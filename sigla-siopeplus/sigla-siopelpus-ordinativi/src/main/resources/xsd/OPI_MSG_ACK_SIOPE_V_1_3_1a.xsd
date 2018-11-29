@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA Messaggio di ACK SIOPE - Versione 1.2.1 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--    -->
+	<xs:include schemaLocation="OPI_GLOBAL_V_1_3_1.xsd"/>
+	<!--    -->
+	<!-- Definizione Tipi semplici          -->
+	<xs:simpleType name="stStato_flusso">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="KO"/>
+			<xs:enumeration value="WARNING"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Definizione Tipi semplici (fine)   -->
+	<!-- Definizione Tipi complessi         -->
+	<xs:complexType name="ctErroreACK">
+		<xs:sequence>
+			<xs:element name="codice" type="xs:nonNegativeInteger">
+				<xs:annotation>
+					<xs:documentation>Contiene il codice dell’errore</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="descrizione">
+				<xs:annotation>
+					<xs:documentation>Contiene la descrizione dell’errore</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="elemento" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Contiene le informazioni per identificare l’elemento rispetto al quale si riferisce l’errore (e.g. Xpath)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Definizione Tipi complessi fine    -->
+	<!--      -->
+	<xs:element name="messaggio_ack_siope">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="testata_messaggio" type="ctTestata_messaggio">
+					<xs:annotation>
+						<xs:documentation>Aggregazione che contiene i dati del messaggio di ACK SIOPE+</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="identificativo_flusso" type="xs:string" minOccurs="0"/>
+				<xs:element name="identificativo_flusso_BT" type="sTId_flusso_BT" minOccurs="0"/>
+				<xs:element name="esercizio" type="stEsercizio" minOccurs="0"/>
+				<xs:element name="stato_flusso" type="stStato_flusso"/>
+				<xs:element name="errore" type="ctErroreACK" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="warning" type="ctErroreACK" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+
+
+
