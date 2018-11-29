@@ -143,13 +143,13 @@ UNION
        Null PG_REVERSALE  ,                                      -- PG_REVERSALE
        to_char(Decode( tipo_movimento,'ENTRATA',lpad(NUMERO_DOCUMENTO,18,'0'),NULL))CD_SOSPESO_E,  -- CD_SOSPESO_E
        to_char(Decode(tipo_movimento, 'USCITA', lpad(NUMERO_DOCUMENTO,18,'0'),NULL)) CD_SOSPESO_S,  -- CD_SOSPESO_S
-       Decode(tipo_movimento,'ENTRATA', Decode(TIPO_OPERAZIONE, 'ESEGUITO', IMPORTO)) IM_SOS_E_APERTI,   -- IM_SOS_E_APERTI
-       Decode(tipo_movimento,'ENTRATA', Decode(TIPO_OPERAZIONE, 'STORNATO', -1*IMPORTO)) IM_SOS_E_STORNI,-- IM_SOS_E_STORNI
+       Decode(tipo_movimento,'ENTRATA', Decode(TIPO_OPERAZIONE, 'ESEGUITO', IMPORTO,0),0) IM_SOS_E_APERTI,   -- IM_SOS_E_APERTI
+       Decode(tipo_movimento,'ENTRATA', Decode(TIPO_OPERAZIONE, 'STORNATO', IMPORTO,0),0) IM_SOS_E_STORNI,-- IM_SOS_E_STORNI
        To_Number(Null)  IM_REV_SOSPESI,                                      -- IM_REV_SOSPESI
        To_Number(Null)  IM_REVERSALI  ,                                      -- IM_REVERSALI
        To_Number(Null)  IM_REV_STORNI ,                                      -- IM_REV_STORNI
-       Decode(tipo_movimento, 'USCITA', Decode(TIPO_OPERAZIONE, 'ESEGUITO',IMPORTO)) IM_SOS_S_APERTI,    -- IM_SOS_S_APERTI
-       Decode(tipo_movimento, 'USCITA', Decode(TIPO_OPERAZIONE, 'STORNATO', -1*IMPORTO)) IM_SOS_S_STORNI, -- IM_SOS_S_STORNI
+       Decode(tipo_movimento, 'USCITA', Decode(TIPO_OPERAZIONE, 'ESEGUITO',IMPORTO,0),0) IM_SOS_S_APERTI,    -- IM_SOS_S_APERTI
+       Decode(tipo_movimento, 'USCITA', Decode(TIPO_OPERAZIONE, 'STORNATO',IMPORTO,0),0) IM_SOS_S_STORNI, -- IM_SOS_S_STORNI
        To_Number(Null) IM_MAN_SOSPESI  ,                                      -- IM_MANDATI A COPERTURA DI SOSPESI
        To_Number(Null) IM_MANDATI      ,                                      -- IM_MANDATI
        To_Number(Null) IM_MAN_STORNI                                          -- IM_MAN_STORNI
