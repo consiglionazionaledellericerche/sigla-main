@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA Messaggio di conferma di ricezione flusso - Versione 1.2.1 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:opi="http://ws.pagamenti.telematici.gov/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+  <!--    -->
+  <xs:include schemaLocation="OPI_GLOBAL_V_1_3_1.xsd"/>
+  <!--    -->
+  <xs:element name="messaggio_ricezione_flusso">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="ds:Signature"/>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso" type="xs:string"/>
+          <xs:element name="identificativo_flusso_BT" type="sTId_flusso_BT"/>
+          <xs:element name="esercizio" type="stEsercizio"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso" type="xs:string"/>
+          <xs:element name="identificativo_flusso_BT" type="sTId_flusso_BT"/>
+          <xs:element name="esercizio" type="stEsercizio"/>
+          <xs:element ref="ds:Signature"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:attribute name="Id"/>
+    </xs:complexType>
+  </xs:element>
+  <!--    -->
+</xs:schema>
+
