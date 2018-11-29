@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA del Messaggio di rifiuto flusso - Versione 1.2.1 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+  <!--    -->
+  <xs:include schemaLocation="OPI_GLOBAL_V_1_3_1.xsd"/>
+  <!--    -->
+  <xs:complexType name="ctErrore">
+    <xs:sequence>
+      <xs:element name="codice" type="xs:nonNegativeInteger" minOccurs="0"/>
+      <xs:element name="descrizione">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--    -->
+  <xs:element name="messaggio_rifiuto_flusso">
+    <xs:annotation>
+      <xs:documentation>Messaggio di rifiuto flusso</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="ds:Signature"/>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso" type="xs:string"/>
+          <xs:element name="identificativo_flusso_BT" type="sTId_flusso_BT"/>
+          <xs:element name="esercizio" type="stEsercizio"/>
+          <xs:element name="errore" type="ctErrore" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso" type="xs:string"/>
+          <xs:element name="identificativo_flusso_BT" type="sTId_flusso_BT"/>
+          <xs:element name="esercizio" type="stEsercizio"/>
+          <xs:element name="errore" type="ctErrore" maxOccurs="unbounded"/>
+          <xs:element ref="ds:Signature"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:attribute name="Id"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
