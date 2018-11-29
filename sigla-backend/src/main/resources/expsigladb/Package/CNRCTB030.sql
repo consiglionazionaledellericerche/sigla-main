@@ -1,4 +1,4 @@
---------------------------------------------------------
+﻿------------------------------------------------------
 --  DDL for Package CNRCTB030
 --------------------------------------------------------
 
@@ -43,7 +43,7 @@
 --
 -- Date: 21/02/2002
 -- Version: 1.6
--- L'importo dell'impegno generato in automatico non puע mai scendere sotto il saldo dei documenti amministrativi collegati
+-- L'importo dell'impegno generato in automatico non può mai scendere sotto il saldo dei documenti amministrativi collegati
 --
 -- Date: 21/02/2002
 -- Version: 1.7
@@ -55,7 +55,7 @@
 --
 -- Date: 11/03/2002
 -- Version: 1.9
--- Lettura della linea di attivitא di spesa ENTE da configurazione CNR per creazione impegno automatico CNR
+-- Lettura della linea di attività di spesa ENTE da configurazione CNR per creazione impegno automatico CNR
 --
 -- Date: 25/03/2002
 -- Version: 2.0
@@ -138,7 +138,7 @@
 -- Date: 26/11/2002
 -- Version: 3.9
 -- Fix su utuv e duva saldo competenza CNR spese parte 1 per aggiornamento impegno capitolo automatico nel caso in
--- cui l'impegno esista giא
+-- cui l'impegno esista già
 --
 -- Date: 25/02/2003
 -- Version: 4.0
@@ -172,11 +172,11 @@
 -- Date: 22/12/2003
 -- Version: 4.7
 -- Richiesta telefonica con Mingarelli da aprire in sito ??? per togliere il controllo
--- bloccante disponibilitא di competenza su modifica obbligazione stipendi in liquidazione 13-esimo mese
+-- bloccante disponibilità di competenza su modifica obbligazione stipendi in liquidazione 13-esimo mese
 --
 -- Date: 07/01/2004
 -- Version: 4.8
--- Controllo che se l'impegno su capitolo CNR ט riportato, NON POSSO modificare tale impegno per variazione
+-- Controllo che se l'impegno su capitolo CNR è riportato, NON POSSO modificare tale impegno per variazione
 -- di bilancio
 --
 -- Date: 29/01/2004
@@ -222,10 +222,10 @@
 --                della voce del piano = 'Y'
 --  e
 --    + stanziamento anno1
---    + variazioni in piש
+--    + variazioni in più
 --    - variazioni in meno
 --    + residuo iniziale
---    + residuo variazioni in piש
+--    + residuo variazioni in più
 --    - residuo variazioni in meno
 --    + cassa iniziale
 --     - saldo obbligazioni
@@ -233,7 +233,7 @@
 --     + tot mandati su pgiro di esercizio precedente (se es scrivania>esercizio partenza) (Rich. CNR n.743)
 --     - tot reversali su pgiro di esercizio precedente (se es scrivania>esercizio partenza) (Rich. CNR n.743)
 --     - importo obbligazione
---  ט minore di 0
+--  è minore di 0
 -- post: Ritorna 'N'
 --
 -- pre-post-name: Controllo importi per obbligazioni con esercizio di competenza = esercizio + n con n=1,2
@@ -243,7 +243,7 @@
 --     + (stanziamento anno1+n)*(percentuale di copertura obbligazioni anno1+n estratta sulla base del CDS dell'obbligazione, se non trovata = 0)
 --     - saldo obbligazioni anno1+n
 --     - importo obbligazione
---  ט minore di 0
+--  è minore di 0
 -- post: Ritorna 'N'
 --
 -- pre-post-name: Controllo superato
@@ -254,7 +254,7 @@
 --   aEs -> esercizio di competenza dell'obbligazione
 --   aEsScrivania -> esercizio di scrivania (= esercizio dell'obbligazione)
 --   aCdCds -> codice del centro di spesa
---   aCdUO -> codice dell'unitא organizzativa
+--   aCdUO -> codice dell'unità organizzativa
 --   aCdElementoVoce -> codice dell'elemento voce di spesa CDS
 --   im_obbligazione -> importo dell'obbligazione
 
@@ -269,10 +269,10 @@
 -- pre: Richista massa spendibile per obbligazione in esercizio di competenza = esercizio di scrivania
 -- post: ritorna
 --    + stanziamento anno1
---    + variazioni in piש
+--    + variazioni in più
 --    - variazioni in meno
 --    + residuo iniziale
---    + residuo variazioni in piש
+--    + residuo variazioni in più
 --    - residuo variazioni in meno
 --    + cassa iniziale
 --     - saldo obbligazioni
@@ -306,7 +306,7 @@
   aCdElementoVoce varchar2
  ) return number;
 */
--- Controllo di disponibilitא di cassa, scatenato al salvataggio dell'obbligazione
+-- Controllo di disponibilità di cassa, scatenato al salvataggio dell'obbligazione
 
  function checkDisponibilitaCassa(
   esercizio number,
@@ -330,7 +330,7 @@
 -- post:
 --  Viene estratto tale impegno strutturato sui tre livelli della tabella OBBLIGAZIONE/OBBLIGAZIONE_SCADENZARIO/OBBLIGAZIONE_SCAD_VOCE
 --  Viene aggiornato il valore dell'impegno legato al capitolo con la seguente regola:
---    se lo stanziamento iniziale sul capitolo ט minore o uguale all'importo associato a documenti amministrativi
+--    se lo stanziamento iniziale sul capitolo è minore o uguale all'importo associato a documenti amministrativi
 --         l'importo dell'impegno = importo associato a documenti amministrativi
 --    altrimenti
 --         l'importo dell'impegno = stanziamento iniziale del capitolo
@@ -340,7 +340,7 @@
 -- post:
 --  Viene creato tale impegno sui tre livelli della tabella OBBLIGAZIONE/OBBLIGAZIONE_SCADENZARIO/OBBLIGAZIONE_SCAD_VOCE
 --  L'impegno nrisulta avere una sola scadenza e dettaglio di scadenza
---  L'importo dell'impegno = stanziamento iniziale presente sulla voce a cui ט collegato
+--  L'importo dell'impegno = stanziamento iniziale presente sulla voce a cui è collegato
 --
 -- Parametri:
 -- aEsercizio -> esercizio contabile
@@ -358,7 +358,7 @@
 -- post:
 --  Viene estratto tale impegno strutturato sui tre livelli della tabella OBBLIGAZIONE/OBBLIGAZIONE_SCADENZARIO/OBBLIGAZIONE_SCAD_VOCE
 --  Viene aggiornato il valore dell'impegno legato al capitolo con la seguente regola:
---    se lo stanziamento assestato sul capitolo ט minore o uguale all'importo associato a documenti amministrativi
+--    se lo stanziamento assestato sul capitolo è minore o uguale all'importo associato a documenti amministrativi
 --         viene sollevata un'eccezione
 --    altrimenti
 --         l'importo dell'impegno = stanziamento iniziale del capitolo
@@ -440,14 +440,14 @@
 
 -- Modifica di obbligazioni con singola spaccatura analitica sotto la scadenza
 -- Adegua l'importo dell'obbligazione sulla base del nuovo importo attribuito alla scadenza specificata
--- Tolto controllo su disponibilitא di competenza (richiesta ??? Mingarelli 20031222)
+-- Tolto controllo su disponibilità di competenza (richiesta ??? Mingarelli 20031222)
 
  procedure adeguaObbSV(aObbScad obbligazione_scadenzario%rowtype,aNewImp number,aUser varchar2);
 
 -- Modifica di obbligazioni con singola spaccatura analitica sotto la scadenza
 -- Adegua l'importo della scadenza successiva a quella specificata per modifica a nuovo importo di quella specificata
 
- procedure adeguaObbScadSuccSV(aObbScad obbligazione_scadenzario%rowtype,aNewImp number,aUser varchar2);
+ procedure adeguaObbScadSuccSV(aObbScad obbligazione_scadenzario%rowtype,aNextPgObbScad number,aNewImp number,aUser varchar2);
 
 -- INTERNE
  function getTotManRegolNoPgiro(aEsScrivania number,aCdCds varchar2) return number;
