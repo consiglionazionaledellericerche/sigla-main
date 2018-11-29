@@ -4695,10 +4695,19 @@ public SQLBuilder selectAssestatoRisorseCoperturaByClause (UserContext userConte
 public void verificaDisponibilitaVincoliSpese(UserContext aUC,AccertamentoResiduoBulk accertamento) throws ComponentException
 {
 	try {
-		if (accertamento.isInesigibile() || accertamento.isParzialmenteInesigibile()) {
-			if (accertamento.getIm_quota_inesigibile_da_ripartire().compareTo(BigDecimal.ZERO)!=0)
-				throw new ApplicationException("Attenzione! Non risulta correttamente coperta con spese vincolate la quota inesigibile dell'accertamento residuo. Operazione non possibile!");
-
+		if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile() || accertamento.isStatoDubbio()) {
+			if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile()) { 
+				if (accertamento.getIm_quota_inesigibile_da_ripartire().compareTo(BigDecimal.ZERO)!=0)
+					throw new ApplicationException("Attenzione! Non risulta correttamente coperta con spese vincolate la quota inesigibile dell'accertamento residuo. Operazione non possibile!");
+			} else { //accertamento.isStatoDubbio()
+				if (Optional.ofNullable(accertamento.getImportoNonIncassato()).orElse(BigDecimal.ZERO).compareTo(
+							Optional.ofNullable(accertamento.getIm_quota_inesigibile_ripartita()).orElse(BigDecimal.ZERO))<0)
+					throw new ApplicationException("Attenzione! Le spese vincolate ("
+							+ new it.cnr.contab.util.EuroFormat().format(Optional.ofNullable(accertamento.getIm_quota_inesigibile_ripartita()).orElse(BigDecimal.ZERO))							
+							+ ") risultano superiori alla quota ancora da incassare ("
+							+ new it.cnr.contab.util.EuroFormat().format(Optional.ofNullable(accertamento.getImportoNonIncassato()).orElse(BigDecimal.ZERO))							
+							+ ") dell'accertamento residuo. Operazione non possibile!");
+			}
 			SaldoComponentSession session = createSaldoComponentSession();
 			for (Pdg_vincoloBulk vincolo : accertamento.getPdgVincoliColl()) {
 				if (vincolo.getIm_vincolo().compareTo(BigDecimal.ZERO)<=0)

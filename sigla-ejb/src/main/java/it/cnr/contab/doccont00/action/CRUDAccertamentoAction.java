@@ -1122,10 +1122,10 @@ public Forward doSelectLineeDiAttivita(ActionContext context)
 
             fillModel(context);
 
-            if (accertamento.isInesigibile() || accertamento.isParzialmenteInesigibile()) {
+            if (accertamento.isStatoInesigibile() || accertamento.isStatoParzialmenteInesigibile()) {
                 if (accertamento.getIm_quota_inesigibile() == null)
                     accertamento.setIm_quota_inesigibile(BigDecimal.ZERO);
-                if (accertamento.isInesigibile())
+                if (accertamento.isStatoInesigibile())
                     accertamento.setIm_quota_inesigibile(accertamento.getImportoNonIncassato());
             } else if (accertamento.getPdgVincoliColl().size() > 0 || accertamento.getAccertamentoVincoliPerentiColl().size() > 0)
                 if (bp instanceof CRUDAccertamentoResiduoAmministraBP)

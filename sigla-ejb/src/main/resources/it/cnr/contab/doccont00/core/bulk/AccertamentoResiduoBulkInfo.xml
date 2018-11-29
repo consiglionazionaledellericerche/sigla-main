@@ -188,6 +188,17 @@
 		nullable="false" />
 
 	<fieldProperty
+		name="importoNonIncassato"
+		property="importoNonIncassato"
+		label="Importo non incassato"
+		inputType="ROTEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="false"
+		nullable="true" />
+
+	<fieldProperty
 		name="im_quota_inesigibile_ripartita"
 		property="im_quota_inesigibile_ripartita"
 		label="Quota Ripartita"
@@ -256,6 +267,8 @@
 		nullable="false" />	
 	<formFieldProperty
 		name="im_quota_inesigibile_ro" />	
+	<formFieldProperty
+		name="importoNonIncassato" />
 
 	<formFieldProperty
 		name="im_quota_inesigibile_ripartita" />
