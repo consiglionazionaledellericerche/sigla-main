@@ -9,6 +9,9 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.sql.*;
+
+import java.util.Optional;
+
 /**
  * Insert the type's description here.
  * Creation date: (20/11/2002 12.26.17)
@@ -201,7 +204,7 @@ public java.util.List loadReversaliDisponibili(UserContext userContext, MandatoB
 			) { 
 			 ReversaleIHome revHome = (ReversaleIHome)getHome(userContext, ReversaleIBulk.class);
 			 ReversaleBulk rev = revHome.loadReversale(userContext,vManRev.getCd_cds(), vManRev.getEsercizio(), vManRev.getPg_documento_cont());
-			 if (!reversaleIsAssociata(userContext, mandato, rev))
+			 if (!reversaleIsAssociata(userContext, mandato, rev) && Optional.ofNullable(rev).isPresent())
 			  list.add(rev);
 		    }
 		}
