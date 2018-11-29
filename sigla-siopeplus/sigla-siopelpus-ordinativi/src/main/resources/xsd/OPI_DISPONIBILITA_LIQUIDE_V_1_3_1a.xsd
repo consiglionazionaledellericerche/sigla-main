@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA GIORNALE DI CASSA OPI Versione 1.2.4 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:opi="http://ws.pagamenti.telematici.gov/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+  <!--    -->
+  <xs:include schemaLocation="OPI_GLOBAL_V_1_3_1.xsd"/>
+  <!--    -->
+  <xs:simpleType name="stAnno">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxInclusive value="2099"/>
+      <xs:minInclusive value="2018"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--    -->
+  <xs:simpleType name="stMese">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:maxInclusive value="12"/>
+      <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--    -->
+  <xs:simpleType name="stImporto">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="15"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--    -->
+  <xs:complexType name="ctSegnalazione_mensile">
+    <xs:annotation>
+      <xs:documentation>struttura Segnalazione mensile</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="anno_riferimento" type="stAnno"/>
+      <xs:element name="mese_riferimento" type="stMese"/>
+      <xs:element name="codice_voce_1100" type="stImporto"/>
+      <xs:element name="codice_voce_1200" type="stImporto"/>
+      <xs:element name="codice_voce_1300" type="stImporto"/>
+      <xs:element name="codice_voce_1400" type="stImporto"/>
+      <xs:element name="codice_voce_1450" type="stImporto"/>
+      <xs:element name="codice_voce_2100" type="stImporto"/>
+      <xs:element name="codice_voce_2200" type="stImporto"/>
+      <xs:element name="codice_voce_2300" type="stImporto"/>
+      <xs:element name="codice_voce_2400" type="stImporto"/>
+      <xs:element name="codice_voce_1500" type="stImporto"/>
+      <xs:element name="codice_voce_1600" type="stImporto"/>
+      <xs:element name="codice_voce_1700" type="stImporto"/>
+      <xs:element name="codice_voce_1800" type="stImporto"/>
+      <xs:element name="codice_voce_1850" type="stImporto"/>
+      <xs:element name="codice_voce_1900" type="stImporto"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--     -->
+  <xs:element name="flusso_disponibilita_liquide">
+    <xs:annotation>
+      <xs:documentation>XML Flusso Disponibilità Liquide</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="ds:Signature"/>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso_BT" type="xs:string"/>
+          <xs:element name="segnalazione_mensile" type="ctSegnalazione_mensile" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso_BT" type="xs:string"/>
+          <xs:element name="segnalazione_mensile" type="ctSegnalazione_mensile" maxOccurs="unbounded"/>
+          <xs:element ref="ds:Signature"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:attribute name="Id"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+
+
+
+
+
+
