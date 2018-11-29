@@ -1392,7 +1392,7 @@ if (aR.tipo_operazione = 'STORNATO') then
                            For update nowait) Loop
             IBMERR001.RAISE_ERR_GENERICO('Il sospeso '||getDesc(aSosF)||' non risulta associato a reversali, ma esistono associazioni con reversale non annullate '||
                                         '(per esempio alla reversale '||aSosDet.CD_CDS||'/'||aSosDet.esercizio||'/'||aSosDet.PG_REVERSALE||')');
-	   End loop;
+	   			End loop;
         else
            for aSosDet in (select * from sospeso_det_usc where
                     		     esercizio = aSosF.esercizio
@@ -1400,16 +1400,16 @@ if (aR.tipo_operazione = 'STORNATO') then
                     		 and cd_sospeso = aSosF.cd_sospeso
                     		 and ti_entrata_spesa = aSosF.ti_entrata_spesa
                     		 and ti_sospeso_riscontro  =aSosF.ti_sospeso_riscontro
-							 and stato <> 'A'
-						 for update nowait) Loop
-            IBMERR001.RAISE_ERR_GENERICO('Il sospeso '||getDesc(aSosF)||' non risulta associato a mandati, ma esistono associazioni con mandati non annullate '||
+							 						and stato <> 'A'
+						 				for update nowait) Loop
+            	IBMERR001.RAISE_ERR_GENERICO('Il sospeso '||getDesc(aSosF)||' non risulta associato a mandati, ma esistono associazioni con mandati non annullate '||
                                         '(per esempio al mandato '||aSosDet.CD_CDS||'/'||aSosDet.esercizio||'/'||aSosDet.PG_mandato||')');
            end loop;
 	end if;
 
         Update sospeso
         Set    fl_stornato = 'Y',
-               dt_storno   = To_Date(aR.data_movimento, 'yyyymmdd'),
+               dt_storno   = aR.data_movimento,
                duva        = aTSNow,
 	       utuv        = aUser,
 	       pg_ver_rec  = pg_ver_rec + 1
@@ -1424,7 +1424,7 @@ End loop; -- FINE LOOP 1
 
        Update sospeso
        Set   fl_stornato  = 'Y',
-             dt_storno    = To_Date(aR.data_movimento, 'yyyymmdd'),
+             dt_storno    = aR.data_movimento,
 	     duva         = aTSNow,
 	     utuv         = aUser,
 	     pg_ver_rec   = pg_ver_rec+1
@@ -1470,7 +1470,8 @@ Elsif -- GESTIONE INSERIMENTO IF 4
           -- identificazione banca d'Italia solo per sospesi ENTE
 	  --If aR01.NUMERO_CONT_TESO = '000000218154' then
 	  if ((aR.codice_rif_interno is not null and aR.codice_rif_interno like 'FZPBP1%') 
-	  	or(aR.tipo_esecuzione='ACCREDITO BANCA D''ITALIA')) then
+	  	or(aR.tipo_esecuzione in('ACCREDITO BANCA D''ITALIA','ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A','ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B',
+	  	'REGOLARIZZAZIONE ACCREDITO BANCA D''ITALIA','REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A','REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B'))) then
         If aCds.cd_tipo_unita = CNRCTB020.TIPO_ENTE then
 	        aSospeso.TI_CC_BI:='B';
  	      Else
