@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA Definizioni dati comuni MESSAGGI/Giornale di Cassa Versione 1.2.1 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<!--    -->
+<!-- Definizione Tipi semplici          -->
+  <xs:simpleType name="sTId_flusso_BT">
+    <xs:annotation>
+      <xs:documentation>Codice alfanumerico attribuito univocamente al flusso della BT</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!--    -->
+  <xs:simpleType name="stEsercizio">
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:minInclusive value="1999"/>
+      <xs:maxInclusive value="2099"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Definizione Tipi semplici (fine)   -->
+<!-- Definizione Tipi complessi         -->
+  <xs:complexType name="ctTestata_messaggio">
+    <xs:annotation>
+      <xs:documentation>Testata Comune per tutti i flussi</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="codice_ABI_BT">
+        <xs:annotation>
+          <xs:documentation>Codice ABI della banca destinataria del flusso trasmesso</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:length value="5"/>
+            <xs:pattern value="[0-9]{5}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="data_ora_creazione_flusso" type="xs:dateTime" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Data e ora di creazione del flusso</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="codice_ente">
+        <xs:annotation>
+          <xs:documentation>Codice IPA dell'ente (cod_uni_ou)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_ente">
+        <xs:annotation>
+          <xs:documentation>Denominazione IPA dell'ente (des_amm)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_istat_ente" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Codice ISTAT dell'ente (codice SIOPE)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_fiscale_ente">
+        <xs:annotation>
+          <xs:documentation>Codice fiscale dell'ente</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_tramite_ente">
+        <xs:annotation>
+          <xs:documentation>Identificativo del soggetto delegato dall’ente al colloquio con SIOPE+</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_tramite_BT">
+        <xs:annotation>
+          <xs:documentation>Identificativo del soggetto delegato dalla banca al colloquio con SIOPE+</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_ente_BT">
+        <xs:annotation>
+          <xs:documentation>Codice univoco interno, attribuito dalla banca, per mezzo del quale l'ente è riconosciuto dalla banca medesima</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--    -->
+<!-- Definizione Tipi complessi (fine)  -->
+</xs:schema>
+
+
+
+
+
+
+

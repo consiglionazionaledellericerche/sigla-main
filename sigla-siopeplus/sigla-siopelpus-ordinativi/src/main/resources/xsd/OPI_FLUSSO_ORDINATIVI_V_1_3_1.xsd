@@ -1,0 +1,1913 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA FLUSSO ORDINATIVI OPI 1.3  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+  <!--  -->
+  <xs:simpleType name="stABI_CAB">
+    <xs:annotation>
+      <xs:documentation>Stringa numerica di 5 caratteri</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="5"/>
+      <xs:pattern value="[0-9]{5}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="OnlyNumMax0_7">
+    <xs:annotation>
+      <xs:documentation>Solo numeri lunghezza massima 7</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:nonNegativeInteger">
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="9999999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="OnlyNumMax7">
+    <xs:annotation>
+      <xs:documentation>Solo numeri lunghezza massima 7</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="9999999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="OnlyNumMax18">
+    <xs:annotation>
+      <xs:documentation>Solo numeri lunghezza massima 7</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="999999999999999999"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="stTipo_debito_non_commerciale">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="IVA"/>
+      <xs:enumeration value="NON_COMMERCIALE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="stTipo_debito_commerciale">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="COMMERCIALE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="stTipo_documento_elettronico">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ELETTRONICO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="stTipo_documento_analogico">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ANALOGICO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="stTipoCodiceCIG">
+    <xs:restriction base="xs:string">
+      <xs:length value="10"/>
+      <xs:pattern value="[a-zA-Z0-9]{10}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:simpleType name="stMotivo_esclusione_cig_siope">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACCORDO_AMM_AGGIUDICATRICI"/>
+      <xs:enumeration value="ACQUISTO_LOCAZIONE"/>
+      <xs:enumeration value="AFFIDAMENTI_IN_HOUSE"/>
+      <xs:enumeration value="AMMINISTRAZIONE DIRETTA"/>
+      <xs:enumeration value="APPALTI_ENERGIA_ACQUA"/>
+      <xs:enumeration value="ARBITRATO"/>
+      <xs:enumeration value="ATTIVITA_CONCORRENZA"/>
+      <xs:enumeration value="CONCESSIONI_PAESI_TERZI"/>
+      <xs:enumeration value="CONTRATTI_ASSOCIAZIONE"/>
+      <xs:enumeration value="CONTRATTI_AUTORITA_GIUDIZIARIA"/>
+      <xs:enumeration value="CONTRATTI_DIFESA"/>
+      <xs:enumeration value="CONTRATTI_ESTERO"/>
+      <xs:enumeration value="CONTRATTI_LAVORO"/>
+      <xs:enumeration value="DIRITTO_ESCLUSIVO"/>
+      <xs:enumeration value="EROGAZIONI_LIBERALITA"/>
+      <xs:enumeration value="IMPRESA_COLLEGATA"/>
+      <xs:enumeration value="INCARICHI_COLLABORAZIONE"/>
+      <xs:enumeration value="JOINT_VENTURE"/>
+      <xs:enumeration value="PRESTAZIONI"/>
+      <xs:enumeration value="RIASSICURAZIONE"/>
+      <xs:enumeration value="RISARCIMENTI_INDENNIZZI"/>
+      <xs:enumeration value="SERVIZI_BANCHE_CENTRALI_EFSF"/>
+      <xs:enumeration value="SERVIZI_CAMPAGNE_POLITICHE"/>
+      <xs:enumeration value="SPESE_ECONOMALI"/>
+      <xs:enumeration value="SPONSORIZZAZIONE_PURA"/>
+      <xs:enumeration value= "TRASFERIMENTO_FONDI"/>
+      <xs:enumeration value="TRASPORTO_AEREO"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--  -->
+  <xs:complexType name="ctDati_a_disposizione_ente_reversale_MIUR">
+    <xs:annotation>
+      <xs:documentation>Dati delle istituzioni scolastiche</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="aggregato">
+        <xs:annotation>
+          <xs:documentation>Indica il codice dell’aggregato di entrata della reversale</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_aggregato">
+        <xs:annotation>
+          <xs:documentation>Descrizione del codice dell’aggregato di entrata della reversale</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="voce">
+        <xs:annotation>
+          <xs:documentation>Indica il codice della voce nell’ambito dell’aggregato di entrata della reversale</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_voce">
+        <xs:annotation>
+          <xs:documentation>Descrizione del codice della voce di entrata nell’ambito dell’aggregato di entrata della reversale</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="sottovoce" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Indica il codice della sottovoce nell’ambito dell’aggregato di entrata della reversale</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_sottovoce" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Descrizione del codice della sottovoce di entrata nell’ambito della voce di entrata della reversale</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="anno_provenienza" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Indica l’anno di provenienza, nel formato "YYYY"</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1980"/>
+            <xs:maxInclusive value="2099"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numero_accertamento">
+        <xs:annotation>
+          <xs:documentation>Indica il numero dell’accertamento al quale è collegata la reversale</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="\d{6}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="ctDati_a_disposizione_ente_mandato_MIUR">
+    <xs:annotation>
+      <xs:documentation>Dati delle istituzioni scolastiche</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="aggregato">
+        <xs:annotation>
+          <xs:documentation>Indica il codice dell’aggregato di spesa del mandato</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_aggregato">
+        <xs:annotation>
+          <xs:documentation>Descrizione del codice dell’aggregato di spesa del mandato</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="voce">
+        <xs:annotation>
+          <xs:documentation>Indica il codice della voce nell’ambito dell’aggregato di spesa del mandato</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_voce">
+        <xs:annotation>
+          <xs:documentation>Descrizione del codice della voce di spesa nell’ambito dell’aggregato di spesa del mandato</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="anno_provenienza" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Indica l’anno di provenienza, nel formato "YYYY"</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1980"/>
+            <xs:maxInclusive value="2099"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numero_impegno">
+        <xs:annotation>
+          <xs:documentation>Indica il numero dell’impegno al quale è collegato il mandato</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="\d{6}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="anyTAG" mixed="true">
+    <xs:annotation>
+      <xs:documentation>struttura XML ente</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:restriction base="xs:anyType">
+        <xs:sequence>
+          <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="bilancio">
+    <xs:annotation>
+      <xs:documentation>struttura bilancio</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="codifica_bilancio">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="9999999"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_codifica" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="gestione">
+        <xs:annotation>
+          <xs:documentation>Può assumere i valori:
+RESIDUO
+COMPETENZA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="RESIDUO"/>
+            <xs:enumeration value="COMPETENZA"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="anno_residuo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>da valorizzare nel caso di gestione RESIDUO</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1980"/>
+            <xs:maxInclusive value="2099"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numero_articolo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:pattern value="[0-9]{1,3}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="voce_economica" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:pattern value="[0-9]{1,3}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="importo_bilancio">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="0.01"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="informazioni_aggiuntive">
+    <xs:annotation>
+      <xs:documentation>struttura informazioni aggiuntive</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="lingua" default="ITALIANO" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>può assumere i valori:
+ITALIANO
+TEDESCO</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="20"/>
+            <xs:enumeration value="ITALIANO"/>
+            <xs:enumeration value="TEDESCO"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="riferimento_documento_esterno" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="sostituzione_mandato">
+    <xs:annotation>
+      <xs:documentation>Da utilizzare con il tipo_operazione SOSTITUZIONE</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="numero_mandato_da_sostituire" type="OnlyNumMax7"/>
+      <xs:element name="progressivo_beneficiario_da_sostituire">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="esercizio_mandato_da_sostituire">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1999"/>
+            <xs:maxInclusive value="2099"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="sostituzione_reversale">
+    <xs:annotation>
+      <xs:documentation>Da utilizzare con il tipo_operazione SOSTITUZIONE</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="numero_reversale_da_sostituire" type="OnlyNumMax7"/>
+      <xs:element name="progressivo_versante_da_sostituire" type="OnlyNumMax7"/>
+      <xs:element name="esercizio_reversale_da_sostituire">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger">
+            <xs:minInclusive value="1999"/>
+            <xs:maxInclusive value="2099"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="reversale">
+    <xs:annotation>
+      <xs:documentation>struttura reversale</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="tipo_operazione">
+        <xs:annotation>
+          <xs:documentation>può assumere i valori:
+INSERIMENTO
+VARIAZIONE
+ANNULLO
+SOSTITUZIONE</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="INSERIMENTO"/>
+            <xs:enumeration value="VARIAZIONE"/>
+            <xs:enumeration value="ANNULLO"/>
+            <xs:enumeration value="SOSTITUZIONE"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numero_reversale" type="OnlyNumMax7"/>
+      <xs:element name="data_reversale">
+        <xs:simpleType>
+          <xs:restriction base="xs:date"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="importo_reversale">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="0.01"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="conto_evidenza" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="25"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="bilancio" type="bilancio" minOccurs="0" maxOccurs="10"/>
+      <xs:element name="informazioni_versante" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="progressivo_versante" type="OnlyNumMax7">
+              <xs:annotation>
+                <xs:documentation>numero progressivo dei versanti all'interno dello stesso ordinativo</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="importo_versante">
+              <xs:simpleType>
+                <xs:restriction base="xs:decimal">
+                  <xs:totalDigits value="15"/>
+                  <xs:fractionDigits value="2"/>
+                  <xs:minInclusive value="0.01"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="tipo_riscossione">
+              <xs:annotation>
+                <xs:documentation>può assumere i valori:
+CASSA
+ACCREDITO BANCA D'ITALIA
+REGOLARIZZAZIONE
+REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA
+PRELIEVO DA CC POSTALE
+COMPENSAZIONE</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="CASSA"/>
+                  <xs:enumeration value="ACCREDITO BANCA D'ITALIA"/>
+                  <xs:enumeration value="REGOLARIZZAZIONE"/>
+                  <xs:enumeration value="REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA"/>
+                  <xs:enumeration value="PRELIEVO DA CC POSTALE"/>
+                  <xs:enumeration value="COMPENSAZIONE"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="numero_ccp" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Contiene il numero del conto corrente postale, da utilizzare con il tipo_riscossione="PRELIEVO DA CC POSTALE"</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:nonNegativeInteger"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="tipo_entrata" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>può assumere i valori FRUTTIFERO
+INFRUTTIFERO</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="FRUTTIFERO"/>
+                  <xs:enumeration value="INFRUTTIFERO"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="destinazione" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>LIBERA:ENTRATA LIBERA
+VINCOLATA:ENTRATA VINCOLATA</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="LIBERA"/>
+                  <xs:enumeration value="VINCOLATA"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="classificazione" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="codice_cge">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{4}"/>
+                        <xs:pattern value="\d{10}"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="importo">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="15"/>
+                        <xs:fractionDigits value="2"/>
+                        <xs:minInclusive value="0.01"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="classificazione_dati_siope_entrate" type="ctClassificazione_dati_siope_entrate" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="bollo">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="assoggettamento_bollo">
+                    <xs:annotation>
+                      <xs:documentation>può assumere i valori:
+ESENTE BOLLO
+ASSOGGETTATO BOLLO A CARICO ENTE
+ASSOGGETTATO BOLLO A CARICO VERSANTE</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="ESENTE BOLLO"/>
+                        <xs:enumeration value="ASSOGGETTATO BOLLO A CARICO ENTE"/>
+                        <xs:enumeration value="ASSOGGETTATO BOLLO A CARICO VERSANTE"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="causale_esenzione_bollo" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="versante" type="versante"/>
+            <xs:element name="causale">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:whiteSpace value="collapse"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="sospeso" minOccurs="0" maxOccurs="1000">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="numero_provvisorio" type="OnlyNumMax18"/>
+                  <xs:element name="importo_provvisorio">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="15"/>
+                        <xs:fractionDigits value="2"/>
+                        <xs:minInclusive value="0.01"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="mandato_associato" type="mandato_associato" minOccurs="0" maxOccurs="100"/>
+            <xs:element name="informazioni_aggiuntive" type="informazioni_aggiuntive" minOccurs="0"/>
+            <xs:element name="sostituzione_reversale" type="sostituzione_reversale" minOccurs="0"/>
+            <xs:element name="dati_a_disposizione_ente_versante" type="anyTAG" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>TAG utilizzato per inserire informazioni utilizzate solamente dell'ente</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="num_sospeso_versante_univoco">
+          <xs:selector xpath="sospeso"/>
+          <xs:field xpath="numero_provvisorio"/>
+        </xs:unique>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="dati_a_disposizione_ente_reversale" type="anyTAG" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>TAG utilizzato per inserire informazioni utilizzate solamente dell'ente</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="dati_a_disposizione_ente_reversale_MIUR" type="ctDati_a_disposizione_ente_reversale_MIUR" minOccurs="0"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="mandato">
+    <xs:annotation>
+      <xs:documentation>struttura mandato</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="tipo_operazione">
+        <xs:annotation>
+          <xs:documentation>può assumere i valori:
+INSERIMENTO
+VARIAZIONE
+ANNULLO
+SOSTITUZIONE</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="INSERIMENTO"/>
+            <xs:enumeration value="VARIAZIONE"/>
+            <xs:enumeration value="ANNULLO"/>
+            <xs:enumeration value="SOSTITUZIONE"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numero_mandato" type="OnlyNumMax7"/>
+      <xs:element name="data_mandato">
+        <xs:simpleType>
+          <xs:restriction base="xs:date"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="importo_mandato">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="0.01"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="conto_evidenza" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="25"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="estremi_provvedimento_autorizzativo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="responsabile_provvedimento" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ufficio_responsabile" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="bilancio" type="bilancio" minOccurs="0" maxOccurs="10"/>
+      <xs:element name="funzionario_delegato" type="funzionario_delegato" minOccurs="0"/>
+      <xs:element name="informazioni_beneficiario" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="progressivo_beneficiario" type="OnlyNumMax7">
+              <xs:annotation>
+                <xs:documentation>numero progressivo dei versanti all'interno dello stesso ordinativo</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="importo_beneficiario">
+              <xs:simpleType>
+                <xs:restriction base="xs:decimal">
+                  <xs:totalDigits value="15"/>
+                  <xs:fractionDigits value="2"/>
+                  <xs:minInclusive value="0.01"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="tipo_pagamento">
+              <xs:annotation>
+                <xs:documentation>Può assumere i valori:
+CASSA
+SEPA CREDIT TRANSFER
+ASSEGNO BANCARIO E POSTALE
+ASSEGNO CIRCOLARE
+ACCREDITO CONTO CORRENTE POSTALE
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+F24EP
+VAGLIA POSTALE
+VAGLIA TESORO
+REGOLARIZZAZIONE
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+ADDEBITO PREAUTORIZZATO DISPOSIZIONE DOCUMENTO ESTERNO
+COMPENSAZIONE
+BONIFICO ESTERO EURO</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="CASSA"/>
+                  <xs:enumeration value="ASSEGNO BANCARIO E POSTALE"/>
+                  <xs:enumeration value="SEPA CREDIT TRANSFER"/>
+                  <xs:enumeration value="ASSEGNO CIRCOLARE"/>
+                  <xs:enumeration value="ACCREDITO CONTO CORRENTE POSTALE"/>
+                  <xs:enumeration value="ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A"/>
+                  <xs:enumeration value="ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"/>
+                  <xs:enumeration value="F24EP"/>
+                  <xs:enumeration value="VAGLIA POSTALE"/>
+                  <xs:enumeration value="VAGLIA TESORO"/>
+                  <xs:enumeration value="REGOLARIZZAZIONE"/>
+                  <xs:enumeration value="REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A"/>
+                  <xs:enumeration value="REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B"/>
+                  <xs:enumeration value="ADDEBITO PREAUTORIZZATO"/>
+                  <xs:enumeration value="DISPOSIZIONE DOCUMENTO ESTERNO"/>
+                  <xs:enumeration value="COMPENSAZIONE"/>
+                  <xs:enumeration value="BONIFICO ESTERO EURO"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="impignorabili" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>può assumere il valore SI</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:length value="2"/>
+                  <xs:pattern value="[S,s]{1}[I,i]{1}"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="frazionabile" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>può assumere il valore NO</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:length value="2"/>
+                  <xs:pattern value="[N,n]{1}[O,o]{1}"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="gestione_provvisoria" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>può assumere il valore SI</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:length value="2"/>
+                  <xs:pattern value="[S,s]{1}[I,i]{1}"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="data_esecuzione_pagamento" type="xs:date" minOccurs="0"/>
+            <xs:element name="data_scadenza_pagamento" type="xs:date" minOccurs="0"/>
+            <xs:element name="destinazione" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>LIBERA: UTILIZZO SOMME LIBERE
+VINCOLATA: UTILIZZO SOMME VINCOLATE</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="LIBERA"/>
+                  <xs:enumeration value="VINCOLATA"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="numero_conto_banca_italia_ente_ricevente" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Utilizzato per operazioni di "girofondo"</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:pattern value="\d{1,7}"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="tipo_contabilita_ente_ricevente" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Utilizzato per operazioni di "girofondo";  può assumere i valori:
+FRUTTIFERA
+INFRUTTIFERA</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="FRUTTIFERA"/>
+                  <xs:enumeration value="INFRUTTIFERA"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="tipo_postalizzazione" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Può assumere i valori:
+COME DA CONVENZIONE
+CONSEGNA ALL'ENTE
+POSTA PRIORITARIA
+RACCOMANDATA
+RACCOMANDATA A.R.
+ASSICURATA</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="COME DA CONVENZIONE"/>
+                  <xs:enumeration value="CONSEGNA ALL'ENTE"/>
+                  <xs:enumeration value="POSTA PRIORITARIA"/>
+                  <xs:enumeration value="RACCOMANDATA"/>
+                  <xs:enumeration value="RACCOMANDATA A.R."/>
+                  <xs:enumeration value="ASSICURATA"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="classificazione" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="codice_cgu">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:pattern value="\d{4}"/>
+                        <xs:pattern value="\d{10}"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="codice_cup" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:maxLength value="15"/>
+                        <xs:minLength value="15"/>
+                        <xs:pattern value="[A-Z|a-z||0-9|]{1,15}"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="codice_cpv" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9]{8}-[0-9]{1}"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="importo">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="15"/>
+                        <xs:fractionDigits value="2"/>
+                        <xs:minInclusive value="0.01"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="classificazione_dati_siope_uscite" type="ctClassificazione_dati_siope_uscite" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="bollo">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="assoggettamento_bollo">
+                    <xs:annotation>
+                      <xs:documentation>può assumere i valori:
+ESENTE BOLLO
+ASSOGGETTATO BOLLO A CARICO ENTE
+ASSOGGETTATO BOLLO A CARICO BENEFICIARIO</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="ESENTE BOLLO"/>
+                        <xs:enumeration value="ASSOGGETTATO BOLLO A CARICO ENTE"/>
+                        <xs:enumeration value="ASSOGGETTATO BOLLO A CARICO BENEFICIARIO"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="causale_esenzione_bollo" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="spese" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="soggetto_destinatario_delle_spese">
+                    <xs:annotation>
+                      <xs:documentation>può assumere i valori
+ESENTE
+A CARICO ENTE
+A CARICO BENEFICIARIO</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="A CARICO ENTE"/>
+                        <xs:enumeration value="A CARICO BENEFICIARIO"/>
+                        <xs:enumeration value="ESENTE"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="natura_pagamento" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:minLength value="0"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="causale_esenzione_spese" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:minLength value="0"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="beneficiario" type="beneficiario"/>
+            <xs:element name="delegato" type="delegato" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation>
+                <xs:documentation>anagrafica soggetto autorizzato a rilasciare quietanza</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="creditore_effettivo" type="creditore_effettivo" minOccurs="0"/>
+            <xs:element name="piazzatura" type="piazzatura" minOccurs="0"/>
+            <xs:element name="sepa_credit_transfer" type="sepa_credit_transfer" minOccurs="0"/>
+            <xs:element name="codice_versante" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Il codice versante contiene i dati per effettuare un bonifico Banca d'Italia con coordinate IBAN a favore dell'INPDAP. Deve essere valorizzato con i seguenti dati XXYYAAM1M2:
+XX = identificativo della cassa su cui si stà versando
+YY = identificativo della causale di versamento
+AA = ultime due cifre dell'anno di riferimento
+M1 = due cifre che indicano il mene "dal" di riferimento del versamento (es, 01 gen, 02 feb, ...)
+M2 = due cifre che indicano il mene "al" di riferimento del versamento (es, 01 gen, 02 feb, ...)</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="10"/>
+                  <xs:maxLength value="10"/>
+                  <xs:pattern value="[A-Z|a-z]{1}[|0-9]{9}"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="causale">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:whiteSpace value="collapse"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="sospeso" minOccurs="0" maxOccurs="1000">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="numero_provvisorio" type="OnlyNumMax18"/>
+                  <xs:element name="importo_provvisorio">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="15"/>
+                        <xs:fractionDigits value="2"/>
+                        <xs:minInclusive value="0.01"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="ritenute" type="ritenute" minOccurs="0" maxOccurs="30"/>
+            <xs:element name="informazioni_aggiuntive" type="informazioni_aggiuntive" minOccurs="0"/>
+            <xs:element name="sostituzione_mandato" type="sostituzione_mandato" minOccurs="0"/>
+            <xs:element name="dati_a_disposizione_ente_beneficiario" type="anyTAG" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>TAG utilizzato per inserire informazioni utilizzate solamente dell'ente</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="num_sospeso_beneficiario_univoco">
+          <xs:selector xpath="sospeso"/>
+          <xs:field xpath="numero_provvisorio"/>
+        </xs:unique>
+      </xs:element>
+      <xs:choice>
+        <xs:element name="dati_a_disposizione_ente_mandato" type="anyTAG" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>TAG utilizzato per inserire informazioni utilizzate solamente dell'ente</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="dati_a_disposizione_ente_mandato_MIUR" type="ctDati_a_disposizione_ente_mandato_MIUR" minOccurs="0"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="piazzatura">
+    <xs:annotation>
+      <xs:documentation>struttura piazzatura, da valorizzare nel caso il tipo_pagamento="ACCREDITO CONTO CORRENTE POSTALE"</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="numero_conto_corrente_beneficiario">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="12"/>
+            <xs:pattern value="[0-9a-zA-Z,/, ,.,\-]{1,12}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="sepa_credit_transfer">
+    <xs:annotation>
+      <xs:documentation>struttura SEPA Credit Transfer da valorizzare nel caso il tipo_pagamento="SEPA CREDIT TRANSFER"</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="iban">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="34"/>
+            <xs:pattern value="[A-Z]{2}\d{2}[A-Z|0-9]{5,30}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="bic" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="8"/>
+            <xs:maxLength value="11"/>
+            <xs:pattern value="[A-Z|a-z||0-9]{11}"/>
+            <xs:pattern value="[A-Z|a-z||0-9]{8}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="identificativo_end_to_end" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="identificativo_category_purpose" minOccurs="0">
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="code">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="4"/>
+                  <xs:enumeration value="SALA"/>
+                  <xs:enumeration value="PENS"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="proprietary">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="35"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:choice>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="creditore_effettivo">
+    <xs:sequence>
+      <xs:element name="anagrafica_creditore_effettivo">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="indirizzo_creditore_effettivo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="cap_creditore_effettivo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="16"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="localita_creditore_effettivo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="provincia_creditore_effettivo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="stato_creditore_effettivo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <xs:maxLength value="2"/>
+            <xs:pattern value="[A-Z]{2,2}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="partita_iva_creditore_effettivo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_fiscale_creditore_effettivo" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="funzionario_delegato">
+    <xs:sequence>
+      <xs:element name="codice_funzionario_delegato">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z|a-z||0-9]{16}"/>
+            <xs:pattern value="[A-Z|a-z||0-9]{11}"/>
+            <xs:pattern value="\d{1,7}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="importo_funzionario_delegato">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="0.01"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="tipologia_pagamento_funzionario_delegato">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numero_pagamento_funzionario_delegato">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="delegato">
+    <xs:annotation>
+      <xs:documentation>anagrafica soggetto autorizzato a rilasciare quietanza</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="anagrafica_delegato">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="indirizzo_delegato" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="cap_delegato" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="16"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="localita_delegato" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="provincia_delegato" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="stato_delegato" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <xs:maxLength value="2"/>
+            <xs:pattern value="[A-Z]{2,2}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_fiscale_delegato" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="beneficiario">
+    <xs:sequence>
+      <xs:element name="anagrafica_beneficiario">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:whiteSpace value="collapse"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="indirizzo_beneficiario" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="cap_beneficiario" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="16"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="localita_beneficiario" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="provincia_beneficiario" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="stato_beneficiario" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <xs:maxLength value="2"/>
+            <xs:pattern value="[A-Z]{2,2}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="partita_iva_beneficiario" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_fiscale_beneficiario" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="versante">
+    <xs:sequence>
+      <xs:element name="anagrafica_versante">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:whiteSpace value="collapse"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="indirizzo_versante" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="cap_versante" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="16"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="localita_versante" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="provincia_versante" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="stato_versante" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="2"/>
+            <xs:maxLength value="2"/>
+            <xs:pattern value="[A-Z]{2,2}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="partita_iva_versante" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_fiscale_versante" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>lunghezza 35 caratteri per SEPA</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="35"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="mandato_associato">
+    <xs:sequence>
+      <xs:element name="numero_mandato" type="OnlyNumMax7"/>
+      <xs:element name="progressivo_beneficiario" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger"/>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ritenute">
+    <xs:sequence>
+      <xs:element name="importo_ritenute">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="0.01"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="numero_reversale" type="OnlyNumMax7" minOccurs="0"/>
+      <xs:element name="progressivo_versante" type="OnlyNumMax7" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:simpleType name="note">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <!--  -->
+  <xs:complexType name="ctClassificazione_dati_siope_uscite">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:sequence>
+          <xs:annotation>
+            <xs:documentation>DEBITI NON COMMERCIALI</xs:documentation>
+          </xs:annotation>
+          <xs:element name="tipo_debito_siope_nc" type="stTipo_debito_non_commerciale"/>
+          <xs:sequence minOccurs="0">
+            <xs:choice>
+              <xs:sequence>
+                <xs:annotation>
+                  <xs:documentation>Codice Gara PRESENTE</xs:documentation>
+                  <xs:documentation>Codice CIG</xs:documentation>
+                </xs:annotation>
+                <xs:element name="codice_cig_siope" type="stTipoCodiceCIG"/>
+              </xs:sequence>
+              <xs:sequence>
+                <xs:annotation>
+                  <xs:documentation>Codice Gara ASSENTE</xs:documentation>
+                  <xs:documentation>Obbligatorio in caso di assenza del codice cig</xs:documentation>
+                </xs:annotation>
+                <xs:element name="motivo_esclusione_cig_siope" type="stMotivo_esclusione_cig_siope"/>
+              </xs:sequence>
+            </xs:choice>
+            <xs:element name="fattura_siope" type="ctFattura_siope" minOccurs="1" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:annotation>
+            <xs:documentation>DEBITI COMMERCIALI</xs:documentation>
+          </xs:annotation>
+          <xs:element name="tipo_debito_siope_c" type="stTipo_debito_commerciale"/>
+          <xs:choice>
+            <xs:element name="codice_cig_siope" type="stTipoCodiceCIG"/>
+            <!-- Codice Gara PRESENTE: non vuole motivo assenza -->
+            <xs:element name="motivo_esclusione_cig_siope" type="stMotivo_esclusione_cig_siope"/>
+            <!-- Codice Gara ASSENTE: vuole motivo assenza -->
+          </xs:choice>
+          <xs:element name="fattura_siope" type="ctFattura_siope"  minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:element name="dati_ARCONET_siope" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Struttura che contiene le informazioni dei bilanci armonizzati ARCONET</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="codice_missione_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene il Codice Missione</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_programma_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene il Codice Programma</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_economico_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene il Codice Economico</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="importo_codice_economico_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene l’importo Codice Economico</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:decimal">
+                  <xs:totalDigits value="15"/>
+                  <xs:fractionDigits value="2"/>
+                  <xs:minInclusive value="0.01"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_UE_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene il Codice UE</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_uscita_siope" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Codice identificativo entrata</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="RICORRENTE"/>
+                  <xs:enumeration value="NON RICORRENTE"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="cofog_siope">
+              <xs:annotation>
+                <xs:documentation>Struttura finalizzata ad accogliere le informazioni relative al codice Cofog</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="codice_cofog_siope">
+                    <xs:annotation>
+                      <xs:documentation>Contiene il Codice Cofog</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="importo_cofog_siope">
+                    <xs:annotation>
+                      <xs:documentation>Contiene l’importo Cofog</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="15"/>
+                        <xs:fractionDigits value="2"/>
+                        <xs:minInclusive value="0.01"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+	<!--  -->
+  <xs:complexType name="ctDati_fattura_siope">
+    <xs:annotation>
+      <xs:documentation>Struttura che contiene dati comuni a fatture elettroniche e analogiche della fattura associata all'ordinativo, obbligatoria se tipo_debito_siope="COMMERCIALE", può essere ripetuta più volte</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="numero_fattura_siope">
+        <xs:annotation>
+          <xs:documentation>Contiene il numero della fattura</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="importo_siope">
+        <xs:annotation>
+          <xs:documentation>Importo pagato per la fattura. Puo' assumere valore negativo</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="data_scadenza_pagam_siope" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Data di scadenza del pagamento, obbligatoria se diversa da quella indicata nella fattura elettronica</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:date"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="motivo_scadenza_siope" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Ragione che determina la scadenza del pagamento</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="SCAD_FATTURA"/>
+            <xs:enumeration value="CORRETTA_SCAD_FATTURA"/>
+            <xs:enumeration value="SOSP_DECORRENZA_TERMINI"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="natura_spesa_siope">
+        <xs:annotation>
+          <xs:documentation>Contiene la natura di spesa della fattura</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="CORRENTE"/>
+            <xs:enumeration value="CAPITALE"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="ctFattura_siope">
+    <xs:annotation>
+      <xs:documentation>Struttura che contiene la fattura associata all'ordinativo, obbligatoria se tipo_debito_siope="COMMERCIALE", può essere ripetuta più volte</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="codice_ipa_ente_siope">
+        <xs:annotation>
+          <xs:documentation>Codice ipa del destinatario della fattura</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element name="tipo_documento_siope_e" type="stTipo_documento_elettronico">
+            <xs:annotation>
+              <xs:documentation>Indica che si tratta di un documento elettronico</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="identificativo_lotto_sdi_siope">
+            <xs:annotation>
+              <xs:documentation>Identificativo del lotto sdi con cui è stata trasmessa la fattura elettronica</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:long">
+                <xs:minInclusive value="1"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="tipo_documento_siope_a" type="stTipo_documento_analogico">
+            <xs:annotation>
+              <xs:documentation>Indica che si tratta di un documento analogico</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="tipo_documento_analogico_siope">
+            <xs:annotation>
+              <xs:documentation>Indica la tipologia del documento nel caso in cui questo è non si riferisca ad una fattura elettronica PA</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="FATT_ANALOGICA"/>
+                <xs:enumeration value="DOC_EQUIVALENTE"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="codice_fiscale_emittente_siope">
+            <xs:annotation>
+              <xs:documentation>Codice fiscale dell’emittente la fattura analogica o il documento equivalente</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="anno_emissione_fattura_siope">
+            <xs:annotation>
+              <xs:documentation>Indica l’anno di emissione della fattura analogica o del documento equivalente, nel formato "YYYY"</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+              <xs:restriction base="xs:nonNegativeInteger">
+                <xs:minInclusive value="1980"/>
+                <xs:maxInclusive value="2099"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:choice>
+      <xs:element name="dati_fattura_siope" type="ctDati_fattura_siope"/>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="ctClassificazione_dati_siope_entrate">
+    <xs:sequence>
+      <xs:choice>
+        <xs:sequence>
+          <xs:annotation>
+            <xs:documentation>DEBITI NON COMMERCIALI</xs:documentation>
+          </xs:annotation>
+          <xs:element name="tipo_debito_siope_nc" type="stTipo_debito_non_commerciale"/>
+          <xs:element name="fattura_siope" type="ctFattura_siope" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:annotation>
+            <xs:documentation>DEBITI COMMERCIALI</xs:documentation>
+          </xs:annotation>
+          <xs:element name="tipo_debito_siope_c" type="stTipo_debito_commerciale"/>
+          <xs:element name="fattura_siope" type="ctFattura_siope" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:element name="dati_ARCONET_siope" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Struttura che contiene le informazioni dei bilanci armonizzati ARCONET</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="codice_economico_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene il Codice Economico</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="importo_codice_economico_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene l’importo Codice Economico</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:decimal">
+                  <xs:totalDigits value="15"/>
+                  <xs:fractionDigits value="2"/>
+                  <xs:minInclusive value="0.01"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_UE_siope">
+              <xs:annotation>
+                <xs:documentation>Contiene il Codice UE</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_entrata_siope" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Codice identificativo entrata</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="RICORRENTE"/>
+                  <xs:enumeration value="NON RICORRENTE"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--  -->
+  <xs:complexType name="ctTestata_flusso">
+    <xs:annotation>
+      <xs:documentation>Testata del Flusso</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="codice_ABI_BT" type="stABI_CAB">
+        <xs:annotation>
+          <xs:documentation>Codice ABI della banca destinataria del flusso trasmesso</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="identificativo_flusso">
+        <xs:annotation>
+          <xs:documentation>Codice alfanumerico attribuito univocamente al flusso inviato da parte dell'ente</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9#_\-\.]{1,70}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="data_ora_creazione_flusso" type="xs:dateTime">
+        <xs:annotation>
+          <xs:documentation>Data e ora di creazione del flusso</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="codice_ente">
+        <xs:annotation>
+          <xs:documentation>Codice IPA dell'ente (cod_uni_ou)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="descrizione_ente">
+        <xs:annotation>
+          <xs:documentation>Denominazione IPA dell'ente (des_amm)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_istat_ente" minOccurs="1">
+        <xs:annotation>
+          <xs:documentation>Codice ISTAT dell'ente (codice SIOPE)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_fiscale_ente">
+        <xs:annotation>
+          <xs:documentation>Codice fiscale dell'ente</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_tramite_ente">
+        <xs:annotation>
+          <xs:documentation>Identificativo del soggetto delegato dall’ente al colloquio con SIOPE+</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_tramite_BT">
+        <xs:annotation>
+          <xs:documentation>Identificativo del soggetto delegato dalla banca al colloquio con SIOPE+</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="codice_ente_BT">
+        <xs:annotation>
+          <xs:documentation>Codice univoco interno, attribuito dalla banca, per mezzo del quale l'ente è riconosciuto dalla banca medesima</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="riferimento_ente" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Codice concordato tra ente e banca</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string"/>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="flusso_ordinativi">
+    <xs:annotation>
+      <xs:documentation>XML Flusso Ordinativi SEPA</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="unbounded"/>
+          <xs:element ref="testata_flusso"/>
+          <xs:element ref="esercizio"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="reversale" minOccurs="1"/>
+            <xs:element ref="mandato" minOccurs="1"/>
+          </xs:choice>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="testata_flusso"/>
+          <xs:element ref="esercizio"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="reversale" minOccurs="1"/>
+            <xs:element ref="mandato" minOccurs="1"/>
+          </xs:choice>
+          <xs:element ref="ds:Signature" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:attribute name="Id"/>
+    </xs:complexType>
+    <xs:unique name="num_mandato_univoco">
+      <xs:selector xpath="mandato"/>
+      <xs:field xpath="tipo_operazione"/>
+      <xs:field xpath="numero_mandato"/>
+    </xs:unique>
+    <xs:unique name="num_reversale_univoco">
+      <xs:selector xpath="reversale"/>
+      <xs:field xpath="tipo_operazione"/>
+      <xs:field xpath="numero_reversale"/>
+    </xs:unique>
+  </xs:element>
+  <xs:element name="testata_flusso" type="ctTestata_flusso">
+    <xs:annotation>
+      <xs:documentation>Testata del Flusso</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element name="esercizio">
+    <xs:simpleType>
+      <xs:restriction base="xs:nonNegativeInteger">
+        <xs:minInclusive value="1999"/>
+        <xs:maxInclusive value="2099"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="reversale" type="reversale">
+    <xs:unique name="num_progressivo_versante_univoco">
+      <xs:selector xpath="informazioni_versante"/>
+      <xs:field xpath="progressivo_versante"/>
+    </xs:unique>
+  </xs:element>
+  <xs:element name="mandato" type="mandato">
+    <xs:unique name="num_progressivo_beneficiario_univoco">
+      <xs:selector xpath="informazioni_beneficiario"/>
+      <xs:field xpath="progressivo_beneficiario"/>
+    </xs:unique>
+  </xs:element>
+</xs:schema>
+
+
+
+
+
+
+
+

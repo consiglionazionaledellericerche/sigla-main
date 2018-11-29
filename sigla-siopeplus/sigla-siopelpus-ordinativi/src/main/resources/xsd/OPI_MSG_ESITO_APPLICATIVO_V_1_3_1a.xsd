@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCHEMA Messaggio di esito applicativo - Versione 1.2.1 -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:opi="http://ws.pagamenti.telematici.gov/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd"/>
+  <!--    -->
+  <xs:include schemaLocation="OPI_GLOBAL_V_1_3_1.xsd"/>
+  <!--    -->
+  <xs:simpleType name="stEsito_operazione_reversale">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACQUISITO"/>
+      <xs:enumeration value="NON ACQUISITO"/>
+      <xs:enumeration value="VARIATO"/>
+      <xs:enumeration value="NON VARIATO"/>
+      <xs:enumeration value="ANNULLATO"/>
+      <xs:enumeration value="NON ANNULLATO"/>
+      <xs:enumeration value="SOSTITUITO"/>
+      <xs:enumeration value="NON SOSTITUITO"/>
+      <xs:enumeration value="RISCOSSO"/>
+      <xs:enumeration value="STORNATO"/>
+      <xs:enumeration value="REGOLARIZZATO"/>
+      <xs:enumeration value="NON REGOLARIZZATO"/>
+      <xs:enumeration value="NON ESEGUIBILE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--    -->
+  <xs:simpleType name="stEsito_operazione_mandato">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACQUISITO"/>
+      <xs:enumeration value="NON ACQUISITO"/>
+      <xs:enumeration value="VARIATO"/>
+      <xs:enumeration value="NON VARIATO"/>
+      <xs:enumeration value="ANNULLATO"/>
+      <xs:enumeration value="NON ANNULLATO"/>
+      <xs:enumeration value="SOSTITUITO"/>
+      <xs:enumeration value="NON SOSTITUITO"/>
+      <xs:enumeration value="PAGATO"/>
+      <xs:enumeration value="STORNATO"/>
+      <xs:enumeration value="REGOLARIZZATO"/>
+      <xs:enumeration value="NON REGOLARIZZATO"/>
+      <xs:enumeration value="NON ESEGUIBILE"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!--    -->
+	<!-- Definizione Tipi semplici (fine)   -->
+	<!-- Definizione Tipi complessi         -->
+	<!--    -->
+  <xs:complexType name="ctEsito_mandati">
+    <xs:sequence>
+      <xs:element name="identificativo_flusso">
+        <xs:annotation>
+          <xs:documentation>Riferimento al flusso che conteneva gli ordinativi</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="70"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="esercizio" type="stEsercizio"/>
+      <xs:element name="numero_mandato">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="progressivo_beneficiario" type="xs:nonNegativeInteger" minOccurs="0"/>
+      <xs:element name="data_mandato" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:date"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="importo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="0.00"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="esito_operazione" type="stEsito_operazione_mandato">
+        <xs:annotation>
+          <xs:documentation>può assumere i valori ACQUISITO
+NON ACQUISITO
+VARIATO
+NON VARIATO
+ANNULLATO
+NON ANNULLATO SOSTITUITO
+NON SOSTITUITO
+PAGATO
+STORNATO
+REGOLARIZZATO
+NON REGOLARIZZATO
+NON ESEGUIBILE</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="data_ora_esito_operazione" type="xs:dateTime"/>
+      <xs:element name="lista_errori" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="progressivo_beneficiario" minOccurs="0">
+              <xs:simpleType>
+                <xs:restriction base="xs:nonNegativeInteger"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_errore" type="xs:nonNegativeInteger" minOccurs="0"/>
+            <xs:element name="descrizione">
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="elemento" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--     -->
+  <xs:complexType name="ctEsito_reversali">
+    <xs:sequence>
+      <xs:element name="identificativo_flusso">
+        <xs:annotation>
+          <xs:documentation>Riferimento al flusso che conteneva gli ordinativi</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="70"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="esercizio" type="stEsercizio"/>
+      <xs:element name="numero_reversale">
+        <xs:simpleType>
+          <xs:restriction base="xs:nonNegativeInteger"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="progressivo_versante" type="xs:nonNegativeInteger" minOccurs="0"/>
+      <xs:element name="data_reversale" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:date"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="importo" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:decimal">
+            <xs:totalDigits value="15"/>
+            <xs:fractionDigits value="2"/>
+            <xs:minInclusive value="0.00"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="esito_operazione" type="stEsito_operazione_reversale">
+        <xs:annotation>
+          <xs:documentation>può assumere i valori ACQUISITO
+NON ACQUISITO, VARIATO
+NON VARIATO, ANNULLATO
+NON ANNULLATO, SOSTITUITO
+NON SOSTITUITO, RISCOSSO
+STORNATO
+REGOLARIZZATO
+NON REGOLARIZZATO
+NON ESEGUIBILE</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="data_ora_esito_operazione" type="xs:dateTime"/>
+      <xs:element name="lista_errori" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="progressivo_versante" minOccurs="0">
+              <xs:simpleType>
+                <xs:restriction base="xs:nonNegativeInteger"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="codice_errore" type="xs:nonNegativeInteger" minOccurs="0"/>
+            <xs:element name="descrizione">
+              <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="elemento" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!--    -->
+	<!--    -->
+	<!-- Definizione Tipi complessi (fine)  -->
+	<!--    -->
+  <xs:element name="messaggi_esito_applicativo">
+    <xs:annotation>
+      <xs:documentation>Messaggio di esito applicativo</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="ds:Signature"/>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso_BT"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element name="esito_reversali" type="ctEsito_reversali"/>
+            <xs:element name="esito_mandati" type="ctEsito_mandati"/>
+          </xs:choice>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element name="testata_messaggio" type="ctTestata_messaggio"/>
+          <xs:element name="identificativo_flusso_BT"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element name="esito_reversali" type="ctEsito_reversali"/>
+            <xs:element name="esito_mandati" type="ctEsito_mandati"/>
+          </xs:choice>
+          <xs:element ref="ds:Signature"/>
+        </xs:sequence>
+      </xs:choice>
+      <xs:attribute name="Id"/>
+    </xs:complexType>
+  </xs:element>
+  <!--    -->
+</xs:schema>
+
