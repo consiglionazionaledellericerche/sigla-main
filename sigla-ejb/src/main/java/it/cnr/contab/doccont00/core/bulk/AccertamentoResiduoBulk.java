@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import java.math.BigDecimal;
 import java.util.Dictionary;
+import java.util.Optional;
 
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -117,7 +118,7 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 		if ( getIm_accertamento() == null )
 			throw new ValidationException( "Il campo IMPORTO è obbligatorio." );
 
-		if (this.isInesigibile() || this.isParzialmenteInesigibile()) {
+		if (this.isStatoInesigibile() || this.isStatoParzialmenteInesigibile()) {
 			if (this.getIm_quota_inesigibile()==null) 
 				throw new ValidationException( "Il campo QUOTA INESIGIBILE è obbligatorio." );
 			if (this.getIm_quota_inesigibile().compareTo(BigDecimal.ZERO)<=0) 
@@ -157,17 +158,29 @@ public class AccertamentoResiduoBulk extends AccertamentoBulk {
 	}
 
 	public java.math.BigDecimal getIm_quota_inesigibile_da_ripartire() {
-		if(getIm_quota_inesigibile_ripartita()!=null)  
+		if (getIm_quota_inesigibile_ripartita()!=null)  
 			return getIm_quota_inesigibile().subtract(getIm_quota_inesigibile_ripartita());
 		else 
 			return getIm_quota_inesigibile();	
 	}
 	
-	public boolean isInesigibile() {
+	public boolean isStatoInesigibile() {
 		return Stato.INESIGIBILE.value.equals(getStato());
 	}
 
-	public boolean isParzialmenteInesigibile() {
+	public boolean isStatoParzialmenteInesigibile() {
 		return Stato.PARZIALMENTE_INESIGIBILE.value.equals(getStato());
+	}
+
+	public boolean isStatoDubbio() {
+		return Stato.DUBBIO.value.equals(getStato());
+	}
+	
+	public boolean isStatoDilazionato() {
+		return Stato.DILAZIONATO.value.equals(getStato());
+	}
+
+	public boolean isStatoIncerto() {
+		return Stato.INCERTO.value.equals(getStato());
 	}
 }
