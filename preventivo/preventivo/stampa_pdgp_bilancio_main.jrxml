@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921208"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="43"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -64,6 +64,9 @@
 	<parameter name="DS_LIVELLO7S" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DS_LIVELLO8S" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DS_LIVELLO9S" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT tipo, peso_livello1, peso_livello2,
 cd_livello1, cd_livello2, cd_livello3, cd_livello4,
@@ -1640,9 +1643,9 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<band/>
 	</title>
 	<pageHeader>
-		<band height="90">
+		<band height="120">
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-184" style="VERB7" x="30" y="0" width="547" height="11" uuid="0eea1766-23cc-428c-a600-04ea1480e1ec"/>
+				<reportElement key="textField-184" style="VERB7" x="30" y="43" width="547" height="11" uuid="0eea1766-23cc-428c-a600-04ea1480e1ec"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1657,7 +1660,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 ($P{P_FONTE}.indexOf("DEC")>0?"DECISIONALE":"GESTIONALE")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-184" style="VERB7" x="55" y="12" width="521" height="11" uuid="2d60c71d-837e-46fc-ac0b-9c504cac20aa"/>
+				<reportElement key="textField-184" style="VERB7" x="55" y="55" width="521" height="11" uuid="2d60c71d-837e-46fc-ac0b-9c504cac20aa"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1673,21 +1676,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 " ANNO "+$P{P_ESERCIZIO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-184" style="VER7" x="76" y="24" width="746" height="11" uuid="f99d002d-80e9-4e0f-b9d5-756716ab6060"/>
-				<box>
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{NOME_EST}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-185" style="VERB8" x="3" y="37" width="428" height="21" uuid="c2b9ee61-d58f-45bc-99a8-c81e512f97c9"/>
+				<reportElement key="textField-185" style="VERB8" x="3" y="67" width="428" height="21" uuid="c2b9ee61-d58f-45bc-99a8-c81e512f97c9"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1717,7 +1706,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
  ($P{P_NUM_LIV}>8?"/"+$P{DS_LIVELLO9S}:""))]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-185" style="VERB8" x="431" y="37" width="195" height="21" uuid="0246b32e-0a8e-4ec6-9eb8-c0f5514813ee"/>
+				<reportElement key="textField-185" style="VERB8" x="431" y="67" width="195" height="21" uuid="0246b32e-0a8e-4ec6-9eb8-c0f5514813ee"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1729,7 +1718,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["Anno finanziario "+$P{P_ESERCIZIO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-186" style="VERB8" x="626" y="37" width="195" height="21" uuid="8e49dde6-b00d-4c98-bc2f-b3ae7f6f411d"/>
+				<reportElement key="textField-186" style="VERB8" x="626" y="67" width="195" height="21" uuid="8e49dde6-b00d-4c98-bc2f-b3ae7f6f411d"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1741,7 +1730,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["Anno finanziario "+new Integer($P{P_ESERCIZIO}.intValue()-1)]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-53" style="VERB6" x="3" y="58" width="63" height="31" uuid="00621031-2a5a-419f-a423-63b4557d3585"/>
+				<reportElement key="staticText-53" style="VERB6" x="3" y="88" width="63" height="31" uuid="00621031-2a5a-419f-a423-63b4557d3585"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1753,7 +1742,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<text><![CDATA[Codice]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB6" x="66" y="58" width="365" height="31" uuid="709515ee-cd1e-448a-bdac-814bfc90073a"/>
+				<reportElement key="staticText-54" style="VERB6" x="66" y="88" width="365" height="31" uuid="709515ee-cd1e-448a-bdac-814bfc90073a"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1765,7 +1754,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<text><![CDATA[Denominazione]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="431" y="58" width="65" height="31" uuid="5f57bd5d-3170-4bf0-a5e2-c8d41a7e02fa"/>
+				<reportElement key="textField-187" style="VERB6" x="431" y="88" width="65" height="31" uuid="5f57bd5d-3170-4bf0-a5e2-c8d41a7e02fa"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1780,7 +1769,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["Residui presunti alla fine dell'anno in corso"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-44" style="VERB6" x="496" y="58" width="65" height="31" uuid="19000c09-822e-4edc-b6b1-0e25c2a176ef"/>
+				<reportElement key="staticText-44" style="VERB6" x="496" y="88" width="65" height="31" uuid="19000c09-822e-4edc-b6b1-0e25c2a176ef"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1793,7 +1782,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 competenza]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-45" style="VERB6" x="561" y="58" width="65" height="31" uuid="a33bfc45-a127-4c3b-bd86-e97d463a0438"/>
+				<reportElement key="staticText-45" style="VERB6" x="561" y="88" width="65" height="31" uuid="a33bfc45-a127-4c3b-bd86-e97d463a0438"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1806,7 +1795,7 @@ competenza]]></text>
 di cassa]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="626" y="58" width="65" height="31" uuid="fcce6b7a-ea6e-440b-a0ce-3cd66703dc04"/>
+				<reportElement key="textField-187" style="VERB6" x="626" y="88" width="65" height="31" uuid="fcce6b7a-ea6e-440b-a0ce-3cd66703dc04"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1821,7 +1810,7 @@ di cassa]]></text>
 				<textFieldExpression><![CDATA["Residui iniziali dell'anno "+new Integer($P{P_ESERCIZIO}.intValue()-1)]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-41" style="VERB6" x="691" y="58" width="65" height="31" uuid="71e229ba-ef85-4855-84a9-46ce05d39d0a"/>
+				<reportElement key="staticText-41" style="VERB6" x="691" y="88" width="65" height="31" uuid="71e229ba-ef85-4855-84a9-46ce05d39d0a"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1835,7 +1824,7 @@ definitive di
 competenza]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-37" style="VERB6" x="756" y="58" width="65" height="31" uuid="8e46c422-1c70-41fd-a722-3df3e52c2e7a"/>
+				<reportElement key="staticText-37" style="VERB6" x="756" y="88" width="65" height="31" uuid="8e46c422-1c70-41fd-a722-3df3e52c2e7a"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1849,7 +1838,7 @@ definitive
 di cassa]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-184" style="VER6" x="756" y="0" width="65" height="11" uuid="e6a3ff38-2b05-4a8d-9413-22efa2b6d6eb">
+				<reportElement key="textField-184" style="VER6" x="756" y="43" width="65" height="11" uuid="e6a3ff38-2b05-4a8d-9413-22efa2b6d6eb">
 					<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.equals(1)]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -1864,6 +1853,16 @@ di cassa]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{P_FONTE}]]></textFieldExpression>
 			</textField>
+			<image onErrorType="Blank">
+				<reportElement key="image-1" x="1" y="1" width="820" height="41" uuid="0220cabd-4d1c-40c5-a6a9-c1f9da3be863"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>

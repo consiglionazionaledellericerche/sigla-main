@@ -48,6 +48,9 @@
 	<parameter name="ROTTURA" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["5"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select DS_LIVELLO1E, DS_LIVELLO2E, DS_LIVELLO3E, DS_LIVELLO4E, DS_LIVELLO5E, DS_LIVELLO6E, DS_LIVELLO7E, NULL DS_LIVELLO8E, NULL DS_LIVELLO9E,
 DS_LIVELLO1S, DS_LIVELLO2S, DS_LIVELLO3S, DS_LIVELLO4S, DS_LIVELLO5S, DS_LIVELLO6S, DS_LIVELLO7S, NULL DS_LIVELLO8S, NULL DS_LIVELLO9S
@@ -98,20 +101,23 @@ AND   SUBSTR($P{P_FONTE},-3) = 'SCI']]>
 				<subreportParameter name="ROTTURA">
 					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO8S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8S}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO6S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO8S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8S}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO4S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4S}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO8E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8E}]]></subreportParameterExpression>
+				<subreportParameter name="DIR_IMAGE">
+					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_FONTE">
 					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO8E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO2S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO2S}]]></subreportParameterExpression>
@@ -167,11 +173,11 @@ AND   SUBSTR($P{P_FONTE},-3) = 'SCI']]>
 				<subreportParameter name="DS_LIVELLO1E">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO1E}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO3E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3E}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="RIEPILOGO">
 					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO3E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO7S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7S}]]></subreportParameterExpression>
