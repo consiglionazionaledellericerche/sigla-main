@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="155"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -33,13 +33,13 @@
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CDS" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["002"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["999"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DataInizio" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2018/01/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DataFine" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2021/12/31")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2018/12/31")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
@@ -48,7 +48,7 @@
 		<![CDATA[select * from PRT_SCAD_OBBL
 where ESERCIZIO = $P{Esercizio}
 and UO like decode($P{UO},'*','%',$P{UO})
-and CDS like decode($P{CDS},'*','%',$P{CDS})
+and CDS like decode($P{CDS},CNRCTB020.GETCDCDSENTE ($P{Esercizio}),'%',$P{CDS})
 and DATA_SCAD between $P{DataInizio} and $P{DataFine}
 order by data_scad, uo, PROGR_SCAD]]>
 	</queryString>
@@ -105,7 +105,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 		<groupFooter>
 			<band height="15" splitType="Stretch">
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNRG9" x="523" y="3" width="45" height="12" uuid="560548c8-aff2-4ff6-b7bb-bbee1057ac60"/>
+					<reportElement key="textField" style="TNRG9" x="523" y="3" width="65" height="12" uuid="560548c8-aff2-4ff6-b7bb-bbee1057ac60"/>
 					<box>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -116,7 +116,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 					<textFieldExpression><![CDATA[$V{SUM_IM_SCAD}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNRG9" x="574" y="3" width="50" height="12" uuid="c3b587c8-8824-443b-a4e3-a4f56a7ec25f"/>
+					<reportElement key="textField" style="TNRG9" x="594" y="3" width="65" height="12" uuid="c3b587c8-8824-443b-a4e3-a4f56a7ec25f"/>
 					<box>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -129,7 +129,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 					<textFieldExpression><![CDATA[$V{SUM_IM_DOC_AMM}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNRG9" x="630" y="3" width="45" height="12" uuid="a918f56a-1c9d-4128-bba8-c3e07ec92248"/>
+					<reportElement key="textField" style="TNRG9" x="665" y="3" width="65" height="12" uuid="a918f56a-1c9d-4128-bba8-c3e07ec92248"/>
 					<box>
 						<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -340,7 +340,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<text><![CDATA[Descrizione Scadenza]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-10" style="TNRG10" x="520" y="108" width="49" height="24" uuid="fbad8adc-eb00-4372-9fce-05eecce37b71"/>
+				<reportElement key="staticText-10" style="TNRG10" x="523" y="108" width="65" height="24" uuid="fbad8adc-eb00-4372-9fce-05eecce37b71"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -351,7 +351,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<text><![CDATA[Importo Scadenza]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-11" style="TNRG10" x="573" y="108" width="55" height="24" uuid="d5231f89-2ff4-42e9-b869-b9ce1886f410"/>
+				<reportElement key="staticText-11" style="TNRG10" x="593" y="108" width="65" height="24" uuid="d5231f89-2ff4-42e9-b869-b9ce1886f410"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -364,7 +364,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<text><![CDATA[Importo Doc. Passivo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-12" style="TNRG10" x="630" y="108" width="45" height="24" uuid="683c4ca2-12af-4969-a47c-4cbf5bee5d10"/>
+				<reportElement key="staticText-12" style="TNRG10" x="665" y="108" width="65" height="24" uuid="683c4ca2-12af-4969-a47c-4cbf5bee5d10"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -375,7 +375,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<text><![CDATA[Importo Doc. Contabile]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-13" style="TNRG10" x="682" y="108" width="97" height="24" uuid="8f4ae3da-c085-450e-a54b-b3751b8f7a05"/>
+				<reportElement key="staticText-13" style="TNRG10" x="734" y="108" width="45" height="24" uuid="8f4ae3da-c085-450e-a54b-b3751b8f7a05"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -458,7 +458,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<textFieldExpression><![CDATA[$F{DS_SCAD}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR9" x="523" y="2" width="45" height="13" uuid="8b486383-2a3c-4d1c-b9f1-ea0421cae133"/>
+				<reportElement key="textField" style="TNR9" x="523" y="2" width="65" height="13" uuid="8b486383-2a3c-4d1c-b9f1-ea0421cae133"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -469,7 +469,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<textFieldExpression><![CDATA[$F{IM_SCAD}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR9" x="574" y="2" width="50" height="13" uuid="95b835b6-7efc-4377-82b6-2fa8f00e6afe"/>
+				<reportElement key="textField" style="TNR9" x="594" y="2" width="65" height="13" uuid="95b835b6-7efc-4377-82b6-2fa8f00e6afe"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -482,7 +482,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<textFieldExpression><![CDATA[$F{IM_DOC_AMM}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR9" x="630" y="2" width="45" height="13" uuid="f96b9c37-18d7-4d4c-9384-bd3d93724244"/>
+				<reportElement key="textField" style="TNR9" x="665" y="2" width="65" height="13" uuid="f96b9c37-18d7-4d4c-9384-bd3d93724244"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -493,7 +493,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<textFieldExpression><![CDATA[$F{IMP_DOC_CONT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR9" x="682" y="2" width="97" height="13" uuid="52ad80aa-42b3-4570-81fa-cc713861771d"/>
+				<reportElement key="textField" style="TNR9" x="734" y="2" width="45" height="13" uuid="52ad80aa-42b3-4570-81fa-cc713861771d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -521,7 +521,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 	<summary>
 		<band height="29" splitType="Stretch">
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNRG9" x="523" y="8" width="45" height="18" uuid="626b3730-beaf-4db7-abbb-4057640971ac"/>
+				<reportElement key="textField" style="TNRG9" x="523" y="8" width="65" height="18" uuid="626b3730-beaf-4db7-abbb-4057640971ac"/>
 				<box>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -532,7 +532,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<textFieldExpression><![CDATA[$V{TOT_IM_SCAD}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNRG9" x="574" y="8" width="50" height="18" uuid="6d2e8211-6214-436d-99d1-887b0ea967c8"/>
+				<reportElement key="textField" style="TNRG9" x="594" y="8" width="65" height="18" uuid="6d2e8211-6214-436d-99d1-887b0ea967c8"/>
 				<box>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -545,7 +545,7 @@ order by data_scad, uo, PROGR_SCAD]]>
 				<textFieldExpression><![CDATA[$V{TOT_IM_DOC_AMM}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNRG9" x="627" y="8" width="52" height="18" uuid="4acde4f1-2315-4e0b-a044-3a66aed3e749"/>
+				<reportElement key="textField" style="TNRG9" x="662" y="8" width="65" height="18" uuid="4acde4f1-2315-4e0b-a044-3a66aed3e749"/>
 				<box>
 					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
