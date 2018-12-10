@@ -18,7 +18,7 @@
 	<fieldProperty
 		name="ti_accesso"
 		property="ti_accesso"
-		label="ti_accesso"
+		label="Tipo Accesso"
 		inputType="TEXT"
 		/>
 

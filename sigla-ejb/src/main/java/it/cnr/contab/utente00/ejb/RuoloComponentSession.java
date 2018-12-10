@@ -1,5 +1,7 @@
 package it.cnr.contab.utente00.ejb;
 
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+
 import javax.ejb.Remote;
 @Remote
 public interface RuoloComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
@@ -21,5 +23,6 @@ boolean isAbilitatoAllTrattamenti(it.cnr.jada.UserContext param0) throws it.cnr.
 boolean isAbilitatoFirmaFatturazioneElettronica(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isAbilitatoCancellazioneMissioneGemis(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isAbilitatoAutorizzareDiaria(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+it.cnr.contab.utenze00.bulk.RuoloBulk cercaAccessiDisponibili(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.RuoloBulk param1,CompoundFindClause param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 
 }

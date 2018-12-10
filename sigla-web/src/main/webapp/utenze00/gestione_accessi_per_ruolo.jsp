@@ -50,7 +50,7 @@
           </tr>
           <tr>
                 <td rowspan="2">
-                    <%	bp.getCrudAccessi_disponibili().writeHTMLTable(pageContext,null,false,false,false,"100%","300px"); %>
+                    <%	bp.getCrudAccessi_disponibili().writeHTMLTable(pageContext,null,false,true,false,"100%","300px"); %>
                 </td>
                 <td>
                     <% JSPUtils.button(out,
