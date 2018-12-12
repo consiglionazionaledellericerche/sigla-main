@@ -256,4 +256,35 @@ public it.cnr.jada.action.Forward doCercaGaeSenzaProgettiForRibaltamento( it.cnr
 		return handleException(context,e);
 	}
 }
+
+public it.cnr.jada.action.Forward doCercaProgettiCollegatiGaeNonApprovatiForRibaltamento( it.cnr.jada.action.ActionContext context )
+{
+	try 
+	{
+		fillModel(context);
+		RiportoEsSuccessivoBP bp = (RiportoEsSuccessivoBP) context.getBusinessProcess();
+		V_obb_acc_xxxBulk model = (V_obb_acc_xxxBulk)bp.getModel();
+		it.cnr.jada.util.RemoteIterator ri = bp.cercaProgettiCollegatiGaeNonApprovatiForRibaltamento(context);
+		if (ri == null || ri.countElements() == 0) {
+			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
+			bp.setMessage("La ricerca non ha fornito alcun risultato.");
+			return context.findDefaultForward();
+		}
+		else
+		{
+			bp.setModel(context,model);
+			RiportoSelezionatoreListaBP nbp = selectRiporto(context,
+												ri,
+												it.cnr.jada.bulk.BulkInfo.getBulkInfo(V_obb_acc_xxxBulk.class),
+												null,"doDefault",null,(RiportoEsSuccessivoBP)bp);
+
+			nbp.setMultiSelection( false );
+			nbp.setSelectAllOnly(false);
+			context.addHookForward("close",this,"doDefault");			
+			return context.findDefaultForward();
+		}
+	} catch(Exception e) {
+		return handleException(context,e);
+	}
+}
 }
