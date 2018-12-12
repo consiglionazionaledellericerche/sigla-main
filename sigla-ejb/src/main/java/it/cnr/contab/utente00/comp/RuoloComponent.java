@@ -103,7 +103,7 @@ public class RuoloComponent extends it.cnr.jada.comp.CRUDComponent implements IC
             }
 
             // carica accessi disponibili
-            ruolo.setAccessi_disponibili(ruoloHome.findAccessi_disponibili(gestore, null));
+            ruolo.setAccessi_disponibili(ruoloHome.findAccessi_disponibili(gestore, ruolo,null));
 
             return ruolo;
 
@@ -151,7 +151,7 @@ public class RuoloComponent extends it.cnr.jada.comp.CRUDComponent implements IC
             }
 
             // carica accessi disponibili
-            ruolo.setAccessi_disponibili(ruoloHome.findAccessi_disponibili(gestore, null));
+            ruolo.setAccessi_disponibili(ruoloHome.findAccessi_disponibili(gestore, ruolo,null));
 
             return ruolo;
 
@@ -167,7 +167,7 @@ public class RuoloComponent extends it.cnr.jada.comp.CRUDComponent implements IC
             if (gestore == null)
                 throw new it.cnr.jada.comp.ApplicationException("Utente Gestore non definito");
             // carica accessi disponibili
-            ruolo.setAccessi_disponibili(ruoloHome.findAccessi_disponibili(gestore, compoundfindclause));
+            ruolo.setAccessi_disponibili(ruoloHome.findAccessi_disponibili(gestore, ruolo, compoundfindclause));
 
             return ruolo;
         } catch (Exception e) {

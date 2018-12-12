@@ -58,6 +58,24 @@ public class CRUDRuoloBP extends SimpleCRUDBP {
 
     }
 
+    @Override
+    public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+        compoundfindclauseAccessiDisponibili = null;
+        return super.initializeModelForInsert(actioncontext, oggettobulk);
+    }
+
+    @Override
+    public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+        compoundfindclauseAccessiDisponibili = null;
+        return super.initializeModelForEdit(actioncontext, oggettobulk);
+    }
+
+    @Override
+    public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+        compoundfindclauseAccessiDisponibili = null;
+        return super.initializeModelForSearch(actioncontext, oggettobulk);
+    }
+
     public void edit(it.cnr.jada.action.ActionContext context, OggettoBulk bulk) throws it.cnr.jada.action.BusinessProcessException {
         super.edit(context, bulk);
         RuoloBulk ruolo = (RuoloBulk) getModel();
