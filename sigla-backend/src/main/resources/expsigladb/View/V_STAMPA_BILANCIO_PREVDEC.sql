@@ -61,12 +61,16 @@
                      + NVL (a.im_spese_gest_accentrata_int, 0)
                      + NVL (a.im_spese_gest_accentrata_est, 0)
                                                              im_previsione_ac,
-                     0 im_cassa_ac, 0 im_residui_ap, 
+                     CASE WHEN e.descrizione='CNR' 
+                          then 0
+                          else NVL (a.im_pagamenti, 0) 
+                     END im_cassa_ac, 0 im_residui_ap, 
                      0 im_previsione_ap, 0 im_cassa_ap
                 FROM pdg_modulo_spese_gest a,
                      elemento_voce b,
                      linea_attivita d,
-                     v_classificazione_voci_all c
+                     v_classificazione_voci_all c,
+                     parametri_ente e
                WHERE a.esercizio = b.esercizio
                  AND a.ti_appartenenza = b.ti_appartenenza
                  AND a.ti_gestione = b.ti_gestione
@@ -75,6 +79,7 @@
                  AND a.cd_linea_attivita = d.cd_linea_attivita
                  AND b.id_classificazione = c.id_classificazione
                  AND a.cd_cdr_assegnatario_clgs IS NULL
+                 AND e.attivo='Y'
               UNION ALL
               --PARTE SPESE STANZIAMENTO SCIENTIFICO
               SELECT 'ASSSCI' fonte, a.esercizio, a.ti_gestione,
@@ -131,16 +136,22 @@
                      c.cd_livello7, c.ds_liv1, c.ds_liv2, c.ds_liv3,
                      c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7,
                      NVL (a.im_residui_ac, 0) im_residui_ac,
-                     0 im_previsione_ac, NVL (a.im_cassa_ac, 0) im_cassa_ac,
+                     0 im_previsione_ac, 
+                     CASE WHEN e.descrizione='CNR' 
+                          then NVL (a.im_cassa_ac, 0)
+                          else 0
+                     END im_cassa_ac,
                      0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
                 FROM pdg_dati_stampa_bilancio a,
                      elemento_voce b,
-                     v_classificazione_voci_all c
+                     v_classificazione_voci_all c,
+                     parametri_ente e
                WHERE a.ti_gestione = 'S'
                  AND b.esercizio = a.esercizio
                  AND b.ti_gestione = a.ti_gestione
                  AND b.cd_elemento_voce = a.cd_elemento_voce
                  AND b.id_classificazione = c.id_classificazione
+                 AND e.attivo='Y'
               UNION ALL
               --PARTE SPESE DATI STORICIZZATI SCIENTIFICI
               SELECT 'STOSCI' fonte, a.esercizio, 'S',
@@ -276,17 +287,22 @@
              + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_previsione_ac,
-             0 im_cassa_ac, 0 im_residui_ap, 
+             NVL (SUM (CASE WHEN e.descrizione='CNR' 
+                            then 0
+                            else NVL(a.im_pagamenti, 0)
+                       END), 0) im_cassa_ac, 0 im_residui_ap, 
              0 im_previsione_ap, 0 im_cassa_ap
         FROM pdg_modulo_spese_gest a,
              elemento_voce b,
-             v_classificazione_voci_all c
+             v_classificazione_voci_all c,
+             parametri_ente e
        WHERE a.esercizio = b.esercizio
          AND a.ti_appartenenza = b.ti_appartenenza
          AND a.ti_gestione = b.ti_gestione
          AND a.cd_elemento_voce = b.cd_elemento_voce
          AND b.id_classificazione = c.id_classificazione
          AND a.cd_cdr_assegnatario_clgs IS NULL
+         AND e.attivo = 'Y'
     GROUP BY a.esercizio,
              a.ti_gestione,
              c.cd_livello1,
@@ -412,15 +428,21 @@
              c.cd_livello6, c.cd_livello7, NULL, NULL, c.ds_liv1, c.ds_liv2,
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, NVL (SUM (a.im_residui_ac), 0) im_residui_ac,
-             0 im_previsione_ac, NVL (SUM (a.im_cassa_ac), 0) im_cassa_ac,
+             0 im_previsione_ac, 
+             NVL (SUM (CASE WHEN e.descrizione='CNR' 
+                            then NVL(a.im_cassa_ac, 0)
+                            else 0
+                       END), 0) im_cassa_ac,
              0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
         FROM pdg_dati_stampa_bilancio a,
              elemento_voce b,
-             v_classificazione_voci_all c
+             v_classificazione_voci_all c,
+             parametri_ente e
        WHERE b.esercizio = a.esercizio
          AND b.ti_gestione = a.ti_gestione
          AND b.cd_elemento_voce = a.cd_elemento_voce
          AND b.id_classificazione = c.id_classificazione
+         AND e.attivo = 'Y'
     GROUP BY a.esercizio,
              a.ti_gestione,
              c.cd_livello1,
