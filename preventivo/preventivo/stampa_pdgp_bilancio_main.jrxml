@@ -175,8 +175,9 @@ FROM V_STAMPA_BILANCIO_PREVDEC a
 WHERE SUBSTR($P{P_FONTE},1,3) != 'EXT'
 AND a.ESERCIZIO = $P{P_ESERCIZIO}-1
 AND a.TIPO = $P{P_TIPO}
-AND (($P{P_FONTE}='DECSCI' AND $P{P_ESERCIZIO}=2017 AND a.FONTE = 'GESTSCI') OR
-     (($P{P_FONTE}!='DECSCI' OR $P{P_ESERCIZIO}!=2017) AND a.FONTE = $P{P_FONTE}))))
+AND (($P{P_FONTE}='DECSCI' AND a.FONTE = 'GESTSCI') OR
+     ($P{P_FONTE}='DECFIN' AND a.FONTE = 'GESTFIN') OR
+     ($P{P_FONTE}!='DECSCI' AND $P{P_FONTE}!='DECFIN' AND a.FONTE = $P{P_FONTE}))))
 GROUP BY tipo, peso_livello1, peso_livello2, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
 cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
 ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
