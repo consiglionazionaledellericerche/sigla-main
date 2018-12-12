@@ -6,11 +6,14 @@ CREATE OR REPLACE PROCEDURE PRC_LOAD_TABLE_STAMPA_BILANCIO(P_ESERCIZIO IN NUMBER
                                                            P_AGG_CASSA_AC IN char,
                                                            P_PERC_CASSA IN NUMBER,
                                                            P_UTCR IN VARCHAR2) IS
+  parEnte PARAMETRI_ENTE%Rowtype;
 BEGIN
   IF P_ESERCIZIO<2016 THEN
      RETURN;
   END IF;
   
+  parEnte := CNRUTL001.getRecParametriEnteAttivo;
+
   IF Nvl(P_AGG_PREVISIONE_AC,'N')='Y' THEN
      UPDATE PDG_DATI_STAMPA_BILANCIO_TEMP
      SET IM_PREVISIONE_AC = 0,
@@ -110,7 +113,8 @@ BEGIN
 
        --CARICO I DATI RESIDUI ANNO CORRENTE
        For rec in (select CD_CENTRO_RESPONSABILITA, TI_GESTIONE, CD_ELEMENTO_VOCE, 
-                          CD_PROGRAMMA, CD_MISSIONE, NVL(SUM(IM_RESIDUO_AC), 0) IM_RESIDUO_AC
+                          CD_PROGRAMMA, CD_MISSIONE, NVL(SUM(IM_RESIDUO_AC), 0) IM_RESIDUO_AC,
+                          NVL(SUM(IM_RESIDUO_AC_SOLO_IMP), 0) IM_RESIDUO_AC_SOLO_IMP
                     FROM (select A.CD_CENTRO_RESPONSABILITA, A.TI_GESTIONE, 
                                  NVL((SELECT CD_ELEMENTO_VOCE_NEW
                                       FROM ASS_EVOLD_EVNEW
@@ -126,7 +130,12 @@ BEGIN
                                                + NVL (var_piu_stanz_res_imp, 0) - NVL (var_meno_stanz_res_imp, 0 ) 
                                                + NVL (im_obbl_res_pro, 0) 
                                                - NVL (im_mandati_reversali_pro, 0) - NVL (im_mandati_reversali_imp, 0)
-                                          end, 0) IM_RESIDUO_AC
+                                          end, 0) IM_RESIDUO_AC,
+                                 nvl(case when a.esercizio = a.esercizio_res
+                                          then NVL (im_obbl_acc_comp, 0) - NVL (im_mandati_reversali_pro, 0)
+                                          else NVL (im_obbl_res_pro, 0) + NVL (im_obbl_res_imp, 0) 
+                                               - NVL (im_mandati_reversali_pro, 0) - NVL (im_mandati_reversali_imp, 0)
+                                          end, 0) IM_RESIDUO_AC_SOLO_IMP
                           from voce_f_saldi_cdr_linea a,
                                v_linea_attivita_valida linea
                           where a.esercizio = P_ESERCIZIO-1
@@ -134,9 +143,17 @@ BEGIN
                           and   a.cd_centro_responsabilita = linea.cd_centro_responsabilita (+)
                           and   a.cd_linea_attivita = linea.cd_linea_attivita (+))
                    group by CD_CENTRO_RESPONSABILITA, TI_GESTIONE, CD_ELEMENTO_VOCE, CD_PROGRAMMA, CD_MISSIONE) loop
-      
+        Declare
+          im_residuo saldi_stanziamenti.im_stanz_iniziale_a1%type;
+        Begin
+          if parEnte.descrizione='CNR' Then
+            im_residuo := rec.IM_RESIDUO_AC;
+          else
+            im_residuo := rec.IM_RESIDUO_AC_SOLO_IMP;
+          END IF;
+
           Update PDG_DATI_STAMPA_BILANCIO
-          set IM_RESIDUI_AC = rec.IM_RESIDUO_AC
+          set IM_RESIDUI_AC = im_residuo
           where ESERCIZIO = P_ESERCIZIO
           and   CD_CENTRO_RESPONSABILITA = rec.CD_CENTRO_RESPONSABILITA
           and   TI_GESTIONE = rec.TI_GESTIONE
@@ -150,11 +167,11 @@ BEGIN
                IM_RESIDUI_AC, IM_CASSA_AC, UTCR, DACR, UTUV, DUVA, PG_VER_REC)
             VALUES
               (P_ESERCIZIO, rec.CD_CENTRO_RESPONSABILITA, rec.TI_GESTIONE, rec.CD_ELEMENTO_VOCE, 
-               rec.cd_programma, rec.CD_MISSIONE, rec.IM_RESIDUO_AC, 0, P_UTCR, SYSDATE, P_UTCR, SYSDATE, 1);
+               rec.cd_programma, rec.CD_MISSIONE, im_residuo, 0, P_UTCR, SYSDATE, P_UTCR, SYSDATE, 1);
           End If;
 
           Update PDG_DATI_STAMPA_BILANCIO_TEMP
-          set IM_RESIDUI_AC = rec.IM_RESIDUO_AC
+          set IM_RESIDUI_AC = im_residuo
           where ESERCIZIO = P_ESERCIZIO
           and   CD_CENTRO_RESPONSABILITA = rec.CD_CENTRO_RESPONSABILITA
           and   TI_GESTIONE = rec.TI_GESTIONE
@@ -168,9 +185,9 @@ BEGIN
                IM_RESIDUI_AC, IM_PREVISIONE_AC, IM_CASSA_AC, IM_RESIDUI_AP, UTCR, DACR, UTUV, DUVA, PG_VER_REC)
             VALUES
               (P_ESERCIZIO, rec.CD_CENTRO_RESPONSABILITA, rec.TI_GESTIONE, rec.CD_ELEMENTO_VOCE, 
-               rec.cd_programma, rec.CD_MISSIONE, rec.IM_RESIDUO_AC, 0, 0, 0, P_UTCR, SYSDATE, P_UTCR, SYSDATE, 1);
+               rec.cd_programma, rec.CD_MISSIONE, im_residuo, 0, 0, 0, P_UTCR, SYSDATE, P_UTCR, SYSDATE, 1);
           End If;
-
+        End;
        End loop;
     End If;
 
