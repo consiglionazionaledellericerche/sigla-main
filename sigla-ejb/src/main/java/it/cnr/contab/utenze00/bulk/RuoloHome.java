@@ -5,6 +5,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
@@ -39,7 +40,7 @@ public class RuoloHome extends BulkHome {
      * @return List lista di AccessoBulk
      */
 
-    public java.util.List findAccessi_disponibili(UtenteBulk gestore, CompoundFindClause compoundFindClause) throws IntrospectionException, PersistencyException {
+    public java.util.List findAccessi_disponibili(UtenteBulk gestore, RuoloBulk ruolo, CompoundFindClause compoundFindClause) throws IntrospectionException, PersistencyException {
         PersistentHome accessoHome = getHomeCache().getHome(AccessoBulk.class);
         SQLBuilder sql = accessoHome.createSQLBuilder();
         Optional.ofNullable(compoundFindClause)
@@ -52,6 +53,14 @@ public class RuoloHome extends BulkHome {
             sql.addSQLClause("OR", "TI_ACCESSO", SQLBuilder.EQUALS, AccessoBulk.TIPO_RISERVATO_CNR);
             sql.closeParenthesis();
         }
+        if (Optional.ofNullable(ruolo).filter(ruoloBulk -> Optional.ofNullable(ruoloBulk.getCd_ruolo()).isPresent()).isPresent()) {
+            PersistentHome ruoloAccessoHome = getHomeCache().getHome(Ruolo_accessoBulk.class);
+            SQLBuilder sqlRuoloAccesso = ruoloAccessoHome.createSQLBuilder();
+            sqlRuoloAccesso.addSQLClause("AND", "CD_RUOLO", SQLBuilder.EQUALS, ruolo.getCd_ruolo());
+            sqlRuoloAccesso.addSQLJoin("ACCESSO.CD_ACCESSO","RUOLO_ACCESSO.CD_ACCESSO");
+            sql.addSQLNotExistsClause(FindClause.AND,sqlRuoloAccesso);
+        }
+
         //sql.addSQLClause("AND","TI_ACCESSO",sql.NOT_EQUALS,AccessoBulk.TIPO_RISERVATO_CNR);
         //sql.addSQLClause("AND","TI_ACCESSO",sql.NOT_EQUALS,AccessoBulk.TIPO_SUPERUTENTE);
         //sql.addSQLClause("AND","TI_ACCESSO",sql.NOT_EQUALS,AccessoBulk.TIPO_AMMIN_UTENZE);
