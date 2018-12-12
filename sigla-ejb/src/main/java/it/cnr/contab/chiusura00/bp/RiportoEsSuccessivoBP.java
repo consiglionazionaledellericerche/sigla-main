@@ -31,6 +31,7 @@ public class RiportoEsSuccessivoBP extends it.cnr.jada.util.action.BulkBP implem
 	private boolean isRiaccertamentoChiuso = true;
 	private boolean isRiobbligazioneChiusa= true;
 	private boolean isGaeCollegateProgetti = true;
+	private boolean isProgettiCollegatiGaeApprovati = true;
 	
 public RiportoEsSuccessivoBP() {
 		super("Tn");
@@ -448,6 +449,7 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 			setRiaccertamentoChiuso(sessione.isRiaccertamentoChiuso(context.getUserContext()));
 			setRiobbligazioneChiusa(sessione.isRiobbligazioneChiusa(context.getUserContext()));
 			setGaeCollegateProgetti(sessione.isGaeCollegateProgetti(context.getUserContext()));
+			setProgettiCollegatiGaeApprovati(sessione.isProgettiCollegatiGaeApprovati(context.getUserContext()));
 			
 			if (!isRiaccertamentoChiuso())
 				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono accertamenti residui da ribaltare privi dello stato.");
@@ -457,6 +459,8 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono anomalie da verificare.");
 			if (!isGaeCollegateProgetti())
 				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono GAE su impegni e/o accertamenti da ribaltare prive dell''indicazione del progetto nell''anno del ribaltamento.");
+			if (!isProgettiCollegatiGaeApprovati())
+				throw new ApplicationException("Impossibile procedere al ribaltamento. Esistono GAE su impegni e/o accertamenti da ribaltare associate a progetti non approvati.");
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -483,7 +487,14 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 	public boolean isGaeCollegateProgetti() {
 		return isGaeCollegateProgetti;
 	}
-
+	
+	public void setProgettiCollegatiGaeApprovati(boolean isProgettiCollegatiGaeApprovati) {
+		this.isProgettiCollegatiGaeApprovati = isProgettiCollegatiGaeApprovati;
+	}
+	public boolean isProgettiCollegatiGaeApprovati() {
+		return isProgettiCollegatiGaeApprovati;
+	}
+	
 	public it.cnr.jada.util.RemoteIterator cercaResiduiForRiaccertamento(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
 	{
 		try 
@@ -501,6 +512,17 @@ public boolean initRibaltato(it.cnr.jada.action.ActionContext context)  throws i
 		{
 			RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
 			return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,sessione.cercaGaeSenzaProgettiForRibaltamento(context.getUserContext()));
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	public it.cnr.jada.util.RemoteIterator cercaProgettiCollegatiGaeNonApprovatiForRibaltamento(ActionContext context) throws it.cnr.jada.action.BusinessProcessException 
+	{
+		try 
+		{
+			RicercaDocContComponentSession sessione = (RicercaDocContComponentSession) createComponentSession();
+			return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,sessione.cercaProgettiCollegatiGaeNonApprovatiForRibaltamento(context.getUserContext()));
 		} catch(Exception e) {
 			throw handleException(e);
 		}

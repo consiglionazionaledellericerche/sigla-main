@@ -18,6 +18,7 @@ import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_residuoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_residuoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -1967,6 +1968,88 @@ public it.cnr.jada.util.RemoteIterator cercaGaeSenzaProgettiForRibaltamento(User
 		return iterator(
 			userContext,
 			selectGaeSenzaProgettiForRibaltamento(userContext),
+			V_obb_acc_xxxBulk.class,
+			getFetchPolicyName("find"));
+	} catch(Throwable e) {
+		throw handleException(e);
+	}
+}
+
+public boolean isProgettiCollegatiGaeApprovati(it.cnr.jada.UserContext userContext) throws ComponentException {
+	try {
+		String cd_cds = CNRUserContext.getCd_cds(userContext);
+		if(cd_cds != null) {
+			SQLBuilder sql = selectProgettiCollegatiGaeNonApprovatiForRibaltamento(userContext);
+			if (sql.executeCountQuery(getConnection(userContext))>0)
+				return false;
+		}
+		return true;
+	}
+	catch(Throwable e) {
+		throw handleException(e);
+	}
+}
+public SQLBuilder selectProgettiCollegatiGaeNonApprovatiForRibaltamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	SQLBuilder sql = getHome( userContext, V_obb_acc_xxxBulk.class, "V_OBB_ACC_RIPORTA" ).createSQLBuilder();
+	sql.addSQLClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio());
+	sql.addSQLClause(FindClause.AND, "cd_cds_origine", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getCd_cds());
+
+	PersistentHome gaeHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+
+	PersistentHome accHome = getHome(userContext, Accertamento_scad_voceBulk.class);
+	SQLBuilder sqlAccExist = accHome.createSQLBuilder();
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.CD_CDS", "V_OBB_ACC_RIPORTA.CD_CDS");
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.ESERCIZIO", "V_OBB_ACC_RIPORTA.ESERCIZIO");
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.ESERCIZIO_ORIGINALE", "V_OBB_ACC_RIPORTA.ESERCIZIO_ORI_ACC_OBB");
+	sqlAccExist.addSQLJoin("ACCERTAMENTO_SCAD_VOCE.PG_ACCERTAMENTO", "V_OBB_ACC_RIPORTA.PG_ACC_OBB");
+
+	SQLBuilder sqlGaeAccExist = gaeHome.createSQLBuilder();
+	sqlGaeAccExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "ACCERTAMENTO_SCAD_VOCE.CD_CENTRO_RESPONSABILITA");
+	sqlGaeAccExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "ACCERTAMENTO_SCAD_VOCE.CD_LINEA_ATTIVITA");
+	sqlGaeAccExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio()+1);
+	sqlGaeAccExist.addTableToHeader("PROGETTO_OTHER_FIELD");
+	sqlGaeAccExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", "PROGETTO_OTHER_FIELD.PG_PROGETTO");
+	sqlGaeAccExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, Progetto_other_fieldBulk.STATO_APPROVATO);
+	
+	sqlAccExist.addSQLNotExistsClause(FindClause.AND, sqlGaeAccExist);
+
+	PersistentHome obbHome = getHome(userContext, Obbligazione_scad_voceBulk.class);
+	SQLBuilder sqlObbExist = obbHome.createSQLBuilder();
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.CD_CDS", "V_OBB_ACC_RIPORTA.CD_CDS");
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO", "V_OBB_ACC_RIPORTA.ESERCIZIO");
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE", "V_OBB_ACC_RIPORTA.ESERCIZIO_ORI_ACC_OBB");
+	sqlObbExist.addSQLJoin("OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE", "V_OBB_ACC_RIPORTA.PG_ACC_OBB");
+
+	SQLBuilder sqlGaeObbExist = gaeHome.createSQLBuilder();
+	sqlGaeObbExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "OBBLIGAZIONE_SCAD_VOCE.CD_CENTRO_RESPONSABILITA");
+	sqlGaeObbExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA");
+	sqlGaeObbExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio()+1);
+	sqlGaeObbExist.addTableToHeader("PROGETTO_OTHER_FIELD");
+	sqlGaeObbExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", "PROGETTO_OTHER_FIELD.PG_PROGETTO");
+	sqlGaeObbExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, Progetto_other_fieldBulk.STATO_APPROVATO);
+
+	sqlObbExist.addSQLNotExistsClause(FindClause.AND, sqlGaeObbExist);
+
+	sql.openParenthesis(FindClause.AND);
+		sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
+			sql.addSQLExistsClause(FindClause.AND, sqlAccExist);
+		sql.closeParenthesis();
+		sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+			sql.addSQLExistsClause(FindClause.AND, sqlObbExist);
+		sql.closeParenthesis();
+	sql.closeParenthesis();
+	
+	return sql;
+}
+
+public it.cnr.jada.util.RemoteIterator cercaProgettiCollegatiGaeNonApprovatiForRibaltamento(UserContext userContext) throws it.cnr.jada.comp.ComponentException 
+{
+	try {
+		return iterator(
+			userContext,
+			selectProgettiCollegatiGaeNonApprovatiForRibaltamento(userContext),
 			V_obb_acc_xxxBulk.class,
 			getFetchPolicyName("find"));
 	} catch(Throwable e) {
