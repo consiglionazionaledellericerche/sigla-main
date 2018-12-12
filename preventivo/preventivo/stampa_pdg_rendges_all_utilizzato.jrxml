@@ -92,7 +92,7 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Fondo cassa"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fondo cassa "]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="211" y="0" width="48" height="15" uuid="c64fbdf4-29cf-477d-8c49-54845a2e84ec"/>
