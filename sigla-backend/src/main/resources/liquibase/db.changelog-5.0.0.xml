@@ -1450,6 +1450,8 @@
         <modifyDataType tableName="movimento_conto_evidenza" columnName="assoggettamento_spese" newDataType="VARCHAR(50)"/>
         <modifyDataType tableName="movimento_conto_evidenza" columnName="assoggettamento_commissioni" newDataType="VARCHAR(50)"/>
     </changeSet>    
- 
+    <changeSet author="rosangela.pucciarelli" id="alter_movimento_c_evi_iban>
+        <modifyDataType tableName="movimento_conto_evidenza" columnName="coordinate" newDataType="VARCHAR(50)"/>
+   </changeSet>  
 </databaseChangeLog>
 
