@@ -171,8 +171,8 @@
 		name="coordinate"
 		property="coordinate"
 		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
+		inputSize="50"
+		maxLength="50"
 		enabledOnEdit="false"
 		label="coordinate" />
 	<fieldProperty
