@@ -71,6 +71,7 @@ public class TerzoBulk extends TerzoBase {
 	// PARTITA_IVA_ANAGRAFICO VARCHAR(20)
 	private java.lang.String partita_iva_anagrafico;
 	
+	private java.lang.String pecForRest;
 	
 public TerzoBulk() {
 	super();
@@ -158,7 +159,7 @@ public int addToBanche(BancaBulk banca) {
 	}
 	public int addToPec(TelefonoBulk telefono) {
 		telefono.setTi_riferimento(TelefonoBulk.PEC);
-		telefono.setFattElettronica(false);
+		telefono.setFattElettronica(Optional.ofNullable(telefono.getFattElettronica()).orElse(false));
 		telefono.setTerzo(this);
 		pec.add(telefono);
 		return pec.size()-1;
@@ -967,5 +968,11 @@ public void setTerzo_speciale(boolean newTerzo_speciale) {
 	}
 	public void setNotGestoreIstat(boolean notGestoreIstat) {
 		this.notGestoreIstat = notGestoreIstat;
+	}
+	public java.lang.String getPecForRest() {
+		return pecForRest;
+	}
+	public void setPecForRest(java.lang.String pecForRest) {
+		this.pecForRest = pecForRest;
 	}
 }
