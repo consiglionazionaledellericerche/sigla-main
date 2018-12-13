@@ -4955,20 +4955,6 @@ public class DocumentoGenericoComponent
 
     }
 
-    private BigDecimal getImportoLimiteBolloVirtuale(UserContext aUC) throws ComponentException {
-        BigDecimal importoLimite;
-        try {
-            importoLimite = Utility.createConfigurazioneCnrComponentSession().getIm01(aUC, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(aUC), null, Configurazione_cnrBulk.PK_BOLLO_VIRTUALE, Configurazione_cnrBulk.SK_BOLLO_VIRTUALE_IMPORTO_LIMITE);
-        } catch (ComponentException e) {
-            throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-        } catch (RemoteException e) {
-            throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-        } catch (EJBException e) {
-            throw new it.cnr.jada.comp.ApplicationException(e.getMessage());
-        }
-        return importoLimite;
-    }
-
     public Tipo_atto_bolloBulk getTipoAttoBolloVirtuale(UserContext aUC, Documento_genericoBulk doc) throws ComponentException {
         final BigDecimal ret = null;
         try {
