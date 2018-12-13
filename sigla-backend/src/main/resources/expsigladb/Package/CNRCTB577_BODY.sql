@@ -109,8 +109,8 @@
  	loop
 	    If aCori.cd_contributo_ritenuta in('DS','DI') Then
 		 aCdImp:='A1';
-	    Elsif aCori.cd_contributo_ritenuta like '%ADD' Then
-		 aCdImp:='I1';
+	    Elsif (aCori.cd_contributo_ritenuta like '%ADD' or aCori.cd_contributo_ritenuta like '%ADM') Then
+		   aCdImp:='I1';
             Elsif aTipoCori.cd_classificazione_cori = 'PR' then
  	         aCdImp:='01';
             Elsif aTipoCori.cd_classificazione_cori = 'FI' then
