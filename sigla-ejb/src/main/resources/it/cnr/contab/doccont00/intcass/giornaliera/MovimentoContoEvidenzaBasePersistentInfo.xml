@@ -95,7 +95,7 @@
 			columnName="COORDINATE"
 			propertyName="coordinate"
 			sqlTypeName="VARCHAR"
-			columnSize="30"
+			columnSize="50"
 			nullable="true" />
 		<columnMapping
 			columnName="CODICE_RIF_OPERAZIONE"
