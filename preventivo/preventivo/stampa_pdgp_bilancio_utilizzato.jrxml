@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="150"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -117,48 +117,16 @@ CASE WHEN $P{P_NUM_LIV}>8 THEN a.ds_livello9 ELSE null END ds_livello9,
 FROM V_STAMPA_BILANCIO_PREVDEC a
 WHERE a.ESERCIZIO = $P{P_ESERCIZIO}-1
 AND a.TIPO = $P{P_TIPO}
-AND (($P{P_FONTE}='DECSCI' AND $P{P_ESERCIZIO}=2017 AND a.FONTE = 'GESTSCI') OR
-     (($P{P_FONTE}!='DECSCI' OR $P{P_ESERCIZIO}!=2017) AND a.FONTE = $P{P_FONTE})))
-GROUP BY tipo, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
-cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
-ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
-ds_livello8, ds_livello9
-ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7, CD_LIVELLO8, CD_LIVELLO9]]>
+AND (($P{P_FONTE}='DECSCI' AND a.FONTE = 'GESTSCI') OR
+     ($P{P_FONTE}='DECFIN' AND a.FONTE = 'GESTFIN') OR
+     ($P{P_FONTE}!='DECSCI' AND $P{P_FONTE}!='DECFIN' AND a.FONTE = $P{P_FONTE})))
+GROUP BY tipo, cd_livello1, ds_livello1
+ORDER BY CD_LIVELLO1]]>
 	</queryString>
 	<field name="TIPO" class="java.lang.String"/>
 	<field name="DS_LIVELLO1" class="java.lang.String"/>
 	<field name="IM_PREVISIONE_AC" class="java.math.BigDecimal"/>
 	<field name="IM_PREVISIONE_AP" class="java.math.BigDecimal"/>
-	<variable name="IMPORTO_AVANZO_N" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{TIPO}.equals("T")?
-$F{IM_PREVISIONE_AC}
-:BigDecimal.ZERO]]></variableExpression>
-	</variable>
-	<variable name="IMPORTO_DISAVANZO_N" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{TIPO}.equals("T")?
-$F{IM_PREVISIONE_AC}
-:BigDecimal.ZERO]]></variableExpression>
-	</variable>
-	<variable name="IMPORTO_FCA_N" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{TIPO}.equals("F")?
-$F{IM_PREVISIONE_AC}
-:BigDecimal.ZERO]]></variableExpression>
-	</variable>
-	<variable name="IMPORTO_AVANZO_N_PREC" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{TIPO}.equals("T")?
-$F{IM_PREVISIONE_AP}
-:BigDecimal.ZERO]]></variableExpression>
-	</variable>
-	<variable name="IMPORTO_DISAVANZO_N_PREC" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{TIPO}.equals("T")?
-$F{IM_PREVISIONE_AP}
-:BigDecimal.ZERO]]></variableExpression>
-	</variable>
-	<variable name="IMPORTO_FCA_N_PREC" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{TIPO}.equals("F")?
-$F{IM_PREVISIONE_AP}
-:BigDecimal.ZERO]]></variableExpression>
-	</variable>
 	<title>
 		<band/>
 	</title>
