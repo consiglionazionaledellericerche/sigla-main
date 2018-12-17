@@ -175,13 +175,11 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                 File file = creaFileXml(userContext, fatturaAttiva);
 
                 logger.info("Creato file XML");
-                Fattura_attivaBulk fatturaProtocollata = null; 
                 if (fatturaAttiva.getProtocollo_iva() == null){
-                    fatturaProtocollata = protocollazione(userContext, fatturaAttiva);
-                } else {
-                	fatturaProtocollata = fatturaAttiva; 
+                    fatturaAttiva = protocollazione(userContext, fatturaAttiva);
+                    logger.info("Creato protocollazione");
                 }
-                logger.info("Creato protocollazione");
+                final Fattura_attivaBulk fatturaProtocollata = fatturaAttiva; 
 
                 List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
                 List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
