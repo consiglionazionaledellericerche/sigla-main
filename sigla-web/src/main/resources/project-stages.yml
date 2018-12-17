@@ -34,6 +34,11 @@ swarm:
         connection-url: jdbc:oracle:thin:@as4dock.si.cnr.it:1521:xe
   deployment:
     timeout: 1200
+  debug:
+    port: 8787
+    bootstrap: true
+debug:
+  port: 8787
 
 spring:
   profiles:
