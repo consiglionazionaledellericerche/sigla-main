@@ -55,7 +55,7 @@
 
   <businessProcess
       name="CRUDModalitaPagamento" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/anagraf00/modalita_pagamento.jsp"/>
+    <forward name="default" path="/util/form.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>

@@ -41,7 +41,8 @@
 						new String[][] {
 								{ "tabDistinta","Distinta","/doccont00/tab_distinta.jsp" },
 								{ "tabDistinta_dettaglio","Mandati/Reversali","/doccont00/tab_distinta_dettaglio.jsp" },
-								{ "tabDistinte_collegate_dettaglio","Distinte Collegate","/doccont00/tab_distinte_collegate_dettaglio.jsp" }
+								{ "tabDistinte_collegate_dettaglio","Distinte Collegate","/doccont00/tab_distinte_collegate_dettaglio.jsp" },
+								{ "tabAllegati",bp.getParentRoot().isBootstrap() ? "<i class=\"fa fa-fw fa-file\" aria-hidden=\"true\"></i> Allegati" : "Allegati","/util00/tab_allegati.jsp" }
 								},
 						bp.getTab("tab"),
 						"center",
@@ -52,7 +53,8 @@
 						"tab",
 						new String[][] {
 								{ "tabDistinta","Distinta","/doccont00/tab_distinta.jsp" },
-								{ "tabDistinta_dettaglio","Mandati/Reversali","/doccont00/tab_distinta_dettaglio.jsp" }
+								{ "tabDistinta_dettaglio","Mandati/Reversali","/doccont00/tab_distinta_dettaglio.jsp" },
+								{ "tabAllegati",bp.getParentRoot().isBootstrap() ? "<i class=\"fa fa-fw fa-file\" aria-hidden=\"true\"></i> Allegati" : "Allegati","/util00/tab_allegati.jsp" }
 								},
 						bp.getTab("tab"),
 						"center",

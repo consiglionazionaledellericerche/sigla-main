@@ -52,6 +52,21 @@ function doScaricaFirmato() {
 		</tr>
 	</table>	
    </div>
+   <% if (bp.isAttivoSiopeplus()) { %>
+   <div class="Group">
+   	<b class="text-info h3 d-flex justify-content-center mt-2">SIOPE+</b>
+	<table class="Panel card border-info p-2 mt-2">
+		<tr>
+			<% bp.getController().writeFormField( out, "progFlusso"); %>
+			<% bp.getController().writeFormField( out, "identificativoFlussoBT"); %>
+		</tr>
+		<tr>
+			<td><% bp.getController().writeFormLabel( out, "statoLabel"); %></td>
+			<td colspan="3"><% bp.getController().writeFormInput( out, (bp.isSearching() ? "stato":"statoLabel")); %></td>
+		</tr>
+   </table>
+   </div>
+   <% } %>
    <div class="Group">
    	<b class="text-primary h3 d-flex justify-content-center mt-2">Totali distinta</b>		
 	<table class="Panel card p-2 mt-2">
