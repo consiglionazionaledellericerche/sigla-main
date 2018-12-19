@@ -1,19 +1,21 @@
 package it.cnr.contab.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public class ACK {
+public class Lista {
     private Integer numRisultati;
     private Integer numPagine;
     private Integer risultatiPerPagina;
     private Integer pagina;
     private Date dataProduzioneDa;
     private Date dataProduzioneA;
+    private Date dataUploadDa;
+    private Date dataUploadA;
+
     private List<Risultato> risultati;
 
-    public ACK() {
+    public Lista() {
     }
 
     public Integer getNumRisultati() {
@@ -64,6 +66,22 @@ public class ACK {
         this.dataProduzioneA = dataProduzioneA;
     }
 
+    public Date getDataUploadDa() {
+        return dataUploadDa;
+    }
+
+    public void setDataUploadDa(Date dataUploadDa) {
+        this.dataUploadDa = dataUploadDa;
+    }
+
+    public Date getDataUploadA() {
+        return dataUploadA;
+    }
+
+    public void setDataUploadA(Date dataUploadA) {
+        this.dataUploadA = dataUploadA;
+    }
+
     public List<Risultato> getRisultati() {
         return risultati;
     }
@@ -74,13 +92,15 @@ public class ACK {
 
     @Override
     public String toString() {
-        return "ACK{" +
+        return "Lista{" +
                 "numRisultati=" + numRisultati +
                 ", numPagine=" + numPagine +
                 ", risultatiPerPagina=" + risultatiPerPagina +
                 ", pagina=" + pagina +
                 ", dataProduzioneDa=" + dataProduzioneDa +
                 ", dataProduzioneA=" + dataProduzioneA +
+                ", dataUploadDa=" + dataUploadDa +
+                ", dataUploadA=" + dataUploadA +
                 ", risultati=" + risultati +
                 '}';
     }

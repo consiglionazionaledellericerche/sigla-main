@@ -1,235 +1,257 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoBase"
-	keyClassName="it.cnr.contab.doccont00.core.bulk.MandatoKey"
-	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoHome" >
-	<defaultColumnMap
-		tableName="MANDATO" >
-		<columnMapping
-			columnName="DT_ANNULLAMENTO"
-			propertyName="dt_annullamento"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="DT_RITRASMISSIONE"
-			propertyName="dt_ritrasmissione"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="STATO_COGE"
-			propertyName="stato_coge"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="PG_VER_REC"
-			propertyName="pg_ver_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="false" />
-		<columnMapping
-			columnName="STATO"
-			propertyName="stato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="TI_MANDATO"
-			propertyName="ti_mandato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_TIPO_DOCUMENTO_CONT"
-			propertyName="cd_tipo_documento_cont"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_UO_ORIGINE"
-			propertyName="cd_uo_origine"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_CDS_ORIGINE"
-			propertyName="cd_cds_origine"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
-		<columnMapping
-			columnName="UTCR"
-			propertyName="utcr"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="STATO_TRASMISSIONE"
-			propertyName="stato_trasmissione"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_EMISSIONE"
-			propertyName="dt_emissione"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="DACR"
-			propertyName="dacr"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_MANDATO"
-			propertyName="im_mandato"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="DUVA"
-			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_PAGATO"
-			propertyName="im_pagato"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_PAGAMENTO"
-			propertyName="dt_pagamento"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="DT_TRASMISSIONE"
-			propertyName="dt_trasmissione"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
-		<columnMapping
-			columnName="CD_UNITA_ORGANIZZATIVA"
-			propertyName="cd_unita_organizzativa"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_RITENUTE"
-			propertyName="im_ritenute"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="TI_COMPETENZA_RESIDUO"
-			propertyName="ti_competenza_residuo"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="UTUV"
-			propertyName="utuv"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="DS_MANDATO"
-			propertyName="ds_mandato"
-			sqlTypeName="VARCHAR"
-			columnSize="300"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_FIRMA"
-			propertyName="dt_firma"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />		
-		<columnMapping
-			columnName="STATO_TRASMISSIONE_ANNULLO"
-			propertyName="stato_trasmissione_annullo"
-			sqlTypeName="CHAR"
-			columnSize="1"/>
-		<columnMapping
-			columnName="FL_RIEMISSIONE"
-			propertyName="fl_riemissione"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
-		<columnMapping
-			columnName="DT_FIRMA_ANNULLO"
-			propertyName="dt_firma_annullo"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />			
-		<columnMapping
-			columnName="PG_MANDATO_RIEMISSIONE"
-			propertyName="pg_mandato_riemissione"
-			sqlTypeName="DECIMAL"
-			columnSize="10"/>	
-		<columnMapping
-			columnName="DT_PAGAMENTO_RICHIESTA"
-			propertyName="dt_pagamento_richiesta"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />		
-	</defaultColumnMap>
-	<persistentProperty
-		name="dt_annullamento" />
-	<persistentProperty
-		name="dt_ritrasmissione" />
-	<persistentProperty
-		name="stato_coge" />
-	<persistentProperty
-		name="pg_ver_rec" />
-	<persistentProperty
-		name="stato" />
-	<persistentProperty
-		name="ti_mandato" />
-	<persistentProperty
-		name="cd_tipo_documento_cont" />
-	<persistentProperty
-		name="cd_uo_origine" />
-	<persistentProperty
-		name="cd_cds_origine" />
-	<persistentProperty
-		name="utcr" />
-	<persistentProperty
-		name="stato_trasmissione" />
-	<persistentProperty
-		name="dt_emissione" />
-	<persistentProperty
-		name="dacr" />
-	<persistentProperty
-		name="im_mandato" />
-	<persistentProperty
-		name="duva" />
-	<persistentProperty
-		name="im_pagato" />
-	<persistentProperty
-		name="dt_pagamento" />
-	<persistentProperty
-		name="dt_trasmissione" />
-	<persistentProperty
-		name="cd_unita_organizzativa" />
-	<persistentProperty
-		name="im_ritenute" />
-	<persistentProperty
-		name="ti_competenza_residuo" />
-	<persistentProperty
-		name="utuv" />
-	<persistentProperty
-		name="ds_mandato" />
-	<persistentProperty
-		name="dt_firma" />	
-	<persistentProperty
-		name="stato_trasmissione_annullo" />
-	<persistentProperty
-		name="fl_riemissione" />		
-	<persistentProperty
-		name="dt_firma_annullo" />		
-	<persistentProperty
-		name="pg_mandato_riemissione" />
-	<persistentProperty		
-		name="dt_pagamento_richiesta" />
+        persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoBase"
+        keyClassName="it.cnr.contab.doccont00.core.bulk.MandatoKey"
+        homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoHome">
+    <defaultColumnMap
+            tableName="MANDATO">
+        <columnMapping
+                columnName="DT_ANNULLAMENTO"
+                propertyName="dt_annullamento"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="DT_RITRASMISSIONE"
+                propertyName="dt_ritrasmissione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="STATO_COGE"
+                propertyName="stato_coge"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="PG_VER_REC"
+                propertyName="pg_ver_rec"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="false"/>
+        <columnMapping
+                columnName="STATO"
+                propertyName="stato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="TI_MANDATO"
+                propertyName="ti_mandato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_TIPO_DOCUMENTO_CONT"
+                propertyName="cd_tipo_documento_cont"
+                sqlTypeName="VARCHAR"
+                columnSize="10"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_UO_ORIGINE"
+                propertyName="cd_uo_origine"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_CDS_ORIGINE"
+                propertyName="cd_cds_origine"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTCR"
+                propertyName="utcr"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="STATO_TRASMISSIONE"
+                propertyName="stato_trasmissione"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_EMISSIONE"
+                propertyName="dt_emissione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="DACR"
+                propertyName="dacr"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_MANDATO"
+                propertyName="im_mandato"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="DUVA"
+                propertyName="duva"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_PAGATO"
+                propertyName="im_pagato"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_PAGAMENTO"
+                propertyName="dt_pagamento"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="DT_TRASMISSIONE"
+                propertyName="dt_trasmissione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="cd_unita_organizzativa"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_RITENUTE"
+                propertyName="im_ritenute"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="TI_COMPETENZA_RESIDUO"
+                propertyName="ti_competenza_residuo"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTUV"
+                propertyName="utuv"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="DS_MANDATO"
+                propertyName="ds_mandato"
+                sqlTypeName="VARCHAR"
+                columnSize="300"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_FIRMA"
+                propertyName="dt_firma"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="STATO_TRASMISSIONE_ANNULLO"
+                propertyName="stato_trasmissione_annullo"
+                sqlTypeName="CHAR"
+                columnSize="1"/>
+        <columnMapping
+                columnName="FL_RIEMISSIONE"
+                propertyName="fl_riemissione"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="DT_FIRMA_ANNULLO"
+                propertyName="dt_firma_annullo"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="PG_MANDATO_RIEMISSIONE"
+                propertyName="pg_mandato_riemissione"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="DT_PAGAMENTO_RICHIESTA"
+                propertyName="dt_pagamento_richiesta"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="ESITO_OPERAZIONE"
+                propertyName="esitoOperazione"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="DT_ORA_ESITO_OPERAZIONE"
+                propertyName="dtOraEsitoOperazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="ERRORE_SIOPE_PLUS"
+                propertyName="erroreSiopePlus"
+                sqlTypeName="VARCHAR"
+                columnSize="2000"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="dt_annullamento"/>
+    <persistentProperty
+            name="dt_ritrasmissione"/>
+    <persistentProperty
+            name="stato_coge"/>
+    <persistentProperty
+            name="pg_ver_rec"/>
+    <persistentProperty
+            name="stato"/>
+    <persistentProperty
+            name="ti_mandato"/>
+    <persistentProperty
+            name="cd_tipo_documento_cont"/>
+    <persistentProperty
+            name="cd_uo_origine"/>
+    <persistentProperty
+            name="cd_cds_origine"/>
+    <persistentProperty
+            name="utcr"/>
+    <persistentProperty
+            name="stato_trasmissione"/>
+    <persistentProperty
+            name="dt_emissione"/>
+    <persistentProperty
+            name="dacr"/>
+    <persistentProperty
+            name="im_mandato"/>
+    <persistentProperty
+            name="duva"/>
+    <persistentProperty
+            name="im_pagato"/>
+    <persistentProperty
+            name="dt_pagamento"/>
+    <persistentProperty
+            name="dt_trasmissione"/>
+    <persistentProperty
+            name="cd_unita_organizzativa"/>
+    <persistentProperty
+            name="im_ritenute"/>
+    <persistentProperty
+            name="ti_competenza_residuo"/>
+    <persistentProperty
+            name="utuv"/>
+    <persistentProperty
+            name="ds_mandato"/>
+    <persistentProperty
+            name="dt_firma"/>
+    <persistentProperty
+            name="stato_trasmissione_annullo"/>
+    <persistentProperty
+            name="fl_riemissione"/>
+    <persistentProperty
+            name="dt_firma_annullo"/>
+    <persistentProperty
+            name="pg_mandato_riemissione"/>
+    <persistentProperty
+            name="dt_pagamento_richiesta"/>
+    <persistentProperty
+            name="esitoOperazione"/>
+    <persistentProperty
+            name="dtOraEsitoOperazione"/>
+    <persistentProperty
+            name="erroreSiopePlus"/>
+
 </SQLPersistentInfo>

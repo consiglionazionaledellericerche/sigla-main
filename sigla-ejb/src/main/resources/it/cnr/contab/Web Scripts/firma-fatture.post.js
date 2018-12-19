@@ -23,6 +23,5 @@ script:{
 		break script;
 	}  
 	nodoDoc.addAspect("cnr:signedDocument");
-	docFirmato.createAssociation(nodoDoc, "cnr:signedDocumentAss");  
 	model.nodeRef = docFirmato.nodeRef.toString();
 }

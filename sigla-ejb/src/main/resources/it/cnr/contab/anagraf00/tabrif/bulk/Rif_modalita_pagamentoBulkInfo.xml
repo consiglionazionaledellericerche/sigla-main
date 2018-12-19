@@ -1,134 +1,126 @@
 <bulkInfo
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
-	<fieldProperty
-		name="cd_modalita_pag"
-		property="cd_modalita_pag"
-		label="Codice"
-		enabledOnEdit="false"
-		inputType="TEXT" 
-		nullable="false" />
-	<fieldProperty
-		name="codice_cassiere"
-		property="codice_cassiere"
-		label="Codice cassiere"
-		inputType="TEXT" />
-	<fieldProperty
-		name="ds_modalita_pag"
-		property="ds_modalita_pag"
-		label="Descrizione"
-		inputType="TEXT"  
-		nullable="false" />
-	<fieldProperty
-		name="ti_pagamento"
-		property="ti_pagamento"
-		label="Tipo pagamento"
-		keysProperty="ti_pagamentoKeys"
-		inputType="SELECT"  
-		nullable="false" />
-	<fieldProperty
-		name="tipoPagamentoSdi"
-		property="tipoPagamentoSdi"
-		label="Tipo pagamento per SDI"
-		keysProperty="tipoPagamentoSdiKeys"
-		inputType="SELECT"  
-		nullable="true" />
-	<fieldProperty
-		name="fl_per_cessione"
-		property="fl_per_cessione"
-		label="Tipo per cessione"
-		enabledOnEdit="false"
-		readonlyProperty="ROfl_per_cessione"
-		inputType="CHECKBOX"  />
-	<fieldProperty
-		name="fl_utilizzabile_art35"
-		property="fl_utilizzabile_art35"
-		inputType="CHECKBOX"
-		label="Soggetta all'Art.35 DL223/2006"
-		enabledOnSearch="false"
-		enabledOnEdit="true"
-		enabledOnInsert="true" />
-	<fieldProperty
-		name="fl_cancellato"
-		property="fl_cancellato"
-		inputType="CHECKBOX"
-		label="Annullata"
-		enabledOnSearch="false"
-		enabledOnEdit="true"
-		enabledOnInsert="true" />		
-	<columnFieldProperty
-		name="cd_modalita_pag"
-		/>
-	<columnFieldProperty
-		name="codice_cassiere"
-		/>
-	<columnFieldProperty
-		name="ds_modalita_pag"
-		columnStyle="width: 60px"
-		/>
-	<columnFieldProperty
-		name="ti_pagamento"
-		/>
-	<columnFieldProperty
-		name="tipoPagamentoSdi"
-		/>
-	<columnFieldProperty
-		name="fl_per_cessione"
-		/>
-	<columnFieldProperty
-		name="fl_utilizzabile_art35"
-		/>
-	<columnFieldProperty
-		name="fl_cancellato"
-		/>
-				
-	<formFieldProperty
-		name="cd_modalita_pag"
-		/>
-	<formFieldProperty
-		name="codice_cassiere"
-		/>
-	<formFieldProperty
-		name="ds_modalita_pag"
-		/>
-	<formFieldProperty
-		name="ti_pagamento"		
-		command="doDefault"
-		/>
-	<formFieldProperty
-		name="tipoPagamentoSdi"		
-		/>
-	<formFieldProperty
-		name="fl_per_cessione"
-		/>
-	<formFieldProperty
-		name="fl_utilizzabile_art35"
-		/>
-	<formFieldProperty
-		name="fl_cancellato"
-		/>
-				
-	<findFieldProperty
-		name="cd_modalita_pag"
-		/>
-	<findFieldProperty
-		name="codice_cassiere"
-		/>
-	<findFieldProperty
-		name="ds_modalita_pag"
-		/>
-	<findFieldProperty
-		name="ti_pagamento"
-		/>
-	<findFieldProperty
-		name="fl_per_cessione"
-		/>
-	<findFieldProperty
-		name="fl_utilizzabile_art35"
-		/>
-	<findFieldProperty
-		name="fl_cancellato"
-		/>
+    <fieldProperty
+            name="cd_modalita_pag"
+            property="cd_modalita_pag"
+            label="Codice"
+            enabledOnEdit="false"
+            inputType="TEXT"
+            nullable="false"/>
+    <fieldProperty
+            name="codice_cassiere"
+            property="codice_cassiere"
+            label="Codice cassiere"
+            inputType="TEXT"/>
+    <fieldProperty
+            name="ds_modalita_pag"
+            property="ds_modalita_pag"
+            inputCssClass="w-100"
+            label="Descrizione"
+            inputType="TEXTAREA"
+            nullable="false"/>
+    <fieldProperty
+            name="ti_pagamento"
+            property="ti_pagamento"
+            label="Tipo pagamento"
+            keysProperty="ti_pagamentoKeys"
+            inputType="SELECT"
+            nullable="false"/>
+    <fieldProperty
+            name="tipoPagamentoSdi"
+            property="tipoPagamentoSdi"
+            label="Tipo pagamento per SDI"
+            keysProperty="tipoPagamentoSdiKeys"
+            inputType="SELECT"
+            nullable="true"/>
+    <fieldProperty
+            name="fl_per_cessione"
+            property="fl_per_cessione"
+            label="Tipo per cessione"
+            enabledOnEdit="false"
+            readonlyProperty="ROfl_per_cessione"
+            inputType="CHECKBOX"/>
+    <fieldProperty
+            name="fl_utilizzabile_art35"
+            property="fl_utilizzabile_art35"
+            inputType="CHECKBOX"
+            label="Soggetta all'Art.35 DL223/2006"
+            enabledOnSearch="false"
+            enabledOnEdit="true"
+            enabledOnInsert="true"/>
+    <fieldProperty
+            name="fl_cancellato"
+            property="fl_cancellato"
+            inputType="CHECKBOX"
+            label="Annullata"
+            enabledOnSearch="false"
+            enabledOnEdit="true"
+            enabledOnInsert="true"/>
+    <fieldProperty
+            name="tipo_pagamento_siope"
+            property="tipo_pagamento_siope"
+            label="Tipo pagamento SIOPE+"
+            keysProperty="tipoPagamentoSiopePlusKeys"
+            inputType="SELECT"
+            nullable="false"/>
+
+    <columnFieldProperty
+            name="cd_modalita_pag"/>
+    <columnFieldProperty
+            name="codice_cassiere"/>
+    <columnFieldProperty
+            name="ds_modalita_pag"
+            columnStyle="width: 60px"/>
+    <columnFieldProperty
+            name="ti_pagamento"/>
+    <columnFieldProperty
+            name="tipoPagamentoSdi"/>
+    <columnFieldProperty
+            name="tipo_pagamento_siope"/>
+    <columnFieldProperty
+            name="fl_per_cessione"/>
+    <columnFieldProperty
+            name="fl_utilizzabile_art35"/>
+    <columnFieldProperty
+            name="fl_cancellato"/>
+
+    <formFieldProperty
+            name="cd_modalita_pag"/>
+    <formFieldProperty
+            name="codice_cassiere"/>
+    <formFieldProperty
+            name="ds_modalita_pag"/>
+    <formFieldProperty
+            name="ti_pagamento"
+            command="doDefault"/>
+    <formFieldProperty
+            name="tipoPagamentoSdi"/>
+    <formFieldProperty
+            name="fl_per_cessione"/>
+    <formFieldProperty
+            name="fl_utilizzabile_art35"/>
+    <formFieldProperty
+            name="fl_cancellato"/>
+    <formFieldProperty
+            name="tipo_pagamento_siope"/>
+
+    <findFieldProperty
+            name="cd_modalita_pag"/>
+    <findFieldProperty
+            name="codice_cassiere"/>
+    <findFieldProperty
+            name="ds_modalita_pag"/>
+    <findFieldProperty
+            name="ti_pagamento"/>
+    <findFieldProperty
+            name="fl_per_cessione"/>
+    <findFieldProperty
+            name="fl_utilizzabile_art35"/>
+    <findFieldProperty
+            name="fl_cancellato"/>
+    <findFieldProperty
+            name="tipo_pagamento_siope"/>
 </bulkInfo>

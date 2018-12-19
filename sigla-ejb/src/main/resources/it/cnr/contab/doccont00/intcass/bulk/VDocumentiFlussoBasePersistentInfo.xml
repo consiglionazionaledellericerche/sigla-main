@@ -163,6 +163,12 @@
 			columnSize="10"
 			nullable="true" />
 		<columnMapping
+			columnName="PARTITA_IVA"
+			propertyName="partitaIva"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
 			columnName="CODICE_FISCALE"
 			propertyName="codiceFiscale"
 			sqlTypeName="VARCHAR"
@@ -420,6 +426,8 @@
 		name="dsComune" />
 	<persistentProperty
 		name="cdProvincia" />
+	<persistentProperty
+		name="partitaIva" />
 	<persistentProperty
 		name="codiceFiscale" />
 	<persistentProperty
