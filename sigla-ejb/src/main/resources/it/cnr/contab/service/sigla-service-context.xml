@@ -103,6 +103,7 @@
 	<task:scheduled-tasks scheduler="siglaScheduler">
 		<task:scheduled ref="fatturaPassivaElettronicaService" method="allineaNotificheExecute" cron="${allinea.notifiche.cron.expression}" />
 		<task:scheduled ref="fatturaPassivaElettronicaService" method="execute" cron="${pec.cron.expression}" />
+		<task:scheduled ref="documentiContabiliService" method="messaggiSiopeplus" cron="${siopeplus.cron.expression}" />
 	</task:scheduled-tasks>
 
 	<task:scheduler id="siglaScheduler"  pool-size="10"/>
