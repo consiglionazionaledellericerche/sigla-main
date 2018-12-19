@@ -12,6 +12,7 @@
     	<version>1.0.3</version>
   	</parent>
 	<modules>
+		<module>../sigla-siopeplus</module>
 		<module>../sigla-ws-client</module>
 		<module>../sigla-ejb</module>
 		<module>../sigla-sdi</module>
