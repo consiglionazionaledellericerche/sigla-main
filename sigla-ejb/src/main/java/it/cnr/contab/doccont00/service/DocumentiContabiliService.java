@@ -627,7 +627,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 messaggioACK(risultato);
                                 logger.info("SIOPE+  elaborato risultato: {}", risultato);
                                 return true;
-                            } catch (RemoteException | ComponentException _ex) {
+                            } catch (Exception _ex) {
                                 logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
                                 return false;
                             }
@@ -640,7 +640,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 messaggioEsito(risultato);
                                 logger.info("SIOPE+  elaborato risultato: {}", risultato);
                                 return true;
-                            } catch (RemoteException | ComponentException _ex) {
+                            } catch (Exception _ex) {
                                 logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
                                 return false;
                             }
@@ -653,7 +653,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 messaggioEsitoApplicativo(risultato);
                                 logger.info("SIOPE+  elaborato risultato: {}", risultato);
                                 return true;
-                            } catch (RemoteException | ComponentException _ex) {
+                            } catch (Exception _ex) {
                                 logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
                                 return false;
                             }
@@ -670,7 +670,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         messaggioACK(risultato);
                         logger.info("SIOPE+  elaborato risultato: {}", risultato);
                         risultatiACK.remove(risultato);
-                    } catch (RemoteException | ComponentException _ex) {
+                    } catch (Exception _ex) {
                         logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
                     }
                 });
@@ -687,7 +687,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         messaggioEsito(risultato);
                         logger.info("SIOPE+  elaborato risultato: {}", risultato);
                         risultatiEsito.remove(risultato);
-                    } catch (RemoteException | ComponentException _ex) {
+                    } catch (Exception _ex) {
                         logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
                     }
                 });
@@ -704,7 +704,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         messaggioEsitoApplicativo(risultato);
                         logger.info("SIOPE+  elaborato risultato: {}", risultato);
                         risultatiEsitoApplicativo.remove(risultato);
-                    } catch (RemoteException | ComponentException _ex) {
+                    } catch (Exception _ex) {
                         logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
                     }
                 });
