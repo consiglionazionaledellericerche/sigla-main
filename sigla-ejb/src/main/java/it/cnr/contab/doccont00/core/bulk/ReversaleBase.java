@@ -2,6 +2,8 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
+import java.sql.Timestamp;
+
 public class ReversaleBase extends ReversaleKey implements Keyed {
 	// CD_CDS_ORIGINE VARCHAR(30) NOT NULL
 	private java.lang.String cd_cds_origine;
@@ -64,6 +66,15 @@ public class ReversaleBase extends ReversaleKey implements Keyed {
 	private java.sql.Timestamp dt_firma_annullo;
 	
 	private java.lang.Long pg_reversale_riemissione;
+
+	// ESITO_OPERAZIONE VARCHAR2(30)
+	private java.lang.String esitoOperazione;
+
+	// DT_ORA_ESITO_OPERAZIONE TIMESTAMP
+	private java.sql.Timestamp dtOraEsitoOperazione;
+
+	// ERRORE_SIOPE_PLUS VARCHAR2(2000)
+	private java.lang.String erroreSiopePlus;
 
 	public ReversaleBase() {
 		super();
@@ -305,5 +316,29 @@ public class ReversaleBase extends ReversaleKey implements Keyed {
 	}
 	public void setPg_reversale_riemissione(java.lang.Long pg_reversale_riemissione) {
 		this.pg_reversale_riemissione = pg_reversale_riemissione;
+	}
+
+	public String getEsitoOperazione() {
+		return esitoOperazione;
+	}
+
+	public void setEsitoOperazione(String esitoOperazione) {
+		this.esitoOperazione = esitoOperazione;
+	}
+
+	public String getErroreSiopePlus() {
+		return erroreSiopePlus;
+	}
+
+	public void setErroreSiopePlus(String erroreSiopePlus) {
+		this.erroreSiopePlus = erroreSiopePlus;
+	}
+
+	public Timestamp getDtOraEsitoOperazione() {
+		return dtOraEsitoOperazione;
+	}
+
+	public void setDtOraEsitoOperazione(Timestamp dtOraEsitoOperazione) {
+		this.dtOraEsitoOperazione = dtOraEsitoOperazione;
 	}
 }

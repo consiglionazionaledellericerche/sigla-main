@@ -34,6 +34,8 @@ public class Rif_modalita_pagamentoBase extends Rif_modalita_pagamentoKey implem
 	
 	private java.lang.String ti_mandato;
 
+	private java.lang.String tipo_pagamento_siope;
+
 	public java.lang.Boolean getFl_utilizzabile_art35() {
 		return fl_utilizzabile_art35;
 	}
@@ -125,4 +127,11 @@ public class Rif_modalita_pagamentoBase extends Rif_modalita_pagamentoKey implem
 		this.ti_mandato = ti_mandato;
 	}
 
+	public String getTipo_pagamento_siope() {
+		return tipo_pagamento_siope;
+	}
+
+	public void setTipo_pagamento_siope(String tipo_pagamento_siope) {
+		this.tipo_pagamento_siope = tipo_pagamento_siope;
+	}
 }

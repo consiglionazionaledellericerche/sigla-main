@@ -103,7 +103,10 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
  
 //    CD_PROVINCIA VARCHAR(10)
 	private java.lang.String cdProvincia;
- 
+
+	//    PARTITA_IVA VARCHAR(20)
+	private java.lang.String partitaIva;
+
 //    CODICE_FISCALE VARCHAR(20)
 	private java.lang.String codiceFiscale;
  
@@ -752,5 +755,13 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
 	}
 	public void setDtPagamentoRichiesta(java.sql.Timestamp dtPagamentoRichiesta) {
 		this.dtPagamentoRichiesta = dtPagamentoRichiesta;
+	}
+
+	public String getPartitaIva() {
+		return partitaIva;
+	}
+
+	public void setPartitaIva(String partitaIva) {
+		this.partitaIva = partitaIva;
 	}
 }

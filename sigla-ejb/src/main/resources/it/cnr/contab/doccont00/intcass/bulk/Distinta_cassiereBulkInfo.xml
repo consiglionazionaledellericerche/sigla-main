@@ -343,7 +343,7 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="true"
 		label="Estero" />
-		<fieldProperty
+	<fieldProperty
 		name="fl_annulli"
 		property="fl_annulli"
 		inputType="CHECKBOX"
@@ -373,7 +373,54 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		enabledOnSearch="true" />	
+		enabledOnSearch="true" />
+
+	<fieldProperty
+		name="progFlusso"
+		property="progFlusso"
+		inputType="TEXT"
+		label="Progressivo Flusso"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		maxLength="10"
+		inputSize="10"/>
+
+	<fieldProperty
+		name="identificativoFlussoBT"
+		property="identificativoFlussoBT"
+		inputType="TEXT"
+		label="Identificativo Flusso BT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		maxLength="10"
+		inputSize="10"/>
+
+	<fieldProperty
+		name="stato"
+		property="stato"
+		inputType="SELECT"
+		keysProperty="stato_DistintaKeys"
+		label="Stato"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		maxLength="50"
+		inputSize="50"/>
+
+	<fieldProperty
+		name="statoLabel"
+		property="statoLabel"
+		inputType="TEXT"
+		label="Stato"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		maxLength="50"
+		inputSize="50"/>
+
+
 	<formFieldProperty
 		name="cd_cds" />
 	<formFieldProperty
@@ -471,7 +518,17 @@
 	<formFieldProperty
 		name="fl_annulli" />
 	<formFieldProperty
-		name="utcr" />	
+		name="utcr" />
+	<formFieldProperty
+		name="progFlusso"/>
+	<formFieldProperty
+		name="identificativoFlussoBT"/>
+	<formFieldProperty
+		name="stato"/>
+	<formFieldProperty
+		name="statoLabel"/>
+
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -486,6 +543,12 @@
 		name="dt_invio" />
 	<columnFieldProperty
 		name="pg_distinta_def" />
+	<columnFieldProperty
+		name="progFlusso"/>
+	<columnFieldProperty
+		name="identificativoFlussoBT"/>
+	<columnFieldProperty
+		name="statoLabel"/>
 	<columnFieldProperty
 		name="fl_flusso" />
 	<columnFieldProperty
@@ -493,7 +556,8 @@
 	<columnFieldProperty
 		name="fl_annulli" />				
 	<columnFieldProperty
-		name="utcr" />	
+		name="utcr" />
+
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
@@ -508,6 +572,12 @@
 		name="dt_invio" />
 	<findFieldProperty
 		name="pg_distinta_def" />
+	<findFieldProperty
+		name="progFlusso"/>
+	<findFieldProperty
+		name="identificativoFlussoBT"/>
+	<findFieldProperty
+		name="stato"/>
 	<findFieldProperty
 		name="utcr" />	
 </bulkInfo>

@@ -1,5 +1,12 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
+import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
+import it.cnr.contab.pdg00.bulk.storage.AllegatoPdGVariazioneDocumentBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.si.spring.storage.annotation.StorageType;
@@ -11,11 +18,44 @@ import it.cnr.contab.spring.service.StorePath;
 import it.cnr.jada.bulk.OggettoBulk;
 
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.Optional;
 import java.util.stream.Collectors;
 @StorageType(name="D:doccont:document")
-public class Distinta_cassiereBulk extends Distinta_cassiereBase{
-	private CdsBulk cds = new CdsBulk();
+public class Distinta_cassiereBulk extends Distinta_cassiereBase implements AllegatoParentBulk {
+
+	@SuppressWarnings("rawtypes")
+	public final static Dictionary stato_DistintaKeys = new OrderedHashtable();
+
+	public enum Stato {
+		PROVVISORIA("Provvisoria","PRO"),
+		DEFINITIVA("Definitiva","DEF"),
+		TRASMESSA("Trasmessa","TRA"),
+		ACCETTATO_SIOPEPLUS("Accettato SIOPE+","ACC"),
+		RIFIUTATO_SIOPEPLUS("Rifiutato SIOPE+","RIF"),
+		ACCETTATO_BT("Accettato BT","ABT"),
+		RIFIUTATO_BT("Rifiutato BT","RBT");
+		private final String label, value;
+		private Stato(String label, String value) {
+			this.value = value;
+			this.label = label;
+		}
+		public String value() {
+			return value;
+		}
+		public String label() {
+			return label;
+		}
+	}
+	static
+	{
+		for (Distinta_cassiereBulk.Stato stato : Distinta_cassiereBulk.Stato.values()) {
+			stato_DistintaKeys.put(stato.value, stato.label);
+		}
+	}
+
+
+    private CdsBulk cds = new CdsBulk();
 	private Unita_organizzativaBulk unita_organizzativa = new Unita_organizzativaBulk();
 	private String cd_cds_ente;
 	private boolean createByOtherUo=false;
@@ -33,6 +73,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase{
 	private java.math.BigDecimal totStoricoReversaliTrasferimentoTrasmesse = new java.math.BigDecimal(0);
 	private java.math.BigDecimal totStoricoReversaliRitenuteTrasmesse = new java.math.BigDecimal(0);
 
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 	@StorageProperty(name="doccont:tipo")
 	public String getCd_tipo_documento_cont() {
@@ -613,6 +654,34 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase{
 		return suffix;
 	}
 
+	public String getIdentificativoFlusso() {
+		return Arrays.asList(
+				Optional.ofNullable(getEsercizio())
+						.map(esercizio -> String.valueOf(esercizio))
+						.orElse("0"),
+				getCd_unita_organizzativa(),
+				Optional.ofNullable(getPg_distinta_def())
+						.map(pgDistintaDef -> String.valueOf(pgDistintaDef))
+						.orElse("0"),
+				"I"
+		).stream().collect(
+				Collectors.joining("-")
+		);
+	}
+
+	public String getFileNameXML() {
+		return getIdentificativoFlusso().concat(".xml");
+	}
+
+	public static Distinta_cassiereBulk fromIdentificativoFlusso(String identificativoFlusso) {
+		final String[] split = identificativoFlusso.split("-");
+		Distinta_cassiereBulk distinta = new Distinta_cassiereBulk();
+		distinta.setEsercizio(Integer.valueOf(split[0]));
+		distinta.setCd_unita_organizzativa(split[1]);
+		distinta.setPg_distinta_def(Long.valueOf(split[2]));
+		return distinta;
+	}
+
 	@Override
 	public String toString() {
 		return getCMISFolderName();
@@ -632,4 +701,53 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase{
 		);
 	}
 
+	public static Dictionary getStato_DistintaKeys() {
+		return stato_DistintaKeys;
+	}
+
+	public void setStato(Stato stato) {
+		super.setStato(stato.value());
+	}
+
+
+
+	public BulkCollection[] getBulkLists() {
+		return new it.cnr.jada.bulk.BulkCollection[] {
+				getArchivioAllegati()};
+	};
+
+	@Override
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;
+	}
+
+	@Override
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		AllegatoGenericoBulk dett = (AllegatoGenericoBulk)getArchivioAllegati().remove(index);
+		return dett;
+	}
+
+	@Override
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+
+	@Override
+	public void setArchivioAllegati(BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+
+	public String getStatoLabel() {
+		return Optional.ofNullable(getStato())
+				.map(s -> {
+					return Arrays.asList(Stato.values())
+							.stream()
+							.filter(stato -> stato.value().equals(s))
+							.findAny()
+							.map(stato -> stato.label())
+							.orElse(null);
+				})
+				.orElse(null);
+	}
 }
