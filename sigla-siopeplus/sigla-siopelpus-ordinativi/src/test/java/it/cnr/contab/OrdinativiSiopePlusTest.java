@@ -31,6 +31,8 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -66,7 +68,8 @@ public class OrdinativiSiopePlusTest {
         OrdinativiSiopePlusService ordinativiSiopePlusService = new OrdinativiSiopePlusService();
         ordinativiSiopePlusService.password = properties.getProperty("siopeplus.certificate.password");
         final Lista lista = getACK();
-        lista.getRisultati()
+        Optional.ofNullable(lista.getRisultati())
+                .orElse(Collections.emptyList())
                 .stream()
                 .forEach(risultato -> {
                     System.out.println(risultato);
