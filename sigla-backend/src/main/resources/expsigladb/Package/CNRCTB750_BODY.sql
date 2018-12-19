@@ -133,6 +133,7 @@
    lNumPagBI number;
    lNumPagNonBI number;
    lTiRiga varchar2(2);
+   aggiorna_sospeso boolean;
 -- Massimo
   tesoreria_unica char(1);
  begin
@@ -1031,8 +1032,8 @@ dbms_output.put_line('fine primo loop');
              Order by progressivo asc) Loop
 
    Begin -- CHIUDE ALLA FINE, APPENA PRIMA DELL'END LOOP SULLE RIGHE DI EXT_CASSIERE00 E POI INSERISCE I LOG
-
-dbms_output.put_line('entro secondo loop');
+	aggiorna_sospeso :=false;
+	dbms_output.put_line('entro secondo loop');
 	aEsercizio:=aR.esercizio;
 -- ====================================================================================================
 --                                                RISCONTRI
@@ -1453,7 +1454,7 @@ Elsif -- GESTIONE INSERIMENTO IF 4
  	  	aSF:=null;
   	  aSospeso.CD_CDS:=aCds.cd_unita_organizzativa;
       aSospeso.ESERCIZIO:=aR.esercizio;
-
+      
   	  if aR.TIPO_MOVIMENTO='ENTRATA' then          -- VERIFICARE I VALORI
                aSospeso.TI_ENTRATA_SPESA:='E';
           else
@@ -1497,8 +1498,25 @@ Elsif -- GESTIONE INSERIMENTO IF 4
 					aSospeso.tipo_contabilita:=aR.tipo_contabilita;
 					aSospeso.destinazione:=aR.destinazione;
           Begin
-	       CNRCTB038.ins_SOSPESO(aSospeso);
-          Exception when DUP_VAL_ON_INDEX Then
+	        CNRCTB038.ins_SOSPESO(aSospeso);
+	        Exception when DUP_VAL_ON_INDEX Then
+	           if (aR.codice_rif_interno is not null and aR.codice_rif_interno like 'PAGSTIP%')  Then
+	              update sospeso set im_sospeso= im_sospeso+abs(aR.IMPORTO)
+	              where
+	               			 CD_CDS               = aSospeso.CD_CDS And
+                       ESERCIZIO            = aSospeso.ESERCIZIO And
+                       TI_ENTRATA_SPESA     = aSospeso.TI_ENTRATA_SPESA And
+                       TI_SOSPESO_RISCONTRO = aSospeso.TI_SOSPESO_RISCONTRO And
+                       CD_SOSPESO           = aSospeso.CD_SOSPESO;
+	              update sospeso set im_sospeso= im_sospeso+abs(aR.IMPORTO)
+	              where
+	               			 CD_CDS               = aSospeso.CD_CDS And
+                       ESERCIZIO            = aSospeso.ESERCIZIO And
+                       TI_ENTRATA_SPESA     = aSospeso.TI_ENTRATA_SPESA And
+                       TI_SOSPESO_RISCONTRO = aSospeso.TI_SOSPESO_RISCONTRO And
+                       CD_SOSPESO           = aSospeso.CD_SOSPESO|| '.001';     
+                aggiorna_sospeso:=true;       
+           	else          
               Begin
                 Select im_sospeso
                 Into   importo_sospeso_esistente
@@ -1513,18 +1531,19 @@ Elsif -- GESTIONE INSERIMENTO IF 4
                   importo_sospeso_esistente := Null;
               End;
 
-            If abs(aR.IMPORTO) != importo_sospeso_esistente Then -- sospeso già esistente di importo diverso
-               IBMERR001.RAISE_ERR_GENERICO('Impossibile inserire il sospeso '||aSospeso.CD_CDS||'/'||aSospeso.ESERCIZIO||'/'||aSospeso.TI_ENTRATA_SPESA||'/'||
+            	If abs(aR.IMPORTO) != importo_sospeso_esistente Then -- sospeso già esistente di importo diverso
+               	IBMERR001.RAISE_ERR_GENERICO('Impossibile inserire il sospeso '||aSospeso.CD_CDS||'/'||aSospeso.ESERCIZIO||'/'||aSospeso.TI_ENTRATA_SPESA||'/'||
                                              aSospeso.TI_SOSPESO_RISCONTRO||'/'||aSospeso.CD_SOSPESO||', già esiste. L''importo del sospeso che si sta tentando di '||
                                              'inserire è '||Ltrim(To_Char(aR.IMPORTO, '999g999g999g999g999g990d00'))||' mentre l''importo del sospeso '||
                                              'già esistente con lo stesso codice è '||Ltrim(To_Char(importo_sospeso_esistente, '999g999g999g999g999g990d00'))||'.');
-	    Else -- sospeso già esistente di uguale importo
-	       IBMERR001.RAISE_ERR_GENERICO('Impossibile inserire il sospeso '||aSospeso.CD_CDS||'/'||aSospeso.ESERCIZIO||'/'||aSospeso.TI_ENTRATA_SPESA||'/'||
-                                             aSospeso.TI_SOSPESO_RISCONTRO||'/'||aSospeso.CD_SOSPESO||'. Con quel codice ne esiste già uno ed ha lo stesso importo di quello che si sta'||
-                                             ' tentando di caricare, vale a dire '||Ltrim(To_Char(aR.IMPORTO, '999g999g999g999g999g990d00'))||'.');
-	    End If;
+				    	Else -- sospeso già esistente di uguale importo
+				       	IBMERR001.RAISE_ERR_GENERICO('Impossibile inserire il sospeso '||aSospeso.CD_CDS||'/'||aSospeso.ESERCIZIO||'/'||aSospeso.TI_ENTRATA_SPESA||'/'||
+			                                             aSospeso.TI_SOSPESO_RISCONTRO||'/'||aSospeso.CD_SOSPESO||'. Con quel codice ne esiste già uno ed ha lo stesso importo di quello che si sta'||
+			                                             ' tentando di caricare, vale a dire '||Ltrim(To_Char(aR.IMPORTO, '999g999g999g999g999g990d00'))||'.');
+				    	End If;
+	    			end if;
 	  End;
-
+			If (aggiorna_sospeso=false) then
           aSF.CD_CDS:=aSospeso.CD_CDS;
           aSF.ESERCIZIO:=aSospeso.esercizio;
           aSF.TI_ENTRATA_SPESA:=aSospeso.ti_entrata_spesa;
@@ -1557,7 +1576,7 @@ Elsif -- GESTIONE INSERIMENTO IF 4
           end if;
 
           CNRCTB038.ins_SOSPESO(aSF);
-
+    End if;
 	  Update movimento_conto_evidenza
 	  Set    STATO=CNRCTB755.STATO_RECORD_PROCESSATO,
                  duva=aTSNow,
