@@ -58,7 +58,7 @@
 				<artifactId>maven-jaxb2-plugin</artifactId>
 				<configuration>
 					<schemaDirectory>${project.basedir}/src/main/resources/xsd</schemaDirectory>
-					<generatePackage>it.siopeplus</generatePackage>
+					<generatePackage>it.siopeplus.giornaledicassa</generatePackage>
 					<plugins>
 						<plugin>
 							<groupId>org.jvnet.jaxb2_commons</groupId>
