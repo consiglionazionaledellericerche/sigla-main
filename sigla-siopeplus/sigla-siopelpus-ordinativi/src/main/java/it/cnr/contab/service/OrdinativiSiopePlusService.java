@@ -151,7 +151,7 @@ public class OrdinativiSiopePlusService {
             final HttpResponse response = client.execute(httpGet);
             if (!Optional.ofNullable(response).filter(httpResponse -> httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK).isPresent()) {
                 logger.error(response.getStatusLine().getReasonPhrase());
-                return null;
+                return new Lista();
             }
             Gson gson = new GsonBuilder().setDateFormat(pattern).create();
             return gson.fromJson(IOUtils.toString(response.getEntity().getContent(), "UTF-8"), Lista.class);

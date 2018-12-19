@@ -661,7 +661,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         final Lista listaACK = ordinativiSiopePlusService.getListaMessaggi(OrdinativiSiopePlusService.Esito.ACK,
                 null, null, false, null);
         logger.info("Lista ACK: {}", listaACK);
-        listaACK.getRisultati()
+        Optional.ofNullable(listaACK.getRisultati())
+                .orElse(Collections.emptyList())
                 .stream()
                 .peek(risultato -> risultatiACK.add(risultato))
                 .forEach(risultato -> {
@@ -677,7 +678,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         final Lista listaEsito = ordinativiSiopePlusService.getListaMessaggi(OrdinativiSiopePlusService.Esito.ESITO,
                 null, null, false, null);
         logger.info("SIOPE+ Lista Esito: {}", listaEsito);
-        listaEsito.getRisultati()
+        Optional.ofNullable(listaEsito.getRisultati())
+                .orElse(Collections.emptyList())
                 .stream()
                 .peek(risultato -> risultatiEsito.add(risultato))
                 .forEach(risultato -> {
@@ -693,7 +695,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(OrdinativiSiopePlusService.Esito.ESITOAPPLICATIVO,
                 null, null, false, null);
         logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
-        listaEsitoApplicativo.getRisultati()
+        Optional.ofNullable(listaEsitoApplicativo.getRisultati())
+                .orElse(Collections.emptyList())
                 .stream()
                 .peek(risultato -> risultatiEsitoApplicativo.add(risultato))
                 .forEach(risultato -> {
