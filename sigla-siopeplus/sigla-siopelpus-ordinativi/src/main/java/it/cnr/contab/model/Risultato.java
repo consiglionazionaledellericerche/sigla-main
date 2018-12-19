@@ -1,10 +1,10 @@
 package it.cnr.contab.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Risultato {
     private Integer progFlusso;
+    private Integer progEsitoApplicativo;
     private Date dataProduzione;
     private Date dataUpload;
     private Boolean download;
@@ -53,10 +53,19 @@ public class Risultato {
         this.dataUpload = dataUpload;
     }
 
+    public Integer getProgEsitoApplicativo() {
+        return progEsitoApplicativo;
+    }
+
+    public void setProgEsitoApplicativo(Integer progEsitoApplicativo) {
+        this.progEsitoApplicativo = progEsitoApplicativo;
+    }
+
     @Override
     public String toString() {
         return "Risultato{" +
                 "progFlusso=" + progFlusso +
+                ", progEsitoApplicativo=" + progEsitoApplicativo +
                 ", dataProduzione=" + dataProduzione +
                 ", dataUpload=" + dataUpload +
                 ", download=" + download +

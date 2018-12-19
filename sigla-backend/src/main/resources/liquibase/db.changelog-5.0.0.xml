@@ -1452,6 +1452,77 @@
     </changeSet>    
     <changeSet author="rosangela.pucciarelli" id="alter_movimento_c_evi_iban">
         <modifyDataType tableName="movimento_conto_evidenza" columnName="coordinate" newDataType="VARCHAR(50)"/>
-   </changeSet>  
+   </changeSet>
+    <changeSet author="marco.spasiano" id="configurazione_cnr-add-parametri-siopeplus">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="csv/configurazione_cnr_parametri_siopeplus.csv" quotchar="&quot;" separator="," tableName="configurazione_cnr">
+            <column header="esercizio" name="esercizio" type="NUMERIC"/>
+            <column header="cd_unita_funzionale" name="cd_unita_funzionale" type="STRING"/>
+            <column header="cd_chiave_primaria" name="cd_chiave_primaria" type="STRING"/>
+            <column header="cd_chiave_secondaria" name="cd_chiave_secondaria" type="STRING"/>
+            <column header="val01" name="val01" type="STRING"/>
+            <column header="val02" name="val02" type="STRING"/>
+            <column header="val03" name="val03" type="STRING"/>
+            <column header="val04" name="val04" type="STRING"/>
+            <column header="im01" name="im01" type="NUMERIC"/>
+            <column header="im02" name="im02" type="NUMERIC"/>
+            <column header="dt01" name="dt01" type="${date.type}"/>
+            <column header="dt02" name="dt02" type="${date.type}"/>
+            <column header="dacr" name="dacr" type="${date.type}"/>
+            <column header="utcr" name="utcr" type="STRING"/>
+            <column header="duva" name="duva" type="${date.type}"/>
+            <column header="utuv" name="utuv" type="STRING"/>
+            <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_distinta_cassiere_add_prog_flusso">
+        <addColumn tableName="distinta_cassiere">
+            <column name="prog_flusso" type="number(30)" remarks="Progressivo flusso siope+"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_distinta_cassiere_add_identificativo_flusso_bt">
+        <addColumn tableName="distinta_cassiere">
+            <column name="identificativo_flusso_bt" type="varchar2(30)" remarks="Identificativo flusso BT siope+"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_distinta_cassiere_add_stato">
+        <addColumn tableName="distinta_cassiere">
+            <column name="stato" type="varchar2(3)" remarks="Stato della distinta siope+"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_mandato_add_esito_errore">
+        <addColumn tableName="mandato">
+            <column name="esito_operazione" type="varchar2(30)" remarks="Esito operazione siope+"/>
+            <column name="dt_ora_esito_operazione" type="${date.type}" remarks="Data Esito operazione siope+"/>
+            <column name="errore_siope_plus" type="varchar2(2000)" remarks="Errore operazione siope+"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_reversale_add_esito_errore">
+        <addColumn tableName="reversale">
+            <column name="esito_operazione" type="varchar2(30)" remarks="Esito operazione siope+"/>
+            <column name="dt_ora_esito_operazione" type="${date.type}" remarks="Data Esito operazione siope+"/>
+            <column name="errore_siope_plus" type="varchar2(2000)" remarks="Errore operazione siope+"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_rif_modalita_pagamento_add_tipo_pagamento_siope_plus">
+        <addColumn tableName="rif_modalita_pagamento">
+            <column name="tipo_pagamento_siope" type="varchar2(250)" remarks="Tipo pagamento siope+ Può assumere i valori:
+CASSA
+SEPA CREDIT TRANSFER
+ASSEGNO BANCARIO E POSTALE
+ASSEGNO CIRCOLARE
+ACCREDITO CONTO CORRENTE POSTALE
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+F24EP
+VAGLIA POSTALE
+VAGLIA TESORO
+REGOLARIZZAZIONE
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+ADDEBITO PREAUTORIZZATO DISPOSIZIONE DOCUMENTO ESTERNO
+COMPENSAZIONE
+BONIFICO ESTERO EURO"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
 
