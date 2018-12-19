@@ -37,6 +37,10 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	private java.lang.Boolean fl_annulli;
 	private java.sql.Timestamp dt_invio_pec;
 
+	private Integer progFlusso;
+	private String identificativoFlussoBT;
+	private String stato;
+
 	public Distinta_cassiereBase() {
 		super();
 	}
@@ -174,5 +178,29 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	}
 	public void setFl_annulli(java.lang.Boolean fl_annulli) {
 		this.fl_annulli = fl_annulli;
+	}
+
+	public Integer getProgFlusso() {
+		return progFlusso;
+	}
+
+	public void setProgFlusso(Integer progFlusso) {
+		this.progFlusso = progFlusso;
+	}
+
+	public String getIdentificativoFlussoBT() {
+		return identificativoFlussoBT;
+	}
+
+	public void setIdentificativoFlussoBT(String identificativoFlussoBT) {
+		this.identificativoFlussoBT = identificativoFlussoBT;
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 }

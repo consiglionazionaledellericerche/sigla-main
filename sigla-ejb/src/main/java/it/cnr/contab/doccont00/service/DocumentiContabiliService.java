@@ -1,23 +1,45 @@
 package it.cnr.contab.doccont00.service;
 
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
+import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
+import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
+import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.model.Lista;
+import it.cnr.contab.model.MessaggioXML;
+import it.cnr.contab.model.Risultato;
+import it.cnr.contab.service.OrdinativiSiopePlusService;
+import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.PdfSignApparence;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
 import it.cnr.contab.util.SignP7M;
+import it.cnr.jada.DetailedRuntimeException;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.firma.arss.ArubaSignServiceClient;
 import it.cnr.jada.firma.arss.ArubaSignServiceException;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.mail.SimplePECMail;
 import it.cnr.si.spring.storage.*;
+import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import it.siopeplus.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -26,18 +48,56 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.rmi.RemoteException;
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class DocumentiContabiliService extends StoreService {
+public class DocumentiContabiliService extends StoreService implements InitializingBean {
     private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
+    final String pattern = "dd MMMM YYYY' alle 'HH:mm:ss";
+    final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
     @Autowired
     private StorageService storageService;
+    @Autowired
+    private OrdinativiSiopePlusService ordinativiSiopePlusService;
     @Value("${sign.document.png.url}")
     private String signDocumentURL;
     private ArubaSignServiceClient arubaSignServiceClient;
     private String pecHostName, pecMailFromBanca, pecMailFromBancaPassword, pecMailToBancaNoEuroSepa, pecMailToBancaItaliaF23F24;
+
+    private CRUDComponentSession crudComponentSession;
+    private MandatoComponentSession mandatoComponentSession;
+    private ReversaleComponentSession reversaleComponentSession;
+
+    private UserContext userContext;
+    private List<Risultato> risultatiACK = new ArrayList<Risultato>();
+    private List<Risultato> risultatiEsito = new ArrayList<Risultato>();
+    private List<Risultato> risultatiEsitoApplicativo = new ArrayList<Risultato>();
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        this.userContext = new WSUserContext("SIOPEPLUS", null,
+                new Integer(Calendar.getInstance().get(Calendar.YEAR)),
+                null, null, null);
+        this.crudComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession"))
+                .filter(CRUDComponentSession.class::isInstance)
+                .map(CRUDComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb JADAEJB_CRUDComponentSession"));
+        this.mandatoComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCCONT00_EJB_MandatoComponentSession"))
+                .filter(MandatoComponentSession.class::isInstance)
+                .map(MandatoComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCCONT00_EJB_MandatoComponentSession"));
+        this.reversaleComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCCONT00_EJB_ReversaleComponentSession"))
+                .filter(ReversaleComponentSession.class::isInstance)
+                .map(ReversaleComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCCONT00_EJB_ReversaleComponentSession"));
+    }
 
     public ArubaSignServiceClient getArubaSignServiceClient() {
         return arubaSignServiceClient;
@@ -116,7 +176,7 @@ public class DocumentiContabiliService extends StoreService {
         Principal principal = arubaSignServiceClient.getUserCertSubjectDN(username, password);
         if (principal == null)
             return null;
-        String subjectArray[] = principal.toString().split(",");
+        String[] subjectArray = principal.toString().split(",");
         for (String s : subjectArray) {
             String[] str = s.trim().split("=");
             String key = str[0];
@@ -298,7 +358,7 @@ public class DocumentiContabiliService extends StoreService {
             } catch (ArubaSignServiceException | IOException e) {
                 throw new StorageException(StorageException.Type.GENERIC, e);
             } finally {
-                List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+                List<String> aspects = storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
                 aspects.add("P:cnr:signedDocument");
                 updateProperties(Collections.singletonMap(
                         StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
@@ -310,6 +370,342 @@ public class DocumentiContabiliService extends StoreService {
 
     private String signDocuments(String json, String url) throws StorageException {
         return storageService.signDocuments(json, url);
+    }
+
+    private Distinta_cassiereBulk fetchDistinta_cassiereBulk(String identificativoFlusso) throws RemoteException, ComponentException {
+        Distinta_cassiereBulk distinta = Distinta_cassiereBulk.fromIdentificativoFlusso(identificativoFlusso);
+        final List<Distinta_cassiereBulk> findDistintaCasserie = crudComponentSession.find(userContext, Distinta_cassiereBulk.class, "findDistintaCasserie", distinta);
+        return findDistintaCasserie.stream()
+                .findFirst()
+                .orElseThrow(() -> new ApplicationMessageFormatException("Distinta non trovata per identificativo flusso: {}", identificativoFlusso));
+    }
+
+    private MandatoBulk fetchMandatoBulk(CtEsitoMandati ctEsitoMandati) {
+        MandatoBulk mandato = new MandatoIBulk();
+        mandato.setEsercizio(ctEsitoMandati.getEsercizio());
+        mandato.setPg_mandato(ctEsitoMandati.getNumeroMandato().longValue());
+        try {
+            final List<MandatoBulk> findMandato = crudComponentSession.find(userContext, MandatoIBulk.class, "findMandato", mandato);
+            return findMandato.stream()
+                    .findFirst()
+                    .orElseThrow(() -> new ApplicationMessageFormatException("Mandato non trovato per esito flusso esercizio: {} numero: {}",
+                            ctEsitoMandati.getEsercizio(), ctEsitoMandati.getNumeroMandato()));
+
+        } catch (ComponentException | RemoteException _ex) {
+            throw new DetailedRuntimeException(_ex);
+        }
+    }
+
+
+    private ReversaleBulk fetchReversaleBulk(CtEsitoReversali ctEsitoReversali) {
+        ReversaleBulk reversale = new ReversaleIBulk();
+        reversale.setEsercizio(ctEsitoReversali.getEsercizio());
+        reversale.setPg_reversale(ctEsitoReversali.getNumeroReversale().longValue());
+        try {
+            final List<ReversaleBulk> findReversale = crudComponentSession.find(userContext, ReversaleIBulk.class, "findReversale", reversale);
+            return findReversale.stream()
+                    .findFirst()
+                    .orElseThrow(() -> new ApplicationMessageFormatException("Reversale non trovata per esito flusso esercizio: {} numero: {}",
+                            ctEsitoReversali.getEsercizio(), ctEsitoReversali.getNumeroReversale()));
+        } catch (ComponentException | RemoteException _ex) {
+            throw new DetailedRuntimeException(_ex);
+        }
+    }
+
+    private void messaggioACK(Risultato risultato) throws RemoteException, ComponentException {
+        final MessaggioXML<MessaggioAckSiope> messaggioXML = ordinativiSiopePlusService.getLocation(risultato.getLocation(), MessaggioAckSiope.class);
+        final MessaggioAckSiope messaggioAckSiope = messaggioXML.getObject();
+        logger.info("Identificativo flusso: {}", messaggioAckSiope.getIdentificativoFlusso());
+        Distinta_cassiereBulk distinta = fetchDistinta_cassiereBulk(messaggioAckSiope.getIdentificativoFlusso());
+        /**
+         * Carico il file del messaggio
+         */
+        StorageFile storageFile = new StorageFile(messaggioXML.getContent(), MimeTypes.XML.mimetype(), messaggioXML.getName());
+        storageFile.setTitle("Acquisito il " + formatter.format(risultato.getDataProduzione().toInstant().atZone(ZoneId.systemDefault())));
+
+        final Integer progFlusso = risultato.getProgFlusso();
+        StringBuffer description = new StringBuffer();
+        switch (messaggioAckSiope.getStatoFlusso()) {
+            case WARNING: {
+                messaggioAckSiope.getWarning()
+                        .stream()
+                        .map(ctErroreACK -> ctErroreACK.getDescrizione().concat(" - ").concat(ctErroreACK.getElemento()))
+                        .peek(logger::warn);
+                distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS);
+                break;
+            }
+            case OK: {
+                distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS);
+                break;
+            }
+            case KO: {
+                messaggioAckSiope.getErrore()
+                        .stream()
+                        .map(ctErroreACK -> ctErroreACK.getDescrizione().concat(" - ").concat(ctErroreACK.getElemento()))
+                        .peek(logger::error)
+                        .forEach(s -> {
+                            description.append(s.concat("\n"));
+                        });
+                distinta.setStato(Distinta_cassiereBulk.Stato.RIFIUTATO_SIOPEPLUS);
+                break;
+            }
+        }
+        storageFile.setDescription(description.toString());
+        final StorageObject storageObject = restoreSimpleDocument(
+                storageFile,
+                new ByteArrayInputStream(storageFile.getBytes()),
+                storageFile.getContentType(),
+                storageFile.getFileName(),
+                distinta.getStorePath(),
+                true);
+        distinta.setToBeUpdated();
+        crudComponentSession.modificaConBulk(userContext, distinta);
+
+    }
+
+    private void messaggioEsito(Risultato risultato) throws RemoteException, ComponentException {
+        final MessaggioXML<EsitoFlusso> messaggioXML = ordinativiSiopePlusService.getLocation(risultato.getLocation(), EsitoFlusso.class);
+        final EsitoFlusso esitoFlusso = messaggioXML.getObject();
+        logger.info("Identificativo flusso: {}", esitoFlusso.getIdentificativoFlusso());
+        Distinta_cassiereBulk distinta = fetchDistinta_cassiereBulk(esitoFlusso.getIdentificativoFlusso());
+        /**
+         * Carico il file del messaggio
+         */
+        StorageFile storageFile = new StorageFile(messaggioXML.getContent(), MimeTypes.XML.mimetype(),
+                String.valueOf(risultato.getProgFlusso()).concat("-").concat(messaggioXML.getName()));
+        storageFile.setTitle("Acquisito il " + formatter.format(risultato.getDataUpload().toInstant().atZone(ZoneId.systemDefault())));
+
+        distinta.setIdentificativoFlussoBT(esitoFlusso.getIdentificativoFlussoBT());
+        StringBuffer description = new StringBuffer();
+        if (esitoFlusso.isRifiutato()) {
+            distinta.setStato(Distinta_cassiereBulk.Stato.RIFIUTATO_BT);
+            MessaggioRifiutoFlusso messaggioRifiutoFlusso = (MessaggioRifiutoFlusso) esitoFlusso;
+            messaggioRifiutoFlusso
+                    .getErrore()
+                    .stream()
+                    .map(ctErrore -> ctErrore.getCodice().toString().concat(" - ").concat(ctErrore.getDescrizione()))
+                    .peek(logger::error)
+                    .forEach(s -> {
+                        description.append(s.concat("\n"));
+                    });
+        } else {
+            distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_BT);
+        }
+        storageFile.setDescription(description.toString());
+        final StorageObject storageObject = restoreSimpleDocument(
+                storageFile,
+                new ByteArrayInputStream(storageFile.getBytes()),
+                storageFile.getContentType(),
+                storageFile.getFileName(),
+                distinta.getStorePath(),
+                true);
+        distinta.setToBeUpdated();
+        crudComponentSession.modificaConBulk(userContext, distinta);
+    }
+
+    private void messaggioEsitoApplicativo(Risultato risultato) throws RemoteException, ComponentException {
+        final MessaggioXML<MessaggiEsitoApplicativo> messaggioXML = ordinativiSiopePlusService.getLocation(risultato.getLocation(), MessaggiEsitoApplicativo.class);
+        final MessaggiEsitoApplicativo messaggiEsitoApplicativo = messaggioXML.getObject();
+        final List<Object> esitoReversaliOrEsitoMandati = messaggiEsitoApplicativo.getEsitoReversaliOrEsitoMandati();
+        final List<OggettoBulk> mandatoStream = esitoReversaliOrEsitoMandati
+                .stream()
+                .filter(CtEsitoMandati.class::isInstance)
+                .map(CtEsitoMandati.class::cast)
+                .map(ctEsitoMandato -> {
+                    logger.info("Identificativo flusso: {} Mandato {}/{}",
+                            ctEsitoMandato.getIdentificativoFlusso(),
+                            ctEsitoMandato.getEsercizio(),
+                            ctEsitoMandato.getNumeroMandato());
+                    StringBuffer error = new StringBuffer();
+                    ctEsitoMandato.getListaErrori()
+                            .stream()
+                            .map(errore -> errore.getCodiceErrore().toString()
+                                    .concat(" - ")
+                                    .concat(errore.getDescrizione())
+                                    .concat(" - ")
+                                    .concat(errore.getElemento()))
+                            .peek(logger::error)
+                            .forEach(s -> {
+                                error.append(s.concat("\n"));
+                            });
+                    MandatoBulk mandato = fetchMandatoBulk(ctEsitoMandato);
+                    mandato.setEsitoOperazione(MandatoBulk.EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    mandato.setDtOraEsitoOperazione(
+                            new Timestamp(ctEsitoMandato
+                                    .getDataOraEsitoOperazione()
+                                    .toGregorianCalendar()
+                                    .getTimeInMillis())
+                    );
+                    mandato.setErroreSiopePlus(
+                            Optional.ofNullable(error)
+                                    .filter(stringBuffer -> stringBuffer.length() > 0)
+                                    .map(StringBuffer::toString)
+                                    .orElse(null)
+                    );
+                    mandato.setToBeUpdated();
+                    return mandato;
+                }).collect(Collectors.toList());
+        final List<OggettoBulk> reversaleStream = esitoReversaliOrEsitoMandati
+                .stream()
+                .filter(CtEsitoReversali.class::isInstance)
+                .map(CtEsitoReversali.class::cast)
+                .map(ctEsitoReversale -> {
+                    logger.info("Identificativo flusso: {} Reversale {}/{}", ctEsitoReversale.getIdentificativoFlusso(), ctEsitoReversale.getEsercizio(), ctEsitoReversale.getNumeroReversale());
+                    StringBuffer error = new StringBuffer();
+                    ctEsitoReversale.getListaErrori()
+                            .stream()
+                            .map(errore -> errore.getCodiceErrore().toString()
+                                    .concat(" - ")
+                                    .concat(errore.getDescrizione())
+                                    .concat(" - ")
+                                    .concat(errore.getElemento()))
+                            .peek(logger::error)
+                            .forEach(s -> {
+                                error.append(s.concat("\n"));
+                            });
+                    ReversaleBulk reversale = fetchReversaleBulk(ctEsitoReversale);
+                    reversale.setEsitoOperazione(ReversaleBulk.EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    reversale.setDtOraEsitoOperazione(
+                            new Timestamp(ctEsitoReversale
+                                    .getDataOraEsitoOperazione()
+                                    .toGregorianCalendar()
+                                    .getTimeInMillis())
+                    );
+                    reversale.setErroreSiopePlus(
+                            Optional.ofNullable(error)
+                                    .filter(stringBuffer -> stringBuffer.length() > 0)
+                                    .map(StringBuffer::toString)
+                                    .orElse(null)
+                    );
+                    reversale.setToBeUpdated();
+                    return reversale;
+                }).collect(Collectors.toList());
+        crudComponentSession.modificaConBulk(userContext,
+                Stream.concat(mandatoStream.stream(), reversaleStream.stream())
+                        .toArray(size -> new OggettoBulk[size]));
+
+        mandatoStream
+                .stream()
+                .filter(MandatoIBulk.class::isInstance)
+                .map(MandatoIBulk.class::cast)
+                .filter(mandatoBulk -> mandatoBulk.getEsitoOperazione().equals(MandatoBulk.EsitoOperazione.NON_ACQUISITO.value()))
+                .forEach(mandatoBulk -> {
+                    try {
+                        logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
+                        mandatoComponentSession.annullaMandato(userContext, mandatoBulk);
+                    } catch (ComponentException|RemoteException e) {
+                        logger.error("SIOPE+ ANNULLA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
+                    }
+                });
+
+        reversaleStream
+                .stream()
+                .filter(ReversaleIBulk.class::isInstance)
+                .map(ReversaleIBulk.class::cast)
+                .filter(reversaleBulk -> reversaleBulk.getEsitoOperazione().equals(ReversaleBulk.EsitoOperazione.NON_ACQUISITO.value()))
+                .forEach(reversaleBulk -> {
+                    try {
+                        logger.info("SIOPE+ ANNULLA REVERSALE [{}/{}]", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale());
+                        reversaleComponentSession.annullaReversale(userContext, reversaleBulk);
+                    } catch (ComponentException|RemoteException e) {
+                        logger.error("SIOPE+ ANNULLA REVERSALE [{}/{}] ERROR", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale(), e);
+                    }
+                });
+    }
+
+    /**
+     * Leggi messaggi dalla piattaforma SIOPE+
+     */
+    public void messaggiSiopeplus() {
+        logger.info("SIOPE+ SCAN started at: {}", LocalDateTime.now());
+
+        risultatiACK.removeAll(
+                risultatiACK
+                        .stream()
+                        .filter(risultato -> {
+                            try {
+                                messaggioACK(risultato);
+                                logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                                return true;
+                            } catch (RemoteException | ComponentException _ex) {
+                                logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                                return false;
+                            }
+                        }).collect(Collectors.toList()));
+        risultatiEsito.removeAll(
+                risultatiEsito
+                        .stream()
+                        .filter(risultato -> {
+                            try {
+                                messaggioEsito(risultato);
+                                logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                                return true;
+                            } catch (RemoteException | ComponentException _ex) {
+                                logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                                return false;
+                            }
+                        }).collect(Collectors.toList()));
+        risultatiEsitoApplicativo.removeAll(
+                risultatiEsitoApplicativo
+                        .stream()
+                        .filter(risultato -> {
+                            try {
+                                messaggioEsitoApplicativo(risultato);
+                                logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                                return true;
+                            } catch (RemoteException | ComponentException _ex) {
+                                logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                                return false;
+                            }
+                        }).collect(Collectors.toList()));
+        final Lista listaACK = ordinativiSiopePlusService.getListaMessaggi(OrdinativiSiopePlusService.Esito.ACK,
+                null, null, false, null);
+        logger.info("Lista ACK: {}", listaACK);
+        listaACK.getRisultati()
+                .stream()
+                .peek(risultato -> risultatiACK.add(risultato))
+                .forEach(risultato -> {
+                    try {
+                        messaggioACK(risultato);
+                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                        risultatiACK.remove(risultato);
+                    } catch (RemoteException | ComponentException _ex) {
+                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                    }
+                });
+
+        final Lista listaEsito = ordinativiSiopePlusService.getListaMessaggi(OrdinativiSiopePlusService.Esito.ESITO,
+                null, null, false, null);
+        logger.info("SIOPE+ Lista Esito: {}", listaEsito);
+        listaEsito.getRisultati()
+                .stream()
+                .peek(risultato -> risultatiEsito.add(risultato))
+                .forEach(risultato -> {
+                    try {
+                        messaggioEsito(risultato);
+                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                        risultatiEsito.remove(risultato);
+                    } catch (RemoteException | ComponentException _ex) {
+                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                    }
+                });
+
+        final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(OrdinativiSiopePlusService.Esito.ESITOAPPLICATIVO,
+                null, null, false, null);
+        logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
+        listaEsitoApplicativo.getRisultati()
+                .stream()
+                .peek(risultato -> risultatiEsitoApplicativo.add(risultato))
+                .forEach(risultato -> {
+                    try {
+                        messaggioEsitoApplicativo(risultato);
+                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                        risultatiEsitoApplicativo.remove(risultato);
+                    } catch (RemoteException | ComponentException _ex) {
+                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                    }
+                });
+        logger.info("SIOPE+ SCAN end at: {}", LocalDateTime.now());
     }
 
     class StorageDataSource implements DataSource {

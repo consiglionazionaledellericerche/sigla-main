@@ -56,25 +56,23 @@
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<version>0.14.0</version>
 				<configuration>
 					<schemaDirectory>${project.basedir}/src/main/resources/xsd</schemaDirectory>
-					<bindingDirectory>${project.basedir}/src/main/resources/xsd</bindingDirectory>
-					<strict>false</strict>
-					<extension>true</extension>
+					<generatePackage>it.siopeplus</generatePackage>
 					<plugins>
 						<plugin>
 							<groupId>org.jvnet.jaxb2_commons</groupId>
 							<artifactId>jaxb2-basics</artifactId>
-							<version>0.5.3</version>
+							<version>1.11.1</version>
 						</plugin>
 						<plugin>
 							<groupId>org.jvnet.jaxb2_commons</groupId>
 							<artifactId>jaxb2-basics-annotate</artifactId>
-							<version>0.5.3</version>
+							<version>1.1.0</version>
 						</plugin>
 					</plugins>
 					<args>
+						<arg>-Xsimplify</arg>
 						<arg>-Xannotate</arg>
 						<arg>-XtoString</arg>
 					</args>
@@ -94,7 +92,7 @@
  		<dependency>
             <groupId>org.jvnet.jaxb2_commons</groupId>
             <artifactId>jaxb2-basics-runtime</artifactId>
-            <version>0.5.3</version>
+            <version>1.11.1</version>
 			<scope>provided</scope>
         </dependency>	
 		<dependency>

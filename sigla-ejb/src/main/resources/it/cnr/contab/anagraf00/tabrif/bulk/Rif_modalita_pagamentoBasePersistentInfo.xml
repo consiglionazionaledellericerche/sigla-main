@@ -1,133 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBase"
-	keyClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoKey"
-	homeClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoHome" >
-	<defaultColumnMap
-		tableName="RIF_MODALITA_PAGAMENTO" >
-		<columnMapping
-			columnName="PG_VER_REC"
-			propertyName="pg_ver_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="false" />
-		<columnMapping
-			columnName="CODICE_CASSIERE"
-			propertyName="codice_cassiere"
-			sqlTypeName="VARCHAR"
-			columnSize="10" />
-		<columnMapping
-			columnName="UTCR"
-			propertyName="utcr"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_PER_CESSIONE"
-			propertyName="fl_per_cessione"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="FL_UTILIZZABILE_ART35"
-			propertyName="fl_utilizzabile_art35"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="FL_CANCELLATO"
-			propertyName="fl_cancellato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
-		<columnMapping
-			columnName="FL_ALL_OBBL_MANDATO"
-			propertyName="fl_all_obbl_mandato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="true"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />										
-		<columnMapping
-			columnName="DACR"
-			propertyName="dacr"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="DUVA"
-			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="TI_PAGAMENTO"
-			propertyName="ti_pagamento"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="DS_MODALITA_PAG"
-			propertyName="ds_modalita_pag"
-			sqlTypeName="VARCHAR"
-			columnSize="100"
-			nullable="false" />
-		<columnMapping
-			columnName="TIPO_PAGAMENTO_SDI"
-			propertyName="tipoPagamentoSdi"
-			sqlTypeName="VARCHAR"
-			columnSize="5"
-			nullable="true" />
-		<columnMapping
-			columnName="UTUV"
-			propertyName="utuv"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_CONTO_BI"
-			propertyName="fl_conto_bi"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="true" 
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />										
-		<columnMapping
-			columnName="TI_MANDATO"
-			propertyName="ti_mandato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="true" />		
-	</defaultColumnMap>
-	<persistentProperty
-		name="pg_ver_rec" />
-	<persistentProperty
-		name="codice_cassiere" />
-	<persistentProperty
-		name="utcr" />
-	<persistentProperty
-		name="fl_per_cessione" />
-	<persistentProperty
-		name="dacr" />
-	<persistentProperty
-		name="duva" />
-	<persistentProperty
-		name="ti_pagamento" />
-	<persistentProperty
-		name="ds_modalita_pag" />
-	<persistentProperty
-		name="tipoPagamentoSdi" />
-	<persistentProperty
-		name="utuv" />
-	<persistentProperty
-		name="fl_utilizzabile_art35" />	
-	<persistentProperty
-		name="fl_cancellato" />				
-	<persistentProperty
-		name="fl_all_obbl_mandato" />			
-	<persistentProperty
-		name="fl_conto_bi" />		
-	<persistentProperty
-		name="ti_mandato" />				
+        persistentClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBase"
+        keyClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoKey"
+        homeClassName="it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoHome">
+    <defaultColumnMap
+            tableName="RIF_MODALITA_PAGAMENTO">
+        <columnMapping
+                columnName="PG_VER_REC"
+                propertyName="pg_ver_rec"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="false"/>
+        <columnMapping
+                columnName="CODICE_CASSIERE"
+                propertyName="codice_cassiere"
+                sqlTypeName="VARCHAR"
+                columnSize="10"/>
+        <columnMapping
+                columnName="UTCR"
+                propertyName="utcr"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_PER_CESSIONE"
+                propertyName="fl_per_cessione"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="FL_UTILIZZABILE_ART35"
+                propertyName="fl_utilizzabile_art35"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="FL_CANCELLATO"
+                propertyName="fl_cancellato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="FL_ALL_OBBL_MANDATO"
+                propertyName="fl_all_obbl_mandato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="DACR"
+                propertyName="dacr"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="DUVA"
+                propertyName="duva"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="TI_PAGAMENTO"
+                propertyName="ti_pagamento"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="DS_MODALITA_PAG"
+                propertyName="ds_modalita_pag"
+                sqlTypeName="VARCHAR"
+                columnSize="100"
+                nullable="false"/>
+        <columnMapping
+                columnName="TIPO_PAGAMENTO_SDI"
+                propertyName="tipoPagamentoSdi"
+                sqlTypeName="VARCHAR"
+                columnSize="5"
+                nullable="true"/>
+        <columnMapping
+                columnName="UTUV"
+                propertyName="utuv"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_CONTO_BI"
+                propertyName="fl_conto_bi"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="TI_MANDATO"
+                propertyName="ti_mandato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"/>
+        <columnMapping
+                columnName="TIPO_PAGAMENTO_SIOPE"
+                propertyName="tipo_pagamento_siope"
+                sqlTypeName="VARCHAR"
+                columnSize="250"
+                nullable="true"/>
+
+    </defaultColumnMap>
+    <persistentProperty
+            name="pg_ver_rec"/>
+    <persistentProperty
+            name="codice_cassiere"/>
+    <persistentProperty
+            name="utcr"/>
+    <persistentProperty
+            name="fl_per_cessione"/>
+    <persistentProperty
+            name="dacr"/>
+    <persistentProperty
+            name="duva"/>
+    <persistentProperty
+            name="ti_pagamento"/>
+    <persistentProperty
+            name="ds_modalita_pag"/>
+    <persistentProperty
+            name="tipoPagamentoSdi"/>
+    <persistentProperty
+            name="utuv"/>
+    <persistentProperty
+            name="fl_utilizzabile_art35"/>
+    <persistentProperty
+            name="fl_cancellato"/>
+    <persistentProperty
+            name="fl_all_obbl_mandato"/>
+    <persistentProperty
+            name="fl_conto_bi"/>
+    <persistentProperty
+            name="ti_mandato"/>
+    <persistentProperty
+            name="tipo_pagamento_siope"/>
 </SQLPersistentInfo>

@@ -19,10 +19,7 @@ import java.rmi.RemoteException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public abstract class MandatoHome extends BulkHome {
     public MandatoHome(Class clazz, java.sql.Connection conn) {
@@ -213,5 +210,19 @@ public abstract class MandatoHome extends BulkHome {
             ht.put(tipo.getCd_tipo_documento_amm(), tipo.getDs_tipo_documento_amm());
         }
         return ht;
+    }
+
+    /**
+     *
+     * @param mandato
+     * @return
+     * @throws IntrospectionException
+     * @throws PersistencyException
+     */
+    public java.util.List findMandato(MandatoBulk mandato) throws IntrospectionException, PersistencyException {
+        final SQLBuilder sql = createSQLBuilder();
+        Optional.ofNullable(mandato)
+                .ifPresent(mandatoBulk -> sql.addClause(mandatoBulk.buildFindClauses(null)));
+        return fetchAll(sql);
     }
 }

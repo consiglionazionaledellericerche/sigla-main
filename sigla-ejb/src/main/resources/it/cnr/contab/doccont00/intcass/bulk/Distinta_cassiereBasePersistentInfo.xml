@@ -116,7 +116,22 @@
 			columnName="DT_INVIO_PEC"
 			propertyName="dt_invio_pec"
 			sqlTypeName="TIMESTAMP"
-			columnSize="7" />		
+			columnSize="7" />
+		<columnMapping
+			columnName="PROG_FLUSSO"
+			propertyName="progFlusso"
+			sqlTypeName="DECIMAL"
+			columnSize="30" />
+		<columnMapping
+			columnName="IDENTIFICATIVO_FLUSSO_BT"
+			propertyName="identificativoFlussoBT"
+			sqlTypeName="VARCHAR"
+			columnSize="30" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="3" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_distinta_def" />
@@ -153,5 +168,12 @@
 	<persistentProperty
 		name="fl_annulli" />			
 	<persistentProperty
-		name="dt_invio_pec" />	
+		name="dt_invio_pec" />
+	<persistentProperty
+		name="progFlusso" />
+	<persistentProperty
+		name="identificativoFlussoBT" />
+	<persistentProperty
+		name="stato" />
+
 </SQLPersistentInfo>
