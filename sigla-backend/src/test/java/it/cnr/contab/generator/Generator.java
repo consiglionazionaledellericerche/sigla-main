@@ -7,12 +7,12 @@ import it.cnr.contab.generator.util.DatabaseUtil;
 public class Generator {
     public static void main(String[] args) {
         GeneratorBean bean = new GeneratorBean();
-        bean.setPackageName("it.cnr.contab.progettiric00.core.bulk");
+        bean.setPackageName("it.cnr.contab.siope.plus.bulk");
         bean.setSourceFolder("/home/mspasiano/");
         bean.setTargetXMLFolder("/home/mspasiano/");
-        bean.setPrefix("TipoFinanziamento");
+        bean.setPrefix("SIOPEPlusRisultato");
 
-        bean.setTable("TIPO_FINANZIAMENTO");
+        bean.setTable("SIOPE_PLUS_RISULTATO");
         bean.setDriver("oracle.jdbc.driver.OracleDriver");
         bean.setUrl("jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF");
         bean.setSchema("PCIR009");

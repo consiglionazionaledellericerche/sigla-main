@@ -2,6 +2,7 @@ package it.cnr.contab.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.model.Esito;
 import it.cnr.contab.model.Lista;
 import it.cnr.contab.model.MessaggioXML;
 import it.cnr.contab.model.Risultato;
@@ -251,9 +252,5 @@ public class OrdinativiSiopePlusService {
         return HttpClients.custom()
                 .setSSLSocketFactory(sslConnectionSocketFactory)
                 .build();
-    }
-
-    public enum Esito {
-        ACK, ESITO, ESITOAPPLICATIVO;
     }
 }
