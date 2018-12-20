@@ -42,11 +42,7 @@ import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.siopeplus.CtClassificazioneDatiSiopeEntrate;
-import it.siopeplus.CtClassificazioneDatiSiopeUscite;
-import it.siopeplus.CtTestataFlusso;
-import it.siopeplus.StTipoDebitoNonCommerciale;
-import it.siopeplus.ObjectFactory;
+import it.siopeplus.*;
 import org.apache.commons.io.IOUtils;
 
 import javax.ejb.EJBException;
@@ -4634,19 +4630,27 @@ public class DistintaCassiereComponent extends
             for (Iterator i = list.iterator(); i.hasNext(); ) {
                 docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
                 final String modalitaPagamento = docContabile.getModalitaPagamento();
-                final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
-                        Optional.ofNullable(findByPrimaryKey(userContext, new Rif_modalita_pagamentoBulk(modalitaPagamento)))
-                        .filter(Rif_modalita_pagamentoBulk.class::isInstance)
-                        .map(Rif_modalita_pagamentoBulk.class::cast)
-                        .flatMap(rif_modalita_pagamentoBulk -> Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope()))
-                        .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
-                        .orElseThrow(() -> new ApplicationMessageFormatException("Tipo pagamento SIOPE+ non trovato per modalità: {}", modalitaPagamento));
 
+                final Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk =
+                        Optional.ofNullable(findByPrimaryKey(userContext, new Rif_modalita_pagamentoBulk(modalitaPagamento)))
+                                .filter(Rif_modalita_pagamentoBulk.class::isInstance)
+                                .map(Rif_modalita_pagamentoBulk.class::cast)
+                                .orElseThrow(() -> new ApplicationMessageFormatException("Modalità di pagamento non trovata: {0}", modalitaPagamento));
+
+                final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
+                        Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
+                            .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
+                            .orElseThrow(() -> new ApplicationMessageFormatException("Tipo pagamento SIOPE+ non trovato per modalità: {0}", modalitaPagamento));
+
+                //TODO deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
-                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB
                 ).contains(tipoPagamentoSiopePlus);
+                //TODO deve esserci il Conto
                 boolean obb_conto = Arrays.asList(
-                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA
                 ).contains(tipoPagamentoSiopePlus);
 
                 boolean obb_dati_beneficiario = Arrays.asList(
@@ -4654,7 +4658,6 @@ public class DistintaCassiereComponent extends
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.CASSA,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ADDEBITOPREAUTORIZZATODISPOSIZIONEDOCUMENTOESTERNO,
-                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
                 ).contains(tipoPagamentoSiopePlus);
 
@@ -4701,18 +4704,18 @@ public class DistintaCassiereComponent extends
                             .setScale(2, BigDecimal.ROUND_HALF_UP));
                     if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
                         infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value());
-                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value())
+                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP)
                             && docContabile.getDtPagamentoRichiesta() == null) {
                         throw new ApplicationMessageFormatException(
-                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {} n. {}",
+                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {0} n. {1}",
                                 docContabile.getCdCds(), docContabile.getPgDocumento());
-                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value())
+                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP)
                             && docContabile.getDtPagamentoRichiesta() != null &&
                             (it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().after(docContabile.getDtPagamentoRichiesta()))) {
                         throw new ApplicationMessageFormatException(
-                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {} mandato {} superiore alla data odierna!",
+                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {0} mandato {1} superiore alla data odierna!",
                                 docContabile.getCdCds(), docContabile.getPgDocumento());
-                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value()) &&
+                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP) &&
                             docContabile.getDtPagamentoRichiesta() != null &&
                             (it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().before(docContabile.getDtPagamentoRichiesta()))) {
                         infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value());
@@ -4731,7 +4734,52 @@ public class DistintaCassiereComponent extends
                     } else {
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
+                    if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)){
+                        infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
+                    }
+
                     infoben.setDestinazione(LIBERA);
+                    caricaInformazioniAggiuntive(infoben, bulk, aggiuntive, tipoPagamentoSiopePlus);
+                    caricaTipoPostalizzazione(infoben, docContabile, tipoPagamentoSiopePlus);
+                    if (obb_dati_beneficiario) {
+                        benef.setIndirizzoBeneficiario(RemoveAccent
+                                .convert(docContabile.getViaSede())
+                                .replace('"', ' ').replace('\u00b0', ' '));
+                        if (docContabile.getCapComuneSede() == null)
+                            throw new ApplicationException(
+                                    "Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "
+                                            + docContabile.getCdTerzo()
+                                            + " cds "
+                                            + docContabile.getCdCds()
+                                            + " mandato "
+                                            + docContabile.getPgDocumento());
+                        benef.setCapBeneficiario(docContabile.getCapComuneSede());
+                        benef.setLocalitaBeneficiario(RemoveAccent.convert(docContabile.getDsComune())
+                                .replace('"', ' ').replace('\u00b0', ' '));
+                        benef.setProvinciaBeneficiario(docContabile.getCdProvincia());
+                        benef.setStatoBeneficiario(docContabile.getCdIso());
+                        benef.setCodiceFiscaleBeneficiario(Optional.ofNullable(docContabile.getCodiceFiscale()).orElse(null));
+                        benef.setPartitaIvaBeneficiario(Optional.ofNullable(docContabile.getPartitaIva()).orElse(null));
+                    }
+                    infoben.setBeneficiario(benef);
+                    if (obb_conto) {
+                        piazzatura.setNumeroContoCorrenteBeneficiario(docContabile.getNumeroConto());
+                        infoben.setPiazzatura(piazzatura);
+                    }
+                    if (obb_iban) {
+                        sepa.setIban(docContabile.getCodiceIban());
+                        if (docContabile.getBic() != null && docContabile.getCodiceIban() != null
+                                && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
+                                !docContabile.getBic().contains(" "))// &&
+                            sepa.setBic(docContabile.getBic());
+
+                        sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
+                                .toString()
+                                + "-"
+                                + docContabile.getCdUoOrigine()
+                                + "-" + docContabile.getPgDocumento().toString());
+                        infoben.setSepaCreditTransfer(sepa);
+                    }
                     List listClass = findDocumentiFlussoClass(userContext, bulk);
                     VDocumentiFlussoBulk oldDoc = null;
                     for (Iterator c = listClass.iterator(); c.hasNext(); ) {
@@ -4982,18 +5030,18 @@ public class DistintaCassiereComponent extends
                         infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE.value());
                     } else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0){
                         infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value());
-                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value())
+                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP)
                             && docContabile.getDtPagamentoRichiesta() == null) {
                         throw new ApplicationMessageFormatException(
-                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {} n. {}",
+                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {0} n. {1}",
                                 docContabile.getCdCds(), docContabile.getPgDocumento());
-                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value())
+                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP)
                             && docContabile.getDtPagamentoRichiesta() != null &&
                             (it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().after(docContabile.getDtPagamentoRichiesta()))) {
                         throw new ApplicationMessageFormatException(
-                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {} mandato {} superiore alla data odierna!",
+                                "Impossibile generare il flusso, indicare data richiesta pagamento nel mandato cds {0} mandato {1} superiore alla data odierna!",
                                 docContabile.getCdCds(), docContabile.getPgDocumento());
-                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value()) &&
+                    } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP) &&
                             docContabile.getDtPagamentoRichiesta() != null &&
                             (it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp().before(docContabile.getDtPagamentoRichiesta()))) {
                         infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP.value());
@@ -5012,6 +5060,11 @@ public class DistintaCassiereComponent extends
                     } else {
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
+                    if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)){
+                        infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
+                    }
+                    caricaInformazioniAggiuntive(infoben, bulk, aggiuntive, tipoPagamentoSiopePlus);
+                    caricaTipoPostalizzazione(infoben, docContabile, tipoPagamentoSiopePlus);
                     infoben.setDestinazione(LIBERA);
                     List listClass = findDocumentiFlussoClass(userContext, bulk);
                     BigDecimal totAssSiope = BigDecimal.ZERO;
@@ -5248,11 +5301,11 @@ public class DistintaCassiereComponent extends
                         benef.setPartitaIvaBeneficiario(Optional.ofNullable(docContabile.getPartitaIva()).orElse(null));
                     }
                     infoben.setBeneficiario(benef);
-                    if (infoben.getTipoPagamento().equals(ACCREDITO_CONTO_CORRENTE_POSTALE)) {
+                    if (obb_conto) {
                         piazzatura.setNumeroContoCorrenteBeneficiario(docContabile.getNumeroConto());
                         infoben.setPiazzatura(piazzatura);
                     }
-                    if (infoben.getTipoPagamento().equals(SEPA_CREDIT_TRANSFER)) {
+                    if (obb_iban) {
                         sepa.setIban(docContabile.getCodiceIban());
                         if (docContabile.getBic() != null && docContabile.getCodiceIban() != null
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
@@ -5345,5 +5398,39 @@ public class DistintaCassiereComponent extends
         } catch (Exception e) {
             throw handleException(e);
         }
+    }
+
+    private void caricaTipoPostalizzazione(it.siopeplus.Mandato.InformazioniBeneficiario infoben, VDocumentiFlussoBulk docContabile, Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus) throws ApplicationMessageFormatException {
+        if (Arrays.asList(
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE,
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE
+        ).contains(tipoPagamentoSiopePlus)){
+            infoben.setTipoPostalizzazione(
+                    Optional.ofNullable(docContabile.getTipoPostalizzazione())
+                        .orElseThrow(() -> new ApplicationMessageFormatException(
+                                "Impossibile generare il flusso, indicare il tipo postalizzazione sulla modalità di pagamento {0} del mandato {1}/{2}/{3} riferito al terzo {4}!",
+                                docContabile.getModalitaPagamento(),
+                                String.valueOf(docContabile.getEsercizio()),
+                                docContabile.getCdCds(),
+                                String.valueOf(docContabile.getPgDocumento()),
+                                String.valueOf(docContabile.getCdTerzo()))
+                        )
+            );
+        }
+    }
+
+    private void caricaInformazioniAggiuntive(it.siopeplus.Mandato.InformazioniBeneficiario infoben,
+                                              V_mandato_reversaleBulk bulk,
+                                              InformazioniAggiuntive aggiuntive,
+                                              Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus) {
+        if (Arrays.asList(
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ADDEBITOPREAUTORIZZATODISPOSIZIONEDOCUMENTOESTERNO,
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP
+        ).contains(tipoPagamentoSiopePlus)){
+            aggiuntive.setRiferimentoDocumentoEsterno(bulk.getCMISName());
+            infoben.setInformazioniAggiuntive(aggiuntive);
+        }
+
     }
 }
