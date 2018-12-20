@@ -1,5 +1,6 @@
 package it.cnr.contab;
 
+import it.cnr.contab.model.Esito;
 import it.cnr.contab.model.Lista;
 import it.cnr.contab.model.Risultato;
 import it.cnr.contab.service.OrdinativiSiopePlusService;
@@ -58,7 +59,7 @@ public class OrdinativiSiopePlusTest {
         OrdinativiSiopePlusService ordinativiSiopePlusService = new OrdinativiSiopePlusService();
         ordinativiSiopePlusService.urlACK = "https://certa2a.siopeplus.it/v1/A2A-31432329/PA/O5WZO8/flusso/ack/";
         ordinativiSiopePlusService.password = properties.getProperty("siopeplus.certificate.password");
-        final Lista lista = ordinativiSiopePlusService.getListaMessaggi(OrdinativiSiopePlusService.Esito.ACK, null, null, null, null);
+        final Lista lista = ordinativiSiopePlusService.getListaMessaggi(Esito.ACK, null, null, null, null);
         Assert.notNull(lista);
         return lista;
     }
@@ -101,7 +102,7 @@ public class OrdinativiSiopePlusTest {
         final CtTestataFlusso testataFlusso = objectFactory.createCtTestataFlusso();
         testataFlusso.setCodiceABIBT("01005");
         testataFlusso.setRiferimentoEnte("A2A-31432329");
-        testataFlusso.setIdentificativoFlusso("TEST-" + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC));
+        testataFlusso.setIdentificativoFlusso(LocalDateTime.now().getYear() + "-TEST-" + LocalDateTime.now().toEpochSecond(ZoneOffset.UTC) + "-I");
         testataFlusso.setDataOraCreazioneFlusso(DatatypeFactory.newInstance().newXMLGregorianCalendar(formatterTime.format(date)));
         testataFlusso.setCodiceEnte("O5WZO8");
         testataFlusso.setCodiceEnteBT("0000767");
