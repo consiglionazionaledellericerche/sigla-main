@@ -662,7 +662,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         }
 
         final Lista listaACK = ordinativiSiopePlusService.getListaMessaggi(Esito.ACK,
-                null, null, null, null);
+                null, null, false, null);
         logger.info("Lista ACK: {}", listaACK);
         Optional.ofNullable(listaACK.getRisultati())
                 .orElse(Collections.emptyList())
@@ -682,7 +682,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 });
 
         final Lista listaEsito = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITO,
-                null, null, null, null);
+                null, null, false, null);
         logger.info("SIOPE+ Lista Esito: {}", listaEsito);
         Optional.ofNullable(listaEsito.getRisultati())
                 .orElse(Collections.emptyList())
@@ -702,7 +702,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 });
 
         final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
-                null, null, null, null);
+                null, null, false, null);
         logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
         Optional.ofNullable(listaEsitoApplicativo.getRisultati())
                 .orElse(Collections.emptyList())
