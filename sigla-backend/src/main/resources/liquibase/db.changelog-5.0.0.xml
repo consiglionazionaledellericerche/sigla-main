@@ -1524,5 +1524,46 @@ COMPENSAZIONE
 BONIFICO ESTERO EURO"/>
         </addColumn>
     </changeSet>
+    <changeSet author="marco.spasiano" id="create-table-siope-plus-risultato">
+        <createTable remarks="Tabella contenente i link dei messaggi SIOPE+" tableName="siope_plus_risultato">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esito" remarks="Codice identificativo dell''esito." type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" remarks="URL del messaggio" type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="siope_plus_risultato_pkey" tableName="siope_plus_risultato"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_banca_add_tipo_postalizzazione">
+        <addColumn tableName="banca">
+            <column name="tipo_postalizzazione" type="varchar2(250)" remarks="Tipo Postalizzazione siope+ Può assumere i valori:
+COME DA CONVENZIONE
+CONSEGNA ALL'ENTE
+POSTA PRIORITARIA
+RACCOMANDATA
+RACCOMANDATA A.R.
+ASSICURATA"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
 
