@@ -23,7 +23,7 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
     public final static String QUIETANZA = "Q";
     public final static String BANCA_ITALIA = "I";
     public final static String IBAN = "N";
-
+    public final static String ASSEGNO = "S";
     static {
         TI_PAGAMENTO_KEYS = new it.cnr.jada.util.OrderedHashtable();
         TI_PAGAMENTO_KEYS.put(BANCARIO, "Bancario");

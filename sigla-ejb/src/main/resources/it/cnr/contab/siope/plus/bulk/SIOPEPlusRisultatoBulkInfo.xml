@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Chiave Primaria." />
+	<fieldProperty
+		name="esito"
+		property="esito"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="50"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Codice identificativo dell''esito." />
+	<fieldProperty
+		name="location"
+		property="location"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnEdit="false"
+		nullable="false"
+		label="URL del messaggio" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="esito" />
+	<formFieldProperty
+		name="location" />
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="esito" />
+	<findFieldProperty
+		name="location" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="esito" />
+	<columnFieldProperty
+		name="location" />
+</bulkInfo>
