@@ -150,6 +150,10 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
 	private java.lang.String modalitaPagamento;
 
 	private java.sql.Timestamp dtPagamentoRichiesta;
+
+	//    TIPO_POSTALIZZAZIONE VARCHAR(250)
+	private java.lang.String tipoPostalizzazione;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: V_DOCUMENTI_FLUSSO
@@ -763,5 +767,13 @@ public class VDocumentiFlussoBase extends OggettoBulk implements Persistent {
 
 	public void setPartitaIva(String partitaIva) {
 		this.partitaIva = partitaIva;
+	}
+
+	public String getTipoPostalizzazione() {
+		return tipoPostalizzazione;
+	}
+
+	public void setTipoPostalizzazione(String tipoPostalizzazione) {
+		this.tipoPostalizzazione = tipoPostalizzazione;
 	}
 }

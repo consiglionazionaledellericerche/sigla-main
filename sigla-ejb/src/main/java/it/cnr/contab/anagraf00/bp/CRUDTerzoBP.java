@@ -6,6 +6,7 @@ import it.cnr.contab.anagraf00.core.bulk.ContattoBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TelefonoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -23,7 +24,9 @@ import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Optional;
 
 /**
  * Gestisce le catene di elementi correlate con l'anagrafica in uso.
@@ -543,5 +546,23 @@ public class CRUDTerzoBP extends SimpleCRUDBP {
 				setStatus(VIEW);
 			}
 		}
+	}
+
+	public String getTiPagamento() {
+		return Optional.ofNullable(getCrudModalita_pagamento())
+				.flatMap(simpleDetailCRUDController -> Optional.ofNullable(simpleDetailCRUDController.getModel()))
+				.filter(Modalita_pagamentoBulk.class::isInstance)
+				.map(Modalita_pagamentoBulk.class::cast)
+				.flatMap(modalita_pagamentoBulk -> Optional.ofNullable(modalita_pagamentoBulk.getRif_modalita_pagamento()))
+				.map(rif_modalita_pagamentoBulk -> {
+					if (Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope()).isPresent() &&
+							Arrays.asList(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE.value(),
+									Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE.value())
+									.contains(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())) {
+						return Rif_modalita_pagamentoBulk.ASSEGNO;
+					}
+					return rif_modalita_pagamentoBulk.getTi_pagamento();
+				})
+				.orElse(Rif_modalita_pagamentoBulk.ALTRO);
 	}
 }

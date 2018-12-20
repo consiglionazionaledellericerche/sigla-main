@@ -239,7 +239,14 @@
 			propertyName="dtPagamentoRichiesta"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
-			nullable="true" />	
+			nullable="true" />
+		<columnMapping
+			columnName="TIPO_POSTALIZZAZIONE"
+			propertyName="tipoPostalizzazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+
 	</defaultColumnMap>
 	
 	<columnMap 
@@ -462,4 +469,7 @@
 		name ="modalitaPagamento" />
 	<persistentProperty
 		name ="dtPagamentoRichiesta" />
+	<persistentProperty
+		name ="tipoPostalizzazione" />
+
 </SQLPersistentInfo>

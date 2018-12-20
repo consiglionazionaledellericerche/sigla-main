@@ -111,6 +111,12 @@
 			propertyName="numero_conto"
 			sqlTypeName="VARCHAR"
 			columnSize="30" />
+		<columnMapping
+			columnName="TIPO_POSTALIZZAZIONE"
+			propertyName="tipo_postalizzazione"
+			sqlTypeName="VARCHAR"
+			columnSize="250" />
+
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -150,4 +156,6 @@
 		name="abi" />
 	<persistentProperty
 		name="numero_conto" />
+	<persistentProperty
+		name="tipo_postalizzazione" />
 </SQLPersistentInfo>

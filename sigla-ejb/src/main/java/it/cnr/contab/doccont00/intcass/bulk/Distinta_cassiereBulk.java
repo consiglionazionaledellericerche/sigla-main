@@ -674,12 +674,16 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 	}
 
 	public static Distinta_cassiereBulk fromIdentificativoFlusso(String identificativoFlusso) {
-		final String[] split = identificativoFlusso.split("-");
-		Distinta_cassiereBulk distinta = new Distinta_cassiereBulk();
-		distinta.setEsercizio(Integer.valueOf(split[0]));
-		distinta.setCd_unita_organizzativa(split[1]);
-		distinta.setPg_distinta_def(Long.valueOf(split[2]));
-		return distinta;
+		try {
+			final String[] split = identificativoFlusso.split("-");
+			Distinta_cassiereBulk distinta = new Distinta_cassiereBulk();
+			distinta.setEsercizio(Integer.valueOf(split[0]));
+			distinta.setCd_unita_organizzativa(split[1]);
+			distinta.setPg_distinta_def(Long.valueOf(split[2]));
+			return distinta;
+		} catch (NumberFormatException _ex) {
+			return null;
+		}
 	}
 
 	@Override
