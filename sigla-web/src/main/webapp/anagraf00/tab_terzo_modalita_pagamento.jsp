@@ -11,12 +11,7 @@
 <%
 	CRUDTerzoBP bp = (CRUDTerzoBP)BusinessProcess.getBusinessProcess(request);
 
-  	String ti_pagamento = null;
-	if (bp.getCrudModalita_pagamento().getModel() != null)
-		ti_pagamento = ((Modalita_pagamentoBulk)bp.getCrudModalita_pagamento().getModel()).getRif_modalita_pagamento().getTi_pagamento();
-	if (ti_pagamento == null || ti_pagamento.length() == 0)
-		ti_pagamento = Rif_modalita_pagamentoBulk.ALTRO;
-
+  	String ti_pagamento = bp.getTiPagamento();
 	boolean isIbanNullable=bp.getCrudBanche()!=null && 
 			             bp.getCrudBanche().getModel()!=null &&
 					     ((BancaBulk)bp.getCrudBanche().getModel()).getTi_pagamento()!=null &&
