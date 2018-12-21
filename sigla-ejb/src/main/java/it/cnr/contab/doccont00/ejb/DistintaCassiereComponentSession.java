@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.ejb;
 
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.ExtCassiereCdsBulk;
@@ -67,4 +68,8 @@ public interface DistintaCassiereComponentSession extends it.cnr.jada.ejb.CRUDDe
     public List findReversali(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException, RemoteException;
 
     public List findDocumentiFlussoClassReversali(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException, RemoteException;
+
+    public void unlockMessaggiSIOPEPlus(UserContext userContext) throws ComponentException, RemoteException;
+
+    public Configurazione_cnrBulk lockMessaggiSIOPEPlus(UserContext userContext) throws ComponentException, RemoteException;
 }

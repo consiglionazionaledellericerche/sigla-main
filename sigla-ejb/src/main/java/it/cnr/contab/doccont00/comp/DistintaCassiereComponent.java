@@ -1058,7 +1058,7 @@ public class DistintaCassiereComponent extends
      * Processo dei File
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
-     * @param file        il <code>V_ext_cassiere00Bulk</code> file da processare.
+     * @param  distinta  il <code>V_ext_cassiere00Bulk</code> file da processare.
      **/
     private void callCheckDocContForDistinta(UserContext userContext,
                                              Distinta_cassiereBulk distinta)
@@ -1132,7 +1132,7 @@ public class DistintaCassiereComponent extends
      * corrispondente. Post: Viene caricata la lista di processi relativi al
      * File specificato.
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param file <code>V_ext_cassiere00Bulk</code> l'oggetto da inizializzare
      * @return <code>V_ext_cassiere00Bulk<code> l'oggetto inizializzato
      */
@@ -1696,8 +1696,8 @@ public class DistintaCassiereComponent extends
      * dalla distinta e all'aggiornamento dello stato_trasmissione del doc.
      * contabile collegato
      *
-     * @param aUC          lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk         <code>OggettoBulk</code> la distinta i cui dettagli sono da
+     * @param userContext          lo <code>UserContext</code> che ha generato la richiesta
+     * @param distinta         <code>OggettoBulk</code> la distinta i cui dettagli sono da
      *                     cancellare
      * @param docContabile <code>V_mandato_reversaleBulk</code> il doc.contabile per cui
      *                     ricercare i doc. contabili collegati
@@ -1738,8 +1738,8 @@ public class DistintaCassiereComponent extends
      * (metodo 'aggiornaStatoDocContabili'). Tutti i dettagli della distinta
      * vengono fisicamente rimossi dal database
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la distinta i cui dettagli sono da
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
+     * @param distinta <code>OggettoBulk</code> la distinta i cui dettagli sono da
      *             cancellare
      */
     public void eliminaTuttiDettagliDistinta(
@@ -1784,7 +1784,7 @@ public class DistintaCassiereComponent extends
      * era già stata in precedenza inserita nel database ( metodo
      * 'inizializzaBulkPerInserimento'), viene aggiornata.
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la distinta da cancellare
      */
 
@@ -1805,7 +1805,7 @@ public class DistintaCassiereComponent extends
      * INSERITO IN DISTINTA (metodo 'eliminaTuttiDettagliDistinta'). La distinta
      * viene cancellata
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la distinta da cancellare
      */
 
@@ -1831,7 +1831,7 @@ public class DistintaCassiereComponent extends
      * Distinta_cassiereBulk che ha superato la validazione Post: La distinta e'
      * stata modificata
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la distinta da modificare
      * @return la distinta modificata
      */
@@ -1860,7 +1860,7 @@ public class DistintaCassiereComponent extends
      * trasmessi al cassiere (metodo 'calcolaTotaliStorici'); viene recuperato
      * il codice del Cds Ente (999). La distinta viene inserita nel database.
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la distinta da inizializzare per
      *             inserimento
      * @return la distinta inizializzata per l'inserimento
@@ -1932,7 +1932,7 @@ public class DistintaCassiereComponent extends
      * mandati/reversali già trasmessi al cassiere (metodo
      * 'calcolaTotaliStorici') e viene recuperato il codice del Cds Ente (999)
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la distinta da inizializzare per la
      *             modifica
      * @return la distinta inizializzata per la modifica
@@ -1977,7 +1977,7 @@ public class DistintaCassiereComponent extends
      * di mandati/reversali già trasmessi al cassiere (metodo
      * 'calcolaTotaliStorici')
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la distinta da inizializzare per la
      *             ricerca
      * @return la distinta inizializzata per la ricerca
@@ -3495,8 +3495,7 @@ public class DistintaCassiereComponent extends
      * @param userContext                lo UserContext che ha generato la richiesta
      * @param distinta          la Distinta_cassiereBulk per cui creare il dettaglio
      * @param docContabile      il mandato/reversale da inserire in distinta
-     * @param last_pg_dettaglio il numero che indica l'ultimo progressivo dettaglio utilizzato
-     *                          per la distinta
+     *
      * @return last_pg_dettaglio + 1
      */
     private void inserisciDettaglioDistinteCollegate(
@@ -4136,7 +4135,8 @@ public class DistintaCassiereComponent extends
     }
 
     public List findDocumentiFlussoClass(UserContext usercontext, V_mandato_reversaleBulk bulk) throws ComponentException {
-        it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome) getHome(usercontext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class, "CLASSIFICAZIONE");
+        it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome homeClass = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoHome)
+                getHome(usercontext, it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk.class, "CLASSIFICAZIONE");
         SQLBuilder sqlClass = homeClass.createSQLBuilder();
         sqlClass.resetColumns();
         sqlClass.addColumn("ESERCIZIO");
@@ -4293,6 +4293,24 @@ public class DistintaCassiereComponent extends
             if (duplicati != null)
                 throw new ApplicationException(duplicati);
         } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
+    public void unlockMessaggiSIOPEPlus(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+        try {
+            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
+                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                    Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS,
+                    "*",
+                    CNRUserContext.getEsercizio(userContext)
+            );
+            Configurazione_cnrHome configurazione_cnrHome = (Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class);
+            configurazione_cnrBulk = (Configurazione_cnrBulk) configurazione_cnrHome.findAndLock(configurazione_cnrBulk);
+            configurazione_cnrBulk.setVal04("N");
+            configurazione_cnrBulk.setToBeUpdated();
+            configurazione_cnrHome.update(configurazione_cnrBulk, userContext);
+        } catch(Throwable e) {
             throw handleException(e);
         }
     }
@@ -4681,9 +4699,11 @@ public class DistintaCassiereComponent extends
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.CASSA,
-                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ADDEBITOPREAUTORIZZATODISPOSIZIONEDOCUMENTOESTERNO,
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
-                ).contains(tipoPagamentoSiopePlus);
+                ).contains(tipoPagamentoSiopePlus) &&
+                        //TODO da sostituire
+                        !rif_modalita_pagamentoBulk.getCd_modalita_pag().equals("STIPENDI");
 
                 mandato.setNumeroMandato(docContabile.getPgDocumento().intValue());
                 gcdi.setTime(docContabile.getDtEmissione());
@@ -4709,7 +4729,7 @@ public class DistintaCassiereComponent extends
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.CASSA,
-                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ADDEBITOPREAUTORIZZATODISPOSIZIONEDOCUMENTOESTERNO,
+                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
                         ).contains(tipoPagamentoSiopePlus)).isPresent();
@@ -4771,7 +4791,7 @@ public class DistintaCassiereComponent extends
                                 .replace('"', ' ').replace('\u00b0', ' '));
                         if (docContabile.getCapComuneSede() == null)
                             throw new ApplicationException(
-                                    "Impossibile generare il flusso, Cap benificiario non valorizzato per il terzo "
+                                    "Impossibile generare il flusso, Cap beneficiario non valorizzato per il terzo "
                                             + docContabile.getCdTerzo()
                                             + " cds "
                                             + docContabile.getCdCds()
@@ -5448,7 +5468,7 @@ public class DistintaCassiereComponent extends
                                               InformazioniAggiuntive aggiuntive,
                                               Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus) {
         if (Arrays.asList(
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ADDEBITOPREAUTORIZZATODISPOSIZIONEDOCUMENTOESTERNO,
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP
         ).contains(tipoPagamentoSiopePlus)){

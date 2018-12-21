@@ -141,7 +141,7 @@ public class OrdinativiSiopePlusService {
             Optional.ofNullable(dataDa)
                     .ifPresent(date -> builder.setParameter(getDataDa(esito), dataDa.format(formatter)));
             Optional.ofNullable(dataA)
-                    .ifPresent(date -> builder.setParameter(getDataA(esito), dataDa.format(formatter)));
+                    .ifPresent(date -> builder.setParameter(getDataA(esito), dataA.format(formatter)));
             Optional.ofNullable(download)
                     .ifPresent(aBoolean -> builder.setParameter("download", aBoolean.toString()));
             Optional.ofNullable(pagina)
