@@ -326,7 +326,8 @@
              c.cd_livello6, c.cd_livello7, NULL, NULL, c.ds_liv1, c.ds_liv2,
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, 0 im_residui_ac,
-             NVL (SUM (a.im_entrata), 0) im_previsione_ac, 0 im_cassa_ac,
+             NVL (SUM (a.im_entrata), 0) im_previsione_ac, 
+             NVL (SUM (a.im_incassi), 0) im_cassa_ac,
              0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
         FROM pdg_modulo_entrate_gest a,
              elemento_voce b,
