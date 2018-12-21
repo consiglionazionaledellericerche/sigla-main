@@ -71,10 +71,6 @@
 		<servlet-class>it.cnr.contab.util.servlet.GenericDownloadServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>DownloadIncarichiServlet</servlet-name>
-		<servlet-class>it.cnr.contab.incarichi00.servlet.DownloadIncarichiServlet</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>DownloadBlobServlet</servlet-name>
 		<servlet-class>it.cnr.contab.blobs.servlet.DownloadBlobServlet</servlet-class>
 	</servlet>
@@ -141,14 +137,6 @@
 	<servlet-mapping>
 		<servlet-name>ExpireSessionServlet</servlet-name>
 		<url-pattern>/expire</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadIncarichiServlet</servlet-name>
-		<url-pattern>/download_incarichi/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>DownloadIncarichiServlet</servlet-name>
-		<url-pattern>/download_incarichi/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>GenericDownloadServlet</servlet-name>
