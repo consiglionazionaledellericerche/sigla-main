@@ -197,7 +197,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                     storageFile.getContentType(),
                                     storageFile.getFileName(),
                                     path,
-                                    true
+                                    false
                             )).ifPresent(storageObject -> {
                                 List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
                                 aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());

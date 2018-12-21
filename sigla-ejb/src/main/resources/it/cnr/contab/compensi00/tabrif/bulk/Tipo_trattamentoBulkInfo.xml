@@ -242,6 +242,17 @@
 		enabledOnSearch="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true" />	
+	<fieldProperty
+		name="tipoDebitoSiope"
+		property="tipoDebitoSiope"
+		keysProperty="tipoDebitoSiopeKeys"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="true"
+	 	label="Tipo Debito per Siope+"/>
 			
 	<formFieldProperty
 		name="cd_trattamento"
@@ -273,6 +284,7 @@
 	<formFieldProperty name="fl_agevolazioni_rientro_lav" />	
 	<formFieldProperty name="fl_solo_inail_ente" />	
 	<formFieldProperty name="fl_split_payment" />	
+	<formFieldProperty name="tipoDebitoSiope" />	
 	
 	<columnFieldProperty name="cd_trattamento" />
 	<columnFieldProperty name="ds_ti_trattamento" />
@@ -300,6 +312,7 @@
 	<columnFieldProperty name="fl_agevolazioni_rientro_lav" />					
 	<columnFieldProperty name="fl_solo_inail_ente" />					
 	<columnFieldProperty name="fl_split_payment" />
+	<columnFieldProperty name="tipoDebitoSiope" />	
 	
 	<columnSet name="cd_ds_trattamento">
 		<columnFieldProperty name="cd_trattamento" />
@@ -334,5 +347,6 @@
 	<findFieldProperty name="fl_agevolazioni_rientro_lav" />	
 	<findFieldProperty name="fl_solo_inail_ente" />
 	<findFieldProperty name="fl_split_payment" />	
+	<findFieldProperty name="tipoDebitoSiope" />	
 		
 </bulkInfo>
