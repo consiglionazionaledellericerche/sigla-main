@@ -1,5 +1,24 @@
 package it.cnr.contab.incarichi00.bp;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.TreeMap;
+
+import javax.servlet.ServletException;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -27,8 +46,6 @@ import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -47,20 +64,8 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.rmi.RemoteException;
-import java.util.*;
-
-import javax.servlet.ServletException;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private transient static final Logger logger = LoggerFactory.getLogger(CRUDIncarichiProceduraBP.class);
@@ -2449,6 +2454,52 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		IOUtils.copyLarge(is, os);
 	}
 
+    public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
+
+		boolean multi_incarico = false;
+
+		Incarichi_proceduraBulk procedura = ((Incarichi_proceduraBulk)getModel());
+
+		if (procedura!=null && procedura.getNr_contratti()!=null && procedura.getNr_contratti().compareTo(new Integer(1))==1)
+			multi_incarico=true;
+
+		SimpleDetailCRUDController controller = multi_incarico?getCrudArchivioAllegati():getCrudArchivioAllegatiMI();
+
+		Incarichi_archivioBulk allegato;
+
+		// Recupero il valore (posizione) del record selezionato
+		int  sel = controller.getSelection().getFocus();
+		
+		/*
+		** Quando navigo la prima volta nella tab e non ci sono 
+		** record selezionati, il valore restituito è -1. 
+		** In questo caso imposto il valore a 0.
+		*/
+		if (sel == -1)
+		   allegato = null;
+		else {
+			allegato = (Incarichi_archivioBulk)controller.getModel();	   
+
+			StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCms_node_ref());
+			InputStream is = storeService.getResource(allegato.getCms_node_ref());
+			((HttpActionContext) actioncontext).getResponse().setContentLength(
+					(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
+					);
+			((HttpActionContext) actioncontext).getResponse().setContentType(
+					(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
+					);
+			OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
+			((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
+			byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
+			int buflength;
+			while ((buflength = is.read(buffer)) > 0) {
+				os.write(buffer, 0, buflength);
+			}
+			is.close();
+			os.flush();
+		}
+    }
 	public void mergeWithCMIS(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException
 	{
 		try {
