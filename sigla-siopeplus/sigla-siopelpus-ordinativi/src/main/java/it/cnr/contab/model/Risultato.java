@@ -10,6 +10,8 @@ public class Risultato {
     private Boolean download;
     private String location;
 
+    private Exception error;
+
     public Risultato() {
     }
 
@@ -59,6 +61,14 @@ public class Risultato {
 
     public void setProgEsitoApplicativo(Integer progEsitoApplicativo) {
         this.progEsitoApplicativo = progEsitoApplicativo;
+    }
+
+    public Exception getError() {
+        return error;
+    }
+
+    public void setError(Exception error) {
+        this.error = error;
     }
 
     @Override
