@@ -37,7 +37,14 @@
   <div class="Group">		
   <table border="0" cellspacing="0" cellpadding="2">
 	<tr>
-			<td><% bp.getController().writeFormInput( out, "ti_reversale" ); %></td>
+		<td>
+			<%
+			if (bp.isEnteCNR())
+				bp.getController().writeFormInput( out, "ti_reversaleCNR" ); 
+			else
+				bp.getController().writeFormInput( out, "ti_reversale" );
+			%>
+		</td>
 	</tr>
   </table>
   </div>
