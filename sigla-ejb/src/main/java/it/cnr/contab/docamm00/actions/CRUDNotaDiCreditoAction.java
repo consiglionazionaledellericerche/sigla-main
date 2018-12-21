@@ -1465,7 +1465,7 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
 public Forward doSearchListabancheuo(ActionContext context) {
 
 	Nota_di_creditoBulk ndc = (Nota_di_creditoBulk)getBusinessProcess(context).getModel();
-	return search(context, getFormField(context, "main.listabancheuo"), ndc.getModalita_pagamento_uo().getTi_pagamento());
+	return search(context, getFormField(context, "main.listabancheuo"), ndc.getModalita_pagamento_uo().getTiPagamentoColumnSet());
 }
 /**
  * <!-- @TODO: da completare -->

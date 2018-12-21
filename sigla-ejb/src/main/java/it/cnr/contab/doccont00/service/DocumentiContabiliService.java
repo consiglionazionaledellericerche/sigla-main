@@ -55,11 +55,9 @@ import java.security.Principal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DocumentiContabiliService extends StoreService implements InitializingBean {
     private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
@@ -546,7 +544,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     mandato.setToBeUpdated();
                     try {
                         return crudComponentSession.modificaConBulk(userContext, mandato);
-                    } catch (ComponentException|RemoteException e) {
+                    } catch (ComponentException | RemoteException e) {
                         logger.error("SIOPE+ AGGIORNA MANDATO [{}/{}] ERROR", mandato.getEsercizio(), mandato.getPg_mandato(), e);
                         return null;
                     }
@@ -586,7 +584,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     reversale.setToBeUpdated();
                     try {
                         return crudComponentSession.modificaConBulk(userContext, reversale);
-                    } catch (ComponentException|RemoteException e) {
+                    } catch (ComponentException | RemoteException e) {
                         logger.error("SIOPE+ AGGIORNA REVERSALE [{}/{}] ERROR", reversale.getEsercizio(), reversale.getPg_reversale(), e);
                         return null;
                     }
@@ -602,7 +600,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     try {
                         logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
                         mandatoComponentSession.annullaMandato(userContext, mandatoBulk, true);
-                    } catch (ComponentException|RemoteException e) {
+                    } catch (ComponentException | RemoteException e) {
                         logger.error("SIOPE+ ANNULLA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
                     }
                 });
@@ -617,7 +615,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     try {
                         logger.info("SIOPE+ ANNULLA REVERSALE [{}/{}]", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale());
                         reversaleComponentSession.annullaReversale(userContext, reversaleBulk, true);
-                    } catch (ComponentException|RemoteException e) {
+                    } catch (ComponentException | RemoteException e) {
                         logger.error("SIOPE+ ANNULLA REVERSALE [{}/{}] ERROR", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale(), e);
                     }
                 });
@@ -631,14 +629,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
         try {
             final List<SIOPEPlusRisultatoBulk> risultati = crudComponentSession.find(userContext, SIOPEPlusRisultatoBulk.class, "findAll");
-            for (SIOPEPlusRisultatoBulk siopePlusRisultatoBulk: risultati) {
+            for (SIOPEPlusRisultatoBulk siopePlusRisultatoBulk : risultati) {
                 try {
                     Risultato risultato = new Risultato();
                     risultato.setLocation(siopePlusRisultatoBulk.getLocation());
                     risultato.setDataProduzione(EJBCommonServices.getServerTimestamp());
                     risultato.setDataUpload(EJBCommonServices.getServerTimestamp());
                     switch (siopePlusRisultatoBulk.getEsitoEnum()) {
-                        case ACK : {
+                        case ACK: {
                             messaggioACK(risultato);
                             break;
                         }
@@ -657,7 +655,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     logger.error("SIOPE+  error during find risultato", e);
                 }
             }
-        } catch (ComponentException|RemoteException e) {
+        } catch (ComponentException | RemoteException e) {
             logger.error("SIOPE+  error during find risultato", e);
         }
 

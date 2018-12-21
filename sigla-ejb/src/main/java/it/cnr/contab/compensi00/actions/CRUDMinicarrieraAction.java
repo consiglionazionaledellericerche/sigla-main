@@ -1059,7 +1059,7 @@ public Forward doRemoveFromCRUDMain_rateCRUDController(ActionContext context) {
 public Forward doSearchListaBanche(ActionContext context) {
 	
 	MinicarrieraBulk carriera = (MinicarrieraBulk)getBusinessProcess(context).getModel();
-	String columnSet = carriera.getModalita_pagamento().getTi_pagamento();
+	String columnSet = carriera.getModalita_pagamento().getTiPagamentoColumnSet();
 	return search(context, getFormField(context, "main.listaBanche"), columnSet);
 }
 /**

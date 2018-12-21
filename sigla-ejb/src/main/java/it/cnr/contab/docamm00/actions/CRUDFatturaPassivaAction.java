@@ -4299,7 +4299,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
         Fattura_passivaBulk fattura = (Fattura_passivaBulk) getBusinessProcess(context).getModel();
         if (getBusinessProcess(context).isInserting())
-            return search(context, getFormField(context, "main.listabanche"), fattura.getModalita_pagamento().getTi_pagamento());
+            return search(context, getFormField(context, "main.listabanche"), fattura.getModalita_pagamento().getTiPagamentoColumnSet());
         else {
             getBusinessProcess(context).setMessage("Esiste almeno un dettaglio e quindi la Modalità di pagamento deve essere cambiata sul dettaglio stesso.");
             return context.findDefaultForward();
@@ -4310,7 +4310,7 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 
         CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP) getBusinessProcess(context);
         Fattura_passiva_rigaBulk fatturaRiga = (Fattura_passiva_rigaBulk) bp.getDettaglio().getModel();
-        return search(context, getFormField(context, "main.Dettaglio.listabanchedett"), fatturaRiga.getModalita_pagamento().getTi_pagamento());
+        return search(context, getFormField(context, "main.Dettaglio.listabanchedett"), fatturaRiga.getModalita_pagamento().getTiPagamentoColumnSet());
     }
 
     /**
