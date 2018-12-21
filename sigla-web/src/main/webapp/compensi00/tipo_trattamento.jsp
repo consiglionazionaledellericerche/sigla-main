@@ -112,6 +112,13 @@
 	<td><% bp.getController().writeFormInput(out,"fl_split_payment");%></td>
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_split_payment");%></td>
   </tr>  	   
+<table class="Panel">
+  <tr>
+	<td colspan=4><% bp.getController().writeFormField(out,"tipoDebitoSiope"); %></td>
+  </tr>
+</table>
+
+    
 </table>
 
 <table class="Group" style="width:100%">
