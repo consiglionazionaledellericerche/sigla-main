@@ -4299,7 +4299,12 @@ public class DistintaCassiereComponent extends
 
     public Configurazione_cnrBulk lockMessaggiSIOPEPlus(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
         try {
-            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(Configurazione_cnrBulk.PK_EMAIL_PEC,Configurazione_cnrBulk.SK_SDI, "*",  new Integer(0));
+            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
+                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                    Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS,
+                    "*",
+                    CNRUserContext.getEsercizio(userContext)
+            );
             Configurazione_cnrHome configurazione_cnrHome = (Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class);
             configurazione_cnrBulk = (Configurazione_cnrBulk) configurazione_cnrHome.findAndLock(configurazione_cnrBulk);
             if ("Y".equalsIgnoreCase(configurazione_cnrBulk.getVal04()))
