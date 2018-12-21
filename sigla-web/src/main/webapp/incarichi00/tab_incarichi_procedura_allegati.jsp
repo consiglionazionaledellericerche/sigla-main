@@ -59,7 +59,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-	doPrint('<%=(allegato==null?null:JSPUtils.getAppRoot(request) + allegato.getDownloadUrl())%>');
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=allegato.getNomeAllegato()%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 
@@ -146,7 +146,7 @@ function doScaricaFile() {
 		        <td><% controller.writeFormLabel(out,"default","url_file"); %></td>
 		        <td colspan=4><% controller.writeFormInput(out,"default","url_file", isRODettaglio,null,null); %></td>
 			</tr>
-		<% } %>
+		<% } %>	
 		<tr>
 	  	    <td><% controller.writeFormLabel(out,"default","utcr"); %></td>
 			<td colspan=4><% controller.writeFormInput(out,"default","utcr",true,null,null); %></td>
