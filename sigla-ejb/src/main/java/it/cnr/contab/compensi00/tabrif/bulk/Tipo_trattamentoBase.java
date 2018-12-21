@@ -80,6 +80,8 @@ public class Tipo_trattamentoBase extends Tipo_trattamentoKey implements Keyed {
 	
 	private java.lang.Boolean fl_split_payment;
 	
+	private java.lang.String tipoDebitoSiope;
+
 public Tipo_trattamentoBase() {
 	super();
 }
@@ -316,5 +318,11 @@ public java.lang.Boolean getFl_split_payment() {
 }
 public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
 	this.fl_split_payment = fl_split_payment;
+}
+public java.lang.String getTipoDebitoSiope() {
+	return tipoDebitoSiope;
+}
+public void setTipoDebitoSiope(java.lang.String tipoDebitoSiope) {
+	this.tipoDebitoSiope = tipoDebitoSiope;
 }
 }
