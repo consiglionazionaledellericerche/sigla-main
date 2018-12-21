@@ -386,7 +386,7 @@ end if;
    aRevRiga.CD_TERZO_UO:=aGenRiga.cd_terzo_uo_cds;
    aRevRiga.PG_BANCA:=aGenRiga.pg_banca_uo_cds;
    aRevRiga.CD_MODALITA_PAG:=aGenRiga.cd_modalita_pag_uo_cds;
-   aRevRiga.IM_REVERSALE_RIGA:=aRev.im_reversale;
+   aRevRiga.IM_REVERSALE_RIGA:=aAcc.im_accertamento;
    aRevRiga.FL_PGIRO:='Y';
    aRevRiga.UTCR:=aUser;
    aRevRiga.DACR:=aTSNow;
