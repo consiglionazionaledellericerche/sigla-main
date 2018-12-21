@@ -2103,6 +2103,9 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
           --  aManP.DT_PAGAMENTO:=;
           --  aManP.DT_ANNULLAMENTO:=;
           aManP.IM_PAGATO:=0;
+          If aLiquidIva.tipo_liquidazione = CNRCTB250.TI_LIQ_IVA_ISTSPLIT Then
+            aManP.tipo_debito_siope := 'I';
+          End If;
           aManP.UTCR:=aUser;
           aManP.DACR:=aTSNow;
           aManP.UTUV:=aUser;
