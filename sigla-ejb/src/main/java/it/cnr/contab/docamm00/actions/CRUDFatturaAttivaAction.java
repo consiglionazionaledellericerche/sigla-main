@@ -2628,7 +2628,7 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
     public Forward doSearchListabancheuo(ActionContext context) {
 
         Fattura_attivaBulk fattura = (Fattura_attivaBulk) getBusinessProcess(context).getModel();
-        return search(context, getFormField(context, "main.listabancheuo"), fattura.getModalita_pagamento_uo().getTi_pagamento());
+        return search(context, getFormField(context, "main.listabancheuo"), fattura.getModalita_pagamento_uo().getTiPagamentoColumnSet());
     }
 
     /**

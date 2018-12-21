@@ -18,7 +18,6 @@ import java.util.List;
 
 @Remote
 public interface DistintaCassiereComponentSession extends it.cnr.jada.ejb.CRUDDetailComponentSession {
-    public static final String FLUSSO_ORDINATIVI = "FLUSSO_ORDINATIVI";
     public static final BigInteger MAX_OPI_DIMENSION = BigInteger.valueOf(200);
 
     void annullaModificaDettagliDistinta(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
