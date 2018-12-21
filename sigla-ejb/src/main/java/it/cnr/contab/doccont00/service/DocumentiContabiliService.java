@@ -1,10 +1,12 @@
 package it.cnr.contab.doccont00.service;
 
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
+import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
@@ -58,6 +60,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DocumentiContabiliService extends StoreService implements InitializingBean {
     private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
@@ -75,6 +78,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     private CRUDComponentSession crudComponentSession;
     private MandatoComponentSession mandatoComponentSession;
     private ReversaleComponentSession reversaleComponentSession;
+    private DistintaCassiereComponentSession distintaCassiereComponentSession;
 
     private UserContext userContext;
 
@@ -95,6 +99,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .filter(ReversaleComponentSession.class::isInstance)
                 .map(ReversaleComponentSession.class::cast)
                 .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCCONT00_EJB_ReversaleComponentSession"));
+        this.distintaCassiereComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRDOCCONT00_EJB_DistintaCassiereComponentSession"))
+                .filter(DistintaCassiereComponentSession.class::isInstance)
+                .map(DistintaCassiereComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCCONT00_EJB_DistintaCassiereComponentSession"));
     }
 
     public ArubaSignServiceClient getArubaSignServiceClient() {
@@ -621,12 +629,101 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 });
     }
 
+
+    public void executeMessaggiSiopeplus() {
+        try{
+            logger.info("SIOPE+ SCAN started at: {}", LocalDateTime.now());
+            Configurazione_cnrBulk configurazione_cnrBulk = distintaCassiereComponentSession.lockMessaggiSIOPEPlus(userContext);
+            if (configurazione_cnrBulk == null) {
+                logger.info("SIOPE+ SCAN alredy started in another server.");
+            } else {
+                try {
+                    messaggiSiopeplus(null, null, false);
+                } finally {
+                    distintaCassiereComponentSession.unlockMessaggiSIOPEPlus(userContext);
+                }
+            }
+            logger.info("SIOPE+ SCAN end at: {}", LocalDateTime.now());
+        } catch(Throwable _ex){
+            logger.error("SIOPE+ ScheduleExecutor error", _ex);
+        }
+    }
+
+    public Stream<Risultato> downloadMessaggiACK(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
+        final Lista listaACK = ordinativiSiopePlusService.getListaMessaggi(Esito.ACK,
+                dataDa, dataA, download, null);
+        logger.info("Lista ACK: {}", listaACK);
+        return Optional.ofNullable(listaACK.getRisultati())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(risultato -> {
+                    try {
+                        final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
+                                new SIOPEPlusRisultatoBulk(Esito.ACK.name(), risultato.getLocation()));
+                        messaggioACK(risultato);
+                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+
+                        siopePlusRisultatoBulk.setToBeDeleted();
+                        crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
+                    } catch (Exception _ex) {
+                        risultato.setError(_ex);
+                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                    }
+                    return risultato;
+                });
+    }
+
+    public Stream<Risultato> downloadMessaggiEsito(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
+        final Lista listaEsito = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITO,
+                dataDa, dataA, download, null);
+        logger.info("SIOPE+ Lista Esito: {}", listaEsito);
+        return Optional.ofNullable(listaEsito.getRisultati())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(risultato -> {
+                    try {
+                        final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
+                                new SIOPEPlusRisultatoBulk(Esito.ESITO.name(), risultato.getLocation()));
+                        messaggioEsito(risultato);
+                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+
+                        siopePlusRisultatoBulk.setToBeDeleted();
+                        crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
+                    } catch (Exception _ex) {
+                        risultato.setError(_ex);
+                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                    }
+                    return risultato;
+                });
+    }
+
+    public Stream<Risultato> downloadMessaggiEsitoApplicativo(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
+        final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
+                dataDa, dataA, download, null);
+        logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
+        return Optional.ofNullable(listaEsitoApplicativo.getRisultati())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(risultato -> {
+                    try {
+                        final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
+                                new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato.getLocation()));
+                        messaggioEsitoApplicativo(risultato);
+                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+
+                        siopePlusRisultatoBulk.setToBeDeleted();
+                        crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
+                    } catch (Exception _ex) {
+                        risultato.setError(_ex);
+                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                    }
+                    return risultato;
+                });
+    }
     /**
      * Leggi messaggi dalla piattaforma SIOPE+
      */
-    public void messaggiSiopeplus() {
-        logger.info("SIOPE+ SCAN started at: {}", LocalDateTime.now());
-
+    public void messaggiSiopeplus(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
         try {
             final List<SIOPEPlusRisultatoBulk> risultati = crudComponentSession.find(userContext, SIOPEPlusRisultatoBulk.class, "findAll");
             for (SIOPEPlusRisultatoBulk siopePlusRisultatoBulk : risultati) {
@@ -659,66 +756,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
             logger.error("SIOPE+  error during find risultato", e);
         }
 
-        final Lista listaACK = ordinativiSiopePlusService.getListaMessaggi(Esito.ACK,
-                null, null, false, null);
-        logger.info("Lista ACK: {}", listaACK);
-        Optional.ofNullable(listaACK.getRisultati())
-                .orElse(Collections.emptyList())
-                .stream()
-                .forEach(risultato -> {
-                    try {
-                        final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
-                                new SIOPEPlusRisultatoBulk(Esito.ACK.name(), risultato.getLocation()));
-                        messaggioACK(risultato);
-                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
-
-                        siopePlusRisultatoBulk.setToBeDeleted();
-                        crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
-                    } catch (Exception _ex) {
-                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
-                    }
-                });
-
-        final Lista listaEsito = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITO,
-                null, null, false, null);
-        logger.info("SIOPE+ Lista Esito: {}", listaEsito);
-        Optional.ofNullable(listaEsito.getRisultati())
-                .orElse(Collections.emptyList())
-                .stream()
-                .forEach(risultato -> {
-                    try {
-                        final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
-                                new SIOPEPlusRisultatoBulk(Esito.ESITO.name(), risultato.getLocation()));
-                        messaggioEsito(risultato);
-                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
-
-                        siopePlusRisultatoBulk.setToBeDeleted();
-                        crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
-                    } catch (Exception _ex) {
-                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
-                    }
-                });
-
-        final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
-                null, null, false, null);
-        logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
-        Optional.ofNullable(listaEsitoApplicativo.getRisultati())
-                .orElse(Collections.emptyList())
-                .stream()
-                .forEach(risultato -> {
-                    try {
-                        final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
-                                new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato.getLocation()));
-                        messaggioEsitoApplicativo(risultato);
-                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
-
-                        siopePlusRisultatoBulk.setToBeDeleted();
-                        crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
-                    } catch (Exception _ex) {
-                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
-                    }
-                });
-        logger.info("SIOPE+ SCAN end at: {}", LocalDateTime.now());
+        downloadMessaggiACK(dataDa, dataA, download);
+        downloadMessaggiEsito(dataDa, dataA, download);
+        downloadMessaggiEsitoApplicativo(dataDa, dataA, download);
     }
 
     class StorageDataSource implements DataSource {
