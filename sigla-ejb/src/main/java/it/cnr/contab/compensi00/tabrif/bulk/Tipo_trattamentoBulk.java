@@ -4,6 +4,8 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
 
+import java.util.Dictionary;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
@@ -11,6 +13,8 @@ public class Tipo_trattamentoBulk extends Tipo_trattamentoBase {
 
 	public final static java.lang.String ATT_COMMERCIALE = "Y";
 	public final static java.lang.String ATT_NON_COMMERCIALE = "N";
+	public final static java.lang.String TIPO_DEBITO_NON_COMMERCIALE = "N";
+	public final static java.lang.String TIPO_DEBITO_COMMERCIALE = "C";
 
 	private final static java.util.Dictionary TIPO_COMMERCIALE;
 
@@ -19,6 +23,15 @@ public class Tipo_trattamentoBulk extends Tipo_trattamentoBase {
 		TIPO_COMMERCIALE.put(ATT_COMMERCIALE, "Attività commerciali");
 		TIPO_COMMERCIALE.put(ATT_NON_COMMERCIALE, "Attività NON commerciali");
 	}
+	
+	public final static Dictionary TIPO_DEBITO_SIOPE;
+
+	static {
+		TIPO_DEBITO_SIOPE = new it.cnr.jada.util.OrderedHashtable();
+		TIPO_DEBITO_SIOPE.put(TIPO_DEBITO_COMMERCIALE,"Commerciale");
+		TIPO_DEBITO_SIOPE.put(TIPO_DEBITO_NON_COMMERCIALE,"Non Commerciale");
+	}
+	
 	private java.util.List intervalli;
 	public Tipo_trattamentoBulk() {
 		super();
@@ -112,5 +125,9 @@ public class Tipo_trattamentoBulk extends Tipo_trattamentoBase {
 	 */
 	public void setIntervalli(java.util.List newIntervalli) {
 		intervalli = newIntervalli;
+	}
+	public Dictionary getTipoDebitoSiopeKeys() {
+		
+		return TIPO_DEBITO_SIOPE;
 	}
 }
