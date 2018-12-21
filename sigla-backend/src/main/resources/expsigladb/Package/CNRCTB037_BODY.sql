@@ -1509,7 +1509,8 @@ PIPE.SEND_MESSAGE('sTestaMandato_gen.pg_mandato = '||sTestaMandato_gen.pg_mandat
  procedure GENERAECOLLEGADOC(
    aManP in mandato%rowtype,
    aRev in out reversale%rowtype,
-   aListaRev in out CNRCTB038.righeReversaleList
+   aListaRev in out CNRCTB038.righeReversaleList,
+   isFromStipendi in boolean default false
  ) is
   aTempManP mandato%rowtype;
   sReversaleTerzo reversale_terzo%rowtype;
@@ -1518,8 +1519,13 @@ PIPE.SEND_MESSAGE('sTestaMandato_gen.pg_mandato = '||sTestaMandato_gen.pg_mandat
   aTipoBolloE tipo_bollo%rowtype;
   aAcc accertamento%rowtype;
   tesoreria_unica char(1):='N';
+  aRevExist boolean := false;
  begin
-       begin
+  If isFromStipendi and aRev.pg_reversale is not null Then
+    aRevExist := true;
+  End If; 
+  
+    begin
        select * into aTipoBolloE from tipo_bollo where
             ti_entrata_spesa in ('*',CNRCTB001.GESTIONE_ENTRATE)
       and fl_cancellato='N'
@@ -1528,7 +1534,7 @@ PIPE.SEND_MESSAGE('sTestaMandato_gen.pg_mandato = '||sTestaMandato_gen.pg_mandat
        IBMERR001.RAISE_ERR_GENERICO('Tipo bollo di default non trovato');
     end;
 
-          begin
+    begin
             select * into aTempManP from mandato
       Where esercizio = aManP.esercizio And
             cd_cds = aManP.cd_cds And
@@ -1546,13 +1552,9 @@ PIPE.SEND_MESSAGE('sTestaMandato_gen.pg_mandato = '||sTestaMandato_gen.pg_mandat
     exception when NO_DATA_FOUND then
        IBMERR001.RAISE_ERR_GENERICO('Configurazione gestione tesoreria mancante');
     end;
+  
     If (aListaRev.count > 0) then
-       if(tesoreria_unica='N') then
-           aRev.pg_reversale   := CNRCTB018.getNextNumDocCont(aRev.cd_tipo_documento_cont, aRev.esercizio, aRev.cd_cds, aRev.utcr);
-       else
-           aRev.pg_reversale   := CNRCTB018.getNextNumDocCont(aRev.cd_tipo_documento_cont, aRev.esercizio, cnrctb020.getCDCDSENTE(aRev.esercizio), aRev.utcr);
-       end if;
-        for aInd in 1..aListaRev.count loop
+      For aInd in 1..aListaRev.count loop
                 -- controllo se il l'accertamento specificata sulle righe ? su partita di giro
                 -- ed eventualemente aggiorno la riga della reversale di conseguenza
               Begin
@@ -1569,68 +1571,81 @@ PIPE.SEND_MESSAGE('sTestaMandato_gen.pg_mandato = '||sTestaMandato_gen.pg_mandat
               End;
               aListaRev(aInd).fl_pgiro := aAcc.fl_pgiro;
 
-            End loop;
+      End loop;
+      
+      If not aRevExist Then
+        if(tesoreria_unica='N') then
+          aRev.pg_reversale   := CNRCTB018.getNextNumDocCont(aRev.cd_tipo_documento_cont, aRev.esercizio, aRev.cd_cds, aRev.utcr);
+        else
+          aRev.pg_reversale   := CNRCTB018.getNextNumDocCont(aRev.cd_tipo_documento_cont, aRev.esercizio, cnrctb020.getCDCDSENTE(aRev.esercizio), aRev.utcr);
+        end if;
+
         -- Impostazione dello STATO_COGE - se non impostato viene messo a X
-      if aRev.STATO_COGE is null then
-       aRev.STATO_COGE := CNRCTB100.STATO_COEP_EXC;
-      end if;
+        if aRev.STATO_COGE is null then
+           aRev.STATO_COGE := CNRCTB100.STATO_COEP_EXC;
+        end if;
 
-      -- Troncamento della data di registrazione
-      aRev.dt_emissione:=trunc(aRev.dt_emissione);
-      -- Impostazione di UTUV DUVA e PG_VER_REC per la testata della reversale
-            aRev.UTUV := aRev.UTCR;
-            aRev.DUVA := aRev.DUVA;
-            aRev.PG_VER_REC := 1;
+        -- Troncamento della data di registrazione
+        aRev.dt_emissione:=trunc(aRev.dt_emissione);
+        -- Impostazione di UTUV DUVA e PG_VER_REC per la testata della reversale
+        aRev.UTUV := aRev.UTCR;
+        aRev.DUVA := aRev.DUVA;
+        aRev.PG_VER_REC := 1;
 
-      -- Inserimento della testata della reversale
-          cnrctb038.ins_REVERSALE(aRev);
+        -- Inserimento della testata della reversale
+        cnrctb038.ins_REVERSALE(aRev);
+      End if;
 
-        for i in 1..aListaRev.count loop
-            aListaRev(i).pg_reversale:= aRev.pg_reversale;
-                -- Impostazione di UTUV DUVA e PG_VER_REC
-            aListaRev(i).UTUV:= aListaRev(i).UTCR;
-            aListaRev(i).DUVA:= aListaRev(i).DACR;
-            aListaRev(i).PG_VER_REC:= 1;
-          -- Inserimento riga
-            cnrctb038.ins_REVERSALE_RIGA(aListaRev(i));
+      for i in 1..aListaRev.count loop
+        aListaRev(i).pg_reversale:= aRev.pg_reversale;
+        -- Impostazione di UTUV DUVA e PG_VER_REC
+        aListaRev(i).UTUV:= aListaRev(i).UTCR;
+        aListaRev(i).DUVA:= aListaRev(i).DACR;
+        aListaRev(i).PG_VER_REC:= 1;
+       
+        -- Inserimento riga
+        cnrctb038.ins_REVERSALE_RIGA(aListaRev(i));
 
-            -- 23.05.2007 Stanislao Fusco
-                      -- Inserita procedura che pu? inserire la riga automatica SIOPE
+        -- 23.05.2007 Stanislao Fusco
+        -- Inserita procedura che pu? inserire la riga automatica SIOPE
 
-                      Inserisci_SIOPE_automatico (aListaRev(i));
+        Inserisci_SIOPE_automatico (aListaRev(i));
 
-          sCodiceTerzo := aListaRev(i).CD_TERZO;
-            end loop;
+        sCodiceTerzo := aListaRev(i).CD_TERZO;
+      end loop;
 
-          updScadAccertamento(aRev);
+      If not aRevExist Then
+        sReversaleTerzo.CD_CDS := aRev.CD_CDS;
+        sReversaleTerzo.CD_TERZO := sCodiceTerzo;
+        sReversaleTerzo.CD_TIPO_BOLLO := aTipoBolloE.cd_tipo_bollo;
+        sReversaleTerzo.DACR := aRev.DACR;
+        sReversaleTerzo.DUVA := aRev.DUVA;
+        sReversaleTerzo.ESERCIZIO := aRev.ESERCIZIO;
+        sReversaleTerzo.PG_REVERSALE := aRev.PG_REVERSALE;
+        sReversaleTerzo.PG_VER_REC := 1;
+        sReversaleTerzo.UTCR := aRev.UTCR;
+        sReversaleTerzo.UTUV := aRev.UTUV;
 
-          updSaldoCapitoliR(aRev,'I','A');
+        cnrctb038.ins_REVERSALE_TERZO(sReversaleTerzo);
 
-          sReversaleTerzo.CD_CDS := aRev.CD_CDS;
-          sReversaleTerzo.CD_TERZO := sCodiceTerzo;
-          sReversaleTerzo.CD_TIPO_BOLLO := aTipoBolloE.cd_tipo_bollo;
-          sReversaleTerzo.DACR := aRev.DACR;
-          sReversaleTerzo.DUVA := aRev.DUVA;
-          sReversaleTerzo.ESERCIZIO := aRev.ESERCIZIO;
-          sReversaleTerzo.PG_REVERSALE := aRev.PG_REVERSALE;
-          sReversaleTerzo.PG_VER_REC := 1;
-          sReversaleTerzo.UTCR := aRev.UTCR;
-          sReversaleTerzo.UTUV := aRev.UTUV;
+        cnrctb038.ins_ASS_MANDATO_REVERSALE (aManP, aManP.pg_mandato, aRev);
+      End if;
+      
+      If not isFromStipendi Then
+        updScadAccertamento(aRev);
+        updSaldoCapitoliR(aRev,'I','A');
 
-          cnrctb038.ins_REVERSALE_TERZO(sReversaleTerzo);
+        cnrctb300.leggiMandatoReversale(aRev.CD_CDS, aRev.ESERCIZIO, aRev.PG_REVERSALE, 'REV', 'I', aRev.utuv);
 
-      cnrctb038.ins_ASS_MANDATO_REVERSALE (aManP, aManP.pg_mandato, aRev);
-
-      cnrctb300.leggiMandatoReversale(aRev.CD_CDS, aRev.ESERCIZIO, aRev.PG_REVERSALE, 'REV', 'I', aRev.utuv);
-
-                  -- Aggiorno l'importo ritenute del mandato principale
-      update mandato
-           -- Devo sommare le ritenute !!!! 22/01/2003
-              Set im_ritenute = im_ritenute + aRev.im_reversale
-      Where esercizio = aManP.esercizio And
-            cd_cds = aManP.cd_cds And
-            pg_mandato = aManp.pg_mandato;
-      end if;
+        -- Aggiorno l'importo ritenute del mandato principale
+        update mandato
+        -- Devo sommare le ritenute !!!! 22/01/2003
+        Set im_ritenute = im_ritenute + aRev.im_reversale
+        Where esercizio = aManP.esercizio And
+              cd_cds = aManP.cd_cds And
+              pg_mandato = aManp.pg_mandato;
+      End If;
+    End if;
  end;
 
  procedure GENERAECOLLEGADOC(

@@ -42,12 +42,12 @@
   aUOPersonale unita_organizzativa%rowtype,
   aTerzoVersamento terzo%rowtype,
   aManP in mandato%rowtype,
+  aRev in out reversale%rowtype,
   aUser varchar2,
   aTSNow date
  ) return contributo_ritenuta%rowtype is
   aGen documento_generico%rowtype;
   aGenRiga documento_generico_riga%rowtype;
-  aRev reversale%rowtype;
   aRevRighe CNRCTB038.righeReversaleList;
   aMan mandato%rowtype;
   aManRighe CNRCTB038.righeMandatoList;
@@ -74,6 +74,7 @@
   isCoriEntrata boolean;
   aDateCont date;
   parametriCnr parametri_cnr%rowtype;
+  existRev boolean := false;
  begin
   aDateCont:=CNRCTB008.getTimestampContabile(aStip.esercizio,aTSNow);
 
@@ -339,30 +340,35 @@ end if;
   -- AGGIUNGO ALLA COLLEZIONE DELLE REVERSALI LA REVERSALE CORI CON I COLLEGAMENTI AL GENERICO IMPOSTATI
 
   if isCoriEntrata then
-   aRev:=null;
+   If aRev.pg_reversale is not null Then
+     existRev := true;
+     aRev.IM_REVERSALE:=aRev.IM_REVERSALE+aAcc.im_accertamento;
+     aRev.DS_REVERSALE:=substr(aRev.DS_REVERSALE||','||aCori.cd_contributo_ritenuta,1,300);
+   Else
+     existRev := false;
+     aRev:=null;
+     aRev.CD_CDS:=aAcc.cd_cds;
+     aRev.ESERCIZIO:=aAcc.esercizio;
+     aRev.CD_UNITA_ORGANIZZATIVA:=aAcc.cd_unita_organizzativa;
+     aRev.CD_CDS_ORIGINE:=aAcc.cd_cds;
+     aRev.CD_UO_ORIGINE:=aAcc.cd_unita_organizzativa;
+     aRev.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_REV;
+     aRev.TI_REVERSALE:=CNRCTB038.TI_REV_INC;
+     aRev.TI_COMPETENZA_RESIDUO:=CNRCTB038.TI_MAN_COMP;
+     aRev.DS_REVERSALE:='CORI-D stipendi '||getDescCori(aCori);
+     aRev.STATO:=CNRCTB038.STATO_REV_EME;
+     aRev.DT_EMISSIONE:=TRUNC(aDateCont);
+     aRev.IM_REVERSALE:=aAcc.im_accertamento;
+     aRev.IM_INCASSATO:=0;
+     aRev.DACR:=aTSNow;
+     aRev.UTCR:=aUser;
+     aRev.DUVA:=aTSNow;
+     aRev.UTUV:=aUser;
+     aRev.PG_VER_REC:=1;
+     aRev.STATO_TRASMISSIONE:=CNRCTB038.STATO_REV_TRASCAS_NODIST;
+   End If;
+   
    aRevRiga:=null;
-   aRev.CD_CDS:=aAcc.cd_cds;
-   aRev.ESERCIZIO:=aAcc.esercizio;
-   aRev.CD_UNITA_ORGANIZZATIVA:=aAcc.cd_unita_organizzativa;
-   aRev.CD_CDS_ORIGINE:=aAcc.cd_cds;
-   aRev.CD_UO_ORIGINE:=aAcc.cd_unita_organizzativa;
-   aRev.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_REV;
-   aRev.TI_REVERSALE:=CNRCTB038.TI_REV_INC;
-   aRev.TI_COMPETENZA_RESIDUO:=CNRCTB038.TI_MAN_COMP;
-   aRev.DS_REVERSALE:='CORI-D stipendi '||getDescCori(aCori);
-   aRev.STATO:=CNRCTB038.STATO_REV_EME;
-   aRev.DT_EMISSIONE:=TRUNC(aDateCont);
- --   aRev.DT_TRASMISSIONE:=;
- --   aRev.DT_INCASSO:=;
- --   aRev.DT_ANNULLAMENTO:=;
-   aRev.IM_REVERSALE:=aAcc.im_accertamento;
-   aRev.IM_INCASSATO:=0;
-   aRev.DACR:=aTSNow;
-   aRev.UTCR:=aUser;
-   aRev.DUVA:=aTSNow;
-   aRev.UTUV:=aUser;
-   aRev.PG_VER_REC:=1;
-   aRev.STATO_TRASMISSIONE:=CNRCTB038.STATO_REV_TRASCAS_NODIST;
    aRevRiga.CD_CDS:=aRev.cd_cds;
    aRevRiga.ESERCIZIO:=aRev.esercizio;
    aRevRiga.ESERCIZIO_ACCERTAMENTO:=aAcc.esercizio;
@@ -392,10 +398,13 @@ end if;
    CNRCTB037.GENERAECOLLEGADOC(
     aManP,
     aRev,
-    aRevRighe
+    aRevRighe,
+    true
    );
-   -- Aggiorno la tabella ASS_COMP_DOC_CONT_NMP visto che il compenso non ha mandato principale
-   CNRCTB560.addAssCompDocNMP(aComp,aRev,aRevRighe);
+   if not existRev Then
+     -- Aggiorno la tabella ASS_COMP_DOC_CONT_NMP visto che il compenso non ha mandato principale
+     CNRCTB560.addAssCompDocNMP(aComp,aRev,aRevRighe);
+   end if;
   else
    aMan:=null;
    aManRiga:=null;
@@ -677,23 +686,46 @@ end if;
   aTotCoriEnte:=0;
   aTotCoriPercipiente:=0;
 
-  For aCoriStip In (Select *
-                    From  stipendi_cofi_cori
-                    Where esercizio = aStip.esercizio And
-                          mese = aStip.mese) Loop
+  Declare
+    aRevI reversale%rowtype;
+  Begin
+    For aCoriStip In (Select *
+                      From  stipendi_cofi_cori
+                      Where esercizio = aStip.esercizio And
+                            mese = aStip.mese) Loop
+      aCori := gestioneCori(aStip,aComp,aCoriStip,aUOPersonale,aTerzoVersamento,aManP,aRevI,aUser,aTSNow);
 
-   aCori := gestioneCori(aStip,aComp,aCoriStip,aUOPersonale,aTerzoVersamento,aManP,aUser,aTSNow);
+      if aCori.esercizio is not null then
+        if aCori.ti_ente_percipiente = 'E' then
+          aTotCoriEnte:=aTotCoriEnte + aCori.ammontare;
+        else
+          aTotCoriPercipiente:=aTotCoriPercipiente + aCori.ammontare;
+        end if;
 
-   if aCori.esercizio is not null then
-    if aCori.ti_ente_percipiente = 'E' then
-     aTotCoriEnte:=aTotCoriEnte + aCori.ammontare;
-    else
-     aTotCoriPercipiente:=aTotCoriPercipiente + aCori.ammontare;
-    end if;
+        CNRCTB545.insCONTRIBUTORITENUTA(aCori);
+      end if;
+    End loop;
 
-    CNRCTB545.insCONTRIBUTORITENUTA(aCori);
-   end if;
-  end loop;
+    -- Aggiorno l'importo e la descrzione della reversale
+    update REVERSALE
+    Set IM_REVERSALE = aRevI.IM_REVERSALE,
+        DS_REVERSALE = substr(aRevI.DS_REVERSALE,1,300)
+    Where esercizio = aRevI.esercizio And
+          cd_cds = aRevI.cd_cds And
+          pg_reversale = aRevI.pg_reversale;
+
+    CNRCTB037.updScadAccertamento(aRevI);
+    CNRCTB037.updSaldoCapitoliR(aRevI,'I','A');
+
+    CNRCTB300.leggiMandatoReversale(aRevI.CD_CDS, aRevI.ESERCIZIO, aRevI.PG_REVERSALE, 'REV', 'I', aRevI.utuv);
+
+    -- Aggiorno l'importo ritenute del mandato principale
+    update mandato
+    Set im_ritenute = im_ritenute + aTotCoriEnte + aTotCoriPercipiente
+    Where esercizio = aManP.esercizio And
+          cd_cds = aManP.cd_cds And
+          pg_mandato = aManp.pg_mandato;
+  End;
 
   Update compenso
   Set IM_CR_PERCIPIENTE    = aTotCoriPercipiente,
