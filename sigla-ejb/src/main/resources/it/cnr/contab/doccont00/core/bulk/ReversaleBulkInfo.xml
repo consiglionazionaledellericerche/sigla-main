@@ -100,7 +100,7 @@
 		enabledOnFreeSearch="false"		
 		label="Tipo documento contabile" />		
 	<fieldProperty
-		name="ti_reversale"
+		name="ti_reversaleCNR"
 		property="ti_reversale"
 		maxLength="1"
 		inputSize="1"
@@ -108,6 +108,18 @@
 		label="Tipo"
 		keysProperty = "tipoReversaleKeys"
 		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ti_reversale"
+		property="ti_reversale"
+		maxLength="1"
+		inputSize="1"
+		inputType="RADIOGROUP"
+		label="Tipo"
+		keysProperty = "tipoReversaleKeys"
+		enabledOnInsert="true"
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		caseSensitiveSearch="false" />
@@ -311,6 +323,8 @@
 		name="dt_emissione" />
 	<formFieldProperty
 		name="ti_reversale" />
+	<formFieldProperty
+		name="ti_reversaleCNR" />
 	<formFieldProperty
 		name="pg_reversale" />
 	<formFieldProperty
