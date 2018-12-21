@@ -320,7 +320,8 @@ cSKCONFIG CONSTANT VARCHAR2(100):='LIMITE1';
  procedure GENERAECOLLEGADOC(
    aManP IN mandato%rowtype,
    aRev IN OUT reversale%rowtype,
-   aListaRev IN OUT CNRCTB038.righeReversaleList
+   aListaRev IN OUT CNRCTB038.righeReversaleList,
+   isFromStipendi in boolean default false
   );
 
  procedure GENERAECOLLEGADOC(
