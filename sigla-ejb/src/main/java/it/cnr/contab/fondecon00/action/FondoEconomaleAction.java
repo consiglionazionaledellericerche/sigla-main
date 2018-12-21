@@ -918,7 +918,7 @@ public class FondoEconomaleAction extends it.cnr.jada.util.action.CRUDAction {
     public Forward doSearchListabanche(ActionContext context) {
 
         Fondo_economaleBulk fondo = (Fondo_economaleBulk) getBusinessProcess(context).getModel();
-        return search(context, getFormField(context, "main.listabanche"), fondo.getModalita_pagamento().getTi_pagamento());
+        return search(context, getFormField(context, "main.listabanche"), fondo.getModalita_pagamento().getTiPagamentoColumnSet());
     }
 
     /**

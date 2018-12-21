@@ -516,7 +516,7 @@ private Forward doSalvaCompenso(ActionContext context, ConguaglioBulk conguaglio
 public Forward doSearchListaBanche(ActionContext context) {
 	
 	ConguaglioBulk conguaglio = (ConguaglioBulk)getBusinessProcess(context).getModel();
-	String columnSet = conguaglio.getModalitaPagamento().getTi_pagamento();
+	String columnSet = conguaglio.getModalitaPagamento().getTiPagamentoColumnSet();
 	return search(context, getFormField(context, "main.listaBanche"), columnSet);
 }
 /**

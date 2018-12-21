@@ -99,7 +99,16 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
     public final static String PK_GESTIONE_PROGETTI = "PROGETTI";
     public final static String SK_PROGETTO_PIANO_ECONOMICO = "PIANO_ECONOMICO";
 
-    public Configurazione_cnrBulk() {
+	public final static String PK_FLUSSO_ORDINATIVI = "FLUSSO_ORDINATIVI";
+	public final static String SK_CODICE_ABI_BT = "CODICE_ABI_BT";
+	public final static String SK_CODICE_A2A = "CODICE_A2A";
+	public final static String SK_CODICE_ENTE = "CODICE_ENTE";
+	public final static String SK_CODICE_ENTE_BT = "CODICE_ENTE_BT";
+	public final static String SK_CODICE_TRAMITE_BT = "CODICE_TRAMITE_BT";
+	public final static String SK_CODICE_ISTAT_ENTE = "CODICE_ISTAT_ENTE";
+	public final static String SK_ATTIVO_SIOPEPLUS = "ATTIVO_SIOPEPLUS";
+
+	public Configurazione_cnrBulk() {
 	super();
 }
 

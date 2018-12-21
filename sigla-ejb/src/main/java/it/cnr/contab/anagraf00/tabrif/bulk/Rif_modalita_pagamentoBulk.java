@@ -6,7 +6,9 @@ import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.jada.util.OrderedHashtable;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ModalitaPagamentoType;
 
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.Optional;
 
 /**
  * Gestione dei dati relativi alla tabella Progressione
@@ -137,6 +139,20 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
 
     public boolean isMandatoRegSospeso() {
         return getTi_mandato() != null && getTi_mandato().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0;
+    }
+
+    public String getTiPagamentoColumnSet() {
+        return Optional.ofNullable(this)
+                .map(rif_modalita_pagamentoBulk -> {
+                    if (Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope()).isPresent() &&
+                            Arrays.asList(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE.value(),
+                                    Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE.value())
+                                    .contains(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())) {
+                        return Rif_modalita_pagamentoBulk.ASSEGNO;
+                    }
+                    return rif_modalita_pagamentoBulk.getTi_pagamento();
+                })
+                .orElse(Rif_modalita_pagamentoBulk.ALTRO);
     }
 
     public static Dictionary getTipoPagamentoSiopePlusKeys() {
