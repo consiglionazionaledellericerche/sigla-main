@@ -40,10 +40,11 @@ procedure ins_MANDATO (aDest MANDATO%rowtype) is
     ,UTUV
     ,DUVA
     ,PG_VER_REC
-	,STATO_TRASMISSIONE
-	,DT_RITRASMISSIONE
+	  ,STATO_TRASMISSIONE
+	  ,DT_RITRASMISSIONE
     ,STATO_COGE
     ,IM_RITENUTE
+    ,TIPO_DEBITO_SIOPE
    ) values (
      aDest.CD_CDS
     ,aDest.ESERCIZIO
@@ -67,10 +68,11 @@ procedure ins_MANDATO (aDest MANDATO%rowtype) is
     ,aDest.UTUV
     ,aDest.DUVA
     ,aDest.PG_VER_REC
-	,aDest.STATO_TRASMISSIONE
-	,aDest.DT_RITRASMISSIONE
-	,aDest.STATO_COGE
-	,aDest.IM_RITENUTE
+    ,aDest.STATO_TRASMISSIONE
+	  ,aDest.DT_RITRASMISSIONE
+	  ,aDest.STATO_COGE
+	  ,aDest.IM_RITENUTE
+    ,aDest.TIPO_DEBITO_SIOPE
     );
  end;
 
