@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -264,8 +265,8 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     context.getUserContext(),
                     CNRUserInfo.getEsercizio(context),
                     null,
-                    DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                    "ATTIVO_SIOPEPLUS"))
+                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                    Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS))
                     .map(s -> Boolean.valueOf(s))
                     .orElse(Boolean.FALSE);
 
@@ -656,7 +657,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
             if (sess.getVal01(context.getUserContext(),
                     it.cnr.contab.utenze00.bulk.CNRUserInfo
-                            .getEsercizio(context), null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
+                            .getEsercizio(context), null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
                     "CODICE_ABI_BT") == null)
                 throw new ApplicationException(
                         "Configurazione mancante per flusso Ordinativo");
@@ -664,7 +665,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .getModel();
             String CodiceAbi = sess.getVal01(context.getUserContext(),
                     it.cnr.contab.utenze00.bulk.CNRUserInfo
-                            .getEsercizio(context), null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
+                            .getEsercizio(context), null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
                     "CODICE_ABI_BT");
             currentFlusso.setCodiceABIBT(CodiceAbi);
             currentFlusso
