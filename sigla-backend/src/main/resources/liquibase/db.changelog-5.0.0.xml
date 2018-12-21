@@ -1565,5 +1565,19 @@ RACCOMANDATA A.R.
 ASSICURATA"/>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_manrev_add_tipo_debito_siope">
+        <addColumn tableName="mandato">
+            <column name="tipo_debito_siope" type="char(1)" remarks="Tipo Debito siope+ Può assumere i valori:
+C: COMMERCIALE
+N: NON COMMERCIALE
+I: IVA"/>
+        </addColumn>
+        <addColumn tableName="reversale">
+            <column name="tipo_debito_siope" type="char(1)" remarks="Tipo Debito siope+ Può assumere i valori:
+C: COMMERCIALE
+N: NON COMMERCIALE
+I: IVA"/>
+        </addColumn>
+    </changeSet>    
 </databaseChangeLog>
 
