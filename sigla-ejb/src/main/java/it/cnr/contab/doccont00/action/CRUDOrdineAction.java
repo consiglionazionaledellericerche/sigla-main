@@ -86,7 +86,7 @@ public Forward doSearchListabanche(ActionContext context) {
 			context,
 			new it.cnr.jada.util.ListRemoteIterator(list),
 			it.cnr.jada.bulk.BulkInfo.getBulkInfo(it.cnr.contab.anagraf00.core.bulk.BancaBulk.class),
-			ordine.getModalitaPagamento().getTi_pagamento(),
+			ordine.getModalitaPagamento().getTiPagamentoColumnSet(),
 			"doBringBackAddBanca");
 
 		return slbp;

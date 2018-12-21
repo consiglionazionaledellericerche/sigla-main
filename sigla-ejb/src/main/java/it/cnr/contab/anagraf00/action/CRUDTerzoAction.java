@@ -106,7 +106,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 				}
 				SelezionatoreListaBP banche_selezionate = select(context,
 						iterator, BulkInfo.getBulkInfo(BancaBulk.class),
-						modalita.getRif_modalita_pagamento().getTi_pagamento(),
+						modalita.getRif_modalita_pagamento().getTiPagamentoColumnSet(),
 						"doBringBackBanchePerCessionario");
 				banche_selezionate.setMultiSelection(true);
 				return banche_selezionate;
