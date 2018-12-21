@@ -1614,7 +1614,7 @@ public Forward doRiportaSelezione(ActionContext context)  throws java.rmi.Remote
 public Forward doSearchListaBanche(ActionContext context) {
 	
 	CompensoBulk compenso = (CompensoBulk)getBusinessProcess(context).getModel();
-	String columnSet = compenso.getModalitaPagamento().getTi_pagamento();
+	String columnSet = compenso.getModalitaPagamento().getTiPagamentoColumnSet();
 	return search(context, getFormField(context, "main.listaBanche"), columnSet);
 }
 /**

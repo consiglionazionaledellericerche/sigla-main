@@ -969,7 +969,7 @@ public Forward doSearchListabanche(ActionContext context)
 	{
 		fillModel(context);	
 		AnticipoBulk anticipo = (AnticipoBulk)getBusinessProcess(context).getModel();
-		return search(context, getFormField(context, "main.listabanche"), anticipo.getModalita_pagamento().getTi_pagamento());
+		return search(context, getFormField(context, "main.listabanche"), anticipo.getModalita_pagamento().getTiPagamentoColumnSet());
 	} 
 	catch (Throwable t) 
 	{

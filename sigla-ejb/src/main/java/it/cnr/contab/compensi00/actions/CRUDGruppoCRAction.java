@@ -113,7 +113,7 @@ public Forward doSearchListaBanche(ActionContext context) {
 	CRUDGruppoCRBP bp =(CRUDGruppoCRBP)getBusinessProcess(context);
 	Gruppo_cr_detBulk gruppo_det = (Gruppo_cr_detBulk)bp.getDettagliGruppoBP().getModel();
 	if(gruppo_det!=null && gruppo_det.getCd_terzo_versamento()!=null){
-		String columnSet = gruppo_det.getModalitaPagamento().getTi_pagamento();
+		String columnSet = gruppo_det.getModalitaPagamento().getTiPagamentoColumnSet();
 		return search(context, getFormField(context, "main.dettagliCRUDController.listaBanche"), columnSet);
 	}
 	else

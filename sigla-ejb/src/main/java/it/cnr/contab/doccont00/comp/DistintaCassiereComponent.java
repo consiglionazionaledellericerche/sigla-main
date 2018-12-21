@@ -7,6 +7,7 @@ import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
@@ -4056,8 +4057,8 @@ public class DistintaCassiereComponent extends
                 userContext,
                 CNRUserContext.getEsercizio(userContext),
                 null,
-                DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                "ATTIVO_SIOPEPLUS"))
+                Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS))
                 .map(s -> Boolean.valueOf(s))
                 .orElse(Boolean.FALSE);
     }
@@ -4296,6 +4297,24 @@ public class DistintaCassiereComponent extends
         }
     }
 
+    public Configurazione_cnrBulk lockMessaggiSIOPEPlus(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+        try {
+            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(Configurazione_cnrBulk.PK_EMAIL_PEC,Configurazione_cnrBulk.SK_SDI, "*",  new Integer(0));
+            Configurazione_cnrHome configurazione_cnrHome = (Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class);
+            configurazione_cnrBulk = (Configurazione_cnrBulk) configurazione_cnrHome.findAndLock(configurazione_cnrBulk);
+            if ("Y".equalsIgnoreCase(configurazione_cnrBulk.getVal04()))
+                return null;
+            configurazione_cnrBulk.setVal04("Y");
+            configurazione_cnrBulk.setToBeUpdated();
+            configurazione_cnrHome.update(configurazione_cnrBulk, userContext);
+            return configurazione_cnrBulk;
+        } catch (BusyResourceException _ex) {
+            return null;
+        } catch(Throwable e) {
+            throw handleException(e);
+        }
+    }
+
     public StorageObject generaFlussoSiopeplus(UserContext userContext, Distinta_cassiereBulk distinta) throws ComponentException,
             RemoteException, BusinessProcessException {
         try {
@@ -4313,47 +4332,47 @@ public class DistintaCassiereComponent extends
                     sess.getVal01(
                             userContext,
                             CNRUserContext.getEsercizio(userContext),
-                            null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                            "CODICE_ABI_BT"
+                            null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_CODICE_ABI_BT
                     )).orElseThrow(() -> new ApplicationException("Configurazione mancante per flusso Ordinativo [CODICE_ABI_BT]"));
             String codiceA2A = Optional.ofNullable(
                     sess.getVal01(
                             userContext,
                             CNRUserContext.getEsercizio(userContext),
-                            null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                            "CODICE_A2A"
+                            null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_CODICE_A2A
                     )).orElseThrow(() -> new ApplicationException("Configurazione mancante per flusso Ordinativo [CODICE_A2A]"));
 
             String codiceEnte = Optional.ofNullable(
                     sess.getVal01(
                             userContext,
                             CNRUserContext.getEsercizio(userContext),
-                            null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                            "CODICE_ENTE"
+                            null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_CODICE_ENTE
                     )).orElseThrow(() -> new ApplicationException("Configurazione mancante per flusso Ordinativo [CODICE_ENTE]"));
 
             String codiceEnteBT = Optional.ofNullable(
                     sess.getVal01(
                             userContext,
                             CNRUserContext.getEsercizio(userContext),
-                            null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                            "CODICE_ENTE_BT"
+                            null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_CODICE_ENTE_BT
                     )).orElseThrow(() -> new ApplicationException("Configurazione mancante per flusso Ordinativo [CODICE_ENTE_BT]"));
 
             String codiceTramiteBT = Optional.ofNullable(
                     sess.getVal01(
                             userContext,
                             CNRUserContext.getEsercizio(userContext),
-                            null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                            "CODICE_TRAMITE_BT"
+                            null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_CODICE_TRAMITE_BT
                     )).orElseThrow(() -> new ApplicationException("Configurazione mancante per flusso Ordinativo [CODICE_TRAMITE_BT]"));
 
             String codiceIstatEnte = Optional.ofNullable(
                     sess.getVal01(
                             userContext,
                             CNRUserContext.getEsercizio(userContext),
-                            null, DistintaCassiereComponentSession.FLUSSO_ORDINATIVI,
-                            "CODICE_ISTAT_ENTE"
+                            null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_CODICE_ISTAT_ENTE
                     )).orElseThrow(() -> new ApplicationException("Configurazione mancante per flusso Ordinativo [CODICE_ISTAT_ENTE]"));
 
             final CtTestataFlusso testataFlusso = objectFactory.createCtTestataFlusso();
