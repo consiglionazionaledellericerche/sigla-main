@@ -204,6 +204,12 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />					
+		<columnMapping
+			columnName="TIPO_DEBITO_SIOPE"
+			propertyName="tipoDebitoSiope"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />			
 
 	</defaultColumnMap>
 	<persistentProperty
@@ -265,5 +271,7 @@
 	<persistentProperty
 		name="fl_solo_inail_ente" />		
 	<persistentProperty
-		name="fl_split_payment" />	
+		name="fl_split_payment" />
+	<persistentProperty
+		name="tipoDebitoSiope" />
 </SQLPersistentInfo>
