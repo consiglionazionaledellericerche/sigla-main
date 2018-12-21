@@ -1,31 +1,48 @@
 package it.cnr.contab.doccont00.bp;
 
-import it.cnr.contab.config00.bulk.Codici_siopeBulk;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
-import it.cnr.contab.doccont00.service.ContabiliService;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.config00.bulk.Codici_siopeBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleCupBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleCupIBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleIBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleSiopeCupBulk;
+import it.cnr.contab.doccont00.core.bulk.ReversaleSiopeCupIBulk;
+import it.cnr.contab.doccont00.core.bulk.Reversale_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Reversale_siopeBulk;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
+import it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBulk;
+import it.cnr.contab.doccont00.core.bulk.V_ass_doc_contabiliBulk;
+import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
+import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedRuntimeException;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.*;
-import it.cnr.jada.util.action.*;
+import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
 /**
@@ -54,7 +71,8 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private boolean siope_cup_attivo =false;
 	private Unita_organizzativaBulk uoSrivania;
 	private ContabiliService contabiliService;
-
+	private boolean isEnteCNR = true;
+	
 	public CRUDReversaleBP() {
 		super();
 		setTab("tab","tabReversale");
@@ -468,20 +486,13 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(actioncontext));
 			contabiliService = SpringUtil.getBean("contabiliService",
 					ContabiliService.class);		
-			//		if (Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), ((ReversaleBulk)this.getModel()).getEsercizio()).getFl_cup().booleanValue() &&
-			//				Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),  ((ReversaleBulk)this.getModel()).getEsercizio()).getFl_siope_cup().booleanValue()){
-			//			
-			//			 if (((ReversaleBulk)this.getModel()).getDt_emissione()!=null){
-			//					Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(actioncontext.getUserContext(), "DATA_LIMITE_CUP_SIOPE_CUP");
-			//					if( ((ReversaleBulk)this.getModel()).getDt_emissione().after(dataLimite))
-			//						setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
-			//					else
-			//						setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
-			//			 }
-			//		}else{
-			setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
-			setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
-			//		}
+
+			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
+			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext()));
+
+			setEnteCNR(parEnte.isEnteCNR());
+			setCup_attivo(parCnr.getFl_cup().booleanValue());
+			setSiope_cup_attivo(parCnr.getFl_siope_cup().booleanValue());
 		}
 		catch(Throwable throwable)
 		{
@@ -716,5 +727,11 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			getModel().setCrudStatus(crudStatus);
 			throw handleException(e);
 		}
+	}
+	public void setEnteCNR(boolean isEnteCNR) {
+		this.isEnteCNR = isEnteCNR;
+	}
+	public boolean isEnteCNR() {
+		return isEnteCNR;
 	}
 }
