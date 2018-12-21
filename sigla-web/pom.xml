@@ -67,6 +67,12 @@
         </dependency>
         <dependency>
             <groupId>it.cnr</groupId>
+            <artifactId>sigla-siopeplus-ordinativi</artifactId>
+            <version>${project.version}</version>
+            <scope>${scope}</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.cnr</groupId>
             <artifactId>jada</artifactId>
             <version>${jada.version}</version>
             <scope>${scope}</scope>
