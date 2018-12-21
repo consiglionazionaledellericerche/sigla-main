@@ -1571,7 +1571,7 @@ ASSICURATA"/>
 C: COMMERCIALE
 N: NON COMMERCIALE
 I: IVA"/>
-        </addColumn>
+</addColumn>
         <addColumn tableName="reversale">
             <column name="tipo_debito_siope" type="char(1)" remarks="Tipo Debito siope+ Può assumere i valori:
 C: COMMERCIALE
@@ -1579,5 +1579,10 @@ N: NON COMMERCIALE
 I: IVA"/>
         </addColumn>
     </changeSet>    
+    <changeSet author="gianfranco.gasparro" id="alter_tipo_trattamento_add_tipo_debito_siope">
+        <addColumn tableName="tipo_trattamento">
+            <column name="tipo_debito_siope" type="varchar2(1)" remarks="Tipo Debito per Siope+. I valori possibili sono: C = Commerciale o N = Non Commerciale"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
 
