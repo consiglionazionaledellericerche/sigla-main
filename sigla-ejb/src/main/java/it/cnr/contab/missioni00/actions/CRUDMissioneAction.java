@@ -2857,7 +2857,7 @@ public class CRUDMissioneAction extends it.cnr.jada.util.action.CRUDAction {
 
     public Forward doSearchListabanche(ActionContext context) {
         MissioneBulk missione = (MissioneBulk) getBusinessProcess(context).getModel();
-        return search(context, getFormField(context, "main.listabanche"), missione.getModalita_pagamento().getTi_pagamento());
+        return search(context, getFormField(context, "main.listabanche"), missione.getModalita_pagamento().getTiPagamentoColumnSet());
     }
 
     /**

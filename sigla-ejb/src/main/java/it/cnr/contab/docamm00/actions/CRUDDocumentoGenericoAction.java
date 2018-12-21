@@ -2489,10 +2489,10 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
         Documento_genericoBulk documentoGenerico= (Documento_genericoBulk) bp.getModel();
         if (!documentoGenerico.isGenericoAttivo()) {
             riga= (Documento_generico_rigaBulk) ((CRUDDocumentoGenericoPassivoBP) bp).getDettaglio().getModel();
-            return search(context, getFormField(context, "main.Dettaglio.listabanche"), riga.getModalita_pagamento().getTi_pagamento());
+            return search(context, getFormField(context, "main.Dettaglio.listabanche"), riga.getModalita_pagamento().getTiPagamentoColumnSet());
         } else {
             riga= (Documento_generico_rigaBulk) ((CRUDDocumentoGenericoAttivoBP) bp).getDettaglio().getModel();
-            return search(context, getFormField(context, "main.Dettaglio.listabanche"), riga.getModalita_pagamento_uo_cds().getTi_pagamento());
+            return search(context, getFormField(context, "main.Dettaglio.listabanche"), riga.getModalita_pagamento_uo_cds().getTiPagamentoColumnSet());
         }
 
     }

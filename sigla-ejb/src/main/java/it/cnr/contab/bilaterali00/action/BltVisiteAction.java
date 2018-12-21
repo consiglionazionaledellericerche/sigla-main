@@ -996,11 +996,11 @@ public class BltVisiteAction extends it.cnr.jada.util.action.CRUDAction{
      */
     public Forward doSearchListabanche(ActionContext context) {
     	Blt_visiteBulk visita = (Blt_visiteBulk)getBusinessProcess(context).getModel();
-   		return search(context, getFormField(context, "main.listabanche"), visita.getModalitaPagamento().getTi_pagamento());
+   		return search(context, getFormField(context, "main.listabanche"), visita.getModalitaPagamento().getTiPagamentoColumnSet());
     }
 
     public Forward doSearchListabancheAnt(ActionContext context) {
     	Blt_visiteBulk visita = (Blt_visiteBulk)getBusinessProcess(context).getModel();
-   		return search(context, getFormField(context, "main.listabancheAnt"), visita.getModalitaPagamentoAnticipo().getTi_pagamento());
+   		return search(context, getFormField(context, "main.listabancheAnt"), visita.getModalitaPagamentoAnticipo().getTiPagamentoColumnSet());
     }
 }
