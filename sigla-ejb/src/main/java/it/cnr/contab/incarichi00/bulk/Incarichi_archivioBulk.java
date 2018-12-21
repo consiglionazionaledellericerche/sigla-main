@@ -180,6 +180,9 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public StorageFile getCMISFile(StorageObject storageObject){
 		return null;
 	}
+	public String getNomeAllegato(){
+		return getNome_file()!=null?getNome_file().replace("'", "_"):"";		
+	}
 	public String getDownloadUrl() {
 		if(this == null ||this.getCms_node_ref() == null)
 			return null;
