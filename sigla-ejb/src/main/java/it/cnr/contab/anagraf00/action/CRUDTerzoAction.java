@@ -10,6 +10,7 @@ import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -62,6 +63,9 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 						BulkInfo.getBulkInfo(Rif_modalita_pagamentoBulk.class),
 						null, "doBringBackModalita_pagamento");
 				selezionatore.setMultiSelection(true);
+				it.cnr.jada.bulk.BulkInfo bulkInfo = it.cnr.jada.bulk.BulkInfo.getBulkInfo(Rif_modalita_pagamentoBulk.class);
+				selezionatore.setFormField(bp.getFormField("cd_terzo"));
+				selezionatore.setBulkInfo(bulkInfo);
 				return selezionatore;
 			}
 			return context.findDefaultForward();
@@ -607,7 +611,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 	 * 11.29.43)
 	 * 
 	 * @return boolean
-	 * @param param
+	 * @param addBanca
 	 *            it.cnr.contab.anagraf00.core.bulk.BancaBulk
 	 */
 	private boolean existBancaInCollection(java.util.List bancheColl,
@@ -632,7 +636,7 @@ public class CRUDTerzoAction extends it.cnr.jada.util.action.CRUDAction {
 	 * 11.29.43)
 	 * 
 	 * @return boolean
-	 * @param param
+	 * @param terzo
 	 *            it.cnr.contab.anagraf00.core.bulk.BancaBulk
 	 */
 	private boolean verifyBanche_StipendiFor(TerzoBulk terzo,
