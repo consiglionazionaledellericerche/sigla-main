@@ -661,13 +661,13 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
                                 new SIOPEPlusRisultatoBulk(Esito.ACK.name(), risultato.getLocation()));
                         messaggioACK(risultato);
-                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                        logger.info("SIOPE+ ACK elaborato risultato: {}", risultato);
 
                         siopePlusRisultatoBulk.setToBeDeleted();
                         crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
                     } catch (Exception _ex) {
                         risultato.setError(_ex);
-                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                        logger.error("SIOPE+ ACK ERROR for risultato: {}", risultato, _ex);
                     }
                     return risultato;
                 });
@@ -685,13 +685,13 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
                                 new SIOPEPlusRisultatoBulk(Esito.ESITO.name(), risultato.getLocation()));
                         messaggioEsito(risultato);
-                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                        logger.info("SIOPE+ ESITO elaborato risultato: {}", risultato);
 
                         siopePlusRisultatoBulk.setToBeDeleted();
                         crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
                     } catch (Exception _ex) {
                         risultato.setError(_ex);
-                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                        logger.error("SIOPE+ ESITO ERROR for risultato: {}", risultato, _ex);
                     }
                     return risultato;
                 });
@@ -709,13 +709,13 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
                                 new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato.getLocation()));
                         messaggioEsitoApplicativo(risultato);
-                        logger.info("SIOPE+  elaborato risultato: {}", risultato);
+                        logger.info("SIOPE+ ESITO APPLICATIVO elaborato risultato: {}", risultato);
 
                         siopePlusRisultatoBulk.setToBeDeleted();
                         crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
                     } catch (Exception _ex) {
                         risultato.setError(_ex);
-                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                        logger.error("SIOPE+ ESITO APPLICATIVO ERROR for risultato: {}", risultato, _ex);
                     }
                     return risultato;
                 });
@@ -749,11 +749,11 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     siopePlusRisultatoBulk.setToBeDeleted();
                     crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
                 } catch (Exception e) {
-                    logger.error("SIOPE+  error during find risultato", e);
+                    logger.error("SIOPE+ MESSAGGI error during find risultato", e);
                 }
             }
         } catch (ComponentException | RemoteException e) {
-            logger.error("SIOPE+  error during find risultato", e);
+            logger.error("SIOPE+ MESSAGGI error during find risultato", e);
         }
 
         downloadMessaggiACK(dataDa, dataA, download);
