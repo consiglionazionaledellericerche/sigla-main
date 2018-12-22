@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericComponent implements IConfigurazione_cnrMgr, Cloneable, Serializable {
@@ -511,24 +512,43 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         logger.info("shutdow hook");
         final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);
         try {
-        Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
-                Configurazione_cnrBulk.PK_EMAIL_PEC,
-                Configurazione_cnrBulk.SK_SDI,
-                ASTERISCO,
-                new Integer(0));
-        Optional.ofNullable(home.findByPrimaryKey(configurazione_cnrBulk))
-                .filter(Configurazione_cnrBulk.class::isInstance)
-                .map(Configurazione_cnrBulk.class::cast)
-                .filter(bulk -> bulk.getVal04().equalsIgnoreCase("Y"))
-                .ifPresent(bulk -> {
-                    bulk.setVal04("N");
-                    bulk.setToBeUpdated();
-                    try {
-                        home.update(bulk, userContext);
-                    } catch (PersistencyException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
+                    Configurazione_cnrBulk.PK_EMAIL_PEC,
+                    Configurazione_cnrBulk.SK_SDI,
+                    ASTERISCO,
+                    new Integer(0));
+            Optional.ofNullable(home.findByPrimaryKey(configurazione_cnrBulk))
+                    .filter(Configurazione_cnrBulk.class::isInstance)
+                    .map(Configurazione_cnrBulk.class::cast)
+                    .filter(bulk -> bulk.getVal04().equalsIgnoreCase("Y"))
+                    .ifPresent(bulk -> {
+                        bulk.setVal04("N");
+                        bulk.setToBeUpdated();
+                        try {
+                            home.update(bulk, userContext);
+                        } catch (PersistencyException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+            Configurazione_cnrBulk flussoOrdinativi  = new Configurazione_cnrBulk(
+                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                    Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS,
+                    ASTERISCO,
+                    LocalDateTime.now().getYear());
+            Optional.ofNullable(home.findByPrimaryKey(flussoOrdinativi))
+                    .filter(Configurazione_cnrBulk.class::isInstance)
+                    .map(Configurazione_cnrBulk.class::cast)
+                    .filter(bulk -> bulk.getVal04().equalsIgnoreCase("Y"))
+                    .ifPresent(bulk -> {
+                        bulk.setVal04("N");
+                        bulk.setToBeUpdated();
+                        try {
+                            home.update(bulk, userContext);
+                        } catch (PersistencyException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
         } catch (PersistencyException e) {
             throw handleException(e);
         }
