@@ -20,8 +20,6 @@ import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
-import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
-import it.cnr.contab.doccont00.intcass.xmlbnl.Reversale;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -70,6 +68,7 @@ public class DistintaCassiereComponent extends
     public static final String LIBERA = "LIBERA";
     public static final String NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE = "0001777";
     public static final String TIPO_CONTABILITA_ENTE_RICEVENTE = "INFRUTTIFERA";
+    public static final String STIPENDI = "STIPENDI";
 
     public DistintaCassiereComponent() {
     }
@@ -4703,7 +4702,7 @@ public class DistintaCassiereComponent extends
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
                 ).contains(tipoPagamentoSiopePlus) &&
                         //TODO da sostituire
-                        !rif_modalita_pagamentoBulk.getCd_modalita_pag().equals("STIPENDI");
+                        !rif_modalita_pagamentoBulk.getCd_modalita_pag().equals(STIPENDI);
 
                 mandato.setNumeroMandato(docContabile.getPgDocumento().intValue());
                 gcdi.setTime(docContabile.getDtEmissione());
@@ -4725,14 +4724,16 @@ public class DistintaCassiereComponent extends
                                 Optional.ofNullable(v_mandato_reversaleBulk.getIm_ritenute())
                                         .filter(imRitenute -> imRitenute.compareTo(BigDecimal.ZERO) != 0).isPresent())
                         .filter(v_mandato_reversaleBulk -> v_mandato_reversaleBulk.getIm_documento_cont().compareTo(v_mandato_reversaleBulk.getIm_ritenute()) != 0)
-                        .filter(v_mandato_reversaleBulk -> !Arrays.asList(
+                        .filter(v_mandato_reversaleBulk -> (!Arrays.asList(
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.CASSA,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
-                        ).contains(tipoPagamentoSiopePlus)).isPresent();
+                        ).contains(tipoPagamentoSiopePlus))
+                                //TODO da sostituire
+                                || rif_modalita_pagamentoBulk.getCd_modalita_pag().equals(STIPENDI)).isPresent();
 
                 if (multibeneficiario) {
                     bollo = objectFactory.createMandatoInformazioniBeneficiarioBollo();
@@ -4845,7 +4846,7 @@ public class DistintaCassiereComponent extends
 
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
-                                    Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
+                                    it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione)it.next();
                                     if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
@@ -4986,7 +4987,7 @@ public class DistintaCassiereComponent extends
 
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
-                                    Mandato.InformazioniBeneficiario.Classificazione presente = (Mandato.InformazioniBeneficiario.Classificazione) it.next();
+                                    it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
                                     if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
