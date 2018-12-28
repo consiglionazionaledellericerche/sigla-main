@@ -1584,5 +1584,14 @@ I: IVA"/>
             <column name="tipo_debito_siope" type="varchar2(1)" remarks="Tipo Debito per Siope+. I valori possibili sono: C = Commerciale o N = Non Commerciale"/>
         </addColumn>
     </changeSet>
+    <changeSet author="marco.spasiano" id="alter_siope_plus_risultato_add_risultato">
+        <addColumn tableName="siope_plus_risultato">
+            <column name="prog_flusso" type="number(30)" remarks="Progressivo flusso siope+"/>
+            <column name="prog_esito_applicativo" type="number(30)" remarks="Progressivo esito applicativo siope+"/>
+            <column name="data_produzione" type="${date.type}" remarks="Data Produzione"/>
+            <column name="data_upload" type="${date.type}" remarks="Data Upload"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
 
