@@ -1,65 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBase"
-	keyClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoKey"
-	homeClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoHome">
-	<defaultColumnMap
-		tableName="SIOPE_PLUS_RISULTATO">
-		<columnMapping
-			columnName="ESITO"
-			propertyName="esito"
-			sqlTypeName="VARCHAR"
-			columnSize="50"
-			nullable="false" />
-		<columnMapping
-			columnName="LOCATION"
-			propertyName="location"
-			sqlTypeName="VARCHAR"
-			columnSize="1000"
-			nullable="false" />
-		<columnMapping
-			columnName="DACR"
-			propertyName="dacr"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="UTCR"
-			propertyName="utcr"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="DUVA"
-			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="UTUV"
-			propertyName="utuv"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="PG_VER_REC"
-			propertyName="pg_ver_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="38"
-			nullable="false" />
-	</defaultColumnMap>
-	<persistentProperty
-		name="esito" />
-	<persistentProperty
-		name="location" />
-	<persistentProperty
-		name="dacr" />
-	<persistentProperty
-		name="utcr" />
-	<persistentProperty
-		name="duva" />
-	<persistentProperty
-		name="utuv" />
-	<persistentProperty
-		name="pg_ver_rec" />
+        persistentClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBase"
+        keyClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoKey"
+        homeClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoHome">
+    <defaultColumnMap
+            tableName="SIOPE_PLUS_RISULTATO">
+        <columnMapping
+                columnName="ESITO"
+                propertyName="esito"
+                sqlTypeName="VARCHAR"
+                columnSize="50"
+                nullable="false"/>
+        <columnMapping
+                columnName="LOCATION"
+                propertyName="location"
+                sqlTypeName="VARCHAR"
+                columnSize="1000"
+                nullable="false"/>
+        <columnMapping
+                columnName="PROG_FLUSSO"
+                propertyName="prog_flusso"
+                sqlTypeName="DECIMAL"
+                columnSize="30"/>
+        <columnMapping
+                columnName="PROG_ESITO_APPLICATIVO"
+                propertyName="prog_esito_applicativo"
+                sqlTypeName="DECIMAL"
+                columnSize="30"/>
+        <columnMapping
+                columnName="DATA_PRODUZIONE"
+                propertyName="data_produzione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="DATA_UPLOAD"
+                propertyName="data_upload"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="DACR"
+                propertyName="dacr"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTCR"
+                propertyName="utcr"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="DUVA"
+                propertyName="duva"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTUV"
+                propertyName="utuv"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="PG_VER_REC"
+                propertyName="pg_ver_rec"
+                sqlTypeName="DECIMAL"
+                columnSize="38"
+                nullable="false"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="esito"/>
+    <persistentProperty
+            name="location"/>
+    <persistentProperty
+            name="prog_flusso"/>
+    <persistentProperty
+            name="prog_esito_applicativo"/>
+    <persistentProperty
+            name="data_produzione"/>
+    <persistentProperty
+            name="data_upload"/>
+    <persistentProperty
+            name="dacr"/>
+    <persistentProperty
+            name="utcr"/>
+    <persistentProperty
+            name="duva"/>
+    <persistentProperty
+            name="utuv"/>
+    <persistentProperty
+            name="pg_ver_rec"/>
 </SQLPersistentInfo>
