@@ -669,7 +669,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .map(risultato -> {
                     try {
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
-                                new SIOPEPlusRisultatoBulk(Esito.ACK.name(), risultato.getLocation()));
+                                new SIOPEPlusRisultatoBulk(Esito.ACK.name(), risultato));
                         messaggioACK(risultato);
                         logger.info("SIOPE+ ACK elaborato risultato: {}", risultato);
 
@@ -693,7 +693,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .map(risultato -> {
                     try {
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
-                                new SIOPEPlusRisultatoBulk(Esito.ESITO.name(), risultato.getLocation()));
+                                new SIOPEPlusRisultatoBulk(Esito.ESITO.name(), risultato));
                         messaggioEsito(risultato);
                         logger.info("SIOPE+ ESITO elaborato risultato: {}", risultato);
 
@@ -717,7 +717,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .map(risultato -> {
                     try {
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
-                                new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato.getLocation()));
+                                new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato));
                         messaggioEsitoApplicativo(risultato);
                         logger.info("SIOPE+ ESITO APPLICATIVO elaborato risultato: {}", risultato);
 
@@ -740,8 +740,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 try {
                     Risultato risultato = new Risultato();
                     risultato.setLocation(siopePlusRisultatoBulk.getLocation());
-                    risultato.setDataProduzione(EJBCommonServices.getServerTimestamp());
-                    risultato.setDataUpload(EJBCommonServices.getServerTimestamp());
+                    risultato.setProgFlusso(siopePlusRisultatoBulk.getProg_flusso());
+                    risultato.setProgEsitoApplicativo(siopePlusRisultatoBulk.getProg_esito_applicativo());
+                    risultato.setDataProduzione(siopePlusRisultatoBulk.getData_produzione());
+                    risultato.setDataUpload(siopePlusRisultatoBulk.getData_upload());
                     switch (siopePlusRisultatoBulk.getEsitoEnum()) {
                         case ACK: {
                             messaggioACK(risultato);
