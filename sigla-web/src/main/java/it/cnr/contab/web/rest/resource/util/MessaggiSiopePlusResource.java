@@ -65,4 +65,11 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
         }
         return Response.ok(result.collect(Collectors.toList())).build();
     }
+
+    @Override
+    public Response messaggiSiopeplus(HttpServletRequest request) throws Exception {
+        DocumentiContabiliService documentiContabiliService = SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class);
+        documentiContabiliService.executeMessaggiSiopeplus();
+        return Response.ok().build();
+    }
 }
