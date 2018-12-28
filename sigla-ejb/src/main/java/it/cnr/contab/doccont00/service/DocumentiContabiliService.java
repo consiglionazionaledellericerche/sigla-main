@@ -17,6 +17,7 @@ import it.cnr.contab.model.MessaggioXML;
 import it.cnr.contab.model.Risultato;
 import it.cnr.contab.service.OrdinativiSiopePlusService;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.ApplicationMessageFormatException;
@@ -31,6 +32,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.firma.arss.ArubaSignServiceClient;
 import it.cnr.jada.firma.arss.ArubaSignServiceException;
+import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.mail.SimplePECMail;
 import it.cnr.si.spring.storage.*;
@@ -59,6 +61,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -510,10 +513,11 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         crudComponentSession.modificaConBulk(userContext, distinta);
     }
 
-    private void messaggioEsitoApplicativo(Risultato risultato) throws RemoteException, ComponentException {
+    private void messaggioEsitoApplicativo(Risultato risultato) throws Exception {
         final MessaggioXML<MessaggiEsitoApplicativo> messaggioXML = ordinativiSiopePlusService.getLocation(risultato.getLocation(), MessaggiEsitoApplicativo.class);
         final MessaggiEsitoApplicativo messaggiEsitoApplicativo = messaggioXML.getObject();
         final List<Object> esitoReversaliOrEsitoMandati = messaggiEsitoApplicativo.getEsitoReversaliOrEsitoMandati();
+        AtomicReference<Exception> _ex = new AtomicReference<>();
         final List<OggettoBulk> mandatoStream = esitoReversaliOrEsitoMandati
                 .stream()
                 .filter(CtEsitoMandati.class::isInstance)
@@ -553,6 +557,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     try {
                         return crudComponentSession.modificaConBulk(userContext, mandato);
                     } catch (ComponentException | RemoteException e) {
+                        _ex.set(e);
                         logger.error("SIOPE+ AGGIORNA MANDATO [{}/{}] ERROR", mandato.getEsercizio(), mandato.getPg_mandato(), e);
                         return null;
                     }
@@ -593,6 +598,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     try {
                         return crudComponentSession.modificaConBulk(userContext, reversale);
                     } catch (ComponentException | RemoteException e) {
+                        _ex.set(e);
                         logger.error("SIOPE+ AGGIORNA REVERSALE [{}/{}] ERROR", reversale.getEsercizio(), reversale.getPg_reversale(), e);
                         return null;
                     }
@@ -609,6 +615,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
                         mandatoComponentSession.annullaMandato(userContext, mandatoBulk, true);
                     } catch (ComponentException | RemoteException e) {
+                        _ex.set(e);
                         logger.error("SIOPE+ ANNULLA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
                     }
                 });
@@ -624,9 +631,12 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         logger.info("SIOPE+ ANNULLA REVERSALE [{}/{}]", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale());
                         reversaleComponentSession.annullaReversale(userContext, reversaleBulk, true);
                     } catch (ComponentException | RemoteException e) {
+                        _ex.set(e);
                         logger.error("SIOPE+ ANNULLA REVERSALE [{}/{}] ERROR", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale(), e);
                     }
                 });
+        if (Optional.ofNullable(_ex).flatMap(exceptionAtomicReference -> Optional.ofNullable(exceptionAtomicReference.get())).isPresent())
+            throw _ex.get();
     }
 
 
@@ -654,7 +664,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 dataDa, dataA, download, null);
         logger.info("Lista ACK: {}", listaACK);
         return Optional.ofNullable(listaACK.getRisultati())
-                .orElse(Collections.emptyList())
+                .orElseGet(() -> Collections.emptyList())
                 .stream()
                 .map(risultato -> {
                     try {
@@ -678,7 +688,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 dataDa, dataA, download, null);
         logger.info("SIOPE+ Lista Esito: {}", listaEsito);
         return Optional.ofNullable(listaEsito.getRisultati())
-                .orElse(Collections.emptyList())
+                .orElseGet(() -> Collections.emptyList())
                 .stream()
                 .map(risultato -> {
                     try {
@@ -702,7 +712,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 dataDa, dataA, download, null);
         logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
         return Optional.ofNullable(listaEsitoApplicativo.getRisultati())
-                .orElse(Collections.emptyList())
+                .orElseGet(() -> Collections.emptyList())
                 .stream()
                 .map(risultato -> {
                     try {
@@ -749,6 +759,17 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     siopePlusRisultatoBulk.setToBeDeleted();
                     crudComponentSession.eliminaConBulk(userContext, siopePlusRisultatoBulk);
                 } catch (Exception e) {
+                    if (siopePlusRisultatoBulk.getPg_ver_rec() > 5) {
+                        java.io.StringWriter sw = new java.io.StringWriter();
+                        e.printStackTrace(new java.io.PrintWriter(sw));
+                        SendMail.sendErrorMail("SIOPE+ Elabora risultato " +
+                                siopePlusRisultatoBulk.getEsito() + " " +
+                                siopePlusRisultatoBulk.getLocation(),
+                                sw.toString());
+                    } else {
+                        siopePlusRisultatoBulk.setToBeUpdated();
+                        crudComponentSession.modificaConBulk(userContext, siopePlusRisultatoBulk);
+                    }
                     logger.error("SIOPE+ MESSAGGI error during find risultato", e);
                 }
             }
@@ -756,9 +777,15 @@ public class DocumentiContabiliService extends StoreService implements Initializ
             logger.error("SIOPE+ MESSAGGI error during find risultato", e);
         }
 
-        downloadMessaggiACK(dataDa, dataA, download);
-        downloadMessaggiEsito(dataDa, dataA, download);
-        downloadMessaggiEsitoApplicativo(dataDa, dataA, download);
+        downloadMessaggiACK(dataDa, dataA, download)
+                .map(Risultato::toString)
+                .forEach(logger::debug);
+        downloadMessaggiEsito(dataDa, dataA, download)
+                .map(Risultato::toString)
+                .forEach(logger::debug);
+        downloadMessaggiEsitoApplicativo(dataDa, dataA, download)
+                .map(Risultato::toString)
+                .forEach(logger::debug);
     }
 
     class StorageDataSource implements DataSource {
