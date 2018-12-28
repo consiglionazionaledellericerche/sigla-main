@@ -122,7 +122,6 @@
       AND dcp.cd_cds(+) = dc.cd_cds
       AND dcp.cd_unita_organizzativa(+) = dc.cd_unita_organizzativa
       AND dcp.pg_distinta_def(+) = dc.pg_distinta_def - 1
-      AND dc.dt_invio IS NOT NULL
       AND m.esercizio = dcd.esercizio
       AND m.cd_cds = dcd.cd_cds_origine
       AND m.pg_mandato = dcd.pg_mandato
@@ -202,7 +201,6 @@
       AND dcp.cd_cds(+) = dc.cd_cds
       AND dcp.cd_unita_organizzativa(+) = dc.cd_unita_organizzativa
       AND dcp.pg_distinta_def(+) = dc.pg_distinta_def - 1
-      AND dc.dt_invio IS NOT NULL
       AND r.esercizio = dcd.esercizio
       AND r.cd_cds = dcd.cd_cds_origine
       AND r.pg_reversale = dcd.pg_reversale
