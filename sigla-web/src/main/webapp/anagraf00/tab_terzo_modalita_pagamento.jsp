@@ -50,8 +50,7 @@
 	  		            <td><% bp.getCrudBanche().writeHTMLTable(pageContext,ti_pagamento,true,false,!bp.isOrigineBancaPerStipendi(),"100%","200px"); %></td>
 	  		        </tr>
                     <% if (bp.getCrudBanche()!=null && bp.getCrudBanche().getModel() != null &&
-                           (((BancaBulk)bp.getCrudBanche().getModel()).getTi_pagamento().equals(Rif_modalita_pagamentoBulk.BANCARIO) ||
-                            ((BancaBulk)bp.getCrudBanche().getModel()).getTi_pagamento().equals(Rif_modalita_pagamentoBulk.IBAN))) {%>
+                           (ti_pagamento.equals(Rif_modalita_pagamentoBulk.BANCARIO) || ti_pagamento.equals(Rif_modalita_pagamentoBulk.IBAN))) {%>
                     <tr><td><% bp.getCrudBanche().writeFormLabel(out,"nazione_iban"+(isIbanNullable?"_nullable":"")); %>
                             <% bp.getCrudBanche().writeFormInput(out,"nazione_iban"+(isIbanNullable?"_nullable":"")); %>
                             <%if (((BancaBulk)bp.getCrudBanche().getModel()).getNazione_iban()!=null) {
