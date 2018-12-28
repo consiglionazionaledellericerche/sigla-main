@@ -144,11 +144,21 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
     public String getTiPagamentoColumnSet() {
         return Optional.ofNullable(this)
                 .map(rif_modalita_pagamentoBulk -> {
-                    if (Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope()).isPresent() &&
-                            Arrays.asList(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE.value(),
+                    if (Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope()).isPresent()){
+                            if (Arrays.asList(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE.value(),
                                     Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE.value())
                                     .contains(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())) {
-                        return Rif_modalita_pagamentoBulk.ASSEGNO;
+                                return Rif_modalita_pagamentoBulk.ASSEGNO;
+                            } else if (rif_modalita_pagamentoBulk.getTipo_pagamento_siope().equals(
+                                    TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value()
+                            )){
+                                return Rif_modalita_pagamentoBulk.POSTALE;
+                            } else if (rif_modalita_pagamentoBulk.getTipo_pagamento_siope().equals(
+                                    TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value()
+                            )){
+                                return Rif_modalita_pagamentoBulk.BANCARIO;
+                            }
+
                     }
                     return rif_modalita_pagamentoBulk.getTi_pagamento();
                 })
