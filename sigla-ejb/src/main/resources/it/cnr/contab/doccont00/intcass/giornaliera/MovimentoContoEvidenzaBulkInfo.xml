@@ -256,7 +256,7 @@
 		name="anagraficaCliente"
 		property="anagraficaCliente"
 		inputType="TEXT"
-		maxLength="50"
+		maxLength="250"
 		enabledOnEdit="false"
 		label="anagraficaCliente" />
 	<fieldProperty
