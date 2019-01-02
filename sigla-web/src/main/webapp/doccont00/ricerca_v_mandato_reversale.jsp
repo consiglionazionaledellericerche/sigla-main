@@ -28,8 +28,7 @@
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %></td>
-	<td><% bp.getController().writeFormInput( out, "cd_unita_organizzativa"); %>
-	    <% bp.getController().writeFormInput( out, "ds_unita_organizzativa"); %></td>
+	<td><% bp.getController().writeFormInput( out, "complete_uo"); %></td>
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_tipo_documento_cont"); %></td>
@@ -63,9 +62,7 @@
 	</tr>
 	<tr>
 	<td><% bp.getController().writeFormLabel( out, "cd_terzo"); %></td>
-	<td><% bp.getController().writeFormInput( out, "cd_terzo"); %>
-	    <% bp.getController().writeFormInput( out, "ds_terzo"); %>
-        <% bp.getController().writeFormInput( out, "find_terzo"); %></td>
+	<td><% bp.getController().writeFormInput( out, "complete_terzo"); %></td>
 	</tr>
    </table>
 

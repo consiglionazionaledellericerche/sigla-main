@@ -30,16 +30,16 @@ function doVisualizzaSingoloDocumento(esercizio, cds , uo, numero_documento, tip
     <table class="Panel">	   
 	<tr>
 		<td>   
-   			 <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","300px", true); %>
+   			 <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","60vh", true); %>
 		</td>
 	</tr>
 	</table>
 	<table>
 	 <tr>
-		<td><big>Totale Mandati</big></td>
+		<td><big class="text-primary mr-2">Totale Mandati</big></td>
 		<td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
 	
-		<td><big>Totale Reversali</big></td>
+		<td><big class="text-primary mr-2">Totale Reversali</big></td>
 		<td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
 	</tr>
 	</table>
