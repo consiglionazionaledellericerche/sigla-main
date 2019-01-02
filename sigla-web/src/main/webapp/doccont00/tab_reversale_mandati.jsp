@@ -15,10 +15,10 @@
 %>
 
 	
-	<table border="0" cellspacing="0" cellpadding="2">		
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 		<tr>
 			<td colspan=2>
-			      <b ALIGN="CENTER"><font size=2>Doc.contabili associati.</font></b>
+			      <b ALIGN="CENTER"><font size=2 class="h3 text-primary">Doc.contabili associati.</font></b>
 			      <% bp.getMandatiRev().setEnabled( false );
 			         bp.getMandatiRev().writeHTMLTable(pageContext,"doc_cont_coll",false,false,false,"100%","100px", true); %>
 			</td>

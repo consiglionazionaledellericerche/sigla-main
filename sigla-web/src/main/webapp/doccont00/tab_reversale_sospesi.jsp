@@ -24,10 +24,10 @@
 	</table>
 	</div>
 	
-	<table border="0" cellspacing="0" cellpadding="2">	
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 		<tr>
 			<td>
-			      <b><font size=2>Sospesi associati alla reversale</font></b>
+			      <b><font size=2 class="h3 text-primary">Sospesi associati alla reversale</font></b>
 			      <% bp.getSospesiSelezionati().writeHTMLTable(pageContext,null,bp.isCaricaSospesiButtonEnabled() && bp.isEditable(),false,bp.isRimuoviSospesiButtonEnabled(),"100%","200px", false); %>
 			</td>
 		</tr>

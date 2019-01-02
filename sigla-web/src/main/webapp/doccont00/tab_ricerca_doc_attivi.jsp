@@ -64,19 +64,37 @@
 		</tr>
 	</table>
 	</div>			
-	<table border="0" cellspacing="0" cellpadding="2">	
+	<table class="w-100">
 		<tr>
 			<td colspan = 4 align = "center">
-				<% JSPUtils.button(out,bp.encodePath("img/find24.gif"),bp.encodePath("Ricerca"), "javascript:submitForm('doCercaDocAttivi')",null, bp.getParentRoot().isBootstrap()); %></td>
+			       <% JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search" : "img/find24.gif",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search" : "img/find24.gif",
+                        bp.encodePath("Ricerca"),
+                        "javascript:submitForm('doCercaDocAttivi')",
+                        "btn-primary btn-outline-primary btn-title btn-lg",
+                        true,
+                        bp.getParentRoot().isBootstrap()); %>
+
+			</td>
 		</tr>	
 		<tr>
 			<td colspan=2>
-			      <b ALIGN="CENTER"><font size=2>Documenti attivi disponibili</b>
+			      <b align="CENTER"><font size=2 class="h3 text-primary">Documenti attivi disponibili</font></b>
 			      <% bp.getDocumentiAttivi().writeHTMLTable(pageContext,null,false,false,false,"100%","150px", true); %>
 			</td>
 		</tr>
 		<tr>
-			<td  align = "center"><% JSPUtils.button(out,bp.encodePath("img/save24.gif"),bp.encodePath("Conferma"), "javascript:submitForm('doAggiungiDocAttivi')", bp.getParentRoot().isBootstrap()); %></td>
+			<td  align = "center">
+			    <% JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o" : "img/save24.gif",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-floppy-o" : "img/save24.gif",
+                        bp.encodePath("Conferma"),
+                        "javascript:submitForm('doAggiungiDocAttivi')",
+                        "btn-primary btn-outline-primary btn-title btn-lg",
+                        true,
+                        bp.getParentRoot().isBootstrap()); %>
+			</td>
 		</tr>
 
 	</table>
