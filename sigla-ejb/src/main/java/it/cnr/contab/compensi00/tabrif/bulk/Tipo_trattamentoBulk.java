@@ -1,10 +1,15 @@
 package it.cnr.contab.compensi00.tabrif.bulk;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
+import it.cnr.contab.util.TipoDebitoSIOPE;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
 
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -24,13 +29,15 @@ public class Tipo_trattamentoBulk extends Tipo_trattamentoBase {
 		TIPO_COMMERCIALE.put(ATT_NON_COMMERCIALE, "Attività NON commerciali");
 	}
 	
-	public final static Dictionary TIPO_DEBITO_SIOPE;
-
-	static {
-		TIPO_DEBITO_SIOPE = new it.cnr.jada.util.OrderedHashtable();
-		TIPO_DEBITO_SIOPE.put(TIPO_DEBITO_COMMERCIALE,"Commerciale");
-		TIPO_DEBITO_SIOPE.put(TIPO_DEBITO_NON_COMMERCIALE,"Non Commerciale");
-	}
+	public final static Map<String,String> tipoDebitoSIOPEKeys = Arrays.asList(TipoDebitoSIOPE.values())
+			.stream()
+			.filter(tipoDebitoSIOPE -> !tipoDebitoSIOPE.equals(TipoDebitoSIOPE.IVA))
+			.collect(Collectors.toMap(
+					TipoDebitoSIOPE::value,
+					TipoDebitoSIOPE::label,
+					(oldValue, newValue) -> oldValue,
+					Hashtable::new
+			));
 	
 	private java.util.List intervalli;
 	public Tipo_trattamentoBulk() {
@@ -125,9 +132,5 @@ public class Tipo_trattamentoBulk extends Tipo_trattamentoBase {
 	 */
 	public void setIntervalli(java.util.List newIntervalli) {
 		intervalli = newIntervalli;
-	}
-	public Dictionary getTipoDebitoSiopeKeys() {
-		
-		return TIPO_DEBITO_SIOPE;
 	}
 }
