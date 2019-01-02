@@ -124,7 +124,11 @@
 			propertyName="dt_firma"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
-				
+		<columnMapping
+			columnName="TIPO_DEBITO_SIOPE"
+			propertyName="tipo_debito_siope"
+			sqlTypeName="CHAR"
+			columnSize="1" />
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -172,5 +176,7 @@
 	<persistentProperty
 		name="versamento_cori" />
 	<persistentProperty
-		name="dt_firma" />	
+		name="dt_firma" />
+	<persistentProperty
+		name="tipo_debito_siope" />
 </SQLPersistentInfo>

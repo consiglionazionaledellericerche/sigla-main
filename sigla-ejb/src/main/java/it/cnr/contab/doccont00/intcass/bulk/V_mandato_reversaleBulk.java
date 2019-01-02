@@ -9,6 +9,7 @@ import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util.TipoDebitoSIOPE;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
@@ -24,6 +25,8 @@ import it.cnr.jada.comp.ComponentException;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -87,7 +90,15 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 		ti_cc_biKeys.put(it.cnr.contab.doccont00.core.bulk.SospesoBulk.TIPO_CC, "C/C");
 		ti_cc_biKeys.put(it.cnr.contab.doccont00.core.bulk.SospesoBulk.TIPO_BANCA_ITALIA, "Banca d'Italia"); 
 	}
-	
+
+	public final static Map<String,String> tipoDebitoSIOPEKeys = Arrays.asList(TipoDebitoSIOPE.values())
+			.stream()
+			.collect(Collectors.toMap(
+					TipoDebitoSIOPE::value,
+					TipoDebitoSIOPE::label,
+					(oldValue, newValue) -> oldValue,
+					Hashtable::new
+			));
 	public V_mandato_reversaleBulk() {
 		super();
 	}
