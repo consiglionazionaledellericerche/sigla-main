@@ -6,6 +6,9 @@ package it.cnr.contab.doccont00.consultazioni.bulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Keyed;
 import it.cnr.jada.persistency.Persistent;
+
+import java.sql.Timestamp;
+
 public class V_cons_stato_invio_reversaliBase extends OggettoBulk implements Persistent {
 //    CD_CDS VARCHAR(30)
 	private java.lang.String cd_cds;
@@ -53,6 +56,15 @@ public class V_cons_stato_invio_reversaliBase extends OggettoBulk implements Per
  
 //    DT_INVIO_DIS TIMESTAMP(7)
 	private java.sql.Timestamp dt_invio_dis;
+
+	// ESITO_OPERAZIONE VARCHAR2(30)
+	private java.lang.String esitoOperazione;
+
+	// DT_ORA_ESITO_OPERAZIONE TIMESTAMP
+	private java.sql.Timestamp dtOraEsitoOperazione;
+
+	// ERRORE_SIOPE_PLUS VARCHAR2(2000)
+	private java.lang.String erroreSiopePlus;
  
 	public V_cons_stato_invio_reversaliBase() {
 		super();
@@ -152,5 +164,29 @@ public class V_cons_stato_invio_reversaliBase extends OggettoBulk implements Per
 	}
 	public void setDt_incasso(java.sql.Timestamp dt_incasso) {
 		this.dt_incasso = dt_incasso;
+	}
+
+	public String getEsitoOperazione() {
+		return esitoOperazione;
+	}
+
+	public void setEsitoOperazione(String esitoOperazione) {
+		this.esitoOperazione = esitoOperazione;
+	}
+
+	public Timestamp getDtOraEsitoOperazione() {
+		return dtOraEsitoOperazione;
+	}
+
+	public void setDtOraEsitoOperazione(Timestamp dtOraEsitoOperazione) {
+		this.dtOraEsitoOperazione = dtOraEsitoOperazione;
+	}
+
+	public String getErroreSiopePlus() {
+		return erroreSiopePlus;
+	}
+
+	public void setErroreSiopePlus(String erroreSiopePlus) {
+		this.erroreSiopePlus = erroreSiopePlus;
 	}
 }
