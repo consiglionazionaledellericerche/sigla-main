@@ -2,7 +2,34 @@
 --  DDL for View V_MANDATO_REVERSALE_PRE
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_MANDATO_REVERSALE_PRE" ("CD_TIPO_DOCUMENTO_CONT", "CD_CDS", "ESERCIZIO", "PG_DOCUMENTO_CONT", "CD_UNITA_ORGANIZZATIVA", "CD_CDS_ORIGINE", "CD_UO_ORIGINE", "TI_DOCUMENTO_CONT", "DS_DOCUMENTO_CONT", "STATO", "STATO_TRASMISSIONE", "DT_EMISSIONE", "DT_TRASMISSIONE", "DT_RITRASMISSIONE", "DT_PAGAMENTO_INCASSO", "DT_ANNULLAMENTO", "IM_DOCUMENTO_CONT", "IM_RITENUTE", "IM_PAGATO_INCASSATO", "CD_TERZO", "CD_TIPO_DOCUMENTO_CONT_PADRE", "PG_DOCUMENTO_CONT_PADRE", "TI_DOCUMENTO_CONT_PADRE", "PG_VER_REC", "DT_FIRMA") AS 
+  CREATE OR REPLACE FORCE VIEW "V_MANDATO_REVERSALE_PRE" (
+    "CD_TIPO_DOCUMENTO_CONT",
+    "CD_CDS",
+    "ESERCIZIO",
+    "PG_DOCUMENTO_CONT",
+    "CD_UNITA_ORGANIZZATIVA",
+    "CD_CDS_ORIGINE",
+    "CD_UO_ORIGINE",
+    "TI_DOCUMENTO_CONT",
+    "DS_DOCUMENTO_CONT",
+    "STATO",
+    "STATO_TRASMISSIONE",
+    "DT_EMISSIONE",
+    "DT_TRASMISSIONE",
+    "DT_RITRASMISSIONE",
+    "DT_PAGAMENTO_INCASSO",
+    "DT_ANNULLAMENTO",
+    "IM_DOCUMENTO_CONT",
+    "IM_RITENUTE",
+    "IM_PAGATO_INCASSATO",
+    "CD_TERZO",
+    "CD_TIPO_DOCUMENTO_CONT_PADRE",
+    "PG_DOCUMENTO_CONT_PADRE",
+    "TI_DOCUMENTO_CONT_PADRE",
+    "PG_VER_REC",
+    "DT_FIRMA",
+    "TIPO_DEBITO_SIOPE"
+    ) AS
   SELECT
 --
 --
@@ -64,7 +91,8 @@ a.cd_tipo_documento_cont,
 a.pg_mandato,
 a.ti_mandato,
 a.pg_ver_rec,
-nvl(a.dt_firma_annullo,a.dt_firma)
+nvl(a.dt_firma_annullo,a.dt_firma),
+a.tipo_debito_siope
 FROM mandato a, mandato_terzo b
 WHERE a.ti_mandato <> 'R'
 AND b.cd_cds = a.cd_cds
@@ -108,7 +136,8 @@ a.cd_tipo_documento_cont,
 a.pg_reversale,
 a.ti_reversale,
 a.pg_ver_rec,
-nvl(a.dt_firma_annullo,a.dt_firma)
+nvl(a.dt_firma_annullo,a.dt_firma),
+a.tipo_debito_siope
 FROM reversale a, reversale_terzo b
 WHERE a.ti_reversale <> 'R'
 AND a.cd_tipo_documento_cont <> 'REV_PROVV'
@@ -153,7 +182,8 @@ b.cd_terzo,
 f.pg_mandato,
 f.ti_mandato,
 a.pg_ver_rec,
-nvl(a.dt_firma_annullo,a.dt_firma)
+nvl(a.dt_firma_annullo,a.dt_firma),
+a.tipo_debito_siope
 FROM reversale a, reversale_terzo b, ass_mandato_reversale e, mandato f
 WHERE a.ti_reversale <> 'R'
 AND a.cd_tipo_documento_cont <> 'REV_PROVV'
@@ -195,7 +225,8 @@ b.cd_terzo,
 f.pg_mandato,
 f.ti_mandato,
 a.pg_ver_rec,
-nvl(a.dt_firma_annullo,a.dt_firma)
+nvl(a.dt_firma_annullo,a.dt_firma),
+a.tipo_debito_siope
 FROM mandato a, mandato_terzo b, ass_mandato_mandato e, mandato f
 WHERE a.ti_mandato = 'P'
 AND b.cd_cds = a.cd_cds

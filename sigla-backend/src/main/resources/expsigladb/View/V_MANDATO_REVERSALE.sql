@@ -2,7 +2,35 @@
 --  DDL for View V_MANDATO_REVERSALE
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_MANDATO_REVERSALE" ("CD_TIPO_DOCUMENTO_CONT", "CD_CDS", "ESERCIZIO", "PG_DOCUMENTO_CONT", "CD_UNITA_ORGANIZZATIVA", "CD_CDS_ORIGINE", "CD_UO_ORIGINE", "TI_DOCUMENTO_CONT", "DS_DOCUMENTO_CONT", "STATO", "STATO_TRASMISSIONE", "DT_EMISSIONE", "DT_TRASMISSIONE", "DT_RITRASMISSIONE", "DT_PAGAMENTO_INCASSO", "DT_ANNULLAMENTO", "IM_DOCUMENTO_CONT", "IM_RITENUTE", "IM_PAGATO_INCASSATO", "TI_CC_BI", "CD_TERZO", "CD_TIPO_DOCUMENTO_CONT_PADRE", "PG_DOCUMENTO_CONT_PADRE", "TI_DOCUMENTO_CONT_PADRE", "PG_VER_REC", "VERSAMENTO_CORI", "DT_FIRMA") AS 
+  CREATE OR REPLACE FORCE VIEW "V_MANDATO_REVERSALE" (
+    "CD_TIPO_DOCUMENTO_CONT",
+    "CD_CDS",
+    "ESERCIZIO",
+    "PG_DOCUMENTO_CONT",
+    "CD_UNITA_ORGANIZZATIVA",
+    "CD_CDS_ORIGINE",
+    "CD_UO_ORIGINE",
+    "TI_DOCUMENTO_CONT",
+    "DS_DOCUMENTO_CONT",
+    "STATO",
+    "STATO_TRASMISSIONE",
+    "DT_EMISSIONE",
+    "DT_TRASMISSIONE",
+    "DT_RITRASMISSIONE",
+    "DT_PAGAMENTO_INCASSO",
+    "DT_ANNULLAMENTO",
+    "IM_DOCUMENTO_CONT",
+    "IM_RITENUTE",
+    "IM_PAGATO_INCASSATO",
+    "TI_CC_BI",
+    "CD_TERZO",
+    "CD_TIPO_DOCUMENTO_CONT_PADRE",
+    "PG_DOCUMENTO_CONT_PADRE",
+    "TI_DOCUMENTO_CONT_PADRE",
+    "PG_VER_REC",
+    "VERSAMENTO_CORI",
+    "DT_FIRMA",
+    "TIPO_DEBITO_SIOPE") AS
   SELECT
 --
 --
@@ -87,7 +115,7 @@
           a.im_documento_cont, a.im_ritenute, a.im_pagato_incassato, 'C',
           a.cd_terzo, a.cd_tipo_documento_cont_padre,
           a.pg_documento_cont_padre, a.ti_documento_cont_padre, a.pg_ver_rec,
-          NULL, a.dt_firma
+          NULL, a.dt_firma, a.tipo_debito_siope
      FROM v_mandato_reversale_pre a
     WHERE NOT EXISTS (
              SELECT 1
@@ -124,7 +152,7 @@
                    a.im_documento_cont, a.im_ritenute, a.im_pagato_incassato,
                    d.ti_cc_bi, a.cd_terzo, a.cd_tipo_documento_cont_padre,
                    a.pg_documento_cont_padre, a.ti_documento_cont_padre,
-                   a.pg_ver_rec, NULL, a.dt_firma
+                   a.pg_ver_rec, NULL, a.dt_firma, a.tipo_debito_siope
               FROM v_mandato_reversale_pre a, sospeso_det_etr b, sospeso d
              WHERE a.cd_tipo_documento_cont = 'REV'
                AND b.cd_cds_reversale = a.cd_cds
@@ -147,7 +175,7 @@
                    a.im_documento_cont, a.im_ritenute, a.im_pagato_incassato,
                    'C', a.cd_terzo, a.cd_tipo_documento_cont_padre,
                    a.pg_documento_cont_padre, a.ti_documento_cont_padre,
-                   a.pg_ver_rec, NULL, a.dt_firma
+                   a.pg_ver_rec, NULL, a.dt_firma, a.tipo_debito_siope
               FROM v_mandato_reversale_pre a, sospeso_det_usc b
              WHERE a.cd_tipo_documento_cont = 'MAN'
                AND b.cd_cds_mandato = a.cd_cds

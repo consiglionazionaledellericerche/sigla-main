@@ -245,7 +245,7 @@
 	<fieldProperty
 		name="tipoDebitoSiope"
 		property="tipoDebitoSiope"
-		keysProperty="tipoDebitoSiopeKeys"
+		keysProperty="tipoDebitoSIOPEKeys"
 		inputType="SELECT"
 		nullable="false"
 		enabledOnInsert="true"
