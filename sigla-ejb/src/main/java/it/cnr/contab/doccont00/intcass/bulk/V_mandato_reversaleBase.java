@@ -77,6 +77,8 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 	// DT_FIRMA TIMESTAMP
 	private java.sql.Timestamp dt_firma;
 
+	private String tipo_debito_siope;
+
 	public V_mandato_reversaleBase() {
 		super();
 	}
@@ -354,5 +356,13 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 	}
 	public void setDt_firma(java.sql.Timestamp dt_firma) {
 		this.dt_firma = dt_firma;
+	}
+
+	public String getTipo_debito_siope() {
+		return tipo_debito_siope;
+	}
+
+	public void setTipo_debito_siope(String tipo_debito_siope) {
+		this.tipo_debito_siope = tipo_debito_siope;
 	}
 }
