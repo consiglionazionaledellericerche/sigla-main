@@ -56,6 +56,12 @@
 		inputType="ROTEXT"
 		caseSensitiveSearch="false" />
 	<fieldProperty
+		name="complete_uo"
+		property="uo"
+		enabledOnSearch="true"
+		formName="searchtool"
+		inputType="SEARCHTOOL"/>
+	<fieldProperty
 		name="stato"
 		property="stato"
 		maxLength="1"
@@ -149,7 +155,14 @@
 		name="find_terzo"
 		property="terzo"
 		enabledOnSearch="true"				
-		inputType="SEARCHTOOL"/>		
+		inputType="SEARCHTOOL"/>
+	<fieldProperty
+		name="complete_terzo"
+		property="terzo"
+		enabledOnSearch="true"
+		formName="searchtool"
+		inputType="SEARCHTOOL"/>
+
 	<fieldProperty
 		name="dt_pagamento_incasso"
 		property="dt_pagamento_incasso"
@@ -241,7 +254,9 @@
 	<formFieldProperty
 		name="cd_unita_organizzativa" />
 	<formFieldProperty
-		name="ds_unita_organizzativa" />		
+		name="ds_unita_organizzativa" />
+	<formFieldProperty
+		name="complete_uo" />
 	<formFieldProperty
 		name="stato" />
 	<formFieldProperty
@@ -261,7 +276,9 @@
 	<formFieldProperty
 		name="ds_terzo" />
 	<formFieldProperty
-		name="find_terzo" />		
+		name="find_terzo" />
+	<formFieldProperty
+		name="complete_terzo" />
 	<formFieldProperty
 		name="dt_pagamento_incasso" />
 	<formFieldProperty
