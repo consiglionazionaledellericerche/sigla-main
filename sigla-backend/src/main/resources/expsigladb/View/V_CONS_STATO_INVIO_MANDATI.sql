@@ -2,7 +2,30 @@
 --  DDL for View V_CONS_STATO_INVIO_MANDATI
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_CONS_STATO_INVIO_MANDATI" ("CD_CDS", "ESERCIZIO", "PG_MANDATO", "CD_UNITA_ORGANIZZATIVA", "TI_MANDATO", "DS_MANDATO", "STATO", "IM_MANDATO", "IM_RITENUTE", "IM_NETTO", "IM_PAGATO", "DT_EMIS_MAN", "DT_ANNULLAMENTO", "DT_PAGAMENTO", "PG_DISTINTA", "PG_DISTINTA_DEF", "DT_EMIS_DIS", "DT_INVIO_DIS", "CD_MODALITA_PAG") AS 
+  CREATE OR REPLACE FORCE VIEW "V_CONS_STATO_INVIO_MANDATI" (
+    "CD_CDS",
+    "ESERCIZIO",
+    "PG_MANDATO",
+    "CD_UNITA_ORGANIZZATIVA",
+    "TI_MANDATO",
+    "DS_MANDATO",
+    "STATO",
+    "IM_MANDATO",
+    "IM_RITENUTE",
+    "IM_NETTO",
+    "IM_PAGATO",
+    "DT_EMIS_MAN",
+    "DT_ANNULLAMENTO",
+    "DT_PAGAMENTO",
+    "PG_DISTINTA",
+    "PG_DISTINTA_DEF",
+    "DT_EMIS_DIS",
+    "DT_INVIO_DIS",
+    "CD_MODALITA_PAG",
+    "ESITO_OPERAZIONE",
+    "DT_ORA_ESITO_OPERAZIONE",
+    "ERRORE_SIOPE_PLUS"
+  ) AS
   Select mandato.cd_cds, mandato.esercizio, mandato.pg_mandato,
           mandato.cd_unita_organizzativa, mandato.ti_mandato,
           mandato.ds_mandato, mandato.stato, mandato.im_mandato,
@@ -13,7 +36,7 @@
           NULL dt_invio_dis,(select decode(max(cd_modalita_pag),min(cd_modalita_pag),max(cd_modalita_pag),null) from mandato_riga
           where   mandato_riga.cd_cds   = mandato.cd_cds And
                              mandato_riga.esercizio  = mandato.esercizio And
-                             mandato_riga.pg_mandato = mandato.pg_mandato) cd_modalita_pag
+                             mandato_riga.pg_mandato = mandato.pg_mandato) cd_modalita_pag,esito_operazione,dt_ora_esito_operazione,errore_siope_plus
     From  mandato
     Where Not Exists (Select 1
                       From   distinta_cassiere_det
@@ -33,7 +56,7 @@
           distinta_cassiere.dt_invio dt_invio_dis,(select decode(max(cd_modalita_pag),min(cd_modalita_pag),max(cd_modalita_pag),null) from mandato_riga
           where   mandato_riga.cd_cds   = mandato.cd_cds And
                              mandato_riga.esercizio  = mandato.esercizio And
-                             mandato_riga.pg_mandato = mandato.pg_mandato) cd_modalita_pag
+                             mandato_riga.pg_mandato = mandato.pg_mandato) cd_modalita_pag,esito_operazione,dt_ora_esito_operazione,errore_siope_plus
    From   mandato, distinta_cassiere, distinta_cassiere_det
    Where  mandato.cd_cds = distinta_cassiere_det.cd_cds_origine And
           mandato.esercizio = distinta_cassiere_det.esercizio And

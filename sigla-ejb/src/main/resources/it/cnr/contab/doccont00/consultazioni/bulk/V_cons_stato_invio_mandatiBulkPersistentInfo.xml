@@ -1,164 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk"
-	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiHome">
-	<defaultColumnMap
-		tableName="V_CONS_STATO_INVIO_MANDATI">
-		<columnMapping
-			columnName="CD_CDS"
-			propertyName="cd_cds"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="esercizio"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="true" />
-		<columnMapping
-			columnName="PG_MANDATO"
-			propertyName="pg_mandato"
-			sqlTypeName="DECIMAL"
-			columnSize="10"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_UNITA_ORGANIZZATIVA"
-			propertyName="cd_unita_organizzativa"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="TI_MANDATO"
-			propertyName="ti_mandato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="true" />
-		<columnMapping
-			columnName="DS_MANDATO"
-			propertyName="ds_mandato"
-			sqlTypeName="VARCHAR"
-			columnSize="300"
-			nullable="true" />
-		<columnMapping
-			columnName="STATO"
-			propertyName="stato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="true" />
-		<columnMapping
-			columnName="IM_MANDATO"
-			propertyName="im_mandato"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="true" />
-		<columnMapping
-			columnName="IM_RITENUTE"
-			propertyName="im_ritenute"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="true" />
-		<columnMapping
-			columnName="IM_PAGATO"
-			propertyName="im_pagato"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="true" />
-		<columnMapping
-			columnName="IM_NETTO"
-			propertyName="im_netto"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_EMIS_MAN"
-			propertyName="dt_emis_man"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_ANNULLAMENTO"
-			propertyName="dt_annullamento"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_PAGAMENTO"
-			propertyName="dt_pagamento"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />	
-		<columnMapping
-			columnName="PG_DISTINTA"
-			propertyName="pg_distinta"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="PG_DISTINTA_DEF"
-			propertyName="pg_distinta_def"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_EMIS_DIS"
-			propertyName="dt_emis_dis"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_INVIO_DIS"
-			propertyName="dt_invio_dis"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_MODALITA_PAG"
-			propertyName="cd_modalita_pag"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="true" />		
-	</defaultColumnMap>
-	<persistentProperty
-		name="cd_cds" />
-	<persistentProperty
-		name="esercizio" />
-	<persistentProperty
-		name="pg_mandato" />
-	<persistentProperty
-		name="cd_unita_organizzativa" />
-	<persistentProperty
-		name="ti_mandato" />
-	<persistentProperty
-		name="ds_mandato" />
-	<persistentProperty
-		name="stato" />
-	<persistentProperty
-		name="im_mandato" />
-	<persistentProperty
-		name="im_ritenute" />
-	<persistentProperty
-		name="im_pagato" />
-	<persistentProperty
-		name="im_netto" />
-	<persistentProperty
-		name="dt_emis_man" />
-	<persistentProperty
-		name="dt_annullamento" />
-	<persistentProperty
-		name="dt_pagamento" />	
-	<persistentProperty
-		name="pg_distinta" />
-	<persistentProperty
-		name="pg_distinta_def" />
-	<persistentProperty
-		name="dt_emis_dis" />
-	<persistentProperty
-		name="dt_invio_dis" />
-	<persistentProperty
-		name="cd_modalita_pag" />	
+        persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk"
+        homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiHome">
+    <defaultColumnMap
+            tableName="V_CONS_STATO_INVIO_MANDATI">
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="cd_cds"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="true"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="esercizio"
+                sqlTypeName="DECIMAL"
+                columnSize="4"
+                nullable="true"/>
+        <columnMapping
+                columnName="PG_MANDATO"
+                propertyName="pg_mandato"
+                sqlTypeName="DECIMAL"
+                columnSize="10"
+                nullable="true"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="cd_unita_organizzativa"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="true"/>
+        <columnMapping
+                columnName="TI_MANDATO"
+                propertyName="ti_mandato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"/>
+        <columnMapping
+                columnName="DS_MANDATO"
+                propertyName="ds_mandato"
+                sqlTypeName="VARCHAR"
+                columnSize="300"
+                nullable="true"/>
+        <columnMapping
+                columnName="STATO"
+                propertyName="stato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"/>
+        <columnMapping
+                columnName="IM_MANDATO"
+                propertyName="im_mandato"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="true"/>
+        <columnMapping
+                columnName="IM_RITENUTE"
+                propertyName="im_ritenute"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="true"/>
+        <columnMapping
+                columnName="IM_PAGATO"
+                propertyName="im_pagato"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="true"/>
+        <columnMapping
+                columnName="IM_NETTO"
+                propertyName="im_netto"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_EMIS_MAN"
+                propertyName="dt_emis_man"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_ANNULLAMENTO"
+                propertyName="dt_annullamento"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_PAGAMENTO"
+                propertyName="dt_pagamento"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="PG_DISTINTA"
+                propertyName="pg_distinta"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="PG_DISTINTA_DEF"
+                propertyName="pg_distinta_def"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_EMIS_DIS"
+                propertyName="dt_emis_dis"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_INVIO_DIS"
+                propertyName="dt_invio_dis"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="CD_MODALITA_PAG"
+                propertyName="cd_modalita_pag"
+                sqlTypeName="VARCHAR"
+                columnSize="10"
+                nullable="true"/>
+        <columnMapping
+                columnName="ESITO_OPERAZIONE"
+                propertyName="esitoOperazione"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="DT_ORA_ESITO_OPERAZIONE"
+                propertyName="dtOraEsitoOperazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="ERRORE_SIOPE_PLUS"
+                propertyName="erroreSiopePlus"
+                sqlTypeName="VARCHAR"
+                columnSize="2000"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="cd_cds"/>
+    <persistentProperty
+            name="esercizio"/>
+    <persistentProperty
+            name="pg_mandato"/>
+    <persistentProperty
+            name="cd_unita_organizzativa"/>
+    <persistentProperty
+            name="ti_mandato"/>
+    <persistentProperty
+            name="ds_mandato"/>
+    <persistentProperty
+            name="stato"/>
+    <persistentProperty
+            name="im_mandato"/>
+    <persistentProperty
+            name="im_ritenute"/>
+    <persistentProperty
+            name="im_pagato"/>
+    <persistentProperty
+            name="im_netto"/>
+    <persistentProperty
+            name="dt_emis_man"/>
+    <persistentProperty
+            name="dt_annullamento"/>
+    <persistentProperty
+            name="dt_pagamento"/>
+    <persistentProperty
+            name="pg_distinta"/>
+    <persistentProperty
+            name="pg_distinta_def"/>
+    <persistentProperty
+            name="dt_emis_dis"/>
+    <persistentProperty
+            name="dt_invio_dis"/>
+    <persistentProperty
+            name="cd_modalita_pag"/>
+    <persistentProperty
+            name="esitoOperazione"/>
+    <persistentProperty
+            name="dtOraEsitoOperazione"/>
+    <persistentProperty
+            name="erroreSiopePlus"/>
 </SQLPersistentInfo>

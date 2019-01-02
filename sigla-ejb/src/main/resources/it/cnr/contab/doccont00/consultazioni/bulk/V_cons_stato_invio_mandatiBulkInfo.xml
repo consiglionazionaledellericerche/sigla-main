@@ -1,260 +1,311 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
-	<fieldProperty
-		name="cd_cds"
-		property="cd_cds"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		label="CdS" />
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Esercizio" />
-	<fieldProperty
-		name="pg_mandato"
-		property="pg_mandato"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Numero Mandato" />
-	<fieldProperty
-		name="cd_unita_organizzativa"
-		property="cd_unita_organizzativa"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		label="Codice U.O." />
-	<fieldProperty
-		name="ti_mandato"
-		property="ti_mandato"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		label="Tipo mandato" />
-	<fieldProperty
-		name="ds_mandato"
-		property="ds_mandato"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="300"
-		label="Descrizione" />
-	<fieldProperty
-		name="stato"
-		property="stato"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		label="Stato" />
-	<fieldProperty
-		name="im_mandato"
-		property="im_mandato"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"	
-		maxLength="16"
-		inputSize="16"
-		label="Importo" />
-	<fieldProperty
-		name="im_ritenute"
-		property="im_ritenute"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"	
-		maxLength="16"
-		inputSize="16"
-		label="Importo ritenute" />
-	<fieldProperty
-		name="im_pagato"
-		property="im_pagato"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"	
-		maxLength="16"
-		inputSize="16"
-		label="Importo pagato" />
-	<fieldProperty
-		name="im_netto"
-		property="im_netto"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"	
-		maxLength="16"
-		inputSize="16"
-		label="Importo netto" />
-	<fieldProperty
-		name="dt_emis_man"
-		property="dt_emis_man"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data emissione mandato" />
-	<fieldProperty
-		name="dt_annullamento"
-		property="dt_annullamento"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data annullamento" />
-	<fieldProperty
-		name="pg_distinta"
-		property="pg_distinta"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Numero Distinta"  />
-	<fieldProperty
-		name="pg_distinta_def"
-		property="pg_distinta_def"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Numero Distinta Definitiva"  />
-	<fieldProperty
-		name="dt_emis_dis"
-		property="dt_emis_dis"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data emiss. distinta" />
-	<fieldProperty
-		name="dt_invio_dis"
-		property="dt_invio_dis"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data invio distinta" />
-	<fieldProperty
-		name="dt_pagamento"
-		property="dt_pagamento"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data pagamento" />	
-	<fieldProperty
-		name="contabile"
-		property="contabile"
-		inputType="TEXT"
-		label="Contabile" />	
-	<fieldProperty
-		name="cd_modalita_pag"
-		property="cd_modalita_pag"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		label="Modalità pag." />		
-	<formFieldProperty
-		name="cd_cds" />
-	<formFieldProperty
-		name="esercizio" />
-	<formFieldProperty
-		name="pg_mandato" />
-	<formFieldProperty
-		name="cd_unita_organizzativa" />
-	<formFieldProperty
-		name="ti_mandato" />
-	<formFieldProperty
-		name="ds_mandato" />
-	<formFieldProperty
-		name="stato" />
-	<formFieldProperty
-		name="im_mandato" />
-	<formFieldProperty
-		name="im_ritenute" />
-	<formFieldProperty
-		name="im_pagato" />
-	<formFieldProperty
-		name="im_netto" />
-	<formFieldProperty
-		name="dt_emis_man" />
-	<formFieldProperty
-		name="dt_annullamento" />
-	<formFieldProperty
-		name="pg_distinta" />
-	<formFieldProperty
-		name="pg_distinta_def" />
-	<formFieldProperty
-		name="dt_emis_dis" />
-	<formFieldProperty
-		name="dt_invio_dis" />
-	<formFieldProperty
-		name="dt_pagamento" />	
-	<formFieldProperty
-		name="cd_modalita_pag" />		
-	<findFieldProperty
-		name="cd_cds" />
-	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
-		name="pg_mandato" />
-	<findFieldProperty
-		name="cd_unita_organizzativa" />
-	<findFieldProperty
-		name="ti_mandato" />
-	<findFieldProperty
-		name="ds_mandato" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="im_mandato" />
-	<findFieldProperty
-		name="im_ritenute" />
-	<findFieldProperty
-		name="im_pagato" />
-	<findFieldProperty
-		name="im_netto" />
-	<findFieldProperty
-		name="dt_emis_man" />
-	<findFieldProperty
-		name="dt_annullamento" />
-	<findFieldProperty
-		name="pg_distinta" />
-	<findFieldProperty
-		name="pg_distinta_def" />
-	<findFieldProperty
-		name="dt_emis_dis" />
-	<findFieldProperty
-		name="dt_invio_dis" />
-	<findFieldProperty
-		name="dt_pagamento" />	
-	<findFieldProperty
-		name="cd_modalita_pag" />				
-	<columnFieldProperty
-		name="cd_cds" />
-	<columnFieldProperty
-		name="esercizio" />
-	<columnFieldProperty
-		name="pg_mandato" />
-	<columnFieldProperty
-		name="cd_unita_organizzativa" />
-	<columnFieldProperty
-		name="ti_mandato" />
-	<columnFieldProperty
-		name="ds_mandato" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="im_mandato" />
-	<columnFieldProperty
-		name="im_ritenute" />
-	<columnFieldProperty
-		name="im_pagato" />
-	<columnFieldProperty
-		name="im_netto" />
-	<columnFieldProperty
-		name="dt_emis_man" />
-	<columnFieldProperty
-		name="dt_annullamento" />
-	<columnFieldProperty
-		name="pg_distinta" />
-	<columnFieldProperty
-		name="pg_distinta_def" />
-	<columnFieldProperty
-		name="dt_emis_dis" />
-	<columnFieldProperty
-		name="dt_invio_dis" />
-	<columnFieldProperty
-		name="dt_pagamento" />		
-	<columnFieldProperty
-		name="contabile" />		
-	<columnFieldProperty
-		name="cd_modalita_pag" />		
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+    <fieldProperty
+            name="cd_cds"
+            property="cd_cds"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            label="CdS"/>
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Esercizio"/>
+    <fieldProperty
+            name="pg_mandato"
+            property="pg_mandato"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Numero Mandato"/>
+    <fieldProperty
+            name="cd_unita_organizzativa"
+            property="cd_unita_organizzativa"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            label="Codice U.O."/>
+    <fieldProperty
+            name="ti_mandato"
+            property="ti_mandato"
+            inputType="TEXT"
+            inputSize="1"
+            maxLength="1"
+            label="Tipo mandato"/>
+    <fieldProperty
+            name="ds_mandato"
+            property="ds_mandato"
+            inputType="TEXTAREA"
+            cols="60"
+            rows="5"
+            maxLength="300"
+            label="Descrizione"/>
+    <fieldProperty
+            name="stato"
+            property="stato"
+            inputType="TEXT"
+            inputSize="1"
+            maxLength="1"
+            label="Stato"/>
+    <fieldProperty
+            name="im_mandato"
+            property="im_mandato"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            maxLength="16"
+            inputSize="16"
+            label="Importo"/>
+    <fieldProperty
+            name="im_ritenute"
+            property="im_ritenute"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            maxLength="16"
+            inputSize="16"
+            label="Ritenute"/>
+    <fieldProperty
+            name="im_pagato"
+            property="im_pagato"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            maxLength="16"
+            inputSize="16"
+            label="Pagato"/>
+    <fieldProperty
+            name="im_netto"
+            property="im_netto"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            maxLength="16"
+            inputSize="16"
+            label="Netto"/>
+    <fieldProperty
+            name="dt_emis_man"
+            property="dt_emis_man"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data emissione mandato"/>
+    <fieldProperty
+            name="dt_annullamento"
+            property="dt_annullamento"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data annullamento"/>
+    <fieldProperty
+            name="pg_distinta"
+            property="pg_distinta"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Numero Distinta"/>
+    <fieldProperty
+            name="pg_distinta_def"
+            property="pg_distinta_def"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Numero Distinta def."/>
+    <fieldProperty
+            name="dt_emis_dis"
+            property="dt_emis_dis"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data emissione Distinta"/>
+    <fieldProperty
+            name="dt_invio_dis"
+            property="dt_invio_dis"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data invio Distinta"/>
+    <fieldProperty
+            name="dt_pagamento"
+            property="dt_pagamento"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data pagamento"/>
+    <fieldProperty
+            name="cd_modalita_pag"
+            property="cd_modalita_pag"
+            inputType="TEXT"
+            inputSize="10"
+            maxLength="10"
+            label="Modalità pag."/>
+    <fieldProperty
+            name="esitoOperazione"
+            property="esitoOperazione"
+            keysProperty="esito_OperazioneKeys"
+            inputType="SELECT"
+            label="Esito SIOPE+"/>
+    <fieldProperty
+            name="dtOraEsitoOperazione"
+            property="dtOraEsitoOperazione"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data esito SIOPE+"/>
+    <fieldProperty
+            name="erroreSiopePlus"
+            property="erroreSiopePlus"
+            inputType="TEXT"
+            label="Errore SIOPE+"/>
+    <fieldProperty
+            name="contabile"
+            property="contabile"
+            inputType="TEXT"
+            label="Contabile"/>
+
+    <formFieldProperty
+            name="cd_cds"/>
+    <formFieldProperty
+            name="esercizio"/>
+    <formFieldProperty
+            name="pg_mandato"/>
+    <formFieldProperty
+            name="cd_unita_organizzativa"/>
+    <formFieldProperty
+            name="ti_mandato"/>
+    <formFieldProperty
+            name="ds_mandato"/>
+    <formFieldProperty
+            name="stato"/>
+    <formFieldProperty
+            name="im_mandato"/>
+    <formFieldProperty
+            name="im_ritenute"/>
+    <formFieldProperty
+            name="im_pagato"/>
+    <formFieldProperty
+            name="im_netto"/>
+    <formFieldProperty
+            name="dt_emis_man"/>
+    <formFieldProperty
+            name="dt_annullamento"/>
+    <formFieldProperty
+            name="pg_distinta"/>
+    <formFieldProperty
+            name="pg_distinta_def"/>
+    <formFieldProperty
+            name="dt_emis_dis"/>
+    <formFieldProperty
+            name="dt_invio_dis"/>
+    <formFieldProperty
+            name="dt_pagamento"/>
+    <formFieldProperty
+            name="cd_modalita_pag"/>
+
+
+    <findFieldProperty
+            name="cd_cds"/>
+    <findFieldProperty
+            name="esercizio"/>
+    <findFieldProperty
+            name="pg_mandato"/>
+    <findFieldProperty
+            name="cd_unita_organizzativa"/>
+    <findFieldProperty
+            name="ti_mandato"/>
+    <findFieldProperty
+            name="ds_mandato"/>
+    <findFieldProperty
+            name="stato"/>
+    <findFieldProperty
+            name="im_mandato"/>
+    <findFieldProperty
+            name="im_ritenute"/>
+    <findFieldProperty
+            name="im_pagato"/>
+    <findFieldProperty
+            name="im_netto"/>
+    <findFieldProperty
+            name="dt_emis_man"/>
+    <findFieldProperty
+            name="dt_annullamento"/>
+    <findFieldProperty
+            name="pg_distinta"/>
+    <findFieldProperty
+            name="pg_distinta_def"/>
+    <findFieldProperty
+            name="dt_emis_dis"/>
+    <findFieldProperty
+            name="dt_invio_dis"/>
+    <findFieldProperty
+            name="dt_pagamento"/>
+    <findFieldProperty
+            name="cd_modalita_pag"/>
+    <findFieldProperty
+            name="esitoOperazione"/>
+    <findFieldProperty
+            name="dtOraEsitoOperazione"/>
+    <findFieldProperty
+            name="erroreSiopePlus"/>
+
+    <columnFieldProperty
+            name="cd_cds"/>
+    <columnFieldProperty
+            name="esercizio"/>
+    <columnFieldProperty
+            name="pg_mandato"/>
+    <columnFieldProperty
+            name="cd_unita_organizzativa"/>
+    <columnFieldProperty
+            name="ti_mandato"/>
+    <columnFieldProperty
+            name="ds_mandato"/>
+    <columnFieldProperty
+            name="stato"/>
+    <columnFieldProperty
+            name="im_mandato"/>
+    <columnFieldProperty
+            name="im_ritenute"/>
+    <columnFieldProperty
+            name="im_pagato"/>
+    <columnFieldProperty
+            name="im_netto"/>
+    <columnFieldProperty
+            name="dt_emis_man"/>
+    <columnFieldProperty
+            name="dt_annullamento"/>
+
+    <columnFieldProperty
+            name="pg_distinta"
+            headerLabel="Distinta"
+            label="Numero"/>
+    <columnFieldProperty
+            name="pg_distinta_def"
+            headerLabel="Distinta"
+            label="Numero def."/>
+    <columnFieldProperty
+            name="dt_emis_dis"
+            headerLabel="Distinta"
+            label="Data emiss."/>
+    <columnFieldProperty
+            name="dt_invio_dis"
+            headerLabel="Distinta"
+            label="Data invio"/>
+
+    <columnFieldProperty
+            name="dt_pagamento"/>
+    <columnFieldProperty
+            name="cd_modalita_pag"/>
+
+    <columnFieldProperty
+            name="esitoOperazione"
+            headerLabel="SIOPE+"
+            label="Esito"/>
+    <columnFieldProperty
+            name="dtOraEsitoOperazione"
+            headerLabel="SIOPE+"
+            label="Data esito"/>
+    <columnFieldProperty
+            name="erroreSiopePlus"
+            headerLabel="SIOPE+"
+            label="Errore"/>
+
+    <columnFieldProperty
+            name="contabile"/>
 </bulkInfo>
