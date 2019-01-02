@@ -27,7 +27,7 @@
 	 bp.openFormWindow(pageContext); 
 	 MandatoBulk mandato = ((DispCassaCapitoloBulk)bp.getModel()).getMandato();%>
 
-<table>
+<table class="w-100">
 	<tr>
 	<% if ( mandato.TIPO_COMPETENZA.equals( mandato.getTi_competenza_residuo() )) { %>
 		<td>
