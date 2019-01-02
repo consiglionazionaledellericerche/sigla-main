@@ -22,7 +22,7 @@
 <%	CRUDAssManualeMandatoReversaleBP bp = (CRUDAssManualeMandatoReversaleBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
 
-<div class="Panel" style="width:100%">
+<div class="Panel card p-2 mb-2" style="width:100%">
 <table>
   <tr>
 	<td><% bp.getController().writeFormLabel( out, "pg_mandato"); %></td>
@@ -31,27 +31,44 @@
   <tr>
   <tr>
 	<td><% bp.getController().writeFormLabel( out, "ds_mandato"); %></td>
-	<td><% bp.getController().writeFormInput( out,null,"ds_mandato",bp.isROMandato(),null,null);%></td>
+	<td class="w-90"><% bp.getController().writeFormInput( out,null,"ds_mandato",bp.isROMandato(),null,null);%></td>
   </tr>
 </table>
 </div>
 
-<table>
+<table class="Panel card p-2">
   <tr>
-	<td><span class="GroupLabel">Reversali disponibili</span></td>
+	<td><span class="GroupLabel h3 text-primary">Reversali disponibili</span></td>
 	<td></td>
-	<td><span class="GroupLabel">Reversali selezionate</span></td>
+	<td><span class="GroupLabel h3 text-primary">Reversali selezionate</span></td>
   </tr>
   <tr>
-	<td rowspan="2"><%bp.getReversaliDisponibiliCRUDController().writeHTMLTable(pageContext,"ASS_MANUALE_MAN_REV",false,false,false,"100%","200px"); %></td>
-	<td><% JSPUtils.button(pageContext,bp.encodePath("img/doublerightarrow24.gif"),"javascript:submitForm('doAggiungiReversali')", bp.getParentRoot().isBootstrap()); %></td>
-	<td rowspan="2"><%	bp.getReversaliAssociateCRUDController().writeHTMLTable(pageContext,"ASS_MANUALE_MAN_REV",false,false,false,"100%","200px"); %></td>
+	<td rowspan="2" class="w-50"><%bp.getReversaliDisponibiliCRUDController().writeHTMLTable(pageContext,"ASS_MANUALE_MAN_REV",false,false,false,"100%","200px"); %></td>
+	<td>
+	    <% JSPUtils.button(out,
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right faa-passing" : "img/doublerightarrow24.gif",
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right" : "img/doublerightarrow24.gif",
+                null,
+                "javascript:submitForm('doAggiungiReversali')",
+                "btn-outline-primary faa-parent animated-hover",
+                true,
+                bp.getParentRoot().isBootstrap()); %>
+	</td>
+	<td rowspan="2" class="w-50"><%	bp.getReversaliAssociateCRUDController().writeHTMLTable(pageContext,"ASS_MANUALE_MAN_REV",false,false,false,"100%","200px"); %></td>
   </tr>
   <tr>
-	<td><% JSPUtils.button(pageContext,bp.encodePath("img/doubleleftarrow24.gif"),"javascript:submitForm('doRimuoviReversali')", bp.getParentRoot().isBootstrap()); %></td>
+	<td>
+        <% JSPUtils.button(out,
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left faa-passing-reverse" : "img/doubleleftarrow24.gif",
+                bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left" : "img/doubleleftarrow24.gif",
+                null,
+                "javascript:submitForm('doRimuoviReversali')",
+                "btn-outline-primary faa-parent animated-hover",
+                true,
+                bp.getParentRoot().isBootstrap()); %>
+	</td>
   </tr>
 </table>
-
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>

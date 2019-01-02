@@ -14,7 +14,7 @@
 		CRUDReversaleBP bp = (CRUDReversaleBP)BusinessProcess.getBusinessProcess(request);
 		it.cnr.contab.doccont00.core.bulk.ReversaleIBulk reversale = (it.cnr.contab.doccont00.core.bulk.ReversaleIBulk)bp.getModel();
 %>
-  <div class="Group">		
+  <div class="Group card p-2">
   <table border="0" cellspacing="0" cellpadding="2">
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "esercizio"); %></td>
@@ -34,7 +34,7 @@
   </table>
   </div>
   
-  <div class="Group">		
+  <div class="Group card p-2">
   <table border="0" cellspacing="0" cellpadding="2">
 	<tr>
 		<td>
@@ -49,7 +49,7 @@
   </table>
   </div>
   
-  <div class="Group">		
+  <div class="Group card p-2">
   <table border="0" cellspacing="0" cellpadding="2">	
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "pg_reversale"); %></td>
@@ -90,7 +90,7 @@
   </table>
   </div>
 
-  <div class="Group">		
+  <div class="Group card p-2">
   <table border="0" cellspacing="0" cellpadding="2">	
   	<tr>
 			<td><% bp.getController().writeFormLabel( out, "im_reversale"); %></td>
@@ -102,9 +102,9 @@
   </table>
   </div>
 <% if (!bp.isSearching() && bp.isSiope_attiva() && reversale.isRequiredSiope()) {%>
-  <div class="Group">		
+  <div class="Group card p-2">
 	<fieldset class="fieldset">
-	<legend class="GroupLabel">Codici SIOPE</legend>
+	<legend class="GroupLabel h3 text-primary">Codici SIOPE</legend>
 	  <table border="0" cellspacing="0" cellpadding="2">	
 	  	<tr>
 				<td><% bp.getController().writeFormLabel( out, "im_associato_siope"); %></td>

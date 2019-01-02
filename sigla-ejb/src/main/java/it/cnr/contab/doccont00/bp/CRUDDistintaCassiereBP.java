@@ -339,10 +339,20 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
      * distinta e' in modifica/inserimento
      */
     public boolean isAddDocContabiliButtonEnabled() {
-        return isEditable()
-                && !((Distinta_cassiereBulk) getModel()).isCreateByOtherUo()
-                && (isInserting() || (isEditing() && ((Distinta_cassiereBulk) getModel())
-                .getDt_invio() == null));
+        if (isAttivoSiopeplus()) {
+            return Optional.ofNullable(getModel())
+                    .filter(Distinta_cassiereBulk.class::isInstance)
+                    .map(Distinta_cassiereBulk.class::cast)
+                    .map(distinta_cassiereBulk -> {
+                        return isEditable() && !distinta_cassiereBulk.isCreateByOtherUo() &&
+                                !Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()).isPresent();
+                    }).orElse(Boolean.TRUE);
+        } else {
+            return isEditable()
+                    && !((Distinta_cassiereBulk) getModel()).isCreateByOtherUo()
+                    && (isInserting() || (isEditing() && ((Distinta_cassiereBulk) getModel())
+                    .getDt_invio() == null));
+        }
 
     }
 
@@ -379,10 +389,21 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
      * distinta e' in modifica/inserimento
      */
     public boolean isRemoveDocContabiliButtonEnabled() {
-        return isEditable()
-                && !((Distinta_cassiereBulk) getModel()).isCreateByOtherUo()
-                && (isInserting() || (isEditing() && ((Distinta_cassiereBulk) getModel())
-                .getDt_invio() == null));
+        if (isAttivoSiopeplus()) {
+            return Optional.ofNullable(getModel())
+                    .filter(Distinta_cassiereBulk.class::isInstance)
+                    .map(Distinta_cassiereBulk.class::cast)
+                    .map(distinta_cassiereBulk -> {
+                        return !distinta_cassiereBulk.isCreateByOtherUo() && (isInserting() ||
+                                (isEditing() && !Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()).isPresent())
+                        );
+                    }).orElse(Boolean.TRUE);
+        } else {
+            return isEditable()
+                    && !((Distinta_cassiereBulk) getModel()).isCreateByOtherUo()
+                    && (isInserting() || (isEditing() && ((Distinta_cassiereBulk) getModel())
+                    .getDt_invio() == null));
+        }
     }
 
     /**
