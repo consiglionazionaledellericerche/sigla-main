@@ -1,136 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBase"
-	homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliHome">
-	<defaultColumnMap
-		tableName="V_CONS_STATO_INVIO_REVERSALI">
-		<columnMapping
-			columnName="CD_CDS"
-			propertyName="cd_cds"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="esercizio"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="PG_REVERSALE"
-			propertyName="pg_reversale"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_UNITA_ORGANIZZATIVA"
-			propertyName="cd_unita_organizzativa"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="TI_REVERSALE"
-			propertyName="ti_reversale"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="true" />
-		<columnMapping
-			columnName="DS_REVERSALE"
-			propertyName="ds_reversale"
-			sqlTypeName="VARCHAR"
-			columnSize="300"
-			nullable="true" />
-		<columnMapping
-			columnName="STATO"
-			propertyName="stato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="true" />
-		<columnMapping
-			columnName="IM_REVERSALE"
-			propertyName="im_reversale"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="IM_INCASSATO"
-			propertyName="im_incassato"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_EMIS_REV"
-			propertyName="dt_emis_rev"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_ANNULLAMENTO"
-			propertyName="dt_annullamento"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_INCASSO"
-			propertyName="dt_incasso"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />	
-		<columnMapping
-			columnName="PG_DISTINTA"
-			propertyName="pg_distinta"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="PG_DISTINTA_DEF"
-			propertyName="pg_distinta_def"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_EMIS_DIS"
-			propertyName="dt_emis_dis"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-		<columnMapping
-			columnName="DT_INVIO_DIS"
-			propertyName="dt_invio_dis"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-	</defaultColumnMap>
-	<persistentProperty
-		name="cd_cds" />
-	<persistentProperty
-		name="esercizio" />
-	<persistentProperty
-		name="pg_reversale" />
-	<persistentProperty
-		name="cd_unita_organizzativa" />
-	<persistentProperty
-		name="ti_reversale" />
-	<persistentProperty
-		name="ds_reversale" />
-	<persistentProperty
-		name="stato" />
-	<persistentProperty
-		name="im_reversale" />
-	<persistentProperty
-		name="im_incassato" />
-	<persistentProperty
-		name="dt_emis_rev" />
-	<persistentProperty
-		name="dt_annullamento" />
-	<persistentProperty
-		name="dt_incasso" />	
-	<persistentProperty
-		name="pg_distinta" />
-	<persistentProperty
-		name="pg_distinta_def" />
-	<persistentProperty
-		name="dt_emis_dis" />
-	<persistentProperty
-		name="dt_invio_dis" />
+        persistentClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBase"
+        homeClassName="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliHome">
+    <defaultColumnMap
+            tableName="V_CONS_STATO_INVIO_REVERSALI">
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="cd_cds"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="true"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="esercizio"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="PG_REVERSALE"
+                propertyName="pg_reversale"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="CD_UNITA_ORGANIZZATIVA"
+                propertyName="cd_unita_organizzativa"
+                sqlTypeName="VARCHAR"
+                columnSize="30"
+                nullable="true"/>
+        <columnMapping
+                columnName="TI_REVERSALE"
+                propertyName="ti_reversale"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"/>
+        <columnMapping
+                columnName="DS_REVERSALE"
+                propertyName="ds_reversale"
+                sqlTypeName="VARCHAR"
+                columnSize="300"
+                nullable="true"/>
+        <columnMapping
+                columnName="STATO"
+                propertyName="stato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="true"/>
+        <columnMapping
+                columnName="IM_REVERSALE"
+                propertyName="im_reversale"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="IM_INCASSATO"
+                propertyName="im_incassato"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_EMIS_REV"
+                propertyName="dt_emis_rev"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_ANNULLAMENTO"
+                propertyName="dt_annullamento"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_INCASSO"
+                propertyName="dt_incasso"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="PG_DISTINTA"
+                propertyName="pg_distinta"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="PG_DISTINTA_DEF"
+                propertyName="pg_distinta_def"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_EMIS_DIS"
+                propertyName="dt_emis_dis"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="DT_INVIO_DIS"
+                propertyName="dt_invio_dis"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="ESITO_OPERAZIONE"
+                propertyName="esitoOperazione"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="DT_ORA_ESITO_OPERAZIONE"
+                propertyName="dtOraEsitoOperazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"/>
+        <columnMapping
+                columnName="ERRORE_SIOPE_PLUS"
+                propertyName="erroreSiopePlus"
+                sqlTypeName="VARCHAR"
+                columnSize="2000"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="cd_cds"/>
+    <persistentProperty
+            name="esercizio"/>
+    <persistentProperty
+            name="pg_reversale"/>
+    <persistentProperty
+            name="cd_unita_organizzativa"/>
+    <persistentProperty
+            name="ti_reversale"/>
+    <persistentProperty
+            name="ds_reversale"/>
+    <persistentProperty
+            name="stato"/>
+    <persistentProperty
+            name="im_reversale"/>
+    <persistentProperty
+            name="im_incassato"/>
+    <persistentProperty
+            name="dt_emis_rev"/>
+    <persistentProperty
+            name="dt_annullamento"/>
+    <persistentProperty
+            name="dt_incasso"/>
+    <persistentProperty
+            name="pg_distinta"/>
+    <persistentProperty
+            name="pg_distinta_def"/>
+    <persistentProperty
+            name="dt_emis_dis"/>
+    <persistentProperty
+            name="dt_invio_dis"/>
+    <persistentProperty
+            name="esitoOperazione"/>
+    <persistentProperty
+            name="dtOraEsitoOperazione"/>
+    <persistentProperty
+            name="erroreSiopePlus"/>
 </SQLPersistentInfo>

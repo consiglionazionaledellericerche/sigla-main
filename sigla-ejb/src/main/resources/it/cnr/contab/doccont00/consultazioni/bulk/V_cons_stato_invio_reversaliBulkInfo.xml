@@ -1,220 +1,268 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Stato invio Reversali"
-          longDescription="Stato invio Reversali di Incasso">
-	<fieldProperty
-		name="cd_cds"
-		property="cd_cds"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		label="CdS" />
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Esercizio" />
-	<fieldProperty
-		name="pg_reversale"
-		property="pg_reversale"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Numero Reversale" />
-	<fieldProperty
-		name="cd_unita_organizzativa"
-		property="cd_unita_organizzativa"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		label="Codice U.O." />
-	<fieldProperty
-		name="ti_reversale"
-		property="ti_reversale"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		label="Tipo reversale" />
-	<fieldProperty
-		name="ds_reversale"
-		property="ds_reversale"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="300"
-		label="Descrizione" />
-	<fieldProperty
-		name="stato"
-		property="stato"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
-		label="Stato" />
-	<fieldProperty
-		name="im_reversale"
-		property="im_reversale"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"	
-		inputSize="22"
-		maxLength="22"
-		label="Importo reversale" />
-	<fieldProperty
-		name="im_incassato"
-		property="im_incassato"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"	
-		inputSize="22"
-		maxLength="22"
-		label="Importo incassato" />
-	<fieldProperty
-		name="dt_emis_rev"
-		property="dt_emis_rev"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data emissione reversale" />
-	<fieldProperty
-		name="dt_annullamento"
-		property="dt_annullamento"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data annullamento" />
-	<fieldProperty
-		name="dt_incasso"
-		property="dt_incasso"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data incasso" />	
-	<fieldProperty
-		name="pg_distinta"
-		property="pg_distinta"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Numero Distinta" />
-	<fieldProperty
-		name="pg_distinta_def"
-		property="pg_distinta_def"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		label="Numero Distinta Definitiva" />
-	<fieldProperty
-		name="dt_emis_dis"
-		property="dt_emis_dis"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data emiss. distinta" />
-	<fieldProperty
-		name="dt_invio_dis"
-		property="dt_invio_dis"
-		inputType="TEXT"
-		formatName="date_short"
-		label="Data invio distinta" />
-	<fieldProperty
-		name="contabile"
-		property="contabile"
-		inputType="TEXT"
-		label="Contabile" />	
-	<formFieldProperty
-		name="cd_cds" />
-	<formFieldProperty
-		name="esercizio" />
-	<formFieldProperty
-		name="pg_reversale" />
-	<formFieldProperty
-		name="cd_unita_organizzativa" />
-	<formFieldProperty
-		name="ti_reversale" />
-	<formFieldProperty
-		name="ds_reversale" />
-	<formFieldProperty
-		name="stato" />
-	<formFieldProperty
-		name="im_reversale" />
-	<formFieldProperty
-		name="im_incassato" />
-	<formFieldProperty
-		name="dt_emis_rev" />
-	<formFieldProperty
-		name="dt_annullamento" />
-	<formFieldProperty
-		name="dt_incasso" />
-	<formFieldProperty
-		name="pg_distinta" />
-	<formFieldProperty
-		name="pg_distinta_def" />
-	<formFieldProperty
-		name="dt_emis_dis" />
-	<formFieldProperty
-		name="dt_invio_dis" />
-	<findFieldProperty
-		name="cd_cds" />
-	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
-		name="pg_reversale" />
-	<findFieldProperty
-		name="cd_unita_organizzativa" />
-	<findFieldProperty
-		name="ti_reversale" />
-	<findFieldProperty
-		name="ds_reversale" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="im_reversale" />
-	<findFieldProperty
-		name="im_incassato" />
-	<findFieldProperty
-		name="dt_emis_rev" />
-	<findFieldProperty
-		name="dt_annullamento" />
-	<findFieldProperty
-		name="dt_incasso" />	
-	<findFieldProperty
-		name="pg_distinta" />
-	<findFieldProperty
-		name="pg_distinta_def" />
-	<findFieldProperty
-		name="dt_emis_dis" />
-	<findFieldProperty
-		name="dt_invio_dis" />
-	<columnFieldProperty
-		name="cd_cds" />
-	<columnFieldProperty
-		name="esercizio" />
-	<columnFieldProperty
-		name="pg_reversale" />
-	<columnFieldProperty
-		name="cd_unita_organizzativa" />
-	<columnFieldProperty
-		name="ti_reversale" />
-	<columnFieldProperty
-		name="ds_reversale" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="im_reversale" />
-	<columnFieldProperty
-		name="im_incassato" />
-	<columnFieldProperty
-		name="dt_emis_rev" />
-	<columnFieldProperty
-		name="dt_annullamento" />
-	<columnFieldProperty
-		name="dt_incasso" />	
-	<columnFieldProperty
-		name="pg_distinta" />
-	<columnFieldProperty
-		name="pg_distinta_def" />
-	<columnFieldProperty
-		name="dt_emis_dis" />
-	<columnFieldProperty
-		name="dt_invio_dis" />
-	<columnFieldProperty
-		name="contabile" />
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+        shortDescription="Stato invio Reversali"
+        longDescription="Stato invio Reversali di Incasso">
+    <fieldProperty
+            name="cd_cds"
+            property="cd_cds"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            label="CdS"/>
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Esercizio"/>
+    <fieldProperty
+            name="pg_reversale"
+            property="pg_reversale"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Numero Reversale"/>
+    <fieldProperty
+            name="cd_unita_organizzativa"
+            property="cd_unita_organizzativa"
+            inputType="TEXT"
+            inputSize="30"
+            maxLength="30"
+            label="Codice U.O."/>
+    <fieldProperty
+            name="ti_reversale"
+            property="ti_reversale"
+            inputType="TEXT"
+            inputSize="1"
+            maxLength="1"
+            label="Tipo reversale"/>
+    <fieldProperty
+            name="ds_reversale"
+            property="ds_reversale"
+            inputType="TEXTAREA"
+            cols="60"
+            rows="5"
+            maxLength="300"
+            label="Descrizione"/>
+    <fieldProperty
+            name="stato"
+            property="stato"
+            inputType="TEXT"
+            inputSize="1"
+            maxLength="1"
+            label="Stato"/>
+    <fieldProperty
+            name="im_reversale"
+            property="im_reversale"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            inputSize="22"
+            maxLength="22"
+            label="Importo reversale"/>
+    <fieldProperty
+            name="im_incassato"
+            property="im_incassato"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            inputSize="22"
+            maxLength="22"
+            label="Importo incassato"/>
+    <fieldProperty
+            name="dt_emis_rev"
+            property="dt_emis_rev"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data emissione reversale"/>
+    <fieldProperty
+            name="dt_annullamento"
+            property="dt_annullamento"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data annullamento"/>
+    <fieldProperty
+            name="dt_incasso"
+            property="dt_incasso"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data incasso"/>
+    <fieldProperty
+            name="pg_distinta"
+            property="pg_distinta"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Numero Distinta"/>
+    <fieldProperty
+            name="pg_distinta_def"
+            property="pg_distinta_def"
+            inputType="TEXT"
+            inputSize="22"
+            maxLength="22"
+            label="Numero Distinta Definitiva"/>
+    <fieldProperty
+            name="dt_emis_dis"
+            property="dt_emis_dis"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data emiss. distinta"/>
+    <fieldProperty
+            name="dt_invio_dis"
+            property="dt_invio_dis"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data invio distinta"/>
+    <fieldProperty
+            name="esitoOperazione"
+            property="esitoOperazione"
+            keysProperty="esito_OperazioneKeys"
+            inputType="SELECT"
+            label="Esito SIOPE+"/>
+    <fieldProperty
+            name="dtOraEsitoOperazione"
+            property="dtOraEsitoOperazione"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data esito SIOPE+"/>
+    <fieldProperty
+            name="erroreSiopePlus"
+            property="erroreSiopePlus"
+            inputType="TEXT"
+            label="Errore SIOPE+"/>
+
+    <fieldProperty
+            name="contabile"
+            property="contabile"
+            inputType="TEXT"
+            label="Contabile"/>
+    <formFieldProperty
+            name="cd_cds"/>
+    <formFieldProperty
+            name="esercizio"/>
+    <formFieldProperty
+            name="pg_reversale"/>
+    <formFieldProperty
+            name="cd_unita_organizzativa"/>
+    <formFieldProperty
+            name="ti_reversale"/>
+    <formFieldProperty
+            name="ds_reversale"/>
+    <formFieldProperty
+            name="stato"/>
+    <formFieldProperty
+            name="im_reversale"/>
+    <formFieldProperty
+            name="im_incassato"/>
+    <formFieldProperty
+            name="dt_emis_rev"/>
+    <formFieldProperty
+            name="dt_annullamento"/>
+    <formFieldProperty
+            name="dt_incasso"/>
+    <formFieldProperty
+            name="pg_distinta"/>
+    <formFieldProperty
+            name="pg_distinta_def"/>
+    <formFieldProperty
+            name="dt_emis_dis"/>
+    <formFieldProperty
+            name="dt_invio_dis"/>
+    <findFieldProperty
+            name="cd_cds"/>
+    <findFieldProperty
+            name="esercizio"/>
+    <findFieldProperty
+            name="pg_reversale"/>
+    <findFieldProperty
+            name="cd_unita_organizzativa"/>
+    <findFieldProperty
+            name="ti_reversale"/>
+    <findFieldProperty
+            name="ds_reversale"/>
+    <findFieldProperty
+            name="stato"/>
+    <findFieldProperty
+            name="im_reversale"/>
+    <findFieldProperty
+            name="im_incassato"/>
+    <findFieldProperty
+            name="dt_emis_rev"/>
+    <findFieldProperty
+            name="dt_annullamento"/>
+    <findFieldProperty
+            name="dt_incasso"/>
+    <findFieldProperty
+            name="pg_distinta"/>
+    <findFieldProperty
+            name="pg_distinta_def"/>
+    <findFieldProperty
+            name="dt_emis_dis"/>
+    <findFieldProperty
+            name="dt_invio_dis"/>
+    <findFieldProperty
+            name="esitoOperazione"/>
+    <findFieldProperty
+            name="dtOraEsitoOperazione"/>
+    <findFieldProperty
+            name="erroreSiopePlus"/>
+
+    <columnFieldProperty
+            name="cd_cds"/>
+    <columnFieldProperty
+            name="esercizio"/>
+    <columnFieldProperty
+            name="pg_reversale"/>
+    <columnFieldProperty
+            name="cd_unita_organizzativa"/>
+    <columnFieldProperty
+            name="ti_reversale"/>
+    <columnFieldProperty
+            name="ds_reversale"/>
+    <columnFieldProperty
+            name="stato"/>
+    <columnFieldProperty
+            name="im_reversale"/>
+    <columnFieldProperty
+            name="im_incassato"/>
+    <columnFieldProperty
+            name="dt_emis_rev"/>
+    <columnFieldProperty
+            name="dt_annullamento"/>
+    <columnFieldProperty
+            name="dt_incasso"/>
+
+    <columnFieldProperty
+            name="pg_distinta"
+            headerLabel="Distinta"
+            label="Numero"/>
+    <columnFieldProperty
+            name="pg_distinta_def"
+            headerLabel="Distinta"
+            label="Numero def."/>
+    <columnFieldProperty
+            name="dt_emis_dis"
+            headerLabel="Distinta"
+            label="Data emiss."/>
+    <columnFieldProperty
+            name="dt_invio_dis"
+            headerLabel="Distinta"
+            label="Data invio"/>
+
+    <columnFieldProperty
+            name="esitoOperazione"
+            headerLabel="SIOPE+"
+            label="Esito"/>
+    <columnFieldProperty
+            name="dtOraEsitoOperazione"
+            headerLabel="SIOPE+"
+            label="Data esito"/>
+    <columnFieldProperty
+            name="erroreSiopePlus"
+            headerLabel="SIOPE+"
+            label="Errore"/>
+    <columnFieldProperty
+            name="contabile"/>
 </bulkInfo>
