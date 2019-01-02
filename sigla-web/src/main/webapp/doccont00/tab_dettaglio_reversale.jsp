@@ -33,7 +33,7 @@
 	</table>		
 	</div>
 	
-	<table border="0" cellspacing="0" cellpadding="2">
+	<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 		<tr>
 			<td colspan=3>
 			      <b><font size=3 class="h3 text-primary">Righe reversale</font></b>
@@ -45,11 +45,11 @@
 	<% if (bp.isSiope_attiva() && reversale.isRequiredSiope()) {%>
 	<br><b><font size=3 class="h3 text-primary">Codici SIOPE</font></b>
 		<div class="Group">
-			<table border="0" cellspacing="0" cellpadding="2">
+			<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 			<tr>
 			<td width="90%">
 			<div class="Group">
-				<table border="0" cellspacing="0" cellpadding="2">
+				<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 					<tr>
 						<td><span class="GroupLabel h5 text-primary">Associati</span></td>
 						<td></td>
@@ -111,7 +111,7 @@
 	<%if (bp.isCup_attivo() && reversale.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
 		<br><b><font size=3>CUP</font></b>
 		<div class="Group">
-			<table border="0" cellspacing="0" cellpadding="2">
+			<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 					<tr>
 						<td colspan="6"> 
 					        <% bp.getCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversale",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","150px", true); %>
@@ -130,7 +130,7 @@
 	<%if (bp.isSiope_cup_attivo() && reversale.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
 		<br><b><font size=3>CUP</font></b>
 		<div class="Group">
-			<table border="0" cellspacing="0" cellpadding="2">
+			<table border="0" cellspacing="0" cellpadding="2" class="w-100">
 					<tr>
 						<td colspan="6"> 
 					        <% bp.getSiopeCupCollegati().writeHTMLTable(pageContext,"collegaARigaReversaleSiope",!reversale.isAnnullato(),false,!reversale.isAnnullato(),"100%","150px", true); %>
