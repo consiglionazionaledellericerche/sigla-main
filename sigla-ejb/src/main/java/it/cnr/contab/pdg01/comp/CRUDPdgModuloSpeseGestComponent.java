@@ -17,6 +17,7 @@ import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.EuroPositivoFormat;
@@ -189,11 +190,6 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 		if (dett.getPdg_modulo_spese()!=null && dett.getPdg_modulo_spese().getCd_cofog()!=null )
 			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_COFOG",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getCd_cofog());
 
-		if (dett.getPdg_modulo_spese().getVoce_piano_economico()!=null && dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_voce_piano()!=null ) {
-			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_UNITA_PIANO",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_unita_organizzativa());
-			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_VOCE_PIANO",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_voce_piano());
-		}
-
 		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
 		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
 		if (parCnrBulk!=null && parCnrBulk.getFl_nuovo_pdg()) {
@@ -287,6 +283,18 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 				if (dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr() != null)
 					sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getPdg_modulo_spese().getPdg_modulo_costi().getPdg_modulo().getCdr().getUnita_padre().getCd_tipo_unita());
 	
+			if (dett.getPdg_modulo_spese().getVoce_piano_economico()!=null && dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_voce_piano()!=null ) {
+				sql.addTableToHeader("ASS_PROGETTO_PIAECO_VOCE");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE","V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE");
+				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getPg_progetto());
+				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_unita_organizzativa());
+				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.CD_VOCE_PIANO",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getVoce_piano_economico().getCd_voce_piano());
+				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+			}
+			
 			if (clause != null) sql.addClause(clause);
 	
 			return sql;
