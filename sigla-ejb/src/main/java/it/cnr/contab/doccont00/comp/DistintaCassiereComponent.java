@@ -6,6 +6,10 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -25,7 +29,9 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.TipoDebitoSIOPE;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.blobs.bulk.Bframe_blobBulk;
@@ -33,6 +39,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDNotDeletableException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.RemoteIterator;
@@ -53,10 +60,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DistintaCassiereComponent extends
         it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
@@ -64,11 +76,12 @@ public class DistintaCassiereComponent extends
 
     public static final String SEPA_CREDIT_TRANSFER = "SEPA CREDIT TRANSFER";
     public static final String ACCREDITO_CONTO_CORRENTE_POSTALE = "ACCREDITO CONTO CORRENTE POSTALE";
-    final private static String SEMAFORO_DISTINTA = "DISTINTA_CASSIERE00";
     public static final String LIBERA = "LIBERA";
     public static final String NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE = "0001777";
     public static final String TIPO_CONTABILITA_ENTE_RICEVENTE = "INFRUTTIFERA";
     public static final String STIPENDI = "STIPENDI";
+    final private static String SEMAFORO_DISTINTA = "DISTINTA_CASSIERE00";
+    public static final String CORRENTE = "CORRENTE";
 
     public DistintaCassiereComponent() {
     }
@@ -357,7 +370,7 @@ public class DistintaCassiereComponent extends
      * stato e' TRASMESSO e il mandato era già stato trasmesso Post: E' stato
      * aggiornato lo stato del mandato e la sua data di ritrasmissione
      *
-     * @param userContext                 lo UserContext che ha generato la richiesta
+     * @param userContext        lo UserContext che ha generato la richiesta
      * @param docContabile       il mandato di accredit. per cui aggiornare lo stato
      * @param stato_trasmissione il nuovo stato che il mandato dovrà assumere
      */
@@ -536,8 +549,8 @@ public class DistintaCassiereComponent extends
      * storici (suddivisi per tipologia) sommando gli importi dei doc. contabili
      * non annullati presenti in distinta
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la distinta da inviare al cassiere
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la distinta da inviare al cassiere
      * @return distinta la distinta coi totali storici aggiornati
      */
 
@@ -610,10 +623,10 @@ public class DistintaCassiereComponent extends
      * doc.contabile viene aggiornato a INSERITO IN DISTINTA ( metodo
      * 'inserisciDettaglioDistinta')
      *
-     * @param userContext                lo UserContext che ha generato la richiesta
+     * @param userContext       lo UserContext che ha generato la richiesta
      * @param distinta          la Distinta_cassiereBulk in cui inserire i doc. contabili
      *                          collegati
-     * @param docContabilePadre      il V_mandato_reversaleBulk per cui ricercare i doc. contabili
+     * @param docContabilePadre il V_mandato_reversaleBulk per cui ricercare i doc. contabili
      *                          dièpendenti
      * @param last_pg_dettaglio , il progressivo dell'ultimo dettaglio inserito in distinta
      * @return il progressivo aggiornato dell'ultimo dettaglio inserito in
@@ -651,9 +664,9 @@ public class DistintaCassiereComponent extends
      * di annullamento successiva alla data di trasmissione e data di
      * ritrasmissione non valorizzata.
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk in cui inserire i doc. contabili da
-     *                 ritrasmettere
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk in cui inserire i doc. contabili da
+     *                    ritrasmettere
      * @throws RemoteException
      * @throws EJBException
      */
@@ -692,9 +705,9 @@ public class DistintaCassiereComponent extends
      * annullare tutte le modifiche fatte dall'utente ai dettagli della distinta
      * Post: La transazione viene riportata all'ultimo savepoint impostato
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk le cui modifiche ai dettagli devono
-     *                 essere annullate
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk le cui modifiche ai dettagli devono
+     *                    essere annullate
      */
 
     public void annullaModificaDettagliDistinta(
@@ -717,9 +730,9 @@ public class DistintaCassiereComponent extends
      * Post: Il progressivo viene calcolato incrementando di 1 l'ultimo
      * progressivo presente nel db per l'esercizio e l'uo di scrivania;
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk per cui generare il progressivo
-     * @param distinta la distinta con il progressivo assegnato
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk per cui generare il progressivo
+     * @param distinta    la distinta con il progressivo assegnato
      */
 
     protected Distinta_cassiereBulk assegnaProgressivo(UserContext userContext,
@@ -745,10 +758,10 @@ public class DistintaCassiereComponent extends
      * calcolato incrementando di 1 l'ultimo progressivo cassiere presente per
      * l'esercizio e l'uo di scrivania;
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk per cui generare il progressivo
-     *                 cassiere
-     * @param distinta la distinta con il progressivo cassiere assegnato
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk per cui generare il progressivo
+     *                    cassiere
+     * @param distinta    la distinta con il progressivo cassiere assegnato
      */
 
     protected Distinta_cassiereBulk assegnaProgressivoCassiere(
@@ -780,11 +793,11 @@ public class DistintaCassiereComponent extends
      * stato trasmissione viene aggiornato (metodo
      * 'aggiungiMandatiEReversaliCollegati').
      *
-     * @param userContext         lo UserContext che ha generato la richiesta
-     * @param distinta   la Distinta_cassiereBulk per cui generare i dettagkli
-     * @param docPassivo un istanza di V_mandato_reversaleBulk contente i criteri di
-     *                   ricerca specificati dall'utente nella selezione del
-     *                   mandato/reversale
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk per cui generare i dettagkli
+     * @param docPassivo  un istanza di V_mandato_reversaleBulk contente i criteri di
+     *                    ricerca specificati dall'utente nella selezione del
+     *                    mandato/reversale
      */
 
     public void associaTuttiDocContabili(UserContext userContext,
@@ -858,8 +871,8 @@ public class DistintaCassiereComponent extends
      * distinti secondo le varie tipologie dei mandati e delle reversali, sono
      * stati calcolati
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk per cui calcolare i totali
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk per cui calcolare i totali
      * @return la Distinta_cassiereBulk con tutti i totali impostati
      */
 
@@ -950,8 +963,8 @@ public class DistintaCassiereComponent extends
      * distinta in cui erano stati inseriti: gli importi di tali doc. contabili
      * vengono sommati nei tot. mandati/reversali da ritrasmettere.
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta l'istanza di Distinta_cassiereBulk per cui calolare lo storico
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    l'istanza di Distinta_cassiereBulk per cui calolare lo storico
      * @return la distinta coi totali storici valorizzati;
      */
 
@@ -1057,7 +1070,7 @@ public class DistintaCassiereComponent extends
      * Processo dei File
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta.
-     * @param  distinta  il <code>V_ext_cassiere00Bulk</code> file da processare.
+     * @param distinta    il <code>V_ext_cassiere00Bulk</code> file da processare.
      **/
     private void callCheckDocContForDistinta(UserContext userContext,
                                              Distinta_cassiereBulk distinta)
@@ -1131,8 +1144,8 @@ public class DistintaCassiereComponent extends
      * corrispondente. Post: Viene caricata la lista di processi relativi al
      * File specificato.
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param file <code>V_ext_cassiere00Bulk</code> l'oggetto da inizializzare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param file        <code>V_ext_cassiere00Bulk</code> l'oggetto da inizializzare
      * @return <code>V_ext_cassiere00Bulk<code> l'oggetto inizializzato
      */
     public it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Bulk caricaLogs(
@@ -1143,8 +1156,8 @@ public class DistintaCassiereComponent extends
         SQLBuilder sql = getHome(userContext, Ext_cassiere00_logsBulk.class)
                 .createSQLBuilder();
 
-        sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, file.getEsercizio());
-        sql.addSQLClause("AND", "NOME_FILE", sql.EQUALS, file.getNome_file());
+        sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, file.getEsercizio());
+        sql.addSQLClause("AND", "NOME_FILE", SQLBuilder.EQUALS, file.getNome_file());
 
         try {
             List risultato = getHome(userContext, Ext_cassiere00_logsBulk.class)
@@ -1190,12 +1203,12 @@ public class DistintaCassiereComponent extends
      * Viene creato un RemoteIterator passandogli le clausole presenti nel
      * SQLBuilder creato dal metodo 'cercaMandatiEReversaliSQL'
      *
-     * @param userContext         lo UserContext che ha generato la richiesta
-     * @param clausole   le clausole specificate dall'utente
-     * @param docPassivo l'istanza di V_mandato_reversaleBulk con le impostazioni
-     *                   specificate dall'utente
-     * @param distinta   l'istanza di Distinta_cassiereBulk per cui ricercare i
-     *                   mandati/reversali
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param clausole    le clausole specificate dall'utente
+     * @param docPassivo  l'istanza di V_mandato_reversaleBulk con le impostazioni
+     *                    specificate dall'utente
+     * @param distinta    l'istanza di Distinta_cassiereBulk per cui ricercare i
+     *                    mandati/reversali
      * @return RemoteIterator con le istanze di V_mandato_reversaleBulk
      */
     public it.cnr.jada.util.RemoteIterator cercaMandatiEReversali(
@@ -1206,7 +1219,7 @@ public class DistintaCassiereComponent extends
         try {
 
             SQLQuery sql = cercaMandatiEReversaliSQL(userContext, clausole,
-                    (V_mandato_reversaleBulk) docPassivo, distinta);
+                    docPassivo, distinta);
             return iterator(userContext, sql, V_mandato_reversaleBulk.class,
                     null);
         } catch (Throwable e) {
@@ -1226,12 +1239,12 @@ public class DistintaCassiereComponent extends
      * IN DISTINTA, il tipo doc. contabile sia diverso da REGOLARIZZAZIONE, e il
      * doc. contabile non dipenda da altri doc. contabili.
      *
-     * @param userContext         lo UserContext che ha generato la richiesta
-     * @param clausole   le clausole specificate dall'utente
-     * @param docPassivo l'istanza di V_mandato_reversaleBulk con le impostazioni
-     *                   specificate dall'utente
-     * @param distinta   l'istanza di Distinta_cassiereBulk per cui ricercare i
-     *                   mandati/reversali
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param clausole    le clausole specificate dall'utente
+     * @param docPassivo  l'istanza di V_mandato_reversaleBulk con le impostazioni
+     *                    specificate dall'utente
+     * @param distinta    l'istanza di Distinta_cassiereBulk per cui ricercare i
+     *                    mandati/reversali
      * @return SQLBuilder con tutte le clausole
      */
     private SQLQuery cercaMandatiEReversaliSQL(UserContext userContext,
@@ -1557,7 +1570,7 @@ public class DistintaCassiereComponent extends
      * del doc. contabile associato a tale dettaglio viene aggiornato a NON
      * INSERITO IN DISTINTA
      *
-     * @param userContext           lo UserContext che ha generato la richiesta
+     * @param userContext  lo UserContext che ha generato la richiesta
      * @param distinta     la Distinta_cassiereBulk per cui cancellare il dettaglio
      * @param docContabile il mandato/reversale da cancellare dalla distinta
      */
@@ -1603,7 +1616,6 @@ public class DistintaCassiereComponent extends
                     ps.close();
                 } catch (java.sql.SQLException e) {
                 }
-                ;
             }
 
         } catch (Exception e) {
@@ -1625,7 +1637,7 @@ public class DistintaCassiereComponent extends
      * documenti vengono eliminati dalla distinta ed il loro stato trasmissione
      * aggiornato.
      *
-     * @param userContext           lo UserContext che ha generato la richiesta
+     * @param userContext  lo UserContext che ha generato la richiesta
      * @param docContabili l'array di V_mandato_reversaleBulk da cancellare dalla
      *                     distinta
      * @param distinta     la Distinta_cassiereBulk per cui eliminare i dettagli
@@ -1662,8 +1674,8 @@ public class DistintaCassiereComponent extends
      * distinta viene eliminato e lo stato trasmissione del documento contabile
      * ad esso associato viene aggiornato a NON INSERITO IN DISTINTA
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk per cui eliminare tutti i dettagli
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk per cui eliminare tutti i dettagli
      */
     public void eliminaDistinta_cassiere_detCollConBulk(
             it.cnr.jada.UserContext userContext, Distinta_cassiereBulk distinta)
@@ -1695,8 +1707,8 @@ public class DistintaCassiereComponent extends
      * dalla distinta e all'aggiornamento dello stato_trasmissione del doc.
      * contabile collegato
      *
-     * @param userContext          lo <code>UserContext</code> che ha generato la richiesta
-     * @param distinta         <code>OggettoBulk</code> la distinta i cui dettagli sono da
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
+     * @param distinta     <code>OggettoBulk</code> la distinta i cui dettagli sono da
      *                     cancellare
      * @param docContabile <code>V_mandato_reversaleBulk</code> il doc.contabile per cui
      *                     ricercare i doc. contabili collegati
@@ -1737,9 +1749,9 @@ public class DistintaCassiereComponent extends
      * (metodo 'aggiornaStatoDocContabili'). Tutti i dettagli della distinta
      * vengono fisicamente rimossi dal database
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param distinta <code>OggettoBulk</code> la distinta i cui dettagli sono da
-     *             cancellare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param distinta    <code>OggettoBulk</code> la distinta i cui dettagli sono da
+     *                    cancellare
      */
     public void eliminaTuttiDettagliDistinta(
             it.cnr.jada.UserContext userContext, Distinta_cassiereBulk distinta)
@@ -1770,7 +1782,6 @@ public class DistintaCassiereComponent extends
                     ps.close();
                 } catch (java.sql.SQLException e) {
                 }
-                ;
             }
         } catch (Exception e) {
             throw handleException(e);
@@ -1783,14 +1794,14 @@ public class DistintaCassiereComponent extends
      * era già stata in precedenza inserita nel database ( metodo
      * 'inizializzaBulkPerInserimento'), viene aggiornata.
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la distinta da cancellare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la distinta da cancellare
      */
 
     protected OggettoBulk eseguiCreaConBulk(UserContext userContext,
                                             OggettoBulk bulk) throws ComponentException,
             it.cnr.jada.persistency.PersistencyException {
-        bulk.setCrudStatus(bulk.TO_BE_UPDATED);
+        bulk.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
         return modificaConBulk(userContext, bulk);
     }
 
@@ -1804,8 +1815,8 @@ public class DistintaCassiereComponent extends
      * INSERITO IN DISTINTA (metodo 'eliminaTuttiDettagliDistinta'). La distinta
      * viene cancellata
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la distinta da cancellare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la distinta da cancellare
      */
 
     protected void eseguiEliminaConBulk(UserContext userContext,
@@ -1830,8 +1841,8 @@ public class DistintaCassiereComponent extends
      * Distinta_cassiereBulk che ha superato la validazione Post: La distinta e'
      * stata modificata
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la distinta da modificare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la distinta da modificare
      * @return la distinta modificata
      */
     protected OggettoBulk eseguiModificaConBulk(UserContext userContext,
@@ -1859,9 +1870,9 @@ public class DistintaCassiereComponent extends
      * trasmessi al cassiere (metodo 'calcolaTotaliStorici'); viene recuperato
      * il codice del Cds Ente (999). La distinta viene inserita nel database.
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la distinta da inizializzare per
-     *             inserimento
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la distinta da inizializzare per
+     *                    inserimento
      * @return la distinta inizializzata per l'inserimento
      */
 
@@ -1931,9 +1942,9 @@ public class DistintaCassiereComponent extends
      * mandati/reversali già trasmessi al cassiere (metodo
      * 'calcolaTotaliStorici') e viene recuperato il codice del Cds Ente (999)
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la distinta da inizializzare per la
-     *             modifica
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la distinta da inizializzare per la
+     *                    modifica
      * @return la distinta inizializzata per la modifica
      */
 
@@ -1976,9 +1987,9 @@ public class DistintaCassiereComponent extends
      * di mandati/reversali già trasmessi al cassiere (metodo
      * 'calcolaTotaliStorici')
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la distinta da inizializzare per la
-     *             ricerca
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la distinta da inizializzare per la
+     *                    ricerca
      * @return la distinta inizializzata per la ricerca
      */
     public OggettoBulk inizializzaBulkPerRicerca(UserContext userContext,
@@ -2017,9 +2028,9 @@ public class DistintaCassiereComponent extends
      * impostato un savepoint in modo da consentire all'utente l'annullamento
      * delle modifiche dei dettagli
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk i cui dettagli devono essere
-     *                 modificati
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk i cui dettagli devono essere
+     *                    modificati
      */
 
     public void inizializzaDettagliDistintaPerModifica(UserContext userContext,
@@ -2042,7 +2053,7 @@ public class DistintaCassiereComponent extends
      * aggiornato a INSERITO IN DISTINTA; il progressivo dettaglio viene
      * incrementato di 1.
      *
-     * @param userContext                lo UserContext che ha generato la richiesta
+     * @param userContext       lo UserContext che ha generato la richiesta
      * @param distinta          la Distinta_cassiereBulk per cui creare il dettaglio
      * @param docContabile      il mandato/reversale da inserire in distinta
      * @param last_pg_dettaglio il numero che indica l'ultimo progressivo dettaglio utilizzato
@@ -2088,9 +2099,9 @@ public class DistintaCassiereComponent extends
      * selezionate sono state inviate al cassiere ( metodo
      * 'inviaSingolaDistinta')
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinte la collezione di oggetti V_distinta_cass_im_man_revBulk da
-     *                 inviare
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinte    la collezione di oggetti V_distinta_cass_im_man_revBulk da
+     *                    inviare
      */
 
     public void inviaDistinte(UserContext userContext, Collection distinte)
@@ -2133,8 +2144,8 @@ public class DistintaCassiereComponent extends
      * 'aggiornaStoricoTrasmessi'); la data di invio della distinta viene
      * aggiornata con la data odierna.
      *
-     * @param userContext       lo UserContext che ha generato la richiesta
-     * @param distinta la Distinta_cassiereBulk da inviare al cassiere
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk da inviare al cassiere
      */
 
     public void inviaSingolaDistinta(UserContext userContext,
@@ -2180,7 +2191,7 @@ public class DistintaCassiereComponent extends
 
             // imposto la data di invio della distinta
             distinta.setDt_invio(DateServices.getDt_valida(userContext));
-            distinta.setUser(((CNRUserContext) userContext).getUser());
+            distinta.setUser(userContext.getUser());
             distinta.setToBeUpdated();
             makeBulkPersistent(userContext, distinta);
             aggiornaDataDiffDocamm(userContext, distinta,
@@ -2270,44 +2281,44 @@ public class DistintaCassiereComponent extends
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA_RIGA.CD_CDS_OBBLIGAZIONE",
-                                                sql.EQUALS, mandato_riga
+                                                SQLBuilder.EQUALS, mandato_riga
                                                         .getCd_cds());
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA_RIGA.ESERCIZIO_OBBLIGAZIONE",
-                                                sql.EQUALS,
+                                                SQLBuilder.EQUALS,
                                                 mandato_riga
                                                         .getEsercizio_obbligazione());
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA_RIGA.ESERCIZIO_ORI_OBBLIGAZIONE",
-                                                sql.EQUALS,
+                                                SQLBuilder.EQUALS,
                                                 mandato_riga
                                                         .getEsercizio_ori_obbligazione());
                                 sql_fat.addSQLClause("AND",
                                         "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE",
-                                        sql.EQUALS, mandato_riga
+                                        SQLBuilder.EQUALS, mandato_riga
                                                 .getPg_obbligazione());
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE_SCADENZARIO",
-                                                sql.EQUALS,
+                                                SQLBuilder.EQUALS,
                                                 mandato_riga
                                                         .getPg_obbligazione_scadenzario());
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA_RIGA.STATO_COFI",
-                                                sql.NOT_EQUALS,
+                                                SQLBuilder.NOT_EQUALS,
                                                 Fattura_passiva_rigaBulk.STATO_ANNULLATO);
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA.FL_LIQUIDAZIONE_DIFFERITA",
-                                                sql.EQUALS, "Y");
+                                                SQLBuilder.EQUALS, "Y");
                             } else if (mandato_riga
                                     .getCd_tipo_documento_amm()
                                     .compareTo(
@@ -2331,66 +2342,66 @@ public class DistintaCassiereComponent extends
                                 sql_fat
                                         .addSQLJoin(
                                                 "FATTURA_PASSIVA.ESERCIZIO_FATTURA_FORNITORE",
-                                                sql.EQUALS,
+                                                SQLBuilder.EQUALS,
                                                 "COMPENSO.ESERCIZIO_FATTURA_FORNITORE");
                                 sql_fat.addSQLJoin(
                                         "FATTURA_PASSIVA.DT_FATTURA_FORNITORE",
-                                        sql.EQUALS,
+                                        SQLBuilder.EQUALS,
                                         "COMPENSO.DT_FATTURA_FORNITORE");
                                 sql_fat.addSQLJoin(
                                         "FATTURA_PASSIVA.NR_FATTURA_FORNITORE",
-                                        sql.EQUALS,
+                                        SQLBuilder.EQUALS,
                                         "COMPENSO.NR_FATTURA_FORNITORE");
                                 sql_fat
                                         .addSQLJoin(
                                                 "FATTURA_PASSIVA.DT_REGISTRAZIONE",
-                                                sql.EQUALS,
+                                                SQLBuilder.EQUALS,
                                                 "COMPENSO.DT_REGISTRAZIONE");
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA.STATO_COFI",
-                                                sql.NOT_EQUALS,
+                                                SQLBuilder.NOT_EQUALS,
                                                 Fattura_passiva_rigaBulk.STATO_ANNULLATO);
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "FATTURA_PASSIVA.FL_LIQUIDAZIONE_DIFFERITA",
-                                                sql.EQUALS, "Y");
+                                                SQLBuilder.EQUALS, "Y");
 
                                 sql_fat.addSQLClause("AND",
                                         "COMPENSO.CD_CDS_OBBLIGAZIONE",
-                                        sql.EQUALS, mandato_riga.getCd_cds());
+                                        SQLBuilder.EQUALS, mandato_riga.getCd_cds());
                                 sql_fat.addSQLClause("AND",
                                         "COMPENSO.ESERCIZIO_OBBLIGAZIONE",
-                                        sql.EQUALS, mandato_riga
+                                        SQLBuilder.EQUALS, mandato_riga
                                                 .getEsercizio_obbligazione());
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "COMPENSO.ESERCIZIO_ORI_OBBLIGAZIONE",
-                                                sql.EQUALS,
+                                                SQLBuilder.EQUALS,
                                                 mandato_riga
                                                         .getEsercizio_ori_obbligazione());
                                 sql_fat.addSQLClause("AND",
-                                        "COMPENSO.PG_OBBLIGAZIONE", sql.EQUALS,
+                                        "COMPENSO.PG_OBBLIGAZIONE", SQLBuilder.EQUALS,
                                         mandato_riga.getPg_obbligazione());
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "COMPENSO.PG_OBBLIGAZIONE_SCADENZARIO",
-                                                sql.EQUALS,
+                                                SQLBuilder.EQUALS,
                                                 mandato_riga
                                                         .getPg_obbligazione_scadenzario());
                                 sql_fat
                                         .addSQLClause(
                                                 "AND",
                                                 "COMPENSO.STATO_COFI",
-                                                sql.NOT_EQUALS,
+                                                SQLBuilder.NOT_EQUALS,
                                                 Fattura_passiva_rigaBulk.STATO_ANNULLATO);
                                 sql_fat.addSQLClause("AND",
                                         "COMPENSO.FL_LIQUIDAZIONE_DIFFERITA",
-                                        sql.EQUALS, "Y");
+                                        SQLBuilder.EQUALS, "Y");
                             }
                             List list_righe = home_righe.fetchAll(sql_fat);
                             for (Iterator it = list_righe.iterator(); it
@@ -2462,41 +2473,41 @@ public class DistintaCassiereComponent extends
                                     "FATTURA_PASSIVA.PG_FATTURA_PASSIVA");
                             sql_fat.addSQLClause("AND",
                                     "FATTURA_PASSIVA_RIGA.CD_CDS_ACCERTAMENTO",
-                                    sql.EQUALS, reversale_riga.getCd_cds());
+                                    SQLBuilder.EQUALS, reversale_riga.getCd_cds());
                             sql_fat
                                     .addSQLClause(
                                             "AND",
                                             "FATTURA_PASSIVA_RIGA.ESERCIZIO_ACCERTAMENTO",
-                                            sql.EQUALS,
+                                            SQLBuilder.EQUALS,
                                             reversale_riga
                                                     .getEsercizio_accertamento());
                             sql_fat
                                     .addSQLClause(
                                             "AND",
                                             "FATTURA_PASSIVA_RIGA.ESERCIZIO_ORI_ACCERTAMENTO",
-                                            sql.EQUALS,
+                                            SQLBuilder.EQUALS,
                                             reversale_riga
                                                     .getEsercizio_ori_accertamento());
                             sql_fat.addSQLClause("AND",
                                     "FATTURA_PASSIVA_RIGA.PG_ACCERTAMENTO",
-                                    sql.EQUALS, reversale_riga
+                                    SQLBuilder.EQUALS, reversale_riga
                                             .getPg_accertamento());
                             sql_fat
                                     .addSQLClause(
                                             "AND",
                                             "FATTURA_PASSIVA_RIGA.PG_ACCERTAMENTO_SCADENZARIO",
-                                            sql.EQUALS,
+                                            SQLBuilder.EQUALS,
                                             reversale_riga
                                                     .getPg_accertamento_scadenzario());
                             sql_fat.addSQLClause("AND",
                                     "FATTURA_PASSIVA_RIGA.STATO_COFI",
-                                    sql.NOT_EQUALS,
+                                    SQLBuilder.NOT_EQUALS,
                                     Fattura_passiva_rigaBulk.STATO_ANNULLATO);
                             sql_fat
                                     .addSQLClause(
                                             "AND",
                                             "FATTURA_PASSIVA.FL_LIQUIDAZIONE_DIFFERITA",
-                                            sql.EQUALS, "Y");
+                                            SQLBuilder.EQUALS, "Y");
                             List list_righe = home_righe.fetchAll(sql_fat);
                             for (Iterator it = list_righe.iterator(); it
                                     .hasNext(); ) {
@@ -2578,7 +2589,7 @@ public class DistintaCassiereComponent extends
      * dettagli di distinta ed il loro stato trasmissione viene aggiornato
      * (metodo 'eliminaMandatiEReversaliCollegati');
      *
-     * @param userContext              lo UserContext che ha generato la richiesta
+     * @param userContext     lo UserContext che ha generato la richiesta
      * @param distinta        la Distinta_cassiereBulk i cui dettagli sono stati modificati
      * @param docContabili    l'array di documenti contabili (V_mandato_reversaleBulk)
      *                        potenzialmente interessati da questa modifica
@@ -2660,10 +2671,10 @@ public class DistintaCassiereComponent extends
      * cd_unita_organizzativa di scrivania e con la data di invio non
      * valorizzata
      *
-     * @param userContext      lo UserContext che ha generato la richiesta
-     * @param clauses le clausole specificate dall'utente
-     * @param bulk    la Distinta_cassiereBulk oppure la
-     *                V_distinta_cass_im_man_revBulk da ricercare
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param clauses     le clausole specificate dall'utente
+     * @param bulk        la Distinta_cassiereBulk oppure la
+     *                    V_distinta_cass_im_man_revBulk da ricercare
      * @return sql Query con le clausole aggiuntive
      */
 
@@ -2671,23 +2682,23 @@ public class DistintaCassiereComponent extends
                            OggettoBulk bulk) throws ComponentException,
             it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = (SQLBuilder) super.select(userContext, clauses, bulk);
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS,
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS,
                 ((CNRUserContext) userContext).getCd_unita_organizzativa());
-        sql.addClause("AND", "esercizio", sql.EQUALS,
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS,
                 ((CNRUserContext) userContext).getEsercizio());
-        sql.addClause("AND", "cd_cds", sql.EQUALS,
+        sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS,
                 ((CNRUserContext) userContext).getCd_cds());
         // visualizza solo le distinte che non sono state ancora inviate
         if (bulk instanceof V_distinta_cass_im_man_revBulk) {
             verificaStatoEsercizio(userContext);
-            sql.addClause("AND", "dt_invio", sql.ISNULL, null);
+            sql.addClause("AND", "dt_invio", SQLBuilder.ISNULL, null);
         }
         if (bulk instanceof Distinta_cassiereBulk && ((Distinta_cassiereBulk) bulk).getFl_flusso() != null)
-            sql.addClause("AND", "fl_flusso", sql.EQUALS, ((Distinta_cassiereBulk) bulk).getFl_flusso().booleanValue());
+            sql.addClause("AND", "fl_flusso", SQLBuilder.EQUALS, ((Distinta_cassiereBulk) bulk).getFl_flusso().booleanValue());
         if (bulk instanceof Distinta_cassiereBulk && ((Distinta_cassiereBulk) bulk).getFl_sepa() != null)
-            sql.addClause("AND", "fl_sepa", sql.EQUALS, ((Distinta_cassiereBulk) bulk).getFl_sepa().booleanValue());
+            sql.addClause("AND", "fl_sepa", SQLBuilder.EQUALS, ((Distinta_cassiereBulk) bulk).getFl_sepa().booleanValue());
         if (bulk instanceof Distinta_cassiereBulk && ((Distinta_cassiereBulk) bulk).getFl_annulli() != null)
-            sql.addClause("AND", "fl_annulli", sql.EQUALS, ((Distinta_cassiereBulk) bulk).getFl_annulli().booleanValue());
+            sql.addClause("AND", "fl_annulli", SQLBuilder.EQUALS, ((Distinta_cassiereBulk) bulk).getFl_annulli().booleanValue());
 
         sql.addOrderBy("pg_distinta");
         return sql;
@@ -2727,8 +2738,8 @@ public class DistintaCassiereComponent extends
         SQLBuilder sql = getHome(userContext, Ext_cassiere00Bulk.class)
                 .createSQLBuilder();
 
-        sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, file.getEsercizio());
-        sql.addSQLClause("AND", "NOME_FILE", sql.EQUALS, file.getNome_file());
+        sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, file.getEsercizio());
+        sql.addSQLClause("AND", "NOME_FILE", SQLBuilder.EQUALS, file.getNome_file());
 
         return sql;
     }
@@ -2784,8 +2795,8 @@ public class DistintaCassiereComponent extends
      * V_mandato_reversaleBulk che contengono tutte le informazioni dei mandati
      * e delle reversali inseriti in distinta.
      *
-     * @param userContext        lo UserContext che ha generato la richiesta
-     * @param distinta  la Distinta_cassiereBulk di cui ricercare i dettagli
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk di cui ricercare i dettagli
      * @param bulkClass
      * @param clauses
      * @return SQLBuilder
@@ -2810,15 +2821,15 @@ public class DistintaCassiereComponent extends
 
             if (tesoreriaUnica(userContext, distinta)) {
                 SQLBuilder sqlIN = getHome(userContext, Distinta_cassiere_detBulk.class).createSQLBuilder();
-                sqlIN.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
+                sqlIN.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", SQLBuilder.EQUALS,
                         distinta.getEsercizio());
-                sqlIN.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", sql.EQUALS,
+                sqlIN.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", SQLBuilder.EQUALS,
                         distinta.getCd_cds());
                 sqlIN.addSQLClause("AND",
-                        "DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
+                        "DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,
                         distinta.getCd_unita_organizzativa());
                 sqlIN.addSQLClause("AND", "DISTINTA_CASSIERE_DET.PG_DISTINTA",
-                        sql.EQUALS, distinta.getPg_distinta());
+                        SQLBuilder.EQUALS, distinta.getPg_distinta());
                 //sqlIN.addOrderBy("CD_CDS_ORIGINE,PG_DETTAGLIO");
                 List list = getHome(userContext, Distinta_cassiere_detBulk.class).fetchAll(sqlIN);
                 String lista_mandati = null;
@@ -2834,11 +2845,11 @@ public class DistintaCassiereComponent extends
                             sql.openParenthesis("OR");
 
                             sql.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS", "V_MANDATO_REVERSALE_DISTINTA.CD_CDS");
-                            sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", sql.EQUALS, distinta
+                            sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", SQLBuilder.EQUALS, distinta
                                     .getEsercizio());
                             sql.addSQLClause("AND",
                                     "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                                    sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
+                                    SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
 
                             sql.addSQLClause("AND", "(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN (" + lista_mandati + ")");
 
@@ -2864,11 +2875,11 @@ public class DistintaCassiereComponent extends
                             sql.openParenthesis("OR");
 
                             sql.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS", "V_MANDATO_REVERSALE_DISTINTA.CD_CDS");
-                            sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", sql.EQUALS, distinta
+                            sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", SQLBuilder.EQUALS, distinta
                                     .getEsercizio());
                             sql.addSQLClause("AND",
                                     "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                                    sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+                                    SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
 
                             sql.addSQLClause("AND", "(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN (" + lista_reversali + ")");
 
@@ -2894,11 +2905,11 @@ public class DistintaCassiereComponent extends
                 if (lista_mandati != null) {
                     sql.openParenthesis("OR");
                     sql.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS", "V_MANDATO_REVERSALE_DISTINTA.CD_CDS");
-                    sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", sql.EQUALS, distinta
+                    sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", SQLBuilder.EQUALS, distinta
                             .getEsercizio());
                     sql.addSQLClause("AND",
                             "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                            sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
+                            SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
 
                     sql.addSQLClause("AND", "(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN (" + lista_mandati + ")");
 
@@ -2911,11 +2922,11 @@ public class DistintaCassiereComponent extends
                 if (lista_reversali != null) {
                     sql.openParenthesis("OR");
                     sql.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS", "V_MANDATO_REVERSALE_DISTINTA.CD_CDS");
-                    sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", sql.EQUALS, distinta
+                    sql.addSQLClause("AND", "V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO", SQLBuilder.EQUALS, distinta
                             .getEsercizio());
                     sql.addSQLClause("AND",
                             "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                            sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+                            SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
 
                     sql.addSQLClause("AND", "(V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT) IN (" + lista_reversali + ")");
 
@@ -2941,31 +2952,31 @@ public class DistintaCassiereComponent extends
                 sql2.openParenthesis("AND");
                 sql2.addSQLClause("AND",
                         "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                        sql2.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
+                        SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
                 sql2.addSQLJoin("	V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
                         " DISTINTA_CASSIERE_DET.PG_MANDATO");
                 sql2.addSQLClause("OR",
                         "V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                        sql2.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+                        SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
                 sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
                         "DISTINTA_CASSIERE_DET.PG_REVERSALE");
                 sql2.closeParenthesis();
                 sql2.closeParenthesis();
                 // da committare
-                sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", sql.EQUALS,
+                sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.ESERCIZIO", SQLBuilder.EQUALS,
                         distinta.getEsercizio());
-                sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", sql.EQUALS,
+                sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.CD_CDS", SQLBuilder.EQUALS,
                         distinta.getCd_cds());
                 sql2.addSQLClause("AND",
-                        "DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
+                        "DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,
                         distinta.getCd_unita_organizzativa());
                 sql2.addSQLClause("AND", "DISTINTA_CASSIERE_DET.PG_DISTINTA",
-                        sql.EQUALS, distinta.getPg_distinta());
+                        SQLBuilder.EQUALS, distinta.getPg_distinta());
 
                 sql.addSQLExistsClause("AND", sql2);
-                sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, distinta
+                sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, distinta
                         .getEsercizio());
-                sql.addSQLClause("AND", "CD_CDS", sql.EQUALS, distinta.getCd_cds());
+                sql.addSQLClause("AND", "CD_CDS", SQLBuilder.EQUALS, distinta.getCd_cds());
                 // sql.addSQLClause( "AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
                 // distinta.getCd_unita_organizzativa() );
 
@@ -3066,7 +3077,7 @@ public class DistintaCassiereComponent extends
                         + ((CNRUserContext) userContext).getEsercizio()
                         + " non è ancora stato definito per il Cds "
                         + ((CNRUserContext) userContext).getCd_cds());
-            if (!esercizio.STATO_APERTO.equals(esercizio
+            if (!EsercizioBulk.STATO_APERTO.equals(esercizio
                     .getSt_apertura_chiusura()))
                 throw new ApplicationException("L'esercizio "
                         + ((CNRUserContext) userContext).getEsercizio()
@@ -3119,11 +3130,8 @@ public class DistintaCassiereComponent extends
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        if (parametriCnr.getFl_versamenti_cori().booleanValue()
-                && day >= parametriCnr.getVersamenti_cori_giorno().intValue())
-            return (true);
-        else
-            return (false);
+        return parametriCnr.getFl_versamenti_cori().booleanValue()
+                && day >= parametriCnr.getVersamenti_cori_giorno().intValue();
     }
 
     private void callCercaTerzoVersCORI(UserContext userContext,
@@ -3157,11 +3165,9 @@ public class DistintaCassiereComponent extends
         if (sess.getVal01(userContext, new Integer(0), null, "UO_SPECIALE",
                 "UO_DISTINTA_TUTTA_SAC") == null)
             return false;
-        if (sess.getVal01(userContext, new Integer(0), null, "UO_SPECIALE",
+        return sess.getVal01(userContext, new Integer(0), null, "UO_SPECIALE",
                 "UO_DISTINTA_TUTTA_SAC").equals(
-                distinta.getCd_unita_organizzativa()))
-            return true;
-        return false;
+                distinta.getCd_unita_organizzativa());
     }
 
     /**
@@ -3366,7 +3372,7 @@ public class DistintaCassiereComponent extends
      * stato_trasmissione del doc. contabile associato a tale dettaglio viene
      * aggiornato a NON INSERITO IN DISTINTA
      *
-     * @param userContext           lo UserContext che ha generato la richiesta
+     * @param userContext  lo UserContext che ha generato la richiesta
      * @param distinta     la Distinta_cassiereBulk per cui cancellare il dettaglio
      * @param docContabile il mandato/reversale da cancellare dalla distinta
      */
@@ -3491,10 +3497,9 @@ public class DistintaCassiereComponent extends
      * aggiornato a INSERITO IN DISTINTA; il progressivo dettaglio viene
      * incrementato di 1.
      *
-     * @param userContext                lo UserContext che ha generato la richiesta
-     * @param distinta          la Distinta_cassiereBulk per cui creare il dettaglio
-     * @param docContabile      il mandato/reversale da inserire in distinta
-     *
+     * @param userContext  lo UserContext che ha generato la richiesta
+     * @param distinta     la Distinta_cassiereBulk per cui creare il dettaglio
+     * @param docContabile il mandato/reversale da inserire in distinta
      * @return last_pg_dettaglio + 1
      */
     private void inserisciDettaglioDistinteCollegate(
@@ -3767,8 +3772,8 @@ public class DistintaCassiereComponent extends
      * le informazioni dei mandati e delle reversali inseriti nelle distinte
      * collegate a quella indicata.
      *
-     * @param userContext        lo UserContext che ha generato la richiesta
-     * @param distinta  la Distinta_cassiereBulk di cui ricercare i dettagli
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk di cui ricercare i dettagli
      * @param bulkClass
      * @param clauses
      * @return SQLBuilder
@@ -3839,8 +3844,8 @@ public class DistintaCassiereComponent extends
      * le informazioni dei mandati e delle reversali inseriti nelle distinte
      * collegate a quella indicata.
      *
-     * @param userContext        lo UserContext che ha generato la richiesta
-     * @param distinta  la Distinta_cassiereBulk di cui ricercare i dettagli
+     * @param userContext lo UserContext che ha generato la richiesta
+     * @param distinta    la Distinta_cassiereBulk di cui ricercare i dettagli
      * @return SQLBuilder
      */
     private SQLBuilder selectDistinte_cassiere_detCollegate(
@@ -3891,9 +3896,9 @@ public class DistintaCassiereComponent extends
         SQLBuilder sql = getHome(userContext, Ext_cassiere00_scartiBulk.class)
                 .createSQLBuilder();
         // sql.setDistinctClause(true);
-        sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, logs.getEsercizio());
-        sql.addSQLClause("AND", "NOME_FILE", sql.EQUALS, logs.getNome_file());
-        sql.addSQLClause("AND", "PG_ESECUZIONE", sql.EQUALS, logs
+        sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, logs.getEsercizio());
+        sql.addSQLClause("AND", "NOME_FILE", SQLBuilder.EQUALS, logs.getNome_file());
+        sql.addSQLClause("AND", "PG_ESECUZIONE", SQLBuilder.EQUALS, logs
                 .getPg_esecuzione());
         it.cnr.jada.util.RemoteIterator ri = iterator(userContext, sql,
                 Ext_cassiere00_scartiBulk.class, null);
@@ -3916,7 +3921,7 @@ public class DistintaCassiereComponent extends
             Bframe_blobBulk bframe_blob = new Bframe_blobBulk("INT_CASS00",
                     new java.io.File(parseFilename(file)).getName(), "ritorno/"
                     + eserc_scirvania + "/");
-            BulkHome home = (BulkHome) getHome(userContext, Bframe_blobBulk.class);
+            BulkHome home = getHome(userContext, Bframe_blobBulk.class);
             bframe_blob.setUser(userContext.getUser());
             home.insert(bframe_blob, userContext);
             home.setSQLLob(bframe_blob, "CDATA", IOUtils.toString(new FileInputStream(file), "UTF-8"));
@@ -3977,10 +3982,10 @@ public class DistintaCassiereComponent extends
         sql.addTableToHeader("TERZO");
         sql.addSQLClause("AND", "TERZO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo.getCd_unita_organizzativa());
         sql.addSQLJoin("BANCA.CD_TERZO", "TERZO.CD_TERZO");
-        sql.addSQLClause("AND", "TERZO.DT_FINE_RAPPORTO", sql.ISNULL, null);
+        sql.addSQLClause("AND", "TERZO.DT_FINE_RAPPORTO", SQLBuilder.ISNULL, null);
         try {
             if (!Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext)).getFl_tesoreria_unica().booleanValue())
-                sql.addSQLClause("AND", "BANCA.FL_CC_CDS", sql.EQUALS, "Y");
+                sql.addSQLClause("AND", "BANCA.FL_CC_CDS", SQLBuilder.EQUALS, "Y");
             else {
                 Configurazione_cnrBulk config = new Configurazione_cnrBulk(
                         "CONTO_CORRENTE_SPECIALE",
@@ -3991,16 +3996,16 @@ public class DistintaCassiereComponent extends
                 List configurazioni = home.find(config);
                 if ((configurazioni != null) && (configurazioni.size() == 1)) {
                     Configurazione_cnrBulk configBanca = (Configurazione_cnrBulk) configurazioni.get(0);
-                    sql.addSQLClause("AND", "BANCA.ABI", sql.EQUALS, configBanca.getVal01());
-                    sql.addSQLClause("AND", "BANCA.CAB", sql.EQUALS, configBanca.getVal02());
-                    sql.addSQLClause("AND", "BANCA.NUMERO_CONTO", sql.CONTAINS, configBanca.getVal03());
+                    sql.addSQLClause("AND", "BANCA.ABI", SQLBuilder.EQUALS, configBanca.getVal01());
+                    sql.addSQLClause("AND", "BANCA.CAB", SQLBuilder.EQUALS, configBanca.getVal02());
+                    sql.addSQLClause("AND", "BANCA.NUMERO_CONTO", SQLBuilder.CONTAINS, configBanca.getVal03());
                 }
             }
         } catch (Exception e) {
             throw handleException(e);
         }
-        sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", sql.EQUALS, "N");
-        sql.addSQLClause("AND", "CODICE_IBAN", sql.ISNOTNULL, null);
+        sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", SQLBuilder.EQUALS, "N");
+        sql.addSQLClause("AND", "CODICE_IBAN", SQLBuilder.ISNOTNULL, null);
         if (getHome(userContext, BancaBulk.class).fetchAll(sql).size() == 0)
             throw new ApplicationException("Configurazione iban uo mancante");
         else if (getHome(userContext, BancaBulk.class).fetchAll(sql).size() > 1)
@@ -4030,10 +4035,10 @@ public class DistintaCassiereComponent extends
             //sql.addSQLJoin("V_MANDATO_REVERSALE.CD_UNITA_ORGANIZZATIVA","DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA");
 
             if (tipo.compareTo(Numerazione_doc_contBulk.TIPO_MAN) == 0) {
-                sql.addSQLClause("AND", "V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
+                sql.addSQLClause("AND", "V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
                 sql.addSQLJoin("DISTINTA_CASSIERE_DET.PG_MANDATO", SQLBuilder.EQUALS, "V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT");
             } else {
-                sql.addSQLClause("AND", "V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT", sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+                sql.addSQLClause("AND", "V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
                 sql.addSQLJoin("DISTINTA_CASSIERE_DET.PG_REVERSALE", SQLBuilder.EQUALS, "V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT");
             }
             return getHome(usercontext, V_mandato_reversaleBulk.class).fetchAll(sql);
@@ -4089,7 +4094,7 @@ public class DistintaCassiereComponent extends
                 distinta.setDt_invio(DateServices.getDt_valida(userContext));
             }
             distinta.setStato(Distinta_cassiereBulk.Stato.DEFINITIVA);
-            distinta.setUser(((CNRUserContext) userContext).getUser());
+            distinta.setUser(userContext.getUser());
             distinta.setToBeUpdated();
             makeBulkPersistent(userContext, distinta);
             aggiornaDataDiffDocamm(userContext, distinta,
@@ -4298,7 +4303,7 @@ public class DistintaCassiereComponent extends
 
     public void unlockMessaggiSIOPEPlus(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
         try {
-            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
+            Configurazione_cnrBulk configurazione_cnrBulk = new Configurazione_cnrBulk(
                     Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
                     Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS,
                     "*",
@@ -4309,14 +4314,14 @@ public class DistintaCassiereComponent extends
             configurazione_cnrBulk.setVal04("N");
             configurazione_cnrBulk.setToBeUpdated();
             configurazione_cnrHome.update(configurazione_cnrBulk, userContext);
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             throw handleException(e);
         }
     }
 
     public Configurazione_cnrBulk lockMessaggiSIOPEPlus(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
         try {
-            Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(
+            Configurazione_cnrBulk configurazione_cnrBulk = new Configurazione_cnrBulk(
                     Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
                     Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS,
                     "*",
@@ -4332,7 +4337,7 @@ public class DistintaCassiereComponent extends
             return configurazione_cnrBulk;
         } catch (BusyResourceException _ex) {
             return null;
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             throw handleException(e);
         }
     }
@@ -4413,7 +4418,7 @@ public class DistintaCassiereComponent extends
                     it.cnr.jada.util.ejb.EJBCommonServices
                             .createEJB("CNRANAGRAF00_EJB_AnagraficoComponentSession");
 
-            AnagraficoBulk uoEnte = (AnagraficoBulk) component.getAnagraficoEnte(userContext);
+            AnagraficoBulk uoEnte = component.getAnagraficoEnte(userContext);
             testataFlusso.setDescrizioneEnte(uoEnte.getRagione_sociale());
 
             testataFlusso.setCodiceIstatEnte(codiceIstatEnte);
@@ -4450,18 +4455,18 @@ public class DistintaCassiereComponent extends
             jaxbMarshaller.marshal(currentFlusso, byteArrayOutputStream);
 
             //FIX per firma xml
-            String out = new String(byteArrayOutputStream.toByteArray(), "UTF-8");
+            String out = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
             out = out.replace("</flusso_ordinativi>", "\n</flusso_ordinativi>");
 
-            StorageFile storageFile = new StorageFile(out.getBytes("UTF-8"), MimeTypes.XML.mimetype(), distinta.getFileNameXML());
+            StorageFile storageFile = new StorageFile(out.getBytes(StandardCharsets.UTF_8), MimeTypes.XML.mimetype(), distinta.getFileNameXML());
             final StorageObject storageObject = documentiContabiliService.getStorageObjectBykey(
                     documentiContabiliService.restoreSimpleDocument(
-                    storageFile,
-                    new ByteArrayInputStream(storageFile.getBytes()),
-                    storageFile.getContentType(),
-                    storageFile.getFileName(),
-                    distinta.getStorePath(),
-                    true).getKey());
+                            storageFile,
+                            new ByteArrayInputStream(storageFile.getBytes()),
+                            storageFile.getContentType(),
+                            storageFile.getFileName(),
+                            distinta.getStorePath(),
+                            true).getKey());
             final BigInteger dimension = storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).divide(BigInteger.valueOf(1024));
             if (dimension.add(BigInteger.valueOf(5)).compareTo(DistintaCassiereComponentSession.MAX_OPI_DIMENSION) > 0) {
                 throw new ApplicationMessageFormatException("La dimensione del flusso {0}kbytes supera la dimensione massima consentita {1}kbytes!",
@@ -4680,8 +4685,8 @@ public class DistintaCassiereComponent extends
 
                 final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
                         Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
-                            .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
-                            .orElseThrow(() -> new ApplicationMessageFormatException("Tipo pagamento SIOPE+ non trovato per modalità: {0}", modalitaPagamento));
+                                .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
+                                .orElseThrow(() -> new ApplicationMessageFormatException("Tipo pagamento SIOPE+ non trovato per modalità: {0}", modalitaPagamento));
 
                 //TODO deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
@@ -4779,7 +4784,7 @@ public class DistintaCassiereComponent extends
                     } else {
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
-                    if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)){
+                    if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                     }
 
@@ -4846,7 +4851,7 @@ public class DistintaCassiereComponent extends
 
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
-                                    it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione)it.next();
+                                    it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
                                     if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
                                         salta = true;
                                         break;
@@ -4866,11 +4871,7 @@ public class DistintaCassiereComponent extends
                                     clas.setImporto((doc.getImportoCge().multiply(coef)).setScale(2,
                                             BigDecimal.ROUND_HALF_UP));
                                 }
-                                //TODO
-                                CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
-
+                                caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
                                 totSiope = totSiope.add(clas.getImporto());
                                 infoben.getClassificazione().add(clas);
                             }
@@ -4878,7 +4879,7 @@ public class DistintaCassiereComponent extends
                         }
                     }
                     if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) == 0))) {
-                        clas = ((it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) (infoben.getClassificazione().get(0)));
+                        clas = infoben.getClassificazione().get(0);
                         if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01")) == 0)
                             clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
                         else
@@ -5007,10 +5008,7 @@ public class DistintaCassiereComponent extends
                                     clas.setImporto((doc.getImportoCge().multiply(coef)).setScale(2,
                                             BigDecimal.ROUND_HALF_UP));
                                 }
-                                //TODO
-                                CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
+                                caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                 totSiope = totSiope.add(clas.getImporto());
                                 infoben.getClassificazione().add(clas);
@@ -5019,7 +5017,7 @@ public class DistintaCassiereComponent extends
                         }
                     }
                     if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) == 0))) {
-                        clas = ((it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) (infoben.getClassificazione().get(0)));
+                        clas = infoben.getClassificazione().get(0);
                         if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01")) == 0)
                             clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
                         else
@@ -5073,7 +5071,7 @@ public class DistintaCassiereComponent extends
                     infoben.setImportoBeneficiario(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
                     if (bulk.getIm_documento_cont().compareTo(bulk.getIm_ritenute()) == 0) {
                         infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE.value());
-                    } else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0){
+                    } else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
                         infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value());
                     } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP)
                             && docContabile.getDtPagamentoRichiesta() == null) {
@@ -5094,7 +5092,7 @@ public class DistintaCassiereComponent extends
                                 DatatypeFactory.newInstance()
                                         .newXMLGregorianCalendar(
                                                 formatterDate.format(
-                                                    docContabile.getDtPagamentoRichiesta().toLocalDateTime()
+                                                        docContabile.getDtPagamentoRichiesta().toLocalDateTime()
                                                 )
                                         );
                         infoben.setDataEsecuzionePagamento(xmlGregorianCalendar);
@@ -5105,7 +5103,7 @@ public class DistintaCassiereComponent extends
                     } else {
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
-                    if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)){
+                    if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
                         infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
                     }
                     caricaInformazioniAggiuntive(infoben, bulk, aggiuntive, tipoPagamentoSiopePlus);
@@ -5157,10 +5155,7 @@ public class DistintaCassiereComponent extends
                                     clas.setCodiceCgu(oldDoc.getCdSiope());
                                     clas.setImporto((totAssSiope.subtract(totAssCup))
                                             .setScale(2, BigDecimal.ROUND_HALF_UP));
-                                    //TODO
-                                    CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                    clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
+                                    caricaClassificazione(userContext, clas, objectFactory, bulk, oldDoc.getCdSiope());
 
                                     totAssCup = BigDecimal.ZERO;
                                     totAssSiope = BigDecimal.ZERO;
@@ -5178,10 +5173,8 @@ public class DistintaCassiereComponent extends
                                         clas.setCodiceCgu(oldDoc.getCdSiope());
                                         clas.setImporto(totAssSiope.subtract(totAssCup)
                                                 .setScale(2, BigDecimal.ROUND_HALF_UP));
-                                        //TODO
-                                        CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                        clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
+
+                                        caricaClassificazione(userContext, clas, objectFactory, bulk, oldDoc.getCdSiope());
 
                                         totAssCup = BigDecimal.ZERO;
                                         totAssSiope = BigDecimal.ZERO;
@@ -5207,10 +5200,7 @@ public class DistintaCassiereComponent extends
                                                             + "-" + doc.getCdCup());
                                             } else
                                                 infoben.setCausale("CUP " + doc.getCdCup());
-                                            //TODO
-                                            CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                            clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
+                                            caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                             infoben.getClassificazione().add(clas);
                                         } else // stesso siope con cup null precedente
@@ -5227,10 +5217,7 @@ public class DistintaCassiereComponent extends
                                                         BigDecimal.ROUND_HALF_UP));
                                                 totAssSiope = BigDecimal.ZERO;
                                                 totAssCup = BigDecimal.ZERO;
-                                                //TODO
-                                                CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                                ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                                clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
+                                                caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                                 infoben.getClassificazione().add(clas);
                                             } else // diverso siope con cup null e precedente
@@ -5247,11 +5234,7 @@ public class DistintaCassiereComponent extends
                                                             BigDecimal.ROUND_HALF_UP));
                                                     totAssSiope = BigDecimal.ZERO;
                                                     totAssCup = BigDecimal.ZERO;
-                                                    //TODO
-                                                    CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                                    clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
-
+                                                    caricaClassificazione(userContext, clas, objectFactory, bulk,doc.getCdSiope());
                                                     infoben.getClassificazione().add(clas);
                                                 } else
                                                     // primo inserimento
@@ -5273,10 +5256,7 @@ public class DistintaCassiereComponent extends
                                                                         + "-" + doc.getCdCup());
                                                         } else
                                                             infoben.setCausale("CUP " + doc.getCdCup());
-                                                        //TODO
-                                                        CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                                        clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
+                                                        caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                                         infoben.getClassificazione().add(clas);
                                                     } else {
@@ -5285,11 +5265,7 @@ public class DistintaCassiereComponent extends
                                                         clas.setImporto(doc.getImportoCge().setScale(2,
                                                                 BigDecimal.ROUND_HALF_UP));
                                                         totAssSiope = doc.getImportoCge();
-                                                        //TODO
-                                                        CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-                                                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
-                                                        clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
-
+                                                        caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
                                                         infoben.getClassificazione().add(clas);
                                                     }
                                 oldDoc = doc;
@@ -5449,17 +5425,17 @@ public class DistintaCassiereComponent extends
         if (Arrays.asList(
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE,
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE
-        ).contains(tipoPagamentoSiopePlus)){
+        ).contains(tipoPagamentoSiopePlus)) {
             infoben.setTipoPostalizzazione(
                     Optional.ofNullable(docContabile.getTipoPostalizzazione())
-                        .orElseThrow(() -> new ApplicationMessageFormatException(
-                                "Impossibile generare il flusso, indicare il tipo postalizzazione sulla modalità di pagamento {0} del mandato {1}/{2}/{3} riferito al terzo {4}!",
-                                docContabile.getModalitaPagamento(),
-                                String.valueOf(docContabile.getEsercizio()),
-                                docContabile.getCdCds(),
-                                String.valueOf(docContabile.getPgDocumento()),
-                                String.valueOf(docContabile.getCdTerzo()))
-                        )
+                            .orElseThrow(() -> new ApplicationMessageFormatException(
+                                    "Impossibile generare il flusso, indicare il tipo postalizzazione sulla modalità di pagamento {0} del mandato {1}/{2}/{3} riferito al terzo {4}!",
+                                    docContabile.getModalitaPagamento(),
+                                    String.valueOf(docContabile.getEsercizio()),
+                                    docContabile.getCdCds(),
+                                    String.valueOf(docContabile.getPgDocumento()),
+                                    String.valueOf(docContabile.getCdTerzo()))
+                            )
             );
         }
     }
@@ -5472,10 +5448,196 @@ public class DistintaCassiereComponent extends
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP
-        ).contains(tipoPagamentoSiopePlus)){
+        ).contains(tipoPagamentoSiopePlus)) {
             aggiuntive.setRiferimentoDocumentoEsterno(bulk.getCMISName());
             infoben.setInformazioniAggiuntive(aggiuntive);
         }
+    }
 
+    private void caricaClassificazione(UserContext userContext,
+                                       it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione clas,
+                                       ObjectFactory objectFactory,
+                                       V_mandato_reversaleBulk bulk,
+                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException {
+        CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
+        Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
+                .map(s -> TipoDebitoSIOPE.getValueFrom(s));
+        if (!tipoDebitoSIOPE.isPresent() || (tipoDebitoSIOPE.isPresent() && tipoDebitoSIOPE.get().equals(TipoDebitoSIOPE.COMMERCIALE))) {
+            MandatoIHome mandatoHome = Optional.ofNullable(getHome(userContext, MandatoIBulk.class))
+                    .filter(MandatoIHome.class::isInstance)
+                    .map(MandatoIHome.class::cast)
+                    .orElseThrow(() -> new ComponentException("Home del mandato non trovata!"));
+            MandatoBulk mandatoBulk = Optional.ofNullable(
+                    mandatoHome.findByPrimaryKey(
+                            new MandatoIBulk(bulk.getCd_cds(), bulk.getEsercizio(), bulk.getPg_documento_cont()
+                            )
+                    )).filter(MandatoBulk.class::isInstance)
+                    .map(MandatoBulk.class::cast)
+                    .orElseThrow(() -> new ComponentException("Mandato non trovato!"));
+            final List<Mandato_siopeBulk> siopeBulks = mandatoHome.findMandato_siope(userContext, mandatoBulk)
+                    .stream()
+                    .filter(Mandato_siopeBulk.class::isInstance)
+                    .map(Mandato_siopeBulk.class::cast)
+                    .filter(o -> o.getCd_siope().equals(codiceSiope))
+                    .collect(Collectors.toList());
+
+
+            final Optional<Mandato_siopeBulk> mandatoDaFattura = siopeBulks
+                    .stream()
+                    .filter(mandato_siopeBulk -> mandato_siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA))
+                    .findAny();
+
+            final Optional<Mandato_siopeBulk> mandatoDaCompenso = siopeBulks
+                    .stream()
+                    .filter(mandato_siopeBulk -> mandato_siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_COMPENSO))
+                    .findAny();
+            if (mandatoDaFattura.isPresent()) {
+                final Map<Fattura_passivaBulk, Double> collect = siopeBulks
+                        .stream()
+                        .map(mandato_siopeBulk -> {
+                            try {
+                                Fattura_passivaHome fattura_passivaHome = Optional.ofNullable(getHome(userContext, Fattura_passiva_IBulk.class))
+                                        .filter(Fattura_passivaHome.class::isInstance)
+                                        .map(Fattura_passivaHome.class::cast)
+                                        .orElseThrow(() -> new ComponentException("Home della fattura non trovata!"));
+                                return new AbstractMap.SimpleEntry<Fattura_passivaBulk, BigDecimal>(Optional.ofNullable(
+                                        fattura_passivaHome.findByPrimaryKey(
+                                                new Fattura_passiva_IBulk(
+                                                        mandato_siopeBulk.getCd_cds_doc_amm(),
+                                                        mandato_siopeBulk.getCd_uo_doc_amm(),
+                                                        mandato_siopeBulk.getEsercizio_doc_amm(),
+                                                        mandato_siopeBulk.getPg_doc_amm()
+                                                )
+                                        )
+                                ).filter(Fattura_passivaBulk.class::isInstance)
+                                        .map(Fattura_passivaBulk.class::cast)
+                                        .orElseThrow(() -> new ComponentException("Fattura non trovata!")), mandato_siopeBulk.getImporto());
+                            } catch (ComponentException | PersistencyException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        })
+                        .collect(Collectors.groupingBy(o -> o.getKey(), Collectors.summingDouble(value -> value.getValue().doubleValue())));
+                getHomeCache(userContext).fetchAll(userContext);
+                final boolean isCommerciale = collect
+                        .keySet()
+                        .stream()
+                        .filter(fattura_passivaBulk -> !(fattura_passivaBulk.isEstera() ||
+                                fattura_passivaBulk.isSanMarinoConIVA() ||
+                                fattura_passivaBulk.isSanMarinoSenzaIVA()))
+                        .findAny().isPresent();
+                if (!isCommerciale) {
+                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
+                } else {
+                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
+                    final Optional<Fattura_passivaBulk> noCIGFattura_passivaBulk = collect
+                            .keySet()
+                            .stream()
+                            .filter(fattura_passivaBulk -> (
+                                    !Optional.ofNullable(fattura_passivaBulk.getCd_cig()).isPresent() &&
+                                            !Optional.ofNullable(fattura_passivaBulk.getMotivo_assenza_cig()).isPresent()
+                            )).findAny();
+                    if (noCIGFattura_passivaBulk.isPresent()) {
+                        throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto non è valorizzato il CIG o il motivo di esclusione " +
+                                "sulla fattura {0}/{1}/{2}",
+                                String.valueOf(noCIGFattura_passivaBulk.get().getEsercizio()),
+                                String.valueOf(noCIGFattura_passivaBulk.get().getCd_cds()),
+                                String.valueOf(noCIGFattura_passivaBulk.get().getPg_fattura_passiva())
+                        );
+                    }
+
+                    collect.entrySet()
+                            .stream()
+                            .forEach(fattura_passivaBulkDoubleEntry -> {
+                                Fattura_passivaBulk fattura_passivaBulk = fattura_passivaBulkDoubleEntry.getKey();
+                                BigDecimal importo = BigDecimal.valueOf(fattura_passivaBulkDoubleEntry.getValue());
+                                CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
+                                ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
+                                ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
+                                ctFatturaSiope.setIdentificativoLottoSdiSiope(
+                                        fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
+                                                fattura_passivaBulk.getDocumentoEleTestata().getProgressivo()
+                                );
+                                CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
+                                ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
+                                ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                                //TODO CONTROLLARE SE NOTA
+                                ctDatiFatturaSiope.setImportoSiope(importo);
+
+                                if (Optional.ofNullable(fattura_passivaBulk.getCd_cig()).isPresent()) {
+                                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(fattura_passivaBulk.getCd_cig());
+                                } else {
+                                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(
+                                            StMotivoEsclusioneCigSiope.valueOf(fattura_passivaBulk.getMotivo_assenza_cig())
+                                    );
+                                }
+
+                                ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
+                                ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
+                            });
+                }
+            } else if (mandatoDaCompenso.isPresent()){
+                CompensoHome compensoHome = Optional.ofNullable(getHome(userContext, CompensoBulk.class))
+                        .filter(CompensoHome.class::isInstance)
+                        .map(CompensoHome.class::cast)
+                        .orElseThrow(() -> new ComponentException("Home del compenso non trovato!"));
+                Tipo_trattamentoHome tipo_trattamentoHome = Optional.ofNullable(getHome(userContext, Tipo_trattamentoBulk.class))
+                        .filter(Tipo_trattamentoHome.class::isInstance)
+                        .map(Tipo_trattamentoHome.class::cast)
+                        .orElseThrow(() -> new ComponentException("Home del trattamento non trovato!"));
+
+                final CompensoBulk compensoBulk = Optional.ofNullable(
+                        compensoHome.findByPrimaryKey(
+                                new CompensoBulk(
+                                        mandatoDaCompenso.get().getCd_cds_doc_amm(),
+                                        mandatoDaCompenso.get().getCd_uo_doc_amm(),
+                                        mandatoDaCompenso.get().getEsercizio_doc_amm(),
+                                        mandatoDaCompenso.get().getPg_doc_amm()
+                                )
+                        )
+                ).filter(CompensoBulk.class::isInstance)
+                        .map(CompensoBulk.class::cast)
+                        .orElseThrow(() -> new ComponentException("Compenso non trovato!"));
+                final TipoDebitoSIOPE tipoDebitoSIOPETrattamento = Optional.ofNullable(compensoBulk.getTipoTrattamento())
+                        .map(tipo_trattamentoBulk -> {
+                            try {
+                                return (Tipo_trattamentoBulk)tipo_trattamentoHome.findByPrimaryKey(tipo_trattamentoBulk);
+                            } catch (PersistencyException e) {
+                                throw new DetailedRuntimeException(e);
+                            }
+                        })
+                        .flatMap(tipo_trattamentoBulk -> Optional.ofNullable(tipo_trattamentoBulk.getTipoDebitoSiope()))
+                        .map(s -> TipoDebitoSIOPE.getValueFrom(s))
+                        .orElse(TipoDebitoSIOPE.NON_COMMERCIALE);
+                switch (tipoDebitoSIOPETrattamento) {
+                    case IVA: {
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.IVA);
+                        break;
+                    }
+                    case NON_COMMERCIALE: {
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
+                        break;
+                    }
+                    case COMMERCIALE: {
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
+                        break;
+                    }
+                }
+            } else {
+                ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
+            }
+
+        } else {
+            switch (tipoDebitoSIOPE.get()) {
+                case IVA: {
+                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.IVA);
+                    break;
+                }
+                case NON_COMMERCIALE: {
+                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
+                    break;
+                }
+            }
+        }
+        clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
     }
 }
