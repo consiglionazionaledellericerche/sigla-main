@@ -391,7 +391,44 @@
       </tr>      
     </table>
    </div>
-
+   <% if (bp.isCIGVisible()) { %>
+    <div class="Group card">
+        <table class="w-100">
+           <tr>
+                <td><% bp.getController().writeFormLabel(out,"cd_cig");%></td>
+                <td><% bp.getController().getBulkInfo().writeFormInput(
+                        out,
+                        bp.getController().getModel(),
+                        null,
+                        "cd_cig",
+                        false,
+                        null,
+                        "",
+                        bp.getController().getInputPrefix(),
+                        bp.getController().getStatus(),
+                        bp.getController().getFieldValidationMap(),
+                        bp.getParentRoot().isBootstrap()
+                    );
+                %></td>
+                <td><% bp.getController().writeFormLabel(out,"motivo_assenza_cig");%></td>
+                <td><% bp.getController().getBulkInfo().writeFormInput(
+                        out,
+                        bp.getController().getModel(),
+                        null,
+                        "motivo_assenza_cig",
+                        false,
+                        null,
+                        "",
+                        bp.getController().getInputPrefix(),
+                        bp.getController().getStatus(),
+                        bp.getController().getFieldValidationMap(),
+                        bp.getParentRoot().isBootstrap()
+                    );
+                %></td>
+          </tr>
+        </table>
+    </div>
+    <% } %>
     <div class="Group card">
     <table>
        <tr>
