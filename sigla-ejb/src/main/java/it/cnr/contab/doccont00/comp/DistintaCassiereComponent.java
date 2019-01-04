@@ -4081,28 +4081,45 @@ public class DistintaCassiereComponent extends
             if (!tesoreriaUnica(userContext, distinta)) {
                 aggiungiMandatiEReversaliDaRitrasmettere(userContext, distinta);
             }
-            // aggiorno lo stato trasmissione di mandati/reversali
-            aggiornaStatoDocContabili(userContext, distinta,
-                    MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
-
             assegnaProgressivoCassiere(userContext, distinta);
 
-            aggiornaStoricoTrasmessi(userContext, distinta);
-
-            // imposto la data di invio della distinta
             if (isAttivoSiopeplus(userContext)) {
                 generaFlussoSiopeplus(userContext, distinta);
             } else {
+                // aggiorno lo stato trasmissione di mandati/reversali
+                aggiornaStatoDocContabili(userContext, distinta, MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+
+                aggiornaStoricoTrasmessi(userContext, distinta);
+
                 distinta.setDt_invio(DateServices.getDt_valida(userContext));
             }
             distinta.setStato(Distinta_cassiereBulk.Stato.DEFINITIVA);
             distinta.setUser(userContext.getUser());
             distinta.setToBeUpdated();
             makeBulkPersistent(userContext, distinta);
-            aggiornaDataDiffDocamm(userContext, distinta,
-                    MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+            if (!isAttivoSiopeplus(userContext))
+                aggiornaDataDiffDocamm(userContext, distinta, MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
             return distinta;
 
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
+    public Distinta_cassiereBulk inviaDistintaSiopePlus(UserContext userContext, Distinta_cassiereBulk distinta, Integer progFlusso) throws it.cnr.jada.comp.ComponentException {
+        try {
+            // aggiorno lo stato trasmissione di mandati/reversali
+            aggiornaStatoDocContabili(userContext, distinta, MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+
+            aggiornaStoricoTrasmessi(userContext, distinta);
+
+            distinta.setProgFlusso(progFlusso);
+            distinta.setDt_invio(DateServices.getDt_valida(userContext));
+            distinta.setStato(Distinta_cassiereBulk.Stato.TRASMESSA);
+            distinta.setToBeUpdated();
+            makeBulkPersistent(userContext, distinta);
+            aggiornaDataDiffDocamm(userContext, distinta, MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+            return distinta;
         } catch (Exception e) {
             throw handleException(e);
         }
@@ -5546,7 +5563,56 @@ public class DistintaCassiereComponent extends
                                 String.valueOf(noCIGFattura_passivaBulk.get().getPg_fattura_passiva())
                         );
                     }
-
+                    final List<String> codiciCIG = collect
+                            .keySet()
+                            .stream()
+                            .map(Fattura_passivaBulk::getCd_cig)
+                            .filter(s -> Optional.ofNullable(s).isPresent())
+                            .filter(s -> s.length() > 0)
+                            .distinct()
+                            .collect(Collectors.toList());
+                    final List<String> motiviAssenzaCIG = collect
+                            .keySet()
+                            .stream()
+                            .map(Fattura_passivaBulk::getMotivo_assenza_cig)
+                            .filter(s -> Optional.ofNullable(s).isPresent())
+                            .filter(s -> s.length() > 0)
+                            .distinct()
+                            .collect(Collectors.toList());
+                    if (codiciCIG.size() > 0 && motiviAssenzaCIG.size() > 0) {
+                        throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture " +
+                                "sia con CIG che con motivo di assenza CIG!",
+                                String.valueOf(bulk.getEsercizio()),
+                                String.valueOf(bulk.getCd_cds()),
+                                String.valueOf(bulk.getPg_documento_cont())
+                        );
+                    }
+                    if (codiciCIG.size() > 1) {
+                        throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture " +
+                                "con CIG diversi : {3}!",
+                                String.valueOf(bulk.getEsercizio()),
+                                String.valueOf(bulk.getCd_cds()),
+                                String.valueOf(bulk.getPg_documento_cont()),
+                                String.join(" - ", codiciCIG)
+                        );
+                    }
+                    if (motiviAssenzaCIG.size() > 1) {
+                        throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture " +
+                                "con motivi di assenza CIG diversi : {3}!",
+                                String.valueOf(bulk.getEsercizio()),
+                                String.valueOf(bulk.getCd_cds()),
+                                String.valueOf(bulk.getPg_documento_cont()),
+                                String.join(" - ", motiviAssenzaCIG)
+                        );
+                    }
+                    if (codiciCIG.stream().findAny().isPresent()) {
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(codiciCIG.stream().findAny().get());
+                    }
+                    if (motiviAssenzaCIG.stream().findAny().isPresent()) {
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(
+                                StMotivoEsclusioneCigSiope.valueOf(motiviAssenzaCIG.stream().findAny().get())
+                        );
+                    }
                     collect.entrySet()
                             .stream()
                             .forEach(fattura_passivaBulkDoubleEntry -> {
@@ -5564,14 +5630,6 @@ public class DistintaCassiereComponent extends
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                                 //TODO CONTROLLARE SE NOTA
                                 ctDatiFatturaSiope.setImportoSiope(importo);
-
-                                if (Optional.ofNullable(fattura_passivaBulk.getCd_cig()).isPresent()) {
-                                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(fattura_passivaBulk.getCd_cig());
-                                } else {
-                                    ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(
-                                            StMotivoEsclusioneCigSiope.valueOf(fattura_passivaBulk.getMotivo_assenza_cig())
-                                    );
-                                }
 
                                 ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                                 ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
