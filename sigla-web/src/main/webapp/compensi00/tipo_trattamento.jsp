@@ -21,7 +21,7 @@
 <% 	CRUDTipoTrattamentoBP bp = (CRUDTipoTrattamentoBP)BusinessProcess.getBusinessProcess(request);
  	bp.openFormWindow(pageContext); %>
 
-<table class="Panel">
+<table class="Panel card p-2">
   <% if (bp.isSearching()) { %>
 	<tr>
 		<td><% bp.getController().writeFormLabel( out, "cd_trattamentoForSearch"); %></td>
@@ -45,23 +45,19 @@
   </tr>
 </table>
 
-&nbsp;
-
-<table class="Panel">
+<table class="Panel card p-2 mt-2">
   <tr>
 	<td colspan=4><% bp.getController().writeFormInput(out,"ti_anagrafico"); %></td>
   </tr>
 </table>
 
-
-<table class="Panel">
+<table class="Panel card p-2 mt-2">
   <tr>
 	<td colspan=4><% bp.getController().writeFormInput(out,"ti_commerciale"); %></td>
   </tr>
 </table>
 
-
-<table class="Panel">
+<table class="Panel card p-2 mt-2">
   <tr>
 	<td><% bp.getController().writeFormInput(out,"fl_detrazioni_familiari");%></td>
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_detrazioni_familiari");%></td>
@@ -111,19 +107,18 @@
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_pignorato_obbl");%></td> 
 	<td><% bp.getController().writeFormInput(out,"fl_split_payment");%></td>
 	<td align="left"><% bp.getController().writeFormLabel(out,"fl_split_payment");%></td>
-  </tr>  	   
-<table class="Panel">
-  <tr>
-	<td colspan=4><% bp.getController().writeFormField(out,"tipoDebitoSiope"); %></td>
   </tr>
 </table>
 
-    
+<table class="Panel card p-2 mt-2">
+  <tr>
+	<td><% bp.getController().writeFormField(out,"tipoDebitoSiope"); %></td>
+  </tr>
 </table>
 
-<table class="Group" style="width:100%">
+<table class="Group card p-2 mt-2" style="width:100%">
   <tr>
-	<td rowspan = "4">
+	<td>
 	  <% java.util.List coll = ((Tipo_trattamentoBulk)bp.getModel()).getIntervalli();
 	  if((coll != null) && (coll.size()!=0))
 	  	bp.getIntervalliCRUDController().writeHTMLTable(

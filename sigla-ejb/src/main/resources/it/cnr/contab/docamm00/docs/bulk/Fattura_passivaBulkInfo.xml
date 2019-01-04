@@ -1149,6 +1149,23 @@
 			enabledOnSearch="true"
 			readonlyProperty="ROFlDaOrdini"
 			label="Da Ordini" />
+	<fieldProperty
+			name="cd_cig"
+			property="cd_cig"
+			maxLength="10"
+			inputSize="22"
+			inputType="TEXT"
+			enabledOnSearch="true"
+			label="Codice CIG"/>
+	<fieldProperty
+			name="motivo_assenza_cig"
+			property="motivo_assenza_cig"
+			inputType="SELECT"
+			keysProperty="motivoEsclusioneCigSIOPEKeys"
+			enabledOnSearch="true"
+			label="Motivo assenza CIG"/>
+
+
 	<findFieldProperty name="esercizio"/>
 	<findFieldProperty name="esercizio_fattura_fornitore"/>
 	<findFieldProperty name="cd_cds"/>
@@ -1212,6 +1229,11 @@
 		name="fl_split_payment" />
 	<findFieldProperty
 			name="flDaOrdini" />
+	<findFieldProperty
+			name="cd_cig" />
+	<findFieldProperty
+			name="motivo_assenza_cig" />
+
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -1477,6 +1499,11 @@
 	<formFieldProperty
 		name="flDaOrdini"
 		command="doOnFlDaOrdiniChange"/>
+	<formFieldProperty
+			name="cd_cig" />
+	<formFieldProperty
+			name="motivo_assenza_cig" />
+
 	<columnFieldProperty 
 		name="esercizio"/>
 	<columnFieldProperty
