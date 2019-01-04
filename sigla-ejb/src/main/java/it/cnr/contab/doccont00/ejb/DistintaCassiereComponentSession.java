@@ -55,6 +55,8 @@ public interface DistintaCassiereComponentSession extends it.cnr.jada.ejb.CRUDDe
 
     Distinta_cassiereBulk inviaDistinta(UserContext userContext, Distinta_cassiereBulk distinta) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
+    Distinta_cassiereBulk inviaDistintaSiopePlus(UserContext userContext, Distinta_cassiereBulk distinta, Integer progFlusso) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
     List<V_mandato_reversaleBulk> findMandatiCollegati(UserContext usercontext, V_mandato_reversaleBulk v_mandato_reversaleBulk) throws ComponentException, RemoteException;
 
     List<V_mandato_reversaleBulk> findReversaliCollegate(UserContext usercontext, V_mandato_reversaleBulk v_mandato_reversaleBulk) throws ComponentException, RemoteException;

@@ -475,6 +475,26 @@ public class TransactionalDistintaCassiereComponentSession extends it.cnr.jada.e
         }
     }
 
+    public Distinta_cassiereBulk inviaDistintaSiopePlus(UserContext param0,
+                                               Distinta_cassiereBulk param1, Integer param2) throws ComponentException,
+            RemoteException {
+        try {
+            return (Distinta_cassiereBulk) invoke("inviaDistintaSiopePlus", new Object[]{
+                    param0,
+                    param1,
+                    param2});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
     public List<V_mandato_reversaleBulk> findMandatiCollegati(UserContext param0,
                                                               V_mandato_reversaleBulk param1)
             throws ComponentException, RemoteException {
