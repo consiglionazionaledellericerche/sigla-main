@@ -59,6 +59,7 @@ import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
+import org.xml.sax.SAXException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -2295,16 +2296,36 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     ),
                     storageObject);
         }
-        //ordinativiSiopePlusService.validateAgainstXSD();
 
+        try {
+            ordinativiSiopePlusService.validateFlussoOrdinativi(documentiContabiliService.getResource(storageObject));
+        } catch (SAXException _ex) {
+            documentiContabiliService.updateProperties(
+                    Collections.singletonMap(
+                            StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                            Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                                    .map(strings -> {
+                                        strings.remove(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+                                        return strings;
+                                    })
+                                    .orElse(Collections.emptyList())
+                    ),
+                    storageObject);
+            distinta.setStato(Distinta_cassiereBulk.Stato.PROVVISORIA);
+            distinta.setPg_distinta_def(null);
+            distinta.setToBeUpdated();
+            setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
+            commitUserTransaction();
+            setMessage("File formalmente errato, la distinta è stata riportata in stato PROVVISORIO!\n" + _ex.getMessage());
+            return;
+        }
 
         final Risultato risultato = ordinativiSiopePlusService.postFlusso(
                 documentiContabiliService.getResource(storageObject)
         );
-        distinta.setProgFlusso(risultato.getProgFlusso());
-        distinta.setDt_invio(DateServices.getDt_valida(context.getUserContext()));
-        distinta.setStato(Distinta_cassiereBulk.Stato.TRASMESSA);
-        distinta.setToBeUpdated();
+        it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession distintaComp =
+                (it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession) createComponentSession();
+        distinta = distintaComp.inviaDistintaSiopePlus(context.getUserContext(), distinta, risultato.getProgFlusso());
         setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
         commitUserTransaction();
         setMessage("Invio effettuato correttamente.");
