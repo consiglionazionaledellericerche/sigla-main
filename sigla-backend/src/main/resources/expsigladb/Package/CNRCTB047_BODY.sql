@@ -1132,13 +1132,13 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
           		  and  	cd_linea_attivita  = disp_imp_da_ribaltare.cd_linea_attivita;
 
 			      if (esisteCofog=0 ) then
-			      	ibmerr001.RAISE_ERR_GENERICO('Ribaltamento disponibilitא improprie fallito manca il cofog sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
+			      	ibmerr001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito manca il cofog sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
 			      end if;
 			   	Exception
 				  When Others Then
 				    IBMUTL200.LOGERR_TEMP(pg_esec,
 					      DS_RIPORTO_NEXT||aEs||' '||to_char(sysdate,'DD/MM/YYYY HH:MI:SS')||' (pg_exec='||pg_esec||') ',
-				          'Ribaltamento disponibilitא improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
+				          'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
 					      '',
 					      'N');
 				End;
@@ -1151,7 +1151,7 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 		          and   cd_linea_attivita  = disp_imp_da_ribaltare.cd_linea_attivita;
 	        	Exception
 		          when no_data_found then
-		            IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilitא improprie fallito: manca il cofog sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
+		            IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito: manca il cofog sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
 		      	End;
 		    End if;
 		End if;
@@ -1170,17 +1170,48 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
  	      If (esisteProgetto=0 ) then
 		  	If (pg_esec is not null) then
               Begin
-  	        	ibmerr001.RAISE_ERR_GENERICO('Ribaltamento disponibilitא improprie fallito manca il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita||' nell''anno '||to_char(aEs + 1));
+  	        	ibmerr001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito manca il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita||' nell''anno '||to_char(aEs + 1));
 			  Exception
 			    When Others Then
 				  IBMUTL200.LOGERR_TEMP(pg_esec,
 					                    DS_RIPORTO_NEXT||aEs||' '||to_char(sysdate,'DD/MM/YYYY HH:MI:SS')||' (pg_exec='||pg_esec||') ',
-					                    'Ribaltamento disponibilitא improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
+					                    'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
 					                    '',
 					                    'N');
 			  End;
 		    Else
               IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito: manca il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
+ 	        End if;
+		  End if;
+		End;
+
+		-- 04/01/2019 RafPag controllo progetto approvato
+   	    Declare
+		  esisteProgetto number:=0;
+  	    Begin
+		  select count(0) into esisteProgetto
+	      from v_linea_attivita_valida, progetto_other_field
+          where esercizio = aEs + 1
+          and   v_linea_attivita_valida.cd_centro_responsabilita = disp_imp_da_ribaltare.cd_centro_responsabilita
+          and   v_linea_attivita_valida.cd_linea_attivita  = disp_imp_da_ribaltare.cd_linea_attivita
+          and   v_linea_attivita_valida.pg_progetto is not null
+          and   v_linea_attivita_valida.pg_progetto = progetto_other_field.pg_progetto
+          and   progetto_other_field.stato = 'APP';
+
+ 	      If (esisteProgetto=0 ) then
+		  	If (pg_esec is not null) then
+              Begin
+  	        	ibmerr001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito: non approvato il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita||' nell''anno '||to_char(aEs + 1));
+			  Exception
+			    When Others Then
+				  IBMUTL200.LOGERR_TEMP(pg_esec,
+					                    DS_RIPORTO_NEXT||aEs||' '||to_char(sysdate,'DD/MM/YYYY HH:MI:SS')||' (pg_exec='||pg_esec||') ',
+					                    'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
+					                    '',
+					                    'N');
+			  End;
+		    Else
+              IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito: non approvato il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
  	        End if;
 		  End if;
 		End;
@@ -1223,7 +1254,7 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
               When Others Then
     			  IBMUTL200.LOGERR_TEMP(pg_esec,
   				                    DS_RIPORTO_NEXT||aEs||' '||to_char(sysdate,'DD/MM/YYYY HH:MI:SS')||' (pg_exec='||pg_esec||') ',
-				                    'Ribaltamento disponibilitא improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
+				                    'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
 				                    '',
 				                    'N');
 		    End;
