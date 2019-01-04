@@ -20,11 +20,11 @@ public enum TipoDebitoSIOPE {
         return label;
     }
 
-    public static String getValueFromLabel(String label) {
+    public static TipoDebitoSIOPE getValueFrom(String value) {
         for (TipoDebitoSIOPE esito : TipoDebitoSIOPE.values()) {
-            if (esito.label.equals(label))
-                return esito.value;
+            if (esito.value.equals(value))
+                return esito;
         }
-        throw new IllegalArgumentException("TipoDebitoSIOPE no found for label: " + label);
+        throw new IllegalArgumentException("TipoDebitoSIOPE no found for value: " + value);
     }
 }
