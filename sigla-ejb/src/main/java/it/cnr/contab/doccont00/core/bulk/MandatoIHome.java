@@ -34,7 +34,7 @@ public class MandatoIHome extends MandatoHome {
     /**
      * Metodo per cercare i documenti attivi associati all'accertamento selezioanto per la regolarizzazione
      *
-     * @param context <code>CNRUserContext</code>
+     * @param userContext <code>CNRUserContext</code>
      * @param mandato <code>MandatoIBulk</code> il mandato
      * @return <code>Collection</code> i documenti attivi associati all'accertamento
      */
@@ -252,6 +252,24 @@ public class MandatoIHome extends MandatoHome {
 
     }
 
+
+    /**
+     * Metodo per cercare la righe siope del mandato.
+     *
+     * @param mandato <code>MandatoBulk</code> il mandato
+     * @return result la riga siope del mandato
+     */
+    public Collection<Mandato_siopeBulk> findMandato_siope(it.cnr.jada.UserContext userContext, MandatoBulk mandato) throws PersistencyException, IntrospectionException {
+        PersistentHome home = getHomeCache().getHome(Mandato_siopeIBulk.class);
+        SQLBuilder sql = home.createSQLBuilder();
+        sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
+        sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
+        sql.addClause("AND", "pg_mandato", sql.EQUALS, mandato.getPg_mandato());
+        Collection result = home.fetchAll(sql);
+        getHomeCache().fetchAll(userContext);
+        return result;
+    }
+
     /**
      * Metodo per cercare il Mandato_terzoBulk.
      *
@@ -273,7 +291,7 @@ public class MandatoIHome extends MandatoHome {
     /**
      * Metodo per cercare le scadenze dell'accertamento selezionato per la regolarizzazione
      *
-     * @param context <code>CNRUserContext</code>
+     * @param userContext <code>CNRUserContext</code>
      * @param mandato <code>MandatoIBulk</code> il mandato
      * @return <code>Collection</code> le scadenze dell'accertamento
      */

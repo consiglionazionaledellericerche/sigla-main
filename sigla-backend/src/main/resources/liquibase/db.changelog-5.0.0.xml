@@ -1592,6 +1592,37 @@ I: IVA"/>
             <column name="data_upload" type="${date.type}" remarks="Data Upload"/>
         </addColumn>
     </changeSet>
-
+    <changeSet author="marco.spasiano" id="alter_fattura_passiva_add_cig">
+        <addColumn tableName="fattura_passiva">
+            <column name="cd_cig" type="VARCHAR(10)" remarks="Codice cig"/>
+            <column name="motivo_assenza_cig" type="VARCHAR(250)" remarks="Motivo assenza CIG  Può assumere i valori:
+ACCORDO_AMM_AGGIUDICATRICI 
+ACQUISTO_LOCAZIONE
+AFFIDAMENTI_IN_HOUSE 
+AMMINISTRAZIONE DIRETTA 
+APPALTI_ENERGIA_ACQUA
+ARBITRATO
+ATTIVITA_CONCORRENZA
+CONCESSIONI_PAESI_TERZI
+CONTRATTI_ASSOCIAZIONE
+CONTRATTI_AUTORITA_GIUDIZIARIA
+CONTRATTI_DIFESA
+CONTRATTI_ESTERO
+CONTRATTI_LAVORO
+DIRITTO_ESCLUSIVO
+EROGAZIONI_LIBERALITA
+IMPRESA_COLLEGATA
+INCARICHI_COLLABORAZIONE
+JOINT_VENTURE
+PRESTAZIONI
+RIASSICURAZIONE
+RISARCIMENTI_INDENNIZZI
+SERVIZI_BANCHE_CENTRALI_EFSF
+SERVIZI_CAMPAGNE_POLITICHE
+SPESE_ECONOMALI
+SPONSORIZZAZIONE_PURA
+TRASFERIMENTO_FONDI
+TRASPORTO_AEREO"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
-

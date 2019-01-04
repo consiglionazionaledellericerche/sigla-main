@@ -29,6 +29,7 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
+import it.siopeplus.StMotivoEsclusioneCigSiope;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -154,6 +155,14 @@ public abstract class Fattura_passivaBulk
         CAUSALE.put(CONT, "Contenzioso");
         CAUSALE.put(ATTNC, "In attesa di nota credito");
     }
+    public final static Map<String,String> motivoEsclusioneCigSIOPEKeys = Arrays.asList(StMotivoEsclusioneCigSiope.values())
+            .stream()
+            .collect(Collectors.toMap(
+                    StMotivoEsclusioneCigSiope::name,
+                    StMotivoEsclusioneCigSiope::value,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
 
     protected Tipo_sezionaleBulk tipo_sezionale;
     protected DivisaBulk valuta;
@@ -2991,6 +3000,11 @@ public abstract class Fattura_passivaBulk
 
         if (getLettera_pagamento_estero() != null)
             getLettera_pagamento_estero().validate();
+
+        if (!(isEstera() ||isSanMarinoConIVA() || isSanMarinoSenzaIVA()) &&
+                (!Optional.ofNullable(getCd_cig()).isPresent() && !Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
+            throw new ValidationException("Inserire il CIG o il motivo di assenza dello stesso!");
+        }
     }
 
     public void validateDate() throws ValidationException {
