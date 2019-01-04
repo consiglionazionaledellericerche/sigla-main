@@ -2816,8 +2816,10 @@ public class DistintaCassiereComponent extends
             long nrDettagli = ((Distinta_cassiere_detHome) getHome(userContext,
                     Distinta_cassiere_detBulk.class)).getNrDettagli(
                     userContext, distinta);
-            if (nrDettagli == 0)
-                return null;
+            if (nrDettagli == 0) {
+                sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, -1);
+                return sql;
+            }
 
             if (tesoreriaUnica(userContext, distinta)) {
                 SQLBuilder sqlIN = getHome(userContext, Distinta_cassiere_detBulk.class).createSQLBuilder();
