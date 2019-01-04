@@ -1349,6 +1349,18 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         }
     }
 
+    public boolean isCIGVisible() {
+        return Optional.ofNullable(getModel())
+                    .filter(Fattura_passivaBulk.class::isInstance)
+                    .map(Fattura_passivaBulk.class::cast)
+                    .map(fattura_passivaBulk -> !(
+                            fattura_passivaBulk.isEstera() ||
+                            fattura_passivaBulk.isSanMarinoConIVA() ||
+                            fattura_passivaBulk.isSanMarinoSenzaIVA()
+                    ))
+                    .orElse(Boolean.FALSE);
+    }
+
     /**
      * Boolean individua le condizioni per cui è possibile sdoppiare i dettagli
      * del documento

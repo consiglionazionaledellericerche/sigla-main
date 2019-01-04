@@ -230,7 +230,7 @@ public class OrdinativiSiopePlusTest {
 
     public static void main (String[] args ) {
         try {
-            validateAgainstXSD(new FileInputStream("/home/mspasiano/Downloads/2018-000.407-1256-I.xml"),
+            validateAgainstXSD(new FileInputStream("/home/mspasiano/Downloads/2018-000.407-1263-I.xml"),
                     new FileInputStream("/home/mspasiano/git/sigla-main/sigla-siopeplus/sigla-siopelpus-ordinativi/src/main/resources/xsd/OPI_FLUSSO_ORDINATIVI_V_1_3_1.xsd"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
