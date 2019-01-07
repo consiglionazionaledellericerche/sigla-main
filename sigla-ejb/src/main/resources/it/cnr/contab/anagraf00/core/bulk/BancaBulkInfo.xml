@@ -80,6 +80,13 @@
             nullable="false"
     />
     <fieldProperty
+            name="numero_contoTABA"
+            property="numero_conto"
+            label="Numero conto"
+            inputType="text"
+            nullable="false"
+    />
+    <fieldProperty
             name="fl_cancellato"
             property="fl_cancellato"
             label="Eliminato"
@@ -326,6 +333,22 @@
     </columnSet>
 
     <columnSet
+            name="TABA">
+        <columnFieldProperty
+                name="ti_pagamento"
+        />
+        <columnFieldProperty
+                name="numero_contoTABA"
+        />
+        <columnFieldProperty
+                name="intestazione"
+        />
+        <columnFieldProperty
+                name="fl_cancellato"
+        />
+    </columnSet>
+
+    <columnSet
             name="Q">
         <columnFieldProperty
                 name="ti_pagamento"
@@ -469,6 +492,9 @@
             name="numero_conto"
     />
     <formFieldProperty
+            name="numero_contoTABA"
+    />
+    <formFieldProperty
             name="intestazione"
     />
     <formFieldProperty
@@ -575,7 +601,15 @@
                 name="intestazione"
         />
     </form>
-
+    <form
+            name="TABA">
+        <formFieldProperty
+                name="numero_contoTABA"
+        />
+        <formFieldProperty
+                name="intestazione"
+        />
+    </form>
     <form
             name="Q">
         <formFieldProperty

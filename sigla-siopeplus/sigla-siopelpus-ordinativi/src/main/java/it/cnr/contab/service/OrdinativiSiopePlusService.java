@@ -237,9 +237,9 @@ public class OrdinativiSiopePlusService {
         }
     }
 
-    public void validateAgainstXSD(InputStream xml, InputStream xsd) throws SAXException, IOException {
+    public void validateFlussoOrdinativi(InputStream xml) throws SAXException, IOException {
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-        Schema schema = factory.newSchema(new StreamSource(xsd));
+        Schema schema = factory.newSchema(new StreamSource(this.getClass().getResourceAsStream("/xsd/OPI_FLUSSO_ORDINATIVI_V_1_3_1.xsd")));
         Validator validator = schema.newValidator();
         validator.validate(new StreamSource(xml));
     }
