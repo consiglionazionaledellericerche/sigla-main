@@ -28,7 +28,8 @@
     "TI_DOCUMENTO_CONT_PADRE",
     "PG_VER_REC",
     "DT_FIRMA",
-    "TIPO_DEBITO_SIOPE"
+    "TIPO_DEBITO_SIOPE",
+    "ESITO_OPERAZIONE"
     ) AS
   SELECT
 --
@@ -92,7 +93,8 @@ a.pg_mandato,
 a.ti_mandato,
 a.pg_ver_rec,
 nvl(a.dt_firma_annullo,a.dt_firma),
-a.tipo_debito_siope
+a.tipo_debito_siope,
+a.esito_operazione
 FROM mandato a, mandato_terzo b
 WHERE a.ti_mandato <> 'R'
 AND b.cd_cds = a.cd_cds
@@ -137,7 +139,8 @@ a.pg_reversale,
 a.ti_reversale,
 a.pg_ver_rec,
 nvl(a.dt_firma_annullo,a.dt_firma),
-a.tipo_debito_siope
+a.tipo_debito_siope,
+a.esito_operazione
 FROM reversale a, reversale_terzo b
 WHERE a.ti_reversale <> 'R'
 AND a.cd_tipo_documento_cont <> 'REV_PROVV'
@@ -183,7 +186,8 @@ f.pg_mandato,
 f.ti_mandato,
 a.pg_ver_rec,
 nvl(a.dt_firma_annullo,a.dt_firma),
-a.tipo_debito_siope
+a.tipo_debito_siope,
+a.esito_operazione
 FROM reversale a, reversale_terzo b, ass_mandato_reversale e, mandato f
 WHERE a.ti_reversale <> 'R'
 AND a.cd_tipo_documento_cont <> 'REV_PROVV'
@@ -226,7 +230,8 @@ f.pg_mandato,
 f.ti_mandato,
 a.pg_ver_rec,
 nvl(a.dt_firma_annullo,a.dt_firma),
-a.tipo_debito_siope
+a.tipo_debito_siope,
+a.esito_operazione
 FROM mandato a, mandato_terzo b, ass_mandato_mandato e, mandato f
 WHERE a.ti_mandato = 'P'
 AND b.cd_cds = a.cd_cds

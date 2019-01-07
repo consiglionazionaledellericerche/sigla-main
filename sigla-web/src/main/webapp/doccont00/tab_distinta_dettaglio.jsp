@@ -34,12 +34,14 @@ function doVisualizzaSingoloDocumento(esercizio, cds , uo, numero_documento, tip
 		</td>
 	</tr>
 	</table>
-	<table>
-	 <tr>
-		<td><big class="text-primary mr-2">Totale Mandati</big></td>
-		<td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
-	
-		<td><big class="text-primary mr-2">Totale Reversali</big></td>
-		<td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
-	</tr>
-	</table>
+	<%if (!bp.isViewing()) { %>
+        <table>
+         <tr>
+            <td><big class="text-primary mr-2">Totale Mandati</big></td>
+            <td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
+
+            <td><big class="text-primary mr-2">Totale Reversali</big></td>
+            <td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
+        </tr>
+        </table>
+	<% } %>

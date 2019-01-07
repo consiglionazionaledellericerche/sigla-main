@@ -60,6 +60,7 @@
 		property="uo"
 		enabledOnSearch="true"
 		formName="searchtool"
+		completeOnSave="false"
 		inputType="SEARCHTOOL"/>
 	<fieldProperty
 		name="stato"
