@@ -19,4 +19,5 @@ CdsBulk getCds(UserContext param0, String param1) throws ComponentException;
 Unita_organizzativaBulk getUo(UserContext param0, String param1) throws ComponentException;
 CdrBulk getCdr(UserContext param0, String param1) throws ComponentException;
 UnitaOrganizzativaPecBulk getUnitaOrganizzativaPec(UserContext param0, String param1) throws ComponentException;
+boolean isProgettoPianoEconomicoEnabled(it.cnr.jada.UserContext param0, int param1) throws it.cnr.jada.comp.ComponentException;
 }
