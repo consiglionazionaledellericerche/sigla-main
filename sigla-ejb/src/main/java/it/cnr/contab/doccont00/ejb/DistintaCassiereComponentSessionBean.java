@@ -352,6 +352,27 @@ public class DistintaCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDDe
         }
     }
 
+    public Distinta_cassiereBulk inviaDistintaSiopePlus(UserContext param0,
+                                               Distinta_cassiereBulk param1, Integer param2) throws ComponentException,
+            RemoteException {
+        pre_component_invocation(param0, componentObj);
+        try {
+            Distinta_cassiereBulk result = ((DistintaCassiereComponent) componentObj).inviaDistintaSiopePlus(param0, param1, param2);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
     public List<V_mandato_reversaleBulk> findMandatiCollegati(UserContext param0,
                                                               V_mandato_reversaleBulk param1)
             throws ComponentException, RemoteException {
