@@ -26,6 +26,9 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
     public final static String BANCA_ITALIA = "I";
     public final static String IBAN = "N";
     public final static String ASSEGNO = "S";
+
+    public final static String TABA = "TABA";
+
     static {
         TI_PAGAMENTO_KEYS = new it.cnr.jada.util.OrderedHashtable();
         TI_PAGAMENTO_KEYS.put(BANCARIO, "Bancario");
@@ -152,7 +155,7 @@ public class Rif_modalita_pagamentoBulk extends Rif_modalita_pagamentoBase {
                             } else if (rif_modalita_pagamentoBulk.getTipo_pagamento_siope().equals(
                                     TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value()
                             )){
-                                return Rif_modalita_pagamentoBulk.POSTALE;
+                                return Rif_modalita_pagamentoBulk.TABA;
                             } else if (rif_modalita_pagamentoBulk.getTipo_pagamento_siope().equals(
                                     TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value()
                             )){

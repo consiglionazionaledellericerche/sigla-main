@@ -4835,7 +4835,15 @@ public class DistintaCassiereComponent extends
                     }
                     infoben.setBeneficiario(benef);
                     if (obb_conto) {
-                        piazzatura.setNumeroContoCorrenteBeneficiario(docContabile.getNumeroConto());
+                        piazzatura.setNumeroContoCorrenteBeneficiario(
+                                Optional.ofNullable(docContabile.getNumeroConto())
+                                    .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
+                                            "sul Mandato {0}/{1}/{2}",
+                                            String.valueOf(bulk.getEsercizio()),
+                                            String.valueOf(bulk.getCd_cds()),
+                                            String.valueOf(bulk.getPg_documento_cont())
+                                            ))
+                        );
                         infoben.setPiazzatura(piazzatura);
                     }
                     if (obb_iban) {
@@ -5345,7 +5353,15 @@ public class DistintaCassiereComponent extends
                     }
                     infoben.setBeneficiario(benef);
                     if (obb_conto) {
-                        piazzatura.setNumeroContoCorrenteBeneficiario(docContabile.getNumeroConto());
+                        piazzatura.setNumeroContoCorrenteBeneficiario(
+                                Optional.ofNullable(docContabile.getNumeroConto())
+                                        .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
+                                                "sul Mandato {0}/{1}/{2}",
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        ))
+                        );
                         infoben.setPiazzatura(piazzatura);
                     }
                     if (obb_iban) {
