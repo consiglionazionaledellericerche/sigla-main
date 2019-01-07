@@ -59,6 +59,7 @@ import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
+import org.xml.sax.SAXException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -133,60 +134,57 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         Button[] toolbar = super.createToolbar();
         List<Button> newToolbarTesoreria = new ArrayList<Button>();
         newToolbarTesoreria.addAll(Arrays.asList(toolbar));
-        if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isFlusso()) {
-            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                    it.cnr.jada.util.Config.getHandler().getProperties(
-                            getClass()), "CRUDToolbar.stampaProv"));
-            if (!attivoSiopeplus) {
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.firma"));
-            }
-            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                    it.cnr.jada.util.Config.getHandler().getProperties(
-                            getClass()), "CRUDToolbar.downloadFirmato"));
-            if (attivoSiopeplus) {
-                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                        it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.uploadsiopeplus"));
-            }
-            return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-        }
-        if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && isFlusso()) {
-            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                    it.cnr.jada.util.Config.getHandler().getProperties(
-                            getClass()), "CRUDToolbar.stampaProv"));
+        if (isAttivoSiopeplus()) {
             newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
                     it.cnr.jada.util.Config.getHandler().getProperties(
                             getClass()), "CRUDToolbar.salvaDef"));
-            if (!attivoSiopeplus) {
+            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                    it.cnr.jada.util.Config.getHandler().getProperties(
+                            getClass()), "CRUDToolbar.uploadsiopeplus"));
+            return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
+        } else {
+            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isFlusso()) {
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.stampaProv"));
                 newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
                         it.cnr.jada.util.Config.getHandler().getProperties(
                                 getClass()), "CRUDToolbar.firma"));
-            }
-            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                    it.cnr.jada.util.Config.getHandler().getProperties(
-                            getClass()), "CRUDToolbar.downloadnew"));
-            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                    it.cnr.jada.util.Config.getHandler().getProperties(
-                            getClass()), "CRUDToolbar.downloadFirmato"));
-            if (attivoSiopeplus) {
                 newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
                         it.cnr.jada.util.Config.getHandler().getProperties(
-                                getClass()), "CRUDToolbar.uploadsiopeplus"));
+                                getClass()), "CRUDToolbar.downloadFirmato"));
+                return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
             }
-            return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-        } else if (this.isFlusso()) {
-            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                    it.cnr.jada.util.Config.getHandler().getProperties(
-                            getClass()), "CRUDToolbar.flusso"));
-            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
-                    it.cnr.jada.util.Config.getHandler().getProperties(
-                            getClass()), "CRUDToolbar.download"));
-            return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
-        } else {
-            return toolbar;
+            if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && isFlusso()) {
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.stampaProv"));
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.salvaDef"));
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.firma"));
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.downloadnew"));
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.downloadFirmato"));
+                return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
+            } else if (this.isFlusso()) {
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.flusso"));
+                newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                        it.cnr.jada.util.Config.getHandler().getProperties(
+                                getClass()), "CRUDToolbar.download"));
+                return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
+            } else {
+                return toolbar;
+            }
         }
+
     }
 
     /**
@@ -238,6 +236,18 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         try {
             context.getBusinessProcess("/GestioneUtenteBP").removeChild(
                     "CRUDDistintaCassiereBP");
+            Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+                    .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+
+            this.attivoSiopeplus = Optional.ofNullable(sess.getVal01(
+                    context.getUserContext(),
+                    CNRUserInfo.getEsercizio(context),
+                    null,
+                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                    Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS))
+                    .map(s -> Boolean.valueOf(s))
+                    .orElse(Boolean.FALSE);
+
             this.setFlusso(new Boolean(config.getInitParameter("flusso")));
             this.setSepa(new Boolean(config.getInitParameter("sepa")));
             this.setAnnulli(new Boolean(config.getInitParameter("annulli")));
@@ -263,17 +273,6 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     "CNRUTENZE00_EJB_UtenteComponentSession",
                     UtenteComponentSession.class)).isUtenteAbilitatoFirma(
                     context.getUserContext(), AbilitatoFirma.DIST);
-            Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
-                    .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-
-            this.attivoSiopeplus = Optional.ofNullable(sess.getVal01(
-                    context.getUserContext(),
-                    CNRUserInfo.getEsercizio(context),
-                    null,
-                    Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
-                    Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS))
-                    .map(s -> Boolean.valueOf(s))
-                    .orElse(Boolean.FALSE);
 
 
             controlloCodiceFiscale = sess.getVal01(context.getUserContext(),
@@ -628,7 +627,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     return !(!Optional.ofNullable(distinta_cassiereBulk.getDt_invio()).isPresent() &&
                             Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()).isPresent());
                 })
-                .orElse(Boolean.TRUE);
+                .orElse(Boolean.TRUE) || isViewing();
     }
 
     public boolean isEstraiButtonHidden() {
@@ -1783,6 +1782,12 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     }
 
     public boolean isSalvaDefButtonHidden() {
+        if (isAttivoSiopeplus())
+            return !Optional.ofNullable(getModel())
+                    .filter(Distinta_cassiereBulk.class::isInstance)
+                    .map(Distinta_cassiereBulk.class::cast)
+                    .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta()))
+                    .isPresent() || isViewing() || isDirty();
         if (!isFlusso())
             return true;
         else
@@ -1794,7 +1799,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             return !Optional.ofNullable(getModel())
                     .filter(Distinta_cassiereBulk.class::isInstance)
                     .map(Distinta_cassiereBulk.class::cast)
-                    .map(Distinta_cassiereBulk::getPg_distinta_def)
+                    .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()))
                     .isPresent();
         } else {
             if (isSaveButtonEnabled()
@@ -1836,6 +1841,13 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             is.close();
             os.flush();
         }
+    }
+
+    @Override
+    protected void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag) throws BusinessProcessException {
+        super.basicEdit(actioncontext, oggettobulk, isEditable());
+        if(!isEditable())
+            initializeModelForEditAllegati(actioncontext, oggettobulk);
     }
 
     public StorageObject inviaDistinta(ActionContext context,
@@ -2295,16 +2307,36 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     ),
                     storageObject);
         }
-        //ordinativiSiopePlusService.validateAgainstXSD();
 
+        try {
+            ordinativiSiopePlusService.validateFlussoOrdinativi(documentiContabiliService.getResource(storageObject));
+        } catch (SAXException _ex) {
+            documentiContabiliService.updateProperties(
+                    Collections.singletonMap(
+                            StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                            Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                                    .map(strings -> {
+                                        strings.remove(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+                                        return strings;
+                                    })
+                                    .orElse(Collections.emptyList())
+                    ),
+                    storageObject);
+            distinta.setStato(Distinta_cassiereBulk.Stato.PROVVISORIA);
+            distinta.setPg_distinta_def(null);
+            distinta.setToBeUpdated();
+            setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
+            commitUserTransaction();
+            setMessage("File formalmente errato, la distinta è stata riportata in stato PROVVISORIO!\n" + _ex.getMessage());
+            return;
+        }
 
         final Risultato risultato = ordinativiSiopePlusService.postFlusso(
                 documentiContabiliService.getResource(storageObject)
         );
-        distinta.setProgFlusso(risultato.getProgFlusso());
-        distinta.setDt_invio(DateServices.getDt_valida(context.getUserContext()));
-        distinta.setStato(Distinta_cassiereBulk.Stato.TRASMESSA);
-        distinta.setToBeUpdated();
+        it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession distintaComp =
+                (it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession) createComponentSession();
+        distinta = distintaComp.inviaDistintaSiopePlus(context.getUserContext(), distinta, risultato.getProgFlusso());
         setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
         commitUserTransaction();
         setMessage("Invio effettuato correttamente.");
