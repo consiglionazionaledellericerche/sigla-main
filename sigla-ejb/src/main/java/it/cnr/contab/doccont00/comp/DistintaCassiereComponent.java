@@ -331,7 +331,9 @@ public class DistintaCassiereComponent extends
                         .getStato_trasmissione_annullo() == null) {
                     if (DateServices.isAnnoMaggEsScriv(userContext)) {
                         if (mandato.getDt_trasmissione().after(
-                                mandato.getDt_annullamento()))
+                                Optional.ofNullable(mandato.getDt_annullamento())
+                                    .orElse(mandato.getDt_trasmissione())
+                        ))
                             mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
                                     userContext, mandato.getDt_trasmissione()));
                         else

@@ -627,7 +627,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     return !(!Optional.ofNullable(distinta_cassiereBulk.getDt_invio()).isPresent() &&
                             Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()).isPresent());
                 })
-                .orElse(Boolean.TRUE);
+                .orElse(Boolean.TRUE) || isViewing();
     }
 
     public boolean isEstraiButtonHidden() {
@@ -1787,7 +1787,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .filter(Distinta_cassiereBulk.class::isInstance)
                     .map(Distinta_cassiereBulk.class::cast)
                     .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta()))
-                    .isPresent();
+                    .isPresent() || isViewing();
         if (!isFlusso())
             return true;
         else
