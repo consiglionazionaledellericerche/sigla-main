@@ -67,64 +67,66 @@ function doScaricaFirmato() {
    </table>
    </div>
    <% } %>
-   <div class="Group">
-   	<b class="text-primary h3 d-flex justify-content-center mt-2">Totali distinta</b>		
-	<table class="Panel card p-2 mt-2">
-		<tr>	
-			<td><% bp.getController().writeFormLabel( out, "totMandati"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
-			<td><% bp.getController().writeFormLabel( out, "totReversali"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
-			<td rowspan=3 align=center>
-				<% JSPUtils.button(out,
-                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
-                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
-                        "Visualizza dettagli totali",
-                        "javascript:submitForm('doVisualizzaDettagliTotali')",
-                        "btn-primary btn-outline-primary btn-title",
-                        bp.isVisualizzaDettagliTotaliButtonEnabled(),
-                        bp.getParentRoot().isBootstrap()); %>
-			</td>
-		</tr>
-		<tr>
-			<td><% bp.getController().writeFormLabel( out, "totMandatiAnnullati"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totMandatiAnnullati"); %></td>
-			<td><% bp.getController().writeFormLabel( out, "totReversaliAnnullate"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totReversaliAnnullate"); %></td>
-		</tr>
-		<tr>
-			<td><% bp.getController().writeFormLabel( out, "totMandatiAnnullatiRitrasmessi"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totMandatiAnnullatiRitrasmessi"); %></td>
-			<td><% bp.getController().writeFormLabel( out, "totReversaliAnnullateRitrasmesse"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totReversaliAnnullateRitrasmesse"); %></td>
-		</tr>
-   </table>	
-   </div>
-   <div class="Group">		
-   	<b class="text-primary h3 d-flex justify-content-center mt-2">Totali trasmessi</b>
-	<table class="Panel card p-2 mt-2">
-		<tr>
-			<td><% bp.getController().writeFormLabel( out, "totStoricoMandatiTrasmessi"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totStoricoMandatiTrasmessi"); %></td>
-			<td><% bp.getController().writeFormLabel( out, "totStoricoReversaliTrasmesse"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totStoricoReversaliTrasmesse"); %></td>
-			<td rowspan=2 align=center>
-				<% JSPUtils.button(out,
-                     bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
-                     bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
-                     "Visualizza dettagli totali trasmessi",
-                     "javascript:submitForm('doVisualizzaDettagliTotaliTrasmessi')", 
-                     "btn-primary btn-outline-primary btn-title",
-                     bp.isVisualizzaDettagliTotaliTrasmessiButtonEnabled(),
-                     bp.getParentRoot().isBootstrap()); %>
-			</td>	
-		</tr>
-		<tr>
-			<td><% bp.getController().writeFormLabel( out, "totStoricoMandatiDaRitrasmettere"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totStoricoMandatiDaRitrasmettere"); %></td>
-			<td><% bp.getController().writeFormLabel( out, "totStoricoReversaliDaRitrasmettere"); %></td>
-			<td><% bp.getController().writeFormInput( out, "totStoricoReversaliDaRitrasmettere"); %></td>
-			<td></td>	
-		</tr>
-   </table>	
-   </div>
+   <% if (!bp.isViewing() && !bp.isSearching()) {%>
+       <div class="Group">
+        <b class="text-primary h3 d-flex justify-content-center mt-2">Totali distinta</b>
+        <table class="Panel card p-2 mt-2">
+            <tr>
+                <td><% bp.getController().writeFormLabel( out, "totMandati"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
+                <td><% bp.getController().writeFormLabel( out, "totReversali"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
+                <td rowspan=3 align=center>
+                    <% JSPUtils.button(out,
+                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
+                            bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
+                            "Visualizza dettagli totali",
+                            "javascript:submitForm('doVisualizzaDettagliTotali')",
+                            "btn-primary btn-outline-primary btn-title",
+                            bp.isVisualizzaDettagliTotaliButtonEnabled(),
+                            bp.getParentRoot().isBootstrap()); %>
+                </td>
+            </tr>
+            <tr>
+                <td><% bp.getController().writeFormLabel( out, "totMandatiAnnullati"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totMandatiAnnullati"); %></td>
+                <td><% bp.getController().writeFormLabel( out, "totReversaliAnnullate"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totReversaliAnnullate"); %></td>
+            </tr>
+            <tr>
+                <td><% bp.getController().writeFormLabel( out, "totMandatiAnnullatiRitrasmessi"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totMandatiAnnullatiRitrasmessi"); %></td>
+                <td><% bp.getController().writeFormLabel( out, "totReversaliAnnullateRitrasmesse"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totReversaliAnnullateRitrasmesse"); %></td>
+            </tr>
+       </table>
+       </div>
+       <div class="Group">
+        <b class="text-primary h3 d-flex justify-content-center mt-2">Totali trasmessi</b>
+        <table class="Panel card p-2 mt-2">
+            <tr>
+                <td><% bp.getController().writeFormLabel( out, "totStoricoMandatiTrasmessi"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totStoricoMandatiTrasmessi"); %></td>
+                <td><% bp.getController().writeFormLabel( out, "totStoricoReversaliTrasmesse"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totStoricoReversaliTrasmesse"); %></td>
+                <td rowspan=2 align=center>
+                    <% JSPUtils.button(out,
+                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
+                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
+                         "Visualizza dettagli totali trasmessi",
+                         "javascript:submitForm('doVisualizzaDettagliTotaliTrasmessi')",
+                         "btn-primary btn-outline-primary btn-title",
+                         bp.isVisualizzaDettagliTotaliTrasmessiButtonEnabled(),
+                         bp.getParentRoot().isBootstrap()); %>
+                </td>
+            </tr>
+            <tr>
+                <td><% bp.getController().writeFormLabel( out, "totStoricoMandatiDaRitrasmettere"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totStoricoMandatiDaRitrasmettere"); %></td>
+                <td><% bp.getController().writeFormLabel( out, "totStoricoReversaliDaRitrasmettere"); %></td>
+                <td><% bp.getController().writeFormInput( out, "totStoricoReversaliDaRitrasmettere"); %></td>
+                <td></td>
+            </tr>
+       </table>
+       </div>
+   <% } %>
