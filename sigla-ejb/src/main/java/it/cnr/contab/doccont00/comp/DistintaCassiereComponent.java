@@ -338,7 +338,8 @@ public class DistintaCassiereComponent extends
                                     userContext, mandato.getDt_trasmissione()));
                         else
                             mandato.setDt_ritrasmissione(DateServices.getNextMinTs(
-                                    userContext, mandato.getDt_annullamento()));
+                                    userContext, Optional.ofNullable(mandato.getDt_annullamento())
+                                            .orElse(mandato.getDt_trasmissione())));
                     } else {
                         mandato.setDt_ritrasmissione(DateServices
                                 .getTs_valido(userContext));
