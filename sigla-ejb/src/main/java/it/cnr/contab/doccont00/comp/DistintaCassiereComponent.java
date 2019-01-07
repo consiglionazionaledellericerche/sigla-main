@@ -1386,9 +1386,7 @@ public class DistintaCassiereComponent extends
                     sql.addClause(docPassivo.buildFindClauses(null));
                 return sql;
             } else if (distinta.getFl_annulli()) {  //annulli
-                SQLBuilder sql = getHome(userContext,
-                        V_mandato_reversaleBulk.class,
-                        "V_MANDATO_REVERSALE_DIST_ANN").createSQLBuilder();
+                SQLBuilder sql = getHome(userContext, V_mandato_reversaleBulk.class,"V_MANDATO_REVERSALE_DIST_ANN").createSQLBuilder();
                 sql.addClause(clausole);
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.esercizio", SQLBuilder.EQUALS,
                         ((CNRUserContext) userContext).getEsercizio());
