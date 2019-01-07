@@ -10,6 +10,7 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.UnitaOrganizzativaPecBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 /**
@@ -136,6 +137,24 @@ public class Parametri_enteComponentSessionBean extends it.cnr.jada.ejb.CRUDComp
 		pre_component_invocation(param0,componentObj);
 		try {
 			UnitaOrganizzativaPecBulk result = ((Parametri_enteComponent)componentObj).getUnitaOrganizzativaPec(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}	
+	public boolean isProgettoPianoEconomicoEnabled(it.cnr.jada.UserContext param0, int param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException{
+		pre_component_invocation(param0,componentObj);
+		try {
+			boolean result = ((Parametri_enteComponent)componentObj).isProgettoPianoEconomicoEnabled(param0, param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
