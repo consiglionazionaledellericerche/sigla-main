@@ -6,8 +6,13 @@
  */
 package it.cnr.contab.config00.comp;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.Calendar;
+import java.util.Optional;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.bulk.ServizioPecBulk;
@@ -22,6 +27,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -220,6 +226,19 @@ public class Parametri_enteComponent extends CRUDComponent {
 		}catch(it.cnr.jada.persistency.PersistencyException ex){
 			throw handleException(ex);
 		} catch (Exception ex) {
+			throw handleException(ex);
+		}
+	}
+	
+	public boolean isProgettoPianoEconomicoEnabled(UserContext userContext, int esercizio) throws ComponentException{
+		try{
+			Parametri_enteBulk parametriEnte = getParametriEnte(userContext);
+			if (Optional.ofNullable(parametriEnte).map(el->el.getFl_prg_pianoeco()).orElse(Boolean.FALSE)) {
+				BigDecimal annoFrom = Utility.createConfigurazioneCnrComponentSession().getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+				return Optional.ofNullable(annoFrom).map(BigDecimal::intValue).map(el->el.compareTo(esercizio)<=0).orElse(Boolean.FALSE);
+			}
+			return Boolean.FALSE;
+		}catch(RemoteException ex){
 			throw handleException(ex);
 		}
 	}

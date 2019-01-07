@@ -38,6 +38,8 @@ import it.cnr.contab.bollo00.ejb.AttoBolloComponentSession;
 import it.cnr.contab.bollo00.comp.TipoAttoBolloComponent;
 import it.cnr.contab.bollo00.ejb.TipoAttoBolloComponentSession;
 import it.cnr.contab.client.docamm.FatturaAttiva;
+import it.cnr.contab.config00.comp.CRUDConfigAssEvoldEvnewComponent;
+import it.cnr.contab.config00.ejb.CRUDConfigAssEvoldEvnewComponentSession;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cdsComponentSession;
@@ -490,5 +492,8 @@ public final class Utility {
 	}
 	public static RuoloComponentSession getRuoloComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (RuoloComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_EJB_RuoloComponentSession",RuoloComponentSession.class);
+	}
+	public static CRUDConfigAssEvoldEvnewComponentSession createCRUDConfigAssEvoldEvnewComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
+		return (CRUDConfigAssEvoldEvnewComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_CRUDConfigAssEvoldEvnewComponentSession",CRUDConfigAssEvoldEvnewComponentSession.class);
 	}
 }
