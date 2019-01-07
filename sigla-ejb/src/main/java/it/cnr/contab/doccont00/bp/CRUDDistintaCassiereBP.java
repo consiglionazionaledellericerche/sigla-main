@@ -1787,7 +1787,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .filter(Distinta_cassiereBulk.class::isInstance)
                     .map(Distinta_cassiereBulk.class::cast)
                     .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta()))
-                    .isPresent() || isViewing();
+                    .isPresent() || isViewing() || isDirty();
         if (!isFlusso())
             return true;
         else

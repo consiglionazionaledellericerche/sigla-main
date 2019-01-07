@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.service;
 
 import com.google.gson.GsonBuilder;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
@@ -82,6 +83,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     private MandatoComponentSession mandatoComponentSession;
     private ReversaleComponentSession reversaleComponentSession;
     private DistintaCassiereComponentSession distintaCassiereComponentSession;
+    private Configurazione_cnrComponentSession configurazione_cnrComponentSession;
 
     private UserContext userContext;
 
@@ -106,6 +108,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .filter(DistintaCassiereComponentSession.class::isInstance)
                 .map(DistintaCassiereComponentSession.class::cast)
                 .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCCONT00_EJB_DistintaCassiereComponentSession"));
+        this.configurazione_cnrComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession"))
+                .filter(Configurazione_cnrComponentSession.class::isInstance)
+                .map(Configurazione_cnrComponentSession.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRCONFIG00_EJB_Configurazione_cnrComponentSession"));
     }
 
     public ArubaSignServiceClient getArubaSignServiceClient() {
@@ -513,7 +519,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         crudComponentSession.modificaConBulk(userContext, distinta);
     }
 
-    private void messaggioEsitoApplicativo(Risultato risultato) throws Exception {
+    private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali) throws Exception {
         final MessaggioXML<MessaggiEsitoApplicativo> messaggioXML = ordinativiSiopePlusService.getLocation(risultato.getLocation(), MessaggiEsitoApplicativo.class);
         final MessaggiEsitoApplicativo messaggiEsitoApplicativo = messaggioXML.getObject();
         final List<Object> esitoReversaliOrEsitoMandati = messaggiEsitoApplicativo.getEsitoReversaliOrEsitoMandati();
@@ -603,38 +609,40 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         return null;
                     }
                 }).collect(Collectors.toList());
-
-        mandatoStream
-                .stream()
-                .filter(oggettoBulk -> Optional.ofNullable(oggettoBulk).isPresent())
-                .filter(MandatoIBulk.class::isInstance)
-                .map(MandatoIBulk.class::cast)
-                .filter(mandatoBulk -> mandatoBulk.getEsitoOperazione().equals(MandatoBulk.EsitoOperazione.NON_ACQUISITO.value()))
-                .forEach(mandatoBulk -> {
-                    try {
-                        logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
-                        mandatoComponentSession.annullaMandato(userContext, mandatoBulk, true);
-                    } catch (ComponentException | RemoteException e) {
-                        _ex.set(e);
-                        logger.error("SIOPE+ ANNULLA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
-                    }
-                });
-
-        reversaleStream
-                .stream()
-                .filter(oggettoBulk -> Optional.ofNullable(oggettoBulk).isPresent())
-                .filter(ReversaleIBulk.class::isInstance)
-                .map(ReversaleIBulk.class::cast)
-                .filter(reversaleBulk -> reversaleBulk.getEsitoOperazione().equals(ReversaleBulk.EsitoOperazione.NON_ACQUISITO.value()))
-                .forEach(reversaleBulk -> {
-                    try {
-                        logger.info("SIOPE+ ANNULLA REVERSALE [{}/{}]", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale());
-                        reversaleComponentSession.annullaReversale(userContext, reversaleBulk, true);
-                    } catch (ComponentException | RemoteException e) {
-                        _ex.set(e);
-                        logger.error("SIOPE+ ANNULLA REVERSALE [{}/{}] ERROR", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale(), e);
-                    }
-                });
+        if (annullaMandati) {
+            mandatoStream
+                    .stream()
+                    .filter(oggettoBulk -> Optional.ofNullable(oggettoBulk).isPresent())
+                    .filter(MandatoIBulk.class::isInstance)
+                    .map(MandatoIBulk.class::cast)
+                    .filter(mandatoBulk -> mandatoBulk.getEsitoOperazione().equals(MandatoBulk.EsitoOperazione.NON_ACQUISITO.value()))
+                    .forEach(mandatoBulk -> {
+                        try {
+                            logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
+                            mandatoComponentSession.annullaMandato(userContext, mandatoBulk, true);
+                        } catch (ComponentException | RemoteException e) {
+                            _ex.set(e);
+                            logger.error("SIOPE+ ANNULLA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
+                        }
+                    });
+        }
+        if (annullaReversali) {
+            reversaleStream
+                    .stream()
+                    .filter(oggettoBulk -> Optional.ofNullable(oggettoBulk).isPresent())
+                    .filter(ReversaleIBulk.class::isInstance)
+                    .map(ReversaleIBulk.class::cast)
+                    .filter(reversaleBulk -> reversaleBulk.getEsitoOperazione().equals(ReversaleBulk.EsitoOperazione.NON_ACQUISITO.value()))
+                    .forEach(reversaleBulk -> {
+                        try {
+                            logger.info("SIOPE+ ANNULLA REVERSALE [{}/{}]", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale());
+                            reversaleComponentSession.annullaReversale(userContext, reversaleBulk, true);
+                        } catch (ComponentException | RemoteException e) {
+                            _ex.set(e);
+                            logger.error("SIOPE+ ANNULLA REVERSALE [{}/{}] ERROR", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale(), e);
+                        }
+                    });
+        }
         if (Optional.ofNullable(_ex).flatMap(exceptionAtomicReference -> Optional.ofNullable(exceptionAtomicReference.get())).isPresent())
             throw _ex.get();
     }
@@ -707,8 +715,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 });
     }
 
-    public Stream<Risultato> downloadMessaggiEsitoApplicativo(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
-        final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
+    public Stream<Risultato> downloadMessaggiEsitoApplicativo(LocalDateTime dataDa, LocalDateTime dataA, Boolean download, boolean annullaMandati, boolean annullaReversali) {
+         final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
                 dataDa, dataA, download, null);
         logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
         return Optional.ofNullable(listaEsitoApplicativo.getRisultati())
@@ -718,7 +726,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     try {
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
                                 new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato));
-                        messaggioEsitoApplicativo(risultato);
+                        messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali);
                         logger.info("SIOPE+ ESITO APPLICATIVO elaborato risultato: {}", risultato);
 
                         siopePlusRisultatoBulk.setToBeDeleted();
@@ -734,6 +742,31 @@ public class DocumentiContabiliService extends StoreService implements Initializ
      * Leggi messaggi dalla piattaforma SIOPE+
      */
     public void messaggiSiopeplus(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
+        boolean annullaMandati = Boolean.FALSE, annullaReversali = Boolean.FALSE;
+        try {
+            annullaMandati =
+                    Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
+                            userContext,
+                            Calendar.getInstance().get(Calendar.YEAR),
+                            "*",
+                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_ANNULLA_MANDATI
+                    ))
+                            .map(s -> Boolean.valueOf(s))
+                            .orElse(Boolean.FALSE);
+            annullaReversali =
+                    Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
+                            userContext,
+                            Calendar.getInstance().get(Calendar.YEAR),
+                            "*",
+                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_ANNULLA_REVERSALI
+                    ))
+                            .map(s -> Boolean.valueOf(s))
+                            .orElse(Boolean.FALSE);
+        } catch (ComponentException|RemoteException _ex) {
+            logger.error("SIOPE+ ESITO ERROR recupera configurazione_cnr per annullamento Mandati e Reversali", _ex);
+        }
         try {
             final List<SIOPEPlusRisultatoBulk> risultati = crudComponentSession.find(userContext, SIOPEPlusRisultatoBulk.class, "findAll");
             for (SIOPEPlusRisultatoBulk siopePlusRisultatoBulk : risultati) {
@@ -754,7 +787,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             break;
                         }
                         case ESITOAPPLICATIVO: {
-                            messaggioEsitoApplicativo(risultato);
+                            messaggioEsitoApplicativo(risultato,annullaMandati, annullaReversali);
                             break;
                         }
                     }
@@ -785,7 +818,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         downloadMessaggiEsito(dataDa, dataA, download)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
-        downloadMessaggiEsitoApplicativo(dataDa, dataA, download)
+        downloadMessaggiEsitoApplicativo(dataDa, dataA, download, annullaMandati, annullaReversali)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
     }
