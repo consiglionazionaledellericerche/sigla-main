@@ -12,6 +12,7 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.comp.CRUDConfigAssEvoldEvnewComponent;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
@@ -45,6 +46,8 @@ import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resHome;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -97,6 +100,8 @@ import java.util.Optional;
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+
+import org.apache.poi.hssf.record.formula.functions.Find;
 
 /**
  * @author mspasiano
@@ -320,36 +325,36 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		return sql;
 	}
 	public SQLBuilder selectElemento_voceByClause (UserContext userContext,Var_stanz_res_rigaBulk var_stanz_res_riga, Elemento_voceBulk elemento_voce, CompoundFindClause clause) throws ComponentException, PersistencyException{
-		
-		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-
-		if (clause == null) clause = ((OggettoBulk)elemento_voce).buildFindClauses(null);
-
-		SQLBuilder sql = getHome(userContext, elemento_voce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
-
+		try{
+			Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+			Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+	
+			if (clause == null) clause = ((OggettoBulk)elemento_voce).buildFindClauses(null);
+	
+			SQLBuilder sql = getHome(userContext, elemento_voce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
+	
 			if(clause != null) sql.addClause(clause);
-			sql.addSQLClause("AND", "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
-			
+			sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+				
 			sql.addTableToHeader("PARAMETRI_LIVELLI");
 			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
-
+	
 			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
 			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
 			sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
-
-			sql.openParenthesis("AND");
-			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
-			sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
+	
+			sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);	
+			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");	
 			sql.closeParenthesis();
-			sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_COMPETENZA", sql.EQUALS, "N");
+			sql.addSQLClause( FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_COMPETENZA", SQLBuilder.EQUALS, "N");
 			if (var_stanz_res_riga.getLinea_di_attivita() != null)
-				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
-			
+				sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",SQLBuilder.EQUALS,var_stanz_res_riga.getLinea_di_attivita().getCd_funzione());
+				
 			if(!parCnrBulk.getFl_nuovo_pdg())
 				if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita() != null)
-					sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
-			
+					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",SQLBuilder.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
+				
 			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 			try {
 				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
@@ -360,9 +365,38 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			}
 			if (config != null && var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
 				if( var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita().compareTo(config.getVal01())!=0)
-					sql.addSQLClause("AND", "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
+					sql.addSQLClause(FindClause.AND, "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
 			}
+			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ))) {
+		        Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+		    	SQLBuilder assSql = assHome.createSQLBuilder();
+		    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,var_stanz_res_riga.getProgetto().getPg_progetto());
+		    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
+
+				List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
+				
+				if (list.isEmpty())
+					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
+				else {
+					sql.openParenthesis(FindClause.AND);
+					for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+						Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+						if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
+							sql.openParenthesis(FindClause.OR);
+							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
+							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
+							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
+							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
+							sql.closeParenthesis();
+						}
+					}
+					sql.closeParenthesis();
+				}
+			}			
 			return sql;
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
 	}
 	public SQLBuilder selectAssestatoResiduoByClause (UserContext userContext,Var_stanz_resBulk var_stanz_res, V_assestato_residuoBulk assestato_residuo, CompoundFindClause clause) throws ComponentException, PersistencyException{	
 		SQLBuilder sql = getHome(userContext, V_assestato_residuoBulk.class).createSQLBuilder();

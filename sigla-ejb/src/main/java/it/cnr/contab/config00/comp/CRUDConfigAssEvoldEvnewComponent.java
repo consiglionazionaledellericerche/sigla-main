@@ -1,13 +1,19 @@
 package it.cnr.contab.config00.comp;
 
+import java.util.List;
+
 import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -56,5 +62,28 @@ public class CRUDConfigAssEvoldEvnewComponent extends it.cnr.jada.comp.CRUDCompo
 		}catch(Exception ex){
 			throw handleException(ex);
 		}
+	}
+	
+	public Elemento_voceBulk getCurrentElementoVoce(UserContext usercontext, Elemento_voceBulk voceOld, int annoVoceNew) throws ComponentException {
+		try {
+			Ass_evold_evnewHome ass_evold_evnewHome = (Ass_evold_evnewHome) getHome( usercontext, Ass_evold_evnewBulk.class);
+			Elemento_voceBulk currentVoce = voceOld;
+			while (currentVoce.getEsercizio().compareTo(annoVoceNew)<0) {
+				//cerco la voce del nuovo anno
+				List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(currentVoce);
+				if (!listVociNew.isEmpty()) {
+					if (listVociNew.size()>1)
+						throw new ApplicationException("Trovate nella tabella di associazione Vecchie/Nuove Voci più elementi voce nel nuovo anno per la Voce: "+ currentVoce.getCd_voce() +" nell'esercizio: "+currentVoce.getCd_elemento_voce());
+					currentVoce = (Elemento_voceBulk)listVociNew.get(0);
+				} else {
+					currentVoce = (Elemento_voceBulk)getHome(usercontext,Elemento_voceBulk.class).findByPrimaryKey(
+							  new Elemento_voceBulk(currentVoce.getCd_elemento_voce(),currentVoce.getEsercizio()+1,currentVoce.getTi_appartenenza(),currentVoce.getTi_gestione())
+							  );
+				}
+			}
+			return currentVoce;
+		}catch(Exception ex){
+			throw handleException(ex);
+		}		
 	}
 }
