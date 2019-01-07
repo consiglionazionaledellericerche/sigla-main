@@ -338,7 +338,9 @@
    aUOVERSCONTOBI unita_organizzativa%rowtype;
    aCdEV varchar2(20);
    elementoVoce elemento_voce%rowtype;
+   recParametriCNR PARAMETRI_CNR%Rowtype;
  begin
+  recParametriCNR := CNRUTL001.getRecParametriCnr(aLiquid.esercizio);
   aDateCont:=CNRCTB008.getTimestampContabile(aLGC.esercizio,aTSNow);
   aDivisaEuro:=CNRCTB015.GETVAL01PERCHIAVE(CNRCTB100.CCNR_DIVISA,CNRCTB100.CCNR_EURO);
   
@@ -389,17 +391,18 @@
  	       aGen:=null;
          aGenRiga:=null;
 
-         aAcc.cd_cds:=aLGCC.cd_cds_acc_accentr;
-         aAcc.esercizio:=aLGCC.esercizio_acc_accentr;
-         aAcc.esercizio_originale:=aLGCC.esercizio_ori_acc_accentr;
-         aAcc.pg_accertamento:=aLGCC.pg_acc_accentr;
-         CNRCTB035.GETPGIROCDSINV(aAcc,aAccScad,aAccScadVoce,aObb,aObbScad,aObbScadVoce);
 
 				 --aAcc si chiude con la reversale di versamento
 				 --aObb si chiude con il mandato di restituzione
 				 --Se la UO è 999.000, solo la reversale di versamento deve uscire dalla 999, mentre il mandato di restituzione deve uscire dalla SAC
 				 --quindi devo annullare aAcc sulla SAC (cioè rendere tronca aObb) e ricrearla tronca sulla 999 
-				 if Uo = aUOVERSCONTOBI.cd_unita_organizzativa then
+				 If recParametriCNR.FL_TESORERIA_UNICA != 'Y' then
+	         aAcc.cd_cds:=aLGCC.cd_cds_acc_accentr;
+	         aAcc.esercizio:=aLGCC.esercizio_acc_accentr;
+	         aAcc.esercizio_originale:=aLGCC.esercizio_ori_acc_accentr;
+	         aAcc.pg_accertamento:=aLGCC.pg_acc_accentr;
+	         CNRCTB035.GETPGIROCDSINV(aAcc,aAccScad,aAccScadVoce,aObb,aObbScad,aObbScadVoce);
+				   if Uo = aUOVERSCONTOBI.cd_unita_organizzativa then
 							 CNRCTB043.troncaPraticaObbPgiro(aObb.esercizio,aObb.cd_cds,aObb.esercizio_originale,aObb.pg_obbligazione,aTSNow,aUser); 
                -- devo creare la pgiro tronca sulla 999
                   aAccNew:=null;
@@ -471,136 +474,168 @@
                   
                   aAcc     := aAccNew;
 		              aAccScad := aAccScadNew;
-         End If;
+           End If;
 
-         -- Creo il documento generico di spesa su partita di giro collegato all'annotazione di entrata su pgiro
- 		     -- per versamento accentrato
-         aGen.CD_CDS:=aObb.cd_cds;       --Cds;
-         aGen.CD_UNITA_ORGANIZZATIVA:=aObb.cd_unita_organizzativa;     --Uo;
-         aGen.ESERCIZIO:=aLGC.esercizio;
-         aGen.CD_CDS_ORIGINE:=aObb.cd_cds;     --Cds;
-         aGen.CD_UO_ORIGINE:=aObb.cd_unita_organizzativa;    --Uo;
-         aGen.CD_TIPO_DOCUMENTO_AMM:=CNRCTB100.TI_GEN_CORI_VER_SPESA;
-         aGen.DATA_REGISTRAZIONE:=TRUNC(aDateCont);
-         aGen.DS_DOCUMENTO_GENERICO:='CORI-RESTITUZIONE A UO:'||aLGCC.cd_unita_organizzativa||' gruppo cr:'||aLGC.cd_gruppo_cr||'.'||aLGC.cd_regione||'.'||aLGC.pg_comune;
-         aGen.TI_ISTITUZ_COMMERC:=CNRCTB100.TI_ISTITUZIONALE;
-         aGen.IM_TOTALE:=aObb.im_obbligazione;
-         aGen.STATO_COFI:=CNRCTB100.STATO_GEN_COFI_TOT_MR;
-         aGen.STATO_COGE:=CNRCTB100.STATO_COEP_EXC;
-         aGen.STATO_COAN:=CNRCTB100.STATO_COEP_EXC;
-         aGen.CD_DIVISA:=aDivisaEuro;
-         aGen.CAMBIO:=1;
-         --  aGen.ESERCIZIO_LETTERA:=0;
-         --  aGen.PG_LETTERA:=0;
-         aGen.DACR:=aTSNow;
-         aGen.UTCR:=aUser;
-         aGen.DUVA:=aTSNow;
-         aGen.UTUV:=aUser;
-         aGen.PG_VER_REC:=1;
-         aGen.DT_SCADENZA:=TRUNC(aTSNow);
-         aGen.STATO_PAGAMENTO_FONDO_ECO:=CNRCTB100.STATO_NO_PFONDOECO;
-         aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
-         aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
-         aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
+           -- Creo il documento generico di spesa su partita di giro collegato all'annotazione di entrata su pgiro
+ 		       -- per versamento accentrato
+           aGen.CD_CDS:=aObb.cd_cds;       --Cds;
+           aGen.CD_UNITA_ORGANIZZATIVA:=aObb.cd_unita_organizzativa;     --Uo;
+           aGen.ESERCIZIO:=aLGC.esercizio;
+           aGen.CD_CDS_ORIGINE:=aObb.cd_cds;     --Cds;
+           aGen.CD_UO_ORIGINE:=aObb.cd_unita_organizzativa;    --Uo;
+           aGen.CD_TIPO_DOCUMENTO_AMM:=CNRCTB100.TI_GEN_CORI_VER_SPESA;
+           aGen.DATA_REGISTRAZIONE:=TRUNC(aDateCont);
+           aGen.DS_DOCUMENTO_GENERICO:='CORI-RESTITUZIONE A UO:'||aLGCC.cd_unita_organizzativa||' gruppo cr:'||aLGC.cd_gruppo_cr||'.'||aLGC.cd_regione||'.'||aLGC.pg_comune;
+           aGen.TI_ISTITUZ_COMMERC:=CNRCTB100.TI_ISTITUZIONALE;
+           aGen.IM_TOTALE:=aObb.im_obbligazione;
+           aGen.STATO_COFI:=CNRCTB100.STATO_GEN_COFI_TOT_MR;
+           aGen.STATO_COGE:=CNRCTB100.STATO_COEP_EXC;
+           aGen.STATO_COAN:=CNRCTB100.STATO_COEP_EXC;
+           aGen.CD_DIVISA:=aDivisaEuro;
+           aGen.CAMBIO:=1;
+           --  aGen.ESERCIZIO_LETTERA:=0;
+           --  aGen.PG_LETTERA:=0;
+           aGen.DACR:=aTSNow;
+           aGen.UTCR:=aUser;
+           aGen.DUVA:=aTSNow;
+           aGen.UTUV:=aUser;
+           aGen.PG_VER_REC:=1;
+           aGen.DT_SCADENZA:=TRUNC(aTSNow);
+           aGen.STATO_PAGAMENTO_FONDO_ECO:=CNRCTB100.STATO_NO_PFONDOECO;
+           aGen.TI_ASSOCIATO_MANREV:=CNRCTB100.TI_ASSOC_TOT_MAN_REV ;
+           aGen.DT_DA_COMPETENZA_COGE:=TRUNC(aDateCont);
+           aGen.DT_A_COMPETENZA_COGE:=TRUNC(aDateCont);
+           
+           aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
+           aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
+           aGenRiga.CD_CDS:=aGen.CD_CDS;
+           aGenRiga.CD_UNITA_ORGANIZZATIVA:=aGen.CD_UNITA_ORGANIZZATIVA;
+           aGenRiga.ESERCIZIO:=aGen.ESERCIZIO;
+           aGenRiga.CD_TIPO_DOCUMENTO_AMM:=aGen.CD_TIPO_DOCUMENTO_AMM;
+           aGenRiga.DS_RIGA:=aGen.DS_DOCUMENTO_GENERICO;
+           aGenRiga.IM_RIGA_DIVISA:=aGen.IM_TOTALE;
+           aGenRiga.IM_RIGA:=aGen.IM_TOTALE;
+           aGenRiga.CD_TERZO:=aCdTerzoRes;
+           aGenRiga.CD_MODALITA_PAG:=aCdModPagRes;
+           aGenRiga.PG_BANCA:=aPgBancaRes;
+           aGenRiga.RAGIONE_SOCIALE:=aAnagTst.RAGIONE_SOCIALE;
+           aGenRiga.NOME:=aAnagTst.NOME;
+           aGenRiga.COGNOME:=aAnagTst.COGNOME;
+           aGenRiga.CODICE_FISCALE:=aAnagTst.CODICE_FISCALE;
+           aGenRiga.PARTITA_IVA:=aAnagTst.PARTITA_IVA;
+           --   aGenRiga.CD_TERMINI_PAG:=aCompenso.CD_TERMINI_PAG;
+           --   aGenRiga.CD_TERMINI_PAG_UO_CDS:=aCompenso.CD_TERMINI_PAG_UO_CDS;
+           --   aGenRiga.PG_BANCA_UO_CDS:=aGen.PG_BANCA_UO_CDS;
+           --   aGenRiga.CD_MODALITA_PAG_UO_CDS:=aGen.CD_MODALITA_PAG_UO_CDS;
+           --   aGenRiga.NOTE:=aGen.NOTE;
+           aGenRiga.STATO_COFI:=aGen.STATO_COFI;
+           --   aGenRiga.DT_CANCELLAZIONE:=aGen.DT_CANCELLAZIONE;
+           --   aGenRiga.CD_CDS_OBBLIGAZIONE:=aGen.CD_CDS_OBBLIGAZIONE;
+           --   aGenRiga.ESERCIZIO_OBBLIGAZIONE:=aGen.ESERCIZIO_OBBLIGAZIONE;
+           --   aGenRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aGen.ESERCIZIO_ORI_OBBLIGAZIONE;
+           --   aGenRiga.PG_OBBLIGAZIONE:=aGen.PG_OBBLIGAZIONE;
+           --   aGenRiga.PG_OBBLIGAZIONE_SCADENZARIO:=aGen.PG_OBBLIGAZIONE_SCADENZARIO;
+           aGenRiga.CD_CDS_OBBLIGAZIONE:=aObb.cd_cds;
+           aGenRiga.ESERCIZIO_OBBLIGAZIONE:=aObb.esercizio;
+           aGenRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aObb.esercizio_originale;
+           aGenRiga.PG_OBBLIGAZIONE:=aObb.pg_obbligazione;
+           aGenRiga.PG_OBBLIGAZIONE_SCADENZARIO:=1;
+           aGenRiga.DACR:=aGen.DACR;
+           aGenRiga.UTCR:=aGen.UTCR;
+           aGenRiga.UTUV:=aGen.UTUV;
+           aGenRiga.DUVA:=aGen.DUVA;
+           aGenRiga.PG_VER_REC:=aGen.PG_VER_REC;
+           aGenRiga.TI_ASSOCIATO_MANREV:=aGen.TI_ASSOCIATO_MANREV;
+           --
+ 	         aListGenRighe(1):=aGenRiga;
+           CNRCTB110.CREAGENERICOAGGOBBACC(aGen,aListGenRighe);
 
-         aGenRiga.DT_DA_COMPETENZA_COGE:=aGen.DT_DA_COMPETENZA_COGE;
-         aGenRiga.DT_A_COMPETENZA_COGE:=aGen.DT_A_COMPETENZA_COGE;
-         aGenRiga.CD_CDS:=aGen.CD_CDS;
-         aGenRiga.CD_UNITA_ORGANIZZATIVA:=aGen.CD_UNITA_ORGANIZZATIVA;
-         aGenRiga.ESERCIZIO:=aGen.ESERCIZIO;
-         aGenRiga.CD_TIPO_DOCUMENTO_AMM:=aGen.CD_TIPO_DOCUMENTO_AMM;
-         aGenRiga.DS_RIGA:=aGen.DS_DOCUMENTO_GENERICO;
-         aGenRiga.IM_RIGA_DIVISA:=aGen.IM_TOTALE;
-         aGenRiga.IM_RIGA:=aGen.IM_TOTALE;
-         aGenRiga.CD_TERZO:=aCdTerzoRes;
-         aGenRiga.CD_MODALITA_PAG:=aCdModPagRes;
-         aGenRiga.PG_BANCA:=aPgBancaRes;
-         aGenRiga.RAGIONE_SOCIALE:=aAnagTst.RAGIONE_SOCIALE;
-         aGenRiga.NOME:=aAnagTst.NOME;
-         aGenRiga.COGNOME:=aAnagTst.COGNOME;
-         aGenRiga.CODICE_FISCALE:=aAnagTst.CODICE_FISCALE;
-         aGenRiga.PARTITA_IVA:=aAnagTst.PARTITA_IVA;
-         --   aGenRiga.CD_TERMINI_PAG:=aCompenso.CD_TERMINI_PAG;
-         --   aGenRiga.CD_TERMINI_PAG_UO_CDS:=aCompenso.CD_TERMINI_PAG_UO_CDS;
-         --   aGenRiga.PG_BANCA_UO_CDS:=aGen.PG_BANCA_UO_CDS;
-         --   aGenRiga.CD_MODALITA_PAG_UO_CDS:=aGen.CD_MODALITA_PAG_UO_CDS;
-         --   aGenRiga.NOTE:=aGen.NOTE;
-         aGenRiga.STATO_COFI:=aGen.STATO_COFI;
-         --   aGenRiga.DT_CANCELLAZIONE:=aGen.DT_CANCELLAZIONE;
-         --   aGenRiga.CD_CDS_OBBLIGAZIONE:=aGen.CD_CDS_OBBLIGAZIONE;
-         --   aGenRiga.ESERCIZIO_OBBLIGAZIONE:=aGen.ESERCIZIO_OBBLIGAZIONE;
-         --   aGenRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aGen.ESERCIZIO_ORI_OBBLIGAZIONE;
-         --   aGenRiga.PG_OBBLIGAZIONE:=aGen.PG_OBBLIGAZIONE;
-         --   aGenRiga.PG_OBBLIGAZIONE_SCADENZARIO:=aGen.PG_OBBLIGAZIONE_SCADENZARIO;
-         aGenRiga.CD_CDS_OBBLIGAZIONE:=aObb.cd_cds;
-         aGenRiga.ESERCIZIO_OBBLIGAZIONE:=aObb.esercizio;
-         aGenRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aObb.esercizio_originale;
-         aGenRiga.PG_OBBLIGAZIONE:=aObb.pg_obbligazione;
-         aGenRiga.PG_OBBLIGAZIONE_SCADENZARIO:=1;
-         aGenRiga.DACR:=aGen.DACR;
-         aGenRiga.UTCR:=aGen.UTCR;
-         aGenRiga.UTUV:=aGen.UTUV;
-         aGenRiga.DUVA:=aGen.DUVA;
-         aGenRiga.PG_VER_REC:=aGen.PG_VER_REC;
-         aGenRiga.TI_ASSOCIATO_MANREV:=aGen.TI_ASSOCIATO_MANREV;
-         --
- 	     aListGenRighe(1):=aGenRiga;
-         CNRCTB110.CREAGENERICOAGGOBBACC(aGen,aListGenRighe);
+		       aListRigheManP.delete;
+		       aManP:=null;
+	         aManP.CD_CDS:=aGen.cd_cds;
+	         aManP.ESERCIZIO:=aGen.esercizio;
+	         aManP.CD_UNITA_ORGANIZZATIVA:=aGen.cd_unita_organizzativa;
+	         aManP.CD_CDS_ORIGINE:=aGen.cd_cds;
+	         aManP.CD_UO_ORIGINE:=aGen.cd_unita_organizzativa;
+	         aManP.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_MAN;
+           aManP.TI_MANDATO:=CNRCTB038.TI_MAN_PAG;
+           aManP.TI_COMPETENZA_RESIDUO:=CNRCTB038.TI_MAN_COMP;
+           aManP.DS_MANDATO:='Mandato di resituzione crediti versamento gruppo CORI: '||aLGC.cd_gruppo_cr||'.'||aLGC.cd_regione||'.'||aLGC.pg_comune;
+           aManP.STATO:=CNRCTB038.STATO_MAN_EME;
+           aManP.DT_EMISSIONE:=TRUNC(aDateCont);
+           aManP.IM_RITENUTE:=0;
+           aManP.IM_MANDATO:=aGen.IM_TOTALE;
+           --  aManP.DT_TRASMISSIONE:=;
+           --  aManP.DT_PAGAMENTO:=;
+           --  aManP.DT_ANNULLAMENTO:=;
+           aManP.IM_PAGATO:=0;
+           aManP.UTCR:=aUser;
+           aManP.DACR:=aTSNow;
+           aManP.UTUV:=aUser;
+           aManP.DUVA:=aTSNow;
+           aManP.PG_VER_REC:=1;
+           aManP.STATO_TRASMISSIONE:=CNRCTB038.STATO_MAN_TRASCAS_NODIST;
+           -- Generazione righe mandato
+           aManPRiga:=null;
+           aManPRiga.CD_CDS:=aGen.cd_cds;
+           aManPRiga.ESERCIZIO:=aGen.esercizio;
+           aManPRiga.ESERCIZIO_OBBLIGAZIONE:=aGenRiga.esercizio_obbligazione;
+           aManPRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aGenRiga.esercizio_ori_obbligazione;
+           aManPRiga.PG_OBBLIGAZIONE:=aGenRiga.pg_obbligazione;
+           aManPRiga.PG_OBBLIGAZIONE_SCADENZARIO:=aGenRiga.pg_obbligazione_scadenzario;
+           aManPRiga.CD_CDS_DOC_AMM:=aGen.cd_cds;
+           aManPRiga.CD_UO_DOC_AMM:=aGen.cd_unita_organizzativa;
+           aManPRiga.ESERCIZIO_DOC_AMM:=aGen.esercizio;
+           aManPRiga.CD_TIPO_DOCUMENTO_AMM:=aGen.cd_tipo_documento_amm;
+           aManPRiga.PG_DOC_AMM:=aGen.pg_documento_generico;
+           aManPRiga.DS_MANDATO_RIGA:=aManP.ds_mandato;
+           aManPRiga.STATO:=aManP.stato;
+           aManPRiga.CD_TERZO:=aGenRiga.CD_TERZO;
+           aManPRiga.PG_BANCA:=aGenRiga.pg_banca;
+           aManPRiga.CD_MODALITA_PAG:=aGenRiga.cd_modalita_pag;
+           aManPRiga.IM_MANDATO_RIGA:=aGen.IM_TOTALE;
+           aManPRiga.IM_RITENUTE_RIGA:=0;
+           aManPRiga.FL_PGIRO:='Y';
+           aManPRiga.UTCR:=aUser;
+           aManPRiga.DACR:=aTSNow;
+           aManPRiga.UTUV:=aUser;
+           aManPRiga.DUVA:=aTSNow;
+           aManPRiga.PG_VER_REC:=1;
+           aListRigheManP(aListRigheManP.count+1):=aManPRiga;
+           CNRCTB037.GENERADOCUMENTO(aManP,aListRigheManP);
+				 else
+				 	 Begin
 
-		 aListRigheManP.delete;
-		 aManP:=null;
-	     aManP.CD_CDS:=aGen.cd_cds;
-	     aManP.ESERCIZIO:=aGen.esercizio;
-	     aManP.CD_UNITA_ORGANIZZATIVA:=aGen.cd_unita_organizzativa;
-	     aManP.CD_CDS_ORIGINE:=aGen.cd_cds;
-	     aManP.CD_UO_ORIGINE:=aGen.cd_unita_organizzativa;
-	     aManP.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_MAN;
-         aManP.TI_MANDATO:=CNRCTB038.TI_MAN_PAG;
-         aManP.TI_COMPETENZA_RESIDUO:=CNRCTB038.TI_MAN_COMP;
-         aManP.DS_MANDATO:='Mandato di resituzione crediti versamento gruppo CORI: '||aLGC.cd_gruppo_cr||'.'||aLGC.cd_regione||'.'||aLGC.pg_comune;
-         aManP.STATO:=CNRCTB038.STATO_MAN_EME;
-         aManP.DT_EMISSIONE:=TRUNC(aDateCont);
-         aManP.IM_RITENUTE:=0;
-         aManP.IM_MANDATO:=aGen.IM_TOTALE;
-         --  aManP.DT_TRASMISSIONE:=;
-         --  aManP.DT_PAGAMENTO:=;
-         --  aManP.DT_ANNULLAMENTO:=;
-         aManP.IM_PAGATO:=0;
-         aManP.UTCR:=aUser;
-         aManP.DACR:=aTSNow;
-         aManP.UTUV:=aUser;
-         aManP.DUVA:=aTSNow;
-         aManP.PG_VER_REC:=1;
-         aManP.STATO_TRASMISSIONE:=CNRCTB038.STATO_MAN_TRASCAS_NODIST;
-         -- Generazione righe mandato
-         aManPRiga:=null;
-         aManPRiga.CD_CDS:=aGen.cd_cds;
-         aManPRiga.ESERCIZIO:=aGen.esercizio;
-         aManPRiga.ESERCIZIO_OBBLIGAZIONE:=aGenRiga.esercizio_obbligazione;
-         aManPRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aGenRiga.esercizio_ori_obbligazione;
-         aManPRiga.PG_OBBLIGAZIONE:=aGenRiga.pg_obbligazione;
-         aManPRiga.PG_OBBLIGAZIONE_SCADENZARIO:=aGenRiga.pg_obbligazione_scadenzario;
-         aManPRiga.CD_CDS_DOC_AMM:=aGen.cd_cds;
-         aManPRiga.CD_UO_DOC_AMM:=aGen.cd_unita_organizzativa;
-         aManPRiga.ESERCIZIO_DOC_AMM:=aGen.esercizio;
-         aManPRiga.CD_TIPO_DOCUMENTO_AMM:=aGen.cd_tipo_documento_amm;
-         aManPRiga.PG_DOC_AMM:=aGen.pg_documento_generico;
-         aManPRiga.DS_MANDATO_RIGA:=aManP.ds_mandato;
-         aManPRiga.STATO:=aManP.stato;
-         aManPRiga.CD_TERZO:=aGenRiga.CD_TERZO;
-         aManPRiga.PG_BANCA:=aGenRiga.pg_banca;
-         aManPRiga.CD_MODALITA_PAG:=aGenRiga.cd_modalita_pag;
-         aManPRiga.IM_MANDATO_RIGA:=aGen.IM_TOTALE;
-         aManPRiga.IM_RITENUTE_RIGA:=0;
-         aManPRiga.FL_PGIRO:='Y';
-         aManPRiga.UTCR:=aUser;
-         aManPRiga.DACR:=aTSNow;
-         aManPRiga.UTUV:=aUser;
-         aManPRiga.DUVA:=aTSNow;
-         aManPRiga.PG_VER_REC:=1;
-         aListRigheManP(aListRigheManP.count+1):=aManPRiga;
-         CNRCTB037.GENERADOCUMENTO(aManP,aListRigheManP);
+             Select * into aAcc
+             From     accertamento
+             Where    cd_cds = aLGCC.cd_cds_acc_accentr And
+                      esercizio = aLGCC.esercizio_acc_accentr And
+                      esercizio_originale = aLGCC.esercizio_ori_acc_accentr And
+                      pg_accertamento = aLGCC.pg_acc_accentr And
+                      fl_pgiro = 'Y'
+             For update nowait;
+             
+             Select * into aAccScad
+             From     accertamento_scadenzario
+             Where    cd_cds = aLGCC.cd_cds_acc_accentr And
+                      esercizio = aLGCC.esercizio_acc_accentr And
+                      esercizio_originale = aLGCC.esercizio_ori_acc_accentr And
+                      pg_accertamento = aLGCC.pg_acc_accentr
+             For update nowait;
+             
+             Select * into aAccScadVoce
+             From     accertamento_scad_voce
+             Where    cd_cds = aLGCC.cd_cds_acc_accentr And
+                      esercizio = aLGCC.esercizio_acc_accentr And
+                      esercizio_originale = aLGCC.esercizio_ori_acc_accentr And
+                      pg_accertamento = aLGCC.pg_acc_accentr
+             For Update nowait;
 
+  				 Exception
+   					 when NO_DATA_FOUND then
+        		   IBMERR001.RAISE_ERR_GENERICO('Accertamento non trovato '||aLGCC.cd_cds_acc_accentr||'-'||aLGCC.esercizio_acc_accentr||'-'||aLGCC.esercizio_ori_acc_accentr||'-'||aLGCC.pg_acc_accentr);
+					 end;
+				 End if;
          -- Crea righe di generico e di reversale per compensazione liquidazione al centro
 
          aGenVERiga:=null;
@@ -616,7 +651,6 @@
          aGenVERiga.IM_RIGA:=aAcc.im_accertamento;
          -- Utilizzo delle corrette informazioni di pagamento nel caso di accentramento o non accentramento
          aGenVERiga.CD_TERZO:=terzo_versamento;
-         --   aGenVERiga.CD_TERZO_CESSIONARIO:=aGenVE.CD_TERZO_CESSIONARIO;
          
          If Uo = aUOVERSCONTOBI.cd_unita_organizzativa then
 	            CNRCTB080.getTerzoPerEnteContoBI(Uo, aCdTerzoVE, aCdModPagVE, aPgBancaVE);
@@ -786,6 +820,7 @@
   recParametriCNR PARAMETRI_CNR%Rowtype;
 	TROVATO_DETTAGLIO_P_GIRO VARCHAR2(1);
 Begin
+
   if aAggregato.im_liquidato = 0 then
    -- ATTENZIONE!!! Se l'importo da liquidare è 0 non c'è niente da aggiornare al centro
    return;
@@ -844,7 +879,15 @@ Begin
     	aAccScad:=null;
     	aAcc.CD_CDS:=aUOVERSACC.cd_unita_padre;
     	aAcc.ESERCIZIO:=aAggregato.esercizio;
-    	aAcc.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC_PGIRO;
+    	if aL.da_esercizio_precedente = 'Y' then
+	      aAcc.ESERCIZIO_ORIGINALE:=aAggregato.esercizio - 1;
+  	    aAcc.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC_PGIRO_RES;
+	      aAcc.pg_accertamento:=CNRCTB018.getNextNumDocCont(CNRCTB018.TI_DOC_ACC_PGIRO, aAcc.ESERCIZIO_ORIGINALE, aAcc.CD_CDS, aUser);
+  	  else
+	      aAcc.ESERCIZIO_ORIGINALE:=aAggregato.esercizio;
+  	    aAcc.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC_PGIRO;
+  	  end if;
+
     	aAcc.CD_UNITA_ORGANIZZATIVA:=aUOVERSACC.cd_unita_organizzativa;
     	aAcc.CD_CDS_ORIGINE:=aUOVERSACC.cd_unita_padre;
     	aAcc.CD_UO_ORIGINE:=aUOVERSACC.cd_unita_organizzativa;
@@ -864,7 +907,7 @@ Begin
     	aAcc.DUVA:=aTSNow;
     	aAcc.UTUV:=aUser;
     	aAcc.PG_VER_REC:=1;
-    	aAcc.ESERCIZIO_COMPETENZA:=aAggregato.esercizio;
+    	aAcc.ESERCIZIO_COMPETENZA:=aAcc.ESERCIZIO;
     	aAcc.IM_ACCERTAMENTO:=abs(aAggregato.im_liquidato);
     	CNRCTB040.CREAACCERTAMENTOPGIROTRONC(false,aAcc,aAccScad,aObbPG,aObbPGScad,trunc(aTSNow));
       aAccPG:=aAcc;
@@ -1062,8 +1105,14 @@ end;
       
       aObbNew.CD_CDS:=aUOVERSACC.cd_unita_padre;
       aObbNew.ESERCIZIO:=aAggregato.esercizio;
-      aObbNew.ESERCIZIO_ORIGINALE:=aAggregato.esercizio;
-      aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_OBB_PGIRO;
+      if aL.da_esercizio_precedente = 'Y' then
+	      aObbNew.ESERCIZIO_ORIGINALE:=aAggregato.esercizio - 1;
+  	    aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_OBB_PGIRO_RES;
+	      aObbNew.pg_obbligazione:=CNRCTB018.getNextNumDocCont(CNRCTB018.TI_DOC_OBB_PGIRO, aObbNew.ESERCIZIO_ORIGINALE, aObbNew.CD_CDS, aUser);
+  	  else
+	      aObbNew.ESERCIZIO_ORIGINALE:=aAggregato.esercizio;
+  	    aObbNew.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_OBB_PGIRO;
+  	  end if;
       aObbNew.CD_UNITA_ORGANIZZATIVA:=aUOVERSACC.cd_unita_organizzativa;
       aObbNew.CD_CDS_ORIGINE:=aUOVERSACC.cd_unita_padre;
       aObbNew.CD_UO_ORIGINE:=aUOVERSACC.cd_unita_organizzativa;
@@ -1088,10 +1137,9 @@ end;
       aObbNew.DUVA:=aTSNow;
       aObbNew.UTUV:=aUser;
       aObbNew.PG_VER_REC:=1;
-      aObbNew.ESERCIZIO_COMPETENZA:=aAggregato.esercizio;
+      aObbNew.ESERCIZIO_COMPETENZA:=aObbNew.ESERCIZIO;
 
       CNRCTB030.CREAOBBLIGAZIONEPGIROTRONC(false,aObbNew,aObbScadNew,aAccNew,aAccScadNew,trunc(aTSNow));
-      
       aObbPG:=aObbNew;
     	aObbPGScad:=aObbScadNew;
     	aAcc:=aAccNew;
@@ -2869,9 +2917,9 @@ end;
      	      -- Crea i mandati di eventuale restituzione crediti alle UO con gruppi negativi....GIRA SOLO SUI DATI DEGLI ANNI PRECEDENTI
 	          --restituzioneCrediti(aAggregato,aGruppoCentro,aTotReversale,aRevP,aListRigheRevP,aUser,aTSNow);
 -- GGG TODO PER I MANDATI DI RESTITUZIONE..SOLO A FINE ANNO
-					  If recParametriCNR.FL_TESORERIA_UNICA != 'Y' then
+--					  If recParametriCNR.FL_TESORERIA_UNICA != 'Y' then
 		          restituzioneCrediti(aLiquid,aCdCds,aCdUo,aGruppi.cd_terzo_versamento,aGruppoCentro,aTotReversale,aRevP,aListRigheRevP,aUser,aTSNow);
-						end if;
+--						end if;
  	          aGen:=null;
             aGenRiga:=null;
             if aGruppoCentro.pg_obb_accentr is not null then
