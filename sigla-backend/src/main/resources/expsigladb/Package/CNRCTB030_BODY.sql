@@ -1390,7 +1390,6 @@ Dbms_Output.put_line ('dentro creaObbligazionePgiroInt');
   aObb.duva:=aObb.dacr;
   aObb.utuv:=aObb.utcr;
   aObb.pg_ver_rec:=1;
-
   CNRCTB035.INS_OBBLIGAZIONE(aObb);
 
   aObbScad.cd_cds := aObb.cd_cds;
@@ -1442,7 +1441,7 @@ Dbms_Output.put_line ('dentro creaObbligazionePgiroInt');
 --            SE LA PARTITA DI GIRO E' DA CREARE FA TUTTE QUESTE COSE CHE FACEVA PRIMA
 --            ALTRIMENTI RECUPERA QUELLA DELL'ANNO PRIMA E "RIBALTA" QUELLA
 
-If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_OBB_PGIRO_RES Then
+--If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_OBB_PGIRO_RES Then
 
   -- gestione contropartita
 
@@ -1501,8 +1500,13 @@ If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_OBB_PGIRO_RES Then
      aAcc.cd_cds_origine := aObb.cd_cds;
      aAcc.cd_uo_origine  := aObb.cd_unita_organizzativa;
   Else
-     aTipoDocContr  := CNRCTB018.TI_DOC_ACC_PGIRO;
-     aNumeratore    := CNRCTB018.getNextNumDocCont(aTipoDocContr, aObb.esercizio, aObb.cd_cds, aObb.utcr);
+     if aObb.esercizio_originale  is not null and aObb.esercizio != aObb.esercizio_originale then
+       aTipoDocContr  := CNRCTB018.TI_DOC_ACC_PGIRO_RES;
+       aNumeratore    := CNRCTB018.getNextNumDocCont(aTipoDocContr, aObb.esercizio_originale, aObb.cd_cds, aObb.utcr);
+	   else
+       aTipoDocContr  := CNRCTB018.TI_DOC_ACC_PGIRO;
+       aNumeratore    := CNRCTB018.getNextNumDocCont(aTipoDocContr, aObb.esercizio, aObb.cd_cds, aObb.utcr);
+	 	 end if;
      aAcc.cd_cds_origine := aObb.cd_cds_origine;
      aAcc.cd_uo_origine  := aObb.cd_uo_origine;
   End If;
@@ -1608,11 +1612,11 @@ Dbms_Output.put_line ('ins associazione pgiro');
 
   CNRCTB035.INS_ASS_OBB_ACR_PGIRO(aAssDocPGiro);
 
-Elsif aObb.cd_tipo_documento_cont = CNRCTB018.TI_DOC_OBB_PGIRO_RES Then
+--Elsif aObb.cd_tipo_documento_cont = CNRCTB018.TI_DOC_OBB_PGIRO_RES Then
 -- RIBALTAMENTO
 
-  Null;
-End If;
+--  Null;
+--End If;
 
 End;
 
@@ -1655,8 +1659,6 @@ End;
    aDtScadenza
   );
  end;
-
-
 
  procedure creaObbligazione(
   isControlloBloccante boolean,
