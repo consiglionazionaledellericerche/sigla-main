@@ -2,8 +2,11 @@ package it.cnr.contab.doccont00.action;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.Optional;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -30,6 +33,7 @@ import it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
@@ -42,6 +46,9 @@ import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
@@ -991,8 +998,44 @@ public Forward handleException(ActionContext context, Throwable ex)
 			Collection capitoliIniziali = ((ObbligazioneBulk)bp.getModel()).getCapitoliDiSpesaCdsSelezionatiColl();
 
 			java.util.List vociList = (java.util.List)caller.getParameter("selectedElements");
-			if (vociList!=null && !vociList.isEmpty())
-			{
+			if (vociList!=null && !vociList.isEmpty()) {
+				if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()))) {
+					for ( Iterator s = vociList.iterator(); s.hasNext(); ) {
+						V_assestatoBulk voceSel = (V_assestatoBulk) s.next();
+						if (Optional.ofNullable(voceSel.getProgetto_dt_inizio())
+								.map(el->{
+									Calendar gc = GregorianCalendar.getInstance();
+									gc.setTime(el);
+									return gc;
+								})
+								.map(el->el.get(Calendar.YEAR)>CNRUserContext.getEsercizio(context.getUserContext()))
+								.orElse(Boolean.FALSE)) {
+								bp.setMessage("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
+												+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(voceSel.getProgetto_dt_inizio())
+												+ ") del progetto "+voceSel.getCd_modulo()+" associato è successiva "
+												+ "rispetto all'anno contabile di scrivania. GAE non selezionabile.");
+								return context.findDefaultForward();
+						}
+						if (Optional.ofNullable(
+								Optional.ofNullable(voceSel.getProgetto_dt_proroga()).orElse(voceSel.getProgetto_dt_fine()))
+								.map(el->{
+									Calendar gc = GregorianCalendar.getInstance();
+									gc.setTime(el);
+									return gc;
+								})
+								.map(el->el.get(Calendar.YEAR)<CNRUserContext.getEsercizio(context.getUserContext()))
+								.orElse(Boolean.FALSE)) {
+								bp.setMessage("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
+												+ "La data fine/proroga ("
+												+ new java.text.SimpleDateFormat("dd/MM/yyyy")
+												.format(Optional.ofNullable(voceSel.getProgetto_dt_proroga()).orElse(voceSel.getProgetto_dt_fine()))
+												+ ") del progetto "+voceSel.getCd_modulo()+" associato è precedente "
+												+ "rispetto all'anno contabile di scrivania.");
+								return context.findDefaultForward();
+						}
+					}
+				}
+
 				bp.setVociSelezionate(vociList);
 				if (bp.getVociSelezionate().get(0) instanceof V_assestatoBulk) {
 					BigDecimal totaleSel = new BigDecimal( 0 ); 
