@@ -39,8 +39,9 @@ import java.util.Optional;
 public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
 	private final CRUDSospesoController sospesiSelezionati = new CRUDSospesoController("SospesiSelezionati",Sospeso_det_uscBulk.class,"sospeso_det_uscColl",this);
-	private final SimpleDetailCRUDController reversaliMan = new SimpleDetailCRUDController("Reversali",V_ass_doc_contabiliBulk.class,"doc_contabili_collColl",this);			
-	private ContabiliService contabiliService;
+	private final SimpleDetailCRUDController reversaliMan = new SimpleDetailCRUDController("Reversali",V_ass_doc_contabiliBulk.class,"doc_contabili_collColl",this);
+    protected boolean attivoSiopeplus;
+    private ContabiliService contabiliService;
 	private DocumentiContabiliService documentiContabiliService;
 	private String nodeRefDocumento;
 	
@@ -437,4 +438,7 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 		}
 	}
 
+	public Boolean isAttivoSiopeplus() {
+		return attivoSiopeplus;
+	}
 }
