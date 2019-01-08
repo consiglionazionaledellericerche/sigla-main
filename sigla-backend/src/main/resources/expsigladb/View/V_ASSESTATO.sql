@@ -2,7 +2,7 @@
 --  DDL for View V_ASSESTATO
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_ASSESTATO" ("ESERCIZIO", "ESERCIZIO_RES", "CD_CENTRO_RESPONSABILITA", "CD_LINEA_ATTIVITA", "DS_LINEA_ATTIVITA", "CD_NATURA", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "CD_VOCE", "CD_MODULO", "STANZIAMENTO_INIZIALE", "VARIAZIONI_POSITIVE", "VARIAZIONI_NEGATIVE", "VARIAZIONI_RESIDUI_PROPRI", "ASSESTATO_INIZIALE", "IMPORTO_UTILIZZATO", "IMPORTO_VINCOLI", "IMPORTO_DISPONIBILE", "VARIAZIONI_PROVVISORIE", "VARIAZIONI_DEFINITIVE", "ASSESTATO_FINALE", "IMPORTO_INI_RESIDUI_PROPRI", "IMPORTO_MANREV", "ASSESTATO_CASSA") AS 
+  CREATE OR REPLACE FORCE VIEW "V_ASSESTATO" ("ESERCIZIO", "ESERCIZIO_RES", "CD_CENTRO_RESPONSABILITA", "CD_LINEA_ATTIVITA", "DS_LINEA_ATTIVITA", "CD_NATURA", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "CD_VOCE", "CD_MODULO", "STANZIAMENTO_INIZIALE", "VARIAZIONI_POSITIVE", "VARIAZIONI_NEGATIVE", "VARIAZIONI_RESIDUI_PROPRI", "ASSESTATO_INIZIALE", "IMPORTO_UTILIZZATO", "IMPORTO_VINCOLI", "IMPORTO_DISPONIBILE", "VARIAZIONI_PROVVISORIE", "VARIAZIONI_DEFINITIVE", "ASSESTATO_FINALE", "IMPORTO_INI_RESIDUI_PROPRI", "IMPORTO_MANREV", "ASSESTATO_CASSA", "PROGETTO_DT_INIZIO", "PROGETTO_DT_FINE", "PROGETTO_DT_PROROGA") AS 
   SELECT
 --
 -- Date: 09/11/2006
@@ -52,7 +52,9 @@
           - x.importo_utilizzato
           + x.variazioni_provvisorie
           + x.variazioni_definitive assestato_finale,
-          x.importo_ini_residui_propri, x.importo_manrev, x.assestato_cassa
+          x.importo_ini_residui_propri, x.importo_manrev, x.assestato_cassa,
+          otherField.dt_inizio progetto_dt_inizio,  
+          otherField.dt_fine progetto_dt_fine, otherField.dt_proroga progetto_dt_proroga
      FROM (SELECT   a.esercizio, a.esercizio_res, a.cd_centro_responsabilita,
                     a.cd_linea_attivita, a.ti_appartenenza, a.ti_gestione,
                     a.cd_elemento_voce, a.cd_voce,
@@ -324,10 +326,12 @@
                     a.cd_elemento_voce,
                     a.cd_voce) x,
           v_linea_attivita_valida,
-          progetto_gest progetto
+          progetto_gest progetto,
+          progetto_other_field otherField
     WHERE x.esercizio = v_linea_attivita_valida.esercizio
       AND x.cd_centro_responsabilita =
                               v_linea_attivita_valida.cd_centro_responsabilita
       AND x.cd_linea_attivita = v_linea_attivita_valida.cd_linea_attivita
       AND v_linea_attivita_valida.esercizio = progetto.esercizio(+)
-      AND v_linea_attivita_valida.pg_progetto = progetto.pg_progetto(+) ;
+      AND v_linea_attivita_valida.pg_progetto = progetto.pg_progetto(+)
+      AND progetto.pg_progetto = otherField.pg_progetto(+);

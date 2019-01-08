@@ -4,6 +4,8 @@
 */
 package it.cnr.contab.prevent00.bulk;
 
+import java.sql.Timestamp;
+
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
@@ -93,6 +95,12 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 //  IMPORTO_VINCOLI DECIMAL(22,0)
 	private java.math.BigDecimal importo_vincoli;
 
+	protected Timestamp progetto_dt_inizio;
+	
+	protected Timestamp progetto_dt_fine;
+	
+	protected Timestamp progetto_dt_proroga;
+	
 	//    DB_IMP_UTILIZZATO DECIMAL(22,0)
 //    utilizzata per memorizzare il valore iniziale dell'importo dell'oggetto 
 //    che risulta già sottratto alla disponibilità mostrata
@@ -320,5 +328,23 @@ public class V_assestatoBulk extends OggettoBulk implements KeyedPersistent {
 	
 	public void setImporto_vincoli(java.math.BigDecimal importo_vincoli) {
 		this.importo_vincoli = importo_vincoli;
+	}
+	public Timestamp getProgetto_dt_inizio() {
+		return progetto_dt_inizio;
+	}
+	public void setProgetto_dt_inizio(Timestamp progetto_dt_inizio) {
+		this.progetto_dt_inizio = progetto_dt_inizio;
+	}
+	public Timestamp getProgetto_dt_fine() {
+		return progetto_dt_fine;
+	}
+	public void setProgetto_dt_fine(Timestamp progetto_dt_fine) {
+		this.progetto_dt_fine = progetto_dt_fine;
+	}
+	public Timestamp getProgetto_dt_proroga() {
+		return progetto_dt_proroga;
+	}
+	public void setProgetto_dt_proroga(Timestamp progetto_dt_proroga) {
+		this.progetto_dt_proroga = progetto_dt_proroga;
 	}
 }

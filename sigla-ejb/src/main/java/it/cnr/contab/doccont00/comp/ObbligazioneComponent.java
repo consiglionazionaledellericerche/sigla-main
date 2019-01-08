@@ -85,6 +85,8 @@ import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -118,13 +120,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Vector;
 
 import javax.ejb.EJBException;
@@ -1651,6 +1656,55 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 													   "), in quanto esiste una disponibilità ad assumere impegni " +
 													   "su stanziamenti residui impropri (" + 
 													   new it.cnr.contab.util.EuroFormat().format(totaleResidui) + ").");
+			}
+		}
+		
+		if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
+			BulkHome lattHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+			SQLBuilder sql = lattHome.createSQLBuilder();
+
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,cdr);
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,latt);
+			
+			List<WorkpackageBulk> list = lattHome.fetchAll(sql);
+			if (!list.isEmpty()) {
+				if (list.size()>1)
+					throw new ApplicationException("Errore in fase di ricerca linea_attivita.");
+				WorkpackageBulk linea = list.get(0);
+				ProgettoBulk progetto = (ProgettoBulk)getHome(userContext, ProgettoBulk.class).findByPrimaryKey(userContext, linea.getProgetto());
+				Progetto_other_fieldBulk other = (Progetto_other_fieldBulk)getHome(userContext, Progetto_other_fieldBulk.class).findByPrimaryKey(new Progetto_other_fieldBulk(linea.getPg_progetto()));
+				if (Optional.ofNullable(other).isPresent()) {
+					if (Optional.ofNullable(other.getDtInizio())
+						.map(el->{
+							Calendar gc = GregorianCalendar.getInstance();
+							gc.setTime(el);
+							return gc;
+						})
+						.map(el->el.get(Calendar.YEAR)>CNRUserContext.getEsercizio(userContext))
+						.orElse(Boolean.FALSE)) {
+						throw new ApplicationException("Attenzione! GAE "+latt+" non selezionabile. "
+											+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(other.getDtInizio())
+											+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+											+ "rispetto all'anno contabile di scrivania.");
+					}
+					if (Optional.ofNullable(
+							Optional.ofNullable(other.getDtProroga()).orElse(other.getDtFine()))
+							.map(el->{
+								Calendar gc = GregorianCalendar.getInstance();
+								gc.setTime(el);
+								return gc;
+							})
+							.map(el->el.get(Calendar.YEAR)<CNRUserContext.getEsercizio(userContext))
+							.orElse(Boolean.FALSE)) {
+						throw new ApplicationException("Attenzione! GAE "+latt+" non selezionabile. "
+								+ "La data fine/proroga ("
+								+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(other.getDtProroga())
+										.orElse(other.getDtFine()))
+								+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
+								+ "rispetto all'anno contabile di scrivania.");
+					}
+				}
 			}
 		}
 	} catch ( Exception e )
@@ -5436,17 +5490,17 @@ private void aggiornaImportoScadVoceScadenzaNuova(BigDecimal newImportoOsv, Obbl
 	public SQLBuilder selectAssestatoSpeseByClause (UserContext userContext, ObbligazioneBulk obbligazione, V_assestatoBulk assestato, CompoundFindClause clause) throws ComponentException, PersistencyException{	
 		SQLBuilder sql = getHome(userContext, V_assestatoBulk.class).createSQLBuilder();
 		sql.addClause( clause );
-		sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
-		sql.addClause("AND", "esercizio_res", SQLBuilder.EQUALS, obbligazione.getEsercizio_originale());
-		sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, CostantiTi_gestione.TI_GESTIONE_SPESE);		
-		sql.addClause("AND", "ti_appartenenza", SQLBuilder.NOT_EQUALS, "C");
-		sql.addClause("AND", "cd_elemento_voce", SQLBuilder.EQUALS, obbligazione.getCd_elemento_voce());
+		sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+		sql.addClause(FindClause.AND, "esercizio_res", SQLBuilder.EQUALS, obbligazione.getEsercizio_originale());
+		sql.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, CostantiTi_gestione.TI_GESTIONE_SPESE);		
+		sql.addClause(FindClause.AND, "ti_appartenenza", SQLBuilder.NOT_EQUALS, "C");
+		sql.addClause(FindClause.AND, "cd_elemento_voce", SQLBuilder.EQUALS, obbligazione.getCd_elemento_voce());
 		if (obbligazione.getCd_unita_organizzativa() != null){
 			BulkHome bulkHome = getHome(userContext, V_struttura_organizzativaBulk.class);
 			SQLBuilder sqlStruttura = bulkHome.createSQLBuilder();
-			sqlStruttura.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
-			sqlStruttura.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, obbligazione.getCd_unita_organizzativa());
-			sqlStruttura.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA", SQLBuilder.ISNOTNULL, true);			
+			sqlStruttura.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sqlStruttura.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, obbligazione.getCd_unita_organizzativa());
+			sqlStruttura.addSQLClause(FindClause.AND, "CD_CENTRO_RESPONSABILITA", SQLBuilder.ISNOTNULL, true);			
 			List<V_struttura_organizzativaBulk> strutture = bulkHome.fetchAll(sqlStruttura);
 			sql.openParenthesis(FindClause.AND);
 			for (V_struttura_organizzativaBulk v_struttura_organizzativaBulk : strutture) {
