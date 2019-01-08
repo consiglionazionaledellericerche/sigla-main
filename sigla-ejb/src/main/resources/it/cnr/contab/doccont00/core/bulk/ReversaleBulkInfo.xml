@@ -17,7 +17,7 @@
 		name="dt_ritrasmissione"
 		property="dt_ritrasmissione"
 		inputType="TEXT"
-		inputSize="8"
+		inputSize="10"
 		formatName="date_short"
 		label="Data Ritrasmissione"
 		enabledOnEdit="false"
@@ -205,6 +205,7 @@
 		maxLength="300"
 		inputSize="70"
 		inputType="TEXT"
+		inputCssClass="w-100"
 		label="Causale di incasso"
 		caseSensitiveSearch="false"
 		enabledOnSearch="true"
@@ -292,7 +293,35 @@
 		inputSize="50"
 		inputType="ROTEXT"
 		label=""
-		caseSensitiveSearch="false" />		
+		caseSensitiveSearch="false" />
+	<fieldProperty
+			name="esitoOperazione"
+			property="esitoOperazione"
+			keysProperty="esito_OperazioneKeys"
+			inputType="SELECT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Esito"/>
+	<fieldProperty
+			name="dtOraEsitoOperazione"
+			property="dtOraEsitoOperazione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Data esito"/>
+	<fieldProperty
+			name="erroreSiopePlus"
+			property="erroreSiopePlus"
+			inputCssClass="w-100"
+			inputType="TEXTAREA"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			cols="4"
+			label="Errore"/>
 	<formFieldProperty
 		name="dt_trasmissione" />
 	<formFieldProperty
@@ -352,8 +381,15 @@
 	<formFieldProperty
 		name="ds_documento_cont" />
 	<formFieldProperty
-		name="find_documento_cont" />	
-		
+		name="find_documento_cont" />
+
+	<formFieldProperty
+			name="esitoOperazione" />
+	<formFieldProperty
+			name="dtOraEsitoOperazione" />
+	<formFieldProperty
+			name="erroreSiopePlus" />
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -427,5 +463,11 @@
 	<findFieldProperty
 		name="fl_riemissione" />	
 	<findFieldProperty
-		name="pg_reversale_riemissione" />		
+		name="pg_reversale_riemissione" />
+	<findFieldProperty
+			name="esitoOperazione" />
+	<findFieldProperty
+			name="dtOraEsitoOperazione" />
+	<findFieldProperty
+			name="erroreSiopePlus" />
 </bulkInfo>

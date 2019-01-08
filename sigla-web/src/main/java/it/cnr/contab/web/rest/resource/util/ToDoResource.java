@@ -364,7 +364,12 @@ public class ToDoResource implements ToDoLocal {
                     break;
                 }
                 case DocumentiAmministrativiFatturazioneElettronicaBP: {
-                    if (UtenteBulk.isAbilitatoFirmaFatturazioneElettronica(userContext)) {
+                    if (UtenteBulk.isAbilitatoFirmaFatturazioneElettronica(userContext)
+                            && Optional.ofNullable(userContext)
+                                .filter(CNRUserContext.class::isInstance)
+                                .map(CNRUserContext.class::cast)
+                                .flatMap(cnrUserContext -> Optional.ofNullable(cnrUserContext.getEsercizio()))
+                                .isPresent()) {
                         BulkLoaderIterator remoteIterator =
                                 Optional.ofNullable(crudComponentSession.cerca(
                                         userContext,
