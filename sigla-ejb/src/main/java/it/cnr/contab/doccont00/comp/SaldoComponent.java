@@ -1384,11 +1384,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	                        "CNRCONFIG00_EJB_Linea_attivitaComponentSession", it.cnr.contab.config00.ejb.Linea_attivitaComponentSession.class)
 	                ).inizializzaBulkPerModifica(userContext, rigaVar.getLinea_attivita());
 	
-	                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(linea_attivita.getProgetto2016().getPg_progetto());
+	                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(pdgVariazione.getEsercizio(), linea_attivita.getProgetto2016().getPg_progetto(), rigaVar.getElemento_voce());
 	                for (Progetto_piano_economicoBulk e : pianoEconomicoList) {
-	                	/*todo lello
-	                	 */
-	                    if (e.getFl_ctrl_disp() && /*e.getCd_voce_piano().equals(linea_attivita.getVocePianoEconomico2016().getCd_voce_piano()) &&*/
+	                    if (e.getFl_ctrl_disp() &&
 	                            (e.getEsercizio_piano().equals(0) || e.getEsercizio_piano().equals(rigaVar.getEsercizio()))) {
 	                        try {
 	                            if (locked) {
