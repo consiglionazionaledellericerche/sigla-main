@@ -3,14 +3,17 @@ package it.cnr.contab.doccont00.bp;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
@@ -30,15 +33,14 @@ import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.HookForward;
-import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.CRUDBP;
@@ -72,7 +74,8 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private Unita_organizzativaBulk uoSrivania;
 	private ContabiliService contabiliService;
 	private boolean isEnteCNR = true;
-	
+	protected boolean attivoSiopeplus;
+
 	public CRUDReversaleBP() {
 		super();
 		setTab("tab","tabReversale");
@@ -728,10 +731,37 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			throw handleException(e);
 		}
 	}
+
+	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		try {
+			Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
+					.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
+
+			this.attivoSiopeplus = Optional.ofNullable(sess.getVal01(
+					actioncontext.getUserContext(),
+					CNRUserInfo.getEsercizio(actioncontext),
+					null,
+					Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+					Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS))
+					.map(s -> Boolean.valueOf(s))
+					.orElse(Boolean.FALSE);
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
+		super.init(config, actioncontext);
+	}
+
 	public void setEnteCNR(boolean isEnteCNR) {
 		this.isEnteCNR = isEnteCNR;
 	}
 	public boolean isEnteCNR() {
 		return isEnteCNR;
+	}
+
+	public boolean isAttivoSiopeplus() {
+		return attivoSiopeplus;
 	}
 }
