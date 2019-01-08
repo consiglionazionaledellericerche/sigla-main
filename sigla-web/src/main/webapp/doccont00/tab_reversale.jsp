@@ -95,7 +95,7 @@
   	<tr>
 			<td><% bp.getController().writeFormLabel( out, "im_reversale"); %></td>
     		<td><% bp.getController().writeFormInput( out, "im_reversale"); %></td>
-    		<td><% bp.getController().writeFormLabel( out, "im_incassato"); %></td>
+    		<td class="text-right"><% bp.getController().writeFormLabel( out, "im_incassato"); %></td>
     		<td><% bp.getController().writeFormInput( out, "im_incassato"); %></td>
 	</tr>
 	
