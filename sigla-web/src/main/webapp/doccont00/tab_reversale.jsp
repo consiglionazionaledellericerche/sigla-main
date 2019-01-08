@@ -50,26 +50,26 @@
   </div>
   
   <div class="Group card p-2">
-  <table border="0" cellspacing="0" cellpadding="2">	
+  <table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "pg_reversale"); %></td>
-			<td><% bp.getController().writeFormInput( out, "pg_reversale"); %>
-				<% bp.getController().writeFormLabel( out, "dt_emissione"); %>
-				<% bp.getController().writeFormInput( out, "dt_emissione"); %></td>
+			<td><% bp.getController().writeFormInput( out, "pg_reversale"); %></td>
+			<td><% bp.getController().writeFormLabel( out, "dt_emissione"); %></td>
+			<td><% bp.getController().writeFormInput( out, "dt_emissione"); %></td>
 			<td><% bp.getController().writeFormLabel( out, "stato"); %></td>
 			<td><% bp.getController().writeFormInput( out, "stato"); %></td>
 	</tr>
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "dt_trasmissione"); %></td>
-			<td><% bp.getController().writeFormInput( out, "dt_trasmissione"); %>
-				<% bp.getController().writeFormLabel( out, "dt_ritrasmissione"); %>
-				<% bp.getController().writeFormInput( out, "dt_ritrasmissione"); %></td>
+			<td><% bp.getController().writeFormInput( out, "dt_trasmissione"); %></td>
+			<td><% bp.getController().writeFormLabel( out, "dt_ritrasmissione"); %></td>
+			<td><% bp.getController().writeFormInput( out, "dt_ritrasmissione"); %></td>
 			<td><% bp.getController().writeFormLabel( out, "stato_trasmissione"); %></td>
 			<td><% bp.getController().writeFormInput( out, "stato_trasmissione"); %></td>
 	</tr>
 	<tr>
 			<td><% bp.getController().writeFormLabel( out, "ds_reversale"); %></td>
-			<td colspan=3><% bp.getController().writeFormInput( out,"default", "ds_reversale",reversale.isAnnullato(),null,null); %></td> 
+			<td colspan=7><% bp.getController().writeFormInput( out,"default", "ds_reversale",reversale.isAnnullato(),null,null); %></td>
 	</tr>
 	
 	<% if (!bp.isSearching() && reversale!=null && reversale.getStato().equals(ReversaleBulk.STATO_REVERSALE_ANNULLATO) && reversale.getDt_trasmissione() !=null) {%>
@@ -91,29 +91,51 @@
   </div>
 
   <div class="Group card p-2">
-  <table border="0" cellspacing="0" cellpadding="2">	
+  <table border="0" cellspacing="0" cellpadding="2" class="w-100">
   	<tr>
 			<td><% bp.getController().writeFormLabel( out, "im_reversale"); %></td>
     		<td><% bp.getController().writeFormInput( out, "im_reversale"); %></td>
     		<td><% bp.getController().writeFormLabel( out, "im_incassato"); %></td>
-    		<td colspan=%><% bp.getController().writeFormInput( out, "im_incassato"); %></td>
+    		<td><% bp.getController().writeFormInput( out, "im_incassato"); %></td>
 	</tr>
 	
   </table>
   </div>
 <% if (!bp.isSearching() && bp.isSiope_attiva() && reversale.isRequiredSiope()) {%>
-  <div class="Group card p-2">
+  <div class="Group">
 	<fieldset class="fieldset">
-	<legend class="GroupLabel h3 text-primary">Codici SIOPE</legend>
-	  <table border="0" cellspacing="0" cellpadding="2">	
+	<legend class="GroupLabel text-primary ml-2 h2">Codici SIOPE</legend>
+	<div class="card p-2 w-100">
+	  <table border="0" cellspacing="0" cellpadding="2" class="w-100">
 	  	<tr>
 				<td><% bp.getController().writeFormLabel( out, "im_associato_siope"); %></td>
 	    		<td><% bp.getController().writeFormInput( out, "im_associato_siope"); %></td>
-				<td><% bp.getController().writeFormLabel( out, "im_da_associare_siope");%></td>
+				<td class="text-right"><% bp.getController().writeFormLabel( out, "im_da_associare_siope");%></td>
 	    		<td><% bp.getController().writeFormInput( out, "im_da_associare_siope");%></td>
 		</tr>
 	  </table>
+	  </div>
 	</fieldset>
   </div>  
-<% } %> 
+<% } %>
+<% if (bp.isAttivoSiopeplus()) {%>
+  <div class="Group">
+	<fieldset class="fieldset">
+	<legend class="GroupLabel text-primary ml-2 h2">SIOPE+</legend>
+	  <div class="card p-2 w-100">
+          <table border="0" cellspacing="0" cellpadding="2" class="w-100">
+            <tr>
+                    <% bp.getController().writeFormField( out, "esitoOperazione"); %>
+                    <td class="text-right"><% bp.getController().writeFormLabel( out, "dtOraEsitoOperazione"); %></td>
+                    <td><% bp.getController().writeFormInput( out, "dtOraEsitoOperazione"); %></td>
+            </tr>
+            <tr>
+                <td><% bp.getController().writeFormLabel( out, "erroreSiopePlus"); %></td>
+                <td colspan="3"><% bp.getController().writeFormInput( out, "erroreSiopePlus"); %></td>
+            </tr>
+          </table>
+	  </div>
+	</fieldset>
+  </div>
+<% } %>
   
