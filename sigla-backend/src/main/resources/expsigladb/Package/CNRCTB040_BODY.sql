@@ -77,7 +77,11 @@
   if aAcc.esercizio != aAcc.esercizio_competenza then
    IBMERR001.RAISE_ERR_GENERICO('Generazione automatica di accertamento in esercizi futuri non supportata!');
   end if;
-  aNumeratore:=CNRCTB018.getNextNumDocCont(aAcc.cd_tipo_documento_cont, aAcc.esercizio, aAcc.cd_cds, aAcc.utcr);
+  If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_ACC_PGIRO_RES Then
+    aNumeratore    := CNRCTB018.getNextNumDocCont(aAcc.cd_tipo_documento_cont, aAcc.esercizio, aAcc.cd_cds, aAcc.utcr);
+  else
+    aNumeratore    := aAcc.PG_accertamento;
+  end if;
 
   --Se l'esercizio originale non è valorizzato lo inizializzo con quello dell'esercizio
   If (aAcc.esercizio_originale Is Null) Then
@@ -187,13 +191,14 @@
 
    If aAcc.esercizio = aAcc.esercizio_originale Then
      aTipoDocContr := CNRCTB018.TI_DOC_OBB_PGIRO;
+     aNumeratore:=CNRCTB018.getNextNumDocCont(aTipoDocContr, aAcc.esercizio, aAcc.cd_cds, aAcc.utcr);
    Elsif aAcc.esercizio > aAcc.esercizio_originale Then
      aTipoDocContr := CNRCTB018.TI_DOC_OBB_PGIRO_RES;
+     aNumeratore:=CNRCTB018.getNextNumDocCont(aTipoDocContr, aAcc.esercizio_originale, aAcc.cd_cds, aAcc.utcr);
    End If;
 
   End if;
 
-  aNumeratore:=CNRCTB018.getNextNumDocCont(aTipoDocContr, aAcc.esercizio, aAcc.cd_cds, aAcc.utcr);
 
   aObb.cd_cds := aAcc.cd_cds;
   aObb.esercizio := aAcc.esercizio;
