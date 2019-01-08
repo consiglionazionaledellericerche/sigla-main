@@ -26,7 +26,7 @@
 		name="dt_ritrasmissione"
 		property="dt_ritrasmissione"
 		inputType="TEXT"
-		inputSize="8"
+		inputSize="10"
 		formatName="date_short"
 		label="Data Ritrasmissione"
 		enabledOnEdit="false"
@@ -109,6 +109,7 @@
 		maxLength="300"
 		inputSize="70"
 		inputType="TEXT"
+		inputCssClass="w-100"
 		label="Causale di Pagamento"
 		caseSensitiveSearch="false"
 		enabledOnSearch="true"
@@ -306,7 +307,36 @@
 		label="Data Pagamento Rich."
 		enabledOnInsert="true"
 		enabledOnSearch="true"/>
-		
+
+	<fieldProperty
+			name="esitoOperazione"
+			property="esitoOperazione"
+			keysProperty="esito_OperazioneKeys"
+			inputType="SELECT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Esito"/>
+	<fieldProperty
+			name="dtOraEsitoOperazione"
+			property="dtOraEsitoOperazione"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Data esito"/>
+	<fieldProperty
+			name="erroreSiopePlus"
+			property="erroreSiopePlus"
+			inputCssClass="w-100"
+			inputType="TEXTAREA"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			cols="4"
+			label="Errore"/>
+
 	<form name="searchtool">
 		<formFieldProperty
 			name="pg_mandato"
@@ -382,7 +412,17 @@
 	<formFieldProperty
 		name="find_documento_cont" />
 	<formFieldProperty
-		name="dt_pagamento_richiesta" />	
+		name="dt_pagamento_richiesta" />
+
+	<formFieldProperty
+		name="esitoOperazione" />
+	<formFieldProperty
+		name="dtOraEsitoOperazione" />
+	<formFieldProperty
+		name="erroreSiopePlus" />
+
+
+
 	<columnFieldProperty
 		name="esercizio"/>
 	<columnFieldProperty
@@ -474,5 +514,11 @@
 	<findFieldProperty
 		name="fl_riemissione" />		
 	<findFieldProperty
-		name="pg_mandato_riemissione" />		
+		name="pg_mandato_riemissione" />
+	<findFieldProperty
+			name="esitoOperazione" />
+	<findFieldProperty
+			name="dtOraEsitoOperazione" />
+	<findFieldProperty
+			name="erroreSiopePlus" />
 </bulkInfo>
