@@ -320,7 +320,8 @@
 			enabledOnInsert="false"
 			enabledOnEdit="false"
 			enabledOnSearch="true"
-			cols="4"
+			cols="100"
+			rows="3"
 			label="Errore"/>
 	<formFieldProperty
 		name="dt_trasmissione" />
