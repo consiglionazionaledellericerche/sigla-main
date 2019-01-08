@@ -4773,7 +4773,13 @@ public class DistintaCassiereComponent extends
                     infoben.setImportoBeneficiario(docContabile.getImDocumento().subtract(bulk.getIm_ritenute())
                             .setScale(2, BigDecimal.ROUND_HALF_UP));
                     if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
-                        infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value());
+                        if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
+                            infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONEACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value());
+                        } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB)) {
+                            infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONEACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value());
+                        } else {
+                            infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value());
+                        }
                     } else if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP)
                             && docContabile.getDtPagamentoRichiesta() == null) {
                         throw new ApplicationMessageFormatException(
