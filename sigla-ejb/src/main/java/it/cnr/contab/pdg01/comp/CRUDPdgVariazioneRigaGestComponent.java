@@ -564,37 +564,49 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 												   Pdg_variazione_riga_spesa_gestBulk dett,
 												   Elemento_voceBulk elementoVoce, 
 												   CompoundFindClause clause) throws ComponentException, PersistencyException {
-		if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
-
-		SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
-		
-		if(clause != null) sql.addClause(clause);
-
-		sql.addSQLClause("AND", "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
-
-		sql.addTableToHeader("PARAMETRI_LIVELLI");
-		sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
-
-		sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
-		sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
-		sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
-
-		sql.openParenthesis("AND");
-		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.ISNULL, null);	
-		sql.addSQLClause("OR", "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", sql.EQUALS, "N");	
-		sql.closeParenthesis();
-		sql.addSQLClause( "AND", "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", sql.EQUALS, "N"); 
-		if (dett.getLinea_attivita() != null)
-			sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",sql.EQUALS,dett.getLinea_attivita().getCd_funzione());
-		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-		if(!parCnrBulk.getFl_nuovo_pdg())
-			if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
-				sql.addSQLClause("AND","V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",sql.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
-
-		if (clause != null) sql.addClause(clause);
-
-		return sql;
+		try {
+			if (clause == null) clause = ((OggettoBulk)elementoVoce).buildFindClauses(null);
+	
+			SQLBuilder sql = getHome(userContext, elementoVoce,"V_ELEMENTO_VOCE_PDG_SPE").createSQLBuilder();
+			
+			if(clause != null) sql.addClause(clause);
+	
+			sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ) );
+	
+			sql.addTableToHeader("PARAMETRI_LIVELLI");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", "PARAMETRI_LIVELLI.ESERCIZIO");
+	
+			sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+			sql.addSQLJoin("V_ELEMENTO_VOCE_PDG_SPE.ID_CLASSIFICAZIONE", "V_CLASSIFICAZIONE_VOCI_ALL.ID_CLASSIFICAZIONE");
+			sql.addSQLJoin("V_CLASSIFICAZIONE_VOCI_ALL.NR_LIVELLO", "PARAMETRI_LIVELLI.LIVELLI_SPESA");
+	
+			sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.ISNULL, null);	
+			sql.addSQLClause(FindClause.OR, "V_ELEMENTO_VOCE_PDG_SPE.FL_PARTITA_GIRO", SQLBuilder.EQUALS, "N");	
+			sql.closeParenthesis();
+			sql.addSQLClause( FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.FL_SOLO_RESIDUO", SQLBuilder.EQUALS, "N"); 
+			if (dett.getLinea_attivita() != null)
+				sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_FUNZIONE",SQLBuilder.EQUALS,dett.getLinea_attivita().getCd_funzione());
+	
+			if(!Utility.createParametriCnrComponentSession().getParametriCnr(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )).getFl_nuovo_pdg())
+				if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
+					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",SQLBuilder.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
+	
+			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ))) {
+				sql.addTableToHeader("ASS_PROGETTO_PIAECO_VOCE");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE","V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE");
+				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE");
+				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
+				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+			}
+			if (clause != null) sql.addClause(clause);
+	
+			return sql;
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
 	}
 	
 	public SQLBuilder selectElemento_voceByClause (UserContext userContext, 
