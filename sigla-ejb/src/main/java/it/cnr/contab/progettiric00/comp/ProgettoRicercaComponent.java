@@ -1610,7 +1610,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 										.collect(Collectors.toList())));
 
 						entryVpe.getValue().stream().collect(Collectors.groupingBy(Pdg_modulo_spese_gestBulk::getElemento_voce))
-							.keySet().stream().filter(voce->vociAssociatePianoEconomico.contains(voce)).findFirst().ifPresent(voce->{
+							.keySet().stream().filter(voce->!vociAssociatePianoEconomico.contains(voce)).findFirst().ifPresent(voce->{
 								throw new ApplicationRuntimeException("Attenzione: non risulta presente per la voce del piano economico "+
 									entryEse.getKey()+"/"+entryVpe.getKey().getCd_voce_piano()+" l'associazione alla voce di bilancio già inserita in previsione (Es: " + 
 									entryEse.getKey()+" - Cdr: "+
@@ -1652,11 +1652,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			
 			Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
 			SQLBuilder sqlSaldi = saldiHome.createSQLBuilder();
+			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO",SQLBuilder.GREATER_EQUALS,annoFrom);
+			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE",SQLBuilder.GREATER_EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+			
 			sqlSaldi.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
 			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
 			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
 			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA","VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
-			sqlSaldi.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.GREATER_EQUALS,annoFrom);
 			sqlSaldi.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,progetto.getPg_progetto());
 
 			sqlSaldi.openParenthesis(FindClause.AND);
@@ -1682,8 +1684,9 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 			List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
 			saldiList.stream().findFirst().ifPresent(el->{
-               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata per il progetto la voce di bilancio " +
-               			el.getTi_gestione()+"/"+el.getCd_voce()+" che non risulta associata a nessuna voce del piano economico." + 
+               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
+               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
+               			" che non risulta associata a nessuna voce del piano economico per l'anno "+el.getEsercizio_res()+". " + 
                			"Operazione non consentita!");
 			});
 		} catch(Throwable e) {
