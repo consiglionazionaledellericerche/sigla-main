@@ -66,10 +66,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DistintaCassiereComponent extends
         it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
@@ -83,6 +80,11 @@ public class DistintaCassiereComponent extends
     public static final String STIPENDI = "STIPENDI";
     final private static String SEMAFORO_DISTINTA = "DISTINTA_CASSIERE00";
     public static final String CORRENTE = "CORRENTE";
+    public static final String COMPENSAZIONE = "COMPENSAZIONE";
+    public static final String REGOLARIZZAZIONE = "REGOLARIZZAZIONE";
+    public static final String CASSA = "CASSA";
+    public static final String INFRUTTIFERO = "INFRUTTIFERO";
+    public static final String INSERIMENTO = "INSERIMENTO";
 
     public DistintaCassiereComponent() {
     }
@@ -4507,7 +4509,7 @@ public class DistintaCassiereComponent extends
             final ObjectFactory objectFactory = new ObjectFactory();
             it.siopeplus.Reversale reversale = objectFactory.createReversale();
             List list = findDocumentiFlusso(userContext, bulk);
-            reversale.setTipoOperazione("INSERIMENTO");
+            reversale.setTipoOperazione(INSERIMENTO);
             GregorianCalendar gcdi = new GregorianCalendar();
             it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile = null;
             for (Iterator i = list.iterator(); i.hasNext(); ) {
@@ -4527,24 +4529,19 @@ public class DistintaCassiereComponent extends
                 reversale.setImportoReversale(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
                 infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
-                infover.setImportoVersante(docContabile.getImDocumento()
-                        .setScale(2, BigDecimal.ROUND_HALF_UP));
-                // tipologia non gestita da committare
-                // if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
-                // infover.setTipoRiscossione("COMPENSAZIONE");
-                if (docContabile.getTiDocumento().compareTo(
-                        ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0)
-                    infover.setTipoRiscossione("REGOLARIZZAZIONE");
+                infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
-                // da committare
-                // if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0
-                // &&
-                // bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
-                if (docContabile.getTiDocumento().compareTo(
-                        ReversaleBulk.TIPO_INCASSO) == 0)
-                    infover.setTipoRiscossione("CASSA");
+                if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
+                    infover.setTipoRiscossione(COMPENSAZIONE);
+                else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
+                    //TODO REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA se (sospseso.ti_CC_BI='B' reversale_riga.cd_modalita_pag = 'BI')
+                    infover.setTipoRiscossione(REGOLARIZZAZIONE);
+                }
+                else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO) == 0)
+                    infover.setTipoRiscossione(CASSA);
+
                 // Classificazioni
-                infover.setTipoEntrata("INFRUTTIFERO");
+                infover.setTipoEntrata(INFRUTTIFERO);
                 infover.setDestinazione(LIBERA);
 
                 List listClass = findDocumentiFlussoClassReversali(userContext, bulk);
@@ -4594,8 +4591,7 @@ public class DistintaCassiereComponent extends
                 }
                 // Fine classificazioni
                 it.siopeplus.Reversale.InformazioniVersante.Bollo bollo = objectFactory.createReversaleInformazioniVersanteBollo();
-                bollo.setAssoggettamentoBollo(docContabile
-                        .getAssoggettamentoBollo());
+                bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
                 bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
 
                 infover.setBollo(bollo);
@@ -4681,7 +4677,7 @@ public class DistintaCassiereComponent extends
             BancaBulk bancauo = recuperaIbanUo(userContext, bulk.getUo());
             it.siopeplus.Mandato mandato = objectFactory.createMandato();
             List list = findDocumentiFlusso(userContext, bulk);
-            mandato.setTipoOperazione("INSERIMENTO");
+            mandato.setTipoOperazione(INSERIMENTO);
             GregorianCalendar gcdi = new GregorianCalendar();
 
             it.siopeplus.Mandato.InformazioniBeneficiario infoben = objectFactory.createMandatoInformazioniBeneficiario();
@@ -5683,6 +5679,7 @@ public class DistintaCassiereComponent extends
                 ).filter(CompensoBulk.class::isInstance)
                         .map(CompensoBulk.class::cast)
                         .orElseThrow(() -> new ComponentException("Compenso non trovato!"));
+                getHomeCache(userContext).fetchAll(userContext);
                 final TipoDebitoSIOPE tipoDebitoSIOPETrattamento = Optional.ofNullable(compensoBulk.getTipoTrattamento())
                         .map(tipo_trattamentoBulk -> {
                             try {
@@ -5705,6 +5702,30 @@ public class DistintaCassiereComponent extends
                     }
                     case COMMERCIALE: {
                         ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
+                        //TODO da controllare
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StMotivoEsclusioneCigSiope.INCARICHI_COLLABORAZIONE);
+                        final Fattura_passivaBulk fattura_passivaBulk = Optional.ofNullable(compensoBulk.getFatturaPassiva())
+                                    .orElseThrow(() ->
+                                            new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al compenso {0}/{1}/{2} non è associata nessuna fattura!",
+                                            String.valueOf(compensoBulk.getEsercizio()),
+                                            String.valueOf(compensoBulk.getCd_cds()),
+                                            String.valueOf(compensoBulk.getPg_compenso())));
+                        CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
+                        ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
+                        ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
+                        ctFatturaSiope.setIdentificativoLottoSdiSiope(
+                                fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
+                                        fattura_passivaBulk.getDocumentoEleTestata().getProgressivo()
+                        );
+                        CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
+                        ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
+                        ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                        //TODO CONTROLLARE SE NOTA
+                        ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.getIm_totale_fattura());
+
+                        ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
+
                         break;
                     }
                 }
