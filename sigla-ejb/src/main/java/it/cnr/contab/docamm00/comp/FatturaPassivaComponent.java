@@ -4,9 +4,11 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -8039,5 +8041,19 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         }
 
     }
+
+    public SQLBuilder selectCigByClause (UserContext userContext, Fattura_passivaBulk fattura, CigBulk cig, CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		  clause = cig.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
+
+		sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
+		sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, fattura.getCd_unita_organizzativa());
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
+	}
+	
 
 }

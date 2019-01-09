@@ -10,6 +10,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -5575,7 +5576,8 @@ public class DistintaCassiereComponent extends
                             .keySet()
                             .stream()
                             .filter(fattura_passivaBulk -> (
-                                    !Optional.ofNullable(fattura_passivaBulk.getCd_cig()).isPresent() &&
+                                    !Optional.ofNullable(fattura_passivaBulk.getCig())
+                                            .flatMap(cigBulk -> Optional.ofNullable(cigBulk.getCdCig())).isPresent() &&
                                             !Optional.ofNullable(fattura_passivaBulk.getMotivo_assenza_cig()).isPresent()
                             )).findAny();
                     if (noCIGFattura_passivaBulk.isPresent()) {
@@ -5589,7 +5591,8 @@ public class DistintaCassiereComponent extends
                     final List<String> codiciCIG = collect
                             .keySet()
                             .stream()
-                            .map(Fattura_passivaBulk::getCd_cig)
+                            .map(Fattura_passivaBulk::getCig)
+                            .map(CigBulk::getCdCig)
                             .filter(s -> Optional.ofNullable(s).isPresent())
                             .filter(s -> s.length() > 0)
                             .distinct()
