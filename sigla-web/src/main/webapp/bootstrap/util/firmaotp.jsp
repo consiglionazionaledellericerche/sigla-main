@@ -20,19 +20,19 @@
           <div class="card-block p-3">
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label"><% bp.getController().writeFormLabel(out,"userNameOTP"); %></label>
-                <div class="col-sm-9">
+                <div class="ml-2 col-sm-9">
                   <% bp.getController().writeFormInput(out,"userNameOTP"); %>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label"><% bp.getController().writeFormLabel(out,"passwordOTP"); %></label>
-                <div class="col-sm-9">
+                <div class="ml-2 col-sm-9">
                   <% bp.getController().writeFormInput(out,"passwordOTP");%>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label"><% bp.getController().writeFormLabel(out,"otp"); %></label>
-                <div class="col-sm-9">
+                <div class="ml-2 col-sm-9">
                   <% bp.getController().writeFormInput(out,"otp");%>
                 </div>
             </div>
