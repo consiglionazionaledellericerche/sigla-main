@@ -7,6 +7,7 @@
     <businessProcess
             name="FirmaOTPBP" className="it.cnr.contab.firma.bp.FirmaOTPBP">
         <forward name="default" path="/util/firmaotp.jsp"/>
+        <forward name="bootstrap" path="/bootstrap/util/firmaotp.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.firma.bulk.FirmaOTPBulk" />
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
         <init-param name="defaultAction" value="FirmaOTPAction" />
