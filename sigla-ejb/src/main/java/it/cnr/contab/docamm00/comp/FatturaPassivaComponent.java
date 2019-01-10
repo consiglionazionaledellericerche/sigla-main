@@ -2313,8 +2313,44 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 throw handleException(fatturaPassiva, t);
             }
         }
+		impostaCig(context, fatturaPassiva);
         return fatturaPassiva;
     }
+
+	public void impostaCig(UserContext context, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
+//		PrimaryKeyHashtable obbligazioneTable = fatturaPassiva.getFattura_passiva_obbligazioniHash();
+//		LinkedList<CigBulk> cigList = new LinkedList<>(); 
+//		if (!obbligazioneTable.isEmpty()){
+//			Enumeration e = obbligazioneTable.keys();
+//		    while (e.hasMoreElements()) {
+//		      String key = (String) e.nextElement();
+//		      Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) obbligazioneTable.get(key);
+//		      ObbligazioneBulk obbligazione = new ObbligazioneBulk(scad.getCd_cds(), scad.getEsercizio(), scad.getEsercizio_originale(), scad.getPg_obbligazione());
+//		      try {
+//				obbligazione = (ObbligazioneBulk)getHome(context, ObbligazioneBulk.class).findByPrimaryKey(obbligazione);
+//			} catch (PersistencyException e1) {
+//				// TODO Auto-generated catch block
+//				throw new ComponentException(e1);
+//			}
+//		      if (obbligazione != null && obbligazione.getContratto() != null && obbligazione.getContratto().getCig() != null && !cigList.contains(obbligazione.getContratto().getCig())){
+//		    	  if (cigList.isEmpty()){
+//			    	  cigList.add(obbligazione.getContratto().getCig());
+//		    	  } else {
+//			    	  cigList.add(obbligazione.getContratto().getCig());
+//			    	  break;
+//		    	  }
+//		      }
+//		    } 
+//		    if (cigList.size() == 1){
+//		    	CigBulk cigImpegno = cigList.get(0);
+//		    	if (fatturaPassiva.getCig() != null && !fatturaPassiva.getCig().equalsByPrimaryKey(cigImpegno)){
+//		    		fatturaPassiva.setCig(null);
+//		    	} else {
+//			    	fatturaPassiva.setCig(cigImpegno);
+//		    	}
+//		    }
+//		}
+	}
 
     private void validaScadenze(Fattura_passivaBulk doc, Obbligazione_scadenzarioBulk newScad) throws ComponentException {
         Iterator it;
