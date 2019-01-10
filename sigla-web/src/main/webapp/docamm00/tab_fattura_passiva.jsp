@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8"
+﻿<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		java.util.*,

@@ -77,7 +77,7 @@
   if aAcc.esercizio != aAcc.esercizio_competenza then
    IBMERR001.RAISE_ERR_GENERICO('Generazione automatica di accertamento in esercizi futuri non supportata!');
   end if;
-  If aObb.cd_tipo_documento_cont is null or aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_ACC_PGIRO_RES Then
+  If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_ACC_PGIRO_RES or aAcc.PG_accertamento is null Then
     aNumeratore    := CNRCTB018.getNextNumDocCont(aAcc.cd_tipo_documento_cont, aAcc.esercizio, aAcc.cd_cds, aAcc.utcr);
   else
     aNumeratore    := aAcc.PG_accertamento;
