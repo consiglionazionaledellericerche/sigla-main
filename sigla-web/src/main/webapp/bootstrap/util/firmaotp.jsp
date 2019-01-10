@@ -16,7 +16,9 @@
 <% bp.openForm(pageContext);%>
     <div class="col-md-6 mx-auto">
         <div class="card">
-          <h3 class="card-header"><i class="fa fa-question-circle fa-fw fa-2x text-info" aria-hidden="true"></i> Inserire l'utente, la password e l'otp per la firma del documento.</h3>
+          <h3 class="card-header">
+            <i class="fa fa-question-circle fa-fw fa-2x text-info" aria-hidden="true"></i> Inserire l'utente, la password e l'otp per la firma del documento.
+          </h3>
           <div class="card-block p-3">
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label"><% bp.getController().writeFormLabel(out,"userNameOTP"); %></label>
