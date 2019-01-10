@@ -1373,7 +1373,7 @@ Dbms_Output.put_line ('dentro creaObbligazionePgiroInt');
   end if;
 
 -- 17.10.2007 SF: NUMERA LE PARTITE DI GIRO SOLO SE NON SONO RESIDUE !!!!
-  If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_OBB_PGIRO_RES Then
+  If aObb.cd_tipo_documento_cont != CNRCTB018.TI_DOC_OBB_PGIRO_RES or aObb.pg_obbligazione is null Then
     aNumeratore := CNRCTB018.getNextNumDocCont(aObb.cd_tipo_documento_cont, aObb.esercizio, aObb.cd_cds, aObb.utcr);
   Else
     aNumeratore := aObb.pg_obbligazione; -- rimane il vecchio numero
