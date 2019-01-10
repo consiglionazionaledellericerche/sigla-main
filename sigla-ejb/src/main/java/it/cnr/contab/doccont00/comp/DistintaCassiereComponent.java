@@ -4852,12 +4852,12 @@ public class DistintaCassiereComponent extends
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
                             sepa.setBic(docContabile.getBic());
-
-                        sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
-                                .toString()
-                                + "-"
-                                + docContabile.getCdUoOrigine()
-                                + "-" + docContabile.getPgDocumento().toString());
+                        if (!tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE))
+                            sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
+                                    .toString()
+                                    + "-"
+                                    + docContabile.getCdUoOrigine()
+                                    + "-" + docContabile.getPgDocumento().toString());
                         infoben.setSepaCreditTransfer(sepa);
                     }
                     List listClass = findDocumentiFlussoClass(userContext, bulk);
@@ -5370,12 +5370,12 @@ public class DistintaCassiereComponent extends
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
                             sepa.setBic(docContabile.getBic());
-
-                        sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
-                                .toString()
-                                + "-"
-                                + docContabile.getCdUoOrigine()
-                                + "-" + docContabile.getPgDocumento().toString());
+                        if (!tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE))
+                            sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
+                                    .toString()
+                                    + "-"
+                                    + docContabile.getCdUoOrigine()
+                                    + "-" + docContabile.getPgDocumento().toString());
                         infoben.setSepaCreditTransfer(sepa);
                     }
                     if (infoben.getCausale() != null
