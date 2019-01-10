@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8"
+﻿<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		java.util.*,
@@ -398,12 +398,6 @@
                 <td><% bp.getController().writeFormLabel(out,"cig");%></td>
 		        <td>
 		         	<div style="float:left"><% bp.getController().getBulkInfo().writeFormInput(out,bp.getController().getModel(),null, "cig", false,null,
-	                        "",
-	                        bp.getController().getInputPrefix(),
-	                        bp.getController().getStatus(),
-	                        bp.getController().getFieldValidationMap(),
-	                        bp.getParentRoot().isBootstrap());%></div>
-		         	<div style="float:left"><% bp.getController().getBulkInfo().writeFormInput(out,bp.getController().getModel(),null, "crea_cig", false,null,
 	                        "",
 	                        bp.getController().getInputPrefix(),
 	                        bp.getController().getStatus(),
