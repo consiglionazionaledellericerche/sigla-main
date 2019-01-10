@@ -61,7 +61,8 @@ public Forward doCerca(ActionContext context) throws java.rmi.RemoteException,In
 		clauses.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, unita_organizzativa.getCd_unita_organizzativa());
 		clauses.addClause("AND", "protocollo_iva", SQLBuilder.ISNULL, null);
 		clauses.addClause("AND", "protocollo_iva_generale", SQLBuilder.ISNULL, null);
-		clauses.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNULL, null);
+		clauses.addClause("AND", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.FALSE);
+		
 		clauses.addClause("AND", "dt_emissione", SQLBuilder.ISNULL, null);
 		clauses.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk.STATO_ANNULLATO);
 
