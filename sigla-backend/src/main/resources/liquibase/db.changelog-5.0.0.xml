@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1625,4 +1625,11 @@ TRASFERIMENTO_FONDI
 TRASPORTO_AEREO"/>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add_fk_fattura_passiva_cig">
+       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="cig" constraintName="fk_fattura_passiva14" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="cig"/>
+       <createIndex indexName="FX_FATTURA_PASSIVA14" tableName="FATTURA_PASSIVA">
+          <column name="CD_CIG"/>
+       </createIndex>
+    </changeSet>
+
 </databaseChangeLog>
