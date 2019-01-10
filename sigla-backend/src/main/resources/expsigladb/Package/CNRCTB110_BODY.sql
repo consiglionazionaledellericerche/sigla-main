@@ -109,7 +109,7 @@
       if aAnag.ti_entita = cnrctb080.TI_ENTITA_DIVERSI then
          return;
       else
-         IBMERR001.RAISE_ERR_GENERICO('Attenzione la riga "'|| aRiga.ds_riga  ||'" ha un terzo incompatibile con il documento contabile associato');
+         IBMERR001.RAISE_ERR_GENERICO('Attenzione la riga "'|| aRiga.ds_riga  ||'" ha un terzo '||aRiga.cd_terzo||' incompatibile con il terzo del documento contabile associato '||aAccertamento.cd_terzo);
 	  end if;
    else
     IBMERR001.RAISE_ERR_GENERICO('Nessun riferimento ad accertamento o '||cnrutil.getLabelObbligazioneMin()||' per il documento generico');
