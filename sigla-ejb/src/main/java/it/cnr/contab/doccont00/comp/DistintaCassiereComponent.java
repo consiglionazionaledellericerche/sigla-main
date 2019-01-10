@@ -85,6 +85,7 @@ public class DistintaCassiereComponent extends
     public static final String CASSA = "CASSA";
     public static final String INFRUTTIFERO = "INFRUTTIFERO";
     public static final String INSERIMENTO = "INSERIMENTO";
+    public static final int MAX_LENGTH_CAUSALE = 140;
 
     public DistintaCassiereComponent() {
     }
@@ -4602,17 +4603,15 @@ public class DistintaCassiereComponent extends
                 infover.setVersante(versante);
 
                 // gestito inserimento cup nella CAUSALE
-                if (infover.getCausale() != null
-                        && (infover.getCausale() + docContabile
-                        .getDsDocumento()).length() > 99)
+                if (infover.getCausale() != null && (infover.getCausale() + docContabile.getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                     infover.setCausale((infover.getCausale() + " " + docContabile
-                            .getDsDocumento()).substring(0, 98));
+                            .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
                 else if (infover.getCausale() != null)
                     infover.setCausale(infover.getCausale() + " "
                             + docContabile.getDsDocumento());
-                else if (docContabile.getDsDocumento().length() > 99)
+                else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                     infover.setCausale(docContabile.getDsDocumento().substring(
-                            0, 98));
+                            0, MAX_LENGTH_CAUSALE -1 ));
                 else
                     infover.setCausale(docContabile.getDsDocumento());
                 infover.setCausale(RemoveAccent.convert(infover.getCausale())
@@ -4929,15 +4928,15 @@ public class DistintaCassiereComponent extends
                     infoben.setBeneficiario(benef);
                     if (infoben.getCausale() != null
                             && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > 99)
+                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, 98));
+                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE -1));
                     else if (infoben.getCausale() != null)
                         infoben.setCausale(infoben.getCausale() + " "
                                 + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > 99)
+                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, 98));
+                                0, MAX_LENGTH_CAUSALE -1));
                     else
                         infoben.setCausale(docContabile.getDsDocumento());
                     infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
@@ -5067,15 +5066,15 @@ public class DistintaCassiereComponent extends
                     infoben.setBeneficiario(benef);
                     if (infoben.getCausale() != null
                             && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > 99)
+                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, 98));
+                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
                     else if (infoben.getCausale() != null)
                         infoben.setCausale(infoben.getCausale() + " "
                                 + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > 99)
+                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, 98));
+                                0, MAX_LENGTH_CAUSALE -1));
                     else
                         infoben.setCausale(docContabile.getDsDocumento());
                     infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
@@ -5380,15 +5379,15 @@ public class DistintaCassiereComponent extends
                     }
                     if (infoben.getCausale() != null
                             && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > 99)
+                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, 98));
+                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
                     else if (infoben.getCausale() != null)
                         infoben.setCausale(infoben.getCausale() + " "
                                 + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > 99)
+                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, 98));
+                                0, MAX_LENGTH_CAUSALE -1));
                     else
                         infoben.setCausale(docContabile.getDsDocumento());
                     infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
@@ -5703,28 +5702,30 @@ public class DistintaCassiereComponent extends
                         ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
                         //TODO da controllare
                         ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StMotivoEsclusioneCigSiope.INCARICHI_COLLABORAZIONE);
-                        final Fattura_passivaBulk fattura_passivaBulk = Optional.ofNullable(compensoBulk.getFatturaPassiva())
-                                    .orElseThrow(() ->
-                                            new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al compenso {0}/{1}/{2} non è associata nessuna fattura!",
-                                            String.valueOf(compensoBulk.getEsercizio()),
-                                            String.valueOf(compensoBulk.getCd_cds()),
-                                            String.valueOf(compensoBulk.getPg_compenso())));
-                        CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
-                        ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
-                        ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
-                        ctFatturaSiope.setIdentificativoLottoSdiSiope(
-                                fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
-                                        fattura_passivaBulk.getDocumentoEleTestata().getProgressivo()
-                        );
-                        CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
-                        ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
-                        ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
-                        //TODO CONTROLLARE SE NOTA
-                        ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.getIm_totale_fattura());
+                        final Optional<Fattura_passivaBulk> fattura_passivaBulk = Optional.ofNullable(compensoBulk.getFatturaPassiva());
 
-                        ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
-                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
-
+                        if (fattura_passivaBulk.isPresent()) {
+                            CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
+                            ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
+                            ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
+                            ctFatturaSiope.setIdentificativoLottoSdiSiope(
+                                    fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
+                                            fattura_passivaBulk.get().getDocumentoEleTestata().getProgressivo()
+                            );
+                            CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
+                            ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
+                            ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                            //TODO CONTROLLARE SE NOTA
+                            ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura());
+                            ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
+                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
+                        } else {
+                            CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
+                            ctFatturaSiope.setTipoDocumentoSiopeA(StTipoDocumentoAnalogico.ANALOGICO);
+                            ctFatturaSiope.setAnnoEmissioneFatturaSiope(compensoBulk.getEsercizio());
+                            ctFatturaSiope.setCodiceFiscaleEmittenteSiope(compensoBulk.getCodice_fiscale());
+                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
+                        }
                         break;
                     }
                 }
