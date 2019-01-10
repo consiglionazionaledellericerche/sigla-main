@@ -4685,13 +4685,12 @@ public class DistintaCassiereComponent extends
             it.siopeplus.Mandato.InformazioniBeneficiario.Bollo bollo = objectFactory.createMandatoInformazioniBeneficiarioBollo();
             it.siopeplus.SepaCreditTransfer sepa = objectFactory.createSepaCreditTransfer();
             it.siopeplus.Piazzatura piazzatura = objectFactory.createPiazzatura();
-            it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile = null;
             it.siopeplus.Beneficiario benef = objectFactory.createBeneficiario();
             it.siopeplus.Mandato.InformazioniBeneficiario.Sospeso sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
             it.siopeplus.Ritenute riten = objectFactory.createRitenute();
             it.siopeplus.InformazioniAggiuntive aggiuntive = objectFactory.createInformazioniAggiuntive();
             for (Iterator i = list.iterator(); i.hasNext(); ) {
-                docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
+                final it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk  docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
                 final String modalitaPagamento = docContabile.getModalitaPagamento();
 
                 final Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk =
@@ -4703,7 +4702,7 @@ public class DistintaCassiereComponent extends
                 final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
                         Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
                                 .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
-                                .orElseThrow(() -> new ApplicationMessageFormatException("Tipo pagamento SIOPE+ non trovato per modalità: {0}", modalitaPagamento));
+                                .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE);
 
                 //TODO deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
