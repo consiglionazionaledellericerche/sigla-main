@@ -1626,7 +1626,7 @@ TRASPORTO_AEREO"/>
         </addColumn>
     </changeSet>
     <changeSet author="gianfranco.gasparro" id="add_fk_fattura_passiva_cig">
-       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="cig" constraintName="fk_fattura_passiva14" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="cig"/>
+       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="cig" constraintName="fk_fattura_passiva14" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
        <createIndex indexName="FX_FATTURA_PASSIVA14" tableName="FATTURA_PASSIVA">
           <column name="CD_CIG"/>
        </createIndex>
