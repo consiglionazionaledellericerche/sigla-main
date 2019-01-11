@@ -10,6 +10,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -65,10 +66,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DistintaCassiereComponent extends
         it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
@@ -82,6 +80,12 @@ public class DistintaCassiereComponent extends
     public static final String STIPENDI = "STIPENDI";
     final private static String SEMAFORO_DISTINTA = "DISTINTA_CASSIERE00";
     public static final String CORRENTE = "CORRENTE";
+    public static final String COMPENSAZIONE = "COMPENSAZIONE";
+    public static final String REGOLARIZZAZIONE = "REGOLARIZZAZIONE";
+    public static final String CASSA = "CASSA";
+    public static final String INFRUTTIFERO = "INFRUTTIFERO";
+    public static final String INSERIMENTO = "INSERIMENTO";
+    public static final int MAX_LENGTH_CAUSALE = 140;
 
     public DistintaCassiereComponent() {
     }
@@ -4506,7 +4510,7 @@ public class DistintaCassiereComponent extends
             final ObjectFactory objectFactory = new ObjectFactory();
             it.siopeplus.Reversale reversale = objectFactory.createReversale();
             List list = findDocumentiFlusso(userContext, bulk);
-            reversale.setTipoOperazione("INSERIMENTO");
+            reversale.setTipoOperazione(INSERIMENTO);
             GregorianCalendar gcdi = new GregorianCalendar();
             it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile = null;
             for (Iterator i = list.iterator(); i.hasNext(); ) {
@@ -4526,24 +4530,22 @@ public class DistintaCassiereComponent extends
                 reversale.setImportoReversale(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
                 infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
-                infover.setImportoVersante(docContabile.getImDocumento()
-                        .setScale(2, BigDecimal.ROUND_HALF_UP));
-                // tipologia non gestita da committare
-                // if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
-                // infover.setTipoRiscossione("COMPENSAZIONE");
-                if (docContabile.getTiDocumento().compareTo(
-                        ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0)
-                    infover.setTipoRiscossione("REGOLARIZZAZIONE");
+                infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
-                // da committare
-                // if(docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO)==0
-                // &&
-                // bulk.getPg_documento_cont_padre().compareTo(bulk.getPg_documento_cont())==0)
-                if (docContabile.getTiDocumento().compareTo(
-                        ReversaleBulk.TIPO_INCASSO) == 0)
-                    infover.setTipoRiscossione("CASSA");
+                if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
+                    //TODO REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA se (sospseso.ti_CC_BI='B' reversale_riga.cd_modalita_pag = 'BI')
+                    infover.setTipoRiscossione(REGOLARIZZAZIONE);
+                } else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO) == 0) {
+                    if(!bulk.getPg_documento_cont_padre().equals(bulk.getPg_documento_cont())) {
+                        infover.setTipoRiscossione(COMPENSAZIONE);
+                    } else {
+                        infover.setTipoRiscossione(CASSA);
+                    }
+                } else if(!bulk.getPg_documento_cont_padre().equals(bulk.getPg_documento_cont())) {
+                    infover.setTipoRiscossione(COMPENSAZIONE);
+                }
                 // Classificazioni
-                infover.setTipoEntrata("INFRUTTIFERO");
+                infover.setTipoEntrata(INFRUTTIFERO);
                 infover.setDestinazione(LIBERA);
 
                 List listClass = findDocumentiFlussoClassReversali(userContext, bulk);
@@ -4593,8 +4595,7 @@ public class DistintaCassiereComponent extends
                 }
                 // Fine classificazioni
                 it.siopeplus.Reversale.InformazioniVersante.Bollo bollo = objectFactory.createReversaleInformazioniVersanteBollo();
-                bollo.setAssoggettamentoBollo(docContabile
-                        .getAssoggettamentoBollo());
+                bollo.setAssoggettamentoBollo(docContabile.getAssoggettamentoBollo());
                 bollo.setCausaleEsenzioneBollo(docContabile.getCausaleBollo());
 
                 infover.setBollo(bollo);
@@ -4605,17 +4606,15 @@ public class DistintaCassiereComponent extends
                 infover.setVersante(versante);
 
                 // gestito inserimento cup nella CAUSALE
-                if (infover.getCausale() != null
-                        && (infover.getCausale() + docContabile
-                        .getDsDocumento()).length() > 99)
+                if (infover.getCausale() != null && (infover.getCausale() + docContabile.getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                     infover.setCausale((infover.getCausale() + " " + docContabile
-                            .getDsDocumento()).substring(0, 98));
+                            .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
                 else if (infover.getCausale() != null)
                     infover.setCausale(infover.getCausale() + " "
                             + docContabile.getDsDocumento());
-                else if (docContabile.getDsDocumento().length() > 99)
+                else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                     infover.setCausale(docContabile.getDsDocumento().substring(
-                            0, 98));
+                            0, MAX_LENGTH_CAUSALE -1 ));
                 else
                     infover.setCausale(docContabile.getDsDocumento());
                 infover.setCausale(RemoveAccent.convert(infover.getCausale())
@@ -4680,7 +4679,7 @@ public class DistintaCassiereComponent extends
             BancaBulk bancauo = recuperaIbanUo(userContext, bulk.getUo());
             it.siopeplus.Mandato mandato = objectFactory.createMandato();
             List list = findDocumentiFlusso(userContext, bulk);
-            mandato.setTipoOperazione("INSERIMENTO");
+            mandato.setTipoOperazione(INSERIMENTO);
             GregorianCalendar gcdi = new GregorianCalendar();
 
             it.siopeplus.Mandato.InformazioniBeneficiario infoben = objectFactory.createMandatoInformazioniBeneficiario();
@@ -4688,13 +4687,12 @@ public class DistintaCassiereComponent extends
             it.siopeplus.Mandato.InformazioniBeneficiario.Bollo bollo = objectFactory.createMandatoInformazioniBeneficiarioBollo();
             it.siopeplus.SepaCreditTransfer sepa = objectFactory.createSepaCreditTransfer();
             it.siopeplus.Piazzatura piazzatura = objectFactory.createPiazzatura();
-            it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile = null;
             it.siopeplus.Beneficiario benef = objectFactory.createBeneficiario();
             it.siopeplus.Mandato.InformazioniBeneficiario.Sospeso sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
             it.siopeplus.Ritenute riten = objectFactory.createRitenute();
             it.siopeplus.InformazioniAggiuntive aggiuntive = objectFactory.createInformazioniAggiuntive();
             for (Iterator i = list.iterator(); i.hasNext(); ) {
-                docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
+                final it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk  docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
                 final String modalitaPagamento = docContabile.getModalitaPagamento();
 
                 final Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk =
@@ -4706,7 +4704,7 @@ public class DistintaCassiereComponent extends
                 final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
                         Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
                                 .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
-                                .orElseThrow(() -> new ApplicationMessageFormatException("Tipo pagamento SIOPE+ non trovato per modalità: {0}", modalitaPagamento));
+                                .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE);
 
                 //TODO deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
@@ -4856,12 +4854,12 @@ public class DistintaCassiereComponent extends
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
                             sepa.setBic(docContabile.getBic());
-
-                        sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
-                                .toString()
-                                + "-"
-                                + docContabile.getCdUoOrigine()
-                                + "-" + docContabile.getPgDocumento().toString());
+                        if (!tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE))
+                            sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
+                                    .toString()
+                                    + "-"
+                                    + docContabile.getCdUoOrigine()
+                                    + "-" + docContabile.getPgDocumento().toString());
                         infoben.setSepaCreditTransfer(sepa);
                     }
                     List listClass = findDocumentiFlussoClass(userContext, bulk);
@@ -4933,15 +4931,15 @@ public class DistintaCassiereComponent extends
                     infoben.setBeneficiario(benef);
                     if (infoben.getCausale() != null
                             && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > 99)
+                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, 98));
+                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE -1));
                     else if (infoben.getCausale() != null)
                         infoben.setCausale(infoben.getCausale() + " "
                                 + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > 99)
+                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, 98));
+                                0, MAX_LENGTH_CAUSALE -1));
                     else
                         infoben.setCausale(docContabile.getDsDocumento());
                     infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
@@ -5071,15 +5069,15 @@ public class DistintaCassiereComponent extends
                     infoben.setBeneficiario(benef);
                     if (infoben.getCausale() != null
                             && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > 99)
+                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, 98));
+                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
                     else if (infoben.getCausale() != null)
                         infoben.setCausale(infoben.getCausale() + " "
                                 + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > 99)
+                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, 98));
+                                0, MAX_LENGTH_CAUSALE -1));
                     else
                         infoben.setCausale(docContabile.getDsDocumento());
                     infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
@@ -5374,25 +5372,25 @@ public class DistintaCassiereComponent extends
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
                             sepa.setBic(docContabile.getBic());
-
-                        sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
-                                .toString()
-                                + "-"
-                                + docContabile.getCdUoOrigine()
-                                + "-" + docContabile.getPgDocumento().toString());
+                        if (!tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE))
+                            sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
+                                    .toString()
+                                    + "-"
+                                    + docContabile.getCdUoOrigine()
+                                    + "-" + docContabile.getPgDocumento().toString());
                         infoben.setSepaCreditTransfer(sepa);
                     }
                     if (infoben.getCausale() != null
                             && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > 99)
+                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, 98));
+                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
                     else if (infoben.getCausale() != null)
                         infoben.setCausale(infoben.getCausale() + " "
                                 + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > 99)
+                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
                         infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, 98));
+                                0, MAX_LENGTH_CAUSALE -1));
                     else
                         infoben.setCausale(docContabile.getDsDocumento());
                     infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
@@ -5575,7 +5573,8 @@ public class DistintaCassiereComponent extends
                             .keySet()
                             .stream()
                             .filter(fattura_passivaBulk -> (
-                                    !Optional.ofNullable(fattura_passivaBulk.getCd_cig()).isPresent() &&
+                                    !Optional.ofNullable(fattura_passivaBulk.getCig())
+                                            .flatMap(cigBulk -> Optional.ofNullable(cigBulk.getCdCig())).isPresent() &&
                                             !Optional.ofNullable(fattura_passivaBulk.getMotivo_assenza_cig()).isPresent()
                             )).findAny();
                     if (noCIGFattura_passivaBulk.isPresent()) {
@@ -5589,7 +5588,8 @@ public class DistintaCassiereComponent extends
                     final List<String> codiciCIG = collect
                             .keySet()
                             .stream()
-                            .map(Fattura_passivaBulk::getCd_cig)
+                            .map(Fattura_passivaBulk::getCig)
+                            .map(CigBulk::getCdCig)
                             .filter(s -> Optional.ofNullable(s).isPresent())
                             .filter(s -> s.length() > 0)
                             .distinct()
@@ -5680,6 +5680,7 @@ public class DistintaCassiereComponent extends
                 ).filter(CompensoBulk.class::isInstance)
                         .map(CompensoBulk.class::cast)
                         .orElseThrow(() -> new ComponentException("Compenso non trovato!"));
+                getHomeCache(userContext).fetchAll(userContext);
                 final TipoDebitoSIOPE tipoDebitoSIOPETrattamento = Optional.ofNullable(compensoBulk.getTipoTrattamento())
                         .map(tipo_trattamentoBulk -> {
                             try {
@@ -5702,6 +5703,32 @@ public class DistintaCassiereComponent extends
                     }
                     case COMMERCIALE: {
                         ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
+                        //TODO da controllare
+                        ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StMotivoEsclusioneCigSiope.INCARICHI_COLLABORAZIONE);
+                        final Optional<Fattura_passivaBulk> fattura_passivaBulk = Optional.ofNullable(compensoBulk.getFatturaPassiva());
+
+                        if (fattura_passivaBulk.isPresent()) {
+                            CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
+                            ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
+                            ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
+                            ctFatturaSiope.setIdentificativoLottoSdiSiope(
+                                    fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
+                                            fattura_passivaBulk.get().getDocumentoEleTestata().getProgressivo()
+                            );
+                            CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
+                            ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
+                            ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                            //TODO CONTROLLARE SE NOTA
+                            ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura());
+                            ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
+                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
+                        } else {
+                            CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
+                            ctFatturaSiope.setTipoDocumentoSiopeA(StTipoDocumentoAnalogico.ANALOGICO);
+                            ctFatturaSiope.setAnnoEmissioneFatturaSiope(compensoBulk.getEsercizio());
+                            ctFatturaSiope.setCodiceFiscaleEmittenteSiope(compensoBulk.getCodice_fiscale());
+                            ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
+                        }
                         break;
                     }
                 }

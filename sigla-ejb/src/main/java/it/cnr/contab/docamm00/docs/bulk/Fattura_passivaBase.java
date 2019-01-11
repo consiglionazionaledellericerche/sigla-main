@@ -228,7 +228,6 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
     // FL_DA_ORDINI CHAR(1)
     private java.lang.Boolean flDaOrdini;
 
-    private String cd_cig;
     private String motivo_assenza_cig;
 
     public Fattura_passivaBase() {
@@ -1235,14 +1234,6 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
 
     public void setFlDaOrdini(Boolean flDaOrdini) {
         this.flDaOrdini = flDaOrdini;
-    }
-
-    public String getCd_cig() {
-        return cd_cig;
-    }
-
-    public void setCd_cig(String cd_cig) {
-        this.cd_cig = cd_cig;
     }
 
     public String getMotivo_assenza_cig() {

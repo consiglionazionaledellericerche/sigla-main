@@ -7,6 +7,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -187,6 +188,7 @@ public abstract class Fattura_passivaBulk
     private char changeOperation = MOLTIPLICA;
     private java.sql.Timestamp inizio_validita_valuta;
     private java.sql.Timestamp fine_validita_valuta;
+	private CigBulk cig;
     /*
      * Le variabili isDetailDoubled e isDocumentoModificabile servono per gestire il caso in cui l'utente
 	 * non potendo modificare il documento procede solo a sdoppiare la riga di dettaglio. In tal caso la
@@ -3002,7 +3004,7 @@ public abstract class Fattura_passivaBulk
             getLettera_pagamento_estero().validate();
 
         if (!(isEstera() ||isSanMarinoConIVA() || isSanMarinoSenzaIVA()) &&
-                (!Optional.ofNullable(getCd_cig()).isPresent() && !Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
+                (!Optional.ofNullable(getCig()).isPresent() && !Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
             throw new ValidationException("Inserire il CIG o il motivo di assenza dello stesso!");
         }
     }
@@ -3479,4 +3481,12 @@ public abstract class Fattura_passivaBulk
                 })
                 .orElse(Collections.emptyList());
     }
+
+	public CigBulk getCig() {
+		return cig;
+	}
+
+	public void setCig(CigBulk cig) {
+		this.cig = cig;
+	}
 }
