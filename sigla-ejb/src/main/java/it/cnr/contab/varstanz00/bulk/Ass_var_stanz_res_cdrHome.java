@@ -19,10 +19,16 @@ public class Ass_var_stanz_res_cdrHome extends BulkHome {
 	public java.util.Collection findDettagliSpesa(Ass_var_stanz_res_cdrBulk testata) throws IntrospectionException, PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Var_stanz_res_rigaBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,testata.getEsercizio());
-		sql.addSQLClause("AND","PG_VARIAZIONE",sql.EQUALS,testata.getPg_variazione());
-		sql.addSQLClause("AND","CD_CDR",sql.EQUALS,testata.getCd_centro_responsabilita());
+		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,testata.getEsercizio());
+		sql.addSQLClause("AND","PG_VARIAZIONE",SQLBuilder.EQUALS,testata.getPg_variazione());
+		sql.addSQLClause("AND","CD_CDR",SQLBuilder.EQUALS,testata.getCd_centro_responsabilita());
 		return dettHome.fetchAll(sql);
 	}
-	
+	public java.util.Collection findDettagliSpesa(Var_stanz_resBulk testata) throws IntrospectionException, PersistencyException {
+		PersistentHome dettHome = getHomeCache().getHome(Var_stanz_res_rigaBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,testata.getEsercizio());
+		sql.addSQLClause("AND","PG_VARIAZIONE",SQLBuilder.EQUALS,testata.getPg_variazione());
+		return dettHome.fetchAll(sql);
+	}	
 }
