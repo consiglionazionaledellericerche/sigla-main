@@ -4532,15 +4532,18 @@ public class DistintaCassiereComponent extends
                 infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
                 infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
-                if(bulk.getPg_documento_cont_padre()!=bulk.getPg_documento_cont())
-                    infover.setTipoRiscossione(COMPENSAZIONE);
-                else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
+                if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
                     //TODO REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA se (sospseso.ti_CC_BI='B' reversale_riga.cd_modalita_pag = 'BI')
                     infover.setTipoRiscossione(REGOLARIZZAZIONE);
+                } else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO) == 0) {
+                    if(!bulk.getPg_documento_cont_padre().equals(bulk.getPg_documento_cont())) {
+                        infover.setTipoRiscossione(COMPENSAZIONE);
+                    } else {
+                        infover.setTipoRiscossione(CASSA);
+                    }
+                } else if(!bulk.getPg_documento_cont_padre().equals(bulk.getPg_documento_cont())) {
+                    infover.setTipoRiscossione(COMPENSAZIONE);
                 }
-                else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO) == 0)
-                    infover.setTipoRiscossione(CASSA);
-
                 // Classificazioni
                 infover.setTipoEntrata(INFRUTTIFERO);
                 infover.setDestinazione(LIBERA);
