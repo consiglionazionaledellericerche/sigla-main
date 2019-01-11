@@ -793,7 +793,7 @@ $F{DENOMINAZIONE_SEDE} != null)]]></printWhenExpression>
 :$F{TI_PAGAMENTO}.equals("P")?$F{DS_MODALITA_PAG} + " n. " + $F{NUMERO_CONTO_TERZO} + ($F{INTESTAZIONE_TERZO}!=null?", intestazione: " + $F{INTESTAZIONE_TERZO}:"")
 :$F{TI_PAGAMENTO}.equals("A")||
  $F{TI_PAGAMENTO}.equals("Q")||
- $F{TI_PAGAMENTO}.equals("I")?$F{DS_MODALITA_PAG} + ($F{INTESTAZIONE_TERZO}!=null?", intestazione: " + $F{INTESTAZIONE_TERZO}:"") + ($F{IBAN_TERZO}!=null?", IBAN: " + $F{IBAN_TERZO}:", conto: " + $F{NUMERO_CONTO_TERZO})
+ $F{TI_PAGAMENTO}.equals("I")?$F{DS_MODALITA_PAG} + ($F{IBAN_TERZO}!=null?", IBAN: " + $F{IBAN_TERZO}:", conto: " + $F{NUMERO_CONTO_TERZO})
 :$F{TI_PAGAMENTO}.equals("N")?$F{DS_MODALITA_PAG} + ($F{INTESTAZIONE_TERZO}!=null?", intestazione: " + $F{INTESTAZIONE_TERZO}:"") + "  " + ($F{IBAN_TERZO}==null?" ":"IBAN "+$F{IBAN_TERZO})+
 			     "  "+($F{SWIFT_TERZO}==null?" ":"SWIFT "+$F{SWIFT_TERZO})
 :$F{DS_MODALITA_PAG}]]></textFieldExpression>
