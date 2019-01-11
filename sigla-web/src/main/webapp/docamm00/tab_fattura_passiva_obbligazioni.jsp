@@ -33,6 +33,40 @@
 			  	<td>
 				  	<% bp.writeFormInput(out,null,"importoTotalePerObbligazione",false,null,"style=\"color:black\"");%>
 			  	</td>
+
+   <% if (bp.isCIGVisible(((Obbligazione_scadenzarioBulk)bp.getObbligazioniController().getModel()))) { %>
+    <div class="Group card">
+        <table class="w-100">
+           <tr>
+                <td><% bp.getObbligazioniController().writeFormLabel(out,"cig");%></td>
+		        <td>
+		         	<div style="float:left"><% bp.getObbligazioniController().getBulkInfo().writeFormInput(out,bp.getObbligazioniController().getModel(),null, "cig", false,null,
+	                        "",
+	                        bp.getObbligazioniController().getInputPrefix(),
+	                        bp.getObbligazioniController().getStatus(),
+	                        bp.getObbligazioniController().getFieldValidationMap(),
+	                        bp.getParentRoot().isBootstrap());%></div>
+		        </td>
+                <td><% bp.getObbligazioniController().writeFormLabel(out,"motivo_assenza_cig");%></td>
+                <td><% bp.getObbligazioniController().getBulkInfo().writeFormInput(
+                        out,
+                        bp.getObbligazioniController().getModel(),
+                        null,
+                        "motivo_assenza_cig",
+                        false,
+                        null,
+                        "",
+                        bp.getObbligazioniController().getInputPrefix(),
+                        bp.getObbligazioniController().getStatus(),
+                        bp.getObbligazioniController().getFieldValidationMap(),
+                        bp.getParentRoot().isBootstrap()
+                    );
+                %></td>
+          </tr>
+        </table>
+    </div>
+    <% } %>
+
 			  	<td>
 					<% if (fatturaPassiva.quadraturaInDeroga()) { %>
 						<span class="FormLabel" style="color:red">

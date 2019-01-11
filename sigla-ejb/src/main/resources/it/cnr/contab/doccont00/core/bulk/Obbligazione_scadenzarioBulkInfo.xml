@@ -120,6 +120,31 @@
 		label="cig"
 		inputType="TEXT"
 		/>	
+
+    <fieldProperty
+            name="cig"
+            property="cig"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            nullable="true"
+            enabledOnSearch="true"
+            CRUDBusinessProcessName="CRUDCodiciCIGBP"
+            label="CIG"/>
+    <fieldProperty
+            name="cdCigDaCopiare"
+            property="cig.cdCig"
+            inputType="TEXT"
+            inputSize="20"
+            maxLength="10"
+            enabledOnSearch="true"
+            label="Codice CIG"/>
+    <fieldProperty
+            name="motivo_assenza_cig"
+            property="motivo_assenza_cig"
+            inputType="SELECT"
+            keysProperty="motivoEsclusioneCigSIOPEKeys"
+            enabledOnSearch="true"
+            label="Motivo assenza CIG"/>		
 	<form name="searchtool">
         <formFieldProperty
               name="esercizio_originale" 
@@ -278,7 +303,10 @@
 	<formFieldProperty
 		name="importo_disponibile"
 		/>
-
+    <formFieldProperty
+            name="cig"/>
+    <formFieldProperty
+            name="motivo_assenza_cig"/>
 	<findFieldProperty
 		name="cd_cds"
 		/>
