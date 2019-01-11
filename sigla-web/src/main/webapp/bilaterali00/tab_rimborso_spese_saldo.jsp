@@ -171,7 +171,9 @@
 										 	     	bp.getController().writeFormInput(out,"contoA");
 												} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(model.getBanca().getTi_pagamento())) { 
 										 	     	bp.getController().writeFormInput(out,"contoN");
-												}
+												} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(model.getBanca().getTi_pagamento()) && model.getBanca().isTABB()) {
+                                                    bp.getController().writeFormInput(out,"contoB");
+                                                }
 											} else {
 												if ((model.getModalitaPagamentoSaldoOptions()==null || model.getModalitaPagamentoSaldoOptions().isEmpty()) && model.getTerzoPagamento().getAnagrafico()!=null && !bp.isSearching()) { %>
 													<span class="FormLabel" style="color:red"> Nessuna modalità di pagamento trovata</span>
