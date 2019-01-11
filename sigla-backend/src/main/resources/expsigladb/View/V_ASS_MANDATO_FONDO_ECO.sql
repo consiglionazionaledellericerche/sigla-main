@@ -2,7 +2,45 @@
 --  DDL for View V_ASS_MANDATO_FONDO_ECO
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_ASS_MANDATO_FONDO_ECO" ("CD_CDS", "ESERCIZIO", "PG_MANDATO", "CD_UNITA_ORGANIZZATIVA", "CD_CDS_ORIGINE", "CD_UO_ORIGINE", "CD_TIPO_DOCUMENTO_CONT", "TI_MANDATO", "TI_COMPETENZA_RESIDUO", "DS_MANDATO", "STATO", "DT_EMISSIONE", "DT_TRASMISSIONE", "DT_PAGAMENTO", "DT_ANNULLAMENTO", "IM_MANDATO", "IM_PAGATO", "UTCR", "DACR", "UTUV", "DUVA", "PG_VER_REC", "STATO_TRASMISSIONE", "DT_RITRASMISSIONE", "STATO_COGE", "IM_RITENUTE", "CD_TERZO", "CD_CODICE_FONDO", "TI_APERTURA_INCREMENTO", "DT_FIRMA", "PG_MANDATO_RIEMISSIONE", "STATO_TRASMISSIONE_ANNULLO", "DT_FIRMA_ANNULLO", "FL_RIEMISSIONE", "DT_PAGAMENTO_RICHIESTA") AS 
+  CREATE OR REPLACE FORCE VIEW "V_ASS_MANDATO_FONDO_ECO" (
+    "CD_CDS",
+    "ESERCIZIO",
+    "PG_MANDATO",
+    "CD_UNITA_ORGANIZZATIVA",
+    "CD_CDS_ORIGINE",
+    "CD_UO_ORIGINE",
+    "CD_TIPO_DOCUMENTO_CONT",
+    "TI_MANDATO",
+    "TI_COMPETENZA_RESIDUO",
+    "DS_MANDATO",
+    "STATO",
+    "DT_EMISSIONE",
+    "DT_TRASMISSIONE",
+    "DT_PAGAMENTO",
+    "DT_ANNULLAMENTO",
+    "IM_MANDATO",
+    "IM_PAGATO",
+    "UTCR",
+    "DACR",
+    "UTUV",
+    "DUVA",
+    "PG_VER_REC",
+    "STATO_TRASMISSIONE",
+    "DT_RITRASMISSIONE",
+    "STATO_COGE",
+    "IM_RITENUTE",
+    "CD_TERZO",
+    "CD_CODICE_FONDO",
+    "TI_APERTURA_INCREMENTO",
+    "DT_FIRMA",
+    "PG_MANDATO_RIEMISSIONE",
+    "STATO_TRASMISSIONE_ANNULLO",
+    "DT_FIRMA_ANNULLO",
+    "FL_RIEMISSIONE",
+    "DT_PAGAMENTO_RICHIESTA",
+    "ESITO_OPERAZIONE",
+    "DT_ORA_ESITO_OPERAZIONE",
+    "ERRORE_SIOPE_PLUS") AS
   SELECT
 --==============================================================================
 --
@@ -55,7 +93,10 @@
        T.cd_terzo,
        F.cd_codice_fondo,
        DECODE(F.cd_codice_fondo, NULL, NULL, 'A'),a.dt_firma, a.pg_mandato_riemissione,a.stato_trasmissione_annullo,a.dt_firma_annullo,a.fl_riemissione,
-       a.DT_PAGAMENTO_RICHIESTA
+       a.DT_PAGAMENTO_RICHIESTA,
+       a.esito_operazione,
+       a.dt_ora_esito_operazione,
+       a.errore_siope_plus
 FROM   MANDATO A,
        MANDATO_TERZO T,
        FONDO_ECONOMALE F
@@ -108,7 +149,10 @@ SELECT A.cd_cds,
        T.cd_terzo,
        M.cd_codice_fondo,
        'I',a.dt_firma,a.pg_mandato_riemissione,a.stato_trasmissione_annullo,a.dt_firma_annullo,a.fl_riemissione,
-       a.DT_PAGAMENTO_RICHIESTA
+       a.DT_PAGAMENTO_RICHIESTA,
+       a.esito_operazione,
+       a.dt_ora_esito_operazione,
+       a.errore_siope_plus
 FROM   MANDATO A,
        MANDATO_TERZO T,
        ASS_FONDO_ECO_MANDATO M

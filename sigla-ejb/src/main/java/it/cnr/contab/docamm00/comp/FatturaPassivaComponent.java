@@ -4,9 +4,11 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -2311,8 +2313,44 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 throw handleException(fatturaPassiva, t);
             }
         }
+		impostaCig(context, fatturaPassiva);
         return fatturaPassiva;
     }
+
+	public void impostaCig(UserContext context, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
+//		PrimaryKeyHashtable obbligazioneTable = fatturaPassiva.getFattura_passiva_obbligazioniHash();
+//		LinkedList<CigBulk> cigList = new LinkedList<>(); 
+//		if (!obbligazioneTable.isEmpty()){
+//			Enumeration e = obbligazioneTable.keys();
+//		    while (e.hasMoreElements()) {
+//		      String key = (String) e.nextElement();
+//		      Obbligazione_scadenzarioBulk scad = (Obbligazione_scadenzarioBulk) obbligazioneTable.get(key);
+//		      ObbligazioneBulk obbligazione = new ObbligazioneBulk(scad.getCd_cds(), scad.getEsercizio(), scad.getEsercizio_originale(), scad.getPg_obbligazione());
+//		      try {
+//				obbligazione = (ObbligazioneBulk)getHome(context, ObbligazioneBulk.class).findByPrimaryKey(obbligazione);
+//			} catch (PersistencyException e1) {
+//				// TODO Auto-generated catch block
+//				throw new ComponentException(e1);
+//			}
+//		      if (obbligazione != null && obbligazione.getContratto() != null && obbligazione.getContratto().getCig() != null && !cigList.contains(obbligazione.getContratto().getCig())){
+//		    	  if (cigList.isEmpty()){
+//			    	  cigList.add(obbligazione.getContratto().getCig());
+//		    	  } else {
+//			    	  cigList.add(obbligazione.getContratto().getCig());
+//			    	  break;
+//		    	  }
+//		      }
+//		    } 
+//		    if (cigList.size() == 1){
+//		    	CigBulk cigImpegno = cigList.get(0);
+//		    	if (fatturaPassiva.getCig() != null && !fatturaPassiva.getCig().equalsByPrimaryKey(cigImpegno)){
+//		    		fatturaPassiva.setCig(null);
+//		    	} else {
+//			    	fatturaPassiva.setCig(cigImpegno);
+//		    	}
+//		    }
+//		}
+	}
 
     private void validaScadenze(Fattura_passivaBulk doc, Obbligazione_scadenzarioBulk newScad) throws ComponentException {
         Iterator it;
@@ -8039,5 +8077,19 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         }
 
     }
+
+    public SQLBuilder selectCigByClause (UserContext userContext, Fattura_passivaBulk fattura, CigBulk cig, CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		  clause = cig.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
+
+		sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
+		sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, fattura.getCd_unita_organizzativa());
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
+	}
+	
 
 }

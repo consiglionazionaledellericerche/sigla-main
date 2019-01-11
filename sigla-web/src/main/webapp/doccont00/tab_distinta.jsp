@@ -1,14 +1,7 @@
-<!-- 
- ?ResourceName "TemplateForm.jsp"
- ?ResourceTimestamp "08/11/00 16.43.22"
- ?ResourceEdition "1.0"
--->
-
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,it.cnr.jada.action.*,java.util.*, it.cnr.jada.util.action.*,it.cnr.contab.doccont00.bp.*"
 %>
 <% 
-	JSPUtils.printBaseUrl(pageContext); 
 it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request);
 %>
 <script language="JavaScript">
