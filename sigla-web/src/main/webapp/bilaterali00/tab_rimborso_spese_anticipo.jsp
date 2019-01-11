@@ -65,7 +65,9 @@
 										 	     	bp.getController().writeFormInput(out,"contoAAnt");
 												} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(model.getBancaAnticipo().getTi_pagamento())) { 
 										 	     	bp.getController().writeFormInput(out,"contoNAnt");
-												}
+												} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(model.getBancaAnticipo().getTi_pagamento()) && model.getBancaAnticipo().isTABB()) {
+                                                    bp.getController().writeFormInput(out,"contoBAnt");
+                                                }
 											} else {
 												if ((model.getModalitaPagamentoAnticipoOptions()==null || model.getModalitaPagamentoAnticipoOptions().isEmpty()) && model.getTerzoPagamento().getAnagrafico()!=null && !bp.isSearching()) { %>
 													<span class="FormLabel" style="color:red"> Nessuna modalità di pagamento trovata</span>

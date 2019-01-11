@@ -161,7 +161,9 @@
 			 	     	bp.getController().writeFormInput(out,"contoA");
 				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(fatturaPassiva.getBanca().getTi_pagamento())) { 
 		 	     	bp.getController().writeFormInput(out,"contoN");
-				}
+				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(fatturaPassiva.getBanca().getTi_pagamento()) && fatturaPassiva.getBanca().isTABB()) {
+                    bp.getDettaglio().writeFormInput(out,"contoB");
+                }
 			} else if (fatturaPassiva.getModalita_pagamento() != null && (fornitore != null && fornitore.getCrudStatus() != fornitore.UNDEFINED)) { %>
 				<span class="FormLabel" style="color:red">
 					Nessun riferimento trovato per la modalità di pagamento selezionata!
