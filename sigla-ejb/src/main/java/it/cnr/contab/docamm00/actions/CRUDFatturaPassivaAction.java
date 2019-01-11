@@ -587,6 +587,9 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             }
 
             doCalcolaTotalePerObbligazione(context, obbligazione);
+        	if (!(obbligazione != null && obbligazione.getObbligazione() != null && obbligazione.getObbligazione().getContratto() != null && obbligazione.getObbligazione().getContratto().getCig() != null)) {
+                bp.setMessage("L'impegno selezionato non ha il CIG. Indicare il CIG.");
+        	}
         }
     }
 
@@ -5603,14 +5606,14 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 .ifPresent(ordiniCRUDController -> ordiniCRUDController.setRettificheCollapse(!ordiniCRUDController.isRettificheCollapse()));
         return context.findDefaultForward();
     }
-	public Forward doBringBackCRUDCrea_cig(ActionContext context, Fattura_passivaBulk fattura, CigBulk cig) 
+	public Forward doBringBackCRUDCrea_cig(ActionContext context, Obbligazione_scadenzarioBulk obbl, CigBulk cig) 
 	{
 		CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
 		try 
 		{
 			if (cig != null )
 			{
-				fattura.setCig(cig);
+				obbl.setCig(cig);
 			}	
 			return context.findDefaultForward();
 		}
