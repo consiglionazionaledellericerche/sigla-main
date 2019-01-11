@@ -1,5 +1,21 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Vector;
+import java.util.stream.Collectors;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -7,7 +23,6 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_termini_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
-import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -16,24 +31,32 @@ import it.cnr.contab.docamm00.intrastat.bulk.Fattura_passiva_intraBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
-import it.cnr.contab.doccont00.core.bulk.*;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoOrdBulk;
+import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
+import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.FatturaOrdineBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.bulk.BulkCollection;
+import it.cnr.jada.bulk.BulkCollections;
+import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.PrimaryKeyHashMap;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
 import it.siopeplus.StMotivoEsclusioneCigSiope;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class Fattura_passivaBulk
         extends Fattura_passivaBase
@@ -156,15 +179,6 @@ public abstract class Fattura_passivaBulk
         CAUSALE.put(CONT, "Contenzioso");
         CAUSALE.put(ATTNC, "In attesa di nota credito");
     }
-    public final static Map<String,String> motivoEsclusioneCigSIOPEKeys = Arrays.asList(StMotivoEsclusioneCigSiope.values())
-            .stream()
-            .collect(Collectors.toMap(
-                    StMotivoEsclusioneCigSiope::name,
-                    StMotivoEsclusioneCigSiope::value,
-                    (oldValue, newValue) -> oldValue,
-                    Hashtable::new
-            ));
-
     protected Tipo_sezionaleBulk tipo_sezionale;
     protected DivisaBulk valuta;
     protected boolean defaultValuta = false;
@@ -188,7 +202,6 @@ public abstract class Fattura_passivaBulk
     private char changeOperation = MOLTIPLICA;
     private java.sql.Timestamp inizio_validita_valuta;
     private java.sql.Timestamp fine_validita_valuta;
-	private CigBulk cig;
     /*
      * Le variabili isDetailDoubled e isDocumentoModificabile servono per gestire il caso in cui l'utente
 	 * non potendo modificare il documento procede solo a sdoppiare la riga di dettaglio. In tal caso la
@@ -451,7 +464,8 @@ public abstract class Fattura_passivaBulk
     public void addToFattura_passiva_obbligazioniHash(
             Obbligazione_scadenzarioBulk obbligazione,
             Fattura_passiva_rigaBulk rigaFattura) {
-
+    	obbligazione.setCig(rigaFattura.getCig());
+    	obbligazione.setMotivo_assenza_cig(rigaFattura.getMotivo_assenza_cig());
         if (fattura_passiva_obbligazioniHash == null)
             fattura_passiva_obbligazioniHash = new ObbligazioniTable();
         Vector righeAssociate = (Vector) fattura_passiva_obbligazioniHash.get(obbligazione);
@@ -3003,10 +3017,13 @@ public abstract class Fattura_passivaBulk
         if (getLettera_pagamento_estero() != null)
             getLettera_pagamento_estero().validate();
 
-        if (!(isEstera() ||isSanMarinoConIVA() || isSanMarinoSenzaIVA()) &&
-                (!Optional.ofNullable(getCig()).isPresent() && !Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
-            throw new ValidationException("Inserire il CIG o il motivo di assenza dello stesso!");
-        }
+//        if (!(isEstera() ||isSanMarinoConIVA() || isSanMarinoSenzaIVA()) &&
+//                (!Optional.ofNullable(getCig()).isPresent() && !Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
+//            throw new ValidationException("Inserire il CIG o il motivo di assenza dello stesso!");
+//        }
+//        if ((Optional.ofNullable(getCig()).isPresent() && Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
+//            throw new ValidationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
+//        }
     }
 
     public void validateDate() throws ValidationException {
@@ -3482,11 +3499,4 @@ public abstract class Fattura_passivaBulk
                 .orElse(Collections.emptyList());
     }
 
-	public CigBulk getCig() {
-		return cig;
-	}
-
-	public void setCig(CigBulk cig) {
-		this.cig = cig;
-	}
 }

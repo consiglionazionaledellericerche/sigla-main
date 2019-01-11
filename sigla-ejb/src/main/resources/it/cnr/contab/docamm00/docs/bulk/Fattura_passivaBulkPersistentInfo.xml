@@ -78,12 +78,6 @@
 			propertyName="compenso.pg_compenso" />
 
 		<columnMapping
-			columnName="CD_CIG"
-			propertyName="cig.cdCig"
-			sqlTypeName="VARCHAR"
-			nullable="true"
-			columnSize="10" />
-		<columnMapping
 			columnName="ID_PAESE"
 			propertyName="documentoEleTestata.documentoEleTrasmissione.idPaese" />
 		<columnMapping
@@ -118,7 +112,5 @@
 		name="compenso" />
 	<persistentProperty
 		name="documentoEleTestata" />
-	<persistentProperty
-		name="cig" />
 				
 </SQLPersistentInfo>
