@@ -1,6 +1,7 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
@@ -33,6 +34,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
@@ -1349,8 +1351,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         }
     }
 
-    public boolean isCIGVisible() {
-        return Optional.ofNullable(getModel())
+    public boolean isCIGVisible(Obbligazione_scadenzarioBulk scad) {
+        if( Optional.ofNullable(getModel())
                     .filter(Fattura_passivaBulk.class::isInstance)
                     .map(Fattura_passivaBulk.class::cast)
                     .map(fattura_passivaBulk -> !(
@@ -1358,7 +1360,12 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                             fattura_passivaBulk.isSanMarinoConIVA() ||
                             fattura_passivaBulk.isSanMarinoSenzaIVA()
                     ) && (fattura_passivaBulk.hasDettagliContabilizzati()|| fattura_passivaBulk.hasDettagliPagati()))
-                    .orElse(Boolean.FALSE);
+                    .orElse(Boolean.FALSE)){
+        	if (!(scad != null && scad.getObbligazione() != null && scad.getObbligazione().getContratto() != null && scad.getObbligazione().getContratto().getCig() != null)) { 
+        		return true;
+        	}
+        }
+        return false;
     }
 
     /**

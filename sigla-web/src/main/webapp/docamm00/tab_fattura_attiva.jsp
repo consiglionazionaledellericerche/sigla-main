@@ -276,8 +276,12 @@
 			 	     	bp.getController().writeFormInput(out,"contoQUO");
 				} else if (Rif_modalita_pagamentoBulk.ALTRO.equalsIgnoreCase(fatturaAttiva.getBanca_uo().getTi_pagamento())) { 
 			 	     	bp.getController().writeFormInput(out,"contoAUO");
-				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(fatturaAttiva.getBanca_uo().getTi_pagamento())) { 
-			 	     	bp.getController().writeFormInput(out,"contoIUO");
+				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(fatturaAttiva.getBanca_uo().getTi_pagamento())) {
+				        if (fatturaAttiva.getBanca_uo().isTABB()) {
+			 	     	    bp.getController().writeFormInput(out,"contoBUO");
+			 	     	} else {
+			 	     	    bp.getController().writeFormInput(out,"contoIUO");
+			 	     	}
 				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(fatturaAttiva.getBanca_uo().getTi_pagamento())) { 
 		 	     	bp.getController().writeFormInput(out,"contoNUO");
 				}
