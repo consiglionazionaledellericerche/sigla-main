@@ -1,9 +1,6 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.persistency.Keyed;
 
 public class Fattura_passiva_rigaBase extends Fattura_passiva_rigaKey implements Keyed {
 	// CD_BENE_SERVIZIO VARCHAR(10) NOT NULL
@@ -134,6 +131,8 @@ public class Fattura_passiva_rigaBase extends Fattura_passiva_rigaKey implements
 	
 	// PG_TROVATO DECIMAL(10,0)
 	private java.lang.Long pg_trovato;
+
+    private String motivo_assenza_cig;
 
 public Fattura_passiva_rigaBase() {
 	super();
@@ -614,5 +613,11 @@ public void setPg_trovato(java.lang.Long pg_trovato) {
 }
 public java.lang.Long getPg_trovato() {
 	return pg_trovato;
+}
+public String getMotivo_assenza_cig() {
+	return motivo_assenza_cig;
+}
+public void setMotivo_assenza_cig(String motivo_assenza_cig) {
+	this.motivo_assenza_cig = motivo_assenza_cig;
 }
 }
