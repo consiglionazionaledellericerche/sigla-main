@@ -1627,6 +1627,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
     private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
 		try{
+			if (!progetto.isPianoEconomicoRequired()) return;
 			progetto.getAllDetailsProgettoPianoEconomico().stream()
 				.filter(el->el.getEsercizio_piano().compareTo(annoFrom)>=0).forEach(ppe->{
 	   			V_saldi_piano_econom_progettoBulk saldo;
