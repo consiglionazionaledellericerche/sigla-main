@@ -86,6 +86,7 @@ import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -1672,38 +1673,25 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 				if (list.size()>1)
 					throw new ApplicationException("Errore in fase di ricerca linea_attivita.");
 				WorkpackageBulk linea = list.get(0);
-				ProgettoBulk progetto = (ProgettoBulk)getHome(userContext, ProgettoBulk.class).findByPrimaryKey(userContext, linea.getProgetto());
-				Progetto_other_fieldBulk other = (Progetto_other_fieldBulk)getHome(userContext, Progetto_other_fieldBulk.class).findByPrimaryKey(new Progetto_other_fieldBulk(linea.getPg_progetto()));
-				if (Optional.ofNullable(other).isPresent()) {
-					if (Optional.ofNullable(other.getDtInizio())
-						.map(el->{
-							Calendar gc = GregorianCalendar.getInstance();
-							gc.setTime(el);
-							return gc;
-						})
-						.map(el->el.get(Calendar.YEAR)>CNRUserContext.getEsercizio(userContext))
-						.orElse(Boolean.FALSE)) {
-						throw new ApplicationException("Attenzione! GAE "+latt+" non selezionabile. "
-											+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(other.getDtInizio())
-											+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
-											+ "rispetto all'anno contabile di scrivania.");
-					}
-					if (Optional.ofNullable(
-							Optional.ofNullable(other.getDtProroga()).orElse(other.getDtFine()))
-							.map(el->{
-								Calendar gc = GregorianCalendar.getInstance();
-								gc.setTime(el);
-								return gc;
-							})
-							.map(el->el.get(Calendar.YEAR)<CNRUserContext.getEsercizio(userContext))
-							.orElse(Boolean.FALSE)) {
-						throw new ApplicationException("Attenzione! GAE "+latt+" non selezionabile. "
-								+ "La data fine/proroga ("
-								+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(other.getDtProroga())
-										.orElse(other.getDtFine()))
+				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(linea.getProgetto());
+				getHomeCache(userContext).fetchAll(userContext);
+				if (Optional.ofNullable(progetto.getOtherField()).isPresent()) {
+					Optional.ofNullable(progetto.getOtherField().getDtInizio())
+						.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
+						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+								+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+								+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+								+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
+
+					Optional.ofNullable(
+							Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+						.filter(dt->!dt.before(obbligazione.getDt_registrazione()))
+						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+								+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
 								+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
-								+ "rispetto all'anno contabile di scrivania.");
-					}
+								+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
 				}
 			}
 		}
