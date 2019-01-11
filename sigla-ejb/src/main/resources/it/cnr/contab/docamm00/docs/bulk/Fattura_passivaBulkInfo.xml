@@ -1,1576 +1,1585 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
 
-	<fieldProperty
-		name="cd_cds"
-		property="cd_cds"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		label="CDS" />		
-	<fieldProperty
-		name="stato_cofi"
-		property="stato_cofi"
-		inputSize="20"
-		maxLength="20"	
-		inputType="ROTEXT"
-		nullable="true"
-		keysProperty="stato_cofiKeys"
-		label="Stato"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="stato_cofiForSearch"
-		property="stato_cofi"
-		inputSize="20"
-		maxLength="20"
-		inputType="SELECT"
-		nullable="true"
-		keysProperty="stato_cofiKeysForSearch"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Stato"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ti_bene_servizio"
-		property="ti_bene_servizio"
-		inputSize="20"
-		inputType="SELECT"
-		nullable="false"
-		keysProperty="ti_bene_servizioKeys"
-		readonlyProperty="ROTi_bene_servizio"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false"
-		label="Servizi/Beni"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ti_bene_servizioForSearch"
-		property="ti_bene_servizio"
-		inputSize="20"
-		inputType="SELECT"
-		nullable="true"
-		keysProperty="ti_bene_servizioKeys"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Servizi/Beni"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="stato_pagamento_fondo_eco"
-		property="stato_pagamento_fondo_eco"
-		inputSize="10"
-		inputType="SELECT"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false"
-		nullable="false"
-		readonlyProperty="ROStato_pagamento_fondo_eco"
-		keysProperty="stato_pagamento_fondo_ecoKeys"
-		label="Fondo economale"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="stato_pagamento_fondo_ecoForSearch"
-		property="stato_pagamento_fondo_eco"
-		inputSize="20"
-		inputType="SELECT"
-		nullable="true"
-		keysProperty="stato_pagamento_fondo_ecoKeysForSearch"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Fondo economale"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ti_associato_manrev"
-		property="ti_associato_manrev"
-		inputSize="25"
-		maxLength="25"
-		inputType="ROTEXT"
-		nullable="false"
-		keysProperty="ti_associato_manrevKeys"
-		label="Associazione man/rev"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ti_associato_manrevForSearch"
-		property="ti_associato_manrev"
-		maxLength="25"
-		inputSize="25"
-		inputType="SELECT"
-		nullable="true"
-		keysProperty="ti_associato_manrevKeysForSearch"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Stato man/rev"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="riportata"
-		property="riportata"
-		inputSize="20"
-		inputType="ROTEXT"
-		nullable="false"
-		keysProperty="riportataKeys"
-		label="Stato riporto"
-		caseSensitiveSearch="false" />
-			
-	<fieldProperty
-		name="sezionale"
-		property="tipo_sezionale"
-		printProperty="ds_tipo_sezionale"
-		optionsProperty="sezionali"
-		maxLength="30"
-		inputSize="30"
-		inputType="SELECT"
-		nullable="false"
-		enabledOnSearch="true"
-		readonlyProperty="abledToModifyTipoFattura"
-		label="Sezionale"/>
-	<fieldProperty
-		name="sezionaliFlagsRadioGroup"
-		property="sezionaliFlag"
-		keysProperty="sezionaliFlags"
-		inputType="RADIOGROUP"
-		layout = "VERTICAL"	
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		label="Opzioni"
-		caseSensitiveSearch="false" />
-		
-	<fieldProperty
-		name="dt_a_competenza_coge"
-		property="dt_a_competenza_coge"
-		maxLength="10"
-		inputSize="10"
-		inputType="TEXT"
-		formatName="date_short"
-		nullable="false"
-		readonlyProperty="RODateCompetenzaCOGE"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false"
-		label="Competenza al" />		
-	<fieldProperty
-		name="dt_da_competenza_coge"
-		property="dt_da_competenza_coge"
-		maxLength="10"
-		inputSize="10"
-		inputType="TEXT"
-		formatName="date_short"
-		nullable="false"
-		readonlyProperty="RODateCompetenzaCOGE"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false"
-		label="Competenza dal" />
-	
-	<fieldProperty
-		name="valuta"
-		property="valuta"
-		printProperty="ds_divisa"
-		optionsProperty="valute"
-		maxLength="10"
-		inputSize="10"
-		inputType="SELECT"
-		readonlyProperty="ROValuta"
-		enabledOnSearch="true"
-		nullable="false"
-		label="Valuta"/>
-	<fieldProperty
-		name="valutaForSearch"
-		property="valuta"
-		printProperty="ds_divisa"
-		optionsProperty="valute"
-		maxLength="10"
-		inputSize="10"
-		inputType="SELECT"
-		enabledOnSearch="true"
-		nullable="true"
-		label="Valuta"/>
-	<fieldProperty
-		name="inizio_validita_valuta"
-		property="inizio_validita_valuta"
-		maxLength="10"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="Validita da:"/>
-	<fieldProperty
-		name="fine_validita_valuta"
-		property="fine_validita_valuta"
-		maxLength="10"
-		inputSize="10"
-		inputType="TEXT"
-		enabledOnSearch="true"
-		label="a:"/>
+    <fieldProperty
+            name="cd_cds"
+            property="cd_cds"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            label="CDS"/>
+    <fieldProperty
+            name="stato_cofi"
+            property="stato_cofi"
+            inputSize="20"
+            maxLength="20"
+            inputType="ROTEXT"
+            nullable="true"
+            keysProperty="stato_cofiKeys"
+            label="Stato"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="stato_cofiForSearch"
+            property="stato_cofi"
+            inputSize="20"
+            maxLength="20"
+            inputType="SELECT"
+            nullable="true"
+            keysProperty="stato_cofiKeysForSearch"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            label="Stato"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ti_bene_servizio"
+            property="ti_bene_servizio"
+            inputSize="20"
+            inputType="SELECT"
+            nullable="false"
+            keysProperty="ti_bene_servizioKeys"
+            readonlyProperty="ROTi_bene_servizio"
+            enabledOnInsert="true"
+            enabledOnEdit="true"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+            label="Servizi/Beni"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ti_bene_servizioForSearch"
+            property="ti_bene_servizio"
+            inputSize="20"
+            inputType="SELECT"
+            nullable="true"
+            keysProperty="ti_bene_servizioKeys"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            label="Servizi/Beni"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="stato_pagamento_fondo_eco"
+            property="stato_pagamento_fondo_eco"
+            inputSize="10"
+            inputType="SELECT"
+            enabledOnInsert="true"
+            enabledOnEdit="true"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+            nullable="false"
+            readonlyProperty="ROStato_pagamento_fondo_eco"
+            keysProperty="stato_pagamento_fondo_ecoKeys"
+            label="Fondo economale"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="stato_pagamento_fondo_ecoForSearch"
+            property="stato_pagamento_fondo_eco"
+            inputSize="20"
+            inputType="SELECT"
+            nullable="true"
+            keysProperty="stato_pagamento_fondo_ecoKeysForSearch"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            label="Fondo economale"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ti_associato_manrev"
+            property="ti_associato_manrev"
+            inputSize="25"
+            maxLength="25"
+            inputType="ROTEXT"
+            nullable="false"
+            keysProperty="ti_associato_manrevKeys"
+            label="Associazione man/rev"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ti_associato_manrevForSearch"
+            property="ti_associato_manrev"
+            maxLength="25"
+            inputSize="25"
+            inputType="SELECT"
+            nullable="true"
+            keysProperty="ti_associato_manrevKeysForSearch"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            label="Stato man/rev"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="riportata"
+            property="riportata"
+            inputSize="20"
+            inputType="ROTEXT"
+            nullable="false"
+            keysProperty="riportataKeys"
+            label="Stato riporto"
+            caseSensitiveSearch="false"/>
 
-	<fieldProperty
-		name="fornitore"
-		property="fornitore"
-		inputType="SEARCHTOOL"
-		formName="searchtool_small"
-		readonlyProperty="ROFornitoreSearchTool"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		completeOnSave="false"
-		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
-		inputCssClass=""
-		label="Fornitore"
-		nullable="false"/>
-	<fieldProperty
-		name="crea_fornitore"
-		property="fornitore"
-		inputType="CRUDTOOL"
-		readonlyProperty="ROFornitoreCrudTool"
-		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP" />
-	<fieldProperty
-		name="cd_fornitore"
-		property="fornitore.cd_terzo"
-		maxLength="8"
-		inputSize="10"
-		inputType="TEXT"
-		label="Fornitore"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		nullable="false"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="cd_precedente"
-		property="fornitore.cd_precedente"
-		maxLength="20"
-		inputSize="20"
-		inputType="TEXT"
-		label="Codice precedente"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ds_fornitore"
-		property="nome"
-		inputSize="15"
-		inputType="TEXT"
-		label="Descr. fornitore"
-		nullable="false"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="denominazione_sede"
-		property="fornitore.denominazione_sede"
-		inputSize="100"
-		inputType="TEXT"
-		label="Denom./Sede"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="via_fiscale"
-		property="fornitore.via_sede"
-		maxLength="20"
-		inputSize="20"
-		inputType="ROTEXT"
-		inputCssClass="w-100 "
-		label="Via/P.za"/>
-	<fieldProperty
-		name="num_civico"
-		property="fornitore.numero_civico_sede"
-		maxLength="10"
-		inputSize="5"
-		inputType="ROTEXT"
-		label="Numero"/>
-	<fieldProperty
-		name="ds_comune"
-		property="fornitore.comune_sede.ds_comune"
-		maxLength="100"
-		inputSize="20"
-		inputCssClass="w-100 "
-		inputType="ROTEXT"
-		label="Comune"/>
-	<fieldProperty
-		name="ds_provincia"
-		property="fornitore.comune_sede.provincia.ds_provincia"
-		maxLength="100"
-		inputSize="20"
-		inputType="ROTEXT"
-		label="Provincia"/>
-	<fieldProperty
-		name="partita_iva"
-		property="partita_iva"
-		maxLength="20"
-		inputSize="20"
-		inputType="TEXT"
-		label="Partita IVA"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="codice_fiscale"
-		property="codice_fiscale"
-		maxLength="20"
-		inputSize="20"
-		inputType="TEXT"
-		label="Cod. Fiscale"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="cognome"
-		property="cognome"
-		maxLength="50"
-		inputSize="50"
-		inputType="TEXT"
-		label="Cognome"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="nome"
-		property="nome"
-		maxLength="50"
-		inputSize="20"
-		inputType="TEXT"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		label="Nome"/>
-	<fieldProperty
-		name="ragione_sociale"
-		property="ragione_sociale"
-		maxLength="100"
-		inputSize="100"
-		inputType="TEXT"
-		readonlyPropertyOnEdit="ROfornitore"
-		readonlyPropertyOnInsert="ROfornitore"
-		readonlyPropertyOnSearch="ROfornitoreForSearch"
-		enabledOnSearch="true"
-		label="Ragione Sociale"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="cd_cessionario"
-		property="cessionario.cd_terzo"
-		maxLength="30"
-		inputSize="6"
-		inputType="ROTEXT"
-		label="Cessionario"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="denom_sede_cessionario"
-		property="cessionario.denominazione_sede"
-		inputSize="50"
-		inputType="ROTEXT"
-		label="Denom./Sede"
-		caseSensitiveSearch="false" />
-		
-	<fieldProperty
-		name="modalita_pagamento"
-		property="modalita_pagamento"
-		printProperty="cd_ds_modalita_pagamento"
-		optionsProperty="modalita"
-		readonlyProperty="ROModalita_pagamento"
-		maxLength="30"
-		inputSize="30"
-		inputType="SELECT"
-		nullable="false"
-		label="Mod. pagamento" />
-	<fieldProperty
-		name="termini_pagamento"
-		property="termini_pagamento"
-		printProperty="cd_ds_termini_pagamento"
-		optionsProperty="termini"
-		maxLength="30"
-		inputSize="30"
-		inputType="SELECT"
-		label="Term. pagamento" />
-	
-		
-	<fieldProperty
-		name="fl_san_marino_con_iva"
-		property="fl_san_marino_con_iva"
-		inputType="CHECKBOX"
-		readonlyProperty="abledToModifyFlagsTipoFattura"
-		enabledOnSearch="true"
-		label="S. Marino con IVA" />
-	<fieldProperty
-		name="fl_san_marino_senza_iva"
-		property="fl_san_marino_senza_iva"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_san_marino_senza_iva"
-		enabledOnSearch="true"
-		label="S. Marino senza IVA" />
-	<fieldProperty
-		name="fl_intra_ue"
-		property="fl_intra_ue"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_intra_ue"
-		enabledOnSearch="true"
-		label="Intra U.E." />
-	<fieldProperty
-		name="fl_extra_ue"
-		property="fl_extra_ue"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_extra_ue"
-		enabledOnSearch="true"
-		label="Extra U.E." />
-	<fieldProperty
-		name="fl_spedizioniere"
-		property="fl_spedizioniere"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_spedizioniere"
-		enabledOnSearch="true"
-		label="Spedizioniere" />
-	<fieldProperty
-		name="fl_bolla_doganale"
-		property="fl_bolla_doganale"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_bolla_doganale"
-		enabledOnSearch="true"
-		label="Bolla doganale" />
-	<fieldProperty
-		name="fl_autofattura"
-		property="fl_autofattura"
-		inputType="CHECKBOX"
-		readonlyProperty="ROAutofattura"
-		enabledOnSearch="true"
-		label="Autofattura" />
-	<fieldProperty
-		name="fl_merce_extra_ue"
-		property="fl_merce_extra_ue"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_extra_ue"
-		enabledOnSearch="true"
-		label="Merce da paesi extra U.E." />	
-	<fieldProperty
-		name="fl_merce_intra_ue"
-		property="fl_merce_intra_ue"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_intra_ue"
-		enabledOnSearch="true"
-		label="Merce da paesi intra U.E." />	
-	<fieldProperty
-		name="protocollo_iva"
-		property="protocollo_iva"
-		maxLength="10"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="N. Registrazione IVA"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="protocollo_iva_generale"
-		property="protocollo_iva_generale"
-		maxLength="10"
-		inputSize="10"
-		inputType="ROTEXT"
-		label="N. Registrazione IVA Generale"
-		caseSensitiveSearch="false" />
-		
-	<fieldProperty
-		name="numero_protocollo"
-		property="numero_protocollo"
-		maxLength="20"
-		inputSize="20"
-		inputType="TEXT"
-		label="Numero di Protocollo"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
+    <fieldProperty
+            name="sezionale"
+            property="tipo_sezionale"
+            printProperty="ds_tipo_sezionale"
+            optionsProperty="sezionali"
+            maxLength="30"
+            inputSize="30"
+            inputType="SELECT"
+            nullable="false"
+            enabledOnSearch="true"
+            readonlyProperty="abledToModifyTipoFattura"
+            label="Sezionale"/>
+    <fieldProperty
+            name="sezionaliFlagsRadioGroup"
+            property="sezionaliFlag"
+            keysProperty="sezionaliFlags"
+            inputType="RADIOGROUP"
+            layout="VERTICAL"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            label="Opzioni"
+            caseSensitiveSearch="false"/>
 
-	<fieldProperty
-		name="contoA"
-		property="banca"
-		inputType="FORM"
-		formName="A"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="contoP"
-		property="banca"
-		inputType="FORM"
-		formName="P"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="contoB"
-		property="banca"
-		inputType="FORM"
-		formName="BdocAmm"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="contoQ"
-		property="banca"
-		inputType="FORM"
-		formName="Q"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
-	<fieldProperty
-		name="contoN"
-		property="banca"
-		inputType="FORM"
-		formName="N"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
+    <fieldProperty
+            name="dt_a_competenza_coge"
+            property="dt_a_competenza_coge"
+            maxLength="10"
+            inputSize="10"
+            inputType="TEXT"
+            formatName="date_short"
+            nullable="false"
+            readonlyProperty="RODateCompetenzaCOGE"
+            enabledOnInsert="true"
+            enabledOnEdit="true"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+            label="Competenza al"/>
+    <fieldProperty
+            name="dt_da_competenza_coge"
+            property="dt_da_competenza_coge"
+            maxLength="10"
+            inputSize="10"
+            inputType="TEXT"
+            formatName="date_short"
+            nullable="false"
+            readonlyProperty="RODateCompetenzaCOGE"
+            enabledOnInsert="true"
+            enabledOnEdit="true"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+            label="Competenza dal"/>
 
-	<fieldProperty
-		name="dt_fattura_fornitore"
-		property="dt_fattura_fornitore"
-		inputType="TEXT"
-		maxLength="10"
-		inputSize="10"
-		formatName="date_short"
-		nullable="false"
-		enabledOnSearch="true"
-		label="Data emissione" />
-	<fieldProperty
-		name="cd_unita_organizzativa"
-		property="cd_unita_organizzativa"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		label="UO" />
-	<fieldProperty
-		name="ti_fattura"
-		property="ti_fattura"
-		inputSize="1"
-		inputType="TEXT"
-		label=""
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="dt_pagamento_fondo_eco"
-		property="dt_pagamento_fondo_eco"
-		inputType="ROTEXT"
-		maxLength="10"
-		inputSize="10"
-		formatName="date_short"
-		label="Data pagam. fondo econ." />
-	
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="TEXT"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Esercizio" />
-	<fieldProperty
-		name="esercizio_fattura_fornitore"
-		property="esercizio_fattura_fornitore"
-		inputType="TEXT"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"
-		label="Esercizio fattura fornitore" />
-	<fieldProperty
-		name="im_totale_fattura"
-		property="im_totale_fattura"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.Importo2CifrePositivoFormat"
-		nullable="false"
-		enabledOnEdit="true"
-		enabledOnSearch="true"
-		label="Totale" />
-	<fieldProperty
-		name="im_importo_totale_fattura_fornitore_euro"
-		property="im_importo_totale_fattura_fornitore_euro"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnInsert="true"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false"
-		readonlyProperty="ROIm_totale_quadratura"
-		nullable="false"
-		label="Totale Euro" />
-	<fieldProperty
-		name="im_totale_fattura_calcolato"
-		property="im_totale_fattura_calcolato"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnInsert="false"
-		label="Totale calcolato" />
-	<fieldProperty
-		name="im_totale_imponibile"
-		property="im_totale_imponibile"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		nullable="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnInsert="false"
-		label="Imponibile" />
-	<fieldProperty
-		name="cambio"
-		property="cambio"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"
-		nullable="false"
-		enabledOnEdit="true"
-		enabledOnSearch="false"
-		enabledOnInsert="true"
-		readonlyProperty="ROCambio"
-		label="Cambio" />
-	<fieldProperty
-		name="ti_istituz_commerc"
-		property="ti_istituz_commerc"
-		inputType="SELECT"
-		readonlyProperty="notAbledToModifyTipoIstCom"
-		label="Tipo"
-		nullable="false"
-		enabledOnSearch="true"
-		keysProperty="ti_istituz_commercKeys" />
-	<fieldProperty
-		name="ti_istituz_commercSearch"
-		property="ti_istituz_commerc"
-		inputType="SELECT"
-		label="Tipo"
-		nullable="true"
-		enabledOnSearch="true"
-		keysProperty="ti_istituz_commercKeysForSearch" />
-	<fieldProperty
-		name="pg_fattura_passiva"
-		property="pg_fattura_passiva"
-		inputType="TEXT"
-		maxLength="10"
-		inputSize="10"
-		label="Progressivo"
-		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true" />
-	
-	<fieldProperty
-		name="nr_fattura_fornitore"
-		property="nr_fattura_fornitore"
-		maxLength="20"
-		inputSize="20"
-		inputType="TEXT"
-		label="N. Fattura"
-		nullable="false"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
+    <fieldProperty
+            name="valuta"
+            property="valuta"
+            printProperty="ds_divisa"
+            optionsProperty="valute"
+            maxLength="10"
+            inputSize="10"
+            inputType="SELECT"
+            readonlyProperty="ROValuta"
+            enabledOnSearch="true"
+            nullable="false"
+            label="Valuta"/>
+    <fieldProperty
+            name="valutaForSearch"
+            property="valuta"
+            printProperty="ds_divisa"
+            optionsProperty="valute"
+            maxLength="10"
+            inputSize="10"
+            inputType="SELECT"
+            enabledOnSearch="true"
+            nullable="true"
+            label="Valuta"/>
+    <fieldProperty
+            name="inizio_validita_valuta"
+            property="inizio_validita_valuta"
+            maxLength="10"
+            inputSize="10"
+            inputType="ROTEXT"
+            label="Validita da:"/>
+    <fieldProperty
+            name="fine_validita_valuta"
+            property="fine_validita_valuta"
+            maxLength="10"
+            inputSize="10"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            label="a:"/>
 
-	<fieldProperty
-		name="stato_coge"
-		property="stato_coge"
-		inputSize="1"
-		inputType="TEXT"
-		label=""
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="dt_registrazione"
-		property="dt_registrazione"
-		inputType="TEXT"
-		maxLength="10"
-		inputSize="10"
-		readonlyProperty="RODt_registrazione"
-		formatName="date_short"
-		nullable="false"
-		enabledOnSearch="true"
-		label="Data registrazione" />
-	<fieldProperty
-		name="fl_fattura_compenso"
-		property="fl_fattura_compenso"
-		inputType="CHECKBOX"
-		nullable="false"
-		readonlyProperty="ROFl_fattura_compenso"
-		enabledOnFreeSearch="true"
-		label="Associata a compenso" />
-	<fieldProperty
-		name="fl_congelata"
-		property="fl_congelata"
-		inputType="CHECKBOX"
-		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="true"
-		label="Congelata" />
-	<fieldProperty
-		name="ds_fattura_passiva"
-		property="ds_fattura_passiva"
-		maxLength="1000"
-		inputType="TEXTAREA"
-		cols="80"
-		rows="5"
-		label="Descrizione"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="pg_banca"
-		property="pg_banca"
-		inputType="TEXT"
-		label="pg_banca" />
-	<fieldProperty
-		name="note"
-		property="note"
-		maxLength="300"
-		inputSize="300"
-		inputType="TEXT"
-		label="note"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="listabanche"
-		property="banca"
-		inputType="BUTTON"
-		img="img/find16.gif"
-		iconClass="fa fa-search text-primary"
-		buttonClass="btn-secondary btn-outline-secondary btn-title text-primary"
-		readonlyProperty="abledToInsertBank"
-		label="Conto/i..."
-		href="javascript:submitForm('doSearch(main.listabanche)')" />
-	
-	<fieldProperty
-		name="im_totale_iva"
-		property="im_totale_iva"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		enabledOnEdit="false"
-		enabledOnSearch="false"
-		enabledOnInsert="false"
-		label="Totale I.V.A." />
-	<fieldProperty
-		name="dt_scadenza"
-		property="dt_scadenza"
-		inputType="TEXT"
-		maxLength="10"
-		inputSize="10"
-		formatName="date_short"
-		label="Data di scadenza" />
+    <fieldProperty
+            name="fornitore"
+            property="fornitore"
+            inputType="SEARCHTOOL"
+            formName="searchtool_small"
+            readonlyProperty="ROFornitoreSearchTool"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            completeOnSave="false"
+            CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"
+            inputCssClass=""
+            label="Fornitore"
+            nullable="false"/>
+    <fieldProperty
+            name="crea_fornitore"
+            property="fornitore"
+            inputType="CRUDTOOL"
+            readonlyProperty="ROFornitoreCrudTool"
+            CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"/>
+    <fieldProperty
+            name="cd_fornitore"
+            property="fornitore.cd_terzo"
+            maxLength="8"
+            inputSize="10"
+            inputType="TEXT"
+            label="Fornitore"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            nullable="false"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="cd_precedente"
+            property="fornitore.cd_precedente"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            label="Codice precedente"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ds_fornitore"
+            property="nome"
+            inputSize="15"
+            inputType="TEXT"
+            label="Descr. fornitore"
+            nullable="false"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="denominazione_sede"
+            property="fornitore.denominazione_sede"
+            inputSize="100"
+            inputType="TEXT"
+            label="Denom./Sede"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="via_fiscale"
+            property="fornitore.via_sede"
+            maxLength="20"
+            inputSize="20"
+            inputType="ROTEXT"
+            inputCssClass="w-100 "
+            label="Via/P.za"/>
+    <fieldProperty
+            name="num_civico"
+            property="fornitore.numero_civico_sede"
+            maxLength="10"
+            inputSize="5"
+            inputType="ROTEXT"
+            label="Numero"/>
+    <fieldProperty
+            name="ds_comune"
+            property="fornitore.comune_sede.ds_comune"
+            maxLength="100"
+            inputSize="20"
+            inputCssClass="w-100 "
+            inputType="ROTEXT"
+            label="Comune"/>
+    <fieldProperty
+            name="ds_provincia"
+            property="fornitore.comune_sede.provincia.ds_provincia"
+            maxLength="100"
+            inputSize="20"
+            inputType="ROTEXT"
+            label="Provincia"/>
+    <fieldProperty
+            name="partita_iva"
+            property="partita_iva"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            label="Partita IVA"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="codice_fiscale"
+            property="codice_fiscale"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            label="Cod. Fiscale"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="cognome"
+            property="cognome"
+            maxLength="50"
+            inputSize="50"
+            inputType="TEXT"
+            label="Cognome"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="nome"
+            property="nome"
+            maxLength="50"
+            inputSize="20"
+            inputType="TEXT"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            label="Nome"/>
+    <fieldProperty
+            name="ragione_sociale"
+            property="ragione_sociale"
+            maxLength="100"
+            inputSize="100"
+            inputType="TEXT"
+            readonlyPropertyOnEdit="ROfornitore"
+            readonlyPropertyOnInsert="ROfornitore"
+            readonlyPropertyOnSearch="ROfornitoreForSearch"
+            enabledOnSearch="true"
+            label="Ragione Sociale"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="cd_cessionario"
+            property="cessionario.cd_terzo"
+            maxLength="30"
+            inputSize="6"
+            inputType="ROTEXT"
+            label="Cessionario"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="denom_sede_cessionario"
+            property="cessionario.denominazione_sede"
+            inputSize="50"
+            inputType="ROTEXT"
+            label="Denom./Sede"
+            caseSensitiveSearch="false"/>
 
-	<fieldProperty
-		name="importoTotalePerObbligazione"
-		property="importoTotalePerObbligazione"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		readonlyProperty="ROImportoTotalePerObbligazione"
-		label="Totale dettagli" />
+    <fieldProperty
+            name="modalita_pagamento"
+            property="modalita_pagamento"
+            printProperty="cd_ds_modalita_pagamento"
+            optionsProperty="modalita"
+            readonlyProperty="ROModalita_pagamento"
+            maxLength="30"
+            inputSize="30"
+            inputType="SELECT"
+            nullable="false"
+            label="Mod. pagamento"/>
+    <fieldProperty
+            name="termini_pagamento"
+            property="termini_pagamento"
+            printProperty="cd_ds_termini_pagamento"
+            optionsProperty="termini"
+            maxLength="30"
+            inputSize="30"
+            inputType="SELECT"
+            label="Term. pagamento"/>
 
 
-	<fieldProperty
-		name="esercizio_lettera"
-		property="lettera_pagamento_estero.esercizio"
-		inputType="ROTEXT"
-		label="Esercizio" />
-	<fieldProperty
-		name="im_commissioni_lettera"
-		property="lettera_pagamento_estero.im_commissioni"
-		inputType="TEXT"
-		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		nullable="false"
-		label="Commissioni" />
-	<fieldProperty
-		name="im_pagamento"
-		property="lettera_pagamento_estero.im_pagamento"
-		inputType="TEXT"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		formatName="it.cnr.contab.util.EuroPositivoFormat"
-		nullable="false"
-		label="Importo" />
-	<fieldProperty
-		name="pg_lettera"
-		property="lettera_pagamento_estero.pg_lettera"
-		inputType="ROTEXT"
-		label="Nr. lettera" />
-	<fieldProperty
-		name="dt_registrazione_lettera"
-		property="lettera_pagamento_estero.dt_registrazione"
-		inputType="ROTEXT"
-		formatName="date_short"
-		nullable="false"
-		label="Data registrazione" />
-	<fieldProperty
-		name="creaLettera"
-		property="lettera_pagamento_estero"
-		inputType="BUTTON"
-		img="img/new16.gif"
-		buttonClass="btn btn-outline-info btn-title"
-		iconClass="fa fa-fw fa-plus"
-		readonlyProperty="abledToInsertLettera"
-		label="Crea lettera pagamento estero"
-		href="javascript:submitForm('doCreaLettera')" />
-	<fieldProperty
-		name="cancellaLettera"
-		property="lettera_pagamento_estero"
-		inputType="BUTTON"
-		img="img/delete16.gif"
-		buttonClass="btn btn-outline-danger btn-title"
-		iconClass="fa fa-fw fa-trash"
-		readonlyProperty="abledToDeleteLettera"
-		label="Cancella lettera pagamento estero"
-		href="javascript:submitForm('doCancellaLettera')" />
-	<fieldProperty
-		name="disassociaLettera"
-		property="lettera_pagamento_estero"
-		inputType="BUTTON"
-		img="img/delete16.gif"
-		buttonClass="btn btn-outline-danger btn-title"
-		iconClass="fa fa-fw fa-trash"
-		readonlyProperty="abledToDisassociaLettera"
-		label="Scollega lettera pagamento estero"
-		href="javascript:submitForm('doDisassociaLettera')" />	
-	<fieldProperty
-		name="cd_sospeso"
-		property="lettera_pagamento_estero.sospeso.cd_sospeso_padre"
-		inputType="TEXT"
-		readonlyProperty="ROSospeso"
-		label="N. sospeso"
-		nullable="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="esercizio_sospeso"
-		property="lettera_pagamento_estero.sospeso.esercizio"
-		inputType="ROTEXT"
-		enabledOnFreeSearch="false"
-		label="Esercizio sospeso" />
-	<fieldProperty
-		name="cd_cds_sospeso"
-		property="lettera_pagamento_estero.sospeso.cd_cds"
-		inputType="ROTEXT"
-		enabledOnFreeSearch="false"
-		label="Cds sospeso" />
-	<fieldProperty
-		name="ti_entrata_spesa"
-		property="lettera_pagamento_estero.sospeso.ti_entrata_spesa"
-		keysProperty="tipo_sospesoKeys"
-		inputType="ROTEXT"
-		enabledOnFreeSearch="false"
-		label="Tipo sospeso" />
-	<fieldProperty
-		name="sospeso"
-		property="lettera_pagamento_estero.sospeso"
-		inputType="SEARCHTOOL"
-		readonlyProperty="ROSospesoSearchTool"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		completeOnSave="false"
-		label="Sospeso"/>
+    <fieldProperty
+            name="fl_san_marino_con_iva"
+            property="fl_san_marino_con_iva"
+            inputType="CHECKBOX"
+            readonlyProperty="abledToModifyFlagsTipoFattura"
+            enabledOnSearch="true"
+            label="S. Marino con IVA"/>
+    <fieldProperty
+            name="fl_san_marino_senza_iva"
+            property="fl_san_marino_senza_iva"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_san_marino_senza_iva"
+            enabledOnSearch="true"
+            label="S. Marino senza IVA"/>
+    <fieldProperty
+            name="fl_intra_ue"
+            property="fl_intra_ue"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_intra_ue"
+            enabledOnSearch="true"
+            label="Intra U.E."/>
+    <fieldProperty
+            name="fl_extra_ue"
+            property="fl_extra_ue"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_extra_ue"
+            enabledOnSearch="true"
+            label="Extra U.E."/>
+    <fieldProperty
+            name="fl_spedizioniere"
+            property="fl_spedizioniere"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_spedizioniere"
+            enabledOnSearch="true"
+            label="Spedizioniere"/>
+    <fieldProperty
+            name="fl_bolla_doganale"
+            property="fl_bolla_doganale"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_bolla_doganale"
+            enabledOnSearch="true"
+            label="Bolla doganale"/>
+    <fieldProperty
+            name="fl_autofattura"
+            property="fl_autofattura"
+            inputType="CHECKBOX"
+            readonlyProperty="ROAutofattura"
+            enabledOnSearch="true"
+            label="Autofattura"/>
+    <fieldProperty
+            name="fl_merce_extra_ue"
+            property="fl_merce_extra_ue"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_extra_ue"
+            enabledOnSearch="true"
+            label="Merce da paesi extra U.E."/>
+    <fieldProperty
+            name="fl_merce_intra_ue"
+            property="fl_merce_intra_ue"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_intra_ue"
+            enabledOnSearch="true"
+            label="Merce da paesi intra U.E."/>
+    <fieldProperty
+            name="protocollo_iva"
+            property="protocollo_iva"
+            maxLength="10"
+            inputSize="10"
+            inputType="ROTEXT"
+            label="N. Registrazione IVA"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="protocollo_iva_generale"
+            property="protocollo_iva_generale"
+            maxLength="10"
+            inputSize="10"
+            inputType="ROTEXT"
+            label="N. Registrazione IVA Generale"
+            caseSensitiveSearch="false"/>
 
-	<fieldProperty
-		name="displayStatoTrasmissione"
-		property="lettera_pagamento_estero.displayStatoTrasmissione"
-		inputType="LABEL"
-		labelStyle="font-style:italic; font-size:x-large"/>
-			
-	<fieldProperty
-		name="bonifico_mezzo"
-		property="lettera_pagamento_estero.bonifico_mezzo"
-		maxLength="1"
-		inputSize="1"
-		inputType="RADIOGROUP"
-		keysProperty="ti_bonifico_mezzoKeys"
-		label="Vi preghiamo disporre il seguente bonifico&lt;br&gt;per nostro ordine e conto a mezzo:"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		nullable="false"
-		layout="VERTICAL"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false"/>
-	<fieldProperty
-		name="divisa"
-		property="lettera_pagamento_estero.divisa"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		inputType="TEXT"
-		nullable="false"
-		label="Divisa"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="beneficiario"
-		property="lettera_pagamento_estero.beneficiario"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="300"
-		inputSize="300"
-		nullable="false"
-		inputType="TEXTAREA"
-		cols="75"
-		rows="2"
-		label="Beneficiario"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="num_conto_ben"
-		property="lettera_pagamento_estero.num_conto_ben"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
-		inputSize="100"		
-		inputType="TEXT"
-		label="Conto n°"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="iban"
-		property="lettera_pagamento_estero.iban"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
-		inputSize="100"		
-		inputType="TEXT"
-		label="IBAN"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="indirizzo"
-		property="lettera_pagamento_estero.indirizzo"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
-		inputSize="100"		
-		inputType="TEXT"
-		label="Presso/tramite"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="indirizzo_swift"
-		property="lettera_pagamento_estero.indirizzo_swift"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
-		inputSize="100"		
-		inputType="TEXT"
-		label="Indirizzo - SWIFT/BIC"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="motivo_pag"
-		property="lettera_pagamento_estero.motivo_pag"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
-		inputSize="100"		
-		inputType="TEXT"
-		label="MOTIVO DEL PAGAMENTO"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="ammontare_debito"
-		property="lettera_pagamento_estero.ammontare_debito"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="1"
-		inputSize="1"
-		inputType="RADIOGROUP"
-		keysProperty="ti_ammontare_debitoKeys"
-		label="Del relativo ammontare/controvalore&lt;br&gt;ci darete debito nel"
-		nullable="false"
-		layout="VERTICAL"
-		enabledOnEdit="false"		
-		enabledOnInsert="false"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false"/>
-	<fieldProperty
-		name="conto_debito"
-		property="lettera_pagamento_estero.conto_debito"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="250"
-		inputSize="100"		
-		inputType="TEXT"
-		label="Numero Conto"
-		enabledOnEdit="false"		
-		enabledOnInsert="false"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />		
-	<fieldProperty
-		name="commissioni_spese"
-		property="lettera_pagamento_estero.commissioni_spese"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="1"
-		inputSize="1"
-		inputType="RADIOGROUP"
-		keysProperty="ti_commissione_speseKeys"
-		label="Vostre commissioni e spese:"
-		nullable="false"
-		layout="VERTICAL"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false"/>
-	<fieldProperty
-		name="commissioni_spese_estere"
-		property="lettera_pagamento_estero.commissioni_spese_estere"
-		readonlyProperty="ROStatoTrasmissioneLettera"
-		maxLength="1"
-		inputSize="1"
-		inputType="RADIOGROUP"
-		keysProperty="ti_commissione_speseKeys"
-		label="Eventuali commissioni e spese&lt;br&gt;della Vostra Corrispondente estera:"
-		nullable="false"
-		layout="VERTICAL"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false"/>
-		
-	<fieldProperty
-		name="fl_liquidazione_differita"
-		property="fl_liquidazione_differita"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_liquidazione_differita"
-		label="Liquidazione Differita" />		
-	<fieldProperty
-		name="data_protocollo"
-		property="data_protocollo"
-		inputType="TEXT"
-		maxLength="10"
-		inputSize="10"
-		formatName="date_short"
-		enabledOnSearch="true"
-		label="Data protocollo/ricezione"
-		command="doCambiaDataProtocollo"/>
-	<fieldProperty
-		name="progr_univoco"
-		property="progr_univoco"
-		inputType="TEXT"
-		maxLength="10"
-		inputSize="10"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnInsert="false"
-		enabledOnFreeSearch="true"
-        label="Progressivo univoco" />			
-	<fieldProperty
-		name="stato_liquidazione"
-		property="stato_liquidazione"
-		inputType="SELECT"
-		label="Stato liquidazione"
-		readonlyProperty="ROStato_liquidazione"
-		nullable="true"
-		enabledOnSearch="true"
-		keysProperty="stato_liquidazioneKeys" />
-	<fieldProperty
-		name="causale"
-		property="causale"
-		inputType="SELECT"
-		label="causale"
-		readonlyProperty="ROStato_liquidazione"
-		nullable="true"
-		enabledOnSearch="true"
-		keysProperty="causaleKeys" />	
-	<fieldProperty
-		name="cds_compenso"
-		property="cds_compenso"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		label="CDS Compenso"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="uo_compenso"
-		property="uo_compenso"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		label="UO Compenso"
-		caseSensitiveSearch="false" />	
-	<fieldProperty
-		name="esercizio_compenso"
-		property="esercizio_compenso"
-		inputType="TEXT"
-		label="Esercizio compenso" />
-	<fieldProperty
-		name="pg_compenso"
-		property="pg_compenso"
-		inputType="TEXT"
-		label="N. Compenso" />			
-	<fieldProperty
-		name="identificativoSdi"
-		property="identificativoSdi"
-		maxLength="22"
-		inputSize="22"
-		inputType="TEXT"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnInsert="false"
-		enabledOnFreeSearch="true"
-        label="Identificativo SDI"/>	
-	<fieldProperty
-		name="progressivo"
-		property="progressivo"
-		maxLength="22"
-		inputSize="22"
-		inputType="TEXT"
-		enabledOnEdit="false"
-		enabledOnSearch="true"
-		enabledOnInsert="false"
-		enabledOnFreeSearch="true"
-		label="progressivo SDI"/>		
-	<fieldProperty
-		name="fl_split_payment"
-		property="fl_split_payment"
-		inputType="CHECKBOX"
-		readonlyProperty="ROFl_split_payment"
-		enabledOnSearch="true"
-		label="Split Payment" />
+    <fieldProperty
+            name="numero_protocollo"
+            property="numero_protocollo"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            label="Numero di Protocollo"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
 
-	<fieldProperty
-			name="flDaOrdini"
-			property="flDaOrdini"
-			inputType="CHECKBOX"
-			enabledOnSearch="true"
-			readonlyProperty="ROFlDaOrdini"
-			label="Da Ordini" />
-	<fieldProperty
-			name="cd_cig"
-			property="cd_cig"
-			maxLength="10"
-			inputSize="22"
-			inputType="TEXT"
-			enabledOnSearch="true"
-			label="Codice CIG"/>
-	<fieldProperty
-			name="motivo_assenza_cig"
-			property="motivo_assenza_cig"
-			inputType="SELECT"
-			keysProperty="motivoEsclusioneCigSIOPEKeys"
-			enabledOnSearch="true"
-			label="Motivo assenza CIG"/>
+    <fieldProperty
+            name="contoA"
+            property="banca"
+            inputType="FORM"
+            formName="A"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="contoP"
+            property="banca"
+            inputType="FORM"
+            formName="P"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="contoB"
+            property="banca"
+            inputType="FORM"
+            formName="BdocAmm"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="contoQ"
+            property="banca"
+            inputType="FORM"
+            formName="Q"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="contoN"
+            property="banca"
+            inputType="FORM"
+            formName="N"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"/>
+
+    <fieldProperty
+            name="dt_fattura_fornitore"
+            property="dt_fattura_fornitore"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="10"
+            formatName="date_short"
+            nullable="false"
+            enabledOnSearch="true"
+            label="Data emissione"/>
+    <fieldProperty
+            name="cd_unita_organizzativa"
+            property="cd_unita_organizzativa"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            label="UO"/>
+    <fieldProperty
+            name="ti_fattura"
+            property="ti_fattura"
+            inputSize="1"
+            inputType="TEXT"
+            label=""
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="dt_pagamento_fondo_eco"
+            property="dt_pagamento_fondo_eco"
+            inputType="ROTEXT"
+            maxLength="10"
+            inputSize="10"
+            formatName="date_short"
+            label="Data pagam. fondo econ."/>
+
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            inputType="TEXT"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            label="Esercizio"/>
+    <fieldProperty
+            name="esercizio_fattura_fornitore"
+            property="esercizio_fattura_fornitore"
+            inputType="TEXT"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            label="Esercizio fattura fornitore"/>
+    <fieldProperty
+            name="im_totale_fattura"
+            property="im_totale_fattura"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.Importo2CifrePositivoFormat"
+            nullable="false"
+            enabledOnEdit="true"
+            enabledOnSearch="true"
+            label="Totale"/>
+    <fieldProperty
+            name="im_importo_totale_fattura_fornitore_euro"
+            property="im_importo_totale_fattura_fornitore_euro"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            enabledOnInsert="true"
+            enabledOnEdit="true"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="false"
+            readonlyProperty="ROIm_totale_quadratura"
+            nullable="false"
+            label="Totale Euro"/>
+    <fieldProperty
+            name="im_totale_fattura_calcolato"
+            property="im_totale_fattura_calcolato"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroPositivoFormat"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnInsert="false"
+            label="Totale calcolato"/>
+    <fieldProperty
+            name="im_totale_imponibile"
+            property="im_totale_imponibile"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroPositivoFormat"
+            nullable="false"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnInsert="false"
+            label="Imponibile"/>
+    <fieldProperty
+            name="cambio"
+            property="cambio"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.Importo4CifrePositivoFormat"
+            nullable="false"
+            enabledOnEdit="true"
+            enabledOnSearch="false"
+            enabledOnInsert="true"
+            readonlyProperty="ROCambio"
+            label="Cambio"/>
+    <fieldProperty
+            name="ti_istituz_commerc"
+            property="ti_istituz_commerc"
+            inputType="SELECT"
+            readonlyProperty="notAbledToModifyTipoIstCom"
+            label="Tipo"
+            nullable="false"
+            enabledOnSearch="true"
+            keysProperty="ti_istituz_commercKeys"/>
+    <fieldProperty
+            name="ti_istituz_commercSearch"
+            property="ti_istituz_commerc"
+            inputType="SELECT"
+            label="Tipo"
+            nullable="true"
+            enabledOnSearch="true"
+            keysProperty="ti_istituz_commercKeysForSearch"/>
+    <fieldProperty
+            name="pg_fattura_passiva"
+            property="pg_fattura_passiva"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="10"
+            label="Progressivo"
+            nullable="false"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"/>
+
+    <fieldProperty
+            name="nr_fattura_fornitore"
+            property="nr_fattura_fornitore"
+            maxLength="20"
+            inputSize="20"
+            inputType="TEXT"
+            label="N. Fattura"
+            nullable="false"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+
+    <fieldProperty
+            name="stato_coge"
+            property="stato_coge"
+            inputSize="1"
+            inputType="TEXT"
+            label=""
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="dt_registrazione"
+            property="dt_registrazione"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="10"
+            readonlyProperty="RODt_registrazione"
+            formatName="date_short"
+            nullable="false"
+            enabledOnSearch="true"
+            label="Data registrazione"/>
+    <fieldProperty
+            name="fl_fattura_compenso"
+            property="fl_fattura_compenso"
+            inputType="CHECKBOX"
+            nullable="false"
+            readonlyProperty="ROFl_fattura_compenso"
+            enabledOnFreeSearch="true"
+            label="Associata a compenso"/>
+    <fieldProperty
+            name="fl_congelata"
+            property="fl_congelata"
+            inputType="CHECKBOX"
+            nullable="false"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnFreeSearch="true"
+            label="Congelata"/>
+    <fieldProperty
+            name="ds_fattura_passiva"
+            property="ds_fattura_passiva"
+            maxLength="1000"
+            inputType="TEXTAREA"
+            cols="80"
+            rows="5"
+            label="Descrizione"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="pg_banca"
+            property="pg_banca"
+            inputType="TEXT"
+            label="pg_banca"/>
+    <fieldProperty
+            name="note"
+            property="note"
+            maxLength="300"
+            inputSize="300"
+            inputType="TEXT"
+            label="note"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="listabanche"
+            property="banca"
+            inputType="BUTTON"
+            img="img/find16.gif"
+            iconClass="fa fa-search text-primary"
+            buttonClass="btn-secondary btn-outline-secondary btn-title text-primary"
+            readonlyProperty="abledToInsertBank"
+            label="Conto/i..."
+            href="javascript:submitForm('doSearch(main.listabanche)')"/>
+
+    <fieldProperty
+            name="im_totale_iva"
+            property="im_totale_iva"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroPositivoFormat"
+            enabledOnEdit="false"
+            enabledOnSearch="false"
+            enabledOnInsert="false"
+            label="Totale I.V.A."/>
+    <fieldProperty
+            name="dt_scadenza"
+            property="dt_scadenza"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="10"
+            formatName="date_short"
+            label="Data di scadenza"/>
+
+    <fieldProperty
+            name="importoTotalePerObbligazione"
+            property="importoTotalePerObbligazione"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroPositivoFormat"
+            readonlyProperty="ROImportoTotalePerObbligazione"
+            label="Totale dettagli"/>
 
 
-	<findFieldProperty name="esercizio"/>
-	<findFieldProperty name="esercizio_fattura_fornitore"/>
-	<findFieldProperty name="cd_cds"/>
-	<findFieldProperty name="cd_unita_organizzativa"/>
-	<findFieldProperty name="pg_fattura_passiva"/>
-	<findFieldProperty name="numero_protocollo"/>
-	<findFieldProperty name="fornitore"/>
-	<findFieldProperty name="ds_fattura_passiva"/>
-	<findFieldProperty name="nr_fattura_fornitore" />
-	<findFieldProperty name="dt_fattura_fornitore" />
-	<findFieldProperty name="dt_scadenza" />
-	<findFieldProperty name="dt_registrazione" />
-	<findFieldProperty name="ti_istituz_commercSearch" />
-	<findFieldProperty name="sezionale" />
-	<findFieldProperty name="im_totale_fattura" />
-	<findFieldProperty name="cd_precedente" />
-	<findFieldProperty name="ragione_sociale" />
-	<findFieldProperty name="nome" />
-	<findFieldProperty name="cognome" />
-	<findFieldProperty name="denominazione_sede" />
-	<findFieldProperty name="codice_fiscale" />
-	<findFieldProperty name="partita_iva" />
-	<findFieldProperty name="ds_fornitore" />
-	<findFieldProperty name="fl_san_marino_con_iva" />
-	<findFieldProperty name="fl_san_marino_senza_iva" />
-	<findFieldProperty name="fl_intra_ue" />
-	<findFieldProperty name="fl_extra_ue" />
-	<findFieldProperty name="stato_cofiForSearch" />
-	<findFieldProperty name="ti_associato_manrevForSearch" />
-	<findFieldProperty name="fl_autofattura"/>
-	<findFieldProperty name="fl_bolla_doganale"/>
-	<findFieldProperty name="fl_spedizioniere"/>
-	<findFieldProperty name="sezionaliFlagsRadioGroup"/>
-	<findFieldProperty name="cd_sospeso" />
-	<findFieldProperty name="esercizio_sospeso" />
-	<findFieldProperty name="cd_cds_sospeso" />
-	<findFieldProperty name="ti_entrata_spesa" />
-	<findFieldProperty name="sospeso" />
-	<findFieldProperty name="valutaForSearch" />
-	<findFieldProperty name="ti_bene_servizioForSearch" />
-	<findFieldProperty name="fl_fattura_compenso" />
-	<findFieldProperty name="fl_congelata" />
-	<findFieldProperty name="fl_liquidazione_differita"/>
-	<findFieldProperty name="stato_liquidazione"/>
-	<findFieldProperty name="causale"/>
-	<findFieldProperty name="cds_compenso" />
-	<findFieldProperty name="uo_compenso" />
-	<findFieldProperty name="esercizio_compenso" />
-	<findFieldProperty name="pg_compenso" />
-	<findFieldProperty name="progr_univoco" />
-	<findFieldProperty name="identificativoSdi" />	
-	<findFieldProperty name="progressivo" />
-	<findFieldProperty
-		name="esercizio_lettera"
-		inputType="TEXT"
-		label="Esercizio lettera" />
-	<findFieldProperty
-		name="pg_lettera"
-		inputType="TEXT"/>	
-	<findFieldProperty
-		name="fl_split_payment" />
-	<findFieldProperty
-			name="flDaOrdini" />
-	<findFieldProperty
-			name="cd_cig" />
-	<findFieldProperty
-			name="motivo_assenza_cig" />
+    <fieldProperty
+            name="esercizio_lettera"
+            property="lettera_pagamento_estero.esercizio"
+            inputType="ROTEXT"
+            label="Esercizio"/>
+    <fieldProperty
+            name="im_commissioni_lettera"
+            property="lettera_pagamento_estero.im_commissioni"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroPositivoFormat"
+            nullable="false"
+            label="Commissioni"/>
+    <fieldProperty
+            name="im_pagamento"
+            property="lettera_pagamento_estero.im_pagamento"
+            inputType="TEXT"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            formatName="it.cnr.contab.util.EuroPositivoFormat"
+            nullable="false"
+            label="Importo"/>
+    <fieldProperty
+            name="pg_lettera"
+            property="lettera_pagamento_estero.pg_lettera"
+            inputType="ROTEXT"
+            label="Nr. lettera"/>
+    <fieldProperty
+            name="dt_registrazione_lettera"
+            property="lettera_pagamento_estero.dt_registrazione"
+            inputType="ROTEXT"
+            formatName="date_short"
+            nullable="false"
+            label="Data registrazione"/>
+    <fieldProperty
+            name="creaLettera"
+            property="lettera_pagamento_estero"
+            inputType="BUTTON"
+            img="img/new16.gif"
+            buttonClass="btn btn-outline-info btn-title"
+            iconClass="fa fa-fw fa-plus"
+            readonlyProperty="abledToInsertLettera"
+            label="Crea lettera pagamento estero"
+            href="javascript:submitForm('doCreaLettera')"/>
+    <fieldProperty
+            name="cancellaLettera"
+            property="lettera_pagamento_estero"
+            inputType="BUTTON"
+            img="img/delete16.gif"
+            buttonClass="btn btn-outline-danger btn-title"
+            iconClass="fa fa-fw fa-trash"
+            readonlyProperty="abledToDeleteLettera"
+            label="Cancella lettera pagamento estero"
+            href="javascript:submitForm('doCancellaLettera')"/>
+    <fieldProperty
+            name="disassociaLettera"
+            property="lettera_pagamento_estero"
+            inputType="BUTTON"
+            img="img/delete16.gif"
+            buttonClass="btn btn-outline-danger btn-title"
+            iconClass="fa fa-fw fa-trash"
+            readonlyProperty="abledToDisassociaLettera"
+            label="Scollega lettera pagamento estero"
+            href="javascript:submitForm('doDisassociaLettera')"/>
+    <fieldProperty
+            name="cd_sospeso"
+            property="lettera_pagamento_estero.sospeso.cd_sospeso_padre"
+            inputType="TEXT"
+            readonlyProperty="ROSospeso"
+            label="N. sospeso"
+            nullable="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="esercizio_sospeso"
+            property="lettera_pagamento_estero.sospeso.esercizio"
+            inputType="ROTEXT"
+            enabledOnFreeSearch="false"
+            label="Esercizio sospeso"/>
+    <fieldProperty
+            name="cd_cds_sospeso"
+            property="lettera_pagamento_estero.sospeso.cd_cds"
+            inputType="ROTEXT"
+            enabledOnFreeSearch="false"
+            label="Cds sospeso"/>
+    <fieldProperty
+            name="ti_entrata_spesa"
+            property="lettera_pagamento_estero.sospeso.ti_entrata_spesa"
+            keysProperty="tipo_sospesoKeys"
+            inputType="ROTEXT"
+            enabledOnFreeSearch="false"
+            label="Tipo sospeso"/>
+    <fieldProperty
+            name="sospeso"
+            property="lettera_pagamento_estero.sospeso"
+            inputType="SEARCHTOOL"
+            readonlyProperty="ROSospesoSearchTool"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            completeOnSave="false"
+            label="Sospeso"/>
 
-	<formFieldProperty
-		name="ti_bene_servizio" />
-	<formFieldProperty
-		name="ti_bene_servizioForSearch" />
-	<formFieldProperty
-		name="sezionaliFlagsRadioGroup" />
-	<formFieldProperty
-		name="stato_cofi" />
-	<formFieldProperty
-		name="stato_cofiForSearch" />
-	<formFieldProperty
-		name="stato_pagamento_fondo_eco" />
-	<formFieldProperty
-		name="stato_pagamento_fondo_ecoForSearch" />
-	<formFieldProperty
-		name="dt_pagamento_fondo_eco" />
-	<formFieldProperty
-		name="ti_associato_manrev" />
-	<formFieldProperty
-		name="ti_associato_manrevForSearch" />
-	<formFieldProperty 
-		name="esercizio"
-		inputSize="6"/>
-	<formFieldProperty 
-		name="esercizio_fattura_fornitore"
-		inputSize="6"/>
-	<formFieldProperty
-		name="fl_fattura_compenso" 
-		command="doOnFlFatturaCompensoChange" />
-	<formFieldProperty
-		name="riportata" />
-		
-	<formFieldProperty
-		name="fornitore" />
-	<formFieldProperty
-		name="cd_fornitore" />
-	<formFieldProperty
-		name="cd_precedente"/>
-	<formFieldProperty
-		name="ds_fornitore" />
-	<formFieldProperty
-		name="crea_fornitore" />
-		
-	<formFieldProperty
-		name="cd_cessionario" />
-	<formFieldProperty
-		name="denom_sede_cessionario" />
+    <fieldProperty
+            name="displayStatoTrasmissione"
+            property="lettera_pagamento_estero.displayStatoTrasmissione"
+            inputType="LABEL"
+            labelStyle="font-style:italic; font-size:x-large"/>
 
-	<formFieldProperty
-		name="contoA" />
-	<formFieldProperty
-		name="contoB" />
-	<formFieldProperty
-		name="contoP" />
-	<formFieldProperty
-		name="contoQ" />
-	<formFieldProperty
-		name="contoN" />
-	<formFieldProperty
-		name="via_fiscale" />
-	<formFieldProperty
-		name="denominazione_sede" />
-	<formFieldProperty
-		name="num_civico" />
-	<formFieldProperty
-		name="ds_comune" />
-	<formFieldProperty
-		name="ds_provincia" />
-	<formFieldProperty
-		name="listabanche" 
-		label="Conto/i..." />
-		
-	<formFieldProperty
-		name="fl_san_marino_con_iva"
-		command="doOnFlSanMarinoConIVAChange" />
-	<formFieldProperty
-		name="fl_san_marino_senza_iva"
-		command="doOnFlSanMarinoSenzaIVAChange" />
-	<formFieldProperty
-		name="fl_intra_ue" 
-		command="doOnFlIntraUEChange" />
-	<formFieldProperty
-		name="fl_extra_ue"
-		command="doOnFlExtraUEChange" />
-	<formFieldProperty
-		name="fl_spedizioniere"
-		command="doOnFlSpedizioniereChange" />
-	<formFieldProperty
-		name="fl_bolla_doganale"
-		command="doOnFlBollaDoganaleChange" />
-	<formFieldProperty
-		name="fl_autofattura"
-		command="doOnFlAutofatturaChange" />
-	<formFieldProperty
-		name="fl_merce_extra_ue"
-		command="doOnFlMerceExtraUEChange" />
-	<formFieldProperty
-		name="fl_merce_intra_ue"
-		command="doOnFlMerceIntraUEChange" />
-			
-	<formFieldProperty
-		name="fl_congelata" />
-	<formFieldProperty
-		name="protocollo_iva" />
-	<formFieldProperty
-		name="protocollo_iva_generale" />
-	<formFieldProperty
-		name="numero_protocollo" />
-	<formFieldProperty
-		name="partita_iva" />
-	<formFieldProperty
-		name="nome" />
-	<formFieldProperty
-		name="dt_fattura_fornitore"
-		command="doCambiaDataEmissioneFattura" />
-		
-	<formFieldProperty
-		name="sezionale" />
+    <fieldProperty
+            name="bonifico_mezzo"
+            property="lettera_pagamento_estero.bonifico_mezzo"
+            maxLength="1"
+            inputSize="1"
+            inputType="RADIOGROUP"
+            keysProperty="ti_bonifico_mezzoKeys"
+            label="Vi preghiamo disporre il seguente bonifico&lt;br&gt;per nostro ordine e conto a mezzo:"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            nullable="false"
+            layout="VERTICAL"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="divisa"
+            property="lettera_pagamento_estero.divisa"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            inputType="TEXT"
+            nullable="false"
+            label="Divisa"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="beneficiario"
+            property="lettera_pagamento_estero.beneficiario"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="300"
+            inputSize="300"
+            nullable="false"
+            inputType="TEXTAREA"
+            cols="75"
+            rows="2"
+            label="Beneficiario"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="num_conto_ben"
+            property="lettera_pagamento_estero.num_conto_ben"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="250"
+            inputSize="100"
+            inputType="TEXT"
+            label="Conto n°"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="iban"
+            property="lettera_pagamento_estero.iban"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="250"
+            inputSize="100"
+            inputType="TEXT"
+            label="IBAN"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="indirizzo"
+            property="lettera_pagamento_estero.indirizzo"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="250"
+            inputSize="100"
+            inputType="TEXT"
+            label="Presso/tramite"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="indirizzo_swift"
+            property="lettera_pagamento_estero.indirizzo_swift"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="250"
+            inputSize="100"
+            inputType="TEXT"
+            label="Indirizzo - SWIFT/BIC"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="motivo_pag"
+            property="lettera_pagamento_estero.motivo_pag"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="250"
+            inputSize="100"
+            inputType="TEXT"
+            label="MOTIVO DEL PAGAMENTO"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ammontare_debito"
+            property="lettera_pagamento_estero.ammontare_debito"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="1"
+            inputSize="1"
+            inputType="RADIOGROUP"
+            keysProperty="ti_ammontare_debitoKeys"
+            label="Del relativo ammontare/controvalore&lt;br&gt;ci darete debito nel"
+            nullable="false"
+            layout="VERTICAL"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="conto_debito"
+            property="lettera_pagamento_estero.conto_debito"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="250"
+            inputSize="100"
+            inputType="TEXT"
+            label="Numero Conto"
+            enabledOnEdit="false"
+            enabledOnInsert="false"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="commissioni_spese"
+            property="lettera_pagamento_estero.commissioni_spese"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="1"
+            inputSize="1"
+            inputType="RADIOGROUP"
+            keysProperty="ti_commissione_speseKeys"
+            label="Vostre commissioni e spese:"
+            nullable="false"
+            layout="VERTICAL"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="commissioni_spese_estere"
+            property="lettera_pagamento_estero.commissioni_spese_estere"
+            readonlyProperty="ROStatoTrasmissioneLettera"
+            maxLength="1"
+            inputSize="1"
+            inputType="RADIOGROUP"
+            keysProperty="ti_commissione_speseKeys"
+            label="Eventuali commissioni e spese&lt;br&gt;della Vostra Corrispondente estera:"
+            nullable="false"
+            layout="VERTICAL"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
 
-	<formFieldProperty
-		name="im_totale_fattura"
-		command="doCalcolaTotaleFatturaFornitoreInEur" />
-	<formFieldProperty
-		name="im_totale_imponibile" />
-	<formFieldProperty
-		name="ti_istituz_commerc" />
-	<formFieldProperty
-		name="ti_istituz_commercSearch" />
-	<formFieldProperty
-		name="pg_fattura_passiva" />
-	<formFieldProperty
-		name="ragione_sociale" />
-		
-	<formFieldProperty
-		name="valuta" />
-	<formFieldProperty
-		name="valutaForSearch" />
-	<formFieldProperty
-		name="cambio"
-		command="doOnChangeModified" />
-	<formFieldProperty
-		name="inizio_validita_valuta" />
-	<formFieldProperty
-		name="fine_validita_valuta" />
-		
-	<formFieldProperty
-		name="nr_fattura_fornitore" />
-	
-	<formFieldProperty
-		name="codice_fiscale" />
-	<formFieldProperty
-		name="modalita_pagamento" />
-	<formFieldProperty
-		name="termini_pagamento" />
-	<formFieldProperty
-		name="cognome" />
-	<formFieldProperty
-		name="dt_registrazione"
-		command="doCambiaDataRegistrazione" />
-	<formFieldProperty
-		name="ds_fattura_passiva" />
-	<formFieldProperty
-		name="pg_banca" />
-	
-	<formFieldProperty
-		name="im_totale_fattura_calcolato" />
-	<formFieldProperty
-		name="im_importo_totale_fattura_fornitore_euro" />
-	<formFieldProperty
-		name="im_totale_iva" />
-	<formFieldProperty
-		name="dt_scadenza"
-		command="doCambiaDataScadenzaFatturaFornitore" />
-	<formFieldProperty
-		name="importoTotalePerObbligazione" />
-	<formFieldProperty
-		name="dt_da_competenza_coge"
-		command="doOnDataCompetenzaDaCogeChange"
-		label="Competenza dal" />
-	<formFieldProperty
-		name="dt_a_competenza_coge"
-		command="doOnDataCompetenzaACogeChange"
-		label="al" />
+    <fieldProperty
+            name="fl_liquidazione_differita"
+            property="fl_liquidazione_differita"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_liquidazione_differita"
+            label="Liquidazione Differita"/>
+    <fieldProperty
+            name="data_protocollo"
+            property="data_protocollo"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="10"
+            formatName="date_short"
+            enabledOnSearch="true"
+            label="Data protocollo/ricezione"
+            command="doCambiaDataProtocollo"/>
+    <fieldProperty
+            name="progr_univoco"
+            property="progr_univoco"
+            inputType="TEXT"
+            maxLength="10"
+            inputSize="10"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnInsert="false"
+            enabledOnFreeSearch="true"
+            label="Progressivo univoco"/>
+    <fieldProperty
+            name="stato_liquidazione"
+            property="stato_liquidazione"
+            inputType="SELECT"
+            label="Stato liquidazione"
+            readonlyProperty="ROStato_liquidazione"
+            nullable="true"
+            enabledOnSearch="true"
+            keysProperty="stato_liquidazioneKeys"/>
+    <fieldProperty
+            name="causale"
+            property="causale"
+            inputType="SELECT"
+            label="causale"
+            readonlyProperty="ROStato_liquidazione"
+            nullable="true"
+            enabledOnSearch="true"
+            keysProperty="causaleKeys"/>
+    <fieldProperty
+            name="cds_compenso"
+            property="cds_compenso"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            label="CDS Compenso"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="uo_compenso"
+            property="uo_compenso"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            label="UO Compenso"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="esercizio_compenso"
+            property="esercizio_compenso"
+            inputType="TEXT"
+            label="Esercizio compenso"/>
+    <fieldProperty
+            name="pg_compenso"
+            property="pg_compenso"
+            inputType="TEXT"
+            label="N. Compenso"/>
+    <fieldProperty
+            name="identificativoSdi"
+            property="identificativoSdi"
+            maxLength="22"
+            inputSize="22"
+            inputType="TEXT"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnInsert="false"
+            enabledOnFreeSearch="true"
+            label="Identificativo SDI"/>
+    <fieldProperty
+            name="progressivo"
+            property="progressivo"
+            maxLength="22"
+            inputSize="22"
+            inputType="TEXT"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            enabledOnInsert="false"
+            enabledOnFreeSearch="true"
+            label="progressivo SDI"/>
+    <fieldProperty
+            name="fl_split_payment"
+            property="fl_split_payment"
+            inputType="CHECKBOX"
+            readonlyProperty="ROFl_split_payment"
+            enabledOnSearch="true"
+            label="Split Payment"/>
 
-	<formFieldProperty
-		name="esercizio_lettera" />
-	<formFieldProperty
-		name="im_commissioni_lettera" />
-	<formFieldProperty
-		name="im_pagamento" />
-	<formFieldProperty
-		name="pg_lettera" />
-	<formFieldProperty
-		name="dt_registrazione_lettera" />
-	<formFieldProperty
-		name="creaLettera" />
-	<formFieldProperty
-		name="cancellaLettera" />
-	<formFieldProperty
-		name="disassociaLettera" />		
-	<formFieldProperty
-		name="cd_sospeso" />
-	<formFieldProperty
-		name="esercizio_sospeso" />
-	<formFieldProperty
-		name="cd_cds_sospeso" />
-	<formFieldProperty
-		name="ti_entrata_spesa" />
-	<formFieldProperty
-		name="sospeso" />
-	<formFieldProperty
-		name="bonifico_mezzo" />
-	<formFieldProperty
-		name="divisa" />
-	<formFieldProperty
-		name="beneficiario" />
-	<formFieldProperty
-		name="num_conto_ben" />
-	<formFieldProperty
-		name="iban"/>		
-	<formFieldProperty
-		name="indirizzo"/>		
-	<formFieldProperty
-		name="indirizzo_swift"/>		
-	<formFieldProperty
-		name="motivo_pag"/>		
-	<formFieldProperty
-		name="ammontare_debito"/>
-	<formFieldProperty
-		name="conto_debito"/>		
-	<formFieldProperty
-		name="commissioni_spese"/>
-	<formFieldProperty
-		name="commissioni_spese_estere"/>
-	<formFieldProperty
-		name="displayStatoTrasmissione"/>
-		
-	<formFieldProperty
-		name="fl_liquidazione_differita" 
-		command="doOnLiquidazioneDifferitaChange"/>	
-	<formFieldProperty
-		name="data_protocollo" />
-	<formFieldProperty
-		name="progr_univoco" />
-	<formFieldProperty 
-		name="stato_liquidazione"/>		
-	<formFieldProperty 
-		name="causale"/>
-	<formFieldProperty
-		name="cds_compenso" />
-	<formFieldProperty
-		name="uo_compenso" />
-	<formFieldProperty
-		name="esercizio_compenso" />
-	<formFieldProperty
-		name="pg_compenso" />
-	<formFieldProperty name="progr_univoco" />
-	<formFieldProperty name="identificativoSdi" />	
-	<formFieldProperty name="progressivo" />
-	<formFieldProperty 
-		name="fl_split_payment" 
-		command="doOnFlSplitPaymentChange"/>
-	<formFieldProperty
-		name="flDaOrdini"
-		command="doOnFlDaOrdiniChange"/>
-	<formFieldProperty
-			name="cd_cig" />
-	<formFieldProperty
-			name="motivo_assenza_cig" />
+    <fieldProperty
+            name="flDaOrdini"
+            property="flDaOrdini"
+            inputType="CHECKBOX"
+            enabledOnSearch="true"
+            readonlyProperty="ROFlDaOrdini"
+            label="Da Ordini"/>
+    <fieldProperty
+            name="cig"
+            property="cig"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            nullable="true"
+            enabledOnSearch="true"
+            CRUDBusinessProcessName="CRUDCodiciCIGBP"
+            label="CIG"/>
+    <fieldProperty
+            name="cdCig"
+            property="cig.cdCig"
+            inputType="TEXT"
+            inputSize="20"
+            maxLength="10"
+            enabledOnSearch="true"
+            label="Codice CIG"/>
+    <fieldProperty
+            name="motivo_assenza_cig"
+            property="motivo_assenza_cig"
+            inputType="SELECT"
+            keysProperty="motivoEsclusioneCigSIOPEKeys"
+            enabledOnSearch="true"
+            label="Motivo assenza CIG"/>
 
-	<columnFieldProperty 
-		name="esercizio"/>
-	<columnFieldProperty
-		name="pg_fattura_passiva" />
-	<columnFieldProperty
-		name="numero_protocollo" />
-	<columnFieldProperty
-		name="data_protocollo" />	
-	<columnFieldProperty
-		name="protocollo_iva" />
-	<columnFieldProperty
-		name="protocollo_iva_generale" />
-	<columnFieldProperty
-		name="progr_univoco" />		
-	<columnFieldProperty
-		name="ds_fattura_passiva" />
-	<columnFieldProperty
-		name="dt_registrazione" />
-	<columnFieldProperty
-		name="ti_istituz_commerc" />
-	<columnFieldProperty
-		name="sezionale" />
-	<columnFieldProperty
-		name="nr_fattura_fornitore" />
-	<columnFieldProperty
-		name="dt_fattura_fornitore" />
-	<columnFieldProperty
-		name="dt_scadenza" />	
-	<columnFieldProperty
-		name="cd_fornitore" />
-	<columnFieldProperty
-		name="cognome" />
-	<columnFieldProperty
-		name="nome" />
-	<columnFieldProperty
-		name="ragione_sociale" />
-	<columnFieldProperty
-		name="im_totale_fattura" />
-	<columnFieldProperty
-		name="ds_divisa"
-		property="valuta.ds_divisa"
-		label="Valuta" />
-	<columnFieldProperty
-		name="stato_cofi" />
-	<columnFieldProperty
-		name="ti_associato_manrev" />
-	<columnFieldProperty 
-		name="stato_liquidazione"/>			
-	<columnFieldProperty 
-		name="causale"/>	
-	<columnFieldProperty name="progr_univoco" />
-	<columnFieldProperty name="identificativoSdi" />	
-	<columnFieldProperty name="progressivo" />
-	<form
-		name="documentoSearchtool" >
-		<formFieldProperty
-			name="esercizio"
-			inputType="ROTEXT" />
-		<formFieldProperty
-			name="cd_cds"
-			inputType="ROTEXT" />
-		<formFieldProperty
-			name="cd_unita_organizzativa"
-			inputType="ROTEXT" />
-		<formFieldProperty
-			name="pg_fattura_passiva"
-			inputType="ROTEXT" />
-	</form>
+
+    <findFieldProperty name="esercizio"/>
+    <findFieldProperty name="esercizio_fattura_fornitore"/>
+    <findFieldProperty name="cd_cds"/>
+    <findFieldProperty name="cd_unita_organizzativa"/>
+    <findFieldProperty name="pg_fattura_passiva"/>
+    <findFieldProperty name="numero_protocollo"/>
+    <findFieldProperty name="fornitore"/>
+    <findFieldProperty name="ds_fattura_passiva"/>
+    <findFieldProperty name="nr_fattura_fornitore"/>
+    <findFieldProperty name="dt_fattura_fornitore"/>
+    <findFieldProperty name="dt_scadenza"/>
+    <findFieldProperty name="dt_registrazione"/>
+    <findFieldProperty name="ti_istituz_commercSearch"/>
+    <findFieldProperty name="sezionale"/>
+    <findFieldProperty name="im_totale_fattura"/>
+    <findFieldProperty name="cd_precedente"/>
+    <findFieldProperty name="ragione_sociale"/>
+    <findFieldProperty name="nome"/>
+    <findFieldProperty name="cognome"/>
+    <findFieldProperty name="denominazione_sede"/>
+    <findFieldProperty name="codice_fiscale"/>
+    <findFieldProperty name="partita_iva"/>
+    <findFieldProperty name="ds_fornitore"/>
+    <findFieldProperty name="fl_san_marino_con_iva"/>
+    <findFieldProperty name="fl_san_marino_senza_iva"/>
+    <findFieldProperty name="fl_intra_ue"/>
+    <findFieldProperty name="fl_extra_ue"/>
+    <findFieldProperty name="stato_cofiForSearch"/>
+    <findFieldProperty name="ti_associato_manrevForSearch"/>
+    <findFieldProperty name="fl_autofattura"/>
+    <findFieldProperty name="fl_bolla_doganale"/>
+    <findFieldProperty name="fl_spedizioniere"/>
+    <findFieldProperty name="sezionaliFlagsRadioGroup"/>
+    <findFieldProperty name="cd_sospeso"/>
+    <findFieldProperty name="esercizio_sospeso"/>
+    <findFieldProperty name="cd_cds_sospeso"/>
+    <findFieldProperty name="ti_entrata_spesa"/>
+    <findFieldProperty name="sospeso"/>
+    <findFieldProperty name="valutaForSearch"/>
+    <findFieldProperty name="ti_bene_servizioForSearch"/>
+    <findFieldProperty name="fl_fattura_compenso"/>
+    <findFieldProperty name="fl_congelata"/>
+    <findFieldProperty name="fl_liquidazione_differita"/>
+    <findFieldProperty name="stato_liquidazione"/>
+    <findFieldProperty name="causale"/>
+    <findFieldProperty name="cds_compenso"/>
+    <findFieldProperty name="uo_compenso"/>
+    <findFieldProperty name="esercizio_compenso"/>
+    <findFieldProperty name="pg_compenso"/>
+    <findFieldProperty name="progr_univoco"/>
+    <findFieldProperty name="identificativoSdi"/>
+    <findFieldProperty name="progressivo"/>
+    <findFieldProperty
+            name="esercizio_lettera"
+            inputType="TEXT"
+            label="Esercizio lettera"/>
+    <findFieldProperty
+            name="pg_lettera"
+            inputType="TEXT"/>
+    <findFieldProperty
+            name="fl_split_payment"/>
+    <findFieldProperty
+            name="flDaOrdini"/>
+    <findFieldProperty
+            name="cdCig"/>
+    <findFieldProperty
+            name="motivo_assenza_cig"/>
+
+    <formFieldProperty
+            name="ti_bene_servizio"/>
+    <formFieldProperty
+            name="ti_bene_servizioForSearch"/>
+    <formFieldProperty
+            name="sezionaliFlagsRadioGroup"/>
+    <formFieldProperty
+            name="stato_cofi"/>
+    <formFieldProperty
+            name="stato_cofiForSearch"/>
+    <formFieldProperty
+            name="stato_pagamento_fondo_eco"/>
+    <formFieldProperty
+            name="stato_pagamento_fondo_ecoForSearch"/>
+    <formFieldProperty
+            name="dt_pagamento_fondo_eco"/>
+    <formFieldProperty
+            name="ti_associato_manrev"/>
+    <formFieldProperty
+            name="ti_associato_manrevForSearch"/>
+    <formFieldProperty
+            name="esercizio"
+            inputSize="6"/>
+    <formFieldProperty
+            name="esercizio_fattura_fornitore"
+            inputSize="6"/>
+    <formFieldProperty
+            name="fl_fattura_compenso"
+            command="doOnFlFatturaCompensoChange"/>
+    <formFieldProperty
+            name="riportata"/>
+
+    <formFieldProperty
+            name="fornitore"/>
+    <formFieldProperty
+            name="cd_fornitore"/>
+    <formFieldProperty
+            name="cd_precedente"/>
+    <formFieldProperty
+            name="ds_fornitore"/>
+    <formFieldProperty
+            name="crea_fornitore"/>
+
+    <formFieldProperty
+            name="cd_cessionario"/>
+    <formFieldProperty
+            name="denom_sede_cessionario"/>
+
+    <formFieldProperty
+            name="contoA"/>
+    <formFieldProperty
+            name="contoB"/>
+    <formFieldProperty
+            name="contoP"/>
+    <formFieldProperty
+            name="contoQ"/>
+    <formFieldProperty
+            name="contoN"/>
+    <formFieldProperty
+            name="via_fiscale"/>
+    <formFieldProperty
+            name="denominazione_sede"/>
+    <formFieldProperty
+            name="num_civico"/>
+    <formFieldProperty
+            name="ds_comune"/>
+    <formFieldProperty
+            name="ds_provincia"/>
+    <formFieldProperty
+            name="listabanche"
+            label="Conto/i..."/>
+
+    <formFieldProperty
+            name="fl_san_marino_con_iva"
+            command="doOnFlSanMarinoConIVAChange"/>
+    <formFieldProperty
+            name="fl_san_marino_senza_iva"
+            command="doOnFlSanMarinoSenzaIVAChange"/>
+    <formFieldProperty
+            name="fl_intra_ue"
+            command="doOnFlIntraUEChange"/>
+    <formFieldProperty
+            name="fl_extra_ue"
+            command="doOnFlExtraUEChange"/>
+    <formFieldProperty
+            name="fl_spedizioniere"
+            command="doOnFlSpedizioniereChange"/>
+    <formFieldProperty
+            name="fl_bolla_doganale"
+            command="doOnFlBollaDoganaleChange"/>
+    <formFieldProperty
+            name="fl_autofattura"
+            command="doOnFlAutofatturaChange"/>
+    <formFieldProperty
+            name="fl_merce_extra_ue"
+            command="doOnFlMerceExtraUEChange"/>
+    <formFieldProperty
+            name="fl_merce_intra_ue"
+            command="doOnFlMerceIntraUEChange"/>
+
+    <formFieldProperty
+            name="fl_congelata"/>
+    <formFieldProperty
+            name="protocollo_iva"/>
+    <formFieldProperty
+            name="protocollo_iva_generale"/>
+    <formFieldProperty
+            name="numero_protocollo"/>
+    <formFieldProperty
+            name="partita_iva"/>
+    <formFieldProperty
+            name="nome"/>
+    <formFieldProperty
+            name="dt_fattura_fornitore"
+            command="doCambiaDataEmissioneFattura"/>
+
+    <formFieldProperty
+            name="sezionale"/>
+
+    <formFieldProperty
+            name="im_totale_fattura"
+            command="doCalcolaTotaleFatturaFornitoreInEur"/>
+    <formFieldProperty
+            name="im_totale_imponibile"/>
+    <formFieldProperty
+            name="ti_istituz_commerc"/>
+    <formFieldProperty
+            name="ti_istituz_commercSearch"/>
+    <formFieldProperty
+            name="pg_fattura_passiva"/>
+    <formFieldProperty
+            name="ragione_sociale"/>
+
+    <formFieldProperty
+            name="valuta"/>
+    <formFieldProperty
+            name="valutaForSearch"/>
+    <formFieldProperty
+            name="cambio"
+            command="doOnChangeModified"/>
+    <formFieldProperty
+            name="inizio_validita_valuta"/>
+    <formFieldProperty
+            name="fine_validita_valuta"/>
+
+    <formFieldProperty
+            name="nr_fattura_fornitore"/>
+
+    <formFieldProperty
+            name="codice_fiscale"/>
+    <formFieldProperty
+            name="modalita_pagamento"/>
+    <formFieldProperty
+            name="termini_pagamento"/>
+    <formFieldProperty
+            name="cognome"/>
+    <formFieldProperty
+            name="dt_registrazione"
+            command="doCambiaDataRegistrazione"/>
+    <formFieldProperty
+            name="ds_fattura_passiva"/>
+    <formFieldProperty
+            name="pg_banca"/>
+
+    <formFieldProperty
+            name="im_totale_fattura_calcolato"/>
+    <formFieldProperty
+            name="im_importo_totale_fattura_fornitore_euro"/>
+    <formFieldProperty
+            name="im_totale_iva"/>
+    <formFieldProperty
+            name="dt_scadenza"
+            command="doCambiaDataScadenzaFatturaFornitore"/>
+    <formFieldProperty
+            name="importoTotalePerObbligazione"/>
+    <formFieldProperty
+            name="dt_da_competenza_coge"
+            command="doOnDataCompetenzaDaCogeChange"
+            label="Competenza dal"/>
+    <formFieldProperty
+            name="dt_a_competenza_coge"
+            command="doOnDataCompetenzaACogeChange"
+            label="al"/>
+
+    <formFieldProperty
+            name="esercizio_lettera"/>
+    <formFieldProperty
+            name="im_commissioni_lettera"/>
+    <formFieldProperty
+            name="im_pagamento"/>
+    <formFieldProperty
+            name="pg_lettera"/>
+    <formFieldProperty
+            name="dt_registrazione_lettera"/>
+    <formFieldProperty
+            name="creaLettera"/>
+    <formFieldProperty
+            name="cancellaLettera"/>
+    <formFieldProperty
+            name="disassociaLettera"/>
+    <formFieldProperty
+            name="cd_sospeso"/>
+    <formFieldProperty
+            name="esercizio_sospeso"/>
+    <formFieldProperty
+            name="cd_cds_sospeso"/>
+    <formFieldProperty
+            name="ti_entrata_spesa"/>
+    <formFieldProperty
+            name="sospeso"/>
+    <formFieldProperty
+            name="bonifico_mezzo"/>
+    <formFieldProperty
+            name="divisa"/>
+    <formFieldProperty
+            name="beneficiario"/>
+    <formFieldProperty
+            name="num_conto_ben"/>
+    <formFieldProperty
+            name="iban"/>
+    <formFieldProperty
+            name="indirizzo"/>
+    <formFieldProperty
+            name="indirizzo_swift"/>
+    <formFieldProperty
+            name="motivo_pag"/>
+    <formFieldProperty
+            name="ammontare_debito"/>
+    <formFieldProperty
+            name="conto_debito"/>
+    <formFieldProperty
+            name="commissioni_spese"/>
+    <formFieldProperty
+            name="commissioni_spese_estere"/>
+    <formFieldProperty
+            name="displayStatoTrasmissione"/>
+
+    <formFieldProperty
+            name="fl_liquidazione_differita"
+            command="doOnLiquidazioneDifferitaChange"/>
+    <formFieldProperty
+            name="data_protocollo"/>
+    <formFieldProperty
+            name="progr_univoco"/>
+    <formFieldProperty
+            name="stato_liquidazione"/>
+    <formFieldProperty
+            name="causale"/>
+    <formFieldProperty
+            name="cds_compenso"/>
+    <formFieldProperty
+            name="uo_compenso"/>
+    <formFieldProperty
+            name="esercizio_compenso"/>
+    <formFieldProperty
+            name="pg_compenso"/>
+    <formFieldProperty name="progr_univoco"/>
+    <formFieldProperty name="identificativoSdi"/>
+    <formFieldProperty name="progressivo"/>
+    <formFieldProperty
+            name="fl_split_payment"
+            command="doOnFlSplitPaymentChange"/>
+    <formFieldProperty
+            name="flDaOrdini"
+            command="doOnFlDaOrdiniChange"/>
+    <formFieldProperty
+            name="cig"/>
+    <formFieldProperty
+            name="motivo_assenza_cig"/>
+
+    <columnFieldProperty
+            name="esercizio"/>
+    <columnFieldProperty
+            name="pg_fattura_passiva"/>
+    <columnFieldProperty
+            name="numero_protocollo"/>
+    <columnFieldProperty
+            name="data_protocollo"/>
+    <columnFieldProperty
+            name="protocollo_iva"/>
+    <columnFieldProperty
+            name="protocollo_iva_generale"/>
+    <columnFieldProperty
+            name="progr_univoco"/>
+    <columnFieldProperty
+            name="ds_fattura_passiva"/>
+    <columnFieldProperty
+            name="dt_registrazione"/>
+    <columnFieldProperty
+            name="ti_istituz_commerc"/>
+    <columnFieldProperty
+            name="sezionale"/>
+    <columnFieldProperty
+            name="nr_fattura_fornitore"/>
+    <columnFieldProperty
+            name="dt_fattura_fornitore"/>
+    <columnFieldProperty
+            name="dt_scadenza"/>
+    <columnFieldProperty
+            name="cd_fornitore"/>
+    <columnFieldProperty
+            name="cognome"/>
+    <columnFieldProperty
+            name="nome"/>
+    <columnFieldProperty
+            name="ragione_sociale"/>
+    <columnFieldProperty
+            name="im_totale_fattura"/>
+    <columnFieldProperty
+            name="ds_divisa"
+            property="valuta.ds_divisa"
+            label="Valuta"/>
+    <columnFieldProperty
+            name="stato_cofi"/>
+    <columnFieldProperty
+            name="ti_associato_manrev"/>
+    <columnFieldProperty
+            name="stato_liquidazione"/>
+    <columnFieldProperty
+            name="causale"/>
+    <columnFieldProperty name="progr_univoco"/>
+    <columnFieldProperty name="identificativoSdi"/>
+    <columnFieldProperty name="progressivo"/>
+    <form
+            name="documentoSearchtool">
+        <formFieldProperty
+                name="esercizio"
+                inputType="ROTEXT"/>
+        <formFieldProperty
+                name="cd_cds"
+                inputType="ROTEXT"/>
+        <formFieldProperty
+                name="cd_unita_organizzativa"
+                inputType="ROTEXT"/>
+        <formFieldProperty
+                name="pg_fattura_passiva"
+                inputType="ROTEXT"/>
+    </form>
 
 </bulkInfo>
