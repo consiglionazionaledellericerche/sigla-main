@@ -5,6 +5,26 @@
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 package it.cnr.contab.varstanz00.comp;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+
+import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -12,7 +32,6 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
-import it.cnr.contab.config00.comp.CRUDConfigAssEvoldEvnewComponent;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
@@ -28,6 +47,7 @@ import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
@@ -50,10 +70,10 @@ import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
-import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ICancellatoLogicamente;
@@ -65,6 +85,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
@@ -85,24 +106,6 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
-import javax.ejb.EJBException;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
-import org.apache.poi.hssf.record.formula.functions.Find;
-
 /**
  * @author mspasiano
  *
@@ -110,7 +113,63 @@ import org.apache.poi.hssf.record.formula.functions.Find;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implements Cloneable, Serializable{
-
+	private class CtrlPianoEco {
+		public CtrlPianoEco(ProgettoBulk progetto, Timestamp dtScadenza, boolean cashFund) {
+			super();
+			this.progetto = progetto;
+			this.dtScadenza = dtScadenza;
+			this.cashFund = cashFund;
+		}
+		private ProgettoBulk progetto;
+		private Timestamp dtScadenza;
+		private boolean cashFund;
+		private BigDecimal impPositivi = BigDecimal.ZERO;
+		private BigDecimal impNegativi = BigDecimal.ZERO;
+		private BigDecimal impPositiviNatura6 = BigDecimal.ZERO;
+		private BigDecimal impNegativiNatura6 = BigDecimal.ZERO;
+		public ProgettoBulk getProgetto() {
+			return progetto;
+		}
+		public void setProgetto(ProgettoBulk progetto) {
+			this.progetto = progetto;
+		}
+		public Timestamp getDtScadenza() {
+			return dtScadenza;
+		}
+		public void setDtScadenza(Timestamp dtScadenza) {
+			this.dtScadenza = dtScadenza;
+		}
+		public boolean isCashFund() {
+			return cashFund;
+		}
+		public void setCashFund(boolean cashFund) {
+			this.cashFund = cashFund;
+		}
+		public BigDecimal getImpPositivi() {
+			return impPositivi;
+		}
+		public void setImpPositivi(BigDecimal impPositivi) {
+			this.impPositivi = impPositivi;
+		}
+		public BigDecimal getImpNegativi() {
+			return impNegativi;
+		}
+		public void setImpNegativi(BigDecimal impNegativi) {
+			this.impNegativi = impNegativi;
+		}
+		public BigDecimal getImpPositiviNatura6() {
+			return impPositiviNatura6;
+		}
+		public void setImpPositiviNatura6(BigDecimal impPositiviNatura6) {
+			this.impPositiviNatura6 = impPositiviNatura6;
+		}
+		public BigDecimal getImpNegativiNatura6() {
+			return impNegativiNatura6;
+		}
+		public void setImpNegativiNatura6(BigDecimal impNegativiNatura6) {
+			this.impNegativiNatura6 = impNegativiNatura6;
+		}
+	}
 	/**
 	 * 
 	 */
@@ -367,32 +426,39 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				if( var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita().compareTo(config.getVal01())!=0)
 					sql.addSQLClause(FindClause.AND, "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
 			}
-			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ))) {
-		        Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
-		    	SQLBuilder assSql = assHome.createSQLBuilder();
-		    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,var_stanz_res_riga.getProgetto().getPg_progetto());
-		    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
-
-				List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
-				
-				if (list.isEmpty())
-					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
-				else {
-					sql.openParenthesis(FindClause.AND);
-					for (Ass_progetto_piaeco_voceBulk assVoce : list) {
-						Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
-						if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
-							sql.openParenthesis(FindClause.OR);
-							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
-							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
-							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
-							sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
-							sql.closeParenthesis();
+			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
+			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo())) {
+				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(var_stanz_res_riga.getProgetto());
+				getHomeCache(userContext).fetchAll(userContext);
+				if (progetto.isPianoEconomicoRequired()) {
+					Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+			    	SQLBuilder assSql = assHome.createSQLBuilder();
+			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,var_stanz_res_riga.getProgetto().getPg_progetto());
+			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
+	
+					List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
+					
+					if (list.isEmpty())
+						sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
+					else {
+						sql.openParenthesis(FindClause.AND);
+						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
+								sql.openParenthesis(FindClause.OR);
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
+								sql.closeParenthesis();
+							}
 						}
+						sql.closeParenthesis();
 					}
-					sql.closeParenthesis();
 				}
-			}			
+			}
 			return sql;
 		} catch (RemoteException e) {
 			throw new ComponentException(e);
@@ -527,6 +593,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				throw new ApplicationException("In un variazione di tipo 'Personale' occorre selezionare almeno una voce accentrata "
 						+ "verso il CDR del personale o scegliere tra i CDR partecipanti anche quello del personale ("+cdrPersonale+").");
 
+			controllaPdgPianoEconomico(userContext, var_stanz_res);
 			aggiornaLimiteSpesa(userContext, var_stanz_res);
 		} catch (IntrospectionException e) {
 			throw new ComponentException(e);
@@ -1470,5 +1537,149 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			throw new ComponentException(e);
 		}
 		return false;
-}
+	}
+
+	private void controllaPdgPianoEconomico(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException{
+		try {
+			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
+				List<CtrlPianoEco> listCtrlPianoEco = new ArrayList<CtrlPianoEco>();
+
+				String cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
+				CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
+
+				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
+				java.util.Collection<Var_stanz_res_rigaBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(variazione);
+	
+				for (Var_stanz_res_rigaBulk varStanzResRiga : dettagliSpesa) {
+					//verifico se si tratta di area
+					CdrBulk cdrBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(varStanzResRiga.getCd_cdr()));
+					Unita_organizzativaBulk uoBulk = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdrBulk.getCd_unita_organizzativa()));
+					boolean isUoArea = uoBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA);
+					
+					//verifico se si tratta di cdr Personale
+					boolean isDettPersonale = uoBulk.getCd_unita_organizzativa().equals(cdrPersonaleBulk.getCd_unita_organizzativa());
+					if (!isDettPersonale) {
+						//verifico se si tratta di voce accentrata verso il personale
+						Elemento_voceBulk voce = (Elemento_voceBulk)getHome(userContext, Elemento_voceBulk.class).findByPrimaryKey(varStanzResRiga.getElemento_voce());
+						Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(userContext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
+						isDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+					}
+
+					//recupero la GAE
+					BulkHome lattHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+					SQLBuilder sql = lattHome.createSQLBuilder();
+	
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,varStanzResRiga.getEsercizio());
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varStanzResRiga.getCd_cdr());
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varStanzResRiga.getCd_linea_attivita());
+						
+					List<WorkpackageBulk> listGAE = lattHome.fetchAll(sql);
+					
+					if (listGAE.isEmpty() || listGAE.size()>1)
+						throw new ApplicationException("Errore in fase di ricerca linea_attivita "+varStanzResRiga.getEsercizio()+"/"+varStanzResRiga.getCd_cdr()+"/"+varStanzResRiga.getCd_linea_attivita()+".");
+					
+					WorkpackageBulk linea = listGAE.get(0);
+
+					//recupero il progetto per verificare se è scaduto
+					ProgettoBulk progetto = (ProgettoBulk)getHome(userContext, ProgettoBulk.class).findByPrimaryKey(userContext, linea.getProgetto());
+					Progetto_other_fieldBulk other = (Progetto_other_fieldBulk)getHome(userContext, Progetto_other_fieldBulk.class).findByPrimaryKey(new Progetto_other_fieldBulk(linea.getPg_progetto()));
+					
+					//effettuo controlli sulla validità del progetto
+					Optional.ofNullable(other).filter(Progetto_other_fieldBulk::isStatoApprovato)
+					.orElseThrow(()->new ApplicationException("Attenzione! Il progetto "+progetto.getCd_progetto()
+							+ " non risulta in stato approvato. Variazione non consentita!"));
+						
+					Optional.ofNullable(other.getDtInizio())
+							.map(el->{
+								Calendar gc = GregorianCalendar.getInstance();
+								gc.setTime(el);
+								return gc;
+							})
+							.filter(el->el.get(Calendar.YEAR)<=CNRUserContext.getEsercizio(userContext))
+							.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+									+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(other.getDtInizio())
+									+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+									+ "rispetto all'anno contabile di scrivania."));
+		
+					Timestamp dtScadenza = Optional.ofNullable(
+							Optional.ofNullable(other.getDtProroga()).orElse(other.getDtFine()))
+							.orElse(null);
+
+					boolean isCashFund = linea.getNatura().getCd_natura().equals("6")||isDettPersonale||isUoArea;
+					
+					//recupero il record se presente altrimenti ne creo uno nuovo
+					CtrlPianoEco pianoEco = listCtrlPianoEco.stream()
+							.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+							.filter(el->isCashFund?el.isCashFund():!el.isCashFund())
+							.findFirst()
+							.orElse(new CtrlPianoEco(progetto, dtScadenza, isCashFund));
+
+					if (varStanzResRiga.getIm_variazione().compareTo(BigDecimal.ZERO)>0) {
+						pianoEco.setImpPositivi(pianoEco.getImpPositivi().add(varStanzResRiga.getIm_variazione().abs()));
+						if (linea.getNatura().getCd_natura().equals("6"))
+							pianoEco.setImpPositiviNatura6(pianoEco.getImpPositiviNatura6().add(varStanzResRiga.getIm_variazione().abs()));
+					} else {
+						pianoEco.setImpNegativi(pianoEco.getImpNegativi().add(varStanzResRiga.getIm_variazione().abs()));
+						if (linea.getNatura().getCd_natura().equals("6"))
+							pianoEco.setImpNegativiNatura6(pianoEco.getImpNegativiNatura6().add(varStanzResRiga.getIm_variazione().abs()));
+					}
+					
+					listCtrlPianoEco.add(pianoEco);
+				}
+
+				/**
+				 * 1. non è possibile attribuire fondi ad un progetto scaduto
+				 */
+				listCtrlPianoEco.stream()
+					.filter(el->Optional.ofNullable(el.getDtScadenza()).map(dt->dt.before(variazione.getDt_chiusura())).orElse(Boolean.FALSE))
+					.filter(el->el.getImpPositivi().compareTo(BigDecimal.ZERO)>0)
+					.findFirst().ifPresent(el->{
+						throw new DetailedRuntimeException("Attenzione! Non è possibile attribuire fondi al progetto "+
+								el.getProgetto().getCd_progetto()+
+								" in quanto scaduto ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDtScadenza()) +
+								") rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+").");});
+				
+				BigDecimal impNegativiPrgScaduti = listCtrlPianoEco.stream()
+						.filter(el->Optional.ofNullable(el.getDtScadenza()).map(dt->dt.before(variazione.getDt_chiusura())).orElse(Boolean.FALSE))
+						.filter(el->el.getImpNegativi().compareTo(BigDecimal.ZERO)>0)
+						.map(CtrlPianoEco::getImpNegativi)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+				BigDecimal impPositiviCashFund = listCtrlPianoEco.stream()
+						.filter(CtrlPianoEco::isCashFund)
+						.map(CtrlPianoEco::getImpPositivi)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+				BigDecimal impPositiviNatura6 = listCtrlPianoEco.stream()
+						.filter(CtrlPianoEco::isCashFund)
+						.filter(el->el.getImpPositiviNatura6().compareTo(BigDecimal.ZERO)>0)
+						.map(CtrlPianoEco::getImpPositiviNatura6)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+				/**
+				 * 2. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da un progetto scaduto
+				 */
+				if (impPositiviNatura6.compareTo(BigDecimal.ZERO)>0 && impPositiviNatura6.compareTo(impNegativiPrgScaduti)!=0)
+					throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
+							+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impPositiviCashFund)
+							+ " che non corrisponde all'importo prelevato da progetti scaduti pari a "
+							+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti));
+
+				/**
+				 * 3. se vengono sottratti importi ad un progetto scaduto devono essere girati a GaeNatura6 o al CDRPersonale o alle Aree
+				 */
+				if (impNegativiPrgScaduti.compareTo(BigDecimal.ZERO)>0 && impNegativiPrgScaduti.compareTo(impPositiviCashFund)>0)
+					throw new ApplicationException("Attenzione! Risultano prelievi da progetti scaduti"
+							+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)
+							+ " che non risultano totalmente coperto da variazioni a favore"
+							+ " di GAE di natura 6 - 'Reimpiego di risorse' o del CDR Personale o di Aree ("
+							+ new it.cnr.contab.util.EuroFormat().format(impPositiviCashFund)+").");
+			}
+        } catch (DetailedRuntimeException _ex) {
+            throw new ApplicationException(_ex.getMessage());
+        } catch (PersistencyException|RemoteException|IntrospectionException e) {
+			throw new ComponentException(e);
+		}
+	}
 }
