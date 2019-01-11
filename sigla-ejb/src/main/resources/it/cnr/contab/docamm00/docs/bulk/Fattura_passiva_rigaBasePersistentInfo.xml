@@ -273,6 +273,11 @@
 			propertyName="pg_trovato"
 			sqlTypeName="DECIMAL"
 			columnSize="10" />
+        <columnMapping
+                columnName="MOTIVO_ASSENZA_CIG"
+                propertyName="motivo_assenza_cig"
+                sqlTypeName="VARCHAR"
+                columnSize="250"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="cd_uo_assncna_eco" />
@@ -369,5 +374,7 @@
 	<persistentProperty
 		name="data_esigibilita_iva" />			
 	<persistentProperty
-		name="pg_trovato" />		
+		name="pg_trovato" />
+    <persistentProperty
+            name="motivo_assenza_cig"/>		
 </SQLPersistentInfo>

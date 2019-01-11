@@ -132,8 +132,12 @@
 			 	     	bp.getDettaglio().writeFormInput(out,"contoQUO");
 				} else if (Rif_modalita_pagamentoBulk.ALTRO.equalsIgnoreCase(riga.getBanca_uo_cds().getTi_pagamento())) { 
 			 	     	bp.getDettaglio().writeFormInput(out,"contoAUO");
-				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(riga.getBanca_uo_cds().getTi_pagamento())) { 
-			 	     	bp.getDettaglio().writeFormInput(out,"contoIUO");
+				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(riga.getBanca_uo_cds().getTi_pagamento())) {
+				        if (riga.getBanca_uo_cds().isTABB()) {
+				            bp.getDettaglio().writeFormInput(out,"contoBUO");
+				        } else {
+			 	     	    bp.getDettaglio().writeFormInput(out,"contoIUO");
+			 	     	}
 				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(riga.getBanca_uo_cds().getTi_pagamento())) { 
 		 	     	bp.getDettaglio().writeFormInput(out,"contoNUO");
 				}
