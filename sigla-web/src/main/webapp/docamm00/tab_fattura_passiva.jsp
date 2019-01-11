@@ -1,4 +1,4 @@
-<%@ page pageEncoding="UTF-8"
+﻿<%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.util.jsp.*,
 		it.cnr.jada.action.*,
 		java.util.*,
@@ -395,21 +395,15 @@
     <div class="Group card">
         <table class="w-100">
            <tr>
-                <td><% bp.getController().writeFormLabel(out,"cd_cig");%></td>
-                <td><% bp.getController().getBulkInfo().writeFormInput(
-                        out,
-                        bp.getController().getModel(),
-                        null,
-                        "cd_cig",
-                        false,
-                        null,
-                        "",
-                        bp.getController().getInputPrefix(),
-                        bp.getController().getStatus(),
-                        bp.getController().getFieldValidationMap(),
-                        bp.getParentRoot().isBootstrap()
-                    );
-                %></td>
+                <td><% bp.getController().writeFormLabel(out,"cig");%></td>
+		        <td>
+		         	<div style="float:left"><% bp.getController().getBulkInfo().writeFormInput(out,bp.getController().getModel(),null, "cig", false,null,
+	                        "",
+	                        bp.getController().getInputPrefix(),
+	                        bp.getController().getStatus(),
+	                        bp.getController().getFieldValidationMap(),
+	                        bp.getParentRoot().isBootstrap());%></div>
+		        </td>
                 <td><% bp.getController().writeFormLabel(out,"motivo_assenza_cig");%></td>
                 <td><% bp.getController().getBulkInfo().writeFormInput(
                         out,
