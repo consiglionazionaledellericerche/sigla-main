@@ -98,6 +98,10 @@
                     {
                         bp.getController().writeFormInput(out,"contoN");
                     }
+                    else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(missione.getBanca().getTi_pagamento()) && missione.getBanca().isTABB())
+                    {
+                        bp.getController().writeFormInput(out,"contoB");
+                    }
                 %>
                     </div>
                 <%

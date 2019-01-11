@@ -123,7 +123,7 @@
 			
 			if(riga.getBanca() != null) {
 				if (Rif_modalita_pagamentoBulk.BANCARIO.equalsIgnoreCase(riga.getBanca().getTi_pagamento())) {
-			 	     	bp.getDettaglio().writeFormInput(out,"contoB");
+			 	     	bp.getDettaglio().writeFormInpuBANCA_ITALIAt(out,"contoB");
 				} else if (Rif_modalita_pagamentoBulk.POSTALE.equalsIgnoreCase(riga.getBanca().getTi_pagamento())) {
 			 	     	bp.getDettaglio().writeFormInput(out,"contoP");
 				} else if (Rif_modalita_pagamentoBulk.QUIETANZA.equalsIgnoreCase(riga.getBanca().getTi_pagamento())) {
@@ -132,7 +132,9 @@
 			 	     	bp.getDettaglio().writeFormInput(out,"contoA");
 				} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(riga.getBanca().getTi_pagamento())) { 
 		 	     	bp.getDettaglio().writeFormInput(out,"contoN");
-				}
+				} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(riga.getBanca().getTi_pagamento()) && riga.getBanca().isTABB()) {
+                       bp.getDettaglio().writeFormInput(out,"contoB");
+                }
 			}
 			else{
 			if ((riga.getModalita()==null || riga.getModalita().isEmpty()) && riga.getTerzo().getAnagrafico()!=null && !bp.isSearching()) { %>
