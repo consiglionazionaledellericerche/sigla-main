@@ -667,6 +667,18 @@ public class BancaBulk extends BancaBase {
         this.getTerzo_delegato().setCd_terzo(cd_terzo_delegato);
     }
 
+    public boolean isTABA() {
+        return Optional.ofNullable(getTipo_pagamento_siope())
+                .map(s -> s.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value()))
+                .orElse(Boolean.FALSE);
+    }
+
+    public boolean isTABB() {
+        return Optional.ofNullable(getTipo_pagamento_siope())
+                .map(s -> s.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value()))
+                .orElse(Boolean.FALSE);
+    }
+
     public static Dictionary getTipo_PostalizzazioneKeys() {
         return tipo_PostalizzazioneKeys;
     }
