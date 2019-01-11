@@ -1,6 +1,7 @@
 package it.cnr.contab.config00.pdcfin.bulk;
 
 import java.util.Dictionary;
+import java.util.Optional;
 
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.persistency.*;
@@ -36,12 +37,18 @@ public NaturaBulk(java.lang.String cd_natura) {
 	 }
 	 return super.equals(obj);
 	}
-/**
- * Restituisce il valore della proprietà 'cd_ds_natura'
- *
- * @return Il valore della proprietà 'cd_ds_natura'
- */
-public String getCd_ds_natura() {
-	return getCd_natura() + " - " + getDs_natura();
-}
+	/**
+	 * Restituisce il valore della proprietà 'cd_ds_natura'
+	 *
+	 * @return Il valore della proprietà 'cd_ds_natura'
+	 */
+	public String getCd_ds_natura() {
+		return getCd_natura() + " - " + getDs_natura();
+	}
+	public boolean isFonteInterna() {
+		return NaturaBulk.TIPO_NATURA_FONTI_INTERNE.equals(this.getTipo());
+	}
+	public boolean isFonteEsterna() {
+		return NaturaBulk.TIPO_NATURA_FONTI_ESTERNE.equals(this.getTipo());
+	}
 }

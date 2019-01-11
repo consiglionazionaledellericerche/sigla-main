@@ -1,2 +1,2 @@
 "esercizio","cd_unita_funzionale","cd_chiave_primaria","cd_chiave_secondaria","val01","val02","val03","val04","im01","im02","dt01","dt02","dacr","utcr","duva","utuv","pg_ver_rec"
-"0","*","BANCAITALIA","ABI","01000","null","null","null","2019","null","null","null","2019-01-11","CED","2019-01-11","CED","1"
+"0","*","CONTO_CORRENTE_SPECIALE","BANCA_ITALIA","01000","null","null","null","null","null","null","null","2019-01-11","CED","2019-01-11","CED","1"
