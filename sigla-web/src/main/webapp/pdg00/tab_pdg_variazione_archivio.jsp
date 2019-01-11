@@ -6,7 +6,6 @@
 		it.cnr.contab.pdg00.bp.*,
 		it.cnr.contab.pdg00.bulk.*"
 %>
-<% JSPUtils.printBaseUrl(pageContext);%>
 <script language="JavaScript" src="scripts/util.js"></script>
 
 <%
