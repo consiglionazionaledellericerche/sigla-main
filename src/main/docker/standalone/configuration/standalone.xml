@@ -178,7 +178,7 @@
                     <driver>ojdbc</driver>
                     <pool>
                         <min-pool-size>5</min-pool-size>
-                        <max-pool-size>20</max-pool-size>
+                        <max-pool-size>50</max-pool-size>
                     </pool>
                     <security>
                         <user-name>${env.SIGLA_CONNECTION_USERNAME:PCIR009}</user-name>

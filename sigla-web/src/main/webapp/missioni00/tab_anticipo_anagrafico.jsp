@@ -136,6 +136,10 @@
 			{ 
 			   	bp.getController().writeFormInput(out,"contoN");
 			}
+			else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(anticipo.getBanca().getTi_pagamento()) && anticipo.getBanca().isTABB())
+            {
+                bp.getController().writeFormInput(out,"contoB");
+            }
   		} 
 		else if (anticipo.getModalita_pagamento() != null && (anticipo.getV_terzo() != null && anticipo.getV_terzo().getCrudStatus() != anticipo.getV_terzo().UNDEFINED)) 
 		{ %>

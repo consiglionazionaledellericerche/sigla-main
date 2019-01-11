@@ -1,19 +1,25 @@
 package it.cnr.contab.doccont00.core.bulk;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.siopeplus.StMotivoEsclusioneCigSiope;
 @JsonInclude(value=Include.NON_NULL)
 public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase implements Cloneable, IScadenzaDocumentoContabileBulk {
 
@@ -37,6 +43,8 @@ public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase i
 	private java.lang.Long pg_doc_passivo;
 	private String cd_tipo_documento_amm;
 	private java.util.Hashtable tipoDocumentoKeys;	
+	private CigBulk cig;
+	private String motivo_assenza_cig;
 
 	private boolean fromDocAmm = false;
 
@@ -201,6 +209,17 @@ public int getStatus() {
 public java.util.Hashtable getTipoDocumentoKeys() {
 	return tipoDocumentoKeys;
 }
+
+public final static Map<String,String> motivoEsclusioneCigSIOPEKeys = Arrays.asList(StMotivoEsclusioneCigSiope.values())
+.stream()
+.collect(Collectors.toMap(
+        StMotivoEsclusioneCigSiope::name,
+        StMotivoEsclusioneCigSiope::value,
+        (oldValue, newValue) -> oldValue,
+        Hashtable::new
+));
+
+
 public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) 
 {
 	Obbligazione_scadenzarioBulk os = (Obbligazione_scadenzarioBulk) super.initializeForInsert( bp, context );
@@ -358,5 +377,17 @@ public void setDatiFinanziariScadenzeDTO(DatiFinanziariScadenzeDTO datiFinanziar
 public java.math.BigDecimal getImportoNonPagato() {
 	return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
 			subtract(Optional.ofNullable(getIm_associato_doc_contabile()).map(map -> map).orElse(BigDecimal.ZERO));
+}
+public CigBulk getCig() {
+	return cig;
+}
+public void setCig(CigBulk cig) {
+	this.cig = cig;
+}
+public String getMotivo_assenza_cig() {
+	return motivo_assenza_cig;
+}
+public void setMotivo_assenza_cig(String motivo_assenza_cig) {
+	this.motivo_assenza_cig = motivo_assenza_cig;
 }
 }
