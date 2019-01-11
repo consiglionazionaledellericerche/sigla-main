@@ -228,8 +228,6 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
     // FL_DA_ORDINI CHAR(1)
     private java.lang.Boolean flDaOrdini;
 
-    private String motivo_assenza_cig;
-
     public Fattura_passivaBase() {
         super();
     }
@@ -1236,11 +1234,4 @@ public class Fattura_passivaBase extends Fattura_passivaKey implements Keyed {
         this.flDaOrdini = flDaOrdini;
     }
 
-    public String getMotivo_assenza_cig() {
-        return motivo_assenza_cig;
-    }
-
-    public void setMotivo_assenza_cig(String motivo_assenza_cig) {
-        this.motivo_assenza_cig = motivo_assenza_cig;
-    }
 }
