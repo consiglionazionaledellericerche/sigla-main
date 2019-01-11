@@ -11,6 +11,7 @@ import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 
 import java.util.Dictionary;
+import java.util.Optional;
 
 /**
  * Gestione dei dati relativi alla tabella Banca
@@ -74,7 +75,7 @@ public class BancaBulk extends BancaBase {
         String cdTerzoDelegato = "XXX";
 
         setTi_pagamento(mod_pagamento.getRif_modalita_pagamento().getTi_pagamento());
-
+        setTipo_pagamento_siope(mod_pagamento.getRif_modalita_pagamento().getTipo_pagamento_siope());
         //  	if (mod_pagamento.isPerCessione())
 
         if (mod_pagamento.isPerCessione()) {
@@ -352,7 +353,10 @@ public class BancaBulk extends BancaBase {
     }
 
     public void validate(OggettoBulk parent) throws ValidationException {
-        if (Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento())) {
+        if (Rif_modalita_pagamentoBulk.BANCARIO.equals(getTi_pagamento()) ||
+                Optional.ofNullable(getTipo_pagamento_siope())
+                        .map(s -> s.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value()))
+                        .orElse(Boolean.FALSE)) {
             // SE è BANCARIO
             if (!isROBanca()) validaIban();
             if (this.getNazione_iban() != null && this.getNazione_iban().getCd_iso().equals("IT")) {
