@@ -721,7 +721,7 @@ end if;
 
     -- Aggiorno l'importo ritenute del mandato principale
     update mandato
-    Set im_ritenute = im_ritenute + aTotCoriEnte + aTotCoriPercipiente
+    Set im_ritenute = im_ritenute + aRevI.IM_REVERSALE
     Where esercizio = aManP.esercizio And
           cd_cds = aManP.cd_cds And
           pg_mandato = aManp.pg_mandato;
