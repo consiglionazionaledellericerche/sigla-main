@@ -1357,7 +1357,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                             fattura_passivaBulk.isEstera() ||
                             fattura_passivaBulk.isSanMarinoConIVA() ||
                             fattura_passivaBulk.isSanMarinoSenzaIVA()
-                    ))
+                    ) && (fattura_passivaBulk.hasDettagliContabilizzati()|| fattura_passivaBulk.hasDettagliPagati()))
                     .orElse(Boolean.FALSE);
     }
 
