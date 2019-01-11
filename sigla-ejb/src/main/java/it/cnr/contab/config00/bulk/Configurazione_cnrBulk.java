@@ -33,6 +33,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
 	public final static String PK_ELEMENTO_VOCE_SPECIALE = "ELEMENTO_VOCE_SPECIALE";
 	public final static String SK_VOCE_IVA_FATTURA_ESTERA = "VOCE_IVA_FATTURA_ESTERA";
+	public final static String SK_TEMPO_IND_SU_PROGETTI_FINANZIATI = "TEMPO_IND_SU_PROGETTI_FINANZIATI";
 
 	public final static String PK_CONTO_CORRENTE_SPECIALE = "CONTO_CORRENTE_SPECIALE";
 	public final static String SK_ENTE = "ENTE";
@@ -98,6 +99,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 
     public final static String PK_GESTIONE_PROGETTI = "PROGETTI";
     public final static String SK_PROGETTO_PIANO_ECONOMICO = "PIANO_ECONOMICO";
+    public final static String SK_NATURA_REIMPIEGO = "NATURA_REIMPIEGO";
 
 	public final static String PK_FLUSSO_ORDINATIVI = "FLUSSO_ORDINATIVI";
 	public final static String SK_CODICE_ABI_BT = "CODICE_ABI_BT";
