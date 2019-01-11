@@ -48,6 +48,8 @@ public class BancaBase extends BancaKey implements Keyed {
     // TIPO_POSTALIZZAZIONE VARCHAR(250) NULL
     private java.lang.String tipo_postalizzazione;
 
+    private java.lang.String tipo_pagamento_siope;
+
     public BancaBase() {
         super();
     }
@@ -258,5 +260,13 @@ public class BancaBase extends BancaKey implements Keyed {
 
     public void setTipo_postalizzazione(String tipo_postalizzazione) {
         this.tipo_postalizzazione = tipo_postalizzazione;
+    }
+
+    public String getTipo_pagamento_siope() {
+        return tipo_pagamento_siope;
+    }
+
+    public void setTipo_pagamento_siope(String tipo_pagamento_siope) {
+        this.tipo_pagamento_siope = tipo_pagamento_siope;
     }
 }
