@@ -116,7 +116,11 @@
 			propertyName="tipo_postalizzazione"
 			sqlTypeName="VARCHAR"
 			columnSize="250" />
-
+		<columnMapping
+				columnName="TIPO_PAGAMENTO_SIOPE"
+				propertyName="tipo_pagamento_siope"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -158,4 +162,6 @@
 		name="numero_conto" />
 	<persistentProperty
 		name="tipo_postalizzazione" />
+	<persistentProperty
+			name="tipo_pagamento_siope" />
 </SQLPersistentInfo>
