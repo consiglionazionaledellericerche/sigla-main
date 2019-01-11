@@ -4854,7 +4854,7 @@ public class DistintaCassiereComponent extends
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
                             sepa.setBic(docContabile.getBic());
-                        if (!tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE))
+                        if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER))
                             sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
                                     .toString()
                                     + "-"
@@ -5372,7 +5372,7 @@ public class DistintaCassiereComponent extends
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
                             sepa.setBic(docContabile.getBic());
-                        if (!tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE))
+                        if ((tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER)))
                             sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
                                     .toString()
                                     + "-"
