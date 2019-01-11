@@ -4849,7 +4849,13 @@ public class DistintaCassiereComponent extends
                         infoben.setPiazzatura(piazzatura);
                     }
                     if (obb_iban) {
-                        sepa.setIban(docContabile.getCodiceIban());
+                        sepa.setIban( Optional.ofNullable(docContabile.getCodiceIban())
+                                .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il codice iban " +
+                                        "sul Mandato {0}/{1}/{2}",
+                                        String.valueOf(bulk.getEsercizio()),
+                                        String.valueOf(bulk.getCd_cds()),
+                                        String.valueOf(bulk.getPg_documento_cont())
+                                )));
                         if (docContabile.getBic() != null && docContabile.getCodiceIban() != null
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
@@ -5367,7 +5373,15 @@ public class DistintaCassiereComponent extends
                         infoben.setPiazzatura(piazzatura);
                     }
                     if (obb_iban) {
-                        sepa.setIban(docContabile.getCodiceIban());
+                        sepa.setIban(
+                                Optional.ofNullable(docContabile.getCodiceIban())
+                                        .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il codice iban " +
+                                                "sul Mandato {0}/{1}/{2}",
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        ))
+                        );
                         if (docContabile.getBic() != null && docContabile.getCodiceIban() != null
                                 && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
                                 !docContabile.getBic().contains(" "))// &&
