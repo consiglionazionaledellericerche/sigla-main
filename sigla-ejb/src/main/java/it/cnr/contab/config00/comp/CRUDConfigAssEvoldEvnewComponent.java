@@ -68,7 +68,7 @@ public class CRUDConfigAssEvoldEvnewComponent extends it.cnr.jada.comp.CRUDCompo
 		try {
 			Ass_evold_evnewHome ass_evold_evnewHome = (Ass_evold_evnewHome) getHome( usercontext, Ass_evold_evnewBulk.class);
 			Elemento_voceBulk currentVoce = voceOld;
-			while (currentVoce.getEsercizio().compareTo(annoVoceNew)<0) {
+			while (currentVoce!=null && currentVoce.getEsercizio().compareTo(annoVoceNew)<0) {
 				//cerco la voce del nuovo anno
 				List listVociNew = ass_evold_evnewHome.findAssElementoVoceNewList(currentVoce);
 				if (!listVociNew.isEmpty()) {
