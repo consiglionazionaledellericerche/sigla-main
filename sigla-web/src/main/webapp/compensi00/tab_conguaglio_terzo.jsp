@@ -80,7 +80,9 @@
 			   	bp.getController().writeFormInput(out,"contoA");
 			} else if (Rif_modalita_pagamentoBulk.IBAN.equalsIgnoreCase(conguaglio.getBanca().getTi_pagamento())) { 
 			   	bp.getController().writeFormInput(out,"contoN");
-			}
+			} else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equalsIgnoreCase(conguaglio.getBanca().getTi_pagamento()) && conguaglio.getBanca().isTABB()) {
+                bp.getController().writeFormInput(out,"contoB");
+            }
   		} else if (conguaglio.getModalitaPagamento() != null && (conguaglio.getV_terzo() != null && conguaglio.getV_terzo().getCrudStatus() != conguaglio.getV_terzo().UNDEFINED)) { %>
 			<span class="FormLabel" style="color:red">
 				Nessun riferimento trovato per la modalità di pagamento selezionata!
