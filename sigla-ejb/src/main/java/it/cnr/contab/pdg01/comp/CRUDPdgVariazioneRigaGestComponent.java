@@ -41,8 +41,11 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
@@ -62,6 +65,7 @@ import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.HomeCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -592,17 +596,40 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 				if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
 					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",SQLBuilder.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
 	
+			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ))) {
-				sql.addTableToHeader("ASS_PROGETTO_PIAECO_VOCE");
-				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE","V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO");
-				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA");
-				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE");
-				sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE");
-				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
-				sql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(dett.getProgetto());
+				getHomeCache(userContext).fetchAll(userContext);
+				if (progetto.isPianoEconomicoRequired()) {
+					Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+			    	SQLBuilder assSql = assHome.createSQLBuilder();
+			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
+			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+	
+					List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
+					
+					if (list.isEmpty())
+						sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
+					else {
+						sql.openParenthesis(FindClause.AND);
+						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
+								sql.openParenthesis(FindClause.OR);
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
+								sql.closeParenthesis();
+							}
+						}
+						sql.closeParenthesis();
+					}
+				}
 			}
 			if (clause != null) sql.addClause(clause);
-	
 			return sql;
 		} catch (RemoteException e) {
 			throw new ComponentException(e);
