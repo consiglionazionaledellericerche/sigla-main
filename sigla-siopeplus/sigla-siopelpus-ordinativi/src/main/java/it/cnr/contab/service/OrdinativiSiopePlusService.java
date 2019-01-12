@@ -2,6 +2,7 @@ package it.cnr.contab.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.exception.SIOPEPlusServiceUnavailable;
 import it.cnr.contab.model.Esito;
 import it.cnr.contab.model.Lista;
 import it.cnr.contab.model.MessaggioXML;
@@ -95,7 +96,7 @@ public class OrdinativiSiopePlusService {
         }
     }
 
-    public Risultato postFlusso(InputStream input) {
+    public Risultato postFlusso(InputStream input) throws SIOPEPlusServiceUnavailable {
         CloseableHttpClient client = null;
         try {
             client = getHttpClient();
@@ -120,6 +121,8 @@ public class OrdinativiSiopePlusService {
 
             final HttpResponse response = client.execute(httpPost);
             if (!Optional.ofNullable(response).filter(httpResponse -> httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED).isPresent()) {
+                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_SERVICE_UNAVAILABLE)
+                    throw new SIOPEPlusServiceUnavailable();
                 logger.error(response.getStatusLine().getReasonPhrase());
                 throw new RuntimeException("Cannot send flusso error code: " + response.getStatusLine().getStatusCode());
             }
