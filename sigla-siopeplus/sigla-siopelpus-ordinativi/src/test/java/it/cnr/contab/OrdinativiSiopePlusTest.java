@@ -1,5 +1,6 @@
 package it.cnr.contab;
 
+import it.cnr.contab.exception.SIOPEPlusServiceUnavailable;
 import it.cnr.contab.model.Esito;
 import it.cnr.contab.model.Lista;
 import it.cnr.contab.model.Risultato;
@@ -83,7 +84,7 @@ public class OrdinativiSiopePlusTest {
     }
 
     //@Test
-    public void postFLUSSO() throws JAXBException, IOException, DatatypeConfigurationException, ArubaSignServiceException {
+    public void postFLUSSO() throws JAXBException, IOException, DatatypeConfigurationException, ArubaSignServiceException, SIOPEPlusServiceUnavailable {
         final InputStream inputStream = generaFlusso();
         OrdinativiSiopePlusService ordinativiSiopePlusService = new OrdinativiSiopePlusService();
         ordinativiSiopePlusService.urlFlusso = "https://certa2a.siopeplus.it/v1/A2A-31432329/PA/O5WZO8/flusso/";
