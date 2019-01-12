@@ -18,6 +18,7 @@ import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.C
 import it.cnr.contab.doccont00.intcass.xmlbnl.ObjectFactory;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Reversale;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.exception.SIOPEPlusServiceUnavailable;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.model.Risultato;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -2330,10 +2331,16 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             setMessage("File formalmente errato, la distinta è stata riportata in stato PROVVISORIO!\n" + _ex.getMessage());
             return;
         }
-
-        final Risultato risultato = ordinativiSiopePlusService.postFlusso(
-                documentiContabiliService.getResource(storageObject)
-        );
+        Risultato risultato = null;
+        try {
+            risultato = ordinativiSiopePlusService.postFlusso(
+                    documentiContabiliService.getResource(storageObject)
+            );
+        } catch (SIOPEPlusServiceUnavailable _ex) {
+            throw handleException(new ApplicationException("Invio flusso non possibile!\nIl sistema è aperto dalle ore 05.00 " +
+                    "alle ore 23.00 di tutti i giorni lavorativi del calendario\n" +
+                    "nazionale inclusi i sabati non festivi (con orario ridotto fino alle ore 13.00)."));
+        }
         it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession distintaComp =
                 (it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession) createComponentSession();
         distinta = distintaComp.inviaDistintaSiopePlus(context.getUserContext(), distinta, risultato.getProgFlusso());
