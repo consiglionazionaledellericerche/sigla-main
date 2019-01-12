@@ -1,13 +1,17 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Fattura_passiva_rigaHome extends BulkHome {
     public Fattura_passiva_rigaHome(Class classe, java.sql.Connection conn) {
@@ -42,20 +46,31 @@ public class Fattura_passiva_rigaHome extends BulkHome {
         return fetchAll(selectForObbligazioneExceptFor(scadenza, fattura));
     }
 
-    public List<String> findCodiciCIG(Fattura_passivaBulk fattura, MandatoBulk mandato) throws PersistencyException {
-        return findCIG(fattura, mandato, "CD_CIG");
+    public List<String> findCodiciCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, String codiceSiope) throws PersistencyException {
+        return findCIG(fattura, mandato, codiceSiope)
+                .stream()
+                .filter(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getCig()).isPresent())
+                .map(Fattura_passiva_rigaBulk::getCig)
+                .map(CigBulk::getCdCig)
+                .filter(s -> Optional.ofNullable(s).isPresent())
+                .distinct()
+                .collect(Collectors.toList());
     }
 
-    public List<String> findMotiviEsclusioneCIG(Fattura_passivaBulk fattura, MandatoBulk mandato) throws PersistencyException {
-        return findCIG(fattura, mandato, "CD_CIG");
+    public List<String> findMotiviEsclusioneCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, String codiceSiope) throws PersistencyException {
+        return findCIG(fattura, mandato, codiceSiope)
+                .stream()
+                .map(Fattura_passiva_rigaBulk::getMotivo_assenza_cig)
+                .filter(s -> Optional.ofNullable(s).isPresent())
+                .distinct()
+                .collect(Collectors.toList());
     }
 
-    private List<String> findCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, String column) throws PersistencyException {
+    public List<Fattura_passiva_rigaBulk> findCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, String codiceSiope) throws PersistencyException {
         SQLBuilder sql = createSQLBuilder();
-        sql.resetColumns();
-        sql.addColumn("DISTINCT " + column);
         sql.addTableToHeader("MANDATO");
         sql.addTableToHeader("MANDATO_RIGA");
+        sql.addTableToHeader("MANDATO_SIOPE");
 
         sql.addSQLJoin("MANDATO.CD_CDS", "MANDATO_RIGA.CD_CDS");
         sql.addSQLJoin("MANDATO.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
@@ -65,6 +80,22 @@ public class Fattura_passiva_rigaHome extends BulkHome {
         sql.addSQLJoin("FATTURA_PASSIVA_RIGA.CD_CDS", "MANDATO_RIGA.CD_CDS_DOC_AMM");
         sql.addSQLJoin("FATTURA_PASSIVA_RIGA.CD_UNITA_ORGANIZZATIVA", "MANDATO_RIGA.CD_UO_DOC_AMM");
         sql.addSQLJoin("FATTURA_PASSIVA_RIGA.PG_FATTURA_PASSIVA", "MANDATO_RIGA.PG_DOC_AMM");
+
+        sql.addSQLJoin("MANDATO_SIOPE.CD_CDS", "MANDATO_RIGA.CD_CDS");
+        sql.addSQLJoin("MANDATO_SIOPE.ESERCIZIO", "MANDATO_RIGA.ESERCIZIO");
+        sql.addSQLJoin("MANDATO_SIOPE.PG_MANDATO", "MANDATO_RIGA.PG_MANDATO");
+        sql.addSQLJoin("MANDATO_SIOPE.ESERCIZIO_OBBLIGAZIONE", "MANDATO_RIGA.ESERCIZIO_OBBLIGAZIONE");
+        sql.addSQLJoin("MANDATO_SIOPE.ESERCIZIO_ORI_OBBLIGAZIONE", "MANDATO_RIGA.ESERCIZIO_ORI_OBBLIGAZIONE");
+        sql.addSQLJoin("MANDATO_SIOPE.PG_OBBLIGAZIONE", "MANDATO_RIGA.PG_OBBLIGAZIONE");
+        sql.addSQLJoin("MANDATO_SIOPE.PG_OBBLIGAZIONE_SCADENZARIO", "MANDATO_RIGA.PG_OBBLIGAZIONE_SCADENZARIO");
+        sql.addSQLJoin("MANDATO_SIOPE.CD_CDS_DOC_AMM", "MANDATO_RIGA.CD_CDS_DOC_AMM");
+        sql.addSQLJoin("MANDATO_SIOPE.CD_UO_DOC_AMM", "MANDATO_RIGA.CD_UO_DOC_AMM");
+        sql.addSQLJoin("MANDATO_SIOPE.ESERCIZIO_DOC_AMM", "MANDATO_RIGA.ESERCIZIO_DOC_AMM");
+        sql.addSQLJoin("MANDATO_SIOPE.CD_TIPO_DOCUMENTO_AMM", "MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM");
+        sql.addSQLJoin("MANDATO_SIOPE.PG_DOC_AMM", "MANDATO_RIGA.PG_DOC_AMM");
+
+        sql.addSQLClause("AND", "MANDATO_SIOPE.CD_SIOPE", SQLBuilder.EQUALS, codiceSiope);
+
 
         sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.ESERCIZIO", SQLBuilder.EQUALS, fattura.getEsercizio());
         sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.CD_CDS", SQLBuilder.EQUALS, fattura.getCd_cds());

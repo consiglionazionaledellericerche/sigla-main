@@ -285,6 +285,17 @@ public class TerzoHome extends BulkHome {
         return fetchAll(sql);
     }
 
+
+    public String findCodiceUnivocoUfficioIPA(String cdUnitaOrganizzativa) throws IntrospectionException, PersistencyException {
+        SQLBuilder sql = createSQLBuilder();
+        sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, cdUnitaOrganizzativa);
+        final Optional<TerzoBulk> optional = fetchAll(sql).stream().findAny()
+                .filter(TerzoBulk.class::isInstance)
+                .map(TerzoBulk.class::cast);
+        return optional
+                .map(TerzoBulk::getCodiceUnivocoUfficioIpa)
+                .orElse(null);
+    }
     @Override
     public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)
             throws PersistencyException {
