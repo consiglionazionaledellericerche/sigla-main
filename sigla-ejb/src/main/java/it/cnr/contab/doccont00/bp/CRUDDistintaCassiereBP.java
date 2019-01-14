@@ -142,6 +142,9 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
                     it.cnr.jada.util.Config.getHandler().getProperties(
                             getClass()), "CRUDToolbar.uploadsiopeplus"));
+            newToolbarTesoreria.add(new it.cnr.jada.util.jsp.Button(
+                    it.cnr.jada.util.Config.getHandler().getProperties(
+                            getClass()), "CRUDToolbar.inviaPEC"));
             return newToolbarTesoreria.toArray(new it.cnr.jada.util.jsp.Button[newToolbarTesoreria.size()]);
         } else {
             if (this.getParametriCnr().getFl_tesoreria_unica().booleanValue() && !isFlusso()) {
@@ -361,6 +364,18 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
 
     }
 
+    public boolean isInviaPECButtonHidden() {
+        if (isAttivoSiopeplus()) {
+            return Optional.ofNullable(getModel())
+                    .filter(Distinta_cassiereBulk.class::isInstance)
+                    .map(Distinta_cassiereBulk.class::cast)
+                    .map(distinta_cassiereBulk -> {
+                        return !Optional.ofNullable(distinta_cassiereBulk.getStato()).filter(s -> s.equals(Distinta_cassiereBulk.Stato.ACCETTATO_BT.value())).isPresent();
+                    }).orElse(Boolean.TRUE);
+        } else {
+            return Boolean.FALSE;
+        }
+    }
     /**
      * Abilito il bottone di delete se la data di invio della distinta è nulla.
      * <p>
@@ -2372,5 +2387,13 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     @Override
     protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
         return Boolean.FALSE;
+    }
+
+    public Boolean reinviaPEC(ActionContext context, Distinta_cassiereBulk model) throws BusinessProcessException{
+        try {
+            return documentiContabiliService.inviaPEC(context.getUserContext(), model);
+        } catch (ComponentException e) {
+            throw handleException(e);
+        }
     }
 }
