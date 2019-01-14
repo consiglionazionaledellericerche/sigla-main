@@ -1409,7 +1409,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	
 				for (Pdg_variazione_riga_gestBulk varStanzRiga : dettagliSpesa) {
 					//verifico se si tratta di area
-					CdrBulk cdrBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(varStanzRiga.getCd_centro_responsabilita()));
+					CdrBulk cdrBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(varStanzRiga.getCd_cdr_assegnatario()));
 					Unita_organizzativaBulk uoBulk = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdrBulk.getCd_unita_organizzativa()));
 					boolean isUoArea = uoBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA);
 					
@@ -1427,7 +1427,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					SQLBuilder sql = lattHome.createSQLBuilder();
 	
 					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,varStanzRiga.getEsercizio());
-					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varStanzRiga.getCd_centro_responsabilita());
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varStanzRiga.getCd_cdr_assegnatario());
 					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varStanzRiga.getCd_linea_attivita());
 						
 					List<WorkpackageBulk> listGAE = lattHome.fetchAll(sql);
@@ -1438,9 +1438,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					WorkpackageBulk linea = listGAE.get(0);
 
 					//recupero il progetto per verificare se è scaduto
-					ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
-					home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-					ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(linea.getProgetto());
+					ProgettoBulk progetto = linea.getProgetto();
 					getHomeCache(userContext).fetchAll(userContext);
 
 					//effettuo controlli sulla validità del progetto
