@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.comp.DistintaCassiereComponent;
@@ -523,6 +524,24 @@ public class DistintaCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDDe
     public Configurazione_cnrBulk lockMessaggiSIOPEPlus(UserContext param0) throws ComponentException, RemoteException {
         try {
             Configurazione_cnrBulk result = ((DistintaCassiereComponent) componentObj).lockMessaggiSIOPEPlus(param0);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
+    public Rif_modalita_pagamentoBulk findModPag(UserContext param0, V_mandato_reversaleBulk param1) throws ComponentException, RemoteException {
+        try {
+            Rif_modalita_pagamentoBulk result = ((DistintaCassiereComponent) componentObj).findModPag(param0, param1);
             component_invocation_succes(param0, componentObj);
             return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {
