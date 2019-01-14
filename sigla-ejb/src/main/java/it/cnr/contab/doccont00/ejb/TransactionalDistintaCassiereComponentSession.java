@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.ejb;
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
@@ -655,8 +656,27 @@ public class TransactionalDistintaCassiereComponentSession extends it.cnr.jada.e
     public Configurazione_cnrBulk lockMessaggiSIOPEPlus(UserContext param0)
             throws ComponentException, RemoteException {
         try {
-            return (Configurazione_cnrBulk) invoke("Configurazione_cnrBulk", new Object[]{
+            return (Configurazione_cnrBulk) invoke("lockMessaggiSIOPEPlus", new Object[]{
                     param0});
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
+
+    public Rif_modalita_pagamentoBulk findModPag(UserContext param0, V_mandato_reversaleBulk param1)
+            throws ComponentException, RemoteException {
+        try {
+            return (Rif_modalita_pagamentoBulk) invoke("findModPag", new Object[]{
+                    param0, param1});
         } catch (java.rmi.RemoteException e) {
             throw e;
         } catch (java.lang.reflect.InvocationTargetException e) {

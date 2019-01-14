@@ -3,6 +3,7 @@ package it.cnr.contab.doccont00.comp;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
@@ -67,6 +68,7 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DistintaCassiereComponent extends
         it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
@@ -86,6 +88,8 @@ public class DistintaCassiereComponent extends
     public static final String INFRUTTIFERO = "INFRUTTIFERO";
     public static final String INSERIMENTO = "INSERIMENTO";
     public static final int MAX_LENGTH_CAUSALE = 140;
+    public static final String FATT_ANALOGICA = "FATT_ANALOGICA";
+    public static final String DOC_EQUIVALENTE = "DOC_EQUIVALENTE";
 
     public DistintaCassiereComponent() {
     }
@@ -4325,6 +4329,30 @@ public class DistintaCassiereComponent extends
         }
     }
 
+    public Rif_modalita_pagamentoBulk findModPag(UserContext userContext, V_mandato_reversaleBulk mandato_reversaleBulk) throws ComponentException {
+        SQLBuilder sql = getHome(userContext, Rif_modalita_pagamentoBulk.class).createSQLBuilder();
+        if (mandato_reversaleBulk.isMandato()) {
+            sql.addTableToHeader("MANDATO_RIGA");
+            sql.addSQLJoin("MANDATO_RIGA.CD_MODALITA_PAG", "RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
+            sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.CD_CDS", SQLBuilder.EQUALS, mandato_reversaleBulk.getCd_cds());
+            sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.ESERCIZIO", SQLBuilder.EQUALS, mandato_reversaleBulk.getEsercizio());
+            sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.PG_MANDATO", SQLBuilder.EQUALS, mandato_reversaleBulk.getPg_documento_cont());
+        } else {
+            sql.addTableToHeader("REVERSALE_RIGA");
+            sql.addSQLJoin("REVERSALE_RIGA.CD_MODALITA_PAG", "RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
+            sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.CD_CDS", SQLBuilder.EQUALS, mandato_reversaleBulk.getCd_cds());
+            sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.ESERCIZIO", SQLBuilder.EQUALS, mandato_reversaleBulk.getEsercizio());
+            sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.PG_REVERSALE", SQLBuilder.EQUALS, mandato_reversaleBulk.getPg_documento_cont());
+        }
+        try {
+            final List<Rif_modalita_pagamentoBulk> list = getHome(userContext, Rif_modalita_pagamentoBulk.class).fetchAll(sql);
+            return list.stream().distinct().findAny().get();
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+
     public void unlockMessaggiSIOPEPlus(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
         try {
             Configurazione_cnrBulk configurazione_cnrBulk = new Configurazione_cnrBulk(
@@ -4713,8 +4741,7 @@ public class DistintaCassiereComponent extends
                 ).contains(tipoPagamentoSiopePlus);
                 //TODO deve esserci il Conto
                 boolean obb_conto = Arrays.asList(
-                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
-                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
                 ).contains(tipoPagamentoSiopePlus);
 
                 boolean obb_dati_beneficiario = Arrays.asList(
@@ -4809,7 +4836,16 @@ public class DistintaCassiereComponent extends
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
                     if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
-                        infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
+                        infoben.setNumeroContoBancaItaliaEnteRicevente(
+                                Optional.ofNullable(docContabile.getNumeroConto())
+                                        .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
+                                                "sul Mandato {0}/{1}/{2}",
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        ))
+                        );
+                        infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
                     }
 
                     infoben.setDestinazione(LIBERA);
@@ -5142,7 +5178,16 @@ public class DistintaCassiereComponent extends
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
                     if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
-                        infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
+                        infoben.setNumeroContoBancaItaliaEnteRicevente(
+                                Optional.ofNullable(docContabile.getNumeroConto())
+                                        .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
+                                                "sul Mandato {0}/{1}/{2}",
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        ))
+                        );
+                        infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
                     }
                     caricaInformazioniAggiuntive(infoben, bulk, aggiuntive, tipoPagamentoSiopePlus);
                     caricaTipoPostalizzazione(infoben, docContabile, tipoPagamentoSiopePlus);
@@ -5535,25 +5580,31 @@ public class DistintaCassiereComponent extends
                     .filter(o -> o.getCd_siope().equals(codiceSiope))
                     .collect(Collectors.toList());
 
-
             final Optional<Mandato_siopeBulk> mandatoDaFattura = siopeBulks
                     .stream()
-                    .filter(mandato_siopeBulk -> mandato_siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA))
+                    .filter(mandato_siopeBulk ->
+                            mandato_siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)
+                     )
                     .findAny();
 
             final Optional<Mandato_siopeBulk> mandatoDaCompenso = siopeBulks
                     .stream()
                     .filter(mandato_siopeBulk -> mandato_siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_COMPENSO))
                     .findAny();
+            Fattura_passivaHome fattura_passivaHome = Optional.ofNullable(getHome(userContext, Fattura_passiva_IBulk.class))
+                    .filter(Fattura_passivaHome.class::isInstance)
+                    .map(Fattura_passivaHome.class::cast)
+                    .orElseThrow(() -> new ComponentException("Home della fattura non trovata!"));
+            TerzoHome terzoHome = Optional.ofNullable(getHome(userContext, TerzoBulk.class))
+                    .filter(TerzoHome.class::isInstance)
+                    .map(TerzoHome.class::cast)
+                    .orElseThrow(() -> new ComponentException("Home della terzo non trovato!"));
+
             if (mandatoDaFattura.isPresent()) {
                 final Map<Fattura_passivaBulk, Double> collect = siopeBulks
                         .stream()
                         .map(mandato_siopeBulk -> {
                             try {
-                                Fattura_passivaHome fattura_passivaHome = Optional.ofNullable(getHome(userContext, Fattura_passiva_IBulk.class))
-                                        .filter(Fattura_passivaHome.class::isInstance)
-                                        .map(Fattura_passivaHome.class::cast)
-                                        .orElseThrow(() -> new ComponentException("Home della fattura non trovata!"));
                                 return new AbstractMap.SimpleEntry<Fattura_passivaBulk, BigDecimal>(Optional.ofNullable(
                                         fattura_passivaHome.findByPrimaryKey(
                                                 new Fattura_passiva_IBulk(
@@ -5571,6 +5622,7 @@ public class DistintaCassiereComponent extends
                             }
                         })
                         .collect(Collectors.groupingBy(o -> o.getKey(), Collectors.summingDouble(value -> value.getValue().doubleValue())));
+
                 getHomeCache(userContext).fetchAll(userContext);
                 final boolean isCommerciale = collect
                         .keySet()
@@ -5583,39 +5635,41 @@ public class DistintaCassiereComponent extends
                     ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoNonCommerciale.NON_COMMERCIALE);
                 } else {
                     ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(StTipoDebitoCommerciale.COMMERCIALE);
-                    final Optional<Fattura_passivaBulk> noCIGFattura_passivaBulk = collect
+                    Fattura_passiva_rigaHome fattura_passivaRigaHome = Optional.ofNullable(getHome(userContext, Fattura_passiva_rigaIBulk.class))
+                            .filter(Fattura_passiva_rigaHome.class::isInstance)
+                            .map(Fattura_passiva_rigaHome.class::cast)
+                            .orElseThrow(() -> new ComponentException("Home della fattura non trovata!"));
+
+                    final List<?> codiciCIG = collect
                             .keySet()
                             .stream()
-                            .filter(fattura_passivaBulk -> (
-                                    !Optional.ofNullable(fattura_passivaBulk.getCig())
-                                            .flatMap(cigBulk -> Optional.ofNullable(cigBulk.getCdCig())).isPresent() &&
-                                            !Optional.ofNullable(fattura_passivaBulk.getMotivo_assenza_cig()).isPresent()
-                            )).findAny();
-                    if (noCIGFattura_passivaBulk.isPresent()) {
-                        throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto non è valorizzato il CIG o il motivo di esclusione " +
-                                "sulla fattura {0}/{1}/{2}",
-                                String.valueOf(noCIGFattura_passivaBulk.get().getEsercizio()),
-                                String.valueOf(noCIGFattura_passivaBulk.get().getCd_cds()),
-                                String.valueOf(noCIGFattura_passivaBulk.get().getPg_fattura_passiva())
+                            .collect(Collectors.toMap(f -> f, f -> {
+                                try {
+                                    return fattura_passivaRigaHome.findCodiciCIG(f, mandatoBulk, codiceSiope);
+                                } catch (PersistencyException e) {
+                                    return Collections.emptyList();
+                                }
+                            })).values().stream().distinct().flatMap(List::stream).collect(Collectors.toList());
+
+                    final List<?> motiviAssenzaCIG = collect
+                            .keySet()
+                            .stream()
+                            .collect(Collectors.toMap(f -> f, f -> {
+                                try {
+                                    return fattura_passivaRigaHome.findMotiviEsclusioneCIG(f, mandatoBulk, codiceSiope);
+                                } catch (PersistencyException e) {
+                                    return Collections.emptyList();
+                                }
+                            })).values().stream().distinct().flatMap(List::stream).collect(Collectors.toList());
+
+                    if (codiciCIG.isEmpty() && motiviAssenzaCIG.isEmpty()) {
+                        throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture " +
+                                "su cui non è posssibile determinare il CIG!",
+                                String.valueOf(bulk.getEsercizio()),
+                                String.valueOf(bulk.getCd_cds()),
+                                String.valueOf(bulk.getPg_documento_cont())
                         );
                     }
-                    final List<String> codiciCIG = collect
-                            .keySet()
-                            .stream()
-                            .map(Fattura_passivaBulk::getCig)
-                            .map(CigBulk::getCdCig)
-                            .filter(s -> Optional.ofNullable(s).isPresent())
-                            .filter(s -> s.length() > 0)
-                            .distinct()
-                            .collect(Collectors.toList());
-                    final List<String> motiviAssenzaCIG = collect
-                            .keySet()
-                            .stream()
-                            .map(Fattura_passivaBulk::getMotivo_assenza_cig)
-                            .filter(s -> Optional.ofNullable(s).isPresent())
-                            .filter(s -> s.length() > 0)
-                            .distinct()
-                            .collect(Collectors.toList());
                     if (codiciCIG.size() > 0 && motiviAssenzaCIG.size() > 0) {
                         throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture " +
                                 "sia con CIG che con motivo di assenza CIG!",
@@ -5630,7 +5684,7 @@ public class DistintaCassiereComponent extends
                                 String.valueOf(bulk.getEsercizio()),
                                 String.valueOf(bulk.getCd_cds()),
                                 String.valueOf(bulk.getPg_documento_cont()),
-                                String.join(" - ", codiciCIG)
+                                String.join(" - ", codiciCIG.stream().map(o -> ((Object) o).toString()).collect(Collectors.toList()))
                         );
                     }
                     if (motiviAssenzaCIG.size() > 1) {
@@ -5639,7 +5693,7 @@ public class DistintaCassiereComponent extends
                                 String.valueOf(bulk.getEsercizio()),
                                 String.valueOf(bulk.getCd_cds()),
                                 String.valueOf(bulk.getPg_documento_cont()),
-                                String.join(" - ", motiviAssenzaCIG)
+                                String.join(" - ", motiviAssenzaCIG.stream().map(o -> ((Object) o).toString()).collect(Collectors.toList()))
                         );
                     }
                     if (codiciCIG.stream().findAny().isPresent()) {
@@ -5647,7 +5701,7 @@ public class DistintaCassiereComponent extends
                     }
                     if (motiviAssenzaCIG.stream().findAny().isPresent()) {
                         ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(
-                                StMotivoEsclusioneCigSiope.valueOf(motiviAssenzaCIG.stream().findAny().get())
+                                StMotivoEsclusioneCigSiope.valueOf(motiviAssenzaCIG.stream().findAny().get().toString())
                         );
                     }
                     collect.entrySet()
@@ -5656,12 +5710,24 @@ public class DistintaCassiereComponent extends
                                 Fattura_passivaBulk fattura_passivaBulk = fattura_passivaBulkDoubleEntry.getKey();
                                 BigDecimal importo = BigDecimal.valueOf(fattura_passivaBulkDoubleEntry.getValue());
                                 CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
-                                ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
-                                ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
-                                ctFatturaSiope.setIdentificativoLottoSdiSiope(
-                                        fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
-                                                fattura_passivaBulk.getDocumentoEleTestata().getProgressivo()
-                                );
+                                if (Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()).isPresent()) {
+                                    ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
+                                    ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
+                                    ctFatturaSiope.setIdentificativoLottoSdiSiope(
+                                            fattura_passivaBulk.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
+                                                    fattura_passivaBulk.getDocumentoEleTestata().getProgressivo()
+                                    );
+                                } else {
+                                    try {
+                                        ctFatturaSiope.setCodiceIpaEnteSiope(terzoHome.findCodiceUnivocoUfficioIPA(fattura_passivaBulk.getCd_unita_organizzativa()));
+                                    } catch (IntrospectionException|PersistencyException e) {
+                                        throw new DetailedRuntimeException(e);
+                                    }
+                                    ctFatturaSiope.setTipoDocumentoSiopeA(StTipoDocumentoAnalogico.ANALOGICO);
+                                    ctFatturaSiope.setAnnoEmissioneFatturaSiope(fattura_passivaBulk.getEsercizio());
+                                    ctFatturaSiope.setCodiceFiscaleEmittenteSiope(fattura_passivaBulk.getCodice_fiscale());
+                                    ctFatturaSiope.setTipoDocumentoAnalogicoSiope(FATT_ANALOGICA);
+                                }
                                 CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                                 ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
@@ -5671,6 +5737,7 @@ public class DistintaCassiereComponent extends
                                 ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                                 ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
                             });
+
                 }
             } else if (mandatoDaCompenso.isPresent()){
                 CompensoHome compensoHome = Optional.ofNullable(getHome(userContext, CompensoBulk.class))
@@ -5723,12 +5790,24 @@ public class DistintaCassiereComponent extends
 
                         if (fattura_passivaBulk.isPresent()) {
                             CtFatturaSiope ctFatturaSiope = objectFactory.createCtFatturaSiope();
-                            ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
-                            ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
-                            ctFatturaSiope.setIdentificativoLottoSdiSiope(
-                                    fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
-                                            fattura_passivaBulk.get().getDocumentoEleTestata().getProgressivo()
-                            );
+                            if (Optional.ofNullable(fattura_passivaBulk.get().getDocumentoEleTestata()).isPresent()) {
+                                ctFatturaSiope.setCodiceIpaEnteSiope(fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getCodiceDestinatario());
+                                ctFatturaSiope.setTipoDocumentoSiopeE(StTipoDocumentoElettronico.ELETTRONICO);
+                                ctFatturaSiope.setIdentificativoLottoSdiSiope(
+                                        fattura_passivaBulk.get().getDocumentoEleTestata().getDocumentoEleTrasmissione().getIdentificativoSdi() +
+                                                fattura_passivaBulk.get().getDocumentoEleTestata().getProgressivo()
+                                );
+                            } else {
+                                try {
+                                    ctFatturaSiope.setCodiceIpaEnteSiope(terzoHome.findCodiceUnivocoUfficioIPA(fattura_passivaBulk.get().getCd_unita_organizzativa()));
+                                } catch (IntrospectionException|PersistencyException e) {
+                                    throw new DetailedRuntimeException(e);
+                                }
+                                ctFatturaSiope.setTipoDocumentoSiopeA(StTipoDocumentoAnalogico.ANALOGICO);
+                                ctFatturaSiope.setAnnoEmissioneFatturaSiope(fattura_passivaBulk.get().getEsercizio());
+                                ctFatturaSiope.setCodiceFiscaleEmittenteSiope(fattura_passivaBulk.get().getCodice_fiscale());
+                                ctFatturaSiope.setTipoDocumentoAnalogicoSiope(FATT_ANALOGICA);
+                            }
                             CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                             ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
                             ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
@@ -5741,6 +5820,7 @@ public class DistintaCassiereComponent extends
                             ctFatturaSiope.setTipoDocumentoSiopeA(StTipoDocumentoAnalogico.ANALOGICO);
                             ctFatturaSiope.setAnnoEmissioneFatturaSiope(compensoBulk.getEsercizio());
                             ctFatturaSiope.setCodiceFiscaleEmittenteSiope(compensoBulk.getCodice_fiscale());
+                            ctFatturaSiope.setTipoDocumentoAnalogicoSiope(DOC_EQUIVALENTE);
                             ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
                         }
                         break;
