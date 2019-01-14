@@ -1939,13 +1939,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    		{
 		    		Pdg_variazioneHome pdgVarHome = (Pdg_variazioneHome)getHome(userContext, Pdg_variazioneBulk.class);
 		    		SQLBuilder sqlVar = pdgVarHome.createSQLBuilder();
+		    		sqlVar.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
+		    		sqlVar.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
 		    		
 		    		Pdg_variazione_riga_gestHome pdgVarRigaHome = (Pdg_variazione_riga_gestHome)getHome(userContext, Pdg_variazione_riga_gestBulk.class);
 		    		SQLBuilder sqlExist = pdgVarRigaHome.createSQLBuilder();
 		    		sqlExist.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
 		    		sqlExist.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
-		    		sqlExist.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
-		    		sqlExist.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
 		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
 		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
 		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
@@ -1986,13 +1986,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    		{
 		    		Var_stanz_resHome varHome = (Var_stanz_resHome)getHome(userContext, Var_stanz_resBulk.class);
 		    		SQLBuilder sqlVar = varHome.createSQLBuilder();
+		    		sqlVar.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
+		    		sqlVar.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
 		    		
 		    		Var_stanz_res_rigaHome varRigaHome = (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
 		    		SQLBuilder sqlExist = varRigaHome.createSQLBuilder();
 		    		sqlExist.addSQLJoin("VAR_STANZ_RES.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
 		    		sqlExist.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE", "VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
-		    		sqlExist.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
-		    		sqlExist.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
 		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
 		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
 		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VAR_STANZ_RES_RIGA.CD_CDR");
