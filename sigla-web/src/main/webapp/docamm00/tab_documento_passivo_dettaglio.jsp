@@ -123,7 +123,7 @@
 			
 			if(riga.getBanca() != null) {
 				if (Rif_modalita_pagamentoBulk.BANCARIO.equalsIgnoreCase(riga.getBanca().getTi_pagamento())) {
-			 	     	bp.getDettaglio().writeFormInpuBANCA_ITALIAt(out,"contoB");
+			 	     	bp.getDettaglio().writeFormInput(out,"contoB");
 				} else if (Rif_modalita_pagamentoBulk.POSTALE.equalsIgnoreCase(riga.getBanca().getTi_pagamento())) {
 			 	     	bp.getDettaglio().writeFormInput(out,"contoP");
 				} else if (Rif_modalita_pagamentoBulk.QUIETANZA.equalsIgnoreCase(riga.getBanca().getTi_pagamento())) {
