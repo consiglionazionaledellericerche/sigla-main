@@ -1873,7 +1873,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             print.setFlEmail(false);
 
             print.setReport("/doccont/doccont/distinta_cassiere.jasper");
-            print.setNomeFile("Distinta n. " + distinta.getPg_distinta_def() + ".pdf");
+            print.setNomeFile("Distinta n." + distinta.getPg_distinta_def() + ".pdf");
             print.setUtcr(context.getUserContext().getUser());
             print.addParam("cd_cds", distinta.getCd_cds(), String.class);
             print.addParam("cd_unita_organizzativa", distinta.getCd_unita_organizzativa(), String.class);
