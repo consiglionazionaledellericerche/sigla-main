@@ -6114,6 +6114,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
             Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
             validaRiga(aUC, riga);
+            controlliCig(riga);
         }
         searchDuplicateInDB(aUC, fatturaPassiva);
 
@@ -6168,6 +6169,16 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         controllaQuadraturaObbligazioni(aUC, fatturaPassiva);
         controllaQuadraturaOrdini(aUC, fatturaPassiva);
     }
+
+	public void controlliCig(Fattura_passiva_rigaBulk riga) throws ApplicationException {
+		if (!(riga.getFattura_passiva().isEstera() ||riga.getFattura_passiva().isSanMarinoConIVA() || riga.getFattura_passiva().isSanMarinoSenzaIVA()) &&
+		        (!Optional.ofNullable(riga.getCig()).isPresent() && !Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
+		    throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
+		}
+		if ((Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
+		    throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
+		}
+	}
 
     private void controllaQuadraturaOrdini(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
         if (Optional.ofNullable(fatturaPassiva.getFatturaRigaOrdiniHash()).isPresent()) {
@@ -6427,13 +6438,6 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                 throw new it.cnr.jada.comp.ApplicationException("Attenzione: voce IVA non valida per il dettaglio - " + riga.getDs_riga_fattura());
         }
 
-        if (!(riga.getFattura_passiva().isEstera() ||riga.getFattura_passiva().isSanMarinoConIVA() || riga.getFattura_passiva().isSanMarinoSenzaIVA()) &&
-                (!Optional.ofNullable(riga.getCig()).isPresent() && !Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
-            throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
-        }
-        if ((Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
-            throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
-        }
 }
 
     private void validateFornitore(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws it.cnr.jada.bulk.ValidationException {
@@ -7383,6 +7387,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         for (Iterator i = fatturaPassiva.getFattura_passiva_dettColl().iterator(); i.hasNext(); ) {
             Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
             validaRiga(aUC, riga);
+            controlliCig(riga);
 
 
         }
