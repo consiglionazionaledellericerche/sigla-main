@@ -1557,7 +1557,8 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				listCtrlPianoEco.stream()
 				.filter(el->!Optional.ofNullable(el.getDtScadenza()).map(dt->dt.before(variazione.getDt_chiusura())).orElse(Boolean.FALSE))
 				.filter(el->el.getImpPositivi().compareTo(BigDecimal.ZERO)>0)
-				.filter(el->el.getImpPositivi().compareTo(el.getImpNegativi())!=0)
+				.filter(el->el.getImpPositivi().compareTo(el.getImpPositiviNaturaReimpiego())>0)
+				.filter(el->el.getImpPositivi().subtract(el.getImpPositiviNaturaReimpiego()).compareTo(el.getImpNegativi())!=0)
 				.findFirst().ifPresent(el->{
 					throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
 							el.getProgetto().getCd_progetto()+"(" + 
