@@ -1,54 +1,82 @@
 package it.cnr.contab.progettiric00.comp;
 
 import java.math.BigDecimal;
-import java.sql.CallableStatement;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collector;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.poi.hssf.record.formula.functions.Find;
-
-import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
-import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioHome;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Stampa_elenco_progetti_laBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_moduloHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
-import it.cnr.contab.progettiric00.core.bulk.*;
-import it.cnr.contab.progettiric00.tabrif.bulk.*;
-import it.cnr.contab.progettiric00.bp.*;
-import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
+import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Stampa_anag_progettiVBulk;
+import it.cnr.contab.progettiric00.core.bulk.Stampa_progettiVBulk;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.doccont00.core.bulk.Stampa_elenco_progetti_laBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_registro_accertamentiBulk;
-import it.cnr.contab.utenze00.bp.*;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -58,8 +86,14 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.*;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBroker;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.RemoteIterator;
 public class ProgettoRicercaComponent extends it.cnr.jada.comp.CRUDComponent implements IProgettoRicercaMgr,IPrintMgr {
 	public static final String TIPO_PROGETTO = "C";
 /**
@@ -172,6 +206,7 @@ public ProgettoRicercaComponent() {
 
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
+				validaDatePianoEconomico(uc, (ProgettoBulk)bulk);
 				validaPianoEconomico(uc, (ProgettoBulk)bulk);
 			}catch(Throwable throwable){
 	            throw handleException(throwable);
@@ -588,6 +623,7 @@ public ProgettoRicercaComponent() {
 				if (!parEnte.getFl_informix().booleanValue())
 					allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
+				validaDatePianoEconomico(uc, (ProgettoBulk)bulk);
 				validaPianoEconomico(uc, (ProgettoBulk)bulk);
 		   }catch(Throwable throwable){
 		       throw handleException(throwable);
@@ -1843,4 +1879,159 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			throw handleException(e);
 		}
     }
+    
+    private void validaDatePianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException {
+		try{
+	    	if (progetto.isDatePianoEconomicoRequired()) {
+	    		Optional.ofNullable(progetto.getOtherField().getDtInizio())
+	    				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di inizio del progetto!"));
+	    		Optional.ofNullable(progetto.getOtherField().getDtFine())
+	    				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di fine del progetto!"));
+
+	    		//cerco la data min e max di impegni fatti su GAE del progetto
+	    		{
+	    			ObbligazioneHome obblHome = (ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class);
+		    		SQLBuilder sqlObb = obblHome.createSQLBuilder();
+		    		
+		    		Obbligazione_scad_voceHome scadVoceHome = (Obbligazione_scad_voceHome)getHome(userContext, Obbligazione_scad_voceBulk.class);
+		    		SQLBuilder sqlExist = scadVoceHome.createSQLBuilder();
+		    		sqlExist.addSQLJoin("OBBLIGAZIONE.CD_CDS", "OBBLIGAZIONE_SCAD_VOCE.CD_CDS");
+		    		sqlExist.addSQLJoin("OBBLIGAZIONE.ESERCIZIO", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
+		    		sqlExist.addSQLJoin("OBBLIGAZIONE.ESERCIZIO_ORIGINALE", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE");
+		    		sqlExist.addSQLJoin("OBBLIGAZIONE.PG_OBBLIGAZIONE", "OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE");
+		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "OBBLIGAZIONE_SCAD_VOCE.CD_CENTRO_RESPONSABILITA");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA");
+		    		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+		    		
+		    		sqlObb.addSQLExistsClause(FindClause.AND, sqlExist);
+		    		
+		    		List<ObbligazioneBulk> listObb = obblHome.fetchAll(sqlObb);
+	
+		    		listObb.stream()
+		    			   .min((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
+		    			   .filter(el->el.getDt_registrazione().before(progetto.getOtherField().getDtInizio()))
+		    			   .ifPresent(el->{
+		    				   throw new ApplicationRuntimeException("Attenzione! Esiste l'obbligazione "
+		    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
+		    				   		+ " associata al progetto con data registrazione "
+		    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_registrazione())
+									+ " inferiore alla data di inizio "
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+									+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
+		    			   });
+		    		listObb.stream()
+			 			   .max((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
+			 			   .filter(el->el.getDt_registrazione().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+			 			   .ifPresent(el->{
+	 				   throw new ApplicationRuntimeException("Attenzione! Esiste l'obbligazione "
+	    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
+	    				   		+ " associata al progetto con data registrazione "
+	    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_registrazione())
+								+ " superiore alla data di fine/proroga "
+								+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+								+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
+	 			    });
+	    		}
+
+	    		//cerco la data min e max di variazioni di bilancio di competenza
+	    		{
+		    		Pdg_variazioneHome pdgVarHome = (Pdg_variazioneHome)getHome(userContext, Pdg_variazioneBulk.class);
+		    		SQLBuilder sqlVar = pdgVarHome.createSQLBuilder();
+		    		
+		    		Pdg_variazione_riga_gestHome pdgVarRigaHome = (Pdg_variazione_riga_gestHome)getHome(userContext, Pdg_variazione_riga_gestBulk.class);
+		    		SQLBuilder sqlExist = pdgVarRigaHome.createSQLBuilder();
+		    		sqlExist.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+		    		sqlExist.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
+		    		sqlExist.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
+		    		sqlExist.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
+		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
+		    		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+		    		
+		    		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
+		    		
+		    		List<Pdg_variazioneBulk> listVar = pdgVarHome.fetchAll(sqlVar);
+	
+		    		listVar.stream()
+		    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+		    			   .filter(el->el.getDt_chiusura().before(progetto.getOtherField().getDtInizio()))
+		    			   .ifPresent(el->{
+		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
+			    				   		+ el.getEsercizio()+"/"+el.getPg_variazione_pdg()
+			    				   		+ " associata al progetto con data di chiusura "
+			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+										+ " inferiore alla data di inizio "
+										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+										+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
+		    			   });
+		    		listVar.stream()
+			 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+			 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+			 			   .ifPresent(el->{
+		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
+			    				   		+ el.getEsercizio()+"/"+el.getPg_variazione_pdg()
+			    				   		+ " associata al progetto con data di chiusura "
+			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+										+ " superiore alla data di fine/proroga "
+										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+										+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
+	 			   });
+	    		}
+
+	    		//cerco la data min e max di variazioni di bilancio di residuo
+	    		{
+		    		Var_stanz_resHome varHome = (Var_stanz_resHome)getHome(userContext, Var_stanz_resBulk.class);
+		    		SQLBuilder sqlVar = varHome.createSQLBuilder();
+		    		
+		    		Var_stanz_res_rigaHome varRigaHome = (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
+		    		SQLBuilder sqlExist = varRigaHome.createSQLBuilder();
+		    		sqlExist.addSQLJoin("VAR_STANZ_RES.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
+		    		sqlExist.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE", "VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
+		    		sqlExist.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
+		    		sqlExist.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
+		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VAR_STANZ_RES_RIGA.CD_CDR");
+		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VAR_STANZ_RES_RIGA.CD_LINEA_ATTIVITA");
+		    		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+		    		
+		    		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
+		    		
+		    		List<Var_stanz_resBulk> listVar = varRigaHome.fetchAll(sqlVar);
+	
+		    		listVar.stream()
+		    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+		    			   .filter(el->el.getDt_chiusura().before(progetto.getOtherField().getDtInizio()))
+		    			   .ifPresent(el->{
+		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di residuo "
+			    				   		+ el.getEsercizio()+"/"+el.getPg_variazione()
+			    				   		+ " associata al progetto con data di chiusura "
+			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+										+ " inferiore alla data di inizio "
+										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+										+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
+		    			   });
+		    		listVar.stream()
+			 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+			 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+			 			   .ifPresent(el->{
+		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di residuo "
+		    						    + el.getEsercizio()+"/"+el.getPg_variazione()
+			    				   		+ " associata al progetto con data di chiusura "
+			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+										+ " superiore alla data di fine/proroga "
+										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+										+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
+	 			   });
+	    		}
+	    	}	    					   
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+    }
+ 
 }
