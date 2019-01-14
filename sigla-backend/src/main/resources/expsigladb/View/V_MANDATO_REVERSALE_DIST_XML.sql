@@ -22,14 +22,11 @@ r.FL_CANCELLATO='N' and
 r.fl_flusso ='Y' and
 mr.cd_terzo = b.cd_terzo and
 mr.pg_banca = b.pg_banca and
-((b.codice_iban is not null and
-((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
-((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
+((b.codice_iban is not null and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')
+or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
 or
-(ti_documento_cont='S'  --and IM_RITENUTE=0
-and TI_CC_BI!='B'
-))  and not exists(select 1 from mandato where
+(ti_documento_cont='S'  ))  
+and not exists(select 1 from mandato where
  mandato.cd_cds_origine= v_mandato_reversale_ver_cori_n.cd_cds_origine and
  mandato.esercizio=v_mandato_reversale_ver_cori_n.esercizio and
  mandato.pg_mandato_riemissione =  v_mandato_reversale_ver_cori_n.PG_DOCUMENTO_CONT)
@@ -53,13 +50,10 @@ r.FL_CANCELLATO='N' and
 r.fl_flusso ='Y' and
 rr.cd_terzo = b.cd_terzo and
 rr.pg_banca = b.pg_banca and
-((b.codice_iban is not null and
-((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
-((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
+((b.codice_iban is not null and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')
+ or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
 or
-(ti_documento_cont='S'  --and IM_RITENUTE=0 
-and TI_CC_BI!='B'))
+(ti_documento_cont='S'  ))  
 and not exists(select 1 from reversale where
  reversale.cd_cds_origine= v_mandato_reversale_ver_cori_n.cd_cds_origine and
  reversale.esercizio=v_mandato_reversale_ver_cori_n.esercizio and
@@ -85,13 +79,11 @@ r.FL_CANCELLATO='N' and
 r.fl_flusso ='Y' and
 mr.cd_terzo = b.cd_terzo and
 mr.pg_banca = b.pg_banca and
-((b.codice_iban is not null and
-((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
-((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
-or (ti_documento_cont='S'  -- and IM_RITENUTE=0
-and TI_CC_BI!='B'
-))and not exists(select 1 from mandato where
+((b.codice_iban is not null and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y') 
+or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
+or
+(ti_documento_cont='S'  ))  
+and not exists(select 1 from mandato where
  mandato.cd_cds_origine= v_mandato_reversale_ver_cori.cd_cds_origine and
  mandato.esercizio=v_mandato_reversale_ver_cori.esercizio and
  mandato.pg_mandato_riemissione =  v_mandato_reversale_ver_cori.PG_DOCUMENTO_CONT)
@@ -115,12 +107,10 @@ r.FL_CANCELLATO='N' and
 r.fl_flusso ='Y' and
 rr.cd_terzo = b.cd_terzo and
 rr.pg_banca = b.pg_banca and
-((b.codice_iban is not null and
-((substr(b.codice_iban,1,2)= 'IT' and substr(codice_iban,6,5)!='01000')) or -- Abi banca d'italia
-((substr(b.codice_iban,1,2)!= 'IT' and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')))
-or (b.codice_iban is null and b.ti_pagamento not in ('B','N','I')))))
-or (ti_documento_cont='S'  --and IM_RITENUTE=0 
-and TI_CC_BI!='B'))
+((b.codice_iban is not null and substr(b.codice_iban,1,2)= n.cd_iso  and n.fl_sepa='Y')
+or (b.codice_iban is null and b.ti_pagamento not in ('B','N')))))
+or
+(ti_documento_cont='S'  ))  
 and not exists(select 1 from reversale where
  reversale.cd_cds_origine= v_mandato_reversale_ver_cori.cd_cds_origine and
  reversale.esercizio=v_mandato_reversale_ver_cori.esercizio and
