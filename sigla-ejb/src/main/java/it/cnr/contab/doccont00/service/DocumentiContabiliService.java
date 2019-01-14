@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.service;
 
 import com.google.gson.GsonBuilder;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -12,6 +13,7 @@ import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.model.Esito;
 import it.cnr.contab.model.Lista;
 import it.cnr.contab.model.MessaggioXML;
@@ -33,6 +35,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.firma.arss.ArubaSignServiceClient;
 import it.cnr.jada.firma.arss.ArubaSignServiceException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.mail.SimplePECMail;
@@ -506,6 +509,61 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     });
         } else {
             distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_BT);
+            /**
+             * In questo caso invio i documenti allegati alla Distinta via PEC
+             *
+             */
+            if (!risultato.getDownload()) {
+                try {
+                    List<String> nodes = new ArrayList<String>();
+                    StorageObject distintaStorageObject = getStorageObjectByPath(
+                            distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName()));
+
+                    nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
+                    List<V_mandato_reversaleBulk> dettagliRev = distintaCassiereComponentSession
+                            .dettagliDistinta(
+                                    userContext,
+                                    distinta,
+                                    it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
+                    dettagliRev.stream()
+                            .filter(v_mandato_reversaleBulk -> {
+                                try {
+                                    return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
+                                } catch (RemoteException|ComponentException e) {
+                                    logger.error("SIOPE+ Invia PEC", e);
+                                    return Boolean.FALSE;
+                                }
+                            })
+                            .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
+                            .filter(s -> s != null)
+                            .forEach(s -> nodes.add(s));
+
+                    List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
+                            .dettagliDistinta(
+                                    userContext,
+                                    distinta,
+                                    it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
+                    dettagliMan.stream()
+                            .filter(v_mandato_reversaleBulk -> {
+                                try {
+                                    return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
+                                } catch (RemoteException|ComponentException e) {
+                                    logger.error("SIOPE+ Invia PEC", e);
+                                    return Boolean.FALSE;
+                                }
+                            })
+                            .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
+                            .filter(s -> s != null)
+                            .forEach(s -> nodes.add(s));
+                    if (nodes.size() > 1)
+                        inviaDistintaPEC(nodes, false,
+                                "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
+                                " Progressivo Flusso: " + distinta.getProgFlusso() +
+                                        " Identificativo Flusso BT: " + distinta.getIdentificativoFlusso());
+                } catch (PersistencyException | EmailException | IOException _ex) {
+                    logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
+                }
+            }
         }
         storageFile.setDescription(description.toString());
         final StorageObject storageObject = restoreSimpleDocument(
@@ -822,6 +880,31 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .map(Risultato::toString)
                 .forEach(logger::debug);
     }
+
+    public boolean isRiferimentoDocumentoEsterno(V_mandato_reversaleBulk bulk) throws RemoteException, ComponentException {
+        return Arrays.asList(
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP
+        ).contains(
+                getTipoPagamentoSiopePlus(bulk)
+        );
+    }
+
+    public Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus getTipoPagamentoSiopePlus(V_mandato_reversaleBulk bulk) throws RemoteException, ComponentException {
+
+        final Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk =
+                Optional.ofNullable(distintaCassiereComponentSession.findModPag(userContext, bulk))
+                        .filter(Rif_modalita_pagamentoBulk.class::isInstance)
+                        .map(Rif_modalita_pagamentoBulk.class::cast)
+                        .orElseThrow(() -> new ApplicationMessageFormatException("Modalità di pagamento non trovata: {0}", String.valueOf(bulk.getPg_documento_cont())));
+
+        return Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
+                        .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
+                        .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE);
+
+    }
+
 
     class StorageDataSource implements DataSource {
 
