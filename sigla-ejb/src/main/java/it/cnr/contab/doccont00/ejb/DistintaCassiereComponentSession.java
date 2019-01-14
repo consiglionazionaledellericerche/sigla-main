@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.ejb;
 
 
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
@@ -74,4 +75,6 @@ public interface DistintaCassiereComponentSession extends it.cnr.jada.ejb.CRUDDe
     public void unlockMessaggiSIOPEPlus(UserContext userContext) throws ComponentException, RemoteException;
 
     public Configurazione_cnrBulk lockMessaggiSIOPEPlus(UserContext userContext) throws ComponentException, RemoteException;
+
+    public Rif_modalita_pagamentoBulk findModPag(UserContext userContext, V_mandato_reversaleBulk mandato_reversaleBulk) throws ComponentException, RemoteException;
 }
