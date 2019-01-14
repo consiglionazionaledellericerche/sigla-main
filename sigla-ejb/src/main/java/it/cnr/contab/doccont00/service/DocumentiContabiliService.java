@@ -514,55 +514,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
              *
              */
             if (!Optional.ofNullable(risultato.getDownload()).orElse(Boolean.TRUE)) {
-                try {
-                    List<String> nodes = new ArrayList<String>();
-                    StorageObject distintaStorageObject = getStorageObjectByPath(
-                            distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName()));
-
-                    nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
-                    List<V_mandato_reversaleBulk> dettagliRev = distintaCassiereComponentSession
-                            .dettagliDistinta(
-                                    userContext,
-                                    distinta,
-                                    it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
-                    dettagliRev.stream()
-                            .filter(v_mandato_reversaleBulk -> {
-                                try {
-                                    return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
-                                } catch (RemoteException|ComponentException e) {
-                                    logger.error("SIOPE+ Invia PEC", e);
-                                    return Boolean.FALSE;
-                                }
-                            })
-                            .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
-                            .filter(s -> s != null)
-                            .forEach(s -> nodes.add(s));
-
-                    List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
-                            .dettagliDistinta(
-                                    userContext,
-                                    distinta,
-                                    it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
-                    dettagliMan.stream()
-                            .filter(v_mandato_reversaleBulk -> {
-                                try {
-                                    return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
-                                } catch (RemoteException|ComponentException e) {
-                                    logger.error("SIOPE+ Invia PEC", e);
-                                    return Boolean.FALSE;
-                                }
-                            })
-                            .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
-                            .filter(s -> s != null)
-                            .forEach(s -> nodes.add(s));
-                    if (nodes.size() > 1)
-                        inviaDistintaPEC(nodes, false,
-                                "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
-                                " Progressivo Flusso: " + distinta.getProgFlusso() +
-                                        " Identificativo Flusso BT: " + distinta.getIdentificativoFlusso());
-                } catch (PersistencyException | EmailException | IOException _ex) {
-                    logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
-                }
+                inviaPEC(userContext, distinta);
             }
         }
         storageFile.setDescription(description.toString());
@@ -575,6 +527,61 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 true);
         distinta.setToBeUpdated();
         crudComponentSession.modificaConBulk(userContext, distinta);
+    }
+
+    public boolean inviaPEC(UserContext context, Distinta_cassiereBulk distinta) throws ComponentException{
+            try {
+                List<String> nodes = new ArrayList<String>();
+                StorageObject distintaStorageObject = getStorageObjectByPath(
+                        distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName()));
+
+                nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
+                List<V_mandato_reversaleBulk> dettagliRev = distintaCassiereComponentSession
+                        .dettagliDistinta(
+                                userContext,
+                                distinta,
+                                it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
+                dettagliRev.stream()
+                        .filter(v_mandato_reversaleBulk -> {
+                            try {
+                                return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
+                            } catch (RemoteException|ComponentException e) {
+                                logger.error("SIOPE+ Invia PEC", e);
+                                return Boolean.FALSE;
+                            }
+                        })
+                        .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
+                        .filter(s -> s != null)
+                        .forEach(s -> nodes.add(s));
+
+                List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
+                        .dettagliDistinta(
+                                userContext,
+                                distinta,
+                                it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
+                dettagliMan.stream()
+                        .filter(v_mandato_reversaleBulk -> {
+                            try {
+                                return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
+                            } catch (RemoteException|ComponentException e) {
+                                logger.error("SIOPE+ Invia PEC", e);
+                                return Boolean.FALSE;
+                            }
+                        })
+                        .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
+                        .filter(s -> s != null)
+                        .forEach(s -> nodes.add(s));
+                if (nodes.size() > 1) {
+                    inviaDistintaPEC(nodes, false,
+                            "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
+                                    " Progressivo Flusso: " + distinta.getProgFlusso() +
+                                    " Identificativo Flusso BT: " + distinta.getIdentificativoFlusso());
+                    return Boolean.TRUE;
+                }
+            } catch (PersistencyException | EmailException | IOException _ex) {
+                logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
+            }
+            return Boolean.FALSE;
     }
 
     private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali) throws Exception {
