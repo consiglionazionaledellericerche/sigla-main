@@ -513,7 +513,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
              * In questo caso invio i documenti allegati alla Distinta via PEC
              *
              */
-            if (!risultato.getDownload()) {
+            if (!Optional.ofNullable(risultato.getDownload()).orElse(Boolean.TRUE)) {
                 try {
                     List<String> nodes = new ArrayList<String>();
                     StorageObject distintaStorageObject = getStorageObjectByPath(
