@@ -4329,6 +4329,30 @@ public class DistintaCassiereComponent extends
         }
     }
 
+    public Rif_modalita_pagamentoBulk findModPag(UserContext userContext, V_mandato_reversaleBulk mandato_reversaleBulk) throws ComponentException {
+        SQLBuilder sql = getHome(userContext, Rif_modalita_pagamentoBulk.class).createSQLBuilder();
+        if (mandato_reversaleBulk.isMandato()) {
+            sql.addTableToHeader("MANDATO_RIGA");
+            sql.addSQLJoin("MANDATO_RIGA.CD_MODALITA_PAG", "RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
+            sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.CD_CDS", SQLBuilder.EQUALS, mandato_reversaleBulk.getCd_cds());
+            sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.ESERCIZIO", SQLBuilder.EQUALS, mandato_reversaleBulk.getEsercizio());
+            sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.PG_MANDATO", SQLBuilder.EQUALS, mandato_reversaleBulk.getPg_documento_cont());
+        } else {
+            sql.addTableToHeader("REVERSALE_RIGA");
+            sql.addSQLJoin("REVERSALE_RIGA.CD_MODALITA_PAG", "RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
+            sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.CD_CDS", SQLBuilder.EQUALS, mandato_reversaleBulk.getCd_cds());
+            sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.ESERCIZIO", SQLBuilder.EQUALS, mandato_reversaleBulk.getEsercizio());
+            sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.PG_REVERSALE", SQLBuilder.EQUALS, mandato_reversaleBulk.getPg_documento_cont());
+        }
+        try {
+            final List<Rif_modalita_pagamentoBulk> list = getHome(userContext, Rif_modalita_pagamentoBulk.class).fetchAll(sql);
+            return list.stream().distinct().findAny().get();
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+
     public void unlockMessaggiSIOPEPlus(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
         try {
             Configurazione_cnrBulk configurazione_cnrBulk = new Configurazione_cnrBulk(
@@ -4812,7 +4836,15 @@ public class DistintaCassiereComponent extends
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
                     if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
-                        infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
+                        infoben.setNumeroContoBancaItaliaEnteRicevente(
+                                Optional.ofNullable(docContabile.getNumeroConto())
+                                        .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
+                                                "sul Mandato {0}/{1}/{2}",
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        ))
+                        );
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
                     }
 
@@ -5146,7 +5178,15 @@ public class DistintaCassiereComponent extends
                         infoben.setTipoPagamento(tipoPagamentoSiopePlus.value());
                     }
                     if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
-                        infoben.setNumeroContoBancaItaliaEnteRicevente(NUMERO_CONTO_BANCA_ITALIA_ENTE_RICEVENTE);
+                        infoben.setNumeroContoBancaItaliaEnteRicevente(
+                                Optional.ofNullable(docContabile.getNumeroConto())
+                                        .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
+                                                "sul Mandato {0}/{1}/{2}",
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        ))
+                        );
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);
                     }
                     caricaInformazioniAggiuntive(infoben, bulk, aggiuntive, tipoPagamentoSiopePlus);
