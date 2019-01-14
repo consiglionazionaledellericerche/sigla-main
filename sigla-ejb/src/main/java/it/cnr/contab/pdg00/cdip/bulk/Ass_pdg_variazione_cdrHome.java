@@ -188,7 +188,7 @@ public class Ass_pdg_variazione_cdrHome extends BulkHome {
 		PersistentHome dettHome = getHomeCache().getHome(Pdg_variazione_riga_gestBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,testata.getEsercizio());
-		sql.addSQLClause(FindClause.AND,"PG_VARIAZIONE",SQLBuilder.EQUALS,testata.getPg_variazione_pdg());
+		sql.addSQLClause(FindClause.AND,"PG_VARIAZIONE_PDG",SQLBuilder.EQUALS,testata.getPg_variazione_pdg());
 		return dettHome.fetchAll(sql);
 	}	
 }

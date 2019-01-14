@@ -1675,9 +1675,9 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 				WorkpackageBulk linea = list.get(0);
 				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(linea.getProgetto());
+				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, linea.getProgetto());
 				getHomeCache(userContext).fetchAll(userContext);
-				if (Optional.ofNullable(progetto.getOtherField()).isPresent()) {
+				if (progetto.isPianoEconomicoRequired()) {
 					Optional.ofNullable(progetto.getOtherField().getDtInizio())
 						.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
 						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
