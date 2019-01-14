@@ -1637,12 +1637,6 @@ TRASPORTO_AEREO"/>
           <column name="CD_CIG"/>
        </createIndex>
     </changeSet>
-    <changeSet author="gianfranco.gasparro" id="drop_column_cig_fattura_passiva">
-	    <dropColumn columnName="cd_cig"
-            tableName="fattura_passiva"/>
-	    <dropColumn columnName="motivo_assenza_cig"
-            tableName="fattura_passiva"/>
-    </changeSet>
     <changeSet author="gianfranco.gasparro" id="alter_fattura_passiva_riga_add_cig">
         <addColumn tableName="fattura_passiva_riga">
             <column name="cd_cig" type="VARCHAR(10)" remarks="Codice cig"/>
