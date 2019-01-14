@@ -8,7 +8,9 @@ import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -8145,9 +8147,50 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 		SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
 
 		sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
-		sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, obbl.getObbligazione().getCd_unita_organizzativa());
+		Set<String> uoAbilitate = new HashSet<String>();
+		uoAbilitate.add(obbl.getObbligazione().getCd_unita_organizzativa());
+		ObbligazioneBulk obbligazione = null;
+	      try {
+	    	  obbligazione = (ObbligazioneBulk)getHome(userContext, ObbligazioneBulk.class).findByPrimaryKey(obbl.getObbligazione());
+		} catch (PersistencyException e1) {
+			throw new ComponentException(e1);
+		}
+		if (obbligazione != null && obbligazione.getContratto() != null){
+			ContrattoBulk contratto = obbligazione.getContratto();
+			try {
+		    	  contratto = (ContrattoBulk)getHome(userContext, ContrattoBulk.class).findByPrimaryKey(contratto);
+		    	  uoAbilitate.add(contratto.getCd_unita_organizzativa());
+			} catch (PersistencyException e1) {
+				throw new ComponentException(e1);
+			}
+            ContrattoHome contrattoHome = (ContrattoHome) getHome(userContext, contratto.getClass());
+            try {
+            	Collection assUo = contrattoHome.findAssociazioneUO(obbligazione.getContratto());
+            	if (assUo != null){
+            		for (Iterator i = assUo.iterator(); i.hasNext(); ) {
+            			Ass_contratto_uoBulk ass = (Ass_contratto_uoBulk) i.next();
+            			uoAbilitate.add(ass.getCd_unita_organizzativa());
+            		}
+            	}
+            } catch (Exception e1) {
+            	throw new ComponentException(e1);
+            }
+		}
+		if (uoAbilitate.size() > 1){
+			sql.openParenthesis(FindClause.AND);
+			boolean first = true;
+			for (Iterator i = uoAbilitate.iterator(); i.hasNext(); ) {
+				String uo = (String) i.next();
+				sql.addSQLClause(first ? FindClause.AND : FindClause.OR, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo);
+				first = false;
+			}
+			sql.closeParenthesis();
+		} else {
+			sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoAbilitate.iterator().next());
+		}
 		if (clause != null) 
 		  sql.addClause(clause);
+        sql.addOrderBy("cd_Unita_Organizzativa, cd_Cig");
 		return sql;
 	}
 	
