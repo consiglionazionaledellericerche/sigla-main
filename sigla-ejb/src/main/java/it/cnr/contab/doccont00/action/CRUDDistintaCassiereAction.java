@@ -242,6 +242,17 @@ public class CRUDDistintaCassiereAction extends it.cnr.jada.util.action.CRUDActi
         }
     }
 
+    public Forward doInviaPEC(ActionContext context) {
+        try {
+            CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP) getBusinessProcess(context);
+            final Boolean inviata = bp.reinviaPEC(context, (Distinta_cassiereBulk) bp.getModel());
+            bp.setMessage(inviata ? "PEC inviata correttamente." : "PEC non inviata, in quanto non erano presenti disposizioni con documenti esterni.");
+            return context.findDefaultForward();
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+
     public Forward doInviaSiopeplus(ActionContext context) {
         try {
             CRUDBP bp = getBusinessProcess(context);
@@ -285,5 +296,7 @@ public class CRUDDistintaCassiereAction extends it.cnr.jada.util.action.CRUDActi
         }
         return context.findDefaultForward();
     }
+
+
 
 }
