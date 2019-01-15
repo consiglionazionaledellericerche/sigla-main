@@ -1,655 +1,666 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bulkInfo
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Mandato/Reversale">
-	<fieldProperty
-		name="dt_trasmissione"
-		property="dt_trasmissione"
-		inputType="TEXT"
-		formatName = "date_short"
-		enabledOnFreeSearch="false"
-		label="Data trasmissione" />
-	<fieldProperty
-		name="cd_cds"
-		property="cd_cds"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		label="Cds"
-		enabledOnFreeSearch="true"		
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="im_documento_cont"
-		property="im_documento_cont"
-		inputType="TEXT"
-		enabledOnSearch="true"
-		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Importo" />
-	<fieldProperty
-		name="cd_uo_origine"
-		property="cd_uo_origine"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		label="cd_uo_origine"
-		enabledOnFreeSearch="false"		
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="im_pagato_incassato"
-		property="im_pagato_incassato"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Importo pagato/incassato" />
-	<fieldProperty
-		name="cd_unita_organizzativa"
-		property="cd_unita_organizzativa"
-		inputSize="10"
-		inputType="TEXT"
-		label="Unit&#224; Organizzativa"
-		enabledOnFreeSearch="true"		
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ds_unita_organizzativa"
-		property="uo.ds_unita_organizzativa"
-		inputSize="50"
-		inputType="ROTEXT"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="complete_uo"
-		property="uo"
-		enabledOnSearch="true"
-		formName="searchtool"
-		completeOnSave="false"
-		inputType="SEARCHTOOL"/>
-	<fieldProperty
-		name="stato"
-		property="stato"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		keysProperty="statoKeys"
-		label="Stato"
-		enabledOnSearch="true"						
-		enabledOnFreeSearch="false"				
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="stato_trasmissione"
-		property="stato_trasmissione"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		keysProperty="stato_trasmissioneKeys"
-		label="Stato trasmissione"
-		nullable="false"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false"/>
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputSize="10"		
-		inputType="ROTEXT"
-		enabledOnFreeSearch="false"		
-		label="Esercizio" />
-	<fieldProperty
-		name="dt_annullamento"
-		property="dt_annullamento"
-		inputType="TEXT"
-		formatName = "date_short"
-		enabledOnSearch="true"		
-		label="Data annullamento" />
-	<fieldProperty
-		name="dt_emissione"
-		property="dt_emissione"
-		inputType="TEXT"
-		formatName = "date_short"		
-		label="Data emissione" 
-		enabledOnSearch="true"
-		/>
-	<fieldProperty
-		name="ti_documento_cont"
-		property="ti_documento_cont"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		keysProperty="ti_documento_contKeys"
-		label="Tipo documento"
-		enabledOnSearch="true"				
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="cd_cds_origine"
-		property="cd_cds_origine"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		label="cd_cds_origine"
-		enabledOnFreeSearch="false"		
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="cd_anag"
-		property="terzo.cd_anag"
-		inputType="TEXT"
-		enabledOnSearch="true"		
-		inputSize="10"		
-		label="Anag" />
-	<fieldProperty
-		name="denominazione_sede"
-		property="terzo.denominazione_sede"
-		inputSize="50"
-		inputType="ROTEXT"
-		label="Denominazione"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="cd_terzo"
-		property="cd_terzo"
-		inputType="TEXT"
-		enabledOnSearch="true"		
-		readonlyProperty="ROTerzo"
-		inputSize="10"		
-		label="Terzo" />
-	<fieldProperty
-		name="ds_terzo"
-		property="terzo.denominazione_sede"
-		inputSize="50"
-		inputType="ROTEXT"/>
-	<fieldProperty
-		name="find_terzo"
-		property="terzo"
-		enabledOnSearch="true"				
-		inputType="SEARCHTOOL"/>
-	<fieldProperty
-		name="complete_terzo"
-		property="terzo"
-		enabledOnSearch="true"
-		formName="searchtool"
-		inputType="SEARCHTOOL"/>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+        shortDescription="Mandato/Reversale">
+    <fieldProperty
+            name="dt_trasmissione"
+            property="dt_trasmissione"
+            inputType="TEXT"
+            formatName="date_short"
+            enabledOnFreeSearch="false"
+            label="Data trasmissione"/>
+    <fieldProperty
+            name="cd_cds"
+            property="cd_cds"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            label="Cds"
+            enabledOnFreeSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="im_documento_cont"
+            property="im_documento_cont"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Importo"/>
+    <fieldProperty
+            name="cd_uo_origine"
+            property="cd_uo_origine"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            label="cd_uo_origine"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="im_pagato_incassato"
+            property="im_pagato_incassato"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Importo pagato/incassato"/>
+    <fieldProperty
+            name="cd_unita_organizzativa"
+            property="cd_unita_organizzativa"
+            inputSize="10"
+            inputType="TEXT"
+            label="Unit&#224; Organizzativa"
+            enabledOnFreeSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ds_unita_organizzativa"
+            property="uo.ds_unita_organizzativa"
+            inputSize="50"
+            inputType="ROTEXT"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="complete_uo"
+            property="uo"
+            enabledOnSearch="true"
+            formName="searchtool"
+            completeOnSave="false"
+            inputType="SEARCHTOOL"/>
+    <fieldProperty
+            name="stato"
+            property="stato"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            keysProperty="statoKeys"
+            label="Stato"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="stato_trasmissione"
+            property="stato_trasmissione"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            keysProperty="stato_trasmissioneKeys"
+            label="Stato trasmissione"
+            nullable="false"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            inputSize="10"
+            inputType="ROTEXT"
+            enabledOnFreeSearch="false"
+            label="Esercizio"/>
+    <fieldProperty
+            name="dt_annullamento"
+            property="dt_annullamento"
+            inputType="TEXT"
+            formatName="date_short"
+            enabledOnSearch="true"
+            label="Data annullamento"/>
+    <fieldProperty
+            name="dt_emissione"
+            property="dt_emissione"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data emissione"
+            enabledOnSearch="true"
+    />
+    <fieldProperty
+            name="ti_documento_cont"
+            property="ti_documento_cont"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            keysProperty="ti_documento_contKeys"
+            label="Tipo documento"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="cd_cds_origine"
+            property="cd_cds_origine"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            label="cd_cds_origine"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="cd_anag"
+            property="terzo.cd_anag"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            inputSize="10"
+            label="Anag"/>
+    <fieldProperty
+            name="denominazione_sede"
+            property="terzo.denominazione_sede"
+            inputSize="50"
+            inputType="ROTEXT"
+            label="Denominazione"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="cd_terzo"
+            property="cd_terzo"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            readonlyProperty="ROTerzo"
+            inputSize="10"
+            label="Terzo"/>
+    <fieldProperty
+            name="ds_terzo"
+            property="terzo.denominazione_sede"
+            inputSize="50"
+            inputType="ROTEXT"/>
+    <fieldProperty
+            name="find_terzo"
+            property="terzo"
+            enabledOnSearch="true"
+            inputType="SEARCHTOOL"/>
+    <fieldProperty
+            name="complete_terzo"
+            property="terzo"
+            enabledOnSearch="true"
+            formName="searchtool"
+            inputType="SEARCHTOOL"/>
 
-	<fieldProperty
-		name="dt_pagamento_incasso"
-		property="dt_pagamento_incasso"
-		inputType="TEXT"
-		formatName = "date_short"		
-		label="Data pagamento/incasso" />
-	<fieldProperty
-		name="pg_documento_cont"
-		property="pg_documento_cont"
-		inputType="TEXT"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="true"						
-		label="Nr. documento" />
-	<fieldProperty
-		name="pg_documento_cont_padre"
-		property="pg_documento_cont_padre"
-		inputType="TEXT"
-		enabledOnSearch="true"				
-		label="Nr. documento padre" />
-	<fieldProperty
-		name="cd_tipo_documento_cont"
-		property="cd_tipo_documento_cont"
-		maxLength="10"
-		inputSize="10"
-		inputType="SELECT"
-		keysProperty="cd_tipo_documento_contKeys"		
-		label="Mandato / Reversale"
-		enabledOnSearch="true"				
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ds_documento_cont"
-		property="ds_documento_cont"
-		maxLength="300"
-		inputSize="300"
-		inputType="TEXT"
-		label="Descrizione"
-		enabledOnSearch="true"				
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ti_cc_bi"
-		property="ti_cc_bi"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		label="CC/Banca d'Italia"
-		keysProperty="ti_cc_biKeys"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="dt_ritrasmissione"
-		property="dt_ritrasmissione"
-		inputType="TEXT"
-		inputSize="8"
-		formatName="date_short"
-		label="Data Ritrasmissione" 
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="im_ritenute"
-		property="im_ritenute"
-		inputType="TEXT"
-		label="Importo Ritenute"
-		formatName = "it.cnr.contab.util.EuroFormat" />
-	<fieldProperty
-		name="versamento_cori"
-		property="versamento_cori"
-		inputType="CHECKBOX"
-		label="Mandato da versamento CORI/IVA accentrato"/>
-	<fieldProperty
-		name="pg_distinta"
-		property="pg_distinta"
-		inputType="TEXT"
-		label="Nr. distinta" />
-	<fieldProperty
-		name="dt_firma"
-		property="dt_firma"
-		inputType="TEXT"
-		label="Data di Firma" />				
+    <fieldProperty
+            name="dt_pagamento_incasso"
+            property="dt_pagamento_incasso"
+            inputType="TEXT"
+            formatName="date_short"
+            label="Data pagamento/incasso"/>
+    <fieldProperty
+            name="pg_documento_cont"
+            property="pg_documento_cont"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="true"
+            label="Nr. documento"/>
+    <fieldProperty
+            name="pg_documento_cont_padre"
+            property="pg_documento_cont_padre"
+            inputType="TEXT"
+            enabledOnSearch="true"
+            label="Nr. documento padre"/>
+    <fieldProperty
+            name="cd_tipo_documento_cont"
+            property="cd_tipo_documento_cont"
+            maxLength="10"
+            inputSize="10"
+            inputType="SELECT"
+            keysProperty="cd_tipo_documento_contKeys"
+            label="Mandato / Reversale"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ds_documento_cont"
+            property="ds_documento_cont"
+            maxLength="300"
+            inputSize="300"
+            inputType="TEXT"
+            label="Descrizione"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ti_cc_bi"
+            property="ti_cc_bi"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            label="CC/Banca d'Italia"
+            keysProperty="ti_cc_biKeys"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="dt_ritrasmissione"
+            property="dt_ritrasmissione"
+            inputType="TEXT"
+            inputSize="8"
+            formatName="date_short"
+            label="Data Ritrasmissione"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="im_ritenute"
+            property="im_ritenute"
+            inputType="TEXT"
+            label="Importo Ritenute"
+            formatName="it.cnr.contab.util.EuroFormat"/>
+    <fieldProperty
+            name="versamento_cori"
+            property="versamento_cori"
+            inputType="CHECKBOX"
+            label="Mandato da versamento CORI/IVA accentrato"/>
+    <fieldProperty
+            name="pg_distinta"
+            property="pg_distinta"
+            inputType="TEXT"
+            label="Nr. distinta"/>
+    <fieldProperty
+            name="dt_firma"
+            property="dt_firma"
+            inputType="TEXT"
+            label="Data di Firma"/>
+    <fieldProperty
+            name="esitoOperazione"
+            property="esitoOperazione"
+            keysProperty="esito_OperazioneKeys"
+            inputType="SELECT"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            label="Esito"/>
 
-
-	<formFieldProperty
-		name="dt_trasmissione" />
-	<formFieldProperty
-		name="cd_cds" />
-	<formFieldProperty
-		name="im_documento_cont" />
-	<formFieldProperty
-		name="cd_uo_origine" />
-	<formFieldProperty
-		name="im_pagato_incassato" />
-	<formFieldProperty
-		name="cd_unita_organizzativa" />
-	<formFieldProperty
-		name="ds_unita_organizzativa" />
-	<formFieldProperty
-		name="complete_uo" />
-	<formFieldProperty
-		name="stato" />
-	<formFieldProperty
-		name="stato_trasmissione" />
-	<formFieldProperty
-		name="esercizio" />
-	<formFieldProperty
-		name="dt_annullamento" />
-	<formFieldProperty
-		name="dt_emissione" />
-	<formFieldProperty
-		name="ti_documento_cont" />
-	<formFieldProperty
-		name="cd_cds_origine" />
-	<formFieldProperty
-		name="cd_terzo" />
-	<formFieldProperty
-		name="ds_terzo" />
-	<formFieldProperty
-		name="find_terzo" />
-	<formFieldProperty
-		name="complete_terzo" />
-	<formFieldProperty
-		name="dt_pagamento_incasso" />
-	<formFieldProperty
-		name="pg_documento_cont" />
-	<formFieldProperty
-		name="cd_tipo_documento_cont" />
-	<formFieldProperty
-		name="ds_documento_cont" />
-	<formFieldProperty
-		name="ti_cc_bi" />
-	<formFieldProperty
-		name="im_ritenute" />
-	<formFieldProperty
-		name="versamento_cori" />
-	<formFieldProperty
-		name="pg_distinta" />
-	<formFieldProperty
-		name="dt_firma" />	
-	<columnSet
-        name="elencoConUo">
+    <formFieldProperty
+            name="dt_trasmissione"/>
+    <formFieldProperty
+            name="cd_cds"/>
+    <formFieldProperty
+            name="im_documento_cont"/>
+    <formFieldProperty
+            name="cd_uo_origine"/>
+    <formFieldProperty
+            name="im_pagato_incassato"/>
+    <formFieldProperty
+            name="cd_unita_organizzativa"/>
+    <formFieldProperty
+            name="ds_unita_organizzativa"/>
+    <formFieldProperty
+            name="complete_uo"/>
+    <formFieldProperty
+            name="stato"/>
+    <formFieldProperty
+            name="stato_trasmissione"/>
+    <formFieldProperty
+            name="esercizio"/>
+    <formFieldProperty
+            name="dt_annullamento"/>
+    <formFieldProperty
+            name="dt_emissione"/>
+    <formFieldProperty
+            name="ti_documento_cont"/>
+    <formFieldProperty
+            name="cd_cds_origine"/>
+    <formFieldProperty
+            name="cd_terzo"/>
+    <formFieldProperty
+            name="ds_terzo"/>
+    <formFieldProperty
+            name="find_terzo"/>
+    <formFieldProperty
+            name="complete_terzo"/>
+    <formFieldProperty
+            name="dt_pagamento_incasso"/>
+    <formFieldProperty
+            name="pg_documento_cont"/>
+    <formFieldProperty
+            name="cd_tipo_documento_cont"/>
+    <formFieldProperty
+            name="ds_documento_cont"/>
+    <formFieldProperty
+            name="ti_cc_bi"/>
+    <formFieldProperty
+            name="im_ritenute"/>
+    <formFieldProperty
+            name="versamento_cori"/>
+    <formFieldProperty
+            name="pg_distinta"/>
+    <formFieldProperty
+            name="dt_firma"/>
+    <columnSet
+            name="elencoConUo">
         <columnFieldProperty
-		name="cd_unita_organizzativa" />
-		<columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="im_pagato_incassato" />
-		<columnFieldProperty
-		name="stato" />
-		<columnFieldProperty
-		name="stato_trasmissione" />
-		<columnFieldProperty
-		name="ti_cc_bi" />		
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="dt_annullamento" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-	</columnSet> 
-	<columnSet
-        name="cds_uo">
-		<columnFieldProperty
-		name="cd_cds" />
-		<columnFieldProperty
-		name="cd_unita_organizzativa" />
-	</columnSet>	
-	<columnSet
-        name="default">
-		<columnFieldProperty
-		name="cd_tipo_documento_cont" />				
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="im_pagato_incassato" />
-		<columnFieldProperty
-		name="stato" />
-		<columnFieldProperty
-		name="stato_trasmissione" />
-		<columnFieldProperty
-		name="ti_cc_bi" />	
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="dt_annullamento" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-	</columnSet> 
-	
-	<columnSet
-        name="elencoConUoeDistinta">
+                name="cd_unita_organizzativa"/>
         <columnFieldProperty
-		name="cd_unita_organizzativa" />
+                name="cd_tipo_documento_cont"/>
         <columnFieldProperty
-		name="pg_distinta" />
-		<columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="im_ritenute" />
-		<columnFieldProperty
-		name="im_pagato_incassato" />
-		<columnFieldProperty
-		name="stato" />
-		<columnFieldProperty
-		name="stato_trasmissione" />
-		<columnFieldProperty
-		name="ti_cc_bi" />	
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="dt_annullamento" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-		<columnFieldProperty
-		name="dt_firma" />	
-	</columnSet>
-	 
-	<columnSet
-        name="firmaBase">
-		<columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="stato" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-	</columnSet>	
-	<columnSet
-        name="firmaPredisposta">
-		<columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="stato" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-		<columnFieldProperty
-		name="documento"
-		property="documento"
-		inputType="TEXT"
-		label="documento" />				
-	</columnSet>	
-	<columnSet
-        name="firmaEseguita">
-		<columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-		<columnFieldProperty
-		name="documento"
-		property="documento"
-		inputType="TEXT"
-		label="documento" />				
-		<columnFieldProperty
-		name="dt_firma"
-		property="dt_firma"
-		inputType="TEXT"
-		label="Data di Firma" />				
-		
-	</columnSet>	
-	<columnSet
-        name="all">
-		<columnFieldProperty
-		name="stato_trasmissione" />	    
-	    <columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-		<columnFieldProperty
-		name="documento"
-		property="documento"
-		inputType="TEXT"
-		label="documento" />				
-		<columnFieldProperty
-		name="dt_firma"
-		property="dt_firma"
-		inputType="TEXT"
-		label="Data di Firma" />				
-		
-	</columnSet>	
-				
-	<columnSet
-        name="elencoConUoFirmati">
-    <columnFieldProperty
-		name="cd_unita_organizzativa" />
-		<columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="im_ritenute" />
-		<columnFieldProperty
-		name="im_pagato_incassato" />
-		<columnFieldProperty
-		name="stato" />
-		<columnFieldProperty
-		name="stato_trasmissione" />
-		<columnFieldProperty
-		name="ti_cc_bi" />		
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_emissione" />
-		<columnFieldProperty
-		name="dt_annullamento" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="denominazione_sede" />
-		<columnFieldProperty
-		name="documento"
-		property="documento"
-		inputType="TEXT"
-		label="documento" />				
-		<columnFieldProperty
-		name="dt_firma"
-		property="dt_firma"
-		inputType="TEXT"
-		label="Data di Firma" />			
-	</columnSet> 
-	
-	<columnSet
-        name="restService">
-	    <columnFieldProperty
-		name="cd_tipo_documento_cont" />
-		<columnFieldProperty
-		name="pg_documento_cont" />
-		<columnFieldProperty
-		name="ti_documento_cont" />
-		<columnFieldProperty
-		name="im_documento_cont" />
-		<columnFieldProperty
-		name="ds_documento_cont" />
-		<columnFieldProperty
-		name="dt_trasmissione" />
-		<columnFieldProperty
-		name="dt_pagamento_incasso" />
-		<columnFieldProperty
-		name="cd_terzo" />
-		<columnFieldProperty
-		name="cd_anag" />
-		<columnFieldProperty
-		name="cd_cds" />
-		<columnFieldProperty
-		name="esercizio" />
-		<columnFieldProperty
-		name="im_pagato_incassato" />
-		<columnFieldProperty
-		name="cd_unita_organizzativa" />
-		<columnFieldProperty
-		name="cd_cds_origine" />
-		<columnFieldProperty
-		name="cd_uo_origine" />
-	</columnSet>	
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="im_pagato_incassato"/>
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="stato_trasmissione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="dt_annullamento"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+    </columnSet>
+    <columnSet
+            name="cds_uo">
+        <columnFieldProperty
+                name="cd_cds"/>
+        <columnFieldProperty
+                name="cd_unita_organizzativa"/>
+    </columnSet>
+    <columnSet
+            name="default">
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="im_pagato_incassato"/>
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="stato_trasmissione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="dt_annullamento"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+    </columnSet>
 
-	<findFieldProperty
-		name="dt_trasmissione" />
-	<findFieldProperty
-		name="cd_cds" />
-	<findFieldProperty
-		name="im_documento_cont" />
-	<findFieldProperty
-		name="cd_uo_origine" />
-	<findFieldProperty
-		name="im_pagato_incassato" />
-	<findFieldProperty
-		name="cd_unita_organizzativa" />
-	<findFieldProperty
-		name="stato" />
-	<findFieldProperty
-		name="stato_trasmissione" />
-	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
-		name="dt_annullamento" />
-	<findFieldProperty
-		name="dt_emissione" />
-	<findFieldProperty
-		name="ti_documento_cont" />
-	<findFieldProperty
-		name="cd_cds_origine" />
-	<findFieldProperty
-		name="cd_terzo" />
-	<findFieldProperty
-		name="dt_pagamento_incasso"
-		inputType="TEXT"/>
-	<findFieldProperty
-		name="pg_documento_cont" />
-	<findFieldProperty
-		name="pg_documento_cont_padre" />
-	<findFieldProperty
-		name="cd_tipo_documento_cont" />
-	<findFieldProperty
-		name="ds_documento_cont" />
-	<findFieldProperty
-		name="ti_cc_bi" />
-	<findFieldProperty
-		name="im_ritenute" />
+    <columnSet
+            name="elencoConUoeDistinta">
+        <columnFieldProperty
+                name="cd_unita_organizzativa"/>
+        <columnFieldProperty
+                name="pg_distinta"/>
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="im_ritenute"/>
+        <columnFieldProperty
+                name="im_pagato_incassato"/>
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="stato_trasmissione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="dt_annullamento"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+        <columnFieldProperty
+                name="dt_firma"/>
+    </columnSet>
+
+    <columnSet
+            name="firmaBase">
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+    </columnSet>
+    <columnSet
+            name="firmaPredisposta">
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+        <columnFieldProperty
+                name="documento"
+                property="documento"
+                inputType="TEXT"
+                label="documento"/>
+    </columnSet>
+    <columnSet
+            name="firmaEseguita">
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+        <columnFieldProperty
+                name="documento"
+                property="documento"
+                inputType="TEXT"
+                label="documento"/>
+        <columnFieldProperty
+                name="dt_firma"
+                property="dt_firma"
+                inputType="TEXT"
+                label="Data di Firma"/>
+
+    </columnSet>
+    <columnSet
+            name="all">
+        <columnFieldProperty
+                name="stato_trasmissione"/>
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+        <columnFieldProperty
+                name="documento"
+                property="documento"
+                inputType="TEXT"
+                label="documento"/>
+        <columnFieldProperty
+                name="dt_firma"
+                property="dt_firma"
+                inputType="TEXT"
+                label="Data di Firma"/>
+
+    </columnSet>
+
+    <columnSet
+            name="elencoConUoFirmati">
+        <columnFieldProperty
+                name="cd_unita_organizzativa"/>
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="im_ritenute"/>
+        <columnFieldProperty
+                name="im_pagato_incassato"/>
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="stato_trasmissione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_emissione"/>
+        <columnFieldProperty
+                name="dt_annullamento"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="denominazione_sede"/>
+        <columnFieldProperty
+                name="esitoOperazione"/>
+        <columnFieldProperty
+                name="documento"
+                property="documento"
+                inputType="TEXT"
+                label="documento"/>
+        <columnFieldProperty
+                name="dt_firma"
+                property="dt_firma"
+                inputType="TEXT"
+                label="Data di Firma"/>
+    </columnSet>
+
+    <columnSet
+            name="restService">
+        <columnFieldProperty
+                name="cd_tipo_documento_cont"/>
+        <columnFieldProperty
+                name="pg_documento_cont"/>
+        <columnFieldProperty
+                name="ti_documento_cont"/>
+        <columnFieldProperty
+                name="im_documento_cont"/>
+        <columnFieldProperty
+                name="ds_documento_cont"/>
+        <columnFieldProperty
+                name="dt_trasmissione"/>
+        <columnFieldProperty
+                name="dt_pagamento_incasso"/>
+        <columnFieldProperty
+                name="cd_terzo"/>
+        <columnFieldProperty
+                name="cd_anag"/>
+        <columnFieldProperty
+                name="cd_cds"/>
+        <columnFieldProperty
+                name="esercizio"/>
+        <columnFieldProperty
+                name="im_pagato_incassato"/>
+        <columnFieldProperty
+                name="cd_unita_organizzativa"/>
+        <columnFieldProperty
+                name="cd_cds_origine"/>
+        <columnFieldProperty
+                name="cd_uo_origine"/>
+    </columnSet>
+
+    <findFieldProperty
+            name="dt_trasmissione"/>
+    <findFieldProperty
+            name="cd_cds"/>
+    <findFieldProperty
+            name="im_documento_cont"/>
+    <findFieldProperty
+            name="cd_uo_origine"/>
+    <findFieldProperty
+            name="im_pagato_incassato"/>
+    <findFieldProperty
+            name="cd_unita_organizzativa"/>
+    <findFieldProperty
+            name="stato"/>
+    <findFieldProperty
+            name="stato_trasmissione"/>
+    <findFieldProperty
+            name="esercizio"/>
+    <findFieldProperty
+            name="dt_annullamento"/>
+    <findFieldProperty
+            name="dt_emissione"/>
+    <findFieldProperty
+            name="ti_documento_cont"/>
+    <findFieldProperty
+            name="cd_cds_origine"/>
+    <findFieldProperty
+            name="cd_terzo"/>
+    <findFieldProperty
+            name="dt_pagamento_incasso"
+            inputType="TEXT"/>
+    <findFieldProperty
+            name="pg_documento_cont"/>
+    <findFieldProperty
+            name="pg_documento_cont_padre"/>
+    <findFieldProperty
+            name="cd_tipo_documento_cont"/>
+    <findFieldProperty
+            name="ds_documento_cont"/>
+    <findFieldProperty
+            name="ti_cc_bi"/>
+    <findFieldProperty
+            name="im_ritenute"/>
 
 </bulkInfo>
