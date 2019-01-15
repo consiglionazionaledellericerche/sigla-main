@@ -6413,11 +6413,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         //if (!competenzaDa.equals(competenzaA) && !competenzaDa.before(competenzaA))
         //throw new it.cnr.jada.comp.ApplicationException("La data \"competenza da\" deve essere precedente o uguale a \"competenza a\"!");
 
-        if (riga.getFattura_passiva().isPagata()
-                && riga.isToBeUpdated())
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si può modificare un dettaglio di una " + riga.getFattura_passiva().getDescrizioneEntita() + " già pagata.");
-        if (riga.isPagata() && riga.isToBeUpdated())
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si può modificare un dettaglio già pagato.");
+//        if (riga.getFattura_passiva().isPagata()
+//                && riga.isToBeUpdated())
+//            throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si può modificare un dettaglio di una " + riga.getFattura_passiva().getDescrizioneEntita() + " già pagata.");
+//        if (riga.isPagata() && riga.isToBeUpdated())
+//            throw new it.cnr.jada.comp.ApplicationException("Attenzione: non si può modificare un dettaglio già pagato.");
 
         if (!isDaOrdini) {
             if (riga.getVoce_iva() == null)
