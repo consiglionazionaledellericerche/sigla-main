@@ -4745,12 +4745,12 @@ public class DistintaCassiereComponent extends
                                 .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
                                 .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE);
 
-                //TODO deve esserci IBAN
+                // deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB
                 ).contains(tipoPagamentoSiopePlus);
-                //TODO deve esserci il Conto
+                // deve esserci il Conto
                 boolean obb_conto = Arrays.asList(
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
                 ).contains(tipoPagamentoSiopePlus);
@@ -4883,7 +4883,7 @@ public class DistintaCassiereComponent extends
                         benef.setPartitaIvaBeneficiario(Optional.ofNullable(docContabile.getPartitaIva()).orElse(null));
                     }
                     infoben.setBeneficiario(benef);
-                    if (obb_conto) {
+                    if (obb_conto && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         piazzatura.setNumeroContoCorrenteBeneficiario(
                                 Optional.ofNullable(docContabile.getNumeroConto())
                                     .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
@@ -4895,7 +4895,7 @@ public class DistintaCassiereComponent extends
                         );
                         infoben.setPiazzatura(piazzatura);
                     }
-                    if (obb_iban) {
+                    if (obb_iban && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         sepa.setIban( Optional.ofNullable(docContabile.getCodiceIban())
                                 .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il codice iban " +
                                         "sul Mandato {0}/{1}/{2}",
@@ -5416,7 +5416,7 @@ public class DistintaCassiereComponent extends
                         benef.setPartitaIvaBeneficiario(Optional.ofNullable(docContabile.getPartitaIva()).orElse(null));
                     }
                     infoben.setBeneficiario(benef);
-                    if (obb_conto) {
+                    if (obb_conto  && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         piazzatura.setNumeroContoCorrenteBeneficiario(
                                 Optional.ofNullable(docContabile.getNumeroConto())
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
@@ -5428,7 +5428,7 @@ public class DistintaCassiereComponent extends
                         );
                         infoben.setPiazzatura(piazzatura);
                     }
-                    if (obb_iban) {
+                    if (obb_iban && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         sepa.setIban(
                                 Optional.ofNullable(docContabile.getCodiceIban())
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il codice iban " +
