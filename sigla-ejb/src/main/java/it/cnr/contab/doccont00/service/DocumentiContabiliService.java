@@ -895,7 +895,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
         ).contains(
                 getTipoPagamentoSiopePlus(bulk)
-        );
+        ) && !bulk.getTi_documento_cont().equals(MandatoBulk.TIPO_REGOLAM_SOSPESO);
     }
 
     public Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus getTipoPagamentoSiopePlus(V_mandato_reversaleBulk bulk) throws RemoteException, ComponentException {
