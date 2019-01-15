@@ -117,6 +117,12 @@
 					
 		<columnMapping	columnName="PG_TROVATO" propertyName="trovato.pg_trovato" />
 
+		<columnMapping
+			columnName="CD_CIG"
+			propertyName="cig.cdCig"
+			sqlTypeName="VARCHAR"
+			nullable="true"
+			columnSize="10" />
 	</defaultColumnMap>		
 
 	<persistentProperty
@@ -194,4 +200,6 @@
 	<persistentProperty
 		name="pg_compenso" />
 	<persistentProperty name="trovato" />
+	<persistentProperty
+		name="cig" />
 </SQLPersistentInfo>
