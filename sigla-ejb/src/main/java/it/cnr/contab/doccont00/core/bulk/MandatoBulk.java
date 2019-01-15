@@ -5,6 +5,7 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -13,6 +14,7 @@ import it.cnr.jada.util.OrderedHashtable;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MandatoBulk extends MandatoBase implements IManRevBulk {
     public final static String STATO_MANDATO_ANNULLATO = "A";
@@ -41,8 +43,14 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
     public final static String TIPO_PAGAMENTO = "P";
     public final static java.util.Dictionary tipoMandatoCNRKeys;
     public final static java.util.Dictionary tipoMandatoCdSKeys;
-    public final static Dictionary esito_OperazioneKeys = new OrderedHashtable();
-
+    public final static  Map<String,String> esito_OperazioneKeys = Arrays.asList(EsitoOperazione.values())
+            .stream()
+            .collect(Collectors.toMap(
+                    EsitoOperazione::value,
+                    EsitoOperazione::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
 
     protected final static java.util.Dictionary classeDiPagamentoKeys = it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk.TI_PAGAMENTO_KEYS;
 
@@ -84,12 +92,6 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
         tipoMandatoCdSKeys.put(TIPO_PAGAMENTO, "Pagamento");
         tipoMandatoCdSKeys.put(TIPO_REGOLAM_SOSPESO, "Regolamento sospeso");
 //		tipoMandatoCdSKeys.put(TIPO_PAGAMENTO_ESTERO, 	"Pagamento estero");
-    }
-
-    static {
-        for (EsitoOperazione esito : EsitoOperazione.values()) {
-            esito_OperazioneKeys.put(esito.value, esito.label);
-        }
     }
 
     protected BulkList mandato_rigaColl = new BulkList();
@@ -1022,44 +1024,5 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
     public void setPg_mandato_riemissione(Long pg_mandato_riemissione) {
         if (getV_man_rev() != null)
             getV_man_rev().setPg_documento_cont(pg_mandato_riemissione);
-    }
-
-    public enum EsitoOperazione {
-        ACQUISITO("ACQUISITO", "ACQUISITO"),
-        NON_ACQUISITO("NON ACQUISITO", "NON_ACQUISITO"),
-        VARIATO("VARIATO", "VARIATO"),
-        NON_VARIATO("NON VARIATO", "NON_VARIATO"),
-        ANNULLATO("ANNULLATO", "ANNULLATO"),
-        NON_ANNULLATO("NON ANNULLATO", "NON_ANNULLATO"),
-        SOSTITUITO("SOSTITUITO", "SOSTITUITO"),
-        NON_SOSTITUITO("NON SOSTITUITO", "NON_SOSTITUITO"),
-        PAGATO("PAGATO", "PAGATO"),
-        STORNATO("STORNATO", "STORNATO"),
-        REGOLARIZZATO("REGOLARIZZATO", "REGOLARIZZATO"),
-        NON_REGOLARIZZATO("NON REGOLARIZZATO", "NON_REGOLARIZZATO"),
-        NON_ESEGUIBILE("NON ESEGUIBILE", "NON_ESEGUIBILE");
-
-        private final String label, value;
-
-        private EsitoOperazione(String label, String value) {
-            this.value = value;
-            this.label = label;
-        }
-
-        public String value() {
-            return value;
-        }
-
-        public String label() {
-            return label;
-        }
-
-        public static String getValueFromLabel(String label) {
-            for (EsitoOperazione esito : EsitoOperazione.values()) {
-                if (esito.label.equals(label))
-                    return esito.value;
-            }
-            throw new IllegalArgumentException("Esito no found for label: " + label);
-        }
     }
 }

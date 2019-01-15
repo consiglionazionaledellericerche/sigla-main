@@ -27,6 +27,7 @@ import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.PdfSignApparence;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
 import it.cnr.contab.util.SignP7M;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -611,7 +612,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 error.append(s.concat("\n"));
                             });
                     MandatoBulk mandato = fetchMandatoBulk(ctEsitoMandato);
-                    mandato.setEsitoOperazione(MandatoBulk.EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    mandato.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
                     mandato.setDtOraEsitoOperazione(
                             new Timestamp(ctEsitoMandato
                                     .getDataOraEsitoOperazione()
@@ -652,7 +653,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 error.append(s.concat("\n"));
                             });
                     ReversaleBulk reversale = fetchReversaleBulk(ctEsitoReversale);
-                    reversale.setEsitoOperazione(ReversaleBulk.EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    reversale.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
                     reversale.setDtOraEsitoOperazione(
                             new Timestamp(ctEsitoReversale
                                     .getDataOraEsitoOperazione()
@@ -680,7 +681,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     .filter(oggettoBulk -> Optional.ofNullable(oggettoBulk).isPresent())
                     .filter(MandatoIBulk.class::isInstance)
                     .map(MandatoIBulk.class::cast)
-                    .filter(mandatoBulk -> mandatoBulk.getEsitoOperazione().equals(MandatoBulk.EsitoOperazione.NON_ACQUISITO.value()))
+                    .filter(mandatoBulk -> mandatoBulk.getEsitoOperazione().equals(EsitoOperazione.NON_ACQUISITO.value()))
                     .forEach(mandatoBulk -> {
                         try {
                             logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
@@ -697,7 +698,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     .filter(oggettoBulk -> Optional.ofNullable(oggettoBulk).isPresent())
                     .filter(ReversaleIBulk.class::isInstance)
                     .map(ReversaleIBulk.class::cast)
-                    .filter(reversaleBulk -> reversaleBulk.getEsitoOperazione().equals(ReversaleBulk.EsitoOperazione.NON_ACQUISITO.value()))
+                    .filter(reversaleBulk -> reversaleBulk.getEsitoOperazione().equals(EsitoOperazione.NON_ACQUISITO.value()))
                     .forEach(reversaleBulk -> {
                         try {
                             logger.info("SIOPE+ ANNULLA REVERSALE [{}/{}]", reversaleBulk.getEsercizio(), reversaleBulk.getPg_reversale());
