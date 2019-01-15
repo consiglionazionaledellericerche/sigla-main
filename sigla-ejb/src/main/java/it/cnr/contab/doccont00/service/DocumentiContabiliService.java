@@ -891,8 +891,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     public boolean isRiferimentoDocumentoEsterno(V_mandato_reversaleBulk bulk) throws RemoteException, ComponentException {
         return Arrays.asList(
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
         ).contains(
                 getTipoPagamentoSiopePlus(bulk)
         );
