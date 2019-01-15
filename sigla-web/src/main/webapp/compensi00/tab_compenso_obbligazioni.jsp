@@ -4,6 +4,7 @@
 		java.util.*,
 		it.cnr.jada.util.action.*,
 		it.cnr.contab.compensi00.bp.*,
+		it.cnr.contab.doccont00.core.bulk.*,
 		it.cnr.contab.compensi00.docs.bulk.*"
 %>
 
@@ -38,9 +39,36 @@
   <tr>
 	<% bp.getController().writeFormField(out,"scadenza_ds_scadenza"); %>
   </tr>
-  <tr>
-	<% bp.getController().writeFormField(out,"cig"); %>
-  </tr>
+    <div class="Group card">
+        <table class="w-100">
+           <tr>
+                <td><% bp.getController().writeFormLabel(out,"cig");%></td>
+		        <td>
+		         	<div style="float:left"><% bp.getController().getBulkInfo().writeFormInput(out,bp.getController().getModel(),null, "cig", !bp.isCigModificabile(),null,
+	                        "",
+	                        bp.getController().getInputPrefix(),
+	                        bp.getController().EDIT,
+	                        bp.getController().getFieldValidationMap(),
+	                        bp.getParentRoot().isBootstrap());%></div>
+		        </td>
+                <td><% bp.getController().writeFormLabel(out,"motivo_assenza_cig");%></td>
+                <td><% bp.getController().getBulkInfo().writeFormInput(
+                        out,
+                        bp.getController().getModel(),
+                        null,
+                        "motivo_assenza_cig",
+                        !bp.isCigModificabile(),
+                        null,
+                        "",
+                        bp.getController().getInputPrefix(),
+                        bp.getController().EDIT,
+                        bp.getController().getFieldValidationMap(),
+                        bp.getParentRoot().isBootstrap()
+                    );
+                %></td>
+          </tr>
+        </table>
+    </div>
   <tr>
 	<td colspan="2">
 		<% if (compenso.isStatoCompensoEseguiCalcolo()) { %>

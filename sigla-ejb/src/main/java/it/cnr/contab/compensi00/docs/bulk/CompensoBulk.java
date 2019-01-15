@@ -1,5 +1,19 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Vector;
+import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_altra_forma_ass_inpsBulk;
@@ -12,6 +26,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_prestazione_compensoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -23,9 +38,6 @@ import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.si.spring.storage.annotation.StoragePolicy;
-import it.cnr.si.spring.storage.annotation.StorageProperty;
-import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
@@ -37,16 +49,10 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Dictionary;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Vector;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
+import it.siopeplus.StMotivoEsclusioneCigSiope;
 
 @StorageType(name = "D:emppay:compenso", parentName = "D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
@@ -181,6 +187,15 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		CAUSALE.put(ATTLIQ, "In attesa di liquidazione");
 		CAUSALE.put(CONT, "Contenzioso");
 	}
+    public final static Map<String,String> motivoEsclusioneCigSIOPEKeys = Arrays.asList(StMotivoEsclusioneCigSiope.values())
+            .stream()
+            .collect(Collectors.toMap(
+                    StMotivoEsclusioneCigSiope::name,
+                    StMotivoEsclusioneCigSiope::value,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
+
 
 	// Stato compenso - mi serve per gestire i bottoni di Esegui Calcolo,
 	// Crea/Modifica obbligazione
@@ -226,7 +241,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	private java.util.Collection tipiPrestazioneCompenso;
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
 	private boolean userAbilitatoSenzaCalcolo = false;
-	
+	private CigBulk cig;
+
 	public CompensoBulk() {
 		super();
 	}
@@ -2808,6 +2824,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 						"L'importo Netto da sospendere non può superare l'importo netto da pagare.");
 			}
 		}
+//        if (!(isEstera() ||isSanMarinoConIVA() || isSanMarinoSenzaIVA()) &&
+//                (!Optional.ofNullable(getCd_cig()).isPresent() && !Optional.ofNullable(getMotivo_assenza_cig()).isPresent())) {
+//            throw new ValidationException("Inserire il CIG o il motivo di assenza dello stesso!");
+//        }
 	}
 
 	public void validaTerzo() throws it.cnr.jada.comp.ApplicationException {
@@ -3406,5 +3426,13 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 
 	public boolean isUserAbilitatoSenzaCalcolo() {
 		return userAbilitatoSenzaCalcolo;
+	}
+
+	public CigBulk getCig() {
+		return cig;
+	}
+
+	public void setCig(CigBulk cig) {
+		this.cig = cig;
 	}
 }
