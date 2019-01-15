@@ -1882,26 +1882,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 setDirty(false);
                 throw businessprocessexception;
             }
-            Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            Print_spoolerBulk print = new Print_spoolerBulk();
-            print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-            print.setFlEmail(false);
-
-            print.setReport("/doccont/doccont/distinta_cassiere.jasper");
-            print.setNomeFile("Distinta n." + distinta.getPg_distinta_def() + ".pdf");
-            print.setUtcr(context.getUserContext().getUser());
-            print.addParam("cd_cds", distinta.getCd_cds(), String.class);
-            print.addParam("cd_unita_organizzativa", distinta.getCd_unita_organizzativa(), String.class);
-            print.addParam("esercizio", distinta.getEsercizio().toString(), String.class);
-            print.addParam("pg_distinta", distinta.getPg_distinta().toString(), String.class);
-
-            Report report = SpringUtil.getBean("printService",
-                    PrintService.class).executeReport(context.getUserContext(),
-                    print);
-
-            return documentiContabiliService.restoreSimpleDocument(
-                    distinta, report.getInputStream(), report.getContentType(), report.getName(), distinta.getStorePath(), true
-            );
+            return archiviaStampa(context, distinta);
         } catch (java.rmi.RemoteException e) {
             throw handleException(e);
         } catch (ComponentException e) {
@@ -1911,6 +1892,30 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         } catch (IOException e) {
             throw handleException(e);
         }
+    }
+
+    private StorageObject archiviaStampa(ActionContext context,
+                                Distinta_cassiereBulk distinta) throws IOException, ComponentException {
+        Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Print_spoolerBulk print = new Print_spoolerBulk();
+        print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+        print.setFlEmail(false);
+
+        print.setReport("/doccont/doccont/distinta_cassiere.jasper");
+        print.setNomeFile("Distinta n." + distinta.getPg_distinta_def() + ".pdf");
+        print.setUtcr(context.getUserContext().getUser());
+        print.addParam("cd_cds", distinta.getCd_cds(), String.class);
+        print.addParam("cd_unita_organizzativa", distinta.getCd_unita_organizzativa(), String.class);
+        print.addParam("esercizio", distinta.getEsercizio().toString(), String.class);
+        print.addParam("pg_distinta", distinta.getPg_distinta().toString(), String.class);
+
+        Report report = SpringUtil.getBean("printService",
+                PrintService.class).executeReport(context.getUserContext(),
+                print);
+
+        return documentiContabiliService.restoreSimpleDocument(
+                distinta, report.getInputStream(), report.getContentType(), report.getName(), distinta.getStorePath(), true
+        );
     }
 
     public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk)
@@ -2360,6 +2365,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 (it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession) createComponentSession();
         distinta = distintaComp.inviaDistintaSiopePlus(context.getUserContext(), distinta, risultato.getProgFlusso());
         setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
+        archiviaStampa(context, distinta);
         commitUserTransaction();
         setMessage("Invio effettuato correttamente.");
     }
