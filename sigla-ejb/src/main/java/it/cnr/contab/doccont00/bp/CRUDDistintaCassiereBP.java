@@ -2365,8 +2365,8 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 (it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession) createComponentSession();
         distinta = distintaComp.inviaDistintaSiopePlus(context.getUserContext(), distinta, risultato.getProgFlusso());
         setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
-        archiviaStampa(context, distinta);
         commitUserTransaction();
+        archiviaStampa(context, distinta);
         setMessage("Invio effettuato correttamente.");
     }
 
