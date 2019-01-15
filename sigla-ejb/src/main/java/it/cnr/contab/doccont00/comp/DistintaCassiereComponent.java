@@ -11,7 +11,6 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
-import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -31,7 +30,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
-import it.cnr.contab.util.TipoDebitoSIOPE;
+import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -68,7 +67,6 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DistintaCassiereComponent extends
         it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
@@ -90,6 +88,7 @@ public class DistintaCassiereComponent extends
     public static final int MAX_LENGTH_CAUSALE = 140;
     public static final String FATT_ANALOGICA = "FATT_ANALOGICA";
     public static final String DOC_EQUIVALENTE = "DOC_EQUIVALENTE";
+    public static final String REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
 
     public DistintaCassiereComponent() {
     }
@@ -4561,8 +4560,12 @@ public class DistintaCassiereComponent extends
                 infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
                 if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
-                    //TODO REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA se (sospseso.ti_CC_BI='B' reversale_riga.cd_modalita_pag = 'BI')
-                    infover.setTipoRiscossione(REGOLARIZZAZIONE);
+                    if (Optional.ofNullable(bulk.getTi_cc_bi()).filter(s -> s.equals("B")).isPresent() &&
+                            Optional.ofNullable(docContabile.getModalitaPagamento()).filter(s -> s.equals("BI")).isPresent() ) {
+                        infover.setTipoRiscossione(REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA);
+                    } else {
+                        infover.setTipoRiscossione(REGOLARIZZAZIONE);
+                    }
                 } else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO) == 0) {
                     if(!bulk.getPg_documento_cont_padre().equals(bulk.getPg_documento_cont())) {
                         infover.setTipoRiscossione(COMPENSAZIONE);
