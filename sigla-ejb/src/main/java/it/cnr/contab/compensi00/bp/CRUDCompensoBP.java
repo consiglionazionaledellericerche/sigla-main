@@ -1,5 +1,8 @@
 package it.cnr.contab.compensi00.bp;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -12,7 +15,6 @@ import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.TrovatoBulk;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
@@ -36,9 +38,6 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
-
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
 
 /**
  * Insert the type's description here.
@@ -139,7 +138,7 @@ private void aggiornaStatoBP() {
 	{
 		if (Boolean.TRUE.equals(compenso.getFl_compenso_stipendi()))
 			setStatus(VIEW);
-		else if (compenso!=null && (compenso.isPagato() || compenso.isAnnullato()))
+		else if (compenso!=null && (compenso.isAnnullato()))
 			setStatus(VIEW);
 	}
 }
@@ -1042,17 +1041,16 @@ public boolean isROFindDatiLiquidazione() throws BusinessProcessException{
 public boolean isSaveButtonEnabled() 
 {
 	CompensoBulk compenso = (CompensoBulk) getModel();
-
 	if(compenso==null)
 		return super.isSaveButtonEnabled();
-		
-	return	super.isSaveButtonEnabled() &&
+	
+	return	((super.isSaveButtonEnabled() &&
 		//!anticipo.isROPerChiusura()
 		// GB-LF-MB (08/11/2004 11.35.04)
 		// Modif. relativa alla nuova gestione di isRiportata()	
 		(!compenso.isROPerChiusura() 
 		 ||
-		 carryingThrough);
+		 carryingThrough)) || (isCigModificabile()));
 
 }
 /**
@@ -1645,5 +1643,23 @@ public void valorizzaInfoDocEle(ActionContext context, CompensoBulk compenso) th
 		throw handleException(ex);
 	}
 }
-
+public Boolean isCigModificabile()  {
+	CompensoBulk compenso = (CompensoBulk)getModel();
+	if (compenso == null || !compenso.getTipoTrattamento().isTipoDebitoSiopeCommerciale() || (compenso.getObbligazioneScadenzario() != null && 
+			compenso.getObbligazioneScadenzario().getObbligazione() != null && compenso.getObbligazioneScadenzario().getObbligazione().getContratto() != null && 
+			compenso.getObbligazioneScadenzario().getObbligazione().getContratto().getCig() != null)) { 
+		return false;
+	}
+	return true;
+}
+@Override
+public boolean isInputReadonly() {
+	CompensoBulk compenso = (CompensoBulk)getModel();
+	if (!isViewing())
+	{
+		if (compenso!=null && compenso.isPagato() )
+			return true;
+	}
+	return super.isInputReadonly();
+}
 }

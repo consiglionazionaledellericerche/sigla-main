@@ -59,10 +59,12 @@ import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioHome;
 import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.V_tipo_trattamento_tipo_coriHome;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -141,10 +143,14 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -1553,6 +1559,11 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			compenso.addToDocumentiContabiliCancellati(oldScad);
 			compenso.sincronizzaScadenzeCancellate(newScad);
 			compenso.setObbligazioneScadenzario(newScad);
+			if (newScad.getObbligazione() != null && newScad.getObbligazione().getContratto() != null){
+				compenso.setCig(newScad.getObbligazione().getContratto().getCig());
+			} else {
+				compenso.setCig(null);
+			}
 			compenso.removeFromDocumentiContabiliCancellati(newScad);
 			compenso.setStato_cofi(CompensoBulk.STATO_CONTABILIZZATO);
 
@@ -3995,9 +4006,21 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				compenso);
 
 		validaContratto(userContext, compenso);
+
+		controlliCig(compenso);
 		
 		return compenso;
 
+	}
+
+	public void controlliCig(CompensoBulk compenso) throws ApplicationException {
+		if (compenso.getTipoTrattamento().isTipoDebitoSiopeCommerciale() &&
+		        (!Optional.ofNullable(compenso.getCig()).isPresent() && !Optional.ofNullable(compenso.getMotivo_assenza_cig()).isPresent())) {
+		    throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
+		}
+		if (Optional.ofNullable(compenso.getCig()).isPresent() && Optional.ofNullable(compenso.getMotivo_assenza_cig()).isPresent()) {
+		    throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
+		}
 	}
 
 	/**
@@ -7243,4 +7266,59 @@ public CompensoBulk valorizzaInfoDocEle(UserContext userContext, CompensoBulk co
 		}
 	}
 
+public SQLBuilder selectCigByClause (UserContext userContext, CompensoBulk compenso, CigBulk cig, CompoundFindClause clause)	throws ComponentException, PersistencyException
+{
+	if (clause == null) 
+	  clause = cig.buildFindClauses(null);
+	SQLBuilder sql = getHome(userContext, cig).createSQLBuilder();
+
+	sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
+	Set<String> uoAbilitate = new HashSet<String>();
+	uoAbilitate.add(compenso.getCd_unita_organizzativa());
+	if (compenso.getObbligazioneScadenzario() != null){
+		ObbligazioneBulk obbligazione = null;
+	      try {
+	    	  obbligazione = (ObbligazioneBulk)getHome(userContext, ObbligazioneBulk.class).findByPrimaryKey(compenso.getObbligazioneScadenzario().getObbligazione());
+		} catch (PersistencyException e1) {
+			throw new ComponentException(e1);
+		}
+		if (obbligazione != null && obbligazione.getContratto() != null){
+			ContrattoBulk contratto = obbligazione.getContratto();
+			try {
+		    	  contratto = (ContrattoBulk)getHome(userContext, ContrattoBulk.class).findByPrimaryKey(contratto);
+		    	  uoAbilitate.add(contratto.getCd_unita_organizzativa());
+			} catch (PersistencyException e1) {
+				throw new ComponentException(e1);
+			}
+	        ContrattoHome contrattoHome = (ContrattoHome) getHome(userContext, contratto.getClass());
+	        try {
+	        	Collection assUo = contrattoHome.findAssociazioneUO(obbligazione.getContratto());
+	        	if (assUo != null){
+	        		for (Iterator i = assUo.iterator(); i.hasNext(); ) {
+	        			Ass_contratto_uoBulk ass = (Ass_contratto_uoBulk) i.next();
+	        			uoAbilitate.add(ass.getCd_unita_organizzativa());
+	        		}
+	        	}
+	        } catch (Exception e1) {
+	        	throw new ComponentException(e1);
+	        }
+		}
+	}
+	if (uoAbilitate.size() > 1){
+		sql.openParenthesis(FindClause.AND);
+		boolean first = true;
+		for (Iterator i = uoAbilitate.iterator(); i.hasNext(); ) {
+			String uo = (String) i.next();
+			sql.addSQLClause(first ? FindClause.AND : FindClause.OR, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uo);
+			first = false;
+		}
+		sql.closeParenthesis();
+	} else {
+		sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoAbilitate.iterator().next());
+	}
+	if (clause != null) 
+	  sql.addClause(clause);
+    sql.addOrderBy("cd_Unita_Organizzativa, cd_Cig");
+	return sql;
+}
 }
