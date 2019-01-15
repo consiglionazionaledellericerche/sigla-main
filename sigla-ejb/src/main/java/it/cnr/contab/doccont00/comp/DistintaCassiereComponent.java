@@ -4559,9 +4559,17 @@ public class DistintaCassiereComponent extends
                 infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
                 infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
+                final String modalitaPagamento = docContabile.getModalitaPagamento();
+
+                final Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk =
+                        Optional.ofNullable(findByPrimaryKey(userContext, new Rif_modalita_pagamentoBulk(modalitaPagamento)))
+                                .filter(Rif_modalita_pagamentoBulk.class::isInstance)
+                                .map(Rif_modalita_pagamentoBulk.class::cast)
+                                .orElseThrow(() -> new ApplicationMessageFormatException("Modalità di pagamento non trovata: {0}", modalitaPagamento));
+
                 if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
                     if (Optional.ofNullable(bulk.getTi_cc_bi()).filter(s -> s.equals("B")).isPresent() &&
-                            Optional.ofNullable(docContabile.getModalitaPagamento()).filter(s -> s.equals("BI")).isPresent() ) {
+                            Optional.ofNullable(rif_modalita_pagamentoBulk.getTi_pagamento()).filter(s -> s.equals(Rif_modalita_pagamentoBulk.BANCA_ITALIA)).isPresent() ) {
                         infover.setTipoRiscossione(REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA);
                     } else {
                         infover.setTipoRiscossione(REGOLARIZZAZIONE);
