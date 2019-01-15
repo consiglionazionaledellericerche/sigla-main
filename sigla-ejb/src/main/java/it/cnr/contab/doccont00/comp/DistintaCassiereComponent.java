@@ -5545,8 +5545,7 @@ public class DistintaCassiereComponent extends
                                               Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus) {
         if (Arrays.asList(
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
         ).contains(tipoPagamentoSiopePlus)) {
             aggiuntive.setRiferimentoDocumentoEsterno(bulk.getCMISName());
             infoben.setInformazioniAggiuntive(aggiuntive);
