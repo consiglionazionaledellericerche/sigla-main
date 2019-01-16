@@ -438,9 +438,15 @@ End;
 
 End loop; -- ciclo sui documenti
 
+Declare
+  erroreDisp CHAR(1) := 'N';
+  DISP_EXCEPTION   EXCEPTION;
 Begin
 If CNRCTB048.getcdsribaltato (aEs-1, inCDS) = 'N' Then
-  ribalta_disp_improprie (aEs-1, inCDS, aUser,aPg_exec);
+  ribalta_disp_improprie_int (aEs-1, inCDS, aUser,aPg_exec,erroreDisp);
+  if erroreDisp='Y' Then
+     RAISE DISP_EXCEPTION;
+  End If;   
 End If;
 
 Update  parametri_cds
@@ -448,7 +454,8 @@ Set     fl_ribaltato = 'Y'
 Where   ESERCIZIO = aEs-1 And
         CD_CDS = INcds;
 Exception
-
+When DISP_EXCEPTION Then
+    ERRORE := 'Y';
 When Others Then
     ERRORE := 'Y';
     IBMUTL200.LOGERR_TEMP(aPg_exec,
@@ -1061,12 +1068,20 @@ Begin
 End;
 
 procedure ribalta_disp_improprie (aEs NUMBER, aCDS VARCHAR2, aUser VARCHAR2,pg_esec number default null) Is
+  ERROREIMP char(1) := 'N';
+begin
+  ribalta_disp_improprie_int(aEs, aCDS, aUser, pg_esec, ERROREIMP);
+end;
+
+procedure ribalta_disp_improprie_int (aEs NUMBER, aCDS VARCHAR2, aUser VARCHAR2,pg_esec number default null,ERROREIMP IN OUT char) Is
 ADELTASALDO VOCE_F_SALDI_CDR_LINEA%Rowtype;
 aSogliaPar      NUMBER;
 livCofog        number:=0;
 esisteCofog number:=0;
 recParametriCNR      PARAMETRI_CNR%Rowtype;
+errorDisp       EXCEPTION;
 Begin
+ERROREIMP := 'N';
 recParametriCNR := CNRUTL001.getRecParametriCnr(aEs+1);
 
 if recParametriCNR.esercizio is null Then
@@ -1104,7 +1119,7 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 
 --If disp_imp_da_ribaltare.ESERCIZIO = disp_imp_da_ribaltare.ESERCIZIO_RES Then
  -- COMPETENZA
-
+Begin
   If  disp_imp_da_ribaltare.TOT_IM_RESIDUI_RICOSTRUITI +
       -- RESIDUO DELLA COMPETENZA: ASSESTATO - IMPEGNATO A COMPETENZA
       disp_imp_da_ribaltare.tot_IM_STANZ_INIZIALE_A1 + disp_imp_da_ribaltare.tot_VARIAZIONI_PIU - disp_imp_da_ribaltare.tot_VARIAZIONI_MENO -
@@ -1141,6 +1156,7 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 				          'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
 					      '',
 					      'N');
+				    raise errorDisp;
 				End;
 			Else
 				-- andando in no_data_found eccezione gestita nella chiamata
@@ -1178,6 +1194,7 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 					                    'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
 					                    '',
 					                    'N');
+				  raise errorDisp;
 			  End;
 		    Else
               IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito: manca il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
@@ -1212,6 +1229,7 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 					                    'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
 					                    '',
 					                    'N');
+			      raise errorDisp;
 			  End;
 		    Else
               IBMERR001.RAISE_ERR_GENERICO('Ribaltamento disponibilità improprie fallito: non approvato il progetto sulla gae '||disp_imp_da_ribaltare.cd_centro_responsabilita||'/'||disp_imp_da_ribaltare.cd_linea_attivita);
@@ -1260,6 +1278,8 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 				                    'Ribaltamento disponibilità improprie fallito: '||DBMS_UTILITY.FORMAT_ERROR_STACK,
 				                    '',
 				                    'N');
+				  raise errorDisp;
+
 		    End;
 		  Else
             recElementoVoceNew := CNRCTB046.getElementoVoceNew(recElementoVoceOld);
@@ -1288,47 +1308,10 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
       CNRCTB054.CREA_AGGIORNA_SALDI(aDELTASALDO, '047.ribalta_disp_improprie 1', 'N');
 		end if;
   End If;
-
-/*
-Elsif disp_imp_da_ribaltare.ESERCIZIO > disp_imp_da_ribaltare.ESERCIZIO_RES Then
- -- RESIDUI
-
-  If ((disp_imp_da_ribaltare.tot_IM_STANZ_RES_IMPROPRIO +
-       disp_imp_da_ribaltare.tot_VAR_PIU_STANZ_RES_IMP -
-       disp_imp_da_ribaltare.tot_VAR_MENO_STANZ_RES_IMP) -
-      (disp_imp_da_ribaltare.tot_IM_OBBL_RES_IMP +
-       disp_imp_da_ribaltare.tot_VAR_PIU_OBBL_RES_IMP -
-       disp_imp_da_ribaltare.tot_VAR_MENO_OBBL_RES_IMP)) != 0 And
-     ((disp_imp_da_ribaltare.tot_IM_STANZ_RES_IMPROPRIO +
-       disp_imp_da_ribaltare.tot_VAR_PIU_STANZ_RES_IMP -
-       disp_imp_da_ribaltare.tot_VAR_MENO_STANZ_RES_IMP) -
-      (disp_imp_da_ribaltare.tot_IM_OBBL_RES_IMP +
-       disp_imp_da_ribaltare.tot_VAR_PIU_OBBL_RES_IMP -
-       disp_imp_da_ribaltare.tot_VAR_MENO_OBBL_RES_IMP)) > aSogliaPar Then
-
-       aDeltaSaldo.ESERCIZIO := aEs + 1;
-       aDeltaSaldo.ESERCIZIO_RES := disp_imp_da_ribaltare.ESERCIZIO_RES;
-       aDeltaSaldo.CD_CENTRO_RESPONSABILITA := disp_imp_da_ribaltare.CD_CENTRO_RESPONSABILITA;
-       aDeltaSaldo.CD_LINEA_ATTIVITA := disp_imp_da_ribaltare.CD_LINEA_ATTIVITA;
-       aDeltaSaldo.TI_APPARTENENZA := disp_imp_da_ribaltare.TI_APPARTENENZA;
-       aDeltaSaldo.TI_GESTIONE := disp_imp_da_ribaltare.TI_GESTIONE;
-       aDeltaSaldo.CD_VOCE := disp_imp_da_ribaltare.CD_VOCE;
-       aDeltaSaldo.UTUV := aUser;
-
-      CNRCTB054.RESET_IMPORTI_SALDI (aDELTASALDO);
-
-       aDeltaSaldo.IM_STANZ_RES_IMPROPRIO :=
-       ((disp_imp_da_ribaltare.tot_IM_STANZ_RES_IMPROPRIO + disp_imp_da_ribaltare.tot_VAR_PIU_STANZ_RES_IMP -
-         disp_imp_da_ribaltare.tot_VAR_MENO_STANZ_RES_IMP) -
-        (disp_imp_da_ribaltare.tot_IM_OBBL_RES_IMP + disp_imp_da_ribaltare.tot_VAR_PIU_OBBL_RES_IMP -
-         disp_imp_da_ribaltare.tot_VAR_MENO_OBBL_RES_IMP));
-
-       CNRCTB054.CREA_AGGIORNA_SALDI(aDELTASALDO, '047.ribalta_disp_improprie 2', 'N');
-
-  End If;
-
-End If;
-*/
+Exception
+  WHEN errorDisp Then
+     ERROREIMP := 'Y';
+End;
 End Loop;
 
 End;
