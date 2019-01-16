@@ -799,6 +799,11 @@
 			columnSize="1"
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+        <columnMapping
+                columnName="MOTIVO_ASSENZA_CIG"
+                propertyName="motivo_assenza_cig"
+                sqlTypeName="VARCHAR"
+                columnSize="250"/>
 					
 	</defaultColumnMap>
 	<persistentProperty
@@ -1073,4 +1078,6 @@
 		name="fl_documento_ele" />		
 	<persistentProperty
 		name="fl_split_payment" />			
+    <persistentProperty
+            name="motivo_assenza_cig"/>
 </SQLPersistentInfo>

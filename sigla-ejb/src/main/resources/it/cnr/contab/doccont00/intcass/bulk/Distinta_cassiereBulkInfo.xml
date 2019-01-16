@@ -550,8 +550,6 @@
 	<columnFieldProperty
 		name="statoLabel"/>
 	<columnFieldProperty
-		name="fl_flusso" />
-	<columnFieldProperty
 		name="fl_sepa" />	
 	<columnFieldProperty
 		name="fl_annulli" />				

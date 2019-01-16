@@ -129,6 +129,11 @@
 			propertyName="tipo_debito_siope"
 			sqlTypeName="CHAR"
 			columnSize="1" />
+		<columnMapping
+			columnName="ESITO_OPERAZIONE"
+			propertyName="esitoOperazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"/>
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -179,4 +184,7 @@
 		name="dt_firma" />
 	<persistentProperty
 		name="tipo_debito_siope" />
+	<persistentProperty
+		name="esitoOperazione" />
+
 </SQLPersistentInfo>
