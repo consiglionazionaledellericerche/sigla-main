@@ -310,6 +310,16 @@
 		nullable="false"
 		columnSet="prg_liv2"
 		label="Programma" />
+    <fieldProperty
+		name="natura"
+		property="linea_attivita.natura.cd_natura"
+		descProperty="linea_attivita.natura.ds_natura"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		nullable="false"
+		label="Natura" />
 	<fieldProperty
 		name="crea_linea_attivita"
 		property="linea_attivita"
@@ -373,6 +383,8 @@
 		name="missione" />
 	<formFieldProperty
 		name="programma" />	
+	<formFieldProperty
+		name="natura" />
 	<formFieldProperty
 		name="find_elemento_voce" />
 	<formFieldProperty
