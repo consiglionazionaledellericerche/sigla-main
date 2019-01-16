@@ -274,6 +274,8 @@ procedure riportoNextEsDocContVoce(aPgCall number, aUser varchar2);
 -- aUser -> utente che effettua l'operazione
 procedure job_riporto_next_doc_cont_voce(job number, pg_exec number, next_date date, aPgCall number, aUser varchar2);
 
+--metodo inserito per gestire la chiamata da JAVA
 Procedure ribalta_disp_improprie (aEs NUMBER, aCDS VARCHAR2, aUser VARCHAR2,pg_esec number default null);
 
+procedure ribalta_disp_improprie_int (aEs NUMBER, aCDS VARCHAR2, aUser VARCHAR2,pg_esec number default null,ERROREIMP IN OUT char);
 end;
