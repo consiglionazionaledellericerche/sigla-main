@@ -389,6 +389,8 @@ public class CompensoBase extends CompensoKey implements Keyed {
 	
 	private java.lang.Boolean fl_split_payment;
 	
+    private String motivo_assenza_cig;
+
 public CompensoBase() {
 	super();
 }
@@ -1825,5 +1827,11 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	}
 	public void setFl_split_payment(java.lang.Boolean fl_split_payment) {
 		this.fl_split_payment = fl_split_payment;
+	}
+	public String getMotivo_assenza_cig() {
+		return motivo_assenza_cig;
+	}
+	public void setMotivo_assenza_cig(String motivo_assenza_cig) {
+		this.motivo_assenza_cig = motivo_assenza_cig;
 	}
 }

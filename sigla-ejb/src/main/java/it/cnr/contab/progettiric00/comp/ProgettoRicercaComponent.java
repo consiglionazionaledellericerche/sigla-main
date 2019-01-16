@@ -1999,6 +1999,8 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		
 		    		Var_stanz_res_rigaHome varRigaHome = (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
 		    		SQLBuilder sqlExist = varRigaHome.createSQLBuilder();
+					sqlExist.resetColumns();
+					sqlExist.addColumn("1");
 		    		sqlExist.addSQLJoin("VAR_STANZ_RES.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
 		    		sqlExist.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE", "VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
 		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");

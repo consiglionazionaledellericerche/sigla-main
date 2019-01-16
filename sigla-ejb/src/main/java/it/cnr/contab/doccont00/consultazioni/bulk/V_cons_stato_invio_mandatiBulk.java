@@ -5,6 +5,7 @@
 package it.cnr.contab.doccont00.consultazioni.bulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
@@ -12,7 +13,11 @@ import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
 
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persistent, V_cons_stato_invio{
 //    CD_CDS VARCHAR(30)
@@ -82,12 +87,14 @@ public class V_cons_stato_invio_mandatiBulk extends OggettoBulk implements Persi
 	// ERRORE_SIOPE_PLUS VARCHAR2(2000)
 	private java.lang.String erroreSiopePlus;
 
-	public final static Dictionary esito_OperazioneKeys = new OrderedHashtable();
-	static {
-		for (MandatoBulk.EsitoOperazione esito : MandatoBulk.EsitoOperazione.values()) {
-			esito_OperazioneKeys.put(esito.value(), esito.label());
-		}
-	}
+	public final static Map<String,String> esito_OperazioneKeys = Arrays.asList(EsitoOperazione.values())
+			.stream()
+			.collect(Collectors.toMap(
+					EsitoOperazione::value,
+					EsitoOperazione::label,
+					(oldValue, newValue) -> oldValue,
+					Hashtable::new
+			));
 
 	public V_cons_stato_invio_mandatiBulk() {
 		super();

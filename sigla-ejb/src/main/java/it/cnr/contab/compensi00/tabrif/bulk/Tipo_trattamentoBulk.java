@@ -1,14 +1,16 @@
 package it.cnr.contab.compensi00.tabrif.bulk;
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
-import it.cnr.contab.util.TipoDebitoSIOPE;
+import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.OrderedHashtable;
 
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -132,5 +134,8 @@ public class Tipo_trattamentoBulk extends Tipo_trattamentoBase {
 	 */
 	public void setIntervalli(java.util.List newIntervalli) {
 		intervalli = newIntervalli;
+	}
+	public Boolean isTipoDebitoSiopeCommerciale(){
+		return TIPO_DEBITO_COMMERCIALE.equals(getTipoDebitoSiope());
 	}
 }

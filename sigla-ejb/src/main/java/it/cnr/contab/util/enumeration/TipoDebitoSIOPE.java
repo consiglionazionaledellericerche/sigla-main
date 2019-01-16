@@ -1,4 +1,4 @@
-package it.cnr.contab.util;
+package it.cnr.contab.util.enumeration;
 
 public enum TipoDebitoSIOPE {
     COMMERCIALE("COMMERCIALE", "C"),
