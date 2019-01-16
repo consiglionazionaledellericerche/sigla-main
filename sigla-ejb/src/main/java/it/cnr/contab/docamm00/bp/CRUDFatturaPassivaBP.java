@@ -1352,7 +1352,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
 
     public boolean isCIGVisible(Obbligazione_scadenzarioBulk scad) {
-        if( Optional.ofNullable(getModel())
+    	if (scad != null){
+            if( Optional.ofNullable(getModel())
                     .filter(Fattura_passivaBulk.class::isInstance)
                     .map(Fattura_passivaBulk.class::cast)
                     .map(fattura_passivaBulk -> !(
@@ -1361,10 +1362,11 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                             fattura_passivaBulk.isSanMarinoSenzaIVA()
                     ) && (fattura_passivaBulk.hasDettagliContabilizzati()|| fattura_passivaBulk.hasDettagliPagati()))
                     .orElse(Boolean.FALSE)){
-        	if (!(scad != null && scad.getObbligazione() != null && scad.getObbligazione().getContratto() != null && scad.getObbligazione().getContratto().getCig() != null)) { 
+        	if (!(scad.getObbligazione() != null && scad.getObbligazione().getContratto() != null && scad.getObbligazione().getContratto().getCig() != null)) { 
         		return true;
         	}
         }
+    	}
         return false;
     }
 
