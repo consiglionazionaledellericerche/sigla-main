@@ -79,6 +79,8 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 
 	private String tipo_debito_siope;
 
+	private String esitoOperazione;
+
 	public V_mandato_reversaleBase() {
 		super();
 	}
@@ -364,5 +366,13 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 
 	public void setTipo_debito_siope(String tipo_debito_siope) {
 		this.tipo_debito_siope = tipo_debito_siope;
+	}
+
+	public String getEsitoOperazione() {
+		return esitoOperazione;
+	}
+
+	public void setEsitoOperazione(String esitoOperazione) {
+		this.esitoOperazione = esitoOperazione;
 	}
 }

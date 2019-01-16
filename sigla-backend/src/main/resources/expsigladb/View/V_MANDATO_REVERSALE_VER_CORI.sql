@@ -30,7 +30,8 @@
     "PG_VER_REC",
     "VERSAMENTO_CORI",
     "DT_FIRMA",
-    "TIPO_DEBITO_SIOPE") AS
+    "TIPO_DEBITO_SIOPE",
+    "ESITO_OPERAZIONE") AS
   SELECT
 A.cd_tipo_documento_cont,
 A.cd_cds,
@@ -59,7 +60,8 @@ A.ti_documento_cont_padre,
 A.pg_ver_rec,
 'S',
 A.DT_FIRMA,
-a.tipo_debito_siope
+a.tipo_debito_siope,
+a.esito_operazione
 FROM  V_MANDATO_REVERSALE A
 Where Exists
 (Select 1

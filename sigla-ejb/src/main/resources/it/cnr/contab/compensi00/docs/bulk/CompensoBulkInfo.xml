@@ -1065,11 +1065,6 @@
 		property="obbligazioneScadenzario.ds_scadenza"
 		inputType="ROTEXT"
 		label="Descrizione scadenza" />
-	<fieldProperty
-		name="cig"
-		property="obbligazioneScadenzario.obbligazione.contratto.cig.cdCig"
-		inputType="ROTEXT"
-		label="Cig" />	
 /*********************************************/
 /******** SEARCH TOOL AGGIUNTIVI *************/
 /*********** DATI LIQUIDAZIONE ***************/
@@ -1475,6 +1470,22 @@
 		nullable="true"
 		enabledOnSearch="true"
 		keysProperty="causaleKeys" />		
+	<fieldProperty
+			name="motivo_assenza_cig"
+			property="motivo_assenza_cig"
+			inputType="SELECT"
+			keysProperty="motivoEsclusioneCigSIOPEKeys"
+			enabledOnSearch="true"
+			label="Motivo assenza CIG"/>
+    <fieldProperty
+            name="cig"
+            property="cig"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            nullable="true"
+            enabledOnSearch="true"
+            CRUDBusinessProcessName="CRUDCodiciCIGBP"
+            label="CIG"/>
 
 	<formFieldProperty name="cd_cds" />
 	<formFieldProperty name="cd_unita_organizzativa" />
@@ -1662,6 +1673,8 @@
 	<formFieldProperty name="oggetto_contratto" />
 	<formFieldProperty name="stato_liquidazione"/>		
 	<formFieldProperty name="causale"/>			
+	<formFieldProperty name="motivo_assenza_cig"
+		command="doOnMotivoAssenzaCigChange" />
                        	
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -1799,4 +1812,5 @@
 	<findFieldProperty name="pg_contratto"/>
 	<findFieldProperty name="stato_liquidazione"/>
 	<findFieldProperty name="causale"/>
+	<findFieldProperty name="motivo_assenza_cig" />
 </bulkInfo>

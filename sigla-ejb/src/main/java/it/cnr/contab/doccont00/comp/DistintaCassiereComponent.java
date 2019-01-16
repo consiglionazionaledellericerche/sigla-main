@@ -11,7 +11,6 @@ import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoHome;
-import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -31,7 +30,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
-import it.cnr.contab.util.TipoDebitoSIOPE;
+import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -68,7 +67,6 @@ import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DistintaCassiereComponent extends
         it.cnr.jada.comp.CRUDDetailComponent implements IDistintaCassiereMgr,
@@ -90,6 +88,7 @@ public class DistintaCassiereComponent extends
     public static final int MAX_LENGTH_CAUSALE = 140;
     public static final String FATT_ANALOGICA = "FATT_ANALOGICA";
     public static final String DOC_EQUIVALENTE = "DOC_EQUIVALENTE";
+    public static final String REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
 
     public DistintaCassiereComponent() {
     }
@@ -4560,9 +4559,21 @@ public class DistintaCassiereComponent extends
                 infover.setProgressivoVersante(1);// Dovrebbe essere sempre 1 ?
                 infover.setImportoVersante(docContabile.getImDocumento().setScale(2, BigDecimal.ROUND_HALF_UP));
 
+                final String modalitaPagamento = docContabile.getModalitaPagamento();
+
+                final Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk =
+                        Optional.ofNullable(findByPrimaryKey(userContext, new Rif_modalita_pagamentoBulk(modalitaPagamento)))
+                                .filter(Rif_modalita_pagamentoBulk.class::isInstance)
+                                .map(Rif_modalita_pagamentoBulk.class::cast)
+                                .orElseThrow(() -> new ApplicationMessageFormatException("Modalità di pagamento non trovata: {0}", modalitaPagamento));
+
                 if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_REGOLAM_SOSPESO) == 0) {
-                    //TODO REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA se (sospseso.ti_CC_BI='B' reversale_riga.cd_modalita_pag = 'BI')
-                    infover.setTipoRiscossione(REGOLARIZZAZIONE);
+                    if (Optional.ofNullable(bulk.getTi_cc_bi()).filter(s -> s.equals("B")).isPresent() &&
+                            Optional.ofNullable(rif_modalita_pagamentoBulk.getTi_pagamento()).filter(s -> s.equals(Rif_modalita_pagamentoBulk.BANCA_ITALIA)).isPresent() ) {
+                        infover.setTipoRiscossione(REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA);
+                    } else {
+                        infover.setTipoRiscossione(REGOLARIZZAZIONE);
+                    }
                 } else if (docContabile.getTiDocumento().compareTo(ReversaleBulk.TIPO_INCASSO) == 0) {
                     if(!bulk.getPg_documento_cont_padre().equals(bulk.getPg_documento_cont())) {
                         infover.setTipoRiscossione(COMPENSAZIONE);
@@ -4734,12 +4745,12 @@ public class DistintaCassiereComponent extends
                                 .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
                                 .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE);
 
-                //TODO deve esserci IBAN
+                // deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB
                 ).contains(tipoPagamentoSiopePlus);
-                //TODO deve esserci il Conto
+                // deve esserci il Conto
                 boolean obb_conto = Arrays.asList(
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
                 ).contains(tipoPagamentoSiopePlus);
@@ -4872,7 +4883,7 @@ public class DistintaCassiereComponent extends
                         benef.setPartitaIvaBeneficiario(Optional.ofNullable(docContabile.getPartitaIva()).orElse(null));
                     }
                     infoben.setBeneficiario(benef);
-                    if (obb_conto) {
+                    if (obb_conto && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         piazzatura.setNumeroContoCorrenteBeneficiario(
                                 Optional.ofNullable(docContabile.getNumeroConto())
                                     .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
@@ -4884,7 +4895,7 @@ public class DistintaCassiereComponent extends
                         );
                         infoben.setPiazzatura(piazzatura);
                     }
-                    if (obb_iban) {
+                    if (obb_iban && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         sepa.setIban( Optional.ofNullable(docContabile.getCodiceIban())
                                 .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il codice iban " +
                                         "sul Mandato {0}/{1}/{2}",
@@ -5405,7 +5416,7 @@ public class DistintaCassiereComponent extends
                         benef.setPartitaIvaBeneficiario(Optional.ofNullable(docContabile.getPartitaIva()).orElse(null));
                     }
                     infoben.setBeneficiario(benef);
-                    if (obb_conto) {
+                    if (obb_conto  && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         piazzatura.setNumeroContoCorrenteBeneficiario(
                                 Optional.ofNullable(docContabile.getNumeroConto())
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
@@ -5417,7 +5428,7 @@ public class DistintaCassiereComponent extends
                         );
                         infoben.setPiazzatura(piazzatura);
                     }
-                    if (obb_iban) {
+                    if (obb_iban && !infoben.getTipoPagamento().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value())) {
                         sepa.setIban(
                                 Optional.ofNullable(docContabile.getCodiceIban())
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il codice iban " +
@@ -5545,8 +5556,7 @@ public class DistintaCassiereComponent extends
                                               Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus) {
         if (Arrays.asList(
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE,
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.F24EP
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
         ).contains(tipoPagamentoSiopePlus)) {
             aggiuntive.setRiferimentoDocumentoEsterno(bulk.getCMISName());
             infoben.setInformazioniAggiuntive(aggiuntive);
