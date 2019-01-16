@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>sigla-siopeplus-ordinativi</artifactId>
+	<artifactId>sigla-siopeplus-commons</artifactId>
 	<parent>
 		<groupId>it.cnr</groupId>
 		<artifactId>sigla-siopeplus</artifactId>
@@ -53,53 +53,9 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<configuration>
-					<schemaDirectory>${project.basedir}/src/main/resources/xsd</schemaDirectory>
-					<generatePackage>it.siopeplus</generatePackage>
-					<plugins>
-						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics</artifactId>
-							<version>1.11.1</version>
-						</plugin>
-						<plugin>
-							<groupId>org.jvnet.jaxb2_commons</groupId>
-							<artifactId>jaxb2-basics-annotate</artifactId>
-							<version>1.1.0</version>
-						</plugin>
-					</plugins>
-					<args>
-						<arg>-Xsimplify</arg>
-						<arg>-Xannotate</arg>
-						<arg>-XtoString</arg>
-					</args>
-				</configuration>
-				<executions>
-					<execution>
-						<id>generate</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
-		<dependency>
-			<groupId>it.cnr</groupId>
-			<artifactId>sigla-siopeplus-commons</artifactId>
-			<version>${project.version}</version>
-		</dependency>
- 		<dependency>
-            <groupId>org.jvnet.jaxb2_commons</groupId>
-            <artifactId>jaxb2-basics-runtime</artifactId>
-            <version>1.11.1</version>
-			<scope>provided</scope>
-        </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

@@ -104,6 +104,18 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
                 );
                 break;
             }
+            case GIORNALEDICASSA: {
+                result = documentiContabiliService.downloadGiornalieraDiCassa(
+                        Optional.ofNullable(dataDa)
+                                .map(s -> LocalDateTime.parse(dataDa, DateTimeFormatter.ISO_DATE_TIME))
+                                .orElse(null),
+                        Optional.ofNullable(dataA)
+                                .map(s -> LocalDateTime.parse(dataA, DateTimeFormatter.ISO_DATE_TIME))
+                                .orElse(null),
+                        download
+                );
+                break;
+            }
         }
         return Response.ok(result.collect(Collectors.toList())).build();
     }

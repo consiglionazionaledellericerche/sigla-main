@@ -9,6 +9,7 @@
 		<version>5.2.49-SNAPSHOT</version>
 	</parent>
 	<modules>
+		<module>sigla-siopelpus-commons</module>
 		<module>sigla-siopelpus-ordinativi</module>
 		<module>sigla-siopelpus-giornaledicassa</module>
 	</modules>
