@@ -1618,8 +1618,15 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			SQLBuilder sqlPdgModuloGest = pdgModuloGestHome.createSQLBuilder();
 			sqlPdgModuloGest.addClause(FindClause.AND,"esercizio",SQLBuilder.GREATER_EQUALS,annoFrom);
 			sqlPdgModuloGest.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,progetto.getPg_progetto());
-			sqlPdgModuloGest.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.ISNOTNULL,null);
-			sqlPdgModuloGest.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.ISNOTNULL,null);
+			sqlPdgModuloGest.addTableToHeader("PDG_MODULO_SPESE");
+			sqlPdgModuloGest.addSQLJoin("PDG_MODULO_SPESE.ESERCIZIO", "PDG_MODULO_SPESE_GEST.ESERCIZIO");
+			sqlPdgModuloGest.addSQLJoin("PDG_MODULO_SPESE.CD_CENTRO_RESPONSABILITA", "PDG_MODULO_SPESE_GEST.CD_CENTRO_RESPONSABILITA");
+			sqlPdgModuloGest.addSQLJoin("PDG_MODULO_SPESE.PG_PROGETTO", "PDG_MODULO_SPESE_GEST.PG_PROGETTO");
+			sqlPdgModuloGest.addSQLJoin("PDG_MODULO_SPESE.ID_CLASSIFICAZIONE", "PDG_MODULO_SPESE_GEST.ID_CLASSIFICAZIONE");
+			sqlPdgModuloGest.addSQLJoin("PDG_MODULO_SPESE.CD_CDS_AREA", "PDG_MODULO_SPESE_GEST.CD_CDS_AREA");
+			sqlPdgModuloGest.addSQLJoin("PDG_MODULO_SPESE.PG_DETTAGLIO", "PDG_MODULO_SPESE_GEST.PG_DETTAGLIO");
+			sqlPdgModuloGest.addSQLClause(FindClause.AND,"PDG_MODULO_SPESE.CD_UNITA_PIANO",SQLBuilder.ISNOTNULL,null);
+			sqlPdgModuloGest.addSQLClause(FindClause.AND,"PDG_MODULO_SPESE.CD_VOCE_PIANO",SQLBuilder.ISNOTNULL,null);
 	
 			List<Pdg_modulo_spese_gestBulk> pdgModuloGestList = new it.cnr.jada.bulk.BulkList(pdgModuloGestHome.fetchAll(sqlPdgModuloGest));
 
@@ -1690,6 +1697,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
 			SQLBuilder sqlSaldi = saldiHome.createSQLBuilder();
 			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO",SQLBuilder.GREATER_EQUALS,annoFrom);
+			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES",SQLBuilder.GREATER_EQUALS,annoFrom);
 			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE",SQLBuilder.GREATER_EQUALS,Elemento_voceHome.GESTIONE_SPESE);
 			
 			sqlSaldi.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
@@ -2001,7 +2009,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		
 		    		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
 		    		
-		    		List<Var_stanz_resBulk> listVar = varRigaHome.fetchAll(sqlVar);
+		    		List<Var_stanz_resBulk> listVar = varHome.fetchAll(sqlVar);
 	
 		    		listVar.stream()
 		    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))

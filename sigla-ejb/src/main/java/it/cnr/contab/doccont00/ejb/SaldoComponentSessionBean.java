@@ -7,6 +7,8 @@ import javax.ejb.Remove;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCCONT00_EJB_SaldoComponentSession")
 public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements SaldoComponentSession  {
@@ -422,6 +424,40 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			java.lang.String result = componentObj.getMessaggioSfondamentoPianoEconomico(param1,param2);
 			component_invocation_succes(param1,componentObj);
 			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param1,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param1,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param1,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param1,componentObj,e);
+		}
+	}
+	public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk param2) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param1,componentObj);
+		try {
+			componentObj.checkPdgPianoEconomico(param1,param2);
+			component_invocation_succes(param1,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param1,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param1,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param1,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param1,componentObj,e);
+		}
+	}
+	public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param2) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param1,componentObj);
+		try {
+			componentObj.checkPdgPianoEconomico(param1,param2);
+			component_invocation_succes(param1,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param1,componentObj);
 			throw e;
