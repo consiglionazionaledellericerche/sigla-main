@@ -2009,7 +2009,15 @@ public SQLBuilder selectProgettiCollegatiGaeNonApprovatiForRibaltamento(UserCont
 	sqlGaeAccExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio()+1);
 	sqlGaeAccExist.addTableToHeader("PROGETTO_OTHER_FIELD");
 	sqlGaeAccExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", "PROGETTO_OTHER_FIELD.PG_PROGETTO");
-	sqlGaeAccExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, Progetto_other_fieldBulk.STATO_APPROVATO);
+	sqlGaeAccExist.addTableToHeader("TIPO_FINANZIAMENTO");
+	sqlGaeAccExist.addSQLJoin("PROGETTO_OTHER_FIELD.ID_TIPO_FINANZIAMENTO", "TIPO_FINANZIAMENTO.ID");
+	sqlGaeAccExist.openParenthesis(FindClause.AND);
+	sqlGaeAccExist.addSQLClause(FindClause.OR, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, Progetto_other_fieldBulk.STATO_APPROVATO);
+		sqlGaeAccExist.openParenthesis(FindClause.OR);
+			sqlGaeAccExist.addSQLClause(FindClause.AND, "TIPO_FINANZIAMENTO.FL_PIANO_ECO_FIN", SQLBuilder.EQUALS, Boolean.FALSE);
+			sqlGaeAccExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.DT_FINE", SQLBuilder.ISNOTNULL, null);
+		sqlGaeAccExist.closeParenthesis();
+	sqlGaeAccExist.closeParenthesis();
 	
 	sqlAccExist.addSQLNotExistsClause(FindClause.AND, sqlGaeAccExist);
 
