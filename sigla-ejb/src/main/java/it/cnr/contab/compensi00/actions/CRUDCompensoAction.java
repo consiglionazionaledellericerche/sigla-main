@@ -12,6 +12,8 @@ import it.cnr.contab.compensi00.docs.bulk.V_doc_cont_compBulk;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipologia_rischioBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
@@ -35,9 +37,11 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormBP;
+import it.cnr.jada.util.action.FormController;
 import it.cnr.jada.util.action.OptionBP;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.Date;
 import java.util.GregorianCalendar;
 
@@ -823,6 +827,12 @@ public Forward doModificaAutomaticaObbligazione(ActionContext context) {
 				scadenza.getObbligazione(), 
 				scadenza.getObbligazione().getSaldiInfo());
 			compenso.setObbligazioneScadenzario(scadenza);
+			if (scadenza.getObbligazione() != null && scadenza.getObbligazione().getContratto() != null){
+				compenso.setCig(scadenza.getObbligazione().getContratto().getCig());
+			} else {
+				compenso.setCig(null);
+			}
+
 			compenso.setStatoCompensoToObbligazioneSincronizzata();
 			compenso.setStato_cofi(compenso.STATO_CONTABILIZZATO);
 
@@ -1456,6 +1466,8 @@ public Forward doOnTipoTrattamentoChange(ActionContext context) {
 		return handleException(context, ex);
 	}
 }
+
+
 public Forward doOnTipoPrestazioneCompensoChange(ActionContext context) {
 
 	try {
@@ -1941,4 +1953,64 @@ public Forward doOnCausaleChange(ActionContext context) {
 	  }
 	 return context.findDefaultForward();
 }
+public Forward doBringBackCRUDCrea_cig(ActionContext context, CompensoBulk compenso, CigBulk cig) 
+{
+	CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
+	try 
+	{
+		if (cig != null )
+		{
+			compenso.setCig(cig);
+		}	
+		return context.findDefaultForward();
+	}
+	catch(it.cnr.jada.action.MessageToUser e) 
+	{
+		getBusinessProcess(context).setErrorMessage(e.getMessage());
+		return context.findDefaultForward();
+	}		
+
+	catch(Throwable e) {return handleException(context,e);}
+}
+
+@Override
+public Forward doSalva(ActionContext actioncontext) throws RemoteException {
+	CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(actioncontext);
+	if (bp.isViewing()){
+        setMessage(actioncontext, FormBP.ERROR_MESSAGE, "Nessuna modifica da salvare.");
+	}
+	return super.doSalva(actioncontext);
+}
+public Forward doBringBackSearchCig(ActionContext context, CompensoBulk compenso, CigBulk cig) throws BusinessProcessException {
+
+	if (cig!=null){
+		CRUDCompensoBP bp = (CRUDCompensoBP) getBusinessProcess(context);
+		compenso.setCig(cig);
+		bp.setDirty(true);
+	} else {
+		compenso.setCig(null);
+	}
+	return context.findDefaultForward();
+}
+public Forward doOnMotivoAssenzaCigChange(ActionContext context) {
+
+	try {
+		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
+		fillModel(context);
+	}catch (Throwable ex) {
+		return handleException(context, ex);
+	}
+	return context.findDefaultForward();
+}
+public Forward doBlankSearchCig(ActionContext context, CompensoBulk compenso) {
+
+	if (compenso!=null){
+		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
+		compenso.setCig(null);
+		bp.setDirty(true);
+	}
+	return context.findDefaultForward();
+
+}
+
 }

@@ -9,7 +9,8 @@ import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.util.TipoDebitoSIOPE;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
+import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
@@ -99,6 +100,16 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 					(oldValue, newValue) -> oldValue,
 					Hashtable::new
 			));
+
+	public final static  Map<String,String> esito_OperazioneKeys = Arrays.asList(EsitoOperazione.values())
+			.stream()
+			.collect(Collectors.toMap(
+					EsitoOperazione::value,
+					EsitoOperazione::label,
+					(oldValue, newValue) -> oldValue,
+					Hashtable::new
+			));
+
 	public V_mandato_reversaleBulk() {
 		super();
 	}

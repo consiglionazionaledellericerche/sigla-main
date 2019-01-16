@@ -1722,4 +1722,64 @@ TRASPORTO_AEREO"/>
             <column header="pg_ver_rec" name="pg_ver_rec" type="NUMERIC"/>
         </loadData>
     </changeSet>
+    <changeSet author="marco.spasiano" id="alter_banca_add_tipo_pagamento_siope_plus">
+        <addColumn tableName="banca">
+            <column name="tipo_pagamento_siope" type="varchar2(250)" remarks="Tipo pagamento siope+ Può assumere i valori:
+CASSA
+SEPA CREDIT TRANSFER
+ASSEGNO BANCARIO E POSTALE
+ASSEGNO CIRCOLARE
+ACCREDITO CONTO CORRENTE POSTALE
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+F24EP
+VAGLIA POSTALE
+VAGLIA TESORO
+REGOLARIZZAZIONE
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB A
+REGOLARIZZAZIONE ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B
+ADDEBITO PREAUTORIZZATO DISPOSIZIONE DOCUMENTO ESTERNO
+COMPENSAZIONE
+BONIFICO ESTERO EURO"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_compenso_add_cig">
+        <addColumn tableName="compenso">
+            <column name="cd_cig" type="VARCHAR(10)" remarks="Codice cig"/>
+            <column name="motivo_assenza_cig" type="VARCHAR(250)" remarks="Motivo assenza CIG  Può assumere i valori:
+ACCORDO_AMM_AGGIUDICATRICI 
+ACQUISTO_LOCAZIONE
+AFFIDAMENTI_IN_HOUSE 
+AMMINISTRAZIONE DIRETTA 
+APPALTI_ENERGIA_ACQUA
+ARBITRATO
+ATTIVITA_CONCORRENZA
+CONCESSIONI_PAESI_TERZI
+CONTRATTI_ASSOCIAZIONE
+CONTRATTI_AUTORITA_GIUDIZIARIA
+CONTRATTI_DIFESA
+CONTRATTI_ESTERO
+CONTRATTI_LAVORO
+DIRITTO_ESCLUSIVO
+EROGAZIONI_LIBERALITA
+IMPRESA_COLLEGATA
+INCARICHI_COLLABORAZIONE
+JOINT_VENTURE
+PRESTAZIONI
+RIASSICURAZIONE
+RISARCIMENTI_INDENNIZZI
+SERVIZI_BANCHE_CENTRALI_EFSF
+SERVIZI_CAMPAGNE_POLITICHE
+SPESE_ECONOMALI
+SPONSORIZZAZIONE_PURA
+TRASFERIMENTO_FONDI
+TRASPORTO_AEREO"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add_fk_compenso_cig">
+       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="compenso" constraintName="fk_compenso34" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
+       <createIndex indexName="FX_COMPENSO34" tableName="COMPENSO">
+          <column name="CD_CIG"/>
+       </createIndex>
+    </changeSet>
 </databaseChangeLog>
