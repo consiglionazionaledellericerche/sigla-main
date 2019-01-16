@@ -1190,13 +1190,16 @@ For disp_imp_da_ribaltare In (Select ESERCIZIO, ESERCIZIO_RES, CD_CENTRO_RESPONS
 		  esisteProgetto number:=0;
   	    Begin
 		  select count(0) into esisteProgetto
-	      from v_linea_attivita_valida, progetto_other_field
+	      from v_linea_attivita_valida, progetto_other_field, tipo_finanziamento
           where esercizio = aEs + 1
           and   v_linea_attivita_valida.cd_centro_responsabilita = disp_imp_da_ribaltare.cd_centro_responsabilita
           and   v_linea_attivita_valida.cd_linea_attivita  = disp_imp_da_ribaltare.cd_linea_attivita
           and   v_linea_attivita_valida.pg_progetto is not null
           and   v_linea_attivita_valida.pg_progetto = progetto_other_field.pg_progetto
-          and   progetto_other_field.stato = 'APP';
+          and   progetto_other_field.id_tipo_finanziamento = tipo_finanziamento.id
+          and   (progetto_other_field.stato = 'APP'
+          	     or 
+          	     (tipo_finanziamento.fl_piano_eco_fin='N' and progetto_other_field.dt_fine is not null));
 
  	      If (esisteProgetto=0 ) then
 		  	If (pg_esec is not null) then
