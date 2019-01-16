@@ -2,10 +2,13 @@ package it.cnr.contab.doccont00.comp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 
@@ -22,15 +25,20 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
-import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
+import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
@@ -42,6 +50,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
@@ -51,16 +60,160 @@ import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
+import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrHome;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
+	private class CtrlPianoEcoDett {
+		private String tipoNatura;
+		private boolean isUoArea;
+		private boolean isCdrPersonale;
+		private boolean isVoceSpeciale;
+		private BigDecimal importo = BigDecimal.ZERO;
+		
+		private final static String TIPO_REIMPIEGO = "RIM";
+		private final static String TIPO_FONTE_INTERNA = "FIN";
+		private final static String TIPO_FONTE_ESTERNA = "FES";
+		
+		public String getTipoNatura() {
+			return tipoNatura;
+		}
+		public void setTipoNatura(String tipoNatura) {
+			this.tipoNatura = tipoNatura;
+		}
+		public boolean isUoArea() {
+			return isUoArea;
+		}
+		public void setUoArea(boolean isUoArea) {
+			this.isUoArea = isUoArea;
+		}
+		public boolean isCdrPersonale() {
+			return isCdrPersonale;
+		}
+		public void setCdrPersonale(boolean isCdrPersonale) {
+			this.isCdrPersonale = isCdrPersonale;
+		}
+		public boolean isVoceSpeciale() {
+			return isVoceSpeciale;
+		}
+		public void setVoceSpeciale(boolean isVoceSpeciale) {
+			this.isVoceSpeciale = isVoceSpeciale;
+		}
+		public BigDecimal getImporto() {
+			return importo;
+		}
+		public void setImporto(BigDecimal importo) {
+			this.importo = importo;
+		}
+		public boolean isNaturaReimpiego(){
+			return TIPO_REIMPIEGO.equals(getTipoNatura());
+		}
+		public boolean isNaturaFonteEsterna(){
+			return TIPO_FONTE_ESTERNA.equals(getTipoNatura());
+		}
+		public boolean isNaturaFonteInterna(){
+			return TIPO_FONTE_INTERNA.equals(getTipoNatura());
+		}
+	}
+	private class CtrlPianoEco {
+		public CtrlPianoEco(ProgettoBulk progetto) {
+			super();
+			this.progetto = progetto;
+		}
+		private ProgettoBulk progetto;
 
+		private List<CtrlPianoEcoDett> dett = new ArrayList<CtrlPianoEcoDett>();
+		
+		public ProgettoBulk getProgetto() {
+			return progetto;
+		}
+		public void setProgetto(ProgettoBulk progetto) {
+			this.progetto = progetto;
+		}
+		public List<CtrlPianoEcoDett> getDett() {
+			return dett;
+		}
+		public void setDett(List<CtrlPianoEcoDett> dett) {
+			this.dett = dett;
+		}
+		public BigDecimal getImpPositivi() {
+			return this.getImpPositivi(dett.stream());
+		}
+		public BigDecimal getImpNegativi() {
+			return this.getImpNegativi(dett.stream());
+		}
+		public BigDecimal getImpPositiviArea() {
+			return this.getImpPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea));
+		}
+		public BigDecimal getImpNegativiArea() {
+			return this.getImpNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea));
+		}
+		public BigDecimal getImpPositiviAreaNaturaReimpiego() {
+			return this.getImpPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaReimpiego()));
+		}
+		public BigDecimal getImpNegativiAreaNaturaReimpiego() {
+			return this.getImpNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaReimpiego()));
+		}
+		public BigDecimal getImpPositiviAreaNaturaFonteEsterna() {
+			return this.getImpPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteEsterna()));
+		}
+		public BigDecimal getImpNegativiAreaNaturaFonteEsterna() {
+			return this.getImpNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteEsterna()));
+		}
+		public BigDecimal getImpPositiviAreaNaturaFonteInterna() {
+			return this.getImpPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteInterna()));
+		}
+		public BigDecimal getImpNegativiAreaNaturaFonteInterna() {
+			return this.getImpNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteInterna()));
+		}
+		public BigDecimal getImpPositiviCdrPersonale() {
+			return this.getImpPositivi(dett.stream().filter(CtrlPianoEcoDett::isCdrPersonale));
+		}
+		public BigDecimal getImpNegativiCdrPersonale() {
+			return this.getImpNegativi(dett.stream().filter(CtrlPianoEcoDett::isCdrPersonale));
+		}
+		public BigDecimal getImpPositiviNaturaReimpiego() {
+			return this.getImpPositivi(dett.stream().filter(CtrlPianoEcoDett::isNaturaReimpiego));
+		}
+		public BigDecimal getImpNegativiNaturaReimpiego() {
+			return this.getImpNegativi(dett.stream().filter(CtrlPianoEcoDett::isNaturaReimpiego));
+		}
+		public BigDecimal getImpPositiviVoceSpeciale() {
+			return this.getImpPositivi(dett.stream().filter(CtrlPianoEcoDett::isVoceSpeciale));
+		}
+		public BigDecimal getImpNegativiVoceSpeciale() {
+			return this.getImpNegativi(dett.stream().filter(CtrlPianoEcoDett::isVoceSpeciale));
+		}
+		public Timestamp getDtScadenza() {
+			return Optional.ofNullable(
+					Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+					.orElse(null);
+		}
+		public boolean isScaduto(Timestamp dataRiferimento) {
+			return Optional.ofNullable(this.getDtScadenza()).map(dt->dt.before(dataRiferimento)).orElse(Boolean.FALSE);
+		}
+		private BigDecimal getImpPositivi(Stream<CtrlPianoEcoDett> stream){
+			return stream.filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
+					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+		}
+		private BigDecimal getImpNegativi(Stream<CtrlPianoEcoDett> stream){
+			return stream.filter(el->el.getImporto().compareTo(BigDecimal.ZERO)<0)
+					.map(CtrlPianoEcoDett::getImporto).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO).abs();
+		}
+	}
 
 
 //@@>> setComponentContext
@@ -1473,4 +1626,468 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
         return messaggio;
     }
 
+	public void checkPdgPianoEconomico(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException{
+		try {
+			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
+				List<CtrlPianoEco> listCtrlPianoEco = new ArrayList<CtrlPianoEco>();
+
+				String cdNaturaReimpiego = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+				String cdVoceSpeciale = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE, Configurazione_cnrBulk.SK_TEMPO_IND_SU_PROGETTI_FINANZIATI);
+				
+				String cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
+				CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
+
+				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
+				java.util.Collection<Var_stanz_res_rigaBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(variazione);
+	
+				for (Var_stanz_res_rigaBulk varStanzResRiga : dettagliSpesa) {
+					//verifico se si tratta di area
+					CdrBulk cdrBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(varStanzResRiga.getCd_cdr()));
+					Unita_organizzativaBulk uoBulk = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdrBulk.getCd_unita_organizzativa()));
+					boolean isUoArea = uoBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA);
+					
+					//verifico se si tratta di cdr Personale
+					boolean isDettPersonale = uoBulk.getCd_unita_organizzativa().equals(cdrPersonaleBulk.getCd_unita_organizzativa());
+					if (!isDettPersonale) {
+						//verifico se si tratta di voce accentrata verso il personale
+						Elemento_voceBulk voce = (Elemento_voceBulk)getHome(userContext, Elemento_voceBulk.class).findByPrimaryKey(varStanzResRiga.getElemento_voce());
+						Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(userContext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
+						isDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+					}
+
+					//recupero la GAE
+					BulkHome lattHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+					SQLBuilder sql = lattHome.createSQLBuilder();
+	
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,varStanzResRiga.getEsercizio());
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varStanzResRiga.getCd_cdr());
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varStanzResRiga.getCd_linea_attivita());
+						
+					List<WorkpackageBulk> listGAE = lattHome.fetchAll(sql);
+					
+					if (listGAE.isEmpty() || listGAE.size()>1)
+						throw new ApplicationException("Errore in fase di ricerca linea_attivita "+varStanzResRiga.getEsercizio()+"/"+varStanzResRiga.getCd_cdr()+"/"+varStanzResRiga.getCd_linea_attivita()+".");
+					
+					WorkpackageBulk linea = listGAE.get(0);
+
+					//recupero il progetto per verificare se è scaduto
+					ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+					home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+					ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, linea.getProgetto());
+					getHomeCache(userContext).fetchAll(userContext);
+					
+					//effettuo controlli sulla validità del progetto
+					Optional.of(progetto.getOtherField())
+							.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
+							.orElseThrow(()->new ApplicationException("Attenzione! Il progetto "+progetto.getCd_progetto()
+									+ " non risulta in stato approvato o chiuso. Variazione non consentita!"));
+						
+					if (progetto.getOtherField().isDatePianoEconomicoRequired()) {
+						Optional.ofNullable(progetto.getOtherField().getDtInizio())
+						 	    .orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+													+ "La data inizio del progetto non risulta impostata."));
+
+						Optional.ofNullable(progetto.getOtherField().getDtFine())
+					    .orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+											+ "La data fine del progetto non risulta impostata."));
+						
+						Optional.of(progetto.getOtherField().getDtInizio())
+				 	    		.filter(dt->!dt.after(variazione.getDt_chiusura()))
+								.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+										+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+										+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+										+ "rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+")."));
+					}
+
+					//recupero il record se presente altrimenti ne creo uno nuovo
+					CtrlPianoEco pianoEco = listCtrlPianoEco.stream()
+							.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+							.findFirst()
+							.orElse(new CtrlPianoEco(progetto));
+
+					//creo il dettaglio
+					CtrlPianoEcoDett dett = new CtrlPianoEcoDett();
+					dett.setImporto(varStanzResRiga.getIm_variazione());
+					dett.setCdrPersonale(isDettPersonale);
+					dett.setUoArea(isUoArea);
+
+					if (Optional.ofNullable(cdNaturaReimpiego).map(el->el.equals(linea.getNatura().getCd_natura())).orElse(Boolean.FALSE))
+						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_REIMPIEGO);
+					else if (linea.getNatura().isFonteEsterna())
+						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_FONTE_ESTERNA);
+					else
+						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_FONTE_INTERNA);
+						
+					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(linea.getNatura().getCd_natura()))
+													.orElse(Boolean.FALSE));
+
+					pianoEco.getDett().add(dett);
+					listCtrlPianoEco.add(pianoEco);
+				}
+				controllaPdgPianoEconomico(userContext, listCtrlPianoEco, variazione.getDt_chiusura(), cdVoceSpeciale);
+			}
+        } catch (DetailedRuntimeException _ex) {
+            throw new ApplicationException(_ex.getMessage());
+        } catch (PersistencyException|RemoteException|IntrospectionException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public void checkPdgPianoEconomico(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException{
+		try {
+			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
+				List<CtrlPianoEco> listCtrlPianoEco = new ArrayList<CtrlPianoEco>();
+
+				String cdNaturaReimpiego = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+				String cdVoceSpeciale = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE, Configurazione_cnrBulk.SK_TEMPO_IND_SU_PROGETTI_FINANZIATI);
+
+				String cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
+				CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
+
+				Ass_pdg_variazione_cdrHome ass_cdrHome = (Ass_pdg_variazione_cdrHome)getHome(userContext,Ass_pdg_variazione_cdrBulk.class);
+				java.util.Collection<Pdg_variazione_riga_gestBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(variazione);
+	
+				for (Pdg_variazione_riga_gestBulk varStanzRiga : dettagliSpesa) {
+					//verifico se si tratta di area
+					CdrBulk cdrBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(varStanzRiga.getCd_cdr_assegnatario()));
+					Unita_organizzativaBulk uoBulk = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdrBulk.getCd_unita_organizzativa()));
+					boolean isUoArea = uoBulk.getCd_tipo_unita().equals(Tipo_unita_organizzativaHome.TIPO_UO_AREA);
+					
+					//verifico se si tratta di cdr Personale
+					boolean isDettPersonale = uoBulk.getCd_unita_organizzativa().equals(cdrPersonaleBulk.getCd_unita_organizzativa());
+					if (!isDettPersonale) {
+						//verifico se si tratta di voce accentrata verso il personale
+						Elemento_voceBulk voce = (Elemento_voceBulk)getHome(userContext, Elemento_voceBulk.class).findByPrimaryKey(varStanzRiga.getElemento_voce());
+						Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(userContext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
+						isDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+					}
+
+					//recupero la GAE
+					BulkHome lattHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+					SQLBuilder sql = lattHome.createSQLBuilder();
+	
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,varStanzRiga.getEsercizio());
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,varStanzRiga.getCd_cdr_assegnatario());
+					sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,varStanzRiga.getCd_linea_attivita());
+						
+					List<WorkpackageBulk> listGAE = lattHome.fetchAll(sql);
+
+					if (listGAE.isEmpty() || listGAE.size()>1)
+						throw new ApplicationException("Errore in fase di ricerca linea_attivita "+varStanzRiga.getEsercizio()+"/"+varStanzRiga.getCd_centro_responsabilita()+"/"+varStanzRiga.getCd_linea_attivita()+".");
+
+					WorkpackageBulk linea = listGAE.get(0);
+
+					//recupero il progetto per verificare se è scaduto
+					ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+					home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+					ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, linea.getProgetto());
+					getHomeCache(userContext).fetchAll(userContext);
+					
+					//effettuo controlli sulla validità del progetto
+					Optional.of(progetto.getOtherField())
+							.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
+							.orElseThrow(()->new ApplicationException("Attenzione! Il progetto "+progetto.getCd_progetto()
+									+ " non risulta in stato approvato o chiuso. Variazione non consentita!"));
+						
+					if (progetto.getOtherField().isDatePianoEconomicoRequired()) {
+						Optional.ofNullable(progetto.getOtherField().getDtInizio())
+						 	    .orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+													+ "La data inizio del progetto non risulta impostata."));
+
+						Optional.ofNullable(progetto.getOtherField().getDtFine())
+					    .orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+											+ "La data fine del progetto non risulta impostata."));
+						
+						Optional.of(progetto.getOtherField().getDtInizio())
+				 	    		.filter(dt->!dt.after(variazione.getDt_chiusura()))
+								.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+										+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+										+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+										+ "rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+")."));
+					}
+						
+					//recupero il record se presente altrimenti ne creo uno nuovo
+					CtrlPianoEco pianoEco = listCtrlPianoEco.stream()
+							.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+							.findFirst()
+							.orElse(new CtrlPianoEco(progetto));
+
+					//creo il dettaglio
+					CtrlPianoEcoDett dett = new CtrlPianoEcoDett();
+					dett.setImporto(varStanzRiga.getIm_variazione());
+					dett.setCdrPersonale(isDettPersonale);
+					dett.setUoArea(isUoArea);
+
+					if (Optional.ofNullable(cdNaturaReimpiego).map(el->el.equals(linea.getNatura().getCd_natura())).orElse(Boolean.FALSE)) {
+						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_REIMPIEGO);
+						if (!variazione.getTipo_variazione().isStorno()) 
+							throw new ApplicationException("Attenzione! Risultano movimentazioni sulla GAE "
+							    + linea.getCd_linea_attivita() + " con natura 6 - 'Reimpiego di risorse' "
+								+ " consentito solo per operazioni di storno. Operazioni non possibile.");
+					} else if (linea.getNatura().isFonteEsterna())
+						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_FONTE_ESTERNA);
+					else
+						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_FONTE_INTERNA);
+						
+					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(linea.getNatura().getCd_natura()))
+													.orElse(Boolean.FALSE));
+
+					pianoEco.getDett().add(dett);
+					listCtrlPianoEco.add(pianoEco);
+				}
+				controllaPdgPianoEconomico(userContext, listCtrlPianoEco, variazione.getDt_chiusura(), cdVoceSpeciale);
+			}
+        } catch (DetailedRuntimeException _ex) {
+            throw new ApplicationException(_ex.getMessage());
+        } catch (PersistencyException|RemoteException|IntrospectionException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	private void controllaPdgPianoEconomico(UserContext userContext, List<CtrlPianoEco> listCtrlPianoEco, Timestamp dataChiusura, String cdVoceSpeciale) throws ComponentException{
+		//CONTROLLI SU SINGOLO PROGETTO
+		/**
+		 * 1. se un progetto è scaduto non è possibile attribuire fondi
+		 */
+		listCtrlPianoEco.stream()
+			.filter(el->el.isScaduto(dataChiusura))
+			.filter(el->el.getImpPositivi().compareTo(BigDecimal.ZERO)>0)
+			.findFirst().ifPresent(el->{
+				throw new DetailedRuntimeException("Attenzione! Non è possibile attribuire fondi al progetto "+
+						el.getProgetto().getCd_progetto()+
+						" in quanto scaduto ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDtScadenza()) +
+						") rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dataChiusura)+").");});
+		
+		/**
+		 * 2. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo prelevandoli dallo stesso progetto 
+		 *    da GAE di natura 6
+		 */
+		listCtrlPianoEco.stream()
+			.filter(el->!el.isScaduto(dataChiusura))
+			.filter(el->el.getImpNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
+			.filter(el->el.getImpNegativiNaturaReimpiego().compareTo(el.getImpPositiviNaturaReimpiego())!=0)
+			.findFirst().ifPresent(el->{
+				throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto "+
+						el.getProgetto().getCd_progetto()+"(" + 
+						new it.cnr.contab.util.EuroFormat().format(el.getImpNegativiNaturaReimpiego()) +
+						") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
+						"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
+						new it.cnr.contab.util.EuroFormat().format(el.getImpPositiviNaturaReimpiego()) + ")");});
+
+		/**
+		 * 3. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
+		 * 	  (regola non valida per progetti di Aree e CdrPersonale)
+		 */
+		listCtrlPianoEco.stream()
+			.filter(el->!el.isScaduto(dataChiusura))
+			.filter(el->el.getImpPositivi().subtract(el.getImpPositiviNaturaReimpiego())
+						  .subtract(el.getImpPositiviArea().subtract(el.getImpPositiviAreaNaturaReimpiego()))
+						  .subtract(el.getImpPositiviCdrPersonale())
+						  .compareTo(BigDecimal.ZERO)>0)
+			.filter(el->el.getImpPositivi().subtract(el.getImpPositiviNaturaReimpiego())
+						  .subtract(el.getImpPositiviArea().subtract(el.getImpPositiviAreaNaturaReimpiego()))
+						  .subtract(el.getImpPositiviCdrPersonale())
+					      .compareTo(el.getImpNegativi().subtract(el.getImpNegativiNaturaReimpiego())
+					    		     .subtract(el.getImpNegativiArea().subtract(el.getImpNegativiAreaNaturaReimpiego()))
+					    		     .subtract(el.getImpNegativiCdrPersonale()))>0)
+			.findFirst().ifPresent(el->{
+			throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
+					el.getProgetto().getCd_progetto()+"(" + 
+					new it.cnr.contab.util.EuroFormat().format(el.getImpPositivi().subtract(el.getImpPositiviNaturaReimpiego())
+							  .subtract(el.getImpPositiviArea().subtract(el.getImpPositiviAreaNaturaReimpiego()))
+							  .subtract(el.getImpPositiviCdrPersonale())) +
+					") non compensati da un equivalente prelievo nell'ambito dello stesso progetto ("+
+					new it.cnr.contab.util.EuroFormat().format(el.getImpNegativi().subtract(el.getImpNegativiNaturaReimpiego())
+			    		     .subtract(el.getImpNegativiArea().subtract(el.getImpNegativiAreaNaturaReimpiego()))
+			    		     .subtract(el.getImpNegativiCdrPersonale())) + ")");});
+
+		/**
+		 * 4. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
+		 *    allo stesso progetto e alla stessa area
+		 */
+		listCtrlPianoEco.stream()
+			.filter(el->!el.isScaduto(dataChiusura))
+			.filter(el->el.getImpNegativiArea().compareTo(BigDecimal.ZERO)>0)
+			.filter(el->el.getImpNegativiArea().compareTo(el.getImpPositiviArea())>0)
+			.findFirst().ifPresent(el->{
+			throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dall'area fondi dal progetto "+
+					el.getProgetto().getCd_progetto()+"(" + 
+					new it.cnr.contab.util.EuroFormat().format(el.getImpNegativiArea()) +
+					") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
+					new it.cnr.contab.util.EuroFormat().format(el.getImpPositiviArea()) + ")");});
+
+		/**
+		 * 5. se un progetto è aperto e vengono sottratte somme al CDR Personale queste devono essere riassegnate 
+		 *    allo stesso progetto e alla stesso CDR
+		 */
+		listCtrlPianoEco.stream()
+			.filter(el->!el.isScaduto(dataChiusura))
+			.filter(el->el.getImpNegativiCdrPersonale().compareTo(BigDecimal.ZERO)>0)
+			.filter(el->el.getImpNegativiCdrPersonale().compareTo(el.getImpPositiviCdrPersonale())>0)
+			.findFirst().ifPresent(el->{
+			throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dal CDR Personale fondi dal progetto "+
+					el.getProgetto().getCd_progetto()+"(" + 
+					new it.cnr.contab.util.EuroFormat().format(el.getImpNegativiCdrPersonale()) +
+					") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
+					new it.cnr.contab.util.EuroFormat().format(el.getImpPositiviCdrPersonale()) + ")");});
+
+		//CONTROLLI SUL TOTALE PROGETTI
+		BigDecimal impNegativiPrgScaduti = listCtrlPianoEco.stream()
+				.filter(el->el.isScaduto(dataChiusura))
+				.filter(el->el.getImpNegativi().compareTo(BigDecimal.ZERO)>0)
+				.map(CtrlPianoEco::getImpNegativi)
+				.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+		
+		{
+		/**
+		 * 6. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale
+		 */
+			BigDecimal impPositiviCashFund = listCtrlPianoEco.stream()
+					.filter(el->!el.isScaduto(dataChiusura))
+					.map(CtrlPianoEco::getDett)
+					.flatMap(List::stream)
+					.filter(el->el.isNaturaReimpiego()||el.isCdrPersonale())
+					.filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
+					.map(CtrlPianoEcoDett::getImporto)
+					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			
+			if (impNegativiPrgScaduti.compareTo(BigDecimal.ZERO)>0 && impNegativiPrgScaduti.compareTo(impPositiviCashFund)>0)
+				throw new ApplicationException("Attenzione! Risultano prelievi da progetti scaduti"
+						+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)
+						+ " che non risultano totalmente coperti da variazioni a favore"
+						+ " di GAE di natura 6 - 'Reimpiego di risorse' o del CDR Personale ("
+						+ new it.cnr.contab.util.EuroFormat().format(impPositiviCashFund)+").");
+		}
+		{
+		/**
+		 * 7. se un progetto è attivo se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
+		 */
+			BigDecimal impSaldoPrgAttiviNaturaReimpiego = listCtrlPianoEco.stream()
+					.filter(el->!el.isScaduto(dataChiusura))
+					.map(CtrlPianoEco::getDett)
+					.flatMap(List::stream)
+					.filter(el->!el.isUoArea())
+					.filter(el->!el.isCdrPersonale())
+					.filter(el->el.isNaturaReimpiego())
+					.map(CtrlPianoEcoDett::getImporto)
+					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+			if (impSaldoPrgAttiviNaturaReimpiego.compareTo(BigDecimal.ZERO)<0) {
+				//Vuol dire che ho ridotto progetti attivi sulla natura 6 per cui deve essere bilanciato solo con Aree
+				BigDecimal impSaldoPrgAttiviAreeNaturaReimpiego = listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.map(CtrlPianoEco::getDett)
+						.flatMap(List::stream)
+						.filter(el->el.isUoArea())
+						.filter(el->el.isNaturaReimpiego())
+						.map(CtrlPianoEcoDett::getImporto)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+				if (impSaldoPrgAttiviAreeNaturaReimpiego.compareTo(BigDecimal.ZERO)<0 ||
+						impSaldoPrgAttiviAreeNaturaReimpiego.abs().compareTo(impSaldoPrgAttiviNaturaReimpiego.abs())!=0)
+					throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
+							+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviNaturaReimpiego.abs())
+							+ " su GAE di natura 6 che non risultano totalmente coperti da variazioni a favore"
+							+ " di Aree su GAE di natura 6 ("
+							+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviAreeNaturaReimpiego.abs())+").");						
+			}
+		}
+		{
+		/**
+		 * 8. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o 
+		 *    al CDR Personale
+		 */
+			BigDecimal impSaldoPrgAttiviFonteEsterna = listCtrlPianoEco.stream()
+					.filter(el->!el.isScaduto(dataChiusura))
+					.map(CtrlPianoEco::getDett)
+					.flatMap(List::stream)
+					.filter(el->!el.isUoArea())
+					.filter(el->!el.isCdrPersonale())
+					.filter(el->el.isNaturaFonteEsterna())
+					.map(CtrlPianoEcoDett::getImporto)
+					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+			if (impSaldoPrgAttiviFonteEsterna.compareTo(BigDecimal.ZERO)<0) {
+				//Vuol dire che ho ridotto progetti attivi sulle fonti esterne per cui deve essere bilanciato solo con Aree di uguale natura o
+				// con CDR Personale
+				BigDecimal impSaldoPrgAttiviCashFund = listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.map(CtrlPianoEco::getDett)
+						.flatMap(List::stream)
+						.filter(el->el.isUoArea()||el.isCdrPersonale())
+						.filter(el->el.isUoArea()?el.isNaturaFonteEsterna():Boolean.TRUE)
+						.map(CtrlPianoEcoDett::getImporto)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+				if (impSaldoPrgAttiviCashFund.compareTo(BigDecimal.ZERO)<0 ||
+						impSaldoPrgAttiviCashFund.abs().compareTo(impSaldoPrgAttiviFonteEsterna.abs())!=0)
+					throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
+							+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviFonteEsterna.abs())
+							+ " su GAE Fonte Esterna che non risultano totalmente coperti da variazioni a favore"
+							+ " di Aree su GAE Fonte Esterna o CDR Personale ("
+							+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviCashFund.abs())+").");						
+			}
+		}
+		BigDecimal impPositiviNaturaReimpiego = listCtrlPianoEco.stream()
+				.filter(el->el.getImpPositiviNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
+				.map(CtrlPianoEco::getImpPositiviNaturaReimpiego)
+				.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+		
+		{
+			/**
+			 * 2. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
+			 * 		a. un progetto scaduto
+			 * 		b. dalla voce speciale (11048)
+			 */
+			if (impPositiviNaturaReimpiego.compareTo(BigDecimal.ZERO)>0) {
+				BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.filter(el->el.getImpNegativiVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
+						.map(CtrlPianoEco::getImpNegativiVoceSpeciale)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				boolean existsPrgScaduti = impNegativiPrgScaduti.compareTo(BigDecimal.ZERO)>0;
+				boolean existsVoceSpeciale = impNegativiVoceSpecialePrgInCorso.compareTo(BigDecimal.ZERO)>0;
+				if (impPositiviNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso))!=0)
+					throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
+							+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impPositiviNaturaReimpiego)
+							+ " che non corrisponde all'importo prelevato da"
+							+ (existsPrgScaduti?" progetti scaduti ":"")
+							+ (existsPrgScaduti&&existsVoceSpeciale?"e da":"")
+							+ (existsVoceSpeciale?"lla Voce "+cdVoceSpeciale:"")
+							+" ("
+							+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)+").");
+			}
+		}
+		{
+			/**
+			 * 5. non è possibile attribuire fondi alla voce speciale (11048)
+			 */
+			BigDecimal impPositiviVoceSpeciale = listCtrlPianoEco.stream()
+					.filter(el->el.getImpPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
+					.map(CtrlPianoEco::getImpPositiviVoceSpeciale)
+					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			
+			if (impPositiviVoceSpeciale.compareTo(BigDecimal.ZERO)>0)
+				throw new ApplicationException("Attenzione! Non è possibile attribuire fondi alla voce "
+						+ cdVoceSpeciale + " ("
+						+ new it.cnr.contab.util.EuroFormat().format(impPositiviVoceSpeciale)+").");
+		}
+		{
+			/**
+			 * 6. se vengono spostate somme dalla voce speciale (11048) devono essere girate a GaeNatura6
+			 */
+			BigDecimal impNegativiVoceSpeciale = listCtrlPianoEco.stream()
+					.filter(el->el.getImpNegativiVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
+					.map(CtrlPianoEco::getImpNegativiVoceSpeciale)
+					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				if (impNegativiVoceSpeciale.compareTo(BigDecimal.ZERO)>0 && impNegativiVoceSpeciale.compareTo(impPositiviNaturaReimpiego)>0)
+				throw new ApplicationException("Attenzione! Risultano prelievi dalla voce " + cdVoceSpeciale
+						+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impNegativiVoceSpeciale)
+						+ " che non risultano totalmente coperto da variazioni a favore"
+						+ " di GAE di natura 6 - 'Reimpiego di risorse' ("
+						+ new it.cnr.contab.util.EuroFormat().format(impPositiviNaturaReimpiego)+").");
+		}
+	}
 }

@@ -61,10 +61,8 @@
 			 <% if (bp.getParametriCnr().getFl_nuovo_pdg().booleanValue()) { %>
 			   <tr>
 					<% controller.writeFormField(out,"missione"); %>
-		        	<td colspan="2">
-		        		<% controller.writeFormLabel(out,"programma"); %>
-		        		<% controller.writeFormInput(out,"programma"); %>
-		        	</td>
+		        	<% controller.writeFormField(out,"programma"); %>
+		        	<% controller.writeFormField(out,"natura"); %>
 		        </tr>   
 	        <% } %>
 			<tr>
