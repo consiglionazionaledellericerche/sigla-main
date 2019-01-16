@@ -5625,5 +5625,14 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
 	
 		catch(Throwable e) {return handleException(context,e);}
 	}
+	public Forward doBlankSearchCig(ActionContext context, Obbligazione_scadenzarioBulk obbl) {
 
+		if (obbl!=null){
+			CRUDFatturaPassivaBP bp = (CRUDFatturaPassivaBP)getBusinessProcess(context);
+			obbl.setCig(null);
+			bp.setDirty(true);
+		}
+		return context.findDefaultForward();
+
+	}
 }
