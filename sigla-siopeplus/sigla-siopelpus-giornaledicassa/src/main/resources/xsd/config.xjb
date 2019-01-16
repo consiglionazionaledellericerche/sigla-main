@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+               xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify" extensionBindingPrefixes="simplify"
+               jaxb:extensionBindingPrefixes="xjc"
+               version="2.0">
+        <jaxb:bindings schemaLocation="OPI_GIORNALE_DI_CASSA_V_1_3_1a.xsd" >
+            <jaxb:bindings node="//xs:element[@name='flusso_giornale_di_cassa']">
+              <jaxb:class ref="it.siopeplus.giornaledicassa.FlussoGiornaleDiCassa"/>
+            </jaxb:bindings>
+        </jaxb:bindings>
+</jaxb:bindings>
