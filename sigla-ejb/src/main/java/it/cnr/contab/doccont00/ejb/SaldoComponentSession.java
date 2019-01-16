@@ -8,6 +8,7 @@ import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 @Remote
@@ -35,4 +36,6 @@ Voce_f_saldi_cdr_lineaBulk aggiornaVariazioneStanziamento(UserContext userContex
 void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_modulo_costiBulk moduloCosti, boolean isFromChangeStato) throws ComponentException,java.rmi.RemoteException;
 void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException,java.rmi.RemoteException;
 String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException,java.rmi.RemoteException;
+void checkPdgPianoEconomico(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,java.rmi.RemoteException;
+void checkPdgPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException,java.rmi.RemoteException;
 }

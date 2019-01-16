@@ -473,4 +473,38 @@ public String getMessaggioSfondamentoPianoEconomico(it.cnr.jada.UserContext para
 		}
 	}
 }
+public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		invoke("checkPdgPianoEconomico",new Object[] {
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param2) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		invoke("checkPdgPianoEconomico",new Object[] {
+			param1,
+			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }

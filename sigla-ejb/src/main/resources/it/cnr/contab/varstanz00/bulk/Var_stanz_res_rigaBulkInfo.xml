@@ -84,6 +84,16 @@
 		nullable="false"
 		label="Programma" />    
     <fieldProperty
+		name="natura"
+		property="linea_di_attivita.natura.cd_natura"
+		descProperty="linea_di_attivita.natura.ds_natura"
+		inputType="DESCTOOL"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		inputSize="5"
+		nullable="false"
+		label="Natura" />
+    <fieldProperty
         name="modulo_di_attivita"
         property="linea_di_attivita.progetto"
         inputType="SEARCHTOOL"
@@ -203,6 +213,8 @@
 		name="missione" />	
 	<formFieldProperty
 		name="programma" />		
+	<formFieldProperty
+		name="natura" />		
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
