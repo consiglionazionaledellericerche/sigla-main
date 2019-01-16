@@ -257,6 +257,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>it.cnr</groupId>
+            <artifactId>sigla-siopeplus-giornaledicassa</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>it.cnr.commons</groupId>
             <artifactId>firmadigitale</artifactId>
             <version>1.12</version>
