@@ -5,6 +5,7 @@ import java.util.Date;
 public class Risultato {
     private Integer progFlusso;
     private Integer progEsitoApplicativo;
+    private Integer progGiornale;
     private Date dataProduzione;
     private Date dataUpload;
     private Boolean download;
@@ -63,6 +64,14 @@ public class Risultato {
         this.progEsitoApplicativo = progEsitoApplicativo;
     }
 
+    public Integer getProgGiornale() {
+        return progGiornale;
+    }
+
+    public void setProgGiornale(Integer progGiornale) {
+        this.progGiornale = progGiornale;
+    }
+
     public Exception getError() {
         return error;
     }
@@ -76,10 +85,12 @@ public class Risultato {
         return "Risultato{" +
                 "progFlusso=" + progFlusso +
                 ", progEsitoApplicativo=" + progEsitoApplicativo +
+                ", progGiornale=" + progGiornale +
                 ", dataProduzione=" + dataProduzione +
                 ", dataUpload=" + dataUpload +
                 ", download=" + download +
                 ", location='" + location + '\'' +
+                ", error=" + error +
                 '}';
     }
 }
