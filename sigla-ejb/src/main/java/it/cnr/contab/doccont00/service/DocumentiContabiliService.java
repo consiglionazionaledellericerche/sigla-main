@@ -49,6 +49,7 @@ import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.siopeplus.*;
 import it.siopeplus.giornaledicassa.FlussoGiornaleDiCassa;
+import it.siopeplus.giornaledicassa.InformazioniContoEvidenza;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.mail.EmailAttachment;
@@ -468,92 +469,103 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     flusso.setToBeCreated();
                     return flusso;
                 });
-        flussoGiornaleDiCassa.getInformazioniContoEvidenza()
-                .stream()
-                .forEach(informazioniContoEvidenza -> {
-                    InformazioniContoEvidenzaBulk infoBulk = new InformazioniContoEvidenzaBulk(
+        for(InformazioniContoEvidenza informazioniContoEvidenza : flussoGiornaleDiCassa.getInformazioniContoEvidenza()) {
+            InformazioniContoEvidenzaBulk infoBulk =  Optional.ofNullable(
+                    crudComponentSession.findByPrimaryKey(userContext,new InformazioniContoEvidenzaBulk(
                             flussoGiornaleDiCassa.getEsercizio(),
                             identificativoFlusso,
-                            informazioniContoEvidenza.getContoEvidenza());
-                    infoBulk.setDescrizioneContoEvidenza(informazioniContoEvidenza.getDescrizioneContoEvidenza());
-                    infoBulk.setSaldoPrecedenteContoEvid(informazioniContoEvidenza.getSaldoPrecedenteContoEvidenza());
-                    infoBulk.setTotaleEntrateContoEvidenza(informazioniContoEvidenza.getTotaleEntrateContoEvidenza());
-                    infoBulk.setTotaleUsciteContoEvidenza(informazioniContoEvidenza.getTotaleUsciteContoEvidenza());
-                    infoBulk.setSaldoFinaleContoEvidenza(informazioniContoEvidenza.getSaldoFinaleContoEvidenza());
-                    AtomicInteger index = new AtomicInteger();
-                    informazioniContoEvidenza.getMovimentoContoEvidenza()
-                            .stream()
-                            .forEach(movimentoContoEvidenza -> {
-                                MovimentoContoEvidenzaBulk movBulk = new MovimentoContoEvidenzaBulk(
-                                        flussoGiornaleDiCassa.getEsercizio(),
-                                        identificativoFlusso,
-                                        informazioniContoEvidenza.getContoEvidenza(),
-                                        "I",
-                                        new Long(index.getAndIncrement()));
-                                movBulk.setTipoMovimento(movimentoContoEvidenza.getTipoMovimento());
-                                movBulk.setTipoDocumento(movimentoContoEvidenza.getTipoDocumento());
-                                movBulk.setTipoOperazione(movimentoContoEvidenza.getTipoOperazione());
-                                movBulk.setTiPagamentoFunzDelegato(movimentoContoEvidenza.getTipologiaPagamentoFunzionarioDelegato());
-                                movBulk.setNumPagFunzDelegato(movimentoContoEvidenza.getNumeroPagamentoFunzionarioDelegato());
-                                movBulk.setNumeroDocumento(movimentoContoEvidenza.getNumeroDocumento());
-                                movBulk.setProgressivoDocumento(movimentoContoEvidenza.getProgressivoDocumento().longValue());
-                                movBulk.setImporto(movimentoContoEvidenza.getImporto());
-                                movBulk.setImportoRitenute(movimentoContoEvidenza.getImportoRitenute());
-                                if (movimentoContoEvidenza.getNumeroBollettaQuietanza()!=null)
-                                    movBulk.setNumeroBollettaQuietanza(movimentoContoEvidenza.getNumeroBollettaQuietanza().toString());
-                                if (movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno()!=null)
-                                    movBulk.setNumeroBollettaQuietanzaS(movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno().toString());
-                                movBulk.setDataMovimento(new Timestamp(movimentoContoEvidenza.getDataMovimento().toGregorianCalendar().getTime().getTime()));
-                                movBulk.setDataValutaEnte(new Timestamp(movimentoContoEvidenza.getDataValutaEnte().toGregorianCalendar().getTime().getTime()));
-                                movBulk.setTipoEsecuzione(movimentoContoEvidenza.getTipoEsecuzione());
-                                movBulk.setCoordinate(movimentoContoEvidenza.getCoordinate());
-                                movBulk.setCodiceRifOperazione(movimentoContoEvidenza.getCodiceRiferimentoOperazione());
-                                movBulk.setCodiceRifInterno(movimentoContoEvidenza.getCodiceRiferimentoInterno());
-                                movBulk.setTipoContabilita(movimentoContoEvidenza.getTipoContabilita());
-                                movBulk.setDestinazione(movimentoContoEvidenza.getDestinazione());
-                                movBulk.setAssoggettamentoBollo(movimentoContoEvidenza.getAssoggettamentoBollo());
-                                movBulk.setImportoBollo(movimentoContoEvidenza.getImportoBollo());
-                                movBulk.setAssoggettamentoSpese(movimentoContoEvidenza.getAssoggettamentoSpese());
-                                movBulk.setImportoSpese(movimentoContoEvidenza.getImportoSpese());
-                                movBulk.setAssoggettamentoCommissioni(movimentoContoEvidenza.getAssoggettamentoCommissioni());
-                                movBulk.setImportoCommissioni(movimentoContoEvidenza.getImportoCommissioni());
-                                if (movimentoContoEvidenza.getCliente()!=null){
-                                    movBulk.setAnagraficaCliente(movimentoContoEvidenza.getCliente().getAnagraficaCliente());
-                                    movBulk.setIndirizzoCliente(movimentoContoEvidenza.getCliente().getIndirizzoCliente());
-                                    movBulk.setCapCliente(movimentoContoEvidenza.getCliente().getCapCliente());
-                                    movBulk.setLocalitaCliente(movimentoContoEvidenza.getCliente().getLocalitaCliente());
-                                    movBulk.setProvinciaCliente(movimentoContoEvidenza.getCliente().getProvinciaCliente());
-                                    movBulk.setStatoCliente(movimentoContoEvidenza.getCliente().getStatoCliente());
-                                    movBulk.setPartitaIvaCliente(movimentoContoEvidenza.getCliente().getPartitaIvaCliente());
-                                    movBulk.setCodiceFiscaleCliente(movimentoContoEvidenza.getCliente().getCodiceFiscaleCliente());
-                                }
-                                if (movimentoContoEvidenza.getDelegato()!=null){
-                                    movBulk.setAnagraficaDelegato(movimentoContoEvidenza.getDelegato().getAnagraficaDelegato());
-                                    movBulk.setIndirizzoDelegato(movimentoContoEvidenza.getDelegato().getIndirizzoDelegato());
-                                    movBulk.setCapDelegato(movimentoContoEvidenza.getDelegato().getCapDelegato());
-                                    movBulk.setLocalitaDelegato(movimentoContoEvidenza.getDelegato().getLocalitaDelegato());
-                                    movBulk.setProvinciaDelegato(movimentoContoEvidenza.getDelegato().getProvinciaDelegato());
-                                    movBulk.setStatoDelegato(movimentoContoEvidenza.getDelegato().getStatoDelegato());
-                                    movBulk.setCodiceFiscaleDelegato(movimentoContoEvidenza.getDelegato().getCodiceFiscaleDelegato());
-                                }
-                                if (movimentoContoEvidenza.getCreditoreEffettivo()!=null){
-                                    movBulk.setAnagraficaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getAnagraficaCreditoreEffettivo());
-                                    movBulk.setIndirizzoCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getIndirizzoCreditoreEffettivo());
-                                    movBulk.setCapCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getCapCreditoreEffettivo());
-                                    movBulk.setLocalitaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getLocalitaCreditoreEffettivo());
-                                    movBulk.setProvinciaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getProvinciaCreditoreEffettivo());
-                                    movBulk.setStatoCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getStatoCreditoreEffettivo());
-                                    movBulk.setPartitaIvaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getPartitaIvaCreditoreEffettivo());
-                                    movBulk.setCodiceFiscaleCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getCodiceFiscaleCreditoreEffettivo());
-                                }
-                                movBulk.setCausale(movimentoContoEvidenza.getCausale());
-                                movBulk.setNumeroSospeso(movimentoContoEvidenza.getNumeroSospeso());
-                                movBulk.setToBeCreated();
-                                infoBulk.addToMovConto(movBulk);
-                            });
-                    infoBulk.setToBeCreated();
-                    flussoGiornaleDiCassaBulk.addToInfoConto(infoBulk);
-                });
+                            informazioniContoEvidenza.getContoEvidenza())
+                    ))
+                    .filter(InformazioniContoEvidenzaBulk.class::isInstance)
+                    .map(InformazioniContoEvidenzaBulk.class::cast)
+                    .orElseGet(() -> {
+                        InformazioniContoEvidenzaBulk informazioniContoEvidenzaBulk = new InformazioniContoEvidenzaBulk(
+                                flussoGiornaleDiCassa.getEsercizio(),
+                                identificativoFlusso,
+                                informazioniContoEvidenza.getContoEvidenza());
+                        informazioniContoEvidenzaBulk.setDescrizioneContoEvidenza(informazioniContoEvidenza.getDescrizioneContoEvidenza());
+                        informazioniContoEvidenzaBulk.setSaldoPrecedenteContoEvid(informazioniContoEvidenza.getSaldoPrecedenteContoEvidenza());
+                        informazioniContoEvidenzaBulk.setTotaleEntrateContoEvidenza(informazioniContoEvidenza.getTotaleEntrateContoEvidenza());
+                        informazioniContoEvidenzaBulk.setTotaleUsciteContoEvidenza(informazioniContoEvidenza.getTotaleUsciteContoEvidenza());
+                        informazioniContoEvidenzaBulk.setSaldoFinaleContoEvidenza(informazioniContoEvidenza.getSaldoFinaleContoEvidenza());
+                        informazioniContoEvidenzaBulk.setToBeCreated();
+                        return informazioniContoEvidenzaBulk;
+                    });
+
+            AtomicInteger index = new AtomicInteger();
+            informazioniContoEvidenza.getMovimentoContoEvidenza()
+                    .stream()
+                    .forEach(movimentoContoEvidenza -> {
+                        MovimentoContoEvidenzaBulk movBulk = new MovimentoContoEvidenzaBulk(
+                                flussoGiornaleDiCassa.getEsercizio(),
+                                identificativoFlusso,
+                                informazioniContoEvidenza.getContoEvidenza(),
+                                "I",
+                                new Long(index.getAndIncrement()));
+                        movBulk.setTipoMovimento(movimentoContoEvidenza.getTipoMovimento());
+                        movBulk.setTipoDocumento(movimentoContoEvidenza.getTipoDocumento());
+                        movBulk.setTipoOperazione(movimentoContoEvidenza.getTipoOperazione());
+                        movBulk.setTiPagamentoFunzDelegato(movimentoContoEvidenza.getTipologiaPagamentoFunzionarioDelegato());
+                        movBulk.setNumPagFunzDelegato(movimentoContoEvidenza.getNumeroPagamentoFunzionarioDelegato());
+                        movBulk.setNumeroDocumento(movimentoContoEvidenza.getNumeroDocumento());
+                        movBulk.setProgressivoDocumento(movimentoContoEvidenza.getProgressivoDocumento().longValue());
+                        movBulk.setImporto(movimentoContoEvidenza.getImporto());
+                        movBulk.setImportoRitenute(movimentoContoEvidenza.getImportoRitenute());
+                        if (movimentoContoEvidenza.getNumeroBollettaQuietanza()!=null)
+                            movBulk.setNumeroBollettaQuietanza(movimentoContoEvidenza.getNumeroBollettaQuietanza().toString());
+                        if (movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno()!=null)
+                            movBulk.setNumeroBollettaQuietanzaS(movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno().toString());
+                        movBulk.setDataMovimento(new Timestamp(movimentoContoEvidenza.getDataMovimento().toGregorianCalendar().getTime().getTime()));
+                        movBulk.setDataValutaEnte(new Timestamp(movimentoContoEvidenza.getDataValutaEnte().toGregorianCalendar().getTime().getTime()));
+                        movBulk.setTipoEsecuzione(movimentoContoEvidenza.getTipoEsecuzione());
+                        movBulk.setCoordinate(movimentoContoEvidenza.getCoordinate());
+                        movBulk.setCodiceRifOperazione(movimentoContoEvidenza.getCodiceRiferimentoOperazione());
+                        movBulk.setCodiceRifInterno(movimentoContoEvidenza.getCodiceRiferimentoInterno());
+                        movBulk.setTipoContabilita(movimentoContoEvidenza.getTipoContabilita());
+                        movBulk.setDestinazione(movimentoContoEvidenza.getDestinazione());
+                        movBulk.setAssoggettamentoBollo(movimentoContoEvidenza.getAssoggettamentoBollo());
+                        movBulk.setImportoBollo(movimentoContoEvidenza.getImportoBollo());
+                        movBulk.setAssoggettamentoSpese(movimentoContoEvidenza.getAssoggettamentoSpese());
+                        movBulk.setImportoSpese(movimentoContoEvidenza.getImportoSpese());
+                        movBulk.setAssoggettamentoCommissioni(movimentoContoEvidenza.getAssoggettamentoCommissioni());
+                        movBulk.setImportoCommissioni(movimentoContoEvidenza.getImportoCommissioni());
+                        if (movimentoContoEvidenza.getCliente()!=null){
+                            movBulk.setAnagraficaCliente(movimentoContoEvidenza.getCliente().getAnagraficaCliente());
+                            movBulk.setIndirizzoCliente(movimentoContoEvidenza.getCliente().getIndirizzoCliente());
+                            movBulk.setCapCliente(movimentoContoEvidenza.getCliente().getCapCliente());
+                            movBulk.setLocalitaCliente(movimentoContoEvidenza.getCliente().getLocalitaCliente());
+                            movBulk.setProvinciaCliente(movimentoContoEvidenza.getCliente().getProvinciaCliente());
+                            movBulk.setStatoCliente(movimentoContoEvidenza.getCliente().getStatoCliente());
+                            movBulk.setPartitaIvaCliente(movimentoContoEvidenza.getCliente().getPartitaIvaCliente());
+                            movBulk.setCodiceFiscaleCliente(movimentoContoEvidenza.getCliente().getCodiceFiscaleCliente());
+                        }
+                        if (movimentoContoEvidenza.getDelegato()!=null){
+                            movBulk.setAnagraficaDelegato(movimentoContoEvidenza.getDelegato().getAnagraficaDelegato());
+                            movBulk.setIndirizzoDelegato(movimentoContoEvidenza.getDelegato().getIndirizzoDelegato());
+                            movBulk.setCapDelegato(movimentoContoEvidenza.getDelegato().getCapDelegato());
+                            movBulk.setLocalitaDelegato(movimentoContoEvidenza.getDelegato().getLocalitaDelegato());
+                            movBulk.setProvinciaDelegato(movimentoContoEvidenza.getDelegato().getProvinciaDelegato());
+                            movBulk.setStatoDelegato(movimentoContoEvidenza.getDelegato().getStatoDelegato());
+                            movBulk.setCodiceFiscaleDelegato(movimentoContoEvidenza.getDelegato().getCodiceFiscaleDelegato());
+                        }
+                        if (movimentoContoEvidenza.getCreditoreEffettivo()!=null){
+                            movBulk.setAnagraficaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getAnagraficaCreditoreEffettivo());
+                            movBulk.setIndirizzoCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getIndirizzoCreditoreEffettivo());
+                            movBulk.setCapCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getCapCreditoreEffettivo());
+                            movBulk.setLocalitaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getLocalitaCreditoreEffettivo());
+                            movBulk.setProvinciaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getProvinciaCreditoreEffettivo());
+                            movBulk.setStatoCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getStatoCreditoreEffettivo());
+                            movBulk.setPartitaIvaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getPartitaIvaCreditoreEffettivo());
+                            movBulk.setCodiceFiscaleCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getCodiceFiscaleCreditoreEffettivo());
+                        }
+                        movBulk.setCausale(movimentoContoEvidenza.getCausale());
+                        movBulk.setNumeroSospeso(movimentoContoEvidenza.getNumeroSospeso());
+                        movBulk.setToBeCreated();
+                        infoBulk.addToMovConto(movBulk);
+                    });
+            flussoGiornaleDiCassaBulk.addToInfoConto(infoBulk);
+
+        }
         flussoGiornaleDiCassaBulk.setSaldoComplessivoPrec(flussoGiornaleDiCassa.getSaldoComplessivoPrecedente());
         flussoGiornaleDiCassaBulk.setTotaleComplessivoEntrate(flussoGiornaleDiCassa.getTotaleComplessivoEntrate());
         flussoGiornaleDiCassaBulk.setTotaleComplessivoUscite(flussoGiornaleDiCassa.getTotaleComplessivoUscite());
