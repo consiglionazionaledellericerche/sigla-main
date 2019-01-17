@@ -4,7 +4,10 @@
 */
 package it.cnr.contab.doccont00.consultazioni.bulk;
 import java.util.List;
+import java.util.Optional;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.service.ContabiliService;
@@ -18,6 +21,9 @@ import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import javax.persistence.PersistenceException;
+
 public class V_cons_stato_invio_reversaliHome extends BulkHome {
 	private ContabiliService contabiliService;
 	
@@ -33,17 +39,19 @@ public class V_cons_stato_invio_reversaliHome extends BulkHome {
 	}
 	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause) throws PersistencyException
 	{
+		Configurazione_cnrHome configurazione_cnrHome = Optional.ofNullable(getHomeCache().getHome(Configurazione_cnrBulk.class))
+				.filter(Configurazione_cnrHome.class::isInstance)
+				.map(Configurazione_cnrHome.class::cast)
+				.orElseThrow(() -> new PersistenceException("Home Configurazione_cnrHome non trovata!"));
+
 		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
 		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(usercontext));
-	
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
-	
 		//	Se uo 999.000 in scrivania: visualizza tutto l'elenco
-		if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-	
+		if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa()) &&
+				!configurazione_cnrHome.isUOSpecialeTuttaSAC(CNRUserContext.getCd_unita_organizzativa(usercontext))){
 			sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(usercontext));
-		}	
-		//sql.addOrderBy("CD_CDS, PG_REVERSALE");
+		}
 		return sql;
 	}	
 	@Override
