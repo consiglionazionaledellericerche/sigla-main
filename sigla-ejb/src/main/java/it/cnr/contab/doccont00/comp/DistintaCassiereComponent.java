@@ -26,6 +26,8 @@ import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -5875,4 +5877,20 @@ public class DistintaCassiereComponent extends
         }
         clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
     }
+
+    public Long findMaxMovimentoContoEvidenza(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {
+        MovimentoContoEvidenzaHome movimentoContoEvidenzaHome = Optional.ofNullable(getHome(userContext, MovimentoContoEvidenzaBulk.class))
+                .filter(MovimentoContoEvidenzaHome.class::isInstance)
+                .map(MovimentoContoEvidenzaHome.class::cast)
+                .orElseThrow(() -> new ComponentException("Home MovimentoContoEvidenzaHome non trovata!"));
+        try {
+            return Optional.ofNullable(movimentoContoEvidenzaHome.findMax(movimentoContoEvidenzaBulk, "progressivo"))
+                    .filter(Long.class::isInstance)
+                    .map(Long.class::cast)
+                    .orElse(new Long(0));
+        } catch (PersistencyException e) {
+           throw handleException(e);
+        }
+    }
+
 }
