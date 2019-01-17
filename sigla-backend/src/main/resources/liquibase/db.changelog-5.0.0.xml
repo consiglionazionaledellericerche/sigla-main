@@ -1782,4 +1782,9 @@ TRASPORTO_AEREO"/>
           <column name="CD_CIG"/>
        </createIndex>
     </changeSet>
+    <changeSet author="marco.spasiano" id="alter-table-movimento-conto-evidenza-anagrafica-cliente">
+        <update tableName="movimento_conto_evidenza">
+            <column name="anagrafica_cliente" type="VARCHAR(250)"/>
+        </update>
+    </changeSet>
 </databaseChangeLog>
