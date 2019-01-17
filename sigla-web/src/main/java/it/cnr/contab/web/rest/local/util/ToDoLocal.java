@@ -18,7 +18,8 @@ public interface ToDoLocal {
         FirmaDigitaleDOC1210BP("DOCINTCASFIRMAD1210"),
         CRUDFatturaPassivaElettronicaBP("AMMFATTURDOCELEPASS"),
         CRUDMissioneBP("AMMMISSIOCOREMISSIOM"),
-        DocumentiAmministrativiFatturazioneElettronicaBP("AMMDOCFATTELETTVM");
+        DocumentiAmministrativiFatturazioneElettronicaBP("AMMDOCFATTELETTVM"),
+        CRUDDistintaCassiereBP("DOCINTCASCOREDISCASF");
 
         private final String cdAccesso;
 
