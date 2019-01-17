@@ -164,7 +164,7 @@
 			columnName="ANAGRAFICA_CLIENTE"
 			propertyName="anagraficaCliente"
 			sqlTypeName="VARCHAR"
-			columnSize="50"
+			columnSize="250"
 			nullable="true" />
 		<columnMapping
 			columnName="INDIRIZZO_CLIENTE"
