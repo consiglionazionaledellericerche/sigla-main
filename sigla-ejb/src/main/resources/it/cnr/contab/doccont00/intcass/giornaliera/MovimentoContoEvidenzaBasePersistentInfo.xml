@@ -170,7 +170,7 @@
 			columnName="INDIRIZZO_CLIENTE"
 			propertyName="indirizzoCliente"
 			sqlTypeName="VARCHAR"
-			columnSize="50"
+			columnSize="250"
 			nullable="true" />
 		<columnMapping
 			columnName="CAP_CLIENTE"
