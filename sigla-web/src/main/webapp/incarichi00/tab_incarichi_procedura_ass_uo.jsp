@@ -21,11 +21,11 @@
 		</td>
 		<td>
 		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-right" : bp.encodePath("img/doublerightarrow24.gif"),
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-right" : bp.encodePath("img/doublerightarrow24.gif"),
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right faa-passing" : bp.encodePath("img/doublerightarrow24.gif"),
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right" : bp.encodePath("img/doublerightarrow24.gif"),
 				null,
 				"javascript:submitForm('doAggiungiUO')",
-				"btn-secondary btn-outline-info btn-title btn-block",
+				"btn-outline-primary faa-parent animated-hover btn-title btn-block",
 				bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
 				bp.getParentRoot().isBootstrap()); %>
 		</td>
@@ -36,11 +36,11 @@
 	<tr>
 		<td>
 		<% JSPUtils.button(out,
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-left" : bp.encodePath("img/doubleleftarrow24.gif"),
-				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-hand-o-left" : bp.encodePath("img/doubleleftarrow24.gif"),
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left faa-passing-reverse" : bp.encodePath("img/doubleleftarrow24.gif"),
+				bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left" : bp.encodePath("img/doubleleftarrow24.gif"),
 				null,
 				"javascript:submitForm('doRimuoviUO')",
-				"btn-secondary btn-outline-info btn-title btn-block",
+				"btn-outline-primary faa-parent animated-hover btn-title btn-block",
 				bp.getCrudAssUO().isEnabled()&& bp.getStatus()!=bp.VIEW,
 				bp.getParentRoot().isBootstrap()); %>		
 		</td>
