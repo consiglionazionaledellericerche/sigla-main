@@ -263,7 +263,9 @@
 	<columnSet
 	        name="rigaVariazione">
         	<columnFieldProperty
-        		name="cd_linea_attivita" />
+        		name="cd_linea_attivita" 
+				descProperty="linea_di_attivita.dett_progetto"
+				inputType="DESCTOOL"/>
         	<columnFieldProperty
         		name="cd_elemento_voce" />
         	<columnFieldProperty
