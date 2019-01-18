@@ -335,7 +335,8 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 	        TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP) getBusinessProcess(context);
 			bp.completeSearchTools(context, bp);
 	        bp.validate(context);
-        	return openConfirm(context, "Attenzione! Il progetto sarà messo in stato \"CHIUSO\". Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmChiusuraOf");
+        	return openConfirm(context, "Attenzione! Il progetto sarà messo in stato \"CHIUSO\" e verrà impostata la data di fine uguale alla data odierna. "
+        			+ "Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmChiusuraOf");
 		}		
 		catch(Throwable e) 
 		{

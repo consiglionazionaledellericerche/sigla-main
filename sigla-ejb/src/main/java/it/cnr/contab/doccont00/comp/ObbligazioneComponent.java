@@ -112,6 +112,7 @@ import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
@@ -1677,22 +1678,25 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
 				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, linea.getProgetto());
 				getHomeCache(userContext).fetchAll(userContext);
-				if (progetto.isPianoEconomicoRequired()) {
+				Optional.ofNullable(progetto.getOtherField())
+						.filter(el->!(el.isStatoApprovato()||el.isStatoChiuso()))
+						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+								+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
+				if (progetto.isDatePianoEconomicoRequired()) {
 					Optional.ofNullable(progetto.getOtherField().getDtInizio())
 						.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
 						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
 								+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
 								+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
 								+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
-
-					Optional.ofNullable(
-							Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+				}
+				Optional.ofNullable(
+					Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
 						.filter(dt->!dt.before(obbligazione.getDt_registrazione()))
 						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
 								+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
 								+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
 								+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
-				}
 			}
 		}
 	} catch ( Exception e )
