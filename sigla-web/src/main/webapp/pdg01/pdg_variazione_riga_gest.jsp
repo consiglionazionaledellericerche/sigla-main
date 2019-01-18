@@ -105,8 +105,6 @@
 		<td colspan="2">
 			<% bp.getRigheVariazioneGestionale().writeFormLabel(out,"programma");%>
 			<% bp.getRigheVariazioneGestionale().writeFormInput(out,"programma");%>
-			<% bp.getRigheVariazioneGestionale().writeFormLabel(out,"natura");%>
-			<% bp.getRigheVariazioneGestionale().writeFormInput(out,"natura");%>
 		</td>
 	</tr>
 	<% } %>
