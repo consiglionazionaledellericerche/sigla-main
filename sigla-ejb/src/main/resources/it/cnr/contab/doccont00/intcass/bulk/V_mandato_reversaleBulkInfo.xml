@@ -662,5 +662,6 @@
             name="ti_cc_bi"/>
     <findFieldProperty
             name="im_ritenute"/>
-
+    <findFieldProperty
+        name="esitoOperazione"/>
 </bulkInfo>
