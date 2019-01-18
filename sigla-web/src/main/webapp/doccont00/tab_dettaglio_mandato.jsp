@@ -69,7 +69,7 @@
 						<td  width="4%" align="center">
 						    <% JSPUtils.button(out,
 							    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right faa-passing" : "img/doublerightarrow24.gif",
-							    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right faa-passing" : "img/doublerightarrow24.gif",
+							    bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right" : "img/doublerightarrow24.gif",
 							    null,
 							    "javascript:submitForm('doRimuoviCodiceSiope')",
 							    "btn-outline-primary faa-parent animated-hover",
@@ -83,8 +83,8 @@
 					<tr>
 						<td align="center">
 						    <% JSPUtils.button(out,
-						        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left faa-passing" : bp.encodePath("img/doubleleftarrow24.gif"),
-						        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left faa-passing" : bp.encodePath("img/doubleleftarrow24.gif"),
+						        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left faa-passing-reverse" : bp.encodePath("img/doubleleftarrow24.gif"),
+						        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left" : bp.encodePath("img/doubleleftarrow24.gif"),
                                 null,
 						        "javascript:submitForm('doAggiungiCodiceSiope')",
 						        "btn-outline-primary faa-parent animated-hover",
