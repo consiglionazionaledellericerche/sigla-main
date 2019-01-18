@@ -235,4 +235,28 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 			   getTi_tipo_variazione().equals(NON_DEFINITO) ||
 			   getTi_tipo_variazione().equals(PRELIEVO_FONDI));
     }
+    
+    public boolean isVariazionePositivaStessoIstituto() {
+    	return VARIAZIONE_POSITIVA_STESSO_ISTITUTO.equals(this.getTi_tipo_variazione());
+    }
+
+    public boolean isVariazioneNegativaStessoIstituto() {
+    	return VARIAZIONE_NEGATIVA_STESSO_ISTITUTO.equals(this.getTi_tipo_variazione());
+    }
+    
+    public boolean isVariazionePositivaIstitutiDiversi() {
+    	return VARIAZIONE_POSITIVA_ISTITUTI_DIVERSI.equals(this.getTi_tipo_variazione());
+    }
+
+    public boolean isVariazioneNegativaIstitutiDiversi() {
+    	return VARIAZIONE_NEGATIVA_ISTITUTI_DIVERSI.equals(this.getTi_tipo_variazione());
+    }
+
+    public boolean isVariazioneMaggioriEntrateSpese() {
+    	return this.isVariazionePositivaStessoIstituto() || this.isVariazionePositivaIstitutiDiversi();
+    }
+
+    public boolean isVariazioneMinoriEntrateSpese() {
+    	return this.isVariazioneNegativaStessoIstituto() || this.isVariazioneNegativaIstitutiDiversi();
+    }
 }
