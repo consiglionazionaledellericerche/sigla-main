@@ -1,5 +1,7 @@
 package it.cnr.contab.config00.latt.bulk;
 
+import java.util.Optional;
+
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.FunzioneBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
@@ -7,6 +9,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -637,5 +640,19 @@ public void validate() throws ValidationException
 	}
 	public void setEsercizio(java.lang.Integer esercizio) {
 		this.esercizio = esercizio;
+	}
+	public java.lang.String getDett_progetto () {
+		String label = getDs_linea_attivita();
+		label = label.concat(Optional.ofNullable(getNatura()).map(el->"\rNatura: "+el.getCd_ds_natura()).orElse(null));
+		label = label.concat(Optional.ofNullable(getProgetto()).map(el->"\rProgetto: "+el.getCd_progetto()+" (id:"+el.getPg_progetto()+")").orElse(null));
+		label = label.concat(Optional.ofNullable(getProgetto())
+				.flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
+				.map(el->"\rFinanziamento: "+el.getCodice()+" - "+el.getDescrizione()).orElse(null));
+		label = label.concat(Optional.ofNullable(getProgetto())
+				.flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.map(el->Optional.ofNullable(el.getDtProroga()).orElse(Optional.ofNullable(el.getDtFine()).orElse(null)))
+				.map(dt->"\rScadenza: "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)).orElse(null));
+		return label;
 	}
 }
