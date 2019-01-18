@@ -164,12 +164,17 @@
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
 	  	<td colspan="3"><% bp.getController().writeFormInput( out, "dtInizioOf"); %></td>
-	  </tr>	  
+	  </tr>
+	  <% } %>	  
+      <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent() ||
+    		  Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).map(Progetto_other_fieldBulk::isStatoChiuso).orElse(Boolean.FALSE)) { %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtFineOf");%></td>
 	  	<td><% bp.getController().writeFormInput( out, "dtFineOf"); %></td>
+      <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  	<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
 	  	<td><% bp.getController().writeFormInput( out, "dtProrogaOf"); %></td>
+	  <% } %> 
 	  </tr>
 	  <% } %> 
 	  <tr>

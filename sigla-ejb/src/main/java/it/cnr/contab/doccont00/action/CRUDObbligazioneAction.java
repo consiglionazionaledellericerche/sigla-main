@@ -2,9 +2,7 @@ package it.cnr.contab.doccont00.action;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -23,7 +21,6 @@ import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP;
 import it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP;
 import it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP;
-import it.cnr.contab.doccont00.comp.ObbligazioneComponent;
 import it.cnr.contab.doccont00.core.bulk.MandatoAutomaticoWizardBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
@@ -40,15 +37,11 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
@@ -1003,34 +996,24 @@ public Forward handleException(ActionContext context, Throwable ex)
 					for ( Iterator s = vociList.iterator(); s.hasNext(); ) {
 						V_assestatoBulk voceSel = (V_assestatoBulk) s.next();
 						if (Optional.ofNullable(voceSel.getProgetto_dt_inizio())
-								.map(el->{
-									Calendar gc = GregorianCalendar.getInstance();
-									gc.setTime(el);
-									return gc;
-								})
-								.map(el->el.get(Calendar.YEAR)>CNRUserContext.getEsercizio(context.getUserContext()))
+								.map(dt->!dt.after(obbligazione.getDt_registrazione()))
 								.orElse(Boolean.FALSE)) {
 								bp.setMessage("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
 												+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(voceSel.getProgetto_dt_inizio())
 												+ ") del progetto "+voceSel.getCd_modulo()+" associato è successiva "
-												+ "rispetto all'anno contabile di scrivania. GAE non selezionabile.");
+												+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
 								return context.findDefaultForward();
 						}
 						if (Optional.ofNullable(
 								Optional.ofNullable(voceSel.getProgetto_dt_proroga()).orElse(voceSel.getProgetto_dt_fine()))
-								.map(el->{
-									Calendar gc = GregorianCalendar.getInstance();
-									gc.setTime(el);
-									return gc;
-								})
-								.map(el->el.get(Calendar.YEAR)<CNRUserContext.getEsercizio(context.getUserContext()))
+								.map(dt->!dt.before(obbligazione.getDt_registrazione()))
 								.orElse(Boolean.FALSE)) {
 								bp.setMessage("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
 												+ "La data fine/proroga ("
 												+ new java.text.SimpleDateFormat("dd/MM/yyyy")
 												.format(Optional.ofNullable(voceSel.getProgetto_dt_proroga()).orElse(voceSel.getProgetto_dt_fine()))
 												+ ") del progetto "+voceSel.getCd_modulo()+" associato è precedente "
-												+ "rispetto all'anno contabile di scrivania.");
+												+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
 								return context.findDefaultForward();
 						}
 					}
