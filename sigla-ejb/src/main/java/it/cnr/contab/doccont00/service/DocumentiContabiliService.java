@@ -492,7 +492,17 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         return informazioniContoEvidenzaBulk;
                     });
 
+
             AtomicInteger index = new AtomicInteger();
+            final MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk = new MovimentoContoEvidenzaBulk();
+            movimentoContoEvidenzaBulk.setEsercizio(flussoGiornaleDiCassa.getEsercizio());
+            movimentoContoEvidenzaBulk.setIdentificativoFlusso(identificativoFlusso);
+            index.set(
+                    distintaCassiereComponentSession.findMaxMovimentoContoEvidenza(
+                            userContext,
+                            movimentoContoEvidenzaBulk
+                    ).intValue()
+            );
             informazioniContoEvidenza.getMovimentoContoEvidenza()
                     .stream()
                     .forEach(movimentoContoEvidenza -> {
@@ -501,7 +511,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 identificativoFlusso,
                                 informazioniContoEvidenza.getContoEvidenza(),
                                 "I",
-                                new Long(index.getAndIncrement()));
+                                new Long(index.incrementAndGet()));
                         movBulk.setTipoMovimento(movimentoContoEvidenza.getTipoMovimento());
                         movBulk.setTipoDocumento(movimentoContoEvidenza.getTipoDocumento());
                         movBulk.setTipoOperazione(movimentoContoEvidenza.getTipoOperazione());
