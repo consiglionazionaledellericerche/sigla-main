@@ -13,4 +13,6 @@ public class MovimentoContoEvidenzaHome extends BulkHome {
 	public MovimentoContoEvidenzaHome(Connection conn, PersistentCache persistentCache) {
 		super(MovimentoContoEvidenzaBulk.class, conn, persistentCache);
 	}
+
+
 }
