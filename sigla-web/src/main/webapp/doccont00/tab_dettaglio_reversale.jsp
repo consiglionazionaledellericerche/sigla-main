@@ -61,9 +61,11 @@
 						</td>
 						<td  width="4%" align="center">
 							<% JSPUtils.button(out,
-									bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-right text-primary" : bp.encodePath("img/doublerightarrow24.gif"),
-									bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-right text-primary" : bp.encodePath("img/doublerightarrow24.gif"),
-									null,"javascript:submitForm('doRimuoviCodiceSiope')",
+									bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right faa-passing" : bp.encodePath("img/doublerightarrow24.gif"),
+									bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-right" : bp.encodePath("img/doublerightarrow24.gif"),
+									null,
+									"javascript:submitForm('doRimuoviCodiceSiope')",
+									"btn-outline-primary faa-parent animated-hover",
 									bp.isAggiungiRimuoviCodiciSiopeEnabled(),
 									bp.getParentRoot().isBootstrap()); %>
 						</td>
@@ -74,9 +76,11 @@
 					<tr>
 						<td align="center">
 						<% JSPUtils.button(out,
-								bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-left text-primary" : bp.encodePath("img/doubleleftarrow24.gif"),
-								bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-angle-double-left text-primary" : bp.encodePath("img/doubleleftarrow24.gif"),
-								null,"javascript:submitForm('doAggiungiCodiceSiope')",
+								bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left faa-passing-reverse" : bp.encodePath("img/doubleleftarrow24.gif"),
+								bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-long-arrow-left" : bp.encodePath("img/doubleleftarrow24.gif"),
+								null,
+								"javascript:submitForm('doAggiungiCodiceSiope')",
+								"btn-outline-primary faa-parent animated-hover",
 								bp.isAggiungiRimuoviCodiciSiopeEnabled(),
 								bp.getParentRoot().isBootstrap()); %>
 						</td>

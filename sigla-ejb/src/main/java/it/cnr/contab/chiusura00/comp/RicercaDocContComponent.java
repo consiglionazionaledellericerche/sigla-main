@@ -2014,7 +2014,7 @@ public SQLBuilder selectProgettiCollegatiGaeNonApprovatiForRibaltamento(UserCont
 	sqlGaeAccExist.openParenthesis(FindClause.AND);
 	sqlGaeAccExist.addSQLClause(FindClause.OR, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, Progetto_other_fieldBulk.STATO_APPROVATO);
 		sqlGaeAccExist.openParenthesis(FindClause.OR);
-			sqlGaeAccExist.addSQLClause(FindClause.AND, "TIPO_FINANZIAMENTO.FL_PIANO_ECO_FIN", SQLBuilder.EQUALS, Boolean.FALSE);
+			sqlGaeAccExist.addSQLClause(FindClause.AND, "TIPO_FINANZIAMENTO.FL_PIANO_ECO_FIN", SQLBuilder.EQUALS, "N");
 			sqlGaeAccExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.DT_FINE", SQLBuilder.ISNOTNULL, null);
 		sqlGaeAccExist.closeParenthesis();
 	sqlGaeAccExist.closeParenthesis();
