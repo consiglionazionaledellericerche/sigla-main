@@ -26,6 +26,8 @@ import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
+import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -67,6 +69,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class DistintaCassiereComponent extends
@@ -90,6 +93,9 @@ public class DistintaCassiereComponent extends
     public static final String FATT_ANALOGICA = "FATT_ANALOGICA";
     public static final String DOC_EQUIVALENTE = "DOC_EQUIVALENTE";
     public static final String REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
+
+    final String regexBic = "[A-Z|a-z||0-9]{11}|[A-Z|a-z||0-9]{8}";
+    final Pattern patternBic = Pattern.compile(regexBic, Pattern.MULTILINE);
 
     public DistintaCassiereComponent() {
     }
@@ -4749,7 +4755,8 @@ public class DistintaCassiereComponent extends
                 // deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
                         Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
-                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB,
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.BONIFICOESTEROEURO
                 ).contains(tipoPagamentoSiopePlus);
                 // deve esserci il Conto
                 boolean obb_conto = Arrays.asList(
@@ -4904,10 +4911,19 @@ public class DistintaCassiereComponent extends
                                         String.valueOf(bulk.getCd_cds()),
                                         String.valueOf(bulk.getPg_documento_cont())
                                 )));
-                        if (docContabile.getBic() != null && docContabile.getCodiceIban() != null
-                                && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
-                                !docContabile.getBic().contains(" "))// &&
-                            sepa.setBic(docContabile.getBic());
+
+                        if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.BONIFICOESTEROEURO)) {
+                            sepa.setBic(Optional.ofNullable(docContabile.getBic())
+                                    .filter(s -> Optional.ofNullable(docContabile.getCodiceIban()).isPresent())
+                                    .filter(s -> patternBic.matcher(s).find())
+                                    .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, codice BIC: {0} non valido " +
+                                            "sul Mandato {1}/{2}/{3}",
+                                            docContabile.getBic(),
+                                            String.valueOf(bulk.getEsercizio()),
+                                            String.valueOf(bulk.getCd_cds()),
+                                            String.valueOf(bulk.getPg_documento_cont())
+                                    )));
+                        }
                         if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER))
                             sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
                                     .toString()
@@ -5439,10 +5455,18 @@ public class DistintaCassiereComponent extends
                                                 String.valueOf(bulk.getPg_documento_cont())
                                         ))
                         );
-                        if (docContabile.getBic() != null && docContabile.getCodiceIban() != null
-                                && (docContabile.getBic().length() == 8 || docContabile.getBic().length() == 11) &&
-                                !docContabile.getBic().contains(" "))// &&
-                            sepa.setBic(docContabile.getBic());
+                        if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.BONIFICOESTEROEURO)) {
+                            sepa.setBic(Optional.ofNullable(docContabile.getBic())
+                                    .filter(s -> Optional.ofNullable(docContabile.getCodiceIban()).isPresent())
+                                    .filter(s -> patternBic.matcher(s).find())
+                                    .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, codice BIC: {0} non valido " +
+                                            "sul Mandato {1}/{2}/{3}",
+                                            docContabile.getBic(),
+                                            String.valueOf(bulk.getEsercizio()),
+                                            String.valueOf(bulk.getCd_cds()),
+                                            String.valueOf(bulk.getPg_documento_cont())
+                                    )));
+                        }
                         if ((tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER)))
                             sepa.setIdentificativoEndToEnd(docContabile.getEsercizio()
                                     .toString()
@@ -5875,4 +5899,20 @@ public class DistintaCassiereComponent extends
         }
         clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
     }
+
+    public Long findMaxMovimentoContoEvidenza(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {
+        MovimentoContoEvidenzaHome movimentoContoEvidenzaHome = Optional.ofNullable(getHome(userContext, MovimentoContoEvidenzaBulk.class))
+                .filter(MovimentoContoEvidenzaHome.class::isInstance)
+                .map(MovimentoContoEvidenzaHome.class::cast)
+                .orElseThrow(() -> new ComponentException("Home MovimentoContoEvidenzaHome non trovata!"));
+        try {
+            return Optional.ofNullable(movimentoContoEvidenzaHome.findMax(movimentoContoEvidenzaBulk, "progressivo"))
+                    .filter(Long.class::isInstance)
+                    .map(Long.class::cast)
+                    .orElse(new Long(0));
+        } catch (PersistencyException e) {
+           throw handleException(e);
+        }
+    }
+
 }
