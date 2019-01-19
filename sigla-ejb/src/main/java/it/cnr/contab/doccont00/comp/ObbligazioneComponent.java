@@ -1679,7 +1679,7 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, linea.getProgetto());
 				getHomeCache(userContext).fetchAll(userContext);
 				Optional.ofNullable(progetto.getOtherField())
-						.filter(el->!(el.isStatoApprovato()||el.isStatoChiuso()))
+						.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
 						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
 								+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
 				if (progetto.isDatePianoEconomicoRequired()) {
