@@ -642,17 +642,17 @@ public void validate() throws ValidationException
 		this.esercizio = esercizio;
 	}
 	public java.lang.String getDett_progetto () {
-		String label = getDs_linea_attivita();
-		label = label.concat(Optional.ofNullable(getNatura()).map(el->"\rNatura: "+el.getCd_ds_natura()).orElse(null));
-		label = label.concat(Optional.ofNullable(getProgetto()).map(el->"\rProgetto: "+el.getCd_progetto()+" (id:"+el.getPg_progetto()+")").orElse(null));
+		String label = Optional.ofNullable(this.getDs_linea_attivita()).orElse("");
+		label = label.concat(Optional.ofNullable(getNatura()).map(el->"\rNatura: "+el.getCd_ds_natura()).orElse(""));
+		label = label.concat(Optional.ofNullable(getProgetto()).map(el->"\rProgetto: "+el.getCd_progetto()+" (id:"+el.getPg_progetto()+")").orElse(""));
 		label = label.concat(Optional.ofNullable(getProgetto())
 				.flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
-				.map(el->"\rFinanziamento: "+el.getCodice()+" - "+el.getDescrizione()).orElse(null));
+				.map(el->"\rFinanziamento: "+el.getCodice()+" - "+el.getDescrizione()).orElse(""));
 		label = label.concat(Optional.ofNullable(getProgetto())
 				.flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.map(el->Optional.ofNullable(el.getDtProroga()).orElse(Optional.ofNullable(el.getDtFine()).orElse(null)))
-				.map(dt->"\rScadenza: "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)).orElse(null));
+				.map(dt->"\rScadenza: "+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)).orElse(""));
 		return label;
 	}
 }
