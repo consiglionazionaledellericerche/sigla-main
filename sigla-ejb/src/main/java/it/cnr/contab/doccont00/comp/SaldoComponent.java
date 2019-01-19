@@ -2208,24 +2208,36 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				 * 2. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
 				 * 		a. un progetto scaduto
 				 * 		b. dalla voce speciale (11048)
+				 * 		c. da una GAE di natura 6 sullo stesso progetto
 				 */
-				if (impPositiviNaturaReimpiego.compareTo(BigDecimal.ZERO)>0) {
+				listCtrlPianoEco.stream()
+				.filter(el->!el.isScaduto(dataChiusura))
+				.filter(el->el.getImpNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
+				.filter(el->el.getImpNegativiNaturaReimpiego().compareTo(el.getImpPositiviNaturaReimpiego())!=0)
+				.findFirst().ifPresent(el->{
+					throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto "+
+							el.getProgetto().getCd_progetto()+"(" + 
+							new it.cnr.contab.util.EuroFormat().format(el.getImpNegativiNaturaReimpiego()) +
+							") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
+							"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
+							new it.cnr.contab.util.EuroFormat().format(el.getImpPositiviNaturaReimpiego()) + ")");});
+
+				BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
+						.filter(el->el.getImpPositiviNaturaReimpiego().subtract(el.getImpNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO)>0)
+						.map(el->el.getImpPositiviNaturaReimpiego().subtract(el.getImpNegativiNaturaReimpiego()))
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				
+				if (saldoPositivoNaturaReimpiego.compareTo(BigDecimal.ZERO)>0) {
 					BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
 							.filter(el->el.getImpNegativiVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
 							.map(CtrlPianoEco::getImpNegativiVoceSpeciale)
 							.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-					boolean existsPrgScaduti = impNegativiPrgScaduti.compareTo(BigDecimal.ZERO)>0;
-					boolean existsVoceSpeciale = impNegativiVoceSpecialePrgInCorso.compareTo(BigDecimal.ZERO)>0;
-					if (impPositiviNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso))!=0)
+					if (saldoPositivoNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso))!=0)
 						throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
-								+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impPositiviNaturaReimpiego)
-								+ " che non corrisponde all'importo prelevato da"
-								+ (existsPrgScaduti?" progetti scaduti ":"")
-								+ (existsPrgScaduti&&existsVoceSpeciale?"e da":"")
-								+ (existsVoceSpeciale?"lla Voce "+cdVoceSpeciale:"")
-								+" ("
-								+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)+").");
+								+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(saldoPositivoNaturaReimpiego)
+								+ " che non corrisponde all'importo prelevato da progetti scaduti e/o dalla voce "+cdVoceSpeciale
+								+" ("+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)+").");
 				}
 			}
 			{
