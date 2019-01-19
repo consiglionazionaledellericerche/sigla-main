@@ -38,3 +38,18 @@ swarm:
 spring:
   profiles:
     active: CMIS,liquibase-isin
+---
+project:
+  stage: production-isin
+swarm:
+  datasources:
+    data-sources:
+      SIGLA:
+        connection-url: jdbc:oracle:thin:@db0.cedrc.cnr.it:1521:SIGLAX
+        password: DBISIN
+  deployment:
+    timeout: 1200
+
+spring:
+  profiles:
+    active: CMIS,liquibase-isin
