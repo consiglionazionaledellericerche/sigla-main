@@ -11,6 +11,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bp.CRUDWorkpackageBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
@@ -30,6 +31,8 @@ import it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk;
 import it.cnr.contab.doccont00.ejb.ObbligazioneComponentSession;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
@@ -996,7 +999,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 					for ( Iterator s = vociList.iterator(); s.hasNext(); ) {
 						V_assestatoBulk voceSel = (V_assestatoBulk) s.next();
 						if (Optional.ofNullable(voceSel.getProgetto_dt_inizio())
-								.map(dt->!dt.after(obbligazione.getDt_registrazione()))
+								.map(dt->dt.after(obbligazione.getDt_registrazione()))
 								.orElse(Boolean.FALSE)) {
 								bp.setMessage("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
 												+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(voceSel.getProgetto_dt_inizio())
@@ -1006,7 +1009,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 						}
 						if (Optional.ofNullable(
 								Optional.ofNullable(voceSel.getProgetto_dt_proroga()).orElse(voceSel.getProgetto_dt_fine()))
-								.map(dt->!dt.before(obbligazione.getDt_registrazione()))
+								.map(dt->dt.before(obbligazione.getDt_registrazione()))
 								.orElse(Boolean.FALSE)) {
 								bp.setMessage("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
 												+ "La data fine/proroga ("
