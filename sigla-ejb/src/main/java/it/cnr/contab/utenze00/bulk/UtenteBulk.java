@@ -156,7 +156,7 @@ public class UtenteBulk extends UtenteBase {
 		if ( cd_utente == null || cd_utente.length() == 0)
 			throw new ValidationException( "Il campo CODICE UTENTE è obbligatorio." );
 		for (int i = 0;i < cd_utente.length();i++)
-			if (!Character.isLetterOrDigit(cd_utente.charAt(i)))
+			if (!Character.isLetterOrDigit(cd_utente.charAt(i)) && cd_utente.charAt(i) != '.')
 				throw new ValidationException( "Il codice utente può essere composto solo da cifre o lettere e non può contenere spazi." );
 		if ( getDt_inizio_validita() == null )
 			throw new ValidationException( "Il campo DATA INIZIO VALIDITA' è obbligatorio." );	
