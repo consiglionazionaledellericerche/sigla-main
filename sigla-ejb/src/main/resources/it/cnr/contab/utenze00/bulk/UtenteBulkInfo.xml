@@ -28,7 +28,7 @@
 		name="cd_utente"
 		property="cd_utente"
 		inputType="TEXT"
-		inputSize="10"
+		inputSize="50"
 		maxLength="20"
 		formatName="it.cnr.jada.util.UppercaseStringFormat"
 		enabledOnSearch="true"
