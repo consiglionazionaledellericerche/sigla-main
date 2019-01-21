@@ -1662,7 +1662,11 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 			}
 		}
 		
-		if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
+		//Controllo valido solo per residui nati nell'anno (impropri e competenza)
+		//per i residui propri il controllo viene fatto solo all'atto della modifica totale positiva dell'importo. Il controllo
+		//è già presente in ObbligazioneResComponent
+		if (!obbligazione.isObbligazioneResiduo() &&
+				Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
 			WorkpackageBulk linea = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class))
 					.searchGAECompleta(userContext,CNRUserContext.getEsercizio(userContext), cdr, latt);
 			ProgettoBulk progetto = linea.getProgetto();
