@@ -89,6 +89,8 @@ public class DistintaCassiereComponent extends
     public static final String CASSA = "CASSA";
     public static final String INFRUTTIFERO = "INFRUTTIFERO";
     public static final String INSERIMENTO = "INSERIMENTO";
+    public static final String ANNULLO = "ANNULLO";
+
     public static final int MAX_LENGTH_CAUSALE = 140;
     public static final String FATT_ANALOGICA = "FATT_ANALOGICA";
     public static final String DOC_EQUIVALENTE = "DOC_EQUIVALENTE";
@@ -4537,6 +4539,22 @@ public class DistintaCassiereComponent extends
         }
     }
 
+    private String getTipoOperazione(V_mandato_reversaleBulk bulk) {
+        switch (bulk.getStato()) {
+            case MandatoBulk.STATO_MANDATO_ANNULLATO : {
+                return ANNULLO;
+            }
+            case MandatoBulk.STATO_MANDATO_EMESSO : {
+                return INSERIMENTO;
+            }
+
+            default: {
+                return INSERIMENTO;
+            }
+        }
+    }
+
+
     private it.siopeplus.Reversale creaReversaleFlussoSiopeplus(UserContext userContext,
                                                                 V_mandato_reversaleBulk bulk) throws ComponentException,
             RemoteException, BusinessProcessException {
@@ -4544,7 +4562,8 @@ public class DistintaCassiereComponent extends
             final ObjectFactory objectFactory = new ObjectFactory();
             it.siopeplus.Reversale reversale = objectFactory.createReversale();
             List list = findDocumentiFlusso(userContext, bulk);
-            reversale.setTipoOperazione(INSERIMENTO);
+            reversale.setTipoOperazione(getTipoOperazione(bulk));
+
             GregorianCalendar gcdi = new GregorianCalendar();
             it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile = null;
             for (Iterator i = list.iterator(); i.hasNext(); ) {
@@ -4725,7 +4744,7 @@ public class DistintaCassiereComponent extends
             BancaBulk bancauo = recuperaIbanUo(userContext, bulk.getUo());
             it.siopeplus.Mandato mandato = objectFactory.createMandato();
             List list = findDocumentiFlusso(userContext, bulk);
-            mandato.setTipoOperazione(INSERIMENTO);
+            mandato.setTipoOperazione(getTipoOperazione(bulk));
             GregorianCalendar gcdi = new GregorianCalendar();
 
             it.siopeplus.Mandato.InformazioniBeneficiario infoben = objectFactory.createMandatoInformazioniBeneficiario();
