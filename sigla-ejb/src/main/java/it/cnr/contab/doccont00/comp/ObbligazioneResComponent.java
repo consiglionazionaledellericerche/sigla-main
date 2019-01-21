@@ -6,31 +6,20 @@
  */
 package it.cnr.contab.doccont00.comp;
 
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
-import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import java.math.BigDecimal;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Optional;
+
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
-import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceKey;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaKey;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
-import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -41,15 +30,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * @author rpagano
