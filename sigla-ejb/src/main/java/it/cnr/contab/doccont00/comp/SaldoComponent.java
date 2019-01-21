@@ -2011,7 +2011,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
 					.map(Pdg_variazioneBulk::getDt_chiusura)
-					.orElse(Optional.of(variazione)
+					.orElseGet(()->Optional.of(variazione)
 									.filter(Var_stanz_resBulk.class::isInstance)
 									.map(Var_stanz_resBulk.class::cast)
 									.map(Var_stanz_resBulk::getDt_chiusura)
