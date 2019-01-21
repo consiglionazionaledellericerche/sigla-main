@@ -131,8 +131,8 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 		return calcolaPercentualeImputazioneObbligazione( aUC, obbligazione, TIPO_ERRORE_ECCEZIONE, errControllo);
 	}
 
-	private ObbligazioneBulk calcolaPercentualeImputazioneObbligazione (UserContext aUC,ObbligazioneBulk obbligazione, String tipoErrore, StringBuffer errControllo) throws ComponentException
-	{
+	private ObbligazioneBulk calcolaPercentualeImputazioneObbligazione (UserContext aUC,ObbligazioneBulk obbligazione, String tipoErrore, StringBuffer errControllo) throws ComponentException {
+	try {
 		BigDecimal percentuale = new BigDecimal( 100);
 		BigDecimal totaleScad = new BigDecimal(0);
 		BigDecimal diffScad = new BigDecimal(0);
@@ -222,29 +222,32 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 			}
 
 			if (totaleScad.compareTo((BigDecimal) prcImputazioneFinanziariaTable.get( key ))!=0) {
-				WorkpackageBulk latt = ((WorkpackageHome)getHome(aUC, WorkpackageBulk.class)).searchGAECompleta(aUC,CNRUserContext.getEsercizio(aUC),
-						key.getCd_centro_responsabilita(), key.getCd_linea_attivita());
-				ProgettoBulk progetto = latt.getProgetto();
-				Optional.ofNullable(progetto.getOtherField())
-						.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
-						.orElseThrow(()->new ApplicationException("Attenzione! Modifica importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
-								+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
-				if (progetto.isDatePianoEconomicoRequired()) {
-					Optional.ofNullable(progetto.getOtherField().getDtInizio())
-						.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
-						.orElseThrow(()->new ApplicationException("Attenzione! Modifica importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
-								+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-								+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
-								+ "rispetto alla data odierna."));
+				//se aumento l'importo del residuo devo controllare che il progetto non sia scaduto
+				if (totaleScad.compareTo((BigDecimal)prcImputazioneFinanziariaTable.get( key ))>0 &&
+					Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(aUC, CNRUserContext.getEsercizio(aUC))) {
+					WorkpackageBulk latt = ((WorkpackageHome)getHome(aUC, WorkpackageBulk.class)).searchGAECompleta(aUC,CNRUserContext.getEsercizio(aUC),
+							key.getCd_centro_responsabilita(), key.getCd_linea_attivita());
+					ProgettoBulk progetto = latt.getProgetto();
+					Optional.ofNullable(progetto.getOtherField())
+							.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
+							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+									+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
+					if (progetto.isDatePianoEconomicoRequired()) {
+						Optional.ofNullable(progetto.getOtherField().getDtInizio())
+							.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
+							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+									+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+									+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+									+ "rispetto alla data odierna."));
+					}
+					Optional.ofNullable(
+						Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
+							.filter(dt->!dt.before(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp())))
+							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+									+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+									+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
+									+ "rispetto alla data odierna."));
 				}
-				Optional.ofNullable(
-					Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
-						.filter(dt->!dt.before(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp())))
-						.orElseThrow(()->new ApplicationException("Attenzione! Modifica importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
-								+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-								+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
-								+ "rispetto alla data odierna."));
-
 				if ( !obbligazione.getFl_calcolo_automatico().booleanValue() ) { 
 					String errore = "L'importo (" +
 					new it.cnr.contab.util.EuroFormat().format(totaleScad) + 
@@ -320,6 +323,10 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 			}
 		}
 		return obbligazione;
+	} catch ( Exception ex )
+	{
+		throw handleException( ex );
+	}					
 	}
 	/**
 	 * E'' consentito l''aumento dell''importo degli impegni residui propri
