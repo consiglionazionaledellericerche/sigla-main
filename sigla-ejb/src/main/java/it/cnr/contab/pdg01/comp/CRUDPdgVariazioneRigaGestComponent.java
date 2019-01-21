@@ -444,22 +444,25 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 													CompoundFindClause clause) throws ComponentException, PersistencyException {	
 		SQLBuilder sql = getHome(userContext, latt, "V_LINEA_ATTIVITA_VALIDA").createSQLBuilder();
 
-		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-		sql.addClause("AND","cd_centro_responsabilita",sql.EQUALS,dett.getCd_cdr_assegnatario());
+		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addClause(FindClause.AND,"cd_centro_responsabilita",SQLBuilder.EQUALS,dett.getCd_cdr_assegnatario());
 
 		sql.openParenthesis(FindClause.AND);
 		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRATE);
 		sql.addClause(FindClause.OR,"ti_gestione",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRAMBE);
 	    sql.closeParenthesis();
 
+	    if (dett.getProgetto()!=null && dett.getProgetto().getPg_progetto()!=null)
+	    	sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
+
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
-		sql.addSQLClause("AND", "NATURA.FL_ENTRATA",sql.EQUALS,"Y");
+		sql.addSQLClause(FindClause.AND, "NATURA.FL_ENTRATA",SQLBuilder.EQUALS,"Y");
 
 		sql.addTableToHeader("PROGETTO_GEST");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","PROGETTO_GEST.ESERCIZIO");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO","PROGETTO_GEST.PG_PROGETTO");
-		sql.addSQLClause("AND","PROGETTO_GEST.FL_UTILIZZABILE",sql.EQUALS,"Y");
+		sql.addSQLClause(FindClause.AND,"PROGETTO_GEST.FL_UTILIZZABILE",SQLBuilder.EQUALS,"Y");
 		/*
 		 * L'origine delle fonti pilota l'utilizzo delle GAE sui dettagli della variazione.
 		 * In particolare:
@@ -470,8 +473,8 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		 * sia su variazioni di Tipo Interno che Esterno.
 		 */
 		if (dett.getPdg_variazione().getTipologia_fin() != null) {
-			sql.openParenthesis("AND");
-			sql.addSQLClause("OR","NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());			
+			sql.openParenthesis(FindClause.AND);
+			sql.addSQLClause(FindClause.OR,"NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());			
 
 			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
 			try {
@@ -482,7 +485,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 				throw new ComponentException(e);
 			}
 			if (config != null){
-				sql.addSQLClause( "OR", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", sql.EQUALS, config.getVal01());
+				sql.addSQLClause( FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, config.getVal01());
 			}
 			sql.closeParenthesis();
 		}
@@ -504,7 +507,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		}
 		*/
 
-		sql.addSQLClause("AND","V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
 			
 		if (clause != null) sql.addClause(clause);
 		
