@@ -28,7 +28,7 @@ function doVisualizzaDistinta() {
  <title>Distinta documenti 1210</title>
 <body class="Form">
 <% 	bp.openFormWindow(pageContext); %>
-	<table class="Panel">
+	<table class="Panel card p-3">
 		<tr>
 			<% bp.getController().writeFormField(out, "esercizio");%>
 			<% bp.getController().writeFormField(out, "pgDistinta");%>
@@ -50,15 +50,17 @@ function doVisualizzaDistinta() {
 	</table>
 	<% if (!bp.isSearching()) {%>
 		<% if (!bp.isViewing()) {%>
-		<fieldset class="fieldset card">
-			<legend class="GroupLabel card-header h5 text-primary">Documenti collegabili</legend>
-		    <table class="Panel" style="width:100%">	   
-			<tr>
-				<td>   
-		   			 <%bp.getDistintaCassiere1210LettereDaCollegare().writeHTMLTable(pageContext,"firmaEseguita",false,true,false,"100%","200px", true); %>
-				</td>
-			</tr>
-			</table>
+		<fieldset class="fieldset">
+			<legend class="GroupLabel h5 text-primary">Documenti collegabili</legend>
+			<div class="card">
+                <table class="Panel" style="width:100%">
+                <tr>
+                    <td>
+                         <%bp.getDistintaCassiere1210LettereDaCollegare().writeHTMLTable(pageContext,"firmaEseguita",false,true,false,"100%","200px", true); %>
+                    </td>
+                </tr>
+                </table>
+			</div>
 		</fieldset>
 		<br>
 		<center>
@@ -79,8 +81,9 @@ function doVisualizzaDistinta() {
 		</center>
 		<br>
 	<% } %>	
-	<fieldset class="fieldset card">
-		<legend class="GroupLabel card-header h5 text-primary">Documenti collegati</legend>
+	<fieldset class="fieldset">
+		<legend class="GroupLabel h5 text-primary">Documenti collegati</legend>
+		<div class="card">
 	    <table class="Panel" style="width:100%">	   
 		<tr>
 			<td>   
@@ -88,6 +91,7 @@ function doVisualizzaDistinta() {
 			</td>
 		</tr>
 		</table>
+		</div>
 	</fieldset>
 	<% } %>	
 <%	bp.closeFormWindow(pageContext); %>
