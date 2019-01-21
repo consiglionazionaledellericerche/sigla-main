@@ -1,6 +1,7 @@
 package it.cnr.contab.config00.latt.bulk;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.ejb.EJBException;
 
@@ -10,6 +11,8 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -19,6 +22,7 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
@@ -218,6 +222,32 @@ public class WorkpackageHome extends BulkHome implements ConsultazioniRestHome {
 			CdrBulk cdr = new CdrBulk( it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext) );
 			return (CdrBulk)getHomeCache().getHome(cdr).findByPrimaryKey(cdr);
 
+		} catch (it.cnr.jada.persistency.PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
+	
+	public WorkpackageBulk searchGAECompleta(UserContext userContext, Integer pEsercizio, String pCdr, String pCdLineaAttivita ) throws ComponentException {
+		try {
+			WorkpackageHome lattHome = (WorkpackageHome)getHomeCache().getHome(WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
+			SQLBuilder sql = lattHome.createSQLBuilder();
+		
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,pEsercizio);
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,pCdr);
+			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,pCdLineaAttivita);
+			
+			List<WorkpackageBulk> list = lattHome.fetchAll(sql);
+			if (!list.isEmpty()) {
+				if (list.size()>1)
+					throw new ApplicationException("Errore in fase di ricerca linea_attivita.");
+				WorkpackageBulk linea = list.get(0);
+				ProgettoHome home = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
+				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+				home.findByPrimaryKey(userContext, linea.getProgetto());
+				getHomeCache().fetchAll(userContext);
+				return linea;
+			}
+			return null;
 		} catch (it.cnr.jada.persistency.PersistencyException e) {
 			throw new ComponentException(e);
 		}
