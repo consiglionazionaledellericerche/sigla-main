@@ -19,6 +19,7 @@ import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseHome;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -1661,43 +1662,33 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 			}
 		}
 		
-		if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
-			BulkHome lattHome = getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
-			SQLBuilder sql = lattHome.createSQLBuilder();
-
-			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,cdr);
-			sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA",SQLBuilder.EQUALS,latt);
-			
-			List<WorkpackageBulk> list = lattHome.fetchAll(sql);
-			if (!list.isEmpty()) {
-				if (list.size()>1)
-					throw new ApplicationException("Errore in fase di ricerca linea_attivita.");
-				WorkpackageBulk linea = list.get(0);
-				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
-				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, linea.getProgetto());
-				getHomeCache(userContext).fetchAll(userContext);
+		//Controllo valido solo per residui nati nell'anno (impropri e competenza)
+		//per i residui propri il controllo viene fatto solo all'atto della modifica totale positiva dell'importo. Il controllo
+		//è già presente in ObbligazioneResComponent
+		if (!obbligazione.isObbligazioneResiduo() &&
+				Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
+			WorkpackageBulk linea = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class))
+					.searchGAECompleta(userContext,CNRUserContext.getEsercizio(userContext), cdr, latt);
+			ProgettoBulk progetto = linea.getProgetto();
 				Optional.ofNullable(progetto.getOtherField())
 						.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
 						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
 								+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
-				if (progetto.isDatePianoEconomicoRequired()) {
-					Optional.ofNullable(progetto.getOtherField().getDtInizio())
-						.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
-						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
-								+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-								+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
-								+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
-				}
-				Optional.ofNullable(
-					Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
-						.filter(dt->!dt.before(obbligazione.getDt_registrazione()))
-						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
-								+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-								+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
-								+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
+			if (progetto.isDatePianoEconomicoRequired()) {
+				Optional.ofNullable(progetto.getOtherField().getDtInizio())
+					.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
+					.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+							+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+							+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+							+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
 			}
+			Optional.ofNullable(
+				Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
+					.filter(dt->!dt.before(obbligazione.getDt_registrazione()))
+					.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+							+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+							+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
+							+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
 		}
 	} catch ( Exception e )
 	{
