@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Classificazione_vociComponentSession;
@@ -199,6 +200,17 @@ public class CRUDPdgModuloSpeseGestComponent extends it.cnr.jada.comp.CRUDCompon
 				sql.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.CD_MISSIONE",SQLBuilder.EQUALS,dett.getPdg_modulo_spese().getCd_missione());
 		}
 		
+		String cdNaturaReimpiego = null;
+		try {
+			cdNaturaReimpiego = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
+		if (cdNaturaReimpiego != null)
+			sql.addSQLClause( FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.CD_NATURA", SQLBuilder.NOT_EQUALS, cdNaturaReimpiego);
+
 		sql.addTableToHeader("NATURA");
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
 		sql.addSQLClause(FindClause.AND, "NATURA.FL_SPESA",SQLBuilder.EQUALS,"Y");
