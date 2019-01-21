@@ -217,6 +217,7 @@
 					<title>Identificativo Ordine</title>
 					<description>Identificativo Ordine</description>
 					<type>d:text</type>
+				</property>	
 				<property name="sigla_contratti_aspect:descrizione_ordine">
 					<title>Descrizione Ordine</title>
 					<description>Descrizione Ordine</description>
@@ -226,6 +227,7 @@
 					<title>nr Ordine</title>
 					<description>nr Ordine</description>
 					<type>d:text</type>
+				</property>	
 				<property name="sigla_contratti_aspect:nr_rdo">
 					<title>Nr. RDO</title>
 					<description>Nr. RDO</description>
