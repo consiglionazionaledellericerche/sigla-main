@@ -5,6 +5,7 @@ import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
@@ -1715,33 +1716,24 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         }
     }
 
-    public Boolean isCigModificabile()  {
-        CompensoBulk compenso = (CompensoBulk)getModel();
-        if (compenso == null || !compenso.getTipoTrattamento().isTipoDebitoSiopeCommerciale() || (compenso.getObbligazioneScadenzario() != null &&
-                compenso.getObbligazioneScadenzario().getObbligazione() != null && compenso.getObbligazioneScadenzario().getObbligazione().getContratto() != null &&
-                compenso.getObbligazioneScadenzario().getObbligazione().getContratto().getCig() != null)) {
-            return false;
-        }
-        return true;
-    }
-
-    public Boolean isCigModificabileNew() {
+    public Boolean isCigModificabile() {
         return Optional.ofNullable(getModel())
                 .filter(CompensoBulk.class::isInstance)
                 .map(CompensoBulk.class::cast)
-                .filter(compensoBulk -> {
+                .map(compensoBulk -> {
                     return Optional.ofNullable(compensoBulk.getTipoTrattamento())
                             .filter(tipo_trattamentoBulk -> Optional.ofNullable(tipo_trattamentoBulk.getCd_trattamento()).isPresent())
-                            .map(tipo_trattamentoBulk -> !tipo_trattamentoBulk.isTipoDebitoSiopeCommerciale())
-                            .orElse(Boolean.FALSE) &&
+                            .filter(tipo_trattamentoBulk -> tipo_trattamentoBulk.isTipoDebitoSiopeCommerciale())
+                            .isPresent() &&
                             Optional.ofNullable(compensoBulk.getObbligazioneScadenzario())
                                     .flatMap(obbligazione_scadenzarioBulk -> Optional.ofNullable(obbligazione_scadenzarioBulk.getObbligazione()))
                                     .flatMap(obbligazioneBulk -> Optional.ofNullable(obbligazioneBulk.getContratto()))
-                                    .filter(contrattoBulk -> Optional.ofNullable(contrattoBulk.getPg_contratto()).isPresent())
-                                    .flatMap(contrattoBulk -> Optional.ofNullable(contrattoBulk.getCig()))
-                                    .isPresent();
+                                    .map(contrattoBulk -> {
+                                        return !Optional.ofNullable(contrattoBulk.getPg_contratto()).isPresent() ||
+                                               !Optional.ofNullable(contrattoBulk.getCig()).map(CigBulk::getCdCig).isPresent();
+                                    }).orElse(Boolean.FALSE);
 
-                }).isPresent();
+                }).orElse(Boolean.FALSE);
     }
 
     @Override
