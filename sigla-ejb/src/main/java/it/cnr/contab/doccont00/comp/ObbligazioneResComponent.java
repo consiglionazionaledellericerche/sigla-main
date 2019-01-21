@@ -9,6 +9,8 @@ package it.cnr.contab.doccont00.comp;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
@@ -27,6 +29,9 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
 import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -37,11 +42,14 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author rpagano
@@ -123,8 +131,8 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 		return calcolaPercentualeImputazioneObbligazione( aUC, obbligazione, TIPO_ERRORE_ECCEZIONE, errControllo);
 	}
 
-	private ObbligazioneBulk calcolaPercentualeImputazioneObbligazione (UserContext aUC,ObbligazioneBulk obbligazione, String tipoErrore, StringBuffer errControllo) throws ComponentException
-	{
+	private ObbligazioneBulk calcolaPercentualeImputazioneObbligazione (UserContext aUC,ObbligazioneBulk obbligazione, String tipoErrore, StringBuffer errControllo) throws ComponentException {
+	try {
 		BigDecimal percentuale = new BigDecimal( 100);
 		BigDecimal totaleScad = new BigDecimal(0);
 		BigDecimal diffScad = new BigDecimal(0);
@@ -133,55 +141,6 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 		Obbligazione_scad_voceBulk key = new Obbligazione_scad_voceBulk();
 
 		boolean cdsModObblResImporto = isCdsModObblResImporto(aUC, obbligazione.getCd_cds());
-
-/*
-		// calcolo le percentuali di imputazione finanziaria per le linee di attivita da pdg
-		// 100 - percentuali specificate x linee att non da PDG
-		try {
-			ObbligazioneHome obbligHome = (ObbligazioneHome)getHome(aUC, ObbligazioneBulk.class);
-			Obbligazione_scadenzarioHome obbligScadHome = (Obbligazione_scadenzarioHome)getHome(aUC, Obbligazione_scadenzarioBulk.class);
-
-			ObbligazioneBulk obbligDB = (ObbligazioneBulk)obbligHome.findObbligazione(obbligazione);
-			obbligDB.setObbligazione_scadenzarioColl(new BulkList(obbligHome.findObbligazione_scadenzarioList(obbligDB)));
-
-			for ( Iterator i = obbligDB.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
-			{
-				Obbligazione_scadenzarioBulk obbligScadDB = (Obbligazione_scadenzarioBulk) i.next();
-				obbligScadDB.setObbligazione_scad_voceColl( new BulkList( obbligScadHome.findObbligazione_scad_voceList( obbligScadDB )));
-			}							    	
-			getHomeCache(aUC).fetchAll();
-
-			PrimaryKeyHashtable prcImputazioneFinanziariaTable = new PrimaryKeyHashtable();	
-		
-			for ( Iterator s = obbligDB.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); )
-			{
-				os = (Obbligazione_scadenzarioBulk) s.next();
-				for ( Iterator d = os.getObbligazione_scad_voceColl().iterator(); d.hasNext(); )
-				{
-					osv = (Obbligazione_scad_voceBulk) d.next();
-					// totale per Cdr e per scadenza				
-					key = new Obbligazione_scad_voceBulk(osv.getCd_cds(),
-														 osv.getCd_centro_responsabilita(),
-														 osv.getCd_linea_attivita(),
-														 osv.getCd_voce(),
-														 osv.getEsercizio(),
-														 osv.getEsercizio_originale(),
-														 osv.getPg_obbligazione(),
-														 new Long(1),
-														 osv.getTi_appartenenza(),
-														 osv.getTi_gestione());
-
-					totaleScad = (BigDecimal) prcImputazioneFinanziariaTable.get( key );			
-					if ( totaleScad == null || totaleScad.compareTo(new BigDecimal(0)) == 0)
-						prcImputazioneFinanziariaTable.put( key, osv.getIm_voce());				
-					else
-					{
-						totaleScad = totaleScad.add( osv.getIm_voce());
-						prcImputazioneFinanziariaTable.put( key, totaleScad );
-					}			
-				}
-			}
-			*/
 
 		// recupero le percentuali di imputazione finanziaria per le linee di attivita da pdg
 		// 100 - percentuali specificate x linee att non da PDG
@@ -263,6 +222,32 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 			}
 
 			if (totaleScad.compareTo((BigDecimal) prcImputazioneFinanziariaTable.get( key ))!=0) {
+				//se aumento l'importo del residuo devo controllare che il progetto non sia scaduto
+				if (totaleScad.compareTo((BigDecimal)prcImputazioneFinanziariaTable.get( key ))>0 &&
+					Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(aUC, CNRUserContext.getEsercizio(aUC))) {
+					WorkpackageBulk latt = ((WorkpackageHome)getHome(aUC, WorkpackageBulk.class)).searchGAECompleta(aUC,CNRUserContext.getEsercizio(aUC),
+							key.getCd_centro_responsabilita(), key.getCd_linea_attivita());
+					ProgettoBulk progetto = latt.getProgetto();
+					Optional.ofNullable(progetto.getOtherField())
+							.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
+							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+									+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
+					if (progetto.isDatePianoEconomicoRequired()) {
+						Optional.ofNullable(progetto.getOtherField().getDtInizio())
+							.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
+							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+									+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+									+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+									+ "rispetto alla data odierna."));
+					}
+					Optional.ofNullable(
+						Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
+							.filter(dt->!dt.before(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp())))
+							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+									+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+									+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
+									+ "rispetto alla data odierna."));
+				}
 				if ( !obbligazione.getFl_calcolo_automatico().booleanValue() ) { 
 					String errore = "L'importo (" +
 					new it.cnr.contab.util.EuroFormat().format(totaleScad) + 
@@ -338,6 +323,10 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 			}
 		}
 		return obbligazione;
+	} catch ( Exception ex )
+	{
+		throw handleException( ex );
+	}					
 	}
 	/**
 	 * E'' consentito l''aumento dell''importo degli impegni residui propri
