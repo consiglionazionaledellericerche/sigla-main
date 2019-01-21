@@ -6173,12 +6173,14 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
 	public void controlliCig(Fattura_passiva_rigaBulk riga) throws ApplicationException {
-		if (!(riga.getFattura_passiva().isEstera() ||riga.getFattura_passiva().isSanMarinoConIVA() || riga.getFattura_passiva().isSanMarinoSenzaIVA()) &&
-		        (!Optional.ofNullable(riga.getCig()).isPresent() && !Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
-		    throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
-		}
-		if ((Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
-		    throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
+		if (!riga.getFattura_passiva().getFl_fattura_compenso() && riga.getObbligazione_scadenziario() != null && riga.getObbligazione_scadenziario().getPg_obbligazione() != null){
+    		if (!(riga.getFattura_passiva().isEstera() ||riga.getFattura_passiva().isSanMarinoConIVA() || riga.getFattura_passiva().isSanMarinoSenzaIVA()) &&
+	    	        (!Optional.ofNullable(riga.getCig()).isPresent() && !Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
+		        throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
+		    }
+		    if ((Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
+    		    throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
+		    }
 		}
 	}
 
