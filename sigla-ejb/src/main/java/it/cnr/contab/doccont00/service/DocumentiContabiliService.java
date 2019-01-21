@@ -90,6 +90,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
     @Value("${sign.document.png.url}")
     private String signDocumentURL;
+    @Value("${sign.documents.from.repository}")
+    private boolean signDocumentsFromRepository;
+
     private ArubaSignServiceClient arubaSignServiceClient;
     private String pecHostName, pecMailFromBanca, pecMailFromBancaPassword, pecMailToBancaNoEuroSepa, pecMailToBancaItaliaF23F24;
 
@@ -313,7 +316,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public String signDocuments(PdfSignApparence pdfSignApparence, String url) throws StorageException {
-        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS) && signDocumentsFromRepository) {
             return signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), url);
         } else {
             List<byte[]> bytes = Optional.ofNullable(pdfSignApparence)
@@ -365,7 +368,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public String signDocuments(SignP7M signP7M, String url) throws StorageException {
-        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS)) {
+        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS) && signDocumentsFromRepository) {
             return signDocuments(new GsonBuilder().create().toJson(signP7M), url);
         } else {
             StorageObject storageObject = storageService.getObject(signP7M.getNodeRefSource());
