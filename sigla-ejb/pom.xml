@@ -5,7 +5,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>5.2.56-SNAPSHOT</version>
+        <version>5.2.57-SNAPSHOT</version>
     </parent>
     <build>
         <pluginManagement>
@@ -267,6 +267,12 @@
             <artifactId>firmadigitale</artifactId>
             <version>1.12</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
