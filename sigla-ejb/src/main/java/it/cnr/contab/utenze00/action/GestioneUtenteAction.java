@@ -8,6 +8,8 @@ import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
+import java.util.Optional;
+
 /**
  * Action utilizzata per la gestione utenze.
  */
@@ -43,6 +45,13 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	public Forward doApriMenu(ActionContext context,String cd_nodo) {
 		try {
 			GestioneUtenteBP bp = (GestioneUtenteBP)context.getBusinessProcess();
+			if (Optional.ofNullable(bp)
+					.map(GestioneUtenteBP::getParentRoot)
+					.map(BusinessProcess::isBootstrap)
+					.orElse(Boolean.FALSE)) {
+				context.invalidateSession();
+				return context.findForward("logout");
+			}
 			Albero_mainBulk nodo = bp.getNodoAlbero_main(cd_nodo);
 			if (nodo == null)
 				bp.addNodoAlbero_main(
@@ -57,7 +66,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			bp.espandiNodo(nodo);
 			return context.findForward("menu_tree");
 		}catch(NullPointerException e){
-			setMessage(context, 0, "Selezionare l'Unitè  Organizzativa");
+			setMessage(context, 0, "Selezionare l'Unità  Organizzativa");
 			return context.findDefaultForward();
 		}catch(Throwable e) {
 			return handleException(context,e);
