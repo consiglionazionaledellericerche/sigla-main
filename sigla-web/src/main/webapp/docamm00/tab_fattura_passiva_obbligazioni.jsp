@@ -40,12 +40,12 @@
            <tr>
                 <td><% bp.getObbligazioniController().writeFormLabel(out,"cig");%></td>
 		        <td>
-		         	<div style="float:left"><% bp.getObbligazioniController().getBulkInfo().writeFormInput(out,bp.getObbligazioniController().getModel(),null, "cig", false,null,
+		         	<% bp.getObbligazioniController().getBulkInfo().writeFormInput(out,bp.getObbligazioniController().getModel(),null, "cig", false,null,
 	                        "",
 	                        bp.getObbligazioniController().getInputPrefix(),
 	                        bp.getObbligazioniController().getStatus(),
 	                        bp.getObbligazioniController().getFieldValidationMap(),
-	                        bp.getParentRoot().isBootstrap());%></div>
+	                        bp.getParentRoot().isBootstrap());%>
 		        </td>
                 <td><% bp.getObbligazioniController().writeFormLabel(out,"motivo_assenza_cig");%></td>
                 <td><% bp.getObbligazioniController().getBulkInfo().writeFormInput(
