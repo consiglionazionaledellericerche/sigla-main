@@ -53,6 +53,9 @@ public class ProgettoBulk extends ProgettoBase {
 	public static final String TIPO_FASE_SEARCH_PREVISIONE_E_GESTIONE ="X";
 	public static final String TIPO_FASE_SEARCH_ALL ="A";
 
+	public static final String STATO_CHIUSURA = "CHI";
+	public static final String STATO_RIAPERTURA = "RIA";
+
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	workpackage_disponibili  = new it.cnr.jada.bulk.BulkList();
 
@@ -120,6 +123,7 @@ public class ProgettoBulk extends ProgettoBase {
 		statoOfKeys.put(Progetto_other_fieldBulk.STATO_APPROVATO,"Approvato");
 		statoOfKeys.put(Progetto_other_fieldBulk.STATO_ANNULLATO,"Annullato");
 		statoOfKeys.put(Progetto_other_fieldBulk.STATO_MIGRAZIONE,"Migrazione");
+		statoOfKeys.put(ProgettoBulk.STATO_CHIUSURA,"Chiuso");
 	};
 	
 	private Tipo_progettoBulk tipo;
@@ -1176,5 +1180,12 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				.filter(el->el.getEsercizio().equals(this.getEsercizio()))
 				.filter(el->!el.getStato().equals(Pdg_moduloBulk.STATO_AC))
 				.findAny().isPresent();
+	}
+	
+	public String getStatoPrg() {
+		Optional<Progetto_other_fieldBulk> optPrg = Optional.ofNullable(this.getOtherField());
+		if (optPrg.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent())
+			return ProgettoBulk.STATO_CHIUSURA;
+		return optPrg.map(el->el.getStato()).orElse(null);
 	}
 }
