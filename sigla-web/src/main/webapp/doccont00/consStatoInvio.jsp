@@ -24,6 +24,7 @@ function doVisualizzaContabili() {
 </script>
 </head>
 <body class="Form">
+<% bp.openFormWindow(pageContext); %>
 <%	if (bp.getParentRoot().isBootstrap()) { %>
 	<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
 	<% bp.writeHTMLNavigator(out); %>
