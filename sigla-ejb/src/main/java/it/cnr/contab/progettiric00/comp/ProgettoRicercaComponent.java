@@ -634,22 +634,22 @@ public ProgettoRicercaComponent() {
 	 * Pre:  Ricerca progettopadre
 	 * Post: Limitazione ai progetti diversi da quello in oggetto.
 	 */
-			public SQLBuilder selectProgettopadreByClause (UserContext userContext,
+		public SQLBuilder selectProgettopadreByClause (UserContext userContext,
 												  OggettoBulk bulk,
 												  Progetto_sipBulk progettopadre,
 												  CompoundFindClause clause)
-			throws ComponentException, PersistencyException
-			{
-					if (clause == null) 
-					  clause = progettopadre.buildFindClauses(null);
-					SQLBuilder sql = getHome(userContext, progettopadre).createSQLBuilder();
-					sql.addSQLClause("AND", "PG_PROGETTO", sql.NOT_EQUALS, ((ProgettoBulk)bulk).getPg_progetto());
-					if (((ProgettoBulk)bulk).getLivello() != null)
-					   sql.addSQLClause("AND", "LIVELLO", sql.EQUALS, new Integer(((ProgettoBulk)bulk).getLivello().intValue()-1));
-					if (clause != null) 
-					  sql.addClause(clause);
-					return sql;
-			}
+		throws ComponentException, PersistencyException
+		{
+				if (clause == null) 
+				  clause = progettopadre.buildFindClauses(null);
+				SQLBuilder sql = getHome(userContext, progettopadre).createSQLBuilder();
+				sql.addSQLClause("AND", "PG_PROGETTO", sql.NOT_EQUALS, ((ProgettoBulk)bulk).getPg_progetto());
+				if (((ProgettoBulk)bulk).getLivello() != null)
+				   sql.addSQLClause("AND", "LIVELLO", sql.EQUALS, new Integer(((ProgettoBulk)bulk).getLivello().intValue()-1));
+				if (clause != null) 
+				  sql.addClause(clause);
+				return sql;
+		}
         
 /**
  * Pre:  Ricerca progettopadre
@@ -1528,6 +1528,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	
 			List<Pdg_modulo_speseBulk> pdgModuloList = new it.cnr.jada.bulk.BulkList(pdgModuloHome.fetchAll(sqlPdgModulo));
 		
+			if (pdgModuloList.size()>0 &&
+				!(Progetto_other_fieldBulk.STATO_APPROVATO.equals(progetto.getStatoPrg()) ||
+					ProgettoBulk.STATO_CHIUSURA.equals(progetto.getStatoPrg()))) {
+				throw new ApplicationRuntimeException("Attenzione: il progetto risulta già inserito in previsione. "
+						+ "Non è possibile attibuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+			}
+				
 			pdgModuloList.stream().collect(Collectors.groupingBy(Pdg_modulo_speseBulk::getEsercizio))
 			.entrySet().forEach(entryEse->{
 				try {
@@ -1642,6 +1649,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	
 			List<Pdg_modulo_spese_gestBulk> pdgModuloGestList = new it.cnr.jada.bulk.BulkList(pdgModuloGestHome.fetchAll(sqlPdgModuloGest));
 
+			if (pdgModuloGestList.size()>0 &&
+				!(Progetto_other_fieldBulk.STATO_APPROVATO.equals(progetto.getStatoPrg()) ||
+					ProgettoBulk.STATO_CHIUSURA.equals(progetto.getStatoPrg()))) {
+				throw new ApplicationRuntimeException("Attenzione: il progetto risulta già inserito in previsione. "
+						+ "Non è possibile attibuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+			}
+
 			pdgModuloGestList.stream().collect(Collectors.groupingBy(Pdg_modulo_spese_gestBulk::getEsercizio))
 			.entrySet().forEach(entryEse->{
 				entryEse.getValue().stream().collect(Collectors.groupingBy(el->el.getPdg_modulo_spese().getVoce_piano_economico()))
@@ -1740,6 +1754,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			sqlSaldi.addSQLNotExistsClause(FindClause.AND, sqlExist);
 
 			List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
+			
 			saldiList.stream().findFirst().ifPresent(el->{
                	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
                			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
@@ -1839,6 +1854,14 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 						        sqlPdgModulo.addSQLClause(FindClause.AND, "PDG_MODULO.STATO", SQLBuilder.NOT_EQUALS, Pdg_moduloBulk.STATO_AC);
 
 								List<Pdg_modulo_costiBulk> pdgModuloList = new it.cnr.jada.bulk.BulkList(pdgModuloHome.fetchAll(sqlPdgModulo));
+
+								if (pdgModuloList.size()>0 &&
+									!(Progetto_other_fieldBulk.STATO_APPROVATO.equals(progetto.getStatoPrg()) ||
+										ProgettoBulk.STATO_CHIUSURA.equals(progetto.getStatoPrg()))) {
+									throw new ApplicationRuntimeException("Attenzione: il progetto risulta già inserito in previsione. "
+											+ "Non è possibile attibuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+								}
+
 								pdgModuloList.stream().forEach(modCosti->{
 									try {
 										Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext, modCosti, Boolean.TRUE);
@@ -1902,153 +1925,139 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     
     private void validaDatePianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException {
 		try{
-	    	if (progetto.isDatePianoEconomicoRequired()) {
+			Optional<Progetto_other_fieldBulk> optOtherField = Optional.ofNullable(progetto.getOtherField());
+			boolean ctrlDtInizio = progetto.isDatePianoEconomicoRequired();
+			boolean ctrlDtFine = progetto.isDatePianoEconomicoRequired() || optOtherField.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent();
+			boolean ctrlStato = !optOtherField.get().isStatoApprovato() && !optOtherField.get().isStatoChiuso();
+					
+			if (ctrlDtInizio)
 	    		Optional.ofNullable(progetto.getOtherField().getDtInizio())
 	    				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di inizio del progetto!"));
-	    		Optional.ofNullable(progetto.getOtherField().getDtFine())
-	    				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di fine del progetto!"));
+			
+			if (ctrlDtFine)
+				Optional.ofNullable(progetto.getOtherField().getDtFine())
+    				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di fine del progetto!"));
 
-	    		//cerco la data min e max di impegni fatti su GAE del progetto
-	    		{
-	    			ObbligazioneHome obblHome = (ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class);
-		    		SQLBuilder sqlObb = obblHome.createSQLBuilder();
-		    		
-		    		Obbligazione_scad_voceHome scadVoceHome = (Obbligazione_scad_voceHome)getHome(userContext, Obbligazione_scad_voceBulk.class);
-		    		SQLBuilder sqlExist = scadVoceHome.createSQLBuilder();
-		    		sqlExist.addSQLJoin("OBBLIGAZIONE.CD_CDS", "OBBLIGAZIONE_SCAD_VOCE.CD_CDS");
-		    		sqlExist.addSQLJoin("OBBLIGAZIONE.ESERCIZIO", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
-		    		sqlExist.addSQLJoin("OBBLIGAZIONE.ESERCIZIO_ORIGINALE", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE");
-		    		sqlExist.addSQLJoin("OBBLIGAZIONE.PG_OBBLIGAZIONE", "OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE");
-		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "OBBLIGAZIONE_SCAD_VOCE.CD_CENTRO_RESPONSABILITA");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA");
-		    		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
-		    		
-		    		sqlObb.addSQLExistsClause(FindClause.AND, sqlExist);
-		    		
-		    		List<ObbligazioneBulk> listObb = obblHome.fetchAll(sqlObb);
-	
-		    		listObb.stream()
-		    			   .min((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
-		    			   .filter(el->el.getDt_registrazione().before(progetto.getOtherField().getDtInizio()))
-		    			   .ifPresent(el->{
-		    				   throw new ApplicationRuntimeException("Attenzione! Esiste l'obbligazione "
-		    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
-		    				   		+ " associata al progetto con data registrazione "
-		    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_registrazione())
-									+ " inferiore alla data di inizio "
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-									+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
-		    			   });
-		    		listObb.stream()
-			 			   .max((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
-			 			   .filter(el->el.getDt_registrazione().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
-			 			   .ifPresent(el->{
-	 				   throw new ApplicationRuntimeException("Attenzione! Esiste l'obbligazione "
-	    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
-	    				   		+ " associata al progetto con data registrazione "
-	    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_registrazione())
-								+ " superiore alla data di fine/proroga "
-								+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-								+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
-	 			    });
-	    		}
 
-	    		//cerco la data min e max di variazioni di bilancio di competenza
-	    		{
-		    		Pdg_variazioneHome pdgVarHome = (Pdg_variazioneHome)getHome(userContext, Pdg_variazioneBulk.class);
-		    		SQLBuilder sqlVar = pdgVarHome.createSQLBuilder();
-		    		sqlVar.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
-		    		sqlVar.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
-		    		
-		    		Pdg_variazione_riga_gestHome pdgVarRigaHome = (Pdg_variazione_riga_gestHome)getHome(userContext, Pdg_variazione_riga_gestBulk.class);
-		    		SQLBuilder sqlExist = pdgVarRigaHome.createSQLBuilder();
-		    		sqlExist.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
-		    		sqlExist.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
-		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
-		    		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
-		    		
-		    		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
-		    		
-		    		List<Pdg_variazioneBulk> listVar = pdgVarHome.fetchAll(sqlVar);
-	
-		    		listVar.stream()
-		    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
-		    			   .filter(el->el.getDt_chiusura().before(progetto.getOtherField().getDtInizio()))
-		    			   .ifPresent(el->{
-		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
-			    				   		+ el.getEsercizio()+"/"+el.getPg_variazione_pdg()
-			    				   		+ " associata al progetto con data di chiusura "
-			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+			if (ctrlDtInizio || ctrlDtFine || ctrlStato) {
+    			ProgettoHome prgHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+				//cerco la movimentazione di impegni fatti su GAE del progetto
+		    	{
+		    		List<ObbligazioneBulk> listObb = (List<ObbligazioneBulk>)prgHome.findObbligazioniAssociate(progetto.getPg_progetto());
+
+		    		if (ctrlStato && listObb.stream().count()>0)
+						throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto. "
+								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+
+		    		if (ctrlDtInizio)
+			    		listObb.stream()
+			    			   .min((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
+			    			   .filter(el->el.getDt_registrazione().before(progetto.getOtherField().getDtInizio()))
+			    			   .ifPresent(el->{
+			    				   throw new ApplicationRuntimeException("Attenzione! Esiste l'obbligazione "
+			    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
+			    				   		+ " associata al progetto con data registrazione "
+			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_registrazione())
 										+ " inferiore alla data di inizio "
 										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
 										+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
-		    			   });
-		    		listVar.stream()
-			 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
-			 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
-			 			   .ifPresent(el->{
-		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
-			    				   		+ el.getEsercizio()+"/"+el.getPg_variazione_pdg()
-			    				   		+ " associata al progetto con data di chiusura "
-			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
-										+ " superiore alla data di fine/proroga "
-										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-										+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
-	 			   });
+			    			   });
+
+		    		if (ctrlDtFine)
+			    		listObb.stream()
+				 			   .max((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
+				 			   .filter(el->el.getDt_registrazione().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+				 			   .ifPresent(el->{
+		 				   throw new ApplicationRuntimeException("Attenzione! Esiste l'obbligazione "
+		    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
+		    				   		+ " associata al progetto con data registrazione "
+		    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_registrazione())
+									+ " superiore alla data di fine/proroga "
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+									+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
+		 			    });
+		    	}
+
+	    		//cerco la movimentazione di variazioni di bilancio di competenza
+	    		{
+		    		List<Pdg_variazioneBulk> listVar = (List<Pdg_variazioneBulk>)prgHome.findVariazioniCompetenzaAssociate(progetto.getPg_progetto());
+	
+		    		if (ctrlStato && listVar.stream().count()>0)
+						throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di competenza emesse sul progetto. "
+								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+
+		    		if (ctrlDtInizio)
+						listVar.stream()
+							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
+							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
+			    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+			    			   .filter(el->el.getDt_chiusura().before(progetto.getOtherField().getDtInizio()))
+			    			   .ifPresent(el->{
+			    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
+				    				   		+ el.getEsercizio()+"/"+el.getPg_variazione_pdg()
+				    				   		+ " associata al progetto con data di chiusura "
+				    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+											+ " inferiore alla data di inizio "
+											+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+											+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
+			    			   });
+
+		    		if (ctrlDtFine)
+			    		listVar.stream()
+							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
+							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
+				 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+				 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+				 			   .ifPresent(el->{
+			    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di competenza "
+				    				   		+ el.getEsercizio()+"/"+el.getPg_variazione_pdg()
+				    				   		+ " associata al progetto con data di chiusura "
+				    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+											+ " superiore alla data di fine/proroga "
+											+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+											+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
+		 			   });
 	    		}
 
 	    		//cerco la data min e max di variazioni di bilancio di residuo
 	    		{
-		    		Var_stanz_resHome varHome = (Var_stanz_resHome)getHome(userContext, Var_stanz_resBulk.class);
-		    		SQLBuilder sqlVar = varHome.createSQLBuilder();
-		    		sqlVar.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_CHIUSURA", SQLBuilder.ISNOTNULL, null);
-		    		sqlVar.addSQLClause(FindClause.AND, "VAR_STANZ_RES.DT_ANNULLAMENTO", SQLBuilder.ISNULL, null);
-		    		
-		    		Var_stanz_res_rigaHome varRigaHome = (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
-		    		SQLBuilder sqlExist = varRigaHome.createSQLBuilder();
-					sqlExist.resetColumns();
-					sqlExist.addColumn("1");
-		    		sqlExist.addSQLJoin("VAR_STANZ_RES.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
-		    		sqlExist.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE", "VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
-		    		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VAR_STANZ_RES_RIGA.CD_CDR");
-		    		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VAR_STANZ_RES_RIGA.CD_LINEA_ATTIVITA");
-		    		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
-		    		
-		    		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
-		    		
-		    		List<Var_stanz_resBulk> listVar = varHome.fetchAll(sqlVar);
+		    		List<Var_stanz_resBulk> listVar = (List<Var_stanz_resBulk>)prgHome.findVariazioniResiduoAssociate(progetto.getPg_progetto());
 	
-		    		listVar.stream()
-		    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
-		    			   .filter(el->el.getDt_chiusura().before(progetto.getOtherField().getDtInizio()))
-		    			   .ifPresent(el->{
-		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di residuo "
-			    				   		+ el.getEsercizio()+"/"+el.getPg_variazione()
-			    				   		+ " associata al progetto con data di chiusura "
-			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
-										+ " inferiore alla data di inizio "
-										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-										+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
-		    			   });
-		    		listVar.stream()
-			 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
-			 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
-			 			   .ifPresent(el->{
-		    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di residuo "
-		    						    + el.getEsercizio()+"/"+el.getPg_variazione()
-			    				   		+ " associata al progetto con data di chiusura "
-			    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
-										+ " superiore alla data di fine/proroga "
-										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-										+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
-	 			   });
+		    		if (ctrlStato && listVar.stream().count()>0)
+						throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di residuo emesse sul progetto. "
+								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+					
+		    		if (ctrlDtInizio)
+						listVar.stream()
+							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
+							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
+			    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+			    			   .filter(el->el.getDt_chiusura().before(progetto.getOtherField().getDtInizio()))
+			    			   .ifPresent(el->{
+			    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di residuo "
+				    				   		+ el.getEsercizio()+"/"+el.getPg_variazione()
+				    				   		+ " associata al progetto con data di chiusura "
+				    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+											+ " inferiore alla data di inizio "
+											+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+											+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
+			    			   });
+
+		    		if (ctrlDtFine)
+			    		listVar.stream()
+							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
+							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
+				 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
+				 			   .filter(el->el.getDt_chiusura().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+				 			   .ifPresent(el->{
+			    				   throw new ApplicationRuntimeException("Attenzione! Esiste la variazione di residuo "
+			    						    + el.getEsercizio()+"/"+el.getPg_variazione()
+				    				   		+ " associata al progetto con data di chiusura "
+				    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_chiusura())
+											+ " superiore alla data di fine/proroga "
+											+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+											+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
+		 			   });
 	    		}
 	    	}	    					   
 		} catch(Throwable e) {
