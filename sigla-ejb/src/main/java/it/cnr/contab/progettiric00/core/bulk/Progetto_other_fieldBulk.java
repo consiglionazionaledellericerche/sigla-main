@@ -16,7 +16,9 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	public static final String STATO_APPROVATO = "APP";
 	public static final String STATO_ANNULLATO = "ANN";
 	public static final String STATO_MIGRAZIONE = "MIG";
-	public static final String STATO_CHIUSURA = "CHI";
+
+	public static final String OPERAZIONE_CHIUSURA = "CHI";
+	public static final String OPERAZIONE_RIAPERTURA = "RIA";
 
 	public final static Dictionary statoKeys;
 	static {
