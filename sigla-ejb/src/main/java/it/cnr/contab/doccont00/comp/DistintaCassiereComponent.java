@@ -7,6 +7,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -4765,6 +4766,25 @@ public class DistintaCassiereComponent extends
                                 .filter(Rif_modalita_pagamentoBulk.class::isInstance)
                                 .map(Rif_modalita_pagamentoBulk.class::cast)
                                 .orElseThrow(() -> new ApplicationMessageFormatException("Modalità di pagamento non trovata: {0}", modalitaPagamento));
+
+                if (Rif_modalita_pagamentoBulk.IBAN.equals(rif_modalita_pagamentoBulk.getTi_pagamento())) {
+                    final Optional<String> codiceNazione = Optional.ofNullable(docContabile.getCdIso());
+                    if (codiceNazione.isPresent()) {
+                        NazioneHome nazioneHome = (NazioneHome) getHome(userContext,NazioneBulk.class);
+                        SQLBuilder sqlExists = nazioneHome.createSQLBuilder();
+                        sqlExists.addSQLClause("AND","NAZIONE.CD_ISO",SQLBuilder.EQUALS,codiceNazione.get());
+                        sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
+                        if (sqlExists.executeCountQuery(getConnection(userContext))!=0 )
+                            throw new ApplicationMessageFormatException("Attenzione la modalità di pagamento {0} presente sul mandato {1}/{2}/{3} non è " +
+                                    "coerente con la nazione {4} del beneficiario!",
+                                    rif_modalita_pagamentoBulk.getCd_modalita_pag(),
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()),
+                                    codiceNazione.get());
+                    }
+                }
+
 
                 final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
                         Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
