@@ -12,7 +12,7 @@ import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.si.spring.storage.StoreService;
-
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -599,13 +599,18 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 				if (dett.getCdr_assegnatario()!=null && dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita() != null)
 					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",SQLBuilder.EQUALS,dett.getCdr_assegnatario().getUnita_padre().getCd_tipo_unita());
 	
-			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
-			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ))) {
+			/*
+			 * controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per 
+			 * progetti con Piano Economico con data fine/proroga successiva all'anno di attivazione
+			 */
+			BigDecimal annoFrom = Utility.createConfigurazioneCnrComponentSession().getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).map(el->el.compareTo(CNRUserContext.getEsercizio( userContext ))<=0).orElse(Boolean.FALSE)) {
 				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
 				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(dett.getProgetto());
 				getHomeCache(userContext).fetchAll(userContext);
-				if (progetto.isPianoEconomicoRequired()) {
+				if (progetto.isPianoEconomicoRequired() &&
+						Optional.ofNullable(progetto.getOtherField().getAnnoFine()).map(annoFine->annoFine.compareTo(annoFrom.intValue())>=0).orElse(Boolean.TRUE)) {
 					Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
 			    	SQLBuilder assSql = assHome.createSQLBuilder();
 			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());

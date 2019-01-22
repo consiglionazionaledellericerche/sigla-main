@@ -13,6 +13,8 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
@@ -25,6 +27,7 @@ import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -33,6 +36,7 @@ import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteBulkTree;
@@ -605,6 +609,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
 				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
 				.isPresent() ||
+				Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.map(Progetto_other_fieldBulk::isStatoChiuso).orElse(Boolean.FALSE) ||
 			   !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.filter(el->Optional.ofNullable(el.getIdTipoFinanziamento()).isPresent())
@@ -638,11 +645,21 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				.filter(el->!el.isDatePianoEconomicoRequired())
 				.isPresent();
 	}
+
+	public boolean isRiapriButtonHidden()	{
+		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			    !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.map(Progetto_other_fieldBulk::isStatoChiuso).orElse(Boolean.FALSE);
+	}
 	
 	@Override
 	protected Button[] createToolbar() {
 		Button[] toolbar = super.createToolbar();
-		Button[] newToolbar = new Button[ toolbar.length + 4];
+		Button[] newToolbar = new Button[ toolbar.length + 5];
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
 			newToolbar[i] = toolbar[i];
@@ -654,13 +671,13 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		newToolbar[ i+2 ].setSeparator(true);
 		newToolbar[ i+3 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.chiusura");
 		newToolbar[ i+3 ].setSeparator(true);
+		newToolbar[ i+4 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.riapri");
+		newToolbar[ i+4 ].setSeparator(true);
 
 		return newToolbar;
 	}
 
-	public void changeStato(ActionContext context, String newStato) throws ValidationException, BusinessProcessException {
-		this.save(context);
-		
+	public void changeStato(ActionContext context, String newStato) throws ValidationException, BusinessProcessException, ComponentException, RemoteException {
 		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
 		if (!optProgetto.isPresent())
 			throw new ValidationException("Operazione non possibile! Non è stato possibile individuare il progetto da aggiornare!");
@@ -676,9 +693,24 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		} else if (Progetto_other_fieldBulk.STATO_ANNULLATO.equals(newStato)){
 			if (!optOtherField.get().isStatoNegoziazione())
 				throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"ANNULLATO\".");
-		} else if (Progetto_other_fieldBulk.STATO_CHIUSURA.equals(newStato)){
+		} else if (ProgettoBulk.STATO_CHIUSURA.equals(newStato)){
 			if (optProgetto.get().isDatePianoEconomicoRequired())
 				throw new ValidationException("Attenzione! Operazione non possibile in presenza delle date del progetto.");
+		} else if (ProgettoBulk.STATO_RIAPERTURA.equals(newStato)) {
+			if (!optOtherField.get().isStatoChiuso())
+				throw new ValidationException("E' possibile riaprire un progetto solo se lo stato corrente risulta essere \"CHIUSO\".");
+			List<ObbligazioneBulk> listObb = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findObbligazioniAssociate", optProgetto.get().getPg_progetto());
+    		if (listObb.stream().count()>0)
+				throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto. "
+						+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+			List<Pdg_variazioneBulk> listVarComp = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findVariazioniCompetenzaAssociate", optProgetto.get().getPg_progetto());
+    		if (listVarComp.stream().count()>0)
+				throw new ApplicationRuntimeException("Attenzione: risultano variazioni di competenza emesse sul progetto. "
+						+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+			List<Var_stanz_resBulk> listVarRes = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findVariazioniResiduoAssociate", optProgetto.get().getPg_progetto());
+    		if (listVarRes.stream().count()>0)
+				throw new ApplicationRuntimeException("Attenzione: risultano variazioni di residuo emesse sul progetto. "
+						+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
 		} else
 			throw new ValidationException("Operazione non gestita.");
 		
@@ -694,13 +726,18 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				optOtherField.get().setDtFine(null);
 				optOtherField.get().setDtProroga(null);
 			}
-		} else if (Progetto_other_fieldBulk.STATO_CHIUSURA.equals(newStato)) {
+		} else if (ProgettoBulk.STATO_CHIUSURA.equals(newStato)) {
 			optOtherField.get().setDtInizio(null);
 			optOtherField.get().setDtProroga(null);
 			optOtherField.get().setDtFine(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
 			optOtherField.get().setToBeUpdated();
+		} else if (ProgettoBulk.STATO_RIAPERTURA.equals(newStato)) {
+			this.setStatus(EDIT);
+			optOtherField.get().setDtFine(null);
+			optOtherField.get().setToBeUpdated();
 		}
 		optProgetto.get().setToBeUpdated();
+		this.setModel(context, optProgetto.get());
 		this.save(context);
 	}
 
@@ -713,7 +750,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (optOtherField.isPresent() && 
 				(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(stato) ||
 					Progetto_other_fieldBulk.STATO_APPROVATO.equals(stato) ||
-					Progetto_other_fieldBulk.STATO_CHIUSURA.equals(stato) ||
+					ProgettoBulk.STATO_CHIUSURA.equals(stato) ||
 					Progetto_other_fieldBulk.STATO_ANNULLATO.equals(stato))) {
 			if (!optOtherField.flatMap(el->Optional.ofNullable(el.getTipoFinanziamento()))
 					.flatMap(el->Optional.ofNullable(el.getCodice())).isPresent())

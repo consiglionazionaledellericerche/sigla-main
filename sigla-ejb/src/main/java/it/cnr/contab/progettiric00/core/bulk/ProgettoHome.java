@@ -19,6 +19,14 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_area_progBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
@@ -40,6 +48,10 @@ import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_rstlBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_sacBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -667,5 +679,65 @@ public class ProgettoHome extends BulkHome {
 		SQLBuilder sql = pdgModuloHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
 		return pdgModuloHome.fetchAll(sql);
+	}
+
+	public java.util.Collection<ObbligazioneBulk> findObbligazioniAssociate(Integer pgProgetto) throws IntrospectionException, PersistencyException {
+		PersistentHome obblHome = getHomeCache().getHome(ObbligazioneBulk.class);
+		SQLBuilder sqlObb = obblHome.createSQLBuilder();
+			
+		PersistentHome scadVoceHome = getHomeCache().getHome(Obbligazione_scad_voceBulk.class);
+		SQLBuilder sqlExist = scadVoceHome.createSQLBuilder();
+		sqlExist.addSQLJoin("OBBLIGAZIONE.CD_CDS", "OBBLIGAZIONE_SCAD_VOCE.CD_CDS");
+		sqlExist.addSQLJoin("OBBLIGAZIONE.ESERCIZIO", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
+		sqlExist.addSQLJoin("OBBLIGAZIONE.ESERCIZIO_ORIGINALE", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO_ORIGINALE");
+		sqlExist.addSQLJoin("OBBLIGAZIONE.PG_OBBLIGAZIONE", "OBBLIGAZIONE_SCAD_VOCE.PG_OBBLIGAZIONE");
+		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "OBBLIGAZIONE_SCAD_VOCE.ESERCIZIO");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "OBBLIGAZIONE_SCAD_VOCE.CD_CENTRO_RESPONSABILITA");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "OBBLIGAZIONE_SCAD_VOCE.CD_LINEA_ATTIVITA");
+		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, pgProgetto);
+			
+		sqlObb.addSQLExistsClause(FindClause.AND, sqlExist);
+		return obblHome.fetchAll(sqlObb);
+	}
+	
+	public java.util.Collection<Pdg_variazioneBulk> findVariazioniCompetenzaAssociate(Integer pgProgetto) throws IntrospectionException, PersistencyException {
+		PersistentHome pdgVarHome = getHomeCache().getHome(Pdg_variazioneBulk.class);
+		SQLBuilder sqlVar = pdgVarHome.createSQLBuilder();
+		
+		PersistentHome pdgVarRigaHome = getHomeCache().getHome(Pdg_variazione_riga_gestBulk.class);
+		SQLBuilder sqlExist = pdgVarRigaHome.createSQLBuilder();
+		sqlExist.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+		sqlExist.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
+		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
+		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, pgProgetto);
+		
+		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
+		
+		return pdgVarHome.fetchAll(sqlVar);
+	}
+	
+	public java.util.Collection<Var_stanz_resBulk> findVariazioniResiduoAssociate(Integer pgProgetto) throws IntrospectionException, PersistencyException {
+		PersistentHome varHome = getHomeCache().getHome(Var_stanz_resBulk.class);
+		SQLBuilder sqlVar = varHome.createSQLBuilder();
+		
+		PersistentHome varRigaHome = getHomeCache().getHome(Var_stanz_res_rigaBulk.class);
+		SQLBuilder sqlExist = varRigaHome.createSQLBuilder();
+		sqlExist.resetColumns();
+		sqlExist.addColumn("1");
+		sqlExist.addSQLJoin("VAR_STANZ_RES.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
+		sqlExist.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE", "VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
+		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VAR_STANZ_RES_RIGA.CD_CDR");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VAR_STANZ_RES_RIGA.CD_LINEA_ATTIVITA");
+		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, pgProgetto);
+		
+		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
+		
+		return varHome.fetchAll(sqlVar);
 	}
 }
