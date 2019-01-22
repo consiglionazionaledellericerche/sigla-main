@@ -717,52 +717,50 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName()));
 
                 nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
-                List<V_mandato_reversaleBulk> dettagliRev = distintaCassiereComponentSession
-                        .dettagliDistinta(
-                                userContext,
-                                distinta,
-                                it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_REV);
-                dettagliRev.stream()
-                        .filter(v_mandato_reversaleBulk -> {
-                            try {
-                                return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
-                            } catch (RemoteException|ComponentException e) {
-                                logger.error("SIOPE+ Invia PEC", e);
-                                return Boolean.FALSE;
-                            }
-                        })
-                        .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
-                        .filter(s -> s != null)
-                        .forEach(s -> nodes.add(s));
+
 
                 List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
                         .dettagliDistinta(
                                 userContext,
                                 distinta,
                                 it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
-                dettagliMan.stream()
-                        .filter(v_mandato_reversaleBulk -> {
-                            try {
-                                return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk);
-                            } catch (RemoteException|ComponentException e) {
-                                logger.error("SIOPE+ Invia PEC", e);
-                                return Boolean.FALSE;
-                            }
-                        })
-                        .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
-                        .filter(s -> s != null)
-                        .forEach(s -> nodes.add(s));
-                if (nodes.size() > 1) {
-                    inviaDistintaPEC(nodes, false,
-                            "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
-                                    " Progressivo Flusso: " + distinta.getProgFlusso() +
-                                    " Identificativo Flusso BT: " + distinta.getIdentificativoFlusso());
-                    return Boolean.TRUE;
-                }
-            } catch (PersistencyException | EmailException | IOException _ex) {
+
+                return inviaPEC(distinta, dettagliMan, true, nodes) ||
+                        inviaPEC(distinta, dettagliMan, false, nodes);
+
+            } catch (PersistencyException | IOException _ex) {
                 logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
             }
             return Boolean.FALSE;
+    }
+
+    private boolean inviaPEC(Distinta_cassiereBulk distinta, List<V_mandato_reversaleBulk> dettagliMan, boolean isEstero, List<String> args) throws ComponentException{
+        try {
+            List<String> nodes = new ArrayList<>();
+            nodes.addAll(args);
+            dettagliMan.stream()
+                .filter(v_mandato_reversaleBulk -> {
+                    try {
+                        return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk, isEstero);
+                    } catch (RemoteException|ComponentException e) {
+                        logger.error("SIOPE+ Invia PEC", e);
+                        return Boolean.FALSE;
+                    }
+                })
+                .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
+                .filter(s -> s != null)
+                .forEach(s -> nodes.add(s));
+            if (nodes.size() > 1) {
+                inviaDistintaPEC(nodes, isEstero,
+                        "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
+                                " Progressivo Flusso: " + distinta.getProgFlusso() +
+                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlusso());
+                return Boolean.TRUE;
+            }
+        } catch (EmailException | IOException _ex) {
+            logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
+        }
+        return Boolean.FALSE;
     }
 
     private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali) throws Exception {
@@ -1101,29 +1099,23 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
     }
 
-    public boolean isRiferimentoDocumentoEsterno(V_mandato_reversaleBulk bulk) throws RemoteException, ComponentException {
-        return Arrays.asList(
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
-                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
-        ).contains(
-                getTipoPagamentoSiopePlus(bulk)
-        ) && !bulk.getTi_documento_cont().equals(MandatoBulk.TIPO_REGOLAM_SOSPESO);
-    }
-
-    public Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus getTipoPagamentoSiopePlus(V_mandato_reversaleBulk bulk) throws RemoteException, ComponentException {
-
+    public boolean isRiferimentoDocumentoEsterno(V_mandato_reversaleBulk bulk, boolean isEstero) throws RemoteException, ComponentException {
         final Rif_modalita_pagamentoBulk rif_modalita_pagamentoBulk =
                 Optional.ofNullable(distintaCassiereComponentSession.findModPag(userContext, bulk))
                         .filter(Rif_modalita_pagamentoBulk.class::isInstance)
                         .map(Rif_modalita_pagamentoBulk.class::cast)
                         .orElseThrow(() -> new ApplicationMessageFormatException("Modalità di pagamento non trovata: {0}", String.valueOf(bulk.getPg_documento_cont())));
 
-        return Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
+        return Arrays.asList(
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
+                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
+        ).contains(
+                Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
                         .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
-                        .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE);
-
+                        .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE)
+        ) && !bulk.getTi_documento_cont().equals(MandatoBulk.TIPO_REGOLAM_SOSPESO) &&
+                ((isEstero && rif_modalita_pagamentoBulk.getTi_pagamento().equals(Rif_modalita_pagamentoBulk.IBAN)) || !isEstero);
     }
-
 
     class StorageDataSource implements DataSource {
 
