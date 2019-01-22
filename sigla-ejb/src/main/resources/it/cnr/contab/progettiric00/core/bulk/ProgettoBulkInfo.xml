@@ -685,7 +685,7 @@
 
 	<fieldProperty
 		name="statoOf"
-		property="otherField.stato"
+		property="statoPrg"
 		label="Stato"
 		inputType="SELECT"
 		keysProperty="statoOfKeys"

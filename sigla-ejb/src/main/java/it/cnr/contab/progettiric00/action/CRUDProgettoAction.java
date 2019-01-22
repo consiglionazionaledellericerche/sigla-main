@@ -350,7 +350,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if ( option == OptionBP.YES_BUTTON) 
 			{
 				TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-				bp.changeStato(context,Progetto_other_fieldBulk.STATO_CHIUSURA);
+				bp.changeStato(context,ProgettoBulk.STATO_CHIUSURA);
 				bp.edit(context,bp.getModel());
 			}
 			return context.findDefaultForward();
@@ -460,6 +460,39 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			{
 				return handleException(context, e);
 			}
+		}
+	}
+
+	public Forward doRiapriOf(ActionContext context){
+		try 
+		{
+			fillModel( context );
+	        TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP) getBusinessProcess(context);
+			bp.completeSearchTools(context, bp);
+	        bp.validate(context);
+        	return openConfirm(context, "Attenzione! Il progetto sarà riaperto. "
+        			+ "Si vuole procedere?", OptionBP.CONFIRM_YES_NO, "doConfirmRiapriOf");
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
+		}
+	}
+
+	public Forward doConfirmRiapriOf(ActionContext context,int option) {
+		try 
+		{
+			if ( option == OptionBP.YES_BUTTON) 
+			{
+				TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
+				bp.changeStato(context,ProgettoBulk.STATO_RIAPERTURA);
+				bp.edit(context,bp.getModel());
+			}
+			return context.findDefaultForward();
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
 		}
 	}
 }
