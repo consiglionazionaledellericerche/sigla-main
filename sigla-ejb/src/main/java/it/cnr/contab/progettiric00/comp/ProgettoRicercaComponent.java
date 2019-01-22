@@ -1407,8 +1407,8 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
     			List resultEtr = homeEtr.fetchAll(sqlEtr);
 	    		if (!resultEtr.isEmpty())
-	    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
-	                   "è già stata collegata al preventivo gestionale del progetto -  parte entrate.");
+	    			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto "+
+	                   "già collegata al progetto nel preventivo gestionale -  parte entrate.");
     		} else {
     			
         		Pdg_modulo_spese_gestHome homeSpe = (Pdg_modulo_spese_gestHome)getHome(userContext,Pdg_modulo_spese_gestBulk.class);
@@ -1421,9 +1421,21 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
         		List resultSpe = homeSpe.fetchAll(sqlSpe);
         		if (!resultSpe.isEmpty())
-        			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto\n"+
-                       "è già stata collegata al preventivo gestionale del progetto -  parte spese.");
+        			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto "+
+                       "già collegata al progetto nel preventivo gestionale -  parte spese.");
     			
+        		Pdg_variazione_riga_gestHome homeVarSpe = (Pdg_variazione_riga_gestHome)getHome(userContext,Pdg_variazione_riga_gestBulk.class);
+        		SQLBuilder sqlVarSpe = homeVarSpe.createSQLBuilder();
+        		sqlVarSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
+        		sqlVarSpe.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
+        		sqlVarSpe.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
+        		sqlVarSpe.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
+        		sqlVarSpe.addClause(FindClause.AND,"cd_elemento_voce",SQLBuilder.EQUALS,assVoce.getCd_elemento_voce());
+
+        		List resultVarSpe = homeVarSpe.fetchAll(sqlVarSpe);
+        		if (!resultVarSpe.isEmpty())
+        			throw new ApplicationException("Impossibile cancellare la voce "+assVoce.getCd_elemento_voce()+" in quanto "+
+                       "già collegata al progetto in una variazione di competenza -  parte spese.");
     		}
 
     	} catch(Throwable e) {
