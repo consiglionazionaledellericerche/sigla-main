@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.comp;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,6 +38,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_variazioniBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
@@ -77,6 +79,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
@@ -1779,202 +1782,25 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
         return messaggio;
     }
 
-//    
-//    
-//    private String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione, boolean locked) throws ComponentException{
-//   		String messaggio = "";
-//        try {
-//        	Configurazione_cnrComponentSession configSession = (Configurazione_cnrComponentSession)Utility.createConfigurazioneCnrComponentSession();
-//			String cdNaturaReimpiego = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
-//			BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
-//
-//			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).filter(el->el.compareTo(pdgVariazione.getEsercizio())<=0).isPresent()) {
-//	            Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
-//	
-//	            for (java.util.Iterator dett = detHome.findDettagliEntrataVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
-//	            	Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
-//
-//	                WorkpackageBulk linea_attivita = (WorkpackageBulk)((it.cnr.contab.config00.ejb.Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
-//	                        "CNRCONFIG00_EJB_Linea_attivitaComponentSession", it.cnr.contab.config00.ejb.Linea_attivitaComponentSession.class)
-//	                ).inizializzaBulkPerModifica(userContext, rigaVar.getLinea_attivita());
-//
-//					//recupero il progetto per verificare se è scaduto
-//					ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
-//					home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-//					ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(linea_attivita.getProgetto2016());
-//					getHomeCache(userContext).fetchAll(userContext);
-//
-//					BigDecimal totFinanziato = BigDecimal.ZERO;
-//					if (progetto.isPianoEconomicoRequired()) {
-//		                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(linea_attivita.getProgetto2016().getPg_progetto());
-//		                totFinanziato = pianoEconomicoList.stream()
-//										                .filter(el->el.getEsercizio_piano().equals(rigaVar.getEsercizio()))
-//										                .map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
-//										                .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-//					} else {
-//						totFinanziato = Optional.ofNullable(progetto.getOtherField())
-//								.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
-//					}
-//		            
-//					Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
-//		            SQLBuilder saldiSQL = saldiHome.createSQLBuilder();
-//		            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-//		            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-//		            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
-//		            saldiSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-//		            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
-//		            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
-//		            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
-//		            saldiSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
-//		                
-//		            List<Voce_f_saldi_cdr_lineaBulk> saldiList = (List<Voce_f_saldi_cdr_lineaBulk>)saldiHome.fetchAll(saldiSQL);
-//
-//		            BigDecimal assestatoPrg = saldiList.stream()
-//		            			.map(Voce_f_saldi_cdr_lineaBulk::getAssestato)
-//		                		.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-//		                
-//		            if (totFinanziato.compareTo(assestatoPrg.add(rigaVar.getIm_entrata()))<0) {
-//                       if (messaggio!=null && messaggio.length()>0)
-//                           messaggio = messaggio+ "\n";
-//                       messaggio = messaggio +
-//                                   "L'assestato entrate del progetto " +
-//                        		   	   new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(rigaVar.getIm_entrata())) +
-//                                       " risulterebbe superiore alla quota finanziata dello stesso "
-//                                       + (progetto.isPianoEconomicoRequired()?"per l'anno"+rigaVar.getEsercizio():"")+
-//                                       " che risulta di " +
-//                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
-//		            }
-//	            }
-//
-//	            for (java.util.Iterator dett = detHome.findDettagliSpesaVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
-//	                Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
-//	
-//	                WorkpackageBulk linea_attivita = (WorkpackageBulk)((it.cnr.contab.config00.ejb.Linea_attivitaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB(
-//	                        "CNRCONFIG00_EJB_Linea_attivitaComponentSession", it.cnr.contab.config00.ejb.Linea_attivitaComponentSession.class)
-//	                ).inizializzaBulkPerModifica(userContext, rigaVar.getLinea_attivita());
-//
-//					boolean isNaturaReimpiego = Optional.ofNullable(cdNaturaReimpiego).map(el->el.equals(linea_attivita.getNatura().getCd_natura()))
-//							.orElse(Boolean.FALSE);
-//
-//					//recupero il progetto per verificare se è scaduto
-//					ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
-//					home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-//					ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(linea_attivita.getProgetto2016());
-//					getHomeCache(userContext).fetchAll(userContext);
-//					
-//					BigDecimal imVariazioneFin = BigDecimal.ZERO;
-//					BigDecimal imVariazioneCofin = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_int());
-//                    if (isNaturaReimpiego)
-//                    	imVariazioneCofin = imVariazioneCofin.add(Utility.nvl(rigaVar.getIm_spese_gest_decentrata_est()));
-//                    else
-//                        imVariazioneFin = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_est());
-//
-//                    if (progetto.isPianoEconomicoRequired()) {
-//		                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(pdgVariazione.getEsercizio(), linea_attivita.getProgetto2016().getPg_progetto(), rigaVar.getElemento_voce());
-//		                if (pianoEconomicoList==null || pianoEconomicoList.isEmpty())
-//                            messaggio = messaggio +
-//                            "Non risulta essere stato imputato alcun valore nel piano economico del progetto per la Voce " + 
-//                            	rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() + ".\n";
-//		                	
-//		                for (Progetto_piano_economicoBulk e : pianoEconomicoList) {
-//		                    if (e.getFl_ctrl_disp() &&
-//		                            (e.getEsercizio_piano().equals(0) || e.getEsercizio_piano().equals(rigaVar.getEsercizio()))) {
-//		                        try {
-//		                            if (locked) {
-//		                                Progetto_piano_economicoBulk bulkToFind = new Progetto_piano_economicoBulk();
-//		                                bulkToFind.setVoce_piano_economico(e.getVoce_piano_economico());
-//		                                bulkToFind.setPg_progetto(e.getPg_progetto());
-//		                                bulkToFind.setEsercizio_piano(e.getEsercizio_piano());
-//		                                try {
-//		                                    bulkToFind = (Progetto_piano_economicoBulk) getHome( userContext,Progetto_piano_economicoBulk.class ).findAndLock(bulkToFind);
-//		                                } catch (ObjectNotFoundException ex) {
-//		                                }
-//		                            }
-//
-//		                            V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
-//		                                    cercaSaldoPianoEconomico(e, "S");
-//		
-//		                            BigDecimal dispResiduaFin = saldo.getDispResiduaFinanziamento().subtract(imVariazioneFin);
-//			                        if (dispResiduaFin.compareTo(BigDecimal.ZERO)<0) {
-//			                            if (messaggio!=null && messaggio.length()>0)
-//			                                messaggio = messaggio+ "\n";
-//			                            messaggio = messaggio +
-//			                                     "La disponibilità quota finanziata del piano economico "+e.getCd_voce_piano()+
-//			                                     " associato al progetto"+(e.getEsercizio_piano().equals(0)?"":" per l'esercizio "+e.getEsercizio_piano())+
-//			                                     " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() +
-//			                                     " non è sufficiente a coprire la variazione che risulta di " +
-//			                                     new it.cnr.contab.util.EuroFormat().format(imVariazioneFin) + ".\n";
-//		                            }		
-//		                            
-//		                            BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento().subtract(imVariazioneCofin);
-//		                            if (dispResiduaCofin.compareTo(BigDecimal.ZERO)<0) {
-//		                                if (messaggio!=null && messaggio.length()>0)
-//		                                    messaggio = messaggio+ "\n";
-//		                                messaggio = messaggio +
-//		                                        "La disponibilità quota cofinanziata del piano economico "+e.getCd_voce_piano()+
-//		                                        " associato al progetto"+(e.getEsercizio_piano().equals(0)?"":" per l'esercizio "+e.getEsercizio_piano())+
-//		                                        " per la Voce " + rigaVar.getCd_elemento_voce() + " e GAE " + rigaVar.getCd_linea_attivita() +
-//		                                        " non è sufficiente a coprire la variazione che risulta di " +
-//		                                        new it.cnr.contab.util.EuroFormat().format(imVariazioneCofin) + ".\n";
-//		                            }
-//		                        }
-//		                        catch (Exception ex )
-//		                        {
-//		                            throw new RuntimeException(  ex );
-//		                        }
-//		                    }
-//		                }
-//					} else {
-//						BigDecimal totFinanziato = Optional.ofNullable(progetto.getOtherField())
-//								.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
-//						
-//						Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
-//			            SQLBuilder saldiSQL = saldiHome.createSQLBuilder();
-//			            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-//			            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-//			            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
-//			            saldiSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-//			            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
-//			            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
-//			            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
-//			            saldiSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
-//			                
-//			            List<Voce_f_saldi_cdr_lineaBulk> saldiList = (List<Voce_f_saldi_cdr_lineaBulk>)saldiHome.fetchAll(saldiSQL);
-//
-//			            BigDecimal assestatoPrg = saldiList.stream()
-//			            			.map(Voce_f_saldi_cdr_lineaBulk::getAssestato)
-//			                		.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-//
-//			            if (totFinanziato.compareTo(assestatoPrg.add(imVariazioneFin))<0) {
-//		                   if (messaggio!=null && messaggio.length()>0)
-//		                       messaggio = messaggio+ "\n";
-//		                   messaggio = messaggio +
-//		                               "L'assestato spese del progetto " +
-//		                        		   	   new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(imVariazioneFin)) +
-//		                                       " risulterebbe superiore alla quota finanziata dello stesso " +
-//		                                       " che risulta di " +
-//		                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
-//				        }
-//                    }
-//	            }
-//	   		}
-//        }catch (PersistencyException e) {
-//            throw new ComponentException(e);
-//        }catch (RemoteException e) {
-//            throw new ComponentException(e);
-//        } catch (EJBException e) {
-//            throw new ComponentException(e);
-//        }
-//        return messaggio;
-//    }
-//
 	public void checkPdgPianoEconomico(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException{
 		try {
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
 				Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
 						findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
-				//se è collegata la UO Ente e la variazione è fatta dalla UO Ente nessun controllo faccio
+				/*
+				 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+				 */
 				if (uoScrivania.isUoEnte() && variazione.getCentroDiResponsabilita().getUnita_padre().isUoEnte())
+					return;
+
+				/*
+				 * non effettuo alcun controllo se si tratta di variazione IVA
+				 */
+				PersistentHome homeLiqVar = getHome(userContext, Liquidazione_iva_variazioniBulk.class);
+				SQLBuilder sqlLiqVar = homeLiqVar.createSQLBuilder();
+				sqlLiqVar.addClause(FindClause.AND, "esercizio_variazione_res", SQLBuilder.EQUALS, variazione.getEsercizio());
+				sqlLiqVar.addClause(FindClause.AND, "pg_variazione_res", SQLBuilder.EQUALS, variazione.getPg_variazione());
+				if (sqlLiqVar.executeCountQuery(getConnection(userContext)) > 0)
 					return;
 				
 				List<CtrlPianoEco> listCtrlPianoEco = new ArrayList<CtrlPianoEco>();
@@ -2067,17 +1893,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					else
 						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_FONTE_INTERNA);
 						
-					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(linea.getNatura().getCd_natura()))
-													.orElse(Boolean.FALSE));
+					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(varStanzResRiga.getCd_elemento_voce()))
+							.orElse(Boolean.FALSE));
 
 					pianoEco.getDett().add(dett);
-					listCtrlPianoEco.add(pianoEco);
+					if (!listCtrlPianoEco.contains(pianoEco))
+						listCtrlPianoEco.add(pianoEco);
 				}
 				controllaPdgPianoEconomico(userContext, variazione, listCtrlPianoEco, cdVoceSpeciale);
 			}
         } catch (DetailedRuntimeException _ex) {
             throw new ApplicationException(_ex.getMessage());
-        } catch (PersistencyException|RemoteException|IntrospectionException e) {
+        } catch (PersistencyException|RemoteException|IntrospectionException|SQLException e) {
 			throw new ComponentException(e);
 		}
 	}
@@ -2087,8 +1914,20 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, CNRUserContext.getEsercizio(userContext))) {
 				Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
 						findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
-				//se è collegata la UO Ente e la variazione è fatta dalla UO Ente nessun controllo faccio
+				/*
+				 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+				 */
 				if (uoScrivania.isUoEnte() && variazione.getCentro_responsabilita().getUnita_padre().isUoEnte())
+					return;
+
+				/*
+				 * non effettuo alcun controllo se si tratta di variazione IVA
+				 */
+				PersistentHome homeLiqVar = getHome(userContext, Liquidazione_iva_variazioniBulk.class);
+				SQLBuilder sqlLiqVar = homeLiqVar.createSQLBuilder();
+				sqlLiqVar.addClause(FindClause.AND, "esercizio_variazione_comp", SQLBuilder.EQUALS, variazione.getEsercizio());
+				sqlLiqVar.addClause(FindClause.AND, "pg_variazione_comp", SQLBuilder.EQUALS, variazione.getPg_variazione_pdg());
+				if (sqlLiqVar.executeCountQuery(getConnection(userContext)) > 0)
 					return;
 				
 				List<CtrlPianoEco> listCtrlPianoEco = new ArrayList<CtrlPianoEco>();
@@ -2185,17 +2024,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					else
 						dett.setTipoNatura(CtrlPianoEcoDett.TIPO_FONTE_INTERNA);
 						
-					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(linea.getNatura().getCd_natura()))
+					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(varStanzRiga.getCd_elemento_voce()))
 													.orElse(Boolean.FALSE));
 
 					pianoEco.getDett().add(dett);
-					listCtrlPianoEco.add(pianoEco);
+					if (!listCtrlPianoEco.contains(pianoEco))
+						listCtrlPianoEco.add(pianoEco);
 				}
 				controllaPdgPianoEconomico(userContext, variazione, listCtrlPianoEco, cdVoceSpeciale);
 			}
         } catch (DetailedRuntimeException _ex) {
             throw new ApplicationException(_ex.getMessage());
-        } catch (PersistencyException|RemoteException|IntrospectionException e) {
+        } catch (PersistencyException|RemoteException|IntrospectionException|SQLException e) {
 			throw new ComponentException(e);
 		}
 	}
@@ -2428,6 +2268,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.flatMap(List::stream)
 						.filter(el->!el.isUoArea())
 						.filter(el->!el.isCdrPersonale())
+						.filter(el->!el.isVoceSpeciale())
 						.filter(el->el.isNaturaFonteEsterna())
 						.map(CtrlPianoEcoDett::getImporto)
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
@@ -2501,7 +2342,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				if (impNegativiVoceSpeciale.compareTo(BigDecimal.ZERO)>0 && impNegativiVoceSpeciale.compareTo(impPositiviNaturaReimpiego)>0)
 					throw new ApplicationException("Attenzione! Risultano prelievi dalla voce " + cdVoceSpeciale
 							+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impNegativiVoceSpeciale)
-							+ " che non risultano totalmente coperto da variazioni a favore"
+							+ " che non risultano totalmente coperti da variazioni a favore"
 							+ " di GAE di natura 6 - 'Reimpiego di risorse' ("
 							+ new it.cnr.contab.util.EuroFormat().format(impPositiviNaturaReimpiego)+").");
 			}

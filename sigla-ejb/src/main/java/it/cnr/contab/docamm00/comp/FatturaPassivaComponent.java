@@ -6097,7 +6097,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             	if (righeCollegate != null){
             		for (Iterator i = righeCollegate.iterator(); i.hasNext(); ) {
             			Fattura_passiva_rigaBulk riga = ((Fattura_passiva_rigaBulk) i.next());
-            			if (!((cig == null && riga.getCig() == null) || (cig != null && riga.getCig() != null && cig.equalsByPrimaryKey(riga.getCig())))){
+            			if (!(((cig == null || cig.getCdCig() == null) && riga.getCig() == null) || (cig != null && riga.getCig() != null && cig.equalsByPrimaryKey(riga.getCig())))){
                 			riga.setCig(cig);
                 			riga.setToBeUpdated();
             			}
