@@ -134,13 +134,14 @@
 	<fetchPolicy
 		name="it.cnr.contab.progettiric00.comp.ProgettoRicercaModuloComponent.findProgettoPadre">
 		<exclude pattern="*"/>
-		<include pattern="progettopadre"/>		
+		<include pattern="progettopadre"/>
 		<include pattern="progettopadre.progettopadre"/>
 	</fetchPolicy>
 
 	<fetchPolicy
             name="it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find">
         <exclude pattern="*"/>
+		<include pattern="progettopadre"/>
         <include pattern="otherField"/>
         <include pattern="otherField.tipoFinanziamento"/>
     </fetchPolicy>
