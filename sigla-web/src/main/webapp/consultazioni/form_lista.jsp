@@ -22,7 +22,10 @@
 
 <% SelezionatoreListaBP bp = (SelezionatoreListaBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
-
+<%	if (bp.getParentRoot().isBootstrap()) { %>
+	<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+	<% bp.writeHTMLNavigator(out); %>
+<% } else {%>
 	<table class="Panel" height="100%" width="100%">
 		<tr height="100%"><td>
 		<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
@@ -31,7 +34,7 @@
 		<% bp.writeHTMLNavigator(out); %>
 		</td></tr>
 	</table>
-
+<% } %>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 

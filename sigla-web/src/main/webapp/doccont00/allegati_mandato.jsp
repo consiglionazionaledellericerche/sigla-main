@@ -29,6 +29,6 @@
 					bp.getTab("tab"),
 					"center",
 					"100%",
-					"300px"); %>
+					"100%"); %>
 <% bp.closeFormWindow(pageContext); %>
 </body>
