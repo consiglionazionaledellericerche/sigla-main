@@ -42,21 +42,21 @@
            { "tabAllegati","Allegati","/config00/tab_contratti_allegati.jsp" },
            };
 %>
-<table class="Panel" width="100%" height="100%">
+<table class="Panel" width="100%">
 	<tr>
 		<td width="100%">
-		   <table class="ToolBar" width="100%" cellspacing="0" cellpadding="2"><tr><td>
-			<table class="Panel" align="left" cellspacing=4 cellpadding=4>
+		   <div class="card p-2">
+			<table align="left" cellspacing=4 cellpadding=4>
 			  <tr>
-		         <td><% bp.getController().writeFormField(out,"esercizio");%></td>
-		         <td><% bp.getController().writeFormField(out,"pg_contratto");%></td>
+		         <% bp.getController().writeFormField(out,"esercizio");%>
+		         <% bp.getController().writeFormField(out,"pg_contratto");%>
 		      </tr>  
 		   	</table>
-		   	</td></tr></table>	
+		   	</div>
 		</td>
 	</tr>
 	<tr>
-		<td height="100%">
+		<td>
 		   <% JSPUtils.tabbed(
 		                   pageContext,
 		                   "tab",
