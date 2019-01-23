@@ -900,7 +900,11 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 logger.info("SIOPE+ SCAN alredy started in another server.");
             } else {
                 try {
-                    messaggiSiopeplus(null, null, false);
+                    if (Boolean.valueOf(configurazione_cnrBulk.getVal01())) {
+                        messaggiSiopeplus(null, null, false);
+                    } else {
+                        logger.warn("SIOPE+ SCAN disabled");
+                    }
                 } finally {
                     distintaCassiereComponentSession.unlockMessaggiSIOPEPlus(userContext);
                 }
