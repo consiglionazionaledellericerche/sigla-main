@@ -35,10 +35,6 @@ function doVisualizzaMandato() {
 </script>
 
 <body class="Form">
-
-
-<table class="Panel w-100 h-100">
-	<tr><td colspan=2>
 	<%
 		// if ( bp.isRicercaDocumentiTabEnabled() )
 		if ( bp.isInserting() )
@@ -70,7 +66,5 @@ function doVisualizzaMandato() {
 						"100%","100%");
 		
 	%>
-	</td></tr>	
-	</table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
