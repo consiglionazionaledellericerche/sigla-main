@@ -5806,7 +5806,7 @@ public class DistintaCassiereComponent extends
                                 ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                                 //TODO CONTROLLARE SE NOTA
-                                ctDatiFatturaSiope.setImportoSiope(importo);
+                                ctDatiFatturaSiope.setImportoSiope(importo.setScale(2, BigDecimal.ROUND_HALF_UP));
 
                                 ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                                 ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
@@ -5906,7 +5906,7 @@ public class DistintaCassiereComponent extends
                             ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
                             ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                             //TODO CONTROLLARE SE NOTA
-                            ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura());
+                            ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP));
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                             ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
                         } else {
