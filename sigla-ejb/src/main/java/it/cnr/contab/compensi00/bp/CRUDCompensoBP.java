@@ -1725,13 +1725,17 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
                             .filter(tipo_trattamentoBulk -> Optional.ofNullable(tipo_trattamentoBulk.getCd_trattamento()).isPresent())
                             .filter(tipo_trattamentoBulk -> tipo_trattamentoBulk.isTipoDebitoSiopeCommerciale())
                             .isPresent() &&
+
                             Optional.ofNullable(compensoBulk.getObbligazioneScadenzario())
-                                    .flatMap(obbligazione_scadenzarioBulk -> Optional.ofNullable(obbligazione_scadenzarioBulk.getObbligazione()))
+                            .map(obbligazione_scadenzarioBulk -> Optional.ofNullable(obbligazione_scadenzarioBulk.getObbligazione()).isPresent())
+                            .orElse(Boolean.FALSE) && 
+                            
+                            Optional.ofNullable(compensoBulk.getObbligazioneScadenzario().getObbligazione())
                                     .flatMap(obbligazioneBulk -> Optional.ofNullable(obbligazioneBulk.getContratto()))
                                     .map(contrattoBulk -> {
                                         return !Optional.ofNullable(contrattoBulk.getPg_contratto()).isPresent() ||
                                                !Optional.ofNullable(contrattoBulk.getCig()).map(CigBulk::getCdCig).isPresent();
-                                    }).orElse(Boolean.FALSE);
+                                    }).orElse(Boolean.TRUE);
 
                 }).orElse(Boolean.FALSE);
     }
