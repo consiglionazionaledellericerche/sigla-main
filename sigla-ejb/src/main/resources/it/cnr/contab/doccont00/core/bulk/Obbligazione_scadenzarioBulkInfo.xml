@@ -127,7 +127,8 @@
             inputType="SEARCHTOOL"
             formName="searchtool"
             nullable="true"
-            enabledOnSearch="true"
+			enabledOnSearch="false"
+    	    enabledOnFreeSearch="false"
             CRUDBusinessProcessName="CRUDCodiciCIGBP"
             label="CIG"/>
     <fieldProperty
