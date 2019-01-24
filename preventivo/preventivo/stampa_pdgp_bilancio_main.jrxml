@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921208"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="434"/>
+	<property name="ireport.y" value="272"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -175,8 +175,9 @@ FROM V_STAMPA_BILANCIO_PREVDEC a
 WHERE SUBSTR($P{P_FONTE},1,3) != 'EXT'
 AND a.ESERCIZIO = $P{P_ESERCIZIO}-1
 AND a.TIPO = $P{P_TIPO}
-AND (($P{P_FONTE}='DECSCI' AND $P{P_ESERCIZIO}=2017 AND a.FONTE = 'GESTSCI') OR
-     (($P{P_FONTE}!='DECSCI' OR $P{P_ESERCIZIO}!=2017) AND a.FONTE = $P{P_FONTE}))))
+AND (($P{P_FONTE}='DECSCI' AND a.FONTE = 'GESTSCI') OR
+     ($P{P_FONTE}='DECFIN' AND a.FONTE = 'GESTFIN') OR
+     ($P{P_FONTE}!='DECSCI' AND $P{P_FONTE}!='DECFIN' AND a.FONTE = $P{P_FONTE}))))
 GROUP BY tipo, peso_livello1, peso_livello2, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
 cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
 ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
@@ -408,6 +409,27 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	</variable>
 	<group name="SOMMARIO">
 		<groupExpression><![CDATA["SOMMARIO"]]></groupExpression>
+		<groupHeader>
+			<band height="12">
+				<subreport isUsingCache="true">
+					<reportElement x="0" y="0" width="842" height="10" uuid="e0eb2d55-8147-4b4d-bff3-ee8573b1c6b8"/>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_ESERCIZIO">
+						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_TIPO">
+						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_FONTE">
+						<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdgp_bilancio_presunto.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
 		<groupFooter>
 			<band height="13">
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -475,13 +497,32 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdgp_bilancio_utilizzato.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+			<band>
+				<subreport isUsingCache="true">
+					<reportElement x="0" y="0" width="842" height="0" forecolor="#000000" uuid="e0de75af-1bf1-4889-b8a0-9b32ae9e13e8"/>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_ESERCIZIO">
+						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_TIPO">
+						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="P_FONTE">
+						<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<returnValue subreportVariable="IMPORTO_AVANZO_N" toVariable="IMPORTO_AVANZO_N"/>
 					<returnValue subreportVariable="IMPORTO_DISAVANZO_N" toVariable="IMPORTO_DISAVANZO_N"/>
 					<returnValue subreportVariable="IMPORTO_FCA_N" toVariable="IMPORTO_FCA_N"/>
 					<returnValue subreportVariable="IMPORTO_DISAVANZO_N_PREC" toVariable="IMPORTO_DISAVANZO_N_PREC"/>
 					<returnValue subreportVariable="IMPORTO_AVANZO_N_PREC" toVariable="IMPORTO_AVANZO_N_PREC"/>
 					<returnValue subreportVariable="IMPORTO_FCA_N_PREC" toVariable="IMPORTO_FCA_N_PREC"/>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdgp_bilancio_utilizzato.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdgp_bilancio_presunto.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupFooter>
@@ -1865,28 +1906,6 @@ di cassa]]></text>
 			</image>
 		</band>
 	</pageHeader>
-	<columnHeader>
-		<band height="14">
-			<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) ))]]></printWhenExpression>
-			<subreport isUsingCache="true">
-				<reportElement x="0" y="0" width="842" height="10" uuid="e0eb2d55-8147-4b4d-bff3-ee8573b1c6b8"/>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_TIPO">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="P_FONTE">
-					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdgp_bilancio_presunto.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
-	</columnHeader>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(1)) == 0

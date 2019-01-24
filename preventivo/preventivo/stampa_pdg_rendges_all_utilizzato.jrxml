@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_rendges_all_utilizzato" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1190" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5e2ed71b-fb9a-4357-8cae-87f0a3e7be84">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.1435888100000016"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -80,7 +80,7 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 	</variable>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<printWhenExpression><![CDATA["N".equals($F{ISCNR}) && $P{P_TIPO}.equals("E")?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+			<printWhenExpression><![CDATA[Boolean.FALSE]]></printWhenExpression>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" stretchType="RelativeToBandHeight" x="3" y="0" width="173" height="15" uuid="ba858c76-150c-42dd-b4bf-841a4f2c8e0c"/>
 				<box leftPadding="4">
@@ -92,7 +92,7 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Fondo cassa"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fondo cassa "]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="211" y="0" width="48" height="15" uuid="c64fbdf4-29cf-477d-8c49-54845a2e84ec"/>

@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="313"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -26,11 +26,13 @@
 		<defaultValueExpression><![CDATA["/media/truecrypt1/DPR/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
 	</parameter>
-	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_FONTE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
+	<parameter name="P_TIPO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FONTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["GESTFIN"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT NVL(SUM(FONDO_CASSA), 0) FONDO_INIZ_CASSA_N,
@@ -97,6 +99,24 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 	<field name="AVANZO_PREC_N" class="java.math.BigDecimal"/>
 	<field name="DISAVANZO_N" class="java.math.BigDecimal"/>
 	<field name="DISAVANZO_PREC_N" class="java.math.BigDecimal"/>
+	<variable name="IMPORTO_AVANZO_N" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{AVANZO_N}]]></variableExpression>
+	</variable>
+	<variable name="IMPORTO_DISAVANZO_N" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{DISAVANZO_N}]]></variableExpression>
+	</variable>
+	<variable name="IMPORTO_FCA_N" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{FONDO_INIZ_CASSA_N}]]></variableExpression>
+	</variable>
+	<variable name="IMPORTO_DISAVANZO_N_PREC" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{DISAVANZO_PREC_N}]]></variableExpression>
+	</variable>
+	<variable name="IMPORTO_AVANZO_N_PREC" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{AVANZO_PREC_N}]]></variableExpression>
+	</variable>
+	<variable name="IMPORTO_FCA_N_PREC" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{FONDO_INIZ_CASSA_PREC_N}]]></variableExpression>
+	</variable>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E")&&
@@ -266,7 +286,7 @@ $F{FONDO_INIZ_CASSA_PREC_N}.compareTo(BigDecimal.ZERO)!=0))]]></printWhenExpress
 				<textFieldExpression><![CDATA[$F{FONDO_INIZ_CASSA_PREC_N}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="13">
+		<band height="40">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("S") &&
 ($F{DISAVANZO_N}.compareTo(BigDecimal.ZERO)!=0 ||
 $F{DISAVANZO_PREC_N}.compareTo(BigDecimal.ZERO)!=0))]]></printWhenExpression>
