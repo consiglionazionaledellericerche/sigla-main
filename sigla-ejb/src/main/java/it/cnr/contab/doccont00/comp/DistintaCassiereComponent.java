@@ -5690,7 +5690,15 @@ public class DistintaCassiereComponent extends
                                         )
                                 ).filter(Fattura_passivaBulk.class::isInstance)
                                         .map(Fattura_passivaBulk.class::cast)
-                                        .orElseThrow(() -> new ComponentException("Fattura non trovata!")), mandato_siopeBulk.getImporto());
+                                        .orElseThrow(() -> new ApplicationMessageFormatException(
+                                                "Generazione flusso interrotta in quanto non è stata trovata la fattura {0}/{1}/{2} asscociata al mandato {3}/{4}/{5}",
+                                                String.valueOf(mandato_siopeBulk.getEsercizio_doc_amm()),
+                                                String.valueOf(mandato_siopeBulk.getCd_cds_doc_amm()),
+                                                String.valueOf(mandato_siopeBulk.getPg_doc_amm()),
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        )), mandato_siopeBulk.getImporto());
                             } catch (ComponentException | PersistencyException e) {
                                 throw new DetailedRuntimeException(e);
                             }
