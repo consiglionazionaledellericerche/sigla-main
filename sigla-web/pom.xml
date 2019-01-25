@@ -5,7 +5,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>5.2.60-SNAPSHOT</version>
+        <version>5.2.64-SNAPSHOT</version>
     </parent>
     <properties>
         <scope>provided</scope>
@@ -188,13 +188,13 @@
             <properties>
                 <sonar.skip>true</sonar.skip>
                 <spring.version>4.3.3.RELEASE</spring.version>
-                <jada.version>6.0.40</jada.version>
+                <jada.version>6.0.43</jada.version>
                 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 <sigla.build.number>${maven.build.timestamp}</sigla.build.number>
                 <slf4j.version>1.7.21</slf4j.version>
                 <maven.javadoc.skip>true</maven.javadoc.skip>
                 <pdfbox.version>2.0.0</pdfbox.version>
-                <storage-cloud.version>0.0.4</storage-cloud.version>
+                <storage-cloud.version>0.0.6</storage-cloud.version>
 
                 <version.maven-war-plugin>2.3</version.maven-war-plugin>
                 <version.maven-failsafe-plugin>2.19.1</version.maven-failsafe-plugin>
