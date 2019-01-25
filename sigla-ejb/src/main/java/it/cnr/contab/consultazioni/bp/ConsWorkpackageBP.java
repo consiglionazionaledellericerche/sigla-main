@@ -21,6 +21,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
@@ -70,14 +71,12 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP
 			setFlNuovoPdg(parCnr.getFl_nuovo_pdg().booleanValue());
 			CompoundFindClause clauses = new CompoundFindClause();
 			
-			//clauses.addClause("AND", "cd_centro_responsabilita", SQLBuilder.EQUALS, ((it.cnr.contab.utenze00.bulk.CNRUserInfo)context.getUserInfo()).getCdr().getCd_centro_responsabilita());
-			clauses.addClause("AND", "esercizio_inizio", SQLBuilder.LESS_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
-			clauses.addClause("AND", "esercizio_fine", SQLBuilder.GREATER_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
-//			if ((getName().equalsIgnoreCase("StampaSituazioneSinteticaDispGAEBP")||getName().equalsIgnoreCase("StampaSituazioneSinteticaRendGAEBP")) ){
-					clauses.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
-//			} 
+			clauses.addClause(FindClause.AND, "esercizio_inizio", SQLBuilder.LESS_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
+			clauses.addClause(FindClause.AND, "esercizio_fine", SQLBuilder.GREATER_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(context.getUserContext()));
+			clauses.addClause(FindClause.AND, "ti_gestione", SQLBuilder.NOT_EQUALS, WorkpackageBulk.TI_GESTIONE_ENTRATE);
+
 			setBaseclause(clauses);
-			//setFindclause(clauses);
+
 			setMultiSelection(true);
 			setPageSize(10);	
 			setBulkClassName(config.getInitParameter("bulkClassName"));	
