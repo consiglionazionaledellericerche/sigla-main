@@ -32,8 +32,6 @@
 <body class="Form">
 <% 	it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP bp = (it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
-	<table class="Panel w-100">
-	<tr><td>
 	<% if (bp.isUoEnte() && bp.getModel()!=null && bp.getDistinteCassCollegateDet().countDetails()!=0)
 			JSPUtils.tabbed(
 						pageContext,
@@ -60,8 +58,6 @@
 						"center",
 						"100%",null);
 	%>
-	</td></tr>	
-	</table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>
