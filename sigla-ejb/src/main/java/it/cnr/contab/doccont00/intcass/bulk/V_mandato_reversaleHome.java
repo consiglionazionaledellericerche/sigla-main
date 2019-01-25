@@ -9,6 +9,7 @@ import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -384,8 +385,17 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
                 sqlBuilder.closeParenthesis();
             sqlBuilder.closeParenthesis();
         }
+
+        sqlBuilder.openParenthesis(FindClause.AND);
         sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE);
         sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, ReversaleIBulk.TIPO_INCASSO);
+            sqlBuilder.openParenthesis(FindClause.OR);
+                sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, "A");
+                sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
+                sqlBuilder.addJoin("pg_documento_cont", "pg_documento_cont_padre");
+                sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
+            sqlBuilder.closeParenthesis();
+        sqlBuilder.closeParenthesis();
 
         sqlBuilder.openParenthesis(FindClause.AND);
             sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, "A");

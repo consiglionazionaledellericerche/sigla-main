@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr</groupId>
-	<version>5.2.60-SNAPSHOT</version>
+	<version>5.2.64-SNAPSHOT</version>
 	<artifactId>sigla</artifactId>
 	<name>sigla</name>
 	<packaging>pom</packaging>
@@ -25,14 +25,14 @@
     	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
-		<jada.version>6.0.40</jada.version>
+		<jada.version>6.0.43</jada.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<liquibase.version>3.5.3</liquibase.version>
 		<pdfbox.version>2.0.0</pdfbox.version>
-		<storage-cloud.version>0.0.5</storage-cloud.version>
+		<storage-cloud.version>0.0.6</storage-cloud.version>
 	</properties>
 	<build>
 

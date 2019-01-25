@@ -19,16 +19,9 @@ function doVisualizzaSingoloDocumento(esercizio, cds , uo, numero_documento, tip
 	if (bp.isElencoConUo())
 		setCol = "elencoConUo";
 %>
-    
-    <table class="Panel">	   
-	<tr>
-		<td>   
-   			 <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","60vh", true); %>
-		</td>
-	</tr>
-	</table>
+    <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","60vh", true); %>
 	<%if (!bp.isViewing()) { %>
-        <table>
+        <table class="card p-2 mt-2 mb-2">
          <tr>
             <td><big class="text-primary mr-2">Totale Mandati</big></td>
             <td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
