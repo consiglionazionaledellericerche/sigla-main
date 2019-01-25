@@ -5233,48 +5233,60 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 .map(Fattura_passiva_rigaHome.class::cast)
                 .orElseThrow(() -> new ComponentException("Home della fattura non trovata!"));
 
-        List<String> codiciCIG = new ArrayList<String>();
-        List<String> motiviAssenzaCIG = new ArrayList<String>();
-        boolean isExistsFatturaEstera = false;
-        for(Mandato_siopeBulk siopeBulk : siopeBulks) {
-            if(siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)) {
-                final Fattura_passivaBulk fattura_passivaBulk = Optional.ofNullable(
-                        fattura_passivaHome.findByPrimaryKey(
-                                new Fattura_passiva_IBulk(
-                                        siopeBulk.getCd_cds_doc_amm(),
-                                        siopeBulk.getCd_uo_doc_amm(),
-                                        siopeBulk.getEsercizio_doc_amm(),
-                                        siopeBulk.getPg_doc_amm()
-                                )
-                        )
-                ).filter(Fattura_passivaBulk.class::isInstance)
-                        .map(Fattura_passivaBulk.class::cast)
-                        .orElseThrow(() -> new ComponentException("Fattura non trovata!"));
-                if (!(fattura_passivaBulk.isEstera() ||
-                        fattura_passivaBulk.isSanMarinoConIVA() ||
-                        fattura_passivaBulk.isSanMarinoSenzaIVA())) {
-                    isExistsFatturaEstera = true;
-                    codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk.getCd_siope()));
-                    motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk.getCd_siope()));
+        final Map<String, List<Mandato_siopeBulk>> codiciSiope = siopeBulks
+                .stream()
+                .collect(Collectors.groupingBy(Mandato_siopeBulk::getCd_siope));
+
+        for(String codiceSiope : codiciSiope.keySet()) {
+            List<String> codiciCIG = new ArrayList<String>();
+            List<String> motiviAssenzaCIG = new ArrayList<String>();
+            boolean isExistsFatturaEstera = false;
+            for(Mandato_siopeBulk siopeBulk : codiciSiope.get(codiceSiope)) {
+                if(siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)) {
+                    final Fattura_passivaBulk fattura_passivaBulk = Optional.ofNullable(
+                            fattura_passivaHome.findByPrimaryKey(
+                                    new Fattura_passiva_IBulk(
+                                            siopeBulk.getCd_cds_doc_amm(),
+                                            siopeBulk.getCd_uo_doc_amm(),
+                                            siopeBulk.getEsercizio_doc_amm(),
+                                            siopeBulk.getPg_doc_amm()
+                                    )
+                            )
+                    ).filter(Fattura_passivaBulk.class::isInstance)
+                            .map(Fattura_passivaBulk.class::cast)
+                            .orElseThrow(() -> new ComponentException("Fattura non trovata!"));
+                    if (!(fattura_passivaBulk.isEstera() ||
+                            fattura_passivaBulk.isSanMarinoConIVA() ||
+                            fattura_passivaBulk.isSanMarinoSenzaIVA())) {
+                        isExistsFatturaEstera = true;
+                        codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk.getCd_siope()));
+                        motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk.getCd_siope()));
+                    }
                 }
             }
-        }
-        if (isExistsFatturaEstera) {
-            if (codiciCIG.isEmpty() && motiviAssenzaCIG.isEmpty()) {
-                throw new ApplicationException("Al mandato è associata una fattura commerciale su cui non è posssibile determinare il CIG!");
-            }
-            if (codiciCIG.size() > 0 && motiviAssenzaCIG.size() > 0) {
-                throw new ApplicationException("Al mandato sono associate fatture commerciali sia con CIG che con motivo di assenza CIG!");
-            }
-            if (codiciCIG.size() > 1) {
-                throw new ApplicationMessageFormatException("Al mandato sono associate fatture commerciali con CIG diversi : {0}!",
-                        String.join(" - ", codiciCIG.stream().collect(Collectors.toList()))
-                );
-            }
-            if (motiviAssenzaCIG.size() > 1) {
-                throw new ApplicationMessageFormatException("Al mandato sono associate fatture commerciali con motivi di assenza CIG diversi : {0}!",
-                        String.join(" - ", motiviAssenzaCIG.stream().collect(Collectors.toList()))
-                );
+            if (isExistsFatturaEstera) {
+                if (codiciCIG.isEmpty() && motiviAssenzaCIG.isEmpty()) {
+                    throw new ApplicationMessageFormatException("Al mandato e per il codice SIOPE {0} sono associate fatture " +
+                            "commerciali su cui non è posssibile determinare il CIG!", codiceSiope);
+                }
+                if (codiciCIG.size() > 0 && motiviAssenzaCIG.size() > 0) {
+                    throw new ApplicationMessageFormatException("Al mandato e per il codice SIOPE {0} sono associate fatture " +
+                            "commerciali sia con CIG che con motivo di assenza CIG!", codiceSiope);
+                }
+                if (codiciCIG.size() > 1) {
+                    throw new ApplicationMessageFormatException("Al mandato e per il codice SIOPE {0} sono associate fatture " +
+                            "commerciali con CIG diversi : {1}!",
+                            codiceSiope,
+                            String.join(" - ", codiciCIG.stream().collect(Collectors.toList()))
+                    );
+                }
+                if (motiviAssenzaCIG.size() > 1) {
+                    throw new ApplicationMessageFormatException("Al mandato e per il codice SIOPE {0} sono associate fatture " +
+                            "commerciali con motivi di assenza CIG diversi : {1}!",
+                            codiceSiope,
+                            String.join(" - ", motiviAssenzaCIG.stream().collect(Collectors.toList()))
+                    );
+                }
             }
         }
     }
