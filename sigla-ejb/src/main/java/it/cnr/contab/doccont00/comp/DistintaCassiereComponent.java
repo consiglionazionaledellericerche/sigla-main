@@ -7,6 +7,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
@@ -4766,6 +4767,25 @@ public class DistintaCassiereComponent extends
                                 .map(Rif_modalita_pagamentoBulk.class::cast)
                                 .orElseThrow(() -> new ApplicationMessageFormatException("Modalità di pagamento non trovata: {0}", modalitaPagamento));
 
+                if (Rif_modalita_pagamentoBulk.IBAN.equals(rif_modalita_pagamentoBulk.getTi_pagamento())) {
+                    final Optional<String> codiceNazione = Optional.ofNullable(docContabile.getCdIso());
+                    if (codiceNazione.isPresent()) {
+                        NazioneHome nazioneHome = (NazioneHome) getHome(userContext,NazioneBulk.class);
+                        SQLBuilder sqlExists = nazioneHome.createSQLBuilder();
+                        sqlExists.addSQLClause("AND","NAZIONE.CD_ISO",SQLBuilder.EQUALS,codiceNazione.get());
+                        sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
+                        if (sqlExists.executeCountQuery(getConnection(userContext))!=0 )
+                            throw new ApplicationMessageFormatException("Attenzione la modalità di pagamento {0} presente sul mandato {1}/{2}/{3} non è " +
+                                    "coerente con la nazione {4} del beneficiario!",
+                                    rif_modalita_pagamentoBulk.getCd_modalita_pag(),
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()),
+                                    codiceNazione.get());
+                    }
+                }
+
+
                 final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
                         Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
                                 .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
@@ -5670,7 +5690,15 @@ public class DistintaCassiereComponent extends
                                         )
                                 ).filter(Fattura_passivaBulk.class::isInstance)
                                         .map(Fattura_passivaBulk.class::cast)
-                                        .orElseThrow(() -> new ComponentException("Fattura non trovata!")), mandato_siopeBulk.getImporto());
+                                        .orElseThrow(() -> new ApplicationMessageFormatException(
+                                                "Generazione flusso interrotta in quanto non è stata trovata la fattura {0}/{1}/{2} asscociata al mandato {3}/{4}/{5}",
+                                                String.valueOf(mandato_siopeBulk.getEsercizio_doc_amm()),
+                                                String.valueOf(mandato_siopeBulk.getCd_cds_doc_amm()),
+                                                String.valueOf(mandato_siopeBulk.getPg_doc_amm()),
+                                                String.valueOf(bulk.getEsercizio()),
+                                                String.valueOf(bulk.getCd_cds()),
+                                                String.valueOf(bulk.getPg_documento_cont())
+                                        )), mandato_siopeBulk.getImporto());
                             } catch (ComponentException | PersistencyException e) {
                                 throw new DetailedRuntimeException(e);
                             }
@@ -5786,7 +5814,7 @@ public class DistintaCassiereComponent extends
                                 ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                                 //TODO CONTROLLARE SE NOTA
-                                ctDatiFatturaSiope.setImportoSiope(importo);
+                                ctDatiFatturaSiope.setImportoSiope(importo.setScale(2, BigDecimal.ROUND_HALF_UP));
 
                                 ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                                 ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
@@ -5886,7 +5914,7 @@ public class DistintaCassiereComponent extends
                             ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
                             ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
                             //TODO CONTROLLARE SE NOTA
-                            ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura());
+                            ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP));
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
                             ctClassificazioneDatiSiopeUscite.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().add(ctFatturaSiope);
                         } else {
