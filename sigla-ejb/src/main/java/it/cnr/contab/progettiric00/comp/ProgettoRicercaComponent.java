@@ -26,14 +26,10 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
 import it.cnr.contab.doccont00.core.bulk.Stampa_elenco_progetti_laBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
@@ -73,9 +69,6 @@ import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -1940,10 +1933,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 
 			if (ctrlDtInizio || ctrlDtFine || ctrlStato) {
-    			ProgettoHome prgHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+				it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+		   		BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+
+		   		ProgettoHome prgHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 				//cerco la movimentazione di impegni fatti su GAE del progetto
 		    	{
-		    		List<ObbligazioneBulk> listObb = (List<ObbligazioneBulk>)prgHome.findObbligazioniAssociate(progetto.getPg_progetto());
+		    		List<ObbligazioneBulk> listObb = (List<ObbligazioneBulk>)prgHome.findObbligazioniAssociate(progetto.getPg_progetto(), annoFrom.intValue());
 
 		    		if (ctrlStato && listObb.stream().count()>0)
 						throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto. "
@@ -1980,7 +1976,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 	    		//cerco la movimentazione di variazioni di bilancio di competenza
 	    		{
-		    		List<Pdg_variazioneBulk> listVar = (List<Pdg_variazioneBulk>)prgHome.findVariazioniCompetenzaAssociate(progetto.getPg_progetto());
+		    		List<Pdg_variazioneBulk> listVar = (List<Pdg_variazioneBulk>)prgHome.findVariazioniCompetenzaAssociate(progetto.getPg_progetto(), annoFrom.intValue());
 	
 		    		if (ctrlStato && listVar.stream().count()>0)
 						throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di competenza emesse sul progetto. "
@@ -2021,7 +2017,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 	    		//cerco la data min e max di variazioni di bilancio di residuo
 	    		{
-		    		List<Var_stanz_resBulk> listVar = (List<Var_stanz_resBulk>)prgHome.findVariazioniResiduoAssociate(progetto.getPg_progetto());
+		    		List<Var_stanz_resBulk> listVar = (List<Var_stanz_resBulk>)prgHome.findVariazioniResiduoAssociate(progetto.getPg_progetto(),annoFrom.intValue());
 	
 		    		if (ctrlStato && listVar.stream().count()>0)
 						throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di residuo emesse sul progetto. "
