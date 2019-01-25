@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>it.cnr</groupId>
 		<artifactId>sigla-siopeplus</artifactId>
-		<version>5.2.65</version>
+		<version>5.2.66-SNAPSHOT</version>
 	</parent>
 	<build>
 		<pluginManagement>
