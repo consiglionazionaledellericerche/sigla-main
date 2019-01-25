@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rendiconto_fin_entrate_cnr_dz" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rendiconto_fin_entrate_cnr_dz" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="67a7af4e-060c-412c-ac63-5ee8b5a72bf5">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -26,6 +26,9 @@
 	<parameter name="cds" class="java.lang.String">
 		<defaultValueExpression><![CDATA[new String("*")]]></defaultValueExpression>
 	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[Select 1 sub1, 1 sub2 from dual
 union all
@@ -39,21 +42,27 @@ Select 2 sub1, 2 sub2 from dual]]>
 			<band height="25" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{SUB1}.equals(new BigDecimal(1)))]]></printWhenExpression>
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-1" positionType="Float" x="0" y="0" width="820" height="25"/>
-					<subreportParameter name="esercizio">
-						<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
+					<reportElement key="subreport-1" positionType="Float" x="0" y="0" width="820" height="25" uuid="a442b489-a83b-4c4b-8bf9-36cd9d5d7394"/>
+					<subreportParameter name="DIR_SUBREPORT">
+						<subreportParameterExpression><![CDATA[$P{DIR_SUBREPORT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="stampadataepagina">
+						<subreportParameterExpression><![CDATA[new String("N")]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="stampaArticolo">
 						<subreportParameterExpression><![CDATA[$P{stampaArticolo}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="stampadataepagina">
-						<subreportParameterExpression><![CDATA[new String("N")]]></subreportParameterExpression>
+					<subreportParameter name="esercizio">
+						<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DIR_IMAGE">
+						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="cds">
 						<subreportParameterExpression><![CDATA[$P{cds}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"rendiconto_fin_entrate_cnr_comp.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{DIR_SUBREPORT}+"rendiconto_fin_entrate_cnr_comp.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -67,21 +76,27 @@ Select 2 sub1, 2 sub2 from dual]]>
 			<band height="25" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{SUB2}.equals(new BigDecimal(2)))]]></printWhenExpression>
 				<subreport isUsingCache="true">
-					<reportElement key="subreport-2" positionType="Float" x="0" y="0" width="820" height="25" isPrintInFirstWholeBand="true"/>
-					<subreportParameter name="esercizio">
-						<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
+					<reportElement key="subreport-2" positionType="Float" x="0" y="0" width="820" height="25" isPrintInFirstWholeBand="true" uuid="67c766fb-9980-4da4-bacd-dc3e114b8075"/>
+					<subreportParameter name="DIR_SUBREPORT">
+						<subreportParameterExpression><![CDATA[$P{DIR_SUBREPORT}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="stampadataepagina">
+						<subreportParameterExpression><![CDATA[new String("N")]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="stampaArticolo">
 						<subreportParameterExpression><![CDATA[$P{stampaArticolo}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter name="stampadataepagina">
-						<subreportParameterExpression><![CDATA[new String("N")]]></subreportParameterExpression>
+					<subreportParameter name="esercizio">
+						<subreportParameterExpression><![CDATA[$P{esercizio}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="DIR_IMAGE">
+						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter name="cds">
 						<subreportParameterExpression><![CDATA[$P{cds}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"rendiconto_fin_entrate_cnr_res.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{DIR_SUBREPORT}+"rendiconto_fin_entrate_cnr_res.jasper"]]></subreportExpression>
 				</subreport>
 			</band>
 		</groupHeader>
@@ -110,18 +125,17 @@ Select 2 sub1, 2 sub2 from dual]]>
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<textField evaluationTime="Report" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
-				<reportElement key="textField-1" style="TNRG8" x="37" y="6" width="161" height="13"/>
+				<reportElement key="textField-1" style="TNRG8" x="37" y="6" width="161" height="13" uuid="c80ff112-3416-4349-8e63-d81f35afdc16"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Data di stampa "+ new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new java.util.Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Data di stampa "+ new SimpleDateFormat("dd/MM/yyyy HH.mm.ss").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" style="TNRG8" x="664" y="6" width="100" height="13"/>
+				<reportElement key="textField-2" style="TNRG8" x="664" y="6" width="100" height="13" uuid="cece017c-b4d6-4cb3-83c4-30dc66ebc32a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -129,18 +143,17 @@ Select 2 sub1, 2 sub2 from dual]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField-3" style="TNRG8" x="764" y="6" width="55" height="13"/>
+				<reportElement key="textField-3" style="TNRG8" x="764" y="6" width="55" height="13" uuid="f58e5a81-cb93-469f-9dd1-9c0f45b430dc"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
