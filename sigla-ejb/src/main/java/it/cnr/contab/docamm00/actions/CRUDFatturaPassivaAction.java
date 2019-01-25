@@ -578,6 +578,13 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
                 try {
                     bp.setModel(context, fattura);
                     bp.setDirty(true);
+
+                    doCalcolaTotalePerObbligazione(context, obbligazione);
+                	if (!(fattura.isEstera() || fattura.isSanMarinoConIVA() || fattura.isSanMarinoSenzaIVA()) && 
+                		!(obbligazione != null && obbligazione.getObbligazione() != null && obbligazione.getObbligazione().getContratto() != null && obbligazione.getObbligazione().getContratto().getCig() != null
+                				&& obbligazione.getObbligazione().getContratto().getCig().getCdCig() != null)) {
+                        bp.setMessage("L'impegno selezionato non ha il CIG. Indicare il CIG.");
+                	}
                 } catch (BusinessProcessException e) {
                 }
             } catch (java.rmi.RemoteException e) {
@@ -585,11 +592,6 @@ public class CRUDFatturaPassivaAction extends it.cnr.jada.util.action.CRUDAction
             } catch (BusinessProcessException e) {
                 bp.handleException(e);
             }
-
-            doCalcolaTotalePerObbligazione(context, obbligazione);
-        	if (!(obbligazione != null && obbligazione.getObbligazione() != null && obbligazione.getObbligazione().getContratto() != null && obbligazione.getObbligazione().getContratto().getCig() != null)) {
-                bp.setMessage("L'impegno selezionato non ha il CIG. Indicare il CIG.");
-        	}
         }
     }
 

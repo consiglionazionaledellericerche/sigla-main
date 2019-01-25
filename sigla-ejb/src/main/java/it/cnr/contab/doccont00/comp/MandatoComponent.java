@@ -5629,10 +5629,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             "Attenzione per la modalità di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non può essere inferiore alla data contabilizzazione.");    	
             
             }
+
+
+
             if (riga.getBanca() == null
                     || Rif_modalita_pagamentoBulk.ALTRO.equals(riga.getBanca()
-                    .getTi_pagamento())
-                    || Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca()
                     .getTi_pagamento()))
                 return;
 
@@ -5643,8 +5644,23 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             String nrConto = riga.getBanca().getNumero_conto();
             String quietanza = riga.getBanca().getQuietanza();
             String intestazione = riga.getBanca().getIntestazione();
-            String cd_modalita_pag = riga.getModalita_pagamento()
-                    .getCd_modalita_pag();
+            String cd_modalita_pag = riga.getModalita_pagamento().getCd_modalita_pag();
+
+            if (Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca().getTi_pagamento())) {
+                final Optional<String> codiceNazione = Optional.ofNullable(riga.getBanca())
+                        .flatMap(bancaBulk -> Optional.ofNullable(bancaBulk.getCodice_iban()))
+                        .map(s -> s.substring(0, 2));
+                if (codiceNazione.isPresent()) {
+                    NazioneHome nazioneHome = (NazioneHome) getHome(aUC,NazioneBulk.class);
+                    SQLBuilder sqlExists = nazioneHome.createSQLBuilder();
+                    sqlExists.addSQLClause("AND","NAZIONE.CD_ISO",SQLBuilder.EQUALS,codiceNazione.get());
+                    sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
+                    if (sqlExists.executeCountQuery(getConnection(aUC))!=0 )
+                        throw new ApplicationMessageFormatException("Attenzione la modalità di pagamento {0} presente sul documento non è " +
+                                "coerente con la nazione {1} del beneficiario!", cd_modalita_pag, codiceNazione.get());
+                }
+                return;
+            }
 
             /*
              * verifico che ogni riga abbia le modalità di pagamento e gli

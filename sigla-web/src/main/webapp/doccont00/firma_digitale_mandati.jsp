@@ -41,17 +41,24 @@ function doVisualizzaDocumenti() {
 			</fieldset>
 		</td>		
 	</tr>
-	<tr height="100%">
-		<td colspan="4">
-			<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
-		</td> 
-	</tr>
-	<tr>
-		<td colspan="4">
-			<% bp.writeHTMLNavigator(out); %>
-		</td>
-	</tr>
+	<%	if (!bp.getParentRoot().isBootstrap()) { %>
+        <tr height="100%">
+            <td colspan="4">
+                <% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <% bp.writeHTMLNavigator(out); %>
+            </td>
+        </tr>
+	<% } %>
 </table>
+<%	if (bp.getParentRoot().isBootstrap()) {
+        bp.writeHTMLTable(pageContext,"100%","100%");
+        bp.writeHTMLNavigator(out);
+    }
+%>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>
