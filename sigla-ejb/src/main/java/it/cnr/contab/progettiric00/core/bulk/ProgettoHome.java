@@ -681,9 +681,13 @@ public class ProgettoHome extends BulkHome {
 		return pdgModuloHome.fetchAll(sql);
 	}
 
-	public java.util.Collection<ObbligazioneBulk> findObbligazioniAssociate(Integer pgProgetto) throws IntrospectionException, PersistencyException {
+	/*
+	 * Recupera le obbligazioni associate ad un progetto a partire da un anno specificato
+	 */
+	public java.util.Collection<ObbligazioneBulk> findObbligazioniAssociate(Integer pgProgetto, Integer annoFrom) throws IntrospectionException, PersistencyException {
 		PersistentHome obblHome = getHomeCache().getHome(ObbligazioneBulk.class);
 		SQLBuilder sqlObb = obblHome.createSQLBuilder();
+		sqlObb.addSQLClause(FindClause.AND, "OBBLIGAZIONE.ESERCIZIO", SQLBuilder.GREATER_EQUALS, annoFrom);
 			
 		PersistentHome scadVoceHome = getHomeCache().getHome(Obbligazione_scad_voceBulk.class);
 		SQLBuilder sqlExist = scadVoceHome.createSQLBuilder();
@@ -701,9 +705,13 @@ public class ProgettoHome extends BulkHome {
 		return obblHome.fetchAll(sqlObb);
 	}
 	
-	public java.util.Collection<Pdg_variazioneBulk> findVariazioniCompetenzaAssociate(Integer pgProgetto) throws IntrospectionException, PersistencyException {
+	/*
+	 * Recupera le variazioni di competenza associate ad un progetto a partire da un anno specificato
+	 */
+	public java.util.Collection<Pdg_variazioneBulk> findVariazioniCompetenzaAssociate(Integer pgProgetto, Integer annoFrom) throws IntrospectionException, PersistencyException {
 		PersistentHome pdgVarHome = getHomeCache().getHome(Pdg_variazioneBulk.class);
 		SQLBuilder sqlVar = pdgVarHome.createSQLBuilder();
+		sqlVar.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.ESERCIZIO", SQLBuilder.GREATER_EQUALS, annoFrom);
 		
 		PersistentHome pdgVarRigaHome = getHomeCache().getHome(Pdg_variazione_riga_gestBulk.class);
 		SQLBuilder sqlExist = pdgVarRigaHome.createSQLBuilder();
@@ -720,9 +728,13 @@ public class ProgettoHome extends BulkHome {
 		return pdgVarHome.fetchAll(sqlVar);
 	}
 	
-	public java.util.Collection<Var_stanz_resBulk> findVariazioniResiduoAssociate(Integer pgProgetto) throws IntrospectionException, PersistencyException {
+	/*
+	 * Recupera le variazioni di residuo associate ad un progetto a partire da un anno specificato
+	 */
+	public java.util.Collection<Var_stanz_resBulk> findVariazioniResiduoAssociate(Integer pgProgetto, Integer annoFrom) throws IntrospectionException, PersistencyException {
 		PersistentHome varHome = getHomeCache().getHome(Var_stanz_resBulk.class);
 		SQLBuilder sqlVar = varHome.createSQLBuilder();
+		sqlVar.addSQLClause(FindClause.AND, "VAR_STANZ_RES.ESERCIZIO", SQLBuilder.GREATER_EQUALS, annoFrom);
 		
 		PersistentHome varRigaHome = getHomeCache().getHome(Var_stanz_res_rigaBulk.class);
 		SQLBuilder sqlExist = varRigaHome.createSQLBuilder();
