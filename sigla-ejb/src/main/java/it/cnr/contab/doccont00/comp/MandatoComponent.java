@@ -5264,6 +5264,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     }
                 }
             }
+            codiciCIG = codiciCIG.stream().distinct().collect(Collectors.toList());
+            motiviAssenzaCIG = motiviAssenzaCIG.stream().distinct().collect(Collectors.toList());
             if (isExistsFatturaEstera) {
                 if (codiciCIG.isEmpty() && motiviAssenzaCIG.isEmpty()) {
                     throw new ApplicationMessageFormatException("Al mandato e per il codice SIOPE {0} sono associate fatture " +
