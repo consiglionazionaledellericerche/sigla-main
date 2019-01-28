@@ -2587,7 +2587,7 @@ public class FatturaAttivaSingolaComponent
                     "Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
                             "pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice Univoco Ufficio IPA " +
                             "relativo al terzo per il quale si sta tentando di emettere fattura.");
-        } else if (!terzo.getAnagrafico().isEntePubblico() && terzo.getAnagrafico().isPersonaGiuridica() && 
+        } else if (!terzo.getAnagrafico().isEntePubblico() && terzo.getAnagrafico().isPersonaGiuridica() && terzo.getAnagrafico().isItaliano() &&  
         			terzo.getCodiceDestinatarioFatt() == null && !terzo.esistePecFatturazioneElettronica() && !terzo.getFlSbloccoFatturaElettronica()) {
             throw new it.cnr.jada.comp.ApplicationException(
                     "Il codice terzo utilizzato si riferisce ad un'anagrafica che ha attiva la fatturazione elettronica." +
