@@ -1,10 +1,16 @@
 package it.cnr.contab.docamm00.bp;
 
+import java.rmi.RemoteException;
+
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 
 /**
  * Insert the type's description here.
@@ -41,6 +47,15 @@ public Filtro_ricerca_doc_amm_fatturazione_elettronicaVBulk createNewBulk(Action
 		throw handleException(e);
 	}
 }
+
+public boolean isUtenteNonAbilitatoFirma(UserContext userContext) throws ApplicationException {
+    try {
+        return !UtenteBulk.isAbilitatoFirmaFatturazioneElettronica(userContext);
+    } catch (ComponentException | RemoteException e) {
+        throw new ApplicationException(e);
+    }
+}
+
 
 /**
  * Ottiene il business process responsabile del documento amministativo docAmm.
