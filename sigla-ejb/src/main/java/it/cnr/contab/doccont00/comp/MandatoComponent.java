@@ -5259,8 +5259,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             fattura_passivaBulk.isSanMarinoConIVA() ||
                             fattura_passivaBulk.isSanMarinoSenzaIVA())) {
                         isExistsFatturaEstera = true;
-                        codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk.getCd_siope()));
-                        motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk.getCd_siope()));
+                        codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
+                        motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
                     }
                 }
             }
