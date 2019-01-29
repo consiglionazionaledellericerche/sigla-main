@@ -699,15 +699,15 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		} else if (ProgettoBulk.STATO_RIAPERTURA.equals(newStato)) {
 			if (!optOtherField.get().isStatoChiuso())
 				throw new ValidationException("E' possibile riaprire un progetto solo se lo stato corrente risulta essere \"CHIUSO\".");
-			List<ObbligazioneBulk> listObb = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findObbligazioniAssociate", optProgetto.get().getPg_progetto());
+			List<ObbligazioneBulk> listObb = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findObbligazioniAssociate", optProgetto.get().getPg_progetto(), this.getAnnoFromPianoEconomico());
     		if (listObb.stream().count()>0)
 				throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto. "
 						+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
-			List<Pdg_variazioneBulk> listVarComp = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findVariazioniCompetenzaAssociate", optProgetto.get().getPg_progetto());
+			List<Pdg_variazioneBulk> listVarComp = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findVariazioniCompetenzaAssociate", optProgetto.get().getPg_progetto(), this.getAnnoFromPianoEconomico());
     		if (listVarComp.stream().count()>0)
 				throw new ApplicationRuntimeException("Attenzione: risultano variazioni di competenza emesse sul progetto. "
 						+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
-			List<Var_stanz_resBulk> listVarRes = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findVariazioniResiduoAssociate", optProgetto.get().getPg_progetto());
+			List<Var_stanz_resBulk> listVarRes = createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findVariazioniResiduoAssociate", optProgetto.get().getPg_progetto(), this.getAnnoFromPianoEconomico());
     		if (listVarRes.stream().count()>0)
 				throw new ApplicationRuntimeException("Attenzione: risultano variazioni di residuo emesse sul progetto. "
 						+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
