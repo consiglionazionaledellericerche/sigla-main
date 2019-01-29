@@ -1095,7 +1095,7 @@
 		
 	<columnSet
 		name="protocollazioneIvaSet">
-		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="esercizio"/>
 		<columnFieldProperty name="cd_uo_origine" />
 		<columnFieldProperty name="pg_fattura_attiva" />
 		<columnFieldProperty name="ti_fattura" />
@@ -1127,15 +1127,13 @@
 	<columnFieldProperty name="ragione_sociale" />
 	<columnFieldProperty name="codice_fiscale" />
 	<columnFieldProperty name="partita_iva" />
-	<columnFieldProperty name="protocollo_iva" />
+	<columnFieldProperty name="protocollo_iva"  label="Registr. IVA"/>
 	<columnFieldProperty name="dt_emissione" />
 	<columnFieldProperty name="im_totale_fattura" />
 	<columnFieldProperty name="codiceUnivocoUfficioIpa" />
-	<columnFieldProperty name="codiceInvioSdi" />
-	<columnFieldProperty name="dtConsegnaSdi" />
-	<columnFieldProperty name="statoInvioSdi" />
-	<columnFieldProperty name="ti_fattura" />
-	<columnFieldProperty name="collegamentoDocumentale" />
+	<columnFieldProperty name="statoInvioSdi"  label="Stato"/>
+	<columnFieldProperty name="ti_fattura"  label="Tipo"/>
+	<columnFieldProperty name="collegamentoDocumentale" label="Documenti"/>
 	</columnSet>
 
 </bulkInfo>
