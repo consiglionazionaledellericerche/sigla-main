@@ -19,7 +19,6 @@
 <script language="javascript" src="scripts/css.js"></script>
 <%
 	CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP bp = (CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP)BusinessProcess.getBusinessProcess(request);
-	bp.openFormWindow(pageContext);
 %>
 <script language="JavaScript">
 function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_organizzativa, pg_fattura) {	
@@ -29,6 +28,23 @@ function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_orga
 </head>
 
 <body class="Form">
+<% bp.openFormWindow(pageContext); %>
+<table class="Panel">
+<%	if (!bp.isUtenteNonAbilitatoFirma()) { %>
+		<tr>
+			<td>
+				<fieldset>
+					<%
+						bp.writeFormLabel(out, "statoFattElett");
+					%>
+					<%
+						bp.writeFormInput(out, null, "statoFattElett", false, null,
+								"onchange=\"javascript:submitForm('doCambiaVisibilita')\"");
+					%>
+				</fieldset>
+			</td>
+		</tr>
+<% } %>
 <%	if (bp.getParentRoot().isBootstrap()) { %>
 	<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
 	<% bp.writeHTMLNavigator(out); %>
@@ -43,5 +59,6 @@ function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_orga
 	</table>
 <% } %>
 <%bp.closeFormWindow(pageContext); %>
+</table>
 </body>
 </html>
