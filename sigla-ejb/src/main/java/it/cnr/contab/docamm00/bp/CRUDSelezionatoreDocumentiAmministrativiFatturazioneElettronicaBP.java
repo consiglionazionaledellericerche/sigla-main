@@ -109,7 +109,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
     		} catch (ComponentException e) {
     			logger.error("Utente Non Abilitato Firma", e);
     		}
-    		if (!isUtenteNonAbilitatoFirma()){
+    		if (isUtenteNonAbilitatoFirma()){
     			((Fattura_attivaBulk) model).setStatoFattElett(Fattura_attivaBulk.DA_PREDISPORRE_ALLA_FIRMA);
     		} else {
     			((Fattura_attivaBulk) model).setStatoFattElett(Fattura_attivaBulk.DA_PREDISPORRE_E_FIRMARE);
