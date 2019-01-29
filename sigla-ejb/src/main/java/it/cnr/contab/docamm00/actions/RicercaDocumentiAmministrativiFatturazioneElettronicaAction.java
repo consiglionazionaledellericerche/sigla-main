@@ -63,7 +63,15 @@ public class RicercaDocumentiAmministrativiFatturazioneElettronicaAction extends
 
             clauses.addClause("AND", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.TRUE);
             if (filtro.isDaFirmare()) {
-                clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+            	if (bp.isUtenteNonAbilitatoFirma(context.getUserContext())){
+                    clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+            	} else {
+                	CompoundFindClause clausesFir = new CompoundFindClause();
+                    clausesFir.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+                	CompoundFindClause clausesPre = new CompoundFindClause();
+                    clausesPre.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+                    clauses.addChild(CompoundFindClause.or(clausesFir, clausesPre));
+            	}
             } else if (filtro.isFirmata()) {
                 clauses.addClause("AND", "statoInvioSdi", SQLBuilder.NOT_EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
             }
@@ -84,7 +92,7 @@ public class RicercaDocumentiAmministrativiFatturazioneElettronicaAction extends
 
                 IDocumentoAmministrativoBP docAmmBP = getBusinessProcessForDocAmm(context, (IDocumentoAmministrativoBulk) instance);
                 SelezionatoreListaBP nbp = (SelezionatoreListaBP) context.createBusinessProcess("SelezionatoreDocAmmFatturazioneElettronica", new Object[]{"Tn"});
-                nbp.setMultiSelection(false);
+//                nbp.setMultiSelection(false);
                 nbp.setIterator(context, ri);
                 BulkInfo bulkInfo = BulkInfo.getBulkInfo(instance.getClass());
                 nbp.setBulkInfo(bulkInfo);

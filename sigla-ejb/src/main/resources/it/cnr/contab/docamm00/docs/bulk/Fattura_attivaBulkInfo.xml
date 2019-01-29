@@ -806,6 +806,17 @@
 		property="collegamentoDocumentale"
 		inputType="TEXT"
 		label="Documenti Elettronici Collegati" />		
+	<fieldProperty
+		name="statoFattElett"
+		property="statoFattElett"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="statoFattureElettronicheKeys"
+		label="Stato"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		enabledOnSearch="true" />
 
 	<findFieldProperty name="pg_fattura_attiva"/>
 	<findFieldProperty name="protocollo_iva" />	
@@ -838,6 +849,8 @@
 	<findFieldProperty name="codiceUnivocoUfficioIpa" />
 	<findFieldProperty name="dtConsegnaSdi" />
 	
+	<formFieldProperty
+		name="statoFattElett" />
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -1082,7 +1095,7 @@
 		
 	<columnSet
 		name="protocollazioneIvaSet">
-		<columnFieldProperty name="esercizio" />
+		<columnFieldProperty name="esercizio"/>
 		<columnFieldProperty name="cd_uo_origine" />
 		<columnFieldProperty name="pg_fattura_attiva" />
 		<columnFieldProperty name="ti_fattura" />
@@ -1112,19 +1125,15 @@
 	<columnFieldProperty name="cognome" />
 	<columnFieldProperty name="nome" />
 	<columnFieldProperty name="ragione_sociale" />
-	<columnFieldProperty name="ti_causale_emissione" />
-	<columnFieldProperty name="sezionale" />
-	<columnFieldProperty name="protocollo_iva" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="partita_iva" />
+	<columnFieldProperty name="protocollo_iva"  label="Registr. IVA"/>
 	<columnFieldProperty name="dt_emissione" />
 	<columnFieldProperty name="im_totale_fattura" />
-	<columnFieldProperty name="ti_associato_manrev" />
-	<columnFieldProperty name="stato_cofi" />
 	<columnFieldProperty name="codiceUnivocoUfficioIpa" />
-	<columnFieldProperty name="codiceInvioSdi" />
-	<columnFieldProperty name="dtConsegnaSdi" />
-	<columnFieldProperty name="statoInvioSdi" />
-	<columnFieldProperty name="ti_fattura" />
-	<columnFieldProperty name="collegamentoDocumentale" />
+	<columnFieldProperty name="statoInvioSdi"  label="Stato"/>
+	<columnFieldProperty name="ti_fattura"  label="Tipo"/>
+	<columnFieldProperty name="collegamentoDocumentale" label="Documenti"/>
 	</columnSet>
 
 </bulkInfo>
