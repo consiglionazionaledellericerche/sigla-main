@@ -806,6 +806,17 @@
 		property="collegamentoDocumentale"
 		inputType="TEXT"
 		label="Documenti Elettronici Collegati" />		
+	<fieldProperty
+		name="statoFattElett"
+		property="statoFattElett"
+		maxLength="1"
+		inputSize="1"
+		inputType="SELECT"
+		keysProperty="statoFattureElettronicheKeys"
+		label="Stato"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		enabledOnSearch="true" />
 
 	<findFieldProperty name="pg_fattura_attiva"/>
 	<findFieldProperty name="protocollo_iva" />	
@@ -838,6 +849,8 @@
 	<findFieldProperty name="codiceUnivocoUfficioIpa" />
 	<findFieldProperty name="dtConsegnaSdi" />
 	
+	<formFieldProperty
+		name="statoFattElett" />
 	<formFieldProperty
 		name="ti_bene_servizio" />
 	<formFieldProperty
@@ -1112,13 +1125,11 @@
 	<columnFieldProperty name="cognome" />
 	<columnFieldProperty name="nome" />
 	<columnFieldProperty name="ragione_sociale" />
-	<columnFieldProperty name="ti_causale_emissione" />
-	<columnFieldProperty name="sezionale" />
+	<columnFieldProperty name="codice_fiscale" />
+	<columnFieldProperty name="partita_iva" />
 	<columnFieldProperty name="protocollo_iva" />
 	<columnFieldProperty name="dt_emissione" />
 	<columnFieldProperty name="im_totale_fattura" />
-	<columnFieldProperty name="ti_associato_manrev" />
-	<columnFieldProperty name="stato_cofi" />
 	<columnFieldProperty name="codiceUnivocoUfficioIpa" />
 	<columnFieldProperty name="codiceInvioSdi" />
 	<columnFieldProperty name="dtConsegnaSdi" />
