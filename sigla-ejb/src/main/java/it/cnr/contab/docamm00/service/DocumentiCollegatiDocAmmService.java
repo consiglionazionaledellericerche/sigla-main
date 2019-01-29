@@ -475,4 +475,18 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
 			throw new ApplicationException(e);
 		}
     }
+    public StorageObject getFileXmlFatturaAttiva(Fattura_attivaBulk fattura)  throws ApplicationException, IOException {
+    	try {
+        	List<StorageObject> lista = getStorageObjectFatturaAttiva(fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA.value());
+            if (lista.size() == 0)
+                throw new ApplicationException("Non esiste il file per la fattura attiva"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva());
+            else if (lista.size() > 1) {
+                throw new ApplicationException("Esistono due file per la fattura attiva"+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva());
+            } else {	
+            	return lista.get(0);
+            }
+		} catch (DetailedException e) {
+			throw new ApplicationException(e);
+		}
+    }
 }
