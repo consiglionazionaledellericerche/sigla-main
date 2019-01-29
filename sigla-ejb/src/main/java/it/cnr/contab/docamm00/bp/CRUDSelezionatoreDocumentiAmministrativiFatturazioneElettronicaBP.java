@@ -109,11 +109,8 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
     		} catch (ComponentException e) {
     			logger.error("Utente Non Abilitato Firma", e);
     		}
-    		if (isUtenteNonAbilitatoFirma()){
+    		if (!isUtenteNonAbilitatoFirma()){
     			((Fattura_attivaBulk) model).setStatoFattElett(Fattura_attivaBulk.DA_PREDISPORRE_ALLA_FIRMA);
-    			java.util.Dictionary list = new it.cnr.jada.util.OrderedHashtable();
-    			list.put(Fattura_attivaBulk.DA_PREDISPORRE_ALLA_FIRMA, "Da Predisposporre alla firma");
-    			((Fattura_attivaBulk) model).setStatoFattureElettronicheKeys(list);
     		} else {
     			((Fattura_attivaBulk) model).setStatoFattElett(Fattura_attivaBulk.DA_PREDISPORRE_E_FIRMARE);
     		}
