@@ -7637,6 +7637,14 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         return fatturaAttiva;
     }
 
+    public Fattura_attivaBulk aggiornaFatturaPredispostaAllaFirma(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+           
+    	fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+        fatturaAttiva.setToBeUpdated();
+        updateBulk(userContext, fatturaAttiva);
+        return fatturaAttiva;
+    }
+
     public Fattura_attivaBulk aggiornaFatturaConsegnaSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, Date dataConsegnaSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
         fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_SDI);
         fatturaAttiva.setDtRicezioneSdi(dataConsegnaSdi!=null?new Timestamp(dataConsegnaSdi.getTime()):null);
