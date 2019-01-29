@@ -45,6 +45,7 @@ function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_orga
 			</td>
 		</tr>
 <% } %>
+</table>
 <%	if (bp.getParentRoot().isBootstrap()) { %>
 	<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
 	<% bp.writeHTMLNavigator(out); %>
@@ -59,6 +60,5 @@ function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_orga
 	</table>
 <% } %>
 <%bp.closeFormWindow(pageContext); %>
-</table>
 </body>
 </html>
