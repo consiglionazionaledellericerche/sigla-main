@@ -36,6 +36,7 @@ import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.StrServ;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.si.spring.storage.StorageObject;
 
 import java.io.File;
 import java.util.*;
@@ -52,6 +53,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String TARIFFARIO          = "T";
 	private int num_dettColl=0;
 
+	private StorageObject storageObject;
 	private File file;
 	private String nomeFile;
 	private String typeNameForCMIS;
@@ -96,7 +98,20 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String FATTURA_DI_BENI = Bene_servizioBulk.BENE;
 	public final static Dictionary FATTURA_BENI_SERVIZI;
 
+    protected final static java.util.Dictionary statoFattureElettronicheKeys;
 
+	public final static String DA_PREDISPORRE_ALLA_FIRMA = "P";
+	public final static String DA_FIRMARE = "F";
+	public final static String DA_PREDISPORRE_E_FIRMARE = "S";
+
+	static {
+    	statoFattureElettronicheKeys = new it.cnr.jada.util.OrderedHashtable();
+    	statoFattureElettronicheKeys.put(DA_PREDISPORRE_ALLA_FIRMA, "Da Predisposporre alla firma");
+    	statoFattureElettronicheKeys.put(DA_FIRMARE, "Da Firmare");
+    	statoFattureElettronicheKeys.put(DA_PREDISPORRE_E_FIRMARE, "Da Predisporre e firmare");
+    }
+
+	public final static String FATT_ELETT_PREDISPOSTA_FIRMA = "PRE";
 	public final static String FATT_ELETT_INVIATA_SDI = "INV";
 	public final static String FATT_ELETT_ALLA_FIRMA = "FIR";
 	public final static String FATT_ELETT_SCARTATA_DA_SDI = "SCA";
@@ -115,7 +130,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String TIPO_NOTA_DI_CREDITO = "C";
 	public final static String TIPO_NOTA_DI_DEBITO = "D";
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-
+	private String statoFattElett;
 	public final static Dictionary statoInvioSdiKeys;
 
 	public final static Dictionary tipoFatturaKeys;
@@ -192,6 +207,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		statoInvioSdiKeys = new it.cnr.jada.util.OrderedHashtable();
 		statoInvioSdiKeys.put(FATT_ELETT_INVIATA_SDI,"Inviata a SDI");
 		statoInvioSdiKeys.put(FATT_ELETT_ALLA_FIRMA,"Alla Firma");
+		statoInvioSdiKeys.put(FATT_ELETT_PREDISPOSTA_FIRMA,"Predisposta alla Firma");
 		statoInvioSdiKeys.put(FATT_ELETT_SCARTATA_DA_SDI,"Scartata da SDI");
 		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_SDI,"Consegnata SDI");
 		statoInvioSdiKeys.put(FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL,"Inviato Avviso notifica e-mail");
@@ -1951,6 +1967,9 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public Dictionary getTi_bene_servizioKeys() {
 		return FATTURA_BENI_SERVIZI;
 	}
+	public Dictionary getStatoFattureElettronicheKeys() {
+		return statoFattureElettronicheKeys;
+	}
 	public boolean isROTi_bene_servizio() {
 
 		return	//isCommerciale() &&
@@ -2130,5 +2149,23 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	}
 	public Boolean isFatturaEstera(){
 		return getFl_extra_ue() || getFl_intra_ue() || getFl_san_marino();
+	}
+	public File getFile() {
+		return file;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public StorageObject getStorageObject() {
+		return storageObject;
+	}
+	public void setStorageObject(StorageObject storageObject) {
+		this.storageObject = storageObject;
+	}
+	public String getStatoFattElett() {
+		return statoFattElett;
+	}
+	public void setStatoFattElett(String statoFattElett) {
+		this.statoFattElett = statoFattElett;
 	}
 }

@@ -108,6 +108,7 @@ Fattura_attiva_IBulk ricercaFatturaSDI(it.cnr.jada.UserContext userContext, Stri
 Fattura_attiva_IBulk aggiornaDatiFatturaSDI(it.cnr.jada.UserContext userContext, String codiceInvioSdi, String statoInvioSdi, String noteInvioSdi, javax.xml.datatype.XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 @Deprecated
 Fattura_attiva_IBulk aggiornaDatiFatturaSDI(it.cnr.jada.UserContext userContext, Fattura_attiva_IBulk fatturaAttiva, String statoInvioSdi, String noteInvioSdi, javax.xml.datatype.XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+Fattura_attivaBulk aggiornaFatturaPredispostaAllaFirma(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 public void preparaProtocollazioneEProtocolla(UserContext userContext, Long pgProtocollazione, Integer offSet, Long pgStampa, java.sql.Timestamp dataStampa,Fattura_attivaBulk fattura) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 boolean isAttivoSplitPayment(UserContext userContext, Timestamp dt_registrazione)throws PersistencyException, ComponentException,java.rmi.RemoteException;

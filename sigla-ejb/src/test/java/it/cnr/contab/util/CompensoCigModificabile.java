@@ -152,4 +152,26 @@ public class CompensoCigModificabile {
         } catch (BusinessProcessException e) {
         }
     }
+    @Test
+    public void compensoEight() {
+        CRUDCompensoBP crudCompensoBP = new CRUDCompensoBP();
+        final CompensoBulk compensoBulk = new CompensoBulk();
+        final Tipo_trattamentoBulk tipo_trattamentoBulk = new Tipo_trattamentoBulk();
+        tipo_trattamentoBulk.setCd_trattamento("TEST");
+        tipo_trattamentoBulk.setTipoDebitoSiope(Tipo_trattamentoBulk.TIPO_DEBITO_COMMERCIALE);
+        compensoBulk.setTipoTrattamento(tipo_trattamentoBulk);
+
+        Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk = new Obbligazione_scadenzarioBulk();
+        ObbligazioneBulk obbligazioneBulk = new ObbligazioneBulk();
+        obbligazioneBulk.setPg_obbligazione(Long.valueOf(1));
+        obbligazioneBulk.setContratto(null);
+        obbligazione_scadenzarioBulk.setObbligazione(obbligazioneBulk);
+        compensoBulk.setObbligazioneScadenzario(obbligazione_scadenzarioBulk);
+
+        try {
+            crudCompensoBP.setModel(null, compensoBulk);
+            Assert.isTrue(crudCompensoBP.isCigModificabile());
+        } catch (BusinessProcessException e) {
+        }
+    }
 }

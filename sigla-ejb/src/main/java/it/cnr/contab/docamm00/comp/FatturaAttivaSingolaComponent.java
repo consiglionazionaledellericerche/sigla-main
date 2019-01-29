@@ -2587,7 +2587,7 @@ public class FatturaAttivaSingolaComponent
                     "Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
                             "pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice Univoco Ufficio IPA " +
                             "relativo al terzo per il quale si sta tentando di emettere fattura.");
-        } else if (!terzo.getAnagrafico().isEntePubblico() && terzo.getAnagrafico().isPersonaGiuridica() && 
+        } else if (!terzo.getAnagrafico().isEntePubblico() && terzo.getAnagrafico().isPersonaGiuridica() && terzo.getAnagrafico().isItaliano() &&  
         			terzo.getCodiceDestinatarioFatt() == null && !terzo.esistePecFatturazioneElettronica() && !terzo.getFlSbloccoFatturaElettronica()) {
             throw new it.cnr.jada.comp.ApplicationException(
                     "Il codice terzo utilizzato si riferisce ad un'anagrafica che ha attiva la fatturazione elettronica." +
@@ -7632,6 +7632,14 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         } else {
             fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI);
         }
+        fatturaAttiva.setToBeUpdated();
+        updateBulk(userContext, fatturaAttiva);
+        return fatturaAttiva;
+    }
+
+    public Fattura_attivaBulk aggiornaFatturaPredispostaAllaFirma(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+           
+    	fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
         fatturaAttiva.setToBeUpdated();
         updateBulk(userContext, fatturaAttiva);
         return fatturaAttiva;
