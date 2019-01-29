@@ -4,9 +4,11 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.doccont00.core.bulk.Mandato_siopeBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.util.List;
@@ -46,8 +48,8 @@ public class Fattura_passiva_rigaHome extends BulkHome {
         return fetchAll(selectForObbligazioneExceptFor(scadenza, fattura));
     }
 
-    public List<String> findCodiciCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, String codiceSiope) throws PersistencyException {
-        return findCIG(fattura, mandato, codiceSiope)
+    public List<String> findCodiciCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, Mandato_siopeBulk mandatoSiopeBulk) throws PersistencyException {
+        return findCIG(fattura, mandato, mandatoSiopeBulk)
                 .stream()
                 .filter(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getCig()).isPresent())
                 .map(Fattura_passiva_rigaBulk::getCig)
@@ -57,8 +59,8 @@ public class Fattura_passiva_rigaHome extends BulkHome {
                 .collect(Collectors.toList());
     }
 
-    public List<String> findMotiviEsclusioneCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, String codiceSiope) throws PersistencyException {
-        return findCIG(fattura, mandato, codiceSiope)
+    public List<String> findMotiviEsclusioneCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, Mandato_siopeBulk mandatoSiopeBulk) throws PersistencyException {
+        return findCIG(fattura, mandato, mandatoSiopeBulk)
                 .stream()
                 .map(Fattura_passiva_rigaBulk::getMotivo_assenza_cig)
                 .filter(s -> Optional.ofNullable(s).isPresent())
@@ -66,7 +68,7 @@ public class Fattura_passiva_rigaHome extends BulkHome {
                 .collect(Collectors.toList());
     }
 
-    public List<Fattura_passiva_rigaBulk> findCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, String codiceSiope) throws PersistencyException {
+    public List<Fattura_passiva_rigaBulk> findCIG(Fattura_passivaBulk fattura, MandatoBulk mandato, Mandato_siopeBulk mandato_siopeBulk) throws PersistencyException {
         SQLBuilder sql = createSQLBuilder();
         sql.addTableToHeader("MANDATO");
         sql.addTableToHeader("MANDATO_RIGA");
@@ -94,18 +96,40 @@ public class Fattura_passiva_rigaHome extends BulkHome {
         sql.addSQLJoin("MANDATO_SIOPE.CD_TIPO_DOCUMENTO_AMM", "MANDATO_RIGA.CD_TIPO_DOCUMENTO_AMM");
         sql.addSQLJoin("MANDATO_SIOPE.PG_DOC_AMM", "MANDATO_RIGA.PG_DOC_AMM");
 
-        sql.addSQLClause("AND", "MANDATO_SIOPE.CD_SIOPE", SQLBuilder.EQUALS, codiceSiope);
 
 
-        sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.ESERCIZIO", SQLBuilder.EQUALS, fattura.getEsercizio());
-        sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.CD_CDS", SQLBuilder.EQUALS, fattura.getCd_cds());
-        sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, fattura.getCd_unita_organizzativa());
-        sql.addSQLClause("AND", "FATTURA_PASSIVA_RIGA.PG_FATTURA_PASSIVA", SQLBuilder.EQUALS, fattura.getPg_fattura_passiva());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.CD_CDS", SQLBuilder.EQUALS, mandato_siopeBulk.getCd_cds());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.ESERCIZIO", SQLBuilder.EQUALS, mandato_siopeBulk.getEsercizio());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.PG_MANDATO", SQLBuilder.EQUALS, mandato_siopeBulk.getPg_mandato());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.ESERCIZIO_OBBLIGAZIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getEsercizio_obbligazione());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.ESERCIZIO_ORI_OBBLIGAZIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getEsercizio_ori_obbligazione());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.PG_OBBLIGAZIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getPg_obbligazione());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.PG_OBBLIGAZIONE_SCADENZARIO", SQLBuilder.EQUALS, mandato_siopeBulk.getPg_obbligazione_scadenzario());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.CD_CDS_DOC_AMM", SQLBuilder.EQUALS, mandato_siopeBulk.getCd_cds_doc_amm());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.CD_UO_DOC_AMM", SQLBuilder.EQUALS, mandato_siopeBulk.getCd_uo_doc_amm());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.ESERCIZIO_DOC_AMM", SQLBuilder.EQUALS, mandato_siopeBulk.getEsercizio_doc_amm());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, mandato_siopeBulk.getCd_tipo_documento_amm());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.PG_DOC_AMM", SQLBuilder.EQUALS, mandato_siopeBulk.getPg_doc_amm());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.ESERCIZIO_SIOPE", SQLBuilder.EQUALS, mandato_siopeBulk.getEsercizio_siope());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.TI_GESTIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getTi_gestione());
+        sql.addSQLClause(FindClause.AND, "MANDATO_SIOPE.CD_SIOPE", SQLBuilder.EQUALS, mandato_siopeBulk.getCd_siope());
 
-        sql.addSQLClause("AND", "MANDATO.ESERCIZIO", SQLBuilder.EQUALS, mandato.getEsercizio());
-        sql.addSQLClause("AND", "MANDATO.CD_CDS", SQLBuilder.EQUALS, mandato.getCd_cds());
-        sql.addSQLClause("AND", "MANDATO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, mandato.getCd_unita_organizzativa());
-        sql.addSQLClause("AND", "MANDATO.PG_MANDATO", SQLBuilder.EQUALS, mandato.getPg_mandato());
+
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.ESERCIZIO", SQLBuilder.EQUALS, fattura.getEsercizio());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.CD_CDS", SQLBuilder.EQUALS, fattura.getCd_cds());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, fattura.getCd_unita_organizzativa());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.PG_FATTURA_PASSIVA", SQLBuilder.EQUALS, fattura.getPg_fattura_passiva());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.CD_CDS_OBBLIGAZIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getCd_cds_doc_amm());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.ESERCIZIO_OBBLIGAZIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getEsercizio_obbligazione());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.ESERCIZIO_ORI_OBBLIGAZIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getEsercizio_ori_obbligazione());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE", SQLBuilder.EQUALS, mandato_siopeBulk.getPg_obbligazione());
+        sql.addSQLClause(FindClause.AND, "FATTURA_PASSIVA_RIGA.PG_OBBLIGAZIONE_SCADENZARIO", SQLBuilder.EQUALS, mandato_siopeBulk.getPg_obbligazione_scadenzario());
+
+
+        sql.addSQLClause(FindClause.AND, "MANDATO.ESERCIZIO", SQLBuilder.EQUALS, mandato.getEsercizio());
+        sql.addSQLClause(FindClause.AND, "MANDATO.CD_CDS", SQLBuilder.EQUALS, mandato.getCd_cds());
+        sql.addSQLClause(FindClause.AND, "MANDATO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, mandato.getCd_unita_organizzativa());
+        sql.addSQLClause(FindClause.AND, "MANDATO.PG_MANDATO", SQLBuilder.EQUALS, mandato.getPg_mandato());
 
 
         return fetchAll(sql);
@@ -147,7 +171,7 @@ public class Fattura_passiva_rigaHome extends BulkHome {
      * inserimento. Da usare principalmente per riempire i progressivi
      * automatici.
      *
-     * @param bulk l'OggettoBulk da inizializzare
+     * @param fatturaPassiva l'OggettoBulk da inizializzare
      */
     public SQLBuilder selectObbligazioniPer(
             it.cnr.jada.UserContext userContext,
