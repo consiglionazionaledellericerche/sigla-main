@@ -1694,6 +1694,29 @@ public Fattura_attivaBulk aggiornaFatturaInvioSDI(UserContext userContext, Fattu
 
 }
 
+public Fattura_attivaBulk aggiornaFatturaPredispostaAllaFirma(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+	pre_component_invocation(userContext,componentObj);
+	try {
+		Fattura_attivaBulk result = ((FatturaAttivaSingolaComponent)componentObj).aggiornaFatturaPredispostaAllaFirma(userContext, fatturaAttiva);
+		component_invocation_succes(userContext,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(it.cnr.jada.persistency.PersistencyException e) {
+		component_invocation_failure(userContext,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(userContext,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(userContext,componentObj,e);
+	}
+
+}
+
 public Fattura_attivaBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, String noteInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	pre_component_invocation(userContext,componentObj);
 	try {

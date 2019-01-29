@@ -5724,27 +5724,34 @@ public class DistintaCassiereComponent extends
                             .map(Fattura_passiva_rigaHome.class::cast)
                             .orElseThrow(() -> new ComponentException("Home della fattura non trovata!"));
 
-                    final List<?> codiciCIG = collect
-                            .keySet()
-                            .stream()
-                            .collect(Collectors.toMap(f -> f, f -> {
-                                try {
-                                    return fattura_passivaRigaHome.findCodiciCIG(f, mandatoBulk, codiceSiope);
-                                } catch (PersistencyException e) {
-                                    return Collections.emptyList();
-                                }
-                            })).values().stream().distinct().flatMap(List::stream).collect(Collectors.toList());
-
-                    final List<?> motiviAssenzaCIG = collect
-                            .keySet()
-                            .stream()
-                            .collect(Collectors.toMap(f -> f, f -> {
-                                try {
-                                    return fattura_passivaRigaHome.findMotiviEsclusioneCIG(f, mandatoBulk, codiceSiope);
-                                } catch (PersistencyException e) {
-                                    return Collections.emptyList();
-                                }
-                            })).values().stream().distinct().flatMap(List::stream).collect(Collectors.toList());
+                    List<String> codiciCIG = new ArrayList<String>();
+                    List<String> motiviAssenzaCIG = new ArrayList<String>();
+                    boolean isExistsFatturaEstera = false;
+                    for(Mandato_siopeBulk siopeBulk : siopeBulks) {
+                        if(siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)) {
+                            final Fattura_passivaBulk fattura_passivaBulk = Optional.ofNullable(
+                                    fattura_passivaHome.findByPrimaryKey(
+                                            new Fattura_passiva_IBulk(
+                                                    siopeBulk.getCd_cds_doc_amm(),
+                                                    siopeBulk.getCd_uo_doc_amm(),
+                                                    siopeBulk.getEsercizio_doc_amm(),
+                                                    siopeBulk.getPg_doc_amm()
+                                            )
+                                    )
+                            ).filter(Fattura_passivaBulk.class::isInstance)
+                                    .map(Fattura_passivaBulk.class::cast)
+                                    .orElseThrow(() -> new ComponentException("Fattura non trovata!"));
+                            if (!(fattura_passivaBulk.isEstera() ||
+                                    fattura_passivaBulk.isSanMarinoConIVA() ||
+                                    fattura_passivaBulk.isSanMarinoSenzaIVA())) {
+                                isExistsFatturaEstera = true;
+                                codiciCIG.addAll(fattura_passivaRigaHome.findCodiciCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
+                                motiviAssenzaCIG.addAll(fattura_passivaRigaHome.findMotiviEsclusioneCIG(fattura_passivaBulk, mandatoBulk, siopeBulk));
+                            }
+                        }
+                    }
+                    codiciCIG = codiciCIG.stream().distinct().collect(Collectors.toList());
+                    motiviAssenzaCIG = motiviAssenzaCIG.stream().distinct().collect(Collectors.toList());
 
                     if (codiciCIG.isEmpty() && motiviAssenzaCIG.isEmpty()) {
                         throw new ApplicationMessageFormatException("Generazione flusso interrotta in quanto al mandato {0}/{1}/{2} sono associate fatture " +
