@@ -2,6 +2,7 @@ package it.cnr.contab.docamm00.comp;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -38,14 +39,19 @@ import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivoBulk;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.RemoteIterator;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AnagraficaType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.BolloVirtualeType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
@@ -946,4 +952,5 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 			caricaDatiContratto(mappaContratti, riga.getProgressivo_riga().intValue(), contrattoBulk);
 		}
 	}
+	
 }
