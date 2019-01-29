@@ -43,7 +43,7 @@ public class Obbligazione_scadenzarioBulk extends Obbligazione_scadenzarioBase i
 	private java.lang.Long pg_doc_passivo;
 	private String cd_tipo_documento_amm;
 	private java.util.Hashtable tipoDocumentoKeys;	
-	private CigBulk cig;
+	private CigBulk cig = new CigBulk();
 	private String motivo_assenza_cig;
 
 	private boolean fromDocAmm = false;
@@ -382,6 +382,10 @@ public CigBulk getCig() {
 	return cig;
 }
 public void setCig(CigBulk cig) {
+	if (cig == null){
+		cig = new CigBulk();
+	}
+	
 	this.cig = cig;
 }
 public String getMotivo_assenza_cig() {

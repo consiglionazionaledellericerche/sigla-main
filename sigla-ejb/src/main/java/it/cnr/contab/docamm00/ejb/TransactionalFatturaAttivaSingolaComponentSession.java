@@ -1810,6 +1810,23 @@ public List findListaCondizioneConsegnaWS(UserContext userContext, String query,
 			}
 		}
 	}
+	public Fattura_attivaBulk aggiornaFatturaPredispostaAllaFirma(UserContext userContext, Fattura_attivaBulk fatturaAttiva) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+		try {
+			return (Fattura_attivaBulk)invoke("aggiornaFatturaPredispostaAllaFirma",new Object[] {
+					userContext,
+					fatturaAttiva});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 	public Fattura_attiva_IBulk aggiornaDatiFatturaSDI(UserContext userContext, String codiceInvioSdi, String statoInvioSdi, String noteInvioSdi, XMLGregorianCalendar dataConsegnaSdi, boolean stornaFattura) throws PersistencyException, ComponentException, java.rmi.RemoteException {
 		try {
 			return (Fattura_attiva_IBulk)invoke("aggiornaDatiFatturaSDI",new Object[] {
