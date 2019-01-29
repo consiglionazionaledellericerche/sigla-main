@@ -98,7 +98,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String FATTURA_DI_BENI = Bene_servizioBulk.BENE;
 	public final static Dictionary FATTURA_BENI_SERVIZI;
 
-    protected static java.util.Dictionary statoFattureElettronicheKeys;
+    protected final static java.util.Dictionary statoFattureElettronicheKeys;
 
 	public final static String DA_PREDISPORRE_ALLA_FIRMA = "P";
 	public final static String DA_FIRMARE = "F";
@@ -1966,9 +1966,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	}
 	public Dictionary getTi_bene_servizioKeys() {
 		return FATTURA_BENI_SERVIZI;
-	}
-	public void setStatoFattureElettronicheKeys(Dictionary stati) {
-		statoFattureElettronicheKeys = stati;
 	}
 	public Dictionary getStatoFattureElettronicheKeys() {
 		return statoFattureElettronicheKeys;
