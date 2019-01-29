@@ -1,5 +1,9 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 /**
@@ -26,10 +30,40 @@ public Fattura_attiva_IHome(java.sql.Connection conn, it.cnr.jada.persistency.Pe
 /**
  * Ritorna un SQLBuilder con la columnMap del ricevente
  */
-public SQLBuilder createSQLBuilder() {
+public SQLBuilder selectByClauseForFatturazioneElettronica(UserContext usercontext, Fattura_attiva_IBulk fattura, CompoundFindClause compoundfindclause) throws PersistencyException {
+    SQLBuilder sqlBuilder = super.createSQLBuilder();
+    if(compoundfindclause == null){
+        if(fattura != null)
+            compoundfindclause = fattura.buildFindClauses(null);
+    } else {
+        compoundfindclause = CompoundFindClause.and(compoundfindclause, fattura.buildFindClauses(Boolean.FALSE));
+    }
+    sqlBuilder.addClause(compoundfindclause);
 
-	SQLBuilder sql = super.createSQLBuilder();
-	sql.addSQLClause("AND", "FATTURA_ATTIVA.TI_FATTURA", sql.EQUALS, Fattura_attiva_IBulk.TIPO_FATTURA_ATTIVA);
-	return sql;
+    CompoundFindClause clauses = new CompoundFindClause();
+    clauses.addClause("AND", "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext));
+    clauses.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
+    clauses.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(usercontext));
+
+    clauses.addClause("AND", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.TRUE);
+    if (fattura.getStatoFattElett().equals(Fattura_attiva_IBulk.DA_PREDISPORRE_ALLA_FIRMA)) {
+    	clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+    } else if (fattura.getStatoFattElett().equals(Fattura_attiva_IBulk.DA_FIRMARE)) {
+    	clauses.addClause("AND", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+    } else {
+    	CompoundFindClause clausesFir = new CompoundFindClause();
+    	clausesFir.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA);
+    	CompoundFindClause clausesPre = new CompoundFindClause();
+    	clausesPre.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_PREDISPOSTA_FIRMA);
+    	clauses.addChild(CompoundFindClause.or(clausesFir, clausesPre));
+    }
+    clauses.addClause("AND", "stato_cofi", SQLBuilder.NOT_EQUALS, it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk.STATO_ANNULLATO);
+
+    sqlBuilder.addClause(clauses);
+    sqlBuilder.addOrderBy("esercizio");
+    sqlBuilder.addOrderBy("pg_Fattura_Attiva");
+
+    return sqlBuilder;
 }
+
 }
