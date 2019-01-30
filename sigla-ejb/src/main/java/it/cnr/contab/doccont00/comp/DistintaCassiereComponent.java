@@ -4836,7 +4836,6 @@ public class DistintaCassiereComponent extends
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOBANCARIOEPOSTALE,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.CASSA,
-                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
                         ).contains(tipoPagamentoSiopePlus))
