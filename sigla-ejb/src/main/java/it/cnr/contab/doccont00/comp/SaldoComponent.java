@@ -1578,6 +1578,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 
 			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).filter(el->el.compareTo(pdgVariazione.getEsercizio())<=0).isPresent()) {
+				List<CtrlDispPianoEco> listCtrlDispPianoEcoEtr = new ArrayList<CtrlDispPianoEco>();
+
 	            Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
 	
 				for (java.util.Iterator dett = detHome.findDettagliEntrataVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
@@ -1587,11 +1589,27 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							rigaVar.getLinea_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_attivita().getCd_linea_attivita());
 					ProgettoBulk progetto = latt.getProgetto();
 	            	
+					BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
+
+                    //recupero il record se presente altrimenti ne creo uno nuovo
+					CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
+							.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+							.findFirst()
+							.orElse(new CtrlDispPianoEco(progetto, null));
+
+					dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+					
+					if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
+						listCtrlDispPianoEcoEtr.add(dispPianoEco);
+				}
+				
+	            for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEcoEtr) {
+					ProgettoBulk progetto = ctrlDispPianoEco.getProgetto();
 					BigDecimal totFinanziato = BigDecimal.ZERO;
 					if (progetto.isPianoEconomicoRequired()) {
 		                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(progetto.getPg_progetto());
 		                totFinanziato = pianoEconomicoList.stream()
-										                .filter(el->el.getEsercizio_piano().equals(rigaVar.getEsercizio()))
+										                .filter(el->el.getEsercizio_piano().equals(pdgVariazione.getEsercizio()))
 										                .map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
 										                .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 					} else {
@@ -1616,14 +1634,15 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		            			.map(Voce_f_saldi_cdr_lineaBulk::getAssestato)
 		                		.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 		                
-		            if (totFinanziato.compareTo(assestatoPrg.add(rigaVar.getIm_entrata()))<0) {
+		            if (totFinanziato.compareTo(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
                        if (messaggio!=null && messaggio.length()>0)
                            messaggio = messaggio+ "\n";
                        messaggio = messaggio +
-                                   "L'assestato entrate del progetto " +
-                        		   	   new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(rigaVar.getIm_entrata())) +
-                                       " risulterebbe superiore alla quota finanziata dello stesso "
-                                       + (progetto.isPianoEconomicoRequired()?"per l'anno"+rigaVar.getEsercizio():"")+
+	                                   "L'assestato entrate ("+
+	                    		   	   new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
+	                                   ") del progetto " + progetto.getCd_progetto() +
+                        		   	   " risulterebbe superiore alla quota finanziata dello stesso "
+                                       + (progetto.isPianoEconomicoRequired()?"per l'anno "+pdgVariazione.getEsercizio():"")+
                                        " che risulta di " +
                                        new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
 		            }
@@ -1654,11 +1673,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		                		.findProgettoPianoEconomicoList(pdgVariazione.getEsercizio(), progetto.getPg_progetto(), rigaVar.getElemento_voce());
 		                if (pianoEconomicoList==null || pianoEconomicoList.isEmpty())
                             messaggio = messaggio +
-                            "Non risulta essere stato imputato alcun valore nel piano economico del progetto per la Voce " + 
-                            	rigaVar.getCd_elemento_voce() + ".\n";
+                            "Non risulta essere stato imputato alcun valore nel piano economico del progetto " + progetto.getCd_progetto() +
+                            " per la Voce " + rigaVar.getCd_elemento_voce() + ".\n";
 		                else if (pianoEconomicoList.size()>1)
                             messaggio = messaggio +
-                            "La Voce " + rigaVar.getCd_elemento_voce() + " risulta associata a più voci di piano economico.\n";
+                            "La Voce " + rigaVar.getCd_elemento_voce() + " risulta associata a più voci di piano economico del progetto " + 
+                            		progetto.getCd_progetto() +".\n";
 		                else {
 		                	Progetto_piano_economicoBulk progettoPianoEconomico = pianoEconomicoList.get(0);
 		                	
@@ -1675,9 +1695,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										.orElse(new CtrlDispPianoEco(progetto, progettoPianoEconomico));
 	
 								dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
-								dispPianoEco.setImpCofinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneCofin));
+								dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
 								
-								listCtrlDispPianoEco.add(dispPianoEco);
+								if (!listCtrlDispPianoEco.contains(dispPianoEco))
+									listCtrlDispPianoEco.add(dispPianoEco);
 			                }
 		                }
                     } else {
@@ -1689,9 +1710,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.orElse(new CtrlDispPianoEco(progetto, null));
 
 						dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
-						dispPianoEco.setImpCofinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneCofin));
+						dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
 						
-						listCtrlDispPianoEco.add(dispPianoEco);
+						if (!listCtrlDispPianoEco.contains(dispPianoEco))
+							listCtrlDispPianoEco.add(dispPianoEco);
                     }
 	            }
 		        
@@ -1718,7 +1740,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	                                messaggio = messaggio+ "\n";
 	                            messaggio = messaggio +
 	                                     "La disponibilità quota finanziata del piano economico "+ppe.getCd_voce_piano()+
-	                                     " associato al progetto"+(ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
+	                                     " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
+	                                     (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
 	                                     " non è sufficiente a coprire la variazione che risulta di " +
 	                                     new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ".\n";
                             }		
@@ -1729,7 +1752,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                     messaggio = messaggio+ "\n";
                                 messaggio = messaggio +
                                         "La disponibilità quota cofinanziata del piano economico "+ppe.getCd_voce_piano()+
-                                        " associato al progetto"+(ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
+                                        " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
+                                        (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
                                         " non è sufficiente a coprire la variazione che risulta di " +
                                         new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + ".\n";
                             }
@@ -1763,9 +1787,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		                   if (messaggio!=null && messaggio.length()>0)
 		                       messaggio = messaggio+ "\n";
 		                   messaggio = messaggio +
-		                               "L'assestato spese del progetto " +
-                        		   	   new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
-                                       " risulterebbe superiore alla quota finanziata dello stesso " +
+		                               "L'assestato spese ("+
+		                               new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
+                                       ") del progetto " +prg.getCd_progetto()+
+                        		   	   " risulterebbe superiore alla quota finanziata dello stesso " +
                                        " che risulta di " +
                                        new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
 				        }
