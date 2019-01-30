@@ -1,23 +1,23 @@
 package it.cnr.contab.docamm00.bp;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
+import javax.mail.MessagingException;
+import javax.mail.util.ByteArrayDataSource;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 
+import it.cnr.jada.firma.arss.ArubaSignServiceException;
+import it.cnr.si.spring.storage.MimeTypes;
+import it.cnr.si.spring.storage.StorageService;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.mail.EmailException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -337,75 +337,113 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 		documentiCollegatiDocAmmService.gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva);
 		return fatturaAttiva;
 	}
+
     public void firmaOTP(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
         UserContext userContext = context.getUserContext();
-        List<Fattura_attivaBulk> lista = getSelectedElements(context);
-        String errorMessage = firmaFatture(firmaOTPBulk, lista); 
-        if (errorMessage != null){
-            setMessage(errorMessage);
-        }
-        aggiornaFatturaEInviaMail(userContext, lista);
+        firmaFatture(context.getUserContext(), firmaOTPBulk, getSelectedElements(context));
+		setMessage("Fatture firmate e inviate correttamente.");
         commitUserTransaction();
         setFocusedElement(context, null);
         refresh(context);
     }
 
+	public void firmaFatture(UserContext userContext, FirmaOTPBulk firmaOTPBulk, List<Fattura_attivaBulk> listFattura) throws ApplicationException, BusinessProcessException {
+		try {
+			DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
+			Configurazione_cnrBulk config = component.getAuthenticatorPecSdi(userContext);
+			logger.info("Recuperata Autenticazione PEC");
+			FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean(FatturaPassivaElettronicaService.class);
+			String pwd = null;
+			try {
+				pwd = StringEncrypter.decrypt(config.getVal01(), config.getVal02());
+			} catch (EncryptionException e1) {
+				new ApplicationException("Cannot decrypt password");
+			}
+			final String password = pwd;
+			logger.info("Decrypt password");
+			FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
+					"CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
+					FatturaAttivaSingolaComponentSession.class);
+			final List<byte[]> fattureFirmate = documentiCollegatiDocAmmService
+					.getArubaSignServiceClient()
+					.pkcs7SignV2Multiple(
+							firmaOTPBulk.getUserName(),
+							firmaOTPBulk.getPassword(),
+							firmaOTPBulk.getOtp(),
+							listFattura.stream()
+									.map(Fattura_attivaBulk::getStorageObject)
+									.filter(storageObject -> storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
+									.map(storageObject -> documentiCollegatiDocAmmService.getResource(storageObject))
+									.map(inputStream -> {
+										try {
+											return IOUtils.toByteArray(inputStream);
+										} catch (IOException _ex) {
+											logger.info("Cannot read input stream", _ex);
+											throw new DetailedRuntimeException(_ex);
+										}
+									}).collect(Collectors.toList())
+					);
+			AtomicInteger index = new AtomicInteger();
+			listFattura.stream()
+					.filter(fattura_attivaBulk -> fattura_attivaBulk.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
+					.forEach(fattura_attivaBulk -> {
+						StorageObject storageObject = fattura_attivaBulk.getStorageObject();
+						final int indexAndIncrement = index.getAndIncrement();
+						String nomeFile = storageObject.getPropertyValue(StoragePropertyNames.NAME.value());
+						String nomeFileP7m = nomeFile + ".p7m";
+						final byte[] byteSigned = fattureFirmate.get(indexAndIncrement);
+						Map<String, Object> metadataProperties = new HashMap<>();
+						metadataProperties.put(StoragePropertyNames.NAME.value(), nomeFileP7m);
+						metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(),
+								SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
+						metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+								Arrays.asList(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value()));
 
-	public String firmaFatture(FirmaOTPBulk firmaOTPBulk, List<Fattura_attivaBulk> listFattura)
-			throws ApplicationException {
-		String errorMessage = null; 
-		for (Fattura_attivaBulk fatturaProtocollata : listFattura) { 
-        	StorageObject so = fatturaProtocollata.getStorageObject();
-        	if (so != null) {
-        		if (so.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0) {
-        			String nomeFile = so.getPropertyValue(StoragePropertyNames.NAME.value());
-        			String nomeFileP7m = nomeFile + ".p7m";
-        			SignP7M signP7M = new SignP7M(
-        					so.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
-        					firmaOTPBulk.getUserName(),
-        					firmaOTPBulk.getPassword(),
-        					firmaOTPBulk.getOtp(),
-        					nomeFileP7m
-        					);
-        			try {
-        				Optional.ofNullable(documentiCollegatiDocAmmService.signDocuments(signP7M, "service/sigla/firma/fatture"))
-        				.map(key -> documentiCollegatiDocAmmService.getStorageObjectBykey(key))
-        				.ifPresent(storageObject -> {
-        					InputStream streamSigned = documentiCollegatiDocAmmService.getResource(storageObject);
-        					File fileSigned = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", nomeFileP7m);
-        					try {
-        						OutputStream outputStream = new FileOutputStream(fileSigned);
-        						IOUtils.copy(streamSigned, outputStream);
-        						outputStream.close();
-        						logger.info("Salvato file firmato temporaneo");
-        						fatturaProtocollata.setNomeFileInvioSdi(nomeFileP7m);
-        						fatturaProtocollata.setFile(fileSigned);
-        					} catch (Exception ex) {
-        						logger.error("Errore nella firma del file");
-        						List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-        						aspects.remove(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-        						documentiCollegatiDocAmmService.updateProperties(
-        								Collections.singletonMap(
-        										StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
-        										aspects),
-        								storageObject);
-        						documentiCollegatiDocAmmService.delete(storageObject);
-        					}
-        				});
-        			} catch (StorageException _ex) {
-        				logger.error("Errore in fase di firma della fattura "+_ex.getMessage());
-        				errorMessage = FirmaOTPBulk.errorMessage(_ex.getMessage());
-            			logger.error(errorMessage);
-        				break;
-        			}
-        		} else {
-    				errorMessage = "Errore. Il file XML salvato era vuoto.";
-        			logger.error(errorMessage);
-    				break;
-        		}
-        	}
-        }
-		return errorMessage;
+						final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
+								documentiCollegatiDocAmmService.getStorageObjectByPath(
+										documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
+												.concat(StorageService.SUFFIX).concat(nomeFileP7m)));
+						if (storageObjectByPath.isPresent()) {
+							documentiCollegatiDocAmmService.updateStream(
+									storageObjectByPath.get().getKey(),
+									new ByteArrayInputStream(byteSigned),
+									MimeTypes.P7M.mimetype()
+							);
+						} else {
+							documentiCollegatiDocAmmService.storeSimpleDocument(
+									new ByteArrayInputStream(byteSigned),
+									MimeTypes.P7M.mimetype(),
+									documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath(),
+									metadataProperties);
+						}
+
+						List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+						aspects.add(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+						documentiCollegatiDocAmmService.updateProperties(
+								Collections.singletonMap(
+										StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+										aspects),
+								storageObject);
+						try {
+							logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(),fattura_attivaBulk.getProgrUnivocoAnno());
+							if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
+								fatturaService.inviaFatturaElettronica(
+										config.getVal01(),
+										password,
+										new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
+										nomeFileP7m);
+								logger.info("File firmato inviato");
+							}
+							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura_attivaBulk);
+						} catch (PersistencyException | ComponentException | IOException | EmailException e) {
+							throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!");
+						}
+					});
+		} catch (ArubaSignServiceException _ex) {
+			setMessage(FirmaOTPBulk.errorMessage(_ex.getMessage()));
+		} catch (BusinessProcessException | RemoteException | ComponentException _ex) {
+			throw handleException(_ex);
+		}
 	}
 
 
