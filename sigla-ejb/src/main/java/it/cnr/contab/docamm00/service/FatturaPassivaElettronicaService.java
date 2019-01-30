@@ -819,6 +819,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
     	DataSource byteArrayDataSource = new UploadedFileDataSourceStream(stream, contentType);
 		return new DataHandler(byteArrayDataSource);
 	}
+
+	public DataSource createDataSource(InputStream stream, String contentType)
+			throws IOException, MessagingException {
+		return new UploadedFileDataSourceStream(stream, contentType);
+	}
 	
 	private void notificaFatturaAttivaEsito(Message message) throws ComponentException {
 		logger.info("Fatture Elettroniche: Attive: Inizio Notifica Esito.");
@@ -953,7 +958,20 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		// send the email
 		email.send();		
 	}
-	
+
+	public void inviaFatturaElettronica(String userName, String password, DataSource fatturaAttivaSigned, String idFattura) throws EmailException, XmlMappingException, IOException {
+		// Create the email message
+		SimplePECMail email = new SimplePECMail(userName, password);
+		email.setHostName(pecHostName);
+		email.addTo(pecSDIAddress, "SdI - Sistema Di Interscambio");
+		email.setFrom(userName, userName);
+		email.setSubject(pecSDISubjectFatturaAttivaInvioTerm + " "+idFattura);
+		email.setMsg("Invio Fattura Elettronica. "+ idFattura);
+		email.attach(fatturaAttivaSigned, idFattura, "");
+		// send the email
+		email.send();
+	}
+
 	private List<BodyPart> estraiBodyPart(Object content, Boolean perAllegati) throws MessagingException, IOException {
 		List<BodyPart> results = new ArrayList<BodyPart>();
 		estraiParte(content, results, perAllegati);
