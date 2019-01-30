@@ -407,7 +407,7 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
         }
     }
 
-    public StorageObject recuperoFolderFatturaByPath(Fattura_attivaBulk fattura) throws DetailedException {
+    public StorageObject recuperoFolderFatturaByPath(Fattura_attivaBulk fattura) {
     	StorageFolderFatturaAttiva folder = new StorageFolderFatturaAttiva(fattura);
     	String path = folder.getCMISPathForSearch();
     	return SpringUtil.getBean("storeService", StoreService.class).getStorageObjectByPath(path);
