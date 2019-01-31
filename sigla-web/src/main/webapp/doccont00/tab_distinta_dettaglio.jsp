@@ -20,14 +20,12 @@ function doVisualizzaSingoloDocumento(esercizio, cds , uo, numero_documento, tip
 		setCol = "elencoConUo";
 %>
     <%bp.getDistintaCassDet().writeHTMLTable(pageContext,setCol,bp.isAddDocContabiliButtonEnabled(),false,bp.isRemoveDocContabiliButtonEnabled(),"100%","60vh", true); %>
-	<%if (!bp.isViewing()) { %>
-        <table class="card p-2 mt-2 mb-2">
-         <tr>
-            <td><big class="text-primary mr-2">Totale Mandati</big></td>
-            <td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
+    <table class="card p-2 mt-2 mb-2">
+     <tr>
+        <td><big class="text-primary mr-2">Totale Mandati</big></td>
+        <td><% bp.getController().writeFormInput( out, "totMandati"); %></td>
 
-            <td><big class="text-primary mr-2">Totale Reversali</big></td>
-            <td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
-        </tr>
-        </table>
-	<% } %>
+        <td><big class="text-primary mr-2">Totale Reversali</big></td>
+        <td><% bp.getController().writeFormInput( out, "totReversali"); %></td>
+    </tr>
+    </table>
