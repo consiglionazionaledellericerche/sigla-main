@@ -106,7 +106,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 
 	static {
     	statoFattureElettronicheKeys = new it.cnr.jada.util.OrderedHashtable();
-    	statoFattureElettronicheKeys.put(DA_PREDISPORRE_ALLA_FIRMA, "Da Predisposporre alla firma");
     	statoFattureElettronicheKeys.put(DA_FIRMARE, "Da Firmare");
     	statoFattureElettronicheKeys.put(DA_PREDISPORRE_E_FIRMARE, "Da Predisporre e firmare");
     }
