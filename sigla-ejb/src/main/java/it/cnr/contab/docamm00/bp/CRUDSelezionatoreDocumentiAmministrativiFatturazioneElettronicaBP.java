@@ -217,10 +217,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         }
     }
 
-    public boolean isPredisponiButtonVisible() {
-        return !isUtenteNonAbilitatoFirma();
-    }
-
     public it.cnr.jada.util.jsp.Button[] createToolbar() {
         Button[] baseToolbar = super.createToolbar();
         Button[] toolbar = new Button[baseToolbar.length + 2];
