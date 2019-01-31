@@ -436,7 +436,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 							}
 							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura_attivaBulk);
 						} catch (PersistencyException | ComponentException | IOException | EmailException e) {
-							throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!");
+							throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!", e);
 						}
 					});
 		} catch (ArubaSignServiceException _ex) {
