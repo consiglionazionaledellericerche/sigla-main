@@ -1862,8 +1862,10 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     @Override
     protected void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag) throws BusinessProcessException {
         super.basicEdit(actioncontext, oggettobulk, isEditable());
-        if(!isEditable())
+        if(!isEditable()) {
             initializeModelForEditAllegati(actioncontext, oggettobulk);
+            calcolaTotali(actioncontext);
+        }
     }
 
     public StorageObject inviaDistinta(ActionContext context,
