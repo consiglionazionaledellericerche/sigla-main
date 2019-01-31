@@ -141,7 +141,8 @@
 	<table class="w-100">
 	  <tr>
 	   <td><% bp.getController().writeFormLabel( out, "find_creditore"); %></td>
-	   <td colspan="2"><% bp.getController().writeFormInput( out, "find_creditore"); %></td>
+	   <td colspan="2"><% bp.getController().writeFormInput( out,"default","find_creditore",bp.isRoCampiResiduoProprio(),null,null); %>
+	   </td>
 	  </tr>
 	  <tr>
 	   <td><% bp.getController().writeFormLabel( out, "cd_terzo_precedente"); %></td>
