@@ -70,7 +70,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
     private boolean utenteNonAbilitatoFirma;
 
     public CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP() {
-        this("");
+        super();
     }
 
 
@@ -80,7 +80,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
      * @param function java.lang.String
      */
     public CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP(String function) {
-        super(function + "Tr");
+        super(function);
     }
 
     public boolean isUtenteNonAbilitatoFirma() {
@@ -256,7 +256,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	            	protocollaECreaFileXml(userContext, componentFatturaAttiva, (Fattura_attivaBulk)docAmm);
 	            }
 	        }
-            commitUserTransaction();
             setFocusedElement(context, null);
             refresh(context);
 			
@@ -342,7 +341,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         UserContext userContext = context.getUserContext();
         firmaFatture(context.getUserContext(), firmaOTPBulk, getSelectedElements(context));
 		setMessage("Fatture firmate e inviate correttamente.");
-        commitUserTransaction();
         setFocusedElement(context, null);
         refresh(context);
     }
@@ -462,7 +460,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 			if (Fattura_attivaBulk.FATT_ELETT_ALLA_FIRMA.equals(docAmm.getStatoInvioSdi())){
 				try {
 					protocollaECreaFileXml(context.getUserContext(), componentFatturaAttiva, (Fattura_attivaBulk)docAmm);
-					commitUserTransaction();
 				} catch (BusinessProcessException | ComponentException | PersistencyException e) {
 					throw new ApplicationException(e);
 				}
