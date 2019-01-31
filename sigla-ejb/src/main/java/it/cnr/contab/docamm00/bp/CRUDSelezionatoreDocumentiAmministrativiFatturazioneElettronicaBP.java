@@ -337,7 +337,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         UserContext userContext = context.getUserContext();
         firmaFatture(context.getUserContext(), firmaOTPBulk, getSelectedElements(context));
 		setMessage("Fatture firmate e inviate correttamente.");
-        setFocusedElement(context, null);
         refresh(context);
     }
 
@@ -365,6 +364,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 							firmaOTPBulk.getPassword(),
 							firmaOTPBulk.getOtp(),
 							listFattura.stream()
+									.filter(fattura_attivaBulk -> !fattura_attivaBulk.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))
 									.map(Fattura_attivaBulk::getStorageObject)
 									.filter(storageObject -> storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
 									.map(storageObject -> documentiCollegatiDocAmmService.getResource(storageObject))
@@ -380,6 +380,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 			AtomicInteger index = new AtomicInteger();
 			listFattura.stream()
 					.filter(fattura_attivaBulk -> fattura_attivaBulk.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
+					.filter(fattura_attivaBulk -> !fattura_attivaBulk.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))
 					.forEach(fattura_attivaBulk -> {
 						StorageObject storageObject = fattura_attivaBulk.getStorageObject();
 						final int indexAndIncrement = index.getAndIncrement();
@@ -434,7 +435,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 						}
 					});
 		} catch (ArubaSignServiceException _ex) {
-			setMessage(FirmaOTPBulk.errorMessage(_ex.getMessage()));
+			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 		} catch (BusinessProcessException | RemoteException | ComponentException _ex) {
 			throw handleException(_ex);
 		}
@@ -466,43 +467,6 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 				docAmm.setStorageObject(so);
 			}
 		}
-	}
-
-
-	public void aggiornaFatturaEInviaMail(UserContext userContext, List<Fattura_attivaBulk> listaFattura)
-			throws BusinessProcessException, RemoteException, ComponentException {
-		DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
-        Configurazione_cnrBulk config = component.getAuthenticatorPecSdi(userContext);
-        logger.info("Recuperata Autenticazione PEC");
-    	FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean(FatturaPassivaElettronicaService.class);
-    	String pwd = null;
-    	try {
-    		pwd = StringEncrypter.decrypt(config.getVal01(), config.getVal02());
-    	} catch (EncryptionException e1) {
-    		new ApplicationException("Cannot decrypt password");
-    	}
-    	final String password = pwd;
-        logger.info("Decrypt password");
-        FatturaAttivaSingolaComponentSession componentFatturaAttiva = (FatturaAttivaSingolaComponentSession) createComponentSession(
-                "CNRDOCAMM00_EJB_FatturaAttivaSingolaComponentSession",
-                FatturaAttivaSingolaComponentSession.class);
-		for (Fattura_attivaBulk fatturaProtocollata : listaFattura) { 
-        	if (fatturaProtocollata.getFile() != null){
-            	try {
-            		Fattura_attivaBulk fattura = (Fattura_attivaBulk)componentFatturaAttiva.findByPrimaryKey(userContext, fatturaProtocollata); 
-            		componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura);
-            		logger.info("Fattura con progressivo univoco " + fatturaProtocollata.getEsercizio() + "/" + fatturaProtocollata.getProgrUnivocoAnno() + " aggiornata.");
-            		if (!fatturaProtocollata.isNotaCreditoDaNonInviareASdi()) {
-            			fatturaService.inviaFatturaElettronica(config.getVal01(), password, fatturaProtocollata.getFile(), fatturaProtocollata.getNomeFileInvioSdi());
-            			logger.info("File firmato inviato");
-            		}
-            	} catch (Exception ex) {
-            		logger.error("Errore nell'invio del file " + ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()) : ex.getMessage());
-
-            		throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!");
-            	}
-        	}
-        };
 	}
 
     public Fattura_attivaBulk protocollazione(UserContext userContext,
