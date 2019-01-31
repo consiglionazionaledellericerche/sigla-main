@@ -627,18 +627,27 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         StringBuffer description = new StringBuffer();
         switch (messaggioAckSiope.getStatoFlusso()) {
             case WARNING: {
+                description.append("WARNING:\n");
                 messaggioAckSiope.getWarning()
                         .stream()
                         .map(ctErroreACK -> ctErroreACK.getDescrizione().concat(" - ").concat(ctErroreACK.getElemento()))
-                        .peek(logger::warn);
-                distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS);
+                        .peek(logger::warn)
+                        .forEach(s -> {
+                            description.append(s.concat("\n"));
+                        });
+                Optional.ofNullable(distinta.getStato())
+                    .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA))
+                    .ifPresent(s -> distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS));
                 break;
             }
             case OK: {
-                distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS);
+                Optional.ofNullable(distinta.getStato())
+                        .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA))
+                        .ifPresent(s -> distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS));
                 break;
             }
             case KO: {
+                description.append("ERROR:\n");
                 messaggioAckSiope.getErrore()
                         .stream()
                         .map(ctErroreACK -> ctErroreACK.getDescrizione().concat(" - ").concat(ctErroreACK.getElemento()))
