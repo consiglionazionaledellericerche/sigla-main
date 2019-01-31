@@ -814,6 +814,7 @@
 		inputType="SELECT"
 		keysProperty="statoFattureElettronicheKeys"
 		label="Stato"
+		nullable="false"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
 		enabledOnSearch="true" />
