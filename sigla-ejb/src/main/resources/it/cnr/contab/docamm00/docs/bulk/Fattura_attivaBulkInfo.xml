@@ -1122,6 +1122,7 @@
 	<columnFieldProperty name="pg_fattura_attiva" />
 	<columnFieldProperty name="dt_registrazione" />
 	<columnFieldProperty name="ds_fattura_attiva" />
+	<columnFieldProperty name="cd_cliente" />
 	<columnFieldProperty name="cognome" />
 	<columnFieldProperty name="nome" />
 	<columnFieldProperty name="ragione_sociale" />
