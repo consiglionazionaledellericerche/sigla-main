@@ -100,11 +100,11 @@ function doScaricaEsito() {
 				<% bp.getController().writeFormField(out,"statoDocumento");%>
 			<% } else {%>
 				<td>
-					<%bp.getController().writeFormInput(out,null,"statoDocumentoVisual",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%>
+					<%bp.getController().writeFormInput(out,null,"statoDocumentoVisual",true,"GroupLabel text-primary h5","style=\"background: #F5F5DC;background-color:transparent;border-style : none; cursor:default;font-size : 16px;\"");%>
 				</td>
 				<% 	if (model != null && model.getStatoNotificaEsito()!= null) {%>
 					<td colspan="2">
-						<%bp.getController().writeFormInput(out,null,"statoNotificaEsitoVisual",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
+						<%bp.getController().writeFormInput(out,null,"statoNotificaEsitoVisual",true,"GroupLabel text-primary h5","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
 					</td>
 				<% } %> 
 			<% } %>	    
@@ -113,7 +113,7 @@ function doScaricaEsito() {
 		<% 	if (!bp.isSearching() && model != null && model.isRicevutaDecorrenzaTermini() && model.isRifiutabile()) {%>
 		<tr>
 			<td colspan="4">
-				<%bp.getController().writeFormInput(out,null,"ricevutaDecorrenza",true,"GroupLabel","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
+				<%bp.getController().writeFormInput(out,null,"ricevutaDecorrenza",true,"GroupLabel text-danger h5","style=\"background: #F5F5DC;background-color:transparent;border-style : none; width:300; cursor:default; font-size : 16px;\"");%>
 			</td>
 		</tr>				
 		<% } %> 

@@ -60,7 +60,7 @@ function doScaricaFirmato() {
    </table>
    </div>
    <% } %>
-   <% if (!bp.isViewing() && !bp.isSearching()) {%>
+   <% if (!bp.isSearching()) {%>
        <div class="Group">
         <b class="text-primary h3 d-flex justify-content-center mt-2">Totali distinta</b>
         <table class="Panel card p-2 mt-2">
