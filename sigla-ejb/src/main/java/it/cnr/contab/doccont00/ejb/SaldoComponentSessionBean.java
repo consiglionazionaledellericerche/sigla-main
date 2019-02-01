@@ -7,8 +7,7 @@ import javax.ejb.Remove;
 import javax.ejb.Stateless;
 
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.jada.UserContext;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCCONT00_EJB_SaldoComponentSession")
 public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements SaldoComponentSession  {
@@ -470,4 +469,25 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param1,componentObj,e);
 		}
 	}
+	public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, String param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			java.math.BigDecimal result = componentObj.getStanziamentoAssestatoProgetto(param0,param1,param2,param3);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+
+	
+
 }
