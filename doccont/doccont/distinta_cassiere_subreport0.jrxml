@@ -2,8 +2,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="distinta_cassiere_subreport0" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b1a7c4e4-5a49-4114-89d5-603960f84260">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="781"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -13,6 +13,24 @@
 	<style name="TITLE" style="NORMAL" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNR11BOLD" fontName="Times New Roman" fontSize="11" isBold="true" isItalic="false" isUnderline="false" pdfFontName="Times-Bold"/>
 	<style name="TNR11" fontName="Times New Roman" fontSize="11" isBold="false" isItalic="false" isUnderline="false" pdfFontName="Times-Bold"/>
+	<subDataset name="ENTE" uuid="da29505c-7a41-41de-baec-5d82e7bdb006">
+		<queryString>
+			<![CDATA[select DENOMINAZIONE_SEDE, NOME_UNITA_ORGANIZZATIVA from terzo
+where terzo.cd_anag = (
+    select im01 from configurazione_cnr
+    where CD_CHIAVE_PRIMARIA = 'COSTANTI'
+    and CD_CHIAVE_SECONDARIA = 'CODICE_ANAG_ENTE'
+    and ESERCIZIO = 0
+)
+and terzo.cd_unita_organizzativa = (
+select cd_unita_organizzativa from unita_organizzativa
+where fl_cds = 'N'
+and cd_tipo_unita = 'ENTE'
+)]]>
+		</queryString>
+		<field name="DENOMINAZIONE_SEDE" class="java.lang.String"/>
+		<field name="NOME_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	</subDataset>
 	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
@@ -255,31 +273,24 @@ $F{STATO}.trim().equals("A")?($F{IM_DOC}.subtract($F{IM_RITENUTE})).negate():($F
 					<textElement markup="styled"/>
 					<text><![CDATA[Tesoreria]]></text>
 				</staticText>
-				<staticText>
-					<reportElement key="staticText-5" style="TNR11BOLD" x="387" y="4" width="47" height="13" uuid="38ee0623-b2a7-44dd-950f-4ed6e85d0641"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement markup="styled"/>
-					<text><![CDATA[CNR]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText-6" style="TNR11BOLD" x="485" y="4" width="251" height="13" uuid="a96a1cd0-71d9-430e-8609-2e3b200bd4b1"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement markup="styled"/>
-					<text><![CDATA[CONSIGLIO NAZIONALE DELLE RICERCHE]]></text>
-				</staticText>
 				<line>
 					<reportElement key="line-1" x="5" y="1" width="800" height="1" uuid="9f770630-e8ac-4a78-b82f-00c84e605955"/>
 				</line>
+				<componentElement>
+					<reportElement x="385" y="3" width="381" height="18" uuid="166e6f9c-f604-478e-baff-74d3466eb8a1"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<datasetRun subDataset="ENTE" uuid="a1f08643-33cc-4733-aae2-52cf65231116">
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="18" width="381">
+							<textField>
+								<reportElement key="staticText-4" style="BOLD" x="0" y="2" width="371" height="13" uuid="7e573e3c-6205-44ee-a8b9-81aad85d588b"/>
+								<textElement markup="styled"/>
+								<textFieldExpression><![CDATA[$F{NOME_UNITA_ORGANIZZATIVA} + " " + $F{DENOMINAZIONE_SEDE}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
 			</band>
 		</groupHeader>
 		<groupFooter>
