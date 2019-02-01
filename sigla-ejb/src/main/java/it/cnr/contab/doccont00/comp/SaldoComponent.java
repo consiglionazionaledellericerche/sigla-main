@@ -29,6 +29,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -56,6 +57,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
@@ -1617,29 +1619,16 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
 					}
 		            
-					Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
-		            SQLBuilder saldiSQL = saldiHome.createSQLBuilder();
-		            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-		            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-		            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
-		            saldiSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-		            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
-		            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
-		            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
-		            saldiSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
-		                
-		            List<Voce_f_saldi_cdr_lineaBulk> saldiList = (List<Voce_f_saldi_cdr_lineaBulk>)saldiHome.fetchAll(saldiSQL);
-
-		            BigDecimal assestatoPrg = saldiList.stream()
-		            			.map(Voce_f_saldi_cdr_lineaBulk::getAssestato)
-		                		.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-		                
-		            if (totFinanziato.compareTo(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
+					//Controllo che la quota finanziata sia almeno pari alle entrate del progetto
+		            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null);
+					
+		            if (totFinanziato.compareTo(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
                        if (messaggio!=null && messaggio.length()>0)
                            messaggio = messaggio+ "\n";
                        messaggio = messaggio +
 	                                   "L'assestato entrate ("+
-	                    		   	   new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
+	                    		   	   new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
 	                                   ") del progetto " + progetto.getCd_progetto() +
                         		   	   " risulterebbe superiore alla quota finanziata dello stesso "
                                        + (progetto.isPianoEconomicoRequired()?"per l'anno "+pdgVariazione.getEsercizio():"")+
@@ -1763,38 +1752,41 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                         }
 					} else {
 		            	ProgettoBulk prg = ctrlDispPianoEco.getProgetto();
-						BigDecimal totFinanziato = Optional.ofNullable(prg.getOtherField())
-								.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
-						
-						Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
-			            SQLBuilder saldiSQL = saldiHome.createSQLBuilder();
-			            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-			            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES", SQLBuilder.EQUALS, pdgVariazione.getEsercizio());
-			            saldiSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
-			            saldiSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-			            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
-			            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
-			            saldiSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
-			            saldiSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, prg.getPg_progetto());
-			                
-			            List<Voce_f_saldi_cdr_lineaBulk> saldiList = (List<Voce_f_saldi_cdr_lineaBulk>)saldiHome.fetchAll(saldiSQL);
-
-			            BigDecimal assestatoPrg = saldiList.stream()
-			            			.map(Voce_f_saldi_cdr_lineaBulk::getAssestato)
-			                		.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-
-			            if (totFinanziato.compareTo(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
-		                   if (messaggio!=null && messaggio.length()>0)
-		                       messaggio = messaggio+ "\n";
-		                   messaggio = messaggio +
-		                               "L'assestato spese ("+
-		                               new it.cnr.contab.util.EuroFormat().format(assestatoPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
-                                       ") del progetto " +prg.getCd_progetto()+
-                        		   	   " risulterebbe superiore alla quota finanziata dello stesso " +
-                                       " che risulta di " +
-                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
+			            {
+			            	BigDecimal totFinanziato = Optional.ofNullable(prg.getOtherField())
+									.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
+				            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
+				            		.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+	
+				            if (totFinanziato.compareTo(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
+			                   if (messaggio!=null && messaggio.length()>0)
+			                       messaggio = messaggio+ "\n";
+			                   messaggio = messaggio +
+			                               "L'assestato spese fonte esterne ("+
+			                               new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato())) +
+	                                       ") del progetto " +prg.getCd_progetto()+
+	                        		   	   " risulterebbe superiore alla quota finanziata dello stesso che risulta di " +
+	                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
+					        }
+			            }
+			            {
+							BigDecimal totCofinanziato = Optional.ofNullable(prg.getOtherField())
+									.map(Progetto_other_fieldBulk::getImCofinanziato).orElse(BigDecimal.ZERO);
+				            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
+				            		.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+	
+				            if (totCofinanziato.compareTo(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato()))<0) {
+			                   if (messaggio!=null && messaggio.length()>0)
+			                       messaggio = messaggio+ "\n";
+			                   messaggio = messaggio +
+			                               "L'assestato spese fonti interne e natura reimpiego ("+
+			                               new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato())) +
+	                                       ") del progetto " +prg.getCd_progetto()+
+	                        		   	   " risulterebbe superiore alla quota cofinanziata dello stesso che risulta di " +
+	                                       new it.cnr.contab.util.EuroFormat().format(totCofinanziato) + ".\n";
+					        }
 				        }
-                    }
+					}
 	            }
 	   		}
         }catch (PersistencyException e) {
@@ -2372,6 +2364,66 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							+ " di GAE di natura 6 - 'Reimpiego di risorse' ("
 							+ new it.cnr.contab.util.EuroFormat().format(impPositiviNaturaReimpiego)+").");
 			}
+		}
+	}
+	
+	public BigDecimal getStanziamentoAssestatoProgetto(UserContext userContext, ProgettoBulk progetto, String tiGestione, String tiImporto) throws ComponentException{
+		try{
+			Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
+			if (Elemento_voceHome.GESTIONE_ENTRATE.equals(tiGestione)) {
+		        SQLBuilder saldiEtrSQL = saldiHome.createSQLBuilder();
+		        saldiEtrSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
+		        saldiEtrSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		        saldiEtrSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
+		        saldiEtrSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
+		        saldiEtrSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
+		        saldiEtrSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+		
+				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(saldiEtrSQL));
+				
+				return saldiList.stream()
+						 .filter(el->el.getEsercizio().equals(el.getEsercizio_res()))
+						 .map(el->el.getAssestato())
+						 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			} else if (Elemento_voceHome.GESTIONE_SPESE.equals(tiGestione)) {
+				it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+				String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+				
+		        SQLBuilder saldiSpeSQL = saldiHome.createSQLBuilder();
+		        saldiSpeSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+		        saldiSpeSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		        saldiSpeSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
+		        saldiSpeSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
+		        saldiSpeSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
+		        saldiSpeSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+
+		        saldiSpeSQL.addTableToHeader("NATURA");
+		        saldiSpeSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA", "NATURA.CD_NATURA");
+
+		        if (Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO.equals(tiImporto)) {
+			        saldiSpeSQL.addSQLClause(FindClause.AND, "NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);
+			        saldiSpeSQL.addSQLClause(FindClause.AND, "NATURA.CD_NATURA", SQLBuilder.NOT_EQUALS, cdNaturaReimpiego);
+		        } else if (Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO.equals(tiImporto)) {
+		        	saldiSpeSQL.openParenthesis(FindClause.AND);
+		        	saldiSpeSQL.addSQLClause(FindClause.OR, "NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
+			        saldiSpeSQL.addSQLClause(FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_NATURA", SQLBuilder.EQUALS, cdNaturaReimpiego);
+			        saldiSpeSQL.closeParenthesis();
+		        }
+
+		        List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(saldiSpeSQL));
+				
+				return saldiList.stream()
+						 .map(el->{
+							 if (el.getEsercizio().equals(el.getEsercizio_res()))
+								 return el.getAssestato();
+							 else
+								 return el.getVar_piu_stanz_res_imp().subtract(el.getVar_meno_stanz_res_imp());
+						 })
+						 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+			}
+			return BigDecimal.ZERO;
+		} catch(Throwable e) {
+			throw handleException(e);
 		}
 	}
 }
