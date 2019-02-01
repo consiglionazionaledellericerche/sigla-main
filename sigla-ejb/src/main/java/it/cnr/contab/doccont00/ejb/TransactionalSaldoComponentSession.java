@@ -3,6 +3,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.jada.comp.ComponentException;
 
 public class TransactionalSaldoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements SaldoComponentSession {
@@ -495,6 +496,25 @@ public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab
 		invoke("checkPdgPianoEconomico",new Object[] {
 			param1,
 			param2});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
+public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, String param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (java.math.BigDecimal)invoke("getStanziamentoAssestatoProgetto",new Object[] {
+			param0,
+			param1,
+			param2,
+			param3});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
