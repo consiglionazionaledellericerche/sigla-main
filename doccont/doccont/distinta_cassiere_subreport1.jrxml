@@ -274,7 +274,7 @@ $F{STATO}.trim().equals("A")?($F{IM_DOC}.subtract($F{IM_RITENUTE})).negate():($F
 							<textField>
 								<reportElement key="staticText-4" style="BOLD" x="0" y="2" width="371" height="13" uuid="55458827-3218-4e54-b1ec-914ab4d63817"/>
 								<textElement markup="styled"/>
-								<textFieldExpression><![CDATA[$F{NOME_UNITA_ORGANIZZATIVA} + " " + $F{DENOMINAZIONE_SEDE}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{NOME_UNITA_ORGANIZZATIVA}.toUpperCase() + " - " + $F{DENOMINAZIONE_SEDE}.toUpperCase()]]></textFieldExpression>
 							</textField>
 						</jr:listContents>
 					</jr:list>
