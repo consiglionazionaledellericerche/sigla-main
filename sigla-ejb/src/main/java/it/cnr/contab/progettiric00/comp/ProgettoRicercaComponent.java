@@ -51,6 +51,7 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
@@ -1689,71 +1690,103 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
     private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
 		try{
-			if (!progetto.isPianoEconomicoRequired()) return;
-			progetto.getAllDetailsProgettoPianoEconomico().stream()
-				.filter(el->el.getEsercizio_piano().compareTo(annoFrom)>=0).forEach(ppe->{
-	   			V_saldi_piano_econom_progettoBulk saldo;
-	   			try{
-	                saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
-	                        cercaSaldoPianoEconomico(ppe, "S");
-		    	} catch(Throwable e) {
-		    		throw new ApplicationRuntimeException(e);
-		    	}    			
-	
-	   			Optional.ofNullable(saldo).filter(el->el.getDispResiduaFinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-	   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato per la voce del piano economico "+
-	   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
-	   	           			el.getAssestatoFinanziamento()+"). Operazione non consentita!");
-				});
-	
-	  			Optional.ofNullable(saldo).filter(el->el.getDispResiduaCofinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-	               	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato per la voce del piano economico "+
-	               			ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
-	    					el.getAssestatoCofinanziamento()+"). Operazione non consentita!");
-				});
-	   		});
-			
-			Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
-			SQLBuilder sqlSaldi = saldiHome.createSQLBuilder();
-			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO",SQLBuilder.GREATER_EQUALS,annoFrom);
-			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES",SQLBuilder.GREATER_EQUALS,annoFrom);
-			sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE",SQLBuilder.GREATER_EQUALS,Elemento_voceHome.GESTIONE_SPESE);
-			
-			sqlSaldi.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
-			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
-			sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA","VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
-			sqlSaldi.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,progetto.getPg_progetto());
+			if (!progetto.isPianoEconomicoRequired()) {
+				//Controllo che la quota finanziata sia almeno pari alle entrate del progetto
+	            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
+	            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null);
 
-			sqlSaldi.openParenthesis(FindClause.AND);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.IM_STANZ_INIZIALE_A1",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_PIU",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_MENO",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.IM_STANZ_RES_IMPROPRIO",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_PIU_STANZ_RES_IMP",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_MENO_STANZ_RES_IMP",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_PIU_OBBL_RES_PRO",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_MENO_OBBL_RES_PRO",SQLBuilder.GREATER,BigDecimal.ZERO);
-			sqlSaldi.closeParenthesis();
-			
-			Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
-			SQLBuilder sqlExist = assPiaecoHome.createSQLBuilder();
-			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO");
-			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES");
-			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","VOCE_F_SALDI_CDR_LINEA.TI_APPARTENENZA");
-			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE");
-			sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE");			
-			
-			sqlSaldi.addSQLNotExistsClause(FindClause.AND, sqlExist);
+	            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoEtrPrg)<0)
+	   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
+             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+                            ") del progetto " + progetto.getCd_progetto() +
+              		   	   " risulterebbe inferiore all'assestato entrate dello stesso (" +
+                             new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg) + "). Operazione non consentita!");
 
-			List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
-			
-			saldiList.stream().findFirst().ifPresent(el->{
-               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
-               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
-               			" che non risulta associata a nessuna voce del piano economico per l'anno "+el.getEsercizio_res()+". " + 
-               			"Operazione non consentita!");
-			});
+	            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
+	            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+
+	            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgFes)<0)
+	   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
+             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+                            ") del progetto " + progetto.getCd_progetto() +
+              		   	   " risulterebbe inferiore all'assestato spese fonte esterne dello stesso (" +
+                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes) + "). Operazione non consentita!");
+
+	            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
+	            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+
+	            if (Optional.ofNullable(progetto.getImCofinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgReimpiego)<0)
+	   	           	throw new ApplicationRuntimeException("Attenzione: la quota cofinanziata ("+
+             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+                            ") del progetto " + progetto.getCd_progetto() +
+              		   	   " risulterebbe inferiore all'assestato spese fonti interne e natura reimpiego dello stesso (" +
+                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego) + "). Operazione non consentita!");
+			} else {
+				progetto.getAllDetailsProgettoPianoEconomico().stream()
+					.filter(el->el.getEsercizio_piano().compareTo(annoFrom)>=0).forEach(ppe->{
+		   			V_saldi_piano_econom_progettoBulk saldo;
+		   			try{
+		                saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
+		                        cercaSaldoPianoEconomico(ppe, "S");
+			    	} catch(Throwable e) {
+			    		throw new ApplicationRuntimeException(e);
+			    	}    			
+		
+		   			Optional.ofNullable(saldo).filter(el->el.getDispResiduaFinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato per la voce del piano economico "+
+		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
+		   	           			el.getAssestatoFinanziamento()+"). Operazione non consentita!");
+					});
+		
+		  			Optional.ofNullable(saldo).filter(el->el.getDispResiduaCofinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+		               	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato per la voce del piano economico "+
+		               			ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
+		    					el.getAssestatoCofinanziamento()+"). Operazione non consentita!");
+					});
+		   		});
+				
+				Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
+				SQLBuilder sqlSaldi = saldiHome.createSQLBuilder();
+				sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO",SQLBuilder.GREATER_EQUALS,annoFrom);
+				sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES",SQLBuilder.GREATER_EQUALS,annoFrom);
+				sqlSaldi.addSQLClause(FindClause.AND,"VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE",SQLBuilder.GREATER_EQUALS,Elemento_voceHome.GESTIONE_SPESE);
+				
+				sqlSaldi.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+				sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO");
+				sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA","VOCE_F_SALDI_CDR_LINEA.CD_CENTRO_RESPONSABILITA");
+				sqlSaldi.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA","VOCE_F_SALDI_CDR_LINEA.CD_LINEA_ATTIVITA");
+				sqlSaldi.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,progetto.getPg_progetto());
+	
+				sqlSaldi.openParenthesis(FindClause.AND);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.IM_STANZ_INIZIALE_A1",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_PIU",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VARIAZIONI_MENO",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.IM_STANZ_RES_IMPROPRIO",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_PIU_STANZ_RES_IMP",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_MENO_STANZ_RES_IMP",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_PIU_OBBL_RES_PRO",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_MENO_OBBL_RES_PRO",SQLBuilder.GREATER,BigDecimal.ZERO);
+				sqlSaldi.closeParenthesis();
+				
+				Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+				SQLBuilder sqlExist = assPiaecoHome.createSQLBuilder();
+				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO");
+				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES");
+				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","VOCE_F_SALDI_CDR_LINEA.TI_APPARTENENZA");
+				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE");
+				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE");			
+				
+				sqlSaldi.addSQLNotExistsClause(FindClause.AND, sqlExist);
+	
+				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
+				
+				saldiList.stream().findFirst().ifPresent(el->{
+	               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
+	               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
+	               			" che non risulta associata a nessuna voce del piano economico per l'anno "+el.getEsercizio_res()+". " + 
+	               			"Operazione non consentita!");
+				});
+			}
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
