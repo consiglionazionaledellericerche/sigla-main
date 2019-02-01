@@ -47,6 +47,8 @@ swarm:
       SIGLA:
         connection-url: jdbc:oracle:thin:@db0.cedrc.cnr.it:1521:SIGLAX
         password: DBISIN
+        min-pool-size: 10
+        max-pool-size: 100
   deployment:
     timeout: 1200
 
