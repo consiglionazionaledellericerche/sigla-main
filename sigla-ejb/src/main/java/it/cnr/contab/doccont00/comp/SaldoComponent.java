@@ -2100,14 +2100,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				.map(CtrlPianoEco::getImpPositiviNaturaReimpiego)
 				.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 			
-		/**
-		 * 1. non è possibile attribuire fondi alla voce speciale (11048)
-		 */
-		if (impPositiviVoceSpeciale.compareTo(BigDecimal.ZERO)>0)
-			throw new ApplicationException("Attenzione! Non è possibile attribuire fondi alla voce "
-					+ cdVoceSpeciale + " ("
-					+ new it.cnr.contab.util.EuroFormat().format(impPositiviVoceSpeciale)+").");
-
 		if (isVariazioneCompetenzaMaggioreEntrateSpese) {
 			listCtrlPianoEco.stream()
 				.filter(el->el.getImpNegativi().compareTo(BigDecimal.ZERO)>0)
@@ -2118,9 +2110,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			
 			if (impPositiviNaturaReimpiego.compareTo(BigDecimal.ZERO)>0)
 				throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
-						+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impPositiviNaturaReimpiego)
-						+ " non consentito in quanto la variazione è di tipo 'Maggiori Entrate/Spese'.");
+							+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impPositiviNaturaReimpiego)
+							+ " non consentito in quanto la variazione è di tipo 'Maggiori Entrate/Spese'.");
 		} else { 
+			/**
+			 * 1. non è possibile attribuire fondi alla voce speciale (11048)
+			 */
+			if (impPositiviVoceSpeciale.compareTo(BigDecimal.ZERO)>0)
+				throw new ApplicationException("Attenzione! Non è possibile attribuire fondi alla voce "
+						+ cdVoceSpeciale + " ("
+						+ new it.cnr.contab.util.EuroFormat().format(impPositiviVoceSpeciale)+") "
+						+ "in quanto la variazione non è di tipo 'Maggiori Entrate/Spese'.");
+			
 			//Controlli su tutte le altre tipologie di variazioni
 			Timestamp dataChiusura = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
