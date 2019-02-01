@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="1250"/>
+	<property name="ireport.x" value="1273"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -268,14 +268,14 @@ $F{STATO}.trim().equals("A")?($F{IM_DOC}.subtract($F{IM_RITENUTE})).negate():($F
 					<text><![CDATA[DISTINTA PROVVISORIA]]></text>
 				</staticText>
 				<componentElement>
-					<reportElement x="419" y="2" width="381" height="18" uuid="6195ff38-1a09-4c56-bace-067e8c222ec6"/>
+					<reportElement x="355" y="2" width="445" height="18" uuid="6195ff38-1a09-4c56-bace-067e8c222ec6"/>
 					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 						<datasetRun subDataset="ENTE" uuid="cdfe2400-413e-4f47-aa8f-999f000b664e">
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 						</datasetRun>
-						<jr:listContents height="18" width="381">
+						<jr:listContents height="18" width="445">
 							<textField>
-								<reportElement key="staticText-4" style="BOLD" x="0" y="2" width="371" height="13" uuid="aee0e571-077c-49b6-958c-b2dd0c79ceb1"/>
+								<reportElement key="staticText-4" style="BOLD" x="0" y="2" width="445" height="13" uuid="aee0e571-077c-49b6-958c-b2dd0c79ceb1"/>
 								<textElement markup="styled"/>
 								<textFieldExpression><![CDATA[$F{NOME_UNITA_ORGANIZZATIVA}.toUpperCase() + " - " + $F{DENOMINAZIONE_SEDE}.toUpperCase()]]></textFieldExpression>
 							</textField>
