@@ -1697,7 +1697,10 @@ Procedure processaInterfaccia(aEs number, aNomeFile varchar2,aUser varchar2) is
                   '''' || aNomeFile || ''',' ||
                   '''' || aUser  || ''');';
 
-  If (To_Number(To_Char(Sysdate,'hh24')) < 13) Then
+  If (To_Number(To_Char(Sysdate,'hh24')) < 6) Then
+    data := To_Date(To_Char(Sysdate,'ddmmyyyy')||' '||'06:00','ddmmyyyy hh24:mi');
+    ora := '06:00';
+  Elsif (To_Number(To_Char(Sysdate,'hh24')) > 6 And To_Number(To_Char(Sysdate,'hh24')) < 13) Then
     data := To_Date(To_Char(Sysdate,'ddmmyyyy')||' '||'13:00','ddmmyyyy hh24:mi');
     ora := '13:00';
   Elsif (To_Number(To_Char(Sysdate,'hh24')) > 13 And To_Number(To_Char(Sysdate,'hh24')) < 18) Then
