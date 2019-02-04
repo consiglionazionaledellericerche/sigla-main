@@ -1787,4 +1787,10 @@ TRASPORTO_AEREO"/>
             <column name="anagrafica_cliente" type="VARCHAR(250)"/>
         </update>
     </changeSet>
+    <changeSet id="update-configurazione-cnr-user-giornaledicassa" author="marco.spasiano">
+        <update tableName="configurazione_cnr">
+            <column name="VAL02" value='CASTELLET' type="VARCHAR(100)"/>
+            <where>CD_CHIAVE_PRIMARIA = 'FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA = 'ATTIVO_SIOPEPLUS'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>
