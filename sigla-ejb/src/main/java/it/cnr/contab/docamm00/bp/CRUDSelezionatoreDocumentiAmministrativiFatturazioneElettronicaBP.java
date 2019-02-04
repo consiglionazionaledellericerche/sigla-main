@@ -426,7 +426,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 										config.getVal01(),
 										password,
 										new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
-										nomeFileP7m);
+										component.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m"));
 								logger.info("File firmato inviato");
 							}
 							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura_attivaBulk);
