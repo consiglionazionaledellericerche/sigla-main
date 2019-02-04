@@ -112,7 +112,8 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
                         Optional.ofNullable(dataA)
                                 .map(s -> LocalDateTime.parse(dataA, DateTimeFormatter.ISO_DATE_TIME))
                                 .orElse(null),
-                        download
+                        download,
+                        DocumentiContabiliService.SIOPEPLUS
                 );
                 break;
             }
