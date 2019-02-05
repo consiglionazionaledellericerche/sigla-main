@@ -184,11 +184,11 @@ public class Ass_pdg_variazione_cdrHome extends BulkHome {
 
 		return home.fetchAll(sql);
 	}
-	public java.util.Collection<Pdg_variazione_riga_gestBulk> findDettagliSpesa(Pdg_variazioneBulk testata) throws IntrospectionException, PersistencyException {
+	public java.util.Collection<Pdg_variazione_riga_gestBulk> findDettagli(Pdg_variazioneBulk testata) throws IntrospectionException, PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Pdg_variazione_riga_gestBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,testata.getEsercizio());
 		sql.addSQLClause(FindClause.AND,"PG_VARIAZIONE_PDG",SQLBuilder.EQUALS,testata.getPg_variazione_pdg());
 		return dettHome.fetchAll(sql);
-	}	
+	}
 }
