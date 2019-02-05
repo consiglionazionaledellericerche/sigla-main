@@ -13,6 +13,10 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
+import java.util.List;
 
 public class Fattura_attivaHome extends BulkHome {
     protected Fattura_attivaHome(Class clazz, java.sql.Connection connection) {
@@ -75,5 +79,11 @@ public class Fattura_attivaHome extends BulkHome {
                     "title='Visualizza Documenti Collegati'><img align='middle' class='Button' src='img/application-pdf.png'></button>");
         }
         return super.completeBulkRowByRow(userContext, persistent);
+    }
+
+    public List<Fattura_attivaBulk> find(UserContext userContext, Fattura_attiva_IBulk fattura_attiva_iBulk) throws PersistencyException {
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause(fattura_attiva_iBulk.buildFindClauses(true));
+        return fetchAll(sql);
     }
 }
