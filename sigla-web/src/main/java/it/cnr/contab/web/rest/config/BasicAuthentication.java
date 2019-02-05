@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 import javax.ejb.EJBException;
@@ -99,14 +100,20 @@ public class BasicAuthentication {
 			throw new ApplicationException(e.getMessage());				
 		}
 	}
-	public static UtenteBulk authenticate(List<String> authorization) throws IOException, ComponentException{
-		final StringTokenizer tokenizer = getUsernameAndPassword(authorization);
-		final String username = tokenizer.nextToken();
-		final String password = tokenizer.nextToken();
 
-		// Verifying Username and password
-		logger.debug("UserName: {} Password: {}", username, password);
-		return authenticate(username, password);
+	public static UtenteBulk authenticate(List<String> authorization) throws IOException, ComponentException{
+		return Optional.ofNullable(getUsernameAndPassword(authorization))
+				.map(stringTokenizer -> {
+					final String username = stringTokenizer.nextToken();
+					final String password = stringTokenizer.nextToken();
+					// Verifying Username and password
+					logger.debug("UserName: {} Password: {}", username, password);
+					try {
+						return authenticate(username, password);
+					} catch (ComponentException e) {
+						return null;
+					}
+				}).orElse(null);
 	}
 
 	public static String getUsername(List<String> authorization) throws IOException, ComponentException{
