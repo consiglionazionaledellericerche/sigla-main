@@ -636,13 +636,13 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             description.append(s.concat("\n"));
                         });
                 Optional.ofNullable(distinta.getStato())
-                        .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA))
+                        .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA.value()))
                         .ifPresent(s -> distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS));
                 break;
             }
             case OK: {
                 Optional.ofNullable(distinta.getStato())
-                        .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA))
+                        .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA.value()))
                         .ifPresent(s -> distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS));
                 break;
             }
