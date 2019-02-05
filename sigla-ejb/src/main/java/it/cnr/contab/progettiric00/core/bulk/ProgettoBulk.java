@@ -1188,4 +1188,19 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 			return ProgettoBulk.STATO_CHIUSURA;
 		return optPrg.map(el->el.getStato()).orElse(null);
 	}
+	
+	/**
+	 * Metodo che ci dice se il controllo di disponibilità su un progetto è spento
+	 * @return boolean
+	 */
+	public boolean isCtrlDispSpento() {
+		return this.getOtherField().isStatoChiuso() ||
+				(this.getOtherField().isStatoApprovato() &&
+						Optional.ofNullable(
+								Optional.ofNullable(this.getOtherField().getDtProroga())
+									.orElse(Optional.ofNullable(this.getOtherField().getDtFine())
+											.orElse(null)))
+							.map(dtScadenza->dtScadenza.before(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp()))
+							.orElse(Boolean.FALSE));
+	}
 }
