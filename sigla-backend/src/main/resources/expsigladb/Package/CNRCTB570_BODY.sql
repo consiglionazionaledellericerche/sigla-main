@@ -1,8 +1,4 @@
---------------------------------------------------------
---  DDL for Package Body CNRCTB570
---------------------------------------------------------
-
-CREATE OR REPLACE PACKAGE BODY "CNRCTB570" AS
+CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
  procedure annullaLiquidazione(aLGCori liquid_gruppo_cori%rowtype, aUser varchar2) is
   aLC liquid_cori%rowtype;
   aUOVERSACC unita_organizzativa%rowtype;
@@ -1920,13 +1916,13 @@ end;
       -- Gestione liquidazione gruppi negativi solo da esercizio precedente
       -- DA COMMENTARE SOLO A GENNAIO PER LA LIQ DA ESERCIZIO PRECEDENTE     ---- SI COMMENTA SOLO LA PARTE INTERNA...NON QUELLA CHE EMETTE I MANDATI
 --INIZIO PARTE DA COMMENTARE SOLO A GENNAIO
-/*
+
       If aGruppi.im_liquidato < 0 then
         If aLiquid.da_esercizio_precedente = 'N' Or aGruppi.fl_accentrato = 'N' Then
            IBMERR001.RAISE_ERR_GENERICO('Importo di liquidazione negativo o nullo per gruppo CORI: '||aGruppi.cd_gruppo_cr||'.'||aGruppi.cd_regione||'.'||aGruppi.pg_comune);
         End if;
       End if;
-*/
+
 --FINE PARTE DA COMMENTARE SOLO A GENNAIO
       
       -- Per i gruppi dei versamenti locali non devo controllare aGruppi.im_liquidato bensì devo fare
@@ -1962,12 +1958,12 @@ end;
 
             -- DA COMMENTARE SOLO A GENNAIO PER LA LIQ DA ESERCIZIO PRECEDENTE---- SI COMMENTA SOLO LA PARTE INTERNA...NON QUELLA CHE EMETTE I MANDATI
 --INIZIO PARTE DA COMMENTARE SOLO A GENNAIO
-/*
+
             If (aGruppi.im_liquidato + totale_negativo) < 0 then
                IBMERR001.RAISE_ERR_GENERICO('Esistono Gruppi Locali negativi che rendono tutta la liquidazione negativa per il gruppo CORI:'||aGruppi.cd_gruppo_cr||'.'||aGruppi.cd_regione||'.'||aGruppi.pg_comune);
                --IBMERR001.RAISE_ERR_GENERICO('Esistono Gruppi Locali negativi che rendono tutta la liquidazione negativa per il gruppo CORI:'||aGruppi.cd_gruppo_cr||'.'||aGruppi.cd_regione||'.'||aGruppi.pg_comune||'/'||totale_negativo||'/'||aGruppi.im_liquidato);
             End if;
-*/
+
 --FINE PARTE DA COMMENTARE SOLO A GENNAIO
          End;
        End If;
@@ -4323,4 +4319,5 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
         1); 
   End Loop;
  end;
-End; 
+End;
+/
