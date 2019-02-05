@@ -56,6 +56,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoHome;
@@ -1600,8 +1601,66 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 
 			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).filter(el->el.compareTo(pdgVariazione.getEsercizio())<=0).isPresent()) {
+				List<CtrlDispPianoEco> listCtrlDispPianoEcoEtr = new ArrayList<CtrlDispPianoEco>();
+
 	            Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
-				List<CtrlDispPianoEco> listCtrlDispPianoEco = new ArrayList<CtrlDispPianoEco>();
+	
+				for (java.util.Iterator dett = detHome.findDettagliEntrataVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
+	            	Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
+
+					WorkpackageBulk latt = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext,CNRUserContext.getEsercizio(userContext),
+							rigaVar.getLinea_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_attivita().getCd_linea_attivita());
+					ProgettoBulk progetto = latt.getProgetto();
+					
+					if (!progetto.isCtrlDispSpento()) {
+						BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
+		
+	                    //recupero il record se presente altrimenti ne creo uno nuovo
+						CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
+								.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+								.findFirst()
+								.orElse(new CtrlDispPianoEco(progetto, null));
+	
+						dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+						
+						if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
+							listCtrlDispPianoEcoEtr.add(dispPianoEco);
+					}
+				}
+				
+	            for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEcoEtr) {
+					ProgettoBulk progetto = ctrlDispPianoEco.getProgetto();
+					BigDecimal totFinanziato = BigDecimal.ZERO;
+					if (progetto.isPianoEconomicoRequired()) {
+		                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(progetto.getPg_progetto());
+		                totFinanziato = pianoEconomicoList.stream()
+										                .filter(el->el.getEsercizio_piano().equals(pdgVariazione.getEsercizio()))
+										                .map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
+										                .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+					} else {
+						totFinanziato = Optional.ofNullable(progetto.getOtherField())
+								.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
+					}
+		            
+					//Controllo che la quota finanziata sia almeno pari alle entrate del progetto
+		            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null);
+					
+		            if (totFinanziato.compareTo(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
+                       if (messaggio!=null && messaggio.length()>0)
+                           messaggio = messaggio+ "\n";
+                       messaggio = messaggio +
+	                                   "L'assestato entrate ("+
+	                    		   	   new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
+	                                   ") del progetto " + progetto.getCd_progetto() +
+                        		   	   " risulterebbe superiore alla quota finanziata dello stesso "
+                                       + (progetto.isPianoEconomicoRequired()?"per l'anno "+pdgVariazione.getEsercizio():"")+
+                                       " che risulta di " +
+                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
+		            }
+	            }
+
+	            List<CtrlDispPianoEco> listCtrlDispPianoEco = new ArrayList<CtrlDispPianoEco>();
 
 	            for (java.util.Iterator dett = detHome.findDettagliSpesaVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
 	                Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
@@ -1654,6 +1713,21 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									listCtrlDispPianoEco.add(dispPianoEco);
 			                }
 		                }
+                    } else {
+    					if (!progetto.isCtrlDispSpento()) {
+							//recupero il record se presente altrimenti ne creo uno nuovo
+							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
+									.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+									.filter(el->!Optional.ofNullable(el.getProgettoPianoEconomico()).isPresent())
+									.findFirst()
+									.orElse(new CtrlDispPianoEco(progetto, null));
+	
+							dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+							dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
+							
+							if (!listCtrlDispPianoEco.contains(dispPianoEco))
+								listCtrlDispPianoEco.add(dispPianoEco);
+                        }
                     }
 	            }
 		        
@@ -1701,6 +1775,42 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                         catch (Exception ex ){
                         	throw new RuntimeException(  ex );
                         }
+					} else {
+		            	ProgettoBulk prg = ctrlDispPianoEco.getProgetto();
+			            {
+			            	BigDecimal totFinanziato = Optional.ofNullable(prg.getOtherField())
+									.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
+				            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
+				            		.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+	
+				            if (totFinanziato.compareTo(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
+			                   if (messaggio!=null && messaggio.length()>0)
+			                       messaggio = messaggio+ "\n";
+			                   messaggio = messaggio +
+			                               "L'assestato spese fonte esterne ("+
+			                               new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato())) +
+	                                       ") del progetto " +prg.getCd_progetto()+
+	                        		   	   " risulterebbe superiore alla quota finanziata dello stesso che risulta di " +
+	                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
+					        }
+			            }
+			            {
+							BigDecimal totCofinanziato = Optional.ofNullable(prg.getOtherField())
+									.map(Progetto_other_fieldBulk::getImCofinanziato).orElse(BigDecimal.ZERO);
+				            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
+				            		.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+	
+				            if (totCofinanziato.compareTo(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato()))<0) {
+			                   if (messaggio!=null && messaggio.length()>0)
+			                       messaggio = messaggio+ "\n";
+			                   messaggio = messaggio +
+			                               "L'assestato spese fonti interne e natura reimpiego ("+
+			                               new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato())) +
+	                                       ") del progetto " +prg.getCd_progetto()+
+	                        		   	   " risulterebbe superiore alla quota cofinanziata dello stesso che risulta di " +
+	                                       new it.cnr.contab.util.EuroFormat().format(totCofinanziato) + ".\n";
+					        }
+				        }
 					}
 	            }
 	   		}
