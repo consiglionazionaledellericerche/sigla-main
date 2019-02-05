@@ -26,6 +26,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -47,6 +48,10 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Exceptio
     
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
 	private final static Map<String, String> UNAUTHORIZED_MAP = Collections.singletonMap("ERROR", "User cannot access the resource.");
+
+	private static final String REALM = "SIGLA";
+	private static final String AUTHENTICATION_SCHEME = "Basic";
+
 	@Override
 	public void filter(ContainerRequestContext requestContext) {	
 
@@ -82,7 +87,11 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Exceptio
 			try {
 				utenteBulk = BasicAuthentication.authenticate(authorization);
 				if (utenteBulk == null){
-					requestContext.abortWith(Response.status(Status.UNAUTHORIZED).entity(UNAUTHORIZED_MAP).build());
+					requestContext.abortWith(
+							Response.status(Response.Status.UNAUTHORIZED)
+									.header(HttpHeaders.WWW_AUTHENTICATE,
+											AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"")
+									.build());
 					return;
 				}
 		    	requestContext.setSecurityContext(new SIGLASecurityContext(requestContext, utenteBulk.getCd_utente()));

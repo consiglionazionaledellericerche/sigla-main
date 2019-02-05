@@ -31,7 +31,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.util.Log;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
@@ -45,6 +44,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -57,7 +58,7 @@ import java.util.zip.ZipOutputStream;
 
 public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaBP implements SearchProvider {
     private static final long serialVersionUID = 1L;
-    private static final Log log = Log.getInstance(AbstractFirmaDigitaleDocContBP.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractFirmaDigitaleDocContBP.class);
     protected String controlloCodiceFiscale;
     private UtenteFirmaDettaglioBulk firmatario;
 
@@ -188,33 +189,25 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
 
     public boolean isDeleteButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-        if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
-            return false;
-        return true;
+        return !oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
     }
 
     public boolean isDeleteSignButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
         if (firmatario == null)
             return true;
-        if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))
-            return false;
-        return true;
+        return !oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
     }
 
     public boolean isPdfDocumentiButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-        if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
-            return false;
-        return true;
+        return !oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
     }
 
     public boolean isZipDocumentiButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-        if (!oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) &&
-                !oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO))
-            return false;
-        return true;
+        return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) ||
+                oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
     }
 
     @SuppressWarnings("unchecked")
@@ -432,11 +425,11 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
     }
 
     protected void executeSign(ActionContext actioncontext, List<StatoTrasmissione> selectelElements, FirmaOTPBulk firmaOTPBulk) throws Exception {
-        Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean("documentiContabiliService",DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
+        Map<String, String> subjectDN = Optional.ofNullable(SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getCertSubjectDN(firmaOTPBulk.getUserName(),
                 firmaOTPBulk.getPassword()))
                 .orElseThrow(() -> new ApplicationException("Errore nella lettura dei certificati!\nVerificare Nome Utente e Password!"));
         if (Optional.ofNullable(controlloCodiceFiscale).filter(s -> s.equalsIgnoreCase("Y")).isPresent()) {
-            SpringUtil.getBean("documentiContabiliService",DocumentiContabiliService.class).controllaCodiceFiscale(
+            SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).controllaCodiceFiscale(
                     subjectDN,
                     ((CNRUserInfo) actioncontext.getUserInfo()).getUtente()
             );
