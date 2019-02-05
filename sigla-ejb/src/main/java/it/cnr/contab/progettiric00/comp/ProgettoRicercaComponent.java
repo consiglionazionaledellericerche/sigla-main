@@ -1690,7 +1690,39 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
     private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
 		try{
-			if (progetto.isPianoEconomicoRequired()) {
+			if (!progetto.isPianoEconomicoRequired()) {
+				if (!progetto.isCtrlDispSpento()) {
+		            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null);
+		
+		            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoEtrPrg)<0)
+		   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
+	             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+	                            ") del progetto " + progetto.getCd_progetto() +
+	              		   	   " risulterebbe inferiore all'assestato entrate dello stesso (" +
+	                             new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg) + "). Operazione non consentita!");
+		
+		            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+		
+		            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgFes)<0)
+		   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
+	             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+	                            ") del progetto " + progetto.getCd_progetto() +
+	              		   	   " risulterebbe inferiore all'assestato spese fonte esterne dello stesso (" +
+	                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes) + "). Operazione non consentita!");
+		
+		            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+		
+		            if (Optional.ofNullable(progetto.getImCofinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgReimpiego)<0)
+		   	           	throw new ApplicationRuntimeException("Attenzione: la quota cofinanziata ("+
+	             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+	                            ") del progetto " + progetto.getCd_progetto() +
+	              		   	   " risulterebbe inferiore all'assestato spese fonti interne e natura reimpiego dello stesso (" +
+	                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego) + "). Operazione non consentita!");
+				}
+			} else {
 				progetto.getAllDetailsProgettoPianoEconomico().stream()
 					.filter(el->el.getEsercizio_piano().compareTo(annoFrom)>=0).forEach(ppe->{
 		   			V_saldi_piano_econom_progettoBulk saldo;
