@@ -13,8 +13,10 @@ import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.doccont00.ejb.ReversaleComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.doccont00.intcass.bulk.V_ext_cassiere00Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassaBulk;
+import it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassaKey;
 import it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
 import it.cnr.contab.model.Esito;
@@ -24,13 +26,9 @@ import it.cnr.contab.model.Risultato;
 import it.cnr.contab.service.GiornaleDiCassaSiopePlusService;
 import it.cnr.contab.service.OrdinativiSiopePlusService;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.util.ApplicationMessageFormatException;
-import it.cnr.contab.util.PdfSignApparence;
-import it.cnr.contab.util.SIGLAStoragePropertyNames;
-import it.cnr.contab.util.SignP7M;
+import it.cnr.contab.util.*;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -79,6 +77,7 @@ import java.util.stream.Stream;
 
 public class DocumentiContabiliService extends StoreService implements InitializingBean {
     private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
+    public static final String SIOPEPLUS = "SIOPEPLUS";
     final String pattern = "dd MMMM YYYY' alle 'HH:mm:ss";
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
     @Autowired
@@ -106,7 +105,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        this.userContext = new WSUserContext("SIOPEPLUS", null,
+        this.userContext = new WSUserContext(SIOPEPLUS, null,
                 new Integer(Calendar.getInstance().get(Calendar.YEAR)),
                 null, null, null);
         this.crudComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession"))
@@ -445,17 +444,17 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         }
     }
 
-    private void messaggioGiornaleDiCassa(Risultato risultato) throws RemoteException, ComponentException {
+    private FlussoGiornaleDiCassaBulk messaggioGiornaleDiCassa(Risultato risultato) throws RemoteException, ComponentException {
         final MessaggioXML<FlussoGiornaleDiCassa> messaggioXML = giornaleDiCassaSiopePlusService.getLocation(risultato.getLocation(), FlussoGiornaleDiCassa.class);
         final FlussoGiornaleDiCassa flussoGiornaleDiCassa = messaggioXML.getObject();
         logger.info("Identificativo flusso BT: {}", flussoGiornaleDiCassa.getIdentificativoFlussoBT());
         String identificativoFlusso = Optional.ofNullable(flussoGiornaleDiCassa.getIdentificativoFlussoBT())
                 .map(s -> s.substring(0, s.indexOf("#")))
-                .orElseThrow(() -> new ApplicationMessageFormatException("IdentificativoFlusso non trovato per location {0}",risultato.getLocation()));
+                .orElseThrow(() -> new ApplicationMessageFormatException("IdentificativoFlusso non trovato per location {0}", risultato.getLocation()));
         final FlussoGiornaleDiCassaBulk flussoGiornaleDiCassaBulk = Optional.ofNullable(
                 crudComponentSession.findByPrimaryKey(
-                    userContext,
-                    new FlussoGiornaleDiCassaBulk(flussoGiornaleDiCassa.getEsercizio(), identificativoFlusso)
+                        userContext,
+                        new FlussoGiornaleDiCassaBulk(flussoGiornaleDiCassa.getEsercizio(), identificativoFlusso)
                 ))
                 .filter(FlussoGiornaleDiCassaBulk.class::isInstance)
                 .map(FlussoGiornaleDiCassaBulk.class::cast)
@@ -472,9 +471,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     flusso.setToBeCreated();
                     return flusso;
                 });
-        for(InformazioniContoEvidenza informazioniContoEvidenza : flussoGiornaleDiCassa.getInformazioniContoEvidenza()) {
-            InformazioniContoEvidenzaBulk infoBulk =  Optional.ofNullable(
-                    crudComponentSession.findByPrimaryKey(userContext,new InformazioniContoEvidenzaBulk(
+        for (InformazioniContoEvidenza informazioniContoEvidenza : flussoGiornaleDiCassa.getInformazioniContoEvidenza()) {
+            InformazioniContoEvidenzaBulk infoBulk = Optional.ofNullable(
+                    crudComponentSession.findByPrimaryKey(userContext, new InformazioniContoEvidenzaBulk(
                             flussoGiornaleDiCassa.getEsercizio(),
                             identificativoFlusso,
                             informazioniContoEvidenza.getContoEvidenza())
@@ -524,9 +523,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         movBulk.setProgressivoDocumento(movimentoContoEvidenza.getProgressivoDocumento().longValue());
                         movBulk.setImporto(movimentoContoEvidenza.getImporto());
                         movBulk.setImportoRitenute(movimentoContoEvidenza.getImportoRitenute());
-                        if (movimentoContoEvidenza.getNumeroBollettaQuietanza()!=null)
+                        if (movimentoContoEvidenza.getNumeroBollettaQuietanza() != null)
                             movBulk.setNumeroBollettaQuietanza(movimentoContoEvidenza.getNumeroBollettaQuietanza().toString());
-                        if (movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno()!=null)
+                        if (movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno() != null)
                             movBulk.setNumeroBollettaQuietanzaS(movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno().toString());
                         movBulk.setDataMovimento(new Timestamp(movimentoContoEvidenza.getDataMovimento().toGregorianCalendar().getTime().getTime()));
                         movBulk.setDataValutaEnte(new Timestamp(movimentoContoEvidenza.getDataValutaEnte().toGregorianCalendar().getTime().getTime()));
@@ -542,7 +541,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         movBulk.setImportoSpese(movimentoContoEvidenza.getImportoSpese());
                         movBulk.setAssoggettamentoCommissioni(movimentoContoEvidenza.getAssoggettamentoCommissioni());
                         movBulk.setImportoCommissioni(movimentoContoEvidenza.getImportoCommissioni());
-                        if (movimentoContoEvidenza.getCliente()!=null){
+                        if (movimentoContoEvidenza.getCliente() != null) {
                             movBulk.setAnagraficaCliente(movimentoContoEvidenza.getCliente().getAnagraficaCliente());
                             movBulk.setIndirizzoCliente(movimentoContoEvidenza.getCliente().getIndirizzoCliente());
                             movBulk.setCapCliente(movimentoContoEvidenza.getCliente().getCapCliente());
@@ -552,7 +551,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             movBulk.setPartitaIvaCliente(movimentoContoEvidenza.getCliente().getPartitaIvaCliente());
                             movBulk.setCodiceFiscaleCliente(movimentoContoEvidenza.getCliente().getCodiceFiscaleCliente());
                         }
-                        if (movimentoContoEvidenza.getDelegato()!=null){
+                        if (movimentoContoEvidenza.getDelegato() != null) {
                             movBulk.setAnagraficaDelegato(movimentoContoEvidenza.getDelegato().getAnagraficaDelegato());
                             movBulk.setIndirizzoDelegato(movimentoContoEvidenza.getDelegato().getIndirizzoDelegato());
                             movBulk.setCapDelegato(movimentoContoEvidenza.getDelegato().getCapDelegato());
@@ -561,7 +560,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             movBulk.setStatoDelegato(movimentoContoEvidenza.getDelegato().getStatoDelegato());
                             movBulk.setCodiceFiscaleDelegato(movimentoContoEvidenza.getDelegato().getCodiceFiscaleDelegato());
                         }
-                        if (movimentoContoEvidenza.getCreditoreEffettivo()!=null){
+                        if (movimentoContoEvidenza.getCreditoreEffettivo() != null) {
                             movBulk.setAnagraficaCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getAnagraficaCreditoreEffettivo());
                             movBulk.setIndirizzoCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getIndirizzoCreditoreEffettivo());
                             movBulk.setCapCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getCapCreditoreEffettivo());
@@ -583,7 +582,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         flussoGiornaleDiCassaBulk.setTotaleComplessivoEntrate(flussoGiornaleDiCassa.getTotaleComplessivoEntrate());
         flussoGiornaleDiCassaBulk.setTotaleComplessivoUscite(flussoGiornaleDiCassa.getTotaleComplessivoUscite());
         flussoGiornaleDiCassaBulk.setSaldoComplessivoFinale(flussoGiornaleDiCassa.getSaldoComplessivoFinale());
-        if (flussoGiornaleDiCassa.getTotaliEsercizio()!=null ){
+        if (flussoGiornaleDiCassa.getTotaliEsercizio() != null) {
             flussoGiornaleDiCassaBulk.setFondoDiCassa(flussoGiornaleDiCassa.getTotaliEsercizio().getFondoDiCassa());
             flussoGiornaleDiCassaBulk.setTotaleReversaliRiscosse(flussoGiornaleDiCassa.getTotaliEsercizio().getTotaleReversaliRiscosse());
             flussoGiornaleDiCassaBulk.setTotaleSospesiEntrata(flussoGiornaleDiCassa.getTotaliEsercizio().getTotaleSospesiEntrata());
@@ -594,7 +593,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
             flussoGiornaleDiCassaBulk.setTotaleUscite(flussoGiornaleDiCassa.getTotaliEsercizio().getTotaleUscite());
             flussoGiornaleDiCassaBulk.setSaldoEsercizio(flussoGiornaleDiCassa.getTotaliEsercizio().getSaldoEsercizio());
         }
-        if (flussoGiornaleDiCassa.getTotaliDisponibilitaLiquide()!=null ){
+        if (flussoGiornaleDiCassa.getTotaliDisponibilitaLiquide() != null) {
             flussoGiornaleDiCassaBulk.setSaldoContiCorrenti(flussoGiornaleDiCassa.getTotaliDisponibilitaLiquide().getSaldoContiCorrenti());
             flussoGiornaleDiCassaBulk.setSaldoContiBi(flussoGiornaleDiCassa.getTotaliDisponibilitaLiquide().getSaldoContiBI());
             flussoGiornaleDiCassaBulk.setTotaleConti(flussoGiornaleDiCassa.getTotaliDisponibilitaLiquide().getTotaleConti());
@@ -610,6 +609,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         } else {
             crudComponentSession.modificaConBulk(userContext, flussoGiornaleDiCassaBulk);
         }
+        return flussoGiornaleDiCassaBulk;
     }
 
     private void messaggioACK(Risultato risultato) throws RemoteException, ComponentException {
@@ -636,8 +636,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             description.append(s.concat("\n"));
                         });
                 Optional.ofNullable(distinta.getStato())
-                    .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA))
-                    .ifPresent(s -> distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS));
+                        .filter(s -> s.equals(Distinta_cassiereBulk.Stato.TRASMESSA))
+                        .ifPresent(s -> distinta.setStato(Distinta_cassiereBulk.Stato.ACCETTATO_SIOPEPLUS));
                 break;
             }
             case OK: {
@@ -719,46 +719,46 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         crudComponentSession.modificaConBulk(userContext, distinta);
     }
 
-    public boolean inviaPEC(UserContext context, Distinta_cassiereBulk distinta) throws ComponentException{
-            try {
-                List<String> nodes = new ArrayList<String>();
-                StorageObject distintaStorageObject = getStorageObjectByPath(
-                        distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName()));
+    public boolean inviaPEC(UserContext context, Distinta_cassiereBulk distinta) throws ComponentException {
+        try {
+            List<String> nodes = new ArrayList<String>();
+            StorageObject distintaStorageObject = getStorageObjectByPath(
+                    distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName()));
 
-                nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
+            nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
 
 
-                List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
-                        .dettagliDistinta(
-                                userContext,
-                                distinta,
-                                it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
+            List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
+                    .dettagliDistinta(
+                            userContext,
+                            distinta,
+                            it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk.TIPO_MAN);
 
-                return inviaPEC(distinta, dettagliMan, true, nodes) ||
-                        inviaPEC(distinta, dettagliMan, false, nodes);
+            return inviaPEC(distinta, dettagliMan, true, nodes) ||
+                    inviaPEC(distinta, dettagliMan, false, nodes);
 
-            } catch (PersistencyException | IOException _ex) {
-                logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
-            }
-            return Boolean.FALSE;
+        } catch (PersistencyException | IOException _ex) {
+            logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
+        }
+        return Boolean.FALSE;
     }
 
-    private boolean inviaPEC(Distinta_cassiereBulk distinta, List<V_mandato_reversaleBulk> dettagliMan, boolean isEstero, List<String> args) throws ComponentException{
+    private boolean inviaPEC(Distinta_cassiereBulk distinta, List<V_mandato_reversaleBulk> dettagliMan, boolean isEstero, List<String> args) throws ComponentException {
         try {
             List<String> nodes = new ArrayList<>();
             nodes.addAll(args);
             dettagliMan.stream()
-                .filter(v_mandato_reversaleBulk -> {
-                    try {
-                        return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk, isEstero);
-                    } catch (RemoteException|ComponentException e) {
-                        logger.error("SIOPE+ Invia PEC", e);
-                        return Boolean.FALSE;
-                    }
-                })
-                .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
-                .filter(s -> s != null)
-                .forEach(s -> nodes.add(s));
+                    .filter(v_mandato_reversaleBulk -> {
+                        try {
+                            return isRiferimentoDocumentoEsterno(v_mandato_reversaleBulk, isEstero);
+                        } catch (RemoteException | ComponentException e) {
+                            logger.error("SIOPE+ Invia PEC", e);
+                            return Boolean.FALSE;
+                        }
+                    })
+                    .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
+                    .filter(s -> s != null)
+                    .forEach(s -> nodes.add(s));
             if (nodes.size() > 1) {
                 inviaDistintaPEC(nodes, isEstero,
                         "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
@@ -902,7 +902,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
 
     public void executeMessaggiSiopeplus() {
-        try{
+        try {
             logger.info("SIOPE+ SCAN started at: {}", LocalDateTime.now());
             Configurazione_cnrBulk configurazione_cnrBulk = distintaCassiereComponentSession.lockMessaggiSIOPEPlus(userContext);
             if (configurazione_cnrBulk == null) {
@@ -919,23 +919,24 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 }
             }
             logger.info("SIOPE+ SCAN end at: {}", LocalDateTime.now());
-        } catch(Throwable _ex){
+        } catch (Throwable _ex) {
             logger.error("SIOPE+ ScheduleExecutor error", _ex);
         }
     }
 
-
-    public Stream<Risultato> downloadGiornalieraDiCassa(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
+    public Stream<Risultato> downloadGiornalieraDiCassa(LocalDateTime dataDa, LocalDateTime dataA, Boolean download, String userForGiornaleDiCassa) {
         final Lista listaGiornaliDiCassa = giornaleDiCassaSiopePlusService.getListaMessaggi(dataDa, dataA, download, null);
         logger.info("Lista gioraliera di cassa: {}", listaGiornaliDiCassa);
-        return Optional.ofNullable(listaGiornaliDiCassa.getRisultati())
+        final List<GiornalieraDiCassaRisultato> result = Optional.ofNullable(listaGiornaliDiCassa.getRisultati())
                 .orElseGet(() -> Collections.emptyList())
                 .stream()
                 .map(risultato -> {
+                    FlussoGiornaleDiCassaBulk flussoGiornaleDiCassaBulk = null;
                     try {
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
                                 new SIOPEPlusRisultatoBulk(Esito.GIORNALEDICASSA.name(), risultato));
-                        messaggioGiornaleDiCassa(risultato);
+
+                        flussoGiornaleDiCassaBulk = messaggioGiornaleDiCassa(risultato);
                         logger.info("SIOPE+ GIORNALEDICASSA elaborato risultato: {}", risultato);
 
                         siopePlusRisultatoBulk.setToBeDeleted();
@@ -944,8 +945,31 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         risultato.setError(_ex);
                         logger.error("SIOPE+ GIORNALEDICASSA ERROR for risultato: {}", risultato, _ex);
                     }
-                    return risultato;
+                    return new GiornalieraDiCassaRisultato(risultato, flussoGiornaleDiCassaBulk);
+                }).collect(Collectors.toList());
+
+        result.stream()
+                .map(GiornalieraDiCassaRisultato::getFlussoGiornaleDiCassaBulk)
+                .filter(Utility.distinctByKey(FlussoGiornaleDiCassaKey::getIdentificativoFlusso))
+                .forEach(flussoGiornaleDiCassaBulk -> {
+                    V_ext_cassiere00Bulk v_ext_cassiere00Bulk = new V_ext_cassiere00Bulk();
+                    v_ext_cassiere00Bulk.setNome_file(flussoGiornaleDiCassaBulk.getIdentificativoFlusso());
+                    v_ext_cassiere00Bulk.setEsercizio(flussoGiornaleDiCassaBulk.getEsercizio());
+                    try {
+                        distintaCassiereComponentSession.processaFile(
+                                new WSUserContext(userForGiornaleDiCassa, null,
+                                        flussoGiornaleDiCassaBulk.getEsercizio(),
+                                        null, null, null),
+                                v_ext_cassiere00Bulk);
+                    } catch (ApplicationException _ex) {
+                        logger.info("SIOPE+ GIORNALEDICASSA processing file name: {} esercizio: {} messaggio: {}",
+                                flussoGiornaleDiCassaBulk.getIdentificativoFlusso(), flussoGiornaleDiCassaBulk.getEsercizio(), _ex.getMessage());
+                    } catch (ComponentException | RemoteException _ex) {
+                        logger.error("SIOPE+ GIORNALEDICASSA ERROR for processing file: {}", flussoGiornaleDiCassaBulk.getIdentificativoFlusso(), _ex);
+                    }
                 });
+
+        return result.stream().map(GiornalieraDiCassaRisultato::getRisultato);
     }
 
     public Stream<Risultato> downloadMessaggiACK(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
@@ -997,7 +1021,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public Stream<Risultato> downloadMessaggiEsitoApplicativo(LocalDateTime dataDa, LocalDateTime dataA, Boolean download, boolean annullaMandati, boolean annullaReversali) {
-         final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
+        final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
                 dataDa, dataA, download, null);
         logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
         return Optional.ofNullable(listaEsitoApplicativo.getRisultati())
@@ -1019,11 +1043,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     return risultato;
                 });
     }
+
     /**
      * Leggi messaggi dalla piattaforma SIOPE+
      */
     public void messaggiSiopeplus(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
-        boolean annullaMandati = Boolean.FALSE, annullaReversali = Boolean.FALSE;
+        boolean annullaMandati = Boolean.FALSE,
+                annullaReversali = Boolean.FALSE;
+        String userForGiornaleDiCassa = SIOPEPLUS;
         try {
             annullaMandati =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
@@ -1045,7 +1072,18 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     ))
                             .map(s -> Boolean.valueOf(s))
                             .orElse(Boolean.FALSE);
-        } catch (ComponentException|RemoteException _ex) {
+            userForGiornaleDiCassa =
+                    Optional.ofNullable(configurazione_cnrComponentSession.getVal02(
+                        userContext,
+                        Calendar.getInstance().get(Calendar.YEAR),
+                        "*",
+                        Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                        Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS
+                    ))
+                    .orElse(SIOPEPLUS);
+
+
+        } catch (ComponentException | RemoteException _ex) {
             logger.error("SIOPE+ ESITO ERROR recupera configurazione_cnr per annullamento Mandati e Reversali", _ex);
         }
         try {
@@ -1068,7 +1106,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             break;
                         }
                         case ESITOAPPLICATIVO: {
-                            messaggioEsitoApplicativo(risultato,annullaMandati, annullaReversali);
+                            messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali);
                             break;
                         }
                         case GIORNALEDICASSA: {
@@ -1083,8 +1121,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         java.io.StringWriter sw = new java.io.StringWriter();
                         e.printStackTrace(new java.io.PrintWriter(sw));
                         SendMail.sendErrorMail("SIOPE+ Elabora risultato " +
-                                siopePlusRisultatoBulk.getEsito() + " " +
-                                siopePlusRisultatoBulk.getLocation(),
+                                        siopePlusRisultatoBulk.getEsito() + " " +
+                                        siopePlusRisultatoBulk.getLocation(),
                                 sw.toString());
                     } else {
                         siopePlusRisultatoBulk.setToBeUpdated();
@@ -1106,7 +1144,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         downloadMessaggiEsitoApplicativo(dataDa, dataA, download, annullaMandati, annullaReversali)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
-        downloadGiornalieraDiCassa(dataDa, dataA, download)
+        downloadGiornalieraDiCassa(dataDa, dataA, download, userForGiornaleDiCassa)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
 
@@ -1127,7 +1165,25 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
                         .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE)
         ) && !bulk.getTi_documento_cont().equals(MandatoBulk.TIPO_REGOLAM_SOSPESO) &&
-                ((isEstero && rif_modalita_pagamentoBulk.getTi_pagamento().equals(Rif_modalita_pagamentoBulk.IBAN)) || !isEstero);
+                (!isEstero || rif_modalita_pagamentoBulk.getTi_pagamento().equals(Rif_modalita_pagamentoBulk.IBAN));
+    }
+
+    class GiornalieraDiCassaRisultato {
+        private final Risultato risultato;
+        private final FlussoGiornaleDiCassaBulk flussoGiornaleDiCassaBulk;
+
+        public GiornalieraDiCassaRisultato(Risultato risultato, FlussoGiornaleDiCassaBulk flussoGiornaleDiCassaBulk) {
+            this.risultato = risultato;
+            this.flussoGiornaleDiCassaBulk = flussoGiornaleDiCassaBulk;
+        }
+
+        public Risultato getRisultato() {
+            return risultato;
+        }
+
+        public FlussoGiornaleDiCassaBulk getFlussoGiornaleDiCassaBulk() {
+            return flussoGiornaleDiCassaBulk;
+        }
     }
 
     class StorageDataSource implements DataSource {
