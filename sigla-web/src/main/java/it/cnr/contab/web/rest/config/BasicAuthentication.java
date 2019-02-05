@@ -12,10 +12,7 @@ import it.cnr.jada.comp.ComponentException;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import javax.ejb.EJBException;
 import javax.xml.bind.DatatypeConverter;
@@ -104,13 +101,13 @@ public class BasicAuthentication {
 	public static UtenteBulk authenticate(List<String> authorization) throws IOException, ComponentException{
 		return Optional.ofNullable(getUsernameAndPassword(authorization))
 				.map(stringTokenizer -> {
-					final String username = stringTokenizer.nextToken();
-					final String password = stringTokenizer.nextToken();
-					// Verifying Username and password
-					logger.debug("UserName: {} Password: {}", username, password);
 					try {
+						final String username = stringTokenizer.nextToken();
+						final String password = stringTokenizer.nextToken();
+						// Verifying Username and password
+						logger.debug("UserName: {} Password: {}", username, password);
 						return authenticate(username, password);
-					} catch (ComponentException e) {
+					} catch (ComponentException| NoSuchElementException e) {
 						return null;
 					}
 				}).orElse(null);
