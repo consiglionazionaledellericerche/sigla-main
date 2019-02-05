@@ -423,11 +423,13 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 						try {
 							logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(),fattura_attivaBulk.getProgrUnivocoAnno());
 							if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
+								final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m");
 								fatturaService.inviaFatturaElettronica(
 										config.getVal01(),
 										password,
 										new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
-										component.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m"));
+										nomeFileInvioSDI);
+								fattura_attivaBulk.setNomeFileInvioSdi(nomeFileInvioSDI);
 								logger.info("File firmato inviato");
 							}
 							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura_attivaBulk);
