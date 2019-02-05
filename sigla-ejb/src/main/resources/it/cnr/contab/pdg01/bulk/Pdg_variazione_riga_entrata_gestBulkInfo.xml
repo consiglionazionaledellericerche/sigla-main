@@ -26,7 +26,7 @@
 	<columnSet name="insertVariazioneGestionale">
 		<columnFieldProperty
 			name="cd_linea_attivita" 
-			descProperty="linea_attivita.ds_linea_attivita"
+			descProperty="linea_attivita.dett_progetto"
 			inputType="DESCTOOL"/>
 		<columnFieldProperty
 			name="cd_elemento_voce"
@@ -44,7 +44,7 @@
 	<columnSet name="dipInsertVariazioneGestionale">
 		<columnFieldProperty
 			name="cd_linea_attivita" 
-			descProperty="linea_attivita.ds_linea_attivita"
+			descProperty="linea_attivita.dett_progetto"
 			inputType="DESCTOOL"/>
 		<columnFieldProperty
 			name="cd_elemento_voce"
@@ -65,7 +65,7 @@
 	<columnSet name="insertVariazioneGestionaleWithoutArea">
 		<columnFieldProperty
 			name="cd_linea_attivita" 
-			descProperty="linea_attivita.ds_linea_attivita"
+			descProperty="linea_attivita.dett_progetto"
 			inputType="DESCTOOL"/>
 		<columnFieldProperty
 			name="cd_elemento_voce"
@@ -79,7 +79,7 @@
 	<columnSet name="dipInsertVariazioneGestionaleWithoutArea">
 		<columnFieldProperty
 			name="cd_linea_attivita" 
-			descProperty="linea_attivita.ds_linea_attivita"
+			descProperty="linea_attivita.dett_progetto"
 			inputType="DESCTOOL"/>
 		<columnFieldProperty
 			name="cd_elemento_voce"
