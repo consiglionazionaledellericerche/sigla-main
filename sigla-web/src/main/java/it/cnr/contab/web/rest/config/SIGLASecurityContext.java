@@ -3,6 +3,8 @@ package it.cnr.contab.web.rest.config;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Optional;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.SecurityContext;
@@ -20,7 +22,9 @@ public class SIGLASecurityContext implements SecurityContext {
 		this.userContext = new CNRUserContext(
 				userName,
 				null,
-				Integer.valueOf(requestContext.getHeaderString(X_SIGLA_ESERCIZIO)),
+				Optional.ofNullable(requestContext.getHeaderString(X_SIGLA_ESERCIZIO))
+					.map(s -> Integer.valueOf(s))
+					.orElse(new Integer(Calendar.getInstance().get(Calendar.YEAR))),
 				requestContext.getHeaderString(X_SIGLA_CD_UNITA_ORGANIZZATIVA),
 				requestContext.getHeaderString(X_SIGLA_CD_CDS),
 				requestContext.getHeaderString(X_SIGLA_CD_CDR)
