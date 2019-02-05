@@ -334,13 +334,12 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 	}
 
     public void firmaOTP(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
-        UserContext userContext = context.getUserContext();
-        firmaFatture(context.getUserContext(), firmaOTPBulk, getSelectedElements(context));
-		setMessage("Fatture firmate e inviate correttamente.");
+        final Integer firmaFatture = firmaFatture(context.getUserContext(), firmaOTPBulk, getSelectedElements(context));
+		setMessage(INFO_MESSAGE, "Sono state firmate e inviate correttamente " + firmaFatture + " Fatture.");
         refresh(context);
     }
 
-	public void firmaFatture(UserContext userContext, FirmaOTPBulk firmaOTPBulk, List<Fattura_attivaBulk> listFattura) throws ApplicationException, BusinessProcessException {
+	public Integer firmaFatture(UserContext userContext, FirmaOTPBulk firmaOTPBulk, List<Fattura_attivaBulk> listFattura) throws ApplicationException, BusinessProcessException {
 		try {
 			DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
 			Configurazione_cnrBulk config = component.getAuthenticatorPecSdi(userContext);
@@ -366,6 +365,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 							listFattura.stream()
 									.filter(fattura_attivaBulk -> !fattura_attivaBulk.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))
 									.map(Fattura_attivaBulk::getStorageObject)
+									.filter(storageObject -> Optional.ofNullable(storageObject).isPresent())
 									.filter(storageObject -> storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
 									.map(storageObject -> documentiCollegatiDocAmmService.getResource(storageObject))
 									.map(inputStream -> {
@@ -379,6 +379,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 					);
 			AtomicInteger index = new AtomicInteger();
 			listFattura.stream()
+					.filter(fattura_attivaBulk -> Optional.ofNullable(fattura_attivaBulk.getStorageObject()).isPresent())
 					.filter(fattura_attivaBulk -> fattura_attivaBulk.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
 					.filter(fattura_attivaBulk -> !fattura_attivaBulk.getStatoInvioSdi().equals(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI))
 					.forEach(fattura_attivaBulk -> {
@@ -422,11 +423,13 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 						try {
 							logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(),fattura_attivaBulk.getProgrUnivocoAnno());
 							if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
+								final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m");
 								fatturaService.inviaFatturaElettronica(
 										config.getVal01(),
 										password,
 										new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
-										component.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m"));
+										nomeFileInvioSDI);
+								fattura_attivaBulk.setNomeFileInvioSdi(nomeFileInvioSDI);
 								logger.info("File firmato inviato");
 							}
 							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura_attivaBulk);
@@ -434,6 +437,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 							throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!", e);
 						}
 					});
+			return index.get();
 		} catch (ArubaSignServiceException _ex) {
 			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 		} catch (BusinessProcessException | RemoteException | ComponentException _ex) {
