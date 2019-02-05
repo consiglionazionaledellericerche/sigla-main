@@ -148,6 +148,17 @@ public class Tipo_variazioneBulk extends Tipo_variazioneBase {
 			  getTi_tipo_variazione().equals(STORNO_SPESA_STESSO_ISTITUTO));
    }
    /*
+	* Serve per sapere se la variazione è di tipo Storno Spesa
+	* Ritorna un boolean con valore true se la tipologia della variazione è:
+	* 		STORNO_SPESA_ISTITUTI_DIVERSI
+	* 		STORNO_SPESA_STESSO_ISTITUTO
+	*/
+   public boolean isStornoSpesa(){
+	  return getTi_tipo_variazione() != null && 
+	  	     (getTi_tipo_variazione().equals(STORNO_SPESA_ISTITUTI_DIVERSI) ||
+			  getTi_tipo_variazione().equals(STORNO_SPESA_STESSO_ISTITUTO));
+   }
+   /*
 	* Serve per sapere se la variazione è di tipo Variazione
 	* Ritorna un boolean con valore true se la tipologia della variazione è:
 	* 		STORNO_ENTRATA_ISTITUTI_DIVERSI
