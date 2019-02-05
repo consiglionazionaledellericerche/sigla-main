@@ -5,10 +5,7 @@ import it.cnr.contab.web.rest.config.AccessoEnum;
 
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,11 +14,11 @@ import javax.ws.rs.core.Response;
 @Path("/fatture-attive")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public interface FattureAttiveLocal {
+public interface PECFattureAttiveLocal {
 
     @GET
     @Path("/reinvia-pec")
     @AccessoAllowed(value= AccessoEnum.XXXHTTPSESSIONXXXXXX)
-    Response reinviaPEC(@Context HttpServletRequest request) throws Exception;
+    Response reinviaPEC(@Context HttpServletRequest request, @QueryParam("esercizio") Integer esercizio, @QueryParam("pgFatturaAttiva") Long pgFatturaAttiva) throws Exception;
 
 }
