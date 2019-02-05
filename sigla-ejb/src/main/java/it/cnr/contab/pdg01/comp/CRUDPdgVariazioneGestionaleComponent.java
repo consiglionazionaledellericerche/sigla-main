@@ -1200,12 +1200,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				}
 			}
 			
-			String messaggioPianoEco = Utility.createSaldoComponentSession().getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione);
-			if (messaggioPianoEco!=null && messaggioPianoEco.length()>0) {
-				if (messaggio!=null) 
-					messaggio = messaggio+ "<BR>";
-				messaggio = messaggio + messaggioPianoEco.replace("\n", "<BR>");
-			}
+			Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext, pdgVariazione);
 	   } catch (PersistencyException e) {
 		   throw new ComponentException(e);
 	   }catch (RemoteException e) {
