@@ -149,9 +149,6 @@ public class StampaSituazioneSinteticaGAEComponent extends it.cnr.jada.comp.CRUD
     public RemoteIterator selezionaGae(UserContext userContext, CompoundFindClause clause) throws ComponentException, PersistencyException, RemoteException {
         WorkpackageHome gaeHome = (WorkpackageHome) getHome(userContext, WorkpackageBulk.class, "V_LINEA_ATTIVITA_VALIDA");
         SQLBuilder sql = gaeHome.createSQLBuilder();
-        sql.addClause("AND", "esercizio_inizio", SQLBuilder.LESS_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-        sql.addClause("AND", "esercizio_fine", SQLBuilder.GREATER_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
-        sql.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
 
         if (!isUtenteEnte(userContext)) {
             CdrBulk cdrUtente = cdrFromUserContext(userContext);
