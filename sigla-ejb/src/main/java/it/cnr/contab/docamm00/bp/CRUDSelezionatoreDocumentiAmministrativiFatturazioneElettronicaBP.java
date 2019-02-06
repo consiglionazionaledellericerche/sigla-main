@@ -14,6 +14,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 
 import it.cnr.jada.firma.arss.ArubaSignServiceException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageService;
 import org.apache.commons.io.IOUtils;
@@ -422,17 +423,22 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 								storageObject);
 						try {
 							logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(),fattura_attivaBulk.getProgrUnivocoAnno());
+							final Fattura_attivaBulk fatturaAttivaByPrimaryKey =
+									Optional.ofNullable(componentFatturaAttiva.findByPrimaryKey(userContext, fattura_attivaBulk))
+										.filter(Fattura_attivaBulk.class::isInstance)
+										.map(Fattura_attivaBulk.class::cast)
+										.orElseThrow(() -> new DetailedRuntimeException("Fattura non trovata!"));
 							if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
-								final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m");
+								final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fatturaAttivaByPrimaryKey).concat(".p7m");
 								fatturaService.inviaFatturaElettronica(
 										config.getVal01(),
 										password,
 										new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
 										nomeFileInvioSDI);
-								fattura_attivaBulk.setNomeFileInvioSdi(nomeFileInvioSDI);
+								fatturaAttivaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
 								logger.info("File firmato inviato");
 							}
-							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fattura_attivaBulk);
+							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fatturaAttivaByPrimaryKey);
 						} catch (PersistencyException | ComponentException | IOException | EmailException e) {
 							throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!", e);
 						}
