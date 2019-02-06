@@ -12,6 +12,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.StringEncrypter;
 import it.cnr.contab.web.rest.local.util.PECFattureAttiveLocal;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageService;
@@ -39,8 +40,11 @@ public class PECFattureAttiveResource implements PECFattureAttiveLocal {
     private Configurazione_cnrComponentSession configurazione_cnrComponentSession;
     @EJB
     private DocAmmFatturazioneElettronicaComponentSession docAmmFatturazioneElettronicaComponentSession;
+    @EJB
+    CRUDComponentSession crudComponentSession;
     @Context
     SecurityContext securityContext;
+
     @Override
     public Response reinviaPEC(HttpServletRequest request, Integer esercizio, Long pgFatturaAttiva) throws Exception {
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
@@ -78,12 +82,43 @@ public class PECFattureAttiveResource implements PECFattureAttiveLocal {
                         config.getVal01(),
                         password,
                         new ByteArrayDataSource(documentiCollegatiDocAmmService.getResource(storageObjectByPath.get()), MimeTypes.P7M.mimetype()),
-                        docAmmFatturazioneElettronicaComponentSession.recuperoNomeFileXml(null, fattura_attivaBulk).concat(".p7m"));
+                        docAmmFatturazioneElettronicaComponentSession.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m"));
             } else {
                 logger.error("File firmato non trovato fattura {}/{}", fattura_attivaBulk.getEsercizio(), fattura_attivaBulk.getPg_fattura_attiva());
                 return Response.serverError().entity("File firmato non trovato").build();
             }
         }
+        return Response.ok().build();
+    }
+
+    @Override
+    public Response aggiornaNomeFile(HttpServletRequest request) throws Exception {
+        CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+        DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService =
+                SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
+        FatturaPassivaElettronicaService fatturaService = SpringUtil.getBean(FatturaPassivaElettronicaService.class);
+        Fattura_attiva_IBulk fattura_attiva_iBulk = new Fattura_attiva_IBulk();
+        fattura_attiva_iBulk.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI);
+        List<Fattura_attivaBulk> fatture =
+                docAmmFatturazioneElettronicaComponentSession.find(userContext, Fattura_attiva_IBulk.class, "findFattureInviateSenzaNomeFile", userContext, fattura_attiva_iBulk);
+        for (Fattura_attivaBulk fattura_attivaBulk : fatture) {
+            final StorageObject fileXmlFatturaAttiva = documentiCollegatiDocAmmService.getFileXmlFatturaAttiva(fattura_attivaBulk);
+            String nomeFile = fileXmlFatturaAttiva.getPropertyValue(StoragePropertyNames.NAME.value());
+            String nomeFileP7m = nomeFile + ".p7m";
+            final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
+                    documentiCollegatiDocAmmService.getStorageObjectByPath(
+                            documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
+                                    .concat(StorageService.SUFFIX).concat(nomeFileP7m)));
+            if (storageObjectByPath.isPresent()) {
+                fattura_attivaBulk.setNomeFileInvioSdi(docAmmFatturazioneElettronicaComponentSession.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m"));
+                fattura_attivaBulk.setToBeUpdated();
+                crudComponentSession.modificaConBulk(userContext, fattura_attivaBulk);
+            } else {
+                logger.error("File firmato non trovato fattura {}/{}", fattura_attivaBulk.getEsercizio(), fattura_attivaBulk.getPg_fattura_attiva());
+                return Response.serverError().entity("File firmato non trovato").build();
+            }
+        }
+
         return Response.ok().build();
     }
 }
