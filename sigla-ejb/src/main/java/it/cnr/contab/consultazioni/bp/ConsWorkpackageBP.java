@@ -131,11 +131,14 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP implements SearchPro
 
     public void openIterator(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
         try {
-            it.cnr.jada.util.RemoteIterator ri = createComponentSession().selezionaGae(context.getUserContext(), Optional.ofNullable(getCondizioneCorrente())
-                    .map(CondizioneComplessaBulk::creaFindClause)
-                    .filter(CompoundFindClause.class::isInstance)
-                    .map(CompoundFindClause.class::cast)
-                    .orElseGet(() -> new CompoundFindClause()));
+            it.cnr.jada.util.RemoteIterator ri = createComponentSession().selezionaGae(
+                    context.getUserContext(),
+                    addBaseClause(context,  Optional.ofNullable(getCondizioneCorrente())
+                            .map(CondizioneComplessaBulk::creaFindClause)
+                            .filter(CompoundFindClause.class::isInstance)
+                            .map(CompoundFindClause.class::cast)
+                            .orElseGet(() -> new CompoundFindClause()))
+            );
             this.setIterator(context, ri);
         } catch (Throwable e) {
             throw new BusinessProcessException(e);
@@ -146,10 +149,22 @@ public class ConsWorkpackageBP extends SelezionatoreListaBP implements SearchPro
     public RemoteIterator search(ActionContext actioncontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws BusinessProcessException {
         it.cnr.jada.util.RemoteIterator ri;
         try {
-            return createComponentSession().selezionaGae(actioncontext.getUserContext(), compoundfindclause);
+            return createComponentSession().selezionaGae(actioncontext.getUserContext(),
+                    addBaseClause(actioncontext, Optional.ofNullable(compoundfindclause)
+                            .filter(CompoundFindClause.class::isInstance)
+                            .map(CompoundFindClause.class::cast)
+                            .orElseGet(() -> new CompoundFindClause()))
+            );
         } catch (Exception e) {
             throw handleException(e);
         }
+    }
+
+    private CompoundFindClause addBaseClause(ActionContext actioncontext, CompoundFindClause compoundFindClause) {
+        compoundFindClause.addClause("AND", "esercizio_inizio", SQLBuilder.LESS_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(actioncontext.getUserContext()));
+        compoundFindClause.addClause("AND", "esercizio_fine", SQLBuilder.GREATER_EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(actioncontext.getUserContext()));
+        compoundFindClause.addClause("AND", "ti_gestione", SQLBuilder.EQUALS, WorkpackageBulk.TI_GESTIONE_SPESE);
+        return compoundFindClause;
     }
 
 
