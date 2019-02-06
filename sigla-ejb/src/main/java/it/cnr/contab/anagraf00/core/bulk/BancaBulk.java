@@ -366,6 +366,11 @@ public class BancaBulk extends BancaBase {
                         getNumero_conto() == null)
                     throw new ValidationException("Modalità di pagamento: ABI, CAB, e Numero Conto sono obbligatori.");
             }
+        } else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equals(getTi_pagamento()) && isTABA()) {
+            // SE è BANCA_ITALIA
+            Optional.ofNullable(getNumero_conto())
+                    .filter(s -> s.length() == 7)
+                    .orElseThrow(() ->  new ValidationException("Modalità di pagamento: Numero Conto è obbligatorio o di lunghezza non valida!"));
         } else if (Rif_modalita_pagamentoBulk.POSTALE.equals(getTi_pagamento())) {
             // SE è POSTALE
             if (getNumero_conto() == null)
