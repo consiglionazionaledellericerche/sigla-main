@@ -246,9 +246,11 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
         AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk) getModel();
         for (AllegatoGenericoBulk allegato : allegatoParentBulk.getArchivioAllegati()) {
             if (allegato.isToBeCreated()) {
+                final File file = Optional.ofNullable(allegato.getFile())
+                        .orElseThrow(() -> new ApplicationException("File non presente"));
                 try {
                     storeService.storeSimpleDocument(allegato,
-                            new FileInputStream(allegato.getFile()),
+                            new FileInputStream(file),
                             allegato.getContentType(),
                             allegato.getNome(),
                             getStorePath((K) allegatoParentBulk,
