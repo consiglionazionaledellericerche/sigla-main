@@ -370,7 +370,8 @@ public class BancaBulk extends BancaBase {
             // SE è BANCA_ITALIA
             Optional.ofNullable(getNumero_conto())
                     .filter(s -> s.length() == 7)
-                    .orElseThrow(() ->  new ValidationException("Modalità di pagamento: Numero Conto è obbligatorio o di lunghezza non valida!"));
+                    .orElseThrow(() ->  new ValidationException("Modalità di pagamento: Numero Conto è obbligatorio e la sua lunghezza " +
+                            "deve essere di 7 caratteri!"));
         } else if (Rif_modalita_pagamentoBulk.POSTALE.equals(getTi_pagamento())) {
             // SE è POSTALE
             if (getNumero_conto() == null)
