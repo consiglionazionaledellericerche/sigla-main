@@ -72,6 +72,8 @@ import java.util.stream.Stream;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -729,7 +731,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
 	}
 
 	@Override
-	public Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception {
+	public Response stampaFattura(@Context HttpServletRequest request, Long pgFattura) throws Exception {
 		LOGGER.debug("REST request per stmpa una fattura attiva." );
 		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();        
 		try {
@@ -739,7 +741,7 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
 							userContext.getEsercizio().longValue(),
 							userContext.getCd_cds(),
 							userContext.getCd_unita_organizzativa(),
-							pg
+							pgFattura
 					)
 			);
 			return Response.ok().entity(stampa).build();        	
