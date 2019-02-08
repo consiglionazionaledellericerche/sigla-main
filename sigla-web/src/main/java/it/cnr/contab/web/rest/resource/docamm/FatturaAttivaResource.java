@@ -733,9 +733,15 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
 		LOGGER.debug("REST request per stmpa una fattura attiva." );
 		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();        
 		try {
-			fatturaAttivaSingolaComponentSession.inserisciDatiPerStampaIva(userContext,  userContext.getEsercizio().longValue(), userContext.getCd_cds(), 
-					userContext.getCd_unita_organizzativa(), pg);        	
-			byte[] stampa = fatturaAttivaSingolaComponentSession.lanciaStampa(userContext, pg);        	
+			byte[] stampa = fatturaAttivaSingolaComponentSession.lanciaStampa(userContext,
+					fatturaAttivaSingolaComponentSession.inserisciDatiPerStampaIva(
+							userContext,
+							userContext.getEsercizio().longValue(),
+							userContext.getCd_cds(),
+							userContext.getCd_unita_organizzativa(),
+							pg
+					)
+			);
 			return Response.ok().entity(stampa).build();        	
 		} catch(FatturaNonTrovataException _ex) {
 			return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();
