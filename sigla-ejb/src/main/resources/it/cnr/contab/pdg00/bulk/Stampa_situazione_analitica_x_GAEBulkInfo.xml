@@ -521,4 +521,35 @@
 			paramNameJR="cdr"
 			paramTypeJR="java.lang.String" />
 	</printForm>	
+	<printForm
+		name="/cnrpreventivo/pdg/situazione_res_uscite_x_voce.jasper">
+		<printFieldProperty 
+			name="esercizio"
+			parameterPosition="0"
+			parameterType="STRING"
+			paramNameJR="esercizio"
+			paramTypeJR="java.lang.Integer" />
+		<printFieldProperty 
+			name="cdCdsForPrint"
+			property="cdCdsForPrint"
+			parameterPosition="1"
+			parameterType="STRING"
+			paramNameJR="cds"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdUoForPrint"
+			property="cdUoForPrint"
+			parameterPosition="2"
+			parameterType="STRING"
+			paramNameJR="uo"
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty 
+			name="cdCdrForPrint"
+			property="cdCdrForPrint"
+			parameterPosition="3"
+			parameterType="STRING"
+			paramNameJR="cdr"
+			paramTypeJR="java.lang.String" />
+	</printForm>	
+	
 </bulkInfo>
