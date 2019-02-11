@@ -154,7 +154,6 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			} else if (procedura != null && isGrowable() &&
 					(procedura.isProceduraDefinitiva() || procedura.isProceduraInviataCorteConti() ||
 							procedura.isProceduraChiusa() || procedura.isProceduraAnnullata())) {
-				if (((CRUDIncarichiProceduraBP)getParentController()).isSuperUtente()) {
 					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
 							isFromBootstrap?"fa fa-fw fa-file-o text-primary":"img/new16.gif",
@@ -164,7 +163,6 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"btn btn-sm btn-secondary btn-outline-secondary",
 							isFromBootstrap);
 					super.writeHTMLToolbar(context, false, false, (getModel()!=null && ((Incarichi_archivioBulk)getModel()).isAllegatoGenerico() && getModel().isToBeCreated()), false, false);
-				}
 			}
             super.closeButtonGROUPToolbar(context);
 		}
@@ -462,8 +460,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						}
 					}
 				}
-				if (((CRUDIncarichiProceduraBP)getParentController()).isSuperUtente()){
-					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
 							isFromBootstrap? "fa fa-plus text-primary":"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
@@ -472,13 +469,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"btn btn-sm btn-secondary btn-outline-secondary",
 							isFromBootstrap);
 
-					innerDelete = innerDelete || Optional.ofNullable(getModel())
-										.filter(Incarichi_archivioBulk.class::isInstance)
-										.map(Incarichi_archivioBulk.class::cast)
-										.filter(el->el.isToBeCreated())
-										.filter(el->el.isAllegatoGenerico())
-										.isPresent();
-				}
+				innerDelete = innerDelete || Optional.ofNullable(getModel())
+									.filter(Incarichi_archivioBulk.class::isInstance)
+									.map(Incarichi_archivioBulk.class::cast)
+									.filter(el->el.isToBeCreated())
+									.filter(el->el.isAllegatoGenerico())
+									.isPresent();
 			}
 			super.writeHTMLToolbar(context, false, false, innerDelete, false, false);
             super.closeButtonGROUPToolbar(context);
@@ -746,8 +742,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						}
 					}
 				}
-				if (((CRUDIncarichiProceduraBP)getParentController().getParentController()).isSuperUtente()){
-					it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+				it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
 							context,
 							isFromBootstrap? "fa fa-plus text-primary":"img/new16.gif",
 							"javascript:submitForm('doAddAllegatoGenericoToCRUD(" + getInputPrefix() + ")')",
@@ -756,13 +751,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"btn btn-sm btn-secondary btn-outline-secondary",
 							isFromBootstrap);
 
-					innerDelete = innerDelete || Optional.ofNullable(getModel())
+				innerDelete = innerDelete || Optional.ofNullable(getModel())
 							.filter(Incarichi_archivioBulk.class::isInstance)
 							.map(Incarichi_archivioBulk.class::cast)
 							.filter(el->el.isToBeCreated())
 							.filter(el->el.isAllegatoGenerico())
 							.isPresent();
-				}
 			}
 			super.writeHTMLToolbar(context, false, false, innerDelete, false, false);
             super.closeButtonGROUPToolbar(context);
