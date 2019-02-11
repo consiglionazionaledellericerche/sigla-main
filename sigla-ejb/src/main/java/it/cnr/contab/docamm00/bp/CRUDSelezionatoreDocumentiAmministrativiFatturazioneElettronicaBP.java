@@ -379,6 +379,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 									}).collect(Collectors.toList())
 					);
 			AtomicInteger index = new AtomicInteger();
+			AtomicInteger indexInviate = new AtomicInteger(1);
 			listFattura.stream()
 					.filter(fattura_attivaBulk -> Optional.ofNullable(fattura_attivaBulk.getStorageObject()).isPresent())
 					.filter(fattura_attivaBulk -> fattura_attivaBulk.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
@@ -389,61 +390,64 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 						String nomeFile = storageObject.getPropertyValue(StoragePropertyNames.NAME.value());
 						String nomeFileP7m = nomeFile + ".p7m";
 						final byte[] byteSigned = fattureFirmate.get(indexAndIncrement);
-						Map<String, Object> metadataProperties = new HashMap<>();
-						metadataProperties.put(StoragePropertyNames.NAME.value(), nomeFileP7m);
-						metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(),
-								SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
-						metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
-								Arrays.asList(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value()));
+						if (Optional.ofNullable(byteSigned).isPresent()) {
+							Map<String, Object> metadataProperties = new HashMap<>();
+							metadataProperties.put(StoragePropertyNames.NAME.value(), nomeFileP7m);
+							metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(),
+									SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
+							metadataProperties.put(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+									Arrays.asList(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_POST_FIRMA.value()));
 
-						final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
-								documentiCollegatiDocAmmService.getStorageObjectByPath(
-										documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
-												.concat(StorageService.SUFFIX).concat(nomeFileP7m)));
-						if (storageObjectByPath.isPresent()) {
-							documentiCollegatiDocAmmService.updateStream(
-									storageObjectByPath.get().getKey(),
-									new ByteArrayInputStream(byteSigned),
-									MimeTypes.P7M.mimetype()
-							);
-						} else {
-							documentiCollegatiDocAmmService.storeSimpleDocument(
-									new ByteArrayInputStream(byteSigned),
-									MimeTypes.P7M.mimetype(),
-									documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath(),
-									metadataProperties);
-						}
-
-						List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-						aspects.add(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-						documentiCollegatiDocAmmService.updateProperties(
-								Collections.singletonMap(
-										StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
-										aspects),
-								storageObject);
-						try {
-							logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(),fattura_attivaBulk.getProgrUnivocoAnno());
-							final Fattura_attivaBulk fatturaAttivaByPrimaryKey =
-									Optional.ofNullable(componentFatturaAttiva.findByPrimaryKey(userContext, fattura_attivaBulk))
-										.filter(Fattura_attivaBulk.class::isInstance)
-										.map(Fattura_attivaBulk.class::cast)
-										.orElseThrow(() -> new DetailedRuntimeException("Fattura non trovata!"));
-							if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
-								final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fatturaAttivaByPrimaryKey).concat(".p7m");
-								fatturaService.inviaFatturaElettronica(
-										config.getVal01(),
-										password,
-										new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
-										nomeFileInvioSDI);
-								fatturaAttivaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
-								logger.info("File firmato inviato");
+							final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
+									documentiCollegatiDocAmmService.getStorageObjectByPath(
+											documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
+													.concat(StorageService.SUFFIX).concat(nomeFileP7m)));
+							if (storageObjectByPath.isPresent()) {
+								documentiCollegatiDocAmmService.updateStream(
+										storageObjectByPath.get().getKey(),
+										new ByteArrayInputStream(byteSigned),
+										MimeTypes.P7M.mimetype()
+								);
+							} else {
+								documentiCollegatiDocAmmService.storeSimpleDocument(
+										new ByteArrayInputStream(byteSigned),
+										MimeTypes.P7M.mimetype(),
+										documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath(),
+										metadataProperties);
 							}
-							componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fatturaAttivaByPrimaryKey);
-						} catch (PersistencyException | ComponentException | IOException | EmailException e) {
-							throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!", e);
+
+							List<String> aspects = storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
+							aspects.add(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+							documentiCollegatiDocAmmService.updateProperties(
+									Collections.singletonMap(
+											StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+											aspects),
+									storageObject);
+							try {
+								logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(),fattura_attivaBulk.getProgrUnivocoAnno());
+								final Fattura_attivaBulk fatturaAttivaByPrimaryKey =
+										Optional.ofNullable(componentFatturaAttiva.findByPrimaryKey(userContext, fattura_attivaBulk))
+												.filter(Fattura_attivaBulk.class::isInstance)
+												.map(Fattura_attivaBulk.class::cast)
+												.orElseThrow(() -> new DetailedRuntimeException("Fattura non trovata!"));
+								if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
+									final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fatturaAttivaByPrimaryKey).concat(".p7m");
+									fatturaService.inviaFatturaElettronica(
+											config.getVal01(),
+											password,
+											new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
+											nomeFileInvioSDI);
+									fatturaAttivaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
+									logger.info("File firmato inviato");
+								}
+								componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fatturaAttivaByPrimaryKey);
+								indexInviate.getAndIncrement();
+							} catch (PersistencyException | ComponentException | IOException | EmailException e) {
+								throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!", e);
+							}
 						}
 					});
-			return index.get();
+			return indexInviate.get();
 		} catch (ArubaSignServiceException _ex) {
 			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 		} catch (BusinessProcessException | RemoteException | ComponentException _ex) {
