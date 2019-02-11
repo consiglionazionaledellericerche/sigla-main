@@ -379,7 +379,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 									}).collect(Collectors.toList())
 					);
 			AtomicInteger index = new AtomicInteger();
-			AtomicInteger indexInviate = new AtomicInteger(1);
+			AtomicInteger indexInviate = new AtomicInteger();
 			listFattura.stream()
 					.filter(fattura_attivaBulk -> Optional.ofNullable(fattura_attivaBulk.getStorageObject()).isPresent())
 					.filter(fattura_attivaBulk -> fattura_attivaBulk.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0)
