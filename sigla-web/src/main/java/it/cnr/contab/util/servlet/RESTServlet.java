@@ -80,10 +80,10 @@ public class RESTServlet extends HttpServlet{
 		resp.setContentType("application/json");
         String action = req.getServletPath();
         String authorization = req.getHeader(AUTHORIZATION);
-        logger.info("RemoteAddr:{} RemoteHost:{} RemotePort:{}",req.getRemoteAddr(),req.getRemoteHost(),req.getRemotePort());
-        logger.info("Action:{} Command:{} Authorization:{}",action,command,authorization);
-        logger.info("ContentType:{} Encoding:{} QueryString:{}",req.getContentType(),req.getCharacterEncoding(),req.getQueryString());
-        logger.info("ServerName:{} ServerPort:{} URI:{}",req.getServerName(),req.getServerPort(),req.getRequestURI());
+        logger.debug("RemoteAddr:{} RemoteHost:{} RemotePort:{}",req.getRemoteAddr(),req.getRemoteHost(),req.getRemotePort());
+        logger.debug("Action:{} Command:{} Authorization:{}",action,command,authorization);
+        logger.debug("ContentType:{} Encoding:{} QueryString:{}",req.getContentType(),req.getCharacterEncoding(),req.getQueryString());
+        logger.debug("ServerName:{} ServerPort:{} URI:{}",req.getServerName(),req.getServerPort(),req.getRequestURI());
         String extension = action.substring(action.lastIndexOf("."));
         if(!restExtension.contains(extension))
             throw new ServletException("Le actions devono terminare con \""+ restExtension +"\"");
@@ -113,7 +113,7 @@ public class RESTServlet extends HttpServlet{
     			            httpactioncontext.setUserContext(
     			            		BasicAuthentication.getContextFromRequest(jsonRequest, utente.getCd_utente(), httpactioncontext.getSessionId()),
 									false);
-    	                    logger.info("Context: Anno:{} CDS:{} UO:{} CDR:{}",
+    	                    logger.debug("Context: Anno:{} CDS:{} UO:{} CDR:{}",
 									jsonRequest.getContext().getEsercizio(),
 									jsonRequest.getContext().getCd_cds(),
 									jsonRequest.getContext().getCd_unita_organizzativa(),
@@ -132,7 +132,7 @@ public class RESTServlet extends HttpServlet{
     	            	else
     	            		businessProcess = mappings.createBusinessProcess(actionmapping, httpactioncontext);
 
-    	                logger.info("Business Process: {} ", businessProcess.getName());
+    	                logger.debug("Business Process: {} ", businessProcess.getName());
 						RemoteIterator iterator = null;
     	            	if (command.equals(COMMAND_POST)) {
     	            		Boolean isEnableBP = false;
@@ -148,7 +148,7 @@ public class RESTServlet extends HttpServlet{
     		        		if (jsonRequest != null && jsonRequest.getClauses() != null) {
     		        			CompoundFindClause compoundFindClause = new CompoundFindClause();
     		        			for (Clause clause : jsonRequest.getClauses()) {
-    		    	                logger.info("Condition:{} FieldName:{} Operator:{} fieldValue:{}", clause.getCondition(), clause.getFieldName(), clause.getOperator(), clause.getFieldValue());
+    		    	                logger.debug("Condition:{} FieldName:{} Operator:{} fieldValue:{}", clause.getCondition(), clause.getFieldName(), clause.getOperator(), clause.getFieldValue());
                                     clause.validate();
     		    	                compoundFindClause.addClause(
                                             clause.getCondition(),
@@ -362,18 +362,18 @@ public class RESTServlet extends HttpServlet{
 			Integer maxItemsPerPage = Optional.ofNullable(jsonRequest.getMaxItemsPerPage())
 					.filter(maxItems -> maxItems.compareTo(0) > 0 && maxItems.compareTo(MAX_ITEMS_PER_PAGE) < 0)
 					.orElse(10);
-			logger.info("MaxItemsPerPage: {}", maxItemsPerPage);
+			logger.debug("MaxItemsPerPage: {}", maxItemsPerPage);
 			consBP.setPageSize(maxItemsPerPage);
 			consBP.refresh(actioncontext);
 
 			if (jsonRequest.getActivePage() != null && jsonRequest.getActivePage().compareTo(0) > 0){
-                logger.info("ActivePage:{}", jsonRequest.getActivePage());
+                logger.debug("ActivePage:{}", jsonRequest.getActivePage());
 	    		consBP.goToPage(actioncontext, jsonRequest.getActivePage());
 			}
 			if (jsonRequest.getOrderBy() != null) {
 				for (OrderBy orderBy : jsonRequest.getOrderBy()) {
 	                int orderType = orderBy.getType() == null || orderBy.getType().equalsIgnoreCase("ASC")?OrderConstants.ORDER_ASC: OrderConstants.ORDER_DESC; 
-	                logger.info(". OrderBy:{} {}", orderBy.name, orderBy.getType());
+	                logger.debug(". OrderBy:{} {}", orderBy.name, orderBy.getType());
 					consBP.setOrderBy(actioncontext, orderBy.name, orderType);
 				}
 			}			
