@@ -86,4 +86,12 @@ public class Fattura_attivaHome extends BulkHome {
         sql.addClause(fattura_attiva_iBulk.buildFindClauses(true));
         return fetchAll(sql);
     }
+
+    public List<Fattura_attivaBulk> findFattureInviateSenzaNomeFile(UserContext userContext, Fattura_attiva_IBulk fattura_attiva_iBulk) throws PersistencyException {
+        SQLBuilder sql = createSQLBuilder();
+        sql.addClause(fattura_attiva_iBulk.buildFindClauses(true));
+        sql.addSQLClause(FindClause.AND, "STATO_INVIO_SDI", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_INVIATA_SDI);
+        sql.addSQLClause(FindClause.AND, "NOME_FILE_INVIO_SDI", SQLBuilder.ISNULL, null);
+        return fetchAll(sql);
+    }
 }

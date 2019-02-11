@@ -2803,12 +2803,11 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
 
     @Override
     protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
-        AllegatoMissioneBulk all = (AllegatoMissioneBulk) allegato;
-        if (isDocumentoProvenienteDaGemis(all)) {
-            setMessage("Cancellazione non possibile! Documento proveniente dalla procedura Missioni");
-            return false;
-        }
-        return true;
+        return Optional.ofNullable(allegato)
+                    .filter(AllegatoMissioneBulk.class::isInstance)
+                    .map(AllegatoMissioneBulk.class::cast)
+                    .map(allegatoGenericoBulk -> !isDocumentoProvenienteDaGemis(allegatoGenericoBulk))
+                    .orElse(Boolean.TRUE);
     }
 
     private Boolean isDocumentoProvenienteDaGemis(AllegatoGenericoBulk allegato) {
@@ -2828,12 +2827,11 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     protected Boolean isPossibileCancellazioneDettaglioAllegato(AllegatoGenericoBulk allegato) {
-        AllegatoMissioneDettaglioSpesaBulk all = (AllegatoMissioneDettaglioSpesaBulk) allegato;
-        if (isDocumentoDettaglioProvenienteDaGemis(all)) {
-            setMessage("Cancellazione non possibile! Documento proveniente dalla procedura Missioni");
-            return false;
-        }
-        return true;
+            return Optional.ofNullable(allegato)
+                    .filter(AllegatoMissioneDettaglioSpesaBulk.class::isInstance)
+                    .map(AllegatoMissioneDettaglioSpesaBulk.class::cast)
+                    .map(allegatoGenericoBulk -> !isDocumentoDettaglioProvenienteDaGemis(allegatoGenericoBulk))
+                    .orElse(Boolean.TRUE);
     }
 
     /**
