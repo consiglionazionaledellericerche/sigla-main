@@ -10,6 +10,8 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
+import java.util.Optional;
+
 public class Tipo_trattamentoHome extends BulkHome {
 public Tipo_trattamentoHome(java.sql.Connection conn) {
 	super(Tipo_trattamentoBulk.class,conn);
@@ -138,8 +140,7 @@ private SQLBuilder selectTipoTrattamento(Filtro_trattamentoBulk filtro) {
 	sql.addTableToHeader("ASS_TI_RAPP_TI_TRATT");
 	sql.addSQLJoin("ASS_TI_RAPP_TI_TRATT.CD_TRATTAMENTO","TIPO_TRATTAMENTO.CD_TRATTAMENTO");
 	sql.addSQLClause("AND","ASS_TI_RAPP_TI_TRATT.CD_TIPO_RAPPORTO",sql.EQUALS, filtro.getCdTipoRapporto());
-	if (filtro.getCdTipoRapporto().equals("DIP"))
-		{
+	if (filtro.getCdTipoRapporto().equals("DIP") && Optional.ofNullable(filtro.getEntePrev()).isPresent()){
 			sql.addTableToHeader("V_TIPO_TRATTAMENTO_TIPO_CORI");
 			sql.addSQLJoin("V_TIPO_TRATTAMENTO_TIPO_CORI.CD_TRATTAMENTO","TIPO_TRATTAMENTO.CD_TRATTAMENTO");
 			sql.addSQLClause("AND","((V_TIPO_TRATTAMENTO_TIPO_CORI.CD_ENTE_PREV_STI",sql.EQUALS, filtro.getEntePrev());
@@ -150,7 +151,7 @@ private SQLBuilder selectTipoTrattamento(Filtro_trattamentoBulk filtro) {
 			sql.closeParenthesis();
 			sql.closeParenthesis();
 			sql.closeParenthesis();
-		}
+	}
 	addSQLTipoTrattamento(sql, filtro);
 	if (filtro.getFlBonus()==null || !filtro.getFlBonus()){
 		SQLBuilder sql_not = createSQLBuilder();

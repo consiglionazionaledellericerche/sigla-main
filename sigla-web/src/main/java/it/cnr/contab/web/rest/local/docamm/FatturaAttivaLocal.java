@@ -43,7 +43,7 @@ public interface FatturaAttivaLocal {
     @GET
     @Path("/print")
     @AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTV)
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces("application/pdf")
     public Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
 
 }

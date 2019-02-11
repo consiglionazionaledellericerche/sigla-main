@@ -390,7 +390,7 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
         sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE);
         sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, ReversaleIBulk.TIPO_INCASSO);
             sqlBuilder.openParenthesis(FindClause.OR);
-                sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, "A");
+                sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
                 sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
                 sqlBuilder.addJoin("pg_documento_cont", "pg_documento_cont_padre");
                 sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
@@ -398,10 +398,11 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
         sqlBuilder.closeParenthesis();
 
         sqlBuilder.openParenthesis(FindClause.AND);
-            sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, "A");
+            sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
             sqlBuilder.openParenthesis(FindClause.OR);
-                sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, "A");
+                sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
                 sqlBuilder.addClause(FindClause.AND, "dt_trasmissione", SQLBuilder.ISNOTNULL, null);
+                sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.NOT_EQUALS, EsitoOperazione.NON_ACQUISITO.value());
             sqlBuilder.closeParenthesis();
         sqlBuilder.closeParenthesis();
 
