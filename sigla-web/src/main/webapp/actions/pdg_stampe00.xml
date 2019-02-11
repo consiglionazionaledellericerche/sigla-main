@@ -310,7 +310,7 @@
 		<init-param name="printbp" value="OfflineReportPrintBP"/>
 	    <init-param name="defaultAction" value="StampaSituazioneAnaliticaXGaeAction" />
 	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
-	    <init-param name="reportName" value="/cnrpreventivo/pdg//cnrpreventivo/pdg/situazione_res_uscite_x_voce.jasper" />
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/situazione_res_uscite_x_voce.jasper" />
 	</businessProcess>
 
 	<action 
