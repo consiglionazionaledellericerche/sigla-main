@@ -72,6 +72,8 @@ import java.util.stream.Stream;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
@@ -729,13 +731,19 @@ public class FatturaAttivaResource implements FatturaAttivaLocal {
 	}
 
 	@Override
-	public Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception {
+	public Response stampaFattura(@Context HttpServletRequest request, Long pgFattura) throws Exception {
 		LOGGER.debug("REST request per stmpa una fattura attiva." );
 		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();        
 		try {
-			fatturaAttivaSingolaComponentSession.inserisciDatiPerStampaIva(userContext,  userContext.getEsercizio().longValue(), userContext.getCd_cds(), 
-					userContext.getCd_unita_organizzativa(), pg);        	
-			byte[] stampa = fatturaAttivaSingolaComponentSession.lanciaStampa(userContext, pg);        	
+			byte[] stampa = fatturaAttivaSingolaComponentSession.lanciaStampa(userContext,
+					fatturaAttivaSingolaComponentSession.inserisciDatiPerStampaIva(
+							userContext,
+							userContext.getEsercizio().longValue(),
+							userContext.getCd_cds(),
+							userContext.getCd_unita_organizzativa(),
+							pgFattura
+					)
+			);
 			return Response.ok().entity(stampa).build();        	
 		} catch(FatturaNonTrovataException _ex) {
 			return Response.status(Status.NOT_FOUND).entity(Collections.singletonMap("ERROR", FATTURA_ATTIVA_NON_PRESENTE)).build();

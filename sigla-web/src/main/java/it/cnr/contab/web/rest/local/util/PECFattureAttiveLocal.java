@@ -21,4 +21,8 @@ public interface PECFattureAttiveLocal {
     @AccessoAllowed(value= AccessoEnum.XXXHTTPSESSIONXXXXXX)
     Response reinviaPEC(@Context HttpServletRequest request, @QueryParam("esercizio") Integer esercizio, @QueryParam("pgFatturaAttiva") Long pgFatturaAttiva) throws Exception;
 
+    @GET
+    @Path("/aggiorna-nome-file")
+    @AccessoAllowed(value= AccessoEnum.XXXHTTPSESSIONXXXXXX)
+    Response aggiornaNomeFile(@Context HttpServletRequest request) throws Exception;
 }
