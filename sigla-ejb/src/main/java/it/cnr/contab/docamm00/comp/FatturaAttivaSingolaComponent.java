@@ -7690,13 +7690,11 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
     	}
 	}
 
-    public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
+    public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, Calendar dataConsegnaSdi) throws PersistencyException, ComponentException, java.rmi.RemoteException {
         fatturaAttiva.setStatoInvioSdi(Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
         fatturaAttiva.setCodiceInvioSdi(codiceSdi);
         fatturaAttiva.setNoteInvioSdi(null);
-        GregorianCalendar cal = new GregorianCalendar();
-        
-        fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi != null ? new Timestamp(dataConsegnaSdi.toGregorianCalendar().getTimeInMillis()) : null);
+        fatturaAttiva.setDtConsegnaSdi(dataConsegnaSdi != null ? new Timestamp(dataConsegnaSdi.getTime().getTime()) : null);
         fatturaAttiva.setToBeUpdated();
         updateBulk(userContext, fatturaAttiva);
         sendMailForNotificationOk(userContext, fatturaAttiva);
