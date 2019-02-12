@@ -1,8 +1,34 @@
 package it.cnr.contab.docamm00.comp;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+
+import javax.activation.DataHandler;
+import javax.ejb.Stateless;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.Name;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPConstants;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPFactory;
+import javax.xml.soap.SOAPFault;
+import javax.xml.soap.SOAPMessage;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.jboss.wsf.spi.annotation.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
-import it.cnr.contab.docamm00.docs.bulk.Documento_amministrativo_attivoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
@@ -11,9 +37,6 @@ import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageException;
-import it.cnr.si.spring.storage.bulk.StorageFile;
-import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.jada.UserContext;
@@ -21,91 +44,25 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.gov.fatturapa.FileSdIType;
-import it.gov.fatturapa.sdi.messaggi.v1.*;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.jboss.wsf.spi.annotation.WebContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.activation.DataHandler;
-import javax.ejb.Stateless;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.soap.*;
-import javax.xml.ws.soap.SOAPFaultException;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.bulk.StorageFile;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1.ErroreType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1.ListaErroriType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1.RicevutaConsegnaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1.RicevutaImpossibilitaRecapitoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1.RicevutaScartoType;
+import it.gov.fatturapa.sdi.messaggi.v1.EsitoCommittenteType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaMancataConsegnaType;
 @Stateless
 @WebService(endpointInterface="it.gov.fatturapa.TrasmissioneFatture", 
 			name="TrasmissioneFatture",targetNamespace="http://www.fatturapa.gov.it/sdi/ws/trasmissione/v1.0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot="/fatturesdi")
-public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture, it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA {
+public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA {
 	private static final Logger logger = LoggerFactory.getLogger(TrasmissioneFatture.class);
-	
-	public void ricevutaConsegna(FileSdIType ricevuta) {
-		UserContext userContext = createUserContext();
-		try{
-			notificaFatturaAttivaRicevutaConsegna(userContext, ricevuta.getNomeFile(), ricevuta.getFile());
-		} catch (Exception e) {
-			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Ricevuta Consegna"));
-		}
-	}
-
-	public void notificaMancataConsegna(FileSdIType mancataConsegna) {
-		UserContext userContext = createUserContext();
-		try{
-			notificaFatturaAttivaMancataConsegna(userContext, mancataConsegna.getNomeFile(), mancataConsegna.getFile());
-		} catch (Exception e) {
-			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Mancata Consegna"));
-		}
-	}
-
-	public void notificaScarto(FileSdIType scarto) {
-		UserContext userContext = createUserContext();
-		try{
-			notificaFatturaAttivaScarto(userContext, scarto.getNomeFile(), scarto.getFile());
-		} catch (Exception e) {
-			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Notifica Scarto"));
-		}
-	}
-
-	public void notificaEsito(FileSdIType esito) {
-		UserContext userContext = createUserContext();
-		try{
-			notificaFatturaAttivaEsito(userContext, esito.getNomeFile(), esito.getFile());
-		} catch (Exception e) {
-			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Notifica Esito"));
-		}
-	}
-
-	public void notificaDecorrenzaTermini(FileSdIType decorrenzaTermini) {
-		UserContext userContext = createUserContext();
-		try{
-			notificaFatturaAttivaDecorrenzaTermini(userContext, decorrenzaTermini.getNomeFile(), decorrenzaTermini.getFile());
-		} catch (Exception e) {
-			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Decorrenza Termini"));
-		}
-	}
-
-	public void attestazioneTrasmissioneFattura(
-			FileSdIType attestazioneTrasmissioneFattura) {
-		UserContext userContext = createUserContext();
-		try{
-			notificaFatturaAttivaAvvenutaTrasmissioneNonRecapitata(userContext, attestazioneTrasmissioneFattura.getNomeFile(), attestazioneTrasmissioneFattura.getFile());
-		} catch (Exception e) {
-			throw new SOAPFaultException(generaFault("Errore generico in fase di aggiornamento fattura per Attestazione Trasmissione Fattura"));
-		}
-	}
-
 	public void notificaFatturaAttivaRicevutaConsegna(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try{
@@ -207,8 +164,8 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		RicercaDocContComponentSession docComponent = recuperoComponentRicercaDocCont();
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
-			JAXBElement<AttestazioneTrasmissioneFatturaType> file = (JAXBElement<AttestazioneTrasmissioneFatturaType>)getJAXBElement(data);
-			AttestazioneTrasmissioneFatturaType notifica = file.getValue();
+			JAXBElement<RicevutaImpossibilitaRecapitoType> file = (JAXBElement<RicevutaImpossibilitaRecapitoType>)getJAXBElement(data);
+			RicevutaImpossibilitaRecapitoType notifica = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Trasmissione non recapitata. MessageId:"+notifica.getMessageId());
 			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -325,8 +282,8 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		RicercaDocContComponentSession docComponent = recuperoComponentRicercaDocCont();
 		try {
-			JAXBElement<NotificaScartoType> file = (JAXBElement<NotificaScartoType>)getJAXBElement(data);
-			NotificaScartoType notifica = file.getValue();
+			JAXBElement<RicevutaScartoType> file = (JAXBElement<RicevutaScartoType>)getJAXBElement(data);
+			RicevutaScartoType notifica = file.getValue();
 			logger.info("Fatture Elettroniche: Attive: Notifica Scarto. MessageId:"+notifica.getMessageId());
 			String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -412,8 +369,8 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		RicercaDocContComponentSession docComponent = recuperoComponentRicercaDocCont();
 		FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
 		try {
-			JAXBElement<NotificaEsitoType> file = (JAXBElement<NotificaEsitoType>)getJAXBElement(data);
-			NotificaEsitoType notifica = file.getValue();
+			JAXBElement<RicevutaConsegnaType> file = (JAXBElement<RicevutaConsegnaType>)getJAXBElement(data);
+			RicevutaConsegnaType notifica = file.getValue();
 			String identificativoSdi = String.valueOf(notifica.getIdentificativoSdI());
 			logger.info("Fatture Elettroniche: Attive: Esito. MessageId:"+notifica.getMessageId() + ". Identificativo SDI: "+identificativoSdi);
 			Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, identificativoSdi);
@@ -433,33 +390,33 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 								ex.printStackTrace(new java.io.PrintWriter(sw));
 								SendMail.sendErrorMail("Fatture Elettroniche: Attive: Esito Accettato. Id SDI "+identificativoSdi, sw.toString());
 							}
-						} else {
-							if ((CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) == 0) || (docComponent.isRibaltato(userContext, fattura.getCd_cds_origine(), fattura.getEsercizio()) && CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) > 0)){
-								salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO);
-								String rifiuto = recuperoMotivoRifiuto(notifica);
-								try{
-									fattura = component.aggiornaFatturaRifiutataDestinatarioSDI(userContext, fattura, rifiuto);
-									logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura rifiutata con id SDI "+identificativoSdi);
-									if (fattura instanceof Fattura_attiva_IBulk){
-										Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
-										if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
-											try{
-                                                SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
-											} catch (Exception ex) {
-												logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa della Fattura rifiutata con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
-												java.io.StringWriter sw = new java.io.StringWriter();
-												ex.printStackTrace(new java.io.PrintWriter(sw));
-												SendMail.sendErrorMail("Fatture Elettroniche: Attive: Esito Rifiutato. Id SDI "+identificativoSdi, sw.toString());
-											}
-										}
-									}
-								} catch (Exception ex) {
-									logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della Fattura rifiutata con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
-									java.io.StringWriter sw = new java.io.StringWriter();
-									ex.printStackTrace(new java.io.PrintWriter(sw));
-									SendMail.sendErrorMail("Fatture Elettroniche: Attive: Esito Rifiutato. Id SDI "+identificativoSdi, sw.toString());
-								}
-							}
+//						} else {
+//							if ((CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) == 0) || (docComponent.isRibaltato(userContext, fattura.getCd_cds_origine(), fattura.getEsercizio()) && CNRUserContext.getEsercizio(userContext).compareTo(fattura.getEsercizio()) > 0)){
+//								salvaFileSuDocumentale(data, nomeFile, fattura, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_ESITO_RIFIUTATO);
+//								String rifiuto = recuperoMotivoRifiuto(notifica);
+//								try{
+//									fattura = component.aggiornaFatturaRifiutataDestinatarioSDI(userContext, fattura, rifiuto);
+//									logger.info("Fatture Elettroniche: Attive: aggiornamento Fattura rifiutata con id SDI "+identificativoSdi);
+//									if (fattura instanceof Fattura_attiva_IBulk){
+//										Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk)fattura;
+//										if (fatturaAttiva.getNotaCreditoAutomaticaGenerata() != null){
+//											try{
+//                                                SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(userContext, fatturaAttiva.getNotaCreditoAutomaticaGenerata());
+//											} catch (Exception ex) {
+//												logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della stampa della Fattura rifiutata con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+//												java.io.StringWriter sw = new java.io.StringWriter();
+//												ex.printStackTrace(new java.io.PrintWriter(sw));
+//												SendMail.sendErrorMail("Fatture Elettroniche: Attive: Esito Rifiutato. Id SDI "+identificativoSdi, sw.toString());
+//											}
+//										}
+//									}
+//								} catch (Exception ex) {
+//									logger.error("Fatture Elettroniche: Attive: MessageId:"+notifica.getMessageId()+". Errore nell'elaborazione della Fattura rifiutata con id SDI "+identificativoSdi + ". Errore:" +ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()):ex.getMessage());
+//									java.io.StringWriter sw = new java.io.StringWriter();
+//									ex.printStackTrace(new java.io.PrintWriter(sw));
+//									SendMail.sendErrorMail("Fatture Elettroniche: Attive: Esito Rifiutato. Id SDI "+identificativoSdi, sw.toString());
+//								}
+//							}
 						}
 						//					} else {
 						//						logger.warn("Fatture Elettroniche: Attive: Stato fattura vuoto non previsto per la notifica esito per la fattura " + identificativoSdi);
@@ -476,7 +433,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		}
 	}
 
-	private String recuperoNomeFileP7m(NotificaScartoType notifica) {
+	private String recuperoNomeFileP7m(RicevutaScartoType notifica) {
 		String nomeFileP7m = notifica.getNomeFile();
 		return nomeFileP7m;
 	}
@@ -509,11 +466,11 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		return componentFatturaAttiva;
 	}
 	
-	private Boolean esitoAccettato(NotificaEsitoType notifica){
-		if (notifica.getEsitoCommittente() != null && notifica.getEsitoCommittente().getEsito().compareTo(EsitoCommittenteType.EC_01) == 0){
+	private Boolean esitoAccettato(RicevutaConsegnaType notifica){
+//		if (notifica.get != null && notifica.getEsitoCommittente().getEsito().compareTo(EsitoCommittenteType.EC_01) == 0){
 			return true;
-		}
-		return false;
+//		}
+//		return false;
 	}
 	
 	private String recuperoMotivoRifiuto(NotificaEsitoType notifica){
@@ -526,7 +483,7 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		return rifiuto;
 	}
 	
-	private StringBuffer estraiErrore(NotificaScartoType notifica) {
+	private StringBuffer estraiErrore(RicevutaScartoType notifica) {
 		StringBuffer errori = new StringBuffer();
 		ListaErroriType listaErrori = notifica.getListaErrori();
 		if (listaErrori != null && listaErrori.getErrore() != null && !listaErrori.getErrore().isEmpty()){
@@ -548,40 +505,40 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
 		try{
 			IOUtils.copy(data.getInputStream(), bStream);
-			JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
+			JAXBContext jc = JAXBContext.newInstance("it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1");
 			return (JAXBElement<?>)jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
 		} catch (Exception e) {
 			throw new ComponentException(e);
 		}
 	}
-
-	private JAXBElement<?> getJAXBElement(FileSdIType fileSdiType) {
-		JAXBContext jc = null;
-		try {
-			jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
-		} catch (JAXBException e) {
-			logger.error("Errore in fase di inizializzazione di un oggetto JAXB. ", e);
-		}
-		
-		File file = null;
-		try {
-			file = File.createTempFile(fileSdiType.getNomeFile(), ".tmp");
-		} catch (IOException e) {
-			logger.error("Errore in fase di creazione file temporaneo. ", e);
-		}
-		
-		JAXBElement<?> element = null; 
-		if (jc != null && file != null){
-			try{
-				element = (JAXBElement<?>)jc.createUnmarshaller().unmarshal(file);
-			} catch (ClassCastException e) {
-				logger.error("Errore in fase di creazione file temporaneo. ", e);
-			} catch (JAXBException e) {
-				logger.error("Errore generico in fase di caricamento del file. ", e);
-			}
-		}
-		return element;
-	}
+//
+//	private JAXBElement<?> getJAXBElement(FileSdIType fileSdiType) {
+//		JAXBContext jc = null;
+//		try {
+//			jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
+//		} catch (JAXBException e) {
+//			logger.error("Errore in fase di inizializzazione di un oggetto JAXB. ", e);
+//		}
+//		
+//		File file = null;
+//		try {
+//			file = File.createTempFile(fileSdiType.getNomeFile(), ".tmp");
+//		} catch (IOException e) {
+//			logger.error("Errore in fase di creazione file temporaneo. ", e);
+//		}
+//		
+//		JAXBElement<?> element = null; 
+//		if (jc != null && file != null){
+//			try{
+//				element = (JAXBElement<?>)jc.createUnmarshaller().unmarshal(file);
+//			} catch (ClassCastException e) {
+//				logger.error("Errore in fase di creazione file temporaneo. ", e);
+//			} catch (JAXBException e) {
+//				logger.error("Errore generico in fase di caricamento del file. ", e);
+//			}
+//		}
+//		return element;
+//	}
 
 	private SOAPFault generaFault(String stringFault){
 		try{
@@ -598,4 +555,5 @@ public class TrasmissioneFatture implements it.gov.fatturapa.TrasmissioneFatture
 			return null;
 		}
 	}
+
 }
