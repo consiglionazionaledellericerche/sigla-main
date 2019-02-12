@@ -1,7 +1,68 @@
 package it.cnr.contab.docamm00.comp;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.activation.DataHandler;
+import javax.ejb.Stateless;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.mail.Message;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.Name;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPConstants;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPFactory;
+import javax.xml.soap.SOAPFault;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.ws.soap.SOAPFaultException;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.bouncycastle.cms.CMSException;
+import org.bouncycastle.cms.CMSSignedData;
+import org.bouncycastle.cms.CMSTypedData;
+import org.jboss.wsf.spi.annotation.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
-import it.cnr.contab.docamm00.fatturapa.bulk.*;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAcquistoBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleAllegatiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleDdtBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleLineaBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleScontoMaggBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTrasmissioneBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTributiBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
+import it.cnr.contab.docamm00.fatturapa.bulk.TipoAcquistoEnum;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.storage.StorageFolderFatturaPassiva;
 import it.cnr.contab.service.SpringUtil;
@@ -18,59 +79,44 @@ import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.*;
-import it.gov.fatturapa.EsitoRicezioneType;
-import it.gov.fatturapa.FileSdIConMetadatiType;
-import it.gov.fatturapa.FileSdIType;
-import it.gov.fatturapa.RispostaRiceviFattureType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AllegatiType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CessionarioCommittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBolloType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiCassaPrevidenzialeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDDTType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDocumentiCorrelatiType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliDocumentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiRiepilogoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasportoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioLineeType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioPagamentoType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaBodyType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FormatoTrasmissioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RappresentanteFiscaleType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ScontoMaggiorazioneType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TerzoIntermediarioSoggettoEmittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
 import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.cms.CMSTypedData;
-import org.jboss.wsf.spi.annotation.WebContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.activation.DataHandler;
-import javax.ejb.Stateless;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.mail.Message;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.soap.*;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.ws.soap.SOAPFaultException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.RoundingMode;
-import java.util.*;
-import java.util.stream.Collectors;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.EsitoRicezioneType;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
+import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.RispostaRiceviFattureType;
 
 @Stateless
 @WebService(endpointInterface = "it.gov.fatturapa.RicezioneFatture",
         name = "RicezioneFatture", targetNamespace = "http://www.fatturapa.gov.it/sdi/ws/ricezione/v1.0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot = "/fatturesdi")
-public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
+public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
     private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFatture.class);
 
     @SuppressWarnings("unchecked")
-    private RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn, String replyTo) {
+    public RispostaRiceviFattureType riceviFatture(FileSdIConMetadatiType parametersIn, String replyTo) {
         RispostaRiceviFattureType risposta = new RispostaRiceviFattureType();
         try {
             JAXBContext jc = JAXBContext.newInstance("it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1");
@@ -1144,4 +1190,6 @@ public class RicezioneFatture implements it.gov.fatturapa.RicezioneFatture, it.c
             throw new ComponentException(e);
         }
     }
+
+
 }
