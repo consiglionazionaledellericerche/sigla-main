@@ -1,22 +1,21 @@
 package it.cnr.contab.docamm00.ejb;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.ejb.Remote;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attivaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-
-import javax.ejb.Remote;
 
 
 @Remote
@@ -114,7 +113,7 @@ public void preparaProtocollazioneEProtocolla(UserContext userContext, Long pgPr
 boolean isAttivoSplitPayment(UserContext userContext, Timestamp dt_registrazione)throws PersistencyException, ComponentException,java.rmi.RemoteException;
 java.util.List recuperoFattureElettronicheSenzaNotificaConsegna(UserContext userContext, Unita_organizzativaBulk unita_organizzativaBulk) throws PersistencyException, ComponentException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
 Fattura_attivaBulk recuperoFatturaElettronicaDaNomeFile(UserContext userContext, String nomeFileInvioSdi) throws PersistencyException, ComponentException,it.cnr.jada.persistency.IntrospectionException,java.rmi.RemoteException;
-Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, Calendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
+Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext userContext, Fattura_attivaBulk fattura, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 Fattura_attivaBulk aggiornaFatturaScartoSDI(UserContext userContext, Fattura_attivaBulk fattura, String codiceInvioSdi, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;
 Fattura_attivaBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, String noteInvioSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException;

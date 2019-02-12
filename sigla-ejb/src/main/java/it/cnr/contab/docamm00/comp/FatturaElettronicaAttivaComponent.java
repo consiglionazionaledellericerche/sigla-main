@@ -1,5 +1,10 @@
 package it.cnr.contab.docamm00.comp;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.jada.UserContext;
@@ -8,11 +13,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class FatturaElettronicaAttivaComponent extends it.cnr.jada.comp.CRUDComponent 
 	implements Cloneable,Serializable {
@@ -21,7 +22,7 @@ public class FatturaElettronicaAttivaComponent extends it.cnr.jada.comp.CRUDComp
 	public  FatturaElettronicaAttivaComponent(){
     }
 	
-	public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, Calendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException{
+	public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext userContext, Fattura_attivaBulk fatturaAttiva, String codiceSdi, XMLGregorianCalendar dataConsegnaSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException{
 		return recuperoComponentFatturaAttiva().aggiornaFatturaRicevutaConsegnaInvioSDI(userContext, fatturaAttiva, codiceSdi, dataConsegnaSdi);
 	}
 	public Fattura_attivaBulk aggiornaFatturaRifiutataDestinatarioSDI(UserContext userContext, Fattura_attivaBulk fattura, String noteSdi) throws PersistencyException, ComponentException,java.rmi.RemoteException{
