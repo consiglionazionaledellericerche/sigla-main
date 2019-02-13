@@ -215,7 +215,7 @@
       <xs:enumeration value="SI">
         <xs:annotation>
           <xs:documentation>
-						SI = Documento emesso secondo modalità e termini stabiliti con DM ai sensi dell'art. 73 DPR 633/72
+						SI = Documento emesso secondo modalita e termini stabiliti con DM ai sensi dell'art. 73 DPR 633/72
 					</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
@@ -554,7 +554,7 @@
       </xs:enumeration>
       <xs:enumeration value="RF04">
         <xs:annotation>
-          <xs:documentation>Agricoltura e attività connesse e pesca (artt. 34 e 34-bis, D.P.R. 633/1972)</xs:documentation>
+          <xs:documentation>Agricoltura e attivita connesse e pesca (artt. 34 e 34-bis, D.P.R. 633/1972)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="RF05">
@@ -584,7 +584,7 @@
       </xs:enumeration>
       <xs:enumeration value="RF10">
         <xs:annotation>
-          <xs:documentation>Intrattenimenti, giochi e altre attività	di cui alla tariffa allegata al D.P.R. 640/72 (art. 74, c.6, D.P.R. 633/1972)
+          <xs:documentation>Intrattenimenti, giochi e altre attivita di cui alla tariffa allegata al D.P.R. 640/72 (art. 74, c.6, D.P.R. 633/1972)
 					</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
@@ -605,12 +605,12 @@
       </xs:enumeration>
       <xs:enumeration value="RF14">
         <xs:annotation>
-          <xs:documentation>Rivendita di beni usati, di oggetti	d’arte, d’antiquariato o da collezione (art.	36, D.L. 41/1995)</xs:documentation>
+          <xs:documentation>Rivendita di beni usati, di oggetti	d'arte, d'antiquariato o da collezione (art.	36, D.L. 41/1995)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="RF15">
         <xs:annotation>
-          <xs:documentation>Agenzie di vendite all’asta di oggetti d’arte, antiquariato o da collezione (art. 40-bis, D.L. 41/1995)</xs:documentation>
+          <xs:documentation>Agenzie di vendite all'asta di oggetti d'arte, antiquariato o da collezione (art. 40-bis, D.L. 41/1995)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="RF16">
@@ -638,7 +638,7 @@
   <xs:complexType name="AnagraficaType">
     <xs:annotation>
       <xs:documentation>
-				Il campo Denominazione è in alternativa ai campi Nome e Cognome
+				Il campo Denominazione e in alternativa ai campi Nome e Cognome
 			</xs:documentation>
     </xs:annotation>
     <xs:sequence>
@@ -885,7 +885,7 @@
       </xs:enumeration>
       <xs:enumeration value="MP15">
         <xs:annotation>
-          <xs:documentation>giroconto su conti di contabilità speciale</xs:documentation>
+          <xs:documentation>giroconto su conti di contabilita speciale</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="MP16">
@@ -920,7 +920,7 @@
       </xs:enumeration>
       <xs:enumeration value="MP22">
         <xs:annotation>
-          <xs:documentation>Trattenuta su somme già riscosse</xs:documentation>
+          <xs:documentation>Trattenuta su somme gia riscosse</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -1032,12 +1032,12 @@
       <xs:maxLength value="1" />
       <xs:enumeration value="D">
         <xs:annotation>
-          <xs:documentation>esigibilità differita</xs:documentation>
+          <xs:documentation>esigibilita differita</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="I">
         <xs:annotation>
-          <xs:documentation>esigibilità immediata</xs:documentation>
+          <xs:documentation>esigibilita immediata</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="S">
@@ -1111,7 +1111,7 @@
       </xs:enumeration>
       <xs:enumeration value="SM">
         <xs:annotation>
-          <xs:documentation>più soci</xs:documentation>
+          <xs:documentation>piu soci</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
