@@ -41,6 +41,12 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import it.gov.fatturapa.EsitoRicezioneType;
+import it.gov.fatturapa.FileSdIConMetadatiType;
+import it.gov.fatturapa.FileSdIType;
+import it.gov.fatturapa.RispostaRiceviFattureType;
+import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
+import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -100,19 +106,14 @@ import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RappresentanteFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ScontoMaggiorazioneType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TerzoIntermediarioSoggettoEmittenteType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
-import it.gov.fatturapa.sdi.messaggi.v1.ScartoEsitoCommittenteType;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.EsitoRicezioneType;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIType;
-import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.RispostaRiceviFattureType;
+
 
 @Stateless
 @WebService(endpointInterface = "it.gov.fatturapa.RicezioneFatture",
         name = "RicezioneFatture", targetNamespace = "http://www.fatturapa.gov.it/sdi/ws/ricezione/v1.0")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 @WebContext(contextRoot = "/fatturesdi")
-public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFatturePA {
+public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFatturePA, it.gov.fatturapa.RicezioneFatture {
     private transient final static Logger LOGGER = LoggerFactory.getLogger(RicezioneFatture.class);
 
     @SuppressWarnings("unchecked")
@@ -945,10 +946,6 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
         notificaDecorrenzaTermini(parametersNotifica);
     }
 
-    public void notificaDecorrenzaTermini(FileSdIType parametersNotifica) {
-
-    }
-
     private SOAPFault generaFault(String stringFault, Throwable _ex) {
         try {
             MessageFactory factory = MessageFactory.newInstance();
@@ -1191,5 +1188,7 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
         }
     }
 
-
+    @Override
+    public void notificaDecorrenzaTermini(it.gov.fatturapa.FileSdIType parametersNotifica) {
+    }
 }
