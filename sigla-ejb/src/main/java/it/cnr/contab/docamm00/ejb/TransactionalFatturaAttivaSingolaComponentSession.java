@@ -2,7 +2,6 @@ package it.cnr.contab.docamm00.ejb;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -620,7 +619,7 @@ public Fattura_attivaBulk aggiornaFatturaMancataConsegnaInvioSDI(UserContext par
 		}
 	}
 }
-public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext param0, Fattura_attivaBulk param1, String param2, Calendar param3) throws PersistencyException, ComponentException,java.rmi.RemoteException {
+public Fattura_attivaBulk aggiornaFatturaRicevutaConsegnaInvioSDI(UserContext param0, Fattura_attivaBulk param1, String param2, XMLGregorianCalendar param3) throws PersistencyException, ComponentException,java.rmi.RemoteException {
 	try {
 		return (Fattura_attivaBulk)invoke("aggiornaFatturaRicevutaConsegnaInvioSDI",new Object[] {
 				param0,

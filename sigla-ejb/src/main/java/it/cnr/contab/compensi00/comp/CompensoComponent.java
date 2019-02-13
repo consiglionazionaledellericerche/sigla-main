@@ -1337,6 +1337,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			
 			validaContratto(userContext, compenso);
 			
+			controlliCig(compenso);
 			return compenso;
 		} catch (it.cnr.jada.persistency.PersistencyException ex) {
 			throw handleException(bulk, ex);
