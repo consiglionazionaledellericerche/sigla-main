@@ -1612,7 +1612,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							rigaVar.getLinea_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_attivita().getCd_linea_attivita());
 					ProgettoBulk progetto = latt.getProgetto();
 					
-					if (!progetto.isCtrlDispSpento()) {
+					if (!progetto.isCtrlDispSpento(annoFrom.intValue())) {
 						BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
 		
 	                    //recupero il record se presente altrimenti ne creo uno nuovo
@@ -1643,8 +1643,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					}
 		            
 					//Controllo che la quota finanziata sia almeno pari alle entrate del progetto
-		            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
-		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null);
+		            BigDecimal assestatoEtrPrg = this.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, pdgVariazione.getEsercizio(), null);
 					
 		            if (totFinanziato.compareTo(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
                        if (messaggio!=null && messaggio.length()>0)
@@ -1714,7 +1713,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			                }
 		                }
                     } else {
-    					if (!progetto.isCtrlDispSpento()) {
+    					if (!progetto.isCtrlDispSpento(annoFrom.intValue())) {
 							//recupero il record se presente altrimenti ne creo uno nuovo
 							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
 									.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
@@ -1780,8 +1779,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			            {
 			            	BigDecimal totFinanziato = Optional.ofNullable(prg.getOtherField())
 									.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
-				            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
-				            		.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+				            BigDecimal assestatoSpePrgFes = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
 	
 				            if (totFinanziato.compareTo(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
 			                   if (messaggio!=null && messaggio.length()>0)
@@ -1797,8 +1795,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			            {
 							BigDecimal totCofinanziato = Optional.ofNullable(prg.getOtherField())
 									.map(Progetto_other_fieldBulk::getImCofinanziato).orElse(BigDecimal.ZERO);
-				            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
-				            		.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+				            BigDecimal assestatoSpePrgReimpiego = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
 	
 				            if (totCofinanziato.compareTo(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato()))<0) {
 			                   if (messaggio!=null && messaggio.length()>0)
@@ -2416,7 +2413,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		}
 	}
 	
-	public BigDecimal getStanziamentoAssestatoProgetto(UserContext userContext, ProgettoBulk progetto, String tiGestione, String tiImporto) throws ComponentException{
+	public BigDecimal getStanziamentoAssestatoProgetto(UserContext userContext, ProgettoBulk progetto, String tiGestione, Integer pEsercizio, String tiImporto) throws ComponentException{
 		try{
 			Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
 			if (Elemento_voceHome.GESTIONE_ENTRATE.equals(tiGestione)) {
@@ -2432,6 +2429,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				
 				return saldiList.stream()
 						 .filter(el->el.getEsercizio().equals(el.getEsercizio_res()))
+						 .filter(el->Optional.ofNullable(pEsercizio).map(ese->ese.equals(el.getEsercizio_res())).orElse(Boolean.TRUE))
 						 .map(el->el.getAssestato())
 						 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 			} else if (Elemento_voceHome.GESTIONE_SPESE.equals(tiGestione)) {
@@ -2462,6 +2460,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		        List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(saldiSpeSQL));
 				
 				return saldiList.stream()
+						 .filter(el->Optional.ofNullable(pEsercizio).map(ese->ese.equals(el.getEsercizio_res())).orElse(Boolean.TRUE))
 						 .map(el->{
 							 if (el.getEsercizio().equals(el.getEsercizio_res()))
 								 return el.getAssestato();

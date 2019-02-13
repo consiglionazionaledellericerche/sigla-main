@@ -25,6 +25,7 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.jada.util.DateUtils;
 
 public class ProgettoBulk extends ProgettoBase {
 
@@ -1191,16 +1192,23 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	
 	/**
 	 * Metodo che ci dice se il controllo di disponibilità su un progetto è spento
+	 * 
+	 * Le maggiori entrate di tutti i progetti "approvati e scaduti"/"approvati e chiusi" devono sempre essere consentite, 
+	 * solo per quelli che iniziano nel 2019  facciamo il controllo sull’assestato entrata della quota annuale
+	 * 
 	 * @return boolean
 	 */
-	public boolean isCtrlDispSpento() {
-		return this.getOtherField().isStatoChiuso() ||
-				(this.getOtherField().isStatoApprovato() &&
+	public boolean isCtrlDispSpento(Integer annoFrom) {
+		return Optional.ofNullable(annoFrom)
+					   .map(el->el.compareTo(this.getOtherField().getAnnoInizio())<=0)
+					   .orElse(Boolean.TRUE) &&
+				(this.getOtherField().isStatoChiuso() ||
+				 (this.getOtherField().isStatoApprovato() &&
 						Optional.ofNullable(
 								Optional.ofNullable(this.getOtherField().getDtProroga())
 									.orElse(Optional.ofNullable(this.getOtherField().getDtFine())
 											.orElse(null)))
 							.map(dtScadenza->dtScadenza.before(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp()))
-							.orElse(Boolean.FALSE));
+							.orElse(Boolean.FALSE)));
 	}
 }

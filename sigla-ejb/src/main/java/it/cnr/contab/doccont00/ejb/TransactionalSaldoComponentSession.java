@@ -508,13 +508,14 @@ public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab
 		}
 	}
 }
-public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, String param3) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, Integer param3, String param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (java.math.BigDecimal)invoke("getStanziamentoAssestatoProgetto",new Object[] {
 			param0,
 			param1,
 			param2,
-			param3});
+			param3,
+			param4});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
