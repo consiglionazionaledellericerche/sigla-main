@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 	xmlns:ds="http://www.w3.org/2000/09/xmldsig#" 
 	xmlns="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v2.0" 
 	targetNamespace="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v2.0" version="1.0">
 
-  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd" />
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/2002/REC-xmldsig-core-20020212/xmldsig-core-schema.xsd" />
     
   <!-- =================================================================== -->
   <!-- ELEMENTI                                                            -->
@@ -25,7 +25,8 @@
 	    <xs:element name="DTE" type="DTEType" />
 	    <xs:element name="DTR" type="DTRType" />
 	    <xs:element name="ANN" type="ANNType" />
-      </xs:choice>  
+      </xs:choice>
+      <xs:element ref ="ds:Signature" minOccurs="0" />    
     </xs:sequence>
     <xs:attribute name="versione" type="VersioneType" use="required" />
   </xs:complexType>  
@@ -473,12 +474,12 @@
       <xs:maxLength value="1" />
       <xs:enumeration value="D">
         <xs:annotation>
-          <xs:documentation>esigibilità differita</xs:documentation>
+          <xs:documentation>esigibilita differita</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="I">
         <xs:annotation>
-          <xs:documentation>esigibilità immediata</xs:documentation>
+          <xs:documentation>esigibilita immediata</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="S">
