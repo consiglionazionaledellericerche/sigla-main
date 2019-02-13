@@ -39,6 +39,6 @@ void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_variazioneBulk
 String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException,java.rmi.RemoteException;
 void checkPdgPianoEconomico(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,java.rmi.RemoteException;
 void checkPdgPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException,java.rmi.RemoteException;
-java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, String param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, Integer param3, String param4) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 
 }
