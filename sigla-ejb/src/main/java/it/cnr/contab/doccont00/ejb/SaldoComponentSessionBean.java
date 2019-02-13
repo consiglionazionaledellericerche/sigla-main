@@ -469,10 +469,10 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param1,componentObj,e);
 		}
 	}
-	public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, String param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, Integer param3, String param4) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			java.math.BigDecimal result = componentObj.getStanziamentoAssestatoProgetto(param0,param1,param2,param3);
+			java.math.BigDecimal result = componentObj.getStanziamentoAssestatoProgetto(param0,param1,param2,param3,param4);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
