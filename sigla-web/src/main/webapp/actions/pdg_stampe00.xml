@@ -266,6 +266,19 @@
 		path="/StampaSituazioneAnaliticaXGaeAction" actionClass="it.cnr.contab.pdg00.action.StampaSituazioneAnaliticaXGaeAction">
 	</action>
 	
+	<businessProcess name="StampaUsciteResiduiXVoceBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/pdg00/stampa_situazione_analitica_x_GAE_uscite.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Stampa_situazione_analitica_x_GAEBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSituazioneAnaliticaXGaeAction" />
+	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/situazione_analitica_gae_res_uscite_x_voce.jasper" />
+	</businessProcess>
+	
+	<action
+		path="/StampaSituazioneAnaliticaXGaeAction" actionClass="it.cnr.contab.pdg00.action.StampaSituazioneAnaliticaXGaeAction">
+	</action>
+	
 	<businessProcess name="StampaEntrateResiduiEsercizioBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
 		<forward name="default" path="/pdg00/stampa_situazione_analitica_x_GAE_entrate.jsp"/>
 		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Stampa_situazione_analitica_x_GAEBulk" />
@@ -286,6 +299,18 @@
 	    <init-param name="defaultAction" value="StampaSituazioneAnaliticaXGaeAction" />
 	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
 	    <init-param name="reportName" value="/cnrpreventivo/pdg/situazione_analitica_gae_res_uscite_x_voce.jasper" />
+	</businessProcess>
+   <action
+		path="/StampaSituazioneAnaliticaXGaeAction" actionClass="it.cnr.contab.pdg00.action.StampaSituazioneAnaliticaXGaeAction">
+	</action>
+	
+	<businessProcess name="StampaSinUsciteResiduiXVoceBP" className="it.cnr.contab.reports.bp.ParametricPrintBP">
+		<forward name="default" path="/pdg00/stampa_situazione_analitica_x_GAE_uscite.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.pdg00.bulk.Stampa_situazione_analitica_x_GAEBulk" />
+		<init-param name="printbp" value="OfflineReportPrintBP"/>
+	    <init-param name="defaultAction" value="StampaSituazioneAnaliticaXGaeAction" />
+	    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession" />
+	    <init-param name="reportName" value="/cnrpreventivo/pdg/situazione_res_uscite_x_voce.jasper" />
 	</businessProcess>
 
 	<action 
