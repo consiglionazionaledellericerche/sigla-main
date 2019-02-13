@@ -1691,9 +1691,9 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
 		try{
 			if (!progetto.isPianoEconomicoRequired()) {
-				if (!progetto.isCtrlDispSpento()) {
+				if (!progetto.isCtrlDispSpento(annoFrom)) {
 		            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
-		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null);
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null, null);
 		
 		            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoEtrPrg)<0)
 		   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
@@ -1703,7 +1703,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	                             new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg) + "). Operazione non consentita!");
 		
 		            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
-		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
 		
 		            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgFes)<0)
 		   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
@@ -1713,7 +1713,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes) + "). Operazione non consentita!");
 		
 		            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
-		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
 		
 		            if (Optional.ofNullable(progetto.getImCofinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgReimpiego)<0)
 		   	           	throw new ApplicationRuntimeException("Attenzione: la quota cofinanziata ("+
