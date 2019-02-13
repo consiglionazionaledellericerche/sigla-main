@@ -175,8 +175,8 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
     public void notificaFatturaAttivaMancataConsegna(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
         FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
         try {
-            JAXBElement<NotificaMancataConsegnaType> file = (JAXBElement<NotificaMancataConsegnaType>) getJAXBElement(data);
-            NotificaMancataConsegnaType mancataConsegna = file.getValue();
+            JAXBElement<RicevutaImpossibilitaRecapitoType> file = (JAXBElement<RicevutaImpossibilitaRecapitoType>) getJAXBElement(data);
+            RicevutaImpossibilitaRecapitoType mancataConsegna = file.getValue();
             logger.info("Fatture Elettroniche: Attive: Mancata Consegna. MessageId:" + mancataConsegna.getMessageId());
             String codiceSDI = String.valueOf(mancataConsegna.getIdentificativoSdI());
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -552,7 +552,9 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
         ByteArrayOutputStream bStream = new ByteArrayOutputStream();
         try {
             IOUtils.copy(data.getInputStream(), bStream);
-            JAXBContext jc = JAXBContext.newInstance("it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1");
+            JAXBContext jc = JAXBContext.newInstance(
+                    it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1.ObjectFactory.class,
+                    it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory.class);
             return (JAXBElement<?>) jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
         } catch (Exception e) {
             throw new ComponentException(e);
