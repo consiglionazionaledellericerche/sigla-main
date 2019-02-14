@@ -988,7 +988,7 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
             JAXBElement<NotificaDecorrenzaTerminiType> file = (JAXBElement<NotificaDecorrenzaTerminiType>) getJAXBElement(data);
             NotificaDecorrenzaTerminiType notifica = file.getValue();
             LOGGER.info("Fatture Elettroniche: Passive: Decorrenza Termini. MessageId:" + notifica.getMessageId());
-            Long identificativoSdi = notifica.getIdentificativoSdI().longValue();
+            Long identificativoSdi = new Long(notifica.getIdentificativoSdI());
             List<DocumentoEleTestataBulk> docs = component.recuperoDocumento(userContext, identificativoSdi);
             if (docs != null && !docs.isEmpty()) {
                 Boolean docsDaAggiornare = false;
@@ -1046,7 +1046,7 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
             JAXBContext jc = JAXBContext.newInstance("it.gov.fatturapa.sdi.messaggi.v1");
             JAXBElement<ScartoEsitoCommittenteType> fileScartoEsito = (JAXBElement<ScartoEsitoCommittenteType>) jc.createUnmarshaller().unmarshal(new ByteArrayInputStream(bStream.toByteArray()));
             ScartoEsitoCommittenteType scartoEsito = fileScartoEsito.getValue();
-            Long identificativoSdi = scartoEsito.getIdentificativoSdI().longValue();
+            Long identificativoSdi = new Long (scartoEsito.getIdentificativoSdI());
             LOGGER.info("Fatture Elettroniche: Passive: Pec: Scarto Esito Id SDI: " + identificativoSdi);
             if (scartoEsito.getNote() != null && scartoEsito.getNote().startsWith("EN02: Notifica di esito già pervenuta al Sistema di Interscambio")) {
                 LOGGER.info("Id SDI: " + identificativoSdi + ".  " + scartoEsito.getNote());
