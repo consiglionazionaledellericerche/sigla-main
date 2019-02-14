@@ -3,9 +3,23 @@
                xmlns:xs="http://www.w3.org/2001/XMLSchema"
                xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
                xmlns:simplify="http://jaxb2-commons.dev.java.net/basic/simplify" extensionBindingPrefixes="simplify"
+               xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
                jaxb:extensionBindingPrefixes="xjc"
                version="2.0">
     <jaxb:globalBindings generateIsSetMethod="true">
         <xjc:serializable uid="12343"/>
     </jaxb:globalBindings>
+    <jaxb:bindings schemaLocation="MessaggiTypes_v1.1.xsd" >
+       <jaxb:bindings node="//xs:complexType[@name='RicevutaConsegna_Type']">
+             <inheritance:implements>it.cnr.contab.sdi.IRicevutaConsegna</inheritance:implements>
+       </jaxb:bindings>
+       <jaxb:bindings node="//xs:simpleType[@name='IdentificativoSdI_Type']">
+           <jaxb:class ref="java.lang.String"/>
+       </jaxb:bindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="MessaggiFatturaTypes_v1.0.xsd" >
+       <jaxb:bindings node="//xs:complexType[@name='RicevutaConsegna_Type']">
+             <inheritance:implements>it.cnr.contab.sdi.IRicevutaConsegna</inheritance:implements>
+       </jaxb:bindings>
+    </jaxb:bindings>
 </jaxb:bindings>
