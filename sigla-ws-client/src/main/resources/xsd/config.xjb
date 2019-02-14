@@ -37,7 +37,7 @@
              <inheritance:implements>it.cnr.contab.sdi.IRicevutaConsegna</inheritance:implements>
        </jaxb:bindings>
        <jaxb:bindings node="//xs:complexType[@name='RicevutaImpossibilitaRecapito_Type']">
-             <inheritance:implements>it.cnr.contab.sdi.INonRecapitabile</inheritance:implements>
+             <inheritance:implements>it.cnr.contab.sdi.IMancataConsegna</inheritance:implements>
        </jaxb:bindings>
        <jaxb:bindings node="//xs:complexType[@name='RicevutaScarto_Type']">
              <inheritance:implements>it.cnr.contab.sdi.IScarto</inheritance:implements>
