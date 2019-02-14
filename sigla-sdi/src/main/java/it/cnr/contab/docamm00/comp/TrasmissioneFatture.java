@@ -1,6 +1,35 @@
 package it.cnr.contab.docamm00.comp;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
+
+import javax.activation.DataHandler;
+import javax.ejb.Stateless;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.Name;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPConstants;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPFactory;
+import javax.xml.soap.SOAPFault;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.ws.soap.SOAPFaultException;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.jboss.wsf.spi.annotation.WebContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.chiusura00.ejb.RicercaDocContComponentSession;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
@@ -9,6 +38,12 @@ import it.cnr.contab.docamm00.ejb.FatturaElettronicaAttivaComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.storage.StorageFileFatturaAttiva;
+import it.cnr.contab.sdi.IErroreType;
+import it.cnr.contab.sdi.IListaErrori;
+import it.cnr.contab.sdi.IMancataConsegna;
+import it.cnr.contab.sdi.INonRecapitabile;
+import it.cnr.contab.sdi.IRicevutaConsegna;
+import it.cnr.contab.sdi.IScarto;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.WSUserContext;
@@ -20,31 +55,10 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.bulk.StorageFile;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fattura.messaggi.v1.*;
 import it.gov.fatturapa.FileSdIType;
 import it.gov.fatturapa.sdi.messaggi.v1.EsitoCommittenteType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaDecorrenzaTerminiType;
 import it.gov.fatturapa.sdi.messaggi.v1.NotificaEsitoType;
-import it.gov.fatturapa.sdi.messaggi.v1.NotificaMancataConsegnaType;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.jboss.wsf.spi.annotation.WebContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.activation.DataHandler;
-import javax.ejb.Stateless;
-import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.soap.*;
-import javax.xml.ws.soap.SOAPFaultException;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
 
 @Stateless
 @WebService(endpointInterface = "it.gov.fatturapa.TrasmissioneFatture",
@@ -112,8 +126,8 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
     public void notificaFatturaAttivaRicevutaConsegna(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
         FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
         try {
-            JAXBElement<RicevutaConsegnaType> file = (JAXBElement<RicevutaConsegnaType>) getJAXBElement(data);
-            RicevutaConsegnaType ricevuta = file.getValue();
+            JAXBElement<IRicevutaConsegna> file = (JAXBElement<IRicevutaConsegna>) getJAXBElement(data);
+            IRicevutaConsegna ricevuta = file.getValue();
             logger.info("Fatture Elettroniche: Attive: Ricevuta Consegna. MessageId:" + ricevuta.getMessageId());
 
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, ricevuta.getIdentificativoSdI());
@@ -175,8 +189,8 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
     public void notificaFatturaAttivaMancataConsegna(UserContext userContext, String nomeFile, DataHandler data) throws ComponentException {
         FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
         try {
-            JAXBElement<RicevutaImpossibilitaRecapitoType> file = (JAXBElement<RicevutaImpossibilitaRecapitoType>) getJAXBElement(data);
-            RicevutaImpossibilitaRecapitoType mancataConsegna = file.getValue();
+            JAXBElement<IMancataConsegna> file = (JAXBElement<IMancataConsegna>) getJAXBElement(data);
+            IMancataConsegna mancataConsegna = file.getValue();
             logger.info("Fatture Elettroniche: Attive: Mancata Consegna. MessageId:" + mancataConsegna.getMessageId());
             String codiceSDI = String.valueOf(mancataConsegna.getIdentificativoSdI());
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -210,8 +224,8 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
         RicercaDocContComponentSession docComponent = recuperoComponentRicercaDocCont();
         FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
         try {
-            JAXBElement<RicevutaImpossibilitaRecapitoType> file = (JAXBElement<RicevutaImpossibilitaRecapitoType>) getJAXBElement(data);
-            RicevutaImpossibilitaRecapitoType notifica = file.getValue();
+            JAXBElement<INonRecapitabile> file = (JAXBElement<INonRecapitabile>) getJAXBElement(data);
+            INonRecapitabile notifica = file.getValue();
             logger.info("Fatture Elettroniche: Attive: Trasmissione non recapitata. MessageId:" + notifica.getMessageId());
             String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
@@ -328,10 +342,10 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
         FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
         RicercaDocContComponentSession docComponent = recuperoComponentRicercaDocCont();
         try {
-            JAXBElement<RicevutaScartoType> file = (JAXBElement<RicevutaScartoType>) getJAXBElement(data);
-            RicevutaScartoType notifica = file.getValue();
+            JAXBElement<IScarto> file = (JAXBElement<IScarto>) getJAXBElement(data);
+            IScarto notifica = file.getValue();
             logger.info("Fatture Elettroniche: Attive: Notifica Scarto. MessageId:" + notifica.getMessageId());
-            String codiceSDI = String.valueOf(notifica.getIdentificativoSdI());
+            String codiceSDI = notifica.getIdentificativoSdI();
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, codiceSDI);
             if (fattura != null) {
                 logger.info("Fatture Elettroniche: Attive: Fattura già elaborata " + codiceSDI);
@@ -415,8 +429,8 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
         RicercaDocContComponentSession docComponent = recuperoComponentRicercaDocCont();
         FatturaElettronicaAttivaComponentSession component = recuperoComponentFatturaElettronicaAttiva();
         try {
-            JAXBElement<RicevutaConsegnaType> file = (JAXBElement<RicevutaConsegnaType>) getJAXBElement(data);
-            RicevutaConsegnaType notifica = file.getValue();
+            JAXBElement<IRicevutaConsegna> file = (JAXBElement<IRicevutaConsegna>) getJAXBElement(data);
+            IRicevutaConsegna notifica = file.getValue();
             String identificativoSdi = String.valueOf(notifica.getIdentificativoSdI());
             logger.info("Fatture Elettroniche: Attive: Esito. MessageId:" + notifica.getMessageId() + ". Identificativo SDI: " + identificativoSdi);
             Fattura_attivaBulk fattura = recuperoFatturaDaCodiceInvioSDI(userContext, identificativoSdi);
@@ -479,7 +493,7 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
         }
     }
 
-    private String recuperoNomeFileP7m(RicevutaScartoType notifica) {
+    private String recuperoNomeFileP7m(IScarto notifica) {
         String nomeFileP7m = notifica.getNomeFile();
         return nomeFileP7m;
     }
@@ -512,7 +526,7 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
         return componentFatturaAttiva;
     }
 
-    private Boolean esitoAccettato(RicevutaConsegnaType notifica) {
+    private Boolean esitoAccettato(IRicevutaConsegna notifica) {
 //		if (notifica.get != null && notifica.getEsitoCommittente().getEsito().compareTo(EsitoCommittenteType.EC_01) == 0){
         return true;
 //		}
@@ -529,15 +543,18 @@ public class TrasmissioneFatture implements it.cnr.contab.docamm00.ejb.Trasmissi
         return rifiuto;
     }
 
-    private StringBuffer estraiErrore(RicevutaScartoType notifica) {
+    private StringBuffer estraiErrore(IScarto notifica) {
         StringBuffer errori = new StringBuffer();
-        ListaErroriType listaErrori = notifica.getListaErrori();
+        IListaErrori listaErrori = notifica.getListaErrori();
         if (listaErrori != null && listaErrori.getErrore() != null && !listaErrori.getErrore().isEmpty()) {
-            for (ErroreType errore : listaErrori.getErrore()) {
-                if (errori.length() != 0) {
-                    errori.append(" - ");
-                }
-                errori.append(errore.getDescrizione());
+            for (Object errore : listaErrori.getErrore()) {
+            	if (errore instanceof IErroreType){
+            		IErroreType err = (IErroreType)errore; 
+            		if (errori.length() != 0) {
+                        errori.append(" - ");
+                    }
+                    errori.append(err.getDescrizione());
+            	}
             }
         }
         return errori;
