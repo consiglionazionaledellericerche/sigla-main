@@ -324,7 +324,7 @@ public class Incarichi_comunicati_fpBulk extends Incarichi_comunicati_fpBase {
 			incaricoFP.setModalita_acquisizione(nuovoConsulente.getIncarico().getModalitaAcquisizione());
 			incaricoFP.setTipologia_consulente(null);
 			if (nuovoConsulenteEsito!=null)
-				incaricoFP.setId_incarico(nuovoConsulenteEsito.getId().toString());
+				incaricoFP.setId_incarico(String.valueOf(nuovoConsulenteEsito.getId()));
 			
 			if (nuovoConsulente.getPagamenti()!=null){
 				for (Iterator<it.perla.accenture.com.anagrafeprestazioni_inserimentoincarichi.ConsulenteType.Pagamenti.NuovoPagamento> iterator = nuovoConsulente.getPagamenti().getNuovoPagamento().iterator(); iterator.hasNext();) {
