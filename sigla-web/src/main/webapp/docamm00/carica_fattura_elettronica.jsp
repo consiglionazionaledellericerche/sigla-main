@@ -37,29 +37,5 @@
 	<%bp.writeForm(out, "default"); %>	
 	</table>
 </div>
-<% if (bp.getAnomalie() != null) { %>
-<fieldset>
-<legend class="GroupLabel">Anomalie</legend>
-	<table class="Panel">
-		<%for (FattureRicevuteType.Flusso flusso : bp.getAnomalie()) {  %>
-			<tr>
-				<td><b>IdSdI:</b><%=flusso.getIdSdI()%></td>
-				<td><b>Stato:</b><%=flusso.getStato()%></td>
-				<%if (flusso.getDataInvio() != null) { %>
-				<td><b>Inviata il:</b><%=fmt.format(flusso.getDataInvio().getTime())%></td>
-				<%}%>
-				<td><b>NomeFile:</b><%=flusso.getNomeFile()%></td>
-				<td><b>Cessionario:</b><%=flusso.getIdFiscaleCessionario()%></td>
-				<td><b>Cedente:</b><%=flusso.getIdFiscaleCedente()%></td>
-
-			</tr>
-		<%}%>
-	</table>
-</fieldset>
-<%}%>
-<%	
-	bp.setAnomalie(null);
-	bp.closeFormWindow(pageContext); 
-%>
 </body>
 </html>

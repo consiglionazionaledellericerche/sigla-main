@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    	JAXBElement<NotificaDecorrenzaTerminiType>  notificaDecorrenzaTermini = (JAXBElement<NotificaDecorrenzaTerminiType>) client.getUnmarshaller().unmarshal(new StreamSource(request.getInputStream()));
 	    	
 	    	getRicezioneFattureService().
-	    		notificaDecorrenzaTermini(notificaDecorrenzaTermini.getValue().getIdentificativoSdI(), 
+	    		notificaDecorrenzaTermini(new BigInteger(notificaDecorrenzaTermini.getValue().getIdentificativoSdI()), 
 	    				notificaDecorrenzaTermini.getValue().getNomeFile(), 
 	    				null);//TODO
 		} catch (Exception e) {
@@ -102,7 +103,7 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 	    	FatturazioneElettronicaClient client = SpringUtil.getBean("fatturazioneElettronicaClient", 
 	    			FatturazioneElettronicaClient.class);
 	    	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) client.getUnmarshaller().unmarshal(new StreamSource(fileMetadata.getFile()));
-	    	fileSdIConMetadatiTypeBulk.setIdentificativoSdI(metadatiInvioFileType.getValue().getIdentificativoSdI());
+	    	fileSdIConMetadatiTypeBulk.setIdentificativoSdI(new BigInteger(metadatiInvioFileType.getValue().getIdentificativoSdI()));
 	    	String cuu = metadatiInvioFileType.getValue().getCodiceDestinatario();
 	    	//TODO
 	    	

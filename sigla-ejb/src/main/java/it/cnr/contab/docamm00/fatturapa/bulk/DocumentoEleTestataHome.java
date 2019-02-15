@@ -172,7 +172,7 @@ public class DocumentoEleTestataHome extends BulkHome {
 	public NotificaEsitoCommittenteType createNotificaEsitoCommittente(DocumentoEleTestataBulk documentoEleTestataBulk) {
     	it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory objMessaggi = new it.gov.fatturapa.sdi.messaggi.v1.ObjectFactory();        	
     	NotificaEsitoCommittenteType notificaEsitoCommittenteType = objMessaggi.createNotificaEsitoCommittenteType();
-    	notificaEsitoCommittenteType.setIdentificativoSdI(BigInteger.valueOf(documentoEleTestataBulk.getIdentificativoSdi()));
+    	notificaEsitoCommittenteType.setIdentificativoSdI(documentoEleTestataBulk.getIdentificativoSdi().toString());
     	notificaEsitoCommittenteType.setVersione("1.0");
     	RiferimentoFatturaType riferimentoFatturaType = objMessaggi.createRiferimentoFatturaType();
     	Calendar cal = Calendar.getInstance();
