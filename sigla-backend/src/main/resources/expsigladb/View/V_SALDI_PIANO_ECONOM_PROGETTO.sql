@@ -2,7 +2,7 @@
 --  DDL for View V_SALDI_PIANO_ECONOM_PROGETTO
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "CD_UNITA_PIANO", "CD_VOCE_PIANO", "TI_GESTIONE", "IMPORTO_FIN", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "IMPORTO_COFIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "IMPACC", "MANRIS") AS 
+CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "CD_UNITA_PIANO", "CD_VOCE_PIANO", "TI_GESTIONE", "IMPORTO_FIN", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "IMPORTO_COFIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "IMPACC", "MANRIS") AS 
   (SELECT   x.pg_progetto, x.esercizio, x.cd_unita_piano, x.cd_voce_piano,
              x.ti_gestione, 
              SUM (x.importo_fin) importo_fin,
@@ -40,34 +40,60 @@
                      d.cd_voce_piano, b.ti_gestione,
                      0 importo_fin, 0 stanziamento_fin, 
                      CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) > 0
-                        THEN NVL(b.im_spese_gest_decentrata_est, 0)
-                        ELSE 0
+                       WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)>0
+                              THEN NVL(b.im_spese_gest_decentrata_est, 0)
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN NVL(b.im_spese_gest_accentrata_est, 0)
+                               ELSE 0
+                             END
                      END variapiu_fin,
                      CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) < 0
-                        THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
-                        ELSE CASE
-                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0
-                               THEN DECODE (b.cd_cdr_assegnatario_clgs, NULL, 
-                                    NVL(b.im_spese_gest_accentrata_est, 0), 0)
+                       WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
+                              THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
                                ELSE 0
                              END
                      END variameno_fin,
                      0 importo_cofin, 0 stanziamento_cofin, 
                      CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_int, 0) > 0
-                        THEN NVL(b.im_spese_gest_decentrata_int, 0)
-                        ELSE 0
+                       WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)>0
+                              THEN NVL(b.im_spese_gest_decentrata_int, 0)
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) > 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN NVL(b.im_spese_gest_accentrata_int, 0)
+                               ELSE 0
+                             END
                      END variapiu_cofin,
                      CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_int, 0) < 0
-                        THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
-                        ELSE CASE
-                                WHEN NVL (b.im_spese_gest_accentrata_int, 0) > 0
-                                THEN DECODE (b.cd_cdr_assegnatario_clgs, NULL, 
-                                     NVL(b.im_spese_gest_accentrata_int, 0), 0)
-                                ELSE 0
+                       WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)<0
+                              THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) < 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
+                               ELSE 0
                              END
                      END variameno_cofin,
                      0 impacc, 0 manris
@@ -78,7 +104,7 @@
                WHERE a.esercizio = b.esercizio
                  AND a.pg_variazione_pdg = b.pg_variazione_pdg
                  AND a.stato IN ('APP', 'APF')
-                 AND a.ti_gestione = 'S'
+                 AND b.ti_gestione = 'S'
                  AND b.esercizio = c.esercizio
                  AND b.cd_cdr_assegnatario = c.cd_centro_responsabilita
                  AND b.cd_linea_attivita = c.cd_linea_attivita
@@ -97,39 +123,61 @@
               SELECT c.pg_progetto, a.esercizio, d.cd_unita_organizzativa,
                      d.cd_voce_piano, b.ti_gestione,
                      0 importo_fin, 0 stanziamento_fin, 
-                     0 variapiu_fin,
-                     0 variameno_fin,
-                     0 importo_cofin, 0 stanziamento_cofin, 
                      CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) > 0
-                        THEN NVL(b.im_spese_gest_decentrata_est, 0)
-                        ELSE 0
-                     END
-                     +
-                     CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_int, 0) > 0
-                        THEN NVL(b.im_spese_gest_decentrata_int, 0)
-                        ELSE 0
-                     END variapiu_cofin,
-                     CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) < 0
-                        THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
-                        ELSE CASE
-                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0
-                               THEN DECODE (b.cd_cdr_assegnatario_clgs, NULL, 
-                                    NVL(b.im_spese_gest_accentrata_est, 0), 0)
+                       WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)>0
+                              THEN NVL(b.im_spese_gest_decentrata_est, 0)
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN NVL(b.im_spese_gest_accentrata_est, 0)
                                ELSE 0
                              END
-                     END
-                     +
+                     END variapiu_fin,
                      CASE
-                        WHEN NVL(b.im_spese_gest_decentrata_int, 0) < 0
-                        THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
-                        ELSE CASE
-                                WHEN NVL (b.im_spese_gest_accentrata_int, 0) > 0
-                                THEN DECODE (b.cd_cdr_assegnatario_clgs, NULL, 
-                                     NVL(b.im_spese_gest_accentrata_int, 0), 0)
-                                ELSE 0
+                       WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
+                              THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
+                               ELSE 0
+                             END
+                     END variameno_fin,
+                     0 importo_cofin, 0 stanziamento_cofin, 
+                     CASE
+                       WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)>0
+                              THEN NVL(b.im_spese_gest_decentrata_int, 0)
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) > 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN NVL(b.im_spese_gest_accentrata_int, 0)
+                               ELSE 0
+                             END
+                     END variapiu_cofin,
+                     CASE
+                       WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
+                       THEN CASE 
+                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)<0
+                              THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
+                              ELSE 0
+                            END
+                       ELSE CASE
+                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) < 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                               THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
+                               ELSE 0
                              END
                      END variameno_cofin,
                      0 impacc, 0 manris
@@ -140,7 +188,7 @@
                WHERE a.esercizio = b.esercizio
                  AND a.pg_variazione_pdg = b.pg_variazione_pdg
                  AND a.stato IN ('APP', 'APF')
-                 AND a.ti_gestione = 'S'
+                 AND b.ti_gestione = 'S'
                  AND b.esercizio = c.esercizio
                  AND b.cd_cdr_assegnatario = c.cd_centro_responsabilita
                  AND b.cd_linea_attivita = c.cd_linea_attivita
