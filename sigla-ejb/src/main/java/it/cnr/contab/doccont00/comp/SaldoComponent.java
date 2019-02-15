@@ -1612,7 +1612,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							rigaVar.getLinea_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_attivita().getCd_linea_attivita());
 					ProgettoBulk progetto = latt.getProgetto();
 					
-					if (!progetto.isCtrlDispSpento(annoFrom.intValue())) {
+					//Il controllo parte sempre per gli storni mentre per le variazioni solo se il controllo non è spento
+					if (pdgVariazione.isStorno() || !progetto.isCtrlDispSpento(annoFrom.intValue())) {
 						BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
 		
 	                    //recupero il record se presente altrimenti ne creo uno nuovo
@@ -1713,7 +1714,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			                }
 		                }
                     } else {
-    					if (!progetto.isCtrlDispSpento(annoFrom.intValue())) {
+    					//Il controllo parte sempre per gli storni mentre per le variazioni solo se il controllo non è spento
+    					if (pdgVariazione.isStorno() || !progetto.isCtrlDispSpento(annoFrom.intValue())) {
 							//recupero il record se presente altrimenti ne creo uno nuovo
 							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
 									.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
@@ -2221,7 +2223,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						    		     .subtract(el.getImpSpesaNegativiCdrPersonale()))>0)
 				.findFirst().ifPresent(el->{
 				throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
-						el.getProgetto().getCd_progetto()+"(" + 
+						el.getProgetto().getCd_progetto()+" (" + 
 						new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviNaturaReimpiego())
 								  .subtract(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
 								  .subtract(el.getImpSpesaPositiviCdrPersonale())) +
@@ -2229,7 +2231,34 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiNaturaReimpiego())
 				    		     .subtract(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
 				    		     .subtract(el.getImpSpesaNegativiCdrPersonale())) + ")");});
-	
+
+			/**
+			 * 3.1 se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
+			 * 	  (regola non valida per progetti di Aree e CdrPersonale)
+			 */
+			listCtrlPianoEco.stream()
+				.filter(el->!el.isScaduto(dataChiusura))
+				.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiNaturaReimpiego())
+								  .subtract(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
+								  .subtract(el.getImpSpesaNegativiCdrPersonale())
+								  .compareTo(BigDecimal.ZERO)>0)
+				.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiNaturaReimpiego())
+							  .subtract(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
+							  .subtract(el.getImpSpesaNegativiCdrPersonale())
+						      .compareTo(el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviNaturaReimpiego())
+						    		     .subtract(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
+						    		     .subtract(el.getImpSpesaPositiviCdrPersonale()))>0)
+				.findFirst().ifPresent(el->{
+				throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi al progetto "+
+						el.getProgetto().getCd_progetto()+" (" + 
+						new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiNaturaReimpiego())
+								  .subtract(el.getImpSpesaNegativiArea().subtract(el.getImpSpesaNegativiAreaNaturaReimpiego()))
+								  .subtract(el.getImpSpesaNegativiCdrPersonale())) +
+						") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto ("+
+						new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviNaturaReimpiego())
+				    		     .subtract(el.getImpSpesaPositiviArea().subtract(el.getImpSpesaPositiviAreaNaturaReimpiego()))
+				    		     .subtract(el.getImpSpesaPositiviCdrPersonale())) + ")");});
+			
 			/**
 			 * 4. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
 			 *    allo stesso progetto e alla stessa area
