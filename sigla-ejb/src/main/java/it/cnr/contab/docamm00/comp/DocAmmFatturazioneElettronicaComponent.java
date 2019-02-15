@@ -435,8 +435,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				if (!fattura.isFatturaEstera() && fattura.getCodice_fiscale() == null)
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()); 
-
-				datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
+				if (!fattura.isFatturaEstera()) {
+					datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
+				}
 
 				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (!cliente.getAnagrafico().isEntePubblico() || cliente.getAnagrafico().isPartitaIvaVerificata() || cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0 ))
 					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
