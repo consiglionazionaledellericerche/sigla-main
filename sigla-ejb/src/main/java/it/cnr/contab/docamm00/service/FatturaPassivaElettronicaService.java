@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -319,11 +320,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			  			fatturazioneElettronicaClient.getUnmarshaller().
 			  			unmarshal(new StreamSource(bodyPartMetadati.getInputStream())));				    	    	
 					String replyTo = getReplyTo(message);
-			  	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, metadatiInvioFileType.getValue().getIdentificativoSdI().longValue())) {
+			  	if (!fatturaElettronicaPassivaComponentSession.existsIdentificativo(userContext, new Long(metadatiInvioFileType.getValue().getIdentificativoSdI()))) {
 			    	DataSource byteArrayDataSourceFattura = new UploadedFileDataSource(bodyPartFattura);
 			    	DataSource byteArrayDataSourceMetadati = new UploadedFileDataSource(bodyPartMetadati);
 			    	ricezioneFattureService.riceviFatturaSIGLA(
-			    			metadatiInvioFileType.getValue().getIdentificativoSdI(), 
+			    		new BigInteger(metadatiInvioFileType.getValue().getIdentificativoSdI()), 
 			    			bodyPartFattura.getFileName(), 
 			    			replyTo,
 						new DataHandler(byteArrayDataSourceFattura), 
@@ -524,7 +525,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
                             }).orElse(Boolean.TRUE)){
                         continue;
                     }
-	    			if (message.getSubject().contains(pecSDISubjectRiceviFattureTerm)){
+    				logger.info("Oggetto:" + message.getSubject());
+                    if (message.getSubject().contains(pecSDISubjectRiceviFattureTerm)){
 	    				riceviFattura(message, userName);
 	    			} else if (message.getSubject().contains(pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm)){
 	    				notificaFatturaPassivaScartoEsito(message, userName);
@@ -794,6 +796,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			if (bodyPartXml != null){
 				logger.info("Fatture Elettroniche: Decorrenza Termini. Estratto Body Part.");
 				String fileName = extractFileName(bodyPartXml);
+				logger.info("File Name:"+ fileName);
 				if (fileName.startsWith(docAmmFatturazioneElettronicaComponentSession.recuperoInizioNomeFile(userContext))){
 					if (!trasmissioneFattureService.notificaFatturaAttivaDecorrenzaTermini(userContext, fileName, createDataHandler(bodyPartXml))){
 						logger.info("Fatture Elettroniche: Decorrenza Termini. Incongruenza nel nome del file. Verifica se esistono fatture passive con l'ID.");
@@ -843,6 +846,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
 			if (bodyPartXml != null){
 				logger.info("Fatture Elettroniche: Attive: Estratto Body Part.");
+				logger.info("File Name:"+ bodyPartXml.getFileName());
 				trasmissioneFattureService.notificaFatturaAttivaScarto(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml));
 			}
 		} catch (Exception e) {
@@ -855,6 +859,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
 			if (bodyPartXml != null){
 				logger.info("Fatture Elettroniche: Attive: Estratto Body Part.");
+				logger.info("File Name:"+ bodyPartXml.getFileName());
 				trasmissioneFattureService.notificaFatturaAttivaRicevutaConsegna(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml));
 				String[] replies = message.getHeader("Reply-To");
 				if (replies != null){
@@ -873,6 +878,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			BodyPart bodyPartXml = estraiBodyPartXmlNotificaFatturaAttiva(message);
 			if (bodyPartXml != null){
 				logger.info("Fatture Elettroniche: Attive: Estratto Body Part.");
+				logger.info("File Name:"+ bodyPartXml.getFileName());
 				trasmissioneFattureService.notificaFatturaAttivaMancataConsegna(userContext, bodyPartXml.getFileName(), createDataHandler(bodyPartXml));
 			}
 		} catch (Exception e) {
