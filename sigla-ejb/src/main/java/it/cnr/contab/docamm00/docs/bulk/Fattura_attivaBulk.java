@@ -24,6 +24,7 @@ import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
@@ -1870,7 +1871,11 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 
 		validaDateCompetenza();
 
-		super.validate();
+		if (!RemoveAccent.isOk(getDs_fattura_attiva())){
+			throw new ValidationException("La descrizione contienere caratteri speciali non supportati.");
+		}
+
+        super.validate();
 	}
 	public void addToAssociazioniInventarioHash(
 			Ass_inv_bene_fatturaBulk ass,
