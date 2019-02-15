@@ -38,4 +38,16 @@ public class RemoveAccent {
 	       }
 	       return sb.toString();
 	    }
+	    public static Boolean isOk(String s) {
+	        if (s != null && s.length() != 0) {
+	            for (int i = 0; i < s.length(); i++) {
+	                if ((((int) RemoveAccent.convert(s).charAt(i)) < 31 ||
+	                        ((int) RemoveAccent.convert(s).charAt(i)) > 126) &&
+	                        (int) RemoveAccent.convert(s).charAt(i) != 13 &&
+	                        (int) RemoveAccent.convert(s).charAt(i) != 10)
+	                    return false;
+	            }
+	        }
+	        return true;
+	    }
 }
