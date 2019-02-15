@@ -433,17 +433,17 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setAnagrafica(impostaAnagrafica(factory, cliente));
 
-				if (fattura.getCodice_fiscale() == null)
+				if (!fattura.isFatturaEstera() && fattura.getCodice_fiscale() == null)
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()); 
 
 				datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
 
-				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (cliente.getAnagrafico().isPartitaIvaVerificata() || cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0 ))
+				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (!cliente.getAnagrafico().isEntePubblico() || cliente.getAnagrafico().isPartitaIvaVerificata() || cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0 ))
 					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
 
 				clienteType.setDatiAnagrafici(datiAnagraficiClienteType);
 
-				clienteType.setSede(impostaIndirizzo(userContext, factory, cliente));
+				clienteType.setSede(impostaIndirizzo(userContext, factory, cliente, fattura));
 
 				fatturaHeaderType.setCessionarioCommittente(clienteType);
 
@@ -481,6 +481,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 						} 
 						descrizione += "Riferimento ordine:"+fattura.getRiferimento_ordine();
 					}
+					
 					int lunghezzaStringaCausale = 200;
 					int numeroCaratteriFinali = 0;
 					for (int i = 0; i <= descrizione.length()/lunghezzaStringaCausale; i++) {
@@ -843,7 +844,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 	private AnagraficaType impostaAnagrafica(ObjectFactory factory, TerzoBulk terzo){
 		AnagraficaType anagrafica = factory.createAnagraficaType();
-		anagrafica.setDenominazione(substring80(terzo.getDenominazione_sede()));
+		anagrafica.setDenominazione(substring80(RemoveAccent.convert(terzo.getDenominazione_sede())));
 		return anagrafica;
 	}
 	
@@ -854,23 +855,31 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	private String substring60(String rit) {
 		return rit.length() > 60 ? rit.substring(0,60) : rit;
 	}
-
-	private IndirizzoType impostaIndirizzo(UserContext userContext, ObjectFactory factory, TerzoBulk terzo) throws ComponentException, PersistencyException{
+	
+	private IndirizzoType impostaIndirizzo(UserContext userContext, ObjectFactory factory, TerzoBulk terzo, Fattura_attivaBulk fattura) throws ComponentException, PersistencyException{
 		IndirizzoType indirizzoCedente = factory.createIndirizzoType();
 		ComuneBulk comune = terzo.getComune_sede();
 		
 		indirizzoCedente.setComune(substring60(comune.getDs_comune()));
 		
-		if (terzo.getCap_comune_sede() == null){
+		if ((fattura == null || !fattura.isFatturaEstera()) && terzo.getCap_comune_sede() == null){
 			throw new ApplicationException("Impossibile Procedere! Manca il CAP per il terzo: "+terzo.getCd_terzo()); 
+		} 
+		if (terzo.getCap_comune_sede() != null){
+			indirizzoCedente.setCAP(terzo.getCap_comune_sede().length() > 5 ? terzo.getCap_comune_sede().substring(0,5) : terzo.getCap_comune_sede());
+		} else {
+			indirizzoCedente.setCAP("00000");
 		}
 
-		indirizzoCedente.setCAP(terzo.getCap_comune_sede().length() > 5 ? terzo.getCap_comune_sede().substring(0,5) : terzo.getCap_comune_sede());
 		indirizzoCedente.setProvincia(comune.getCd_provincia());
 		indirizzoCedente.setNazione(impostaCodicePaese(userContext, comune));
-		indirizzoCedente.setIndirizzo(substring60(terzo.getVia_sede()));
+		indirizzoCedente.setIndirizzo(substring60(RemoveAccent.convert(terzo.getVia_sede())));
 		indirizzoCedente.setNumeroCivico(terzo.getNumero_civico_sede());
 		return indirizzoCedente;
+	}
+
+	private IndirizzoType impostaIndirizzo(UserContext userContext, ObjectFactory factory, TerzoBulk terzo) throws ComponentException, PersistencyException{
+		return impostaIndirizzo(userContext, factory, terzo, null);
 	}
 
 	private java.sql.Timestamp getDataOdierna() {
