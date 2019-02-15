@@ -65,5 +65,10 @@ public SQLBuilder selectByClauseForFatturazioneElettronica(UserContext userconte
 
     return sqlBuilder;
 }
+public SQLBuilder createSQLBuilder() {
 
+	SQLBuilder sql = super.createSQLBuilder();
+	sql.addSQLClause("AND", "FATTURA_ATTIVA.TI_FATTURA", sql.EQUALS, Fattura_attiva_IBulk.TIPO_FATTURA_ATTIVA);
+	return sql;
+}
 }
