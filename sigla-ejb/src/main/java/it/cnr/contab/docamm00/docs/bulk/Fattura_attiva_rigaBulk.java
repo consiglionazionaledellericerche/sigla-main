@@ -9,6 +9,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
+import it.cnr.contab.util.RemoveAccent;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
@@ -93,10 +94,15 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 
 		return 	!STATO_INIZIALE.equals(getStato_cofi());
 	}
-	/**
-	 * Insert the method's description here.
-	 * @param newAccertamento it.cnr.contab.doccont00.core.bulk.AccertamentoBulk
-	 */
+	public void validate() throws ValidationException {
+
+		if (!RemoveAccent.isOk(getDs_riga_fattura())){
+			throw new ValidationException("La descrizione contienere caratteri speciali non supportati.");
+		}
+
+        super.validate();
+	}
+
 	public void calcolaCampiDiRiga() {
 
 		if (getQuantita() == null) setQuantita(new java.math.BigDecimal(1));
