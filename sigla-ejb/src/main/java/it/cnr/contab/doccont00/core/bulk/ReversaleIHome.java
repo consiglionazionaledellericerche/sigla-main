@@ -43,11 +43,29 @@ public Collection findDocAttivi( ReversaleIBulk reversale, it.cnr.contab.utenze0
 //	sql.addSQLClause( "AND", "IM_TOTALE_DOC_AMM - IM_ASSOCIATO_DOC_CONTABILE", sql.GREATER, new java.math.BigDecimal(0));
 	sql.addClause( "AND", "stato_cofi", sql.EQUALS, Documento_genericoBulk.STATO_CONTABILIZZATO);		
 	sql.addSQLClause( "AND", "IM_SCADENZA", sql.GREATER, new java.math.BigDecimal(0));		
+	CompoundFindClause clausesNoFattElett = new CompoundFindClause();
+	clausesNoFattElett.addClause("OR", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.FALSE);
+	CompoundFindClause clausesOr = new CompoundFindClause();
+	CompoundFindClause clausesFattElett = new CompoundFindClause();
+	CompoundFindClause clausesFattElettPubblici = new CompoundFindClause();
+	clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ACCETTATA_DESTINATARIO);
+	clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI);
+	clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_NON_RECAPITABILE);
+	CompoundFindClause clausesFattElettPrivati = new CompoundFindClause();
+	CompoundFindClause clausesFattElettPrivatiAnd = new CompoundFindClause();
+	CompoundFindClause clausesFattElettPrivatiOr = new CompoundFindClause();
+	clausesFattElettPrivatiAnd.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNULL, null);
+	clausesFattElettPrivatiOr.addClause("or", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA);
+	clausesFattElettPrivatiOr.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
+	
+	clausesFattElettPrivati.addChild(CompoundFindClause.and(clausesFattElettPrivatiAnd, clausesFattElettPrivatiOr));
+
+	clausesFattElett.addChild(CompoundFindClause.or(clausesFattElettPrivati, clausesFattElettPubblici));
+	
+	clausesOr.addChild(CompoundFindClause.or(clausesNoFattElett, clausesFattElett));
+	sql.addClause(clausesOr);
 	sql.addOrderBy( "esercizio_ori_accertamento, pg_accertamento" );
 	
-	
-	
-
 	return home.fetchAll( sql);
 			
 }

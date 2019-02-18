@@ -158,6 +158,23 @@
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"
 			columnSize="22"/>
+		<columnMapping
+			columnName="FL_FATTURA_ELETTRONICA"
+			propertyName="flFatturaElettronica"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="STATO_INVIO_SDI"
+			propertyName="statoInvioSdi"
+			sqlTypeName="VARCHAR"
+			columnSize="3" />
+		<columnMapping
+			columnName="CODICE_UNIVOCO_UFFICIO_IPA"
+			propertyName="codiceUnivocoUfficioIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="6" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_banca" />
@@ -217,4 +234,10 @@
 		name="dt_scadenza" />
 	<persistentProperty
 		name="pg_ver_rec" />
+	<persistentProperty
+		name="statoInvioSdi" />			
+	<persistentProperty
+		name="flFatturaElettronica" />
+	<persistentProperty
+		name="codiceUnivocoUfficioIpa" />			
 </SQLPersistentInfo>
