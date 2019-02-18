@@ -2,7 +2,7 @@
 --  DDL for View V_DOC_ATTIVO
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_DOC_ATTIVO" ("CD_CDS", "CD_UNITA_ORGANIZZATIVA", "ESERCIZIO", "CD_TIPO_DOCUMENTO_AMM", "PG_DOCUMENTO_AMM", "DT_EMISSIONE", "PG_VER_REC", "CD_CDS_ORIGINE", "CD_UO_ORIGINE", "TI_FATTURA", "STATO_COFI", "CD_CDS_ACCERTAMENTO", "ESERCIZIO_ACCERTAMENTO", "ESERCIZIO_ORI_ACCERTAMENTO", "PG_ACCERTAMENTO", "PG_ACCERTAMENTO_SCADENZARIO", "CD_TERZO", "CD_TERZO_UO_CDS", "COGNOME", "NOME", "RAGIONE_SOCIALE", "PG_BANCA", "CD_MODALITA_PAG", "IM_IMPONIBILE_DOC_AMM", "IM_IVA_DOC_AMM", "IM_TOTALE_DOC_AMM", "FL_SELEZIONE") AS 
+  CREATE OR REPLACE FORCE VIEW "V_DOC_ATTIVO" ("CD_CDS", "CD_UNITA_ORGANIZZATIVA", "ESERCIZIO", "CD_TIPO_DOCUMENTO_AMM", "PG_DOCUMENTO_AMM", "DT_EMISSIONE", "PG_VER_REC", "CD_CDS_ORIGINE", "CD_UO_ORIGINE", "TI_FATTURA", "STATO_COFI", "CD_CDS_ACCERTAMENTO", "ESERCIZIO_ACCERTAMENTO", "ESERCIZIO_ORI_ACCERTAMENTO", "PG_ACCERTAMENTO", "PG_ACCERTAMENTO_SCADENZARIO", "CD_TERZO", "CD_TERZO_UO_CDS", "COGNOME", "NOME", "RAGIONE_SOCIALE", "PG_BANCA", "CD_MODALITA_PAG", "IM_IMPONIBILE_DOC_AMM", "IM_IVA_DOC_AMM", "IM_TOTALE_DOC_AMM", "FL_SELEZIONE", "FL_FATTURA_ELETTRONICA", "STATO_INVIO_SDI", "CODICE_UNIVOCO_UFFICIO_IPA") AS 
   SELECT
 --==================================================================================================
 --
@@ -99,7 +99,8 @@
        DECODE(A.ti_fattura, 'C', (B.im_imponibile * -1), B.im_imponibile),
        decode(FL_LIQUIDAZIONE_DIFFERITA,'Y',0, DECODE(A.ti_fattura, 'C', (B.im_iva * -1), B.im_iva)) iva,
        DECODE(A.ti_fattura, 'C', decode(FL_LIQUIDAZIONE_DIFFERITA,'Y',B.im_imponibile*-1,((B.im_imponibile + B.im_iva) * -1)),(decode(FL_LIQUIDAZIONE_DIFFERITA,'Y',B.im_imponibile,B.im_imponibile + B.im_iva))),
-       DECODE(A.ti_fattura, 'F', (DECODE(A.FL_CONGELATA, 'Y', 'N', 'Y')), 'N')
+       DECODE(A.ti_fattura, 'F', (DECODE(A.FL_CONGELATA, 'Y', 'N', 'Y')), 'N'),
+       FL_FATTURA_ELETTRONICA, STATO_INVIO_SDI, CODICE_UNIVOCO_UFFICIO_IPA
 FROM   FATTURA_ATTIVA A,
        FATTURA_ATTIVA_RIGA B,
        CONFIGURAZIONE_CNR C
@@ -142,7 +143,8 @@ select
        DECODE(A.ti_fattura, 'C', (B.im_imponibile * -1), B.im_imponibile),
        DECODE(A.ti_fattura, 'C', (B.im_iva * -1), B.im_iva) iva,
        DECODE(A.ti_fattura, 'C', ((B.im_imponibile + B.im_iva) * -1),(B.im_imponibile + B.im_iva)),
-       DECODE(A.ti_fattura, 'F', (DECODE(A.FL_CONGELATA, 'Y', 'N', 'Y')), 'N')
+       DECODE(A.ti_fattura, 'F', (DECODE(A.FL_CONGELATA, 'Y', 'N', 'Y')), 'N'),
+       FL_FATTURA_ELETTRONICA, STATO_INVIO_SDI,CODICE_UNIVOCO_UFFICIO_IPA
 FROM   FATTURA_ATTIVA A,
        FATTURA_ATTIVA_RIGA B,
        CONFIGURAZIONE_CNR C
@@ -183,7 +185,8 @@ SELECT A.cd_cds,
        B.im_imponibile,
        B.im_iva,
        decode(a.fl_split_payment,'Y',B.im_imponibile,(B.im_imponibile + B.im_iva)),
-       DECODE(A.FL_CONGELATA, 'Y', 'N', 'Y') --'Y'
+       DECODE(A.FL_CONGELATA, 'Y', 'N', 'Y') --'Y', 
+       ,'N',NULL, NULL
 FROM   FATTURA_PASSIVA A,
        FATTURA_PASSIVA_RIGA B
 WHERE  A.ti_fattura = 'C' AND
@@ -224,7 +227,8 @@ SELECT A.cd_cds,
        0,
        0,
        A.im_riga,
-       'Y'
+       'Y', 
+       'N',NULL, NULL
 FROM   DOCUMENTO_GENERICO_RIGA A,
        DOCUMENTO_GENERICO B
 WHERE  A.dt_cancellazione IS NULL AND
@@ -265,7 +269,8 @@ SELECT A.cd_cds,
        0,
        0,
        A.im_rimborso,
-       'Y'
+       'Y', 
+       'N',NULL, NULL
 FROM   RIMBORSO A
 WHERE  A.dt_cancellazione IS NULL AND
        A.cd_cds_accertamento IS NOT NULL AND
