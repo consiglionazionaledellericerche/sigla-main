@@ -36,13 +36,18 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 @Service
 public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
     private transient static final Logger logger = LoggerFactory.getLogger(OrdinativiSiopePlusService.class);
+    public static final int TOO_MANY_REQUEST = 429;
 
     @Value("${siopeplus.url.flusso}")
     public String urlFlusso;
@@ -112,7 +117,27 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
         }
     }
 
-    public Lista getListaMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina) {
+    public List<Risultato> getAllMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina) {
+        List<Risultato> risultatoList = new ArrayList<Risultato>();
+        final Lista listaMessaggi = getListaMessaggi(esito, dataDa, dataA, download, pagina);
+        risultatoList.addAll(
+                Optional.ofNullable(listaMessaggi)
+                    .flatMap(lista -> Optional.ofNullable(lista.getRisultati()))
+                    .orElse(Collections.emptyList())
+        );
+        if (listaMessaggi.getNumPagine() > 1) {
+            for (int i = 2; i < listaMessaggi.getNumPagine(); i++) {
+                risultatoList.addAll(
+                        Optional.ofNullable(getListaMessaggi(esito, dataDa, dataA, download, i))
+                        .flatMap(lista -> Optional.ofNullable(lista.getRisultati()))
+                                .orElse(Collections.emptyList())
+                );
+            }
+        }
+        return risultatoList;
+    }
+
+    private Lista getListaMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina) {
         CloseableHttpClient client = null;
         try {
             client = getHttpClient();
@@ -130,7 +155,15 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
 
             final HttpResponse response = client.execute(httpGet);
             if (!Optional.ofNullable(response).filter(httpResponse -> httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK).isPresent()) {
-                logger.error(response.getStatusLine().getReasonPhrase());
+                logger.error("ERROR SIOPE+ for LISTA MESSAGGI {}", response.getStatusLine());
+                if (response.getStatusLine().getStatusCode() == TOO_MANY_REQUEST) {
+                    try {
+                        TimeUnit.SECONDS.sleep(10);
+                        return getListaMessaggi(esito, dataDa, dataA, download, pagina);
+                    } catch (InterruptedException e) {
+                        logger.error("ERROR SIOPE+ for LISTA MESSAGGI", e);
+                    }
+                }
                 return new Lista();
             }
             Gson gson = new GsonBuilder().setDateFormat(pattern).create();

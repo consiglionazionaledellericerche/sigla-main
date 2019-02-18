@@ -32,10 +32,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -56,21 +53,21 @@ public class OrdinativiSiopePlusTest {
         properties.load(this.getClass().getResourceAsStream("/META-INF/spring/siopeplus.properties"));
     }
 
-    public Lista getACK() {
+    public List<Risultato> getACK() {
         OrdinativiSiopePlusService ordinativiSiopePlusService = new OrdinativiSiopePlusService();
         ordinativiSiopePlusService.urlACK = "https://certa2a.siopeplus.it/v1/A2A-31432329/PA/O5WZO8/flusso/ack/";
         ordinativiSiopePlusService.password = properties.getProperty("siopeplus.certificate.password");
-        final Lista lista = ordinativiSiopePlusService.getListaMessaggi(Esito.ACK, null, null, null, null);
-        Assert.notNull(lista);
-        return lista;
+        final List<Risultato> allMessaggi = ordinativiSiopePlusService.getAllMessaggi(Esito.ACK, null, null, null, null);
+        Assert.notNull(allMessaggi);
+        return allMessaggi;
     }
 
     //@Test
     public void downloadACK() {
         OrdinativiSiopePlusService ordinativiSiopePlusService = new OrdinativiSiopePlusService();
         ordinativiSiopePlusService.password = properties.getProperty("siopeplus.certificate.password");
-        final Lista lista = getACK();
-        Optional.ofNullable(lista.getRisultati())
+        final List<Risultato> lista = getACK();
+        Optional.ofNullable(lista)
                 .orElse(Collections.emptyList())
                 .stream()
                 .forEach(risultato -> {
