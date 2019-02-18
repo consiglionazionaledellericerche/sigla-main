@@ -28,4 +28,11 @@ public interface MessaggiSiopePlusLocal {
     Response esito(@Context HttpServletRequest request, @PathParam("esito") Esito esito,
                    @QueryParam("dataDa") String dataDa, @QueryParam("dataA") String dataA, @QueryParam("download") Boolean download) throws Exception;
 
+
+    @GET
+    @Path("/siopeplus/{esito}/downloadxml")
+    @AccessoAllowed(value= AccessoEnum.XXXHTTPSESSIONXXXXXX)
+    Response downloadxml(@Context HttpServletRequest request, @PathParam("esito") Esito esito,
+                   @QueryParam("dataDa") String dataDa, @QueryParam("dataA") String dataA, @QueryParam("download") Boolean download, @QueryParam("localfolder") String localFolder) throws Exception;
+
 }

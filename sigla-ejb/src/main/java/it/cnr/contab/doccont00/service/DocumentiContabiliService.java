@@ -973,10 +973,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public Stream<Risultato> downloadMessaggiACK(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
-        final Lista listaACK = ordinativiSiopePlusService.getListaMessaggi(Esito.ACK,
+        final List<Risultato> allMessaggi = ordinativiSiopePlusService.getAllMessaggi(Esito.ACK,
                 dataDa, dataA, download, null);
-        logger.info("Lista ACK: {}", listaACK);
-        return Optional.ofNullable(listaACK.getRisultati())
+        logger.info("Lista ACK: {}", allMessaggi);
+        return Optional.ofNullable(allMessaggi)
                 .orElseGet(() -> Collections.emptyList())
                 .stream()
                 .map(risultato -> {
@@ -997,10 +997,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public Stream<Risultato> downloadMessaggiEsito(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
-        final Lista listaEsito = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITO,
+        final List<Risultato> allMessaggi = ordinativiSiopePlusService.getAllMessaggi(Esito.ESITO,
                 dataDa, dataA, download, null);
-        logger.info("SIOPE+ Lista Esito: {}", listaEsito);
-        return Optional.ofNullable(listaEsito.getRisultati())
+        logger.info("SIOPE+ Lista Esito: {}", allMessaggi);
+        return Optional.ofNullable(allMessaggi)
                 .orElseGet(() -> Collections.emptyList())
                 .stream()
                 .map(risultato -> {
@@ -1021,10 +1021,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public Stream<Risultato> downloadMessaggiEsitoApplicativo(LocalDateTime dataDa, LocalDateTime dataA, Boolean download, boolean annullaMandati, boolean annullaReversali) {
-        final Lista listaEsitoApplicativo = ordinativiSiopePlusService.getListaMessaggi(Esito.ESITOAPPLICATIVO,
+        final List<Risultato> allMessaggi = ordinativiSiopePlusService.getAllMessaggi(Esito.ESITOAPPLICATIVO,
                 dataDa, dataA, download, null);
-        logger.info("SIOPE+ Lista Esito Applicativo: {}", listaEsitoApplicativo);
-        return Optional.ofNullable(listaEsitoApplicativo.getRisultati())
+        logger.info("SIOPE+ Lista Esito Applicativo: {}", allMessaggi);
+        return Optional.ofNullable(allMessaggi)
                 .orElseGet(() -> Collections.emptyList())
                 .stream()
                 .map(risultato -> {
