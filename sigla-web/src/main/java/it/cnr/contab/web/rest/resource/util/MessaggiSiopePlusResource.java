@@ -4,12 +4,16 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.model.Esito;
+import it.cnr.contab.model.Lista;
+import it.cnr.contab.model.MessaggioXML;
 import it.cnr.contab.model.Risultato;
+import it.cnr.contab.service.OrdinativiSiopePlusService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.web.rest.local.util.MessaggiSiopePlusLocal;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.siopeplus.MessaggiEsitoApplicativo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,11 +23,15 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -119,6 +127,35 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
             }
         }
         return Response.ok(result.collect(Collectors.toList())).build();
+    }
+
+    @Override
+    public Response downloadxml(HttpServletRequest request, Esito esito, String dataDa, String dataA, Boolean download, String localFolder) throws Exception {
+        OrdinativiSiopePlusService ordinativiSiopePlusService = SpringUtil.getBean("ordinativiSiopePlusService", OrdinativiSiopePlusService.class);
+
+        final Stream<Risultato> risultatoStream = Optional.ofNullable(ordinativiSiopePlusService.getAllMessaggi(esito, Optional.ofNullable(dataDa)
+                        .map(s -> LocalDateTime.parse(dataDa, DateTimeFormatter.ISO_DATE_TIME))
+                        .orElse(null),
+                Optional.ofNullable(dataA)
+                        .map(s -> LocalDateTime.parse(dataA, DateTimeFormatter.ISO_DATE_TIME))
+                        .orElse(null), download, null))
+                .orElseGet(() -> Collections.emptyList())
+                .stream()
+                .map(risultato -> {
+                    try {
+                        final MessaggioXML<Object> messaggioXML =
+                                ordinativiSiopePlusService.getLocation(risultato.getLocation(), Object.class);
+                        Files.write(
+                                Files.createFile(
+                                    Paths.get(localFolder.concat(File.separator).concat(UUID.randomUUID().toString()).concat("-").concat(messaggioXML.getName()))),
+                                    messaggioXML.getContent()
+                        );
+                    } catch (Exception _ex) {
+                        logger.error("SIOPE+ ERROR for risultato: {}", risultato, _ex);
+                    }
+                    return risultato;
+                });
+        return Response.ok(risultatoStream.collect(Collectors.toList())).build();
     }
 
     @Override
