@@ -47,6 +47,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 import javax.ejb.RemoveException;
@@ -609,28 +610,27 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	}
 
 	@Override
-	public OggettoBulk initializeModelForEdit(ActionContext actioncontext,
-			OggettoBulk oggettobulk) throws BusinessProcessException {
+	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		ContrattoBulk contratto = (ContrattoBulk)super.initializeModelForEdit(actioncontext, oggettobulk);
-		StorageObject folder;
 		try {
-			folder = contrattoService.getFolderContratto(contratto);
+			Optional.ofNullable(contrattoService.getFolderContratto(contratto))
+					.map(storageObject -> contrattoService.getChildren(storageObject.getKey()))
+					.map(storageObjects -> storageObjects.stream())
+					.orElse(Stream.empty())
+					.filter(storageObject -> Optional.ofNullable(storageObject.getKey()).isPresent())
+					.forEach(child -> {
+						AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
+						allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+						allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
+						allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+						allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
+						allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
+						allegato.setLink(child.<String>getPropertyValue("sigla_contratti_aspect_link:url"));
+						allegato.setCrudStatus(OggettoBulk.NORMAL);
+						contratto.addToArchivioAllegati(allegato);
+					});
 		} catch (ApplicationException e) {
 			throw handleException(e);
-		}
-		if (folder != null){
-			List<StorageObject> children = contrattoService.getChildren(folder.getKey());
-			for (StorageObject child : children) {
-				AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-				allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-				allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
-				allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-				allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
-				allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
-				allegato.setLink((String) child.getPropertyValue("sigla_contratti_aspect_link:url"));
-				allegato.setCrudStatus(OggettoBulk.NORMAL);
-				contratto.addToArchivioAllegati(allegato);
-			}
 		}
 		return contratto;
 	}
@@ -642,7 +642,6 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				.map(key -> contrattoService.getStorageObjectBykey(key))
 				.map(storageObject -> storageObject.<String>getPropertyValue(StoragePropertyNames.NAME.value()))
 				.orElse(null);
-
 	}
 	
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
