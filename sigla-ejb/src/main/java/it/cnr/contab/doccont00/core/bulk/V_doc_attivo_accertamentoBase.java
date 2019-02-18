@@ -102,9 +102,32 @@ public class V_doc_attivo_accertamentoBase extends OggettoBulk implements Persis
 	// PG_VER_REC
 	private Long pg_ver_rec;
 
-public V_doc_attivo_accertamentoBase() {
+	private java.lang.Boolean flFatturaElettronica;
+	
+	private java.lang.String statoInvioSdi;
+
+	private java.lang.String codiceUnivocoUfficioIpa;
+	public java.lang.String getCodiceUnivocoUfficioIpa() {
+		return codiceUnivocoUfficioIpa;
+	}
+	public void setCodiceUnivocoUfficioIpa(java.lang.String codiceUnivocoUfficioIpa) {
+		this.codiceUnivocoUfficioIpa = codiceUnivocoUfficioIpa;
+	}
+	public V_doc_attivo_accertamentoBase() {
 	super();
 }
+public java.lang.Boolean getFlFatturaElettronica() {
+		return flFatturaElettronica;
+	}
+	public void setFlFatturaElettronica(java.lang.Boolean flFatturaElettronica) {
+		this.flFatturaElettronica = flFatturaElettronica;
+	}
+	public java.lang.String getStatoInvioSdi() {
+		return statoInvioSdi;
+	}
+	public void setStatoInvioSdi(java.lang.String statoInvioSdi) {
+		this.statoInvioSdi = statoInvioSdi;
+	}
 /* 
  * Getter dell'attributo cd_cds
  */
