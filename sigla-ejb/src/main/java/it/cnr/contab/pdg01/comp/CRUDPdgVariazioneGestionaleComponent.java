@@ -35,6 +35,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -199,7 +200,13 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			if (!pdg.isStorno() && !pdg.getTipo_variazione().isMovimentoSuFondi())
 				controllaQuadraturaImportiAree(userContext, pdg);
 			
-			Utility.createSaldoComponentSession().checkPdgPianoEconomico(userContext, pdg);
+			SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
+
+			//Verifico che il tipo di variazione sia consentita
+			saldoComponent.checkPdgPianoEconomico(userContext, pdg);
+			//Verifico che piano economico non si sfondi
+			saldoComponent.checkDispPianoEconomicoProgetto(userContext, pdg);
+
 			aggiornaLimiteSpesa(userContext, pdg);
 			/*
 			 * Verifico che l'assestato di tutte le combinazioni scelte sia positivo in modo da avvertire
@@ -607,19 +614,28 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			int contaRigheEntrata = Utility.ZERO.intValue();
 			int contaRigheSpesa = Utility.ZERO.intValue();
 
+			if (Optional.of(pdg).filter(el->el.isMotivazioneTrasferimentoAutorizzato()).isPresent() &&
+					!pdg.getCentro_responsabilita().isCdrSAC())
+				throw new ApplicationException("Variazione di tipo 'Trasferimento autorizzato' " +
+						"consentita solo alla UO Ente.");
+
 			boolean existDettPersonale = true;
 			String cdrPersonale = null;
-			if (Optional.ofNullable(pdg.getTiMotivazioneVariazione()).isPresent()) { 
+			if (Optional.of(pdg).filter(el->el.isMotivazioneVariazionePersonale()).isPresent()) { 
 				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(usercontext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				existDettPersonale = false;
 			} 
-				
+			boolean existDettArea = true;
+			if (Optional.of(pdg).filter(el->el.isMotivazioneTrasferimentoArea()).isPresent())
+				existDettArea = false;
+			
 			for (java.util.Iterator j=pdg.getAssociazioneCDR().iterator();j.hasNext();){
 				Ass_pdg_variazione_cdrBulk ass_pdg = (Ass_pdg_variazione_cdrBulk)j.next();
 
 				existDettPersonale = existDettPersonale||cdrPersonale.equals(ass_pdg.getCd_centro_responsabilita());
-
+				existDettArea = existDettArea||ass_pdg.getCentro_responsabilita().getUnita_padre().isUoArea();
+						
 				if (pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_STESSO_ISTITUTO) ||
 					pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_ENTRATA_STESSO_ISTITUTO) ||
 					pdg.getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO) ||
@@ -688,6 +704,10 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			if (!existDettPersonale)
 				throw new ApplicationException("In un variazione di tipo 'Personale' occorre selezionare almeno una voce accentrata "
 						+ "verso il CDR del personale o scegliere tra i CDR partecipanti anche quello del personale ("+cdrPersonale+").");
+			if (!existDettArea)
+				throw new ApplicationException("In un variazione di tipo 'Trasferimento ad Aree' occorre scegliere tra i CDR partecipanti "
+						+ "almeno uno di tipo Area.");
+
 			if (pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_STESSO_ISTITUTO) ||
 				pdg.getTipologia().equals(Tipo_variazioneBulk.STORNO_SPESA_ISTITUTI_DIVERSI)) {
 				if (contaRigheEntrata>Utility.ZERO.intValue())
@@ -1199,8 +1219,6 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					     new it.cnr.contab.util.EuroFormat().format(totVariazioneSpe) + ".<BR>";
 				}
 			}
-			
-			Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext, pdgVariazione);
 	   } catch (PersistencyException e) {
 		   throw new ComponentException(e);
 	   }catch (RemoteException e) {
