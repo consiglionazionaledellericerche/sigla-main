@@ -260,7 +260,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             return true;
         else if ((isUoEnte() || isCdrScrivania()) &&
                 (pdgVariazione.isApprovata() || pdgVariazione.isApprovazioneFormale()) &&
-                pdgVariazione.isMotivazioneVariazioneBando() && pdgVariazione.getStorageMatricola() == null)
+                pdgVariazione.isMotivazioneVariazioneBandoPersonale() && pdgVariazione.getStorageMatricola() == null)
             return true;
         else
             return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !(pdgVariazione.getStatoDocumentale() != null);
@@ -426,7 +426,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) getModel();
             if (pdg != null &&
                     (pdg.isCancellatoLogicamente() || pdg.isRespinta() ||
-                            (pdg.isApprovazioneFormale() && (!pdg.isMotivazioneVariazioneBando() || pdg.getStorageMatricola() != null)))) {
+                            (pdg.isApprovazioneFormale() && (!pdg.isMotivazioneVariazioneBandoPersonale() || pdg.getStorageMatricola() != null)))) {
                 setStatus(VIEW);
             }
         }
@@ -678,9 +678,9 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                 ? null
                 : pdgVar.getMapMotivazioneVariazione());
 
-        if (pdgVar.isMotivazioneVariazioneBando())
+        if (pdgVar.isMotivazioneVariazioneBandoPersonale())
             pdgVar.setIdMatricola(null);
-        else if (pdgVar.isMotivazioneVariazioneProroga() || pdgVar.isMotivazioneVariazioneAltreSpese())
+        else if (pdgVar.isMotivazioneVariazioneProrogaPersonale() || pdgVar.isMotivazioneVariazioneAltreSpesePersonale())
             pdgVar.setIdBando(null);
         else {
             pdgVar.setIdMatricola(null);

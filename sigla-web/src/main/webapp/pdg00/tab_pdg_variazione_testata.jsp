@@ -52,7 +52,7 @@
     <TR>
 	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
 	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null);%></TD>
-	  <% if (bp.isSearching() || bk.isMotivazioneVariazioneBando()) {%>
+	  <% if (bp.isSearching() || bk.isMotivazioneVariazioneBandoPersonale()) {%>
 		 <TD><% bp.getController().writeFormLabel( out, "idBando"); %></TD>
 		 <TD><% bp.getController().writeFormInput( out, "default","idBando",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null); %></TD>
 	 	 <%	if (bk.isApprovata()||bk.isApprovazioneFormale()) { %>
@@ -64,7 +64,7 @@
 		 </TD>
 		 <% } %>
 	  <% } 
-	     if (bp.isSearching() || (bk.isMotivazioneVariazioneProroga() || bk.isMotivazioneVariazioneAltreSpese())) { %>
+	     if (bp.isSearching() || (bk.isMotivazioneVariazioneProrogaPersonale() || bk.isMotivazioneVariazioneAltreSpesePersonale())) { %>
 		 <TD <% if (!bp.isSearching()){ %>colspan="3"<% } %>>
 		 	<%	
 		 		bp.getController().writeFormLabel( out, "idMatricola");
@@ -82,9 +82,9 @@
     <% } %>
     <TR>
       <TD><% bp.getController().writeFormLabel(out,"tipologia_fin");%></TD>
-      <TD colspan="1"><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
+      <TD colspan="2"><% bp.getController().writeFormInput(out,"tipologia_fin");%></TD>
       <TD><% bp.getController().writeFormLabel(out,"ds_causale");%></TD>
-     <TD colspan="3">	  
+     <TD colspan="2">	  
     	<% bp.getController().writeFormInput(out,"default","ds_causale",isFieldStoEnabled,null,null);%>
     </TD>
     </TR>

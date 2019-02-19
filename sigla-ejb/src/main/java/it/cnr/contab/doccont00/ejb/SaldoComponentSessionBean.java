@@ -417,24 +417,6 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 			throw uncaughtError(param1,componentObj,e);
 		}
 	}
-	public String getMessaggioSfondamentoPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk param2) throws ComponentException,javax.ejb.EJBException {
-		pre_component_invocation(param1,componentObj);
-		try {
-			java.lang.String result = componentObj.getMessaggioSfondamentoPianoEconomico(param1,param2);
-			component_invocation_succes(param1,componentObj);
-			return result;
-		} catch(it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param1,componentObj);
-			throw e;
-		} catch(it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param1,componentObj);
-			throw e;
-		} catch(RuntimeException e) {
-			throw uncaughtRuntimeException(param1,componentObj,e);
-		} catch(Error e) {
-			throw uncaughtError(param1,componentObj,e);
-		}
-	}
 	public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk param2) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param1,componentObj);
 		try {
