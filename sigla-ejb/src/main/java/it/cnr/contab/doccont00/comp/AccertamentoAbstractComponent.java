@@ -473,6 +473,10 @@ public OggettoBulk modificaConBulk (UserContext uc,OggettoBulk bulk) throws Comp
 
 public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImporto, boolean aggiornaScadenzaSuccessiva) throws ComponentException 
 {
+	return modificaScadenzaInAutomatico(userContext, scad, nuovoImporto, aggiornaScadenzaSuccessiva, false);
+}
+public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext,	IScadenzaDocumentoContabileBulk scad,	BigDecimal nuovoImporto, boolean aggiornaScadenzaSuccessiva, Boolean aggiornaCalcoloAutomatico) throws ComponentException 
+{
 	Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk)scad;
 	try
 	{
@@ -493,7 +497,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 		}	
 		else
 		{
-			return createAccertamentoComponentSession().modificaScadenzaInAutomatico( userContext, scadenza, nuovoImporto, aggiornaScadenzaSuccessiva);
+			return createAccertamentoComponentSession().modificaScadenzaInAutomatico( userContext, scadenza, nuovoImporto, aggiornaScadenzaSuccessiva, aggiornaCalcoloAutomatico);
 		}	
 	}
 	catch ( Exception e )

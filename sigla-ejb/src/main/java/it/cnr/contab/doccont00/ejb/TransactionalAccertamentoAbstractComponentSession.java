@@ -111,6 +111,26 @@ public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk modific
 		}
 	}
 }
+public it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico(it.cnr.jada.UserContext param0,it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk param1,java.math.BigDecimal param2,boolean param3, Boolean aggiornaCalcoloAutomatico) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	try {
+		return (it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk)invoke("modificaScadenzaInAutomatico",new Object[] {
+			param0,
+			param1,
+			param2,
+			new Boolean(param3),
+			aggiornaCalcoloAutomatico});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 public void rollbackToSavePoint(it.cnr.jada.UserContext param0) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		invoke("rollbackToSavePoint",new Object[] {
