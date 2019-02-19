@@ -946,7 +946,7 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
             return;
         }
 
-        logger.info("query: {} dominio: {} anno:{} rows: {}", query, dominio, anno, getRows());
+        logger.debug("query: {} dominio: {} anno:{} rows: {}", query, dominio, anno, getRows());
 		IncarichiRichiestaComponentSession componentSession = ((IncarichiRichiestaComponentSession)createComponentSession("CNRINCARICHI00_EJB_IncarichiRichiestaComponentSession",IncarichiRichiestaComponentSession.class));
 		ContrattoComponentSession contrattoComponentSession = ((ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class));
 		try {

@@ -515,9 +515,9 @@ public class FatturaAttivaComponentWS {
 		    	                    	if (v.getFl_solo_residuo())
 		    	                    	   	fat=ValorizzaErrore(fat,Costanti.ERRORE_FA_107.toString());
 	    	                    	}
-		    	                    //acc.setDt_registrazione(testata.getDt_registrazione());
-		    	                    ///?????
-		    	                    acc.setDt_registrazione((DateUtils.truncate(new Timestamp(fatr.getDt_scadenza().getTime()))));
+		    	            		java.sql.Timestamp dataReg = null;
+		    	            		dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+		    	                    acc.setDt_registrazione((DateUtils.truncate(dataReg)));
 		    	                    acc.setDs_accertamento(fatr.getDs_accertamento());
 		    	                    //??? importo riga?????	
 		    	                    if(fatturaAttivaSingolaComponentSession.isAttivoSplitPayment(userContext,testata.getDt_registrazione()) && testata.getFl_liquidazione_differita())
