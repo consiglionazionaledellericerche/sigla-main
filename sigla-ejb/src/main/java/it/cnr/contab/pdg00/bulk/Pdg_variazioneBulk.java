@@ -46,6 +46,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	final public static String MOTIVAZIONE_GENERICO = "GEN";
 	final public static String MOTIVAZIONE_BANDO = "BAN";
 	final public static String MOTIVAZIONE_PROROGA = "PRG";
+	final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
+	final public static String MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO = "TAU";
 	final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
 
 	final public static String FONDO = "Fondo Perequativo Stabilizzazioni";
@@ -69,10 +71,14 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento Autorizzato");
 
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento Autorizzato");
 		
 		ds_causaleKeys.put(FONDO,"Fondo Perequativo Stabilizzazioni");
 		ds_causaleKeys.put(OVERHEAD,"Overhead/Spese Generali");
@@ -654,11 +660,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 			if (getTipo_variazione().getFl_variazione_trasferimento() && getMapMotivazioneVariazione()==null) 
 				throw new ValidationException("Occorre indicare la motivazione per cui viene effettuata la variazione.");
 		}			
-		if (this.isMotivazioneVariazioneBando() && getIdBando()==null) 
+		if (this.isMotivazioneVariazioneBandoPersonale() && getIdBando()==null) 
 			throw new ValidationException("Occorre inserire i dettagli del bando per cui si effettua la variazione.");
-		if (this.isMotivazioneVariazioneProroga() && getIdMatricola()==null) 
+		if (this.isMotivazioneVariazioneProrogaPersonale() && getIdMatricola()==null) 
 			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione di proroga contratto.");
-		if (this.isMotivazioneVariazioneAltreSpese() && getIdMatricola()==null) 
+		if (this.isMotivazioneVariazioneAltreSpesePersonale() && getIdMatricola()==null) 
 			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione per altre spese del personale.");
 	}
 	
@@ -733,16 +739,30 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
     	return dett;
     }
 
-	public boolean isMotivazioneVariazioneBando() {
+	public boolean isMotivazioneVariazionePersonale() {
+		return this.isMotivazioneVariazioneBandoPersonale()||
+			   this.isMotivazioneVariazioneProrogaPersonale()||
+			   this.isMotivazioneVariazioneAltreSpesePersonale();
+	}
+
+	public boolean isMotivazioneVariazioneBandoPersonale() {
 		return MOTIVAZIONE_BANDO.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneVariazioneProroga() {
+	public boolean isMotivazioneVariazioneProrogaPersonale() {
 		return MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneVariazioneAltreSpese() {
+	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
 		return MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneTrasferimentoArea() {
+		return MOTIVAZIONE_TRASFERIMENTO_AREA.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneTrasferimentoAutorizzato() {
+		return MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneGenerico() {
