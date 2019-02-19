@@ -2459,6 +2459,10 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 
 public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, java.math.BigDecimal nuovoImporto, boolean modificaScadenzaSuccessiva) throws ComponentException
 {
+	return modificaScadenzaInAutomatico(userContext, scad, nuovoImporto, modificaScadenzaSuccessiva,false);
+}
+public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, java.math.BigDecimal nuovoImporto, boolean modificaScadenzaSuccessiva, Boolean aggiornaCalcoloAutomatico) throws ComponentException
+{
 	Accertamento_scadenzarioBulk scadenzaDaFattura = (Accertamento_scadenzarioBulk)scad;
 	if (  nuovoImporto.compareTo( scad.getIm_scadenza()) == 0  )
 		throw handleException( new ApplicationException( "Aggiornamento in automatico non necessario!" ));
@@ -2472,7 +2476,11 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
                     .filter(accertamentoScadenzario -> accertamentoScadenzario.equalsByPrimaryKey(scad))
                     .findAny()
                     .orElse(scadenzaDaFattura);
-
+        if (aggiornaCalcoloAutomatico){
+        	accertamento.setFl_calcolo_automatico(true);
+        	accertamento.setToBeUpdated();
+        }
+        
 		if ( accertamento.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES) &&
 				!modificaScadenzaSuccessiva)
 			throw handleException( new ApplicationException( "Non è consentita la modifica dell'importo di testata di un accertamento residuo." ));
