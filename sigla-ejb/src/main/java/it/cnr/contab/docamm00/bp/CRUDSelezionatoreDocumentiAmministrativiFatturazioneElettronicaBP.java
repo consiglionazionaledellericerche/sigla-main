@@ -449,6 +449,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 					});
 			return indexInviate.get();
 		} catch (ArubaSignServiceException _ex) {
+			logger.error("ERROR firma fatture attive", _ex);
 			throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
 		} catch (BusinessProcessException | RemoteException | ComponentException _ex) {
 			throw handleException(_ex);
