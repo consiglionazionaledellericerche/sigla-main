@@ -76,7 +76,8 @@ public abstract class CommonsSiopePlusService {
             final HttpResponse response = client.execute(httpGet);
             final InputStream content = response.getEntity().getContent();
             ZipInputStream zipInputStream = new ZipInputStream(content);
-            final ZipEntry nextEntry = zipInputStream.getNextEntry();
+            final ZipEntry nextEntry = Optional.ofNullable(zipInputStream.getNextEntry())
+                    .orElseThrow(() -> new RuntimeException("Cannot download file from location: " + location));
             final String name = nextEntry.getName();
             final byte[] bytes = IOUtils.toByteArray(extractFileFromArchive(zipInputStream));
 

@@ -72,14 +72,14 @@ public class BasicAuthentication {
 	}
 
 	private static String[] getUsernameAndPassword(String authorization) throws ApplicationException {
-		logger.info("Authorization: " + authorization);
+		logger.debug("Authorization: " + authorization);
 		String[] authorizationParts = authorization.split(" ");
 		if (!authorizationParts[0].equalsIgnoreCase("basic"))
 		{
 		    throw new ApplicationException("Authorization '" + authorizationParts[0] + "' not supported.");
 		}
 		String decodedAuthorisation = new String(DatatypeConverter.parseBase64Binary(authorizationParts[1]));
-		logger.info("Decoded Authorisation: " + decodedAuthorisation);
+		logger.debug("Decoded Authorization: " + decodedAuthorisation);
 		String[] parts = decodedAuthorisation.split(":");
 		return parts;
 	}
