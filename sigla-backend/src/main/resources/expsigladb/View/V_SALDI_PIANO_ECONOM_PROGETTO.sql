@@ -103,7 +103,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      ass_progetto_piaeco_voce d
                WHERE a.esercizio = b.esercizio
                  AND a.pg_variazione_pdg = b.pg_variazione_pdg
-                 AND a.stato IN ('APP', 'APF')
+                 AND a.stato IN ('APP', 'APF', 'PRD')
                  AND b.ti_gestione = 'S'
                  AND b.esercizio = c.esercizio
                  AND b.cd_cdr_assegnatario = c.cd_centro_responsabilita
@@ -187,7 +187,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      ass_progetto_piaeco_voce d
                WHERE a.esercizio = b.esercizio
                  AND a.pg_variazione_pdg = b.pg_variazione_pdg
-                 AND a.stato IN ('APP', 'APF')
+                 AND a.stato IN ('APP', 'APF', 'PRD')
                  AND b.ti_gestione = 'S'
                  AND b.esercizio = c.esercizio
                  AND b.cd_cdr_assegnatario = c.cd_centro_responsabilita
@@ -247,7 +247,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      ass_progetto_piaeco_voce d
                WHERE a.esercizio = b.esercizio
                  AND a.pg_variazione = b.pg_variazione
-                 AND a.stato IN ('APP', 'APF')
+                 AND a.stato IN ('APP', 'APF', 'PRD')
                  AND b.ti_gestione = 'S'
                  AND b.esercizio = c.esercizio
                  AND b.cd_cdr = c.cd_centro_responsabilita
@@ -287,7 +287,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      ass_progetto_piaeco_voce d
                WHERE a.esercizio = b.esercizio
                  AND a.pg_variazione = b.pg_variazione
-                 AND a.stato IN ('APP', 'APF')
+                 AND a.stato IN ('APP', 'APF', 'PRD')
                  AND b.ti_gestione = 'S'
                  AND b.esercizio = c.esercizio
                  AND b.cd_cdr = c.cd_centro_responsabilita
