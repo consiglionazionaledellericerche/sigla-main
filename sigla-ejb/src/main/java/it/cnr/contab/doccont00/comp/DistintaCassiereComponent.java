@@ -1458,48 +1458,51 @@ public class DistintaCassiereComponent extends
                     sql.addSQLClause("AND", "v_mandato_reversale_distinta.dt_firma", SQLBuilder.ISNOTNULL, null);
                     sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
                             MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+                    if (!Utility.createParametriCnrComponentSession().getParametriCnr(
+                            userContext, docPassivo.getEsercizio()).getFl_siope()
+                            .booleanValue()) {
+                        SQLBuilder sql2 = getHome(userContext, V_mandato_reversaleBulk.class,
+                                "V_MANDATO_REVERSALE_DIST_SEPA").createSQLBuilder();
+                        sql2.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_SEPA.esercizio", SQLBuilder.EQUALS,
+                                ((CNRUserContext) userContext).getEsercizio());
+                        sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+                                "V_MANDATO_REVERSALE_DIST_SEPA.ESERCIZIO");
+                        sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+                                "V_MANDATO_REVERSALE_DIST_SEPA.CD_CDS");
+                        sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+                                "V_MANDATO_REVERSALE_DIST_SEPA.CD_TIPO_DOCUMENTO_CONT");
+                        sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+                                "V_MANDATO_REVERSALE_DIST_SEPA.PG_DOCUMENTO_CONT");
+                        sql.addSQLNotExistsClause("AND", sql2);
 
-                    SQLBuilder sql2 = getHome(userContext, V_mandato_reversaleBulk.class,
-                            "V_MANDATO_REVERSALE_DIST_SEPA").createSQLBuilder();
-                    sql2.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_SEPA.esercizio", SQLBuilder.EQUALS,
-                            ((CNRUserContext) userContext).getEsercizio());
-                    sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
-                            "V_MANDATO_REVERSALE_DIST_SEPA.ESERCIZIO");
-                    sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
-                            "V_MANDATO_REVERSALE_DIST_SEPA.CD_CDS");
-                    sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                            "V_MANDATO_REVERSALE_DIST_SEPA.CD_TIPO_DOCUMENTO_CONT");
-                    sql2.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
-                            "V_MANDATO_REVERSALE_DIST_SEPA.PG_DOCUMENTO_CONT");
-                    sql.addSQLNotExistsClause("AND", sql2);
+                        SQLBuilder sql3 = getHome(userContext, V_mandato_reversaleBulk.class,
+                                "V_MANDATO_REVERSALE_DIST_XML").createSQLBuilder();
+                        sql3.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_XML.esercizio", SQLBuilder.EQUALS,
+                                ((CNRUserContext) userContext).getEsercizio());
+                        sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+                                "V_MANDATO_REVERSALE_DIST_XML.ESERCIZIO");
+                        sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+                                "V_MANDATO_REVERSALE_DIST_XML.CD_CDS");
+                        sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+                                "V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
+                        sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+                                "V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
+                        sql.addSQLNotExistsClause("AND", sql3);
 
-                    SQLBuilder sql3 = getHome(userContext, V_mandato_reversaleBulk.class,
-                            "V_MANDATO_REVERSALE_DIST_XML").createSQLBuilder();
-                    sql3.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_XML.esercizio", SQLBuilder.EQUALS,
-                            ((CNRUserContext) userContext).getEsercizio());
-                    sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
-                            "V_MANDATO_REVERSALE_DIST_XML.ESERCIZIO");
-                    sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
-                            "V_MANDATO_REVERSALE_DIST_XML.CD_CDS");
-                    sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                            "V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
-                    sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
-                            "V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
-                    sql.addSQLNotExistsClause("AND", sql3);
-
-                    SQLBuilder sql4 = getHome(userContext, V_mandato_reversaleBulk.class,
-                            "V_MANDATO_REVERSALE_DIST_ANN").createSQLBuilder();
-                    sql4.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_ANN.esercizio", SQLBuilder.EQUALS,
-                            ((CNRUserContext) userContext).getEsercizio());
-                    sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
-                            "V_MANDATO_REVERSALE_DIST_ANN.ESERCIZIO");
-                    sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
-                            "V_MANDATO_REVERSALE_DIST_ANN.CD_CDS");
-                    sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
-                            "V_MANDATO_REVERSALE_DIST_ANN.CD_TIPO_DOCUMENTO_CONT");
-                    sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
-                            "V_MANDATO_REVERSALE_DIST_ANN.PG_DOCUMENTO_CONT");
-                    sql.addSQLNotExistsClause("AND", sql4);
+                        SQLBuilder sql4 = getHome(userContext, V_mandato_reversaleBulk.class,
+                                "V_MANDATO_REVERSALE_DIST_ANN").createSQLBuilder();
+                        sql4.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_ANN.esercizio", SQLBuilder.EQUALS,
+                                ((CNRUserContext) userContext).getEsercizio());
+                        sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.ESERCIZIO",
+                                "V_MANDATO_REVERSALE_DIST_ANN.ESERCIZIO");
+                        sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_CDS",
+                                "V_MANDATO_REVERSALE_DIST_ANN.CD_CDS");
+                        sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT",
+                                "V_MANDATO_REVERSALE_DIST_ANN.CD_TIPO_DOCUMENTO_CONT");
+                        sql4.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
+                                "V_MANDATO_REVERSALE_DIST_ANN.PG_DOCUMENTO_CONT");
+                        sql.addSQLNotExistsClause("AND", sql4);
+                    }
                 }
                 sql.addSQLClause("AND", "v_mandato_reversale_distinta.ti_documento_cont", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
