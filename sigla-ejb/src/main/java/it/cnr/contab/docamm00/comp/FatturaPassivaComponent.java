@@ -38,6 +38,8 @@ import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 import it.cnr.contab.inventario00.docs.bulk.*;
 import it.cnr.contab.inventario01.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.*;
+import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
@@ -8177,7 +8179,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             } catch (Exception e1) {
             	throw new ComponentException(e1);
             }
-		}
+		} 
 		if (uoAbilitate.size() > 1){
 			sql.openParenthesis(FindClause.AND);
 			boolean first = true;
@@ -8187,6 +8189,15 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 				first = false;
 			}
 			sql.closeParenthesis();
+		} else if (obbligazione != null && (obbligazione.getContratto() == null || obbligazione.getContratto().getPg_contratto() == null)){
+			String uo = uoAbilitate.iterator().next();
+			String condizione = " cd_unita_organizzativa = '"+uo+"' or cd_unita_organizzativa in ("
+					+ " select contratto.cd_unita_organizzativa from contratto, ass_contratto_uo where contratto.esercizio = ass_contratto_uo.esercizio "
+					+ " AND contratto.stato = ass_contratto_uo.stato_contratto AND contratto.pg_contratto = ass_contratto_uo.pg_contratto and "
+					+ " ass_contratto_uo.cd_unita_organizzativa='"+uo+"' and contratto.cd_cig=cig.cd_cig)";
+
+			sql.addSQLClause( "AND", condizione);
+			
 		} else {
 			sql.addSQLClause(FindClause.AND, "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, uoAbilitate.iterator().next());
 		}
