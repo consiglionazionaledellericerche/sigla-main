@@ -433,9 +433,10 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setAnagrafica(impostaAnagrafica(factory, cliente));
 
-				if (!fattura.isFatturaEstera() && fattura.getCodice_fiscale() == null)
+				if ((!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) && fattura.getCodice_fiscale() == null){
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()); 
-				if (!fattura.isFatturaEstera()) {
+				}
+				if (!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) {
 					datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
 				}
 
