@@ -98,14 +98,17 @@ public class CRUDReversaleRigaController extends it.cnr.jada.util.action.SimpleD
 
         if (getParentController() instanceof CRUDReversaleBP) {
             CRUDReversaleBP bp = (CRUDReversaleBP) getParentController();
+            boolean isFromBootstrap = HttpActionContext.isFromBootstrap(context);
             if (bp.isSiope_attiva() && !((ReversaleBulk) getParentModel()).isSiopeTotalmenteAssociato()) {
                 String command = "javascript:submitForm('doSelezionaRigaSiopeDaCompletare')";
                 it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
                         context,
-                        "img/find16.gif",
+                        isFromBootstrap ? "fa fa-fw fa-arrow-down" : "img/find16.gif",
                         !(isInputReadonly() || getDetails().isEmpty() || ((CRUDReversaleBP) getParentController()).isSearching()) ? command : null,
-                        true, "SIOPE - Vai a riga successiva da completare",
-                        HttpActionContext.isFromBootstrap(context));
+                        true,
+                        "SIOPE - Vai a riga successiva da completare",
+                        "btn-sm btn-outline-primary",
+                        isFromBootstrap);
             }
         }
         super.closeButtonGROUPToolbar(context);
