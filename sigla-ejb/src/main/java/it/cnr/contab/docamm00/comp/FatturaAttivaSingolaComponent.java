@@ -5414,7 +5414,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
      */
 //^^@@
     public void validaFattura(UserContext aUC, Fattura_attivaBulk fatturaAttiva) throws ComponentException {
-
+    	
         //controlla che la data di scadenza sia successiva alla data di registrazione
         if (fatturaAttiva.getDt_scadenza() != null && fatturaAttiva.getDt_scadenza().before(fatturaAttiva.getDt_registrazione()))
             throw new it.cnr.jada.comp.ApplicationException("Attenzione: la data di scadenza e' precedente a quella di registrazione");
@@ -5434,6 +5434,10 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             controlliGestioneBolloVirtuale(aUC, fatturaAttiva, dettaglio);
         }
 
+        if (fatturaAttiva.isFatturaEstera() && fatturaAttiva.getPartita_iva() == null && fatturaAttiva.getCliente() != null && fatturaAttiva.getCliente().getAnagrafico() != null && fatturaAttiva.getCliente().getAnagrafico().isPersonaGiuridica() ){
+            throw new it.cnr.jada.comp.ApplicationException("Non è possibile emettere una fattura attiva estera ad un cliente non persona fisica senza partita IVA");
+        }
+        
         try {
             fatturaAttiva.validaDateCompetenza();
         } catch (it.cnr.jada.bulk.ValidationException e) {
