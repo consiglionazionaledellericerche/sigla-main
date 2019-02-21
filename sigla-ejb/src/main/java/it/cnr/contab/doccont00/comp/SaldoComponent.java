@@ -55,7 +55,6 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
@@ -73,7 +72,6 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -128,7 +126,6 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		private boolean isUoArea;
 		private boolean isCdrPersonale;
 		private boolean isVoceSpeciale;
-		private Voce_piano_economico_prgBulk vocePianoEconomico;
 		private Elemento_voceBulk elementoVoce;
 		private String tipoDett;
 		private BigDecimal importo = BigDecimal.ZERO;
@@ -160,12 +157,6 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		}
 		public void setVoceSpeciale(boolean isVoceSpeciale) {
 			this.isVoceSpeciale = isVoceSpeciale;
-		}
-		public Voce_piano_economico_prgBulk getVocePianoEconomico() {
-			return vocePianoEconomico;
-		}
-		public void setVocePianoEconomico(Voce_piano_economico_prgBulk vocePianoEconomico) {
-			this.vocePianoEconomico = vocePianoEconomico;
 		}
 		public Elemento_voceBulk getElementoVoce() {
 			return elementoVoce;
@@ -1959,19 +1950,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(varStanzResRiga.getCd_elemento_voce()))
 							.orElse(Boolean.FALSE));
 
-		            List<Progetto_piano_economicoBulk> ppeList = 
-		            		(List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class))
-		            		.findProgettoPianoEconomicoList(varStanzResRiga.getEsercizio(), progetto.getPg_progetto(), varStanzResRiga.getElemento_voce());
-		            
-		            if (ppeList==null||ppeList.isEmpty())
-						throw new ApplicationException("Attenzione! La voce di bilancio "+varStanzResRiga.getElemento_voce().getCd_ds_elemento_voce()
-								+ " non risulta associata ad alcuna voce del piano economico. Operazione non possibile.");
-		            else if (ppeList.size()>1)
-						throw new ApplicationException("Attenzione! La voce di bilancio "+varStanzResRiga.getElemento_voce().getCd_ds_elemento_voce()
-								+ " risulta associata a più categorie del piano economico. Operazione non possibile.");
-		            else
-		            	dett.setVocePianoEconomico(ppeList.get(0).getVoce_piano_economico());
-
 					pianoEco.getDett().add(dett);
 					if (!listCtrlPianoEco.contains(pianoEco))
 						listCtrlPianoEco.add(pianoEco);
@@ -2093,19 +2071,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					dett.setVoceSpeciale(Optional.ofNullable(cdVoceSpeciale).map(el->el.equals(varStanzRiga.getCd_elemento_voce()))
 													.orElse(Boolean.FALSE));
 
-		            List<Progetto_piano_economicoBulk> ppeList = 
-		            		(List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class))
-		            		.findProgettoPianoEconomicoList(varStanzRiga.getEsercizio(), progetto.getPg_progetto(), varStanzRiga.getElemento_voce());
-		            
-		            if (ppeList==null||ppeList.isEmpty())
-						throw new ApplicationException("Attenzione! La voce di bilancio "+varStanzRiga.getElemento_voce().getCd_ds_elemento_voce()
-								+ " non risulta associata ad alcuna voce del piano economico. Operazione non possibile.");
-		            else if (ppeList.size()>1)
-						throw new ApplicationException("Attenzione! La voce di bilancio "+varStanzRiga.getElemento_voce().getCd_ds_elemento_voce()
-								+ " risulta associata a più categorie del piano economico. Operazione non possibile.");
-		            else
-		            	dett.setVocePianoEconomico(ppeList.get(0).getVoce_piano_economico());
-
 					pianoEco.getDett().add(dett);
 					if (!listCtrlPianoEco.contains(pianoEco))
 						listCtrlPianoEco.add(pianoEco);
@@ -2141,16 +2106,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
 							+ "sottrarre fondi a voci accentrate del personale.");
 			});
-			
-			listCtrlPianoEco.stream()
-				.flatMap(el->el.getDett().stream())
-				.filter(el->!el.getVocePianoEconomico().isVocePersonaleTempoDeterminato()&&!el.getVocePianoEconomico().isVocePersonaleTempoIndeterminato())
-				.findFirst().ifPresent(el->{
-					throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
-							+ "selezionare voci di bilancio non associate a voci del piano economico di tipo personale "
-							+ "(Anomalia: Voce Bilancio '"+el.getElementoVoce().getCd_ds_elemento_voce()
-							+ "' associata a Voce Piano Economico '"+el.getVocePianoEconomico().getCd_voce_piano()+"').");
-			});			
 		} else {
 			listCtrlPianoEco.stream()
 				.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)!=0 ||
@@ -2158,16 +2113,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				.findFirst().ifPresent(el->{
 					throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci accentrate del personale "
 							+ "in una variazione non effettuata per 'Trasferimenti per personale'.");
-			});
-
-			listCtrlPianoEco.stream()
-				.flatMap(el->el.getDett().stream())
-				.filter(el->el.getVocePianoEconomico().isVocePersonaleTempoDeterminato()||el.getVocePianoEconomico().isVocePersonaleTempoIndeterminato())
-				.findFirst().ifPresent(el->{
-					throw new DetailedRuntimeException("Attenzione! In una variazione non di tipo 'Trasferimenti per personale' non è possibile "
-							+ "selezionare voci di bilancio associate a voci del piano economico di tipo personale "
-							+ "(Anomalia: Voce Bilancio "+el.getElementoVoce().getCd_ds_elemento_voce()
-							+ " associata a Voce Piano Economico "+el.getVocePianoEconomico().getCd_voce_piano()+").");
 			});
 		}
 		
