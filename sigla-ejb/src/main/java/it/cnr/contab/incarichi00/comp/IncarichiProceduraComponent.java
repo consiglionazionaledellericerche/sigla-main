@@ -952,7 +952,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
                 aspects.remove(StorageContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value());
                 contrattiService.updateProperties(Collections.singletonMap(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(), aspects), storageFile.getStorageObject());
 			}
-			throw new ApplicationException(e.getMessage());
+			throw handleException(e);
 		}
 	}
 	public void eliminaConBulk (UserContext aUC,OggettoBulk bulk) throws ComponentException
