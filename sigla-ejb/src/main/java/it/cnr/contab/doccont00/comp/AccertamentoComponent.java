@@ -2459,6 +2459,10 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 
 public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, java.math.BigDecimal nuovoImporto, boolean modificaScadenzaSuccessiva) throws ComponentException
 {
+	return modificaScadenzaInAutomatico(userContext, scad, nuovoImporto, modificaScadenzaSuccessiva,false);
+}
+public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext userContext, IScadenzaDocumentoContabileBulk scad, java.math.BigDecimal nuovoImporto, boolean modificaScadenzaSuccessiva, Boolean aggiornaCalcoloAutomatico) throws ComponentException
+{
 	Accertamento_scadenzarioBulk scadenzaDaFattura = (Accertamento_scadenzarioBulk)scad;
 	if (  nuovoImporto.compareTo( scad.getIm_scadenza()) == 0  )
 		throw handleException( new ApplicationException( "Aggiornamento in automatico non necessario!" ));
@@ -2472,7 +2476,11 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
                     .filter(accertamentoScadenzario -> accertamentoScadenzario.equalsByPrimaryKey(scad))
                     .findAny()
                     .orElse(scadenzaDaFattura);
-
+        if (aggiornaCalcoloAutomatico){
+        	accertamento.setFl_calcolo_automatico(true);
+        	accertamento.setToBeUpdated();
+        }
+        
 		if ( accertamento.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES) &&
 				!modificaScadenzaSuccessiva)
 			throw handleException( new ApplicationException( "Non è consentita la modifica dell'importo di testata di un accertamento residuo." ));
@@ -2488,7 +2496,7 @@ public IScadenzaDocumentoContabileBulk modificaScadenzaInAutomatico( UserContext
 		// aggiorno solo l'importo della scadenza (+ dettagli) modificata dalla
 		// fattura e l'importo del relativo accertamento
 		if(!modificaScadenzaSuccessiva)
-			return modificaScadenzaNonInAutomatico(userContext, scadenzaDaFattura, nuovoImporto);
+			return modificaScadenzaNonInAutomatico(userContext, scadenzaDaFattura, nuovoImporto, aggiornaCalcoloAutomatico);
 		else
 		{
 			scadenzaDaFattura.setFl_aggiorna_scad_successiva( new Boolean( true) );
@@ -2655,7 +2663,7 @@ public IScadenzaDocumentoContabileBulk sdoppiaScadenzaInAutomatico( UserContext 
  */
 
 
-private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContext userContext, Accertamento_scadenzarioBulk scadenza, java.math.BigDecimal nuovoImporto) throws ComponentException
+private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContext userContext, Accertamento_scadenzarioBulk scadenza, java.math.BigDecimal nuovoImporto, Boolean aggiornaCalcoloAutomatico) throws ComponentException
 {
 	// aggiorno importo accertamento : importo accertamento = importo accertamento - importo vecchia scadenza + importo nuovo scadenza
 	java.math.BigDecimal vecchioImportoAccertamento = scadenza.getAccertamento().getIm_accertamento();
@@ -2670,6 +2678,9 @@ private Accertamento_scadenzarioBulk modificaScadenzaNonInAutomatico( UserContex
 	// aggiorno dettagli scadenza
 	// MITODO - remmo per ora
 	//modificoDettagliScadenza(userContext, scadenza.getAccertamento(), scadenza);
+	if (aggiornaCalcoloAutomatico){
+		scadenza.getAccertamento().setCheckDisponibilitaContrattoEseguito(true);
+	}
 	modificaConBulk(userContext, scadenza.getAccertamento());
 	return scadenza;
 }
