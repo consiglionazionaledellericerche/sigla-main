@@ -1458,11 +1458,7 @@ public class DistintaCassiereComponent extends
                     sql.addSQLClause("AND", "v_mandato_reversale_distinta.dt_firma", SQLBuilder.ISNOTNULL, null);
                     sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato_trasmissione", SQLBuilder.EQUALS,
                             MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
-                    if (!Utility.createParametriCnrComponentSession()
-                            .getParametriCnr(
-                                    userContext,
-                                    CNRUserContext.getEsercizio(userContext)
-                            ).getFl_siope().booleanValue()) {
+                    if (isAttivoSiopeplus(userContext)) {
                         SQLBuilder sql2 = getHome(userContext, V_mandato_reversaleBulk.class,
                                 "V_MANDATO_REVERSALE_DIST_SEPA").createSQLBuilder();
                         sql2.addSQLClause("AND", "V_MANDATO_REVERSALE_DIST_SEPA.esercizio", SQLBuilder.EQUALS,
