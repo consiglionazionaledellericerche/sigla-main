@@ -171,6 +171,18 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		//	P.R.: Controllo proveniente da ModificaConBulk e CreaConBulk
 		//	Deciso con Angelini di spostare i controlli in fase di salvataggio definitivo
 		validaDettagliEntrataSpesa(userContext, pdg);
+
+		try {
+			SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
+	
+			//Verifico che il tipo di variazione sia consentita
+			saldoComponent.checkPdgPianoEconomico(userContext, pdg);
+			//Verifico che piano economico non si sfondi
+			saldoComponent.checkDispPianoEconomicoProgetto(userContext, pdg);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}	
+		
 		/*
 		 * Confermo l'operazione
 		 * E' importante salvare in questo momento in controllo di disponibilità avviene tramite
@@ -200,20 +212,13 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 			if (!pdg.isStorno() && !pdg.getTipo_variazione().isMovimentoSuFondi())
 				controllaQuadraturaImportiAree(userContext, pdg);
 			
-			SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
-
-			//Verifico che il tipo di variazione sia consentita
-			saldoComponent.checkPdgPianoEconomico(userContext, pdg);
-			//Verifico che piano economico non si sfondi
-			saldoComponent.checkDispPianoEconomicoProgetto(userContext, pdg);
-
 			aggiornaLimiteSpesa(userContext, pdg);
 			/*
 			 * Verifico che l'assestato di tutte le combinazioni scelte sia positivo in modo da avvertire
 			 * l'utente del problema di approvazione che avrebbe  
 			 */
 			checkDispAssestatoCdrGAEVoce(userContext, pdg, "onSalvaDefinitivoDispAssestatoCdrGAEVoceFailed");
-		} catch (PersistencyException|RemoteException e) {
+		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}	
 		return pdg;

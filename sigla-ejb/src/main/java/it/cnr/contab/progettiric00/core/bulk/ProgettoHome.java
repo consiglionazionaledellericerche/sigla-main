@@ -1,5 +1,6 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,8 +22,11 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
@@ -703,6 +707,33 @@ public class ProgettoHome extends BulkHome {
 			
 		sqlObb.addSQLExistsClause(FindClause.AND, sqlExist);
 		return obblHome.fetchAll(sqlObb);
+	}
+
+	/*
+	 * Recupera le testate delle modifiche di obbligazioni cui risulta movimentata in positivo almeno una GAE
+	 * associata ad un progetto a partire da un anno specificato
+	 */
+	public java.util.Collection<Obbligazione_modificaBulk> findModifichePositiveObbligazioniAssociate(Integer pgProgetto, Integer annoFrom) throws IntrospectionException, PersistencyException {
+		PersistentHome obblModHome = getHomeCache().getHome(Obbligazione_modificaBulk.class);
+		SQLBuilder sqlObblMod = obblModHome.createSQLBuilder();
+		sqlObblMod.addSQLClause(FindClause.AND, "OBBLIGAZIONE_MODIFICA.ESERCIZIO", SQLBuilder.GREATER_EQUALS, annoFrom);
+
+		PersistentHome modVoceHome = getHomeCache().getHome(Obbligazione_mod_voceBulk.class);
+		SQLBuilder sqlExist = modVoceHome.createSQLBuilder();
+		sqlExist.addSQLJoin("OBBLIGAZIONE_MOD_VOCE.CD_CDS","OBBLIGAZIONE_MODIFICA.CD_CDS");
+		sqlExist.addSQLJoin("OBBLIGAZIONE_MOD_VOCE.ESERCIZIO","OBBLIGAZIONE_MODIFICA.ESERCIZIO");
+		sqlExist.addSQLJoin("OBBLIGAZIONE_MOD_VOCE.PG_MODIFICA","OBBLIGAZIONE_MODIFICA.PG_MODIFICA");
+
+		sqlExist.addSQLClause(FindClause.AND, "OBBLIGAZIONE_MOD_VOCE.IM_MODIFICA", SQLBuilder.GREATER, BigDecimal.ZERO);
+
+		sqlExist.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "OBBLIGAZIONE_MOD_VOCE.ESERCIZIO");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "OBBLIGAZIONE_MOD_VOCE.CD_CENTRO_RESPONSABILITA");
+		sqlExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "OBBLIGAZIONE_MOD_VOCE.CD_LINEA_ATTIVITA");
+		sqlExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, pgProgetto);
+			
+		sqlObblMod.addSQLExistsClause(FindClause.AND, sqlExist);
+		return obblModHome.fetchAll(sqlObblMod);
 	}
 	
 	/*

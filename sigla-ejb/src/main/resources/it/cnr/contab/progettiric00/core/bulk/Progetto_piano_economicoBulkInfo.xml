@@ -304,5 +304,54 @@
 			name="im_manris_spesa"
 			headerLabel="SITUAZIONE SPESA"
 			label="Pagato"/>
-	</columnSet>	
+	</columnSet>
+
+	<form name="piano_economico2">
+		<formFieldProperty
+			name="esercizio_piano"/>
+		<formFieldProperty
+			name="im_entrata"/> 
+		<formFieldProperty
+			name="im_spesa_finanziato"/> 
+		<formFieldProperty
+			name="im_spesa_cofinanziato"/> 
+	</form>
+	
+	<columnSet name="piano_economico2">
+		<columnFieldProperty
+			name="esercizio_piano"
+			label="Esercizio"/>
+		<columnFieldProperty
+			name="im_spesa_finanziato"
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="QUOTE PIANO ECONOMICO"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="im_disp_residua_spesa_finanziata"
+			headerLabel="QUOTE DA STANZIARE"
+			label="Finanziata"/>
+		<columnFieldProperty 
+			name="im_disp_residua_spesa_cofinanziata"
+			headerLabel="QUOTE DA STANZIARE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+		<columnFieldProperty 
+			name="im_manris_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Pagato"/>
+	</columnSet>
 </bulkInfo>
