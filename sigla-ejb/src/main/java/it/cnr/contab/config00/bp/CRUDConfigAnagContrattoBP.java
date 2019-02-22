@@ -17,6 +17,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.ApplicationMessageFormatException;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -628,6 +630,8 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 						allegato.setLink(child.<String>getPropertyValue("sigla_contratti_aspect_link:url"));
 						allegato.setCrudStatus(OggettoBulk.NORMAL);
 						contratto.addToArchivioAllegati(allegato);
+						if (!allegato.isContentStreamPresent())
+							setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
 					});
 		} catch (ApplicationException e) {
 			throw handleException(e);
