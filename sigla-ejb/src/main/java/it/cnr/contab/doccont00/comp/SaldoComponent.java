@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +47,7 @@ import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
@@ -70,6 +73,7 @@ import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -81,6 +85,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 
 public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements ISaldoMgr,Cloneable,Serializable
 {
@@ -1636,27 +1641,25 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							rigaVar.getLinea_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_attivita().getCd_linea_attivita());
 					ProgettoBulk progetto = latt.getProgetto();
 					
-					//Il controllo parte sempre per gli storni mentre per le variazioni solo se il controllo non è spento
-					if (pdgVariazione.isStorno() || !progetto.isCtrlDispSpento(annoFrom.intValue())) {
-						BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
+					BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
 		
-	                    //recupero il record se presente altrimenti ne creo uno nuovo
-						CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
-								.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
-								.findFirst()
-								.orElse(new CtrlDispPianoEco(progetto, null));
+                    //recupero il record se presente altrimenti ne creo uno nuovo
+					CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
+							.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+							.findFirst()
+							.orElse(new CtrlDispPianoEco(progetto, null));
 	
-						dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+					dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
 						
-						if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
-							listCtrlDispPianoEcoEtr.add(dispPianoEco);
-					}
+					if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
+						listCtrlDispPianoEcoEtr.add(dispPianoEco);
 				}
 				
 	            for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEcoEtr) {
 					ProgettoBulk progetto = ctrlDispPianoEco.getProgetto();
 					BigDecimal totFinanziato;
-					if (progetto.isPianoEconomicoRequired()) {
+					boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() && !progetto.isProgettoScaduto();
+					if (ctrlFinanziamentoAnnuale) {
 		                List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class)).findProgettoPianoEconomicoList(progetto.getPg_progetto());
 		                totFinanziato = pianoEconomicoList.stream()
 										                .filter(el->el.getEsercizio_piano().equals(pdgVariazione.getEsercizio()))
@@ -1668,19 +1671,21 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					}
 		            
 					//Controllo che la quota finanziata sia almeno pari alle entrate del progetto
-		            BigDecimal assestatoEtrPrg = this.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, pdgVariazione.getEsercizio(), null);
+		            BigDecimal assestatoEtrPrg = this.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, 
+		            		(ctrlFinanziamentoAnnuale?pdgVariazione.getEsercizio():null), null, null);
 					
 		            if (totFinanziato.compareTo(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
                        if (messaggio!=null && messaggio.length()>0)
                            messaggio = messaggio+ "\n";
                        messaggio = messaggio +
-	                                   "L'assestato entrate ("+
+	                                   "Progetto " + progetto.getCd_progetto() + ": "+
+	                                   (ctrlFinanziamentoAnnuale?"per l'esercizio "+pdgVariazione.getEsercizio()+" ":"")+
+	                                   "l'assestato entrate "+
+	                                   (ctrlFinanziamentoAnnuale?"":"totale ")+
+	                                   "("+
 	                    		   	   new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
-	                                   ") del progetto " + progetto.getCd_progetto() +
-                        		   	   " risulterebbe superiore alla quota finanziata dello stesso "
-                                       + (progetto.isPianoEconomicoRequired()?"per l'anno "+pdgVariazione.getEsercizio():"")+
-                                       " che risulta di " +
-                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
+	                                   ") non può essere superiore alla quota finanziata (" +
+                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ").\n";
 		            }
 	            }
 
@@ -1703,7 +1708,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                     else
                         imVariazioneFin = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_est());
 
-                    if (progetto.isPianoEconomicoRequired()) {
+					boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() && !progetto.isProgettoScaduto();
+
+                    if (ctrlFinanziamentoAnnuale) {
 		                List<Progetto_piano_economicoBulk> pianoEconomicoList = 
 		                		(List<Progetto_piano_economicoBulk>)((Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class))
 		                		.findProgettoPianoEconomicoList(pdgVariazione.getEsercizio(), progetto.getPg_progetto(), rigaVar.getElemento_voce());
@@ -1738,21 +1745,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			                }
 		                }
                     } else {
-    					//Il controllo parte sempre per gli storni mentre per le variazioni solo se il controllo non è spento
-    					if (pdgVariazione.isStorno() || !progetto.isCtrlDispSpento(annoFrom.intValue())) {
-							//recupero il record se presente altrimenti ne creo uno nuovo
-							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
-									.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
-									.filter(el->!Optional.ofNullable(el.getProgettoPianoEconomico()).isPresent())
-									.findFirst()
-									.orElse(new CtrlDispPianoEco(progetto, null));
+						//recupero il record se presente altrimenti ne creo uno nuovo
+						CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
+								.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+								.filter(el->!Optional.ofNullable(el.getProgettoPianoEconomico()).isPresent())
+								.findFirst()
+								.orElse(new CtrlDispPianoEco(progetto, null));
 	
-							dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
-							dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
+						dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+						dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
 							
-							if (!listCtrlDispPianoEco.contains(dispPianoEco))
-								listCtrlDispPianoEco.add(dispPianoEco);
-                        }
+						if (!listCtrlDispPianoEco.contains(dispPianoEco))
+							listCtrlDispPianoEco.add(dispPianoEco);
                     }
 	            }
 		        
@@ -1805,33 +1809,33 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			            {
 			            	BigDecimal totFinanziato = Optional.ofNullable(prg.getOtherField())
 									.map(Progetto_other_fieldBulk::getImFinanziato).orElse(BigDecimal.ZERO);
-				            BigDecimal assestatoSpePrgFes = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+				            BigDecimal assestatoSpePrgFes = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, 
+				            		null, null, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
 	
 				            if (totFinanziato.compareTo(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato()))<0) {
 			                   if (messaggio!=null && messaggio.length()>0)
 			                       messaggio = messaggio+ "\n";
 			                   messaggio = messaggio +
-			                               "L'assestato spese fonte esterne ("+
-			                               new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato())) +
-	                                       ") del progetto " +prg.getCd_progetto()+
-	                        		   	   " risulterebbe superiore alla quota finanziata dello stesso che risulta di " +
-	                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ".\n";
+	                                   "Progetto " + prg.getCd_progetto() + ": l'assestato totale spese 'fonti esterne' ("+
+	                    		   	   new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato())) +
+	                                   ") non può essere superiore alla quota finanziata (" +
+                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ").\n";
 					        }
 			            }
 			            {
 							BigDecimal totCofinanziato = Optional.ofNullable(prg.getOtherField())
 									.map(Progetto_other_fieldBulk::getImCofinanziato).orElse(BigDecimal.ZERO);
-				            BigDecimal assestatoSpePrgReimpiego = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+				            BigDecimal assestatoSpePrgReimpiego = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, 
+				            		null, null, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
 	
 				            if (totCofinanziato.compareTo(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato()))<0) {
 			                   if (messaggio!=null && messaggio.length()>0)
 			                       messaggio = messaggio+ "\n";
 			                   messaggio = messaggio +
-			                               "L'assestato spese fonti interne e natura reimpiego ("+
-			                               new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato())) +
-	                                       ") del progetto " +prg.getCd_progetto()+
-	                        		   	   " risulterebbe superiore alla quota cofinanziata dello stesso che risulta di " +
-	                                       new it.cnr.contab.util.EuroFormat().format(totCofinanziato) + ".\n";
+	                                   "Progetto " + prg.getCd_progetto() + ": l'assestato totale spese 'fonti interne' e 'natura reimpiego' ("+
+	                                   new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato())) +
+                                       ") non può essere superiore alla quota cofinanziata (" +
+                                       new it.cnr.contab.util.EuroFormat().format(totCofinanziato) + ").\n";
 					        }
 				        }
 					}
@@ -2506,9 +2510,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		}
 	}
 	
-	public BigDecimal getStanziamentoAssestatoProgetto(UserContext userContext, ProgettoBulk progetto, String tiGestione, Integer pEsercizio, String tiImporto) throws ComponentException{
+	public BigDecimal getStanziamentoAssestatoProgetto(UserContext userContext, ProgettoBulk progetto, String tiGestione, Integer pEsercizio, Timestamp pDataLimite, String tiImporto) throws ComponentException{
 		try{
 			Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
+			
+			Integer annoDtLimite = Optional.ofNullable(pDataLimite)
+									   .map(el->{
+										  Calendar calDtLimite = Calendar.getInstance();
+										  calDtLimite.setTime(new Date(pDataLimite.getTime()));
+										  return calDtLimite.get(Calendar.YEAR)-1;
+									   })
+									   .orElse(null);
+			BigDecimal result = BigDecimal.ZERO;
 			if (Elemento_voceHome.GESTIONE_ENTRATE.equals(tiGestione)) {
 		        SQLBuilder saldiEtrSQL = saldiHome.createSQLBuilder();
 		        saldiEtrSQL.addSQLClause(FindClause.AND, "VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
@@ -2520,11 +2533,54 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(saldiEtrSQL));
 				
-				return saldiList.stream()
-						 .filter(el->el.getEsercizio().equals(el.getEsercizio_res()))
-						 .filter(el->Optional.ofNullable(pEsercizio).map(ese->ese.equals(el.getEsercizio_res())).orElse(Boolean.TRUE))
-						 .map(el->el.getAssestato())
-						 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				result = saldiList.stream()
+							 .filter(el->Optional.ofNullable(pEsercizio).map(ese->ese.equals(el.getEsercizio_res())).orElse(Boolean.TRUE))
+							 .filter(el->el.getEsercizio().equals(el.getEsercizio_res()))
+							 .filter(el->Optional.ofNullable(annoDtLimite).map(aaDt->aaDt.compareTo(el.getEsercizio())>=0).orElse(Boolean.TRUE))
+							 .map(el->{
+								 //Prendo sempre lo stanziamento di tutti gli anni
+								 BigDecimal assestato = el.getIm_stanz_iniziale_a1();
+								 //e tutte le variazioni, tranne quelle dell'anno della data limite se presente, 
+								 //che calcolo puntualmente dopo
+								 if (Optional.ofNullable(annoDtLimite)
+										 	 .map(annoLimite->el.getEsercizio().compareTo(annoLimite)<0)
+										 	 .orElse(Boolean.TRUE))
+									 assestato = assestato.add(el.getVariazioni_piu()).subtract(el.getVariazioni_meno());
+								 return assestato;
+							 })
+							 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				
+				if (Optional.ofNullable(pDataLimite).isPresent()) {
+					//sommo le variazioni dell'anno della data limite 
+					Pdg_variazione_riga_gestHome varHome = (Pdg_variazione_riga_gestHome)getHome(userContext, Pdg_variazione_riga_gestBulk.class);
+			        SQLBuilder varEtrSQL = varHome.createSQLBuilder();
+			        varEtrSQL.addSQLClause(FindClause.AND, "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO", SQLBuilder.EQUALS, annoDtLimite);
+			        varEtrSQL.addSQLClause(FindClause.AND, "PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_ENTRATE);
+			        varEtrSQL.addTableToHeader("PDG_VARIAZIONE");
+			        varEtrSQL.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+			        varEtrSQL.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
+
+			        varEtrSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.DT_CHIUSURA", SQLBuilder.GREATER_EQUALS, pDataLimite);
+			        varEtrSQL.openParenthesis(FindClause.AND);
+			        varEtrSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+			        varEtrSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+			        varEtrSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+			        varEtrSQL.closeParenthesis();
+				        
+			        varEtrSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+			        varEtrSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+			        varEtrSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CENTRO_RESPONSABILITA");
+			        varEtrSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
+			        varEtrSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+			        
+					List<Pdg_variazione_riga_gestBulk> varList = new it.cnr.jada.bulk.BulkList(varHome.fetchAll(varEtrSQL));
+
+			        BigDecimal variazioni = varList.stream()
+								 .map(Pdg_variazione_riga_gestBulk::getIm_entrata)
+								 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				        
+			        result = result.add(variazioni);
+				} 
 			} else if (Elemento_voceHome.GESTIONE_SPESE.equals(tiGestione)) {
 				it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
 				String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
@@ -2552,17 +2608,156 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
 		        List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(saldiSpeSQL));
 				
-				return saldiList.stream()
-						 .filter(el->Optional.ofNullable(pEsercizio).map(ese->ese.equals(el.getEsercizio_res())).orElse(Boolean.TRUE))
-						 .map(el->{
-							 if (el.getEsercizio().equals(el.getEsercizio_res()))
-								 return el.getAssestato();
-							 else
-								 return el.getVar_piu_stanz_res_imp().subtract(el.getVar_meno_stanz_res_imp());
-						 })
-						 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				result = saldiList.stream()
+							 .filter(el->Optional.ofNullable(pEsercizio).map(ese->ese.equals(el.getEsercizio_res())).orElse(Boolean.TRUE))
+							 .filter(el->Optional.ofNullable(annoDtLimite).map(aaDt->aaDt.compareTo(el.getEsercizio())>=0).orElse(Boolean.TRUE))
+							 .map(el->{
+								 BigDecimal assestato = BigDecimal.ZERO;
+								 //Prendo sempre lo stanziamento di tutti gli anni
+								 if (el.getEsercizio().equals(el.getEsercizio_res()))
+									 assestato = el.getIm_stanz_iniziale_a1();
+								 //e tutte le variazioni, tranne quelle dell'anno della data limite se presente, 
+								 //che devo calcolare puntualmente
+								 if (Optional.ofNullable(annoDtLimite)
+										 	 .map(annoLimite->el.getEsercizio().compareTo(annoLimite)<0)
+										 	 .orElse(Boolean.TRUE)){
+									 if (el.getEsercizio().equals(el.getEsercizio_res()))
+										 assestato = assestato.add(el.getVariazioni_piu()).subtract(el.getVariazioni_meno());
+									 else
+										 assestato = assestato.add(el.getVar_piu_stanz_res_imp()).subtract(el.getVar_meno_stanz_res_imp());
+								 }
+								 return assestato;
+							 })
+							 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+	
+				if (Optional.ofNullable(pDataLimite).isPresent()) {
+					if (Optional.ofNullable(pEsercizio).map(ese->ese.equals(annoDtLimite)).orElse(Boolean.TRUE)) {
+						//sommo le variazioni di competenza dell'anno della data limite 
+						Pdg_variazione_riga_gestHome varHome = (Pdg_variazione_riga_gestHome)getHome(userContext, Pdg_variazione_riga_gestBulk.class);
+				        SQLBuilder varSpeCompSQL = varHome.createSQLBuilder();
+				        varSpeCompSQL.addSQLClause(FindClause.AND, "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO", SQLBuilder.EQUALS, annoDtLimite);
+				        varSpeCompSQL.addSQLClause(FindClause.AND, "PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+				        varSpeCompSQL.addTableToHeader("PDG_VARIAZIONE");
+				        varSpeCompSQL.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+				        varSpeCompSQL.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
+
+				        varSpeCompSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.DT_CHIUSURA", SQLBuilder.GREATER_EQUALS, pDataLimite);
+				        varSpeCompSQL.openParenthesis(FindClause.AND);
+				        varSpeCompSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+				        varSpeCompSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+				        varSpeCompSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+				        varSpeCompSQL.closeParenthesis();
+				        
+				        varSpeCompSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+				        varSpeCompSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+				        varSpeCompSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CENTRO_RESPONSABILITA");
+				        varSpeCompSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
+				        varSpeCompSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+
+				        varSpeCompSQL.addTableToHeader("NATURA");
+				        varSpeCompSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA", "NATURA.CD_NATURA");
+	
+				        if (Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO.equals(tiImporto)) {
+				        	varSpeCompSQL.addSQLClause(FindClause.AND, "NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);
+				        	varSpeCompSQL.addSQLClause(FindClause.AND, "NATURA.CD_NATURA", SQLBuilder.NOT_EQUALS, cdNaturaReimpiego);
+				        } else if (Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO.equals(tiImporto)) {
+				        	varSpeCompSQL.openParenthesis(FindClause.AND);
+				        	varSpeCompSQL.addSQLClause(FindClause.OR, "NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
+				        	varSpeCompSQL.addSQLClause(FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_NATURA", SQLBuilder.EQUALS, cdNaturaReimpiego);
+				        	varSpeCompSQL.closeParenthesis();
+				        }
+
+				        List<Pdg_variazione_riga_gestBulk> varSpeCompList = new it.cnr.jada.bulk.BulkList(varHome.fetchAll(varSpeCompSQL));
+
+				        BigDecimal variazioniCompetenza = varSpeCompList.stream()
+								 .map(el->{
+									 BigDecimal resultEst = BigDecimal.ZERO;
+									 if (Utility.nvl(el.getIm_spese_gest_decentrata_est()).compareTo(BigDecimal.ZERO)!=0) 
+										 resultEst = Utility.nvl(el.getIm_spese_gest_decentrata_est());
+									 else if (Utility.nvl(el.getIm_spese_gest_accentrata_est()).compareTo(BigDecimal.ZERO)!=0 &&
+											 (el.getCd_cdr_assegnatario_clgs()!=null || el.isDettaglioScaricato()))
+										 resultEst = Utility.nvl(el.getIm_spese_gest_accentrata_est());
+
+									 if (Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO.equals(tiImporto))
+										 return resultEst;
+									 else if (Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO.equals(tiImporto)) {
+										 BigDecimal resultInt = BigDecimal.ZERO;
+										 if (Utility.nvl(el.getIm_spese_gest_decentrata_int()).compareTo(BigDecimal.ZERO)!=0) 
+											 resultInt = Utility.nvl(el.getIm_spese_gest_decentrata_int());
+										 else if (Utility.nvl(el.getIm_spese_gest_accentrata_int()).compareTo(BigDecimal.ZERO)!=0 &&
+												 (el.getCd_cdr_assegnatario_clgs()!=null || el.isDettaglioScaricato()))
+											 resultInt = Utility.nvl(el.getIm_spese_gest_accentrata_int());
+										 return resultEst.add(resultInt);
+									 }
+									 return BigDecimal.ZERO;
+								 })
+								 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				        
+				        result = result.add(variazioniCompetenza);
+					}
+					
+					if (Optional.ofNullable(pEsercizio).map(ese->!ese.equals(annoDtLimite)).orElse(Boolean.TRUE)) {
+						//sommo le variazioni di residuo dell'anno della data limite 
+						Var_stanz_res_rigaHome varHome = (Var_stanz_res_rigaHome)getHome(userContext, Var_stanz_res_rigaBulk.class);
+				        SQLBuilder varSpeResSQL = varHome.createSQLBuilder();
+				        varSpeResSQL.addSQLClause(FindClause.AND, "VAR_STANZ_RES_RIGA.ESERCIZIO", SQLBuilder.EQUALS, annoDtLimite);
+				        varSpeResSQL.addSQLClause(FindClause.AND, "VAR_STANZ_RES_RIGA.TI_GESTIONE", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+				        if (Optional.ofNullable(pEsercizio).isPresent())
+					        varSpeResSQL.addSQLClause(FindClause.AND, "VAR_STANZ_RES_RIGA.ESERCIZIO_RES", SQLBuilder.EQUALS, pEsercizio);
+				        varSpeResSQL.addTableToHeader("VAR_STANZ_RES");
+				        varSpeResSQL.addSQLJoin("VAR_STANZ_RES.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
+				        varSpeResSQL.addSQLJoin("VAR_STANZ_RES.PG_VARIAZIONE", "VAR_STANZ_RES_RIGA.PG_VARIAZIONE");
+
+				        varSpeResSQL.addSQLClause(FindClause.OR, "VAR_STANZ_RES.DT_CHIUSURA", SQLBuilder.GREATER_EQUALS, pDataLimite);
+				        varSpeResSQL.openParenthesis(FindClause.AND);
+				        varSpeResSQL.addSQLClause(FindClause.OR, "VAR_STANZ_RES.STATO", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_APPROVATA);
+				        varSpeResSQL.addSQLClause(FindClause.OR, "VAR_STANZ_RES.STATO", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_PROPOSTA_DEFINITIVA);
+				        varSpeResSQL.closeParenthesis();
+				        
+				        varSpeResSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+				        varSpeResSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
+				        varSpeResSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VAR_STANZ_RES_RIGA.CD_CENTRO_RESPONSABILITA");
+				        varSpeResSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VAR_STANZ_RES_RIGA.CD_LINEA_ATTIVITA");
+				        varSpeResSQL.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+
+				        varSpeResSQL.addTableToHeader("NATURA");
+				        varSpeResSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA", "NATURA.CD_NATURA");
+	
+				        if (Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO.equals(tiImporto)) {
+				        	varSpeResSQL.addSQLClause(FindClause.AND, "NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_ESTERNE);
+				        	varSpeResSQL.addSQLClause(FindClause.AND, "NATURA.CD_NATURA", SQLBuilder.NOT_EQUALS, cdNaturaReimpiego);
+				        } else if (Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO.equals(tiImporto)) {
+				        	varSpeResSQL.openParenthesis(FindClause.AND);
+				        	varSpeResSQL.addSQLClause(FindClause.OR, "NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
+				        	varSpeResSQL.addSQLClause(FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_NATURA", SQLBuilder.EQUALS, cdNaturaReimpiego);
+				        	varSpeResSQL.closeParenthesis();
+				        }
+
+				        List<Var_stanz_res_rigaBulk> varSpeResList = new it.cnr.jada.bulk.BulkList(varHome.fetchAll(varSpeResSQL));
+
+				        BigDecimal variazioniResiduo = varSpeResList.stream()
+								 .map(el->{
+									 BigDecimal resultEst = BigDecimal.ZERO;
+									 if (el.getVar_stanz_res().getTipologia_fin().equals(NaturaBulk.TIPO_NATURA_FONTI_ESTERNE)) 
+										 resultEst = Utility.nvl(el.getIm_variazione());
+
+									 if (Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO.equals(tiImporto))
+										 return resultEst;
+									 else if (Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO.equals(tiImporto)) {
+										 BigDecimal resultInt = BigDecimal.ZERO;
+										 if (el.getVar_stanz_res().getTipologia_fin().equals(NaturaBulk.TIPO_NATURA_FONTI_INTERNE)) 
+											 resultInt = Utility.nvl(el.getIm_variazione());
+										 return resultEst.add(resultInt);
+									 }
+									 return BigDecimal.ZERO;
+								 })
+								 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				        
+				        result = result.add(variazioniResiduo);
+					}
+				}
 			}
-			return BigDecimal.ZERO;
+			return result;
 		} catch(Throwable e) {
 			throw handleException(e);
 		}

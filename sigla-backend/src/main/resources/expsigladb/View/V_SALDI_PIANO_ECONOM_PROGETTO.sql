@@ -115,14 +115,16 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                  AND d.ti_gestione = b.ti_gestione
                  AND d.cd_elemento_voce = b.cd_elemento_voce
                  AND c.cd_natura not in (select val01 from configurazione_cnr e
-                                         where e.esercizio = a.esercizio
+                                         where e.esercizio = 0
                                          and   e.cd_unita_funzionale = '*'
-                                         and   e.cd_chiave_primaria = 'ELEMENTO_VOCE_SPECIALE'
-                                         and   e.cd_chiave_secondaria = 'TEMPO_IND_SU_PROGETTI_FINANZIATI')
+                                         and   e.cd_chiave_primaria = 'PROGETTI'
+                                         and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
               UNION ALL
               SELECT c.pg_progetto, a.esercizio, d.cd_unita_organizzativa,
                      d.cd_voce_piano, b.ti_gestione,
                      0 importo_fin, 0 stanziamento_fin, 
+                     0 variapiu_fin, 0 variameno_fin,
+                     0 importo_cofin, 0 stanziamento_cofin, 
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                        THEN CASE 
@@ -136,7 +138,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                                THEN NVL(b.im_spese_gest_accentrata_est, 0)
                                ELSE 0
                              END
-                     END variapiu_fin,
+                     END variapiu_cofin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                        THEN CASE 
@@ -148,35 +150,6 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                                WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
                                     (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
                                THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
-                               ELSE 0
-                             END
-                     END variameno_fin,
-                     0 importo_cofin, 0 stanziamento_cofin, 
-                     CASE
-                       WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
-                       THEN CASE 
-                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)>0
-                              THEN NVL(b.im_spese_gest_decentrata_int, 0)
-                              ELSE 0
-                            END
-                       ELSE CASE
-                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) > 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
-                               THEN NVL(b.im_spese_gest_accentrata_int, 0)
-                               ELSE 0
-                             END
-                     END variapiu_cofin,
-                     CASE
-                       WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
-                       THEN CASE 
-                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)<0
-                              THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
-                              ELSE 0
-                            END
-                       ELSE CASE
-                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) < 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
-                               THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
                                ELSE 0
                              END
                      END variameno_cofin,
@@ -199,10 +172,10 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                  AND d.ti_gestione = b.ti_gestione
                  AND d.cd_elemento_voce = b.cd_elemento_voce
                  AND c.cd_natura in (select val01 from configurazione_cnr e
-                                     where e.esercizio = a.esercizio
+                                     where e.esercizio = 0
                                      and   e.cd_unita_funzionale = '*'
-                                     and   e.cd_chiave_primaria = 'ELEMENTO_VOCE_SPECIALE'
-                                     and   e.cd_chiave_secondaria = 'TEMPO_IND_SU_PROGETTI_FINANZIATI')
+                                     and   e.cd_chiave_primaria = 'PROGETTI'
+                                     and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
               UNION ALL
               SELECT c.pg_progetto, a.esercizio_res, d.cd_unita_organizzativa,
                      d.cd_voce_piano, b.ti_gestione, 
@@ -259,10 +232,10 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                  AND d.ti_gestione = b.ti_gestione
                  AND d.cd_elemento_voce = b.cd_elemento_voce
                  AND c.cd_natura not in (select val01 from configurazione_cnr e
-                                         where e.esercizio = a.esercizio
+                                         where e.esercizio = 0
                                          and   e.cd_unita_funzionale = '*'
-                                         and   e.cd_chiave_primaria = 'ELEMENTO_VOCE_SPECIALE'
-                                         and   e.cd_chiave_secondaria = 'TEMPO_IND_SU_PROGETTI_FINANZIATI')                 
+                                         and   e.cd_chiave_primaria = 'PROGETTI'
+                                         and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')                
               UNION ALL
               SELECT c.pg_progetto, a.esercizio_res, d.cd_unita_organizzativa,
                      d.cd_voce_piano, b.ti_gestione, 
@@ -299,10 +272,10 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                  AND d.ti_gestione = b.ti_gestione
                  AND d.cd_elemento_voce = b.cd_elemento_voce
                  AND c.cd_natura in (select val01 from configurazione_cnr e
-                                     where e.esercizio = a.esercizio
+                                     where e.esercizio = 0
                                      and   e.cd_unita_funzionale = '*'
-                                     and   e.cd_chiave_primaria = 'ELEMENTO_VOCE_SPECIALE'
-                                     and   e.cd_chiave_secondaria = 'TEMPO_IND_SU_PROGETTI_FINANZIATI')
+                                     and   e.cd_chiave_primaria = 'PROGETTI'
+                                     and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
               UNION ALL
               SELECT b.pg_progetto, a.esercizio_res, c.cd_unita_organizzativa,
                      c.cd_voce_piano, a.ti_gestione, 
