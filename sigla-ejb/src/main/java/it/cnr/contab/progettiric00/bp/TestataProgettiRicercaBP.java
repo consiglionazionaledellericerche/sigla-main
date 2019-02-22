@@ -106,7 +106,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		};
 	};
 
-	private SimpleDetailCRUDController pianoEconomicoSummary = new SimpleDetailCRUDController( "PianoEconomicoSummary", Progetto_piano_economicoBulk.class, "pianoEconomicoSummary", this); 
+	private SimpleDetailCRUDController pianoEconomicoSummaryVoce = new SimpleDetailCRUDController( "PianoEconomicoSummaryVoce", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryVoce", this); 
+	private SimpleDetailCRUDController pianoEconomicoSummaryAnno = new SimpleDetailCRUDController( "PianoEconomicoSummaryAnno", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryAnno", this); 
 
 	private SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAnnoCorrente = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAnnoCorrente);
 	private SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAltriAnni = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAltriAnni", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAltriAnni);	
@@ -590,8 +591,12 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    }
 	}
 	
-	public SimpleDetailCRUDController getPianoEconomicoSummary() {
-		return pianoEconomicoSummary;
+	public SimpleDetailCRUDController getPianoEconomicoSummaryVoce() {
+		return pianoEconomicoSummaryVoce;
+	}
+
+	public SimpleDetailCRUDController getPianoEconomicoSummaryAnno() {
+		return pianoEconomicoSummaryAnno;
 	}
 
 	public boolean isNegoziazioneButtonHidden()	{

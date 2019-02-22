@@ -26,6 +26,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Stampa_elenco_progetti_laBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
@@ -1690,39 +1691,37 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
     private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
 		try{
+			//SE IL PROGETTO NON HA PIANO ECONOMICO IL CONTROLLO VIENE FATTO SEMPRE E SOLO SUI TOTALI PROGETTO
 			if (!progetto.isPianoEconomicoRequired()) {
-				if (!progetto.isCtrlDispSpento(annoFrom)) {
-		            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
-		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null, null);
+	            BigDecimal assestatoEtrPrg = Utility.createSaldoComponentSession()
+	            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_ENTRATE, null, null, null);
 		
-		            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoEtrPrg)<0)
-		   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
-	             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
-	                            ") del progetto " + progetto.getCd_progetto() +
-	              		   	   " risulterebbe inferiore all'assestato entrate dello stesso (" +
-	                             new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg) + "). Operazione non consentita!");
-		
-		            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
-		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
-		
-		            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgFes)<0)
-		   	           	throw new ApplicationRuntimeException("Attenzione: la quota finanziata ("+
-	             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
-	                            ") del progetto " + progetto.getCd_progetto() +
-	              		   	   " risulterebbe inferiore all'assestato spese fonte esterne dello stesso (" +
-	                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes) + "). Operazione non consentita!");
-		
-		            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
-		            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, null, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
-		
-		            if (Optional.ofNullable(progetto.getImCofinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgReimpiego)<0)
-		   	           	throw new ApplicationRuntimeException("Attenzione: la quota cofinanziata ("+
-	             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
-	                            ") del progetto " + progetto.getCd_progetto() +
-	              		   	   " risulterebbe inferiore all'assestato spese fonti interne e natura reimpiego dello stesso (" +
-	                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego) + "). Operazione non consentita!");
-				}
-			} else {
+	            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoEtrPrg)<0)
+	   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato ("+
+             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+                             ") non può essere inferiore all'assestato entrate totale (" +
+                             new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg) + ")!");
+	
+	            BigDecimal assestatoSpePrgFes = Utility.createSaldoComponentSession()
+	            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, null, null, 
+	            				Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+	
+	            if (Optional.ofNullable(progetto.getImFinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgFes)<0)
+	   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato ("+
+             		   	    new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+                            ") non può essere inferiore all'assestato totale spese 'fonti esterne' (" +
+                            new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes) + ")!");
+	
+	            BigDecimal assestatoSpePrgReimpiego = Utility.createSaldoComponentSession()
+	            		.getStanziamentoAssestatoProgetto(userContext, progetto, Elemento_voceHome.GESTIONE_SPESE, null, null, 
+	            				Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+	
+	            if (Optional.ofNullable(progetto.getImCofinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgReimpiego)<0)
+	   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato ("+
+             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+                            ") non può essere inferiore all'assestato totale spese 'fonti interne' e 'natura reimpiego' (" +
+                            new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego) + ")!");
+			} else { //PROGETTO CON PIANO ECONOMICO
 				progetto.getAllDetailsProgettoPianoEconomico().stream()
 					.filter(el->el.getEsercizio_piano().compareTo(annoFrom)>=0).forEach(ppe->{
 		   			V_saldi_piano_econom_progettoBulk saldo;
@@ -1734,15 +1733,17 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			    	}    			
 		
 		   			Optional.ofNullable(saldo).filter(el->el.getDispResiduaFinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato per la voce del piano economico "+
-		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
-		   	           			el.getAssestatoFinanziamento()+"). Operazione non consentita!");
+		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato del piano economico "+
+		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+		   	    				" non può essere inferiore all'assestato spese 'fonti esterne' ("+
+		   	           			el.getAssestatoFinanziamento()+")!");
 					});
 		
 		  			Optional.ofNullable(saldo).filter(el->el.getDispResiduaCofinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-		               	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato per la voce del piano economico "+
-		               			ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+" non può essere inferiore all'importo assestato per le fonti decentrate interne ("+
-		    					el.getAssestatoCofinanziamento()+"). Operazione non consentita!");
+		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato del piano economico "+
+		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+		   	    				" non può essere inferiore all'assestato spese 'fonti interne' e 'natura reimpiego' ("+
+		   	           			el.getAssestatoCofinanziamento()+")!");
 					});
 		   		});
 				
@@ -1784,7 +1785,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				saldiList.stream().findFirst().ifPresent(el->{
 	               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
 	               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
-	               			" che non risulta associata a nessuna voce del piano economico per l'anno "+el.getEsercizio_res()+". " + 
+	               			" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " + 
 	               			"Operazione non consentita!");
 				});
 			}
@@ -1962,7 +1963,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di inizio del progetto!"));
 			
 			if (ctrlDtFine)
-				Optional.ofNullable(progetto.getOtherField().getDtFine())
+				Optional.ofNullable(progetto.getOtherField().getDtFineEffettiva())
     				.orElseThrow(()-> new ApplicationException("Attenzione: E' necessario indicare la data di fine del progetto!"));
 
 
@@ -1993,19 +1994,36 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 										+ " del progetto stesso! Aggiornare la data di inizio del progetto con un valore coerente!");
 			    			   });
 
-		    		if (ctrlDtFine)
+		    		if (ctrlDtFine && Optional.ofNullable(progetto.getOtherField().getDtFineEffettiva()).isPresent()) {
 			    		listObb.stream()
+			    			   .filter(el->!el.isObbligazioneResiduo())
 				 			   .max((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
-				 			   .filter(el->el.getDt_registrazione().after(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine())))
+				 			   .filter(el->el.getDt_registrazione().after(progetto.getOtherField().getDtFineEffettiva()))
 				 			   .ifPresent(el->{
 		 				   throw new ApplicationRuntimeException("Attenzione! Esiste l'obbligazione "
 		    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
 		    				   		+ " associata al progetto con data registrazione "
 		    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_registrazione())
 									+ " superiore alla data di fine/proroga "
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtFineEffettiva())
 									+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
 		 			    });
+			    		
+			    		List<Obbligazione_modificaBulk> listObblMod = (List<Obbligazione_modificaBulk>)prgHome.findModifichePositiveObbligazioniAssociate(progetto.getPg_progetto(), annoFrom.intValue());
+			    		
+			    		listObblMod.stream()
+		    			   .max((p1, p2) -> p1.getDt_modifica().compareTo(p2.getDt_modifica()))
+			 			   .filter(el->el.getDt_modifica().after(progetto.getOtherField().getDtFineEffettiva()))
+			 			   .ifPresent(el->{
+		 				   throw new ApplicationRuntimeException("Attenzione! Esiste una modifica positiva all'obbligazione "
+		    				   		+ el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione()
+		    				   		+ " su GAE associate al progetto con data registrazione "
+		    				   		+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDt_modifica())
+									+ " superiore alla data di fine/proroga "
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtFineEffettiva())
+									+ " del progetto stesso! Aggiornare la data di fine/proroga del progetto con un valore coerente!");
+		 			    });			    		
+		    		}
 		    	}
 
 	    		//cerco la movimentazione di variazioni di bilancio di competenza

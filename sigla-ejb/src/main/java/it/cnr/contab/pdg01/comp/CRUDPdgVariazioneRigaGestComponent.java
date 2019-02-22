@@ -69,6 +69,7 @@ import it.cnr.jada.persistency.sql.HomeCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDComponent {
