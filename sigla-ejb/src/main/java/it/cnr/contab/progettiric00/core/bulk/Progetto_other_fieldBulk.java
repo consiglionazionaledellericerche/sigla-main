@@ -188,4 +188,12 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 		}
 		return anno.orElse(9999);
 	}
+	
+	/**
+	 * Ritorna la data di fine effettiva del progetto calcolata come confronto tra data fine e data proroga
+	 * @return
+	 */
+	public java.sql.Timestamp getDtFineEffettiva() {
+		return Optional.ofNullable(this.getDtProroga()).orElse(this.getDtFine());
+	}
 }
