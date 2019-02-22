@@ -55,7 +55,7 @@ function doVisualizzaDocumenti() {
 	<% } %>
 </table>
 <%	if (bp.getParentRoot().isBootstrap()) {
-        bp.writeHTMLTable(pageContext,"100%","100%");
+        bp.writeHTMLTable(pageContext,"100%","65vh");
         bp.writeHTMLNavigator(out);
     }
 %>
