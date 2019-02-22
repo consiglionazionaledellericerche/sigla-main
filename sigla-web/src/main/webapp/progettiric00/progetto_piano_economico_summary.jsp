@@ -9,7 +9,24 @@
 
 <%
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
-	SimpleDetailCRUDController controller = bp.getPianoEconomicoSummary();
+	SimpleDetailCRUDController controllerVoce = bp.getPianoEconomicoSummaryVoce();
+	SimpleDetailCRUDController controllerAnno = bp.getPianoEconomicoSummaryAnno();
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico1",false,false,false,"100%","100px"); %>
+<div class="GroupLabel h3 text-primary" style="border-style:none; cursor:default; background-color:initial;">Totali per Voce Piano Economico</div>
+<div class="Group">
+<table class="Panel card border-info p-2">
+<tr><td>
+<%	controllerVoce.writeHTMLTable(pageContext,"piano_economico1",false,false,false,"100%","160px"); %>
+</td></tr>
+</table>
+</div>
+</br>
+<div class="GroupLabel h3 text-primary" style="border-style:none; cursor:default; background-color:initial;">Totali per Esercizio</div>
+<div class="Group">
+<table class="Panel card border-info p-2 w-100" style="width:100%">
+<tr><td>
+<%	controllerAnno.writeHTMLTable(pageContext,"piano_economico2",false,false,false,"100%","160px"); %>
+</td></tr>
+</table>
+</div>
