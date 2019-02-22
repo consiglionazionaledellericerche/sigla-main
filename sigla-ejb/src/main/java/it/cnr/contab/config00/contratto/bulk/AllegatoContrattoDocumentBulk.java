@@ -1,5 +1,7 @@
 package it.cnr.contab.config00.contratto.bulk;
 
+import it.cnr.contab.util.ApplicationMessageFormatException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.si.spring.storage.bulk.StorageTypeName;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
@@ -10,6 +12,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 
 import java.io.File;
 import java.math.BigInteger;
+import java.util.Optional;
 
 public class AllegatoContrattoDocumentBulk extends OggettoBulk implements StorageTypeName {
 	private static final long serialVersionUID = 1L;
@@ -48,15 +51,17 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements Storag
 		super();
 	}
 
-	public static AllegatoContrattoDocumentBulk construct(StorageObject storageObject){
+	public static AllegatoContrattoDocumentBulk construct(StorageObject storageObject) {
 		return new AllegatoContrattoDocumentBulk(storageObject);
 	}
 
-	public AllegatoContrattoDocumentBulk(StorageObject storageObject) {
+	public AllegatoContrattoDocumentBulk(StorageObject storageObject){
 		super();
-		contentlength = storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).longValue();
 		nodeId = storageObject.getKey();
 		name = storageObject.getPropertyValue(StoragePropertyNames.NAME.value());
+		contentlength = Optional.ofNullable(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()))
+				.map(bigInteger -> bigInteger.longValue())
+				.orElse(Long.valueOf(0));
 	}
 
 	public String getName() {
