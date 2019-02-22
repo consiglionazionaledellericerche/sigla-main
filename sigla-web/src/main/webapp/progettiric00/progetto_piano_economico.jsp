@@ -8,7 +8,6 @@
 %>
 <%
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
-	SimpleDetailCRUDController controller = bp.getPianoEconomicoSummary();
 %>
 <div class="card">
 	<fieldset class="fieldset mb-2">

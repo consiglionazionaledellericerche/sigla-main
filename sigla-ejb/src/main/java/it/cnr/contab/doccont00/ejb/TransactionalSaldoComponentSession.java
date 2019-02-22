@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.ejb;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -491,14 +492,15 @@ public void checkPdgPianoEconomico(it.cnr.jada.UserContext param1, it.cnr.contab
 		}
 	}
 }
-public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, Integer param3, String param4) throws RemoteException,it.cnr.jada.comp.ComponentException {
+public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, Integer param3, Timestamp param4, String param5) throws RemoteException,it.cnr.jada.comp.ComponentException {
 	try {
 		return (java.math.BigDecimal)invoke("getStanziamentoAssestatoProgetto",new Object[] {
 			param0,
 			param1,
 			param2,
 			param3,
-			param4});
+			param4,
+			param5});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
