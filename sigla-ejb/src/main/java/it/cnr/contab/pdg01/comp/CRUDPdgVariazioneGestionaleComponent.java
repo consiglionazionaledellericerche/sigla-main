@@ -382,9 +382,6 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 
 	public Pdg_variazioneBulk approva(UserContext userContext, Pdg_variazioneBulk varPdg) throws ComponentException{
 		try {
-			//Verifichiamo che il piano economico sia quadrato 
-			Utility.createSaldoComponentSession().checkDispPianoEconomicoProgetto(userContext, varPdg);
-
 			varPdg.setStato(Pdg_variazioneBulk.STATO_APPROVATA);
 			varPdg.setDt_approvazione(DateUtils.dataContabile(EJBCommonServices.getServerDate(), CNRUserContext.getEsercizio(userContext)));
 			varPdg.setToBeUpdated();
