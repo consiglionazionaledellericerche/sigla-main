@@ -7758,8 +7758,6 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         updateBulk(userContext, fattura);
         if (fattura instanceof Fattura_attiva_IBulk) {
             Fattura_attiva_IBulk fatturaAttiva = (Fattura_attiva_IBulk) fattura;
-            Nota_di_credito_attivaBulk nota = generaNotaCreditoAutomatica(userContext, fatturaAttiva, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext), false);
-            fatturaAttiva.setNotaCreditoAutomaticaGenerata(nota);
             sendMailForNotificationKo(userContext, fatturaAttiva);
         }
         return fattura;
