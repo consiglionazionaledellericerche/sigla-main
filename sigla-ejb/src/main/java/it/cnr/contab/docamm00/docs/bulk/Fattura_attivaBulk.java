@@ -210,7 +210,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		statoInvioSdiKeys.put(FATT_ELETT_PREDISPOSTA_FIRMA,"Predisposta alla Firma");
 		statoInvioSdiKeys.put(FATT_ELETT_SCARTATA_DA_SDI,"Scartata da SDI");
 		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_SDI,"Consegnata SDI");
-		statoInvioSdiKeys.put(FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL,"Inviato Avviso notifica e-mail");
+		statoInvioSdiKeys.put(FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL,"Consegnata a SDI e Inviato Avviso notifica e-mail");
 		statoInvioSdiKeys.put(FATT_ELETT_MANCATA_CONSEGNA,"Mancata consegna");	
 		statoInvioSdiKeys.put(FATT_ELETT_NON_RECAPITABILE,"Non recapitabile");	
 		statoInvioSdiKeys.put(FATT_ELETT_CONSEGNATA_DESTINATARIO,"Consegnata al destinatario");	
