@@ -7356,6 +7356,9 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
 
     private Nota_di_credito_attivaBulk generaNotaCreditoAutomatica(UserContext userContext, Fattura_attiva_IBulk fa, Integer esercizio, Boolean isNotaEsterna) throws ComponentException, RemoteException, PersistencyException {
         fa = (Fattura_attiva_IBulk) inizializzaBulkPerModifica(userContext, fa);
+        if (fa.isPagata()){
+            throw new it.cnr.jada.comp.ApplicationException("La fattura "+fa.getEsercizio()+"-"+fa.getPg_fattura_attiva()+" è già incassata. Non è possibile emettere la nota di credito.");
+        }
 
         Nota_di_credito_attivaBulk notaDiCredito = new Nota_di_credito_attivaBulk(fa, esercizio);
         notaDiCredito.setCaricaDatiPerFatturazioneElettronica(!isNotaEsterna);
