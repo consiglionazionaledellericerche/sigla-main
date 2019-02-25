@@ -4530,9 +4530,9 @@ public class DistintaCassiereComponent extends
                             distinta.getStorePath(),
                             true).getKey());
             final BigInteger dimension = storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).divide(BigInteger.valueOf(1024));
-            if (dimension.add(BigInteger.valueOf(5)).compareTo(DistintaCassiereComponentSession.MAX_OPI_DIMENSION) > 0) {
+            if (dimension.add(BigInteger.valueOf(7)).compareTo(DistintaCassiereComponentSession.MAX_OPI_DIMENSION) > 0) {
                 throw new ApplicationMessageFormatException("La dimensione del flusso {0}kbytes supera la dimensione massima consentita {1}kbytes!",
-                        dimension,
+                        dimension.add(BigInteger.valueOf(7)),
                         DistintaCassiereComponentSession.MAX_OPI_DIMENSION);
             }
             return storageObject;
