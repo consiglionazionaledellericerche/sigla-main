@@ -430,8 +430,6 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			throw new ComponentException(e);
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
-		} catch (RemoteException e) {
-			throw new ComponentException(e);
 		} catch (EJBException e) {
 			throw new ComponentException(e);
 		}
