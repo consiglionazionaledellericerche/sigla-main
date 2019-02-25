@@ -2126,6 +2126,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
 									+ "sottrarre fondi a voci accentrate del personale.");
 					});
+
+					listCtrlPianoEco.stream()
+						.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviCdrPersonale()).compareTo(BigDecimal.ZERO)>0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
+									+ "assegnare fondi a voci non accentrate del personale.");
+					});
 				} else {
 					listCtrlPianoEco.stream()
 						.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)!=0 ||
@@ -2149,13 +2156,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' non è possibile "
 									+ "sottrarre fondi ad Aree di Ricerca.");
 					});
-				} else {
+
 					listCtrlPianoEco.stream()
-						.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
-									el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
+						.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviArea()).compareTo(BigDecimal.ZERO)>0)
 						.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare fondi su Aree di Ricerca "
-									+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' non è possibile "
+									+ "assegnare fondi a CDR non qualificati come Aree di Ricerca.");
 					});
 				}
 			} 
@@ -2294,50 +2300,52 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				 * 3. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
 				 * 	  (regola non valida per progetti di Aree e CdrPersonale)
 				 */
-				boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
-				listCtrlPianoEco.stream()
-					.filter(el->!el.isScaduto(dataChiusura))
-					.filter(el->el.getImpSpesaPositiviNetti()
-							  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
-							  .compareTo(BigDecimal.ZERO)>0)
-					.filter(el->el.getImpSpesaPositiviNetti()
+				if (!isVariazioneArea) {
+					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
+					listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.filter(el->el.getImpSpesaPositiviNetti()
 								  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
-								  .compareTo(el.getImpSpesaNegativiNetti()
-										  	   .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO))>0)
-					.findFirst().ifPresent(el->{
-					throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
-							el.getProgetto().getCd_progetto()+" (" + 
-							new it.cnr.contab.util.EuroFormat().format(
-									el.getImpSpesaPositiviNetti()
-									  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) +
-							") non compensati da un equivalente prelievo nell'ambito dello stesso progetto ("+
-							new it.cnr.contab.util.EuroFormat().format(
-									el.getImpSpesaNegativiNetti()
-									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) + ")");});
-	
-				/**
-				 * 3.1 se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
-				 * 	  (regola non valida per progetti di Aree e CdrPersonale)
-				 */
-				listCtrlPianoEco.stream()
-					.filter(el->!el.isScaduto(dataChiusura))
-					.filter(el->el.getImpSpesaNegativiNetti()
-								  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
 								  .compareTo(BigDecimal.ZERO)>0)
-					.filter(el->el.getImpSpesaNegativiNetti()
-								  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
-								  .compareTo(el.getImpSpesaPositiviNetti()
-										  	   .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO))>0)
-					.findFirst().ifPresent(el->{
-					throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi al progetto "+
-							el.getProgetto().getCd_progetto()+" (" + 
-							new it.cnr.contab.util.EuroFormat().format(
-									el.getImpSpesaNegativiNetti()
-									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) +
-							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto ("+
-							new it.cnr.contab.util.EuroFormat().format(
-									el.getImpSpesaPositiviNetti()
-									  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) + ")");});
+						.filter(el->el.getImpSpesaPositiviNetti()
+									  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
+									  .compareTo(el.getImpSpesaNegativiNetti()
+											  	   .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO))>0)
+						.findFirst().ifPresent(el->{
+						throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
+								el.getProgetto().getCd_progetto()+" (" + 
+								new it.cnr.contab.util.EuroFormat().format(
+										el.getImpSpesaPositiviNetti()
+										  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) +
+								") non compensati da un equivalente prelievo nell'ambito dello stesso progetto ("+
+								new it.cnr.contab.util.EuroFormat().format(
+										el.getImpSpesaNegativiNetti()
+										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) + ")");});
+		
+					/**
+					 * 3.1 se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto 
+					 * 	  (regola non valida per progetti di Aree e CdrPersonale)
+					 */
+					listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.filter(el->el.getImpSpesaNegativiNetti()
+									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
+									  .compareTo(BigDecimal.ZERO)>0)
+						.filter(el->el.getImpSpesaNegativiNetti()
+									  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)
+									  .compareTo(el.getImpSpesaPositiviNetti()
+											  	   .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO))>0)
+						.findFirst().ifPresent(el->{
+						throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi al progetto "+
+								el.getProgetto().getCd_progetto()+" (" + 
+								new it.cnr.contab.util.EuroFormat().format(
+										el.getImpSpesaNegativiNetti()
+										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) +
+								") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto ("+
+								new it.cnr.contab.util.EuroFormat().format(
+										el.getImpSpesaPositiviNetti()
+										  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)) + ")");});
+				}
 				
 				/**
 				 * 4. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
@@ -2663,6 +2671,15 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				        varSpeCompSQL.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
 				        varSpeCompSQL.closeParenthesis();
 				        
+				        varSpeCompSQL.openParenthesis(FindClause.AND);
+				        varSpeCompSQL.addSQLClause(FindClause.OR,"PDG_VARIAZIONE.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.ISNULL,null);
+				        varSpeCompSQL.addSQLClause(FindClause.OR,"PDG_VARIAZIONE.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.NOT_EQUALS,Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA);
+				        varSpeCompSQL.addSQLClause(FindClause.OR,"PDG_VARIAZIONE_RIGA_GEST.IM_SPESE_GEST_DECENTRATA_INT",SQLBuilder.GREATER,BigDecimal.ZERO);
+				        varSpeCompSQL.addSQLClause(FindClause.OR,"PDG_VARIAZIONE_RIGA_GEST.IM_SPESE_GEST_ACCENTRATA_INT",SQLBuilder.GREATER,BigDecimal.ZERO);
+				        varSpeCompSQL.addSQLClause(FindClause.OR,"PDG_VARIAZIONE_RIGA_GEST.IM_SPESE_GEST_DECENTRATA_EST",SQLBuilder.GREATER,BigDecimal.ZERO);
+				        varSpeCompSQL.addSQLClause(FindClause.OR,"PDG_VARIAZIONE_RIGA_GEST.IM_SPESE_GEST_DECENTRATA_EST",SQLBuilder.GREATER,BigDecimal.ZERO);
+				        varSpeCompSQL.closeParenthesis();
+				        		
 				        varSpeCompSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
 				        varSpeCompSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
 				        varSpeCompSQL.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CENTRO_RESPONSABILITA");
@@ -2727,6 +2744,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				        varSpeResSQL.openParenthesis(FindClause.AND);
 				        varSpeResSQL.addSQLClause(FindClause.OR, "VAR_STANZ_RES.STATO", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_APPROVATA);
 				        varSpeResSQL.addSQLClause(FindClause.OR, "VAR_STANZ_RES.STATO", SQLBuilder.EQUALS, Var_stanz_resBulk.STATO_PROPOSTA_DEFINITIVA);
+				        varSpeResSQL.closeParenthesis();
+
+				        varSpeResSQL.openParenthesis(FindClause.AND);
+				        varSpeResSQL.addSQLClause(FindClause.OR,"VAR_STANZ_RES.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.ISNULL,null);
+				        varSpeResSQL.addSQLClause(FindClause.OR,"VAR_STANZ_RES.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.NOT_EQUALS,Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA);
+				        varSpeResSQL.addSQLClause(FindClause.OR,"VAR_STANZ_RES_RIGA.IM_VARIAZIONE",SQLBuilder.GREATER,BigDecimal.ZERO);
 				        varSpeResSQL.closeParenthesis();
 				        
 				        varSpeResSQL.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
