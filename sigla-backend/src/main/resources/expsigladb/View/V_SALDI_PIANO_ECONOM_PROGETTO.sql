@@ -55,17 +55,19 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      END variapiu_fin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                       THEN CASE 
-                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
+                       THEN CASE --NEL TRASFERIMENTO AEREE NON PRENDERE IN CONSIDERAZIONE GLI IMPORTI NEGATIVI
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0 AND 
+                                   NVL(a.ti_motivazione_variazione,'X')!='TAE'
                               THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
                               ELSE 0
                             END
                        ELSE CASE
-                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
-                               THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
-                               ELSE 0
-                             END
+                              WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
+                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR') AND 
+                                   NVL(a.ti_motivazione_variazione,'X')!='TAE'
+                              THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
+                              ELSE 0
+                            END
                      END variameno_fin,
                      0 importo_cofin, 0 stanziamento_cofin, 
                      CASE
@@ -84,17 +86,19 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      END variapiu_cofin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
-                       THEN CASE 
-                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)<0
+                       THEN CASE --NEL TRASFERIMENTO AEREE NON PRENDERE IN CONSIDERAZIONE GLI IMPORTI NEGATIVI
+                              WHEN NVL(b.im_spese_gest_decentrata_int, 0)<0 AND 
+                                   NVL(a.ti_motivazione_variazione,'X')!='TAE'
                               THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
                               ELSE 0
                             END
                        ELSE CASE
-                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) < 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
-                               THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
-                               ELSE 0
-                             END
+                              WHEN NVL (b.im_spese_gest_accentrata_int, 0) < 0 AND
+                                   (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR') AND 
+                                   NVL(a.ti_motivazione_variazione,'X')!='TAE'
+                              THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
+                              ELSE 0
+                            END
                      END variameno_cofin,
                      0 impacc, 0 manris
                 FROM pdg_variazione a,
@@ -142,16 +146,18 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                        THEN CASE 
-                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0 AND 
+                                   NVL(a.ti_motivazione_variazione,'X')!='TAE'
                               THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
                               ELSE 0
                             END
                        ELSE CASE
-                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
-                               THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
-                               ELSE 0
-                             END
+                              WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
+                                   (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR') AND 
+                                   NVL(a.ti_motivazione_variazione,'X')!='TAE'
+                              THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
+                              ELSE 0
+                            END
                      END variameno_cofin,
                      0 impacc, 0 manris
                 FROM pdg_variazione a,
@@ -191,7 +197,8 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      CASE
                         WHEN a.tipologia_fin='FES'
                         THEN CASE
-                               WHEN NVL(b.im_variazione, 0) < 0
+                               WHEN NVL(b.im_variazione, 0) < 0 AND 
+                                    NVL(a.ti_motivazione_variazione,'X')!='TAE'
                                THEN ABS(NVL (b.im_variazione, 0))
                                ELSE 0
                              END
@@ -208,7 +215,8 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      CASE
                         WHEN a.tipologia_fin='FIN'
                         THEN CASE
-                               WHEN NVL(b.im_variazione, 0) < 0
+                               WHEN NVL(b.im_variazione, 0) < 0 AND 
+                                    NVL(a.ti_motivazione_variazione,'X')!='TAE'
                                THEN ABS(NVL (b.im_variazione, 0))
                                ELSE 0
                              END
@@ -249,7 +257,8 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                         ELSE 0
                      END variapiu_cofin,
                      CASE
-                        WHEN NVL(b.im_variazione, 0) < 0
+                        WHEN NVL(b.im_variazione, 0) < 0 AND 
+                             NVL(a.ti_motivazione_variazione,'X')!='TAE'
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END variameno_cofin,

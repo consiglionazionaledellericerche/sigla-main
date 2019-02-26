@@ -360,11 +360,11 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
         	throw new ValidationException("Valorizzare l'esercizio residuo!");
 		super.validate();
 		
-		if (this.isMotivazioneVariazioneBando() && getIdBando()==null) 
+		if (this.isMotivazioneVariazioneBandoPersonale() && getIdBando()==null) 
 			throw new ValidationException("Occorre inserire i dettagli del bando per cui si effettua la variazione.");
-		if (this.isMotivazioneVariazioneProroga() && getIdMatricola()==null) 
+		if (this.isMotivazioneVariazioneProrogaPersonale() && getIdMatricola()==null) 
 			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione di proroga contratto.");
-		if (this.isMotivazioneVariazioneAltreSpese() && getIdMatricola()==null) 
+		if (this.isMotivazioneVariazioneAltreSpesePersonale() && getIdMatricola()==null) 
 			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione per altre spese del personale.");
 	}
 	
@@ -477,18 +477,26 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		return super.initializeForInsert(crudbp, actioncontext);
 	}
 
-	public boolean isMotivazioneVariazioneBando() {
+	public boolean isMotivazioneVariazioneBandoPersonale() {
 		return Pdg_variazioneBulk.MOTIVAZIONE_BANDO.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneVariazioneProroga() {
+	public boolean isMotivazioneVariazioneProrogaPersonale() {
 		return Pdg_variazioneBulk.MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneVariazioneAltreSpese() {
+	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
 		return Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
 	}
 
+	public boolean isMotivazioneTrasferimentoArea() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneTrasferimentoAutorizzato() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO.equals(this.getTiMotivazioneVariazione());
+	}
+	
 	public boolean isMotivazioneGenerico() {
 		return this.getTiMotivazioneVariazione()==null;
 	}
@@ -519,4 +527,15 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public final java.util.Dictionary getDs_causaleKeys() {
 		return ds_causaleKeys;
 	}
+	
+	public boolean isMotivazioneVariazionePersonale() {
+		return this.isMotivazioneVariazioneBandoPersonale()||
+			   this.isMotivazioneVariazioneProrogaPersonale()||
+			   this.isMotivazioneVariazioneAltreSpesePersonale();
+	}
+	
+    public boolean isVariazioneStorno() {
+    	return Var_stanz_resBulk.TIPOLOGIA_STO.equalsIgnoreCase(this.getTipologia())||
+    			Var_stanz_resBulk.TIPOLOGIA_STO_INT.equalsIgnoreCase(this.getTipologia());
+    }
 }

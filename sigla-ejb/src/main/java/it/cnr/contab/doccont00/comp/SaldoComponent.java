@@ -2103,12 +2103,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
 					.map(Pdg_variazioneBulk::isMotivazioneVariazionePersonale)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::isMotivazioneVariazionePersonale)
 					.orElse(Boolean.FALSE);
 			
 			boolean isVariazioneArea = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
 					.map(Pdg_variazioneBulk::isMotivazioneTrasferimentoArea)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoArea)
 					.orElse(Boolean.FALSE);
 
 			if (isAttivaGestioneTrasferimenti) {
@@ -2188,7 +2198,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Pdg_variazioneBulk.class::cast)
 					.map(Pdg_variazioneBulk::getTipo_variazione)
 					.map(Tipo_variazioneBulk::isStornoSpesa)
-					.orElse(Boolean.FALSE);
+					.orElse(Boolean.FALSE)  ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::isVariazioneStorno)
+					.orElse(Boolean.FALSE);;
 			
 			BigDecimal impSpesaPositiviVoceSpeciale = listCtrlPianoEco.stream()
 					.filter(el->el.getImpSpesaPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
@@ -2201,14 +2216,30 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 				
 			if (isVariazioneCompetenzaMaggioreEntrateSpese || isVariazioneCompetenzaMinoriEntrateSpese) {
+				CdrBulk cdrVariazioneBulk = Optional.of(variazione)
+						.filter(Pdg_variazioneBulk.class::isInstance)
+						.map(Pdg_variazioneBulk.class::cast)
+						.map(Pdg_variazioneBulk::getCentro_responsabilita)
+						.orElseGet(()->Optional.of(variazione)
+										.filter(Var_stanz_resBulk.class::isInstance)
+										.map(Var_stanz_resBulk.class::cast)
+										.map(Var_stanz_resBulk::getCentroDiResponsabilita)
+										.orElseThrow(()->new DetailedRuntimeException("Attenzione! Operazione non possibile in "
+												+ "quanto non è stato possibile individuare il CDR della variazione|")));
+
+				Unita_organizzativaBulk uoVariazioneBulk = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdrVariazioneBulk.getCd_unita_organizzativa()));
+				//verifico se si tratta di cdr Personale
+				boolean isCDRVariazionePersonale = uoVariazioneBulk.getCd_unita_organizzativa().equals(this.getCDRPersonale(userContext).getCd_unita_organizzativa());
+
 				//se è una variazione per maggiori/minori entrate/spese non è possibile movimentare voci accentrate del personale
-				listCtrlPianoEco.stream()
-					.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)!=0 ||
-								el.getImpSpesaNegativiCdrPersonale().compareTo(BigDecimal.ZERO)!=0)
-					.findFirst().ifPresent(el->{
-						throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci accentrate del personale "
-								+ "in una variazione per maggiori/minori spese.");
-				});
+				if (!isCDRVariazionePersonale)
+					listCtrlPianoEco.stream()
+						.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)!=0 ||
+									el.getImpSpesaNegativiCdrPersonale().compareTo(BigDecimal.ZERO)!=0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci accentrate del personale "
+									+ "in una variazione per maggiori/minori spese.");
+					});
 	
 				listCtrlPianoEco.stream()
 					.filter(el->el.getImpEntrataPositivi().subtract(el.getImpEntrataNegativi())
@@ -2528,7 +2559,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								+ new it.cnr.contab.util.EuroFormat().format(impSpesaPositiviNaturaReimpiego)+").");
 				}
 			}
-		} catch (RemoteException e) {
+		} catch (RemoteException|PersistencyException e) {
 			throw new ComponentException(e);
 		}
 	}
@@ -2796,6 +2827,16 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 			}
 			return result;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
+	
+	private CdrBulk getCDRPersonale(UserContext userContext) throws ComponentException{
+		try {
+			String cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+				.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
+			return (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
 		} catch(Throwable e) {
 			throw handleException(e);
 		}
