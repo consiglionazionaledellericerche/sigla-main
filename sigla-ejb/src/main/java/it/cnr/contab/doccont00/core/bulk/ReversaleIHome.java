@@ -56,6 +56,7 @@ public Collection findDocAttivi( ReversaleIBulk reversale, it.cnr.contab.utenze0
 	CompoundFindClause clausesFattElettPrivatiOr = new CompoundFindClause();
 	clausesFattElettPrivatiAnd.addClause("AND", "codiceUnivocoUfficioIpa", SQLBuilder.ISNULL, null);
 	clausesFattElettPrivatiOr.addClause("or", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_MANCATA_CONSEGNA);
+	clausesFattElettPrivatiOr.addClause("or", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_AVVISO_NOTIFICA_INVIO_MAIL);
 	clausesFattElettPrivatiOr.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_CONSEGNATA_DESTINATARIO);
 	
 	clausesFattElettPrivati.addChild(CompoundFindClause.and(clausesFattElettPrivatiAnd, clausesFattElettPrivatiOr));
