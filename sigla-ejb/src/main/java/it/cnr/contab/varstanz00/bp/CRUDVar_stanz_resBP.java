@@ -290,7 +290,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			return false;
 		else if ((isUoEnte() || isCdrScrivania()) && 
 				(varStanzRes.isApprovata() || varStanzRes.isApprovazioneControllata()) &&
-				varStanzRes.isMotivazioneVariazioneBando() && varStanzRes.getStorageMatricola()==null)
+				varStanzRes.isMotivazioneVariazioneBandoPersonale() && varStanzRes.getStorageMatricola()==null)
 			return true;
 		else
 			return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte());
@@ -599,9 +599,9 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 											:var.getMapMotivazioneVariazione());
 
 		if (!this.isSearching()) {
-			if (var.isMotivazioneVariazioneBando())
+			if (var.isMotivazioneVariazioneBandoPersonale())
 				var.setIdMatricola(null);
-			else if (var.isMotivazioneVariazioneProroga() || var.isMotivazioneVariazioneAltreSpese())
+			else if (var.isMotivazioneVariazioneProrogaPersonale() || var.isMotivazioneVariazioneAltreSpesePersonale())
 				var.setIdBando(null);
 			else {
 				var.setIdMatricola(null);
