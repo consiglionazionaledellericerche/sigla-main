@@ -54,7 +54,7 @@
     <TR>
 	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
 	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!var_stanz_res.isPropostaProvvisoria()),null,null);%></TD>
-	  <% if (bp.isSearching() || var_stanz_res.isMotivazioneVariazioneBando()) {%>
+	  <% if (bp.isSearching() || var_stanz_res.isMotivazioneVariazioneBandoPersonale()) {%>
 		 <TD><% bp.getController().writeFormLabel( out, "idBando"); %></TD>
 		 <TD><% bp.getController().writeFormInput( out, "default","idBando",!bp.isSearching()&&(isAbilitato||!var_stanz_res.isPropostaProvvisoria()),null,null); %></TD>
 	 	 <%	if (var_stanz_res.isApprovata()||var_stanz_res.isApprovazioneControllata()) { %>
@@ -66,7 +66,7 @@
 		 </TD>
 		 <% } %>
   	 <% }  
-	    if (bp.isSearching() || (var_stanz_res.isMotivazioneVariazioneProroga() || var_stanz_res.isMotivazioneVariazioneAltreSpese())) { %>
+	    if (bp.isSearching() || (var_stanz_res.isMotivazioneVariazioneProrogaPersonale() || var_stanz_res.isMotivazioneVariazioneAltreSpesePersonale())) { %>
 		 <TD <% if (!bp.isSearching()){ %>colspan="3"<% } %>>
 		 	<%	
 		 		bp.getController().writeFormLabel( out, "idMatricola");
