@@ -259,7 +259,6 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		try{
 			if (pecScanDisable){
 				logger.info("PEC scan is disabled");
-				fatturaAttivaSingolaComponentSession.gestioneAvvisoInvioMailFattureAttive(userContext);
 			} else {
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
 				Configurazione_cnrBulk email = fatturaElettronicaPassivaComponentSession.getEmailPecSdi(userContext);
@@ -273,6 +272,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 					}
 				}
 				logger.info("PEC SCAN for ricevi Fatture finished at: "+new Date());
+				fatturaAttivaSingolaComponentSession.gestioneAvvisoInvioMailFattureAttive(userContext);
 			}
 		} catch(Throwable _ex){
 			logger.error("ScheduleExecutor error", _ex);
