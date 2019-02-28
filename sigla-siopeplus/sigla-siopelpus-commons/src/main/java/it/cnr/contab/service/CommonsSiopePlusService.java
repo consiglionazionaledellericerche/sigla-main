@@ -5,6 +5,7 @@ import it.cnr.contab.model.MessaggioXML;
 import it.cnr.contab.model.Parameter;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -30,16 +31,19 @@ import java.security.*;
 import java.security.cert.CertificateException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public abstract class CommonsSiopePlusService {
     protected static final String APPLICATION_ZIP = "application/zip";
     protected static final String  APPLICATION_JSON_UTF8 = "application/json;charset=UTF-8";
+    public static final int TOO_MANY_REQUEST = 429;
 
     private transient static final Logger logger = LoggerFactory.getLogger(CommonsSiopePlusService.class);
     protected static final String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
     protected static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+    public static final int TIMEOUT = 30;
 
     @Value("${siopeplus.certificate.password}")
     public String password;
@@ -64,7 +68,7 @@ public abstract class CommonsSiopePlusService {
 
     public abstract <T extends Object> MessaggioXML<T> getLocation(String location, Class<T> clazz);
 
-    protected <T extends Object> MessaggioXML<T> getLocation(String location, Class<T> clazz, JAXBContext jc) {
+    protected <T extends Object> MessaggioXML<T> getLocation(String location, Class<T> clazz, JAXBContext jc, Integer iterate) {
         CloseableHttpClient client = null;
         try {
             client = getHttpClient();
@@ -74,25 +78,45 @@ public abstract class CommonsSiopePlusService {
             httpGet.setHeader("Accept", APPLICATION_ZIP);
 
             final HttpResponse response = client.execute(httpGet);
-            final InputStream content = response.getEntity().getContent();
-            ZipInputStream zipInputStream = new ZipInputStream(content);
-            final ZipEntry nextEntry = Optional.ofNullable(zipInputStream.getNextEntry())
-                    .orElseThrow(() -> new RuntimeException("Cannot download file from location: " + location));
-            final String name = nextEntry.getName();
-            final byte[] bytes = IOUtils.toByteArray(extractFileFromArchive(zipInputStream));
-
-            final Unmarshaller unmarshaller = jc.createUnmarshaller();
-            final T object = Optional.ofNullable(
-                    unmarshaller.unmarshal(new ByteArrayInputStream(bytes)))
-                    .map(jaxbElement -> {
-                        try {
-                            return (T) jaxbElement;
-                        } catch (ClassCastException _ex) {
-                            return null;
+            if (!Optional.ofNullable(response).filter(httpResponse -> httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK).isPresent()) {
+                logger.error("ERROR SIOPE+ for location {} iterate", response.getStatusLine(), iterate);
+                if (response.getStatusLine().getStatusCode() == TOO_MANY_REQUEST) {
+                    try {
+                        TimeUnit.SECONDS.sleep(TIMEOUT);
+                        if (iterate < 10) {
+                            return getLocation(location, clazz, jc, ++iterate);
+                        } else {
+                            logger.error("ERROR SIOPE+ CANNOT ITERATE THAN 10");
+                            throw new RuntimeException("ERROR SIOPE+ CANNOT ITERATE THAN 10");
                         }
-                    })
-                    .orElse(null);
-            return new MessaggioXML<T>(name, bytes, object);
+                    } catch (InterruptedException e) {
+                        logger.error("ERROR SIOPE+ for location", e);
+                        throw new RuntimeException("ERROR SIOPE+ for location " + response.getStatusLine());
+                    }
+                } else {
+                    throw new RuntimeException("ERROR SIOPE+ for location " + response.getStatusLine());
+                }
+            } else {
+                final InputStream content = response.getEntity().getContent();
+                ZipInputStream zipInputStream = new ZipInputStream(content);
+                final ZipEntry nextEntry = Optional.ofNullable(zipInputStream.getNextEntry())
+                        .orElseThrow(() -> new RuntimeException("Cannot download file from location: " + location));
+                final String name = nextEntry.getName();
+                final byte[] bytes = IOUtils.toByteArray(extractFileFromArchive(zipInputStream));
+
+                final Unmarshaller unmarshaller = jc.createUnmarshaller();
+                final T object = Optional.ofNullable(
+                        unmarshaller.unmarshal(new ByteArrayInputStream(bytes)))
+                        .map(jaxbElement -> {
+                            try {
+                                return (T) jaxbElement;
+                            } catch (ClassCastException _ex) {
+                                return null;
+                            }
+                        })
+                        .orElse(null);
+                return new MessaggioXML<T>(name, bytes, object);
+            }
         } catch (URISyntaxException | KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException | UnrecoverableKeyException | KeyManagementException | JAXBException e) {
             throw new RuntimeException(e);
         } finally {
