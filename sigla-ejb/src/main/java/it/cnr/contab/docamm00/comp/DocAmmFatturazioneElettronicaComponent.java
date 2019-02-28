@@ -867,7 +867,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		if ((fattura == null || !fattura.isFatturaEstera()) && terzo.getCap_comune_sede() == null){
 			throw new ApplicationException("Impossibile Procedere! Manca il CAP per il terzo: "+terzo.getCd_terzo()); 
 		} 
-		if (terzo.getCap_comune_sede() != null && !fattura.isFatturaEstera()){
+		if (terzo.getCap_comune_sede() != null && (fattura == null || !fattura.isFatturaEstera())){
 			indirizzoCedente.setCAP(terzo.getCap_comune_sede().length() > 5 ? terzo.getCap_comune_sede().substring(0,5) : terzo.getCap_comune_sede());
 		} else {
 			indirizzoCedente.setCAP("00000");
