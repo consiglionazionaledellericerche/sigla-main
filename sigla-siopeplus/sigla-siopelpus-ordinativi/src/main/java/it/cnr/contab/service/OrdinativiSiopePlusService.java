@@ -47,7 +47,7 @@ import java.util.zip.ZipOutputStream;
 @Service
 public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
     private transient static final Logger logger = LoggerFactory.getLogger(OrdinativiSiopePlusService.class);
-    public static final int TOO_MANY_REQUEST = 429;
+
 
     @Value("${siopeplus.url.flusso}")
     public String urlFlusso;
@@ -155,12 +155,12 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
 
             final HttpResponse response = client.execute(httpGet);
             if (!Optional.ofNullable(response).filter(httpResponse -> httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK).isPresent()) {
-                logger.error("ERROR SIOPE+ for LISTA MESSAGGI {}", response.getStatusLine());
+                logger.error("ERROR SIOPE+ for LISTA MESSAGGI {} ITERATE {}", response.getStatusLine(), iterate);
                 if (response.getStatusLine().getStatusCode() == TOO_MANY_REQUEST) {
                     try {
-                        TimeUnit.SECONDS.sleep(10);
+                        TimeUnit.SECONDS.sleep(TIMEOUT);
                         if (iterate < 10) {
-                            return getListaMessaggi(esito, dataDa, dataA, download, pagina, iterate++);
+                            return getListaMessaggi(esito, dataDa, dataA, download, pagina, ++iterate);
                         } else {
                             logger.error("ERROR SIOPE+ CANNOT ITERATE THAN 10");
                             return new Lista();
@@ -189,7 +189,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
 
     public <T extends Object> MessaggioXML<T> getLocation(String location, Class<T> clazz) {
         try {
-            return getLocation(location, clazz, JAXBContext.newInstance(it.siopeplus.custom.ObjectFactory.class, it.siopeplus.ObjectFactory.class));
+            return getLocation(location, clazz, JAXBContext.newInstance(it.siopeplus.custom.ObjectFactory.class, it.siopeplus.ObjectFactory.class), 0);
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
