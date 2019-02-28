@@ -119,7 +119,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
 
     public List<Risultato> getAllMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina) {
         List<Risultato> risultatoList = new ArrayList<Risultato>();
-        final Lista listaMessaggi = getListaMessaggi(esito, dataDa, dataA, download, pagina);
+        final Lista listaMessaggi = getListaMessaggi(esito, dataDa, dataA, download, pagina, 0);
         risultatoList.addAll(
                 Optional.ofNullable(listaMessaggi)
                     .flatMap(lista -> Optional.ofNullable(lista.getRisultati()))
@@ -128,7 +128,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
         if (listaMessaggi.getNumPagine() > 1) {
             for (int i = 2; i < listaMessaggi.getNumPagine(); i++) {
                 risultatoList.addAll(
-                        Optional.ofNullable(getListaMessaggi(esito, dataDa, dataA, download, i))
+                        Optional.ofNullable(getListaMessaggi(esito, dataDa, dataA, download, i, 0))
                         .flatMap(lista -> Optional.ofNullable(lista.getRisultati()))
                                 .orElse(Collections.emptyList())
                 );
@@ -137,7 +137,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
         return risultatoList;
     }
 
-    private Lista getListaMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina) {
+    private Lista getListaMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina, Integer iterate) {
         CloseableHttpClient client = null;
         try {
             client = getHttpClient();
@@ -159,7 +159,12 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
                 if (response.getStatusLine().getStatusCode() == TOO_MANY_REQUEST) {
                     try {
                         TimeUnit.SECONDS.sleep(10);
-                        return getListaMessaggi(esito, dataDa, dataA, download, pagina);
+                        if (iterate < 10) {
+                            return getListaMessaggi(esito, dataDa, dataA, download, pagina, iterate++);
+                        } else {
+                            logger.error("ERROR SIOPE+ CANNOT ITERATE THAN 10");
+                            return new Lista();
+                        }
                     } catch (InterruptedException e) {
                         logger.error("ERROR SIOPE+ for LISTA MESSAGGI", e);
                     }
