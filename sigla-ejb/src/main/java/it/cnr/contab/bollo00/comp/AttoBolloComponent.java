@@ -308,11 +308,6 @@ public class AttoBolloComponent extends CRUDComponent {
 		if (clauses != null) 
 		  sql.addClause(clauses);
 
-		sql.openParenthesis(FindClause.AND);  
-		  sql.addSQLClause(FindClause.AND,"NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_PASSIVO);
-		  sql.addSQLClause(FindClause.OR,"NATURA_CONTABILE",SQLBuilder.EQUALS, ContrattoBulk.NATURA_CONTABILE_ATTIVO_E_PASSIVO);
-		sql.closeParenthesis();  
-		
 		if(paramCds != null && paramCds.getFl_contratto_cessato().booleanValue()){
 			sql.openParenthesis(FindClause.AND);  
 			  sql.addSQLClause(FindClause.AND,"STATO",SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
