@@ -272,14 +272,14 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 			FatturaAttivaSingolaComponentSession componentFatturaAttiva, Fattura_attivaBulk fatturaAttiva)
 			throws BusinessProcessException, ComponentException, RemoteException, PersistencyException,
 			ApplicationException {
-		logger.info("Processo la fattura");
+		logger.info("Processo la fattura {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
 		File file = creaFileXml(userContext, fatturaAttiva);
 
-		logger.info("Creato file XML");
+		logger.info("Creato file XML {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
 		if (fatturaAttiva.getProtocollo_iva() == null){
 		    Fattura_attivaBulk fatturaAttivaProtocollata = protocollazione(userContext, fatturaAttiva);
 		    fatturaAttiva = fatturaAttivaProtocollata;
-		    logger.info("Creato protocollazione");
+		    logger.info("Creato protocollazione {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
 		}
 		List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
 		List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
