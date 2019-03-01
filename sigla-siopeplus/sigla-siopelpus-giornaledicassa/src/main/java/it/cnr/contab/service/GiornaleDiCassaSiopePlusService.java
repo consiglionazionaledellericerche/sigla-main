@@ -76,7 +76,7 @@ public class GiornaleDiCassaSiopePlusService extends CommonsSiopePlusService{
             return getLocation(location, clazz, JAXBContext.newInstance(
                     it.siopeplus.giornaledicassa.custom.ObjectFactory.class,
                     it.siopeplus.giornaledicassa.ObjectFactory.class
-            ));
+            ), 0);
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
