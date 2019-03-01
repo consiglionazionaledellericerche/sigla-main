@@ -47,7 +47,7 @@ import java.util.zip.ZipOutputStream;
 @Service
 public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
     private transient static final Logger logger = LoggerFactory.getLogger(OrdinativiSiopePlusService.class);
-    public static final int TOO_MANY_REQUEST = 429;
+
 
     @Value("${siopeplus.url.flusso}")
     public String urlFlusso;
@@ -119,7 +119,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
 
     public List<Risultato> getAllMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina) {
         List<Risultato> risultatoList = new ArrayList<Risultato>();
-        final Lista listaMessaggi = getListaMessaggi(esito, dataDa, dataA, download, pagina);
+        final Lista listaMessaggi = getListaMessaggi(esito, dataDa, dataA, download, pagina, 0);
         risultatoList.addAll(
                 Optional.ofNullable(listaMessaggi)
                     .flatMap(lista -> Optional.ofNullable(lista.getRisultati()))
@@ -128,7 +128,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
         if (listaMessaggi.getNumPagine() > 1) {
             for (int i = 2; i < listaMessaggi.getNumPagine(); i++) {
                 risultatoList.addAll(
-                        Optional.ofNullable(getListaMessaggi(esito, dataDa, dataA, download, i))
+                        Optional.ofNullable(getListaMessaggi(esito, dataDa, dataA, download, i, 0))
                         .flatMap(lista -> Optional.ofNullable(lista.getRisultati()))
                                 .orElse(Collections.emptyList())
                 );
@@ -137,7 +137,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
         return risultatoList;
     }
 
-    private Lista getListaMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina) {
+    private Lista getListaMessaggi(Esito esito, LocalDateTime dataDa, LocalDateTime dataA, Boolean download, Integer pagina, Integer iterate) {
         CloseableHttpClient client = null;
         try {
             client = getHttpClient();
@@ -155,11 +155,16 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
 
             final HttpResponse response = client.execute(httpGet);
             if (!Optional.ofNullable(response).filter(httpResponse -> httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK).isPresent()) {
-                logger.error("ERROR SIOPE+ for LISTA MESSAGGI {}", response.getStatusLine());
+                logger.error("ERROR SIOPE+ for LISTA MESSAGGI {} ITERATE {}", response.getStatusLine(), iterate);
                 if (response.getStatusLine().getStatusCode() == TOO_MANY_REQUEST) {
                     try {
-                        TimeUnit.SECONDS.sleep(10);
-                        return getListaMessaggi(esito, dataDa, dataA, download, pagina);
+                        TimeUnit.SECONDS.sleep(TIMEOUT);
+                        if (iterate < 10) {
+                            return getListaMessaggi(esito, dataDa, dataA, download, pagina, ++iterate);
+                        } else {
+                            logger.error("ERROR SIOPE+ CANNOT ITERATE THAN 10");
+                            return new Lista();
+                        }
                     } catch (InterruptedException e) {
                         logger.error("ERROR SIOPE+ for LISTA MESSAGGI", e);
                     }
@@ -184,7 +189,7 @@ public class OrdinativiSiopePlusService extends CommonsSiopePlusService {
 
     public <T extends Object> MessaggioXML<T> getLocation(String location, Class<T> clazz) {
         try {
-            return getLocation(location, clazz, JAXBContext.newInstance(it.siopeplus.custom.ObjectFactory.class, it.siopeplus.ObjectFactory.class));
+            return getLocation(location, clazz, JAXBContext.newInstance(it.siopeplus.custom.ObjectFactory.class, it.siopeplus.ObjectFactory.class), 0);
         } catch (JAXBException e) {
             throw new RuntimeException(e);
         }
