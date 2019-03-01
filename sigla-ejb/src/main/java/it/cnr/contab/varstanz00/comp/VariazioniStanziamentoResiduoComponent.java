@@ -54,6 +54,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -492,6 +493,12 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		if (var_stanz_res.getAssociazioneCDR().isEmpty()) 
 			throw new ApplicationException("Associare almeno un Centro di Responsabilità alla Variazione.");
 		
+		try {
+			Utility.createSaldoComponentSession().checkPdgPianoEconomico(userContext, var_stanz_res);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}		
+		
 		var_stanz_res = (Var_stanz_resBulk)super.modificaConBulk(userContext, var_stanz_res);
 		if ((var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
 		    var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO_INT)) &&
@@ -535,9 +542,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				throw new ApplicationException("In un variazione di tipo 'Personale' occorre selezionare almeno una voce accentrata "
 						+ "verso il CDR del personale o scegliere tra i CDR partecipanti anche quello del personale ("+cdrPersonale+").");
 
-			Utility.createSaldoComponentSession().checkPdgPianoEconomico(userContext, var_stanz_res);
 			aggiornaLimiteSpesa(userContext, var_stanz_res);
-		} catch (IntrospectionException|PersistencyException|RemoteException e) {
+		} catch (IntrospectionException|PersistencyException e) {
 			throw new ComponentException(e);
 		}
 		return var_stanz_res;
