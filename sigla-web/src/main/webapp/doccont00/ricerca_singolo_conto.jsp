@@ -20,7 +20,7 @@
 	V_voce_f_sing_contoBulk filtro = (V_voce_f_sing_contoBulk)bp.getModel();
 	bp.openFormWindow(pageContext); %>
 
-	<div class="Group">
+	<div class="Group card p-2">
 		<table>
 		<% if ( !filtro.isEnteInScrivania() ) { %>
 			<tr>
@@ -39,15 +39,11 @@
 						</tr>
 						<tr>
 						   <td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>	 	
-						   <td><% bp.getController().writeFormInput( out,"default", "cd_elemento_voce",true,null,"");
-						          bp.getController().writeFormInput( out,"default", "ds_elemento_voce",true,null,"");
-						          bp.getController().writeFormInput( out,"default","find_elemento_voce",true,null,"");%></td>
+						   <td><% bp.getController().writeFormInput( out,"default","find_elemento_voce");%></td>
 						</tr>   
 		  				<tr>
 						   <td><% bp.getController().writeFormLabel( out, "cd_voce"); %></td>		
-						   <td><% bp.getController().writeFormInput( out, null,"cd_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-						          bp.getController().writeFormInput( out, null,"ds_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-						          bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
+						   <td><% bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
 						</tr>					
 		  			<% } %>
   			<% } else {%>
@@ -57,15 +53,11 @@
 						</tr>
 						<tr>
 						   <td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>		
-						   <td><% bp.getController().writeFormInput( out, "cd_elemento_voce");
-						          bp.getController().writeFormInput( out, "ds_elemento_voce");
-						          bp.getController().writeFormInput( out, "find_elemento_voce");%></td>
+						   <td><% bp.getController().writeFormInput( out, "find_elemento_voce");%></td>
 						</tr>
 						<tr>
 						   <td><% bp.getController().writeFormLabel( out, "cd_voce"); %></td>		
-						   <td><% bp.getController().writeFormInput( out, null,"cd_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-						          bp.getController().writeFormInput( out, null,"ds_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-						          bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
+						   <td><% bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
 						</tr>
 			<% } %>
 	  	<% } else { %>
@@ -80,15 +72,11 @@
 					<td><% bp.getController().writeFormInput( out,"default","fl_partita_giro",false,null,"onclick=\"submitForm('doOnFl_partita_giroChange')\""); %></td>		
 				<tr>
 				   <td><% bp.getController().writeFormLabel( out, "cd_unita_organizzativa"); %></td>		
-				   <td><% bp.getController().writeFormInput( out, "cd_unita_organizzativa");
-				          bp.getController().writeFormInput( out, "ds_unita_organizzativa");
-				          bp.getController().writeFormInput( out, "find_unita_organizzativa");%></td>
+				   <td><% bp.getController().writeFormInput( out, "find_unita_organizzativa");%></td>
 				</tr>
 				<tr>
 				   <td><% bp.getController().writeFormLabel( out, "cd_voce"); %></td>		
-				   <td><% bp.getController().writeFormInput( out, null,"cd_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-				          bp.getController().writeFormInput( out, null,"ds_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-				          bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
+				   <td><% bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
 				</tr>
   			<% } else { %>
 				<tr>
@@ -112,9 +100,7 @@
 				</tr>
 				<tr>
 					   <td><% bp.getController().writeFormLabel( out, "cd_voce"); %></td>		
-					   <td><% bp.getController().writeFormInput( out, null,"cd_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-					          bp.getController().writeFormInput( out, null,"ds_voce",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");
-					          bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
+					   <td><% bp.getController().writeFormInput( out, null,"find_voce_f",(filtro.getFl_partita_giro()!=null && filtro.getFl_partita_giro().booleanValue()),null,"");%></td>
 				</tr>
 			<% } %>
 		<% } %>	   
