@@ -370,7 +370,7 @@ public class ToDoResource implements ToDoLocal {
                             });
                     break;
                 }
-                case DocumentiAmministrativiFatturazioneElettronicaBP: {
+                case SelezionatoreDocAmmFatturazioneElettronica: {
                     if (UtenteBulk.isAbilitatoFirmaFatturazioneElettronica(userContext)
                             && Optional.ofNullable(userContext)
                                 .filter(CNRUserContext.class::isInstance)
