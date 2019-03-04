@@ -18,7 +18,8 @@ import java.util.Optional;
  * @author: CNRADM
  */
 public class PrintSpoolerBP extends it.cnr.jada.util.action.SelezionatoreListaBP {
-
+    public static String PEC_PROTOCOLLO = "PROTOCOLLO";
+    public static String PEC_BILANCIO = "BILANCIO";
     /**
      * SpoolerStatusBP constructor comment.
      */
