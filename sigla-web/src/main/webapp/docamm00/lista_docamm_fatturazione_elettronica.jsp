@@ -47,7 +47,7 @@ function doVisualizzaSingoloDocumentiCollegati(esercizio, cd_cds , cd_unita_orga
 <% } %>
 </table>
 <%	if (bp.getParentRoot().isBootstrap()) { %>
-	<% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+	<% bp.writeHTMLTable(pageContext,"100%","65vh"); %>
 	<% bp.writeHTMLNavigator(out); %>
 <% } else {%>
 	<table class="Panel" height="100%" width="100%">
