@@ -7,6 +7,7 @@
 		name="find_elemento_voce"
 		property="elemento_voce"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Voce del piano"
 		enabledOnSearch="true"
 		completeOnSave="true" />
@@ -14,6 +15,7 @@
 		name="find_voce_f"
 		property="voce_f"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="Capitolo"
 		enabledOnSearch="true"
 		completeOnSave="true" />
@@ -28,6 +30,7 @@
 		name="find_unita_organizzativa"
 		property="unita_organizzativa"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		label="UO"
 		enabledOnSearch="true"
 		completeOnSave="true" />
