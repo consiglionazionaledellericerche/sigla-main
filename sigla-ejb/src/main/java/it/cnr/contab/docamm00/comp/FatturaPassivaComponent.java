@@ -3961,7 +3961,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     * Gestisce un cambiamento di pagina su un controllo tabbed
      */
     private java.util.List getBeniServizioPerSconto(UserContext userContext) throws ComponentException {
 
@@ -4028,7 +4028,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     * Gestisce un cambiamento di pagina su un controllo tabbed
      */
     private DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 
@@ -4059,7 +4059,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
+     * Gestisce un cambiamento di pagina su un controllo tabbed
      */
     private Consuntivo_rigaVBulk getRigaConsuntivoFor(Fattura_passiva_rigaBulk rigaFatturaPassiva) {
 
@@ -7102,7 +7102,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * @param userContext
      * @param bulk        fattura o nota credito da aggiornare
      * @return fattura o nota credito aggiornato con le modifiche
-     * @throws it.cnr.jada.comp.ComponentException
+     * @throws ComponentException
+     *
      */
     public OggettoBulk rebuildDocumento(it.cnr.jada.UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
         if (bulk instanceof Fattura_passivaBulk) {
@@ -7726,7 +7727,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     Fattura_passiva_rigaBulk riga = (Fattura_passiva_rigaBulk) i.next();
                     String key = null;
                     Hashtable<String, BigDecimal> currentMap = null;
-                    if (riga.getVoce_iva() != null && !riga.getVoce_iva().getFl_autofattura()) {
+                    if (Optional.ofNullable(riga)
+                            .flatMap(fattura_passiva_rigaBulk -> Optional.ofNullable(fattura_passiva_rigaBulk.getVoce_iva()))
+                            .flatMap(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getFl_autofattura()))
+                            .map(flAutoFattura -> !flAutoFattura)
+                            .orElse(Boolean.FALSE)) {
                         if (riga.getVoce_iva().getNaturaOperNonImpSdi() != null) {
                             key = riga.getVoce_iva().getNaturaOperNonImpSdi();
                             currentMap = mapNatura;

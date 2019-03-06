@@ -285,7 +285,9 @@ public class SelezionatoreAssestatoResiduoBP extends ConsultazioniBP{
 		var_stanz_res = bulk;
 	}
 	public String getFormTitle(){
-	   String title = BulkInfo.getBulkInfo(V_assestato_residuoBulk.class).getLongDescription();	
+	   String title = BulkInfo.getBulkInfo(V_assestato_residuoBulk.class).getLongDescription();
+	   if (this.getParentRoot().isBootstrap())
+			return title;
 	   return "<script>document.write(\""+title+"\")</script>";
 	}
 	public AssestatoResiduoReplacer getAssestatoReplacer() {
