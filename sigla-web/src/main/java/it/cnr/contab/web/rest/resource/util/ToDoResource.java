@@ -370,7 +370,7 @@ public class ToDoResource implements ToDoLocal {
                             });
                     break;
                 }
-                case DocumentiAmministrativiFatturazioneElettronicaBP: {
+                case SelezionatoreDocAmmFatturazioneElettronica: {
                     if (UtenteBulk.isAbilitatoFirmaFatturazioneElettronica(userContext)
                             && Optional.ofNullable(userContext)
                                 .filter(CNRUserContext.class::isInstance)
@@ -397,7 +397,7 @@ public class ToDoResource implements ToDoLocal {
                                                     "fa fa-fw fa-pencil text-info",
                                                     "Fatture Elettroniche Attive",
                                                     firstLabel(i),
-                                                    detailLabel(i, "Fattrura", "Fatture", "da firmare.")
+                                                    detailLabel(i, "Fattura", "Fatture", "da firmare.")
                                             ));
                                         }
                                     } catch (ComponentException | RemoteException e) {

@@ -7666,8 +7666,9 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         fattura.setNoteInvioSdi(impostaNoteSdi(noteInvioSdi));
         fattura.setToBeUpdated();
         updateBulk(userContext, fattura);
-
-    	gestioneEmailUtenteAvvisoFatturaElettronica(userContext, fattura);
+        if (fattura.getCodiceUnivocoUfficioIpa() != null){
+            gestioneEmailUtenteAvvisoFatturaElettronica(userContext, fattura);
+        }
 
     	return fattura;
     }
