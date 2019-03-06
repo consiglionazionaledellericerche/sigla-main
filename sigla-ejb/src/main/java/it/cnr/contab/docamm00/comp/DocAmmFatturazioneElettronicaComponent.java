@@ -5,13 +5,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -752,11 +746,13 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	}
 
 	private ContrattoBulk recuperoContrattoCollegato(UserContext userContext, Fattura_attiva_rigaBulk riga) throws PersistencyException, ComponentException {
-		Accertamento_scadenzarioBulk accSca= ((Accertamento_scadenzarioBulk)getHome(userContext, Accertamento_scadenzarioBulk.class).findByPrimaryKey(riga.getAccertamento_scadenzario()));
-		AccertamentoBulk accert = ((AccertamentoBulk)getHome(userContext, AccertamentoBulk.class).findByPrimaryKey(accSca.getAccertamento()));
-		if (accert.getContratto() != null && accert.getContratto().getEsercizio() != null){
-			ContrattoBulk contrattoBulk= ((ContrattoBulk)getHome(userContext, ContrattoBulk.class).findByPrimaryKey(accert.getContratto()));
-			return contrattoBulk;
+		if (Optional.ofNullable(riga.getAccertamento_scadenzario()).isPresent()) {
+			Accertamento_scadenzarioBulk accSca= ((Accertamento_scadenzarioBulk)getHome(userContext, Accertamento_scadenzarioBulk.class).findByPrimaryKey(riga.getAccertamento_scadenzario()));
+			AccertamentoBulk accert = ((AccertamentoBulk)getHome(userContext, AccertamentoBulk.class).findByPrimaryKey(accSca.getAccertamento()));
+			if (accert.getContratto() != null && accert.getContratto().getEsercizio() != null){
+				ContrattoBulk contrattoBulk= ((ContrattoBulk)getHome(userContext, ContrattoBulk.class).findByPrimaryKey(accert.getContratto()));
+				return contrattoBulk;
+			}
 		}
 		return null;
 	}

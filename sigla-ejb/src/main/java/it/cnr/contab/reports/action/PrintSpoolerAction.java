@@ -97,13 +97,4 @@ public class  PrintSpoolerAction extends it.cnr.jada.util.action.SelezionatoreLi
 			return handleException(context,e);
 		}
 	}
-	public Forward doSign(ActionContext context) {
-		try {
-			PrintSpoolerBP bp = (PrintSpoolerBP)context.getBusinessProcess();
-			bp.sign(context);
-			return context.findDefaultForward();
-		} catch(Exception e) {
-			return handleException(context,e);
-		}
-	}
 }
