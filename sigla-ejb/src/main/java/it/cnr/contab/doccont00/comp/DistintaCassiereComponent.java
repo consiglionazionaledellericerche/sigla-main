@@ -4841,7 +4841,8 @@ public class DistintaCassiereComponent extends
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
                         ).contains(tipoPagamentoSiopePlus))
                                 //TODO da sostituire
-                                || rif_modalita_pagamentoBulk.getCd_modalita_pag().equals(STIPENDI)).isPresent();
+                                ||rif_modalita_pagamentoBulk.getCd_modalita_pag().equals(STIPENDI)
+                                ||docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0).isPresent();
 
                 if (multibeneficiario) {
                     bollo = objectFactory.createMandatoInformazioniBeneficiarioBollo();
