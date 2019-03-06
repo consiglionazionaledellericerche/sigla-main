@@ -230,22 +230,22 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea));
 		}
 		public BigDecimal getImpSpesaPositiviAreaNaturaReimpiego() {
-			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaReimpiego()));
+			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaReimpiego));
 		}
 		public BigDecimal getImpSpesaNegativiAreaNaturaReimpiego() {
-			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaReimpiego()));
+			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaReimpiego));
 		}
 		public BigDecimal getImpSpesaPositiviAreaNaturaFonteEsterna() {
-			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteEsterna()));
+			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteEsterna));
 		}
 		public BigDecimal getImpSpesaNegativiAreaNaturaFonteEsterna() {
-			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteEsterna()));
+			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteEsterna));
 		}
 		public BigDecimal getImpSpesaPositiviAreaNaturaFonteInterna() {
-			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteInterna()));
+			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteInterna));
 		}
 		public BigDecimal getImpSpesaNegativiAreaNaturaFonteInterna() {
-			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(el->el.isNaturaFonteInterna()));
+			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteInterna));
 		}
 		public BigDecimal getImpSpesaPositiviCdrPersonale() {
 			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isCdrPersonale));
@@ -291,24 +291,42 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		}
 		/**
 		 * Ritorna l'importo positivo della spesa al netto degli importi di Natura Reimpiego, Area e Cdr Personale
+		 * Calcolo:
+		 * 		Totale Importi Positivi
+		 *    - Totale Importi Positivi di Natura Reimpiego
+		 *    - Totale Importi Positivi di Area al netto della Natura Reimpiego (il cui valore è ricompreso al punto precedente)
+		 *    - Totale Importi Positivi di CDR Personale
+		 *    - Totale Importi Positivi Voce Speciale 11048 al netto della quota compresa in Aree o Personale (il cui valore è ricompreso nei punti precedente)
 		 */
 		public BigDecimal getImpSpesaPositiviNetti() {
 			return this.getImpSpesaPositivi().subtract(this.getImpSpesaPositiviNaturaReimpiego())
 					  .subtract(this.getImpSpesaPositiviArea().subtract(this.getImpSpesaPositiviAreaNaturaReimpiego()))
-					  .subtract(this.getImpSpesaPositiviCdrPersonale());
+					  .subtract(this.getImpSpesaPositiviCdrPersonale())
+					  .subtract(this.getImpSpesaPositivi(dett.stream()
+								 .filter(CtrlPianoEcoDett::isVoceSpeciale)
+								 .filter(el->!el.isCdrPersonale())
+								 .filter(el->!el.isUoArea())));
 		}
+
 		/**
 		 * Ritorna l'importo negativo della spesa al netto degli importi di Natura Reimpiego, Area e Cdr Personale
+		 * Calcolo:
+		 * 		Totale Importi Negativi
+		 *    - Totale Importi Negativi di Natura Reimpiego
+		 *    - Totale Importi Negativi di Area al netto della Natura Reimpiego (il cui valore è ricompreso al punto precedente)
+		 *    - Totale Importi Negativi di CDR Personale
+		 *    - Totale Importi Negativi Voce Speciale 11048 al netto della quota compresa in Aree o Personale (il cui valore è ricompreso nei punti precedente)
 		 */
 		public BigDecimal getImpSpesaNegativiNetti() {
 			return this.getImpSpesaNegativi().subtract(this.getImpSpesaNegativiNaturaReimpiego())
 					  .subtract(this.getImpSpesaNegativiArea().subtract(this.getImpSpesaNegativiAreaNaturaReimpiego()))
-					  .subtract(this.getImpSpesaNegativiCdrPersonale());
+					  .subtract(this.getImpSpesaNegativiCdrPersonale())
+					  .subtract(this.getImpSpesaNegativi(dett.stream()
+							  								 .filter(CtrlPianoEcoDett::isVoceSpeciale)
+							  								 .filter(el->!el.isCdrPersonale())
+							  								 .filter(el->!el.isUoArea())));
 		}
 	}
-
-
-//@@>> setComponentContext
 
 /** 
   *  aggiornamento importo relativo a mandati e reversali
@@ -2214,7 +2232,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.filter(el->el.getImpSpesaPositiviNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
 					.map(CtrlPianoEco::getImpSpesaPositiviNaturaReimpiego)
 					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-				
+
+			BigDecimal impSpesaNegativiNaturaReimpiego = listCtrlPianoEco.stream()
+					.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
+					.map(CtrlPianoEco::getImpSpesaNegativiNaturaReimpiego)
+					.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
 			if (isVariazioneCompetenzaMaggioreEntrateSpese || isVariazioneCompetenzaMinoriEntrateSpese) {
 				CdrBulk cdrVariazioneBulk = Optional.of(variazione)
 						.filter(Pdg_variazioneBulk.class::isInstance)
@@ -2261,9 +2284,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								el.getProgetto().getCd_progetto()+" in quanto la variazione è di tipo 'Maggiori Entrate/Spese'.");
 						});
 					
-					if (impSpesaPositiviNaturaReimpiego.compareTo(BigDecimal.ZERO)>0)
-						throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
-									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSpesaPositiviNaturaReimpiego)
+					if (impSpesaPositiviNaturaReimpiego.compareTo(BigDecimal.ZERO)>0 || impSpesaNegativiNaturaReimpiego.compareTo(BigDecimal.ZERO)>0)
+						throw new ApplicationException("Attenzione! Risultano movimenti su GAE di natura 6 - 'Reimpiego di risorse' "
 									+ " non consentito in quanto la variazione è di tipo 'Maggiori Entrate/Spese'.");
 				} else {
 					listCtrlPianoEco.stream()
@@ -2300,7 +2322,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				//Controlli non attivi per variazioni maggiori entrate/spese che non possono avere importi negativi essendo già stato fatto
 				//questo controllo prima
 				/**
-				 * 1. se un progetto è scaduto non è possibile attribuire fondi 
+				 * 10. se un progetto è scaduto non è possibile attribuire fondi 
 				 */
 				listCtrlPianoEco.stream()
 					.filter(el->el.isScaduto(dataChiusura))
@@ -2312,7 +2334,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								") rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dataChiusura)+").");});
 		
 				/**
-				 * 2. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo prelevandoli dallo stesso progetto 
+				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo prelevandoli dallo stesso progetto 
 				 *    da GAE di natura 6
 				 */
 				listCtrlPianoEco.stream()
@@ -2320,7 +2342,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
 					.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego())!=0)
 					.findFirst().ifPresent(el->{
-						throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto "+
+						throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi dal progetto "+
 								el.getProgetto().getCd_progetto()+"(" + 
 								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
 								") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
@@ -2328,7 +2350,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");});
 		
 				/**
-				 * 3. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
+				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
 				 * 	  (regola non valida per progetti di Aree e CdrPersonale)
 				 */
 				if (!isVariazioneArea) {
@@ -2354,8 +2376,11 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										  .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO)) + ")");});
 		
 					/**
-					 * 3.1 se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto 
+					 * 31. se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto 
 					 * 	  (regola non valida per progetti di Aree e CdrPersonale)
+					 *     
+					 *     N.B.: la sottrazione dalla voce speciale è consentita purchè sia compensata da trasferimenti a GAE di natura 6
+					 *     controllo effettuato al punto 90
 					 */
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
@@ -2379,7 +2404,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 				
 				/**
-				 * 4. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
+				 * 40. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stessa area
 				 */
 				listCtrlPianoEco.stream()
@@ -2394,7 +2419,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");});
 		
 				/**
-				 * 5. se un progetto è aperto e vengono sottratte somme al CDR Personale queste devono essere riassegnate 
+				 * 50. se un progetto è aperto e vengono sottratte somme al CDR Personale queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stesso CDR
 				 */
 				listCtrlPianoEco.stream()
@@ -2417,7 +2442,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				
 				{
 				/**
-				 * 6. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale
+				 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale
 				 */
 					BigDecimal impPositiviCashFund = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
@@ -2437,7 +2462,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 				{
 				/**
-				 * 7. se un progetto è attivo se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
+				 * 70. se un progetto è attivo se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
 				 */
 					BigDecimal impSaldoPrgAttiviNaturaReimpiego = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
@@ -2471,7 +2496,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 				{
 				/**
-				 * 8. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o 
+				 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o 
 				 *    al CDR Personale
 				 */
 					BigDecimal impSaldoPrgAttiviFonteEsterna = listCtrlPianoEco.stream()
@@ -2508,7 +2533,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 				{
 					/**
-					 * 2. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
+					 * 90. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
 					 * 		a. un progetto scaduto
 					 * 		b. dalla voce speciale (11048)
 					 * 		c. da una GAE di natura 6 sullo stesso progetto
@@ -2545,7 +2570,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 				{
 					/**
-					 * 6. se vengono spostate somme dalla voce speciale (11048) devono essere girate a GaeNatura6
+					 * 100. se vengono spostate somme dalla voce speciale (11048) devono essere girate a GaeNatura6
 					 */
 					BigDecimal impNegativiVoceSpeciale = listCtrlPianoEco.stream()
 							.filter(el->el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
