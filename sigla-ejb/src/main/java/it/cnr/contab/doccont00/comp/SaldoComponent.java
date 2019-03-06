@@ -1963,6 +1963,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
 					//creo il dettaglio
 					CtrlPianoEcoDett dett = new CtrlPianoEcoDett();
+					dett.setTipoDett(varStanzResRiga.getTi_gestione());
 					dett.setImporto(varStanzResRiga.getIm_variazione());
 					dett.setCdrPersonale(isDettPersonale);
 					dett.setUoArea(isUoArea);
