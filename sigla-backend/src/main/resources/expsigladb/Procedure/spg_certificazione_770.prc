@@ -141,6 +141,7 @@ begin
 			  order by cd_anag
 			    ,CD_QUADRO
 				  ,cd_ti_compenso
+				  ,cd_anag_pignorato
 			  	  ,cd_cds
 				  ,cd_unita_organizzativa
 				  ,pg_compenso
@@ -181,86 +182,7 @@ begin
 		   end if;
 
 		   i := i + 1;
-		   IF aDett.cd_anag_pignorato IS NOT NULL THEN
-		        insert into VPG_CERTIFICAZIONE_770  (ID,
-							                              CHIAVE,
-							                              TIPO,
-							                              SEQUENZA,
-							                              ESERCIZIO,
-							                              TI_MODELLO,
-							                              CD_ANAG,
-							                              NOTA,
-							                              CD_QUADRO,
-							                              DS_QUADRO,
-							                              TI_RITENUTA,
-							                              NOME,
-							                              COGNOME,
-							                              RAGIONE_SOCIALE,
-							                              VIA_NUM_FISCALE,
-							                              CAP_COMUNE_FISCALE,
-							                              FRAZIONE_FISCALE,
-							                              DS_COMUNE_FISCALE,
-							                              DS_PROVINCIA_FISCALE,
-							                              CD_PROVINCIA_FISCALE,
-							                              DS_NAZIONE_FISCALE,
-							                              DT_NASCITA,
-							                              DS_COMUNE_NASCITA,
-							                              DS_PROVINCIA_NASCITA,
-							                              CD_PROVINCIA_NASCITA,
-							                              DS_NAZIONE_NASCITA,
-							                              CODICE_FISCALE,
-							                              PARTITA_IVA,
-							                              TI_ENTITA,
-                                            TI_SESSO,
-                                            ID_FISCALE_ESTERO,
-                                            CD_NAZIONE_770,
-                                            CF_PI_PIGNORATO)
-		   		             (Select distinct
-		   		               aId
-		   		              ,to_char(aDett.cd_anag)
-				               	,'A'
-				               	,i
-				               	,aEs
-				               	,aTiModello
-				               	,aDett.cd_anag
-				               	,aNota
-				               	,aDett.cd_quadro
-				               	,aDett.ds_quadro
-				               	,aDett.ti_ritenuta
-				               	,vat.nome
-				               	,vat.cognome
-				               	,vat.ragione_sociale
-				               	,vat.via_fiscale||' '||vat.num_civico_fiscale
-				               	,vat.cap_comune_fiscale
-				               	,vat.frazione_fiscale
-				               	,vat.ds_comune_fiscale
-				               	,vat.ds_provincia_fiscale
-				               	,vat.cd_provincia_fiscale
-				               	,naz.ds_nazione
-				               	,vat.dt_nascita
-				               	,vat.ds_comune_nascita
-				               	,vat.ds_provincia_nascita
-				               	,vat.cd_provincia_nascita
-				               	,naz2.ds_nazione
-				               	,vat.codice_fiscale
-				               	,vat.partita_iva
-				               	,vat.ti_entita
-				               	,vat.ti_sesso
-				               	,vat.id_fiscale_estero
-                        ,naz.cd_nazione_770
-                        ,nvl(vatp.codice_fiscale,vatp.partita_iva)
-		   		             from PCIR009.v_anagrafico_terzo vat
-		   	                	 ,PCIR009.nazione naz
-			   	                 ,PCIR009.comune com
-			                 	   ,PCIR009.nazione naz2
-			                 	   ,PCIR009.v_anagrafico_terzo vatp
-		   		             where vat.cd_anag	= aDett.cd_anag
-		     	             	and naz.pg_nazione	= vat.pg_nazione_fiscale
-			 	                and com.pg_comune (+) 	= vat.pg_comune_nascita
-			 	                and naz2.pg_nazione (+) = com.pg_nazione
-			 	                and vatp.cd_anag (+)	= aDett.cd_anag_pignorato);
-			 ELSE   --aDett.cd_anag_pignorato IS NULL
-		        insert into VPG_CERTIFICAZIONE_770  (ID,
+		           insert into VPG_CERTIFICAZIONE_770  (ID,
 							                              CHIAVE,
 							                              TIPO,
 							                              SEQUENZA,
@@ -335,7 +257,6 @@ begin
 		     	             	and naz.pg_nazione	= vat.pg_nazione_fiscale
 			 	                and com.pg_comune (+) 	= vat.pg_comune_nascita
 			 	                and naz2.pg_nazione (+) = com.pg_nazione);
-			 END IF;
 		end if; -- fine inserimento primo anagrafico
 
 		if aDett.cd_anag <> aTmpCdAnag then -- il primo anag non passa di qui
@@ -365,7 +286,8 @@ begin
 							                                IM_CONTRIBUTI_ENTE,
 							                                IM_NETTO,
 							                                IM_NON_SOGG_INPS,
-							                                CD_TRATTAMENTO)
+							                                CD_TRATTAMENTO,
+							                                CF_PI_PIGNORATO)
 		   	                  values (aId
 		   	                         ,to_char(aTmpCdAnag)
 				                         ,'B'
@@ -390,7 +312,11 @@ begin
 				                         ,aImCoriEnte
 				                         ,aImNetto
 				                         ,aImNonSoggInps
-				                         ,aTmpCdTrattamento);
+				                         ,aTmpCdTrattamento
+				                         ,(select nvl(vatp.codice_fiscale,vatp.partita_iva)
+		   	                   From PCIR009.v_anagrafico_terzo vatp
+		   	                   Where 
+		                       	  vatp.cd_anag (+)	=aTmpCdAnagPignorato));
 
 		    -- reset delle variabili
         aTmpCdTrattamento :=aDett.cd_trattamento;
@@ -426,86 +352,7 @@ begin
 
 		    -- inserimento nuova anagrafica
 		    i := i + 1;
-		    IF aDett.cd_anag_pignorato IS NOT NULL THEN
 		        insert into VPG_CERTIFICAZIONE_770  (ID,
-							                               CHIAVE,
-							                               TIPO,
-							                               SEQUENZA,
-							                               ESERCIZIO,
-							                               TI_MODELLO,
-							                               CD_ANAG,
-							                               NOTA,
-							                               CD_QUADRO,
-							                               DS_QUADRO,
-							                               TI_RITENUTA,
-							                               NOME,
-							                               COGNOME,
-							                               RAGIONE_SOCIALE,
-							                               VIA_NUM_FISCALE,
-							                               CAP_COMUNE_FISCALE,
-							                               FRAZIONE_FISCALE,
-							                               DS_COMUNE_FISCALE,
-							                               DS_PROVINCIA_FISCALE,
-							                               CD_PROVINCIA_FISCALE,
-							                               DS_NAZIONE_FISCALE,
-							                               DT_NASCITA,
-							                               DS_COMUNE_NASCITA,
-							                               DS_PROVINCIA_NASCITA,
-							                               CD_PROVINCIA_NASCITA,
-							                               DS_NAZIONE_NASCITA,
-							                               CODICE_FISCALE,
-							                               PARTITA_IVA,
-							                               TI_ENTITA,
-                                             TI_SESSO,
-                                             ID_FISCALE_ESTERO,
-                                             CD_NAZIONE_770,
-                                             CF_PI_PIGNORATO)
-		   	                  (Select distinct
-		   	                  	 aId
-		   	                  	,to_char(aDett.cd_anag)
-				                    ,'A'
-				                    ,i
-				                    ,aEs
-				                    ,aTiModello
-				                    ,aDett.cd_anag
-				                    ,aNota
-				                    ,aDett.cd_quadro
-				               	    ,aDett.ds_quadro
-				               	    ,aDett.ti_ritenuta
-				                    ,vat.nome
-				                    ,vat.cognome
-				                    ,vat.ragione_sociale
-				                    ,vat.via_fiscale||' '||vat.num_civico_fiscale
-				                    ,vat.cap_comune_fiscale
-				                    ,vat.frazione_fiscale
-				                    ,vat.ds_comune_fiscale
-				                    ,vat.ds_provincia_fiscale
-				                    ,vat.cd_provincia_fiscale
-				                    ,naz.ds_nazione
-				                    ,vat.dt_nascita
-				                    ,vat.ds_comune_nascita
-				                    ,vat.ds_provincia_nascita
-				                    ,vat.cd_provincia_nascita
-				                    ,naz2.ds_nazione
-				                    ,vat.codice_fiscale
-				                    ,vat.partita_iva
-				                    ,vat.ti_entita
-				                    ,vat.ti_sesso
-				                    ,vat.id_fiscale_estero
-                            ,naz.cd_nazione_770
-                            ,nvl(vatp.codice_fiscale,vatp.partita_iva)
-		   	                   From PCIR009.v_anagrafico_terzo vat
-		   	                       ,PCIR009.nazione naz
-			                         ,PCIR009.comune com
-			                         ,PCIR009.nazione naz2
-			                 	       ,PCIR009.v_anagrafico_terzo vatp
-		   	                   Where vat.cd_anag 	= aDett.cd_anag
-		                       	 And naz.pg_nazione 	= vat.pg_nazione_fiscale
-			                       And com.pg_comune (+) 	= vat.pg_comune_nascita
-			                       And naz2.pg_nazione (+)= com.pg_nazione
-			 	                     And vatp.cd_anag (+)	= aDett.cd_anag_pignorato);
-			 	ELSE     --aDett.cd_anag_pignorato IS NULL
-			 	    insert into VPG_CERTIFICAZIONE_770  (ID,
 							                               CHIAVE,
 							                               TIPO,
 							                               SEQUENZA,
@@ -580,7 +427,6 @@ begin
 		                       	 And naz.pg_nazione 	= vat.pg_nazione_fiscale
 			                       And com.pg_comune (+) 	= vat.pg_comune_nascita
 			                       And naz2.pg_nazione (+)= com.pg_nazione);
-			  END IF;
 		end if; -- fine inserimento testata nuova anagrafica
 
     if aDett.cd_quadro = aTmpQuadro and aDett.cd_ti_compenso = aTmpTiCompenso  -- lo stesso quadro e lo stesso tipo compenso (mod.pag)  >>> aggiorno
@@ -645,8 +491,9 @@ begin
 		      	                                IM_CONTRIBUTI_ENTE,
 		      	                                IM_NETTO,
 		      	                                IM_NON_SOGG_INPS,
-		      	                                CD_TRATTAMENTO)
-		                    values (aId
+		      	                                CD_TRATTAMENTO,
+																						CF_PI_PIGNORATO)
+		                    values ( aId
 		                         ,to_char(aDett.cd_anag)
 		                         ,'B'
 		                         ,i
@@ -670,7 +517,11 @@ begin
 		                         ,aImCoriEnte
 		                         ,aImNetto
 		                         ,aImNonSoggInps
-		                         ,aTmpCdTrattamento);
+		                         ,aTmpCdTrattamento
+		                         ,(select nvl(vatp.codice_fiscale,vatp.partita_iva)
+		   	                   From PCIR009.v_anagrafico_terzo vatp
+		   	                   Where 
+		                       	  vatp.cd_anag (+)	=aTmpCdAnagPignorato));
 		      -- reset variabili
 		      aTmpCdTrattamento := aDett.cd_trattamento;
 		      aTmpCdAnag 		   := aDett.cd_anag;
@@ -741,7 +592,8 @@ begin
 						     IM_CONTRIBUTI_ENTE,
 						     IM_NETTO,
 						     IM_NON_SOGG_INPS,
-						     CD_TRATTAMENTO)
+						     CD_TRATTAMENTO,
+						     CF_PI_PIGNORATO)
 	    		values   (aId
 		  		 ,to_char(aTmpCdAnag)
 				   ,'B'
@@ -766,7 +618,11 @@ begin
 				   ,aImCoriEnte
 				   ,aImNetto
 				   ,aImNonSoggInps
-				   ,aTmpCdTrattamento);
+				   ,aTmpCdTrattamento
+				   ,(select nvl(vatp.codice_fiscale,vatp.partita_iva)
+		   	                   From PCIR009.v_anagrafico_terzo vatp
+		   	                   Where 
+		                       	  vatp.cd_anag (+)	= aTmpCdAnagPignorato));
 	end if;
 
 	open tc for
