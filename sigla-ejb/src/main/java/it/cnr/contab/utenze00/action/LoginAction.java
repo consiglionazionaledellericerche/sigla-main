@@ -51,7 +51,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
-	 * @throws ParseException	
+	 * @throws java.text.ParseException
 	 */
 	public Forward doAssegnaPassword(ActionContext context) throws java.text.ParseException {
 		try {
@@ -83,7 +83,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
-	 * @throws ParseException	
+	 * @throws java.text.ParseException
 	 */
 	public Forward doCambiaPassword(ActionContext context) throws java.text.ParseException {
 		try {
@@ -159,7 +159,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
-	 * @throws ParseException	
+	 * @throws java.text.ParseException
 	 */
 	public Forward doEntra(ActionContext context) throws java.text.ParseException {
 		try {
@@ -501,7 +501,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 	public Forward doSelezionaContesto(ActionContext context, Integer esercizio, String cds, String uo, String cdr) {
 		try {
 			LoginBP bp = (LoginBP)context.getBusinessProcess();			
-			CNRUserInfo ui = (CNRUserInfo)context.getUserInfo();
+			CNRUserInfo ui = Optional.ofNullable(context.getUserInfo())
+					.filter(CNRUserInfo.class::isInstance)
+					.map(CNRUserInfo.class::cast)
+					.orElseThrow(() -> new NoSuchSessionException());
 			ui.setEsercizio(esercizio);
 			CNRUserContext userContext = new CNRUserContext(
 				ui.getUtente().getCd_utente(),
@@ -542,6 +545,8 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 			bp.setBootstrap(true);
 			context.setUserContext(userContext);
 			return context.findDefaultForward();
+		} catch (NoSuchSessionException _ex) {
+			return context.findForward("sessionExpired");
 		} catch(Throwable e) {
 			return handleException(context,e);
 		}

@@ -763,7 +763,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 inviaDistintaPEC(nodes, isEstero,
                         "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
                                 " Progressivo Flusso: " + distinta.getProgFlusso() +
-                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlusso());
+                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlussoBT());
                 return Boolean.TRUE;
             }
         } catch (EmailException | IOException _ex) {
