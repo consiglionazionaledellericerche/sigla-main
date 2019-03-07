@@ -956,16 +956,14 @@ PROCEDURE scriviFileQuadroSY
    gen_cur GenericCurType;
  -- Variabili usate
    aCodiceFiscale varchar2(20);
-   aCodiceFiscalePignorato varchar2(20);
-
+   
 BEGIN
 --pipe.send_message('4');
    BEGIN
 
       -- Valorizzazione costanti della chiave file -------------------------------------------------
       aCodiceFiscale :=' ';
-      aCodiceFiscalePignorato :=' ';
-
+      
       -- Ciclo elaborazione dati 770 ---------------------------------------------------------------
 
       OPEN gen_cur FOR
@@ -974,7 +972,7 @@ BEGIN
            FROM  vpg_certificazione_770
            where inTiModello = 'S'
              and inQuadro = 'SY'
-           Order By ID, CHIAVE, CF_PI_PIGNORATO, TIPO;
+           Order By ID, CHIAVE, TIPO,CF_PI_PIGNORATO;
       LOOP
          FETCH gen_cur INTO
                aRecEstrazione770;
@@ -994,7 +992,7 @@ BEGIN
 	           aStringa:=aStringa || RPAD(' ', 14, ' ');   -- rfu
 	           aStringa:=aStringa || '0';                  -- tipo invio
 
-             aStringa:=aStringa || RPAD(SUBSTR(aCodiceFiscalePignorato, 1, 16), 16, ' ');   -- codice fiscale pignorato
+             aStringa:=aStringa || RPAD(SUBSTR(nvl(aRecEstrazione770.CF_PI_PIGNORATO,' '), 1, 16), 16, ' ');   -- codice fiscale pignorato
              aStringa:=aStringa || RPAD(SUBSTR(aCodiceFiscale, 1, 16), 16, ' ');   -- codice fiscale
 
       	     aStringa:= aStringa ||  LPAD((aRecEstrazione770.im_Lordo * 100), 16, '0');   -- somma erogata
@@ -1019,17 +1017,13 @@ BEGIN
                                  aRecBframeBlob.filename,
                                  mioCLOB,
                                  aStringa);
-
       ELSE    -- record di tipo A
 	          IF aRecEstrazione770.CODICE_FISCALE IS NULL THEN
 	               aCodiceFiscale := aRecEstrazione770.PARTITA_IVA;
 	          ELSE
                  aCodiceFiscale := aRecEstrazione770.CODICE_FISCALE;
 	          END IF;
-            aCodiceFiscalePignorato := aRecEstrazione770.CF_PI_PIGNORATO;
       END IF;
-
-
    END LOOP;
 
    CLOSE gen_cur;
@@ -1407,7 +1401,7 @@ BEGIN
               aStringa:=aStringa || RPAD(' ', 4, ' ');  -- codice comune fusione 2017 N
               aStringa:=aStringa || RPAD(' ', 40, ' ');   --comune
 
-      	      aStringa:=aStringa || RPAD(SUBSTR(Upper(aProvinciaDomicilio), 1, 2), 2, ' ');   -- provincia domicilio fiscale
+      	      aStringa:=aStringa || RPAD(' ', 2, ' ');   -- provincia domicilio fiscale
       	      aStringa:=aStringa || RPAD(' ', 4, ' ');  -- codice comune (dovrebbe essere valorizzato solo in casi da noi non gestiti)
       	      aStringa:=aStringa || RPAD(' ', 4, ' ');  -- codice comune (dovrebbe essere valorizzato solo in casi da noi non gestiti)
       	      aStringa:=aStringa || RPAD(SUBSTR(aSpazi, 1, 16), 16, ' ');   -- codice fiscale rappresentante incapace
@@ -1559,13 +1553,13 @@ BEGIN
 	             		  	IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) not in ('T255','T255C','T256','T256C','T257','T257C','T259','T159',
 																																				'T155','T155C','T156','T156C','T157','T157C','T091','T091C','T259C')) then
 
-	                			aStringa:= aStringa || '6';
+	                			aStringa:= aStringa || '7';
 	                			aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
 	                	  else
 		                	  -- CM e Regime Forfettario e Legge 388 ma ha IM_NON_SOGG_RIT!=0
 		                		IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T255C','T256','T256C','T257','T257C','T259','T159',
 																																					'T155','T155C','T156','T156C','T157','T157C','T091','T091C','T259C')) then
-																				aStringa:= aStringa || '6';
+																				aStringa:= aStringa || '7';
 																				aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_LORDO * 100), 12, '0');-- somma non soggetta a ritenute
 		                		else
 		                			aStringa:= aStringa || '0';
@@ -1577,7 +1571,7 @@ BEGIN
 									-- CM e Regime Forfettario e Legge 388
 	                 IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T255C','T256','T256C','T257','T257C','T259','T159',
 																																				'T155','T155C','T156','T156C','T157','T157C','T091','T091C','T259C')) then
-											aStringa:= aStringa || '6';
+											aStringa:= aStringa || '7';
 											aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_LORDO * 100), 12, '0');-- somma non soggetta a ritenute
 										else
 	                		aStringa:= aStringa || '0';
@@ -1762,7 +1756,7 @@ BEGIN
 	           --*****
 
 	         if(aRecEstrazione770.cd_quadro='SY') then
-				           aStringa:=aStringa || RPAD(SUBSTR(aCodiceFiscalePignorato, 1, 16), 16, ' ');   -- codice fiscale pignorato
+				           aStringa:=aStringa || RPAD(SUBSTR(aRecEstrazione770.cf_pi_pignorato, 1, 16), 16, ' ');   -- codice fiscale pignorato
 			      	     aStringa:= aStringa ||  LPAD(((aRecEstrazione770.im_Lordo -aRecEstrazione770.IM_NON_SOGG_RIT)* 100), 12, '0');   -- somma erogata
 			             aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_RITENUTE * 100), 12, '0');  -- ritenuta operata
 			             aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');  -- ritenuta operata

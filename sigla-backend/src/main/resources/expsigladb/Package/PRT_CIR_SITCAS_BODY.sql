@@ -114,13 +114,18 @@ RETURN number;
        Stringa := 'Select nvl(sum(MANDATO.IM_MANDATO), 0) '||
                   'from  MANDATO, DISTINTA_CASSIERE, DISTINTA_CASSIERE_DET '||
                   'WHERE MANDATO.STATO != ''A'' AND '||
-                  '      MANDATO.CD_CDS     = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE     AND '||
-                  '      MANDATO.ESERCIZIO  = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
-                  '      MANDATO.PG_MANDATO = DISTINTA_CASSIERE_DET.PG_MANDATO AND '||
-                  '      DISTINTA_CASSIERE.CD_CDS                 = DISTINTA_CASSIERE_DET.CD_CDS                 AND '||
-                  '      DISTINTA_CASSIERE.ESERCIZIO              = DISTINTA_CASSIERE_DET.ESERCIZIO              AND '||
-                  '      DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
-                  '      DISTINTA_CASSIERE.PG_DISTINTA            = DISTINTA_CASSIERE_DET.PG_DISTINTA';
+                  'MANDATO.CD_CDS     = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE  AND '||
+                  'MANDATO.ESERCIZIO  = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
+                  'MANDATO.PG_MANDATO = DISTINTA_CASSIERE_DET.PG_MANDATO AND '||
+                  'DISTINTA_CASSIERE.CD_CDS                 = DISTINTA_CASSIERE_DET.CD_CDS                 AND '||
+                  'DISTINTA_CASSIERE.ESERCIZIO              = DISTINTA_CASSIERE_DET.ESERCIZIO              AND '||
+                  'DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
+                  'DISTINTA_CASSIERE.PG_DISTINTA            = DISTINTA_CASSIERE_DET.PG_DISTINTA  AND  '||
+                  'DISTINTA_CASSIERE.PG_DISTINTA IN(SELECT MIN(DET.PG_DISTINTA) FROM DISTINTA_CASSIERE_DET DET '||
+                  'WHERE '||
+                  'MANDATO.CD_CDS               = DET.CD_CDS_ORIGINE  AND '||                           
+                  'MANDATO.ESERCIZIO            = DET.ESERCIZIO  AND '||                       
+                  'MANDATO.PG_MANDATO           = DET.PG_MANDATO)';
     Else
        Stringa := 'Select nvl(sum(MANDATO.IM_MANDATO), 0) from MANDATO '||
                   ' WHERE STATO != ''A'' ';
@@ -297,6 +302,7 @@ FUNCTION Tot_reversali(
                   '      DISTINTA_CASSIERE.ESERCIZIO   = DISTINTA_CASSIERE_DET.ESERCIZIO              AND '||
                   '      DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
                   '      DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA';
+
     Else
        Stringa := 'Select nvl(sum(REVERSALE.im_REVERSALE), 0) from REVERSALE '||
                   ' WHERE STATO != ''A'' ';
@@ -574,22 +580,27 @@ FUNCTION Tot_reversali(
     Stringa := 'Select nvl(sum(SOSPESO_DET_USC.IM_ASSOCIATO), 0) '||
                'from SOSPESO, SOSPESO_DET_USC, MANDATO, DISTINTA_CASSIERE, DISTINTA_CASSIERE_DET '||
                'WHERE SOSPESO_DET_USC.TI_SOSPESO_RISCONTRO = ''R'' AND '||
-               '      SOSPESO_DET_USC.STATO       	 = ''N'' AND '||
-               '      SOSPESO_DET_USC.CD_CDS	     = MANDATO.CD_CDS AND '||
-               '      SOSPESO_DET_USC.ESERCIZIO    = MANDATO.ESERCIZIO AND '||
-               '      SOSPESO_DET_USC.PG_MANDATO   = MANDATO.PG_MANDATO AND '||
-               '      SOSPESO.CD_CDS               = SOSPESO_DET_USC.CD_CDS AND '||
-               '      SOSPESO.ESERCIZIO            = SOSPESO_DET_USC.ESERCIZIO AND '||
-               '      SOSPESO.TI_ENTRATA_SPESA     = SOSPESO_DET_USC.TI_ENTRATA_SPESA AND '||
-               '      SOSPESO.TI_SOSPESO_RISCONTRO = SOSPESO_DET_USC.TI_SOSPESO_RISCONTRO AND '||
-               '      SOSPESO.CD_SOSPESO           = SOSPESO_DET_USC.CD_SOSPESO AND '||
-               '      MANDATO.CD_CDS               = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE     AND '||
-               '      MANDATO.ESERCIZIO            = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
-               '      MANDATO.PG_MANDATO           = DISTINTA_CASSIERE_DET.PG_MANDATO AND '||
-               '      DISTINTA_CASSIERE.CD_CDS      = DISTINTA_CASSIERE_DET.CD_CDS       AND '||
-               '      DISTINTA_CASSIERE.ESERCIZIO   = DISTINTA_CASSIERE_DET.ESERCIZIO    AND '||
-               '      DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
-               '      DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA ';
+               'SOSPESO_DET_USC.STATO       	 = ''N'' AND '||
+               'SOSPESO_DET_USC.CD_CDS	     = MANDATO.CD_CDS AND '||
+               'SOSPESO_DET_USC.ESERCIZIO    = MANDATO.ESERCIZIO AND '||
+               'SOSPESO_DET_USC.PG_MANDATO   = MANDATO.PG_MANDATO AND '||
+               'SOSPESO.CD_CDS               = SOSPESO_DET_USC.CD_CDS AND '||
+               'SOSPESO.ESERCIZIO            = SOSPESO_DET_USC.ESERCIZIO AND '||
+               'SOSPESO.TI_ENTRATA_SPESA     = SOSPESO_DET_USC.TI_ENTRATA_SPESA AND '||
+               'SOSPESO.TI_SOSPESO_RISCONTRO = SOSPESO_DET_USC.TI_SOSPESO_RISCONTRO AND '||
+               'SOSPESO.CD_SOSPESO           = SOSPESO_DET_USC.CD_SOSPESO AND '||
+               'MANDATO.CD_CDS               = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE     AND '||
+               'MANDATO.ESERCIZIO            = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
+               'MANDATO.PG_MANDATO           = DISTINTA_CASSIERE_DET.PG_MANDATO AND '||
+               'DISTINTA_CASSIERE.CD_CDS      = DISTINTA_CASSIERE_DET.CD_CDS       AND '||
+               'DISTINTA_CASSIERE.ESERCIZIO   = DISTINTA_CASSIERE_DET.ESERCIZIO    AND '||
+               'DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
+               'DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA AND '||
+               'DISTINTA_CASSIERE.PG_DISTINTA IN(SELECT MIN(DET.PG_DISTINTA) FROM DISTINTA_CASSIERE_DET DET '||
+               'WHERE '||
+               'MANDATO.CD_CDS               = DET.CD_CDS_ORIGINE AND '||                           
+               'MANDATO.ESERCIZIO            = DET.ESERCIZIO  AND '||                       
+               'MANDATO.PG_MANDATO           = DET.PG_MANDATO)';
 	if (parametri_esercizio.fl_tesoreria_unica='N') then
     If P_CDS IS NOT NULL Then
           Costruisci_Stringa(Stringa, 'SOSPESO_DET_USC.CD_CDS = '''||P_CDS||'''');
