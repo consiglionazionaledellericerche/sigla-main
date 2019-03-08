@@ -616,7 +616,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 
 			if (Optional.of(pdg).filter(el->el.isMotivazioneTrasferimentoAutorizzato()).isPresent() &&
 					!pdg.getCentro_responsabilita().isCdrSAC())
-				throw new ApplicationException("Variazione di tipo 'Trasferimento autorizzato' " +
+				throw new ApplicationException("Variazione di tipo 'Trasferimento in deroga' " +
 						"consentita solo alla UO Ente.");
 
 			boolean existDettPersonale = true;
