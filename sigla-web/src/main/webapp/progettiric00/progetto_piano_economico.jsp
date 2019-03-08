@@ -9,7 +9,7 @@
 <%
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
 %>
-<div class="card">
+<div class="card mb-1">
 	<fieldset class="fieldset mb-2">
 	<legend class="GroupLabel card-header text-primary">Riepilogo Importi</legend>
 	<table class="m-2 p-2">
@@ -49,19 +49,15 @@
 <div class="card">
 	<fieldset class="fieldset mb-2">
 	<legend class="GroupLabel card-header text-primary">Ripartizione Annuale</legend>
-	<table class="m-2 p-2">
-	  <tr><td>	
-<%
-	JSPUtils.tabbed(
-				pageContext,
-				"tabProgettoPianoEconomico",
-				bp.getTabsPianoEconomico(),
-				bp.getTab("tabProgettoPianoEconomico"),
-				"center",
-				"100%",
-				null);	
-%>
-	  </td></tr>                     	
-	</table>
+    <%
+        JSPUtils.tabbed(
+                    pageContext,
+                    "tabProgettoPianoEconomico",
+                    bp.getTabsPianoEconomico(),
+                    bp.getTab("tabProgettoPianoEconomico"),
+                    "center",
+                    "100%",
+                    null);
+    %>
 	</fieldset>
 </div>
