@@ -1793,4 +1793,8 @@ TRASPORTO_AEREO"/>
             <where>CD_CHIAVE_PRIMARIA = 'FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA = 'ATTIVO_SIOPEPLUS'</where>
         </update>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_id_matricola">
+        <modifyDataType tableName="var_stanz_res" columnName="id_matricola" newDataType="numeric"/>
+        <modifyDataType tableName="pdg_variazione" columnName="id_matricola" newDataType="numeric"/>
+    </changeSet>
 </databaseChangeLog>
