@@ -31,7 +31,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public static final java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary ds_causaleKeys = new it.cnr.jada.util.OrderedHashtable();
 	
-	private String storageMatricola;
+	private Long storageMatricola;
 	
 	final public static String STATO_PROPOSTA_PROVVISORIA = "PRP";
 	final public static String STATO_PROPOSTA_DEFINITIVA = "PRD";
@@ -68,11 +68,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		stato_invioKeys.put(STATO_INVIATA,"Inviata");
 
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_GENERICO,"Variazione Generica");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando in corso");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento Autorizzato");
+//		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
 
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
@@ -779,11 +779,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		this.mapMotivazioneVariazione = mapMotivazioneVariazione; 
 	}
 	
-	public String getStorageMatricola() {
+	public Long getStorageMatricola() {
 		return storageMatricola;
 	}
 	
-	public void setStorageMatricola(String storageMatricola) {
+	public void setStorageMatricola(Long storageMatricola) {
 		this.storageMatricola = storageMatricola;
 	}
 }

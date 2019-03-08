@@ -508,7 +508,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		try{
 			boolean existDettPersonale = true;
 			String cdrPersonale = null;
-			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent()) { 
+			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent() && 
+					var_stanz_res.isMotivazionePersonale()) { 
 				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				existDettPersonale = false;
@@ -522,7 +523,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 
 				java.util.Collection<Var_stanz_res_rigaBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(ass_cdr);
 				if (dettagliSpesa.isEmpty()) 
-						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilitïà " + ass_cdr.getCd_centro_responsabilita());
+						throw new ApplicationException("Associare almeno un dettaglio di variazione al Centro di Responsabilità " + ass_cdr.getCd_centro_responsabilita());
 				if (ass_cdr.getSpesa_diff().compareTo(Utility.ZERO) != 0)
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_cdr.getSpesa_diff())+")"+
 												   "\n" + "per il Cdr "+ ass_cdr.getCd_centro_responsabilita()+ " è diversa da zero. ");
