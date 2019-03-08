@@ -89,7 +89,7 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	private Accertamento_modificaBulk accMod;
 	private boolean approvazioneControllata = false;
 	
-	private String storageMatricola;
+	private Long storageMatricola;
 	
 	// variabile utilizzata per gestire consentire l'inserimento di valori null in tiMotivazioneVariazione
 	// ma rendere allo stesso tempo obbligatorio l'indicazione del campo da parte dell'utente
@@ -485,6 +485,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		return Pdg_variazioneBulk.MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
 	}
 
+	public boolean isMotivazionePersonale() {
+		return isMotivazioneVariazioneBandoPersonale() || isMotivazioneVariazioneProrogaPersonale() || isMotivazioneVariazioneAltreSpesePersonale();
+	}
 	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
 		return Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
 	}
@@ -517,11 +520,11 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		return Pdg_variazioneBulk.tiMotivazioneVariazioneForSearchKeys;
 	}
 	
-	public String getStorageMatricola() {
+	public Long getStorageMatricola() {
 		return storageMatricola;
 	}
 	
-	public void setStorageMatricola(String storageMatricola) {
+	public void setStorageMatricola(Long storageMatricola) {
 		this.storageMatricola = storageMatricola;
 	}
 	public final java.util.Dictionary getDs_causaleKeys() {

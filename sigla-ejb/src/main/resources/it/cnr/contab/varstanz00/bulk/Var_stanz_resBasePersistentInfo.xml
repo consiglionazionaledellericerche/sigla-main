@@ -98,7 +98,7 @@
 		<columnMapping
 			columnName="ID_MATRICOLA"
 			propertyName="idMatricola"
-			sqlTypeName="VARCHAR"
+			sqlTypeName="DECIMAL"
 			columnSize="10"
 			nullable="true"/>
 		<columnMapping
