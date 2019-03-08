@@ -68,7 +68,7 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 	private java.lang.String tiMotivazioneVariazione;
 
 	// ID_MATRICOLA VARCHAR2(10)
-	private java.lang.String idMatricola;
+	private java.lang.Long idMatricola;
 
 	// ID_BANDO VARCHAR2(30)
 	private java.lang.String idBando;
@@ -230,11 +230,11 @@ public class Pdg_variazioneBase extends Pdg_variazioneKey implements Keyed {
 		this.tiMotivazioneVariazione = tiMotivazioneVariazione;
 	}
 	
-	public java.lang.String getIdMatricola() {
+	public java.lang.Long getIdMatricola() {
 		return idMatricola;
 	}
 	
-	public void setIdMatricola(java.lang.String idMatricola) {
+	public void setIdMatricola(java.lang.Long idMatricola) {
 		this.idMatricola = idMatricola;
 	}
 
