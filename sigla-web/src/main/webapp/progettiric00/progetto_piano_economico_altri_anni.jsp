@@ -15,7 +15,7 @@
 %>
 
 <%	controller.writeHTMLTable(pageContext,"piano_economico",true,false,true,"100%","100px"); %>
-<table class="Panel">
+<table class="Panel card p-2 mt-1">
   <TR>
   	<TD><% controller.writeFormLabel(out,"esercizio_piano");%></TD>
   	<TD colspan="3"><% controller.writeFormInput(out,null,"esercizio_piano",isKeyEditable,null,null);%></TD>
@@ -32,7 +32,7 @@
 </table>
 </br>
 <fieldset class="fieldset">
-	<legend class="GroupLabel">Voci Bilancio Associate</legend>
+	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
 <%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","100px"); %>
 	</br>
 	<table class="Panel">

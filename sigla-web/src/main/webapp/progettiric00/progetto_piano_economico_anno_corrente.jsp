@@ -16,7 +16,7 @@
 %>
 
 <%	controller.writeHTMLTable(pageContext,"piano_economico1",true,false,true,"100%","100px"); %>
-<table class="Panel">
+<table class="Panel card p-2 mt-1">
   <TR>
   	<TD><% controller.writeFormLabel(out,"voce_piano");%></TD>
   	<TD colspan="3"><% controller.writeFormInput(out,null,"voce_piano",isKeyEditable,null,null);%></TD>
