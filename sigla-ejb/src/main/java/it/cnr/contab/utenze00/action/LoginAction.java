@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.ejb.EJBException;
 
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.jada.comp.ComponentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -540,7 +541,27 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
 					})
 					.filter(CdrBulk.class::isInstance)
 					.map(CdrBulk.class::cast)
-					.orElse(null));
+					.orElseGet(() -> {
+						if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase("null")).isPresent()) {
+							try {
+								return createCRUDComponentSession().find(
+										context.getUserContext(),
+										V_struttura_organizzativaBulk.class,
+										"findCDRCollegatiUO",
+										ui.getUnita_organizzativa(),
+										ui.getEsercizio()
+								).stream()
+										.filter(CdrBulk.class::isInstance)
+										.map(CdrBulk.class::cast)
+										.findAny()
+										.orElse(null);
+							} catch (RemoteException|ComponentException e) {
+								throw new RuntimeException(e);
+							}
+						}
+						return null;
+					})
+			);
 			userContext.getAttributes().put("bootstrap", true);
 			bp.setBootstrap(true);
 			context.setUserContext(userContext);
