@@ -16,16 +16,9 @@
 
 <% JSPUtils.printBaseUrl(pageContext);%>
 </head>
-
-
 <% CaricaFileCassiereBP bp = (CaricaFileCassiereBP)BusinessProcess.getBusinessProcess(request); %>
-
-
 <body class="Form">
-
-
 <% bp.openFormWindow(pageContext); %>
-
     <span class="FormLabel h1 text-primary" style="color:blue">Carica Nuovo File</span>
 	<div class="Group card">
         <table style="width:100%">

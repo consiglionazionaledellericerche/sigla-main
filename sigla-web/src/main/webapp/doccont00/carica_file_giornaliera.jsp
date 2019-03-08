@@ -16,30 +16,34 @@
 
 <% JSPUtils.printBaseUrl(pageContext);%>
 </head>
-
-
 <% CaricaFileGiornalieraBP bp = (CaricaFileGiornalieraBP)BusinessProcess.getBusinessProcess(request); %>
-
-
 <body class="Form">
-
-
 <% bp.openFormWindow(pageContext); %>
-
+    <span class="FormLabel h1 text-primary" style="color:blue">Carica Nuovo File xml per la Giornaliera di Cassa</span>
 	<div class="Group card">
-	<table style="width:100%">
-       <tr>
-    	<td>
-		  <span class="FormLabel" style="color:blue">Carica Nuovo File xml</span>
-		</td>
-       </tr>
-		<tr>
-			<td>
-				<input type="file" name="fileGiornaliera">
-				<% JSPUtils.button(out,null,null,"Carica File","javascript:submitForm('doCaricaFile')", true, bp.getParentRoot().isBootstrap()); %>
-			</td>
-		</tr>
-	</table>
-	</div>	
+        <table style="width:100%">
+            <tr>
+                <td>
+                    <label class="custom-file">
+                        <input type="file" name="fileGiornaliera" onchange="inputFileName(this);"
+                            class="custom-file-input"
+                            maxlength="400"
+                            size="40" onclick="cancelBubble(event)">
+                            <span id="span-fileGiornaliera" class="custom-file-control" title="Scegli file..."></span>
+                    </label>
+                </td>
+                <td>
+                    <% JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-cloud-upload" : "",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-cloud-upload" : "",
+                        "Invia File",
+                        "javascript:submitForm('doCaricaFile')",
+                        "btn-outline-primary btn-title btn-sm ml-2",
+                        true,
+                        bp.getParentRoot().isBootstrap()); %>
+                </td>
+            </tr>
+        </table>
+	</div>
 <%bp.closeFormWindow(pageContext); %>
 </body>
