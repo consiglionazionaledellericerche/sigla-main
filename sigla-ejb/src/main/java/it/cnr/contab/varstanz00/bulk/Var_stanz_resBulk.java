@@ -485,6 +485,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		return Pdg_variazioneBulk.MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
 	}
 
+	public boolean isMotivazionePersonale() {
+		return isMotivazioneVariazioneBandoPersonale() || isMotivazioneVariazioneProrogaPersonale() || isMotivazioneVariazioneAltreSpesePersonale();
+	}
 	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
 		return Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
 	}
