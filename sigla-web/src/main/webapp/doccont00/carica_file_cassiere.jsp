@@ -34,8 +34,8 @@
                 </td>
                 <td>
                     <% JSPUtils.button(out,
-                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-cloud-upload" : "",
-                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-cloud-upload" : "",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-cloud-upload" : null,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-cloud-upload" : null,
                         "Invia File",
                         "javascript:submitForm('doCaricaFile')",
                         "btn-outline-primary btn-title btn-sm ml-2",
