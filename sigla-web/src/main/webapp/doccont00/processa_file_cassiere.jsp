@@ -19,6 +19,9 @@
     <span class="FormLabel h1 text-primary" style="color:blue">Files</span>
     <div class="card p-2 mb-1">
         <% bp.writeHTMLTable(pageContext,"100%","300px"); %>
+        <% if (bp.getParentRoot().isBootstrap()) { %>
+        <br>
+        <% } %>
         <% bp.writeHTMLNavigator(out); %>
 	</div>
     <span class="FormLabel h1 text-primary" style="color:blue">Logs</span>
