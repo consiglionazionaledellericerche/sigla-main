@@ -555,7 +555,9 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     .filter(CdrBulk.class::isInstance)
                     .map(CdrBulk.class::cast)
                     .orElseGet(() -> {
-                        if (Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase(NULL)).isPresent()) {
+                        if (Optional.ofNullable(ui)
+                                .flatMap(cnrUserInfo -> Optional.ofNullable(cnrUserInfo.getUnita_organizzativa()))
+                                .flatMap(unita_organizzativaBulk -> Optional.ofNullable(unita_organizzativaBulk.getCd_unita_organizzativa())).isPresent()) {
                             try {
                                 return createCRUDComponentSession().find(
                                         context.getUserContext(),
@@ -569,7 +571,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                                         .findAny()
                                         .orElse(null);
                             } catch (RemoteException | ComponentException e) {
-                                log.error("CANNOT FIND CDR from UO: {}", uo, e);
+                                log.error("CANNOT FIND CDR from UO: {}", ui.getUnita_organizzativa().getCd_unita_organizzativa(), e);
                             }
                         }
                         return null;
