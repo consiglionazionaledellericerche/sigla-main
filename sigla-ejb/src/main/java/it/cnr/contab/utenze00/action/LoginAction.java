@@ -569,7 +569,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                                         .findAny()
                                         .orElse(null);
                             } catch (RemoteException | ComponentException e) {
-                                throw new RuntimeException(e);
+                                log.error("CANNOT FIND CDR from UO: {}", uo, e);
                             }
                         }
                         return null;
