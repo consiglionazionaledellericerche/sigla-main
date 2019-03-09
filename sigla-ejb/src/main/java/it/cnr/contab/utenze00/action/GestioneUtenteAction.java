@@ -337,7 +337,9 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			it.cnr.contab.utenze00.bulk.Albero_mainBulk nodo = getComponentSession().validaNodoPerUtente(context.getUserContext(),bp.getUserInfo().getUtente(),uo == null ? null : uo.getCd_unita_organizzativa(),cd_nodo);
 			if (nodo == null) return context.findDefaultForward();
 			return startNodo(context,bp,nodo);
-		} catch(Throwable e) {
+		} catch (NoSuchBusinessProcessException _ex){
+			return context.findForward("sessionExpired");
+		} catch (Throwable e) {
 		     if (bp.getParentRoot().isBootstrap()) {
 		        bp.setErrorMessage(e.getMessage());
                 ((HttpActionContext)context).getRequest()
