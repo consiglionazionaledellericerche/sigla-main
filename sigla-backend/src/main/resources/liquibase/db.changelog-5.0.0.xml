@@ -1797,4 +1797,44 @@ TRASPORTO_AEREO"/>
         <modifyDataType tableName="var_stanz_res" columnName="id_matricola" newDataType="numeric"/>
         <modifyDataType tableName="pdg_variazione" columnName="id_matricola" newDataType="numeric"/>
     </changeSet>
+    <changeSet author="marco.spasiano" id="accessi_amminstra_progetti">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGAMM"/>
+            <column name="ti_accesso" type="CHAR(1)"  value="" />
+            <column name="ds_accesso" type="VARCHAR(200)" value="Amministra Progetti Area Progettuale"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGAMM"/>
+            <column name="business_process" type="VARCHAR(200)" value="AmministraTestataProgettiRicercaBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PROGETTI.LIV2.A"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Amministra"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGAMM"/>
+            <column name="business_process" type="VARCHAR(200)" value="AmministraTestataProgettiRicercaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="3"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="A"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PROGETTI.LIV2"/>
+            <column name="url_icona" type="VARCHAR(200)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
