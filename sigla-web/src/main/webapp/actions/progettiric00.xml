@@ -30,7 +30,17 @@
     <init-param name="searchResultColumnSet" value="filtro_ricerca_prog2"/>
 	<init-param name="defaultAction" value="CRUDProgettiRicercaAction"/>
   </businessProcess>
-  
+
+  <businessProcess
+          name="AmministraTestataProgettiRicercaBP" className="it.cnr.contab.progettiric00.bp.AmministraTestataProgettiRicercaBP">
+    <forward name="default" path="/progettiric00/progetto_ricerca_commesse.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.ProgettoBulk"/>
+    <init-param name="componentSessionName" value="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession"/>
+    <init-param name="freeSearchSet" value="filtro_ricerca_prog2"/>
+    <init-param name="searchResultColumnSet" value="filtro_ricerca_prog2"/>
+    <init-param name="defaultAction" value="CRUDProgettiRicercaAction"/>
+  </businessProcess>
+
   <businessProcess
       name="TestataProgettiRicercaNuovoBP" className="it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP">
     <forward name="default" path="/progettiric00/progetto_ricerca.jsp"/>
