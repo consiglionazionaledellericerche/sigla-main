@@ -1,5 +1,6 @@
 package it.cnr.contab.progettiric00.bp;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.JspWriter;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -81,7 +83,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 					Optional.ofNullable(getParentModel())
 							.filter(ProgettoBulk.class::isInstance)
 							.map(ProgettoBulk.class::cast)
-							.map(el->!el.isROProgettoPianoEconomico())
+							.map(el->!isROProgettoPianoEconomico(el))
 							.orElse(Boolean.FALSE);
 		}
 		
@@ -91,9 +93,14 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 					Optional.ofNullable(getParentModel())
 							.filter(ProgettoBulk.class::isInstance)
 							.map(ProgettoBulk.class::cast)
-							.map(el->!el.isROProgettoPianoEconomico())
+							.map(el->!isROProgettoPianoEconomico(el))
 							.orElse(Boolean.FALSE);
-		}		
+		}
+
+		@Override
+		public void writeFormInput(JspWriter jspwriter, String s, String s1, boolean flag, String s2, String s3) throws IOException {
+			super.writeFormInput(jspwriter, s, s1, flag, s2, s3);
+		}
 	};
 
 	private SimpleDetailCRUDController crudPianoEconomicoAltriAnni = new ProgettoPianoEconomicoCRUDController( "PianoEconomicoAltriAnni", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAltriAnni", this) {
@@ -792,5 +799,11 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	
 	public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
 		this.annoFromPianoEconomico = annoFromPianoEconomico;
+	}
+
+	protected boolean isROProgettoPianoEconomico(ProgettoBulk progettoBulk) {
+		return Optional.ofNullable(progettoBulk)
+					.map(ProgettoBulk::isROProgettoPianoEconomico)
+					.orElse(Boolean.TRUE);
 	}
 }
