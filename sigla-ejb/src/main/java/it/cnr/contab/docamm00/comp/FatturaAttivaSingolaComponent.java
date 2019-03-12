@@ -2582,7 +2582,7 @@ public class FatturaAttivaSingolaComponent
 
     private void controlloCodiceIpaValorizzato(TerzoBulk terzo)
             throws ApplicationException {
-        if (terzo.getAnagrafico().isEntePubblico() && terzo.getCodiceUnivocoUfficioIpa() == null) {
+        if (terzo.getAnagrafico().isEntePubblico() && terzo.getCodiceUnivocoUfficioIpa() == null && terzo.getAnagrafico().isItaliano()) {
             throw new it.cnr.jada.comp.ApplicationException(
                     "Il codice terzo utilizzato si riferisce ad un'anagrafica censita nell'indice delle " +
                             "pubbliche amministrazioni. Richiedere tramite helpdesk l'inserimento del codice Univoco Ufficio IPA " +
