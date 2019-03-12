@@ -22,6 +22,7 @@ import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.jada.util.action.FormBP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -195,6 +196,11 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             Forward forward = doLogin(context, GestioneLoginComponent.VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO);
             if (forward == null)
                 forward = initializeWorkspace(context);
+            Optional.ofNullable(context.getBusinessProcess())
+                    .filter(FormBP.class::isInstance)
+                    .map(FormBP.class::cast)
+                    .flatMap(formBP -> Optional.ofNullable(formBP.getMessage()))
+                    .ifPresent(s -> log.warn("Utente Multiplo message: {}", s));
             return forward;
         } catch (Throwable e) {
             return handleException(context, e);
