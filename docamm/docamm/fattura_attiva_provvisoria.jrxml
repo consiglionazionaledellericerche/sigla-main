@@ -395,7 +395,7 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TNR10" x="86" y="7" width="468" height="38" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1f4a2831-7396-4293-89c9-731bb3d302c7"/>
-				<textFieldExpression><![CDATA[$F{DS_FATTURA_ATTIVA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DS_RIGA_FATTURA}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="1" y="3" width="554" height="1" uuid="336db13a-b91d-48c3-82e8-6620a58f12cf"/>
