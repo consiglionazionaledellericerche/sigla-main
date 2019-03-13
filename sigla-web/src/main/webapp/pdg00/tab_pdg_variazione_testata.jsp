@@ -51,7 +51,12 @@
 			bk!=null && bk.getTipo_variazione()!=null && bk.getTipo_variazione().getFl_variazione_trasferimento())) { %>
     <TR>
 	  <TD><% bp.getController().writeFormLabel( out, "mapMotivazioneVariazione"); %></TD>
-	  <TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null);%></TD>
+	  <% if (bp.isSearching()) { %>
+		<TD colspan="2"><% bp.getController().writeFormInput(out,"default","tiMotivazioneVariazione");%></TD>
+	  <% } else { %>
+		<TD colspan="2"><% bp.getController().writeFormInput(out,"default","mapMotivazioneVariazione",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null);%></TD>
+	  <% } %>	  
+	  
 	  <% if (bp.isSearching() || bk.isMotivazioneVariazioneBandoPersonale()) {%>
 		 <TD><% bp.getController().writeFormLabel( out, "idBando"); %></TD>
 		 <TD><% bp.getController().writeFormInput( out, "default","idBando",!bp.isSearching()&&(isAbilitato||!bk.isPropostaProvvisoria()),null,null); %></TD>

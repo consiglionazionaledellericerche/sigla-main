@@ -237,7 +237,7 @@
         enabledOnSearch="true"
         enabledOnEdit="true"                
 		nullable="false"
-		label="Motivo Variazione" />
+		label="Finalità della Variazione" />
 	<fieldProperty
 		name="mapMotivazioneVariazione"
 		property="mapMotivazioneVariazione"
@@ -249,7 +249,7 @@
         enabledOnSearch="true"
         enabledOnEdit="true"                
 		nullable="false"
-		label="Motivo Variazione" />
+		label="Finalità della Variazione" />
 	<fieldProperty
 		name="idMatricola"
 		property="idMatricola"

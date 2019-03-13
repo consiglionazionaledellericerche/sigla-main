@@ -2287,7 +2287,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					
 					if (impSpesaPositiviNaturaReimpiego.compareTo(BigDecimal.ZERO)>0 || impSpesaNegativiNaturaReimpiego.compareTo(BigDecimal.ZERO)>0)
 						throw new ApplicationException("Attenzione! Risultano movimenti su GAE di natura 6 - 'Reimpiego di risorse' "
-									+ " non consentito in quanto la variazione è di tipo 'Maggiori Entrate/Spese'.");
+									+ " non consentiti in quanto la variazione è di tipo 'Maggiori Entrate/Spese'.");
 				} else {
 					listCtrlPianoEco.stream()
 						.filter(el->el.getImpEntrataPositivi().compareTo(BigDecimal.ZERO)>0 ||
@@ -2354,7 +2354,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
 				 * 	  (regola non valida per progetti di Aree e CdrPersonale)
 				 */
-				if (!isVariazioneArea) {
+				if (!isVariazioneArea && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))

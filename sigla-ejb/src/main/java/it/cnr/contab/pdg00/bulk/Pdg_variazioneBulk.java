@@ -9,6 +9,7 @@ import java.util.Optional;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
@@ -27,8 +28,10 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private static final java.util.Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary ti_tipologia_finKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary stato_invioKeys = new it.cnr.jada.util.OrderedHashtable();
-	public static final java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+	
+	//Elenco completo delle Finalità della Variazioni utilizzato dalle mappe in modalità ricerca
 	public static final java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
+
 	private static final java.util.Dictionary ds_causaleKeys = new it.cnr.jada.util.OrderedHashtable();
 	
 	private Long storageMatricola;
@@ -67,18 +70,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		stato_invioKeys.put(STATO_DA_INVIARE,"Da inviare");
 		stato_invioKeys.put(STATO_INVIATA,"Inviata");
 
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_GENERICO,"Variazione Generica");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando in corso");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
-//		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
-
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
-		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento Autorizzato");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
 		
 		ds_causaleKeys.put(FONDO,"Fondo Perequativo Stabilizzazioni");
 		ds_causaleKeys.put(OVERHEAD,"Overhead/Spese Generali");
@@ -190,7 +186,23 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public final java.util.Dictionary getTi_causale_respintaKeys() {
 		return ti_causale_respintaKeys;
 	}
+
 	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
+		java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_GENERICO,"Variazione Generica");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando in corso");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
+
+		if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea())
+			tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+		
+		if (Optional.ofNullable(this.getCentro_responsabilita())
+					.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+					.map(Unita_organizzativaBulk::isUoEnte)
+					.orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoAutorizzato())
+			tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
+		
 		return tiMotivazioneVariazioneKeys;
 	}	
 
