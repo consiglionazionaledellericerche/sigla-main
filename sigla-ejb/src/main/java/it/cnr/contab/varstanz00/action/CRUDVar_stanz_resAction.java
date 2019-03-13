@@ -317,6 +317,13 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 		Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)testataBP.getModel();
 		try{
 			fillModel(context);
+			Var_stanz_resBulk varRes = (Var_stanz_resBulk)getBusinessProcess(context).getModel();
+			if (!Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia())) {
+				varRes.setMapMotivazioneVariazione(null);
+				varRes.setTiMotivazioneVariazione(null);
+				varRes.setIdMatricola(null);
+				varRes.setIdBando(null);
+			}				
 			if (!(Var_stanz_resBulk.TIPOLOGIA_STO.equals(var_stanz_res.getTipologia())||Var_stanz_resBulk.TIPOLOGIA_STO_INT.equals(var_stanz_res.getTipologia())))
 			   var_stanz_res.setDs_causale(null);
 			return context.findDefaultForward();
