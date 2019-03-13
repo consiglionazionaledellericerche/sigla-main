@@ -595,6 +595,7 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 			if (!pdgVar.getTipo_variazione().isMovimentoSuFondi())
 				pdgVar.setElemento_voce(null);
 			if (!pdgVar.getTipo_variazione().getFl_variazione_trasferimento()) {
+				pdgVar.setMapMotivazioneVariazione(null);
 				pdgVar.setTiMotivazioneVariazione(null);
 				pdgVar.setIdMatricola(null);
 				pdgVar.setIdBando(null);

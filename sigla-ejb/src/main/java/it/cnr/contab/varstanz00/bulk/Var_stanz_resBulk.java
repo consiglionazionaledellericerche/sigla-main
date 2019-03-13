@@ -6,11 +6,13 @@ package it.cnr.contab.varstanz00.bulk;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.GregorianCalendar;
+import java.util.Optional;
 
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
@@ -513,9 +515,26 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public void setMapMotivazioneVariazione(String mapMotivazioneVariazione) {
 		this.mapMotivazioneVariazione = mapMotivazioneVariazione; 
 	}
+	
 	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
-		return Pdg_variazioneBulk.tiMotivazioneVariazioneKeys;
+		java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO,"Variazione Generica");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_BANDO,"Personale - Bando in corso");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
+
+		if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea())
+			tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+		
+		if (Optional.ofNullable(this.getCentroDiResponsabilita())
+					.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+					.map(Unita_organizzativaBulk::isUoEnte)
+					.orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoAutorizzato())
+			tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
+		
+		return tiMotivazioneVariazioneKeys;
 	}
+
 	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
 		return Pdg_variazioneBulk.tiMotivazioneVariazioneForSearchKeys;
 	}
@@ -540,5 +559,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
     public boolean isVariazioneStorno() {
     	return Var_stanz_resBulk.TIPOLOGIA_STO.equalsIgnoreCase(this.getTipologia())||
     			Var_stanz_resBulk.TIPOLOGIA_STO_INT.equalsIgnoreCase(this.getTipologia());
+    }
+
+    public boolean isVariazioneInternaIstituto() {
+    	return Var_stanz_resBulk.TIPOLOGIA_STO_INT.equalsIgnoreCase(this.getTipologia());
     }
 }
