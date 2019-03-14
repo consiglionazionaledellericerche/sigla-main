@@ -7,13 +7,14 @@
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
-		inputSize="2"		
+		inputSize="5"
 		inputType="ROTEXT"
 		label="Esercizio" />
 	<fieldProperty
 		name="findCdsForPrint"
 		property="cdsForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		readonlyProperty="ROFindCdsForPrint"
 		completeOnSave="true"
 		label="Cds" />
@@ -37,6 +38,7 @@
 		name="findUoForPrint"
 		property="uoForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
 		readonlyProperty="ROFindUoForPrint"
 		label="Unita Organizzativa" />
@@ -59,6 +61,7 @@
 		name="findProgettoForPrint"
 		property="progettoForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
 		readonlyProperty="ROFindProgettoForPrint"
 		columnSet="nuovoPdg"
@@ -82,6 +85,7 @@
 		name="findGaeForPrint"
 		property="gaeForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="true"
 		readonlyProperty="ROFindGaeForPrint"
 		label="GAE" />
@@ -104,6 +108,7 @@
 		name="findResponsabileGaeForPrint"
 		property="responsabileGaeForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="true"
 		readonlyProperty="ROFindResponsabileGaeForPrint"
 		label="Responsabile GAE" />

@@ -18,7 +18,7 @@
 <body class="Form">
 
 <%	bp.openFormWindow(pageContext); %>
-
+<div class="card p-2 mb-2">
 <table width=100%>
  <tr>
   <td>
@@ -53,13 +53,15 @@
    </td>
   </tr>
 </table>
+</div>
+<div class="card p-2">
 <table>  
   <tr>
    <td>	
 	<div class="Group">
 	<table>    	  
 	  <tr>
-		<td class="GroupLabel">Raggruppamenti</td>
+		<td class="GroupLabel text-primary">Raggruppamenti</td>
 		<td><% bp.getController().writeFormInput(out,"seleziona"); %></td>
 	  </tr>	
 	  <tr>
@@ -87,7 +89,7 @@
 	</td>
    </tr>	    
 </table>
-
+</div>
 <% bp.closeFormWindow(pageContext); %>
 
 </body>
