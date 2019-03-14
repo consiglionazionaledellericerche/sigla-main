@@ -8,6 +8,7 @@
 		name="findCds"
 		property="cds"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
 		label="CdS" />
 	<fieldProperty
