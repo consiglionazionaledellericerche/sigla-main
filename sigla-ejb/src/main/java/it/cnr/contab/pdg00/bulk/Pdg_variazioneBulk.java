@@ -194,9 +194,20 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
 
-		if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea())
-			tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
-		
+		if (Optional.ofNullable(this.getCentro_responsabilita())
+				.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+				.filter(el->!el.isUoArea() && !el.isUoEnte())
+				.isPresent()) {
+			if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea()) {
+				if (Optional.ofNullable(this.getCentro_responsabilita())
+						.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+						.map(Unita_organizzativaBulk::isUoArea)
+						.orElse(Boolean.FALSE))
+					tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento da Aree di Ricerca");
+				else
+					tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+			}
+		}
 		if (Optional.ofNullable(this.getCentro_responsabilita())
 					.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
 					.map(Unita_organizzativaBulk::isUoEnte)

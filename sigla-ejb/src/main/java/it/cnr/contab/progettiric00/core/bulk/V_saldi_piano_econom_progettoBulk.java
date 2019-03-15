@@ -6,6 +6,9 @@
  */
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 /**
  * @author mspasiano
  *
@@ -20,13 +23,27 @@ public class V_saldi_piano_econom_progettoBulk extends V_saldi_piano_econom_prog
 	}
 	
 	public java.math.BigDecimal getAssestatoFinanziamento() {
-		return getStanziamentoFin().add(getVariapiuFin()).subtract(getVariamenoFin());
+		return getStanziamentoFin().add(getVariapiuFin()).subtract(getVariamenoFin()).add(getTrasferitoFinanziamento());
 	}
 
+	public java.math.BigDecimal getTrasferitoFinanziamento() {
+		return Optional.ofNullable(this.getSaldoTrasferimentoFinanziamento())
+				 	   .filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				 	   .map(BigDecimal::abs)
+				 	   .orElse(BigDecimal.ZERO);
+	}
+	
 	public java.math.BigDecimal getAssestatoCofinanziamento() {
-		return getStanziamentoCofin().add(getVariapiuCofin()).subtract(getVariamenoCofin());
+		return getStanziamentoCofin().add(getVariapiuCofin()).subtract(getVariamenoCofin()).add(getTrasferitoCofinanziamento());
 	}
 
+	public java.math.BigDecimal getTrasferitoCofinanziamento() {
+		return Optional.ofNullable(this.getSaldoTrasferimentoCofinanziamento())
+				 	   .filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				 	   .map(BigDecimal::abs)
+				 	   .orElse(BigDecimal.ZERO);
+	}
+	
 	public java.math.BigDecimal getDispResiduaFinanziamento() {
 		return getImportoFin().subtract(getAssestatoFinanziamento());
 	}
@@ -39,7 +56,19 @@ public class V_saldi_piano_econom_progettoBulk extends V_saldi_piano_econom_prog
 		return getAssestatoFinanziamento().add(getAssestatoCofinanziamento());
 	}
 
+	public java.math.BigDecimal getTrasferito() {
+		return getTrasferitoFinanziamento().add(getTrasferitoCofinanziamento());
+	}
+	
 	public java.math.BigDecimal getDispResidua() {
 		return getDispResiduaFinanziamento().add(getDispResiduaCofinanziamento());
+	}
+
+	public java.math.BigDecimal getSaldoTrasferimentoFinanziamento() {
+		return getTrasfpiuFin().subtract(getTrasfmenoFin());
+	}
+
+	public java.math.BigDecimal getSaldoTrasferimentoCofinanziamento() {
+		return getTrasfpiuCofin().subtract(getTrasfmenoCofin());
 	}
 }

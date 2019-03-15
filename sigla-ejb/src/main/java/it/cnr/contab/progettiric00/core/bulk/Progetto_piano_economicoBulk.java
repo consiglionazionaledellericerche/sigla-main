@@ -160,7 +160,6 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		return this.getDispResiduaFinanziamento().add(this.getDispResiduaCofinanziamento());
 	}
 	
-	
 	public boolean isROProgettoPianoEconomico() {
 		return Optional.ofNullable(this.getProgetto())
 					   .flatMap(el->Optional.ofNullable(el.getPdgModuli()))
