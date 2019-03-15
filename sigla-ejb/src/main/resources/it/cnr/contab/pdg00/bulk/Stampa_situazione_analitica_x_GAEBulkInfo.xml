@@ -7,7 +7,7 @@
 	<fieldProperty
 		name="esercizio"
 		property="esercizio"
-		inputSize="2"		
+		inputSize="5"
 		inputType="ROTEXT"
 		label="Esercizio" />
 	<!-- <fieldProperty
@@ -19,6 +19,7 @@
 		name="findCdsForPrint"
 		property="cdsForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
 		label="Cds" />
 	<fieldProperty
@@ -41,6 +42,7 @@
 		name="findUoForPrint"
 		property="uoForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
 		label="Unita Organizzativa" />
 	<fieldProperty
@@ -62,6 +64,7 @@
 		name="findCdrForPrint"
 		property="cdrForPrint"
 		inputType="SEARCHTOOL"
+		formName="searchtool"
 		completeOnSave="true"
 		label="Centro di Responsabilità" />
 	<fieldProperty
