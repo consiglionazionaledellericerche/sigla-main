@@ -83,22 +83,18 @@
 		readonlyProperty="decisionale"
 		inputType="BUTTON"
 		img="img/check10.gif"
+		buttonClass="btn-sm btn-outline-primary"
+		iconClass="fa fa-fw fa-check-square-o"
 		href="javascript:submitForm('doSeleziona()')" />
 
 	<formFieldProperty
 		name="esercizio"
 		property="esercizio"
 		inputType="ROTEXT"
-		inputSize="2"
+		inputSize="4"
 		label="Esercizio" />
 	<formFieldProperty
 		name="seleziona" />
-	<formFieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="ROTEXT"
-		inputSize="2"
-		label="Esercizio" />
 	<formFieldProperty
 		name="findCDSForPrint" />
 	<formFieldProperty
@@ -113,7 +109,7 @@
 		name="ti_etr_spe" />
 	<formFieldProperty
 		name="tipo_stampa"
-		command="" />
+		command="doDefault" />
 	<formFieldProperty
 		name="ragrr_dipartimento" />
 	<formFieldProperty
