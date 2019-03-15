@@ -151,6 +151,14 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota da Stanziare Spesa Cofinanziata" />
 	<fieldProperty
+		name="im_trasferito_spesa"
+		property="saldoSpesa.trasferito"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Trasferito" />
+	<fieldProperty
 		name="im_impacc_spesa"
 		property="saldoSpesa.impacc"
 		inputSize="20"
@@ -190,6 +198,8 @@
 	<formFieldProperty name="im_assestato_spesa" />
 	<formFieldProperty name="im_disp_residua_spesa_finanziata" />
 	<formFieldProperty name="im_disp_residua_spesa_cofinanziata" />
+	<formFieldProperty name="im_trasferito_spesa" />
+	
 	<formFieldProperty name="im_impacc_spesa" />
 	<formFieldProperty name="im_manris_spesa" />
 	
@@ -209,6 +219,7 @@
 	<columnFieldProperty name="im_assestato_spesa" />
 	<columnFieldProperty name="im_disp_residua_spesa_finanziata" />
 	<columnFieldProperty name="im_disp_residua_spesa_cofinanziata" />
+	<columnFieldProperty name="im_trasferito_spesa" />
 	<columnFieldProperty name="im_impacc_spesa" />
 	<columnFieldProperty name="im_manris_spesa" />
 
@@ -267,6 +278,10 @@
 			headerLabel="SITUAZIONE SPESA"
 			label="Assestato"/>
 		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
 			name="im_impacc_spesa"
 			headerLabel="SITUAZIONE SPESA"
 			label="Impegnato"/>
@@ -319,6 +334,10 @@
 			headerLabel="SITUAZIONE SPESA"
 			label="Assestato"/>
 		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
 			name="im_impacc_spesa"
 			headerLabel="SITUAZIONE SPESA"
 			label="Impegnato"/>
@@ -367,6 +386,10 @@
 			name="im_assestato_spesa"
 			headerLabel="SITUAZIONE SPESA"
 			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
 		<columnFieldProperty 
 			name="im_impacc_spesa"
 			headerLabel="SITUAZIONE SPESA"
