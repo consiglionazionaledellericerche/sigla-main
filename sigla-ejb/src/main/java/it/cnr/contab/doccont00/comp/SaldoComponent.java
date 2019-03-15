@@ -2140,6 +2140,21 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoArea)
 					.orElse(Boolean.FALSE);
 
+			boolean isCDRVariazioneArea = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getCentro_responsabilita)
+					.map(CdrBulk::getUnita_padre)
+					.map(Unita_organizzativaBulk::isUoArea)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::getCentroDiResponsabilita)
+					.map(CdrBulk::getUnita_padre)
+					.map(Unita_organizzativaBulk::isUoArea)
+					.orElse(Boolean.FALSE);
+
 			if (isAttivaGestioneTrasferimenti) {
 				//se non è una variazione di personale non possono essere movimentate voci del personale
 				if (isVariazionePersonale) {
@@ -2173,25 +2188,47 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 		
 				if (isVariazioneArea) {
-					listCtrlPianoEco.stream()
-						.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
-						.findFirst().orElseThrow(()->
-							new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' è necessario "
-									+ "assegnare fondi ad almeno una Area di Ricerca."));
-		
-					listCtrlPianoEco.stream()
-						.filter(el->el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)>0)
-						.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' non è possibile "
-									+ "sottrarre fondi ad Aree di Ricerca.");
-					});
+					if (isCDRVariazioneArea) {
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' non è possibile "
+										+ "assegnare fondi ad una Area di Ricerca.");
+						});
+						
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().orElseThrow(()->
+								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' è necessario "
+										+ "sottrarre fondi ad Aree di Ricerca."));
+	
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiArea()).compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti da Aree di Ricerca' non è possibile "
+										+ "sottrarre fondi a CDR non qualificati come Aree di Ricerca.");
+						});
+					} else {
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().orElseThrow(()->
+								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' è necessario "
+										+ "assegnare fondi ad almeno una Area di Ricerca."));
+			
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' non è possibile "
+										+ "sottrarre fondi ad Aree di Ricerca.");
+						});
 
-					listCtrlPianoEco.stream()
-						.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviArea()).compareTo(BigDecimal.ZERO)>0)
-						.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' non è possibile "
-									+ "assegnare fondi a CDR non qualificati come Aree di Ricerca.");
-					});
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviArea()).compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti ad Aree di Ricerca' non è possibile "
+										+ "assegnare fondi a CDR non qualificati come Aree di Ricerca.");
+						});
+					}
 				}
 			} 
 			

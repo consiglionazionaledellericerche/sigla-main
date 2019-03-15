@@ -12,6 +12,10 @@
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="VARIAMENO_FIN" propertyName="variamenoFin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="TRASFPIU_FIN" propertyName="trasfpiuFin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="TRASFMENO_FIN" propertyName="trasfmenoFin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="IMPORTO_COFIN" propertyName="importoCofin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="STANZIAMENTO_COFIN" propertyName="stanziamentoCofin"
@@ -19,6 +23,10 @@
 		<columnMapping columnName="VARIAPIU_COFIN" propertyName="variapiuCofin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="VARIAMENO_COFIN" propertyName="variamenoCofin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="TRASFPIU_COFIN" propertyName="trasfpiuCofin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="TRASFMENO_COFIN" propertyName="trasfmenoCofin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="IMPACC" propertyName="impacc"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
@@ -30,10 +38,14 @@
 	<persistentProperty name="stanziamentoFin" />
 	<persistentProperty name="variapiuFin" />
 	<persistentProperty name="variamenoFin" />
+	<persistentProperty name="trasfpiuFin" />
+	<persistentProperty name="trasfmenoFin" />
 	<persistentProperty name="importoCofin" />
 	<persistentProperty name="stanziamentoCofin" />
 	<persistentProperty name="variapiuCofin" />
 	<persistentProperty name="variamenoCofin" />
+	<persistentProperty name="trasfpiuCofin" />
+	<persistentProperty name="trasfmenoCofin" />
 	<persistentProperty name="impacc" />
 	<persistentProperty name="manris" />
 </SQLPersistentInfo>
