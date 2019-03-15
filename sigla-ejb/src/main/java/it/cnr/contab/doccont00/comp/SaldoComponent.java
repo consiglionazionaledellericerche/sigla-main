@@ -2140,7 +2140,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoArea)
 					.orElse(Boolean.FALSE);
 
-			boolean isCDRVariazioneArea = Optional.of(variazione)
+			boolean isCDRAreaVariazione = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getCentro_responsabilita)
+					.map(CdrBulk::getUnita_padre)
+					.map(Unita_organizzativaBulk::isUoArea)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::getCentroDiResponsabilita)
+					.map(CdrBulk::getUnita_padre)
+					.map(Unita_organizzativaBulk::isUoArea)
+					.orElse(Boolean.FALSE);
+
+			boolean isCDRPersonaleVariazione = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
 					.map(Pdg_variazioneBulk::getCentro_responsabilita)
@@ -2158,25 +2173,47 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			if (isAttivaGestioneTrasferimenti) {
 				//se non è una variazione di personale non possono essere movimentate voci del personale
 				if (isVariazionePersonale) {
-					listCtrlPianoEco.stream()
-						.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)>0)
-						.findFirst().orElseThrow(()->
-							new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' è necessario "
-									+ "assegnare fondi ad almeno una voce accentrata del personale."));
-		
-					listCtrlPianoEco.stream()
-						.filter(el->el.getImpSpesaNegativiCdrPersonale().compareTo(BigDecimal.ZERO)>0)
-						.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
-									+ "sottrarre fondi a voci accentrate del personale.");
-					});
-
-					listCtrlPianoEco.stream()
-						.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviCdrPersonale()).compareTo(BigDecimal.ZERO)>0)
-						.findFirst().ifPresent(el->{
-							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
-									+ "assegnare fondi a voci non accentrate del personale.");
-					});
+					if (isCDRPersonaleVariazione) {
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di restituzione di 'Trasferimenti per personale' "
+										+ "non è possibile assegnare fondi a voci accentrate del personale.");
+						});
+						
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaNegativiCdrPersonale().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().orElseThrow(()->
+								new DetailedRuntimeException("Attenzione! In una variazione di restituzione di 'Trasferimenti per personale' "
+										+ "è necessario sottrarre fondi a voci accentrate del personale."));
+	
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiCdrPersonale()).compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di restituzione 'Trasferimenti per personale' "
+										+ "non è possibile sottrarre fondi a CDR non qualificati come CDR Personale.");
+						});
+					} else {
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().orElseThrow(()->
+								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' è necessario "
+										+ "assegnare fondi ad almeno una voce accentrata del personale."));
+			
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaNegativiCdrPersonale().compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
+										+ "sottrarre fondi a voci accentrate del personale.");
+						});
+	
+						listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviCdrPersonale()).compareTo(BigDecimal.ZERO)>0)
+							.findFirst().ifPresent(el->{
+								throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti per personale' non è possibile "
+										+ "assegnare fondi a voci non accentrate del personale.");
+						});
+					}
 				} else {
 					listCtrlPianoEco.stream()
 						.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)!=0 ||
@@ -2188,7 +2225,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				}
 		
 				if (isVariazioneArea) {
-					if (isCDRVariazioneArea) {
+					if (isCDRAreaVariazione) {
 						listCtrlPianoEco.stream()
 							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)>0)
 							.findFirst().ifPresent(el->{
@@ -2451,7 +2488,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.filter(el->el.getImpSpesaNegativiArea().compareTo(el.getImpSpesaPositiviArea())>0)
 					.findFirst().ifPresent(el->{
 					throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dall'area fondi dal progetto "+
-							el.getProgetto().getCd_progetto()+"(" + 
+							el.getProgetto().getCd_progetto()+" (" + 
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiArea()) +
 							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");});
@@ -2466,7 +2503,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.filter(el->el.getImpSpesaNegativiCdrPersonale().compareTo(el.getImpSpesaPositiviCdrPersonale())>0)
 					.findFirst().ifPresent(el->{
 					throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dal CDR Personale fondi dal progetto "+
-							el.getProgetto().getCd_progetto()+"(" + 
+							el.getProgetto().getCd_progetto()+" (" + 
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiCdrPersonale()) +
 							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviCdrPersonale()) + ")");});
