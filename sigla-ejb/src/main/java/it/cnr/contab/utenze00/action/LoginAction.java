@@ -196,12 +196,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             Forward forward = doLogin(context, GestioneLoginComponent.VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO);
             if (forward == null)
                 forward = initializeWorkspace(context);
+
             Optional.ofNullable(context)
                     .filter(HttpActionContext.class::isInstance)
                     .map(HttpActionContext.class::cast)
                     .flatMap(httpActionContext -> Optional.ofNullable(httpActionContext.getParameter("main.utente_multiplo")))
                     .ifPresent(s -> log.warn("Utente Multiplo User: {}", s));
-
 
             Optional.ofNullable(context.getBusinessProcess())
                     .filter(FormBP.class::isInstance)

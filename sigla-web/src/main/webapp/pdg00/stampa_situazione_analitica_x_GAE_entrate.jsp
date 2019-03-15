@@ -22,37 +22,26 @@
 		 Stampa_situazione_analitica_x_GAEBulk bulk=(Stampa_situazione_analitica_x_GAEBulk)bp.getModel(); %> 
 	
 	 
-<table>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
-  </tr>
-  <tr>
-  <td><% bp.getController().writeFormLabel(out,"findCdsForPrint"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,"cdCdsForPrint"); %>
-		<% bp.getController().writeFormInput(out,"dsCdsForPrint"); %>
-		<% bp.getController().writeFormInput(out,"findCdsForPrint"); %>
-	</td>
-  </tr>
-  <tr>
-  <td><% bp.getController().writeFormLabel(out,"findUoForPrint"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,"cdUoForPrint"); %>
-		<% bp.getController().writeFormInput(out,"dsUoForPrint"); %>
-		<% bp.getController().writeFormInput(out,"findUoForPrint"); %>
-	</td>
-  </tr>
-  <tr>
-	<td><% bp.getController().writeFormLabel(out,"findCdrForPrint"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,"cdCdrForPrint"); %>
-		<% bp.getController().writeFormInput(out,"dsCdrForPrint"); %>
-		<% bp.getController().writeFormInput(out,"findCdrForPrint"); %>
-	</td>
-  </tr>
-</table>
-
+<div class="card p-3">
+    <table class="w-100">
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
+        <td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
+      </tr>
+      <tr>
+      <td><% bp.getController().writeFormLabel(out,"findCdsForPrint"); %></td>
+        <td><% bp.getController().writeFormInput(out,"findCdsForPrint"); %></td>
+      </tr>
+      <tr>
+      <td><% bp.getController().writeFormLabel(out,"findUoForPrint"); %></td>
+        <td><% bp.getController().writeFormInput(out,"findUoForPrint"); %></td>
+      </tr>
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"findCdrForPrint"); %></td>
+        <td><% bp.getController().writeFormInput(out,"findCdrForPrint"); %></td>
+      </tr>
+    </table>
+</div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>
