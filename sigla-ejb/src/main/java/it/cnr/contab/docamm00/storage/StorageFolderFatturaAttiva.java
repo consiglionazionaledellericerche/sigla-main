@@ -1,28 +1,21 @@
 package it.cnr.contab.docamm00.storage;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 import java.util.stream.Collectors;
 
-import org.springframework.util.StringUtils;
-
-import it.cnr.contab.client.docamm.FatturaAttiva;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util.Utility;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.si.spring.storage.annotation.StorageType;
-import it.cnr.contab.util.Utility;
 
 @StorageType(name="F:sigla_fatture:fatture_attive")
 public class StorageFolderFatturaAttiva extends StorageFolderFattura {
@@ -330,7 +323,13 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
 	}
 
 	private String getLastFolderFatturaAttiva() {
-		final String folderName = "Fattura " + this.getEsercizioFattura().toString() +
+		String fatNc = "";
+		if (!getFattura_attivaBulk().getTi_fattura().equals("C") || !getFattura_attivaBulk().getCd_unita_organizzativa().equals(getFattura_attivaBulk().getCd_uo_origine())){
+			fatNc = "Fattura";
+		} else {
+			fatNc = "Nota Credito non a storno";
+		}
+		final String folderName = fatNc+" " + this.getEsercizioFattura().toString() +
 				Utility.lpad(this.getPgFattura().toString(),10,'0');
 		return folderName;
 	}
