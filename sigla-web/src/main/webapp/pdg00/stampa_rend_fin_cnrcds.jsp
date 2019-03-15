@@ -20,51 +20,58 @@
 	StampaRendFinanziarioCNRBP bp = (StampaRendFinanziarioCNRBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext);
 %>
-<br><br>
-<table>
-  <tr>											  
-	<td><% bp.getController().writeFormLabel(out,"findCds"); %></td>
-	<td>
-		<% bp.getController().writeFormInput(out,"cd_cds"); %>
-		<% bp.getController().writeFormInput(out,"ds_cds"); %>
-		<% bp.getController().writeFormInput(out,"findCds"); %>
-	</td>
-  </tr>
-</table>
-<br><br>
-<table class="Panel">
-    <tr>
-		<td colspan=4> </td>
-	</tr>
-
-	<tr>
-		<td colspan=4><b>Stampa Entrate (importi diversi da zero)</b>
-		</td>
-	</tr>
-	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaEntrateCDSPerCapitolo')", bp.getParentRoot().isBootstrap());%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaEntrateCDSPerArticolo')", bp.getParentRoot().isBootstrap());%></td>
-		<td></td>
-	</tr>
-
-
-		<td colspan=4> </td>
-	<tr>	
-	<tr>
-		<td colspan=4><b>Stampa Spese (importi diversi da zero)</b>
-		</td>
-	</tr>
-	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaSpeseCDSPerCapitolo')", bp.getParentRoot().isBootstrap());%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaSpeseCDSPerArticolo')", bp.getParentRoot().isBootstrap());%></td>
-		<td></td>
-	</tr>
-
-
-		<td colspan=4> </td>
-	<tr>	
-		
-</table>
+<div class="card p-2">
+    <table class="w-100">
+      <tr>
+        <td><% bp.getController().writeFormLabel(out,"findCds"); %></td>
+        <td><% bp.getController().writeFormInput(out,"findCds"); %></td>
+      </tr>
+    </table>
+    <table>
+        <tr>
+            <td colspan=2 class="text-info"><b>Stampa Entrate (importi diversi da zero)</b></td>
+        </tr>
+        <tr>
+            <td>
+                <%JSPUtils.button(out,
+                    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+                    "Per capitolo",
+                    "if (disableDblClick()) javascript:submitForm('doStampaEntrateCDSPerCapitolo')",
+                    "btn-outline-info btn-title",
+                    bp.getParentRoot().isBootstrap());%>
+            </td>
+            <td>
+                <%JSPUtils.button(out,
+                    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+                    "Per articolo",
+                    "if (disableDblClick()) javascript:submitForm('doStampaEntrateCDSPerArticolo')",
+                    "btn-outline-info btn-title",
+                    bp.getParentRoot().isBootstrap());%>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=2 class="text-primary"><b>Stampa Spese (importi diversi da zero)</b></td>
+        </tr>
+        <tr>
+            <td>
+                <%JSPUtils.button(out,
+                    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+                    "Per capitolo",
+                    "if (disableDblClick()) javascript:submitForm('doStampaSpeseCDSPerCapitolo')",
+                    "btn-outline-primary btn-title",
+                    bp.getParentRoot().isBootstrap());%>
+            </td>
+            <td>
+                <%JSPUtils.button(out,
+                    bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+                    "Per articolo",
+                    "if (disableDblClick()) javascript:submitForm('doStampaSpeseCDSPerArticolo')",
+                    "btn-outline-primary btn-title",
+                    bp.getParentRoot().isBootstrap());%>
+            </td>
+        </tr>
+    </table>
+</div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html>
