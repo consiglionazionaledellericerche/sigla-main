@@ -21,38 +21,50 @@
 	bp.openFormWindow(pageContext);
 %>
 
-<table class="Panel">
-    <tr>
-		<td colspan=4> </td>
-	</tr>
-
+<table class="Panel card p-2">
 	<tr>
-		<td colspan=4><b>Stampa Entrate (importi diversi da zero)</b>
+		<td colspan=3 class="text-info"><b>Stampa Entrate (importi diversi da zero)</b></td>
+	</tr>
+	<tr>
+		<td>
+		    <%JSPUtils.button(out,
+		        bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+		        "Per capitolo",
+		        "if (disableDblClick()) javascript:submitForm('doStampaEntratePerCapitolo')",
+		        "btn-outline-info btn-title",
+		        bp.getParentRoot().isBootstrap());%>
+		</td>
+		<td>
+		    <%JSPUtils.button(out,
+		        bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+		        "Per articolo",
+		        "if (disableDblClick()) javascript:submitForm('doStampaEntratePerArticolo')",
+		        "btn-outline-info btn-title",
+		        bp.getParentRoot().isBootstrap());%>
 		</td>
 	</tr>
 	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaEntratePerCapitolo')", bp.getParentRoot().isBootstrap());%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaEntratePerArticolo')", bp.getParentRoot().isBootstrap());%></td>
-		<td></td>
+		<td colspan=3 class="text-primary"><b>Stampa Spese (importi diversi da zero)</b></td>
 	</tr>
-
-	
-		<td colspan=4> </td>
-	<tr>	
 	<tr>
-		<td colspan=4><b>Stampa Spese (importi diversi da zero)</b>
+		<td>
+		    <%JSPUtils.button(out,
+		        bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+		        "Per capitolo",
+		        "if (disableDblClick()) javascript:submitForm('doStampaSpesePerCapitolo')",
+		        "btn-outline-primary btn-title",
+		        bp.getParentRoot().isBootstrap());%>
 		</td>
-	</tr>
-	<tr>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per capitolo", "if (disableDblClick()) javascript:submitForm('doStampaSpesePerCapitolo')", bp.getParentRoot().isBootstrap());%></td>
-		<td><%JSPUtils.button(out, "img/print16.gif", "Per articolo", "if (disableDblClick()) javascript:submitForm('doStampaSpesePerArticolo')", bp.getParentRoot().isBootstrap());%></td>
+		<td>
+		    <%JSPUtils.button(out,
+		        bp.getParentRoot().isBootstrap() ? "fa fa-2x fa-print" : "img/print16.gif",
+		        "Per articolo",
+		        "if (disableDblClick()) javascript:submitForm('doStampaSpesePerArticolo')",
+		        "btn-outline-primary btn-title",
+		        bp.getParentRoot().isBootstrap());%>
+		</td>
 		<td></td>
 	</tr>
-
-
-		<td colspan=4> </td>
-	<tr>	
-		
 </table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
