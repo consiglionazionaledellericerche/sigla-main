@@ -28,6 +28,12 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 	// VARIAMENO_FIN DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal variamenoFin;
 
+	// TRASFPIU_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal trasfpiuFin;
+
+	// TRASFMENO_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal trasfmenoFin;
+
 	// IMPORTO_COFIN DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal importoCofin;
 
@@ -39,6 +45,12 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 
 	// VARIAMENO_COFIN DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal variamenoCofin;
+
+	// TRASFPIU_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal trasfpiuCofin;
+
+	// TRASFMENO_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal trasfmenoCofin;
 
 	// IMPACC DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal impacc;
@@ -82,6 +94,22 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 		this.variamenoFin = variamenoFin;
 	}
 
+	public java.math.BigDecimal getTrasfpiuFin() {
+		return trasfpiuFin;
+	}
+	
+	public void setTrasfpiuFin(java.math.BigDecimal trasfpiuFin) {
+		this.trasfpiuFin = trasfpiuFin;
+	}
+	
+	public java.math.BigDecimal getTrasfmenoFin() {
+		return trasfmenoFin;
+	}
+	
+	public void setTrasfmenoFin(java.math.BigDecimal trasfmenoFin) {
+		this.trasfmenoFin = trasfmenoFin;
+	}
+	
 	public java.math.BigDecimal getImportoCofin() {
 		return importoCofin;
 	}
@@ -114,6 +142,22 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 		this.variamenoCofin = variamenoCofin;
 	}
 
+	public java.math.BigDecimal getTrasfpiuCofin() {
+		return trasfpiuCofin;
+	}
+	
+	public void setTrasfpiuCofin(java.math.BigDecimal trasfpiuCofin) {
+		this.trasfpiuCofin = trasfpiuCofin;
+	}
+	
+	public java.math.BigDecimal getTrasfmenoCofin() {
+		return trasfmenoCofin;
+	}
+	
+	public void setTrasfmenoCofin(java.math.BigDecimal trasfmenoCofin) {
+		this.trasfmenoCofin = trasfmenoCofin;
+	}
+	
 	public java.math.BigDecimal getImpacc() {
 		return impacc;
 	}
