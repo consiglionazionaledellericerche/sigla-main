@@ -11,6 +11,13 @@
 		readonlyProperty = "ROVocePiano"
 		label="Voce del piano economico" />
 	<fieldProperty
+		name="voce_piano_amm"
+		property="voce_piano_economico"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Voce del piano economico" />
+
+	<fieldProperty
 		name="cd_voce_piano"
 		property="voce_piano_economico.cd_voce_piano"
 		maxLength="10"
@@ -177,6 +184,7 @@
 
 
 	<formFieldProperty name="voce_piano" />
+	<formFieldProperty name="voce_piano_amm" />
 	<formFieldProperty name="cd_voce_piano" />
 	<formFieldProperty name="ds_voce_piano" />
 	<formFieldProperty name="esercizio_piano" />
