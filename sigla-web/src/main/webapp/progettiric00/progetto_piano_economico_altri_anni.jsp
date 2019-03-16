@@ -11,6 +11,10 @@
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
 	SimpleDetailCRUDController controller = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomicoAltriAnni();
 	SimpleDetailCRUDController controllerVoci = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomicoVoceBilancioAltriAnni();
+    String fieldAmm = Optional.ofNullable(bp)
+                .filter(AmministraTestataProgettiRicercaBP.class::isInstance)
+                .map(amm -> "_amm")
+                .orElse("");
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
 %>
 
@@ -22,11 +26,11 @@
   </TR>
   <TR>
   	<TD><% controller.writeFormLabel(out,"voce_piano");%></TD>
-  	<TD colspan="3"><% controller.writeFormInput(out,null,"voce_piano",isKeyEditable,null,null);%></TD>
+  	<TD colspan="3"><% controller.writeFormInput(out,null,"voce_piano" + fieldAmm,isKeyEditable,null,null);%></TD>
   </TR>
   <TR>
-  	<% controller.writeFormField(out,"im_spesa_finanziato");%>
-  	<% controller.writeFormField(out,"im_spesa_cofinanziato");%>
+  	<% controller.writeFormField(out,"im_spesa_finanziato" + fieldAmm);%>
+  	<% controller.writeFormField(out,"im_spesa_cofinanziato" + fieldAmm);%>
   	<% controller.writeFormField(out,"imTotaleSpesa");%>
   </TR>
 </table>
@@ -36,8 +40,6 @@
 <%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","100px"); %>
 	</br>
 	<table class="Panel">
-	  <TR>
-	  	<% controllerVoci.writeFormField(out,"elemento_voce");%>
-	  </TR>
+	  <tr><% controllerVoci.writeFormField(out,"elemento_voce");%></tr>
 	</table>
 </fieldset>

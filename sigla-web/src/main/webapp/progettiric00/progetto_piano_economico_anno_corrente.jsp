@@ -23,7 +23,7 @@
 <table class="Panel card p-2 mt-1">
   <tr>
   	<td><% controller.writeFormLabel(out,"voce_piano");%></td>
-  	<td colspan="3"><% controller.writeFormInput(out,null,"voce_piano",isKeyEditable,null,null);%></td>
+  	<td colspan="3"><% controller.writeFormInput(out,null,"voce_piano" + fieldAmm,isKeyEditable,null,null);%></td>
   </tr>
   <tr>
   	<% controller.writeFormField(out,"im_spesa_finanziato" + fieldAmm);%>
