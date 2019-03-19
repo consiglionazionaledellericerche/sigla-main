@@ -12,7 +12,6 @@
     	<version>1.0.3</version>
   	</parent>
 	<modules>
-		<module>sigla-siopeplus</module>
 		<module>sigla-ws-client</module>
 		<module>sigla-ejb</module>
 		<module>sigla-sdi</module>
@@ -24,6 +23,7 @@
 	<properties>
     	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
+		<siopeplus.version>0.0.1</siopeplus.version>
 		<spring.version>4.3.3.RELEASE</spring.version>
 		<jada.version>6.0.49</jada.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
