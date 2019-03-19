@@ -325,8 +325,12 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	 * @return Il Forward alla pagina di risposta
 	 */
 	public Forward doSelezionaMenu(ActionContext context,String cd_nodo) {
-		it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
+		it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = null;
 		try {
+			bp = Optional.ofNullable(context.getBusinessProcess("/GestioneUtenteBP"))
+					.filter(GestioneUtenteBP.class::isInstance)
+					.map(GestioneUtenteBP.class::cast)
+					.orElseThrow(() -> new NoSuchBusinessProcessException());
 			if (isCurrentBPDirty(context)) {
 				it.cnr.jada.util.action.OptionBP optionbp = openContinuePrompt(context,"doConfermaSelezioneMenu");
 				optionbp.addAttribute("cd_nodo", cd_nodo);
@@ -348,6 +352,7 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 			return handleException(context,e);
 		}
 	}
+
 	public Forward doCollapseAll(ActionContext context) {
 		it.cnr.contab.utenze00.bp.GestioneUtenteBP bp = (it.cnr.contab.utenze00.bp.GestioneUtenteBP)context.getBusinessProcess("/GestioneUtenteBP");
 		bp.collapseAllNodi();
@@ -391,8 +396,8 @@ public class GestioneUtenteAction extends it.cnr.jada.util.action.BulkAction {
 	 * Restituisce il valore della proprietà  'componentSession'
 	 *
 	 * @return Il valore della proprietà  'componentSession'
-	 * @throws EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
-	 * @throws RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
+	 * @throws javax.ejb.EJBException	Se si verifica qualche eccezione applicativa per cui non è possibile effettuare l'operazione
+	 * @throws java.rmi.RemoteException	Se si verifica qualche eccezione di sistema per cui non è possibile effettuare l'operazione
 	 */
 	public static GestioneLoginComponentSession getComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession",GestioneLoginComponentSession.class);
