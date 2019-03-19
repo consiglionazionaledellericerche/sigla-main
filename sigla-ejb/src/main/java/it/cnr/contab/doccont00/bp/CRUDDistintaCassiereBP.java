@@ -45,6 +45,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.firma.arss.ArubaSignServiceClient;
+import it.cnr.jada.firma.arss.ArubaSignServiceException;
 import it.cnr.jada.firma.arss.stub.XmlSignatureType;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
@@ -60,6 +61,8 @@ import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import javax.servlet.ServletException;
@@ -94,6 +97,7 @@ import java.util.stream.Collectors;
  * Jasper Reports
  */
 public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk, Distinta_cassiereBulk> {
+    private transient final static Logger logger = LoggerFactory.getLogger(CRUDDistintaCassiereBP.class);
     private static final DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
     private final RemoteDetailCRUDController distintaCassDet = new RemoteDetailCRUDController(
@@ -2307,12 +2311,18 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
 
         if (!documentiContabiliService.hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())) {
             ArubaSignServiceClient client = documentiContabiliService.getArubaSignServiceClient();
-            byte[] contentSigned = client.xmlSignature(
-                    firmaOTPBulk.getUserName(),
-                    firmaOTPBulk.getPassword(),
-                    firmaOTPBulk.getOtp(),
-                    IOUtils.toByteArray(documentiContabiliService.getResource(storageObject)),
-                    XmlSignatureType.XMLENVELOPED);
+            byte[] contentSigned;
+            try {
+                contentSigned = client.xmlSignature(
+                        firmaOTPBulk.getUserName(),
+                        firmaOTPBulk.getPassword(),
+                        firmaOTPBulk.getOtp(),
+                        IOUtils.toByteArray(documentiContabiliService.getResource(storageObject)),
+                        XmlSignatureType.XMLENVELOPED);
+            } catch (ArubaSignServiceException _ex) {
+                logger.error("SIOPE+ firma flusso ",_ex);
+                throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
+            }
 
             storageObject = documentiContabiliService.updateStream(
                     storageObject.getKey(),
