@@ -243,13 +243,13 @@
         <dependency>
             <groupId>it.cnr</groupId>
             <artifactId>sigla-siopeplus-ordinativi</artifactId>
-            <version>${project.version}</version>
+            <version>${siopeplus.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>it.cnr</groupId>
             <artifactId>sigla-siopeplus-giornaledicassa</artifactId>
-            <version>${project.version}</version>
+            <version>${siopeplus.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
