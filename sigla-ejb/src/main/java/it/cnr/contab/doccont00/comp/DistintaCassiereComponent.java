@@ -96,6 +96,7 @@ public class DistintaCassiereComponent extends
     public static final String FATT_ANALOGICA = "FATT_ANALOGICA";
     public static final String DOC_EQUIVALENTE = "DOC_EQUIVALENTE";
     public static final String REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
+    public static final String SCOSTAMENTO = "0.03";
 
     final String regexBic = "[A-Z|a-z||0-9]{11}|[A-Z|a-z||0-9]{8}";
     final Pattern patternBic = Pattern.compile(regexBic, Pattern.MULTILINE);
@@ -5023,13 +5024,13 @@ public class DistintaCassiereComponent extends
                             oldDoc = doc;
                         }
                     }
-                    if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) == 0))) {
+                    if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) == 0))) {
                         clas = infoben.getClassificazione().get(0);
-                        if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01")) == 0)
-                            clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
+                        if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal(SCOSTAMENTO)) == 0)
+                            clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
                         else
-                            clas.setImporto(clas.getImporto().add(new BigDecimal("0.01")));
-                    } else if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) != 0))) {
+                            clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
+                    } else if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) != 0))) {
                         throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
@@ -5161,13 +5162,13 @@ public class DistintaCassiereComponent extends
                             oldDoc = doc;
                         }
                     }
-                    if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) == 0))) {
+                    if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) == 0))) {
                         clas = infoben.getClassificazione().get(0);
-                        if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01")) == 0)
-                            clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
+                        if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal(SCOSTAMENTO)) == 0)
+                            clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
                         else
-                            clas.setImporto(clas.getImporto().add(new BigDecimal("0.01")));
-                    } else if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) != 0))) {
+                            clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
+                    } else if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) != 0))) {
                         throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
