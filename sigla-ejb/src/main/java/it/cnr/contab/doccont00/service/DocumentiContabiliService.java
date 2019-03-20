@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.doccont00.comp.DistintaCassiereComponent;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
@@ -76,8 +77,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DocumentiContabiliService extends StoreService implements InitializingBean {
-    private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
     public static final String SIOPEPLUS = "SIOPEPLUS";
+    private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
     final String pattern = "dd MMMM YYYY' alle 'HH:mm:ss";
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
     @Autowired
@@ -93,7 +94,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     private boolean signDocumentsFromRepository;
 
     private ArubaSignServiceClient arubaSignServiceClient;
-    private String pecHostName, pecMailFromBanca, pecMailFromBancaPassword, pecMailToBancaNoEuroSepa, pecMailToBancaItaliaF23F24;
+    private String pecHostName, pecMailFromBanca,
+            pecMailFromBancaPassword, pecMailToBancaNoEuroSepa,
+            pecMailToBancaItaliaF23F24, pecMailToBancaForStipendi;
 
     private CRUDComponentSession crudComponentSession;
     private MandatoComponentSession mandatoComponentSession;
@@ -177,6 +180,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
 
     public void setPecMailToBancaItaliaF23F24(String pecMailToBancaItaliaF23F24) {
         this.pecMailToBancaItaliaF23F24 = pecMailToBancaItaliaF23F24;
+    }
+
+    public String getPecMailToBancaForStipendi() {
+        return pecMailToBancaForStipendi;
+    }
+
+    public void setPecMailToBancaForStipendi(String pecMailToBancaForStipendi) {
+        this.pecMailToBancaForStipendi = pecMailToBancaForStipendi;
     }
 
     public String getDocumentKey(StatoTrasmissione bulk) {
@@ -272,22 +283,31 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         logger.debug("Inviata distinta PEC");
     }
 
-    public void inviaDistintaPEC(List<String> nodes, boolean isNoEuroOrSepa, String nrDistinta) throws EmailException, ApplicationException, IOException {
+    public void inviaDistintaPEC(List<String> nodes, boolean isNoEuroOrSepa, String nrDistinta, boolean isDistintaStipendi) throws EmailException, ApplicationException, IOException {
         // Create the email message
         SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
         email.setHostName(pecHostName);
-
-        if (isNoEuroOrSepa) {
-            if (pecMailToBancaNoEuroSepa != null && pecMailToBancaNoEuroSepa.split(";").length != 0) {
-                email.addTo(pecMailToBancaNoEuroSepa.split(";"));
-            } else {
-                email.addTo(pecMailToBancaNoEuroSepa, pecMailToBancaNoEuroSepa);
-            }
+        if (isDistintaStipendi) {
+            email.addTo(
+                    Optional.ofNullable(pecMailToBancaForStipendi)
+                            .map(s -> s.split(";"))
+                            .filter(strings -> strings.length != 0)
+                            .orElse(new String[]{
+                                    pecMailToBancaForStipendi
+                            }));
         } else {
-            if (pecMailToBancaItaliaF23F24 != null && pecMailToBancaItaliaF23F24.split(";").length != 0) {
-                email.addTo(pecMailToBancaItaliaF23F24.split(";"));
+            if (isNoEuroOrSepa) {
+                if (pecMailToBancaNoEuroSepa != null && pecMailToBancaNoEuroSepa.split(";").length != 0) {
+                    email.addTo(pecMailToBancaNoEuroSepa.split(";"));
+                } else {
+                    email.addTo(pecMailToBancaNoEuroSepa, pecMailToBancaNoEuroSepa);
+                }
             } else {
-                email.addTo(pecMailToBancaItaliaF23F24, pecMailToBancaItaliaF23F24);
+                if (pecMailToBancaItaliaF23F24 != null && pecMailToBancaItaliaF23F24.split(";").length != 0) {
+                    email.addTo(pecMailToBancaItaliaF23F24.split(";"));
+                } else {
+                    email.addTo(pecMailToBancaItaliaF23F24, pecMailToBancaItaliaF23F24);
+                }
             }
         }
         email.setFrom(pecMailFromBanca, pecMailFromBanca);
@@ -305,6 +325,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         // send the email
         email.send();
         logger.debug("Inviata distinta PEC");
+    }
+
+    public void inviaDistintaPEC(List<String> nodes, boolean isNoEuroOrSepa, String nrDistinta) throws EmailException, ApplicationException, IOException {
+        inviaDistintaPEC(nodes, isNoEuroOrSepa, nrDistinta, Boolean.FALSE);
     }
 
     public Set<String> getAllegatoForModPag(String key, String modPag) {
@@ -763,13 +787,28 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 inviaDistintaPEC(nodes, isEstero,
                         "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
                                 " Progressivo Flusso: " + distinta.getProgFlusso() +
-                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlussoBT());
+                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlussoBT(),
+                        isDistintaStipendi(dettagliMan));
                 return Boolean.TRUE;
             }
         } catch (EmailException | IOException _ex) {
             logger.error("Invio distinta {} fallito", distinta.getPg_distinta_def(), _ex);
         }
         return Boolean.FALSE;
+    }
+
+    private Boolean isDistintaStipendi(List<V_mandato_reversaleBulk> dettagliMan) {
+        return dettagliMan.stream()
+                .map(bulk -> {
+                    try {
+                        return distintaCassiereComponentSession.findModPag(userContext, bulk);
+                    } catch (ComponentException|RemoteException e) {
+                        return null;
+                    }
+                })
+                .filter(o -> Optional.ofNullable(o).isPresent())
+                .filter(o -> o.getCd_modalita_pag().equalsIgnoreCase(DistintaCassiereComponent.STIPENDI))
+                .findAny().isPresent();
     }
 
     private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali) throws Exception {
@@ -1074,13 +1113,13 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             .orElse(Boolean.FALSE);
             userForGiornaleDiCassa =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal02(
-                        userContext,
-                        Calendar.getInstance().get(Calendar.YEAR),
-                        "*",
-                        Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
-                        Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS
+                            userContext,
+                            Calendar.getInstance().get(Calendar.YEAR),
+                            "*",
+                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS
                     ))
-                    .orElse(SIOPEPLUS);
+                            .orElse(SIOPEPLUS);
 
 
         } catch (ComponentException | RemoteException _ex) {
