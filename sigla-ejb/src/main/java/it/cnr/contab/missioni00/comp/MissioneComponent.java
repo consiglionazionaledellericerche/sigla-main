@@ -327,7 +327,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
      *
      * @param docCont il documento contabile di tipo ObbligazioneBulk per cui chiedere l'aggiornamento dei saldi
      * @param    userContext    lo UserContext che ha generato la richiesta
-     * @param    bulk        la MissioneBulk a cui e' stata associata una scadenza di obbligazione
+     * @param    missione        la MissioneBulk a cui e' stata associata una scadenza di obbligazione
      * @param    status        serve per gestire l'eccezione lanciata dall'obbligazione
      * nel caso non ci sia disponibilita' di cassa
      */
@@ -1374,7 +1374,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
      * Post: Il sistema restituisce la lista delle modalità di pagamento relative al terzo della missione
      *
      * @return la collezione di istanze di tipo Rif_modalita_pagamentoBulk
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      * @param    bulk la MissioneBulk da cui ricavare il terzo per cui selezionare le modalità di pagamento
      */
 
@@ -3754,7 +3754,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
      * Post: La spesa non supera la validazione e l'errore viene segnalato all'utente
      *
      * @return MissioneBulk validata
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    aUC    lo UserContext che ha generato la richiesta
      * @param    spesa    la Missione_dettaglioBulk per cui effettuare la validazione
      * @param    divisaDefault    la DivisaBulk di default
      */
@@ -3763,7 +3763,20 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         BigDecimal massimalePastoEuro = new BigDecimal(0);
 
         // MASSIMALE MISSIONE_TIPO_PASTO
-        massimalePastoEuro = getMassimaleEuro(aUC, spesa, divisaDefault, spesa.getTipo_pasto().getCd_divisa(), spesa.getTipo_pasto().getLimite_max_pasto(), false);
+        massimalePastoEuro = getMassimaleEuro(
+                aUC,
+                spesa,
+                divisaDefault,
+                Optional.ofNullable(spesa)
+                    .flatMap(missione_dettaglioBulk -> Optional.ofNullable(missione_dettaglioBulk.getTipo_pasto()))
+                    .flatMap(missione_tipo_pastoBulk -> Optional.ofNullable(missione_tipo_pastoBulk.getDivisa()))
+                    .flatMap(divisaBulk -> Optional.ofNullable(divisaBulk.getCd_divisa()))
+                    .orElseThrow(() -> new ValidationException("Tipo pasto non valorizzato!")),
+                Optional.ofNullable(spesa)
+                        .flatMap(missione_dettaglioBulk -> Optional.ofNullable(missione_dettaglioBulk.getTipo_pasto()))
+                        .flatMap(missione_tipo_pastoBulk -> Optional.ofNullable(missione_tipo_pastoBulk.getLimite_max_pasto()))
+                        .orElseThrow(() -> new ValidationException("Tipo pasto non valorizzato!")),
+                false);
 
         // CONFRONTO IMPORTO SPESA CON MASSIMALE TIPO PASTO
         if (massimalePastoEuro.compareTo(spesa.getIm_spesa_euro()) == -1)
