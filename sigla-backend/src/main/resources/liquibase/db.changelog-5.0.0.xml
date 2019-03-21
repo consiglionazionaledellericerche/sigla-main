@@ -1836,5 +1836,9 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="marco.spasiano" id="alter_id_bando">
+        <modifyDataType tableName="var_stanz_res" columnName="id_bando" newDataType="varchar(30)"/>
+        <modifyDataType tableName="pdg_variazione" columnName="id_bando" newDataType="varchar(30)"/>
+    </changeSet>
 
 </databaseChangeLog>
