@@ -66,16 +66,17 @@ public class ConsFileCassiereBP extends ConsultazioniBP {
             listButton.addElement(button1);
         } else if (getPathConsultazione().compareTo(ConsFileCassiereBP.BASE) == 0) {
             Button button1 = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.bott1");
+            button1.setSeparator(true);
             listButton.addElement(button1);
 
             Button button2 = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.bott2");
             listButton.addElement(button2);
 
             Button button3 = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.bott3");
-            button3.setSeparator(true);
             listButton.addElement(button3);
 
             Button button4 = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.bott4");
+            button4.setSeparator(true);
             listButton.addElement(button4);
 
             Button button5 = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.bott5");
@@ -89,6 +90,7 @@ public class ConsFileCassiereBP extends ConsultazioniBP {
             listButton.addElement(button7);
 
             Button button8 = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.bott8");
+            button8.setSeparator(true);
             listButton.addElement(button8);
 
             Button button9 = new Button(Config.getHandler().getProperties(getClass()), "Toolbar.bott9");
