@@ -34,8 +34,6 @@ public class FirmaOTPBulk extends OggettoBulk {
     		return "Parametri non corretti per il tipo di trasporto indicato";
     	else if (messageException.contains("0003"))
     		return "Errore in fase di verifica delle credenziali";
-    	else if (messageException.contains("0003"))
-    		return "Errore in fase di verifica delle credenziali";
     	else if (messageException.contains("0004"))
     		return "Errore nel PIN";
     	else if (messageException.contains("0005"))
@@ -51,6 +49,5 @@ public class FirmaOTPBulk extends OggettoBulk {
     	else if (messageException.contains("0010"))
     		return "Lo stato dell'utente non è valido (es. utente sospeso)";
 	    return messageException;
-		
 	}
 }
