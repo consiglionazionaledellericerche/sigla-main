@@ -57,21 +57,21 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                             END
                        ELSE CASE
                                WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                    b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                THEN NVL(b.im_spese_gest_accentrata_est, 0)
                                ELSE 0
                              END
                      END variapiu_fin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                       THEN CASE --NEL TRASFERIMENTO AEREE NON PRENDERE IN CONSIDERAZIONE GLI IMPORTI NEGATIVI
+                       THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0 
                               THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
                               ELSE 0
                             END
                        ELSE CASE
                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR') 
+                                   b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                               THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
                               ELSE 0
                             END
@@ -87,7 +87,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                                    END
                               ELSE CASE
                                      WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
-                                           (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                          b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                       THEN NVL(b.im_spese_gest_accentrata_est, 0)
                                       ELSE 0
                                     END
@@ -98,19 +98,26 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                        WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                              THEN CASE --NEL TRASFERIMENTO AEREE NON PRENDERE IN CONSIDERAZIONE GLI IMPORTI NEGATIVI
+                              THEN CASE
                                      WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
                                      THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
                                      ELSE 0
                                    END
                               ELSE CASE
                                      WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
-                                           (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                          b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                      THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
                                      ELSE 0
                                    END
                             END
-                       ELSE 0
+                       ELSE CASE --INDICO COME TRASFERIMENTO NEGATIVO LE SOMME ASSEGNATE A VOCI ACCENTRATE CHE VENGONO GIRATE
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0) = 0 AND
+                                   NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
+                                   a.ti_motivazione_variazione is null AND 
+                                   (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                              THEN NVL(b.im_spese_gest_accentrata_est, 0)
+                              ELSE 0
+                            END
                      END trasfmeno_fin,
                      0 importo_cofin, 0 stanziamento_cofin, 
                      CASE
@@ -122,22 +129,22 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                             END
                        ELSE CASE
                                WHEN NVL (b.im_spese_gest_accentrata_int, 0) > 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                    b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                THEN NVL(b.im_spese_gest_accentrata_int, 0)
                                ELSE 0
                              END
                      END variapiu_cofin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
-                       THEN CASE --NEL TRASFERIMENTO AEREE NON PRENDERE IN CONSIDERAZIONE GLI IMPORTI NEGATIVI
+                       THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_int, 0)<0
                               THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
                               ELSE 0
                             END
                        ELSE CASE
                               WHEN NVL (b.im_spese_gest_accentrata_int, 0) < 0 AND
-                                   (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
-                              THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
+                                   b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
+                            THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
                               ELSE 0
                             END
                      END variameno_cofin,
@@ -152,7 +159,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                                    END
                               ELSE CASE
                                       WHEN NVL (b.im_spese_gest_accentrata_int, 0) > 0 AND
-                                           (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                           b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                       THEN NVL(b.im_spese_gest_accentrata_int, 0)
                                       ELSE 0
                                     END
@@ -163,19 +170,26 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                        WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
-                              THEN CASE --NEL TRASFERIMENTO AEREE NON PRENDERE IN CONSIDERAZIONE GLI IMPORTI NEGATIVI
+                              THEN CASE
                                      WHEN NVL(b.im_spese_gest_decentrata_int, 0)<0
                                      THEN ABS(NVL(b.im_spese_gest_decentrata_int, 0))
                                      ELSE 0
                                    END
                               ELSE CASE
                                      WHEN NVL (b.im_spese_gest_accentrata_int, 0) < 0 AND
-                                          (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                          b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                      THEN ABS(NVL(b.im_spese_gest_accentrata_int, 0))
                                      ELSE 0
                                    END
                             END
-                       ELSE 0
+                       ELSE CASE --INDICO COME TRASFERIMENTO NEGATIVO LE SOMME ASSEGNATE A VOCI ACCENTRATE CHE VENGONO GIRATE
+                              WHEN NVL(b.im_spese_gest_decentrata_int, 0) = 0 AND
+                                   NVL (b.im_spese_gest_accentrata_int, 0) > 0 AND
+                                   a.ti_motivazione_variazione is null AND 
+                                   (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                              THEN NVL(b.im_spese_gest_accentrata_int, 0)
+                              ELSE 0
+                            END
                      END trasfmeno_cofin,
                      0 impacc, 0 manris
                 FROM pdg_variazione a,
@@ -216,7 +230,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                             END
                        ELSE CASE
                                WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
-                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                    b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                THEN NVL(b.im_spese_gest_accentrata_est, 0)
                                ELSE 0
                              END
@@ -230,7 +244,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                             END
                        ELSE CASE
                               WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
-                                   (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                   b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                               THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
                               ELSE 0
                             END
@@ -246,7 +260,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                                    END
                               ELSE CASE
                                       WHEN NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
-                                           (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                                           b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                       THEN NVL(b.im_spese_gest_accentrata_est, 0)
                                       ELSE 0
                                     END
@@ -264,12 +278,19 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                                    END
                               ELSE CASE
                                      WHEN NVL (b.im_spese_gest_accentrata_est, 0) < 0 AND
-                                          (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR') 
+                                          b.cd_cdr_assegnatario_clgs is not null AND b.categoria_dettaglio!='SCR'
                                      THEN ABS(NVL(b.im_spese_gest_accentrata_est, 0))
                                      ELSE 0
                                    END
                               END
-                       ELSE 0
+                       ELSE CASE --INDICO COME TRASFERIMENTO NEGATIVO LE SOMME ASSEGNATE A VOCI ACCENTRATE CHE VENGONO GIRATE
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0) = 0 AND
+                                   NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
+                                   a.ti_motivazione_variazione is null AND 
+                                   (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
+                              THEN NVL(b.im_spese_gest_accentrata_est, 0)
+                              ELSE 0
+                            END
                      END trasfmeno_cofin,
                      0 impacc, 0 manris
                 FROM pdg_variazione a,
