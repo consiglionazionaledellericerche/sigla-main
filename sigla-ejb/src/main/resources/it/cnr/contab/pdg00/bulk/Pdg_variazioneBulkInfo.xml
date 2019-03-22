@@ -453,7 +453,7 @@
 		name="idBando"
 		property="idBando"
 		inputType="TEXT"
-		inputSize="30"
+		inputSize="50"
 		maxLength="30"
 		enabledOnInsert="true"
         enabledOnSearch="true"
