@@ -1983,7 +1983,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					if (!listCtrlPianoEco.contains(pianoEco))
 						listCtrlPianoEco.add(pianoEco);
 				}
-				controllaPdgPianoEconomico(userContext, variazione, listCtrlPianoEco, cdVoceSpeciale);
+				controllaPdgPianoEconomico(userContext, variazione, listCtrlPianoEco, cdVoceSpeciale, cdrPersonaleBulk);
 			}
         } catch (DetailedRuntimeException _ex) {
             throw new ApplicationException(_ex.getMessage());
@@ -2105,7 +2105,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						listCtrlPianoEco.add(pianoEco);
 				}
 				
-				controllaPdgPianoEconomico(userContext, variazione, listCtrlPianoEco, cdVoceSpeciale);
+				controllaPdgPianoEconomico(userContext, variazione, listCtrlPianoEco, cdVoceSpeciale, cdrPersonaleBulk);
 			}
         } catch (DetailedRuntimeException _ex) {
             throw new ApplicationException(_ex.getMessage());
@@ -2114,7 +2114,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		}
 	}
 
-	private void controllaPdgPianoEconomico(UserContext userContext, OggettoBulk variazione, List<CtrlPianoEco> listCtrlPianoEco, String cdVoceSpeciale) throws ComponentException{
+	private void controllaPdgPianoEconomico(UserContext userContext, OggettoBulk variazione, List<CtrlPianoEco> listCtrlPianoEco, String cdVoceSpeciale, CdrBulk cdrPersonaleBulk) throws ComponentException{
 		try {
 			boolean isAttivaGestioneTrasferimenti = Utility.createParametriEnteComponentSession().getParametriEnte(userContext).getFl_variazioni_trasferimento();
 		
@@ -2160,14 +2160,16 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Pdg_variazioneBulk.class::cast)
 					.map(Pdg_variazioneBulk::getCentro_responsabilita)
 					.map(CdrBulk::getUnita_padre)
-					.map(Unita_organizzativaBulk::isUoArea)
+					.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+					.map(cdUo -> cdUo.equals(cdrPersonaleBulk.getCd_unita_organizzativa()))
 					.orElse(Boolean.FALSE) ||
 					Optional.of(variazione)
 					.filter(Var_stanz_resBulk.class::isInstance)
 					.map(Var_stanz_resBulk.class::cast)
 					.map(Var_stanz_resBulk::getCentroDiResponsabilita)
 					.map(CdrBulk::getUnita_padre)
-					.map(Unita_organizzativaBulk::isUoArea)
+					.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+					.map(cdUo -> cdUo.equals(cdrPersonaleBulk.getCd_unita_organizzativa()))
 					.orElse(Boolean.FALSE);
 
 			if (isAttivaGestioneTrasferimenti) {
@@ -2214,7 +2216,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										+ "assegnare fondi a voci non accentrate del personale.");
 						});
 					}
-				} else {
+				} else if (!isCDRPersonaleVariazione) { 
+					//Il controllo non vale se la variazione viene fatta dal CDR Personale in quanto per essa le voci sono qualificate come accentrate
 					listCtrlPianoEco.stream()
 						.filter(el->el.getImpSpesaPositiviCdrPersonale().compareTo(BigDecimal.ZERO)!=0 ||
 									el.getImpSpesaNegativiCdrPersonale().compareTo(BigDecimal.ZERO)!=0)
