@@ -883,6 +883,7 @@ public class GestioneLoginComponent
 			}
 			// passata la validazione aggiorniamo la data ultimo accesso
 			utenteReale.setDt_ultimo_accesso(currDate);
+			utenteReale.setUser("LOGIN");
 			updateBulk(userContext,utenteReale);
 			
 			return utenteReale;
