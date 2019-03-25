@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fattura_attiva_provvisoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4bb7c89d-e7c1-4040-8fca-6e403eb37b53">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
@@ -36,12 +36,14 @@
 	<queryString>
 		<![CDATA[select distinct ter.denominazione_sede as ds_cd_terzo, ter2.denominazione_sede as ds_cd_uo_origine, uo.*, fa.*, frg.*,
 vi.cd_voce_iva, vi.ds_voce_iva, rmp.ds_modalita_pag as ds_modalita_pag_uo_cds, rmp.ti_pagamento,
-AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split
+AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split, decode(anag.ti_entita,'F','Codice Fiscale: '||anag.codice_fiscale,decode(anag.partita_iva,null,'Codice Fiscale: '||anag.codice_fiscale,'Partita IVA: '||anag.partita_iva)) codfis_piva, ter.via_sede||' '||ter.cap_comune_sede||' '||com.ds_comune indirizzo
 from fattura_attiva fa, terzo ter, terzo ter2, unita_organizzativa uo, fattura_attiva_riga frg, voce_iva vi,
-rif_modalita_pagamento rmp, accertamento ac, contratto co,configurazione_cnr cnr
+rif_modalita_pagamento rmp, accertamento ac, contratto co,configurazione_cnr cnr, anagrafico anag, comune com
 where fa.esercizio = $P{esercizio}
 and fa.cd_uo_origine =  $P{cd_uo_origine}
 and fa.pg_fattura_attiva =  $P{pg_fattura}
+and ter.cd_anag = anag.cd_anag
+and ter.pg_comune_sede = com.pg_comune
 and ter.cd_terzo = fa.cd_terzo
 AND ter2.cd_terzo = fa.cd_terzo_uo_cds
 AND uo.cd_unita_organizzativa = fa.cd_uo_origine
@@ -146,6 +148,12 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 	<field name="NC_ANNULLO_SDI" class="java.lang.String"/>
 	<field name="PROGR_UNIVOCO_ANNO" class="java.math.BigDecimal"/>
 	<field name="DT_CONSEGNA_SDI" class="java.sql.Timestamp"/>
+	<field name="NOME_FILE_INVIO_SDI" class="java.lang.String"/>
+	<field name="CODICE_DESTINATARIO_FATT" class="java.lang.String"/>
+	<field name="MAIL_FATTURA_ELETTRONICA" class="java.lang.String"/>
+	<field name="PEC_FATTURA_ELETTRONICA" class="java.lang.String"/>
+	<field name="FL_FATTURA_ELETTRONICA" class="java.lang.String"/>
+	<field name="DT_RICEZIONE_SDI" class="java.sql.Timestamp"/>
 	<field name="PROGRESSIVO_RIGA" class="java.math.BigDecimal"/>
 	<field name="CD_TARIFFARIO" class="java.lang.String"/>
 	<field name="DS_RIGA_FATTURA" class="java.lang.String"/>
@@ -183,104 +191,106 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 	<field name="CD_CIG_FATTURA_ATTIVA" class="java.lang.String"/>
 	<field name="CD_CUP" class="java.lang.String"/>
 	<field name="SPLIT" class="java.lang.String"/>
+	<field name="CODFIS_PIVA" class="java.lang.String"/>
+	<field name="INDIRIZZO" class="java.lang.String"/>
 	<group name="Numero_Fattura">
 		<groupExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></groupExpression>
 		<groupHeader>
-			<band height="194">
+			<band height="216">
 				<staticText>
 					<reportElement style="TNRG10" x="3" y="4" width="44" height="14" uuid="a8cbb2df-f28b-4762-96d7-8cdd42ba98fb"/>
 					<text><![CDATA[Mittente:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="20" width="65" height="14" uuid="480d1053-12bd-4eef-9f1a-7d3beaa83a44"/>
+					<reportElement style="TNRG10" x="3" y="20" width="64" height="14" uuid="480d1053-12bd-4eef-9f1a-7d3beaa83a44"/>
 					<text><![CDATA[Destinatario:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="69" y="20" width="485" height="14" isRemoveLineWhenBlank="true" uuid="584cc196-9416-4d1a-862a-65d572aa3b51"/>
+					<reportElement style="TNR10" x="68" y="20" width="486" height="14" isRemoveLineWhenBlank="true" uuid="584cc196-9416-4d1a-862a-65d572aa3b51"/>
 					<textFieldExpression><![CDATA[$F{CD_TERZO} + " - " +$F{DS_CD_TERZO}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="1" y="59" width="554" height="1" uuid="0b29c02d-0c09-4199-a700-0c5d0eae8242"/>
+					<reportElement x="1" y="85" width="554" height="1" uuid="0b29c02d-0c09-4199-a700-0c5d0eae8242"/>
 				</line>
 				<line>
 					<reportElement x="1" y="0" width="554" height="1" uuid="2bee1f8c-f0ab-4f6e-b052-f013ca081398"/>
 				</line>
 				<line>
-					<reportElement x="555" y="1" width="1" height="58" uuid="4ff2c054-0aa6-4ea4-aec5-e87f96cf44ab"/>
+					<reportElement x="555" y="1" width="1" height="84" uuid="4ff2c054-0aa6-4ea4-aec5-e87f96cf44ab"/>
 				</line>
 				<line>
-					<reportElement x="0" y="1" width="1" height="58" uuid="6aad15db-4e7e-456b-a058-05f045e79a10"/>
+					<reportElement x="0" y="1" width="1" height="84" uuid="6aad15db-4e7e-456b-a058-05f045e79a10"/>
 				</line>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="88" width="83" height="14" uuid="de551c25-6bef-4bc2-a423-3fa2e16be5ae"/>
+					<reportElement style="TNRG10" x="3" y="114" width="83" height="14" uuid="de551c25-6bef-4bc2-a423-3fa2e16be5ae"/>
 					<text><![CDATA[Numero:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="104" width="83" height="14" uuid="045a180c-1546-4400-a800-626a37d5737a"/>
+					<reportElement style="TNRG10" x="3" y="130" width="83" height="14" uuid="045a180c-1546-4400-a800-626a37d5737a"/>
 					<text><![CDATA[Data:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="286" y="68" width="98" height="14" uuid="7b26872a-6b21-44bc-a485-25266a5b39a5"/>
+					<reportElement style="TNRG10" x="286" y="94" width="98" height="14" uuid="7b26872a-6b21-44bc-a485-25266a5b39a5"/>
 					<text><![CDATA[Riferimento Ordine:]]></text>
 				</staticText>
 				<line>
-					<reportElement x="1" y="62" width="554" height="1" uuid="7f51e4c4-90bf-4842-8e78-73c980db3cc8"/>
+					<reportElement x="1" y="88" width="554" height="1" uuid="7f51e4c4-90bf-4842-8e78-73c980db3cc8"/>
 				</line>
 				<line>
-					<reportElement x="1" y="158" width="554" height="1" uuid="7834a03d-1664-41ba-9a2c-94bd1224906d"/>
+					<reportElement x="1" y="184" width="554" height="1" uuid="7834a03d-1664-41ba-9a2c-94bd1224906d"/>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="88" width="156" height="14" isRemoveLineWhenBlank="true" uuid="40d0d305-1648-4143-b063-c8ed2080eb1d"/>
+					<reportElement style="TNR10" x="110" y="114" width="156" height="14" isRemoveLineWhenBlank="true" uuid="40d0d305-1648-4143-b063-c8ed2080eb1d"/>
 					<textFieldExpression><![CDATA[$F{PROTOCOLLO_IVA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="104" width="156" height="14" isRemoveLineWhenBlank="true" uuid="8775c333-8934-4a36-8dbc-b7f3fc643722"/>
+					<reportElement style="TNR10" x="110" y="130" width="156" height="14" isRemoveLineWhenBlank="true" uuid="8775c333-8934-4a36-8dbc-b7f3fc643722"/>
 					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DT_EMISSIONE})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="388" y="68" width="166" height="28" isRemoveLineWhenBlank="true" uuid="6b7fba55-cb32-48da-b5df-66c265e5e375"/>
+					<reportElement style="TNR10" x="388" y="94" width="166" height="28" isRemoveLineWhenBlank="true" uuid="6b7fba55-cb32-48da-b5df-66c265e5e375"/>
 					<textFieldExpression><![CDATA[$F{RIFERIMENTO_ORDINE}]]></textFieldExpression>
 				</textField>
 				<line>
-					<reportElement x="0" y="63" width="1" height="95" uuid="be52ef50-b9ac-4d28-a42a-bcca173fb87c"/>
+					<reportElement x="0" y="89" width="1" height="95" uuid="be52ef50-b9ac-4d28-a42a-bcca173fb87c"/>
 				</line>
 				<line>
-					<reportElement x="555" y="63" width="1" height="95" uuid="4163950d-ae14-49e8-b026-495fa835e898"/>
+					<reportElement x="555" y="89" width="1" height="95" uuid="4163950d-ae14-49e8-b026-495fa835e898"/>
 				</line>
 				<staticText>
-					<reportElement style="TNRGC12" x="3" y="175" width="150" height="15" uuid="81b3ce6b-4374-435d-a4f6-a4e2e88d7aca"/>
+					<reportElement style="TNRGC12" x="3" y="201" width="150" height="15" uuid="81b3ce6b-4374-435d-a4f6-a4e2e88d7aca"/>
 					<text><![CDATA[Dettagli Fattura]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="70" y="44" width="484" height="14" isRemoveLineWhenBlank="true" uuid="6f6c08f9-e8d8-4cf9-a64d-b9fc221251e7"/>
+					<reportElement style="TNR10" x="68" y="71" width="484" height="14" isRemoveLineWhenBlank="true" uuid="6f6c08f9-e8d8-4cf9-a64d-b9fc221251e7"/>
 					<textFieldExpression><![CDATA[$F{DS_MODALITA_PAG_UO_CDS}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="124" width="127" height="14" uuid="17fd9363-5f58-4b63-b574-131a1ce876f7"/>
+					<reportElement style="TNRG10" x="3" y="150" width="127" height="14" uuid="17fd9363-5f58-4b63-b574-131a1ce876f7"/>
 					<text><![CDATA[Numero Protocollo generale:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="140" width="127" height="14" uuid="1be2bb81-b9a1-4909-b897-860b62af1b32"/>
+					<reportElement style="TNRG10" x="3" y="166" width="127" height="14" uuid="1be2bb81-b9a1-4909-b897-860b62af1b32"/>
 					<text><![CDATA[Data Protocollo generale:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="286" y="124" width="127" height="14" uuid="51bba778-7543-4dcf-9441-5e65e15f6c60"/>
+					<reportElement style="TNRG10" x="286" y="150" width="127" height="14" uuid="51bba778-7543-4dcf-9441-5e65e15f6c60"/>
 					<text><![CDATA[Data avvenuta consegna:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNR10" x="286" y="140" width="127" height="14" uuid="91168a7e-96d0-47a8-8596-ffbd92e49c7b"/>
+					<reportElement style="TNR10" x="286" y="166" width="127" height="14" uuid="91168a7e-96d0-47a8-8596-ffbd92e49c7b"/>
 					<text><![CDATA[(Per fatturazione elettronica)]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="143" y="124" width="123" height="14" isRemoveLineWhenBlank="true" uuid="224442a2-88a7-4423-9008-82426fd97abd"/>
+					<reportElement style="TNR10" x="143" y="150" width="123" height="14" isRemoveLineWhenBlank="true" uuid="224442a2-88a7-4423-9008-82426fd97abd"/>
 					<textFieldExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="425" y="124" width="129" height="14" isRemoveLineWhenBlank="true" uuid="f098f82c-9e0c-4a2f-a599-1c2df0b2bb83"/>
+					<reportElement style="TNR10" x="425" y="150" width="129" height="14" isRemoveLineWhenBlank="true" uuid="f098f82c-9e0c-4a2f-a599-1c2df0b2bb83"/>
 					<textFieldExpression><![CDATA[$F{DT_CONSEGNA_SDI}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="143" y="140" width="123" height="14" isRemoveLineWhenBlank="true" uuid="fb62bae4-4f4c-431d-9b7c-1b2d78612cd7"/>
+					<reportElement style="TNR10" x="143" y="166" width="123" height="14" isRemoveLineWhenBlank="true" uuid="fb62bae4-4f4c-431d-9b7c-1b2d78612cd7"/>
 					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DT_REGISTRAZIONE})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -288,15 +298,23 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<textFieldExpression><![CDATA[$F{CD_UO_ORIGINE}+ " - " +$F{DS_CD_UO_ORIGINE}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNRG10" x="110" y="68" width="156" height="14" isRemoveLineWhenBlank="true" uuid="e6fc1fec-1edf-49a0-8618-a46cd49c2028"/>
+					<reportElement style="TNRG10" x="110" y="94" width="156" height="14" isRemoveLineWhenBlank="true" uuid="e6fc1fec-1edf-49a0-8618-a46cd49c2028"/>
 					<textFieldExpression><![CDATA[($F{TI_FATTURA}.equals("F")?"Fattura":
     ($F{TI_FATTURA}.equals("C")?"Nota di credito":
         ($F{TI_FATTURA}.equals("D")?"Nota di debito":"")))]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="68" width="100" height="14" uuid="4feac9a1-116c-452c-aadf-e6d2eede9b67"/>
+					<reportElement style="TNRG10" x="3" y="94" width="100" height="14" uuid="4feac9a1-116c-452c-aadf-e6d2eede9b67"/>
 					<text><![CDATA[Tipo documento:]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="TNR10" x="68" y="52" width="486" height="14" isRemoveLineWhenBlank="true" uuid="68061b56-0614-4996-bc03-b0140465d3b5"/>
+					<textFieldExpression><![CDATA[$F{CODFIS_PIVA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="TNR10" x="68" y="36" width="486" height="14" isRemoveLineWhenBlank="true" uuid="075d6ae9-250d-41fd-be7b-ad1faf5b6b52"/>
+					<textFieldExpression><![CDATA[$F{INDIRIZZO}]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -395,7 +413,7 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="TNR10" x="86" y="7" width="468" height="38" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1f4a2831-7396-4293-89c9-731bb3d302c7"/>
-				<textFieldExpression><![CDATA[$F{DS_FATTURA_ATTIVA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DS_RIGA_FATTURA}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="1" y="3" width="554" height="1" uuid="336db13a-b91d-48c3-82e8-6620a58f12cf"/>
