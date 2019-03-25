@@ -232,7 +232,11 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
         }	        
     }
 
-	public Forward doNegoziazioneOf(ActionContext context){
+    public it.cnr.jada.action.Forward doBringBackSearchVoce_piano_amm(ActionContext context, Progetto_piano_economicoBulk progettoPiaeco, Voce_piano_economico_prgBulk vocePiaeco) throws java.rmi.RemoteException {
+    	return doBringBackSearchVoce_piano(context, progettoPiaeco, vocePiaeco);
+    }
+    
+    public Forward doNegoziazioneOf(ActionContext context){
 		try 
 		{
 			fillModel( context );
