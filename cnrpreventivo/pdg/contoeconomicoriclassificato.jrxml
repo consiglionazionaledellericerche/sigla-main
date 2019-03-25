@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contoeconomicoriclassificato" pageWidth="595" pageHeight="842" columnWidth="573" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.ContoeconomicoriclassificatoScriptlet">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="contoeconomicoriclassificato" pageWidth="595" pageHeight="842" columnWidth="573" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.ContoeconomicoriclassificatoScriptlet" uuid="adf89dda-15e4-44ba-9f11-62e015095f24">
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
-    <property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.scriptlethandling" value="2"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -51,7 +51,7 @@
 	<detail>
 		<band height="16" splitType="Stretch">
 			<subreport isUsingCache="true">
-				<reportElement key="subreport-1" positionType="Float" x="0" y="0" width="572" height="16"/>
+				<reportElement key="subreport-1" positionType="Float" x="0" y="0" width="569" height="16" uuid="c1cb7416-1150-4bf7-b254-f8cbc6553cf2"/>
 				<subreportParameter name="inEs">
 					<subreportParameterExpression><![CDATA[$P{inEs}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -68,7 +68,7 @@
 					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"contoeconomicoriclassificato_subreport0.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT}+"contoeconomicoriclassificato_subreport0.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
@@ -78,7 +78,7 @@
 	<pageFooter>
 		<band height="15" splitType="Stretch">
 			<textField pattern="" isBlankWhenNull="false">
-				<reportElement key="textField-1" x="245" y="0" width="294" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement key="textField-1" x="245" y="0" width="294" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="5b270383-9348-48a2-a0c6-020985d709d8"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -88,10 +88,10 @@
 				<textElement textAlignment="Right">
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField-2" x="542" y="0" width="27" height="15"/>
+				<reportElement key="textField-2" x="542" y="0" width="27" height="15" uuid="da1e3ccb-861c-4260-a6df-db295cff29ce"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -101,10 +101,10 @@
 				<textElement>
 					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
 				</textElement>
-				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10BOLD" x="6" y="0" width="143" height="15"/>
+				<reportElement key="textField" style="TNR10BOLD" x="6" y="0" width="143" height="15" uuid="81363a5f-d5c0-41b7-96f3-a1d2e9838889"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -112,7 +112,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement markup="styled"/>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
