@@ -1,6 +1,7 @@
 package it.cnr.contab.doccont00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBase;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
@@ -5628,8 +5629,23 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if(rifModPag.getCd_modalita_pag().compareTo("F24EP")==0 && mandato.getDt_pagamento_richiesta()!=null && 
                 	mandato.getDt_emissione()!=null && 	mandato.getDt_pagamento_richiesta().before(mandato.getDt_emissione()))
                 	throw new ApplicationException(
-                            "Attenzione per la modalità di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non può essere inferiore alla data contabilizzazione.");    	
-            
+                            "Attenzione per la modalità di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non può essere inferiore alla data contabilizzazione.");
+
+                if (Optional.ofNullable(rifModPag)
+                        .map(Rif_modalita_pagamentoBase::getTi_pagamento)
+                        .filter(s -> s.equalsIgnoreCase(Rif_modalita_pagamentoBulk.BANCA_ITALIA))
+                        .isPresent() &&
+                        !Arrays.asList(
+                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value(),
+                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value())
+                        .contains(Optional.ofNullable(rifModPag)
+                                .map(Rif_modalita_pagamentoBase::getTipo_pagamento_siope)
+                                .orElse(null)
+                        )
+                    ) {
+                    throw new ApplicationMessageFormatException(
+                            "Attenzione la modalità di pagamento {0} non può essere utilizzata per l''emissione del Mandato!",rifModPag.getCd_modalita_pag());
+                }
             }
 
 
