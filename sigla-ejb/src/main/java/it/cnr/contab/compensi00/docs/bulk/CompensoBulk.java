@@ -1,14 +1,7 @@
 package it.cnr.contab.compensi00.docs.bulk;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Vector;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,7 +31,9 @@ import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoStorePath;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkCollections;
@@ -56,7 +51,7 @@ import it.siopeplus.StMotivoEsclusioneCigSiope;
 
 @StorageType(name = "D:emppay:compenso", parentName = "D:emppay:document")
 @JsonInclude(value=Include.NON_NULL)
-public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk {
+public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk, AllegatoStorePath {
 
 	private BancaBulk banca;
 	private Rif_termini_pagamentoBulk terminiPagamento;
@@ -3435,4 +3430,12 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 	public void setCig(CigBulk cig) {
 		this.cig = cig;
 	}
+
+	@Override
+	public List<String> getStorePath() {
+		return Optional.ofNullable(missione)
+					.map(MissioneBulk::getStorePath)
+					.orElse(Collections.emptyList());
+	}
+
 }
