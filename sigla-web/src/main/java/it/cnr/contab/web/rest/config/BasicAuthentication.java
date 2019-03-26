@@ -1,5 +1,6 @@
 package it.cnr.contab.web.rest.config;
 
+import it.cnr.contab.utente00.nav.comp.GestioneLoginComponent;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -23,7 +24,8 @@ import org.slf4j.LoggerFactory;
 public class BasicAuthentication {
 	private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
 	private static final String AUTHENTICATION_SCHEME = "Basic";
-	public static UtenteBulk authenticate(String authorization) throws ComponentException{
+
+	public static UtenteBulk authenticateUtenteMultiplo(String authorization, String utenteMultiplo) throws ComponentException{
         boolean authorized = false;
 		UtenteBulk utente = new UtenteBulk();
         // authenticate as specified by HTTP Basic Authentication
@@ -43,8 +45,13 @@ public class BasicAuthentication {
 				utente.setCd_utente(username.toUpperCase());
 				utente.setLdap_password(password);
 				utente.setPasswordInChiaro(password.toUpperCase());
+				utente.setUtente_multiplo(utenteMultiplo);
 				try {
-					utente = loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente);
+					utente = loginComponentSession().validaUtente(AdminUserContext.getInstance(), utente,
+							Optional.ofNullable(utenteMultiplo)
+								.map(s -> GestioneLoginComponent.VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO)
+								.orElseGet(() -> GestioneLoginComponent.VALIDA_FASE_INIZIALE)
+							);
 					if (utente != null)
 						authorized = true;
 				} catch (RemoteException e) {
