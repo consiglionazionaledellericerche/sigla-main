@@ -12,6 +12,7 @@ import com.google.gson.JsonParser;
 
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.utente00.nav.comp.UtenteMultiploException;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.RESTUserContext;
@@ -102,7 +103,16 @@ public class RESTServlet extends HttpServlet{
             UtenteBulk utente = null;
     		try {
     			if (actionmapping.needExistingSession())
-    				utente = BasicAuthentication.authenticate(req.getHeader(AUTHORIZATION));
+    				try {
+						utente = BasicAuthentication.authenticateUtenteMultiplo(req.getHeader(AUTHORIZATION), null);
+					} catch (UtenteMultiploException _ex) {
+						utente = BasicAuthentication.authenticateUtenteMultiplo(req.getHeader(AUTHORIZATION),
+									Optional.ofNullable(req.getParameterValues("utente-multiplo"))
+										.filter(strings -> strings.length == 1)
+										.map(strings -> strings[0])
+										.orElse(null)
+								);
+					}
     			if (utente != null || !actionmapping.needExistingSession()) {
     				JSONRequest jsonRequest = null;
     	            HttpActionContext httpactioncontext = new HttpActionContext(this, req, resp);
