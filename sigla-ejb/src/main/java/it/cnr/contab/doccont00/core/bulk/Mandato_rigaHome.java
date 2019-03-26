@@ -2,6 +2,7 @@ package it.cnr.contab.doccont00.core.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -239,6 +240,9 @@ public class Mandato_rigaHome extends BulkHome {
             }
             case Numerazione_doc_ammBulk.TIPO_ANTICIPO : {
                 return AnticipoBulk.class;
+            }
+            case Numerazione_doc_ammBulk.TIPO_COMPENSO : {
+                return CompensoBulk.class;
             }
         }
         return null;
