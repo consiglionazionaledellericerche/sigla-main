@@ -349,7 +349,9 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
                                             allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
                                             return allegato;
                                         }).collect(Collectors.toCollection(ArrayList<AllegatoGenericoBulk>::new)))
-                                .orElseGet(() -> new ArrayList<AllegatoGenericoBulk>());
+                                .orElseGet(() -> {
+                                    return new ArrayList<AllegatoGenericoBulk>();
+                                });
                     } catch (ComponentException | RemoteException e) {
                         return new ArrayList<AllegatoGenericoBulk>();
                     }
