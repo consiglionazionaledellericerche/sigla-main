@@ -12,6 +12,7 @@ import com.google.gson.JsonParser;
 
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.utente00.nav.comp.UtenteLdapNonUtenteSiglaException;
 import it.cnr.contab.utente00.nav.comp.UtenteMultiploException;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -198,7 +199,10 @@ public class RESTServlet extends HttpServlet{
     	            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     	            resp.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");   
     			}
-    		} catch (ComponentException e) {
+    		} catch (UtenteLdapNonUtenteSiglaException _ex) {
+				resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				resp.setHeader("WWW-Authenticate", "Basic realm=\"SIGLA\"");
+			} catch (ComponentException e) {
     			logger.error("ComponentException", e);
     			resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);			
     			Gson gson = new Gson();			
