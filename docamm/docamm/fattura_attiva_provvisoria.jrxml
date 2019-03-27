@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fattura_attiva_provvisoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4bb7c89d-e7c1-4040-8fca-6e403eb37b53">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="4"/>
 	<property name="ireport.y" value="0"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -36,7 +36,7 @@
 	<queryString>
 		<![CDATA[select distinct ter.denominazione_sede as ds_cd_terzo, ter2.denominazione_sede as ds_cd_uo_origine, uo.*, fa.*, frg.*,
 vi.cd_voce_iva, vi.ds_voce_iva, rmp.ds_modalita_pag as ds_modalita_pag_uo_cds, rmp.ti_pagamento,
-AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split, decode(anag.ti_entita,'F','Codice Fiscale: '||anag.codice_fiscale,decode(anag.partita_iva,null,'Codice Fiscale: '||anag.codice_fiscale,'Partita IVA: '||anag.partita_iva)) codfis_piva, ter.via_sede||' '||ter.cap_comune_sede||' '||com.ds_comune indirizzo, ter2.via_sede||','||ter2.numero_civico_sede||' '||ter2.cap_comune_sede||' - '||com2.ds_comune||', '||com2.cd_provincia indirizzo_cds_uo,  'Codice Fiscale '|| anag2.codice_fiscale||' - Partita IVA '||anag2.partita_iva dati_fiscali_cds_uo
+AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split, decode(anag.ti_entita,'F','Codice Fiscale: '||anag.codice_fiscale,decode(anag.partita_iva,null,'Codice Fiscale: '||anag.codice_fiscale,'Partita IVA: '||anag.partita_iva)) codfis_piva, ter.via_sede||' '||ter.cap_comune_sede||' '||com.ds_comune indirizzo, ter2.via_sede||','||ter2.numero_civico_sede||' -  '||ter2.cap_comune_sede||' '||com2.ds_comune||', '||com2.cd_provincia indirizzo_cds_uo,  'Codice Fiscale '|| anag2.codice_fiscale||' - Partita IVA '||anag2.partita_iva dati_fiscali_cds_uo
 from fattura_attiva fa, terzo ter, terzo ter2, unita_organizzativa uo, fattura_attiva_riga frg, voce_iva vi,
 rif_modalita_pagamento rmp, accertamento ac, contratto co,configurazione_cnr cnr, anagrafico anag, comune com, comune com2, anagrafico anag2
 where fa.esercizio = $P{esercizio}
@@ -206,11 +206,11 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<text><![CDATA[Mittente:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="46" width="64" height="14" uuid="480d1053-12bd-4eef-9f1a-7d3beaa83a44"/>
+					<reportElement style="TNRG10" x="3" y="49" width="64" height="14" uuid="480d1053-12bd-4eef-9f1a-7d3beaa83a44"/>
 					<text><![CDATA[Destinatario:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="68" y="46" width="486" height="14" isRemoveLineWhenBlank="true" uuid="584cc196-9416-4d1a-862a-65d572aa3b51"/>
+					<reportElement style="TNR10" x="68" y="49" width="486" height="14" isRemoveLineWhenBlank="true" uuid="584cc196-9416-4d1a-862a-65d572aa3b51"/>
 					<textFieldExpression><![CDATA[$F{CD_TERZO} + " - " +$F{DS_CD_TERZO}]]></textFieldExpression>
 				</textField>
 				<line>
@@ -312,11 +312,11 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<text><![CDATA[Tipo documento:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="68" y="78" width="486" height="14" isRemoveLineWhenBlank="true" uuid="68061b56-0614-4996-bc03-b0140465d3b5"/>
+					<reportElement style="TNR10" x="68" y="79" width="486" height="14" isRemoveLineWhenBlank="true" uuid="68061b56-0614-4996-bc03-b0140465d3b5"/>
 					<textFieldExpression><![CDATA[$F{CODFIS_PIVA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="68" y="62" width="486" height="14" isRemoveLineWhenBlank="true" uuid="075d6ae9-250d-41fd-be7b-ad1faf5b6b52"/>
+					<reportElement style="TNR10" x="68" y="64" width="486" height="14" isRemoveLineWhenBlank="true" uuid="075d6ae9-250d-41fd-be7b-ad1faf5b6b52"/>
 					<textFieldExpression><![CDATA[$F{INDIRIZZO}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -327,6 +327,9 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<reportElement style="TNR10" x="68" y="32" width="486" height="14" isRemoveLineWhenBlank="true" uuid="ef92e9e7-2ffe-40ab-a085-bd1d97e0174c"/>
 					<textFieldExpression><![CDATA[$F{DATI_FISCALI_CDS_UO}]]></textFieldExpression>
 				</textField>
+				<line>
+					<reportElement x="1" y="47" width="554" height="1" uuid="1caa5ca3-8c24-43d7-8014-616f761f66db"/>
+				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
