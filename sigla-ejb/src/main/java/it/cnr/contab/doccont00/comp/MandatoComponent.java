@@ -40,7 +40,9 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util00.ejb.ProcedureComponentSession;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
@@ -53,6 +55,8 @@ import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -65,6 +69,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
@@ -74,6 +79,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     public final static String MODIFICA_MANDATO_ACTION = "M";
 
     public final static String VSX_PROC_NAME = "CNRCTB037.vsx_man_acc";
+    private transient static final Logger logger = LoggerFactory.getLogger(MandatoComponent.class);
 
     // @@<< CONSTRUCTORCST
     public MandatoComponent() {
@@ -364,7 +370,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * doc.contabile
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga        <code>MandatoBulk</code> il Mandato per cui aggiornare le
+     * @param mandato        <code>MandatoBulk</code> il Mandato per cui aggiornare le
      *                    scadenze dell'obbligazione
      */
     protected void aggiornaImportoObbligazioni(UserContext userContext,
@@ -609,7 +615,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * resettata e vengono aggiornati i saldi relativi al pagato delle voci del
      * piano presenti nel mandato
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> mandato per cui aggiornare lo stato e
      *                i saldi pagati
      * @param action  <code>String</code> azione effettuata sul mandato. ( I -
@@ -882,8 +888,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato     <code>MandatoBulk</code> il mandato da annullare
      */
-    private void annullaDocContabiliCollegati(UserContext userContext,
-                                              MandatoBulk mandato) throws ComponentException {
+    private void annullaDocContabiliCollegati(UserContext userContext, MandatoBulk mandato) throws ComponentException {
         try {
             V_ass_doc_contabiliBulk ass;
             ReversaleComponentSession revSession = null;
@@ -892,8 +897,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             if (mandato.getDoc_contabili_collColl().size() > 0)
                 revSession = createReversaleComponentSession();
-            for (Iterator i = mandato.getDoc_contabili_collColl().iterator(); i
-                    .hasNext(); ) {
+            for (Iterator i = mandato.getDoc_contabili_collColl().iterator(); i.hasNext(); ) {
                 ass = (V_ass_doc_contabiliBulk) i.next();
                 if (ass.getCd_tipo_documento_cont().equals(
                         Numerazione_doc_contBulk.TIPO_MAN)
@@ -902,42 +906,78 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         && ass.getPg_documento_cont().equals(
                         mandato.getPg_mandato())
                         && ass.getCd_tipo_documento_cont_coll().equals(
-                        Numerazione_doc_contBulk.TIPO_MAN)) { // il
-                    // mandato
-                    // ha un
-                    // mandato
-                    // associato
+                        Numerazione_doc_contBulk.TIPO_MAN)) {
+                    /** il mandato ha un mandato associato **/
                     manColl = (MandatoBulk) inizializzaBulkPerModifica(
                             userContext, new MandatoIBulk(ass.getCd_cds_coll(),
                                     ass.getEsercizio_coll(), ass
                                     .getPg_documento_cont_coll()));
                     annullaMandato(userContext, manColl, null, false);
-                } else if (ass.getCd_tipo_documento_cont().equals(
-                        Numerazione_doc_contBulk.TIPO_MAN)
+                } else if (ass.getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_MAN)
                         && ass.getCd_cds().equals(mandato.getCd_cds())
                         && ass.getEsercizio().equals(mandato.getEsercizio())
-                        && ass.getPg_documento_cont().equals(
-                        mandato.getPg_mandato())
-                        && ass.getCd_tipo_documento_cont_coll().equals(
-                        Numerazione_doc_contBulk.TIPO_REV)) { // il
-                    // mandato
-                    // ha
-                    // una
-                    // reversale
-                    // associata
-                    reversale = (ReversaleBulk) revSession
-                            .inizializzaBulkPerModifica(userContext,
+                        && ass.getPg_documento_cont().equals(mandato.getPg_mandato())
+                        && ass.getCd_tipo_documento_cont_coll().equals(Numerazione_doc_contBulk.TIPO_REV)) {
+                    /** il mandato ha una reversale associata **/
+                    reversale = (ReversaleBulk) revSession.inizializzaBulkPerModifica(userContext,
                                     new ReversaleIBulk(ass.getCd_cds_coll(),
                                             ass.getEsercizio_coll(),
                                             ass.getPg_documento_cont_coll()));
                     revSession.annullaReversale(userContext, reversale, false);
+                    rimuoviVincoliAlMandato(userContext, mandato);
                 }
-
             }
         } catch (Exception e) {
             throw handleException(mandato, e);
         }
+    }
 
+    private void rimuoviVincoliAlMandato(UserContext userContext, MandatoBulk mandatoBulk) throws ComponentException, PersistencyException, IntrospectionException {
+        /**
+         * Nel caso di Mandato NON ACQUISITO e reversali NON_ESEGUITE ma ACQUISITA
+         * rimuovo i vincoli
+         */
+        if (Optional.ofNullable(mandatoBulk.getEsitoOperazione())
+                .filter(s -> s.equalsIgnoreCase(EsitoOperazione.NON_ACQUISITO.value()))
+                .isPresent()) {
+            Ass_mandato_reversaleHome ass_mandato_reversaleHome =
+                    Optional.ofNullable(getHome(userContext, Ass_mandato_reversaleBulk.class))
+                            .filter(Ass_mandato_reversaleHome.class::isInstance)
+                            .map(Ass_mandato_reversaleHome.class::cast)
+                            .orElseThrow(() -> new ComponentException(("Ass_mandato_reversaleHome not found")));
+
+            final Collection<Ass_mandato_reversaleBulk> ass = Optional.ofNullable(ass_mandato_reversaleHome.findReversali(userContext, mandatoBulk))
+                    .filter(collection -> !collection.isEmpty())
+                    .orElse(Collections.emptyList());
+            for(Ass_mandato_reversaleBulk ass_mandato_reversaleBulk : ass){
+                ReversaleBulk reversale =
+                        Optional.ofNullable(super.findByPrimaryKey(userContext,
+                                new ReversaleIBulk(ass_mandato_reversaleBulk.getCd_cds_reversale(),
+                                        ass_mandato_reversaleBulk.getEsercizio_reversale(),
+                                        ass_mandato_reversaleBulk.getPg_reversale())))
+                                .filter(ReversaleBulk.class::isInstance)
+                                .map(ReversaleBulk.class::cast)
+                                .orElse(null);
+                if (Optional.ofNullable(reversale)
+                                .flatMap(reversaleBulk -> Optional.ofNullable(reversaleBulk.getEsitoOperazione()))
+                                .filter(s -> s.equalsIgnoreCase(EsitoOperazione.ACQUISITO.value()) ||
+                                        s.equalsIgnoreCase(EsitoOperazione.NON_ESEGUIBILE.value()))
+                                .isPresent()
+                ) {
+                    ass_mandato_reversaleBulk.setToBeDeleted();
+                    try {
+                        ass_mandato_reversaleHome.delete(ass_mandato_reversaleBulk, userContext);
+                        logger.info("SIOPE+ annulato vincolo al Mandato {}/{} Reversale {}/{}",
+                                mandatoBulk.getEsercizio(),
+                                mandatoBulk.getPg_mandato(),
+                                ass_mandato_reversaleBulk.getEsercizio_reversale(),
+                                ass_mandato_reversaleBulk.getPg_reversale());
+                    } catch (PersistencyException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -1136,7 +1176,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      *
      * @param userContext      lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato          <code>MandatoBulk</code> il mandato da annullare
-     * @param param            il parametro che indica se il controllo sul compenso e'
+     * @param p            il parametro che indica se il controllo sul compenso e'
      *                         necessario
      * @param annullaCollegati valore booleano che indica se procedere o meno con
      *                         l'annullamento dei doc. contabili collegati al mandato
@@ -1298,6 +1338,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     .getEsercizio_reversale(), ass
                                     .getPg_reversale()));
             revSession.annullaReversaleDiIncassoIVA(userContext, reversale);
+            rimuoviVincoliAlMandato(userContext, mandato);
         } catch (Exception e) {
             throw handleException(mandato, e);
         }
@@ -1328,6 +1369,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     .getPg_reversale()));
             revSession.annullaReversaleDiRegolarizzazione(userContext,
                     reversale);
+            rimuoviVincoliAlMandato(userContext, mandato);
         } catch (Exception e) {
             throw handleException(mandato, e);
         }
@@ -1358,6 +1400,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     .getEsercizio_reversale(), ass
                                     .getPg_reversale()));
             revSession.annullaReversaleDiTrasferimento(userContext, reversale);
+            rimuoviVincoliAlMandato(userContext, mandato);
         } catch (Exception e) {
             throw handleException(mandato, e);
         }
@@ -1415,7 +1458,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * disponibile = importo iniziale del sospeso - importo già associato a
      * mandati) maggiore di zero, stato uguale a ASSOCIATO A CDS
      *
-     * @param aUC      lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext      lo <code>UserContext</code> che ha generato la richiesta
      * @param clausole le clausole specificate dall'utente
      * @param mandato  <code>MandatoBulk</code> il mandato
      * @return il RemoteIterator della lista dei sospesi di spesa
@@ -2748,7 +2791,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * viene ricercata e inizializzata
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga        <code>Reversale_rigaIBulk</code> la riga della reversale
+     * @param impegno        <code>Reversale_rigaIBulk</code> la riga della reversale
      * @return List la lista delle banche definite per il terzo della reversale
      */
 
@@ -2934,7 +2977,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * scadenze dell'obbligazione pagate dalla riga del mandato
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato     <code>Mandato_rigaBulk</code> la riga del mandato di cui si
+     * @param riga     <code>Mandato_rigaBulk</code> la riga del mandato di cui si
      *                    verifica disponibilità sui capitoli
      */
 
@@ -3036,7 +3079,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Cds - modello 1210 emessi dal Cds) PostCondition: Viene restituita la
      * disponibilità di cassa del cds
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
      *                verifica disponibilità di cassa
      */
@@ -3075,7 +3118,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * ai mandati) PostCondition: Viene restituita la disponibilità di cassa
      * dell'ente
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
      *                verifica disponibilità di cassa
      */
@@ -3123,7 +3166,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * ai mandati) PostCondition: Viene restituita la disponibilità di cassa
      * dell'ente
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
      *                verifica disponibilità di cassa
      */
@@ -4256,7 +4299,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * regolarizzazione PostCondition: Vengono ricercati tutti i documenti
      * attivi che sono stati contabilizzati sulle scadenze dell'accertamento
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato
      * @return mandato il Mandato dopo la ricerca dei documenti attivi
      */
@@ -4984,7 +5027,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * tutti i precedenti controlli sono stati superati PostCondition: Il
      * mandato ha superato la validazione e può pertanto essere salvato
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
      *                correttezza
      */
@@ -5043,7 +5086,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * cassa del conto corrente ed e' pertanto possibile proseguire con il suo
      * salvataggio
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
      *                verifica disponibilità di cassa
      */
@@ -5755,7 +5798,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * tutti i precedenti controlli sono stati superati PostCondition: Il
      * mandato ha superato la validazione e può pertanto essere salvato
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
      *                correttezza
      */
@@ -5819,7 +5862,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     /**
      * verifica tipo bollo PreCondition: PostCondition:
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
      *                correttezza
      */
@@ -6060,7 +6103,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * istanza di Mandato_siopeBulk per l'importo complessivo della riga del
      * mandato
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param riga <code>Mandato_rigaBulk</code> la riga mandato da aggiornare
      * @return riga <code>Mandato_rigaBulk</code> la riga mandato aggiornato
      */
@@ -6103,7 +6146,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Vengono caricati i codici SIOPE disponibili per l'associazione della riga
      * del mandato
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param riga <code>Mandato_rigaBulk</code> la riga mandato da aggiornare
      * @return riga <code>Mandato_rigaBulk</code> la riga mandato aggiornato
      */
@@ -6158,7 +6201,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * completamente a codici SIOPE PostCondition: Ritorna TRUE se la riga del
      * mandato è associata completamente a codici SIOPE
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param riga <code>Mandato_rigaBulk</code> la riga mandato da controllare
      * @return Boolean
      */
@@ -6191,7 +6234,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * associate a codici SIOPE. Ritorna TRUE se tutte le righe del mandato sono
      * associate completamente a codici SIOPE
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoBulk</code> il mandato da controllare
      * @return Boolean
      */
@@ -6223,7 +6266,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * regolarizzazione PostCondition: Vengono ricercate tutte le scadenze
      * dell'accertamento con importo disponibile positivo
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato <code>MandatoIBulk</code> il mandato
      * @return mandato il Mandato dopo la ricerca delle scadenze
      */
