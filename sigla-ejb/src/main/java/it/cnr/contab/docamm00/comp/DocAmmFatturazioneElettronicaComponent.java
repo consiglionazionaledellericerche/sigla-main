@@ -7,6 +7,8 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import org.springframework.util.StringUtils;
+
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.ejb.EJBException;
