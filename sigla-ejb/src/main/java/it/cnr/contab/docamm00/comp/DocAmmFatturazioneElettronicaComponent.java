@@ -7,6 +7,8 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import org.springframework.util.StringUtils;
+
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.ejb.EJBException;
@@ -434,8 +436,14 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
 				}
 
-				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (!cliente.getAnagrafico().isEntePubblico() || cliente.getAnagrafico().isPartitaIvaVerificata() || cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0 ))
+				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (!cliente.getAnagrafico().isEntePubblico() || cliente.getAnagrafico().isPartitaIvaVerificata() || cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0 )){
 					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
+				} else if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale())){
+					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
+				}
+				if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale()) && !StringUtils.hasLength(datiAnagraficiClienteType.getIdFiscaleIVA().getIdCodice())){
+					datiAnagraficiClienteType.getIdFiscaleIVA().setIdCodice("99999999999");
+				}
 
 				clienteType.setDatiAnagrafici(datiAnagraficiClienteType);
 
