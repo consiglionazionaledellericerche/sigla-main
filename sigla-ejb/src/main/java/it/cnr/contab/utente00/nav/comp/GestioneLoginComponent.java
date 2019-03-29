@@ -877,12 +877,14 @@ public class GestioneLoginComponent
 					if(ute.getCd_utente().compareTo(utenteReale.getCd_utente())!=0){
 						ute = (UtenteBulk)home.findByPrimaryKey(ute,false);
 						ute.setDt_ultimo_accesso(new Timestamp(cal.getTime().getTime()));
+						ute.setUser("LOGIN");
 						updateBulk(userContext,ute);
 					}
 				}
 			}
 			// passata la validazione aggiorniamo la data ultimo accesso
 			utenteReale.setDt_ultimo_accesso(currDate);
+			utenteReale.setUser("LOGIN");
 			updateBulk(userContext,utenteReale);
 			
 			return utenteReale;
