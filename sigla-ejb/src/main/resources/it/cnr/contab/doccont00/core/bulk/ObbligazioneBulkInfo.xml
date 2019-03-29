@@ -294,7 +294,6 @@
 		label="Numero Impegno"
 		inputType="TEXT"
 		maxLength="10"
-		inputSize="10"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
 		enabledOnSearch="true"

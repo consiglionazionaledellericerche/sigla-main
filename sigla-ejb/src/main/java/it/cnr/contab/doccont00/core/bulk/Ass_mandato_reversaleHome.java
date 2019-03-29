@@ -34,14 +34,14 @@ public Ass_mandato_reversaleHome(java.sql.Connection conn,PersistentCache persis
  *
  * @return result i mandati associati alla reversale
  */
-public Collection findMandati( it.cnr.jada.UserContext userContext,ReversaleBulk reversale ) throws PersistencyException, IntrospectionException
+public List findMandati( it.cnr.jada.UserContext userContext,ReversaleBulk reversale ) throws PersistencyException, IntrospectionException
 {
 	PersistentHome home = getHomeCache().getHome( Ass_mandato_reversaleBulk.class );
 	SQLBuilder sql = home.createSQLBuilder();
 	sql.addClause("AND","esercizio_reversale",sql.EQUALS, reversale.getEsercizio() );
 	sql.addClause("AND","cd_cds_reversale",sql.EQUALS, reversale.getCds().getCd_unita_organizzativa() );
 	sql.addClause("AND","pg_reversale",sql.EQUALS, reversale.getPg_reversale() );
-	Collection result = home.fetchAll( sql);
+	List result = home.fetchAll( sql);
 	getHomeCache().fetchAll(userContext);
 	return result;
 }	
