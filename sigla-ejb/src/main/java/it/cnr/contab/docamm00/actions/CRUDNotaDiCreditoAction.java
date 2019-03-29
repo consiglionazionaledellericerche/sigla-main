@@ -1454,7 +1454,7 @@ public Forward doSalva(ActionContext context) throws java.rmi.RemoteException {
 			bp.rollbackToSavePoint(context, IDocumentoAmministrativoBulk.RIPORTA_AVANTI);
 			bp.setModel(context, originalClone);
 		} catch (BusinessProcessException ex) {
-			return handleException(context, ex);
+			return handleException(context, e);
 		}
 		return handleException(context,e);
 	}
