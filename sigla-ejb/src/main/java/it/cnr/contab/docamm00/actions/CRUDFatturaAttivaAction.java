@@ -2617,8 +2617,13 @@ public class CRUDFatturaAttivaAction extends it.cnr.jada.util.action.CRUDAction 
     protected void postSalvataggio(ActionContext context) throws BusinessProcessException {
 
         CRUDFatturaAttivaBP bp = (CRUDFatturaAttivaBP) getBusinessProcess(context);
-        bp.gestioneAllegatiFatturazioneElettronica(context);
+        ristampaFatturaElettronica(context, bp);
     }
+
+	private void ristampaFatturaElettronica(ActionContext context, CRUDFatturaAttivaBP bp)
+			throws BusinessProcessException {
+		bp.gestioneAllegatiFatturazioneElettronica(context);
+	}
 
     /**
      * Viene richiamato nel momento in cui si seleziona la lista delle banche nella
