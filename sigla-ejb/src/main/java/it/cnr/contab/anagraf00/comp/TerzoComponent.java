@@ -467,6 +467,25 @@ public class TerzoComponent extends UtilitaAnagraficaComponent implements ICRUDM
             if (terzo.inseriteDiversePecFatturazioneElettronica()) {
                 throw new ApplicationException("Non è possibile indicare più PEC per la fatturazione elettronica");
             }
+            if (terzo.getCodiceUnivocoUfficioIpa() != null){
+            	if (!terzo.getCodiceUnivocoUfficioIpa().equals(terzo.getCodiceUnivocoUfficioIpa().toUpperCase())){
+                    throw new ApplicationException("Il codice IPA deve essere inserito con caratteri in maiuscolo");
+            	}
+            	if (!terzo.getCodiceUnivocoUfficioIpa().equals(terzo.getCodiceUnivocoUfficioIpa().replaceAll("\\s+",""))){
+                    throw new ApplicationException("Il codice IPA deve essere senza spazi");
+            	}
+            }
+            if (terzo.getCodiceDestinatarioFatt() != null){
+            	if (terzo.getCodiceDestinatarioFatt().length() != 7){
+                    throw new ApplicationException("Il codice destinatario deve essere di 7 caratteri");
+            	}
+            	if (!terzo.getCodiceDestinatarioFatt().equals(terzo.getCodiceDestinatarioFatt().toUpperCase())){
+                    throw new ApplicationException("Il codice destinatario deve essere inserito con caratteri in maiuscolo");
+            	}
+            	if (!terzo.getCodiceDestinatarioFatt().equals(terzo.getCodiceDestinatarioFatt().replaceAll("\\s+",""))){
+                    throw new ApplicationException("Il codice destinatario deve essere senza spazi");
+            	}
+            }
 
         } catch (Throwable e) {
             throw handleException(e);
