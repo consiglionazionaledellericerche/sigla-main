@@ -429,6 +429,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				datiAnagraficiClienteType.setAnagrafica(impostaAnagrafica(factory, cliente));
 
+				if (fattura.getFl_intra_ue() && cliente.getAnagrafico().isPersonaGiuridica()  && cliente.getCodiceUnivocoUfficioIpa() == null && cliente.getAnagrafico().getPartita_iva() == null){
+					throw new ApplicationException("Impossibile Procedere! E' necessario indicare la partita IVA"); 
+				}
 				if ((!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) && fattura.getCodice_fiscale() == null){
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()); 
 				}

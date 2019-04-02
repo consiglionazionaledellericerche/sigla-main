@@ -5,6 +5,7 @@
 package it.cnr.contab.config00.contratto.bulk;
 import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -75,10 +76,17 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private CigBulk cig;
 	private CupBulk cup;
 	
+	private String cdCigRest;
+	private String cdCupRest;
+	private String codfisPivaRupRest;
+	private String codfisPivaFirmatarioRest;
+	private String codfisPivaAggiudicatarioRest;
+	private List<String> listaUoAbilitateRest;
 	
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
-		private BulkList ditteInvitate = new BulkList();
+	private BulkList ditteInvitate = new BulkList();
+		
 	@Transient
 	private BulkList<AllegatoContrattoDocumentBulk> archivioAllegati = new BulkList();
 	
@@ -879,4 +887,40 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 			java.math.BigDecimal tot_docamm_cont_spe_netto) {
 		this.tot_docamm_cont_spe_netto = tot_docamm_cont_spe_netto;
 	}	
+	public String getCdCigRest() {
+		return cdCigRest;
+	}
+	public void setCdCigRest(String cdCigRest) {
+		this.cdCigRest = cdCigRest;
+	}
+	public String getCdCupRest() {
+		return cdCupRest;
+	}
+	public void setCdCupRest(String cdCupRest) {
+		this.cdCupRest = cdCupRest;
+	}
+	public String getCodfisPivaRupRest() {
+		return codfisPivaRupRest;
+	}
+	public void setCodfisPivaRupRest(String codfisPivaRupRest) {
+		this.codfisPivaRupRest = codfisPivaRupRest;
+	}
+	public String getCodfisPivaFirmatarioRest() {
+		return codfisPivaFirmatarioRest;
+	}
+	public void setCodfisPivaFirmatarioRest(String codfisPivaFirmatarioRest) {
+		this.codfisPivaFirmatarioRest = codfisPivaFirmatarioRest;
+	}
+	public String getCodfisPivaAggiudicatarioRest() {
+		return codfisPivaAggiudicatarioRest;
+	}
+	public void setCodfisPivaAggiudicatarioRest(String codfisPivaAggiudicatarioRest) {
+		this.codfisPivaAggiudicatarioRest = codfisPivaAggiudicatarioRest;
+	}
+	public List<String> getListaUoAbilitateRest() {
+		return listaUoAbilitateRest;
+	}
+	public void setListaUoAbilitateRest(List<String> listaUoAbilitateRest) {
+		this.listaUoAbilitateRest = listaUoAbilitateRest;
+	}
 }
