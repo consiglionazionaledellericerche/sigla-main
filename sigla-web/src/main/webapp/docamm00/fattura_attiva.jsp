@@ -32,6 +32,11 @@ function doScaricaFatturaAttivaFirmata() {
 	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=nomeFileFirmato%>?methodName=scaricaFatturaAttivaFirmata&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
 			'Fattura Attiva', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
+function doRistampaFatturaElettronica() {
+	window.open('<%=JSPUtils.getAppRoot(request)%>genericdownload/ristampaFatturaElettronica.html?methodName=ristampaFatturaElettronica&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>', 
+			'Fattura Attiva', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
+}
+
 </script>
 </head>
 <body class="Form">

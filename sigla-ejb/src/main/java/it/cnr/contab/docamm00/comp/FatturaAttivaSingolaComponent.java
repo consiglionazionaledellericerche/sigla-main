@@ -5629,6 +5629,9 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                 .flatMap(voce_ivaBulk -> Optional.ofNullable(voce_ivaBulk.getFl_obb_dichiarazione_intento()))
                 .orElse(Boolean.FALSE))
             verificaEsistenzaDichiarazioneIntento(aUC, fatturaRiga);
+		if (!RemoveAccent.isOk(fatturaRiga.getDs_riga_fattura())){
+			throw new ApplicationException("La descrizione contienere caratteri speciali non supportati.");
+		}
     }
 
     private boolean isObbligatoriaIndicazioneTrovato(Elemento_voceBulk voce) throws ComponentException {
