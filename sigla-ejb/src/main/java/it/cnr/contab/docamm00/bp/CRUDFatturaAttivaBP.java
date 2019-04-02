@@ -1,5 +1,7 @@
 package it.cnr.contab.docamm00.bp;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -199,7 +201,7 @@ public void create(it.cnr.jada.action.ActionContext context)
 		try {
 			Fattura_attivaBulk fattura = (Fattura_attivaBulk) getModel();
 			int crudStatus = fattura.getCrudStatus();
-			if (fattura.isDocumentoFatturazioneElettronica()) {
+			if (fattura != null && fattura.isDocumentoFatturazioneElettronica() && isRistampaFatturaElettronicaButtonHidden()) {
 				SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(
 						context.getUserContext(),
 						fattura
@@ -532,6 +534,12 @@ public boolean isVisualizzaDocumentoFatturaElettronicaButtonHidden() {
 	Fattura_attivaBulk fa = (Fattura_attivaBulk)getModel();
 	return (fa == null || fa.getPg_fattura_attiva() == null || !fa.isDocumentoFatturazioneElettronica());
 }
+public boolean isRistampaFatturaElettronicaButtonHidden() {
+
+	Fattura_attivaBulk fa = (Fattura_attivaBulk)getModel();
+	return (fa == null || fa.getPg_fattura_attiva() == null || !fa.isDocumentoFatturazioneElettronica() || fa.isFatturaElettronicaAllaFirma() ||  fa.isFatturaElettronicaPredispostaAllaFirma()||  fa.isFatturaElettronicaScartata());
+}
+
 public boolean isVisualizzaXmlFatturaElettronicaButtonHidden() {
 
 	Fattura_attivaBulk fa = (Fattura_attivaBulk)getModel();
@@ -1244,6 +1252,36 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 		}
 		is.close();
 		os.flush();
+	}
+	public void ristampaFatturaElettronica(it.cnr.jada.action.ActionContext context)
+			throws it.cnr.jada.action.BusinessProcessException {
+		try {
+			Fattura_attivaBulk fattura = (Fattura_attivaBulk) getModel();
+			if (fattura != null && fattura.isDocumentoFatturazioneElettronica() && !isRistampaFatturaElettronicaButtonHidden()) {
+				File file = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class).gestioneAllegatiPerFatturazioneElettronica(
+						context.getUserContext(),
+						fattura
+				);
+				if (file != null){
+					((HttpActionContext)context).getResponse().setContentLength((int)file.length());
+					((HttpActionContext)context).getResponse().setContentType("application/pdf");
+					OutputStream os = ((HttpActionContext)context).getResponse().getOutputStream();
+					((HttpActionContext)context).getResponse().setDateHeader("Expires", 0);
+					byte[] buffer = new byte[((HttpActionContext)context).getResponse().getBufferSize()];
+					int buflength;
+					InputStream is = new FileInputStream(file);
+					while ((buflength = is.read(buffer)) > 0) {
+						os.write(buffer,0,buflength);
+					}
+					is.close();
+					os.flush();
+				}
+			}
+		} catch (Exception e) {
+			throw handleException(e);
+		} finally {
+			setUserConfirm(null);
+		}
 	}
 }
 
