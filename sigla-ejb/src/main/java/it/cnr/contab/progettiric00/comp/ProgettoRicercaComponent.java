@@ -1980,10 +1980,14 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    	{
 		    		List<ObbligazioneBulk> listObb = (List<ObbligazioneBulk>)prgHome.findObbligazioniAssociate(progetto.getPg_progetto(), annoFrom.intValue());
 
-		    		if (ctrlStato && listObb.stream().count()>0)
-						throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto. "
+		    		if (ctrlStato) {
+		    			listObb.stream().findFirst().ifPresent(el->{
+						throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto "
+		    				   	+ "(Obb: "+el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione() + ")."
 								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
-
+		    			});
+		    		}
+		    		
 		    		if (ctrlDtInizio)
 			    		listObb.stream()
 			    			   .min((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
@@ -2034,12 +2038,16 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    		{
 		    		List<Pdg_variazioneBulk> listVar = (List<Pdg_variazioneBulk>)prgHome.findVariazioniCompetenzaAssociate(progetto.getPg_progetto(), annoFrom.intValue());
 	
-		    		if (ctrlStato && listVar.stream().count()>0)
-						throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di competenza emesse sul progetto. "
-								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
-
+		    		if (ctrlStato) {
+		    			listVar.stream().filter(el->!el.isAnnullata()).findFirst().ifPresent(el->{
+							throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di competenza emesse sul progetto. ("
+									+"Var. "+el.getEsercizio()+"/"+el.getPg_variazione_pdg()+"). "
+									+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+		    			});
+		    		}
 		    		if (ctrlDtInizio)
 						listVar.stream()
+							   .filter(el->!el.isAnnullata())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 			    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
@@ -2056,6 +2064,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 		    		if (ctrlDtFine)
 			    		listVar.stream()
+			    			   .filter(el->!el.isAnnullata())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 				 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
@@ -2075,12 +2084,17 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    		{
 		    		List<Var_stanz_resBulk> listVar = (List<Var_stanz_resBulk>)prgHome.findVariazioniResiduoAssociate(progetto.getPg_progetto(),annoFrom.intValue());
 	
-		    		if (ctrlStato && listVar.stream().count()>0)
-						throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di residuo emesse sul progetto. "
-								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+		    		if (ctrlStato) {
+		    			listVar.stream().filter(el->!el.isAnnullata()).findFirst().ifPresent(el->{
+							throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di residuo emesse sul progetto ("
+									+"Var. "+el.getEsercizio()+"/"+el.getPg_variazione()+"). "
+									+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+		    			});
+		    		}
 					
 		    		if (ctrlDtInizio)
 						listVar.stream()
+  						       .filter(el->!el.isAnnullata())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 			    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
@@ -2097,6 +2111,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 		    		if (ctrlDtFine)
 			    		listVar.stream()
+ 					           .filter(el->!el.isAnnullata())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 				 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
