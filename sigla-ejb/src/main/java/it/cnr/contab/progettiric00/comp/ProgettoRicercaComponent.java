@@ -1983,7 +1983,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		if (ctrlStato) {
 		    			listObb.stream().findFirst().ifPresent(el->{
 						throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto "
-		    				   	+ "(Obb: "+el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione() + ")."
+		    				   	+ "(Obb: "+el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione() + "). "
 								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
 		    			});
 		    		}
