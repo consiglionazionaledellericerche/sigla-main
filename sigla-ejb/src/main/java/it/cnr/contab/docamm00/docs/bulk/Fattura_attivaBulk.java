@@ -366,6 +366,20 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return false;
 	}
 
+	public Boolean isFatturaElettronicaPredispostaAllaFirma() {
+		if (FATT_ELETT_PREDISPOSTA_FIRMA.equals(getStatoInvioSdi())){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean isFatturaElettronicaScartata() {
+		if (FATT_ELETT_SCARTATA_DA_SDI.equals(getStatoInvioSdi())){
+			return true;
+		}
+		return false;
+	}
+
 	public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
 
 		if (dettaglio != null && ((OggettoBulk)dettaglio).getCrudStatus() == OggettoBulk.NORMAL) {
