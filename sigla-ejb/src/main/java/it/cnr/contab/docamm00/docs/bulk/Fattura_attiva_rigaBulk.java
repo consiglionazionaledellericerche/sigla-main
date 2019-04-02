@@ -1,5 +1,12 @@
 package it.cnr.contab.docamm00.docs.bulk;
 
+import java.util.Calendar;
+import java.util.Dictionary;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * Insert the type's description here.
  * Creation date: (9/5/2001 5:02:18 PM)
@@ -9,16 +16,8 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.TariffarioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.util.RemoveAccent;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-
-import java.util.Calendar;
-import java.util.Dictionary;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value=Include.NON_NULL)
 public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase implements IDocumentoAmministrativoRigaBulk, Voidable {
 
@@ -93,14 +92,6 @@ public abstract class Fattura_attiva_rigaBulk extends Fattura_attiva_rigaBase im
 	public boolean isROBeneServizioSearchTool() {
 
 		return 	!STATO_INIZIALE.equals(getStato_cofi());
-	}
-	public void validate() throws ValidationException {
-
-		if (!RemoveAccent.isOk(getDs_riga_fattura())){
-			throw new ValidationException("La descrizione contienere caratteri speciali non supportati.");
-		}
-
-        super.validate();
 	}
 
 	public void calcolaCampiDiRiga() {
