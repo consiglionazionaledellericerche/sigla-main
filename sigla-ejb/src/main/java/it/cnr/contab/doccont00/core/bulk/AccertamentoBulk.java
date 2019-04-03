@@ -1187,8 +1187,9 @@ public void setCd_cds(java.lang.String cd_cds) {
 	public void setAnniResidui(it.cnr.jada.util.OrderedHashtable hashtable) {
 		anniResidui = hashtable;
 	}
-	public void caricaAnniResidui(ActionContext actioncontext) { 
-		for (int i=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-1;i>=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-10;i--)
+	public void caricaAnniResidui(ActionContext actioncontext) {
+		final int esercizio = CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue();
+		for (int i = esercizio -1; i>= esercizio -20; i--)
 			anniResidui.put(new Integer(i), new Integer(i));
 	}
 	/**
