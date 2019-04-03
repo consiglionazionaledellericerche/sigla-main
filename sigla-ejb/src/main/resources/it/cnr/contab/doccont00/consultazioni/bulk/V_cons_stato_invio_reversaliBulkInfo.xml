@@ -265,4 +265,60 @@
             label="Errore"/>
     <columnFieldProperty
             name="contabile"/>
+    <columnSet name="elencoNonAcquisiti">
+        <columnFieldProperty
+                name="cd_cds"/>
+        <columnFieldProperty
+                name="esercizio"/>
+        <columnFieldProperty
+                name="pg_reversale"/>
+        <columnFieldProperty
+                name="cd_unita_organizzativa"/>
+        <columnFieldProperty
+                name="ti_reversale"/>
+        <columnFieldProperty
+                name="ds_reversale"/>
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="im_reversale"/>
+        <columnFieldProperty
+                name="im_incassato"/>
+        <columnFieldProperty
+                name="dt_emis_rev"/>
+        <columnFieldProperty
+                name="dt_annullamento"/>
+        <columnFieldProperty
+                name="dt_incasso"/>
+
+        <columnFieldProperty
+                name="pg_distinta"
+                headerLabel="Distinta"
+                label="Numero"/>
+        <columnFieldProperty
+                name="pg_distinta_def"
+                headerLabel="Distinta"
+                label="Numero def."/>
+        <columnFieldProperty
+                name="dt_emis_dis"
+                headerLabel="Distinta"
+                label="Data emiss."/>
+        <columnFieldProperty
+                name="dt_invio_dis"
+                headerLabel="Distinta"
+                label="Data invio"/>
+
+        <columnFieldProperty
+                name="esitoOperazione"
+                headerLabel="SIOPE+"
+                label="Esito"/>
+        <columnFieldProperty
+                name="dtOraEsitoOperazione"
+                headerLabel="SIOPE+"
+                label="Data esito"/>
+        <columnFieldProperty
+                name="erroreSiopePlus"
+                headerLabel="SIOPE+"
+                label="Errore"/>
+    </columnSet>
 </bulkInfo>
