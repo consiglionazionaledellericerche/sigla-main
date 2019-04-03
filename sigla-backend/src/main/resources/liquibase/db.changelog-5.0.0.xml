@@ -1841,4 +1841,82 @@ TRASPORTO_AEREO"/>
         <modifyDataType tableName="pdg_variazione" columnName="id_bando" newDataType="varchar(30)"/>
     </changeSet>
 
+    <changeSet author="marco.spasiano" id="accessi_documenti_non_acquisiti">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSDOCAMMMANNONAC"/>
+            <column name="ti_accesso" type="CHAR(1)"  value="D" />
+            <column name="ds_accesso" type="VARCHAR(200)" value="Mandati non acquisiti"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSDOCAMMMANNONAC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsMandatiNonAcquisitiBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.DOC.CON.MAN.MANNONA"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Mandati non acquisiti"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSDOCAMMMANNONAC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsMandatiNonAcquisitiBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="100"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="A"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.DOC.CON.MAN"/>
+            <column name="url_icona" type="VARCHAR(200)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSDOCAMMREVNONAC"/>
+            <column name="ti_accesso" type="CHAR(1)"  value="D" />
+            <column name="ds_accesso" type="VARCHAR(200)" value="Reversali non acquisite"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSDOCAMMREVNONAC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsReversaliNonAcquisitiBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.DOC.CON.REV.REVNONA"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Reversali non acquisite"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CONSDOCAMMREVNONAC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsReversaliNonAcquisitiBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="100"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="A"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.DOC.CON.REV"/>
+            <column name="url_icona" type="VARCHAR(200)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
