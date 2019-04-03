@@ -230,6 +230,7 @@
 	</action>
 	<action path="/ConsAccertamentiAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
+	<action path="/ConsNonAcquisitiAction" actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsNonAcquisitiAction"/>
 
 	<businessProcess name="ConsObbligazioniBP"
 		className="it.cnr.contab.consultazioni.bp.ConsObbligazioniBP">
@@ -745,6 +746,28 @@
 		<init-param name="defaultAction" value="ConsStatoInvioAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
+
+
+	<businessProcess name="ConsMandatiNonAcquisitiBP"
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsNonAcquisitiBP">
+		<forward name="default" path="/util/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_mandatiBulk" />
+		<init-param name="searchResultColumnSet" value="elencoNonAcquisiti"/>
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsNonAcquisitiAction" />
+	</businessProcess>
+
+	<businessProcess name="ConsReversaliNonAcquisitiBP"
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsNonAcquisitiBP">
+		<forward name="default" path="/util/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBulk" />
+		<init-param name="searchResultColumnSet" value="elencoNonAcquisiti"/>
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsNonAcquisitiAction" />
+	</businessProcess>
+
 
 	<businessProcess name="ConsPDGGAreaSpeBP"
 		className="it.cnr.contab.prevent01.consultazioni.bp.ConsPDGGAreaSpeBP">

@@ -409,7 +409,7 @@ public class ToDoResource implements ToDoLocal {
                     }
                     break;
                 }
-                case CRUDDistintaCassiereBP: {
+                case ConsMandatiNonAcquisitiBP: {
                     V_mandato_reversaleBulk mandatoReversaleBulk = new V_mandato_reversaleBulk();
                     mandatoReversaleBulk.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_MAN);
                     mandatoReversaleBulk.setEsercizio(CNRUserContext.getEsercizio(userContext));
@@ -437,7 +437,7 @@ public class ToDoResource implements ToDoLocal {
                                     final int i = iterator.countElements();
                                     if (i > 0) {
                                         result.add(new ToDoDetail(
-                                                "0.DOC.CON.MAN.INIOMAN",
+                                                "0.DOC.CON.MAN.MANNONA",
                                                 "fa fa-fw fa-university text-danger",
                                                 "SIOPE+",
                                                 firstLabel(i),
@@ -450,7 +450,20 @@ public class ToDoResource implements ToDoLocal {
                                     iterator.ejbRemove();
                                 }
                             });
+                    break;
+                }
+                case ConsReversaliNonAcquisitiBP: {
+                    V_mandato_reversaleBulk mandatoReversaleBulk = new V_mandato_reversaleBulk();
                     mandatoReversaleBulk.setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_REV);
+                    mandatoReversaleBulk.setEsercizio(CNRUserContext.getEsercizio(userContext));
+                    mandatoReversaleBulk.setEsitoOperazione(EsitoOperazione.NON_ACQUISITO.value());
+                    mandatoReversaleBulk.setStato(MandatoBulk.STATO_MANDATO_EMESSO);
+                    mandatoReversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+                    if (!configurazione_cnrComponentSession.getVal01(userContext, new Integer(0), null,
+                            "UO_SPECIALE", "UO_DISTINTA_TUTTA_SAC").equals(
+                            CNRUserContext.getCd_unita_organizzativa(userContext))) {
+                        mandatoReversaleBulk.setCd_unita_organizzativa(CNRUserContext.getCd_unita_organizzativa(userContext));
+                    }
                     BulkLoaderIterator remoteIteratorReversale =
                             Optional.ofNullable(crudComponentSession.cerca(
                                     userContext,
@@ -466,7 +479,7 @@ public class ToDoResource implements ToDoLocal {
                                     final int i = iterator.countElements();
                                     if (i > 0) {
                                         result.add(new ToDoDetail(
-                                                "0.DOC.CON.REV.INIOREV",
+                                                "0.DOC.CON.REV.REVNONA",
                                                 "fa fa-fw fa-university text-danger",
                                                 "SIOPE+",
                                                 firstLabel(i),
