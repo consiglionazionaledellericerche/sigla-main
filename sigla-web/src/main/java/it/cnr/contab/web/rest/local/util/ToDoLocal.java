@@ -19,7 +19,8 @@ public interface ToDoLocal {
         CRUDFatturaPassivaElettronicaBP("AMMFATTURDOCELEPASS"),
         CRUDMissioneBP("AMMMISSIOCOREMISSIOM"),
         SelezionatoreDocAmmFatturazioneElettronica("AMMDOCFATTELETTVM"),
-        CRUDDistintaCassiereBP("DOCINTCASCOREDISCASF");
+        ConsMandatiNonAcquisitiBP("CONSDOCAMMMANNONAC"),
+        ConsReversaliNonAcquisitiBP("CONSDOCAMMREVNONAC");
 
         private final String cdAccesso;
 
