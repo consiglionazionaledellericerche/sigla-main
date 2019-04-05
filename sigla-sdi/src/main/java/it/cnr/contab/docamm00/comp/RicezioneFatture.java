@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -41,6 +42,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
+import it.cnr.jada.comp.CRUDDuplicateKeyException;
 import it.gov.fatturapa.EsitoRicezioneType;
 import it.gov.fatturapa.FileSdIConMetadatiType;
 import it.gov.fatturapa.FileSdIType;
@@ -876,8 +878,18 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
         try {
             docTrasmissione = (DocumentoEleTrasmissioneBulk) component.creaDocumento(userContext, docTrasmissione);
             component.completaDocumento(userContext, docTrasmissione);
+        } catch (CRUDDuplicateKeyException _ex) {
+            LOGGER.warn("WS della ricezione delle fatture fattura gia presente !Identificativo: {}", identificativoSdI);
+            try {
+                DocumentoEleTrasmissioneBulk doc = (DocumentoEleTrasmissioneBulk) component.findByPrimaryKey(userContext, docTrasmissione);
+                doc.setToBeUpdated();
+                doc.setCmisNodeRef(storeService.getStorageObjectByPath(path).getKey());
+                component.modificaConBulk(userContext, doc);
+            } catch (ComponentException|RemoteException e) {
+                LOGGER.error("Errore nel WS della ricezione delle fatture!Identificativo:{}",identificativoSdI, e);
+            }
         } catch (Exception e) {
-            LOGGER.error("Errore nel WS della ricezione delle fatture!Identificativo:" + identificativoSdI, e);
+            LOGGER.error("Errore nel WS della ricezione delle fatture!Identificativo:{}",identificativoSdI, e);
             java.io.StringWriter sw = new java.io.StringWriter();
             e.printStackTrace(new java.io.PrintWriter(sw));
             SendMail.sendErrorMail("Errore nel WS della ricezione delle fatture!Identificativo:" + identificativoSdI, sw.toString());
