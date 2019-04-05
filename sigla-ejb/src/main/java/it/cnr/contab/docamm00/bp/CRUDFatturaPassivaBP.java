@@ -1512,6 +1512,15 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
         return null;
     }
 
+    public String getNomeFileFirmato() {
+        return Optional.ofNullable(getModel())
+                    .filter(Fattura_passivaBulk.class::isInstance)
+                    .map(Fattura_passivaBulk.class::cast)
+                    .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()))
+                    .map(DocumentoEleTestataBulk::getNomeFileFirmato)
+                    .orElse(null);
+    }
+
     public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
         StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
         DocumentoEleAllegatiBulk allegato = (DocumentoEleAllegatiBulk) getCrudDocEleAllegatiColl().getModel();
