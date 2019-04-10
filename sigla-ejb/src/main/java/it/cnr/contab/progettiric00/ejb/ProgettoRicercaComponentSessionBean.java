@@ -244,6 +244,24 @@ public void validaCancellazioneVoceAssociataPianoEconomico(it.cnr.jada.UserConte
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
 	}
-}	
+}
+public it.cnr.contab.progettiric00.core.bulk.ProgettoBulk initializePianoEconomico(it.cnr.jada.UserContext param0,it.cnr.contab.progettiric00.core.bulk.ProgettoBulk param1, boolean param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.progettiric00.core.bulk.ProgettoBulk result = ((ProgettoRicercaComponent)componentObj).initializePianoEconomico(param0,param1,param2);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 }
 

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoKey" >
+	<defaultColumnMap
+		tableName="V_SALDI_VOCE_PROGETTO">
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="esercizio"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" 
+			primary="true" />			
+		<columnMapping
+			columnName="ESERCIZIO_VOCE"
+			propertyName="esercizio_voce"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false" 
+			primary="true" />
+		<columnMapping
+			columnName="TI_GESTIONE"
+			propertyName="ti_gestione"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_APPARTENENZA"
+			propertyName="ti_appartenenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_ELEMENTO_VOCE"
+			propertyName="cd_elemento_voce"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="pg_progetto" 
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio" 
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_voce" 
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_gestione" 
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_appartenenza" 
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_elemento_voce" 
+		partOfOid="true" />
+</SQLPersistentInfo>
