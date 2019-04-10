@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -18,6 +20,8 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
+import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
@@ -66,11 +70,20 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 		};
 	};
 
-	private SimpleDetailCRUDController pianoEconomicoSummaryVoce = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoSummaryVoce", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryVoce", this);
-	private SimpleDetailCRUDController pianoEconomicoSummaryAnno = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoSummaryAnno", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryAnno", this);
+	private SimpleDetailCRUDController pianoEconomicoSummaryVoce = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoSummaryVoce", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryVoce", this){
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException ,javax.servlet.ServletException {};
+	};
+	private SimpleDetailCRUDController pianoEconomicoSummaryAnno = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoSummaryAnno", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryAnno", this){
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException ,javax.servlet.ServletException {};
+	};
+	private SimpleDetailCRUDController pianoEconomicoVociBilancioDaAssociare = new SimpleDetailCRUDController( "VociMovimentateNonAssociate", V_saldi_voce_progettoBulk.class, "vociMovimentateNonAssociate", this); 
 
 	protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAnnoCorrente = new RimodulaProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAnnoCorrente);
 	protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAltriAnni = new RimodulaProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAltriAnni", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAltriAnni);
+
+	public SimpleDetailCRUDController getPianoEconomicoVociBilancioDaAssociare() {
+		return pianoEconomicoVociBilancioDaAssociare;
+	}
 
 	/**
 	 * RimodulaProgettiRicercaBP constructor comment.
@@ -119,7 +132,7 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		oggettobulk = super.initializeModelForEdit(actioncontext, oggettobulk);
 		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)oggettobulk;
-		initializeProgetto(actioncontext, progettoRimodulazione, progettoRimodulazione.getProgetto());
+		initializeProgetto(actioncontext, progettoRimodulazione);
 		return progettoRimodulazione;
 	}
 	
@@ -175,6 +188,9 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 			
 		if (!progetto.getAnnoInizioOf().equals(progetto.getEsercizio()) || !progetto.getAnnoFineOf().equals(progetto.getEsercizio()))
 			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/rimodula_progetto_piano_economico_altri_anni.jsp" });
+
+		if (!progettoRimodulazione.getVociMovimentateNonAssociate().isEmpty())
+			hash.put(i++, new String[]{ "tabProgettoVociMovimentateNonAssociate","Voci Movimentate da Associare","/progettiric00/rimodula_progetto_piano_economico_voci_da_associare.jsp" });
 
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++) {
@@ -232,9 +248,11 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 		return crudPianoEconomicoVoceBilancioAltriAnni;
 	}
 	
-	public void initializeProgetto(ActionContext actioncontext, Progetto_rimodulazioneBulk rimodulazione, ProgettoBulk progetto) throws BusinessProcessException {
+	public void initializeProgetto(ActionContext actioncontext, Progetto_rimodulazioneBulk rimodulazione) throws BusinessProcessException {
 		try {
-			progetto = Utility.createProgettoRicercaComponentSession().initializePianoEconomico(actioncontext.getUserContext(), progetto, true);
+			if (rimodulazione.getProgetto()==null) return;
+
+			final ProgettoBulk progetto = Utility.createProgettoRicercaComponentSession().initializePianoEconomico(actioncontext.getUserContext(), rimodulazione.getProgetto(), true);
 
 			rimodulazione.setProgetto(progetto);
 			rimodulazione.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>());
@@ -404,7 +422,8 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 							newPpeVoce.setDetailRimodulatoAggiunto(Boolean.TRUE);
 							newPpeVoce.setImVarFinanziatoRimodulato(rimVoce.getImVarSpesaFinanziato());
 							newPpeVoce.setImVarCofinanziatoRimodulato(rimVoce.getImVarSpesaCofinanziato());
-							
+
+							initializeAssProgettoPiaecoVoce(actioncontext,newPpeVoce,progetto.getVociBilancioMovimentate());
 							ppe.addToVociBilancioAssociate(newPpeVoce);
 						}
 					}
@@ -413,4 +432,68 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 			throw new BusinessProcessException(e);
 		}
 	}
+	
+	public void initializeAssProgettoPiaecoVoce(ActionContext actioncontext, Ass_progetto_piaeco_voceBulk assProgettoPiaecoVoce) {
+		ProgettoBulk progetto = ((Progetto_rimodulazioneBulk)this.getModel()).getProgetto();
+		initializeAssProgettoPiaecoVoce(actioncontext,assProgettoPiaecoVoce,progetto.getVociBilancioMovimentate());
+	}
+
+	private void initializeAssProgettoPiaecoVoce(ActionContext actioncontext, Ass_progetto_piaeco_voceBulk assProgettoPiaecoVoce, BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate) {
+		V_saldi_voce_progettoBulk saldo = 
+				vociBilancioMovimentate.stream()
+						.filter(el->el.getEsercizio_voce().equals(assProgettoPiaecoVoce.getEsercizio_voce()))
+						.filter(el->el.getTi_appartenenza().equals(assProgettoPiaecoVoce.getTi_appartenenza()))
+						.filter(el->el.getTi_gestione().equals(assProgettoPiaecoVoce.getTi_gestione()))
+						.filter(el->el.getCd_elemento_voce().equals(assProgettoPiaecoVoce.getCd_elemento_voce()))
+						.findFirst()
+						.orElseGet(()->{
+							V_saldi_voce_progettoBulk saldoNew = new V_saldi_voce_progettoBulk();
+							saldoNew.setEsercizio_voce(assProgettoPiaecoVoce.getEsercizio_voce());
+							saldoNew.setTi_appartenenza(assProgettoPiaecoVoce.getTi_appartenenza());
+							saldoNew.setTi_gestione(assProgettoPiaecoVoce.getTi_gestione());
+							saldoNew.setCd_elemento_voce(assProgettoPiaecoVoce.getCd_elemento_voce());
+
+							saldoNew.setStanziamentoFin(BigDecimal.ZERO);
+							saldoNew.setVariapiuFin(BigDecimal.ZERO);
+							saldoNew.setVariamenoFin(BigDecimal.ZERO);
+							saldoNew.setTrasfpiuFin(BigDecimal.ZERO);
+							saldoNew.setTrasfmenoFin(BigDecimal.ZERO);
+
+							saldoNew.setStanziamentoCofin(BigDecimal.ZERO);
+							saldoNew.setVariapiuCofin(BigDecimal.ZERO);
+							saldoNew.setVariamenoCofin(BigDecimal.ZERO);
+							saldoNew.setTrasfpiuCofin(BigDecimal.ZERO);
+							saldoNew.setTrasfmenoCofin(BigDecimal.ZERO);
+							
+							saldoNew.setImpaccFin(BigDecimal.ZERO);
+							saldoNew.setImpaccCofin(BigDecimal.ZERO);
+							saldoNew.setManrisFin(BigDecimal.ZERO);
+							saldoNew.setManrisCofin(BigDecimal.ZERO);
+							return saldoNew;
+						});
+		if (Elemento_voceHome.GESTIONE_ENTRATE.equals(assProgettoPiaecoVoce.getTi_gestione()))
+			assProgettoPiaecoVoce.setSaldoEntrata(saldo);
+		else
+			assProgettoPiaecoVoce.setSaldoSpesa(saldo);
+	}
+	
+	public void caricaVociPianoEconomicoAssociate(ActionContext context, Progetto_piano_economicoBulk progettoPiaeco) throws BusinessProcessException {
+		try {
+			if (Optional.ofNullable(progettoPiaeco.getVoce_piano_economico()).map(Voce_piano_economico_prgBulk::getFl_link_vocibil_associate).orElse(Boolean.FALSE)) {
+				List<Elemento_voceBulk> listVoci = Utility.createProgettoRicercaComponentSession().find(context.getUserContext(), Elemento_voceBulk.class, "findElementoVociAssociate", progettoPiaeco);
+				progettoPiaeco.setVociBilancioAssociate(new BulkList<>());
+				ProgettoBulk progetto = ((Progetto_rimodulazioneBulk)this.getModel()).getProgetto();
+
+				listVoci.stream().forEach(el->{
+					Ass_progetto_piaeco_voceBulk dett = new Ass_progetto_piaeco_voceBulk();
+					dett.setElemento_voce(el);
+					dett.setDetailRimodulatoAggiunto(Boolean.TRUE);
+					initializeAssProgettoPiaecoVoce(context,dett,progetto.getVociBilancioMovimentate());
+					progettoPiaeco.addToVociBilancioAssociate(dett);
+				});
+			}
+	    } catch (ComponentException | RemoteException e) {
+	        throw handleException(e);
+	    }
+	}	
 }

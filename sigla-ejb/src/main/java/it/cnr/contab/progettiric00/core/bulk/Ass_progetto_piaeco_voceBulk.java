@@ -14,8 +14,12 @@ public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 	
 	private boolean detailRimodulatoEliminato;
 	private boolean detailRimodulatoAggiunto;
+
 	private java.math.BigDecimal imVarFinanziatoRimodulato;
 	private java.math.BigDecimal imVarCofinanziatoRimodulato;	
+	
+	private java.math.BigDecimal imVarFinanziatoRimodulatoPreDelete;
+	private java.math.BigDecimal imVarCofinanziatoRimodulatoPreDelete;
 
 	public Ass_progetto_piaeco_voceBulk() {
 		super();
@@ -192,6 +196,27 @@ public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 		this.imVarCofinanziatoRimodulato = imVarCofinanziatoRimodulato;
 	}
 	
+	public java.math.BigDecimal getImTotaleVarRimodulato() {
+		return Optional.ofNullable(getImVarFinanziatoRimodulato()).orElse(BigDecimal.ZERO)
+				.add(Optional.ofNullable(getImVarCofinanziatoRimodulato()).orElse(BigDecimal.ZERO));
+	}
+	
+	public java.math.BigDecimal getImVarFinanziatoRimodulatoPreDelete() {
+		return imVarFinanziatoRimodulatoPreDelete;
+	}
+
+	public void setImVarFinanziatoRimodulatoPreDelete(java.math.BigDecimal imVarFinanziatoRimodulatoPreDelete) {
+		this.imVarFinanziatoRimodulatoPreDelete = imVarFinanziatoRimodulatoPreDelete;
+	}
+
+	public java.math.BigDecimal getImVarCofinanziatoRimodulatoPreDelete() {
+		return imVarCofinanziatoRimodulatoPreDelete;
+	}
+
+	public void setImVarCofinanziatoRimodulatoPreDelete(java.math.BigDecimal imVarCofinanziatoRimodulatoPreDelete) {
+		this.imVarCofinanziatoRimodulatoPreDelete = imVarCofinanziatoRimodulatoPreDelete;
+	}
+
 	public boolean isDetailRimodulato() {
 		return this.isDetailRimodulatoEliminato() || this.isDetailRimodulatoAggiunto() ||
 				Optional.ofNullable(this.getImVarFinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0 ||
