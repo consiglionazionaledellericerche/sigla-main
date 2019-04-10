@@ -1058,8 +1058,10 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 						saldoSpesa.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						saldoSpesa.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						saldoSpesa.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setImpacc(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setManris(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setImpaccFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpaccFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setManrisFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManrisFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setImpaccCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpaccCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setManrisCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManrisCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						
 						Ass_progetto_piaeco_voceBulk dettSpesa = new Ass_progetto_piaeco_voceBulk();
 						dettSpesa.setSaldoSpesa(saldoSpesa);
@@ -1069,18 +1071,20 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 						List<V_saldi_piano_econom_progettoBulk> listSaldiEntrata = resultByVoce.get(vocePiano).stream()
 								.filter(el->Optional.ofNullable(el.getSaldoEntrata()).isPresent())
 								.map(Progetto_piano_economicoBulk::getSaldoEntrata).collect(Collectors.toList());
-						saldoEntrata.setStanziamentoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setStanziamentoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setImpacc(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setManris(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setStanziamentoFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariapiuFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariamenoFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfpiuFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfmenoFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setStanziamentoCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariapiuCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariamenoCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfpiuCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfmenoCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setImpaccFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpaccFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setManrisFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManrisFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setImpaccCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpaccCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setManrisCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManrisCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 
 						Ass_progetto_piaeco_voceBulk dettEntrata = new Ass_progetto_piaeco_voceBulk();
 						dettEntrata.setSaldoEntrata(saldoEntrata);
@@ -1121,8 +1125,10 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 						saldoSpesa.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						saldoSpesa.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						saldoSpesa.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setImpacc(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setManris(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setImpaccFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpaccFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setManrisFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManrisFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setImpaccCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpaccCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoSpesa.setManrisCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManrisCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 
 						Ass_progetto_piaeco_voceBulk dettSpesa = new Ass_progetto_piaeco_voceBulk();
 						dettSpesa.setSaldoSpesa(saldoSpesa);
@@ -1132,18 +1138,20 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 						List<V_saldi_piano_econom_progettoBulk> listSaldiEntrata = resultByEsercizio.get(esercizioPiano).stream()
 								.filter(el->Optional.ofNullable(el.getSaldoEntrata()).isPresent())
 								.map(Progetto_piano_economicoBulk::getSaldoEntrata).collect(Collectors.toList());
-						saldoEntrata.setStanziamentoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setStanziamentoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setImpacc(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setManris(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setStanziamentoFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariapiuFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariamenoFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfpiuFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfmenoFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setStanziamentoCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariapiuCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setVariamenoCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfpiuCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setTrasfmenoCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setImpaccFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpaccFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setManrisFin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManrisFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setImpaccCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpaccCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						saldoEntrata.setManrisCofin(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManrisCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 
 						Ass_progetto_piaeco_voceBulk dettEntrata = new Ass_progetto_piaeco_voceBulk();
 						dettEntrata.setSaldoEntrata(saldoEntrata);

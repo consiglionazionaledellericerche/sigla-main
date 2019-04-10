@@ -72,6 +72,7 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	public V_saldi_piano_econom_progettoBulk getSaldoEntrata() {
 		V_saldi_piano_econom_progettoBulk saldoEntrata = new V_saldi_piano_econom_progettoBulk();
 		Supplier<Stream<V_saldi_voce_progettoBulk>> saldi = () -> this.getVociBilancioAssociate().stream()
+													  .filter(el->!el.isDetailRimodulatoEliminato())
 													  .filter(el->Optional.ofNullable(el.getSaldoEntrata()).isPresent())
 													  .flatMap(el->Stream.of(el.getSaldoEntrata()));
 		saldoEntrata.setStanziamentoFin(saldi.get().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
@@ -86,15 +87,18 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		saldoEntrata.setTrasfpiuCofin(saldi.get().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 		saldoEntrata.setTrasfmenoCofin(saldi.get().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 		
-		saldoEntrata.setImpacc(saldi.get().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
-		saldoEntrata.setManris(saldi.get().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+		saldoEntrata.setImpaccFin(saldi.get().map(el->Optional.ofNullable(el.getImpaccFin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+		saldoEntrata.setImpaccCofin(saldi.get().map(el->Optional.ofNullable(el.getImpaccCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+		saldoEntrata.setManrisFin(saldi.get().map(el->Optional.ofNullable(el.getManrisFin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+		saldoEntrata.setManrisCofin(saldi.get().map(el->Optional.ofNullable(el.getManrisCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 		return saldoEntrata;
 	}
 	
 	public V_saldi_piano_econom_progettoBulk getSaldoSpesa() {
 		V_saldi_piano_econom_progettoBulk saldoSpesa = new V_saldi_piano_econom_progettoBulk();
 		Supplier<Stream<V_saldi_voce_progettoBulk>> saldi = () -> this.getVociBilancioAssociate().stream()
-													  .filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
+													  .filter(el->!el.isDetailRimodulatoEliminato())
+				  									  .filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
 													  .flatMap(el->Stream.of(el.getSaldoSpesa()));
 		saldoSpesa.setStanziamentoFin(saldi.get().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 		saldoSpesa.setVariapiuFin(saldi.get().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
@@ -108,9 +112,10 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		saldoSpesa.setTrasfpiuCofin(saldi.get().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 		saldoSpesa.setTrasfmenoCofin(saldi.get().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 		
-		saldoSpesa.setImpacc(saldi.get().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
-		saldoSpesa.setManris(saldi.get().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
-
+		saldoSpesa.setImpaccFin(saldi.get().map(el->Optional.ofNullable(el.getImpaccFin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+		saldoSpesa.setImpaccCofin(saldi.get().map(el->Optional.ofNullable(el.getImpaccCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+		saldoSpesa.setManrisFin(saldi.get().map(el->Optional.ofNullable(el.getManrisFin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+		saldoSpesa.setManrisCofin(saldi.get().map(el->Optional.ofNullable(el.getManrisCofin()).orElse(BigDecimal.ZERO)).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 		return saldoSpesa;
 	}
 	
@@ -238,15 +243,17 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	}
 	
 	public boolean isDetailRimodulato(){
-		return this.getIm_spesa_finanziato().compareTo(this.getImSpesaFinanziatoRimodulato())!=0 ||
-				this.getIm_spesa_cofinanziato().compareTo(this.getImSpesaCofinanziatoRimodulato())!=0;
+		return Optional.ofNullable(this.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)
+				.compareTo(Optional.ofNullable(this.getImSpesaFinanziatoRimodulato()).orElse(BigDecimal.ZERO))!=0 ||
+				Optional.ofNullable(this.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)
+				.compareTo(Optional.ofNullable(this.getImSpesaCofinanziatoRimodulato()).orElse(BigDecimal.ZERO))!=0;
 				
 	}
 
 	public boolean isDetailRimodulatoEliminato(){
 		return this.isDetailRimodulato() && 
-			   this.getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0 &&
-  		       this.getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0;
+				Optional.ofNullable(this.getImSpesaFinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==0 &&
+				Optional.ofNullable(this.getImSpesaCofinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==0;
 	}
 
 	public java.math.BigDecimal getImSpesaFinanziatoRimodulatoPreDelete() {
