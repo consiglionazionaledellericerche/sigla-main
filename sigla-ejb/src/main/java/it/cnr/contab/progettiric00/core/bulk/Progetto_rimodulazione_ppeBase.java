@@ -1,0 +1,46 @@
+package it.cnr.contab.progettiric00.core.bulk;
+
+import it.cnr.jada.persistency.Keyed;
+
+public class Progetto_rimodulazione_ppeBase extends Progetto_rimodulazione_ppeKey implements Keyed {
+	// IM_VAR_ENTRATA DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imVarEntrata;
+
+	// IM_VAR_SPESA_FINANZIATO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imVarSpesaFinanziato;
+
+	// IM_VAR_SPESA_COFINANZIATO DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal imVarSpesaCofinanziato;
+
+	public Progetto_rimodulazione_ppeBase() {
+		super();
+	}
+	
+	public Progetto_rimodulazione_ppeBase(java.lang.Integer pg_progetto, java.lang.Integer pg_rimodulazione, java.lang.String cd_unita_organizzativa, java.lang.String cd_voce_piano, java.lang.Integer esercizio_piano) {
+		super(pg_progetto, pg_rimodulazione, cd_unita_organizzativa, cd_voce_piano, esercizio_piano);
+	}
+	
+	public java.math.BigDecimal getImVarEntrata() {
+		return imVarEntrata;
+	}
+
+	public void setImVarEntrata(java.math.BigDecimal imVarEntrata) {
+		this.imVarEntrata = imVarEntrata;
+	}
+
+	public java.math.BigDecimal getImVarSpesaFinanziato() {
+		return imVarSpesaFinanziato;
+	}
+
+	public void setImVarSpesaFinanziato(java.math.BigDecimal imVarSpesaFinanziato) {
+		this.imVarSpesaFinanziato = imVarSpesaFinanziato;
+	}
+
+	public java.math.BigDecimal getImVarSpesaCofinanziato() {
+		return imVarSpesaCofinanziato;
+	}
+
+	public void setImVarSpesaCofinanziato(java.math.BigDecimal imVarSpesaCofinanziato) {
+		this.imVarSpesaCofinanziato = imVarSpesaCofinanziato;
+	}
+}

@@ -1,18 +1,14 @@
 package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
-import java.nio.file.DirectoryStream.Filter;
 import java.rmi.RemoteException;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
@@ -66,5 +62,4 @@ public class ProgettoPianoEconomicoCRUDController extends it.cnr.jada.util.actio
 		pianoEco.setFl_ctrl_disp(Boolean.TRUE);
 		return super.addDetail(oggettobulk);
 	}
-
 }
