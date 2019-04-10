@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd" shortDescription="Situazione assestato piano economico"
+          longDescription="Situazione assestato voce progetto">
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"/>
+	<fieldProperty
+		name="cd_elemento_voce"
+		property="cd_elemento_voce"
+		maxLength="10"
+		inputSize="10"
+		inputType="ROTEXT"		
+		label="Codice Voce" />
+	<fieldProperty
+		name="assestato"
+		property="assestato"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa" />
+	<fieldProperty
+		name="trasferito"
+		property="trasferito"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Trasferito" />
+	<fieldProperty
+		name="impacc"
+		property="impacc"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegni" />
+	<fieldProperty
+		name="manris"
+		property="manris"
+		inputSize="20"
+		maxLength="18"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati" />
+
+	<formFieldProperty name="esercizio"/>
+	<formFieldProperty name="cd_elemento_voce"/>
+	<formFieldProperty name="assestato" />
+	<formFieldProperty name="trasferito" />
+	<formFieldProperty name="impacc" />
+	<formFieldProperty name="manris" />
+	
+   	<columnSet name="voce_bilancio">
+		<columnFieldProperty
+			name="esercizio"/>
+		<columnFieldProperty
+			name="cd_elemento_voce"/>
+		<columnFieldProperty 
+			name="assestato"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="trasferito"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
+			name="impacc"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+		<columnFieldProperty 
+			name="manris"
+			headerLabel="SITUAZIONE SPESA"
+			label="Pagato"/>
+	</columnSet>
+</bulkInfo>

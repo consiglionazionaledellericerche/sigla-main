@@ -1,14 +1,22 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 
 public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 	private Progetto_piano_economicoBulk progetto_piano_economico;
 	private Elemento_voceBulk elemento_voce;
 	
+	private V_saldi_voce_progettoBulk saldoEntrata;
+	private V_saldi_voce_progettoBulk saldoSpesa;
+	
+	private boolean detailRimodulatoEliminato;
+	private boolean detailRimodulatoAggiunto;
+	private java.math.BigDecimal imVarFinanziatoRimodulato;
+	private java.math.BigDecimal imVarCofinanziatoRimodulato;	
+
 	public Ass_progetto_piaeco_voceBulk() {
 		super();
 	}
@@ -134,6 +142,60 @@ public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 	@Override
 	public void setCd_elemento_voce(String cd_elemento_voce) {
 		this.getElemento_voce().setCd_elemento_voce(cd_elemento_voce);
+	}
+
+	public V_saldi_voce_progettoBulk getSaldoEntrata() {
+		return saldoEntrata;
+	}
+
+	public void setSaldoEntrata(V_saldi_voce_progettoBulk saldoEntrata) {
+		this.saldoEntrata = saldoEntrata;
+	}
+
+	public V_saldi_voce_progettoBulk getSaldoSpesa() {
+		return saldoSpesa;
+	}
+
+	public void setSaldoSpesa(V_saldi_voce_progettoBulk saldoSpesa) {
+		this.saldoSpesa = saldoSpesa;
+	}
+	
+	public boolean isDetailRimodulatoEliminato() {
+		return this.detailRimodulatoEliminato;
+	}
+
+	public void setDetailRimodulatoEliminato(boolean detailRimodulatoEliminato) {
+		this.detailRimodulatoEliminato = detailRimodulatoEliminato;
+	}
+	
+	public boolean isDetailRimodulatoAggiunto() {
+		return this.detailRimodulatoAggiunto;
+	}
+
+	public void setDetailRimodulatoAggiunto(boolean detailRimodulatoAggiunto) {
+		this.detailRimodulatoAggiunto = detailRimodulatoAggiunto;
+	}
+
+	public java.math.BigDecimal getImVarFinanziatoRimodulato() {
+		return imVarFinanziatoRimodulato;
+	}
+
+	public void setImVarFinanziatoRimodulato(java.math.BigDecimal imVarFinanziatoRimodulato) {
+		this.imVarFinanziatoRimodulato = imVarFinanziatoRimodulato;
+	}
+
+	public java.math.BigDecimal getImVarCofinanziatoRimodulato() {
+		return imVarCofinanziatoRimodulato;
+	}
+
+	public void setImVarCofinanziatoRimodulato(java.math.BigDecimal imVarCofinanziatoRimodulato) {
+		this.imVarCofinanziatoRimodulato = imVarCofinanziatoRimodulato;
+	}
+	
+	public boolean isDetailRimodulato() {
+		return this.isDetailRimodulatoEliminato() || this.isDetailRimodulatoAggiunto() ||
+				Optional.ofNullable(this.getImVarFinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0 ||
+				Optional.ofNullable(this.getImVarCofinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0;
 	}
 }
 

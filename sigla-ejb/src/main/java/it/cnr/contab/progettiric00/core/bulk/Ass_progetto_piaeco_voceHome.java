@@ -8,9 +8,12 @@ import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
@@ -61,5 +64,4 @@ public class Ass_progetto_piaeco_voceHome extends BulkHome {
 		}
 		return sql;
 	}
-
 }
