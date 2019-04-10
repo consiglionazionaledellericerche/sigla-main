@@ -218,6 +218,8 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 					rimVoce.setVocePianoEconomico(ppeVoce.getProgetto_piano_economico().getVoce_piano_economico());
 					rimVoce.setEsercizio_piano(ppeVoce.getEsercizio_piano());
 					rimVoce.setElementoVoce(ppeVoce.getElemento_voce());
+					rimVoce.setImVarSpesaFinanziato(BigDecimal.ZERO);
+					rimVoce.setImVarSpesaCofinanziato(BigDecimal.ZERO);
 					if (ppeVoce.isDetailRimodulatoEliminato())
 						rimVoce.setTi_operazione(Progetto_rimodulazione_voceBulk.TIPO_OPERAZIONE_ELIMINATO);
 					else {
@@ -366,7 +368,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 
 		Optional<Progetto_rimodulazioneBulk> optProgettoRimodulato = Optional.ofNullable(oggettobulk).filter(Progetto_rimodulazioneBulk.class::isInstance).map(Progetto_rimodulazioneBulk.class::cast);
 		Optional<ProgettoBulk> optProgetto = optProgettoRimodulato.map(Progetto_rimodulazioneBulk::getProgetto);
-		if (optProgetto.get().isPianoEconomicoRequired()) {
+		if (optProgetto.get().isPianoEconomicoRequired() && !optProgettoRimodulato.get().isStatoProvvisorio()) {
 			if (!optProgettoRimodulato.map(Progetto_rimodulazioneBulk::getImTotaleRimodulato).filter(el->el.compareTo(BigDecimal.ZERO)>0).isPresent())
 				throw new ApplicationException("Operazione non possibile! Indicare almeno un importo rimodulato positivo tra quello finanziato e cofinanziato!");
 			if (!optProgettoRimodulato.map(Progetto_rimodulazioneBulk::getImFinanziatoRimodulatoDaRipartire).filter(el->el.compareTo(BigDecimal.ZERO)==0).isPresent())

@@ -2,7 +2,7 @@
 --  DDL for View V_SALDI_VOCE_PROGETTO
 --------------------------------------------------------
 
-CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "ESERCIZIO_VOCE", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "TRASFPIU_FIN", "TRASFMENO_FIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "TRASFPIU_COFIN", "TRASFMENO_COFIN", "IMPACC", "MANRIS") AS 
+CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "ESERCIZIO_VOCE", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "TRASFPIU_FIN", "TRASFMENO_FIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "TRASFPIU_COFIN", "TRASFMENO_COFIN", "IMPACC_FIN", "IMPACC_COFIN", "MANRIS_FIN", "MANRIS_COFIN") AS 
   (SELECT    x.pg_progetto, x.esercizio, 
              x.esercizio_voce, x.ti_appartenenza, x.ti_gestione, x.cd_elemento_voce,
              SUM (x.stanziamento_fin) stanziamento_fin,
@@ -15,8 +15,10 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
              SUM (x.variameno_cofin) variameno_cofin,
              SUM (x.trasfpiu_cofin) trasfpiu_cofin,
              SUM (x.trasfmeno_cofin) trasfmeno_cofin,
-             SUM (x.impacc) impacc,
-             SUM (x.manris) manris
+             SUM (x.impacc_fin) impacc_fin,
+             SUM (x.impacc_cofin) impacc_cofin,
+             SUM (x.manris_fin) manris_fin,
+             SUM (x.manris_cofin) manris_cofin
         FROM (SELECT a.pg_progetto, a.esercizio, 
                      a.esercizio esercizio_voce, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce, 
                      NVL(a.im_spese_gest_decentrata_est, 0) stanziamento_fin, 
@@ -25,7 +27,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
                      NVL (a.im_spese_gest_decentrata_int, 0) stanziamento_cofin, 
                      0 variapiu_cofin, 0 variameno_cofin, 
                      0 trasfpiu_cofin, 0 trasfmeno_cofin,
-                     0 impacc, 0 manris
+                     0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
                 FROM pdg_modulo_spese_gest a
               WHERE NVL (a.im_spese_gest_decentrata_est, 0) != 0
               OR    NVL (a.im_spese_gest_decentrata_int, 0) != 0
@@ -176,7 +178,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
                               ELSE 0
                             END
                      END trasfmeno_cofin,
-                     0 impacc, 0 manris
+                     0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
                 FROM pdg_variazione a,
                      pdg_variazione_riga_gest b,
                      v_linea_attivita_valida c
@@ -270,7 +272,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
                               ELSE 0
                             END
                      END trasfmeno_cofin,
-                     0 impacc, 0 manris
+                     0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
                 FROM pdg_variazione a,
                      pdg_variazione_riga_gest b,
                      v_linea_attivita_valida c
@@ -335,7 +337,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END trasfmeno_cofin,
-                     0 impacc, 0 manris
+                     0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
                 FROM var_stanz_res a,
                      var_stanz_res_riga b,
                      v_linea_attivita_valida c
@@ -383,7 +385,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END trasfmeno_cofin,
-                     0 impacc, 0 manris
+                     0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
                 FROM var_stanz_res a,
                      var_stanz_res_riga b,
                      v_linea_attivita_valida c
@@ -409,19 +411,90 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
                      0 variapiu_cofin, 0 variameno_cofin,
                      0 trasfpiu_cofin, 0 trasfmeno_cofin,
                      CASE
+                        WHEN c.tipo ='FES'
+                        THEN CASE
+                                WHEN a.ESERCIZIO = a.ESERCIZIO_RES
+                                THEN NVL(a.IM_OBBL_ACC_COMP, 0)
+                                ELSE NVL(a.IM_OBBL_RES_IMP, 0) +
+                                     NVL(a.VAR_PIU_OBBL_RES_IMP, 0) - NVL(a.VAR_MENO_OBBL_RES_IMP, 0) +
+                                     NVL(a.VAR_PIU_OBBL_RES_PRO, 0) - NVL(a.VAR_MENO_OBBL_RES_PRO, 0)
+                             END
+                        ELSE 0
+                     END impacc_fin,
+                     CASE
+                        WHEN c.tipo ='FIN'
+                        THEN CASE
+                                WHEN a.ESERCIZIO = a.ESERCIZIO_RES
+                                THEN NVL(a.IM_OBBL_ACC_COMP, 0)
+                                ELSE NVL(a.IM_OBBL_RES_IMP, 0) +
+                                     NVL(a.VAR_PIU_OBBL_RES_IMP, 0) - NVL(a.VAR_MENO_OBBL_RES_IMP, 0) +
+                                     NVL(a.VAR_PIU_OBBL_RES_PRO, 0) - NVL(a.VAR_MENO_OBBL_RES_PRO, 0)
+                             END
+                        ELSE 0
+                     END impacc_cofin,
+                     CASE
+                        WHEN c.tipo ='FES'
+                        THEN NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0) 
+                        ELSE 0
+                     END manris_fin,
+                     CASE
+                        WHEN c.tipo ='FES'
+                        THEN NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0) 
+                        ELSE 0
+                     END manris_cofin
+                FROM voce_f_saldi_cdr_linea a,
+                     v_linea_attivita_valida b,
+                     natura c
+               WHERE a.esercizio = b.esercizio
+                 AND a.cd_centro_responsabilita = b.cd_centro_responsabilita
+                 AND a.cd_linea_attivita = b.cd_linea_attivita
+                 AND a.ti_gestione = 'S'
+                 AND c.cd_natura = b.cd_natura
+                 AND c.cd_natura not in (select val01 from configurazione_cnr e
+                                         where e.esercizio = 0
+                                         and   e.cd_unita_funzionale = '*'
+                                         and   e.cd_chiave_primaria = 'PROGETTI'
+                                         and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')   
+                 AND (NVL(a.IM_OBBL_ACC_COMP, 0)!=0 OR
+                      NVL(a.IM_OBBL_RES_IMP, 0)!=0 OR
+                      NVL(a.VAR_PIU_OBBL_RES_IMP, 0)!=0 OR
+                      NVL(a.VAR_MENO_OBBL_RES_IMP, 0)!=0 OR
+                      NVL(a.VAR_PIU_OBBL_RES_PRO, 0)!=0 OR
+                      NVL(a.VAR_MENO_OBBL_RES_PRO, 0)!=0 OR
+                      NVL(a.IM_MANDATI_REVERSALI_PRO, 0)!=0 OR
+                      NVL(a.IM_MANDATI_REVERSALI_IMP, 0)!=0)
+              UNION ALL
+              SELECT b.pg_progetto, a.esercizio_res, 
+                     a.esercizio_res, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce, 
+                     0 stanziamento_fin, 
+                     0 variapiu_fin, 0 variameno_fin,
+                     0 trasfpiu_fin, 0 trasfmeno_fin,
+                     0 stanziamento_cofin, 
+                     0 variapiu_cofin, 0 variameno_cofin,
+                     0 trasfpiu_cofin, 0 trasfmeno_cofin,
+                     0 impacc_fin,
+                     CASE
                         WHEN a.ESERCIZIO = a.ESERCIZIO_RES
                         THEN NVL(a.IM_OBBL_ACC_COMP, 0)
                         ELSE NVL(a.IM_OBBL_RES_IMP, 0) +
                              NVL(a.VAR_PIU_OBBL_RES_IMP, 0) - NVL(a.VAR_MENO_OBBL_RES_IMP, 0) +
                              NVL(a.VAR_PIU_OBBL_RES_PRO, 0) - NVL(a.VAR_MENO_OBBL_RES_PRO, 0)
-                     END impacc,
-                     NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0) manris
+                     END impacc_cofin,
+                     0 manris_fin,
+                     NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0) manris_cofin
                 FROM voce_f_saldi_cdr_linea a,
-                     v_linea_attivita_valida b
+                     v_linea_attivita_valida b,
+                     natura c
                WHERE a.esercizio = b.esercizio
                  AND a.cd_centro_responsabilita = b.cd_centro_responsabilita
                  AND a.cd_linea_attivita = b.cd_linea_attivita
                  AND a.ti_gestione = 'S'
+                 AND c.cd_natura = b.cd_natura
+                 AND c.cd_natura in (select val01 from configurazione_cnr e
+                                     where e.esercizio = 0
+                                     and   e.cd_unita_funzionale = '*'
+                                     and   e.cd_chiave_primaria = 'PROGETTI'
+                                     and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')   
                  AND (NVL(a.IM_OBBL_ACC_COMP, 0)!=0 OR
                       NVL(a.IM_OBBL_RES_IMP, 0)!=0 OR
                       NVL(a.VAR_PIU_OBBL_RES_IMP, 0)!=0 OR

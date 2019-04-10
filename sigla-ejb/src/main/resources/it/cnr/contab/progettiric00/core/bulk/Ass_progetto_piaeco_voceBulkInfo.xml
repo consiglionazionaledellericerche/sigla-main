@@ -56,7 +56,33 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Mandati" />
-
+	<fieldProperty
+		name="imVarFinanziatoRimodulato"
+		property="imVarFinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		readonlyProperty="detailRimodulatoEliminato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Finanziata Variata" />
+	<fieldProperty
+		name="imVarCofinanziatoRimodulato"
+		property="imVarCofinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		readonlyProperty="detailRimodulatoEliminato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Cofinanziata Variata" />
+	<fieldProperty
+		name="imTotaleVarRimodulato"
+		property="imTotaleVarRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale Spesa Variaya" />		
+		
 	<formFieldProperty name="elemento_voce" />
 	<formFieldProperty name="cd_elemento_voce"/>
 	<formFieldProperty name="ds_elemento_voce"/>
@@ -65,6 +91,10 @@
 	<formFieldProperty name="im_trasferito_spesa" />
 	<formFieldProperty name="im_impacc_spesa" />
 	<formFieldProperty name="im_manris_spesa" />
+
+	<formFieldProperty name="imVarFinanziatoRimodulato" />
+	<formFieldProperty name="imVarCofinanziatoRimodulato" />
+	<formFieldProperty name="imTotaleVarRimodulato" />
 	
 	<columnFieldProperty name="elemento_voce" />
 
@@ -108,5 +138,17 @@
 			name="im_impacc_spesa"
 			headerLabel="SITUAZIONE SPESA"
 			label="Impegnato"/>
+		<columnFieldProperty
+			name="imVarFinanziatoRimodulato"
+			headerLabel="VARIAZIONI"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imVarCofinanziatoRimodulato"
+			headerLabel="VARIAZIONI"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleVarRimodulato"
+			headerLabel="VARIAZIONI"
+			label="Totale"/> 
 	</columnSet>
 </bulkInfo>
