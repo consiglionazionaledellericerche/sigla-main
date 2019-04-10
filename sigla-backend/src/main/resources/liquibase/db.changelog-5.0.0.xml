@@ -1918,5 +1918,16 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
-
+    <changeSet author="marco.spasiano" id="nuova_stampa_buono_carico_scarico">
+        <insert tableName="print_priority">
+            <column name="report_name" type="VARCHAR(1500)" value="/cnrdocamm/docamm/buono_carico_scarico.jasper"/>
+            <column name="priority" type="SMALLINT"  value="1" />
+            <column name="ds_report" type="VARCHAR(300)" value="Stampa buono di carico/scarico"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
