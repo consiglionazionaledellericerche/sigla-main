@@ -2,7 +2,7 @@
 --  DDL for View V_SALDI_PIANO_ECONOM_PROGETTO
 --------------------------------------------------------
 
-CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "CD_UNITA_PIANO", "CD_VOCE_PIANO", "TI_GESTIONE", "IMPORTO_FIN", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "TRASFPIU_FIN", "TRASFMENO_FIN", "IMPORTO_COFIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "TRASFPIU_COFIN", "TRASFMENO_COFIN", "IMPACC", "MANRIS") AS 
+CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "CD_UNITA_PIANO", "CD_VOCE_PIANO", "TI_GESTIONE", "IMPORTO_FIN", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "TRASFPIU_FIN", "TRASFMENO_FIN", "IMPORTO_COFIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "TRASFPIU_COFIN", "TRASFMENO_COFIN", "IMPACC_FIN", "IMPACC_COFIN", "MANRIS_FIN", "MANRIS_COFIN") AS 
   (SELECT   x.pg_progetto, x.esercizio, x.cd_unita_piano, x.cd_voce_piano,
              x.ti_gestione, 
              SUM (x.importo_fin) importo_fin,
@@ -17,8 +17,10 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
              SUM (x.variameno_cofin) variameno_cofin,
              SUM (x.trasfpiu_cofin) trasfpiu_cofin,
              SUM (x.trasfmeno_cofin) trasfmeno_cofin,
-             SUM (x.impacc) impacc,
-             SUM (x.manris) manris
+             SUM (x.impacc_fin) impacc_fin,
+             SUM (x.impacc_cofin) impacc_cofin,
+             SUM (x.manris_fin) manris_fin,
+             SUM (x.manris_cofin) manris_cofin
         FROM (SELECT a.pg_progetto, a.esercizio_piano esercizio,
                      a.cd_unita_organizzativa cd_unita_piano, a.cd_voce_piano,
                      'S' ti_gestione, NVL(a.im_spesa_finanziato, 0) importo_fin,
@@ -27,7 +29,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      NVL(a.im_spesa_cofinanziato, 0) importo_cofin,
                      0 stanziamento_cofin, 0 variapiu_cofin, 0 variameno_cofin, 
                      0 trasfpiu_cofin, 0 trasfmeno_cofin,
-                     0 impacc, 0 manris
+                     0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
                 FROM progetto_piano_economico a
               UNION ALL
               SELECT a.pg_progetto, a.esercizio_piano, a.cd_unita_organizzativa,
@@ -40,7 +42,8 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_PIANO_ECONOM_PROGETTO" ("PG_PROGETTO", "ES
                      b.stanziamento_cofin, 
                      b.variapiu_cofin, b.variameno_cofin, 
                      b.trasfpiu_cofin, b.trasfmeno_cofin,
-                     b.impacc, b.manris
+                     b.impacc_fin, b.impacc_cofin,
+                     b.manris_fin, b.manris_cofin
                 FROM ass_progetto_piaeco_voce a,
                      V_SALDI_VOCE_PROGETTO b
                WHERE a.pg_progetto = b.pg_progetto

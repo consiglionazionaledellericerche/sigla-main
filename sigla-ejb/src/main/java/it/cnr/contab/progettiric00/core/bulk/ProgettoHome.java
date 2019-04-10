@@ -842,8 +842,10 @@ public class ProgettoHome extends BulkHome {
 										saldoNew.setTrasfpiuCofin(BigDecimal.ZERO);
 										saldoNew.setTrasfmenoCofin(BigDecimal.ZERO);
 										
-										saldoNew.setImpacc(BigDecimal.ZERO);
-										saldoNew.setManris(BigDecimal.ZERO);
+										saldoNew.setImpaccFin(BigDecimal.ZERO);
+										saldoNew.setImpaccCofin(BigDecimal.ZERO);
+										saldoNew.setManrisFin(BigDecimal.ZERO);
+										saldoNew.setManrisCofin(BigDecimal.ZERO);
 										return saldoNew;
 									});
 					if (Elemento_voceHome.GESTIONE_SPESE.equals(voceAss.getTi_gestione()))
