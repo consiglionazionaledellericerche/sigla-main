@@ -304,11 +304,7 @@ public ProgettoRicercaComponent() {
 						testata.setDettagliPartner_esterni(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPartner_esterni(testata)));
 						testata.setSpeseEsercizio(new it.cnr.jada.bulk.BulkList(testataHome.findDettagliSpese(userContext,testata)));
 						
-						List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(testataHome.findDettagliPianoEconomico(userContext,testata.getPg_progetto()));
-						progettoPiano.stream().forEach(el->el.setProgetto(testata));
-						testata.setDettagliPianoEconomicoTotale(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
-						testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
-						testata.setDettagliPianoEconomicoAltriAnni(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
+						testata = initializePianoEconomico(userContext, testata, true);
 
 						// controllo per evitare che il progetto padre sia modificabile nel caso
 						// in cui tale progetto sia stato inserito nel piano di gestione preventivo
@@ -2131,5 +2127,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			throw handleException(e);
 		}
     }
- 
+    
+    public ProgettoBulk initializePianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean loadSaldi) throws ComponentException {
+    	try {
+    		ProgettoHome testataHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+    		return testataHome.initializePianoEconomico(userContext, progetto, loadSaldi);
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
 }

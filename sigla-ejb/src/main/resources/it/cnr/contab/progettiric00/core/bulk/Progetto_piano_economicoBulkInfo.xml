@@ -69,6 +69,15 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata" />
 	<fieldProperty
+		name="imSpesaFinanziatoRimodulato"
+		property="imSpesaFinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Finanziata Rimodulata" />
+		
+	<fieldProperty
 		name="im_spesa_cofinanziato"
 		property="im_spesa_cofinanziato"
 		inputSize="20"
@@ -85,7 +94,15 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata" />
-
+	<fieldProperty
+		name="imSpesaCofinanziatoRimodulato"
+		property="imSpesaCofinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Cofinanziata Rimodulata" />
+		
 	<fieldProperty
 		name="imTotaleSpesa"
 		property="imTotaleSpesa"
@@ -94,6 +111,14 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo Totale Spesa" />
+	<fieldProperty
+		name="imTotaleSpesaRimodulato"
+		property="imTotaleSpesaRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale Spesa Rimodulato" />
 	<fieldProperty
 		name="fl_ctrl_disp"
 		property="fl_ctrl_disp"
@@ -192,11 +217,14 @@
 
 	<formFieldProperty name="im_spesa_finanziato" label="Quota Finanziata"/>
 	<formFieldProperty name="im_spesa_finanziato_amm"/>
+	<formFieldProperty name="imSpesaFinanziatoRimodulato"/>
 
 	<formFieldProperty name="im_spesa_cofinanziato" label="Quota Cofinanziata"/>
 	<formFieldProperty name="im_spesa_cofinanziato_amm"/>
+	<formFieldProperty name="imSpesaCofinanziatoRimodulato"/>
 
 	<formFieldProperty name="imTotaleSpesa" label="Quota Totale"/>
+	<formFieldProperty name="imTotaleSpesaRimodulato" label="Quota Totale Rimodulata"/>
 	
 	<formFieldProperty name="fl_ctrl_disp" />
 	<formFieldProperty name="im_assestato_entrata" />
@@ -299,6 +327,57 @@
 			label="Pagato"/>
 	</columnSet>
 	
+	<columnSet name="piano_economico_rimodulato">
+		<columnFieldProperty
+			name="esercizio_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Esercizio"/>
+		<columnFieldProperty
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
+		<columnFieldProperty
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="im_spesa_finanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="QUOTE CORRENTI"
+			label="Totale"/> 
+		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+	</columnSet>
+	
 	<form name="piano_economico1">
 		<formFieldProperty
 			name="voce_piano"/>
@@ -355,6 +434,53 @@
 			label="Pagato"/>
 	</columnSet>
 
+	<columnSet name="piano_economico1_rimodulato">
+		<columnFieldProperty
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
+		<columnFieldProperty
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="im_spesa_finanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="QUOTE CORRENTI"
+			label="Totale"/> 
+		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+	</columnSet>
+	
 	<form name="piano_economico2">
 		<formFieldProperty
 			name="esercizio_piano"/>
@@ -407,4 +533,46 @@
 			headerLabel="SITUAZIONE SPESA"
 			label="Pagato"/>
 	</columnSet>
+	
+	<columnSet name="piano_economico2_rimodulato">
+		<columnFieldProperty
+			name="esercizio_piano"
+			label="Esercizio"/>
+		<columnFieldProperty
+			name="im_spesa_finanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="QUOTE CORRENTI"
+			label="Totale"/> 
+		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+	</columnSet>	
 </bulkInfo>
