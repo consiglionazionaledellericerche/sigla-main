@@ -24,10 +24,47 @@
 		inputSize="100"
 		inputType="ROTEXT"
 		label="Descrizione"/>
+	<fieldProperty
+		name="im_assestato_spesa"
+		property="saldoSpesa.assestato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa" />
+	<fieldProperty
+		name="im_trasferito_spesa"
+		property="saldoSpesa.trasferito"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Trasferito" />
+	<fieldProperty
+		name="im_impacc_spesa"
+		property="saldoSpesa.impacc"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegni" />
+	<fieldProperty
+		name="im_manris_spesa"
+		property="saldoSpesa.manris"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati" />
 
 	<formFieldProperty name="elemento_voce" />
 	<formFieldProperty name="cd_elemento_voce"/>
 	<formFieldProperty name="ds_elemento_voce"/>
+
+	<formFieldProperty name="im_assestato_spesa" />
+	<formFieldProperty name="im_trasferito_spesa" />
+	<formFieldProperty name="im_impacc_spesa" />
+	<formFieldProperty name="im_manris_spesa" />
 	
 	<columnFieldProperty name="elemento_voce" />
 
@@ -36,6 +73,40 @@
 			name="cd_elemento_voce"/>
 		<columnFieldProperty
 			name="ds_elemento_voce"/>
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+		<columnFieldProperty 
+			name="im_manris_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Pagato"/>
 	</columnSet>
-	
+
+	<columnSet name="voce_bilancio_rimodulato">
+		<columnFieldProperty
+			name="cd_elemento_voce"/>
+		<columnFieldProperty
+			name="ds_elemento_voce"/>
+		<columnFieldProperty 
+			name="im_assestato_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato"/>
+		<columnFieldProperty 
+			name="im_trasferito_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Trasferito"/>
+		<columnFieldProperty 
+			name="im_impacc_spesa"
+			headerLabel="SITUAZIONE SPESA"
+			label="Impegnato"/>
+	</columnSet>
 </bulkInfo>

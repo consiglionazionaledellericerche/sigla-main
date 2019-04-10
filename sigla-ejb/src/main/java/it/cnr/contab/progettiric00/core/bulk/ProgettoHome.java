@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 
@@ -15,6 +16,7 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
@@ -56,8 +58,10 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -651,16 +655,12 @@ public class ProgettoHome extends BulkHome {
 	public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
 	}
 	
-	public java.util.Collection findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws IntrospectionException, PersistencyException {
+	public java.util.Collection<Progetto_piano_economicoBulk> findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws IntrospectionException, PersistencyException {
 		Progetto_piano_economicoHome dettHome = (Progetto_piano_economicoHome)getHomeCache().getHome(Progetto_piano_economicoBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
 		sql.addOrderBy("esercizio_piano, cd_voce_piano");
-		List<Progetto_piano_economicoBulk> pianoList = dettHome.fetchAll(sql);
-		List<Progetto_piano_economicoBulk> pianoListNew = new ArrayList<>();
-		for (Progetto_piano_economicoBulk progetto_piano_economicoBulk : pianoList)
-			pianoListNew.add((Progetto_piano_economicoBulk)dettHome.completeBulkRowByRow(userContext, progetto_piano_economicoBulk));
-		return pianoListNew;
+		return dettHome.fetchAll(sql);
 	}
 	
 	public Progetto_other_fieldBulk findProgettoOtherField(it.cnr.jada.UserContext userContext,ProgettoBulk testata) throws IntrospectionException, PersistencyException {
@@ -782,5 +782,80 @@ public class ProgettoHome extends BulkHome {
 		sqlVar.addSQLExistsClause(FindClause.AND, sqlExist);
 		
 		return varHome.fetchAll(sqlVar);
+	}
+	
+    public ProgettoBulk initializePianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean loadSaldi) throws ComponentException, PersistencyException {
+    	try {
+			List<Progetto_piano_economicoBulk> progettoPiano = new BulkList<Progetto_piano_economicoBulk>(this.findDettagliPianoEconomico(userContext,progetto.getPg_progetto()));
+			progettoPiano.stream().forEach(el->el.setProgetto(progetto));
+			progetto.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
+			progetto.setDettagliPianoEconomicoAnnoCorrente(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
+			progetto.setDettagliPianoEconomicoAltriAnni(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
+
+			if (loadSaldi)
+				loadSaldiPianoEconomico(userContext, progetto);
+
+			getHomeCache().fetchAll(userContext);
+			return progetto;
+		} catch(Exception e) {
+			throw new PersistencyException( e );
+		}
+	}
+
+    public ProgettoBulk loadSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException, PersistencyException {
+    	try {
+			progetto.setVociBilancioMovimentate(new BulkList<V_saldi_voce_progettoBulk>(((V_saldi_voce_progettoHome)getHomeCache().getHome(V_saldi_voce_progettoBulk.class))
+									.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio())));
+				
+			progetto.getDettagliPianoEconomicoAnnoCorrente().stream().forEach(ppe->{
+				try {
+					ppe.setVociBilancioAssociate(new BulkList<Ass_progetto_piaeco_voceBulk>(((Ass_progetto_piaeco_voceHome)getHomeCache().getHome(Ass_progetto_piaeco_voceBulk.class ))
+						.findAssProgettoPiaecoVoceList(ppe.getPg_progetto(), ppe.getCd_unita_organizzativa(), ppe.getCd_voce_piano(), 
+								ppe.getEsercizio_piano())));
+				} catch (PersistencyException ex){
+					throw new DetailedRuntimeException(ex.getMessage());
+				}
+				ppe.getVociBilancioAssociate().stream().forEach(voceAss->{
+					V_saldi_voce_progettoBulk saldo = 
+							progetto.getVociBilancioMovimentate().stream()
+									.filter(el->el.getEsercizio_voce().equals(voceAss.getEsercizio_voce()))
+									.filter(el->el.getTi_appartenenza().equals(voceAss.getTi_appartenenza()))
+									.filter(el->el.getTi_gestione().equals(voceAss.getTi_gestione()))
+									.filter(el->el.getCd_elemento_voce().equals(voceAss.getCd_elemento_voce()))
+									.findFirst()
+									.orElseGet(()->{
+										V_saldi_voce_progettoBulk saldoNew = new V_saldi_voce_progettoBulk();
+										saldoNew.setEsercizio_voce(voceAss.getEsercizio_voce());
+										saldoNew.setTi_appartenenza(voceAss.getTi_appartenenza());
+										saldoNew.setTi_gestione(voceAss.getTi_gestione());
+										saldoNew.setCd_elemento_voce(voceAss.getCd_elemento_voce());
+
+										saldoNew.setStanziamentoFin(BigDecimal.ZERO);
+										saldoNew.setVariapiuFin(BigDecimal.ZERO);
+										saldoNew.setVariamenoFin(BigDecimal.ZERO);
+										saldoNew.setTrasfpiuFin(BigDecimal.ZERO);
+										saldoNew.setTrasfmenoFin(BigDecimal.ZERO);
+
+										saldoNew.setStanziamentoCofin(BigDecimal.ZERO);
+										saldoNew.setVariapiuCofin(BigDecimal.ZERO);
+										saldoNew.setVariamenoCofin(BigDecimal.ZERO);
+										saldoNew.setTrasfpiuCofin(BigDecimal.ZERO);
+										saldoNew.setTrasfmenoCofin(BigDecimal.ZERO);
+										
+										saldoNew.setImpacc(BigDecimal.ZERO);
+										saldoNew.setManris(BigDecimal.ZERO);
+										return saldoNew;
+									});
+					if (Elemento_voceHome.GESTIONE_SPESE.equals(voceAss.getTi_gestione()))
+						voceAss.setSaldoSpesa(saldo);
+					else
+						voceAss.setSaldoEntrata(saldo);
+					
+				});
+			});
+			return progetto;
+		} catch(Exception e) {
+			throw new PersistencyException( e );
+		}
 	}
 }

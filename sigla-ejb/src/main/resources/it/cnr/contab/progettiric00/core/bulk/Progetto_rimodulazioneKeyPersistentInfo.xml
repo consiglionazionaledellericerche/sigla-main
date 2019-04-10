@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneKey" >
+	<defaultColumnMap
+		tableName="PROGETTO_RIMODULAZIONE" >
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="pg_progetto"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_RIMODULAZIONE"
+			propertyName="pg_rimodulazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_progetto" 
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_rimodulazione" 
+		partOfOid="true" />
+</SQLPersistentInfo>
