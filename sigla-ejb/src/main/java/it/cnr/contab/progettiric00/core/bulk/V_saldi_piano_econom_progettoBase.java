@@ -52,11 +52,17 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 	// TRASFMENO_COFIN DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal trasfmenoCofin;
 
-	// IMPACC DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal impacc;
+	// IMPACC_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal impaccFin;
 
-	// MANRIS DECIMAL(15,2) NOT NULL
-	private java.math.BigDecimal manris;
+	// IMPACC_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal impaccCofin;
+
+	// MANRIS_FIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal manrisFin;
+
+	// MANRIS_COFIN DECIMAL(15,2) NOT NULL
+	private java.math.BigDecimal manrisCofin;
 
 	public V_saldi_piano_econom_progettoBase() {
 		super();
@@ -158,20 +164,36 @@ public class V_saldi_piano_econom_progettoBase extends V_saldi_piano_econom_prog
 		this.trasfmenoCofin = trasfmenoCofin;
 	}
 	
-	public java.math.BigDecimal getImpacc() {
-		return impacc;
+	public java.math.BigDecimal getImpaccFin() {
+		return impaccFin;
 	}
 
-	public void setImpacc(java.math.BigDecimal impacc) {
-		this.impacc = impacc;
+	public void setImpaccFin(java.math.BigDecimal impaccFin) {
+		this.impaccFin = impaccFin;
 	}
 
-	public java.math.BigDecimal getManris() {
-		return manris;
+	public java.math.BigDecimal getImpaccCofin() {
+		return impaccCofin;
 	}
 
-	public void setManris(java.math.BigDecimal manris) {
-		this.manris = manris;
+	public void setImpaccCofin(java.math.BigDecimal impaccCofin) {
+		this.impaccCofin = impaccCofin;
+	}
+
+	public java.math.BigDecimal getManrisFin() {
+		return manrisFin;
+	}
+
+	public void setManrisFin(java.math.BigDecimal manrisFin) {
+		this.manrisFin = manrisFin;
+	}
+
+	public java.math.BigDecimal getManrisCofin() {
+		return manrisCofin;
+	}
+
+	public void setManrisCofin(java.math.BigDecimal manrisCofin) {
+		this.manrisCofin = manrisCofin;
 	}
 }
 

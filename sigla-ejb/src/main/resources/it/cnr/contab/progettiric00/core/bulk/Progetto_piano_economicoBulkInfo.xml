@@ -74,6 +74,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata Rimodulata" />
 		
@@ -100,6 +101,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata Rimodulata" />
 		

@@ -33,8 +33,14 @@
 <%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato",true,false,true,"100%","100px"); %>
 	</br>
 	<table class="Panel">
-	  <TR>
-	  	<% controllerVoci.writeFormField(out,"elemento_voce");%>
-	  </TR>
+	  <tr>
+	  	<td><% controllerVoci.writeFormLabel(out,"elemento_voce");%></td>
+	  	<td colspan="3"><% controllerVoci.writeFormInput(out,null,"elemento_voce",false,null,null);%></td>
+	  </tr>
+	  <tr>
+	  	<% controllerVoci.writeFormField(out,"imVarFinanziatoRimodulato");%>
+	  	<% controllerVoci.writeFormField(out,"imVarCofinanziatoRimodulato");%>
+	  	<% controllerVoci.writeFormField(out,"imTotaleVarRimodulato");%>
+	  </tr>
 	</table>	
 </fieldset>
