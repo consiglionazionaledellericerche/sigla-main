@@ -54,5 +54,4 @@ public class Progetto_piano_economicoBase extends Progetto_piano_economicoKey im
 	public void setFl_ctrl_disp(java.lang.Boolean fl_ctrl_disp) {
 		this.fl_ctrl_disp = fl_ctrl_disp;
 	}
-
 }

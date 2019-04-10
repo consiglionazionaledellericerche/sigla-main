@@ -25,6 +25,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
+import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -50,7 +51,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	private boolean flNuovoPdg = false;
 	private boolean flInformix = false;
 	private boolean flPrgPianoEconomico = false;
-	private boolean isUoCdsCollegata = false;
+	protected boolean isUoCdsCollegata = false;
 	private Integer annoFromPianoEconomico;
 	private Unita_organizzativaBulk uoScrivania;
 	
@@ -111,6 +112,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	private SimpleDetailCRUDController pianoEconomicoSummaryVoce = new SimpleDetailCRUDController( "PianoEconomicoSummaryVoce", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryVoce", this); 
 	private SimpleDetailCRUDController pianoEconomicoSummaryAnno = new SimpleDetailCRUDController( "PianoEconomicoSummaryAnno", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryAnno", this); 
+	private SimpleDetailCRUDController pianoEconomicoVociBilancioDaAssociare = new SimpleDetailCRUDController( "VociMovimentateNonAssociate", V_saldi_voce_progettoBulk.class, "vociMovimentateNonAssociate", this); 
 
 	protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAnnoCorrente = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAnnoCorrente);
 	protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAltriAnni = new ProgettoPianoEconomicoVoceBilancioCRUDController( "PianoEconomicoVoceBilancioAltriAnni", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAltriAnni);
@@ -479,6 +481,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (!progetto.getAnnoInizioOf().equals(progetto.getEsercizio()) || !progetto.getAnnoFineOf().equals(progetto.getEsercizio()))
 			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/progetto_piano_economico_altri_anni.jsp" });
 
+		if (!progetto.getVociMovimentateNonAssociate().isEmpty())
+			hash.put(i++, new String[]{ "tabProgettoVociMovimentateNonAssociate","Voci Movimentate da Associare","/progettiric00/progetto_piano_economico_voci_da_associare.jsp" });
+
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++) {
 			tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
@@ -600,6 +605,10 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	public SimpleDetailCRUDController getPianoEconomicoSummaryAnno() {
 		return pianoEconomicoSummaryAnno;
+	}
+
+	public SimpleDetailCRUDController getPianoEconomicoVociBilancioDaAssociare() {
+		return pianoEconomicoVociBilancioDaAssociare;
 	}
 
 	public boolean isNegoziazioneButtonHidden()	{
@@ -789,7 +798,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		}
 	}
 
-	private Integer getAnnoFromPianoEconomico() {
+	protected Integer getAnnoFromPianoEconomico() {
 		return annoFromPianoEconomico;
 	}
 	

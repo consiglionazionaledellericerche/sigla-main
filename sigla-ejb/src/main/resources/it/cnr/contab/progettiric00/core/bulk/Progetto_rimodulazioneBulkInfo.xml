@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="pg_rimodulazione"
+		property="pg_rimodulazione"
+		label="Nr.Rimodulazione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
+		name="find_progetto"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		label="Progetto"
+		formName="form_searchtool_progetto"
+		freeSearchSet="filtro_ricerca_prog2"
+    	columnSet="filtro_ricerca_prog2"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="statoOf"
+		property="progetto.statoPrg"
+		label="Stato"
+		inputType="SELECT"
+		keysProperty="statoOfKeys"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		inputSize="20"
+		maxLength="20"/>
+	<fieldProperty
+		name="tipoFinanziamentoOf"
+		property="progetto.otherField.tipoFinanziamento"
+		label="Tipo Finanziamento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="dsTipoFinanziamentoOf"
+		property="progetto.otherField.tipoFinanziamento.descrizione"
+		inputType="ROTEXT"
+		label="Finanziamento" />
+	<fieldProperty
+		name="dtInizioOf"
+		property="progetto.otherField.dtInizio"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Inizio" />
+	<fieldProperty
+		name="dtFineOf"
+		property="progetto.otherField.dtFine"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Fine" />
+	<fieldProperty
+		name="dtProrogaOf"
+		property="progetto.otherField.dtProroga"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Proroga" />
+	<fieldProperty
+		name="imFinanziatoOf"
+		property="progetto.otherField.imFinanziato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Finanziato" />
+	<fieldProperty
+		name="imCofinanziatoOf"
+		property="progetto.otherField.imCofinanziato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Cofinanziato" />
+
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		label="Stato"
+		inputType="SELECT"
+		maxLength="1"
+		inputSize="2"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imFinanziatoRimodulato"
+		property="imFinanziatoRimodulato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato Rimodulato" />
+	<fieldProperty
+		name="imCofinanziatoRimodulato"
+		property="imCofinanziatoRimodulato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato Rimodulato" />
+	<fieldProperty
+		name="imTotaleRimodulato"
+		property="imTotaleRimodulato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale Rimodulato" />
+	<fieldProperty
+		name="imFinanziatoRimodulatoRipartito"
+		property="imFinanziatoRimodulatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato Ripartito" />
+	<fieldProperty
+		name="imCofinanziatoRimodulatoRipartito"
+		property="imCofinanziatoRimodulatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato Ripartito" />
+	<fieldProperty
+		name="imTotaleRimodulatoRipartito"
+		property="imTotaleRimodulatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale Rimodulato Ripartito" />
+	<fieldProperty
+		name="imFinanziatoRimodulatoDaRipartire"
+		property="imFinanziatoRimodulatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Finanziato Rimodulato da Ripartire" />
+	<fieldProperty
+		name="imCofinanziatoRimodulatoDaRipartire"
+		property="imCofinanziatoRimodulatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Cofinanziato Rimodulato da Ripartire" />
+	<fieldProperty
+		name="imTotaleRimodulatoDaRipartire"
+		property="imTotaleRimodulatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Totale Rimodulato da Ripartire" />
+
+
+	<formFieldProperty name="pg_rimodulazione" />
+	<formFieldProperty name="find_progetto" />
+	<formFieldProperty name="stato" />
+	<formFieldProperty name="imFinanziatoRimodulato" />
+	<formFieldProperty name="imCofinanziatoRimodulato" />
+	<formFieldProperty name="imTotaleRimodulato" />
+	<formFieldProperty name="imFinanziatoRimodulatoRipartito" />
+	<formFieldProperty name="imCofinanziatoRimodulatoRipartito" />
+	<formFieldProperty name="imTotaleRimodulatoRipartito" />
+	<formFieldProperty name="imFinanziatoRimodulatoDaRipartire" />
+	<formFieldProperty name="imCofinanziatoRimodulatoDaRipartire" />
+	<formFieldProperty name="imTotaleRimodulatoDaRipartire" />
+		
+	<formFieldProperty
+		name="statoOf" />
+	<formFieldProperty
+		name="tipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dsTipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dtInizioOf" />
+	<formFieldProperty
+		name="dtFineOf" />
+	<formFieldProperty
+		name="dtProrogaOf" />
+	<formFieldProperty
+		name="imFinanziatoOf" />
+	<formFieldProperty
+		name="imCofinanziatoOf" />
+			
+	<columnFieldProperty name="pg_rimodulazione" />
+	<columnFieldProperty name="stato" />
+
+	<findFieldProperty name="stato" />
+	<findFieldProperty name="pg_rimodulazione" />
+</bulkInfo>
