@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_renddec_main" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ef76e6b0-0a73-4325-a28c-c3000551a992">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
-	<property name="ireport.zoom" value="1.331000000000001"/>
+	<property name="ireport.zoom" value="1.3310000000000013"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="189"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -75,6 +75,9 @@
 	<parameter name="DS_LIVELLO7S" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DS_LIVELLO8S" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DS_LIVELLO9S" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT tipo, peso_livello1, peso_livello2,
 cd_livello1, cd_livello2, cd_livello3, cd_livello4,
@@ -1584,26 +1587,50 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<band/>
 	</title>
 	<pageHeader>
-		<band height="90">
+		<band height="121">
+			<image>
+				<reportElement key="image-1" x="0" y="1" width="497" height="40" uuid="7966b861-3625-47e7-a2fc-0f33a9e6b1ec"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-184" style="VERB7" x="30" y="0" width="547" height="11" uuid="f53cdbdd-4b67-4190-92a7-2a97580ab85c"/>
+				<reportElement key="textField-184" x="5" y="43" width="837" height="11" uuid="4098f818-36db-4177-a777-0628c2128c85"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1252"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["RENDICONTO FINANZIARIO DECISIONALE ESERCIZIO "+$P{P_ESERCIZIO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-184" style="VERBI8" x="5" y="55" width="837" height="11" uuid="602b106e-ffd6-4dcb-95f5-0b9e974fc8e3"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="8" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["RENDICONTO FINANZIARIO DECISIONALE"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Parte "+($P{P_TIPO}.equals("E")?"Entrate":"Spese")]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-4" x="3" y="37" width="1" height="52" uuid="4fb61da4-204a-41b9-af30-589da9edadbc"/>
+				<reportElement key="line-4" x="3" y="68" width="1" height="52" uuid="4fb61da4-204a-41b9-af30-589da9edadbc"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="627" y="58" width="65" height="31" uuid="c43e0cbe-07b9-4e73-961c-4f2cd7369b20"/>
+				<reportElement key="textField-187" style="VERB6" x="627" y="89" width="65" height="31" uuid="c43e0cbe-07b9-4e73-961c-4f2cd7369b20"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<leftPen lineWidth="0.5" lineColor="#000000"/>
@@ -1617,10 +1644,10 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["Residui"]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-8" x="431" y="37" width="1" height="52" uuid="20260011-d01d-436e-aaf3-4f7d261d11a1"/>
+				<reportElement key="line-8" x="431" y="68" width="1" height="52" uuid="20260011-d01d-436e-aaf3-4f7d261d11a1"/>
 			</line>
 			<staticText>
-				<reportElement key="staticText-52" style="VERB6" x="4" y="37" width="427" height="21" uuid="287e46a2-4de1-4a4b-a477-e20958a80d2c"/>
+				<reportElement key="staticText-52" style="VERB6" x="4" y="68" width="427" height="21" uuid="287e46a2-4de1-4a4b-a477-e20958a80d2c"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1631,7 +1658,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-53" style="VERB6" x="3" y="58" width="52" height="30" uuid="6a2b7fad-4a13-41f6-ac83-0fe9dc654008"/>
+				<reportElement key="staticText-53" style="VERB6" x="3" y="89" width="52" height="30" uuid="6a2b7fad-4a13-41f6-ac83-0fe9dc654008"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1642,7 +1669,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<text><![CDATA[Codice]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB6" x="55" y="58" width="376" height="31" uuid="fa3d5e53-2e01-4221-b21e-820c4ecc788d"/>
+				<reportElement key="staticText-54" style="VERB6" x="55" y="89" width="376" height="31" uuid="fa3d5e53-2e01-4221-b21e-820c4ecc788d"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1653,13 +1680,13 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<text><![CDATA[Denominazione]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-67" x="822" y="37" width="1" height="52" uuid="48899234-89bc-459a-8f5e-679700e2a0ab"/>
+				<reportElement key="line-67" x="822" y="68" width="1" height="52" uuid="48899234-89bc-459a-8f5e-679700e2a0ab"/>
 			</line>
 			<line>
-				<reportElement key="line-68" x="3" y="37" width="819" height="1" uuid="c779291c-9f09-4ffa-97ee-8f7d705bc71d"/>
+				<reportElement key="line-68" x="3" y="68" width="819" height="1" uuid="c779291c-9f09-4ffa-97ee-8f7d705bc71d"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-185" style="VERB6" x="432" y="37" width="195" height="21" uuid="7dff6d13-c81a-4ce8-a02f-1109f0f77350"/>
+				<reportElement key="textField-185" style="VERB6" x="432" y="68" width="195" height="21" uuid="7dff6d13-c81a-4ce8-a02f-1109f0f77350"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1670,7 +1697,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["Anno finanziario "+$P{P_ESERCIZIO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-186" style="VERB6" x="627" y="38" width="195" height="20" uuid="6012cc0b-c293-4e38-8605-bccac1c9aa4a"/>
+				<reportElement key="textField-186" style="VERB6" x="627" y="69" width="195" height="20" uuid="6012cc0b-c293-4e38-8605-bccac1c9aa4a"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1681,26 +1708,10 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["Anno finanziario "+new Integer($P{P_ESERCIZIO}.intValue()-1)]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-69" x="3" y="88" width="819" height="1" uuid="b71e321c-90b2-45e2-b3d0-62b772e3aae0"/>
+				<reportElement key="line-69" x="3" y="119" width="819" height="1" uuid="b71e321c-90b2-45e2-b3d0-62b772e3aae0"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-184" style="VERB7" x="55" y="12" width="521" height="11" uuid="9a919915-d79a-4ef7-b967-50d9dbddbe2f"/>
-				<box>
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA["PARTE I"+
-($P{P_TIPO}.equals("E")?" - ENTRATE":"I - SPESE")+
-" ANNO "+$P{P_ESERCIZIO}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="432" y="58" width="65" height="31" uuid="7d32dd6b-9df9-496d-82d3-60c30d1bb77d"/>
+				<reportElement key="textField-187" style="VERB6" x="432" y="89" width="65" height="31" uuid="7d32dd6b-9df9-496d-82d3-60c30d1bb77d"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -1714,21 +1725,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["Residui"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-184" style="VER7" x="76" y="24" width="746" height="11" uuid="813e6796-aeb6-4bb2-a815-5738c321f349"/>
-				<box>
-					<topPen lineWidth="0.0" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
-				</box>
-				<textElement verticalAlignment="Middle" rotation="None">
-					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
-					<paragraph lineSpacing="Single"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{NOME_EST}+" - "+$P{DESCR_AGG_ENTE}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="497" y="58" width="65" height="31" uuid="f30572e0-8598-42e8-bfff-1d51a2efa6d0"/>
+				<reportElement key="textField-187" style="VERB6" x="497" y="89" width="65" height="31" uuid="f30572e0-8598-42e8-bfff-1d51a2efa6d0"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<leftPen lineWidth="0.5" lineColor="#000000"/>
@@ -1742,7 +1739,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 				<textFieldExpression><![CDATA["  Competenza   "+($P{P_TIPO}.equals("E")?"(Accertamenti)":"(Impegni)")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="562" y="58" width="65" height="31" uuid="a18f6e59-a2b6-486d-8425-73a79459d66d"/>
+				<reportElement key="textField-187" style="VERB6" x="562" y="89" width="65" height="31" uuid="a18f6e59-a2b6-486d-8425-73a79459d66d"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<leftPen lineWidth="0.5" lineColor="#000000"/>
@@ -1757,7 +1754,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 ($P{P_TIPO}.equals("E")?"(Riscossioni)":"(Pagamenti)")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="692" y="58" width="65" height="31" uuid="c881bc40-f6ce-4dee-8802-0af974c435bb"/>
+				<reportElement key="textField-187" style="VERB6" x="692" y="89" width="65" height="31" uuid="c881bc40-f6ce-4dee-8802-0af974c435bb"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<leftPen lineWidth="0.5" lineColor="#000000"/>
@@ -1772,7 +1769,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 ($P{P_TIPO}.equals("E")?"(Accertamenti)":"(Impegni)")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-187" style="VERB6" x="757" y="58" width="65" height="31" uuid="9b8574fc-38ca-4f0c-9b51-a9d449d5b6aa"/>
+				<reportElement key="textField-187" style="VERB6" x="757" y="89" width="65" height="31" uuid="9b8574fc-38ca-4f0c-9b51-a9d449d5b6aa"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
 					<leftPen lineWidth="0.5" lineColor="#000000"/>
