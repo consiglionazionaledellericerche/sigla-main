@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="regobblig" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="regobblig" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="782" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="a811c376-068d-437e-b5e1-f81bc2377681">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="125"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -30,7 +30,7 @@
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2006)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2018)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["080.000"]]></defaultValueExpression>
@@ -45,13 +45,13 @@
 		<defaultValueExpression><![CDATA[new Long(999999999)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DaData" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2006/01/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2018/01/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="AData" class="java.util.Date" isForPrompting="false">
-		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2006/12/01")]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2018/12/01")]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Tipo" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["OBB"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["RES"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Stato" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["*"]]></defaultValueExpression>
@@ -59,9 +59,10 @@
 	<queryString>
 		<![CDATA[SELECT * FROM PRT_REG_OBBLIG
 where ESERCIZIO = $P{Esercizio}
-AND CDS = $P{CDS}
-AND UO = decode($P{UO},'*',UO,$P{UO})
-AND TIPO = decode($P{Tipo},'*',TIPO,$P{Tipo})
+and UO like decode($P{UO},'*','%',$P{UO})
+and CDS like decode($P{CDS},CNRCTB020.GETCDCDSENTE ($P{Esercizio}),'%',$P{CDS})
+and (($P{Tipo}='RES' and TIPO in('OBB_RES','OBB_RESIM')) or
+     ($P{Tipo}!='RES' and TIPO = decode($P{Tipo},'*',TIPO,$P{Tipo})))
 AND STATO_OBBL = decode($P{Stato},'*',STATO_OBBL,$P{Stato})
 AND PROGRESSIVO between $P{DaNumero} AND $P{ANumero}
 AND DATA between $P{DaData} AND $P{AData}]]>
@@ -70,7 +71,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 	<field name="CDS" class="java.lang.String"/>
 	<field name="UO" class="java.lang.String"/>
 	<field name="ESERCIZIO_ORIGINALE" class="java.math.BigDecimal"/>
-	<field name="PROGRESSIVO" class="java.lang.Long"/>
+	<field name="PROGRESSIVO" class="java.math.BigDecimal"/>
 	<field name="DATA" class="java.sql.Timestamp"/>
 	<field name="DESCRIZIONE" class="java.lang.String"/>
 	<field name="IMPORTO" class="java.math.BigDecimal"/>
@@ -89,21 +90,21 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 	<title>
 		<band height="44" splitType="Stretch">
 			<image>
-				<reportElement key="image-1" x="2" y="2" width="497" height="40"/>
+				<reportElement key="image-1" x="2" y="2" width="497" height="40" uuid="4e1e80b3-750d-450e-a043-7ca0e646a3b4"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
 			</image>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="127" splitType="Stretch">
 			<staticText>
-				<reportElement key="staticText-1" style="TNRG16" x="0" y="7" width="782" height="19"/>
+				<reportElement key="staticText-1" style="TNRG16" x="0" y="7" width="782" height="19" uuid="87939ea9-f795-456b-af33-848e0cb79b27"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -114,7 +115,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[REGISTRO IMPEGNI CDS]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-1" style="TNR12" x="0" y="29" width="782" height="14"/>
+				<reportElement key="textField-1" style="TNR12" x="0" y="29" width="782" height="14" uuid="141ce564-c21f-47ab-ab8c-f002425de7ff"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -122,10 +123,10 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["ESERCIZIO "+$P{Esercizio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["ESERCIZIO "+$P{Esercizio}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-2" style="TNR12" x="0" y="48" width="782" height="14"/>
+				<reportElement key="textField-2" style="TNR12" x="0" y="48" width="782" height="14" uuid="87ae5046-39fc-47dc-9e51-80fd90bec27d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -133,10 +134,10 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["CDS: "+$P{CDS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["CDS: "+$P{CDS}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-3" style="TNR12" x="0" y="63" width="782" height="14"/>
+				<reportElement key="textField-3" style="TNR12" x="0" y="63" width="782" height="14" uuid="cf6369fa-3e41-4c2d-85a1-d5da48e4f474"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -144,38 +145,36 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["UNITA' ORGANIZZATIVA: "+$P{UO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["UNITA' ORGANIZZATIVA: "+$P{UO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-2" style="TNR10" x="1" y="78" width="44" height="13"/>
+				<reportElement key="staticText-2" style="TNR10" x="1" y="78" width="44" height="13" uuid="1a4d2be3-a783-4ea2-99df-e41fb6ccae1f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[Data: ]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" evaluationTime="Report" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement key="textField-4" style="TNR10" x="45" y="78" width="86" height="13"/>
+				<reportElement key="textField-4" style="TNR10" x="45" y="78" width="86" height="13" uuid="95b5225d-765e-4a31-b47d-5bc7b558ecec"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement key="line-1" x="0" y="94" width="782" height="1"/>
+				<reportElement key="line-1" x="0" y="94" width="782" height="1" uuid="7abac287-8a35-4d8e-9e0b-940db940d82d"/>
 				<graphicElement>
 					<pen lineWidth="2.0" lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement key="staticText-3" style="TNR10" x="0" y="99" width="61" height="25"/>
+				<reportElement key="staticText-3" style="TNR10" x="0" y="99" width="61" height="25" uuid="0e03fe54-6021-47ad-9d88-f6cb744686b9"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -186,7 +185,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Esercizio Impegno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-4" style="TNR10" x="61" y="99" width="54" height="25"/>
+				<reportElement key="staticText-4" style="TNR10" x="61" y="99" width="54" height="25" uuid="999ed80d-f066-4080-bee1-b88dd1019dd1"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -197,7 +196,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Prog. Impegno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-5" style="TNR10" x="115" y="104" width="54" height="15"/>
+				<reportElement key="staticText-5" style="TNR10" x="115" y="104" width="54" height="15" uuid="aa3abcdb-ea8d-4589-a35d-aeec5693d30b"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -208,7 +207,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Data]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-6" style="TNR10" x="169" y="104" width="27" height="15"/>
+				<reportElement key="staticText-6" style="TNR10" x="169" y="104" width="27" height="15" uuid="e7d2407b-29e5-4cb1-964c-c92c5105b47f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -219,7 +218,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[C/R]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-7" style="TNR10" x="226" y="104" width="54" height="15"/>
+				<reportElement key="staticText-7" style="TNR10" x="226" y="104" width="54" height="15" uuid="7a4ad541-d99b-40a2-ab98-0dedf96c0f4c"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -230,7 +229,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Creditore]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-8" style="TNR10" x="358" y="104" width="123" height="15"/>
+				<reportElement key="staticText-8" style="TNR10" x="358" y="104" width="123" height="15" uuid="2a7e7744-8cb6-4934-b25e-b495a50ddb09"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -241,7 +240,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Descrizione Impegno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-9" style="TNR10" x="532" y="99" width="50" height="25"/>
+				<reportElement key="staticText-9" style="TNR10" x="532" y="99" width="50" height="25" uuid="2675aae5-15b8-478a-91ac-6310fc9dbfb7"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -252,7 +251,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Importo Impegno]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-10" style="TNR10" x="585" y="99" width="93" height="25"/>
+				<reportElement key="staticText-10" style="TNR10" x="585" y="99" width="93" height="25" uuid="51070a37-8ac0-4081-a583-f4dc6951e46f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -263,7 +262,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Voce di Bilancio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-11" style="TNR10" x="678" y="104" width="47" height="14"/>
+				<reportElement key="staticText-11" style="TNR10" x="678" y="104" width="47" height="14" uuid="9016da2c-a5ff-4fbc-b265-fb754ab0b02c"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -274,7 +273,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[Stato]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-12" style="TNR10" x="740" y="104" width="42" height="14"/>
+				<reportElement key="staticText-12" style="TNR10" x="740" y="104" width="42" height="14" uuid="ffc99c74-89d3-4693-962d-b8d70fd2e7ce"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -285,10 +284,10 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[U.O.]]></text>
 			</staticText>
 			<line>
-				<reportElement key="line-2" x="0" y="125" width="782" height="1"/>
+				<reportElement key="line-2" x="0" y="125" width="782" height="1" uuid="dbea19cf-5f1b-40ce-bcae-33bebec8455c"/>
 			</line>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="650" y="78" width="100" height="13"/>
+				<reportElement key="textField" style="TNR10" x="650" y="78" width="100" height="13" uuid="aaad4495-f8f4-4a5e-a03a-7012116c8a26"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -296,18 +295,17 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="750" y="78" width="30" height="13"/>
+				<reportElement key="textField" style="TNR10" x="750" y="78" width="30" height="13" uuid="8f161a54-6aaa-4291-9fea-af6ea5582b7f"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -317,7 +315,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField pattern="###0" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="61" y="3" width="54" height="13"/>
+				<reportElement key="textField" style="TNR10" x="61" y="3" width="54" height="13" uuid="ad9e8ea9-d9c5-4018-8064-4abb3f7314ff"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -325,10 +323,10 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.Long"><![CDATA[$F{PROGRESSIVO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{PROGRESSIVO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="0" y="3" width="61" height="13"/>
+				<reportElement key="textField" style="TNR10" x="0" y="3" width="61" height="13" uuid="f8adece9-85a9-4348-907d-5d60e9750ebe"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -336,32 +334,30 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{ESERCIZIO_ORIGINALE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ESERCIZIO_ORIGINALE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="115" y="3" width="54" height="13"/>
+				<reportElement key="textField" style="TNR10" x="115" y="3" width="54" height="13" uuid="7cdc0422-888f-4f25-844c-cdf9bd94364e"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{DATA}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DATA}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="196" y="3" width="114" height="13"/>
+				<reportElement key="textField" style="TNR10" x="196" y="3" width="114" height="13" uuid="a0ad1b39-4c69-4772-8944-2ff05a0a9475"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{CREDITORE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CREDITORE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="585" y="3" width="93" height="13"/>
+				<reportElement key="textField" style="TNR10" x="585" y="3" width="93" height="13" uuid="b8771cd3-afed-45a4-84df-7a0d322e14e2"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -369,21 +365,20 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{VOCE_BILANCIO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VOCE_BILANCIO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="314" y="3" width="212" height="13"/>
+				<reportElement key="textField" style="TNR10" x="314" y="3" width="212" height="13" uuid="2b10e43b-999d-4d1f-a006-91628ccd9e59"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{DESCRIZIONE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DESCRIZIONE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNR10" x="532" y="3" width="50" height="13"/>
+				<reportElement key="textField" style="TNR10" x="532" y="3" width="50" height="13" uuid="1ff39ec5-767b-4696-8a4d-aec5e4e709e3"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -391,10 +386,10 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{IMPORTO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{IMPORTO}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
-				<reportElement key="textField-5" style="TNR10" x="740" y="2" width="42" height="13"/>
+				<reportElement key="textField-5" style="TNR10" x="740" y="2" width="42" height="13" uuid="3fb8b131-365a-45de-aa19-4312694f5985"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -402,10 +397,10 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{UO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{UO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-14" style="TNR10" x="169" y="3" width="27" height="13">
+				<reportElement key="staticText-14" style="TNR10" x="169" y="3" width="27" height="13" uuid="a66789b5-5fac-4e0e-8782-c54460aa1632">
 					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("OBB_RES")||$F{TIPO}.equals("OBB_RESIM"))]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -418,7 +413,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[R]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-15" style="TNR10" x="169" y="3" width="27" height="13">
+				<reportElement key="staticText-15" style="TNR10" x="169" y="3" width="27" height="13" uuid="8911377f-1cbb-4c66-b895-39375451d4cf">
 					<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("OBB"))]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -431,7 +426,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 				<text><![CDATA[C]]></text>
 			</staticText>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField" style="TNR10" x="678" y="2" width="47" height="14"/>
+				<reportElement key="textField" style="TNR10" x="678" y="2" width="47" height="14" uuid="43685387-85cb-45c8-9a39-ca339f5e044a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -439,7 +434,7 @@ AND DATA between $P{DaData} AND $P{AData}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression class="java.lang.String"><![CDATA[($F{STATO_OBBL}.equals("P")?"Provvisoria":
+				<textFieldExpression><![CDATA[($F{STATO_OBBL}.equals("P")?"Provvisoria":
 ($F{STATO_OBBL}.equals("D")?"Definitiva":
 ($F{STATO_OBBL}.equals("S")?"Stornata":
 $F{STATO_OBBL})))]]></textFieldExpression>
@@ -452,7 +447,7 @@ $F{STATO_OBBL})))]]></textFieldExpression>
 	<pageFooter>
 		<band height="3" splitType="Stretch">
 			<line>
-				<reportElement key="line-3" x="0" y="1" width="782" height="1"/>
+				<reportElement key="line-3" x="0" y="1" width="782" height="1" uuid="87a1d736-a5a4-44ee-ab55-0fd864a9db32"/>
 				<graphicElement>
 					<pen lineWidth="2.0" lineStyle="Solid"/>
 				</graphicElement>
@@ -462,7 +457,7 @@ $F{STATO_OBBL})))]]></textFieldExpression>
 	<summary>
 		<band height="23" splitType="Stretch">
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-				<reportElement key="textField" style="TNRG10" x="517" y="10" width="63" height="13"/>
+				<reportElement key="textField" style="TNRG10" x="517" y="10" width="63" height="13" uuid="7a0895f8-0345-4d67-b9d8-e1ce610a3f31"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -470,17 +465,16 @@ $F{STATO_OBBL})))]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{TOT_IMPORTO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{TOT_IMPORTO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-16" style="TNRG10" x="388" y="10" width="129" height="13"/>
+				<reportElement key="staticText-16" style="TNRG10" x="388" y="10" width="129" height="13" uuid="8069f98b-d787-4729-89bc-1df3813a67a3"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement/>
 				<text><![CDATA[TOTALE GENERALE   €]]></text>
 			</staticText>
 		</band>
