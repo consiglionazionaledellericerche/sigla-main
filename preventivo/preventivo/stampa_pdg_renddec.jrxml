@@ -66,6 +66,9 @@
 	<parameter name="RIEPILOGO" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select DS_LIVELLO1E, DS_LIVELLO2E, DS_LIVELLO3E, DS_LIVELLO4E, DS_LIVELLO5E, DS_LIVELLO6E, DS_LIVELLO7E, NULL DS_LIVELLO8E, NULL DS_LIVELLO9E,
 DS_LIVELLO1S, DS_LIVELLO2S, DS_LIVELLO3S, DS_LIVELLO4S, DS_LIVELLO5S, DS_LIVELLO6S, DS_LIVELLO7S, NULL DS_LIVELLO8S, NULL DS_LIVELLO9S
@@ -116,20 +119,35 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 				<subreportParameter name="ROTTURA">
 					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PATH_LOGO_FORNITORE">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				<subreportParameter name="DS_LIVELLO6S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6S}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_NUM_LIV">
-					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
+				<subreportParameter name="DS_LIVELLO8S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8S}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				<subreportParameter name="DS_LIVELLO4S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DIR_IMAGE">
+					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO8E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8E}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO2S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO2S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO6E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_ESERCIZIO">
 					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_TIPO_RENDICONTO">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO_RENDICONTO}]]></subreportParameterExpression>
+				<subreportParameter name="DS_LIVELLO4E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4E}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO9E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO9E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_ORIGINE">
 					<subreportParameterExpression><![CDATA[$P{P_ORIGINE}]]></subreportParameterExpression>
@@ -137,17 +155,56 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 				<subreportParameter name="NOME_EST">
 					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="PATH_LOGO1">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DESCR_AGG_ENTE">
+					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO2E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO2E}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO9S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO9S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PATH_LOGO_FORNITORE">
+					<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO5S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO5S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_NUM_LIV">
+					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO1S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO1S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO3S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO7E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7E}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO_RENDICONTO">
+					<subreportParameterExpression><![CDATA[$P{P_TIPO_RENDICONTO}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="P_TIPO">
 					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="UTENTE">
 					<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="PATH_LOGO1">
-					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				<subreportParameter name="DS_LIVELLO5E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO5E}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DESCR_AGG_ENTE">
-					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
+				<subreportParameter name="DS_LIVELLO1E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO1E}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO3E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="RIEPILOGO">
 					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
@@ -155,59 +212,8 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 				<subreportParameter name="P_TIPO_AGGREGAZIONE">
 					<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO1S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO1S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO2S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO2S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO3S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO4S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO5S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO5S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO6S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6S}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO7S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO8S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO9S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO9S}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO1E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO1E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO2E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO2E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO3E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO4E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO5E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO5E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO6E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO7E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO8E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8E}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO9E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO9E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_renddec_main.jasper"]]></subreportExpression>
