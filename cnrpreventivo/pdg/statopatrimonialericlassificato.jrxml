@@ -1,186 +1,127 @@
-<?xml version="1.0" encoding="UTF-8"  ?>
-<!-- Created with iReport - A designer for JasperReports -->
-<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-<jasperReport
-		 name="statopatrimonialericlassificato"
-		 columnCount="1"
-		 printOrder="Vertical"
-		 orientation="Portrait"
-		 pageWidth="595"
-		 pageHeight="842"
-		 columnWidth="573"
-		 columnSpacing="0"
-		 leftMargin="11"
-		 rightMargin="11"
-		 topMargin="11"
-		 bottomMargin="11"
-		 whenNoDataType="NoPages"
-		 scriptletClass="it.cnr.jasperreports.scriptlet.sigla.StatopatrimonialericlassificatoScriptlet"
-		 isTitleNewPage="false"
-		 isSummaryNewPage="false">
-	<property name="ireport.scriptlethandling" value="2" />
-	<property name="ireport.encoding" value="UTF-8" />
-	<import value="java.util.*" />
-	<import value="net.sf.jasperreports.engine.*" />
-	<import value="net.sf.jasperreports.engine.data.*" />
-
-	<style 
-		name="TNR10"
-		isDefault="true"
-		fontName="Times New Roman"
-		pdfFontName="Times-Roman"
-	>
-	</style>
-	<style 
-		name="TNR10BOLD"
-		isDefault="false"
-		fontName="Times New Roman"
-		isBold="true"
-		pdfFontName="Times-Bold"
-	>
-	</style>
-
-	<parameter name="IST_COMM" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["C"]]></defaultValueExpression>
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="statopatrimonialericlassificato" pageWidth="595" pageHeight="842" columnWidth="573" leftMargin="11" rightMargin="11" topMargin="11" bottomMargin="11" scriptletClass="it.cnr.jasperreports.scriptlet.sigla.StatopatrimonialericlassificatoScriptlet" uuid="09ba138e-2278-4f0a-9870-af369f1c8106">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="TNR10" isDefault="true" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="TNR10BOLD" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="IST_COMM" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="inEs" isForPrompting="false" class="java.lang.Integer">
-		<defaultValueExpression ><![CDATA[new Integer("2005")]]></defaultValueExpression>
+	<parameter name="inEs" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer("2005")]]></defaultValueExpression>
 	</parameter>
-	<parameter name="CDS" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["075"]]></defaultValueExpression>
+	<parameter name="CDS" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["075"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="uo" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["075.000"]]></defaultValueExpression>
+	<parameter name="uo" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["075.000"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DIR_SUBREPORT" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA[""]]></defaultValueExpression>
+	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DIR_IMAGE" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="ATTPAS" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["SPPAS"]]></defaultValueExpression>
+	<parameter name="ATTPAS" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["SPPAS"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="dettaglioConti" isForPrompting="false" class="java.lang.String">
-		<defaultValueExpression ><![CDATA["Y"]]></defaultValueExpression>
+	<parameter name="dettaglioConti" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
 	</parameter>
-	<queryString><![CDATA[Select 1 from dual]]></queryString>
-
+	<queryString>
+		<![CDATA[Select 1 from dual]]>
+	</queryString>
 	<field name="1" class="java.math.BigDecimal"/>
-
-		<background>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</background>
-		<title>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</title>
-		<pageHeader>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</pageHeader>
-		<columnHeader>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</columnHeader>
-		<detail>
-			<band height="16"  isSplitAllowed="true" >
-				<subreport  isUsingCache="true">
-					<reportElement
-						x="0"
-						y="0"
-						width="572"
-						height="16"
-						key="subreport-1"
-						positionType="Float"/>
-					<subreportParameter  name="inEs">
-						<subreportParameterExpression><![CDATA[$P{inEs}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="CDS">
-						<subreportParameterExpression><![CDATA[$P{CDS}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="uo">
-						<subreportParameterExpression><![CDATA[$P{uo}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="IST_COMM">
-						<subreportParameterExpression><![CDATA[$P{IST_COMM}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="DIR_IMAGE">
-						<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter  name="ATTPAS">
-						<subreportParameterExpression><![CDATA[$P{ATTPAS}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression  class="java.lang.String"><![CDATA[$P{DIR_SUBREPORT}+"statopatrimonialericlassificato_subreport0.jasper"]]></subreportExpression>
-				</subreport>
-			</band>
-		</detail>
-		<columnFooter>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</columnFooter>
-		<pageFooter>
-			<band height="15"  isSplitAllowed="true" >
-				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="245"
-						y="0"
-						width="294"
-						height="15"
-						forecolor="#000000"
-						backcolor="#FFFFFF"
-						key="textField-1"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" positionType="Float" x="0" y="0" width="569" height="16" uuid="d601ea28-0279-4ebc-bdba-1a3cb4b1c82e"/>
+				<subreportParameter name="inEs">
+					<subreportParameterExpression><![CDATA[$P{inEs}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CDS">
+					<subreportParameterExpression><![CDATA[$P{CDS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="uo">
+					<subreportParameterExpression><![CDATA[$P{uo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="IST_COMM">
+					<subreportParameterExpression><![CDATA[$P{IST_COMM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DIR_IMAGE">
+					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ATTPAS">
+					<subreportParameterExpression><![CDATA[$P{ATTPAS}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT}+"statopatrimonialericlassificato_subreport0.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement key="textField-1" x="245" y="0" width="294" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="4cfb7a2b-9a6c-42a0-b1c1-43373bac4810"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Right">
-						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1250" isStrikeThrough="false" />
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="542"
-						y="0"
-						width="27"
-						height="15"
-						key="textField-2"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " di "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-2" x="542" y="0" width="27" height="15" uuid="a22cdc5f-4513-4db3-983f-faa5091d6116"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement>
-						<font fontName="Times New Roman" pdfFontName="Times-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="Cp1250" isStrikeThrough="false" />
-					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						style="TNR10BOLD"
-						x="6"
-						y="0"
-						width="143"
-						height="15"
-						key="textField"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="dd/MM/yyyy HH.mm.ss" isBlankWhenNull="false">
+				<reportElement key="textField" style="TNR10BOLD" x="6" y="0" width="143" height="15" uuid="b5992b76-a6f5-4f1a-b94e-c6f96408273f"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement isStyledText="true">
-						<font/>
-					</textElement>
-				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
-			</band>
-		</pageFooter>
-		<summary>
-			<band height="0"  isSplitAllowed="true" >
-			</band>
-		</summary>
+				</box>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
 </jasperReport>
