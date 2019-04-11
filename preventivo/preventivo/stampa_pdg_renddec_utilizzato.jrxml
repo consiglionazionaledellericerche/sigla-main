@@ -102,14 +102,14 @@ Boolean.TRUE:
                          $F{RES_INI_ES_PREC}.compareTo(BigDecimal.ZERO)>0||
                          $F{TOT_ACC_IMP_PREC}.compareTo(BigDecimal.ZERO)>0||
                          $F{RES_INI_ES}.compareTo(BigDecimal.ZERO)>0)?
-"Avanzo di amministrazione utilizzato":
+"Disavanzo di amministrazione":
         ($P{P_TIPO}.equals("S")&&($F{RES_INI_ES}.compareTo(BigDecimal.ZERO)<0||
                              $F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)<0||
                              $F{RIS_PAG}.compareTo(BigDecimal.ZERO)<0||
                              $F{RES_INI_ES_PREC}.compareTo(BigDecimal.ZERO)<0||
                              $F{TOT_ACC_IMP_PREC}.compareTo(BigDecimal.ZERO)<0||
                              $F{RES_INI_ES}.compareTo(BigDecimal.ZERO)<0)?
-    "Disavanzo di amministrazione utilizzato":
+    "Avanzo di amministrazione":
     "")
 )]]></textFieldExpression>
 			</textField>
