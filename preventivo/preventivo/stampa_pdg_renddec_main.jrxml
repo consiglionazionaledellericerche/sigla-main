@@ -166,7 +166,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -184,7 +184,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -202,7 +202,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV3" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO3" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -220,7 +220,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV4" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO4" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -238,7 +238,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV5" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO5" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -256,7 +256,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV6" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO6" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -274,7 +274,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV7" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO7" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV7" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO7" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -292,7 +292,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_LIV8" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO8" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_LIV8" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO8" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
@@ -457,146 +457,9 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	</group>
 	<group name="RIEPILOGO_TITOLI">
 		<groupExpression><![CDATA["RIEPILOGO_TITOLI"]]></groupExpression>
-		<groupFooter>
-			<band height="17" splitType="Stretch">
-				<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E")  &&
-    $P{P_NUM_LIV}.compareTo(new Integer(2)) >= 0)]]></printWhenExpression>
-				<subreport>
-					<reportElement x="0" y="4" width="842" height="10" isRemoveLineWhenBlank="true" uuid="eafd3963-86c1-4d1f-9b3c-192a925f3336"/>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="LIVELLO2">
-						<subreportParameterExpression><![CDATA[$F{CD_LIVELLO2}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_ESERCIZIO">
-						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_TIPO">
-						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO1">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="DESCR_AGG_ENTE">
-						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="RIEPILOGO">
-						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdg_renddec_totale_titoli.jasper"]]></subreportExpression>
-				</subreport>
-			</band>
-			<band height="17">
-				<printWhenExpression><![CDATA[Boolean.valueOf($P{RIEPILOGO}.equals("S"))]]></printWhenExpression>
-				<subreport>
-					<reportElement x="0" y="4" width="842" height="10" isRemoveLineWhenBlank="true" uuid="1fe1d4fb-71b6-4082-97b3-c4738d146b44"/>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_ESERCIZIO">
-						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_TIPO">
-						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO1">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="DESCR_AGG_ENTE">
-						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="RIEPILOGO">
-						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdg_renddec_riepilogo.jasper"]]></subreportExpression>
-				</subreport>
-				<break>
-					<reportElement x="0" y="2" width="100" height="1" uuid="bd30eba1-6544-4e49-83d5-6666579b456d"/>
-				</break>
-			</band>
-		</groupFooter>
 	</group>
 	<group name="COD_ROTTURA_ORD">
 		<groupExpression><![CDATA[$F{CD_LIVELLO2}.compareTo($P{ROTTURA}) < 0?$F{CD_LIVELLO2}:"AFTER"]]></groupExpression>
-		<groupFooter>
-			<band height="15">
-				<printWhenExpression><![CDATA[Boolean.valueOf($F{CD_LIVELLO2}.compareTo($P{ROTTURA}) < 0)]]></printWhenExpression>
-				<subreport>
-					<reportElement x="0" y="2" width="842" height="10" isRemoveLineWhenBlank="true" uuid="2d9e7d4a-5043-403b-99b0-537bfa6fbf86"/>
-					<subreportParameter name="SUBREPORT_DIR">
-						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="ROTTURA">
-						<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_ESERCIZIO">
-						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_TIPO">
-						<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="NOME_EST">
-						<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO_FORNITORE">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO_FORNITORE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="PATH_LOGO1">
-						<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="UTENTE">
-						<subreportParameterExpression><![CDATA[$P{UTENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="LIVELLO2">
-						<subreportParameterExpression><![CDATA[$F{CD_LIVELLO2}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="DESCR_AGG_ENTE">
-						<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="P_NUM_LIV">
-						<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="RIEPILOGO">
-						<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdg_renddec_rottura.jasper"]]></subreportExpression>
-				</subreport>
-			</band>
-		</groupFooter>
 	</group>
 	<group name="LIVELLO1" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{CD_LIVELLO1}]]></groupExpression>
@@ -1624,7 +1487,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 					<font fontName="Times New Roman" size="8" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Roman" pdfEncoding="Cp1252"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Parte "+($P{P_TIPO}.equals("E")?"Entrate":"Spese")]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Parte I"+($P{P_TIPO}.equals("E")?" - Entrate":"I - Spese")]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement key="line-4" x="3" y="68" width="1" height="52" uuid="4fb61da4-204a-41b9-af30-589da9edadbc"/>

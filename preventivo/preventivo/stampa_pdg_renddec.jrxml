@@ -41,16 +41,16 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2018)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_NUM_LIV" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[new Integer(3)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO_AGGREGAZIONE" class="java.lang.String">
-		<defaultValueExpression><![CDATA["SCI"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["FIN"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_TIPO_RENDICONTO" class="java.lang.String">
 		<parameterDescription><![CDATA[DEC: Decisionale - GES: Gestionale]]></parameterDescription>
