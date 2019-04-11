@@ -82,6 +82,40 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo Totale Spesa Variaya" />		
+
+	<fieldProperty
+		name="imAssestatoSpesaFinanziato"
+		property="saldoSpesa.assestatoFinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa Finanziato" />
+	<fieldProperty
+		name="imUtilizzatoAssestatoFinanziamento"
+		property="saldoSpesa.utilizzatoAssestatoFinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Utilizzato Assestato Spesa Finanziato" />
+
+	<fieldProperty
+		name="imAssestatoSpesaCofinanziato"
+		property="saldoSpesa.assestatoCofinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa Cofinanziato" />
+	<fieldProperty
+		name="imUtilizzatoAssestatoCofinanziamento"
+		property="saldoSpesa.utilizzatoAssestatoCofinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Utilizzato Assestato Spesa Cofinanziato" />
 		
 	<formFieldProperty name="elemento_voce" />
 	<formFieldProperty name="cd_elemento_voce"/>
@@ -95,7 +129,12 @@
 	<formFieldProperty name="imVarFinanziatoRimodulato" />
 	<formFieldProperty name="imVarCofinanziatoRimodulato" />
 	<formFieldProperty name="imTotaleVarRimodulato" />
-	
+
+	<formFieldProperty name="imAssestatoSpesaFinanziato" />
+	<formFieldProperty name="imUtilizzatoAssestatoFinanziamento" />
+	<formFieldProperty name="imAssestatoSpesaCofinanziato" />
+	<formFieldProperty name="imUtilizzatoAssestatoCofinanziamento" />
+		
 	<columnFieldProperty name="elemento_voce" />
 
 	<columnSet name="voce_bilancio">
@@ -127,17 +166,21 @@
 		<columnFieldProperty
 			name="ds_elemento_voce"/>
 		<columnFieldProperty 
-			name="im_assestato_spesa"
+			name="imAssestatoSpesaFinanziato"
 			headerLabel="SITUAZIONE SPESA"
-			label="Assestato"/>
+			label="Assestato Fin."/>
 		<columnFieldProperty 
-			name="im_trasferito_spesa"
+			name="imUtilizzatoAssestatoFinanziamento"
 			headerLabel="SITUAZIONE SPESA"
-			label="Trasferito"/>
+			label="Utilizzato Fin."/>
 		<columnFieldProperty 
-			name="im_impacc_spesa"
+			name="imAssestatoSpesaCofinanziato"
 			headerLabel="SITUAZIONE SPESA"
-			label="Impegnato"/>
+			label="Assestato Cofin."/>
+		<columnFieldProperty 
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="SITUAZIONE SPESA"
+			label="Utilizzato Cofin."/>			
 		<columnFieldProperty
 			name="imVarFinanziatoRimodulato"
 			headerLabel="VARIAZIONI"

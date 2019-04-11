@@ -20,7 +20,8 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	
 	private java.math.BigDecimal imSpesaFinanziatoRimodulatoPreDelete;
 	private java.math.BigDecimal imSpesaCofinanziatoRimodulatoPreDelete;
-
+	private boolean detailDerivato;
+	
 	public Progetto_piano_economicoBulk() {
 		super();
 	}
@@ -226,22 +227,44 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	
 	public java.math.BigDecimal getDispResiduaFinanziamentoRimodulato() {
 		return Optional.ofNullable(this.getImSpesaFinanziatoRimodulato()).orElse(BigDecimal.ZERO)
-				.subtract(Optional.ofNullable(this.getSaldoSpesa())
-								  .flatMap(el->Optional.ofNullable(el.getAssestatoFinanziamento()))
-								  .orElse(BigDecimal.ZERO));
+				.subtract(this.getImAssestatoSpesaFinanziatoRimodulato());
 	}
 
 	public java.math.BigDecimal getDispResiduaCofinanziamentoRimodulato() {
 		return Optional.ofNullable(this.getImSpesaCofinanziatoRimodulato()).orElse(BigDecimal.ZERO)
-				.subtract(Optional.ofNullable(this.getSaldoSpesa())
-								  .flatMap(el->Optional.ofNullable(el.getAssestatoCofinanziamento()))
-						          .orElse(BigDecimal.ZERO));
+				.subtract(this.getImAssestatoSpesaCofinanziatoRimodulato());
 	}
 
 	public java.math.BigDecimal getDispResiduaRimodulato() {
 		return this.getDispResiduaFinanziamentoRimodulato().add(this.getDispResiduaCofinanziamentoRimodulato());
 	}
+
+	/**
+	 * Ritorna il totale assestato spesa di tipo finanziamento delle voci associate inclusa la rimodulazione proposta dall'utente
+	 * @return java.math.BigDecimal
+	 */
+	public java.math.BigDecimal getImAssestatoSpesaFinanziatoRimodulato() {
+		return this.getSaldoSpesa().getAssestatoFinanziamento()
+				.add(this.getVociBilancioAssociate().stream()
+				  		 .filter(el->!el.isDetailRimodulatoEliminato())
+					     .filter(el->Optional.ofNullable(el.getImVarFinanziatoRimodulato()).isPresent())
+					     .map(Ass_progetto_piaeco_voceBulk::getImVarFinanziatoRimodulato)
+					     .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO));
+	}
 	
+	/**
+	 * Ritorna il totale assestato spesa di tipo cofinanziamento delle voci associate inclusa la rimodulazione proposta dall'utente
+	 * @return java.math.BigDecimal
+	 */
+	public java.math.BigDecimal getImAssestatoSpesaCofinanziatoRimodulato() {
+		return this.getSaldoSpesa().getAssestatoCofinanziamento()
+				.add(this.getVociBilancioAssociate().stream()
+				  		 .filter(el->!el.isDetailRimodulatoEliminato())
+					     .filter(el->Optional.ofNullable(el.getImVarCofinanziatoRimodulato()).isPresent())
+					     .map(Ass_progetto_piaeco_voceBulk::getImVarCofinanziatoRimodulato)
+					     .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO));
+	}
+
 	public boolean isDetailRimodulato(){
 		return Optional.ofNullable(this.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)
 				.compareTo(Optional.ofNullable(this.getImSpesaFinanziatoRimodulato()).orElse(BigDecimal.ZERO))!=0 ||
@@ -270,5 +293,18 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 
 	public void setImSpesaCofinanziatoRimodulatoPreDelete(java.math.BigDecimal imSpesaCofinanziatoRimodulatoPreDelete) {
 		this.imSpesaCofinanziatoRimodulatoPreDelete = imSpesaCofinanziatoRimodulatoPreDelete;
+	}
+	
+	public void setDetailDerivato(boolean detailDerivato) {
+		this.detailDerivato = detailDerivato;
+	}
+	
+	/**
+	 * Indica se il record nella rimodulazione è stato creato a seguito di copia dal piano economico
+	 * Serve per gestire la rimodulazione
+	 * @return boolean
+	 */
+	public boolean isDetailDerivato() {
+		return detailDerivato;
 	}
 }
