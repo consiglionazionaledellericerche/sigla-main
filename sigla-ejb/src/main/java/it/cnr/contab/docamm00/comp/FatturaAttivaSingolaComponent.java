@@ -5530,14 +5530,16 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                         BigDecimal imponibile = (BigDecimal)riga.getValue();
                         BigDecimal aliquota = (BigDecimal)riga.getKey();
                         if (aliquota.compareTo(BigDecimal.ZERO) > 0){
+                        	imponibile.multiply(aliquota).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_UP);
                         	totaleIva = totaleIva.add(imponibile.multiply(aliquota).divide(new java.math.BigDecimal(100), 2, java.math.BigDecimal.ROUND_HALF_UP));
                         }
                     }
                     BigDecimal differenzaIva = totaleIva.subtract(fatturaAttiva.getIm_totale_iva());
-                    if (differenzaIva.compareTo(BigDecimal.ZERO) > 0){
+                    BigDecimal tolleranza = BigDecimal.ONE.divide((BigDecimal.TEN.multiply(BigDecimal.TEN)));
+                    if (differenzaIva.compareTo(BigDecimal.ZERO) > 0 && differenzaIva.compareTo(tolleranza) > 0){
                         throw new it.cnr.jada.comp.ApplicationException("Il totale documento per aliquota iva è maggiore di "+differenzaIva+" rispetto alla somma dei dettagli del documento. Aggiungere " + differenzaIva+" all'importo IVA(forzandolo) di una delle righe del documento.");
                     }
-                    if (differenzaIva.compareTo(BigDecimal.ZERO) < 0){
+                    if (differenzaIva.compareTo(BigDecimal.ZERO) < 0 && differenzaIva.abs().compareTo(tolleranza) < 0){
                         throw new it.cnr.jada.comp.ApplicationException("Il totale documento per aliquota iva è minore di "+differenzaIva+" rispetto alla somma dei dettagli del documento. Sottrarre " + differenzaIva.abs()+" dall'importo IVA(forzandolo) di una delle righe del documento.");
                     }
                 }
