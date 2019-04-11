@@ -15,7 +15,7 @@
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico_rimodulato",true,false,true,"100%","100px"); %>
+<%	controller.writeHTMLTable(pageContext,"piano_economico_rimodulato",true,false,true,"100%","300px"); %>
 <table class="Panel card p-2 mt-1">
   <TR>
   	<TD><% controller.writeFormLabel(out,"esercizio_piano");%></TD>
@@ -34,7 +34,7 @@
 </br>
 <fieldset class="fieldset">
 	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
-<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato",true,false,true,"100%","100px"); %>
+<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato",true,false,true,"100%","300px"); %>
 	</br>
 	<table class="Panel">
 	  <tr><% controllerVoci.writeFormField(out,"elemento_voce");%></tr>

@@ -34,7 +34,7 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
 	
 	public OggettoBulk removeDetail(OggettoBulk oggettobulk, int i) {
 		Progetto_piano_economicoBulk ppe = (Progetto_piano_economicoBulk)oggettobulk;
-		if (ppe.isToBeCreated())
+		if (!ppe.isDetailDerivato())
 			return super.removeDetail(oggettobulk, i);
 		if (!ppe.isDetailRimodulatoEliminato()) {
 			ppe.setImSpesaFinanziatoRimodulatoPreDelete(ppe.getImSpesaFinanziatoRimodulato());
