@@ -331,9 +331,9 @@ $F{TOT_ACC_IMP}.abs():BigDecimal.ZERO))]]></variableExpression>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($P{P_TIPO}.equals("E")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)<0?
+				<textFieldExpression><![CDATA[($P{P_TIPO}.equals("E")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)>0?
 "Disavanzo di amministrazione":
-($P{P_TIPO}.equals("S")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)>0?
+($P{P_TIPO}.equals("S")&&$F{TOT_ACC_IMP}.compareTo(BigDecimal.ZERO)<0?
 "Avanzo di amministrazione":
 ""))]]></textFieldExpression>
 			</textField>
