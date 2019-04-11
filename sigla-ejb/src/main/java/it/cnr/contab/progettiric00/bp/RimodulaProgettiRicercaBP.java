@@ -264,6 +264,7 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 			progetto.getDettagliPianoEconomicoTotale().stream()
 				.forEach(el->{
 					Progetto_piano_economicoBulk ppe = new Progetto_piano_economicoBulk();
+					ppe.setDetailDerivato(Boolean.TRUE);
 					ppe.setProgetto(el.getProgetto());
 					ppe.setVoce_piano_economico(el.getVoce_piano_economico());
 					ppe.setEsercizio_piano(el.getEsercizio_piano());
@@ -285,6 +286,7 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 			progetto.getDettagliPianoEconomicoAnnoCorrente().stream()
 				.forEach(el->{
 					Progetto_piano_economicoBulk ppe = new Progetto_piano_economicoBulk();
+					ppe.setDetailDerivato(Boolean.TRUE);
 					ppe.setProgetto(el.getProgetto());
 					ppe.setVoce_piano_economico(el.getVoce_piano_economico());
 					ppe.setEsercizio_piano(el.getEsercizio_piano());
@@ -306,6 +308,7 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 			progetto.getDettagliPianoEconomicoAltriAnni().stream()
 				.forEach(el->{
 					Progetto_piano_economicoBulk ppe = new Progetto_piano_economicoBulk();
+					ppe.setDetailDerivato(Boolean.TRUE);
 					ppe.setProgetto(el.getProgetto());
 					ppe.setVoce_piano_economico(el.getVoce_piano_economico());
 					ppe.setEsercizio_piano(el.getEsercizio_piano());
