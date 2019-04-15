@@ -29,7 +29,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -242,7 +241,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			return super.creaConBulk(usercontext, oggettobulk);
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
-		} catch (PersistencyException|IntrospectionException e) {
+		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
 	}

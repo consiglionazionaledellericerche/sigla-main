@@ -164,7 +164,9 @@
 		<columnFieldProperty
 			name="cd_elemento_voce"/>
 		<columnFieldProperty
-			name="ds_elemento_voce"/>
+			name="ds_elemento_voce"
+			inputType="DESCTOOL"
+			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziato"
 			headerLabel="SITUAZIONE SPESA"
