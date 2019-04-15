@@ -2049,7 +2049,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             nomeFileP7m
                     );
                     try {
-                        Optional.ofNullable(documentiContabiliService.signDocuments(signP7M, "service/sigla/firma/p7m"))
+                        Optional.ofNullable(documentiContabiliService.signDocuments(signP7M, "service/sigla/firma/p7m", distinta.getStorePath()))
                                 .ifPresent(key -> {
                                     File fileSigned = new File(
                                             System.getProperty("tmp.dir.SIGLAWeb")
