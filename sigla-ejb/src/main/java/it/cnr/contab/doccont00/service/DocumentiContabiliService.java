@@ -390,7 +390,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         }
     }
 
-    public String signDocuments(SignP7M signP7M, String url) throws StorageException {
+    public String signDocuments(SignP7M signP7M, String url, String path) throws StorageException {
         if (storageService.getStoreType().equals(StorageService.StoreType.CMIS) && signDocumentsFromRepository) {
             return signDocuments(new GsonBuilder().create().toJson(signP7M), url);
         } else {
@@ -408,7 +408,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 return storeSimpleDocument(
                         new ByteArrayInputStream(bytes),
                         MimeTypes.P7M.mimetype(),
-                        storageObject.getPath().substring(0, storageObject.getPath().lastIndexOf(StorageService.SUFFIX) + 1),
+                        path,
                         metadataProperties).getKey();
             } catch (ArubaSignServiceException | IOException e) {
                 throw new StorageException(StorageException.Type.GENERIC, e);
