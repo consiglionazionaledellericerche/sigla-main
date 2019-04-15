@@ -1,6 +1,7 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -307,4 +308,37 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	public boolean isDetailDerivato() {
 		return detailDerivato;
 	}
+	
+	public String getMessageAnomaliaDetailRimodulato() {
+		StringBuffer anomalia = new StringBuffer();
+		anomalia = anomalia.append(
+				Optional.ofNullable(this.getDispResiduaFinanziamentoRimodulato())
+				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				.map(el->
+					"QUOTA FINANZIATA:" +
+					"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
+					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
+					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito.\r\r")
+				.orElse(""));
+		anomalia = anomalia.append(
+				Optional.ofNullable(this.getDispResiduaCofinanziamentoRimodulato())
+				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				.map(el->
+					"QUOTA COFINANZIATA:" +
+					"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
+					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
+					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito.\r\r")
+				.orElse(""));
+		anomalia = anomalia.append(
+				Optional.ofNullable(this.getVociBilancioAssociate())
+				.map(List::stream)
+				.orElse(Stream.empty())
+				.filter(el->Optional.ofNullable(el.getMessageAnomaliaDetailRimodulato()).isPresent())
+				.findAny()
+				.map(el->"VOCI ASSOCIATE:" +
+					"\rAlcune voci associate presentano anomalie da correggere.")
+				.orElse(""));
+
+		return Optional.ofNullable(anomalia).filter(el->el.length()>0).map(StringBuffer::toString).orElse(null);
+	}	
 }
