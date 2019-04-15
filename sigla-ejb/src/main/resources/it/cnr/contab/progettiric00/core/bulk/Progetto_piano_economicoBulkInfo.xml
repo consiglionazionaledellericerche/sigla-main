@@ -341,7 +341,9 @@
 		<columnFieldProperty
 			name="ds_voce_piano"
 			headerLabel="PIANO ECONOMICO"
-			label="Descrizione"/>
+			label="Descrizione"
+			inputType="DESCTOOL"
+			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
 			headerLabel="QUOTE CORRENTI"
@@ -440,7 +442,9 @@
 		<columnFieldProperty
 			name="ds_voce_piano"
 			headerLabel="PIANO ECONOMICO"
-			label="Descrizione"/>
+			label="Descrizione"
+			inputType="DESCTOOL"
+			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
 			headerLabel="QUOTE CORRENTI"
@@ -564,5 +568,48 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="ASSESTATO RIMODULATO"
 			label="Cofinanziato"/>
-	</columnSet>	
+	</columnSet>
+	
+	<columnSet name="piano_economico3_rimodulato">
+		<columnFieldProperty
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
+		<columnFieldProperty
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="im_spesa_finanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="QUOTE CORRENTI"
+			label="Totale"/> 
+		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="imAssestatoSpesaFinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Finanziato"/>
+		<columnFieldProperty 
+			name="imAssestatoSpesaCofinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Cofinanziato"/>
+	</columnSet>		
 </bulkInfo>

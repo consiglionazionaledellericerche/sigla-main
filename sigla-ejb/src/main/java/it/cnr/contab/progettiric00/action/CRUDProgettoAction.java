@@ -3,13 +3,18 @@ package it.cnr.contab.progettiric00.action;
 import java.sql.Timestamp;
 import java.util.Optional;
 
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
+import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
+import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -499,5 +504,44 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			return handleException(context,e);
 		}
 	}
+	
+	public Forward doRimodula(ActionContext context){
+		try 
+		{
+			fillModel( context );
+	        TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP) getBusinessProcess(context);
+			bp.completeSearchTools(context, bp);
+	        bp.validate(context);
+        	return openConfirm(context, "Attenzione! Si vuole procedere alla rimodulazione del progetto?", 
+        			OptionBP.CONFIRM_YES_NO, "doConfirmRimodula");
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
+		}
+	}
+
+	public Forward doConfirmRimodula(ActionContext context,int option) {
+		try 
+		{
+			if (option == OptionBP.YES_BUTTON) {
+				TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
+				ProgettoBulk progetto = (ProgettoBulk)bp.getModel();
+
+				String status = "M";
+				RimodulaProgettiRicercaBP newbp = null;
+				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
+				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","RimodulaProgettiRicercaBP");
+				if (mode == null) 
+					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di rimodulazione progetti. Impossibile continuare.");
+
+				newbp = (RimodulaProgettiRicercaBP) context.getUserInfo().createBusinessProcess(context,"RimodulaProgettiRicercaBP",new Object[] { status + "RSWTh",  progetto});
+				return context.addBusinessProcess(newbp);
+			}
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+		return context.findDefaultForward();
+	}	
 }
 
