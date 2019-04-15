@@ -38,7 +38,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		return dettHome.fetchAll(sql);
 	}
 	
-	public java.util.Collection<Progetto_rimodulazioneBulk> findRimodulazioni(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws IntrospectionException, PersistencyException {
+	public java.util.List<Progetto_rimodulazioneBulk> findRimodulazioni(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws PersistencyException {
 		Progetto_rimodulazioneHome dettHome = (Progetto_rimodulazioneHome)getHomeCache().getHome(Progetto_rimodulazioneBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);

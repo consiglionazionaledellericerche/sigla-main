@@ -2,6 +2,7 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -14,6 +15,7 @@ import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
@@ -32,6 +34,8 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
@@ -40,6 +44,7 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 	protected boolean isUoCdsCollegata = false;
 	private Integer annoFromPianoEconomico;
 	private Unita_organizzativaBulk uoScrivania;
+	private ProgettoBulk mainProgetto;
 
 	private SimpleDetailCRUDController crudPianoEconomicoTotale = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoTotale", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoTotale", this){
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
@@ -99,6 +104,11 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 		super(function);
 	}
 
+	public RimodulaProgettiRicercaBP(String function, ProgettoBulk progetto) {
+		super(function);
+		setMainProgetto(progetto);
+	}
+	
 	@Override
 	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
 		try {
@@ -115,7 +125,28 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 			throw new BusinessProcessException(e);
 		}
 		super.init(config, actioncontext);
-		resetForSearch(actioncontext);
+		if (this.getMainProgetto()!=null) {
+			try {
+				List<Progetto_rimodulazioneBulk> listRimodulazioni = createComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", actioncontext.getUserContext(), this.getMainProgetto().getPg_progetto());
+				Optional<Progetto_rimodulazioneBulk> lastRim = listRimodulazioni.stream()
+									.filter(el->!el.isStatoApprovato())
+									.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_progetto))
+									.findFirst();
+
+				if (lastRim.isPresent()) {
+					this.setModel(actioncontext, lastRim.get());
+					this.edit(actioncontext, this.getModel());
+				} else {
+					this.initializeModelForInsert(actioncontext, this.getModel());
+					((Progetto_rimodulazioneBulk)this.getModel()).setProgetto(this.getMainProgetto());
+					this.initializeProgetto(actioncontext, (Progetto_rimodulazioneBulk)this.getModel());
+				}
+			}catch(Throwable e) {
+				throw new BusinessProcessException(e);
+			}
+		} else {
+			resetForSearch(actioncontext);
+		}
 	}
 
 	@Override
@@ -499,4 +530,12 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 	        throw handleException(e);
 	    }
 	}	
+	
+	public void setMainProgetto(ProgettoBulk mainProgetto) {
+		this.mainProgetto = mainProgetto;
+	}
+	
+	public ProgettoBulk getMainProgetto() {
+		return mainProgetto;
+	}
 }

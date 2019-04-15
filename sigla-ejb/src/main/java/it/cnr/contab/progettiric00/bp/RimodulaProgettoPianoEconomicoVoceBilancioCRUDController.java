@@ -51,11 +51,8 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
 			style.append("font-style:italic;font-weight:bold;");
 		if (assVoce.isDetailRimodulatoEliminato())
 			style.append("text-decoration: line-through;");
-		if (assVoce.getSaldoSpesa().getDispAssestatoFinanziamento()
-				   .compareTo(Optional.ofNullable(assVoce.getImVarFinanziatoRimodulato()).orElse(BigDecimal.ZERO))<0 ||
-			assVoce.getSaldoSpesa().getDispAssestatoCofinanziamento()
-				   .compareTo(Optional.ofNullable(assVoce.getImVarCofinanziatoRimodulato()).orElse(BigDecimal.ZERO))<0)
-			style.append("color:red;");
+		if (Optional.ofNullable(assVoce.getMessageAnomaliaDetailRimodulato()).isPresent())
+			style.append("color:red!important;");
 		return Optional.of(style).filter(el->el.length()>0).map(StringBuffer::toString).orElse(null);
 	};	
 	

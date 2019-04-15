@@ -23,12 +23,12 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
 	public String getRowStyle(Object obj) {
 		Progetto_piano_economicoBulk ppe = (Progetto_piano_economicoBulk)obj;
 		StringBuffer style = new StringBuffer();
-		if (ppe.isDetailRimodulato() || ppe.isToBeCreated())
+		if (ppe.isDetailRimodulato() || (ppe.isToBeCreated() && !ppe.isDetailDerivato()))
 			style.append("font-style:italic;font-weight:bold;");
 		if (ppe.isDetailRimodulatoEliminato())
 			style.append("text-decoration: line-through;");
-		if (ppe.getDispResiduaRimodulato().compareTo(BigDecimal.ZERO)<0)
-			style.append("color:red;");
+		if (Optional.ofNullable(ppe.getMessageAnomaliaDetailRimodulato()).isPresent())
+			style.append("color:red!important;");
 		return Optional.of(style).filter(el->el.length()>0).map(StringBuffer::toString).orElse(null);
 	};
 	
