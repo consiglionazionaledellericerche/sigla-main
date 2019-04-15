@@ -15,7 +15,7 @@
 <div class="Group card">
     <table class="Panel border-info p-2">
         <tr>
-            <td><%controllerVoce.writeHTMLTable(pageContext,"piano_economico1_rimodulato",false,false,false,"100%","350px"); %></td>
+            <td><%controllerVoce.writeHTMLTable(pageContext,"piano_economico3_rimodulato",false,false,false,"100%","350px"); %></td>
         </tr>
     </table>
 </div>

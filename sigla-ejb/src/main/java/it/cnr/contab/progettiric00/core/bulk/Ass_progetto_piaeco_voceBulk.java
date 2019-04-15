@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.util.Utility;
 
 public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 	private Progetto_piano_economicoBulk progetto_piano_economico;
@@ -221,6 +222,43 @@ public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 		return this.isDetailRimodulatoEliminato() || this.isDetailRimodulatoAggiunto() ||
 				Optional.ofNullable(this.getImVarFinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0 ||
 				Optional.ofNullable(this.getImVarCofinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)!=0;
+	}
+	
+	public boolean isDetailRimodulatoAnomalo() {
+		return this.getSaldoSpesa().getDispAssestatoFinanziamento()
+				   .add(Optional.ofNullable(this.getImVarFinanziatoRimodulato()).orElse(BigDecimal.ZERO))
+				   .compareTo(BigDecimal.ZERO)<0 ||
+			   this.getSaldoSpesa().getDispAssestatoCofinanziamento()
+				   .add(Optional.ofNullable(this.getImVarCofinanziatoRimodulato()).orElse(BigDecimal.ZERO))
+				   .compareTo(BigDecimal.ZERO)<0;
+	}
+
+	public String getMessageAnomaliaDetailRimodulato() {
+		StringBuffer anomalia = new StringBuffer();
+		anomalia = anomalia.append(
+				Optional.ofNullable(this.getImVarFinanziatoRimodulato())
+				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				.filter(el->this.getSaldoSpesa().getDispAssestatoFinanziamento().add(el).compareTo(BigDecimal.ZERO)<0)
+				.map(el->
+					"QUOTA FINANZIATA:" +
+					"\rAssestato (" + new it.cnr.contab.util.EuroFormat().format(this.getSaldoSpesa().getAssestatoFinanziamento())+")"+
+					" - Utilizzato (" + new it.cnr.contab.util.EuroFormat().format(this.getSaldoSpesa().getUtilizzatoAssestatoFinanziamento())+")"+
+					" + Variazioni (" + new it.cnr.contab.util.EuroFormat().format(el)+")"+
+					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito.\r\r")
+				.orElse(""));
+		anomalia = anomalia.append(
+				Optional.ofNullable(this.getImVarCofinanziatoRimodulato())
+				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				.filter(el->this.getSaldoSpesa().getDispAssestatoCofinanziamento().add(el).compareTo(BigDecimal.ZERO)<0)
+				.map(el->
+					"QUOTA COFINANZIATA:" +
+					"\rAssestato (" + new it.cnr.contab.util.EuroFormat().format(this.getSaldoSpesa().getAssestatoCofinanziamento())+")"+
+					" - Utilizzato (" + new it.cnr.contab.util.EuroFormat().format(this.getSaldoSpesa().getUtilizzatoAssestatoCofinanziamento())+")"+
+					" + Variazioni (" + new it.cnr.contab.util.EuroFormat().format(el)+")"+
+					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito.")
+				.orElse(""));
+
+		return Optional.ofNullable(anomalia).filter(el->el.length()>0).map(StringBuffer::toString).orElse(null);
 	}
 }
 

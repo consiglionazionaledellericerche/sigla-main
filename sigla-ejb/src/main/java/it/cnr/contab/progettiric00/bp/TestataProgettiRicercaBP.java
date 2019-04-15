@@ -672,11 +672,21 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
 				.map(Progetto_other_fieldBulk::isStatoChiuso).orElse(Boolean.FALSE);
 	}
-	
+
+	public boolean isRimodulaButtonHidden()	{
+		return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+				.filter(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+				.isPresent() ||
+			    !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
+				.map(ProgettoBulk.class::cast).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.map(Progetto_other_fieldBulk::isStatoApprovato).orElse(Boolean.FALSE);
+	}
+
 	@Override
 	protected Button[] createToolbar() {
 		Button[] toolbar = super.createToolbar();
-		Button[] newToolbar = new Button[ toolbar.length + 5];
+		Button[] newToolbar = new Button[ toolbar.length + 6];
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
 			newToolbar[i] = toolbar[i];
@@ -690,6 +700,8 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		newToolbar[ i+3 ].setSeparator(true);
 		newToolbar[ i+4 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.riapri");
 		newToolbar[ i+4 ].setSeparator(true);
+		newToolbar[ i+5 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.rimodula");
+		newToolbar[ i+5 ].setSeparator(true);
 
 		return newToolbar;
 	}
