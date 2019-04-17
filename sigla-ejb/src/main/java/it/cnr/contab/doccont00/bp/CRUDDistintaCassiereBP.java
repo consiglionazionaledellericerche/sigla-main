@@ -69,16 +69,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -740,12 +735,10 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                                     .get(Calendar.MINUTE), gcdi
                                     .get(Calendar.SECOND))));
 
-            ExtCassiereCdsBulk extcas = ((DistintaCassiereComponentSession) createComponentSession())
-                    .recuperaCodiciCdsCassiere(context.getUserContext(),
-                            (Distinta_cassiereBulk) getModel());
-
-            currentFlusso.setCodiceEnte(Formatta(extcas.getCodiceProto(), "D",
-                    6, "0"));
+            currentFlusso.setCodiceEnte(sess.getVal01(context.getUserContext(),
+                    it.cnr.contab.utenze00.bulk.CNRUserInfo
+                            .getEsercizio(context), null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                    "CODICE_ENTE"));
 
             Liquid_coriComponentSession component = (Liquid_coriComponentSession) this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession", Liquid_coriComponentSession.class);
             AnagraficoBulk uoEnte = null;
@@ -759,11 +752,11 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .recuperaIbanUo(context.getUserContext(),
                             ((Distinta_cassiereBulk) getModel())
                                     .getUnita_organizzativa());
-//			currentFlusso.setCodiceEnteBT(currentFlusso.getCodiceEnte() + "-"
-//					+ banca.getCodice_iban() + "-" + extcas.getCodiceSia());
-            //modifica per tesorà
-            currentFlusso.setCodiceEnteBT(Formatta(extcas.getCodiceProto(), "D",
-                    7, "0"));
+
+            currentFlusso.setCodiceEnteBT(sess.getVal01(context.getUserContext(),
+                    it.cnr.contab.utenze00.bulk.CNRUserInfo
+                            .getEsercizio(context), null, Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                    "CODICE_ENTE_BT"));
             currentFlusso.setEsercizio(it.cnr.contab.utenze00.bulk.CNRUserInfo
                     .getEsercizio(context));
 
@@ -1765,7 +1758,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         }
     }
 
-    public String Formatta(String s, String allineamento, Integer dimensione,
+    public String formatta(String s, String allineamento, Integer dimensione,
                            String riempimento) {
         if (s == null)
             s = riempimento;
@@ -2049,17 +2042,19 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             nomeFileP7m
                     );
                     try {
-                        Optional.ofNullable(documentiContabiliService.signDocuments(signP7M, "service/sigla/firma/p7m", distinta.getStorePath()))
-                                .ifPresent(key -> {
-                                    File fileSigned = new File(
-                                            System.getProperty("tmp.dir.SIGLAWeb")
-                                                    + "/tmp/", nomeFileP7m);
-                                    try {
-                                        IOUtils.copyLarge(documentiContabiliService.getResource(key), new FileOutputStream(fileSigned));
-                                    } catch (IOException e) {
-                                        throw new StorageException(StorageException.Type.GENERIC, e);
-                                    }
-                                });
+                        final String signDocument = documentiContabiliService.signDocuments(signP7M, "service/sigla/firma/p7m", distinta.getStorePath());
+                        documentiContabiliService.inviaDistintaPEC(
+                                Arrays.asList(signDocument),
+                                this.isSepa(),
+                                "acquisizione_flusso_ordinativi_sepa");
+
+                        distinta.setDt_invio_pec(DateServices.getDt_valida(context.getUserContext()));
+                        distinta.setUser(((CNRUserContext) context.getUserContext()).getUser());
+                        distinta.setToBeUpdated();
+                        final OggettoBulk oggettoBulk = createComponentSession().modificaConBulk(context.getUserContext(), distinta);
+                        commitUserTransaction();
+                        initializeModelForEdit(context, oggettoBulk);
+                        setMessage("Invio effettuato correttamente.");
                     } catch (StorageException _ex) {
                         throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
                     }
