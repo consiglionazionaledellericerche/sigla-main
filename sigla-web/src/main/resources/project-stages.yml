@@ -43,7 +43,6 @@ pec:
     name: send.cert.legalmail.it
   from:
     banca: isin-udg@legalmail.it
-      password: GloGio10
   to:
     banca:
       noeuro:
@@ -75,7 +74,6 @@ pec:
     name: send.cert.legalmail.it
   from:
     banca: isin-udg@legalmail.it
-      password: GloGio10
   to:
     banca:
       noeuro:
