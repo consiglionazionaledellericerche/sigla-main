@@ -312,7 +312,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         }
         email.setFrom(pecMailFromBanca, pecMailFromBanca);
         if (nrDistinta != null)
-            email.setSubject("Invio Distinta " + nrDistinta + " e Documenti");
+            email.setSubject(nrDistinta);
         else
             email.setSubject("Invio Distinta e Documenti");
         email.setMsg("In allegato i documenti");
@@ -785,9 +785,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     .forEach(s -> nodes.add(s));
             if (nodes.size() > 1) {
                 inviaDistintaPEC(nodes, isEstero,
-                        "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
+                        "Invio Distinta Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
                                 " Progressivo Flusso: " + distinta.getProgFlusso() +
-                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlussoBT(),
+                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlussoBT() +
+                                " e Documenti",
                         isDistintaStipendi(dettagliMan));
                 return Boolean.TRUE;
             }
