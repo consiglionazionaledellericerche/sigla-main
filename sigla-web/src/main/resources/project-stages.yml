@@ -38,6 +38,21 @@ swarm:
 spring:
   profiles:
     active: CMIS,liquibase-isin
+pec:
+  host:
+    name: send.cert.legalmail.it
+  from:
+    banca: isin-udg@legalmail.it
+      password: GloGio10
+  to:
+    banca:
+      noeuro:
+        sepa: andrea.marchetti@pec.popso.it
+      italia:
+        f23:
+          f24: andrea.marchetti@pec.popso.it
+      for:
+        stipendi: andrea.marchetti@pec.popso.it
 ---
 project:
   stage: production-isin
@@ -55,3 +70,18 @@ swarm:
 spring:
   profiles:
     active: CMIS,liquibase-isin
+pec:
+  host:
+    name: send.cert.legalmail.it
+  from:
+    banca: isin-udg@legalmail.it
+      password: GloGio10
+  to:
+    banca:
+      noeuro:
+        sepa: ordinativi.informatici@pec.popso.it
+      italia:
+        f23:
+          f24: ordinativi.informatici@pec.popso.it
+      for:
+        stipendi: ordinativi.informatici@pec.popso.it
