@@ -36,6 +36,7 @@ import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDComponent {
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * RimodulaProgettoRicercaComponent constructor comment.
@@ -182,7 +183,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)oggettobulk;
 	
 			Progetto_rimodulazioneHome prgRimodulazioneHome = (Progetto_rimodulazioneHome)getHome(usercontext, Progetto_rimodulazioneBulk.class);
-			BulkList<Progetto_rimodulazioneBulk> listRimodulazioni = new BulkList(prgRimodulazioneHome.findRimodulazioni(usercontext, progettoRimodulazione.getPg_progetto()));
+			BulkList<Progetto_rimodulazioneBulk> listRimodulazioni = new BulkList<Progetto_rimodulazioneBulk>(prgRimodulazioneHome.findRimodulazioni(usercontext, progettoRimodulazione.getPg_progetto()));
 			listRimodulazioni.stream().filter(el->!el.isStatoApprovato())
 				.findFirst().ifPresent(el->{
 					throw new ApplicationRuntimeException("Attenzione! La rimodulazione n."+el.getPg_rimodulazione()+" del progetto "
@@ -193,7 +194,12 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			progettoRimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_PROVVISORIO);
 			progettoRimodulazione.setImVarFinanziato(progettoRimodulazione.getImFinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImFinanziato()));
 			progettoRimodulazione.setImVarCofinanziato(progettoRimodulazione.getImCofinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImCofinanziato()));
-			
+
+		    if (progettoRimodulazione.isRimodulatoDtInizio())
+	    		progettoRimodulazione.setDtInizio(progettoRimodulazione.getDtInizioRimodulato());
+			if (progettoRimodulazione.isRimodulatoDtFine())
+				progettoRimodulazione.setDtFine(progettoRimodulazione.getDtFineRimodulato());
+		    
 			//Individuo le righe di variazione da creare
 			progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
 				.filter(Progetto_piano_economicoBulk::isDetailRimodulato)
@@ -236,7 +242,12 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 					progettoRimodulazione.addToDettagliVoceRimodulazione(rimVoce);
 				});
 			
-			if (progettoRimodulazione.getDettagliRimodulazione().isEmpty() && progettoRimodulazione.getDettagliVoceRimodulazione().isEmpty())
+			if (progettoRimodulazione.getDettagliRimodulazione().isEmpty() && progettoRimodulazione.getDettagliVoceRimodulazione().isEmpty() &&
+				progettoRimodulazione.getImFinanziatoRimodulato().compareTo(progettoRimodulazione.getProgetto().getImFinanziato())==0 && 
+				progettoRimodulazione.getImCofinanziatoRimodulato().compareTo(progettoRimodulazione.getProgetto().getImCofinanziato())==0 && 
+			    (!progettoRimodulazione.getProgetto().isDatePianoEconomicoRequired() ||
+			     (progettoRimodulazione.getDtInizioRimodulato().compareTo(progettoRimodulazione.getProgetto().getOtherField().getDtInizio())==0 &&
+			      progettoRimodulazione.getDtFineRimodulato().compareTo(progettoRimodulazione.getProgetto().getOtherField().getDtFine())==0)))
 				throw new ApplicationException("Salvataggio non consentito. Non risulta alcuna variazione sul piano economico.");
 			return super.creaConBulk(usercontext, oggettobulk);
 		} catch (ApplicationRuntimeException e) {
@@ -252,7 +263,15 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)oggettobulk;
 		progettoRimodulazione.setImVarFinanziato(progettoRimodulazione.getImFinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImFinanziato()));
 		progettoRimodulazione.setImVarCofinanziato(progettoRimodulazione.getImCofinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImCofinanziato()));
-
+	    if (progettoRimodulazione.isRimodulatoDtInizio())
+    		progettoRimodulazione.setDtInizio(progettoRimodulazione.getDtInizioRimodulato());
+	    else
+	    	progettoRimodulazione.setDtInizio(null);
+	    if (progettoRimodulazione.isRimodulatoDtFine())
+			progettoRimodulazione.setDtFine(progettoRimodulazione.getDtFineRimodulato());
+	    else
+	    	progettoRimodulazione.setDtFine(null);
+		
 		progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
 			.filter(Progetto_piano_economicoBulk::isDetailRimodulato)
 			.forEach(ppe->{
@@ -376,4 +395,17 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 				throw new ApplicationException("Operazione non possibile! E' obbligatorio ripartire correttamente nel piano economico tutto l'importo cofinanziato rimodulato del progetto!");
 		}
 	}
+	
+	public Progetto_rimodulazioneBulk approva(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		return rimodulazione;
+	}
+
+	public Progetto_rimodulazioneBulk respingi(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		return rimodulazione;
+	}
+
+	public Progetto_rimodulazioneBulk salvaDefinitivo(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		return rimodulazione;
+	}
+
 }
