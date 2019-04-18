@@ -13,9 +13,11 @@
 	SimpleDetailCRUDController controller = bp.getCrudPianoEconomicoAnnoCorrente();
 	SimpleDetailCRUDController controllerVoci = bp.getCrudPianoEconomicoVoceBilancioAnnoCorrente();
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
+	int controllerSize = controller.getDetails()==null?0:controller.getDetails().size();
+	int controllerVociSize = controllerVoci.getDetails()==null?0:controllerVoci.getDetails().size();
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico1_rimodulato",true,false,true,"100%","300px"); %>
+<%	controller.writeHTMLTable(pageContext,"piano_economico1_rimodulato",true,false,true,"100%",100+(controllerSize/5*50)+"px"); %>
 <table class="Panel card p-2 mt-1">
   <tr>
   	<td><% controller.writeFormLabel(out,"voce_piano");%></td>
@@ -28,9 +30,10 @@
   </tr>
 </table>
 </br>
+
 <fieldset class="fieldset">
 	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
-<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato",true,false,true,"100%","300px"); %>
+<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato",true,false,true,"100%",100+(controllerVociSize/5*50)+"px"); %>
 	</br>
 	<table class="Panel">
 	  <tr>

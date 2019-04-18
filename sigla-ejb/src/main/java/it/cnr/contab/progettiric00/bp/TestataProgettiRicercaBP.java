@@ -1,6 +1,5 @@
 package it.cnr.contab.progettiric00.bp;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspWriter;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;

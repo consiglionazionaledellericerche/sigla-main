@@ -96,75 +96,149 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />
 	<fieldProperty
+		name="dtInizioRimodulato"
+		property="dtInizioRimodulato"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtInizioRimodulatoChange"
+		label="Data Inizio" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />		
+	<fieldProperty
+		name="dtInizioRimodulatoModificato"
+		property="dtInizioRimodulato"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtInizioRimodulatoChange"
+		label="Data Inizio" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="dtFineRimodulato"
+		property="dtFineRimodulato"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtFineRimodulatoChange"
+		label="Data Fine" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="dtFineRimodulatoModificato"
+		property="dtFineRimodulato"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtFineRimodulatoChange"
+		label="Data Fine" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
 		name="imFinanziatoRimodulato"
 		property="imFinanziatoRimodulato"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Finanziato Rimodulato" />
+		command="doDefault"
+		label="Importo Finanziato" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imFinanziatoRimodulatoModificato"
+		property="imFinanziatoRimodulato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doDefault"
+		label="Importo Finanziato" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imCofinanziatoRimodulato"
 		property="imCofinanziatoRimodulato"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Cofinanziato Rimodulato" />
+		command="doDefault"
+		label="Importo Cofinanziato" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imCofinanziatoRimodulatoModificato"
+		property="imCofinanziatoRimodulato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doDefault"
+		label="Importo Cofinanziato" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imTotaleRimodulato"
 		property="imTotaleRimodulato"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Totale Rimodulato" />
+		label="Importo Totale Rimodulato" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imFinanziatoRimodulatoRipartito"
 		property="imFinanziatoRimodulatoRipartito"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Finanziato Ripartito" />
+		label="Importo Finanziato Ripartito" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imCofinanziatoRimodulatoRipartito"
 		property="imCofinanziatoRimodulatoRipartito"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Cofinanziato Ripartito" />
+		label="Importo Cofinanziato Ripartito" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imTotaleRimodulatoRipartito"
 		property="imTotaleRimodulatoRipartito"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Totale Rimodulato Ripartito" />
+		label="Importo Totale Rimodulato Ripartito" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imFinanziatoRimodulatoDaRipartire"
 		property="imFinanziatoRimodulatoDaRipartire"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Finanziato Rimodulato da Ripartire" />
+		label="Importo Finanziato Rimodulato da Ripartire"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imCofinanziatoRimodulatoDaRipartire"
 		property="imCofinanziatoRimodulatoDaRipartire"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Cofinanziato Rimodulato da Ripartire" />
+		label="Importo Cofinanziato Rimodulato da Ripartire"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="imTotaleRimodulatoDaRipartire"
 		property="imTotaleRimodulatoDaRipartire"
 		inputType="ROTEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		enabledOnSearch="true"
-		label="Importo Totale Rimodulato da Ripartire" />
-
+		label="Importo Totale Rimodulato da Ripartire"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
 
 	<formFieldProperty name="pg_rimodulazione" />
 	<formFieldProperty name="find_progetto" />
 	<formFieldProperty name="stato" />
+	<formFieldProperty name="dtInizioRimodulato" />
+	<formFieldProperty name="dtFineRimodulato" />
 	<formFieldProperty name="imFinanziatoRimodulato" />
 	<formFieldProperty name="imCofinanziatoRimodulato" />
+	<formFieldProperty name="dtInizioRimodulatoModificato" />
+	<formFieldProperty name="dtFineRimodulatoModificato" />
+	<formFieldProperty name="imFinanziatoRimodulatoModificato" />
+	<formFieldProperty name="imCofinanziatoRimodulatoModificato" />
 	<formFieldProperty name="imTotaleRimodulato" />
 	<formFieldProperty name="imFinanziatoRimodulatoRipartito" />
 	<formFieldProperty name="imCofinanziatoRimodulatoRipartito" />
