@@ -2,16 +2,19 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.util.BitSet;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.util.action.SelectionIterator;
 
 public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgettoPianoEconomicoCRUDController {
@@ -110,7 +113,18 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
 
 	public OggettoBulk undoRemoveDetail(OggettoBulk oggettobulk, int i) {
 		Progetto_piano_economicoBulk ppe = (Progetto_piano_economicoBulk)oggettobulk;
+		Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)this.getParentModel();
+
 		if (ppe.isDetailRimodulatoEliminato()) {
+			//Per riattiavrlo devo essere sicuro che le date siano coerenti
+			if (ppe.getEsercizio_piano().compareTo(rim.getAnnoInizioRimodulato())<0)
+				throw new ApplicationRuntimeException("Per l'anno " + ppe.getEsercizio_piano() + " non è possibile riattivare dettagli di piano economico " +
+						" perchè precedente alla data di inizio del progetto. Modificare la data di inizio e ripetere l'operazione!");
+
+			if (ppe.getEsercizio_piano().compareTo(rim.getAnnoFineRimodulato())>0)
+				throw new ApplicationRuntimeException("Per l'anno " + ppe.getEsercizio_piano() + " non è possibile riattivare dettagli di piano economico " +
+						" perchè successivo alla data di fine/proroga del progetto. Modificare la data di fine e ripetere l'operazione!");
+
 			ppe.setImSpesaFinanziatoRimodulato(Optional.ofNullable(ppe.getImSpesaFinanziatoRimodulatoPreDelete()).orElse(ppe.getIm_spesa_finanziato()));
 			ppe.setImSpesaCofinanziatoRimodulato(Optional.ofNullable(ppe.getImSpesaCofinanziatoRimodulatoPreDelete()).orElse(ppe.getIm_spesa_cofinanziato()));
 		}

@@ -5,6 +5,10 @@ import it.cnr.jada.persistency.Keyed;
 public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implements Keyed {
 	private String stato;
 
+	private java.sql.Timestamp dtInizio;
+
+	private java.sql.Timestamp dtFine;
+
 	private java.math.BigDecimal imVarFinanziato;
 	
 	private java.math.BigDecimal imVarCofinanziato;
@@ -23,6 +27,22 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 
 	public void setStato(String stato) {
 		this.stato = stato;
+	}
+
+	public java.sql.Timestamp getDtInizio() {
+		return dtInizio;
+	}
+
+	public void setDtInizio(java.sql.Timestamp dtInizio) {
+		this.dtInizio = dtInizio;
+	}
+
+	public java.sql.Timestamp getDtFine() {
+		return dtFine;
+	}
+
+	public void setDtFine(java.sql.Timestamp dtFine) {
+		this.dtFine = dtFine;
 	}
 
 	public java.math.BigDecimal getImVarFinanziato() {

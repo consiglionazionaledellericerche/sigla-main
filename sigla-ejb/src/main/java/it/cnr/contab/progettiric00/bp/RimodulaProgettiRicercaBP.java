@@ -14,15 +14,17 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
+import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -33,17 +35,18 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.jsp.Button;
 
 public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 	private boolean flPrgPianoEconomico = false;
 	protected boolean isUoCdsCollegata = false;
 	private Integer annoFromPianoEconomico;
 	private Unita_organizzativaBulk uoScrivania;
+    private CdrBulk cdrScrivania;
 	private ProgettoBulk mainProgetto;
 
 	private SimpleDetailCRUDController crudPianoEconomicoTotale = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoTotale", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoTotale", this){
@@ -111,44 +114,68 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 	
 	@Override
 	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		super.init(config, actioncontext);
 		try {
 			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 			setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
 			uoScrivania = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
+            cdrScrivania = Utility.createCdrComponentSession().cdrFromUserContext(actioncontext.getUserContext());
 			isUoCdsCollegata = uoScrivania.getFl_uo_cds();
 
 			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
 	   		BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+
 	   		if (Optional.ofNullable(annoFrom).isPresent())
 	   			setAnnoFromPianoEconomico(annoFrom.intValue());
-		}catch(Throwable e) {
-			throw new BusinessProcessException(e);
-		}
-		super.init(config, actioncontext);
-		if (this.getMainProgetto()!=null) {
-			try {
+			if (Optional.ofNullable(this.getMainProgetto()).isPresent()) {
 				List<Progetto_rimodulazioneBulk> listRimodulazioni = createComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", actioncontext.getUserContext(), this.getMainProgetto().getPg_progetto());
 				Optional<Progetto_rimodulazioneBulk> lastRim = listRimodulazioni.stream()
 									.filter(el->!el.isStatoApprovato())
 									.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_progetto))
 									.findFirst();
-
-				if (lastRim.isPresent()) {
-					this.setModel(actioncontext, lastRim.get());
-					this.edit(actioncontext, this.getModel());
-				} else {
-					this.initializeModelForInsert(actioncontext, this.getModel());
-					((Progetto_rimodulazioneBulk)this.getModel()).setProgetto(this.getMainProgetto());
-					this.initializeProgetto(actioncontext, (Progetto_rimodulazioneBulk)this.getModel());
-				}
-			}catch(Throwable e) {
-				throw new BusinessProcessException(e);
-			}
-		} else {
-			resetForSearch(actioncontext);
+	
+				if (lastRim.isPresent())
+					edit(actioncontext, lastRim.get());
+				else
+					reset(actioncontext);
+			} else
+				resetForSearch(actioncontext);
+		}catch(Throwable e) {
+			throw new BusinessProcessException(e);
 		}
 	}
 
+	@Override
+	public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag)
+			throws BusinessProcessException {
+		super.basicEdit(actioncontext, oggettobulk, flag);
+		Optional<Progetto_rimodulazioneBulk> optModel = 
+				Optional.ofNullable(this.getModel())
+						.filter(Progetto_rimodulazioneBulk.class::isInstance)
+						.map(Progetto_rimodulazioneBulk.class::cast);
+
+		if (optModel.map(Progetto_rimodulazioneBulk::getProgetto)
+				.map(ProgettoBulk::getCd_unita_organizzativa)
+				.map(el->!el.equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
+				.orElse(Boolean.TRUE) ||
+			optModel.filter(el->!el.isStatoProvvisorio())
+				.isPresent())
+			this.setStatus(VIEW);
+	}
+
+    protected it.cnr.jada.util.jsp.Button[] createToolbar() {
+		Button[] toolbar = super.createToolbar();
+		Button[] newToolbar = new Button[ toolbar.length + 3];
+
+		int i;
+		for ( i = 0; i < toolbar.length; i++ )
+			newToolbar[i] = toolbar[i];
+		newToolbar[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.definitiveSave");
+		newToolbar[i+1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.approva");
+		newToolbar[i+2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.nonApprova");
+        return newToolbar;
+    }
+    
 	@Override
 	public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		oggettobulk = super.initializeModelForInsert(actioncontext, oggettobulk);
@@ -156,6 +183,10 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 		progettoRimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_PROVVISORIO);
 		progettoRimodulazione.setImVarFinanziato(BigDecimal.ZERO);
 		progettoRimodulazione.setImVarCofinanziato(BigDecimal.ZERO);
+		if (Optional.ofNullable(this.getMainProgetto()).isPresent()) {
+			progettoRimodulazione.setProgetto(this.getMainProgetto());
+			progettoRimodulazione = initializeProgetto(actioncontext, progettoRimodulazione);
+		}
 		return progettoRimodulazione;
 	}
 	
@@ -163,7 +194,7 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		oggettobulk = super.initializeModelForEdit(actioncontext, oggettobulk);
 		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)oggettobulk;
-		initializeProgetto(actioncontext, progettoRimodulazione);
+		progettoRimodulazione = initializeProgetto(actioncontext, progettoRimodulazione);
 		return progettoRimodulazione;
 	}
 	
@@ -279,9 +310,9 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 		return crudPianoEconomicoVoceBilancioAltriAnni;
 	}
 	
-	public void initializeProgetto(ActionContext actioncontext, Progetto_rimodulazioneBulk rimodulazione) throws BusinessProcessException {
+	public Progetto_rimodulazioneBulk initializeProgetto(ActionContext actioncontext, Progetto_rimodulazioneBulk rimodulazione) throws BusinessProcessException {
 		try {
-			if (rimodulazione.getProgetto()==null) return;
+			if (rimodulazione.getProgetto()==null) return rimodulazione;
 
 			final ProgettoBulk progetto = Utility.createProgettoRicercaComponentSession().initializePianoEconomico(actioncontext.getUserContext(), rimodulazione.getProgetto(), true);
 
@@ -291,6 +322,8 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 			rimodulazione.setDettagliPianoEconomicoAltriAnni(new BulkList<Progetto_piano_economicoBulk>());
 			rimodulazione.setImFinanziatoRimodulato(progetto.getImFinanziato().add(rimodulazione.getImVarFinanziato()));
 			rimodulazione.setImCofinanziatoRimodulato(progetto.getImCofinanziato().add(rimodulazione.getImVarCofinanziato()));
+			rimodulazione.setDtInizioRimodulato(Optional.ofNullable(rimodulazione.getDtInizio()).orElse(Optional.ofNullable(progetto.getOtherField()).map(Progetto_other_fieldBulk::getDtInizio).orElse(null)));
+			rimodulazione.setDtFineRimodulato(Optional.ofNullable(rimodulazione.getDtFine()).orElse(Optional.ofNullable(progetto.getOtherField()).map(Progetto_other_fieldBulk::getDtFine).orElse(null)));
 			
 			progetto.getDettagliPianoEconomicoTotale().stream()
 				.forEach(el->{
@@ -462,6 +495,7 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 						}
 					}
 				});
+			return rimodulazione;
 		} catch (ComponentException | RemoteException e) {
 			throw new BusinessProcessException(e);
 		}
@@ -538,4 +572,158 @@ public class RimodulaProgettiRicercaBP extends SimpleCRUDBP {
 	public ProgettoBulk getMainProgetto() {
 		return mainProgetto;
 	}
+	
+	@Override
+	public boolean isSearchButtonHidden() {
+		return super.isSearchButtonHidden() || Optional.ofNullable(this.getMainProgetto()).isPresent();
+	}
+	
+	@Override
+	public boolean isFreeSearchButtonHidden() {
+		return super.isFreeSearchButtonHidden() || Optional.ofNullable(this.getMainProgetto()).isPresent();
+	}
+
+	@Override
+	public boolean isNewButtonHidden() {
+		return super.isNewButtonHidden() || Optional.ofNullable(this.getMainProgetto()).isPresent();
+	}
+
+	@Override
+	public boolean isDeleteButtonEnabled() {
+		return super.isDeleteButtonEnabled() &&
+				Optional.ofNullable(this.getModel())
+					.filter(Progetto_rimodulazioneBulk.class::isInstance)
+					.map(Progetto_rimodulazioneBulk.class::cast)
+					.map(Progetto_rimodulazioneBulk::isStatoProvvisorio)
+					.orElse(Boolean.FALSE);
+	}
+	
+    /**
+     * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'
+     * Il bottone di SalvaDefinitivo è disponibile solo se:
+     * - la proposta è provvisoria
+     * - il CDR è di 1° Livello
+     *
+     * @return Il valore della proprietà 'salvaDefinitivoButtonEnabled'
+     */
+    public boolean isSalvaDefinitivoButtonEnabled() {
+        return this.isSaveButtonEnabled() &&
+                ((Progetto_rimodulazioneBulk) getModel()).isStatoProvvisorio() &&
+                ((Progetto_rimodulazioneBulk) getModel()).isNotNew();
+    }
+
+    /**
+     * Restituisce il valore della proprietà 'approvaButtonEnabled'
+     * Il bottone di Approva è disponibile solo se:
+     * - è attivo il bottone di salvataggio
+     * - la proposta di variazione PDG è definitiva
+     * - la UO che sta effettuando l'operazione è di tipo ENTE
+     *
+     * @return Il valore della proprietà 'approvaButtonEnabled'
+     */
+    public boolean isApprovaButtonEnabled() {
+		Optional<Progetto_rimodulazioneBulk> optModel = 
+				Optional.ofNullable(this.getModel())
+						.filter(Progetto_rimodulazioneBulk.class::isInstance)
+						.map(Progetto_rimodulazioneBulk.class::cast);
+
+        return super.isSaveButtonEnabled() && 
+        		optModel.filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).isPresent() &&
+                uoScrivania.isUoEnte();
+    }
+
+    /**
+     * Restituisce il valore della proprietà 'nonApprovaButtonEnabled'
+     * Il bottone di NonApprova è disponibile solo se:
+     * - è attivo il bottone di salvataggio
+     * - la proposta di variazione PDG è definitiva
+     * - la UO che sta effettuando l'operazione è di tipo ENTE
+     *
+     * @return Il valore della proprietà 'nonApprovaButtonEnabled'
+     */
+    public boolean isNonApprovaButtonEnabled() {
+		Optional<Progetto_rimodulazioneBulk> optModel = 
+				Optional.ofNullable(this.getModel())
+						.filter(Progetto_rimodulazioneBulk.class::isInstance)
+						.map(Progetto_rimodulazioneBulk.class::cast);
+
+        return super.isSaveButtonEnabled() && 
+        		optModel.filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).isPresent() &&
+                uoScrivania.isUoEnte();
+    }
+
+    /**
+     * Gestione del salvataggio come definitiva di una rimodulazione
+     *
+     * @param context L'ActionContext della richiesta
+     * @throws BusinessProcessException
+     * @throws ValidationException
+     */
+    public void salvaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException {
+        try {
+        	RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
+        	Progetto_rimodulazioneBulk bulk = (Progetto_rimodulazioneBulk) getModel();
+        	bulk.validate();
+        	bulk = comp.salvaDefinitivo(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
+            edit(context, bulk);
+        } catch (it.cnr.jada.comp.ComponentException ex) {
+            throw handleException(ex);
+        } catch (java.rmi.RemoteException ex) {
+            throw handleException(ex);
+        }
+    }
+
+    /**
+     * Gestione del salvataggio come approvata di una variazione
+     *
+     * @param context L'ActionContext della richiesta
+     * @throws BusinessProcessException
+     */
+    public void approva(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+        try {
+        	RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
+        	Progetto_rimodulazioneBulk bulk = comp.approva(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
+            edit(context, bulk);
+        } catch (it.cnr.jada.comp.ComponentException ex) {
+            throw handleException(ex);
+        } catch (java.rmi.RemoteException ex) {
+            throw handleException(ex);
+        }
+    }
+
+    /**
+     * Gestione del salvataggio come respinta di una variazione
+     *
+     * @param context L'ActionContext della richiesta
+     * @throws BusinessProcessException
+     */
+    public void respingi(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+        try {
+        	RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
+        	Progetto_rimodulazioneBulk bulk = comp.respingi(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
+            edit(context, bulk);
+        } catch (it.cnr.jada.comp.ComponentException ex) {
+            throw handleException(ex);
+        } catch (java.rmi.RemoteException ex) {
+            throw handleException(ex);
+        }
+    }
+    
+    @Override
+    public void delete(ActionContext actioncontext) throws BusinessProcessException {
+        int crudStatus = getModel().getCrudStatus();
+        try {
+        	Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk) getModel();
+            if (rimodulazione.isStatoProvvisorio()) {
+            	rimodulazione.getDettagliVoceRimodulazione().stream().forEach(el->el.setToBeDeleted());
+            	rimodulazione.getDettagliRimodulazione().stream().forEach(el->el.setToBeDeleted());
+            	super.delete(actioncontext);
+                setMessage("Cancellazione effettuata");
+            } else 
+                throw new BusinessProcessException("Lo stato della rimodulazione non ne consente la cancellazione.");
+        } catch (Exception e) {
+            getModel().setCrudStatus(crudStatus);
+            throw handleException(e);
+        }
+    } 
 }
