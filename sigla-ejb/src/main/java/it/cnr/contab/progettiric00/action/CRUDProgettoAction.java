@@ -3,6 +3,8 @@ package it.cnr.contab.progettiric00.action;
 import java.sql.Timestamp;
 import java.util.Optional;
 
+import it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP;
+import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
 import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
 import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -526,16 +528,19 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 		{
 			if (option == OptionBP.YES_BUTTON) {
 				TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
+				String function = bp.isEditable() ? "M" : "V";
+				if (bp.isBringBack())
+					function += "R";
+
 				ProgettoBulk progetto = (ProgettoBulk)bp.getModel();
 
-				String status = "M";
 				RimodulaProgettiRicercaBP newbp = null;
 				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
 				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","RimodulaProgettiRicercaBP");
 				if (mode == null) 
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di rimodulazione progetti. Impossibile continuare.");
 
-				newbp = (RimodulaProgettiRicercaBP) context.getUserInfo().createBusinessProcess(context,"RimodulaProgettiRicercaBP",new Object[] { status + "RSWTh",  progetto});
+				newbp = (RimodulaProgettiRicercaBP) context.getUserInfo().createBusinessProcess(context,"RimodulaProgettiRicercaBP",new Object[] { function,  progetto});
 				return context.addBusinessProcess(newbp);
 			}
 		} catch(Exception e) {

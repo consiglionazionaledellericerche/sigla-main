@@ -23,9 +23,9 @@
 	    <td><span class="FormLabel">Totale Progetto</span></td>
 	    <td><% bp.getController().writeFormInput(out,"imTotaleRimodulato");%></td>
 	    <td> = </td>
-	    <td><% bp.getController().writeFormInput(out,"default","imFinanziatoRimodulato",true,null,null); %></td>
+	    <td><% bp.getController().writeFormInput(out,"imFinanziatoRimodulato"); %></td>
 		<td> + </td>
-	    <td><% bp.getController().writeFormInput(out,"default","imCofinanziatoRimodulato",true,null,null); %></td>
+	    <td><% bp.getController().writeFormInput(out,"imCofinanziatoRimodulato"); %></td>
 	  </tr>                     	
 	  <tr>         
 	    <td><span class="FormLabel">Ripartiti</span></td>

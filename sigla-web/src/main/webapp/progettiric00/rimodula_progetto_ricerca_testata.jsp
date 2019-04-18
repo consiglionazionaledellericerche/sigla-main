@@ -13,6 +13,9 @@
 	Progetto_rimodulazioneBulk bulk = (Progetto_rimodulazioneBulk)bp.getModel();
 	ProgettoBulk progetto = Optional.ofNullable(bulk).map(Progetto_rimodulazioneBulk::getProgetto).orElse(null);
 %>
+	<div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">
+	Rimodulazione <%=bulk.getPg_rimodulazione()!=null?" n."+bulk.getPg_rimodulazione():""%>
+	</div>
 	<div class="Group">
 	<table class="Panel card border-primary p-2 mb-2">
 	  <TR><TD>
@@ -20,7 +23,6 @@
 	  	</TD><TD>
 	  	<% bp.getController().writeFormInput(out,"find_progetto");%>
 	  </TD></TR>
-	  <TR><% bp.getController().writeFormField(out,"pg_rimodulazione");%></TR>
 	  <TR><% bp.getController().writeFormField(out,"stato");%></TR>
 	</table>  
 	</div> 
@@ -45,29 +47,20 @@
 	  </tr>	  
       <% if (Optional.ofNullable(progetto).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  <tr>
-	  	<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "dtInizioOf"); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"dtInizioRimodulato"+(bulk.isRimodulatoDtInizio()?"Modificato":""));%></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "dtInizioRimodulato"); %></td>
 	  </tr>
-	  <% } %>	  
-      <% if (Optional.ofNullable(progetto).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent() ||
-    		  Optional.ofNullable(progetto).flatMap(el->Optional.ofNullable(el.getOtherField())).map(Progetto_other_fieldBulk::isStatoChiuso).orElse(Boolean.FALSE)) { %>
 	  <tr>
-	  	<td><% bp.getController().writeFormLabel(out,"dtFineOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "dtFineOf"); %></td>
-      <% if (Optional.ofNullable(progetto).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
+	  	<td><% bp.getController().writeFormLabel(out,"dtFineRimodulato"+(bulk.isRimodulatoDtFine()?"Modificato":""));%></td>
+	  	<td><% bp.getController().writeFormInput( out, "dtFineRimodulato"); %></td>
 	  	<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
 	  	<td><% bp.getController().writeFormInput( out, "dtProrogaOf"); %></td>
-	  <% } %> 
 	  </tr>
 	  <% } %> 
 	  <tr>
-	  	<% bp.getController().writeFormField(out,"imFinanziatoOf");%>
-	  	<% bp.getController().writeFormField(out,"imCofinanziatoOf");%>
-	  </tr>
-	  <tr>
-	  	<% bp.getController().writeFormField(out,"imFinanziatoRimodulato");%>
-	  	<% bp.getController().writeFormField(out,"imCofinanziatoRimodulato");%>
+	  	<% bp.getController().writeFormField(out,"imFinanziatoRimodulato"+(bulk.isRimodulatoImportoFinanziato()?"Modificato":""));%>
+	  	<% bp.getController().writeFormField(out,"imCofinanziatoRimodulato"+(bulk.isRimodulatoImportoCofinanziato()?"Modificato":""));%>
 	  </tr>
      </table>
 	 </div>
-	 <% } %> 	
+ <% } %> 	
