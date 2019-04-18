@@ -273,7 +273,13 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 				.compareTo(Optional.ofNullable(this.getImSpesaCofinanziatoRimodulato()).orElse(BigDecimal.ZERO))!=0;
 				
 	}
-
+	
+	/**
+	 * Campo utilizzato solo in fase di rimodulazione.
+	 * Indica che il dettaglio è stato eliminato, a seguito di rimodulazione.
+	 * 
+	 * @return boolean
+	 */
 	public boolean isDetailRimodulatoEliminato(){
 		return this.isDetailRimodulato() && 
 				Optional.ofNullable(this.getImSpesaFinanziatoRimodulato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==0 &&

@@ -1,7 +1,11 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Dictionary;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -10,6 +14,9 @@ import java.util.stream.Stream;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.jada.util.DateUtils;
 
 public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 	public static final String STATO_PROVVISORIO = "P";
@@ -46,6 +53,8 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 
 	private java.math.BigDecimal imFinanziatoRimodulato;
 	private java.math.BigDecimal imCofinanziatoRimodulato;
+	private java.sql.Timestamp dtInizioRimodulato;
+	private java.sql.Timestamp dtFineRimodulato;
 	
 	public Progetto_rimodulazioneBulk() {
 		super();
@@ -366,6 +375,22 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 		this.imCofinanziatoRimodulato = imCofinanziatoRimodulato;
 	}
 	
+	public java.sql.Timestamp getDtInizioRimodulato() {
+		return dtInizioRimodulato;
+	}
+	
+	public void setDtInizioRimodulato(java.sql.Timestamp dtInizioRimodulato) {
+		this.dtInizioRimodulato = dtInizioRimodulato;
+	}
+	
+	public java.sql.Timestamp getDtFineRimodulato() {
+		return dtFineRimodulato;
+	}
+	
+	public void setDtFineRimodulato(java.sql.Timestamp dtFineRimodulato) {
+		this.dtFineRimodulato = dtFineRimodulato;
+	}
+	
 	public java.math.BigDecimal getImTotaleRimodulato() {
 		return this.getImFinanziatoRimodulato().add(this.getImCofinanziatoRimodulato());
 	}
@@ -404,4 +429,107 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 		return this.getImTotaleRimodulato().subtract(this.getImTotaleRimodulatoRipartito());
 	}
 	
+	public Integer getAnnoInizioRimodulato() {
+		return Optional.ofNullable(this.getDtInizioRimodulato())
+				.map(elDate->{
+					GregorianCalendar calendar = new GregorianCalendar();
+					calendar.setTime(elDate);
+					return calendar.get(Calendar.YEAR);
+				})
+				.orElse(0);
+	}
+	
+	public Integer getAnnoFineRimodulato() {
+		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.flatMap(el->Optional.ofNullable(el.getDtProroga()));
+		Optional<Integer> anno = Optional.empty();
+		if (Optional.ofNullable(this.getDtFineRimodulato()).isPresent() || optDtProroga.isPresent()) {
+			GregorianCalendar calendar = new GregorianCalendar();
+			calendar.setTime(DateUtils.max(this.getDtFineRimodulato(), optDtProroga.orElse(null)));
+			anno = Optional.of(calendar.get(Calendar.YEAR));
+		}
+		return anno.orElse(9999);
+	}
+    
+	public void validaDateRimodulazione() throws ValidationException {
+		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getOtherField()))
+											.flatMap(el->Optional.ofNullable(el.getDtProroga()));
+		if (!Optional.ofNullable(this.getDtInizioRimodulato()).isPresent() && Optional.ofNullable(this.getDtFineRimodulato()).isPresent())  
+		    throw new ValidationException( "Non \350 possibile indicare la \"Data di fine\" senza indicare la \"Data di inizio\".");
+		if (!Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProroga.isPresent())  
+		    throw new ValidationException( "Non \350 possibile indicare la \"Data di proroga\" senza indicare la \"Data di fine\".");
+		if (Optional.ofNullable(this.getDtInizioRimodulato()).isPresent() && Optional.ofNullable(this.getDtFineRimodulato()).isPresent() &&
+			this.getDtInizioRimodulato().after(this.getDtFineRimodulato()))
+			throw new ValidationException( "La \"Data di fine\" del progetto deve essere uguale o superiore alla \"Data di inizio\".");
+		if (Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProroga.isPresent() &&
+				this.getDtFine().after(optDtProroga.get()))
+			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
+		
+		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(progetto_piano_economicoBulk -> Optional.ofNullable(progetto_piano_economicoBulk.getEsercizio_piano()).isPresent())
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioRimodulato())<0)
+			.filter(el->!el.isDetailRimodulatoEliminato())
+			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
+			.min(Comparator.comparing(Integer::valueOf))
+			.ifPresent(annoMin->{
+				throw new ApplicationRuntimeException("Non è possibile indicare una data di inizio con anno maggiore del "+annoMin+
+						" per il quale risulta già caricato un piano economico.");
+			});
+
+		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoFineRimodulato())>0)
+			.filter(el->!el.isDetailRimodulatoEliminato())
+			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
+			.max(Comparator.comparing(Integer::valueOf))
+			.ifPresent(annoMax->{
+				throw new ApplicationRuntimeException("Non è possibile indicare una data di fine/proroga con anno inferiore al "+annoMax+
+						" per il quale risulta già caricato un piano economico.");
+		});
+	}   
+	
+	/**
+	 * Indica se è stato modificato il valore della data di inizio del progetto rispetto al valore originario
+	 * 
+	 * @return boolean
+	 */
+	public boolean isRimodulatoDtInizio() {
+		return Optional.ofNullable(this.getProgetto())
+					   .filter(ProgettoBulk::isDatePianoEconomicoRequired)
+					   .flatMap(el->Optional.ofNullable(el.getOtherField()))
+					   .map(Progetto_other_fieldBulk::getDtInizio)
+					   .map(el->el.compareTo(this.getDtInizioRimodulato())!=0)
+					   .orElse(Boolean.FALSE);
+	}
+
+	/**
+	 * Indica se è stato modificato il valore della data di fine del progetto rispetto al valore originario
+	 * 
+	 * @return boolean
+	 */
+	public boolean isRimodulatoDtFine() {
+		return Optional.ofNullable(this.getProgetto())
+					   .filter(ProgettoBulk::isDatePianoEconomicoRequired)
+					   .flatMap(el->Optional.ofNullable(el.getOtherField()))
+					   .map(Progetto_other_fieldBulk::getDtFine)
+					   .map(el->el.compareTo(this.getDtFineRimodulato())!=0)
+					   .orElse(Boolean.FALSE);
+	}
+
+	/**
+	 * Indica se è stato modificato il valore del totale importo finanziato del progetto rispetto al valore originario
+	 * 
+	 * @return boolean
+	 */
+	public boolean isRimodulatoImportoFinanziato() {
+		return this.getImFinanziatoRimodulato().compareTo(this.getProgetto().getImFinanziato())!=0;
+	}
+
+	/**
+	 * Indica se è stato modificato il valore del totale importo cofinanziato del progetto rispetto al valore originario
+	 * 
+	 * @return boolean
+	 */
+	public boolean isRimodulatoImportoCofinanziato() {
+		return this.getImCofinanziatoRimodulato().compareTo(this.getProgetto().getImCofinanziato())!=0;
+	}
 }
