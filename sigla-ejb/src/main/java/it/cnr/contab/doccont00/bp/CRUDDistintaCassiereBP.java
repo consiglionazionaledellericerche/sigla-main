@@ -2046,7 +2046,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         documentiContabiliService.inviaDistintaPEC(
                                 Arrays.asList(signDocument),
                                 this.isSepa(),
-                                "acquisizione_flusso_ordinativi_sepa");
+                                "<acquisizione_flusso_ordinativi_sepa>");
 
                         distinta.setDt_invio_pec(DateServices.getDt_valida(context.getUserContext()));
                         distinta.setUser(((CNRUserContext) context.getUserContext()).getUser());
