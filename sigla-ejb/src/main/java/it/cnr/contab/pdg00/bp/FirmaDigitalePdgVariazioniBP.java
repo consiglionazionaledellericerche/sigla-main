@@ -44,6 +44,8 @@ import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.bouncycastle.cms.CMSException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
@@ -64,6 +66,8 @@ import java.util.stream.Collectors;
  */
 public class FirmaDigitalePdgVariazioniBP extends
         it.cnr.jada.util.action.SelezionatoreListaBP implements FirmaInfos {
+    private transient final static Logger logger = LoggerFactory.getLogger(FirmaDigitalePdgVariazioniBP.class);
+
     public static String PEC_PROTOCOLLO = "PROTOCOLLO";
     public static String PEC_BILANCIO = "BILANCIO";
     private boolean signEnabled;
@@ -733,6 +737,7 @@ public class FirmaDigitalePdgVariazioniBP extends
                     .map(s -> pdgVariazioniService.getStorageObjectBykey(s))
                     .orElse(null);
         } catch (StorageException _ex) {
+            logger.error("ERROR firma variazioni", _ex);
             throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
         }
 
