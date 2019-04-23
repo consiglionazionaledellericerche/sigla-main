@@ -1930,4 +1930,12 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_obbligazione_pgiro_modifica_add_imp">
+        <addColumn tableName="obbligazione_pgiro_modifica">
+            <column name="im_prima_modifica" type="numeric(15, 2)" remarks="Importo prima della modifica"/>
+            <column name="im_dopo_modifica" type="numeric(15, 2)" remarks="Importo dopo la modifica"/>
+            <column name="data_variazione" type="${date.type}" remarks="Data della Variazione alla partita di giro"/>
+            <column name="utente_variazione" type="VARCHAR(20)" remarks="Utente della Variazione alla partita di giro"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

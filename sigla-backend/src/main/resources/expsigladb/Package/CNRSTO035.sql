@@ -62,6 +62,6 @@
  procedure sto_OBBLIGAZIONE (aPgStorico number, aDsStorico varchar2, aDest OBBLIGAZIONE%rowtype);
  procedure sto_OBBLIGAZIONE_SCADENZARIO (aPgStorico number, aDsStorico varchar2, aDest OBBLIGAZIONE_SCADENZARIO%rowtype);
  procedure sto_OBBLIGAZIONE_SCAD_VOCE (aPgStorico number, aDsStorico varchar2, aDest OBBLIGAZIONE_SCAD_VOCE%rowtype);
- procedure sto_OBBLIGAZIONE_PGIRO_MODIF (aPgStorico number, imp_iniziale NUMBER, imp_variazione NUMBER,aDest OBBLIGAZIONE%rowtype);
+ procedure sto_OBBLIGAZIONE_PGIRO_MODIF (aPgStorico number, imp_iniziale NUMBER, imp_variazione NUMBER,aDest OBBLIGAZIONE%rowtype, newObb OBBLIGAZIONE%rowtype);
 
 end;
