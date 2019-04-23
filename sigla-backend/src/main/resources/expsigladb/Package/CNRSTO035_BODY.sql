@@ -1,4 +1,4 @@
---------------------------------------------------------
+﻿--------------------------------------------------------
 --  DDL for Package Body CNRSTO035
 --------------------------------------------------------
 
@@ -25,7 +25,7 @@
 	   	exception when no_data_found then
 	   	   imp_iniziale :=aOldObb.im_obbligazione;
 	   	end;
-	     sto_OBBLIGAZIONE_PGIRO_MODIF(aObb.pg_ver_rec, imp_iniziale,imp_variazione, aOldObb);
+	     sto_OBBLIGAZIONE_PGIRO_MODIF(aObb.pg_ver_rec, imp_iniziale,imp_variazione, aOldObb, aObb);
 	 end if;
 
   for aScad in (select * from obbligazione_scadenzario where
@@ -233,7 +233,7 @@
     ,aDest.PG_VER_REC
     );
  end;
- procedure sto_OBBLIGAZIONE_PGIRO_MODIF(aPgStorico number, imp_iniziale number,imp_variazione number, aDest OBBLIGAZIONE%rowtype) is
+ procedure sto_OBBLIGAZIONE_PGIRO_MODIF(aPgStorico number, imp_iniziale number,imp_variazione number, aDest OBBLIGAZIONE%rowtype, newObb OBBLIGAZIONE%rowtype) is
   begin
    insert into OBBLIGAZIONE_PGIRO_MODIFICA(
 	  CD_CDS,
@@ -241,8 +241,12 @@
 		PG_OBBLIGAZIONE,
 		ESERCIZIO_ORIGINALE,
 		IM_ORIGINE,
+		IM_PRIMA_MODIFICA,
 		IM_VARIAZIONE,
+		IM_DOPO_MODIFICA,
 		CD_ELEMENTO_VOCE,
+		DATA_VARIAZIONE,
+		UTENTE_VARIAZIONE,
 		DACR,
 		UTCR,
 		DUVA,
@@ -255,8 +259,12 @@
     ,aDest.PG_OBBLIGAZIONE
     ,aDest.ESERCIZIO_ORIGINALE
     ,imp_iniziale
+    ,aDest.im_obbligazione
     ,imp_variazione
+    ,newObb.im_obbligazione
     ,aDest.CD_ELEMENTO_VOCE
+    ,newObb.duva
+    ,newObb.utuv
     ,aDest.DACR
     ,aDest.UTCR
     ,aDest.DUVA
