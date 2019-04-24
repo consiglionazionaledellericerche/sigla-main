@@ -26,6 +26,7 @@ import it.cnr.contab.model.MessaggioXML;
 import it.cnr.contab.model.Risultato;
 import it.cnr.contab.service.GiornaleDiCassaSiopePlusService;
 import it.cnr.contab.service.OrdinativiSiopePlusService;
+import it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoBulk;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBulk;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -854,6 +855,28 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     );
                     mandato.setToBeUpdated();
                     try {
+                        SIOPEPlusEsitoBulk siopePlusEsitoBulk = new SIOPEPlusEsitoBulk();
+                        siopePlusEsitoBulk.setMandato(mandato);
+                        siopePlusEsitoBulk.setProgEsitoApplicativo(risultato.getProgEsitoApplicativo());
+                        siopePlusEsitoBulk.setDataUpload(Optional.ofNullable(risultato.getDataUpload())
+                                .map(Date::getTime)
+                                .map(aLong -> new Timestamp(aLong))
+                                .orElse(null));
+                        siopePlusEsitoBulk.setIdentificativoFlusso(ctEsitoMandato.getIdentificativoFlusso());
+                        siopePlusEsitoBulk.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                        siopePlusEsitoBulk.setDtOraEsitoOperazione(
+                                new Timestamp(ctEsitoMandato
+                                    .getDataOraEsitoOperazione()
+                                    .toGregorianCalendar()
+                                    .getTimeInMillis()
+                                )
+                        );
+                        siopePlusEsitoBulk.setToBeCreated();
+                        crudComponentSession.creaConBulk(userContext, siopePlusEsitoBulk);
+                    } catch (ComponentException | RemoteException e) {
+                        logger.error("SIOPE+ CREAZIONE MANDATO ESITO [{}/{}] ERROR", mandato.getEsercizio(), mandato.getPg_mandato(), e);
+                    }
+                    try {
                         return crudComponentSession.modificaConBulk(userContext, mandato);
                     } catch (ComponentException | RemoteException e) {
                         _ex.set(e);
@@ -894,6 +917,28 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                     .orElse(null)
                     );
                     reversale.setToBeUpdated();
+                    try {
+                        SIOPEPlusEsitoBulk siopePlusEsitoBulk = new SIOPEPlusEsitoBulk();
+                        siopePlusEsitoBulk.setReversale(reversale);
+                        siopePlusEsitoBulk.setProgEsitoApplicativo(risultato.getProgEsitoApplicativo());
+                        siopePlusEsitoBulk.setDataUpload(Optional.ofNullable(risultato.getDataUpload())
+                                .map(Date::getTime)
+                                .map(aLong -> new Timestamp(aLong))
+                                .orElse(null));
+                        siopePlusEsitoBulk.setIdentificativoFlusso(ctEsitoReversale.getIdentificativoFlusso());
+                        siopePlusEsitoBulk.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                        siopePlusEsitoBulk.setDtOraEsitoOperazione(
+                                new Timestamp(ctEsitoReversale
+                                        .getDataOraEsitoOperazione()
+                                        .toGregorianCalendar()
+                                        .getTimeInMillis()
+                                )
+                        );
+                        siopePlusEsitoBulk.setToBeCreated();
+                        crudComponentSession.creaConBulk(userContext, siopePlusEsitoBulk);
+                    } catch (ComponentException | RemoteException e) {
+                        logger.error("SIOPE+ CREAZIONE REVERSALE ESITO [{}/{}] ERROR", reversale.getEsercizio(), reversale.getPg_reversale(), e);
+                    }
                     try {
                         return crudComponentSession.modificaConBulk(userContext, reversale);
                     } catch (ComponentException | RemoteException e) {
