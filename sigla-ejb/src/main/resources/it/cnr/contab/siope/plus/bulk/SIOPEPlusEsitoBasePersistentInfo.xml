@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoBase"
+	keyClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoKey"
+	homeClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoHome">
+	<defaultColumnMap
+		tableName="SIOPE_PLUS_ESITO">
+		<columnMapping
+			columnName="PROG_ESITO_APPLICATIVO"
+			propertyName="progEsitoApplicativo"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="DATA_UPLOAD"
+			propertyName="dataUpload"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="IDENTIFICATIVO_FLUSSO"
+			propertyName="identificativoFlusso"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="ESITO_OPERAZIONE"
+			propertyName="esitoOperazione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false" />
+		<columnMapping
+			columnName="DT_ORA_ESITO_OPERAZIONE"
+			propertyName="dtOraEsitoOperazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="ESERCIZIO_MANDATO"
+			propertyName="esercizioMandato"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_MANDATO"
+			propertyName="cdCdsMandato"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="pgMandato"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="ESERCIZIO_REVERSALE"
+			propertyName="esercizioReversale"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="CD_CDS_REVERSALE"
+			propertyName="cdCdsReversale"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="pgReversale"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="progEsitoApplicativo" />
+	<persistentProperty
+		name="dataUpload" />
+	<persistentProperty
+		name="identificativoFlusso" />
+	<persistentProperty
+		name="esitoOperazione" />
+	<persistentProperty
+		name="dtOraEsitoOperazione" />
+	<persistentProperty
+		name="esercizioMandato" />
+	<persistentProperty
+		name="cdCdsMandato" />
+	<persistentProperty
+		name="pgMandato" />
+	<persistentProperty
+		name="esercizioReversale" />
+	<persistentProperty
+		name="cdCdsReversale" />
+	<persistentProperty
+		name="pgReversale" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>
