@@ -17,4 +17,9 @@ import javax.ws.rs.core.Response;
 public interface IteratorTracersLocal {
     @GET
     Response map(@Context HttpServletRequest request) throws Exception;
+
+    @GET
+    @Path("/test")
+    Response test(@Context HttpServletRequest request) throws Exception;
+
 }

@@ -11,6 +11,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Stateless
@@ -27,5 +28,11 @@ public class IteratorTracersResource implements IteratorTracersLocal {
                 .sorted((iteratorTracer, t1) -> iteratorTracer.getCreationDate().compareTo(t1.getCreationDate()))
                 .collect(Collectors.toList()))
         ).build();
+    }
+
+    @Override
+    public Response test(HttpServletRequest request) throws Exception {
+        TimeUnit.SECONDS.sleep(5);
+        return Response.ok().build();
     }
 }
