@@ -47,7 +47,16 @@
 	
 	<div class="Group card">
         <b class="text-primary h3">Righe mandato</b>
-        <% bp.getDocumentiPassiviSelezionati().writeHTMLTable(pageContext,(bp.isSiope_attiva() && mandato.isRequiredSiope())?"columnSetConSiope":null,false,false,bp.isInserting(),"100%","150px", true); %>
+        <% bp.getDocumentiPassiviSelezionati().writeHTMLTable(
+                    pageContext,
+                    (bp.isSiope_attiva() && mandato.isRequiredSiope())?"columnSetConSiope":null,
+                    false,
+                    false,
+                    bp.isInserting(),
+                    "100%",
+                    "auto",
+                    true);
+        %>
     </div>
 	<% if (bp.isSiope_attiva() && mandato.isRequiredSiope()) {%>
 	<br><b class="text-primary h3">Codici SIOPE</b>
@@ -119,7 +128,7 @@
 			</table>
 		</div>
 	<% } %>
-		<%if (bp.isCup_attivo() && mandato.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
+	<%if (bp.isCup_attivo() && mandato.isRequiredSiope()) {%> <!--se non è di regolarizzazione !-->
 		<br><b class="text-primary h3">CUP</b>
 		<div class="Group card">
 			<table border="0" cellspacing="0" cellpadding="2" class="w-100">
@@ -127,8 +136,7 @@
 						<td colspan="6"> 
 					        <% bp.getCupCollegati().writeHTMLTable(pageContext,"collegaARigaMandato", !mandato.isAnnullato(),false, !mandato.isAnnullato(),"100%","100px",true); %>
 						</td>
-					</tr> 
-						
+					</tr>
 					<tr>	
 						<td><% bp.getCupCollegati().writeFormField(out,"cdCup"); %> 
 			    			<% bp.getCupCollegati().writeFormField(out,"dsCup"); %>

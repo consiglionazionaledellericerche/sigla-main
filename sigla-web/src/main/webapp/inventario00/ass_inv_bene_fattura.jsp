@@ -23,10 +23,9 @@
    Ass_inv_bene_fatturaBulk associaz_bene_fatt = (Ass_inv_bene_fatturaBulk)bp.getModel();
    bp.openFormWindow(pageContext); %>
   
-  <% bp.getDettagliFattura().writeHTMLTable(pageContext,"inventarioSet",false,false,false,"100%","200px"); %> 
-  <div class="Group">
-	<table>
-
+  <% bp.getDettagliFattura().writeHTMLTable(pageContext,"inventarioSet",false,false,false,"100%","auto"); %>
+  <div class="Group card p-2">
+	<table class="w-100">
 	  <tr>
 	  	<td colspan = "4">
 		  <% bp.getRigheDaFattura().writeHTMLTable(
@@ -35,7 +34,8 @@
 				true,
 				false,
 				true,
-				"100%","140px",
+				"100%",
+				"140px",
 				true); %>
 		</td>
 	  </tr>
