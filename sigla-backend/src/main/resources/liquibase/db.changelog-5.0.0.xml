@@ -1938,4 +1938,70 @@ TRASPORTO_AEREO"/>
             <column name="utente_variazione" type="VARCHAR(20)" remarks="Utente della Variazione alla partita di giro"/>
         </addColumn>
     </changeSet>
+
+    <changeSet author="marco.spasiano" id="create-table-siope-plus-esito">
+        <createTable remarks="Tabella contenente gli esiti di mandati e reversali." tableName="siope_plus_esito">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prog_esito_applicativo" remarks="Progressivo esito applicativo" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_upload" remarks="Data upload" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identificativo_flusso" remarks="Identificativo flusso" type="VARCHAR2(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esito_operazione" remarks="Esito operazione" type="VARCHAR2(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_ora_esito_operazione" remarks="Data Esito operazione siope+" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_mandato" remarks="Esercizio mandato" type="INT"/>
+            <column name="cd_cds_mandato" remarks="CdS mandato" type="VARCHAR2(30)"/>
+            <column name="pg_mandato" remarks="Esercizio mandato" type="INT"/>
+            <column name="esercizio_reversale" remarks="Esercizio reversale" type="INT"/>
+            <column name="cd_cds_reversale" remarks="CdS reversale" type="VARCHAR2(30)"/>
+            <column name="pg_reversale" remarks="Esercizio reversale" type="INT"/>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="siope_plus_esito_pkey" tableName="siope_plus_esito"/>
+        <addForeignKeyConstraint
+                baseColumnNames="cd_cds_mandato,esercizio_mandato,pg_mandato"
+                baseTableName="siope_plus_esito"
+                constraintName="fk_siope_plus_esito01"
+                deferrable="false"
+                initiallyDeferred="false"
+                onDelete="NO ACTION"
+                onUpdate="NO ACTION"
+                referencedColumnNames="cd_cds,esercizio,pg_mandato"
+                referencedTableName="mandato"/>
+        <addForeignKeyConstraint
+                baseColumnNames="cd_cds_reversale,esercizio_reversale,pg_reversale"
+                baseTableName="siope_plus_esito"
+                constraintName="fk_siope_plus_esito02"
+                deferrable="false"
+                initiallyDeferred="false"
+                onDelete="NO ACTION"
+                onUpdate="NO ACTION"
+                referencedColumnNames="cd_cds,esercizio,pg_reversale"
+                referencedTableName="reversale"/>
+    </changeSet>
 </databaseChangeLog>
