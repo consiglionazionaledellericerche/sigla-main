@@ -5,6 +5,10 @@ import it.cnr.jada.persistency.Keyed;
 public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implements Keyed {
 	private String stato;
 
+	private java.sql.Timestamp dtInizioOld;
+
+	private java.sql.Timestamp dtFineOld;
+
 	private java.sql.Timestamp dtInizio;
 
 	private java.sql.Timestamp dtFine;
@@ -27,6 +31,22 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 
 	public void setStato(String stato) {
 		this.stato = stato;
+	}
+
+	public java.sql.Timestamp getDtInizioOld() {
+		return dtInizioOld;
+	}
+
+	public void setDtInizioOld(java.sql.Timestamp dtInizioOld) {
+		this.dtInizioOld = dtInizioOld;
+	}
+
+	public java.sql.Timestamp getDtFineOld() {
+		return dtFineOld;
+	}
+
+	public void setDtFineOld(java.sql.Timestamp dtFineOld) {
+		this.dtFineOld = dtFineOld;
 	}
 
 	public java.sql.Timestamp getDtInizio() {
