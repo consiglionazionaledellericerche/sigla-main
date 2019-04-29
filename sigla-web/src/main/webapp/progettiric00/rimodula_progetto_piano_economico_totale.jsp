@@ -12,4 +12,4 @@
 	SimpleDetailCRUDController controller = bp.getCrudPianoEconomicoTotale();
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico1_rimodulato",true,false,true,"100%","100px"); %>
+<%	controller.writeHTMLTable(pageContext,"piano_economico1_rimodulato",true,false,true,"100%","auto"); %>

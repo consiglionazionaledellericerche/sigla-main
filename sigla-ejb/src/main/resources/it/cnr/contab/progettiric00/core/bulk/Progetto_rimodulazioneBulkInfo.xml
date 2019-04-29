@@ -227,7 +227,13 @@
 		label="Importo Totale Rimodulato da Ripartire"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />
-
+	<fieldProperty
+		name="flViewCurrent"
+		property="flViewCurrent"
+		inputType="CHECKBOX"
+		command="doDefault"
+		label="Visualizza Quote Correnti" />
+		
 	<formFieldProperty name="pg_rimodulazione" />
 	<formFieldProperty name="find_progetto" />
 	<formFieldProperty name="stato" />
@@ -246,6 +252,7 @@
 	<formFieldProperty name="imFinanziatoRimodulatoDaRipartire" />
 	<formFieldProperty name="imCofinanziatoRimodulatoDaRipartire" />
 	<formFieldProperty name="imTotaleRimodulatoDaRipartire" />
+	<formFieldProperty name="flViewCurrent" />
 		
 	<formFieldProperty
 		name="statoOf" />

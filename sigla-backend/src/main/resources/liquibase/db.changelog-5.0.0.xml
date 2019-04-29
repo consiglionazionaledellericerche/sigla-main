@@ -1929,6 +1929,8 @@ TRASPORTO_AEREO"/>
             <column name="stato" remarks="Stato della rimodulazione. P: Provvisorio - D: Definitivo - A: Approvato" type="VARCHAR(1)">
                 <constraints nullable="false"/>
             </column>
+            <column name="dt_inizio_old" remarks="Data inizio precedente alla rimodulazione del progetto." type="${date.type}"/>
+            <column name="dt_fine_old" remarks="Data fine precedente alla rimodulazione del progetto." type="${date.type}"/>
             <column name="dt_inizio" remarks="Data inizio rimodulato del progetto." type="${date.type}"/>
             <column name="dt_fine" remarks="Data fine rimodulato del progetto." type="${date.type}"/>
             <column name="im_var_finanziato" remarks="Importo Variazione Spesa Finanziato rimodulato del progetto" type="numeric(15, 2)">

@@ -77,6 +77,26 @@
 		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata Rimodulata" />
+	<fieldProperty
+		name="imSpesaFinanziatoRimodulatoAC"
+		property="imSpesaFinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		command="doOnImportoFinanziatoPpeACChange"
+		readonlyProperty="detailRimodulatoEliminato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Finanziata Rimodulata" />
+	<fieldProperty
+		name="imSpesaFinanziatoRimodulatoAA"
+		property="imSpesaFinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		command="doOnImportoFinanziatoPpeAAChange"
+		readonlyProperty="detailRimodulatoEliminato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Finanziata Rimodulata" />
 		
 	<fieldProperty
 		name="im_spesa_cofinanziato"
@@ -104,7 +124,27 @@
 		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata Rimodulata" />
-		
+	<fieldProperty
+		name="imSpesaCofinanziatoRimodulatoAC"
+		property="imSpesaCofinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		command="doOnImportoCofinanziatoPpeACChange"
+		readonlyProperty="detailRimodulatoEliminato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Cofinanziata Rimodulata" />
+	<fieldProperty
+		name="imSpesaCofinanziatoRimodulatoAA"
+		property="imSpesaCofinanziatoRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		command="doOnImportoCofinanziatoPpeAAChange"
+		readonlyProperty="detailRimodulatoEliminato"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Cofinanziata Rimodulata" />
+				
 	<fieldProperty
 		name="imTotaleSpesa"
 		property="imTotaleSpesa"
@@ -221,10 +261,14 @@
 	<formFieldProperty name="im_spesa_finanziato" label="Quota Finanziata"/>
 	<formFieldProperty name="im_spesa_finanziato_amm"/>
 	<formFieldProperty name="imSpesaFinanziatoRimodulato"/>
+	<formFieldProperty name="imSpesaFinanziatoRimodulatoAC"/>
+	<formFieldProperty name="imSpesaFinanziatoRimodulatoAA"/>
 
 	<formFieldProperty name="im_spesa_cofinanziato" label="Quota Cofinanziata"/>
 	<formFieldProperty name="im_spesa_cofinanziato_amm"/>
 	<formFieldProperty name="imSpesaCofinanziatoRimodulato"/>
+	<formFieldProperty name="imSpesaCofinanziatoRimodulatoAC"/>
+	<formFieldProperty name="imSpesaCofinanziatoRimodulatoAA"/>
 
 	<formFieldProperty name="imTotaleSpesa" label="Quota Totale"/>
 	<formFieldProperty name="imTotaleSpesaRimodulato" label="Quota Totale Rimodulata"/>
@@ -345,6 +389,43 @@
 			inputType="DESCTOOL"
 			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="imAssestatoSpesaFinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Finanziato"/>
+		<columnFieldProperty 
+			name="imAssestatoSpesaCofinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Cofinanziato"/>
+	</columnSet>
+	
+		<columnSet name="piano_economico_rimodulato_current">
+		<columnFieldProperty
+			name="esercizio_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Esercizio"/>
+		<columnFieldProperty
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
+		<columnFieldProperty
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"
+			inputType="DESCTOOL"
+			descProperty="messageAnomaliaDetailRimodulato"/>
+		<columnFieldProperty
 			name="im_spesa_finanziato"
 			headerLabel="QUOTE CORRENTI"
 			label="Finanziata"/>
@@ -446,6 +527,39 @@
 			inputType="DESCTOOL"
 			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="imAssestatoSpesaFinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Finanziato"/>
+		<columnFieldProperty 
+			name="imAssestatoSpesaCofinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Cofinanziato"/>
+	</columnSet>
+
+	<columnSet name="piano_economico1_rimodulato_current">
+		<columnFieldProperty
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
+		<columnFieldProperty
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"
+			inputType="DESCTOOL"
+			descProperty="messageAnomaliaDetailRimodulato"/>
+		<columnFieldProperty
 			name="im_spesa_finanziato"
 			headerLabel="QUOTE CORRENTI"
 			label="Finanziata"/>
@@ -478,7 +592,7 @@
 			headerLabel="ASSESTATO RIMODULATO"
 			label="Cofinanziato"/>
 	</columnSet>
-	
+		
 	<form name="piano_economico2">
 		<formFieldProperty
 			name="esercizio_piano"/>
@@ -537,6 +651,32 @@
 			name="esercizio_piano"
 			label="Esercizio"/>
 		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="imAssestatoSpesaFinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Finanziato"/>
+		<columnFieldProperty 
+			name="imAssestatoSpesaCofinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Cofinanziato"/>
+	</columnSet>
+	
+	<columnSet name="piano_economico2_rimodulato_current">
+		<columnFieldProperty
+			name="esercizio_piano"
+			label="Esercizio"/>
+		<columnFieldProperty
 			name="im_spesa_finanziato"
 			headerLabel="QUOTE CORRENTI"
 			label="Finanziata"/>
@@ -580,18 +720,6 @@
 			headerLabel="PIANO ECONOMICO"
 			label="Descrizione"/>
 		<columnFieldProperty
-			name="im_spesa_finanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesa"
-			headerLabel="QUOTE CORRENTI"
-			label="Totale"/> 
-		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
 			headerLabel="QUOTE RIMODULATE"
 			label="Finanziata"/>
@@ -612,4 +740,47 @@
 			headerLabel="ASSESTATO RIMODULATO"
 			label="Cofinanziato"/>
 	</columnSet>		
+
+	<columnSet name="piano_economico3_rimodulato_current">
+		<columnFieldProperty
+			name="cd_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Voce"/>
+		<columnFieldProperty
+			name="ds_voce_piano"
+			headerLabel="PIANO ECONOMICO"
+			label="Descrizione"/>
+		<columnFieldProperty
+			name="im_spesa_finanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE CORRENTI"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="QUOTE CORRENTI"
+			label="Totale"/>
+		<columnFieldProperty
+			name="imSpesaFinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Finanziata"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Cofinanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="QUOTE RIMODULATE"
+			label="Totale"/> 
+		<columnFieldProperty 
+			name="imAssestatoSpesaFinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Finanziato"/>
+		<columnFieldProperty 
+			name="imAssestatoSpesaCofinanziatoRimodulato"
+			headerLabel="ASSESTATO RIMODULATO"
+			label="Cofinanziato"/>
+	</columnSet>
 </bulkInfo>

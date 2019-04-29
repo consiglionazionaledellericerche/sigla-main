@@ -13,11 +13,11 @@
 	SimpleDetailCRUDController controller = bp.getCrudPianoEconomicoAltriAnni();
 	SimpleDetailCRUDController controllerVoci = bp.getCrudPianoEconomicoVoceBilancioAltriAnni();
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
-	int controllerSize = controller.getDetails()==null?0:controller.getDetails().size();
-	int controllerVociSize = controllerVoci.getDetails()==null?0:controllerVoci.getDetails().size();
+	Progetto_rimodulazioneBulk model = (Progetto_rimodulazioneBulk)bp.getModel();	
+	String viewCurrent = Optional.ofNullable(model).filter(Progetto_rimodulazioneBulk::getFlViewCurrent).map(el->"_current").orElse("");
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico_rimodulato",true,false,true,"100%",100+(controllerSize/5*50)+"px"); %>
+<%	controller.writeHTMLTable(pageContext,"piano_economico_rimodulato"+viewCurrent,true,false,true,"100%","auto"); %>
 <table class="Panel card p-2 mt-1">
   <TR>
   	<TD><% controller.writeFormLabel(out,"esercizio_piano");%></TD>
@@ -28,15 +28,15 @@
   	<TD colspan="3"><% controller.writeFormInput(out,null,"voce_piano",isKeyEditable,null,null);%></TD>
   </TR>
   <TR>
-  	<% controller.writeFormField(out,"imSpesaFinanziatoRimodulato");%>
-  	<% controller.writeFormField(out,"imSpesaCofinanziatoRimodulato");%>
+  	<% controller.writeFormField(out,"imSpesaFinanziatoRimodulatoAA");%>
+  	<% controller.writeFormField(out,"imSpesaCofinanziatoRimodulatoAA");%>
   	<% controller.writeFormField(out,"imTotaleSpesaRimodulato");%>
   </TR>
 </table>
 </br>
 <fieldset class="fieldset">
 	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
-<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato",true,false,true,"100%",100+(controllerVociSize/5*50)+"px"); %>
+<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato",true,false,true,"100%","auto"); %>
 	</br>
 	<table class="Panel">
 	  <tr><% controllerVoci.writeFormField(out,"elemento_voce");%></tr>

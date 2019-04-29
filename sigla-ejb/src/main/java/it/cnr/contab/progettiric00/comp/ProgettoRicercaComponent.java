@@ -201,7 +201,6 @@ public ProgettoRicercaComponent() {
 
 				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
-				validaDatePianoEconomico(uc, (ProgettoBulk)bulk);
 				validaPianoEconomico(uc, (ProgettoBulk)bulk);
 			}catch(Throwable throwable){
 	            throw handleException(throwable);
@@ -614,7 +613,6 @@ public ProgettoRicercaComponent() {
 				if (!parEnte.getFl_informix().booleanValue())
 					allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
 
-				validaDatePianoEconomico(uc, (ProgettoBulk)bulk);
 				validaPianoEconomico(uc, (ProgettoBulk)bulk);
 		   }catch(Throwable throwable){
 		       throw handleException(throwable);
@@ -1493,9 +1491,11 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	}
     }
 
-    private void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException {
+    public void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException {
     	try {
-	   		it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+			validaDatePianoEconomico(userContext, progetto);
+
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
 	   		BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 	   		if (Optional.ofNullable(annoFrom).isPresent()) {
 		   		validaVociPianoEconomicoDecisionale(userContext, progetto, annoFrom.intValue());

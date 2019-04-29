@@ -2,6 +2,7 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.util.BitSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,8 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
 	
 	public void add(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
+		assVoce.setImVarFinanziatoRimodulato(BigDecimal.ZERO);
+		assVoce.setImVarCofinanziatoRimodulato(BigDecimal.ZERO);
 		assVoce.setDetailRimodulatoAggiunto(Boolean.TRUE);
 		super.add(actioncontext, oggettobulk);
 	};
@@ -72,11 +75,12 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
     		Button button = new Button();
     		button.setImg("img/undo16.gif");
     		button.setDisabledImg("img/undo16.gif");
-    		button.setTitle("Ripristina Selezionati");
+    		button.setTitle("Annulla Eliminazione");
     		button.setIconClass("fa fa-fw fa-undo text-primary");
     		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
             button.setHref("javascript:submitForm('doUndoRemoveFromCRUD(" + getInputPrefix() + ")')");
-            boolean isButtonEnable = Optional.ofNullable(getParentController().getModel())
+            boolean isButtonEnable = isShrinkable() && 
+            						 Optional.ofNullable(getParentController().getModel())
 											  .filter(Progetto_piano_economicoBulk.class::isInstance)
 											  .map(Progetto_piano_economicoBulk.class::cast)
 											  .flatMap(el->Optional.ofNullable(el.getVoce_piano_economico()))
@@ -94,17 +98,26 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
             List list = getDetailsPage();
             BitSet bitset = selection.getSelection(getCurrentPage() * getPageSize(), getPageSize());
             if (bitset.length() == 0) {
+                for (int i = 0; i < getPageSize(); i++)
+                    if (bitset.get(i))
+                        validateForUndoRemoveDetail(actioncontext, (OggettoBulk) list.get(i));
+
                 for (int j = getPageSize() - 1; j > 0; j--)
                     if (bitset.get(j))
                         undoRemoveDetail((OggettoBulk) list.get(j), j);
 
             } else if (selection.getFocus() >= 0) {
                 OggettoBulk oggettobulk1 = getDetail(selection.getFocus());
+                validateForUndoRemoveDetail(actioncontext, oggettobulk1);
                 undoRemoveDetail(oggettobulk1, selection.getFocus());
             }
         } else {
             List list1 = getDetails();
             if (selection.size() > 0) {
+                OggettoBulk oggettobulk2;
+                for (Iterator iterator1 = selection.iterator(list1); iterator1.hasNext(); validateForUndoRemoveDetail(actioncontext, oggettobulk2))
+                    oggettobulk2 = (OggettoBulk) iterator1.next();
+
                 int k;
                 OggettoBulk oggettobulk3;
                 for (SelectionIterator selectioniterator = selection.reverseIterator(); selectioniterator.hasNext(); undoRemoveDetail(oggettobulk3, k)) {
@@ -114,17 +127,24 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
 
             } else if (selection.getFocus() >= 0) {
                 OggettoBulk oggettobulk = getDetail(selection.getFocus());
+                validateForUndoRemoveDetail(actioncontext, oggettobulk);
                 undoRemoveDetail(oggettobulk, selection.getFocus());
             }
         }
         getParentController().setDirty(true);
         reset(actioncontext);
     }
+
+    public void validateForUndoRemoveDetail(ActionContext actioncontext, OggettoBulk oggettobulk)
+            throws ValidationException {
+    }
     
 	public OggettoBulk undoRemoveDetail(OggettoBulk oggettobulk, int i) {
 		Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
-		assVoce.setImVarFinanziatoRimodulato(Optional.ofNullable(assVoce.getImVarFinanziatoRimodulatoPreDelete()).orElse(BigDecimal.ZERO));
-		assVoce.setImVarCofinanziatoRimodulato(Optional.ofNullable(assVoce.getImVarCofinanziatoRimodulatoPreDelete()).orElse(BigDecimal.ZERO));
+		if (assVoce.isDetailRimodulatoEliminato()) {
+			assVoce.setImVarFinanziatoRimodulato(Optional.ofNullable(assVoce.getImVarFinanziatoRimodulatoPreDelete()).orElse(BigDecimal.ZERO));
+			assVoce.setImVarCofinanziatoRimodulato(Optional.ofNullable(assVoce.getImVarCofinanziatoRimodulatoPreDelete()).orElse(BigDecimal.ZERO));
+		}
 		assVoce.setDetailRimodulatoEliminato(Boolean.FALSE);
 		return oggettobulk;
 	}
