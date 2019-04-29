@@ -42,6 +42,7 @@
 	    <td><% bp.getController().writeFormInput(out,"imFinanziatoRimodulatoDaRipartire");%></td>
 		<td> + </td>
 	    <td><% bp.getController().writeFormInput(out,"imCofinanziatoRimodulatoDaRipartire");%></td>
+	    <td align="left"><% bp.getController().writeFormField(out,"flViewCurrent"); %></td>
 	  </tr>                     	
 	</table>
 	</fieldset>

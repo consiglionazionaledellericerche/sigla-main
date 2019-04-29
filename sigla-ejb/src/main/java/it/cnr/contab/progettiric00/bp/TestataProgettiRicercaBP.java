@@ -15,12 +15,14 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
@@ -28,6 +30,7 @@ import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -37,6 +40,7 @@ import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
@@ -44,8 +48,10 @@ import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
-public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUDBP implements IProgettoBP{
+public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBulk, ProgettoBulk> implements IProgettoBP{
 	private boolean flNuovoPdg = false;
 	private boolean flInformix = false;
 	private boolean flPrgPianoEconomico = false;
@@ -417,7 +423,7 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (Optional.ofNullable(progetto.getCd_unita_organizzativa())
 					.map(el->!el.equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
 					.orElse(Boolean.TRUE) ||
-			Optional.ofNullable(progetto.getOtherField()).filter(el->el.isStatoChiuso()||el.isStatoAnnullato()).isPresent())
+			Optional.ofNullable(progetto.getOtherField()).filter(el->el.isStatoChiuso()||el.isStatoAnnullato()||el.isStatoApprovato()).isPresent())
 			this.setStatus(VIEW);
 	}
 	
@@ -450,6 +456,9 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 	    		hash.put(i++, new String[]{ "tabDettagli","UO partecipanti","/progettiric00/progetto_ricerca_dettagli.jsp" });
 	    	}
 	    } 
+
+		hash.put(i++, new String[]{"tabAllegati","Allegati","/util00/tab_allegati.jsp" });
+
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++) {
 			tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
@@ -820,5 +829,22 @@ public class TestataProgettiRicercaBP extends it.cnr.jada.util.action.SimpleCRUD
 		return Optional.ofNullable(progettoBulk)
 					.map(ProgettoBulk::isROProgettoPianoEconomico)
 					.orElse(Boolean.TRUE);
+	}
+
+	@Override
+	protected String getStorePath(ProgettoBulk allegatoParentBulk, boolean create) throws BusinessProcessException {
+        return allegatoParentBulk.getStorePath();
+	}
+
+	@Override
+	protected Class<AllegatoProgettoBulk> getAllegatoClass() {
+        return AllegatoProgettoBulk.class;
+	} 
+	
+	@Override
+	protected void completeAllegato(AllegatoProgettoBulk allegato) throws ApplicationException {
+		super.completeAllegato(allegato);
+		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
+		allegato.setType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
 	}
 }
