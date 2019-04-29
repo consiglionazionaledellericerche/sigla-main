@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="nome"
+		property="nome"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="400"
+        inputCssClass="w-100"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		caseSensitiveSearch="false"
+		label="Nome del File" />
+	<fieldProperty
+		name="descrizione"
+		property="descrizione"
+		inputType="TEXTAREA"
+		inputSize="2000"
+		maxLength="2000"
+		cols="80"
+		rows="3"
+		caseSensitiveSearch="false"
+		label="Descrizione" />
+	<fieldProperty
+		name="titolo"
+		property="titolo"
+		inputType="TEXTAREA"
+		inputSize="2000"
+		maxLength="2000"
+		cols="80"
+		rows="3"
+		caseSensitiveSearch="false"
+		label="Titolo" />
+	<fieldProperty
+		name="file"
+		property="file"
+		inputType="FILE"
+		inputSize="40"
+		maxLength="400"
+		caseSensitiveSearch="false"
+		nullable="false"
+		label="File" />
+	<fieldProperty
+		name="type"
+		property="type"
+		label="Tipo"
+		inputSize="20"
+		keysProperty="ti_allegato_rimodulazioneKeys"
+		inputType="SELECT"
+		nullable="false"
+		readonlyPropertyOnEdit="typeEnabled"/>
+	<fieldProperty
+		name="attivaFile"
+		property="nome"
+		inputType="BUTTON"
+		enabledOnSearch="false"
+		enabledOnInsert="false"
+		enabledOnView="true"
+		img="img/import24.gif"
+		buttonClass="btn-outline-primary btn-title w-100"
+		iconClass="fa fa-fw fa-cloud-download"
+		href="javascript:doScaricaAllegato()"
+		label="Apri File" />
+
+		
+	<formFieldProperty
+		name="type" />
+	<formFieldProperty
+		name="nome" />
+	<formFieldProperty
+		name="descrizione" />
+	<formFieldProperty
+		name="titolo" />
+	<formFieldProperty
+		name="file" />
+	<formFieldProperty
+		name="attivaFile" />
+
+	<columnFieldProperty
+		name="type" />		
+	<columnFieldProperty
+		name="nome" />
+	<columnFieldProperty
+		name="descrizione" />
+	<columnFieldProperty
+		name="titolo" />
+
+	<findFieldProperty
+		name="nome" />
+	<findFieldProperty
+		name="descrizione" />
+	<findFieldProperty
+		name="titolo" />
+
+	<columnSet
+		name="archivioAllegati" >
+		<columnFieldProperty
+			name="type" />
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="titolo" />
+	</columnSet>
+</bulkInfo>

@@ -1,6 +1,7 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.List;
@@ -21,12 +22,17 @@ import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.si.spring.storage.StorageService;
 
-public class ProgettoBulk extends ProgettoBase {
+public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 
 	public static final String TIPO_STATO_PROPOSTA  ="P";
 	public static final String TIPO_STATO_APPROVATO ="A";
@@ -150,6 +156,7 @@ public class ProgettoBulk extends ProgettoBase {
 	private Progetto_other_fieldBulk otherField;
 	private BulkList<Pdg_moduloBulk> pdgModuli = new BulkList();
 	private BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate = new BulkList<V_saldi_voce_progettoBulk>();
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 	public ProgettoBulk() {
 		super();
@@ -1237,4 +1244,44 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	public void setVociBilancioMovimentate(BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate) {
 		this.vociBilancioMovimentate = vociBilancioMovimentate;
 	}
+	
+	@Override
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;
+	}
+
+	@Override
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		AllegatoGenericoBulk dett = (AllegatoGenericoBulk)getArchivioAllegati().remove(index);
+		return dett;
+	}
+
+	@Override
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+
+	@Override
+	public void setArchivioAllegati(BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	
+	public String getStorePath() {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				this.getCd_unita_organizzativa(),
+				"Progetti",
+				getCMISFolderName()
+		).stream().collect(
+				Collectors.joining(StorageService.SUFFIX)
+		);
+	}
+	
+	public String getCMISFolderName() {
+		String suffix = "Progetto ";
+		suffix = suffix.concat(String.valueOf(this.getCd_progetto()));
+		suffix = suffix.concat(" - "+String.valueOf(this.getPg_progetto()));
+		return suffix;
+	}	
 }

@@ -13,15 +13,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.util.DateUtils;
+import it.cnr.si.spring.storage.StorageService;
 
-public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
+public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase implements AllegatoParentBulk {
 	public static final String STATO_PROVVISORIO = "P";
 	public static final String STATO_DEFINITIVO = "D";
 	public static final String STATO_APPROVATO = "A";
+	public static final String STATO_RESPINTO = "R";
 
 	protected ProgettoBulk progetto;
 	
@@ -31,6 +35,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 		statoKeys.put(STATO_PROVVISORIO,"Provvisorio");
 		statoKeys.put(STATO_DEFINITIVO,"Definitivo");
 		statoKeys.put(STATO_APPROVATO,"Approvato");
+		statoKeys.put(STATO_RESPINTO,"Respinto");
 	};
 
 	public final static Dictionary statoOfKeys;
@@ -55,7 +60,12 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 	private java.math.BigDecimal imCofinanziatoRimodulato;
 	private java.sql.Timestamp dtInizioRimodulato;
 	private java.sql.Timestamp dtFineRimodulato;
-	
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+
+	//Flag che indica se nella mappa di rimodulazione occorre visualizzare una versione semplice 
+	//senza campi valori attuali
+	private Boolean flViewCurrent = Boolean.FALSE;
+
 	public Progetto_rimodulazioneBulk() {
 		super();
 	}
@@ -97,6 +107,10 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 		return STATO_APPROVATO.equals(this.getStato());
 	}
 
+	public boolean isStatoRespinto() {
+		return STATO_RESPINTO.equals(this.getStato());
+	}
+	
 	public Dictionary getStatoKeys() {
 		return statoKeys;
 	}
@@ -135,7 +149,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 	}
 	
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {dettagliRimodulazione,dettagliVoceRimodulazione};
+		return new it.cnr.jada.bulk.BulkCollection[] {this.getDettagliRimodulazione(),this.getDettagliVoceRimodulazione(),this.getArchivioAllegati()};
 	}
 
 	public BulkList<Progetto_rimodulazione_ppeBulk> getDettagliRimodulazione() {
@@ -531,5 +545,51 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase {
 	 */
 	public boolean isRimodulatoImportoCofinanziato() {
 		return this.getImCofinanziatoRimodulato().compareTo(this.getProgetto().getImCofinanziato())!=0;
+	}
+
+	@Override
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;
+	}
+
+	@Override
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		AllegatoGenericoBulk dett = (AllegatoGenericoBulk)getArchivioAllegati().remove(index);
+		return dett;
+	}
+
+	@Override
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+
+	@Override
+	public void setArchivioAllegati(BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	
+	public String getStorePath() {
+		return getProgetto().getStorePath()
+				.concat(StorageService.SUFFIX)
+				.concat(getCMISFolderName());
+	}
+	
+	public String getCMISFolderName() {
+		String suffix = "Rimodulazione n.";
+		suffix = suffix.concat(String.valueOf(this.getPg_rimodulazione()));
+		return suffix;
+	}	
+	
+	public void setFlViewCurrent(Boolean flViewCurrent) {
+		this.flViewCurrent = flViewCurrent;
+	}
+	
+	/*
+	 * Flag che indica se nella mappa di rimodulazione occorre visualizzare una versione semplice 
+	 * senza campi contenenti i valori attuali
+	 */
+	public Boolean getFlViewCurrent() {
+		return flViewCurrent;
 	}
 }

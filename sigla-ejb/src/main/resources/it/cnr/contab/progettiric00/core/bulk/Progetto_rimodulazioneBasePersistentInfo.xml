@@ -11,6 +11,18 @@
 			sqlTypeName="CHAR"
 			columnSize="1"/>			
 		<columnMapping
+			columnName="DT_INIZIO_OLD"
+			propertyName="dtInizioOld"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_OLD"
+			propertyName="dtFineOld"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
 			columnName="DT_INIZIO"
 			propertyName="dtInizio"
 			sqlTypeName="TIMESTAMP"
@@ -69,6 +81,10 @@
 	</defaultColumnMap>
 	<persistentProperty
 		name="stato" />
+	<persistentProperty
+		name="dtInizioOld" />
+	<persistentProperty
+		name="dtFineOld" /> 
 	<persistentProperty
 		name="dtInizio" />
 	<persistentProperty
