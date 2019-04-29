@@ -62,6 +62,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		command="doDefault"
 		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata Variata" />
@@ -71,6 +72,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
+		command="doDefault"
 		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata Variata" />
@@ -81,7 +83,7 @@
 		maxLength="18"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
-		label="Importo Totale Spesa Variaya" />		
+		label="Importo Totale Spesa Variata" />		
 
 	<fieldProperty
 		name="imAssestatoSpesaFinanziato"

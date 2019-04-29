@@ -2,7 +2,7 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.util.BitSet;
-import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +16,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.util.action.SelectionIterator;
+import it.cnr.jada.util.jsp.Button;
 
 public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgettoPianoEconomicoCRUDController {
 	public RimodulaProgettoPianoEconomicoCRUDController(String name, Class modelClass, String listPropertyName, it.cnr.jada.util.action.FormController parent) {
@@ -66,15 +67,16 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
 
         super.writeHTMLToolbar(context, reset, find, delete, false);
 
-        String command = "javascript:submitForm('doUndoRemoveFromCRUD(" + getInputPrefix() + ")')";
-        it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-                    context,
-                    HttpActionContext.isFromBootstrap(context) ? "fa fa-fw fa-undo text-primary" : "img/undo16.gif",
-                    command,
-                    true,
-                    "Ripristina Selezionati",
-                    "btn-sm btn-secondary btn-outline-secondary btn-title",
-                    HttpActionContext.isFromBootstrap(context));
+		Button button = new Button();
+		button.setImg("img/undo16.gif");
+		button.setDisabledImg("img/undo16.gif");
+		button.setTitle("Annulla Eliminazione");
+		button.setIconClass("fa fa-fw fa-undo text-primary");
+		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+        button.setHref("javascript:submitForm('doUndoRemoveFromCRUD(" + getInputPrefix() + ")')");
+        boolean isButtonEnable = isShrinkable();
+        button.writeToolbarButton(context.getOut(), isButtonEnable, HttpActionContext.isFromBootstrap(context));
+        
         super.closeButtonGROUPToolbar(context);
     }
     
@@ -84,17 +86,26 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
             List list = getDetailsPage();
             BitSet bitset = selection.getSelection(getCurrentPage() * getPageSize(), getPageSize());
             if (bitset.length() == 0) {
+                for (int i = 0; i < getPageSize(); i++)
+                    if (bitset.get(i))
+                        validateForUndoRemoveDetail(actioncontext, (OggettoBulk) list.get(i));
+
                 for (int j = getPageSize() - 1; j > 0; j--)
                     if (bitset.get(j))
                         undoRemoveDetail((OggettoBulk) list.get(j), j);
 
             } else if (selection.getFocus() >= 0) {
                 OggettoBulk oggettobulk1 = getDetail(selection.getFocus());
+                validateForUndoRemoveDetail(actioncontext, oggettobulk1);
                 undoRemoveDetail(oggettobulk1, selection.getFocus());
             }
         } else {
             List list1 = getDetails();
             if (selection.size() > 0) {
+                OggettoBulk oggettobulk2;
+                for (Iterator iterator1 = selection.iterator(list1); iterator1.hasNext(); validateForUndoRemoveDetail(actioncontext, oggettobulk2))
+                    oggettobulk2 = (OggettoBulk) iterator1.next();
+
                 int k;
                 OggettoBulk oggettobulk3;
                 for (SelectionIterator selectioniterator = selection.reverseIterator(); selectioniterator.hasNext(); undoRemoveDetail(oggettobulk3, k)) {
@@ -104,6 +115,7 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
 
             } else if (selection.getFocus() >= 0) {
                 OggettoBulk oggettobulk = getDetail(selection.getFocus());
+                validateForUndoRemoveDetail(actioncontext, oggettobulk);
                 undoRemoveDetail(oggettobulk, selection.getFocus());
             }
         }
@@ -111,7 +123,11 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
         reset(actioncontext);
     }
 
-	public OggettoBulk undoRemoveDetail(OggettoBulk oggettobulk, int i) {
+    public void validateForUndoRemoveDetail(ActionContext actioncontext, OggettoBulk oggettobulk)
+            throws ValidationException {
+    }
+
+    public OggettoBulk undoRemoveDetail(OggettoBulk oggettobulk, int i) {
 		Progetto_piano_economicoBulk ppe = (Progetto_piano_economicoBulk)oggettobulk;
 		Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)this.getParentModel();
 

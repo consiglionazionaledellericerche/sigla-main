@@ -3,6 +3,7 @@ package it.cnr.contab.progettiric00.core.bulk;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringJoiner;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -316,35 +317,47 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	}
 	
 	public String getMessageAnomaliaDetailRimodulato() {
-		StringBuffer anomalia = new StringBuffer();
-		anomalia = anomalia.append(
-				Optional.ofNullable(this.getDispResiduaFinanziamentoRimodulato())
-				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
-				.map(el->
-					"QUOTA FINANZIATA:" +
-					"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
-					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
-					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito.\r\r")
-				.orElse(""));
-		anomalia = anomalia.append(
-				Optional.ofNullable(this.getDispResiduaCofinanziamentoRimodulato())
-				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
-				.map(el->
-					"QUOTA COFINANZIATA:" +
-					"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
-					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
-					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito.\r\r")
-				.orElse(""));
-		anomalia = anomalia.append(
-				Optional.ofNullable(this.getVociBilancioAssociate())
-				.map(List::stream)
-				.orElse(Stream.empty())
-				.filter(el->Optional.ofNullable(el.getMessageAnomaliaDetailRimodulato()).isPresent())
-				.findAny()
-				.map(el->"VOCI ASSOCIATE:" +
-					"\rAlcune voci associate presentano anomalie da correggere.")
-				.orElse(""));
+		StringJoiner anomalia = new StringJoiner("\r\r");
+		Optional.ofNullable(this.getDispResiduaFinanziamentoRimodulato())
+			.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+			.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
+				"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
+				" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
+				" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
 
-		return Optional.ofNullable(anomalia).filter(el->el.length()>0).map(StringBuffer::toString).orElse(null);
-	}	
+		Optional.ofNullable(this)
+			.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
+			.map(Progetto_piano_economicoBulk::getDispResiduaFinanziamentoRimodulato)
+			.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
+			.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
+					"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
+					" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
+					"."));
+
+		Optional.ofNullable(this.getDispResiduaCofinanziamentoRimodulato())
+			.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+			.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
+				"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
+				" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
+				" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
+
+		Optional.ofNullable(this)
+			.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
+			.map(Progetto_piano_economicoBulk::getDispResiduaCofinanziamentoRimodulato)
+			.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
+			.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
+				"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
+				" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
+				"."));
+
+		Optional.ofNullable(this.getVociBilancioAssociate())
+			.map(List::stream)
+			.orElse(Stream.empty())
+			.filter(el->Optional.ofNullable(el.getMessageAnomaliaDetailRimodulato()).isPresent())
+			.findAny()
+			.ifPresent(el->anomalia.add("VOCI ASSOCIATE:" +
+					"\rAlcune voci associate presentano anomalie da correggere."));
+
+		return Optional.ofNullable(anomalia).filter(el->el.length()>0).map(StringJoiner::toString).orElse(null);
+	}
 }
