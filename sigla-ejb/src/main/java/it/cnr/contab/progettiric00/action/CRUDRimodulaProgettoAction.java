@@ -190,7 +190,12 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 			{
 				RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
 	        	bp.salvaDefinitivo(context);
-				setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
+				Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)bp.getModel();
+				if (rim.isStatoApprovato())
+		        	setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo! La rimodulazione è stata posta "
+		        			+ "direttamente in stato approvato non essendo previste variazioni di bilancio a supporto!");
+				else
+					setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo!");
 			}
 			return context.findDefaultForward();
 		}		
@@ -251,6 +256,37 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		catch (Throwable ex) {
 			// In caso di errore ripropongo la data precedente
 			optRimodulazione.get().setDtFineRimodulato(oldDate);
+			try
+			{
+				return handleException(context, ex);			
+			}
+			catch (Throwable e) 
+			{
+				return handleException(context, e);
+			}
+		}
+	}
+	
+	public Forward doOnDtProrogaRimodulatoChange(ActionContext context) {
+		RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
+		Optional<Progetto_rimodulazioneBulk> optRimodulazione = Optional.ofNullable(bp.getModel())
+				.filter(Progetto_rimodulazioneBulk.class::isInstance).map(Progetto_rimodulazioneBulk.class::cast);
+				
+		Optional<Timestamp> optData = optRimodulazione.flatMap(el->Optional.ofNullable(el.getDtProrogaRimodulato()));
+	
+		java.sql.Timestamp oldDate=null;
+		if (optData.isPresent())
+			oldDate = (java.sql.Timestamp)optData.get().clone();
+	
+		try {
+			fillModel(context);
+			if (optRimodulazione.isPresent())
+				optRimodulazione.get().validaDateRimodulazione();
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			// In caso di errore ripropongo la data precedente
+			optRimodulazione.get().setDtProrogaRimodulato(oldDate);
 			try
 			{
 				return handleException(context, ex);			

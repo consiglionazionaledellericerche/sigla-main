@@ -347,24 +347,30 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 
 		hash.put(i++, new String[]{ "tabProgettoPianoEconomicoSummary","Totali","/progettiric00/rimodula_progetto_piano_economico_summary.jsp" });
 
-		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)this.getModel();
-		ProgettoBulk progetto = progettoRimodulazione.getProgetto();
+		Optional<Progetto_rimodulazioneBulk> optProgettoRimodulazione = Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance).map(Progetto_rimodulazioneBulk.class::cast);
+		Optional<ProgettoBulk> optProgetto = optProgettoRimodulazione.flatMap(el->Optional.ofNullable(el.getProgetto()));
+
+		Integer annoInizio = optProgettoRimodulazione.map(el->el.getAnnoInizioRimodulato())
+				.orElse(optProgetto.map(ProgettoBulk::getAnnoInizioOf).orElse(0));
+		Integer annoFine = optProgettoRimodulazione.map(el->el.getAnnoFineRimodulato())
+				.orElse(optProgetto.map(ProgettoBulk::getAnnoFineOf).orElse(9999));
 
 		boolean existAnnoCorrente = false;
-		if (progetto.getAnnoInizioOf() > progetto.getEsercizio() || progetto.getAnnoFineOf() < progetto.getEsercizio()) {
+		if (annoInizio > optProgetto.get().getEsercizio() || annoFine < optProgetto.get().getEsercizio()) {
 			//non sono nell'anno ma verifico se per caso non l'ho erronemanete caricato
-			if (progetto.getDettagliPianoEconomicoAnnoCorrente().size()>0)
+			if (optProgetto.get().getDettagliPianoEconomicoAnnoCorrente().size()>0)
 				existAnnoCorrente = true;
 		} else 
 			existAnnoCorrente = true;
 
 		if (existAnnoCorrente)
-			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAnnoCorrente","Anno "+progetto.getEsercizio(),"/progettiric00/rimodula_progetto_piano_economico_anno_corrente.jsp" });
+			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAnnoCorrente","Anno "+optProgetto.get().getEsercizio(),"/progettiric00/rimodula_progetto_piano_economico_anno_corrente.jsp" });
 			
-		if (!progetto.getAnnoInizioOf().equals(progetto.getEsercizio()) || !progetto.getAnnoFineOf().equals(progetto.getEsercizio()))
+		if (!annoInizio.equals(optProgetto.get().getEsercizio()) || !optProgetto.get().getAnnoFineOf().equals(optProgetto.get().getEsercizio()) ||
+				optProgettoRimodulazione.get().getDettagliPianoEconomicoAltriAnni().size()>0)
 			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/rimodula_progetto_piano_economico_altri_anni.jsp" });
 
-		if (!progettoRimodulazione.getVociMovimentateNonAssociate().isEmpty())
+		if (!optProgettoRimodulazione.get().getVociMovimentateNonAssociate().isEmpty())
 			hash.put(i++, new String[]{ "tabProgettoVociMovimentateNonAssociate","Voci Movimentate da Associare","/progettiric00/rimodula_progetto_piano_economico_voci_da_associare.jsp" });
 
 		String[][] tabs = new String[i][3];
@@ -527,6 +533,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 		Optional.ofNullable(rimodulazione.getImVarCofinanziato()).ifPresent(el->rimodulazione.setImCofinanziatoRimodulato(rimodulazione.getImCofinanziatoRimodulato().add(el)));
 		Optional.ofNullable(rimodulazione.getDtInizio()).ifPresent(el->rimodulazione.setDtInizioRimodulato(el));
 		Optional.ofNullable(rimodulazione.getDtFine()).ifPresent(el->rimodulazione.setDtFineRimodulato(el));
+		Optional.ofNullable(rimodulazione.getDtProroga()).ifPresent(el->rimodulazione.setDtProrogaRimodulato(el));
 
 		//Aggiorno i dettagli presenti
 		rimodulazione.getAllDetailsProgettoPianoEconomico().stream()
@@ -658,6 +665,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 			rimodulazione.setImCofinanziatoRimodulato(progetto.getImCofinanziato().add(rimodulazione.getImVarCofinanziato()));
 			rimodulazione.setDtInizioRimodulato(Optional.ofNullable(rimodulazione.getDtInizio()).orElse(Optional.ofNullable(progetto.getOtherField()).map(Progetto_other_fieldBulk::getDtInizio).orElse(null)));
 			rimodulazione.setDtFineRimodulato(Optional.ofNullable(rimodulazione.getDtFine()).orElse(Optional.ofNullable(progetto.getOtherField()).map(Progetto_other_fieldBulk::getDtFine).orElse(null)));
+			rimodulazione.setDtProrogaRimodulato(Optional.ofNullable(rimodulazione.getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField()).map(Progetto_other_fieldBulk::getDtProroga).orElse(null)));
 			
 			progetto.getDettagliPianoEconomicoTotale().stream()
 				.forEach(el->{
