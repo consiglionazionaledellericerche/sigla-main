@@ -2,8 +2,10 @@ package it.cnr.contab.progettiric00.ejb;
 
 import javax.ejb.Remote;
 
+import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 
 @Remote
 public interface ProgettoRicercaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession,it.cnr.jada.ejb.PrintComponentSession {
@@ -20,4 +22,5 @@ void validaCancellazionePianoEconomicoAssociato(it.cnr.jada.UserContext param0, 
 void validaCancellazioneVoceAssociataPianoEconomico(it.cnr.jada.UserContext param0, it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk param1, it.cnr.jada.bulk.OggettoBulk param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.progettiric00.core.bulk.ProgettoBulk initializePianoEconomico(it.cnr.jada.UserContext param0, it.cnr.contab.progettiric00.core.bulk.ProgettoBulk param1, boolean param2) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void validaPianoEconomico(it.cnr.jada.UserContext param0,it.cnr.contab.progettiric00.core.bulk.ProgettoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+Pdg_esercizioBulk getPdgEsercizio(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

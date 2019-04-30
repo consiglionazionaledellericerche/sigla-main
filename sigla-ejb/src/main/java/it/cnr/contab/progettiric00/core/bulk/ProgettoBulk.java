@@ -157,6 +157,7 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 	private BulkList<Pdg_moduloBulk> pdgModuli = new BulkList();
 	private BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate = new BulkList<V_saldi_voce_progettoBulk>();
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	private BulkList<Progetto_rimodulazioneBulk> rimodulazioni = new BulkList<Progetto_rimodulazioneBulk>();
 
 	public ProgettoBulk() {
 		super();
@@ -1283,5 +1284,32 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		suffix = suffix.concat(String.valueOf(this.getCd_progetto()));
 		suffix = suffix.concat(" - "+String.valueOf(this.getPg_progetto()));
 		return suffix;
-	}	
+	}
+	
+	public BulkList<Progetto_rimodulazioneBulk> getRimodulazioni() {
+		return rimodulazioni;
+	}
+	
+	public void setRimodulazioni(BulkList<Progetto_rimodulazioneBulk> rimodulazioni) {
+		this.rimodulazioni = rimodulazioni;
+	}
+	
+	public String getVersione() {
+		Optional<Progetto_rimodulazioneBulk> lastRim = getRimodulazioni().stream()
+							.filter(el->!el.isStatoRespinto())
+							.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_rimodulazione).reversed())
+							.findFirst();
+
+		if (lastRim.isPresent())
+			return lastRim.get().getPg_rimodulazione()+
+					lastRim.map(el->{
+						if (el.isStatoProvvisorio()) return "P";
+						if (el.isStatoDefinitivo()) return "D";
+						if (el.isStatoApprovato()) return "A";
+						return "";
+					})
+					.orElse("");
+		else
+			return "0";
+	}
 }

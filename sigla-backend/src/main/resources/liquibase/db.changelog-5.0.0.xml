@@ -1931,8 +1931,10 @@ TRASPORTO_AEREO"/>
             </column>
             <column name="dt_inizio_old" remarks="Data inizio precedente alla rimodulazione del progetto." type="${date.type}"/>
             <column name="dt_fine_old" remarks="Data fine precedente alla rimodulazione del progetto." type="${date.type}"/>
+            <column name="dt_proroga_old" remarks="Data proroga precedente alla rimodulazione del progetto." type="${date.type}"/>
             <column name="dt_inizio" remarks="Data inizio rimodulato del progetto." type="${date.type}"/>
             <column name="dt_fine" remarks="Data fine rimodulato del progetto." type="${date.type}"/>
+            <column name="dt_proroga" remarks="Data proroga rimodulato del progetto." type="${date.type}"/>
             <column name="im_var_finanziato" remarks="Importo Variazione Spesa Finanziato rimodulato del progetto" type="numeric(15, 2)">
                 <constraints nullable="false"/>
             </column>

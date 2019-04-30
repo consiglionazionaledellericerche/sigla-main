@@ -60,6 +60,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	private java.math.BigDecimal imCofinanziatoRimodulato;
 	private java.sql.Timestamp dtInizioRimodulato;
 	private java.sql.Timestamp dtFineRimodulato;
+	private java.sql.Timestamp dtProrogaRimodulato;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 
 	//Flag che indica se nella mappa di rimodulazione occorre visualizzare una versione semplice 
@@ -135,6 +136,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	}
 
 	public int addToDettagliPianoEconomicoAnnoCorrente(Progetto_piano_economicoBulk dett) {
+		dett.setProgettoRimodulazione(this);
 		dett.setProgetto( this.getProgetto() );
 		dett.setPg_progetto( getPg_progetto() );
 		dettagliPianoEconomicoAnnoCorrente.add(dett);
@@ -142,6 +144,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	}
 
 	public int addToDettagliPianoEconomicoAltriAnni(Progetto_piano_economicoBulk dett) {
+		dett.setProgettoRimodulazione(this);
 		dett.setProgetto( this.getProgetto() );
 		dett.setPg_progetto( getPg_progetto() );
 		dettagliPianoEconomicoAltriAnni.add(dett);
@@ -405,6 +408,14 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 		this.dtFineRimodulato = dtFineRimodulato;
 	}
 	
+	public java.sql.Timestamp getDtProrogaRimodulato() {
+		return dtProrogaRimodulato;
+	}
+	
+	public void setDtProrogaRimodulato(java.sql.Timestamp dtProrogaRimodulato) {
+		this.dtProrogaRimodulato = dtProrogaRimodulato;
+	}
+	
 	public java.math.BigDecimal getImTotaleRimodulato() {
 		return this.getImFinanziatoRimodulato().add(this.getImCofinanziatoRimodulato());
 	}
@@ -454,8 +465,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	}
 	
 	public Integer getAnnoFineRimodulato() {
-		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getOtherField()))
-				.flatMap(el->Optional.ofNullable(el.getDtProroga()));
+		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getDtProrogaRimodulato());
 		Optional<Integer> anno = Optional.empty();
 		if (Optional.ofNullable(this.getDtFineRimodulato()).isPresent() || optDtProroga.isPresent()) {
 			GregorianCalendar calendar = new GregorianCalendar();
@@ -466,8 +476,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	}
     
 	public void validaDateRimodulazione() throws ValidationException {
-		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getOtherField()))
-											.flatMap(el->Optional.ofNullable(el.getDtProroga()));
+		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getDtProrogaRimodulato());
 		if (!Optional.ofNullable(this.getDtInizioRimodulato()).isPresent() && Optional.ofNullable(this.getDtFineRimodulato()).isPresent())  
 		    throw new ValidationException( "Non \350 possibile indicare la \"Data di fine\" senza indicare la \"Data di inizio\".");
 		if (!Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProroga.isPresent())  
@@ -476,6 +485,9 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 			this.getDtInizioRimodulato().after(this.getDtFineRimodulato()))
 			throw new ValidationException( "La \"Data di fine\" del progetto deve essere uguale o superiore alla \"Data di inizio\".");
 		if (Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProroga.isPresent() &&
+				this.getDtFine().after(optDtProroga.get()))
+			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
+		if (Optional.ofNullable(this.getDtProrogaRimodulato()).isPresent() && optDtProroga.isPresent() &&
 				this.getDtFine().after(optDtProroga.get()))
 			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
 		
@@ -491,6 +503,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 			});
 
 		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(el->Optional.ofNullable(el.getEsercizio_piano()).isPresent())
 			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoFineRimodulato())>0)
 			.filter(el->!el.isDetailRimodulatoEliminato())
 			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
@@ -512,6 +525,20 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 					   .flatMap(el->Optional.ofNullable(el.getOtherField()))
 					   .map(Progetto_other_fieldBulk::getDtInizio)
 					   .map(el->el.compareTo(this.getDtInizioRimodulato())!=0)
+					   .orElse(Boolean.FALSE);
+	}
+
+	/**
+	 * Indica se è stato modificato il valore della data di proroga del progetto rispetto al valore originario
+	 * 
+	 * @return boolean
+	 */
+	public boolean isRimodulatoDtProroga() {
+		return Optional.ofNullable(this.getProgetto())
+					   .filter(ProgettoBulk::isDatePianoEconomicoRequired)
+					   .flatMap(el->Optional.ofNullable(el.getOtherField()))
+					   .map(Progetto_other_fieldBulk::getDtProroga)
+					   .map(el->el.compareTo(this.getDtProrogaRimodulato())!=0)
 					   .orElse(Boolean.FALSE);
 	}
 
@@ -592,4 +619,5 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	public Boolean getFlViewCurrent() {
 		return flViewCurrent;
 	}
+	
 }
