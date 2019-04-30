@@ -2,6 +2,7 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -12,9 +13,12 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
+import it.cnr.contab.prevent01.ejb.PdgAggregatoModuloComponentSession;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -22,7 +26,6 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
@@ -56,6 +59,7 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
 	private boolean flInformix = false;
 	private boolean flPrgPianoEconomico = false;
 	protected boolean isUoCdsCollegata = false;
+	private boolean isBilancioChiuso = false;
 	private Integer annoFromPianoEconomico;
 	private Unita_organizzativaBulk uoScrivania;
 	
@@ -145,6 +149,9 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
 			uoScrivania = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
 			isUoCdsCollegata = uoScrivania.getFl_uo_cds();
 
+			Pdg_esercizioBulk pdgEsercizio = Utility.createProgettoRicercaComponentSession().getPdgEsercizio(actioncontext.getUserContext());
+			isBilancioChiuso = Optional.ofNullable(pdgEsercizio).map(el->el.getStato().equals(Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR)).orElse(Boolean.FALSE);
+					
 			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
 	   		BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 	   		if (Optional.ofNullable(annoFrom).isPresent())
@@ -442,7 +449,7 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
 	    			  progetto.getCd_unita_organizzativa().equals(uo)))) {
 
 	    	if (this.isFlPrgPianoEconomico() && 
-	    		((progetto.isPianoEconomicoRequired() && 
+	    		((progetto.isPianoEconomicoRequired() && !isBilancioChiuso &&
 	    		  Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
 	    		  Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent()) ||
 	    		 (progetto.isDettagliPianoEconomicoPresenti() && 
@@ -457,7 +464,8 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
 	    	}
 	    } 
 
-		hash.put(i++, new String[]{"tabAllegati","Allegati","/util00/tab_allegati.jsp" });
+		if (!isSearching())
+			hash.put(i++, new String[]{"tabAllegati","Allegati","/util00/tab_allegati.jsp" });
 
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++) {
@@ -517,6 +525,20 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
 		return super.initializeModelForInsert(actioncontext, oggettobulk);
 	}
 
+	@Override
+	public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk)
+			throws BusinessProcessException {
+		ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEdit(actioncontext, oggettobulk);
+		if (isBilancioChiuso &&
+			Optional.ofNullable(progetto.getOtherField()).filter(Progetto_other_fieldBulk::isStatoIniziale).isPresent() &&
+			!Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getImFinanziato())).isPresent() &&
+			!Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getImCofinanziato())).isPresent()) {
+			progetto.getOtherField().setImFinanziato(BigDecimal.ZERO);
+			progetto.getOtherField().setImCofinanziato(BigDecimal.ZERO);
+		}
+		return progetto;
+	}
+	
 	@Override
 	public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk)
 			throws BusinessProcessException {
@@ -804,7 +826,7 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
 			if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).filter(el->!(el.compareTo(BigDecimal.ZERO)<0)).isPresent())
 				throw new ValidationException("Operazione non possibile! Indicare l'importo cofinanziato (valore maggiore o uguale a 0)!");
 
-			if (optProgetto.get().isPianoEconomicoRequired()) {
+			if (optProgetto.get().isPianoEconomicoRequired() && !isBilancioChiuso) {
 				if (!optProgetto.map(ProgettoBulk::getImTotale).filter(el->el.compareTo(BigDecimal.ZERO)>0).isPresent())
 					throw new ValidationException("Operazione non possibile! Indicare almeno un importo positivo tra quello finanziato e cofinanziato!");
 				if (!optProgetto.map(ProgettoBulk::isDettagliPianoEconomicoPresenti).orElse(Boolean.TRUE))
@@ -847,4 +869,10 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
 		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
 		allegato.setType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
 	}
+	
+    public boolean isRODatiContabili() {
+    	Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+    	return !this.isSearching() && isBilancioChiuso && 
+    		   optProgetto.filter(ProgettoBulk::isPianoEconomicoRequired).isPresent();
+    }
 }

@@ -130,8 +130,9 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	 * e la data fine risulta essere valorizzata
 	 */
 	public boolean isStatoChiuso() {
-		return !isDatePianoEconomicoRequired() && 
-				Optional.ofNullable(this.getDtFine()).isPresent();
+		return Optional.ofNullable(this.getTipoFinanziamento()).map(TipoFinanziamentoBulk::getCodice).isPresent() &&
+			   Optional.ofNullable(this.getDtFine()).isPresent() &&
+			   !isDatePianoEconomicoRequired();
 	}
 
 	/*

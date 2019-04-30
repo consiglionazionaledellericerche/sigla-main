@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
+import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
@@ -41,6 +43,7 @@ import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_Modulo_EntrateHome;
+import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
@@ -55,6 +58,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
@@ -324,6 +328,9 @@ public ProgettoRicercaComponent() {
 				   			testata.setPdgModuli(new BulkList(pdgModuliList.stream().filter(el->el.getEsercizio().compareTo(annoFrom.intValue())>=0).collect(Collectors.toList())));
 				   		else
 				   			testata.setPdgModuli(pdgModuliList);
+				   		
+						testata.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(userContext, Progetto_rimodulazioneBulk.class, "findRimodulazioni", userContext, testata.getPg_progetto())));
+
 						getHomeCache(userContext).fetchAll(userContext);
 						return testata;
 				} catch(Exception e) {
@@ -2136,4 +2143,34 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			throw handleException(e);
 		}
 	}
+    /**
+     * Ritorna il pdg_esercizio del CDR di primo livello del CDR collegato
+     * 
+     * @param userContext
+     * @return
+     * @throws ComponentException
+     */
+	public Pdg_esercizioBulk getPdgEsercizio(UserContext userContext) throws ComponentException {
+		try {
+			CdrBulk cdrUC = Utility.createCdrComponentSession().cdrFromUserContext(userContext);
+			CdrBulk cdrPrimoLivello;
+			if (cdrUC.getLivello().intValue() == 1)
+				cdrPrimoLivello = cdrUC;
+			else {
+				try {
+					cdrPrimoLivello = (CdrBulk) getHome(userContext, CdrBulk.class)
+							.findByPrimaryKey(new CdrBulk(cdrUC.getCd_cdr_afferenza()));
+				} catch (PersistencyException e) {
+					throw handleException(e);
+				}
+			}
+
+			return (Pdg_esercizioBulk)getHome(userContext,Pdg_esercizioBulk.class).findByPrimaryKey(new Pdg_esercizioBulk(
+				it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext),
+				cdrPrimoLivello.getCd_centro_responsabilita()));
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
+
 }
