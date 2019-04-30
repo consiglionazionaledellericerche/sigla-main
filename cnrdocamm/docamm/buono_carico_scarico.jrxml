@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
 	<property name="ireport.zoom" value="2.1435888100000016"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -14,16 +14,16 @@
 	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
 	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[2019]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[2013]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_inventario" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[347]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[277]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ti_documento" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_buono_c_s" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[39]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -51,7 +51,9 @@ TESTATA.DS_BUONO_CARICO_SCARICO,
 (SELECT DENOMINAZIONE_SEDE FROM TERZO
   WHERE CD_TERZO = INVENTARIO_CONSEGNATARIO.CD_CONSEGNATARIO) CONSEGNATARIO,
 (SELECT DENOMINAZIONE_SEDE FROM TERZO
-  WHERE CD_TERZO = INVENTARIO_CONSEGNATARIO.CD_DELEGATO) DELEGATO
+  WHERE CD_TERZO = INVENTARIO_CONSEGNATARIO.CD_DELEGATO) DELEGATO,
+(SELECT DENOMINAZIONE_SEDE FROM TERZO
+  WHERE CD_TERZO = INVENTARIO.CD_ASSEGNATARIO) ASSEGNATARIO
 FROM BUONO_CARICO_SCARICO TESTATA,
 BUONO_CARICO_SCARICO_DETT DETTAGLIO,
 INVENTARIO_BENI  INVENTARIO,
@@ -94,6 +96,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 	<field name="DS_TIPO_CARICO_SCARICO" class="java.lang.String"/>
 	<field name="CONSEGNATARIO" class="java.lang.String"/>
 	<field name="DELEGATO" class="java.lang.String"/>
+	<field name="ASSEGNATARIO" class="java.lang.String"/>
 	<variable name="TOTALE" class="java.math.BigDecimal" resetType="Group" resetGroup="TESTATA" calculation="Sum">
 		<variableExpression><![CDATA[$F{VALORE_UNITARIO}.multiply($F{QUANTITA})]]></variableExpression>
 	</variable>
@@ -256,6 +259,13 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 				</textField>
 				<textField>
 					<reportElement key="staticText-1" style="TNR10" x="0" y="32" width="530" height="13" uuid="bb377ef1-0b9f-4510-918f-61006c52bc17">
+						<printWhenExpression><![CDATA[$F{ASSEGNATARIO} != null]]></printWhenExpression>
+					</reportElement>
+					<textElement markup="none"/>
+					<textFieldExpression><![CDATA["Assegnatario: " + $F{ASSEGNATARIO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="staticText-1" style="TNR10" x="1" y="47" width="530" height="13" uuid="c261d1d9-3367-4d66-9b19-a63517807fbf">
 						<printWhenExpression><![CDATA[$F{DELEGATO} != null]]></printWhenExpression>
 					</reportElement>
 					<textElement markup="none"/>
