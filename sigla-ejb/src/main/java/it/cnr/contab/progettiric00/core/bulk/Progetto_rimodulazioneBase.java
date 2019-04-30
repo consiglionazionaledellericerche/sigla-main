@@ -9,9 +9,13 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 
 	private java.sql.Timestamp dtFineOld;
 
+	private java.sql.Timestamp dtProrogaOld;
+
 	private java.sql.Timestamp dtInizio;
 
 	private java.sql.Timestamp dtFine;
+
+	private java.sql.Timestamp dtProroga;
 
 	private java.math.BigDecimal imVarFinanziato;
 	
@@ -49,6 +53,14 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 		this.dtFineOld = dtFineOld;
 	}
 
+	public java.sql.Timestamp getDtProrogaOld() {
+		return dtProrogaOld;
+	}
+	
+	public void setDtProrogaOld(java.sql.Timestamp dtProrogaOld) {
+		this.dtProrogaOld = dtProrogaOld;
+	}
+	
 	public java.sql.Timestamp getDtInizio() {
 		return dtInizio;
 	}
@@ -65,6 +77,14 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 		this.dtFine = dtFine;
 	}
 
+	public java.sql.Timestamp getDtProroga() {
+		return dtProroga;
+	}
+	
+	public void setDtProroga(java.sql.Timestamp dtProroga) {
+		this.dtProroga = dtProroga;
+	}
+	
 	public java.math.BigDecimal getImVarFinanziato() {
 		return imVarFinanziato;
 	}

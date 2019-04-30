@@ -22,7 +22,9 @@ import java.util.jar.Manifest;
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.progettiric00.comp.RimodulaProgettoRicercaComponent;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
@@ -495,5 +497,8 @@ public final class Utility {
 	}
 	public static CRUDConfigAssEvoldEvnewComponentSession createCRUDConfigAssEvoldEvnewComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException {
 		return (CRUDConfigAssEvoldEvnewComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_CRUDConfigAssEvoldEvnewComponentSession",CRUDConfigAssEvoldEvnewComponentSession.class);
+	}
+	public static RimodulaProgettoRicercaComponentSession createRimodulaProgettoRicercaComponentSession() throws javax.ejb.EJBException{
+		return (RimodulaProgettoRicercaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_RimodulaProgettoRicercaComponentSession", RimodulaProgettoRicercaComponentSession.class);
 	}
 }
