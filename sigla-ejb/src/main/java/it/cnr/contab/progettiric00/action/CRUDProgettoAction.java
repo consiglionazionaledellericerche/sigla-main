@@ -1,25 +1,24 @@
 package it.cnr.contab.progettiric00.action;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
-import it.cnr.contab.anagraf00.bp.CRUDAnagraficaBP;
-import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneBP;
-import it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
@@ -224,6 +223,10 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
     		progetto.getOtherField().setDtInizio(null);
     		progetto.getOtherField().setDtFine(null);
     		progetto.getOtherField().setDtProroga(null);
+    	}
+    	if (progetto.isPianoEconomicoRequired() && progetto.getOtherField().isStatoIniziale() && progetto.getDettagliPianoEconomicoTotale().isEmpty()) {
+    		progetto.getOtherField().setImFinanziato(BigDecimal.ZERO);
+    		progetto.getOtherField().setImCofinanziato(BigDecimal.ZERO);
     	}
         return context.findDefaultForward();
     }
@@ -529,8 +532,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if (option == OptionBP.YES_BUTTON) {
 				TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
 				String function = bp.isEditable() ? "M" : "V";
-				if (bp.isBringBack())
-					function += "R";
+				function += "R";
 
 				ProgettoBulk progetto = (ProgettoBulk)bp.getModel();
 
@@ -541,12 +543,33 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di rimodulazione progetti. Impossibile continuare.");
 
 				newbp = (RimodulaProgettiRicercaBP) context.getUserInfo().createBusinessProcess(context,"RimodulaProgettiRicercaBP",new Object[] { function,  progetto});
+				newbp.setBringBack(true);
+				context.addHookForward("bringback", this, "doBringBackRimodula");
 				return context.addBusinessProcess(newbp);
 			}
 		} catch(Exception e) {
 			return handleException(context,e);
 		}
 		return context.findDefaultForward();
-	}	
+	}
+	
+    public Forward doBringBackRimodula(ActionContext context) {
+        try {
+        	HookForward caller = (HookForward)context.getCaller();
+        	Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)caller.getParameter("bringback");
+	    	TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
+            ProgettoBulk progetto = (ProgettoBulk) bp.getModel();
+			if (Optional.ofNullable(rim).map(Progetto_rimodulazioneBulk::isStatoApprovato).orElse(Boolean.TRUE)) {
+				bp.basicEdit(context, progetto,Boolean.TRUE);
+			} else {
+	            List<Progetto_rimodulazioneBulk> listRimodulazioni = bp.createComponentSession().find(context.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", context.getUserContext(), progetto.getPg_progetto());
+	            progetto.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(listRimodulazioni));
+			}
+            return context.findDefaultForward();
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+	
 }
 
