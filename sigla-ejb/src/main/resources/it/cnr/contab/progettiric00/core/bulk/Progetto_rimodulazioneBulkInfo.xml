@@ -134,6 +134,25 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />
 	<fieldProperty
+		name="dtProrogaRimodulato"
+		property="dtProrogaRimodulato"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtProrogaRimodulatoChange"
+		label="Data Proroga" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="dtProrogaRimodulatoModificato"
+		property="dtProrogaRimodulato"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtProrogaRimodulatoChange"
+		label="Data Proroga" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
 		name="imFinanziatoRimodulato"
 		property="imFinanziatoRimodulato"
 		inputType="TEXT"
@@ -239,10 +258,12 @@
 	<formFieldProperty name="stato" />
 	<formFieldProperty name="dtInizioRimodulato" />
 	<formFieldProperty name="dtFineRimodulato" />
+	<formFieldProperty name="dtProrogaRimodulato" />
 	<formFieldProperty name="imFinanziatoRimodulato" />
 	<formFieldProperty name="imCofinanziatoRimodulato" />
 	<formFieldProperty name="dtInizioRimodulatoModificato" />
 	<formFieldProperty name="dtFineRimodulatoModificato" />
+	<formFieldProperty name="dtProrogaRimodulatoModificato" />
 	<formFieldProperty name="imFinanziatoRimodulatoModificato" />
 	<formFieldProperty name="imCofinanziatoRimodulatoModificato" />
 	<formFieldProperty name="imTotaleRimodulato" />

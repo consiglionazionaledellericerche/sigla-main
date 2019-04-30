@@ -14,7 +14,12 @@
 	ProgettoBulk progetto = Optional.ofNullable(bulk).map(Progetto_rimodulazioneBulk::getProgetto).orElse(null);
 %>
 	<div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">
-	Rimodulazione <%=bulk.getPg_rimodulazione()!=null?" n."+bulk.getPg_rimodulazione():""%>
+	Rimodulazione
+	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio).map(el->" Provvisoria").orElse("")%>
+	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).map(el->" Definitiva").orElse("")%>
+	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoApprovato).map(el->" Approvata").orElse("")%>
+	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoRespinto).map(el->" Respinta").orElse("")%>
+	<%=bulk.getPg_rimodulazione()!=null?" n."+bulk.getPg_rimodulazione():""%>
 	</div>
 	<div class="Group">
 	<table class="Panel card border-primary p-2 mb-2">
@@ -23,7 +28,6 @@
 	  	</TD><TD>
 	  	<% bp.getController().writeFormInput(out,"find_progetto");%>
 	  </TD></TR>
-	  <TR><% bp.getController().writeFormField(out,"stato");%></TR>
 	</table>  
 	</div> 
 
@@ -53,8 +57,8 @@
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtFineRimodulato"+(bulk.isRimodulatoDtFine()?"Modificato":""));%></td>
 	  	<td><% bp.getController().writeFormInput( out, "dtFineRimodulato"); %></td>
-	  	<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "dtProrogaOf"); %></td>
+	  	<td><% bp.getController().writeFormLabel( out, "dtProrogaRimodulato"+(bulk.isRimodulatoDtProroga()?"Modificato":""));%></td>
+	  	<td><% bp.getController().writeFormInput(out,"dtProrogaRimodulato");%></td>
 	  </tr>
 	  <% } %> 
 	  <tr>

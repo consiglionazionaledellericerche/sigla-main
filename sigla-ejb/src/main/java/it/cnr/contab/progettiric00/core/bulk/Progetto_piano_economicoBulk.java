@@ -15,6 +15,7 @@ import it.cnr.jada.util.OrderedHashtable;
 public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	private Voce_piano_economico_prgBulk voce_piano_economico;
 	private ProgettoBulk progetto;
+	private Progetto_rimodulazioneBulk progettoRimodulazione;
 	private BulkList<Ass_progetto_piaeco_voceBulk> vociBilancioAssociate = new BulkList();
 
 	private java.math.BigDecimal imSpesaFinanziatoRimodulato;
@@ -72,6 +73,14 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		this.progetto = progetto;
 	}
 
+	public Progetto_rimodulazioneBulk getProgettoRimodulazione() {
+		return progettoRimodulazione;
+	}
+	
+	public void setProgettoRimodulazione(Progetto_rimodulazioneBulk progettoRimodulazione) {
+		this.progettoRimodulazione = progettoRimodulazione;
+	}
+	
 	public V_saldi_piano_econom_progettoBulk getSaldoEntrata() {
 		V_saldi_piano_econom_progettoBulk saldoEntrata = new V_saldi_piano_econom_progettoBulk();
 		Supplier<Stream<V_saldi_voce_progettoBulk>> saldi = () -> this.getVociBilancioAssociate().stream()
@@ -165,7 +174,12 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	
 	public it.cnr.jada.util.OrderedHashtable getAnniList() {
 		OrderedHashtable list = new OrderedHashtable();
-		for (int i=this.getProgetto().getAnnoFineOf().intValue();i>=this.getProgetto().getAnnoInizioOf();i--)
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getProgetto());
+		Integer annoInizio = Optional.ofNullable(this.getProgettoRimodulazione()).map(el->el.getAnnoInizioRimodulato())
+				.orElse(optProgetto.map(ProgettoBulk::getAnnoInizioOf).orElse(0));
+		Integer annoFine = Optional.ofNullable(this.getProgettoRimodulazione()).map(el->el.getAnnoFineRimodulato())
+				.orElse(optProgetto.map(ProgettoBulk::getAnnoFineOf).orElse(9999));
+		for (int i=annoFine;i>=annoInizio;i--)
 			list.put(new Integer(i), new Integer(i));
 		if (this.getEsercizio_piano()!=null && list.get(this.getEsercizio_piano())==null)
 			list.put(this.getEsercizio_piano(), this.getEsercizio_piano());

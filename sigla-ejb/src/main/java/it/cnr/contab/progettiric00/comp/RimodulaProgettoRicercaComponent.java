@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -193,7 +192,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 							+ progettoRimodulazione.getProgetto().getCd_progetto() +" non risulta ancora in stato approvato."
 							+ " Operazione non possibile.");
 				});
-			progettoRimodulazione.setPg_rimodulazione(listRimodulazioni.stream().mapToInt(Progetto_rimodulazioneBulk::getPg_rimodulazione).max().orElse(1));
+			progettoRimodulazione.setPg_rimodulazione(listRimodulazioni.stream().mapToInt(Progetto_rimodulazioneBulk::getPg_rimodulazione).max().orElse(0)+1);
 			progettoRimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_PROVVISORIO);
 			progettoRimodulazione.setImVarFinanziato(progettoRimodulazione.getImFinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImFinanziato()));
 			progettoRimodulazione.setImVarCofinanziato(progettoRimodulazione.getImCofinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImCofinanziato()));
@@ -206,43 +205,27 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 				progettoRimodulazione.setDtFineOld(progettoRimodulazione.getProgetto().getOtherField().getDtFine());
 				progettoRimodulazione.setDtFine(progettoRimodulazione.getDtFineRimodulato());
 	    	}
-		    
-			//Individuo le righe di variazione da creare
-			progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
-				.filter(Progetto_piano_economicoBulk::isDetailRimodulato)
-				.forEach(ppe->{
-					Progetto_rimodulazione_ppeBulk detail = new Progetto_rimodulazione_ppeBulk();
-					detail.setVocePianoEconomico(ppe.getVoce_piano_economico());
-					detail.setEsercizio_piano(ppe.getEsercizio_piano());
-					detail.setImVarEntrata(BigDecimal.ZERO);
-					detail.setImVarSpesaFinanziato(ppe.getImSpesaFinanziatoRimodulato().subtract(ppe.getIm_spesa_finanziato()));
-					detail.setImVarSpesaCofinanziato(ppe.getImSpesaCofinanziatoRimodulato().subtract(ppe.getIm_spesa_cofinanziato()));
-					detail.setToBeCreated();
-					progettoRimodulazione.addToDettagliRimodulazione(detail);
+	    	if (progettoRimodulazione.isRimodulatoDtProroga()) {
+				progettoRimodulazione.setDtProrogaOld(progettoRimodulazione.getProgetto().getOtherField().getDtProroga());
+				progettoRimodulazione.setDtProroga(progettoRimodulazione.getDtProrogaRimodulato());
+	    	}
+	    	
+		    Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(usercontext, Progetto_rimodulazioneBulk.class);
+		    List<Progetto_rimodulazione_ppeBulk> listRim = rimodHome.getDettagliRimodulazioneAggiornato(usercontext, progettoRimodulazione);
+
+		    //Individuo le righe di variazione da creare
+		    listRim.stream()
+				.forEach(newDett->{
+					newDett.setToBeCreated();
+					progettoRimodulazione.addToDettagliRimodulazione(newDett);
 				});
-			
+
+		    List<Progetto_rimodulazione_voceBulk> listRimVoce = rimodHome.getDettagliRimodulazioneVoceAggiornato(usercontext, progettoRimodulazione);
+
 			//Aggiorno associazione voci di bilancio
-			progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
-				.flatMap(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).map(List::stream).orElse(Stream.empty()))
-				.filter(Ass_progetto_piaeco_voceBulk::isDetailRimodulato)
-				.forEach(ppeVoce->{
-					Progetto_rimodulazione_voceBulk rimVoce = new Progetto_rimodulazione_voceBulk();
-					rimVoce.setVocePianoEconomico(ppeVoce.getProgetto_piano_economico().getVoce_piano_economico());
-					rimVoce.setEsercizio_piano(ppeVoce.getEsercizio_piano());
-					rimVoce.setElementoVoce(ppeVoce.getElemento_voce());
-					rimVoce.setImVarSpesaFinanziato(BigDecimal.ZERO);
-					rimVoce.setImVarSpesaCofinanziato(BigDecimal.ZERO);
-					if (ppeVoce.isDetailRimodulatoEliminato())
-						rimVoce.setTi_operazione(Progetto_rimodulazione_voceBulk.TIPO_OPERAZIONE_ELIMINATO);
-					else {
-						rimVoce.setImVarSpesaFinanziato(ppeVoce.getImVarFinanziatoRimodulato());
-						rimVoce.setImVarSpesaCofinanziato(ppeVoce.getImVarCofinanziatoRimodulato());
-						if (ppeVoce.isDetailRimodulatoAggiunto())
-							rimVoce.setTi_operazione(Progetto_rimodulazione_voceBulk.TIPO_OPERAZIONE_AGGIUNTO);
-						else 
-							rimVoce.setTi_operazione(Progetto_rimodulazione_voceBulk.TIPO_OPERAZIONE_MODIFICA);
-					}							
-					rimVoce.setPg_variazione(progettoRimodulazione.getDettagliVoceRimodulazione().stream()
+		    listRimVoce.stream()
+		    	.forEach(rimVoce->{
+		    		rimVoce.setPg_variazione(progettoRimodulazione.getDettagliVoceRimodulazione().stream()
 							.mapToInt(Progetto_rimodulazione_voceBulk::getPg_variazione)
 							.max().orElse(0)+1);
 					rimVoce.setToBeCreated();
@@ -286,80 +269,43 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	    	progettoRimodulazione.setDtFine(null);
 	    }
 		
-		progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
-			.filter(Progetto_piano_economicoBulk::isDetailRimodulato)
-			.forEach(ppe->{
+	    if (progettoRimodulazione.isRimodulatoDtProroga()) {
+			progettoRimodulazione.setDtProrogaOld(progettoRimodulazione.getProgetto().getOtherField().getDtProroga());
+			progettoRimodulazione.setDtProroga(progettoRimodulazione.getDtProrogaRimodulato());
+	    } else {
+	    	progettoRimodulazione.setDtProrogaOld(null);
+	    	progettoRimodulazione.setDtProroga(null);
+	    }
+
+	    Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(usercontext, Progetto_rimodulazioneBulk.class);
+	    List<Progetto_rimodulazione_ppeBulk> listRim = rimodHome.getDettagliRimodulazioneAggiornato(usercontext, progettoRimodulazione);
+
+	    //Aggiorno o aggiungo i dettagli presenti
+	    listRim.stream()
+			.forEach(newDett->{
 				Progetto_rimodulazione_ppeBulk detail = 
 						progettoRimodulazione.getDettagliRimodulazione().stream()
-							.filter(el->el.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
-							.filter(el->el.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
-							.filter(el->el.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
+							.filter(dett->dett.getCd_unita_organizzativa().equals(newDett.getCd_unita_organizzativa()))
+							.filter(dett->dett.getCd_voce_piano().equals(newDett.getCd_voce_piano()))
+							.filter(dett->dett.getEsercizio_piano().equals(newDett.getEsercizio_piano()))
 							.findFirst().orElseGet(()->{
-								Progetto_rimodulazione_ppeBulk newDetail = new Progetto_rimodulazione_ppeBulk();
-								newDetail.setProgettoRimodulazione(progettoRimodulazione);
-								newDetail.setVocePianoEconomico(ppe.getVoce_piano_economico());
-								newDetail.setEsercizio_piano(ppe.getEsercizio_piano());
-								newDetail.setToBeCreated();
-								progettoRimodulazione.addToDettagliRimodulazione(newDetail);
-								return newDetail;
+								newDett.setToBeCreated();
+								progettoRimodulazione.addToDettagliRimodulazione(newDett);
+								return newDett;
 							});
 				detail.setImVarEntrata(BigDecimal.ZERO);
-				detail.setImVarSpesaFinanziato(ppe.getImSpesaFinanziatoRimodulato().subtract(ppe.getIm_spesa_finanziato()));
-				detail.setImVarSpesaCofinanziato(ppe.getImSpesaCofinanziatoRimodulato().subtract(ppe.getIm_spesa_cofinanziato()));
+				detail.setImVarSpesaFinanziato(newDett.getImVarSpesaFinanziato());
+				detail.setImVarSpesaCofinanziato(newDett.getImVarSpesaCofinanziato());
 				detail.setToBeUpdated();
 			});
 
-		//Aggiorno associazione voci di bilancio
-		progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
-			.flatMap(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).map(List::stream).orElse(Stream.empty()))
-			.filter(Ass_progetto_piaeco_voceBulk::isDetailRimodulato)
-			.forEach(ppeVoce->{
-				Progetto_rimodulazione_voceBulk rimVoce =
-						progettoRimodulazione.getDettagliVoceRimodulazione().stream()
-							.filter(el->el.getCd_unita_organizzativa().equals(ppeVoce.getCd_unita_organizzativa()))
-							.filter(el->el.getCd_voce_piano().equals(ppeVoce.getCd_voce_piano()))
-							.filter(el->el.getEsercizio_piano().equals(ppeVoce.getEsercizio_piano()))
-							.filter(el->el.getEsercizio_voce().equals(ppeVoce.getEsercizio_voce()))
-							.filter(el->el.getTi_appartenenza().equals(ppeVoce.getTi_appartenenza()))
-							.filter(el->el.getTi_gestione().equals(ppeVoce.getTi_gestione()))
-							.filter(el->el.getCd_elemento_voce().equals(ppeVoce.getCd_elemento_voce()))
-							.findFirst().orElseGet(()->{
-								Progetto_rimodulazione_voceBulk newRimVoce = new Progetto_rimodulazione_voceBulk();
-								newRimVoce.setVocePianoEconomico(ppeVoce.getProgetto_piano_economico().getVoce_piano_economico());
-								newRimVoce.setEsercizio_piano(ppeVoce.getEsercizio_piano());
-								newRimVoce.setElementoVoce(ppeVoce.getElemento_voce());
-								newRimVoce.setImVarSpesaFinanziato(BigDecimal.ZERO);
-								newRimVoce.setImVarSpesaCofinanziato(BigDecimal.ZERO);
-								newRimVoce.setPg_variazione(progettoRimodulazione.getDettagliVoceRimodulazione().stream()
-										.mapToInt(Progetto_rimodulazione_voceBulk::getPg_variazione)
-										.max().orElse(0)+1);
-								newRimVoce.setToBeCreated();
-								progettoRimodulazione.addToDettagliVoceRimodulazione(newRimVoce);
-								return newRimVoce;
-							});
-				if (ppeVoce.isDetailRimodulatoEliminato()) {
-					rimVoce.setTi_operazione(Progetto_rimodulazione_voceBulk.TIPO_OPERAZIONE_ELIMINATO);
-					rimVoce.setImVarSpesaFinanziato(BigDecimal.ZERO);
-					rimVoce.setImVarSpesaCofinanziato(BigDecimal.ZERO);
-				} else {
-					rimVoce.setImVarSpesaFinanziato(Optional.ofNullable(ppeVoce.getImVarFinanziatoRimodulato()).orElse(BigDecimal.ZERO));
-					rimVoce.setImVarSpesaCofinanziato(Optional.ofNullable(ppeVoce.getImVarCofinanziatoRimodulato()).orElse(BigDecimal.ZERO));
-					if (ppeVoce.isDetailRimodulatoAggiunto())
-						rimVoce.setTi_operazione(Progetto_rimodulazione_voceBulk.TIPO_OPERAZIONE_AGGIUNTO);
-					else 
-						rimVoce.setTi_operazione(Progetto_rimodulazione_voceBulk.TIPO_OPERAZIONE_MODIFICA);
-				}							
-				rimVoce.setToBeUpdated();
-			});				
-
-		//Rimuovo i dettagli non utilizzati
+		//Rimuovo i dettagli non presenti nella lista
 		List<Progetto_rimodulazione_ppeBulk> bulkToDelete = 
 				progettoRimodulazione.getDettagliRimodulazione().stream()
-					.filter(rim->!progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
-									.filter(Progetto_piano_economicoBulk::isDetailRimodulato)
-									.filter(ppe->ppe.getCd_unita_organizzativa().equals(rim.getCd_unita_organizzativa()))
-									.filter(ppe->ppe.getCd_voce_piano().equals(rim.getCd_voce_piano()))
-									.filter(ppe->ppe.getEsercizio_piano().equals(rim.getEsercizio_piano()))
+					.filter(rim->!listRim.stream()
+									.filter(newDett->newDett.getCd_unita_organizzativa().equals(rim.getCd_unita_organizzativa()))
+									.filter(newDett->newDett.getCd_voce_piano().equals(rim.getCd_voce_piano()))
+									.filter(newDett->newDett.getEsercizio_piano().equals(rim.getEsercizio_piano()))
 									.findFirst().isPresent())
 					.collect(Collectors.toList());
 
@@ -368,19 +314,45 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			progettoRimodulazione.removeFromDettagliRimodulazione(progettoRimodulazione.getDettagliRimodulazione().indexOf(el));
 		});
 
-		//Rimuovo i dettagli voce non utilizzati
+	    List<Progetto_rimodulazione_voceBulk> listRimVoce = rimodHome.getDettagliRimodulazioneVoceAggiornato(usercontext, progettoRimodulazione);
+
+	    //Aggiorno o aggiungo le voci presenti
+	    listRimVoce.stream()
+			.forEach(newDettVoce->{
+				Progetto_rimodulazione_voceBulk detail = 
+						progettoRimodulazione.getDettagliVoceRimodulazione().stream()
+							.filter(el->el.getCd_unita_organizzativa().equals(newDettVoce.getCd_unita_organizzativa()))
+							.filter(el->el.getCd_voce_piano().equals(newDettVoce.getCd_voce_piano()))
+							.filter(el->el.getEsercizio_piano().equals(newDettVoce.getEsercizio_piano()))
+							.filter(el->el.getEsercizio_voce().equals(newDettVoce.getEsercizio_voce()))
+							.filter(el->el.getTi_appartenenza().equals(newDettVoce.getTi_appartenenza()))
+							.filter(el->el.getTi_gestione().equals(newDettVoce.getTi_gestione()))
+							.filter(el->el.getCd_elemento_voce().equals(newDettVoce.getCd_elemento_voce()))
+							.findFirst().orElseGet(()->{
+								newDettVoce.setPg_variazione(progettoRimodulazione.getDettagliVoceRimodulazione().stream()
+										.mapToInt(Progetto_rimodulazione_voceBulk::getPg_variazione)
+										.max().orElse(0)+1);								
+								newDettVoce.setToBeCreated();
+								progettoRimodulazione.addToDettagliVoceRimodulazione(newDettVoce);
+								return newDettVoce;
+							});
+				detail.setTi_operazione(newDettVoce.getTi_operazione());
+				detail.setImVarSpesaFinanziato(newDettVoce.getImVarSpesaFinanziato());
+				detail.setImVarSpesaCofinanziato(newDettVoce.getImVarSpesaCofinanziato());
+				detail.setToBeUpdated();
+			});
+
+		//Rimuovo i dettagli voce non presenti nella lista
 		List<Progetto_rimodulazione_voceBulk> bulkVoceToDelete = 
 				progettoRimodulazione.getDettagliVoceRimodulazione().stream()
-					.filter(rim->!progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
-									.flatMap(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).map(List::stream).orElse(Stream.empty()))
-									.filter(Ass_progetto_piaeco_voceBulk::isDetailRimodulato)
-									.filter(ppeVoce->ppeVoce.getCd_unita_organizzativa().equals(rim.getCd_unita_organizzativa()))
-									.filter(ppeVoce->ppeVoce.getCd_voce_piano().equals(rim.getCd_voce_piano()))
-									.filter(ppeVoce->ppeVoce.getEsercizio_piano().equals(rim.getEsercizio_piano()))
-									.filter(ppeVoce->ppeVoce.getEsercizio_voce().equals(rim.getEsercizio_voce()))
-									.filter(ppeVoce->ppeVoce.getTi_appartenenza().equals(rim.getTi_appartenenza()))
-									.filter(ppeVoce->ppeVoce.getTi_gestione().equals(rim.getTi_gestione()))
-									.filter(ppeVoce->ppeVoce.getCd_elemento_voce().equals(rim.getCd_elemento_voce()))
+					.filter(rim->!listRimVoce.stream()
+									.filter(rimVoce->rimVoce.getCd_unita_organizzativa().equals(rim.getCd_unita_organizzativa()))
+									.filter(rimVoce->rimVoce.getCd_voce_piano().equals(rim.getCd_voce_piano()))
+									.filter(rimVoce->rimVoce.getEsercizio_piano().equals(rim.getEsercizio_piano()))
+									.filter(rimVoce->rimVoce.getEsercizio_voce().equals(rim.getEsercizio_voce()))
+									.filter(rimVoce->rimVoce.getTi_appartenenza().equals(rim.getTi_appartenenza()))
+									.filter(rimVoce->rimVoce.getTi_gestione().equals(rim.getTi_gestione()))
+									.filter(rimVoce->rimVoce.getCd_elemento_voce().equals(rim.getCd_elemento_voce()))
 									.findFirst().isPresent())
 					.collect(Collectors.toList());
 
@@ -416,10 +388,14 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	}
 	
 	public Progetto_rimodulazioneBulk approva(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
-		try{
-			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
-			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato approvato può essere assegnato solo a rimodulazioni in stato definitivo!"));
+		Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
+		.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato approvato può essere assegnato solo a rimodulazioni in stato definitivo!"));
 	
+		return approvaInt(userContext, rimodulazione);
+	}
+
+	private Progetto_rimodulazioneBulk approvaInt(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		try{
 			//Ricostruisco il progetto sulla base della nuova rimodulazione e aggiorno il dato
 			//Nell'aggiornamento viene rifatta la validazione
 			ProgettoBulk progettoRimodulato = getProgettoRimodulato(rimodulazione);
@@ -434,7 +410,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			throw handleException(e);
 		}
 	}
-
+	
 	public Progetto_rimodulazioneBulk respingi(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
 		Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
 		.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato respinto può essere assegnato solo a rimodulazioni in stato definitivo!"));
@@ -455,13 +431,21 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio)
 			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato definitivo può essere assegnato solo a rimodulazioni in stato provvisorio!"));
 	
-			//Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
-			ProgettoBulk progettoRimodulato = getProgettoRimodulato(rimodulazione);
-			Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato);
-			
-			rimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_DEFINITIVO);
-			rimodulazione.setToBeUpdated();
-			return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
+		    Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+		    List<OggettoBulk> listVariazioni = rimodHome.constructVariazioniBilancio(userContext, rimodulazione);
+
+		    //Se la rimodulazione non prevede variazioni procedo direttamente con l'approvazione
+		    if (Optional.ofNullable(listVariazioni).map(List::isEmpty).orElse(Boolean.TRUE))
+		    	return approvaInt(userContext, rimodulazione);
+		    else {
+			    //Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
+				ProgettoBulk progettoRimodulato = getProgettoRimodulato(rimodulazione);
+				Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato);
+				
+				rimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_DEFINITIVO);
+				rimodulazione.setToBeUpdated();
+				return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
+		    }
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
 		} catch(Exception e) {

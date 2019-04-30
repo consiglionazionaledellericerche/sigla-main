@@ -22,6 +22,7 @@
 			   bp.getController().writeFormInput(out,null,"livello_padre",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } 
 		%>
+		<div style="float: right;" class="GroupLabel h3 text-primary ">V.<%=bulk.getVersione()%></div>
 	 </div>
 	 <div class="Group">
 	 <table class="Panel card border-primary p-2 mb-2">
@@ -163,25 +164,25 @@
       <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "dtInizioOf"); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","dtInizioOf",bp.isRODatiContabili(),null,null); %></td>
 	  </tr>
 	  <% } %>	  
       <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent() ||
     		  Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).map(Progetto_other_fieldBulk::isStatoChiuso).orElse(Boolean.FALSE)) { %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtFineOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "dtFineOf"); %></td>
+	  	<td><% bp.getController().writeFormInput(out, "default","dtFineOf",bp.isRODatiContabili(),null,null); %></td>
       <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  	<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "dtProrogaOf"); %></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtProrogaOf",bp.isRODatiContabili(),null,null); %></td>	  
 	  <% } %> 
 	  </tr>
 	  <% } %> 
 	  <tr>
-	  	<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "imFinanziatoOf"); %></td>
-	  	<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "imCofinanziatoOf"); %></td>
+		<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
+		<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",bp.isRODatiContabili(),null,null); %></td>	  
 	  </tr>
      </table>
 	 </div>
@@ -267,15 +268,20 @@
 		  	</td>
 		</tr>	  
 		<tr>
-		  	<% bp.getController().writeFormField(out,"dtInizioOf");%>
-		  	<% bp.getController().writeFormField(out,"dtFineOf");%>
+			<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","dtInizioOf",bp.isRODatiContabili(),null,null); %></td>
+			<td><% bp.getController().writeFormLabel(out,"dtFineOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","dtFineOf",bp.isRODatiContabili(),null,null); %></td>
 		</tr>
 		<tr>
-		  	<% bp.getController().writeFormField(out,"dtProrogaOf");%>
+			<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","dtProrogaOf",bp.isRODatiContabili(),null,null); %></td>
 	  	</tr>
 		<tr>
-		  	<% bp.getController().writeFormField(out,"imFinanziatoOf");%>
-		  	<% bp.getController().writeFormField(out,"imCofinanziatoOf");%>
+			<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
+			<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
 		</tr>
 	</table>
 	</div>
