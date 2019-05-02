@@ -555,7 +555,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     .map(Unita_organizzativaBulk.class::cast)
                     .orElse(null));
 
-            ui.setCdr(Optional.ofNullable(cdr)
+            final CdrBulk cdrBulk1 = Optional.ofNullable(cdr)
                     .filter(x -> !x.equalsIgnoreCase(NULL))
                     .map(x -> new CdrBulk(x))
                     .map(cdrBulk -> {
@@ -588,7 +588,11 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                             }
                         }
                         return null;
-                    })
+                    });
+            ui.setCdr(cdrBulk1);
+            userContext.setCd_cdr(
+                    Optional.ofNullable(userContext.getCd_cdr())
+                        .orElse(cdrBulk1.getCd_centro_responsabilita())
             );
             userContext.getAttributes().put(BOOTSTRAP, true);
             bp.setBootstrap(true);
