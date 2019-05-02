@@ -590,10 +590,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                         return null;
                     });
             ui.setCdr(cdrBulk1);
-            userContext.setCd_cdr(
-                    Optional.ofNullable(userContext.getCd_cdr())
-                        .orElse(cdrBulk1.getCd_centro_responsabilita())
-            );
+           // userContext.setCd_cdr(
+            //        Optional.ofNullable(userContext.getCd_cdr())
+            //            .orElse(cdrBulk1.getCd_centro_responsabilita())
+           // );
             userContext.getAttributes().put(BOOTSTRAP, true);
             bp.setBootstrap(true);
             context.setUserContext(userContext);
