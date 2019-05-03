@@ -120,6 +120,13 @@
    <TD><% bp.getController().writeFormLabel(out,"riferimenti");%></TD>
    <TD colspan="5"><% bp.getController().writeFormInput(out,"default","riferimenti",isAbilitato,null,null);%></TD>
   </TR>
+<% if (bp.isSearching() || bk.getProgettoRimodulazione()!=null) {%>
+  <TR>
+   <TD><% bp.getController().writeFormLabel(out,"cdProgettoRimodulazione");%></TD>
+   <TD colspan="3"><% bp.getController().writeFormInput(out,"default","cdProgettoRimodulazione",false,null,null);%></TD>
+   <TD colspan="2"><% bp.getController().writeFormInput(out,"default","pgRimodulazione",false,null,null);%></TD>
+  </TR>
+<% } %>
 </table>
 <%
 if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEnte())) { 

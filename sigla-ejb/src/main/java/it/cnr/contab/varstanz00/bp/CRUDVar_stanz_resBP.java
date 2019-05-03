@@ -16,6 +16,7 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -43,6 +44,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	private it.cnr.contab.config00.sto.bulk.CdsBulk centro_di_spesa_scrivania;	
 	private Unita_organizzativaBulk uoSrivania;
 	private Accertamento_modificaBulk acrMod;
+	private Progetto_rimodulazioneBulk mainProgettoRimodulazione;
 	
 	private SimpleDetailCRUDController crudAssCDR = new SimpleDetailCRUDController( "AssociazioneCDR", Ass_var_stanz_res_cdrBulk.class, "associazioneCDR", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
@@ -77,6 +79,11 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 		setAcrMod(acrMod);
 	}
 
+    public CRUDVar_stanz_resBP(String function, Progetto_rimodulazioneBulk rimodulazione) {
+		super(function);
+		setMainProgettoRimodulazione(rimodulazione);
+    }
+    
 	protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 		setTab("tab","tabTestataVarStanzRes");
 	}
@@ -246,6 +253,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			var.setTipologia(Var_stanz_resBulk.TIPOLOGIA_ECO);
 			var.setAccMod(getAccMod());
 		}
+		var.setProgettoRimodulazione(getMainProgettoRimodulazione());
 		return var;
 	}
 	public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
@@ -619,5 +627,13 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 					.filter(el->!Var_stanz_resBulk.TIPOLOGIA_STO.equals(el.getTipologia()) || el.getMapMotivazioneVariazione()!=null)
 					.orElseThrow(()->new ValidationException("Occorre indicare la motivazione per cui viene effettuata la variazione."));
 		super.validate(actioncontext);
+	}
+	
+	public Progetto_rimodulazioneBulk getMainProgettoRimodulazione() {
+		return mainProgettoRimodulazione;
+	}
+	
+	private void setMainProgettoRimodulazione(Progetto_rimodulazioneBulk mainProgettoRimodulazione) {
+		this.mainProgettoRimodulazione = mainProgettoRimodulazione;
 	}
 }
