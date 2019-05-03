@@ -56,8 +56,8 @@
 	  </tr>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtFineRimodulato"+(bulk.isRimodulatoDtFine()?"Modificato":""));%></td>
-	  	<td><% bp.getController().writeFormInput( out, "dtFineRimodulato"); %></td>
-	  	<td><% bp.getController().writeFormLabel( out, "dtProrogaRimodulato"+(bulk.isRimodulatoDtProroga()?"Modificato":""));%></td>
+	  	<td><% bp.getController().writeFormInput(out,"dtFineRimodulato");%></td>
+	  	<td><% bp.getController().writeFormLabel(out,"dtProrogaRimodulato"+(bulk.isRimodulatoDtProroga()?"Modificato":""));%></td>
 	  	<td><% bp.getController().writeFormInput(out,"dtProrogaRimodulato");%></td>
 	  </tr>
 	  <% } %> 
