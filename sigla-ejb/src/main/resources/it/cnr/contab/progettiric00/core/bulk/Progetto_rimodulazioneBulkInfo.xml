@@ -301,7 +301,7 @@
 		name="imFinanziatoOf" />
 	<formFieldProperty
 		name="imCofinanziatoOf" />
-			
+
 	<columnFieldProperty name="pg_rimodulazione" />
 	<columnFieldProperty name="stato" />
 

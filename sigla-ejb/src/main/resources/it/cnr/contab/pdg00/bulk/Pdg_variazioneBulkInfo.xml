@@ -471,6 +471,18 @@
         enabledOnSearch="true"		
 		nullable="true"
 		label="Delibera 210/2018" />	
+
+	<fieldProperty
+		name="cdProgettoRimodulazione"
+		property="progettoRimodulazione.progetto.cd_progetto"
+		inputType="TEXT"
+		inputSize="30" 
+		label="Rimodulazione" />
+	<fieldProperty
+		name="pgRimodulazione"
+		property="progettoRimodulazione.pg_rimodulazione"
+		inputType="TEXT"
+		inputSize="10" />
 	
     <form
         name="searchtool">
@@ -601,7 +613,10 @@
 		name="idBando" />
 	<formFieldProperty
 		name="ds_causale" />	
-		
+	<formFieldProperty
+		name="cdProgettoRimodulazione" />
+	<formFieldProperty
+		name="pgRimodulazione" />
 							
 	<findFieldProperty
 		name="esercizio" />
