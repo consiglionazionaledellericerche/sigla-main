@@ -215,7 +215,43 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 	};
 
 	private final SimpleDetailCRUDController crudVariazioniAssociate = new SimpleDetailCRUDController("Variazioni associate", Progetto_rimodulazione_variazioneBulk.class,"variazioniAssociate",this){
-		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException ,javax.servlet.ServletException {};
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException ,javax.servlet.ServletException {
+			super.openButtonGROUPToolbar(context);
+
+			{
+				Button button = new Button();
+	    		button.setImg("img/open16.gif");
+	    		button.setDisabledImg("img/open16.gif");
+	    		button.setTitle("Apri Variazione");
+	    		button.setIconClass("fa fa-folder-open-o text-primary");
+	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+	            button.setHref("javascript:submitForm('doOpenVariazione(" + getInputPrefix() + ")')");
+	            boolean isButtonEnable = Optional.ofNullable(this.getModel()).isPresent();
+	            button.writeToolbarButton(context.getOut(), isButtonEnable, HttpActionContext.isFromBootstrap(context));
+			}
+	        {
+				Button button = new Button();
+	    		button.setImg("img/new16.gif");
+	    		button.setDisabledImg("img/new16.gif");
+	    		button.setTitle("Nuova Variazione Competenza");
+	    		button.setIconClass("fa fa fa-plus text-primary");
+	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+	            button.setHref("javascript:submitForm('doNewVariazioneCompetenza()')");
+	            button.writeToolbarButton(context.getOut(), Boolean.TRUE, HttpActionContext.isFromBootstrap(context));
+            }
+	        {
+				Button button = new Button();
+	    		button.setImg("img/new16.gif");
+	    		button.setDisabledImg("img/new16.gif");
+	    		button.setTitle("Nuova Variazione Residua");
+	    		button.setIconClass("fa fa fa-plus text-primary");
+	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+	            button.setHref("javascript:submitForm('doNewVariazioneResidua()')");
+	            button.writeToolbarButton(context.getOut(), Boolean.TRUE, HttpActionContext.isFromBootstrap(context));
+            }
+            
+            super.closeButtonGROUPToolbar(context);			
+		};
 	};
 
 	/**

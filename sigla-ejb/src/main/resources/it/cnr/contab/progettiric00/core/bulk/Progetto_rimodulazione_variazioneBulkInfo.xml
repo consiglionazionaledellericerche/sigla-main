@@ -25,12 +25,24 @@
         enabledOnEdit="false"
         enabledOnSearch="true"
 		label="Numero Variazione" />
-		
+	<fieldProperty
+		name="tipoVariazione"
+		property="tipoVariazione"
+		keysProperty="tiVariazioneKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipologia" />
+				
+	<formFieldProperty
+		name="tipoVariazione" />
 	<formFieldProperty
 		name="esercizioVariazione" />
 	<formFieldProperty
 		name="pg_variazione" />
 		
+	<columnFieldProperty
+		name="tipoVariazione" />
 	<columnFieldProperty
 		name="esercizioVariazione" />
 	<columnFieldProperty
