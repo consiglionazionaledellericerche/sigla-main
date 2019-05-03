@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -22,6 +23,18 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
 		super(name, modelClass, listPropertyName, parent);
 	}
 
+	@Override
+	public boolean isShrinkable() {
+		Progetto_piano_economicoBulk obj = (Progetto_piano_economicoBulk)this.getParentModel();
+		return super.isShrinkable() && !obj.isROFieldRimodulazione();
+	}
+	
+	@Override
+	public boolean isGrowable() {
+		Progetto_piano_economicoBulk obj = (Progetto_piano_economicoBulk)this.getParentModel();
+		return super.isGrowable() && !obj.isROFieldRimodulazione();
+	}
+	
 	public OggettoBulk removeDetail(OggettoBulk oggettobulk, int i) {
 		Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
 		if (assVoce.isDetailRimodulatoAggiunto())

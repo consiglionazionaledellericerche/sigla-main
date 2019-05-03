@@ -256,5 +256,10 @@ public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 
 		return Optional.ofNullable(anomalia).filter(el->el.length()>0).map(StringJoiner::toString).orElse(null);
 	}
+	
+	public boolean isROFieldRimodulazione() {
+		return isDetailRimodulatoEliminato() || 
+			   Optional.ofNullable(this.getProgetto_piano_economico()).map(Progetto_piano_economicoBulk::isROFieldRimodulazione).orElse(Boolean.TRUE);
+	}
 }
 
