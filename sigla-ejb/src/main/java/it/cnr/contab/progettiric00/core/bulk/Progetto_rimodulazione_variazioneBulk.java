@@ -1,0 +1,70 @@
+package it.cnr.contab.progettiric00.core.bulk;
+
+import java.util.Dictionary;
+import java.util.Optional;
+
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.jada.bulk.OggettoBulk;
+
+public class Progetto_rimodulazione_variazioneBulk extends OggettoBulk {
+	private static final long serialVersionUID = 1L;
+
+	public static final String TIPO_COMPETENZA = "COM";
+	public static final String TIPO_RESIDUO = "RES";
+
+	public final static Dictionary tiVariazioneKeys;
+	static {
+		tiVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		tiVariazioneKeys.put(TIPO_COMPETENZA,"Competenza");
+		tiVariazioneKeys.put(TIPO_RESIDUO,"Residuo");
+	};
+
+	private Pdg_variazioneBulk variazioneCompetenza;
+	
+	private Var_stanz_resBulk variazioneResiduo;
+	
+	public Progetto_rimodulazione_variazioneBulk() {
+		super();
+	}
+
+	public Pdg_variazioneBulk getVariazioneCompetenza() {
+		return variazioneCompetenza;
+	}
+
+	public void setVariazioneCompetenza(Pdg_variazioneBulk variazioneCompetenza) {
+		this.variazioneCompetenza = variazioneCompetenza;
+	}
+
+	public Var_stanz_resBulk getVariazioneResiduo() {
+		return variazioneResiduo;
+	}
+
+	public void setVariazioneResiduo(Var_stanz_resBulk variazioneResiduo) {
+		this.variazioneResiduo = variazioneResiduo;
+	}
+	
+	public String getTipoVariazione(){
+		if (Optional.ofNullable(getVariazioneCompetenza()).isPresent())
+			return TIPO_COMPETENZA;
+		if (Optional.ofNullable(getVariazioneResiduo()).isPresent())
+			return TIPO_RESIDUO;
+		return null;
+	}
+	
+	public java.lang.Integer getEsercizioVariazione() {
+		if (Optional.ofNullable(getVariazioneCompetenza()).isPresent())
+			return getVariazioneCompetenza().getEsercizio();
+		if (Optional.ofNullable(getVariazioneResiduo()).isPresent())
+			return getVariazioneResiduo().getEsercizio();
+		return null;
+	}
+
+	public java.lang.Long getPg_variazione() {
+		if (Optional.ofNullable(getVariazioneCompetenza()).isPresent())
+			return getVariazioneCompetenza().getPg_variazione_pdg();
+		if (Optional.ofNullable(getVariazioneResiduo()).isPresent())
+			return getVariazioneResiduo().getPg_variazione();
+		return null;
+	}
+}

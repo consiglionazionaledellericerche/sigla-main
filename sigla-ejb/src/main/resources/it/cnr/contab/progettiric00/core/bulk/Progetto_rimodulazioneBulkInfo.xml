@@ -98,6 +98,7 @@
 	<fieldProperty
 		name="dtInizioRimodulato"
 		property="dtInizioRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="date_short"
 		command="doOnDtInizioRimodulatoChange"
@@ -107,6 +108,7 @@
 	<fieldProperty
 		name="dtInizioRimodulatoModificato"
 		property="dtInizioRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="date_short"
 		command="doOnDtInizioRimodulatoChange"
@@ -117,6 +119,7 @@
 	<fieldProperty
 		name="dtFineRimodulato"
 		property="dtFineRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="date_short"
 		command="doOnDtFineRimodulatoChange"
@@ -126,6 +129,7 @@
 	<fieldProperty
 		name="dtFineRimodulatoModificato"
 		property="dtFineRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="date_short"
 		command="doOnDtFineRimodulatoChange"
@@ -136,6 +140,7 @@
 	<fieldProperty
 		name="dtProrogaRimodulato"
 		property="dtProrogaRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="date_short"
 		command="doOnDtProrogaRimodulatoChange"
@@ -145,6 +150,7 @@
 	<fieldProperty
 		name="dtProrogaRimodulatoModificato"
 		property="dtProrogaRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="date_short"
 		command="doOnDtProrogaRimodulatoChange"
@@ -155,6 +161,7 @@
 	<fieldProperty
 		name="imFinanziatoRimodulato"
 		property="imFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		command="doDefault"
@@ -164,6 +171,7 @@
 	<fieldProperty
 		name="imFinanziatoRimodulatoModificato"
 		property="imFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		command="doDefault"
@@ -174,6 +182,7 @@
 	<fieldProperty
 		name="imCofinanziatoRimodulato"
 		property="imCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		command="doDefault"
@@ -183,6 +192,7 @@
 	<fieldProperty
 		name="imCofinanziatoRimodulatoModificato"
 		property="imCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		command="doDefault"

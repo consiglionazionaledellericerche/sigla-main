@@ -24,6 +24,18 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
 	}
 
 	@Override
+	public boolean isShrinkable() {
+		Progetto_rimodulazioneBulk obj = (Progetto_rimodulazioneBulk)this.getParentModel();
+		return super.isShrinkable() && !obj.isROFieldRimodulazione();
+	}
+	
+	@Override
+	public boolean isGrowable() {
+		Progetto_rimodulazioneBulk obj = (Progetto_rimodulazioneBulk)this.getParentModel();
+		return super.isGrowable() && !obj.isROFieldRimodulazione();
+	}
+	
+	@Override
 	public String getRowStyle(Object obj) {
 		Progetto_piano_economicoBulk ppe = (Progetto_piano_economicoBulk)obj;
 		StringBuffer style = new StringBuffer();

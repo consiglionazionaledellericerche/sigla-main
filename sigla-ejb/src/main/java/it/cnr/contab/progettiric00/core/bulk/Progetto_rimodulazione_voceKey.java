@@ -19,7 +19,7 @@ public class Progetto_rimodulazione_voceKey extends OggettoBulk implements Keyed
 	// ESERCIZIO_PIANO NUMBER (4) NOT NULL (PK)
 	private java.lang.Integer esercizio_piano;
 
-	// PG_RIMODULAZIONE NUMBER (10) NOT NULL (PK)
+	// PG_VARIAZIONE NUMBER (10) NOT NULL (PK)
 	private java.lang.Integer pg_variazione;
 
 	public Progetto_rimodulazione_voceKey() {

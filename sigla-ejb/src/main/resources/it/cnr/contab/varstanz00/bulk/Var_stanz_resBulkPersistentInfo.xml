@@ -13,6 +13,12 @@
 		<columnMapping
 			columnName="ESERCIZIO_RES"
 			propertyName="esercizio_res.esercizio"/>
+		<columnMapping
+			columnName="PG_PROGETTO_RIMODULAZIONE"
+			propertyName="progettoRimodulazione.progetto.pg_progetto" />
+		<columnMapping
+			columnName="PG_RIMODULAZIONE"
+			propertyName="progettoRimodulazione.pg_rimodulazione" />	
 	</defaultColumnMap>
 		
 		
@@ -21,5 +27,7 @@
 	<persistentProperty
 		name="centroDiResponsabilita"/>
 	<persistentProperty
-		name="esercizio_res"/>		
+		name="esercizio_res"/>
+	<persistentProperty
+		name="progettoRimodulazione"/>				
 </SQLPersistentInfo>

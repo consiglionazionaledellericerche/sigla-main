@@ -332,46 +332,61 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	
 	public String getMessageAnomaliaDetailRimodulato() {
 		StringJoiner anomalia = new StringJoiner("\r\r");
-		Optional.ofNullable(this.getDispResiduaFinanziamentoRimodulato())
-			.filter(el->el.compareTo(BigDecimal.ZERO)<0)
-			.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
-				"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
-				" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
-				" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
-
-		Optional.ofNullable(this)
-			.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
-			.map(Progetto_piano_economicoBulk::getDispResiduaFinanziamentoRimodulato)
-			.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
-			.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
-					"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
-					" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
+		if (Optional.ofNullable(this.getEsercizio_piano()).map(esePpe->{
+				return Optional.ofNullable(this.getProgettoRimodulazione())
+						.flatMap(el->Optional.ofNullable(el.getAnnoFromPianoEconomico()))
+						.map(eseFrom->eseFrom.compareTo(esePpe)<=0)
+						.orElse(Boolean.TRUE) &&
+						Optional.ofNullable(this.getProgettoRimodulazione())
+						.flatMap(el->Optional.ofNullable(el.getLastEsercizioAperto()))
+						.map(lastEse->lastEse.compareTo(esePpe)>=0)
+						.orElse(Boolean.TRUE);
+			}).orElse(Boolean.TRUE)) {
+			Optional.ofNullable(this.getDispResiduaFinanziamentoRimodulato())
+				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
+					"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
+					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
+					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
+	
+			Optional.ofNullable(this)
+				.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
+				.map(Progetto_piano_economicoBulk::getDispResiduaFinanziamentoRimodulato)
+				.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
+				.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
+						"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
+						" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
+						"."));
+	
+			Optional.ofNullable(this.getDispResiduaCofinanziamentoRimodulato())
+				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
+				.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
+					"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
+					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
+					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
+	
+			Optional.ofNullable(this)
+				.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
+				.map(Progetto_piano_economicoBulk::getDispResiduaCofinanziamentoRimodulato)
+				.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
+				.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
+					"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
+					" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
 					"."));
-
-		Optional.ofNullable(this.getDispResiduaCofinanziamentoRimodulato())
-			.filter(el->el.compareTo(BigDecimal.ZERO)<0)
-			.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
-				"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
-				" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
-				" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
-
-		Optional.ofNullable(this)
-			.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
-			.map(Progetto_piano_economicoBulk::getDispResiduaCofinanziamentoRimodulato)
-			.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
-			.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
-				"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
-				" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
-				"."));
-
-		Optional.ofNullable(this.getVociBilancioAssociate())
-			.map(List::stream)
-			.orElse(Stream.empty())
-			.filter(el->Optional.ofNullable(el.getMessageAnomaliaDetailRimodulato()).isPresent())
-			.findAny()
-			.ifPresent(el->anomalia.add("VOCI ASSOCIATE:" +
-					"\rAlcune voci associate presentano anomalie da correggere."));
-
+	
+			Optional.ofNullable(this.getVociBilancioAssociate())
+				.map(List::stream)
+				.orElse(Stream.empty())
+				.filter(el->Optional.ofNullable(el.getMessageAnomaliaDetailRimodulato()).isPresent())
+				.findAny()
+				.ifPresent(el->anomalia.add("VOCI ASSOCIATE:" +
+						"\rAlcune voci associate presentano anomalie da correggere."));
+		}
 		return Optional.ofNullable(anomalia).filter(el->el.length()>0).map(StringJoiner::toString).orElse(null);
+	}
+	
+	public boolean isROFieldRimodulazione() {
+		return isDetailRimodulatoEliminato() ||
+				Optional.ofNullable(this.getProgettoRimodulazione()).map(Progetto_rimodulazioneBulk::isROFieldRimodulazione).orElse(Boolean.TRUE);
 	}
 }
