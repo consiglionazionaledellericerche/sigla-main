@@ -2094,6 +2094,32 @@ TRASPORTO_AEREO"/>
         </createIndex>
     </changeSet>
 
+    <changeSet author="raffaele.pagano" id="alter-table-variazioni-add-column-rimodulazione">
+        <addColumn tableName="pdg_variazione">
+            <column name="pg_progetto_rimodulazione" type="BIGINT" remarks="Progressivo del progetto di ricerca oggetto della rimodulazione associata alla variazione."/>
+            <column name="pg_rimodulazione" type="BIGINT" remarks="Progressivo rimodulazione del progetto di ricerca associata alla variazione."/>
+        </addColumn>
+
+        <addColumn tableName="var_stanz_res">
+            <column name="pg_progetto_rimodulazione" type="BIGINT" remarks="Progressivo del progetto di ricerca oggetto della rimodulazione associata alla variazione."/>
+            <column name="pg_rimodulazione" type="BIGINT" remarks="Progressivo rimodulazione del progetto di ricerca associata alla variazione."/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_rimodulazione, pg_rimodulazione" baseTableName="pdg_variazione" constraintName="fk_pdg_variazione03" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto, pg_rimodulazione" referencedTableName="progetto_rimodulazione"/>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_rimodulazione, pg_rimodulazione" baseTableName="var_stanz_res" constraintName="fk_var_stanz_res02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto, pg_rimodulazione" referencedTableName="progetto_rimodulazione"/>
+
+        <createIndex indexName="FX_PDG_VARIAZIONE03" tableName="PDG_VARIAZIONE">
+            <column name="PG_PROGETTO_RIMODULAZIONE"/>
+            <column name="PG_RIMODULAZIONE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_VAR_STANZ_RES03" tableName="VAR_STANZ_RES">
+            <column name="PG_PROGETTO_RIMODULAZIONE"/>
+            <column name="PG_RIMODULAZIONE"/>
+        </createIndex>
+    </changeSet>
+
     <changeSet author="raffaele.pagano" id="accessi_rimodulazione_progetti">
         <insert tableName="accesso">
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGRIM"/>

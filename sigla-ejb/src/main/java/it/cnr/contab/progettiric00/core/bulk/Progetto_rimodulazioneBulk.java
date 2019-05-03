@@ -2,6 +2,7 @@ package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Dictionary;
@@ -16,6 +17,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.util.DateUtils;
@@ -56,16 +58,25 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	private BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoAnnoCorrente = new BulkList<Progetto_piano_economicoBulk>();
 	private BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoAltriAnni = new BulkList<Progetto_piano_economicoBulk>();
 
+	private BulkList<Progetto_rimodulazione_variazioneBulk> variazioniAssociate = new BulkList<Progetto_rimodulazione_variazioneBulk>();
+
 	private java.math.BigDecimal imFinanziatoRimodulato;
 	private java.math.BigDecimal imCofinanziatoRimodulato;
 	private java.sql.Timestamp dtInizioRimodulato;
 	private java.sql.Timestamp dtFineRimodulato;
 	private java.sql.Timestamp dtProrogaRimodulato;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-
+	private Integer annoFromPianoEconomico;
+	private Integer lastEsercizioAperto;
+	
 	//Flag che indica se nella mappa di rimodulazione occorre visualizzare una versione semplice 
 	//senza campi valori attuali
 	private Boolean flViewCurrent = Boolean.FALSE;
+
+	//Modelli di variazioni compatibili con la rimodulazione.
+	//Se vuota vuol dire che la rimodulazione definitiva non prevede creazione di variazioni di bilancio.
+	//Lista che viene valorizzata dal BP sulle rimodulazioni di tipo definitivo.
+	List<OggettoBulk> variazioniModels = new ArrayList<OggettoBulk>();
 
 	public Progetto_rimodulazioneBulk() {
 		super();
@@ -175,6 +186,10 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 		return dettagliPianoEconomicoAltriAnni;
 	}
 
+	public BulkList<Progetto_rimodulazione_variazioneBulk> getVariazioniAssociate() {
+		return variazioniAssociate;
+	}
+
 	public void setDettagliRimodulazione(BulkList<Progetto_rimodulazione_ppeBulk> dettagliRimodulazione) {
 		this.dettagliRimodulazione = dettagliRimodulazione;
 	}
@@ -193,6 +208,10 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	
 	public void setDettagliPianoEconomicoAltriAnni(BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoAltriAnni) {
 		this.dettagliPianoEconomicoAltriAnni = dettagliPianoEconomicoAltriAnni;
+	}
+
+	public void setVariazioniAssociate(BulkList<Progetto_rimodulazione_variazioneBulk> variazioniAssociate) {
+		this.variazioniAssociate = variazioniAssociate;
 	}
 
 	public Progetto_rimodulazione_ppeBulk removeFromDettagliRimodulazione(int index) {
@@ -476,19 +495,16 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	}
     
 	public void validaDateRimodulazione() throws ValidationException {
-		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getDtProrogaRimodulato());
+		Optional<Timestamp> optDtProrogaRimodulato = Optional.ofNullable(this.getDtProrogaRimodulato());
 		if (!Optional.ofNullable(this.getDtInizioRimodulato()).isPresent() && Optional.ofNullable(this.getDtFineRimodulato()).isPresent())  
 		    throw new ValidationException( "Non \350 possibile indicare la \"Data di fine\" senza indicare la \"Data di inizio\".");
-		if (!Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProroga.isPresent())  
+		if (!Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProrogaRimodulato.isPresent())  
 		    throw new ValidationException( "Non \350 possibile indicare la \"Data di proroga\" senza indicare la \"Data di fine\".");
 		if (Optional.ofNullable(this.getDtInizioRimodulato()).isPresent() && Optional.ofNullable(this.getDtFineRimodulato()).isPresent() &&
 			this.getDtInizioRimodulato().after(this.getDtFineRimodulato()))
 			throw new ValidationException( "La \"Data di fine\" del progetto deve essere uguale o superiore alla \"Data di inizio\".");
-		if (Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProroga.isPresent() &&
-				this.getDtFine().after(optDtProroga.get()))
-			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
-		if (Optional.ofNullable(this.getDtProrogaRimodulato()).isPresent() && optDtProroga.isPresent() &&
-				this.getDtFine().after(optDtProroga.get()))
+		if (Optional.ofNullable(this.getDtFineRimodulato()).isPresent() && optDtProrogaRimodulato.isPresent() &&
+				this.getDtFineRimodulato().after(optDtProrogaRimodulato.get()))
 			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
 		
 		this.getAllDetailsProgettoPianoEconomico().stream()
@@ -534,12 +550,11 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	 * @return boolean
 	 */
 	public boolean isRimodulatoDtProroga() {
-		return Optional.ofNullable(this.getProgetto())
+		return !Optional.ofNullable(this.getProgetto())
 					   .filter(ProgettoBulk::isDatePianoEconomicoRequired)
 					   .flatMap(el->Optional.ofNullable(el.getOtherField()))
-					   .map(Progetto_other_fieldBulk::getDtProroga)
-					   .map(el->el.compareTo(this.getDtProrogaRimodulato())!=0)
-					   .orElse(Boolean.FALSE);
+					   .flatMap(el->Optional.ofNullable(el.getDtProroga()))
+					   .equals(Optional.ofNullable(this.getDtProrogaRimodulato()));
 	}
 
 	/**
@@ -620,4 +635,44 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 		return flViewCurrent;
 	}
 	
+	public void setVariazioniModels(List<OggettoBulk> variazioniModels) {
+		this.variazioniModels = variazioniModels;
+	}
+	
+	/*
+	 * Modelli di variazioni compatibili con la rimodulazione.
+	 * Se vuota vuol dire che la rimodulazione definitiva non prevede creazione di variazioni di bilancio.
+	 * Lista che viene valorizzata dal BP sulle rimodulazioni di tipo definitivo.
+	 */
+	public List<OggettoBulk> getVariazioniModels() {
+		return variazioniModels;
+	}
+
+	public boolean isROFieldRimodulazione() {
+		return !this.isStatoProvvisorio();
+	}
+	
+	/*
+	 * Variabile che indica da quale anno il piano economico è attivo
+	 * Valorizzata dal BP di rimodulazione e usata per la gestione degli errori
+	 */
+	public Integer getAnnoFromPianoEconomico() {
+		return annoFromPianoEconomico;
+	}
+	
+	public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
+		this.annoFromPianoEconomico = annoFromPianoEconomico;
+	}
+	
+	/*
+	 * Variabile che indica l'ultimo esercizio contabile aperto
+	 * Valorizzata dal BP di rimodulazione e usata per la gestione degli errori
+	 */
+	public Integer getLastEsercizioAperto() {
+		return lastEsercizioAperto;
+	}
+	
+	public void setLastEsercizioAperto(Integer lastEsercizioAperto) {
+		this.lastEsercizioAperto = lastEsercizioAperto;
+	}
 }

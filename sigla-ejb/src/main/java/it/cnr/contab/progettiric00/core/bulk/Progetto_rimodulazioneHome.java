@@ -15,12 +15,14 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -60,6 +62,22 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		Progetto_rimodulazioneHome dettHome = (Progetto_rimodulazioneHome)getHomeCache().getHome(Progetto_rimodulazioneBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
+		return dettHome.fetchAll(sql);
+	}
+	
+	public java.util.Collection<Pdg_variazioneBulk> findVariazioniCompetenzaAssociate(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk rimodulazione) throws IntrospectionException, PersistencyException {
+		Pdg_variazioneHome dettHome = (Pdg_variazioneHome)getHomeCache().getHome(Pdg_variazioneBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto_rimodulazione",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());
+		sql.addClause(FindClause.AND,"pg_rimodulazione",SQLBuilder.EQUALS,rimodulazione.getPg_rimodulazione());
+		return dettHome.fetchAll(sql);
+	}
+	
+	public java.util.Collection<Var_stanz_resBulk> findVariazioniResidueAssociate(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk rimodulazione) throws IntrospectionException, PersistencyException {
+		Var_stanz_resHome dettHome = (Var_stanz_resHome)getHomeCache().getHome(Var_stanz_resBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto_rimodulazione",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());
+		sql.addClause(FindClause.AND,"pg_rimodulazione",SQLBuilder.EQUALS,rimodulazione.getPg_rimodulazione());
 		return dettHome.fetchAll(sql);
 	}
 	
