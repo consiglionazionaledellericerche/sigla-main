@@ -22,7 +22,7 @@
 			   bp.getController().writeFormInput(out,null,"livello_padre",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } 
 		%>
-		<div style="float: right;" class="GroupLabel h3 text-primary ">V.<%=bulk.getVersione()%></div>
+		<div style="float: right;" class="GroupLabel h3 text-primary ">Ver.<%=bulk.getVersione()%></div>
 	 </div>
 	 <div class="Group">
 	 <table class="Panel card border-primary p-2 mb-2">

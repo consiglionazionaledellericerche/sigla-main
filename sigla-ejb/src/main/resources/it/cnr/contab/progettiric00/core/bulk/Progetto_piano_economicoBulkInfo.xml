@@ -71,30 +71,30 @@
 	<fieldProperty
 		name="imSpesaFinanziatoRimodulato"
 		property="imSpesaFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata Rimodulata" />
 	<fieldProperty
 		name="imSpesaFinanziatoRimodulatoAC"
 		property="imSpesaFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		command="doOnImportoFinanziatoPpeACChange"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata Rimodulata" />
 	<fieldProperty
 		name="imSpesaFinanziatoRimodulatoAA"
 		property="imSpesaFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		command="doOnImportoFinanziatoPpeAAChange"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata Rimodulata" />
 		
@@ -118,30 +118,30 @@
 	<fieldProperty
 		name="imSpesaCofinanziatoRimodulato"
 		property="imSpesaCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata Rimodulata" />
 	<fieldProperty
 		name="imSpesaCofinanziatoRimodulatoAC"
 		property="imSpesaCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		command="doOnImportoCofinanziatoPpeACChange"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata Rimodulata" />
 	<fieldProperty
 		name="imSpesaCofinanziatoRimodulatoAA"
 		property="imSpesaCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		command="doOnImportoCofinanziatoPpeAAChange"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata Rimodulata" />
 				

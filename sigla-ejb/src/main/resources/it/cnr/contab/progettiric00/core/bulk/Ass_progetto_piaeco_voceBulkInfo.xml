@@ -59,21 +59,21 @@
 	<fieldProperty
 		name="imVarFinanziatoRimodulato"
 		property="imVarFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		command="doDefault"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata Variata" />
 	<fieldProperty
 		name="imVarCofinanziatoRimodulato"
 		property="imVarCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
 		command="doDefault"
-		readonlyProperty="detailRimodulatoEliminato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Cofinanziata Variata" />
 	<fieldProperty

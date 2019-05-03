@@ -27,6 +27,12 @@
 		<columnMapping
 			columnName="TIPOLOGIA"
 			propertyName="tipo_variazione.cd_tipo_variazione" />
+		<columnMapping
+			columnName="PG_PROGETTO_RIMODULAZIONE"
+			propertyName="progettoRimodulazione.progetto.pg_progetto" />
+		<columnMapping
+			columnName="PG_RIMODULAZIONE"
+			propertyName="progettoRimodulazione.pg_rimodulazione" />			
 	</defaultColumnMap>
 	
 	<persistentProperty
@@ -35,6 +41,8 @@
 		name="elemento_voce" />	
 	<persistentProperty
 		name="tipo_variazione" />	
+	<persistentProperty
+		name="progettoRimodulazione"/>				
 	
 	<columnMap
 		name="VP_PDG_VARIAZIONE"
