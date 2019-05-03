@@ -1,30 +1,32 @@
 package it.cnr.contab.progettiric00.action;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.doccont00.bp.CRUDAccertamentoBP;
-import it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoAmministraBP;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk;
-import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_varBulk;
+import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettoPianoEconomicoCRUDController;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettoPianoEconomicoVoceBilancioCRUDController;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
-import it.cnr.contab.util.Utility;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
+import it.cnr.jada.action.HookForward;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDController;
 import it.cnr.jada.util.action.OptionBP;
+import it.cnr.jada.util.action.SimpleCRUDBP;
 
 /**
  * Azione che gestisce le richieste relative alla Rimodulazione Gestione Progetto Risorse
@@ -368,5 +370,139 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		}
 	
 		return context.findDefaultForward();
-	}		
+	}
+	
+	public Forward doNewVariazioneCompetenza(ActionContext context){
+		try 
+		{
+			fillModel( context );
+			RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP) getBusinessProcess(context);
+			bp.completeSearchTools(context, bp);
+	        bp.validate(context);
+        	return openConfirm(context, "Attenzione! Si vuole procedere alla creazione di una nuova variazione di competenza da associare alla "
+        			+ "rimodulazione del progetto?", 
+        			OptionBP.CONFIRM_YES_NO, "doConfirmdoNewVariazioneCompetenza");
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
+		}
+	}
+
+	public Forward doConfirmdoNewVariazioneCompetenza(ActionContext context,int option) {
+		try 
+		{
+			if (option == OptionBP.YES_BUTTON) {
+				RimodulaProgettiRicercaBP bp= (RimodulaProgettiRicercaBP) getBusinessProcess(context);
+				String function = bp.isEditable() ? "M" : "V";
+				function += "R";
+
+				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)bp.getModel();
+
+				CRUDPdgVariazioneGestionaleBP newbp = null;
+				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
+				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDPdgVariazioneGestionaleBP");
+				if (mode == null) 
+					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle variazioni di competenza. Impossibile continuare.");
+
+				newbp = (CRUDPdgVariazioneGestionaleBP) context.getUserInfo().createBusinessProcess(context,"CRUDPdgVariazioneGestionaleBP",new Object[] { function,  rimodulazione});
+				newbp.setBringBack(true);
+				context.addHookForward("bringback", this, "doBringBackNewVariazione");
+				return context.addBusinessProcess(newbp);
+			}
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+		return context.findDefaultForward();
+	}
+
+	public Forward doNewVariazioneResidua(ActionContext context){
+		try 
+		{
+			fillModel( context );
+			RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP) getBusinessProcess(context);
+			bp.completeSearchTools(context, bp);
+	        bp.validate(context);
+        	return openConfirm(context, "Attenzione! Si vuole procedere alla creazione di una nuova variazione residua da associare alla "
+        			+ "rimodulazione del progetto?", 
+        			OptionBP.CONFIRM_YES_NO, "doConfirmdoNewVariazioneResidua");
+		}		
+		catch(Throwable e) 
+		{
+			return handleException(context,e);
+		}
+	}
+
+	public Forward doConfirmdoNewVariazioneResidua(ActionContext context,int option) {
+		try 
+		{
+			if (option == OptionBP.YES_BUTTON) {
+				RimodulaProgettiRicercaBP bp= (RimodulaProgettiRicercaBP) getBusinessProcess(context);
+				String function = bp.isEditable() ? "M" : "V";
+				function += "R";
+
+				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)bp.getModel();
+
+				CRUDVar_stanz_resBP newbp = null;
+				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
+				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDVar_stanz_resBP");
+				if (mode == null) 
+					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle variazioni residue. Impossibile continuare.");
+
+				newbp = (CRUDVar_stanz_resBP) context.getUserInfo().createBusinessProcess(context,"CRUDVar_stanz_resBP",new Object[] { function,  rimodulazione});
+				newbp.setBringBack(true);
+				context.addHookForward("bringback", this, "doBringBackNewVariazione");
+				return context.addBusinessProcess(newbp);
+			}
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+		return context.findDefaultForward();
+	}
+
+    public Forward doBringBackNewVariazione(ActionContext context) {
+        try {
+        	HookForward caller = (HookForward)context.getCaller();
+        	RimodulaProgettiRicercaBP bp= (RimodulaProgettiRicercaBP) getBusinessProcess(context);
+            Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk) bp.getModel();
+            return context.findDefaultForward();
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+    
+	public Forward doOpenVariazione(ActionContext context, String s)
+	{
+		try 
+		{
+			fillModel( context );
+			CRUDController crudController = getController(context, s);
+
+			RimodulaProgettiRicercaBP bp= (RimodulaProgettiRicercaBP) getBusinessProcess(context);
+
+			String function = bp.isEditable() ? "M" : "V";
+			function += "R";
+
+			SimpleCRUDBP newbp = null;
+
+			if (crudController.getModel() instanceof Pdg_variazioneBulk) {
+				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
+				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","PdGVariazioneBP");
+				if (mode == null) 
+					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle variazioni di competenza. Impossibile continuare.");
+
+				newbp = (PdGVariazioneBP) context.getUserInfo().createBusinessProcess(context,"PdGVariazioneBP",new Object[] { function, (Pdg_variazioneBulk)crudController.getModel()});
+			} else {
+				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
+				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDVar_stanz_resBP");
+				if (mode == null) 
+					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle variazioni residue. Impossibile continuare.");
+
+				newbp = (CRUDVar_stanz_resBP) context.getUserInfo().createBusinessProcess(context,"CRUDVar_stanz_resBP",new Object[] { function,  (Pdg_variazioneBulk)crudController.getModel()});
+			}
+			return context.addBusinessProcess(newbp);
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
 }
