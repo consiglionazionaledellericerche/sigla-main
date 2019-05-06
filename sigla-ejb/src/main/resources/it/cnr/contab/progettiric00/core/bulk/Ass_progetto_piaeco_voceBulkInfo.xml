@@ -184,18 +184,35 @@
 		<columnFieldProperty 
 			name="imUtilizzatoAssestatoCofinanziamento"
 			headerLabel="SITUAZIONE SPESA"
+			label="Utilizzato Cofin."/>
+	</columnSet>
+
+	<columnSet name="voce_bilancio_rimodulato_con_variazioni">
+		<columnFieldProperty
+			name="cd_elemento_voce"/>
+		<columnFieldProperty
+			name="ds_elemento_voce"
+			inputType="DESCTOOL"
+			descProperty="messageAnomaliaDetailRimodulato"/>
+		<columnFieldProperty 
+			name="imAssestatoSpesaFinanziato"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato Fin."/>
+		<columnFieldProperty 
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="SITUAZIONE SPESA"
+			label="Utilizzato Fin."/>
+		<columnFieldProperty 
+			name="imAssestatoSpesaCofinanziato"
+			headerLabel="SITUAZIONE SPESA"
+			label="Assestato Cofin."/>
+		<columnFieldProperty 
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="SITUAZIONE SPESA"
 			label="Utilizzato Cofin."/>			
 		<columnFieldProperty
 			name="imVarFinanziatoRimodulato"
-			headerLabel="VARIAZIONI"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imVarCofinanziatoRimodulato"
-			headerLabel="VARIAZIONI"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleVarRimodulato"
-			headerLabel="VARIAZIONI"
-			label="Totale"/> 
-	</columnSet>
+			headerLabel="VARIAZIONE"
+			label="Quota Finanziata"/>
+	</columnSet>	
 </bulkInfo>
