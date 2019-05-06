@@ -64,17 +64,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 		};
 	};
 
-	protected SimpleDetailCRUDController crudPianoEconomicoAnnoCorrente = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoAnnoCorrente", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAnnoCorrente", this){
-		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
-			((Progetto_piano_economicoBulk)oggettobulk).setEsercizio_piano(((Progetto_rimodulazioneBulk)this.getParentModel()).getProgetto().getEsercizio());
-			((Progetto_piano_economicoBulk)oggettobulk).setIm_entrata(BigDecimal.ZERO);
-			((Progetto_piano_economicoBulk)oggettobulk).setIm_spesa_finanziato(BigDecimal.ZERO);
-			((Progetto_piano_economicoBulk)oggettobulk).setIm_spesa_cofinanziato(BigDecimal.ZERO);
-			((Progetto_piano_economicoBulk)oggettobulk).setImSpesaFinanziatoRimodulato(BigDecimal.ZERO);
-			((Progetto_piano_economicoBulk)oggettobulk).setImSpesaCofinanziatoRimodulato(BigDecimal.ZERO);
-			return super.addDetail(oggettobulk);
-		};
-	};
+	protected SimpleDetailCRUDController crudPianoEconomicoAnnoCorrente = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoAnnoCorrente", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAnnoCorrente", this);
 
 	protected SimpleDetailCRUDController crudPianoEconomicoAltriAnni = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoAltriAnni", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAltriAnni", this) {
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
