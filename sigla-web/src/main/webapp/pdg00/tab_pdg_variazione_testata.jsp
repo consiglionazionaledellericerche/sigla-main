@@ -120,14 +120,21 @@
    <TD><% bp.getController().writeFormLabel(out,"riferimenti");%></TD>
    <TD colspan="5"><% bp.getController().writeFormInput(out,"default","riferimenti",isAbilitato,null,null);%></TD>
   </TR>
-<% if (bp.isSearching() || bk.getProgettoRimodulazione()!=null) {%>
-  <TR>
-   <TD><% bp.getController().writeFormLabel(out,"cdProgettoRimodulazione");%></TD>
-   <TD colspan="3"><% bp.getController().writeFormInput(out,"default","cdProgettoRimodulazione",false,null,null);%></TD>
-   <TD colspan="2"><% bp.getController().writeFormInput(out,"default","pgRimodulazione",false,null,null);%></TD>
-  </TR>
-<% } %>
 </table>
+<% if (bp.isSearching() || bk.getProgettoRimodulazione()!=null) {%>
+<BR>
+<div class="GroupLabel font-weight-bold text-primary ml-2">Rimodulazione Progetto</div>
+<div class="Group card p-3 m-1 w-100" style="width:100%">
+	<table class="Panel w-100" align="left" cellspacing=1 cellpadding=1>
+	  <tr>
+        <TD><% bp.getController().writeFormLabel(out,"cdProgettoRimodulazione");%></TD>
+        <TD colspan="5"><% bp.getController().writeFormInput(out,"default","cdProgettoRimodulazione",true,null,null);%></TD>
+        <TD><% bp.getController().writeFormLabel(out,"pgRimodulazione");%></TD>
+        <TD colspan="5"><% bp.getController().writeFormInput(out,"default","pgRimodulazione",true,null,null);%></TD>
+      </tr>
+   	</table>
+</div>	
+<% } %>
 <%
 if ((bp.isSearching())||(bk.isRespinta())||(bk.isPropostaDefinitiva()&&bp.isUoEnte())) { 
 %>

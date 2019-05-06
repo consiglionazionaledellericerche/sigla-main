@@ -555,16 +555,18 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 	
     public Forward doBringBackRimodula(ActionContext context) {
         try {
-        	HookForward caller = (HookForward)context.getCaller();
-        	Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)caller.getParameter("bringback");
-	    	TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
-            ProgettoBulk progetto = (ProgettoBulk) bp.getModel();
-			if (Optional.ofNullable(rim).map(Progetto_rimodulazioneBulk::isStatoApprovato).orElse(Boolean.TRUE)) {
-				bp.basicEdit(context, progetto,Boolean.TRUE);
-			} else {
-	            List<Progetto_rimodulazioneBulk> listRimodulazioni = bp.createComponentSession().find(context.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", context.getUserContext(), progetto.getPg_progetto());
-	            progetto.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(listRimodulazioni));
-			}
+        	if (Optional.ofNullable(getBusinessProcess(context)).map(TestataProgettiRicercaBP.class::isInstance).orElse(Boolean.FALSE)) {
+	        	HookForward caller = (HookForward)context.getCaller();
+	        	Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)caller.getParameter("bringback");
+		    	TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
+	            ProgettoBulk progetto = (ProgettoBulk) bp.getModel();
+				if (Optional.ofNullable(rim).map(Progetto_rimodulazioneBulk::isStatoApprovato).orElse(Boolean.TRUE)) {
+					bp.basicEdit(context, progetto,Boolean.TRUE);
+				} else {
+		            List<Progetto_rimodulazioneBulk> listRimodulazioni = bp.createComponentSession().find(context.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", context.getUserContext(), progetto.getPg_progetto());
+		            progetto.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(listRimodulazioni));
+				}
+        	}
             return context.findDefaultForward();
         } catch (Exception e) {
             return handleException(context, e);
