@@ -24,6 +24,17 @@ public class RimodulaProgettoPianoEconomicoCRUDController extends SimpleProgetto
 	}
 
 	@Override
+	public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
+		((Progetto_piano_economicoBulk)oggettobulk).setEsercizio_piano(((Progetto_rimodulazioneBulk)this.getParentModel()).getProgetto().getEsercizio());
+		((Progetto_piano_economicoBulk)oggettobulk).setIm_entrata(BigDecimal.ZERO);
+		((Progetto_piano_economicoBulk)oggettobulk).setIm_spesa_finanziato(BigDecimal.ZERO);
+		((Progetto_piano_economicoBulk)oggettobulk).setIm_spesa_cofinanziato(BigDecimal.ZERO);
+		((Progetto_piano_economicoBulk)oggettobulk).setImSpesaFinanziatoRimodulato(BigDecimal.ZERO);
+		((Progetto_piano_economicoBulk)oggettobulk).setImSpesaCofinanziatoRimodulato(BigDecimal.ZERO);
+		return super.addDetail(oggettobulk);
+	};	
+	
+	@Override
 	public boolean isShrinkable() {
 		Progetto_rimodulazioneBulk obj = (Progetto_rimodulazioneBulk)this.getParentModel();
 		return super.isShrinkable() && !obj.isROFieldRimodulazione();

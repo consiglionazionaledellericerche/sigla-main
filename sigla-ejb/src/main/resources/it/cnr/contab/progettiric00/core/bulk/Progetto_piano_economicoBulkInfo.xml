@@ -402,15 +402,15 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
 	</columnSet>
 	
-		<columnSet name="piano_economico_rimodulato_current">
+	<columnSet name="piano_economico_rimodulato_current">
 		<columnFieldProperty
 			name="esercizio_piano"
 			headerLabel="PIANO ECONOMICO"
@@ -451,14 +451,14 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
 	</columnSet>
-	
+
 	<form name="piano_economico1">
 		<formFieldProperty
 			name="voce_piano"/>
@@ -540,14 +540,14 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
 	</columnSet>
-
+	
 	<columnSet name="piano_economico1_rimodulato_current">
 		<columnFieldProperty
 			name="cd_voce_piano"
@@ -585,11 +585,11 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
 	</columnSet>
 		
@@ -664,14 +664,14 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
 	</columnSet>
-	
+		
 	<columnSet name="piano_economico2_rimodulato_current">
 		<columnFieldProperty
 			name="esercizio_piano"
@@ -702,14 +702,14 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
 	</columnSet>
-	
+		
 	<columnSet name="piano_economico3_rimodulato">
 		<columnFieldProperty
 			name="cd_voce_piano"
@@ -733,13 +733,13 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
-	</columnSet>		
+	</columnSet>	
 
 	<columnSet name="piano_economico3_rimodulato_current">
 		<columnFieldProperty
@@ -776,11 +776,11 @@
 			label="Totale"/> 
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
-			label="Finanziato"/>
+			headerLabel="ASSESTATO"
+			label="Finanz. + Variaz."/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO RIMODULATO"
+			headerLabel="ASSESTATO"
 			label="Cofinanziato"/>
-	</columnSet>
+	</columnSet>	
 </bulkInfo>

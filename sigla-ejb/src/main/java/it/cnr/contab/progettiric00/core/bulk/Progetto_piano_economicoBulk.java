@@ -166,7 +166,6 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 
 	public boolean isROVocePiano() {
 		return !Optional.ofNullable(this.getEsercizio_piano()).isPresent() ||
-				this.isROProgettoPianoEconomico() ||
 				Optional.ofNullable(this.getVociBilancioAssociate())
 				.map(el->!el.isEmpty())
 				.orElse(Boolean.TRUE);
@@ -332,16 +331,7 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	
 	public String getMessageAnomaliaDetailRimodulato() {
 		StringJoiner anomalia = new StringJoiner("\r\r");
-		if (Optional.ofNullable(this.getEsercizio_piano()).map(esePpe->{
-				return Optional.ofNullable(this.getProgettoRimodulazione())
-						.flatMap(el->Optional.ofNullable(el.getAnnoFromPianoEconomico()))
-						.map(eseFrom->eseFrom.compareTo(esePpe)<=0)
-						.orElse(Boolean.TRUE) &&
-						Optional.ofNullable(this.getProgettoRimodulazione())
-						.flatMap(el->Optional.ofNullable(el.getLastEsercizioAperto()))
-						.map(lastEse->lastEse.compareTo(esePpe)>=0)
-						.orElse(Boolean.TRUE);
-			}).orElse(Boolean.TRUE)) {
+		if (this.isEsercizioPianoAttivo()) {
 			Optional.ofNullable(this.getDispResiduaFinanziamentoRimodulato())
 				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
 				.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
@@ -365,15 +355,6 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
 					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
 	
-			Optional.ofNullable(this)
-				.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
-				.map(Progetto_piano_economicoBulk::getDispResiduaCofinanziamentoRimodulato)
-				.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
-				.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
-					"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
-					" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
-					"."));
-	
 			Optional.ofNullable(this.getVociBilancioAssociate())
 				.map(List::stream)
 				.orElse(Stream.empty())
@@ -388,5 +369,35 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	public boolean isROFieldRimodulazione() {
 		return isDetailRimodulatoEliminato() ||
 				Optional.ofNullable(this.getProgettoRimodulazione()).map(Progetto_rimodulazioneBulk::isROFieldRimodulazione).orElse(Boolean.TRUE);
+	}
+	
+	/**
+	 * Indica se l'anno del piano economico è all'interno del periodo di validità comreso
+	 * tra l'anno di attivazione del piano economico e l'ultimo anno contabile attivo
+	 * @return
+	 */
+	public boolean isEsercizioPianoAttivo() {
+		return Optional.ofNullable(this.getEsercizio_piano()).map(esePpe->{
+			return Optional.ofNullable(this.getProgettoRimodulazione())
+					.flatMap(el->Optional.ofNullable(el.getAnnoFromPianoEconomico()))
+					.map(eseFrom->eseFrom.compareTo(esePpe)<=0)
+					.orElse(Boolean.TRUE) &&
+					Optional.ofNullable(this.getProgettoRimodulazione())
+					.flatMap(el->Optional.ofNullable(el.getLastEsercizioAperto()))
+					.map(lastEse->lastEse.compareTo(esePpe)>=0)
+					.orElse(Boolean.TRUE);
+		}).orElse(Boolean.TRUE);
+	}
+
+	/**
+	 * Indica se l'anno del piano economico è all'interno del periodo di validità comreso
+	 * tra l'anno di attivazione del piano economico e l'ultimo anno contabile attivo
+	 * @return
+	 */
+	public boolean isQuadraturaVariazioniRequired() {
+		return isEsercizioPianoAttivo() && 
+			   Optional.ofNullable(this.getVoce_piano_economico())
+		   	           .flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin()))
+		   	           .orElse(Boolean.FALSE);
 	}
 }

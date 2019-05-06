@@ -16,6 +16,7 @@ import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
@@ -23,6 +24,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDController;
 import it.cnr.jada.util.action.OptionBP;
@@ -485,20 +487,24 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 
 			SimpleCRUDBP newbp = null;
 
-			if (crudController.getModel() instanceof Pdg_variazioneBulk) {
+			if (Progetto_rimodulazione_variazioneBulk.TIPO_COMPETENZA.equals(((Progetto_rimodulazione_variazioneBulk)crudController.getModel()).getTipoVariazione())) {
 				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
-				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","PdGVariazioneBP");
+				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDPdgVariazioneGestionaleBP");
 				if (mode == null) 
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle variazioni di competenza. Impossibile continuare.");
 
-				newbp = (PdGVariazioneBP) context.getUserInfo().createBusinessProcess(context,"PdGVariazioneBP",new Object[] { function, (Pdg_variazioneBulk)crudController.getModel()});
+				newbp = (PdGVariazioneBP) context.getUserInfo().createBusinessProcess(context,"CRUDPdgVariazioneGestionaleBP",new Object[] { function});
+				OggettoBulk variazione = newbp.initializeModelForEdit(context, ((Progetto_rimodulazione_variazioneBulk)crudController.getModel()).getVariazioneCompetenza());
+				newbp.setModel(context, variazione);
 			} else {
 				// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
 				String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDVar_stanz_resBP");
 				if (mode == null) 
 					throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa di creazione delle variazioni residue. Impossibile continuare.");
 
-				newbp = (CRUDVar_stanz_resBP) context.getUserInfo().createBusinessProcess(context,"CRUDVar_stanz_resBP",new Object[] { function,  (Pdg_variazioneBulk)crudController.getModel()});
+				newbp = (CRUDVar_stanz_resBP) context.getUserInfo().createBusinessProcess(context,"CRUDVar_stanz_resBP",new Object[] { function });
+				OggettoBulk variazione = newbp.initializeModelForEdit(context, ((Progetto_rimodulazione_variazioneBulk)crudController.getModel()).getVariazioneResiduo());
+				newbp.setModel(context, variazione);
 			}
 			return context.addBusinessProcess(newbp);
 		} catch(Exception e) {
