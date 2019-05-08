@@ -370,7 +370,15 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
                 sqlBuilder.addClause(FindClause.AND, "cd_cds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
                 sqlBuilder.openParenthesis(FindClause.OR);
                     sqlBuilder.addClause(FindClause.AND, "cd_cds_origine", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
-                    sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.EQUALS, "S");
+                    sqlBuilder.openParenthesis(FindClause.AND);
+                        sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.EQUALS, ReversaleIBulk.TIPO_REGOLAM_SOSPESO);
+                        sqlBuilder.openParenthesis(FindClause.OR);
+                            sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.EQUALS, ReversaleIBulk.TIPO_INCASSO);
+                            sqlBuilder.addJoin("cd_tipo_documento_cont", "cd_tipo_documento_cont_padre");
+                            sqlBuilder.addJoin("pg_documento_cont", "pg_documento_cont_padre");
+                            sqlBuilder.addJoin("ti_documento_cont", "ti_documento_cont_padre");
+                        sqlBuilder.closeParenthesis();
+                    sqlBuilder.closeParenthesis();
                     sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
                 sqlBuilder.closeParenthesis();
             sqlBuilder.closeParenthesis();
@@ -380,15 +388,25 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
                 sqlBuilder.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(usercontext));
                 sqlBuilder.openParenthesis(FindClause.OR);
                     sqlBuilder.addClause(FindClause.AND, "cd_uo_origine", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(usercontext));
-                    sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.EQUALS, "S");
+                    sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.EQUALS, ReversaleIBulk.TIPO_REGOLAM_SOSPESO);
                     sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
                 sqlBuilder.closeParenthesis();
             sqlBuilder.closeParenthesis();
         }
 
         sqlBuilder.openParenthesis(FindClause.AND);
-        sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE);
-        sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, ReversaleIBulk.TIPO_INCASSO);
+            sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE);
+
+            sqlBuilder.openParenthesis(FindClause.AND);
+                sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.NOT_EQUALS, ReversaleIBulk.TIPO_INCASSO);
+                sqlBuilder.openParenthesis(FindClause.OR);
+                    sqlBuilder.addClause(FindClause.AND, "ti_documento_cont", SQLBuilder.EQUALS, ReversaleIBulk.TIPO_INCASSO);
+                    sqlBuilder.addJoin("cd_tipo_documento_cont", "cd_tipo_documento_cont_padre");
+                    sqlBuilder.addJoin("pg_documento_cont", "pg_documento_cont_padre");
+                    sqlBuilder.addJoin("ti_documento_cont", "ti_documento_cont_padre");
+                sqlBuilder.closeParenthesis();
+            sqlBuilder.closeParenthesis();
+
             sqlBuilder.openParenthesis(FindClause.OR);
                 sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
                 sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
