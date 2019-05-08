@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
 	<property name="ireport.zoom" value="2.3579476910000023"/>
-	<property name="ireport.x" value="438"/>
+	<property name="ireport.x" value="879"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -256,7 +256,7 @@ $F{STATO}.trim().equals("A")?($F{IM_DOC}.subtract($F{IM_RITENUTE})).negate():($F
 					<text><![CDATA[DISTINTA PROVVISORIA]]></text>
 				</staticText>
 				<componentElement>
-					<reportElement x="365" y="2" width="445" height="18" uuid="f2a9958a-9ac4-4058-a375-a64905578108"/>
+					<reportElement x="355" y="2" width="445" height="18" uuid="f2a9958a-9ac4-4058-a375-a64905578108"/>
 					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
 						<datasetRun subDataset="ENTE" uuid="6c1a2db4-70b9-4be1-8d2c-d50455cdb8a4">
 							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
