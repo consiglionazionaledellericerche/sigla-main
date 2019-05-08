@@ -681,45 +681,49 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
     }
 
     public boolean isRiapriButtonHidden() {
-        return !Optional.ofNullable(this.getModel())
+        return !(
+                Optional.ofNullable(this.getModel())
                         .filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getCd_unita_organizzativa()))
                         .filter(el -> el.equals(uoScrivania.getCd_unita_organizzativa()))
                         .isPresent()||
-                !Optional.ofNullable(this.getModel())
+                Optional.ofNullable(this.getModel())
                         .filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getOtherField()))
                         .map(Progetto_other_fieldBulk::isStatoChiuso)
                         .orElse(Boolean.FALSE)||
-                !Optional.ofNullable(this.getModel())
+                Optional.ofNullable(this.getModel())
                         .filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getCd_unita_organizzativa()))
                         .map(el -> uoScrivania.isUoEnte())
-                        .orElse(Boolean.FALSE);
+                        .orElse(Boolean.FALSE)
+        );
     }
 
     public boolean isRimodulaButtonHidden() {
-        return !Optional.ofNullable(this.getModel())
+        return !(
+                Optional.ofNullable(this.getModel())
                         .filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getCd_unita_organizzativa()))
                         .filter(el -> el.equals(uoScrivania.getCd_unita_organizzativa()))
                         .isPresent() ||
-                !Optional.ofNullable(this.getModel())
+                Optional.ofNullable(this.getModel())
                         .filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getOtherField()))
                         .map(Progetto_other_fieldBulk::isStatoApprovato)
                         .orElse(Boolean.FALSE)||
-                !Optional.ofNullable(this.getModel())
+                Optional.ofNullable(this.getModel())
                         .filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getCd_unita_organizzativa()))
                         .map(el -> uoScrivania.isUoEnte())
-                        .orElse(Boolean.FALSE);
+                        .orElse(Boolean.FALSE)
+        );
     }
 
     @Override
