@@ -6876,7 +6876,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             }
 
             caricaDettagliFatturaTrovato(userContext, fatturaAttiva);
-
+            getHomeCache(userContext).fetchAll(userContext);
             if (fatturaAttiva != null)
                 return fatturaAttiva;
             else if (ncAttiva != null)

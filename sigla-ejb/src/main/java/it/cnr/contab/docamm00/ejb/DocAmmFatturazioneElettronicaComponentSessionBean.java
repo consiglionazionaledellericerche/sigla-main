@@ -101,4 +101,23 @@ public class DocAmmFatturazioneElettronicaComponentSessionBean extends it.cnr.ja
 			throw uncaughtError(userContext,componentObj,e);
 		}
 	}
+	
+	public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws ComponentException{
+		pre_component_invocation(userContext,componentObj);
+		try {
+			FatturaElettronicaType result = ((DocAmmFatturazioneElettronicaComponent)componentObj).preparaFattura(userContext, fattura);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
 }
