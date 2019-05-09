@@ -273,14 +273,17 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 			throws BusinessProcessException, ComponentException, RemoteException, PersistencyException,
 			ApplicationException {
 		logger.info("Processo la fattura {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
-		File file = creaFileXml(userContext, fatturaAttiva);
+        DocAmmFatturazioneElettronicaComponentSession component = createComponentSession();
+        // Questo metodo va invocato perchè fa tutti i controlli prima che la fattura venga protocollata
+        component.preparaFattura(userContext, fatturaAttiva);
 
-		logger.info("Creato file XML {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
 		if (fatturaAttiva.getProtocollo_iva() == null){
 		    Fattura_attivaBulk fatturaAttivaProtocollata = protocollazione(userContext, fatturaAttiva);
 		    fatturaAttiva = fatturaAttivaProtocollata;
 		    logger.info("Creato protocollazione {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
 		}
+        File file = creaFileXml(userContext, fatturaAttiva);
+		logger.info("Creato file XML {}/{}", fatturaAttiva.getEsercizio(), fatturaAttiva.getPg_fattura_attiva());
 		List<StorageFile> storageFileCreate = new ArrayList<StorageFile>();
 		List<StorageFile> storageFileAnnullati = new ArrayList<StorageFile>();
 		try {
@@ -497,6 +500,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
         Integer offSet = 0;
         componentFatturaAttiva.preparaProtocollazioneEProtocolla(userContext, pgProtocollazione, offSet, pgStampa, dataStampa, fattura);
         return componentFatturaAttiva.ricercaFatturaByKey(userContext, new Long(fattura.getEsercizio()), fattura.getCd_cds(), fattura.getCd_unita_organizzativa(), fattura.getPg_fattura_attiva());
+        
     }
 
     private void extracted(Exception e) throws ApplicationException {
