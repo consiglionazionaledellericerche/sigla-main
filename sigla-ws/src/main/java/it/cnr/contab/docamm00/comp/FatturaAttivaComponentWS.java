@@ -1059,6 +1059,9 @@ public FatturaAttiva RicercaFattura(String user,Long esercizio,String cds,String
 			righescad=new java.util.ArrayList<FatturaAttivaScad>();
 		}
 		ritorno.setRighefat(righe);
+		if (fatturaAt.getProtocollo_iva() != null){
+			ritorno.setNumeroFattura(fatturaAt.recuperoIdFatturaAsString());
+		}
 		
 	   return ritorno;  
 	}catch(FatturaNonTrovataException e){

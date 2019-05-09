@@ -2124,6 +2124,9 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	}
 
 	public String recuperoIdFatturaAsString(){
+		if (getProtocollo_iva() != null){
+			return StrServ.replace(getCd_uo_origine(), ".", "")+getEsercizio()+StrServ.lpad(getCd_tipo_sezionale().substring(2), 4)+getTi_fattura()+StrServ.lpad(getProtocollo_iva().toString(),5);
+		} 
 		return StrServ.replace(getCd_unita_organizzativa(), ".", "")+getEsercizio()+StrServ.lpad(getPg_fattura_attiva().toString(), 5);
 	}
 	public boolean quadraturaInDeroga() {
