@@ -595,7 +595,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     .orElseGet(() ->
                             Optional.ofNullable(cdrBulk1)
                             .flatMap(cdrBulk -> Optional.ofNullable(cdrBulk.getCd_centro_responsabilita()))
-                            .orElse(null)
+                            .orElse("")
                     )
             );
             userContext.getAttributes().put(BOOTSTRAP, true);
