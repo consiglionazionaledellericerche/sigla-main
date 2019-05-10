@@ -18,6 +18,10 @@ swarm:
     address: 0.0.0.0
   context:
     path: SIGLA
+  logging:
+    loggers:
+      org.jboss.as.ejb3.invocation:
+        level: SEVERE
 spring:
   profiles:
     active: CMIS
