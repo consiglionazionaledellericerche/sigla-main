@@ -590,14 +590,14 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                         return null;
                     });
             ui.setCdr(cdrBulk1);
-            userContext.setCd_cdr(
-                Optional.ofNullable(userContext.getCd_cdr())
+            final String cdCdR = Optional.ofNullable(userContext.getCd_cdr())
                     .orElseGet(() ->
                             Optional.ofNullable(cdrBulk1)
-                            .flatMap(cdrBulk -> Optional.ofNullable(cdrBulk.getCd_centro_responsabilita()))
-                            .orElse("")
-                    )
-            );
+                                    .flatMap(cdrBulk -> Optional.ofNullable(cdrBulk.getCd_centro_responsabilita()))
+                                    .orElse(null)
+                    );
+            if (Optional.ofNullable(cdCdR).isPresent())
+                userContext.setCd_cdr(cdCdR);
             userContext.getAttributes().put(BOOTSTRAP, true);
             bp.setBootstrap(true);
             context.setUserContext(userContext);
