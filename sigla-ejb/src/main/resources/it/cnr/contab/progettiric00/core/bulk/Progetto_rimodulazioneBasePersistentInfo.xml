@@ -6,6 +6,12 @@
 	<defaultColumnMap
 		tableName="PROGETTO_RIMODULAZIONE" >
 		<columnMapping
+			columnName="PG_GEN_RIMODULAZIONE"
+			propertyName="pg_gen_rimodulazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
 			columnName="STATO"
 			propertyName="stato"
 			sqlTypeName="CHAR"
@@ -91,6 +97,8 @@
 			columnSize="20"
 			nullable="false" />
 	</defaultColumnMap>
+	<persistentProperty
+		name="pg_gen_rimodulazione" />
 	<persistentProperty
 		name="stato" />
 	<persistentProperty

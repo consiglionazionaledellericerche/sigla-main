@@ -1248,6 +1248,10 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	
 	@Override
 	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		Optional.ofNullable(allegato)
+			    .filter(AllegatoProgettoBulk.class::isInstance)
+			    .map(AllegatoProgettoBulk.class::cast)
+			    .ifPresent(el->el.setProgetto(this));
 		archivioAllegati.add(allegato);
 		return archivioAllegati.size()-1;
 	}
