@@ -2,6 +2,7 @@ package it.cnr.contab.progettiric00.action;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -517,7 +518,20 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 	        TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP) getBusinessProcess(context);
 			bp.completeSearchTools(context, bp);
 	        bp.validate(context);
-        	return openConfirm(context, "Attenzione! Si vuole procedere alla rimodulazione del progetto?", 
+			
+			Optional<ProgettoBulk> optProgetto = Optional.ofNullable(bp.getModel())
+					.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+
+	        Optional<Progetto_rimodulazioneBulk> lastRim = optProgetto.get().getRimodulazioni().stream()
+					.filter(el->!el.isStatoRespinto())
+					.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_rimodulazione).reversed())
+					.findFirst();
+
+			if (lastRim.filter(el->el.isStatoProvvisorio()||el.isStatoDefinitivo()).isPresent())
+				return openConfirm(context, "Attenzione! Si vuole accedere alla rimodulazione in corso del progetto?", 
+	        			OptionBP.CONFIRM_YES_NO, "doConfirmRimodula");
+			else
+				return openConfirm(context, "Attenzione! Si vuole procedere alla rimodulazione del progetto?", 
         			OptionBP.CONFIRM_YES_NO, "doConfirmRimodula");
 		}		
 		catch(Throwable e) 
