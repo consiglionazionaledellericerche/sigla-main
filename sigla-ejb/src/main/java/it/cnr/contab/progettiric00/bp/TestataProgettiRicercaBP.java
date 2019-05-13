@@ -879,7 +879,7 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
     protected void completeAllegato(AllegatoProgettoBulk allegato) throws ApplicationException {
         super.completeAllegato(allegato);
         StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
-        allegato.setType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
+        allegato.setObjectType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
     }
 
     public boolean isRODatiContabili() {

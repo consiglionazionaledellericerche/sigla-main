@@ -13,6 +13,8 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
@@ -382,12 +384,12 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		});
 
 		if (progettoRimodulazione.getDettagliRimodulazione().isEmpty() && progettoRimodulazione.getDettagliVoceRimodulazione().isEmpty() &&
-				progettoRimodulazione.getImFinanziatoRimodulato().compareTo(progettoRimodulazione.getProgetto().getImFinanziato())==0 && 
-				progettoRimodulazione.getImCofinanziatoRimodulato().compareTo(progettoRimodulazione.getProgetto().getImCofinanziato())==0 && 
+				!progettoRimodulazione.isRimodulatoImportoFinanziato() && !progettoRimodulazione.isRimodulatoImportoCofinanziato() && 
 			    (!progettoRimodulazione.getProgetto().isDatePianoEconomicoRequired() ||
-			     (progettoRimodulazione.getDtInizioRimodulato().compareTo(progettoRimodulazione.getProgetto().getOtherField().getDtInizio())==0 &&
-			      progettoRimodulazione.getDtFineRimodulato().compareTo(progettoRimodulazione.getProgetto().getOtherField().getDtFine())==0)))
-			throw new ApplicationException("Salvataggio non consentito. Non risulta alcuna variazione sul piano economico.");
+			     (!progettoRimodulazione.isRimodulatoDtInizio() && !progettoRimodulazione.isRimodulatoDtFine() &&
+			      !progettoRimodulazione.isRimodulatoDtProroga())))
+				throw new ApplicationException("Salvataggio non consentito. Non risulta alcuna variazione sul piano economico.");
+
 		return super.modificaConBulk(usercontext, oggettobulk);
 	}
 	
@@ -450,7 +452,15 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	
 			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio)
 			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato definitivo può essere assegnato solo a rimodulazioni in stato provvisorio!"));
-	
+
+			if (rimodulazione.isRimodulatoDtProroga())
+				rimodulazione.getArchivioAllegati().stream()
+					.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+					.map(AllegatoProgettoRimodulazioneBulk.class::cast)
+					.filter(AllegatoProgettoRimodulazioneBulk::isProroga)
+					.findFirst()
+					.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo proroga alla rimodulazione in oggetto!"));
+
 		    List<OggettoBulk> listVariazioni = this.constructVariazioniBilancio(userContext, rimodulazione);
 
 		    //Se la rimodulazione non prevede variazioni procedo direttamente con l'approvazione

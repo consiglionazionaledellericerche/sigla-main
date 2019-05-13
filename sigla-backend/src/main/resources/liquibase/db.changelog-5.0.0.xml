@@ -1926,6 +1926,7 @@ TRASPORTO_AEREO"/>
             <column name="pg_rimodulazione" remarks="Progressivo rimodulazione del progetto di ricerca" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
+            <column name="pg_gen_rimodulazione" remarks="Progressivo generale rimodulazione del progetto di ricerca" type="BIGINT"/>
             <column name="stato" remarks="Stato della rimodulazione. P: Provvisorio - D: Definitivo - A: Approvato" type="VARCHAR(1)">
                 <constraints nullable="false"/>
             </column>
