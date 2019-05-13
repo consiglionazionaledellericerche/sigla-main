@@ -18,7 +18,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
@@ -48,7 +48,7 @@ import it.cnr.jada.util.jsp.Button;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
-public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBulk, Progetto_rimodulazioneBulk> {
+public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoRimodulazioneBulk, Progetto_rimodulazioneBulk> {
 	private boolean flPrgPianoEconomico = false;
 	protected boolean isUoCdsCollegata = false;
 	private Integer annoFromPianoEconomico;
@@ -1163,15 +1163,15 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 	}
 
 	@Override
-	protected Class<AllegatoProgettoBulk> getAllegatoClass() {
-        return AllegatoProgettoBulk.class;
+	protected Class<AllegatoProgettoRimodulazioneBulk> getAllegatoClass() {
+        return AllegatoProgettoRimodulazioneBulk.class;
 	} 
 	
 	@Override
-	protected void completeAllegato(AllegatoProgettoBulk allegato) throws ApplicationException {
+	protected void completeAllegato(AllegatoProgettoRimodulazioneBulk allegato) throws ApplicationException {
 		super.completeAllegato(allegato);
 		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
-		allegato.setType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
+		allegato.setObjectType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
 	}
 	
     public void validaImportoFinanziatoRimodulato(ActionContext actioncontext, Optional<Progetto_piano_economicoBulk> optPpe) throws ValidationException {
@@ -1207,7 +1207,14 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 		  		.forEach(el->{
 		  			el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate());
 		  		});
-		} else {
+		} else if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(optPpe.get().getIm_spesa_finanziato())==0) {
+  			//Se l'importo non viene rimodulato rimetto a zero il valore delle variazioni stesse
+			optPpe.get().getVociBilancioAssociate().stream()
+		  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
+		  		.forEach(el->{
+		  				el.setImVarFinanziatoRimodulato(BigDecimal.ZERO);
+		  		});
+    	} else {
 			//se è una sola voce collegata propongo la variazione
 			if (optPpe.get().getVociBilancioAssociate().stream()
 					.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
@@ -1216,8 +1223,13 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBu
 			  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
 			  		.findFirst()
 			  		.ifPresent(el->{
-			  			el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate()
-			  					.add(optPpe.get().getImSpesaFinanziatoRimodulato()));
+			  			//Se con la rimodulazione l'importo viene diminuito propongo la variazione 
+			  			//Se l'importo viene aumentato rimetto a zero il valore della variazione stessa se negativa
+			  			if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(optPpe.get().getIm_spesa_finanziato())<0)
+				  			el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate()
+				  					.add(optPpe.get().getImSpesaFinanziatoRimodulato()));
+			  			else if (el.getImVarFinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
+			  				el.setImVarFinanziatoRimodulato(BigDecimal.ZERO);
 			  		});
 		}
     }
