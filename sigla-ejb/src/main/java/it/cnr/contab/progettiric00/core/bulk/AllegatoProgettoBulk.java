@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.StringJoiner;
 
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
@@ -57,31 +58,31 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 	}
 	
 	public boolean isProvvedimentoCostituzione() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(PROVV_COSTITUZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(PROVV_COSTITUZIONE)).orElse(Boolean.FALSE);
 	}
 
 	public boolean isRichiestaAnticipo() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(RICHIESTA_ANTICIPO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(RICHIESTA_ANTICIPO)).orElse(Boolean.FALSE);
 	}
 
 	public boolean isRendicontazione() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(RENDICONTAZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(RENDICONTAZIONE)).orElse(Boolean.FALSE);
 	}
 
 	public boolean isStralcio() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(STRALCIO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(STRALCIO)).orElse(Boolean.FALSE);
 	}
 
 	public boolean isControdeduzione() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(CONTRODEDUZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(CONTRODEDUZIONE)).orElse(Boolean.FALSE);
 	}
 	
 	public boolean isFinalStatementPayment() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(FINAL_STATEMENT_PAYMENT)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(FINAL_STATEMENT_PAYMENT)).orElse(Boolean.FALSE);
 	}
 	
 	public boolean isGenerico() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(GENERICO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(GENERICO)).orElse(Boolean.FALSE);
 	}
 	
 	public ProgettoBulk getProgetto() {
@@ -113,5 +114,14 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 			name.add("GEN");
 		name.add(super.parseFilename(file));
 		return name.toString();
+	}
+	
+	@Override
+	public void validate() throws ValidationException {
+		super.validate();
+		if (getNome() == null ) {
+			if (getObjectType() == null)
+				throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
+		}
 	}
 }
