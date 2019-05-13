@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fattura_attiva_provvisoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4bb7c89d-e7c1-4040-8fca-6e403eb37b53">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="4"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -36,7 +36,8 @@
 	<queryString>
 		<![CDATA[select distinct ter.denominazione_sede as ds_cd_terzo, ter2.denominazione_sede as ds_cd_uo_origine, uo.*, fa.*, frg.*,
 vi.cd_voce_iva, vi.ds_voce_iva, rmp.ds_modalita_pag as ds_modalita_pag_uo_cds, rmp.ti_pagamento,
-AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split, decode(anag.ti_entita,'F','Codice Fiscale: '||anag.codice_fiscale,decode(anag.partita_iva,null,'Codice Fiscale: '||anag.codice_fiscale,'Partita IVA: '||anag.partita_iva)) codfis_piva, ter.via_sede||' '||ter.cap_comune_sede||' '||com.ds_comune indirizzo, ter2.via_sede||','||ter2.numero_civico_sede||' -  '||ter2.cap_comune_sede||' '||com2.ds_comune||', '||com2.cd_provincia indirizzo_cds_uo,  'Codice Fiscale '|| anag2.codice_fiscale||' - Partita IVA '||anag2.partita_iva dati_fiscali_cds_uo
+AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split, decode(anag.ti_entita,'F','Codice Fiscale: '||anag.codice_fiscale,decode(anag.partita_iva,null,'Codice Fiscale: '||anag.codice_fiscale,'Partita IVA: '||anag.partita_iva)) codfis_piva, ter.via_sede||' '||ter.cap_comune_sede||' '||com.ds_comune indirizzo, ter2.via_sede||','||ter2.numero_civico_sede||' -  '||ter2.cap_comune_sede||' '||com2.ds_comune||', '||com2.cd_provincia indirizzo_cds_uo,  'Codice Fiscale '|| anag2.codice_fiscale||' - Partita IVA '||anag2.partita_iva dati_fiscali_cds_uo, decode(fa.protocollo_iva, null, null, replace(fa.cd_uo_origine, '.', '')||fa.esercizio||lpad(substr(fa.cd_tipo_sezionale,3,4),'0')||
+fa.Ti_fattura||lpad(fa.protocollo_iva,5,'0')) numero_fattura
 from fattura_attiva fa, terzo ter, terzo ter2, unita_organizzativa uo, fattura_attiva_riga frg, voce_iva vi,
 rif_modalita_pagamento rmp, accertamento ac, contratto co,configurazione_cnr cnr, anagrafico anag, comune com, comune com2, anagrafico anag2
 where fa.esercizio = $P{esercizio}
@@ -197,6 +198,7 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 	<field name="INDIRIZZO" class="java.lang.String"/>
 	<field name="INDIRIZZO_CDS_UO" class="java.lang.String"/>
 	<field name="DATI_FISCALI_CDS_UO" class="java.lang.String"/>
+	<field name="NUMERO_FATTURA" class="java.lang.String"/>
 	<group name="Numero_Fattura">
 		<groupExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></groupExpression>
 		<groupHeader>
@@ -244,11 +246,11 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<reportElement x="1" y="210" width="554" height="1" uuid="7834a03d-1664-41ba-9a2c-94bd1224906d"/>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="140" width="156" height="14" isRemoveLineWhenBlank="true" uuid="40d0d305-1648-4143-b063-c8ed2080eb1d"/>
-					<textFieldExpression><![CDATA[$F{PROTOCOLLO_IVA}]]></textFieldExpression>
+					<reportElement style="TNR10" x="110" y="140" width="176" height="14" isRemoveLineWhenBlank="true" uuid="40d0d305-1648-4143-b063-c8ed2080eb1d"/>
+					<textFieldExpression><![CDATA[$F{NUMERO_FATTURA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="156" width="156" height="14" isRemoveLineWhenBlank="true" uuid="8775c333-8934-4a36-8dbc-b7f3fc643722"/>
+					<reportElement style="TNR10" x="110" y="156" width="176" height="14" isRemoveLineWhenBlank="true" uuid="8775c333-8934-4a36-8dbc-b7f3fc643722"/>
 					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DT_EMISSIONE})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
