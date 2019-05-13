@@ -591,6 +591,10 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 
 	@Override
 	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		Optional.ofNullable(allegato)
+			    .filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+			    .map(AllegatoProgettoRimodulazioneBulk.class::cast)
+			    .ifPresent(el->el.setRimodulazione(this));
 		archivioAllegati.add(allegato);
 		return archivioAllegati.size()-1;
 	}

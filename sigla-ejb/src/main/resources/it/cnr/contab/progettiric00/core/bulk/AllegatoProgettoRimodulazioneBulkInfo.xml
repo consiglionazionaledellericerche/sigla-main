@@ -48,7 +48,7 @@
 		property="objectType"
 		label="Tipo"
 		inputSize="20"
-		keysProperty="ti_allegato_rimodulazioneKeys"
+		keysProperty="ti_allegatoKeys"
 		inputType="SELECT"
 		nullable="false"
 		readonlyPropertyOnEdit="typeEnabled"/>

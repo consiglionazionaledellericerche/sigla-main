@@ -3,6 +3,8 @@ package it.cnr.contab.progettiric00.core.bulk;
 import it.cnr.jada.persistency.Keyed;
 
 public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implements Keyed {
+	private java.lang.Integer pg_gen_rimodulazione;
+	
 	private String stato;
 
 	private java.sql.Timestamp dtInizioOld;
@@ -29,6 +31,14 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 		super(pg_progetto, pg_rimodulazione);
 	}
 
+	public java.lang.Integer getPg_gen_rimodulazione() {
+		return pg_gen_rimodulazione;
+	}
+	
+	public void setPg_gen_rimodulazione(java.lang.Integer pg_gen_rimodulazione) {
+		this.pg_gen_rimodulazione = pg_gen_rimodulazione;
+	}
+	
 	public String getStato() {
 		return stato;
 	}

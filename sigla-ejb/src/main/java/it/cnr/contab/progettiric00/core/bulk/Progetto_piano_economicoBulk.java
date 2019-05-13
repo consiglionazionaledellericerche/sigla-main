@@ -395,9 +395,6 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	 * @return
 	 */
 	public boolean isQuadraturaVariazioniRequired() {
-		return isEsercizioPianoAttivo() && 
-			   Optional.ofNullable(this.getVoce_piano_economico())
-		   	           .flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin()))
-		   	           .orElse(Boolean.FALSE);
+		return isEsercizioPianoAttivo();
 	}
 }

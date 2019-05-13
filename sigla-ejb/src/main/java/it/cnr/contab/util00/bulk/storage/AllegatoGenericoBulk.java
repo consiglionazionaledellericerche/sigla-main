@@ -101,6 +101,7 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
+	
 	@Override
 	public void validate() throws ValidationException {
 		if (getNome() == null ) {
