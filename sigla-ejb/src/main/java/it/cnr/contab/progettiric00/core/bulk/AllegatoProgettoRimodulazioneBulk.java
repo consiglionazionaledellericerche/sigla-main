@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.StringJoiner;
 
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.si.spring.storage.StorageObject;
 
 public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk {
@@ -48,15 +49,15 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 	}
 	
 	public boolean isRimodulazione() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(RIMODULAZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(RIMODULAZIONE)).orElse(Boolean.FALSE);
 	}
 	
 	public boolean isProroga() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(PROROGA)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(PROROGA)).orElse(Boolean.FALSE);
 	}
 
 	public boolean isGenerico() {
-		return Optional.ofNullable(getContentType()).map(el->el.equals(GENERICO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(GENERICO)).orElse(Boolean.FALSE);
 	}
 	
 	public Progetto_rimodulazioneBulk getRimodulazione() {
@@ -84,5 +85,14 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 			name.add("GEN");
 		name.add(super.parseFilename(file));
 		return name.toString();
-	}	
+	}
+
+	@Override
+	public void validate() throws ValidationException {
+		super.validate();
+		if (getNome() == null ) {
+			if (getObjectType() == null)
+				throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
+		}
+	}
 }
