@@ -5,8 +5,6 @@ import java.util.StringJoiner;
 
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 	private static final long serialVersionUID = 1L;
@@ -40,17 +38,8 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 		super();
 	}
 
-	public static AllegatoProgettoBulk construct(StorageObject storageObject) {
-		return new AllegatoProgettoBulk(storageObject);
-	}
-
 	public AllegatoProgettoBulk(String storageKey) {
 		super(storageKey);
-	}
-
-	public AllegatoProgettoBulk(StorageObject storageObject){
-		super();
-		setContentType(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
 	}
 
 	public boolean isTypeEnabled(){
@@ -95,33 +84,34 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 	
 	@Override
 	public String parseFilename(String file) {
-		StringJoiner name = new StringJoiner("-");
-		Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getPg_progetto()))
-				.ifPresent(el->name.add("PRG" + el));
-		if (this.isProvvedimentoCostituzione())	
-			name.add("COST");
-		if (this.isRichiestaAnticipo())	
-			name.add("ANT");
-		if (this.isRendicontazione())	
-			name.add("REND");
-		if (this.isStralcio())	
-			name.add("STRC");
-		if (this.isControdeduzione())	
-			name.add("CTRD");
-		if (this.isFinalStatementPayment())	
-			name.add("FSP");
-		if (this.isGenerico())	
-			name.add("GEN");
-		name.add(super.parseFilename(file));
-		return name.toString();
+		return null;
 	}
 	
 	@Override
 	public void validate() throws ValidationException {
 		super.validate();
-		if (getNome() == null ) {
-			if (getObjectType() == null)
-				throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
+		if (getObjectType() == null)
+			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
+		else {
+			StringJoiner name = new StringJoiner("-");
+			Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getPg_progetto()))
+					.ifPresent(el->name.add("PRG" + el));
+			if (this.isProvvedimentoCostituzione())	
+				name.add("COST");
+			if (this.isRichiestaAnticipo())	
+				name.add("ANT");
+			if (this.isRendicontazione())	
+				name.add("REND");
+			if (this.isStralcio())	
+				name.add("STRC");
+			if (this.isControdeduzione())	
+				name.add("CTRD");
+			if (this.isFinalStatementPayment())	
+				name.add("FSP");
+			if (this.isGenerico())	
+				name.add("GEN");
+			name.add(this.getNome());
+			this.setNome(name.toString());
 		}
 	}
 }
