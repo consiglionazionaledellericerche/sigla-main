@@ -14,6 +14,7 @@ import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
+import it.cnr.contab.util00.bp.AllegatiTypeCRUDBP;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -41,7 +42,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.TreeMap;
 
-public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBulk, ProgettoBulk> implements IProgettoBP {
+public class TestataProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProgettoBulk, ProgettoBulk> implements IProgettoBP {
     protected boolean isUoCdsCollegata = false;
     protected SimpleDetailCRUDController crudPianoEconomicoAnnoCorrente = new ProgettoPianoEconomicoCRUDController("PianoEconomicoAnnoCorrente", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoAnnoCorrente", this) {
         public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
@@ -873,13 +874,6 @@ public class TestataProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoBul
     @Override
     protected Class<AllegatoProgettoBulk> getAllegatoClass() {
         return AllegatoProgettoBulk.class;
-    }
-
-    @Override
-    protected void completeAllegato(AllegatoProgettoBulk allegato) throws ApplicationException {
-        super.completeAllegato(allegato);
-        StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
-        allegato.setObjectType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
     }
 
     public boolean isRODatiContabili() {
