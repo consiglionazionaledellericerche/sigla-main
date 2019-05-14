@@ -339,15 +339,6 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
 					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
 	
-			Optional.ofNullable(this)
-				.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).flatMap(el2->Optional.ofNullable(el2.getFlAllPrevFin())).orElse(Boolean.FALSE))
-				.map(Progetto_piano_economicoBulk::getDispResiduaFinanziamentoRimodulato)
-				.filter(el->el.compareTo(BigDecimal.ZERO)!=0)
-				.ifPresent(el->anomalia.add("QUOTA FINANZIATA:" +
-						"\rLa quota assegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaFinanziatoRimodulato())+")"+
-						" deve essere uguale al valore dell'assestato(" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaFinanziatoRimodulato())+")"+
-						"."));
-	
 			Optional.ofNullable(this.getDispResiduaCofinanziamentoRimodulato())
 				.filter(el->el.compareTo(BigDecimal.ZERO)<0)
 				.ifPresent(el->anomalia.add("QUOTA COFINANZIATA:" +
