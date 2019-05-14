@@ -512,8 +512,15 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 							.findFirst().orElse(null);
 				
 				if (ppeRim.isDetailRimodulatoEliminato()) {
-					if (Optional.ofNullable(ppeStorage).isPresent())
+					if (Optional.ofNullable(ppeStorage).isPresent()) {
+						ppeStorage.getVociBilancioAssociate().stream()
+							.forEach(ppeVocStorage->{
+								ppeVocStorage.setToBeDeleted();
+								ppeStorage.removeFromVociBilancioAssociate(ppeStorage.getVociBilancioAssociate().indexOf(ppeVocStorage));
+						});
+						ppeStorage.setToBeDeleted();
 						progetto.removeFromDettagliPianoEconomicoAnnoCorrente(progetto.getDettagliPianoEconomicoAnnoCorrente().indexOf(ppeStorage));
+					}
 				} else {
 					Progetto_piano_economicoBulk ppe = 
 							Optional.ofNullable(ppeStorage)
