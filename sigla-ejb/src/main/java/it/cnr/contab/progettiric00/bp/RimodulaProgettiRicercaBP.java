@@ -32,7 +32,7 @@ import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bp.AllegatiCRUDBP;
+import it.cnr.contab.util00.bp.AllegatiTypeCRUDBP;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -41,14 +41,11 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
-public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoRimodulazioneBulk, Progetto_rimodulazioneBulk> {
+public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProgettoRimodulazioneBulk, Progetto_rimodulazioneBulk> {
 	private boolean flPrgPianoEconomico = false;
 	protected boolean isUoCdsCollegata = false;
 	private Integer annoFromPianoEconomico;
@@ -1166,13 +1163,6 @@ public class RimodulaProgettiRicercaBP extends AllegatiCRUDBP<AllegatoProgettoRi
 	protected Class<AllegatoProgettoRimodulazioneBulk> getAllegatoClass() {
         return AllegatoProgettoRimodulazioneBulk.class;
 	} 
-	
-	@Override
-	protected void completeAllegato(AllegatoProgettoRimodulazioneBulk allegato) throws ApplicationException {
-		super.completeAllegato(allegato);
-		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getStorageKey());
-		allegato.setObjectType(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()));
-	}
 	
     public void validaImportoFinanziatoRimodulato(ActionContext actioncontext, Optional<Progetto_piano_economicoBulk> optPpe) throws ValidationException {
         boolean isAddVoceBilancio = optPpe.flatMap(el->Optional.ofNullable(el.getVoce_piano_economico()))
