@@ -1,17 +1,14 @@
 package it.cnr.contab.progettiric00.action;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettoPianoEconomicoCRUDController;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettoPianoEconomicoVoceBilancioCRUDController;
-import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
@@ -23,7 +20,6 @@ import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.CRUDController;
@@ -195,10 +191,10 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 				RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
 	        	bp.salvaDefinitivo(context);
 				Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)bp.getModel();
-				if (rim.isStatoApprovato())
-		        	setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo! La rimodulazione è stata posta "
-		        			+ "direttamente in stato approvato non essendo previste variazioni di bilancio a supporto!");
-				else
+				if (rim.isStatoApprovato()) {
+					return openConfirm(context,  "Operazione eseguita con successo! La rimodulazione è stata posta "
+		        			+ "direttamente in stato approvato non essendo previste variazioni di bilancio a supporto!", "doRiporta");
+				} else
 					setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo!");
 			}
 			return context.findDefaultForward();
@@ -510,5 +506,9 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		} catch(Exception e) {
 			return handleException(context,e);
 		}
+	}
+	
+	public Forward doRiporta(ActionContext context,int option) {
+		return doRiporta(context);
 	}
 }
