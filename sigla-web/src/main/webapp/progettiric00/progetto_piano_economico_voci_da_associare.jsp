@@ -13,4 +13,4 @@
 	SimpleDetailCRUDController controller = bp.getPianoEconomicoVociBilancioDaAssociare();
 %>
 
-<%	controller.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","100px"); %>
+<%	controller.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","auto"); %>

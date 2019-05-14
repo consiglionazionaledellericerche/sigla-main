@@ -1,7 +1,6 @@
 package it.cnr.contab.progettiric00.comp;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,8 +11,6 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -453,13 +450,22 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio)
 			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato definitivo può essere assegnato solo a rimodulazioni in stato provvisorio!"));
 
+			if (!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty() ||
+				rimodulazione.isRimodulatoImportoFinanziato() || rimodulazione.isRimodulatoImportoCofinanziato())
+				rimodulazione.getArchivioAllegati().stream()
+							 .filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+							 .map(AllegatoProgettoRimodulazioneBulk.class::cast)
+							 .filter(AllegatoProgettoRimodulazioneBulk::isRimodulazione)
+							 .findFirst()
+							 .orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo rimodulazione!"));
+
 			if (rimodulazione.isRimodulatoDtProroga())
 				rimodulazione.getArchivioAllegati().stream()
 					.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
 					.map(AllegatoProgettoRimodulazioneBulk.class::cast)
 					.filter(AllegatoProgettoRimodulazioneBulk::isProroga)
 					.findFirst()
-					.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo proroga alla rimodulazione in oggetto!"));
+					.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo proroga!"));
 
 		    List<OggettoBulk> listVariazioni = this.constructVariazioniBilancio(userContext, rimodulazione);
 
