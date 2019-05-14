@@ -539,8 +539,10 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 								   .findFirst().orElse(null);
 
 							if (ppeRimVoc.isDetailRimodulatoEliminato()) {
-								if (Optional.ofNullable(ppeVocStorage).isPresent())
+								if (Optional.ofNullable(ppeVocStorage).isPresent()){
+									ppeVocStorage.setToBeDeleted();
 									ppe.removeFromVociBilancioAssociate(ppe.getVociBilancioAssociate().indexOf(ppeVocStorage));
+								}
 							} else {
 								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
 									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
