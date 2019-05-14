@@ -1215,10 +1215,12 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
 			  		.ifPresent(el->{
 			  			//Se con la rimodulazione l'importo viene diminuito propongo la variazione 
 			  			//Se l'importo viene aumentato rimetto a zero il valore della variazione stessa se negativa
-			  			if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(optPpe.get().getIm_spesa_finanziato())<0)
-				  			el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate()
-				  					.add(optPpe.get().getImSpesaFinanziatoRimodulato()));
-			  			else if (el.getImVarFinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
+			  			if (optPpe.get().getDispResiduaFinanziamentoRimodulato().compareTo(BigDecimal.ZERO)<0) {
+			  				if (el.getSaldoSpesa().getDispAssestatoFinanziamento().compareTo(optPpe.get().getDispResiduaFinanziamentoRimodulato())>=0)
+			  					el.setImVarFinanziatoRimodulato(optPpe.get().getDispResiduaFinanziamentoRimodulato());
+			  				else
+			  					el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate());
+			  			} else if (el.getImVarFinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
 			  				el.setImVarFinanziatoRimodulato(BigDecimal.ZERO);
 			  		});
 		}
@@ -1249,26 +1251,5 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
 					+ " all'importo già utilizzato ("
 					+ new it.cnr.contab.util.EuroFormat().format(totaleUtilizzato)
 					+ ") su voci di bilancio associate obbligatoriamente alla voce di piano economico corrispondente.");
-
-		//Se viene azzerato l'importo provvedo a proporre variazioni alle voci azzerative per riequilibrare il tutto
-		if (optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0) {
-			optPpe.get().getVociBilancioAssociate().stream()
-		  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
-		  		.forEach(el->{
-		  			el.setImVarCofinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoCofinanziamento().negate());
-		  		});
-		} else {
-			//se è una sola voce collegata propongo la variazione
-			if (optPpe.get().getVociBilancioAssociate().stream()
-					.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
-			  		.count()==1)
-				optPpe.get().getVociBilancioAssociate().stream()
-			  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
-			  		.findFirst()
-			  		.ifPresent(el->{
-			  			el.setImVarCofinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoCofinanziamento().negate()
-			  					.add(optPpe.get().getImSpesaCofinanziatoRimodulato()));
-			  		});
-		}
 	}
 }
