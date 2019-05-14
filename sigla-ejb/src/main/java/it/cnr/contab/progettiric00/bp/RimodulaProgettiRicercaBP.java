@@ -1215,9 +1215,10 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
 			  		.ifPresent(el->{
 			  			//Se con la rimodulazione l'importo viene diminuito propongo la variazione 
 			  			//Se l'importo viene aumentato rimetto a zero il valore della variazione stessa se negativa
-			  			if (optPpe.get().getDispResiduaFinanziamentoRimodulato().compareTo(BigDecimal.ZERO)<0) {
-			  				if (el.getSaldoSpesa().getDispAssestatoFinanziamento().compareTo(optPpe.get().getDispResiduaFinanziamentoRimodulato())>=0)
-			  					el.setImVarFinanziatoRimodulato(optPpe.get().getDispResiduaFinanziamentoRimodulato());
+			  			if (optPpe.get().getDispResiduaFinanziamentoRimodulato().add(el.getImVarFinanziatoRimodulato()).compareTo(BigDecimal.ZERO)<0) {
+			  				if (el.getSaldoSpesa().getDispAssestatoFinanziamento().compareTo(optPpe.get().getDispResiduaFinanziamentoRimodulato()
+			  						.add(el.getImVarFinanziatoRimodulato()).negate())>=0)
+			  					el.setImVarFinanziatoRimodulato(optPpe.get().getDispResiduaFinanziamentoRimodulato().add(el.getImVarFinanziatoRimodulato()));
 			  				else
 			  					el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate());
 			  			} else if (el.getImVarFinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
