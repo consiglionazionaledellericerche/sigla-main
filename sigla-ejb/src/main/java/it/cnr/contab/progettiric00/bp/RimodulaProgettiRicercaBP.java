@@ -1088,10 +1088,9 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
      */
     public void salvaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException {
         try {
+        	this.save(context);
         	RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
-        	Progetto_rimodulazioneBulk bulk = (Progetto_rimodulazioneBulk) getModel();
-        	bulk.validate();
-        	bulk = comp.salvaDefinitivo(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
+        	Progetto_rimodulazioneBulk bulk = comp.salvaDefinitivo(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
             edit(context, bulk);
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
@@ -1106,8 +1105,9 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
      * @param context L'ActionContext della richiesta
      * @throws BusinessProcessException
      */
-    public void approva(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public void approva(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException {
         try {
+        	this.save(context);
         	RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
         	Progetto_rimodulazioneBulk bulk = comp.approva(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
             edit(context, bulk);
@@ -1124,8 +1124,9 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
      * @param context L'ActionContext della richiesta
      * @throws BusinessProcessException
      */
-    public void respingi(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public void respingi(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException {
         try {
+        	this.save(context);
         	RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
         	Progetto_rimodulazioneBulk bulk = comp.respingi(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
             edit(context, bulk);
