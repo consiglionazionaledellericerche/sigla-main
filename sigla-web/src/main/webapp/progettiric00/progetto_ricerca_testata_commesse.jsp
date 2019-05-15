@@ -159,7 +159,7 @@
 	  </tr>	  
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "tipoFinanziamentoOf"); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipoFinanziamentoOf",bp.isROProgettoForStato(),null,null); %></td>
 	  </tr>	  
       <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  <tr>
@@ -263,7 +263,10 @@
 		<tr>
 		  	<td colspan="4">
 		  		<table>
-		  			<tr><% bp.getController().writeFormField( out, "tipoFinanziamentoOf"); %></tr>
+		  			<tr>
+						<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
+						<td><% bp.getController().writeFormInput( out, "default","tipoFinanziamentoOf",bp.isROProgettoForStato(),null,null); %></td>
+		  			</tr>
 		  		</table>
 		  	</td>
 		</tr>	  

@@ -216,6 +216,9 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	
 	public boolean isROProgettoPianoEconomico() {
 		return Optional.ofNullable(this.getProgetto())
+					   .map(ProgettoBulk::isROProgettoForStato)
+					   .orElse(Boolean.FALSE) ||
+				Optional.ofNullable(this.getProgetto())
 					   .flatMap(el->Optional.ofNullable(el.getPdgModuli()))
 					   .map(el->el.stream())
 					   .orElse(Stream.empty())
