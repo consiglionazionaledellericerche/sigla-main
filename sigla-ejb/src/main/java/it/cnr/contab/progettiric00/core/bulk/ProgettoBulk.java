@@ -1214,8 +1214,18 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		this.pdgModuli = pdgModuli;
 	}
 
-	public boolean isROProgettoPianoEconomico() {
+	//Indica se il progetto è in stato RO a causa dello stato che possiede
+	//Un progetto è readonly se Approvato, Chiuso o Annullato
+	public boolean isROProgettoForStato() {
 		return Optional.ofNullable(this)
+				.flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.filter(el->el.isStatoAnnullato()||el.isStatoChiuso()||el.isStatoApprovato())
+				.isPresent();
+	}
+	
+	public boolean isROProgettoPianoEconomico() {
+		return isROProgettoForStato() ||
+				Optional.ofNullable(this)
 				.flatMap(el->Optional.ofNullable(el.getPdgModuli()))
 				.map(el->el.stream())
 				.orElse(Stream.empty())
