@@ -1,9 +1,25 @@
 package it.cnr.contab.util00.bulk.storage;
 
+import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import it.cnr.contab.util00.bulk.storage.enumeration.AllegatoGenericoType;
+
 public class AllegatoGenericoTypeBulk extends AllegatoGenericoBulk {
 	private static final long serialVersionUID = 1L;
 	private String objectType;
 	
+    public final static Map<String,String> ti_allegatoKeys = Arrays.asList(AllegatoGenericoType.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		AllegatoGenericoType::value,
+            		AllegatoGenericoType::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
+    
 	public AllegatoGenericoTypeBulk() {
 		super();
 	}
