@@ -1,10 +1,15 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Optional;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 
+import it.cnr.contab.progettiric00.enumeration.AllegatoProgettoRimodulazioneType;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.jada.bulk.ValidationException;
 
@@ -13,23 +18,17 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 
 	private Progetto_rimodulazioneBulk rimodulazione;
 
-	private static final java.util.Dictionary ti_allegatoKeys =  new it.cnr.jada.util.OrderedHashtable();
+    public final static Map<String,String> ti_allegatoKeys = Arrays.asList(AllegatoProgettoRimodulazioneType.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		AllegatoProgettoRimodulazioneType::value,
+            		AllegatoProgettoRimodulazioneType::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
+    
 
-	final public static String RIMODULAZIONE = "D:sigla_progetti_attachment:rimodulazione_attestato";
-	final public static String PROROGA = "D:sigla_progetti_attachment:rimodulazione_proroga";
-	final public static String GENERICO = "D:sigla_progetti_attachment:rimodulazione_allegato_generico";
-
-	static {
-		ti_allegatoKeys.put(RIMODULAZIONE,"Rimodulazione");
-		ti_allegatoKeys.put(PROROGA,"Proroga");
-		ti_allegatoKeys.put(GENERICO,"Allegato Generico");
-	}
-
-	public final java.util.Dictionary getTi_allegatoKeys() {
-		return ti_allegatoKeys;
-	}
-
-	public AllegatoProgettoRimodulazioneBulk() {
+    public AllegatoProgettoRimodulazioneBulk() {
 		super();
 	}
 
@@ -42,15 +41,15 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 	}
 	
 	public boolean isRimodulazione() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(RIMODULAZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoRimodulazioneType.RIMODULAZIONE.value())).orElse(Boolean.FALSE);
 	}
 	
 	public boolean isProroga() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(PROROGA)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoRimodulazioneType.PROROGA.value())).orElse(Boolean.FALSE);
 	}
 
 	public boolean isGenerico() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(GENERICO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoRimodulazioneType.GENERICO.value())).orElse(Boolean.FALSE);
 	}
 	
 	public Progetto_rimodulazioneBulk getRimodulazione() {
@@ -71,7 +70,7 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 		super.validate();
 		if (getObjectType() == null)
 			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
-		else {
+		else if (this.isToBeCreated() || this.getNome().isEmpty()) {
 			StringJoiner name = new StringJoiner("-");
 			Optional.ofNullable(this.getRimodulazione())
 					.flatMap(el->Optional.ofNullable(el.getProgetto()))

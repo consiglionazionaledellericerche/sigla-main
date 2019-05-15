@@ -17,6 +17,8 @@
 	            .map(amm -> "_amm")
 	            .orElse("");
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
+	boolean isROProgettoForStato = Optional.ofNullable(bp.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast)
+			.map(ProgettoBulk::isROProgettoForStato).orElse(Boolean.FALSE);
 %>
 
 <%	controller.writeHTMLTable(pageContext,"piano_economico1",true,false,true,"100%","auto"); %>
@@ -26,8 +28,10 @@
   	<td colspan="3"><% controller.writeFormInput(out,null,"voce_piano" + fieldAmm,isKeyEditable,null,null);%></td>
   </tr>
   <tr>
-  	<% controller.writeFormField(out,"im_spesa_finanziato" + fieldAmm);%>
-  	<% controller.writeFormField(out,"im_spesa_cofinanziato" + fieldAmm);%>
+  	<TD><% controller.writeFormLabel(out,"im_spesa_finanziato");%></TD>
+  	<TD><% controller.writeFormInput(out,null,"im_spesa_finanziato" + fieldAmm,isROProgettoForStato,null,null);%></TD>
+  	<TD><% controller.writeFormLabel(out,"im_spesa_cofinanziato");%></TD>
+  	<TD><% controller.writeFormInput(out,null,"im_spesa_cofinanziato" + fieldAmm,isROProgettoForStato,null,null);%></TD> 
   	<% controller.writeFormField(out,"imTotaleSpesa");%>
   </tr>
 </table>
@@ -37,8 +41,9 @@
 <%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","auto"); %>
 	</br>
 	<table class="Panel">
-	  <TR>
-	  	<% controllerVoci.writeFormField(out,"elemento_voce");%>
-	  </TR>
+	  <tr>
+	  	<TD><% controller.writeFormLabel(out,"elemento_voce");%></TD>
+	  	<TD><% controller.writeFormInput(out,null,"elemento_voce",isROProgettoForStato,null,null);%></TD>
+	  </tr>	
 	</table>	
 </fieldset>
