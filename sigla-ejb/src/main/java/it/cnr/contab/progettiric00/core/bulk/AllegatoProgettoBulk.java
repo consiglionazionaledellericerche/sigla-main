@@ -1,8 +1,13 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.util.Arrays;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Optional;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
+import it.cnr.contab.progettiric00.enumeration.AllegatoProgettoType;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
 import it.cnr.jada.bulk.ValidationException;
 
@@ -10,30 +15,15 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 	private static final long serialVersionUID = 1L;
 	private ProgettoBulk progetto;
 
-	private static final java.util.Dictionary ti_allegatoKeys =  new it.cnr.jada.util.OrderedHashtable();
+    public final static Map<String,String> ti_allegatoKeys = Arrays.asList(AllegatoProgettoType.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		AllegatoProgettoType::value,
+            		AllegatoProgettoType::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
 
-	final public static String PROVV_COSTITUZIONE = "D:sigla_progetti_attachment:provvedimento_costituzione";
-	final public static String RICHIESTA_ANTICIPO = "D:sigla_progetti_attachment:richiesta_anticipo";
-	final public static String RENDICONTAZIONE = "D:sigla_progetti_attachment:rendicontazione";
-	final public static String STRALCIO = "D:sigla_progetti_attachment:stralcio";
-	final public static String CONTRODEDUZIONE = "D:sigla_progetti_attachment:controdeduzioni";
-	final public static String FINAL_STATEMENT_PAYMENT = "D:sigla_progetti_attachment:final_statement_payment";
-	final public static String GENERICO = "D:sigla_progetti_attachment:allegato_generico";
-
-	static {
-		ti_allegatoKeys.put(PROVV_COSTITUZIONE,"Provvedimento di Costituzione");
-		ti_allegatoKeys.put(RICHIESTA_ANTICIPO,"Richiesta di Anticipo");
-		ti_allegatoKeys.put(RENDICONTAZIONE,"Rendicontazione");
-		ti_allegatoKeys.put(STRALCIO,"Stralcio");
-		ti_allegatoKeys.put(CONTRODEDUZIONE,"Controdeduzione");
-		ti_allegatoKeys.put(FINAL_STATEMENT_PAYMENT,"Final Statement Payment");
-		ti_allegatoKeys.put(GENERICO,"Allegato Generico");
-	}
-
-	public final java.util.Dictionary getTi_allegatoKeys() {
-		return ti_allegatoKeys;
-	}
-	
 	public AllegatoProgettoBulk() {
 		super();
 	}
@@ -47,31 +37,31 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 	}
 	
 	public boolean isProvvedimentoCostituzione() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(PROVV_COSTITUZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.PROVV_COSTITUZIONE.value())).orElse(Boolean.FALSE);
 	}
 
 	public boolean isRichiestaAnticipo() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(RICHIESTA_ANTICIPO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.RICHIESTA_ANTICIPO.value())).orElse(Boolean.FALSE);
 	}
 
 	public boolean isRendicontazione() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(RENDICONTAZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.RENDICONTAZIONE.value())).orElse(Boolean.FALSE);
 	}
 
 	public boolean isStralcio() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(STRALCIO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.STRALCIO.value())).orElse(Boolean.FALSE);
 	}
 
 	public boolean isControdeduzione() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(CONTRODEDUZIONE)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.CONTRODEDUZIONE.value())).orElse(Boolean.FALSE);
 	}
 	
 	public boolean isFinalStatementPayment() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(FINAL_STATEMENT_PAYMENT)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.FINAL_STATEMENT_PAYMENT.value())).orElse(Boolean.FALSE);
 	}
 	
 	public boolean isGenerico() {
-		return Optional.ofNullable(getObjectType()).map(el->el.equals(GENERICO)).orElse(Boolean.FALSE);
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoType.GENERICO.value())).orElse(Boolean.FALSE);
 	}
 	
 	public ProgettoBulk getProgetto() {
@@ -92,7 +82,7 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 		super.validate();
 		if (getObjectType() == null)
 			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
-		else {
+		else if (this.isToBeCreated() || this.getNome().isEmpty()) {
 			StringJoiner name = new StringJoiner("-");
 			Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getPg_progetto()))
 					.ifPresent(el->name.add("PRG" + el));
@@ -110,7 +100,6 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 				name.add("FSP");
 			if (this.isGenerico())	
 				name.add("GEN");
-			name.add(this.getNome());
 			this.setNome(name.toString());
 		}
 	}
