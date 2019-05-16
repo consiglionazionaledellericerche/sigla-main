@@ -19,6 +19,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_residuoBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_residuoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -2012,7 +2013,7 @@ public SQLBuilder selectProgettiCollegatiGaeNonApprovatiForRibaltamento(UserCont
 	sqlGaeAccExist.addTableToHeader("TIPO_FINANZIAMENTO");
 	sqlGaeAccExist.addSQLJoin("PROGETTO_OTHER_FIELD.ID_TIPO_FINANZIAMENTO", "TIPO_FINANZIAMENTO.ID");
 	sqlGaeAccExist.openParenthesis(FindClause.AND);
-	sqlGaeAccExist.addSQLClause(FindClause.OR, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, Progetto_other_fieldBulk.STATO_APPROVATO);
+	sqlGaeAccExist.addSQLClause(FindClause.OR, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, StatoProgetto.STATO_APPROVATO.value());
 		sqlGaeAccExist.openParenthesis(FindClause.OR);
 			sqlGaeAccExist.addSQLClause(FindClause.AND, "TIPO_FINANZIAMENTO.FL_PIANO_ECO_FIN", SQLBuilder.EQUALS, "N");
 			sqlGaeAccExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.DT_FINE", SQLBuilder.ISNOTNULL, null);
@@ -2034,7 +2035,7 @@ public SQLBuilder selectProgettiCollegatiGaeNonApprovatiForRibaltamento(UserCont
 	sqlGaeObbExist.addSQLClause(FindClause.AND, "V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", SQLBuilder.EQUALS, ((CNRUserContext)userContext).getEsercizio()+1);
 	sqlGaeObbExist.addTableToHeader("PROGETTO_OTHER_FIELD");
 	sqlGaeObbExist.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO", "PROGETTO_OTHER_FIELD.PG_PROGETTO");
-	sqlGaeObbExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, Progetto_other_fieldBulk.STATO_APPROVATO);
+	sqlGaeObbExist.addSQLClause(FindClause.AND, "PROGETTO_OTHER_FIELD.STATO", SQLBuilder.EQUALS, StatoProgetto.STATO_APPROVATO.value());
 
 	sqlObbExist.addSQLNotExistsClause(FindClause.AND, sqlGaeObbExist);
 

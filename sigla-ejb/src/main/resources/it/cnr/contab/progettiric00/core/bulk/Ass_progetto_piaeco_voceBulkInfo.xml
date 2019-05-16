@@ -57,6 +57,22 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Mandati" />
 	<fieldProperty
+		name="im_manris_spesa_finanziata"
+		property="saldoSpesa.manrisFin"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati Finanziato" />
+	<fieldProperty
+		name="im_manris_spesa_cofinanziata"
+		property="saldoSpesa.manrisCofin"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati Cofinanziato" />		
+	<fieldProperty
 		name="imVarFinanziatoRimodulato"
 		property="imVarFinanziatoRimodulato"
 		readonlyProperty="ROFieldRimodulazione"
@@ -136,7 +152,10 @@
 	<formFieldProperty name="imUtilizzatoAssestatoFinanziamento" />
 	<formFieldProperty name="imAssestatoSpesaCofinanziato" />
 	<formFieldProperty name="imUtilizzatoAssestatoCofinanziamento" />
-		
+
+	<formFieldProperty name="im_manris_spesa_finanziata" />
+	<formFieldProperty name="im_manris_spesa_cofinanziata" />
+	
 	<columnFieldProperty name="elemento_voce" />
 
 	<columnSet name="voce_bilancio">
@@ -144,75 +163,29 @@
 			name="cd_elemento_voce"/>
 		<columnFieldProperty
 			name="ds_elemento_voce"/>
-		<columnFieldProperty 
-			name="im_assestato_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato"/>
-		<columnFieldProperty 
-			name="im_trasferito_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Trasferito"/>
-		<columnFieldProperty 
-			name="im_impacc_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Impegnato"/>
-		<columnFieldProperty 
-			name="im_manris_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Pagato"/>
-	</columnSet>
-
-	<columnSet name="voce_bilancio_rimodulato">
 		<columnFieldProperty
-			name="cd_elemento_voce"/>
-		<columnFieldProperty
-			name="ds_elemento_voce"
-			inputType="DESCTOOL"
-			descProperty="messageAnomaliaDetailRimodulato"/>
-		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziato"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato Fin."/>
-		<columnFieldProperty 
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
 			name="imUtilizzatoAssestatoFinanziamento"
-			headerLabel="SITUAZIONE SPESA"
-			label="Utilizzato Fin."/>
-		<columnFieldProperty 
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
 			name="imAssestatoSpesaCofinanziato"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato Cofin."/>
-		<columnFieldProperty 
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
 			name="imUtilizzatoAssestatoCofinanziamento"
-			headerLabel="SITUAZIONE SPESA"
-			label="Utilizzato Cofin."/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>
 	</columnSet>
-
-	<columnSet name="voce_bilancio_rimodulato_con_variazioni">
-		<columnFieldProperty
-			name="cd_elemento_voce"/>
-		<columnFieldProperty
-			name="ds_elemento_voce"
-			inputType="DESCTOOL"
-			descProperty="messageAnomaliaDetailRimodulato"/>
-		<columnFieldProperty 
-			name="imAssestatoSpesaFinanziato"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato Fin."/>
-		<columnFieldProperty 
-			name="imUtilizzatoAssestatoFinanziamento"
-			headerLabel="SITUAZIONE SPESA"
-			label="Utilizzato Fin."/>
-		<columnFieldProperty 
-			name="imAssestatoSpesaCofinanziato"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato Cofin."/>
-		<columnFieldProperty 
-			name="imUtilizzatoAssestatoCofinanziamento"
-			headerLabel="SITUAZIONE SPESA"
-			label="Utilizzato Cofin."/>			
-		<columnFieldProperty
-			name="imVarFinanziatoRimodulato"
-			headerLabel="VARIAZIONE"
-			label="Quota Finanziata"/>
-	</columnSet>	
 </bulkInfo>

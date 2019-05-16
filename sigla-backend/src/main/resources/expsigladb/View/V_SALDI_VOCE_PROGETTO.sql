@@ -438,7 +438,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO"
                         ELSE 0
                      END manris_fin,
                      CASE
-                        WHEN c.tipo ='FES'
+                        WHEN c.tipo ='FIN'
                         THEN NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0) 
                         ELSE 0
                      END manris_cofin

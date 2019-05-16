@@ -48,6 +48,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 //import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -89,7 +90,7 @@ public class PdgAggregatoModuloComponent extends CRUDComponent implements IPrint
 						throw new ApplicationRuntimeException("Salvataggio non possibile! Non risulta indicato il progetto su una riga!");
 					else if (!Optional.ofNullable(el.getProgetto().getOtherField())
 							.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
-							.filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
+							.filter(stato -> Arrays.asList(StatoProgetto.STATO_NEGOZIAZIONE.value(), StatoProgetto.STATO_APPROVATO.value()).indexOf(stato) != -1).isPresent()) {
 						throw new ApplicationRuntimeException("Attenzione: il progetto "+el.getProgetto().getCd_progetto()+" non ha uno stato utile alla previsione! Deve essere completato dalla UO responsabile! "
 								+ "Eliminare l'associazione al bilancio!");
 					}
