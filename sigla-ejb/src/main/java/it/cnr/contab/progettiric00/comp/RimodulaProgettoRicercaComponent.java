@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -11,6 +12,15 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
+import it.cnr.contab.pdg00.bulk.Var_stanz_resHome;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestHome;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
+import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -21,10 +31,12 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
+import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -213,7 +225,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 							+ " Operazione non possibile.");
 				});
 			progettoRimodulazione.setPg_rimodulazione(listRimodulazioni.stream().mapToInt(Progetto_rimodulazioneBulk::getPg_rimodulazione).max().orElse(0)+1);
-			progettoRimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_PROVVISORIO);
+			progettoRimodulazione.setStato(StatoProgettoRimodulazione.STATO_PROVVISORIO.value());
 			progettoRimodulazione.setImVarFinanziato(progettoRimodulazione.getImFinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImFinanziato()));
 			progettoRimodulazione.setImVarCofinanziato(progettoRimodulazione.getImCofinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImCofinanziato()));
 
@@ -420,7 +432,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			ProgettoBulk progettoRimodulato = getProgettoRimodulato(rimodulazione);
 			Utility.createProgettoRicercaComponentSession().modificaConBulk(userContext, progettoRimodulato);
 
-			rimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_APPROVATO);
+			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_APPROVATO.value());
 			rimodulazione.setToBeUpdated();
 			return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 		} catch (ApplicationRuntimeException e) {
@@ -434,7 +446,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
 		.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato respinto può essere assegnato solo a rimodulazioni in stato definitivo!"));
 
-		rimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_RESPINTO);
+		rimodulazione.setStato(StatoProgettoRimodulazione.STATO_RESPINTO.value());
 		rimodulazione.setToBeUpdated();
 		return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 	}
@@ -447,25 +459,28 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			else
 				rimodulazione = (Progetto_rimodulazioneBulk)this.modificaConBulk(userContext, rimodulazione);
 	
-			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio)
-			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato definitivo può essere assegnato solo a rimodulazioni in stato provvisorio!"));
+			validaStatoDefinitivoRimodulazione(userContext, rimodulazione);
 
-			if (!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty() ||
-				rimodulazione.isRimodulatoImportoFinanziato() || rimodulazione.isRimodulatoImportoCofinanziato())
-				rimodulazione.getArchivioAllegati().stream()
-							 .filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
-							 .map(AllegatoProgettoRimodulazioneBulk.class::cast)
-							 .filter(AllegatoProgettoRimodulazioneBulk::isRimodulazione)
-							 .findFirst()
-							 .orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo rimodulazione!"));
+			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
+			rimodulazione.setToBeUpdated();
+			return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
+		} catch (ApplicationRuntimeException e) {
+			throw new ApplicationException(e);
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
 
-			if (rimodulazione.isRimodulatoDtProroga())
-				rimodulazione.getArchivioAllegati().stream()
-					.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
-					.map(AllegatoProgettoRimodulazioneBulk.class::cast)
-					.filter(AllegatoProgettoRimodulazioneBulk::isProroga)
-					.findFirst()
-					.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo proroga!"));
+	public Progetto_rimodulazioneBulk valida(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		try{
+			//Prima salvo il progetto per aggiornare i dettagli della rimodulazione
+			if (rimodulazione.isToBeCreated())
+				rimodulazione = (Progetto_rimodulazioneBulk)this.creaConBulk(userContext, rimodulazione);
+			else
+				rimodulazione = (Progetto_rimodulazioneBulk)this.modificaConBulk(userContext, rimodulazione);
+	
+			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
+			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato validato può essere assegnato solo a rimodulazioni in stato definitivo!"));
 
 		    List<OggettoBulk> listVariazioni = this.constructVariazioniBilancio(userContext, rimodulazione);
 
@@ -477,7 +492,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 				ProgettoBulk progettoRimodulato = getProgettoRimodulato(rimodulazione);
 				Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato);
 				
-				rimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_DEFINITIVO);
+				rimodulazione.setStato(StatoProgettoRimodulazione.STATO_VALIDATO.value());
 				rimodulazione.setToBeUpdated();
 				return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 		    }
@@ -487,7 +502,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			throw handleException(e);
 		}
 	}
-	
+
 	private ProgettoBulk getProgettoRimodulato(Progetto_rimodulazioneBulk rimodulazione) {
 		ProgettoBulk progetto = rimodulazione.getProgetto();
 		
@@ -692,4 +707,114 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			throw handleException(e);
 		}			
 	}
+	
+	/*
+	 * Metodo che verifica se la rimodulazione può divenire definitiva.
+	 * Per divenire tale: 
+	 * 		1) on devono esserci variazioni sul progetto in stato definitivo o approvazione formale.
+	 * 		2) la rimodulazione deve essere provvisoria.
+	 * 		3) se rimodulato data proroga occorre file fi tipo proroga.
+	 * 		4) se rimodulato altro occorre file di tipo rimodulazione.
+	 * 		5) vengono lanciati controlli su progetto.
+	 */
+	private void validaStatoDefinitivoRimodulazione(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException{
+    	try {
+    		List<OggettoBulk> listVariazioni = this.constructVariazioniBilancio(userContext, rimodulazione);
+
+		    //Se la rimodulazione prevede variazioni di competenza procedo a verificare ce non ce ne siano sul progetto in stato definitivo
+		    if (Optional.ofNullable(listVariazioni).map(List::stream).orElse(Stream.empty())
+		    			.filter(Pdg_variazioneBulk.class::isInstance).findFirst().isPresent()) {
+	       		Pdg_variazioneHome homeVarSpe = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
+	       		SQLBuilder sqlVarSpe = homeVarSpe.createSQLBuilder();
+	
+	       		sqlVarSpe.addTableToHeader("PDG_VARIAZIONE_RIGA_GEST");
+	       		sqlVarSpe.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO", "PDG_VARIAZIONE.ESERCIZIO");
+	       		sqlVarSpe.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE.PG_VARIAZIONE_PDG");
+	       		sqlVarSpe.openParenthesis(FindClause.AND);
+	       		sqlVarSpe.addClause(FindClause.OR,"stato",SQLBuilder.EQUALS,Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+	       		sqlVarSpe.addClause(FindClause.OR,"stato",SQLBuilder.EQUALS,Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+	       		sqlVarSpe.closeParenthesis();
+	       		
+	       		sqlVarSpe.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+	       		sqlVarSpe.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+	       		sqlVarSpe.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
+	       		sqlVarSpe.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
+	       		sqlVarSpe.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());    		
+	
+	       		List<Pdg_variazioneBulk> resultVarSpe = homeVarSpe.fetchAll(sqlVarSpe);
+	       		resultVarSpe.stream().findFirst().ifPresent(el->{
+	    			throw new ApplicationRuntimeException("Operazione non possibile! Esiste la variazione di competenza "+el.getEsercizio()+
+	    					"/"+el.getPg_variazione_pdg()+" con stato "+el.getStato()+" che non consente di rendere definitiva la rimodulazione! "+
+	    					" Approvare o annullare la variazione e rieffettuare l'operazione!");
+	      		});
+		    }
+		    
+		    //Se la rimodulazione prevede variazioni residue su un anno procedo a verificare se non ce ne siano sul progetto in stato definitivo
+		    Optional.ofNullable(listVariazioni).map(List::stream).orElse(Stream.empty())
+		    		.filter(Var_stanz_resBulk.class::isInstance).map(Var_stanz_resBulk.class::cast)
+		    		.map(Var_stanz_resBulk::getEsercizio_residuo)
+			   		.forEach(esercizioRes->{
+			   			try{
+				       		Var_stanz_resHome homeVarRes = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
+				       		SQLBuilder sqlVarRes = homeVarRes.createSQLBuilder();
+				       		sqlVarRes.addClause(FindClause.AND,"esercizio_res",SQLBuilder.EQUALS,esercizioRes);
+	
+				       		sqlVarRes.addTableToHeader("VAR_STANZ_RES_RIGA");
+				       		sqlVarRes.addSQLJoin("VAR_STANZ_RES_RIGA.ESERCIZIO", "VAR_STANZ_RES.ESERCIZIO");
+				       		sqlVarRes.addSQLJoin("VAR_STANZ_RES_RIGA.PG_VARIAZIONE", "VAR_STANZ_RES.PG_VARIAZIONE");
+				       		sqlVarRes.openParenthesis(FindClause.AND);
+				       		sqlVarRes.addClause(FindClause.OR,"stato",SQLBuilder.EQUALS,Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+				       		sqlVarRes.addClause(FindClause.OR,"stato",SQLBuilder.EQUALS,Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+				       		sqlVarRes.closeParenthesis();
+				       		
+				       		sqlVarRes.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
+				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
+				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
+				       		sqlVarRes.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());    		
+	
+				       		List<Var_stanz_resBulk> resultVarRes = homeVarRes.fetchAll(sqlVarRes);
+				       		resultVarRes.stream().findFirst().ifPresent(el->{
+				    			throw new ApplicationRuntimeException("Operazione non possibile! Esiste la variazione residua "+el.getEsercizio()+
+				    					"/"+el.getPg_variazione()+" con stato "+el.getStato()+" che non consente di rendere definitiva la rimodulazione! "+
+				    					" Approvare o annullare la variazione e rieffettuare l'operazione!");
+				      		});
+			   			} catch (ComponentException|PersistencyException ex){
+			   				throw new RuntimeException(ex);
+			   			}
+			   		});
+       		
+			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio)
+			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato definitivo può essere assegnato solo a rimodulazioni in stato provvisorio!"));
+
+			if (!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty() ||
+				rimodulazione.isRimodulatoImportoFinanziato() || rimodulazione.isRimodulatoImportoCofinanziato())
+				rimodulazione.getArchivioAllegati().stream()
+							 .filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+							 .map(AllegatoProgettoRimodulazioneBulk.class::cast)
+							 .filter(AllegatoProgettoRimodulazioneBulk::isRimodulazione)
+							 .findFirst()
+							 .orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo rimodulazione!"));
+
+			if (rimodulazione.isRimodulatoDtProroga())
+				rimodulazione.getArchivioAllegati().stream()
+					.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+					.map(AllegatoProgettoRimodulazioneBulk.class::cast)
+					.filter(AllegatoProgettoRimodulazioneBulk::isProroga)
+					.findFirst()
+					.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo proroga!"));
+
+		    //Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
+			ProgettoBulk progettoRimodulato = getProgettoRimodulato(rimodulazione);
+			Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato);
+    	} catch (ApplicationRuntimeException e) {
+			throw new ApplicationException(e);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (RuntimeException e) {
+            throw handleException(  e.getCause() );
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+    }    
 }

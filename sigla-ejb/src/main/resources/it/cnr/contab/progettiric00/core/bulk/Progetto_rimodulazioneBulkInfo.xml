@@ -261,6 +261,7 @@
 		property="flViewCurrent"
 		inputType="CHECKBOX"
 		command="doDefault"
+		enabledOnView="true"
 		label="Visualizza Quote Correnti" />
 		
 	<formFieldProperty name="pg_rimodulazione" />

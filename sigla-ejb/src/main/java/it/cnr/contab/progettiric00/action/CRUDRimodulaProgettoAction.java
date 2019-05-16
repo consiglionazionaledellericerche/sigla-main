@@ -31,8 +31,9 @@ import it.cnr.jada.util.action.SimpleCRUDBP;
  * (Progetto)
  */
 public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
+	private static final long serialVersionUID = 1L;
 
-    public CRUDRimodulaProgettoAction() {
+	public CRUDRimodulaProgettoAction() {
         super();
     }
 
@@ -96,30 +97,30 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 	}
 	
 	/**
-	 * Gestione della richiesta di approvazione una rimodulazione definitiva
+	 * Gestione della richiesta di validazione di una rimodulazione definitiva
 	 *
 	 * @param context	L'ActionContext della richiesta
 	 * @return Il Forward alla pagina di risposta
 	 */
-	public Forward doApprova(ActionContext context) {
+	public Forward doValida(ActionContext context) {
 		try {
 			fillModel(context);
 			RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
 			bp.completeSearchTools(context, bp);
 	        bp.validate(context);
-       		return openConfirm(context, "Attenzione! Si vuole procedere ad approvare la rimodulazione?", OptionBP.CONFIRM_YES_NO, "doConfirmApprova");
+       		return openConfirm(context, "Attenzione! Si vuole procedere a validare la rimodulazione?", OptionBP.CONFIRM_YES_NO, "doConfirmValida");
 		}catch(Throwable ex){
 			return handleException(context, ex);
 		}
 	}
 
-	public Forward doConfirmApprova(ActionContext context,int option) {
+	public Forward doConfirmValida(ActionContext context,int option) {
 		try 
 		{
 			if ( option == OptionBP.YES_BUTTON) 
 			{
 				RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
-	        	bp.approva(context);
+	        	bp.valida(context);
 				setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
 			}
 			return context.findDefaultForward();
