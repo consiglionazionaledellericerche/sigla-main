@@ -16,8 +16,6 @@
 	Progetto_rimodulazioneBulk model = (Progetto_rimodulazioneBulk)bp.getModel();	
 	String viewCurrent = Optional.ofNullable(model).filter(Progetto_rimodulazioneBulk::getFlViewCurrent).map(el->"_current").orElse("");
 	Progetto_piano_economicoBulk modelPpe = (Progetto_piano_economicoBulk)controller.getModel();
-	boolean isVariazioniVociRequired = Optional.ofNullable(modelPpe).map(Progetto_piano_economicoBulk::isQuadraturaVariazioniRequired).orElse(Boolean.FALSE);
-	String viewVariazioni = isVariazioniVociRequired?"_con_variazioni":"";
 %>
 
 <%	controller.writeHTMLTable(pageContext,"piano_economico_rimodulato"+viewCurrent,true,false,true,"100%","auto"); %>
@@ -39,17 +37,12 @@
 </br>
 <fieldset class="fieldset">
 	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
-<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio_rimodulato"+viewVariazioni,true,false,true,"100%","auto"); %>
+<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","auto"); %>
 	</br>
 	<table class="Panel">
 	  <tr>
 	  	<td><% controllerVoci.writeFormLabel(out,"elemento_voce");%></td>
 	  	<td colspan="3"><% controllerVoci.writeFormInput(out,null,"elemento_voce",false,null,null);%></td>
 	  </tr>
-<% if (isVariazioniVociRequired) { %>
-  <tr>
-  	<% controllerVoci.writeFormField(out,"imVarFinanziatoRimodulato");%>
-  </tr>
-<% } %>  
 	</table>	
 </fieldset>

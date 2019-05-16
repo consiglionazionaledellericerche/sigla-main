@@ -16,7 +16,6 @@ import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
@@ -29,10 +28,10 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBu
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
 import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
+import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
-import it.cnr.contab.util00.bp.AllegatiTypeCRUDBP;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -41,17 +40,17 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
-public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProgettoRimodulazioneBulk, Progetto_rimodulazioneBulk> {
+public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUDBP<AllegatoProgettoRimodulazioneBulk, Progetto_rimodulazioneBulk> {
 	private boolean flPrgPianoEconomico = false;
 	protected boolean isUoCdsCollegata = false;
 	private Integer annoFromPianoEconomico;
 	private Integer lastEsercizioAperto;
 	private Unita_organizzativaBulk uoScrivania;
-    private CdrBulk cdrScrivania;
 	private ProgettoBulk mainProgetto;
 
 	private SimpleDetailCRUDController crudPianoEconomicoTotale = new RimodulaProgettoPianoEconomicoCRUDController( "PianoEconomicoTotale", Progetto_piano_economicoBulk.class, "dettagliPianoEconomicoTotale", this){
@@ -267,7 +266,6 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
 			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 			setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
 			uoScrivania = (Unita_organizzativaBulk)Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
-            cdrScrivania = Utility.createCdrComponentSession().cdrFromUserContext(actioncontext.getUserContext());
 			isUoCdsCollegata = uoScrivania.getFl_uo_cds();
 
 			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
@@ -330,7 +328,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
 	public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
 		oggettobulk = super.initializeModelForInsert(actioncontext, oggettobulk);
 		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)oggettobulk;
-		progettoRimodulazione.setStato(Progetto_rimodulazioneBulk.STATO_PROVVISORIO);
+		progettoRimodulazione.setStato(StatoProgettoRimodulazione.STATO_PROVVISORIO.value());
 		progettoRimodulazione.setImVarFinanziato(BigDecimal.ZERO);
 		progettoRimodulazione.setImVarCofinanziato(BigDecimal.ZERO);
 		if (Optional.ofNullable(this.getMainProgetto()).isPresent()) {
@@ -1042,41 +1040,39 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
     }
 
     /**
-     * Restituisce il valore della proprietà 'approvaButtonEnabled'
-     * Il bottone di Approva è disponibile solo se:
-     * - è attivo il bottone di salvataggio
-     * - la proposta di variazione PDG è definitiva
+     * Restituisce il valore della proprietà 'validaButtonHidden'
+     * Il bottone di Valida è disponibile solo se:
+     * - la proposta di rimodulazione è definitiva
      * - la UO che sta effettuando l'operazione è di tipo ENTE
      *
-     * @return Il valore della proprietà 'approvaButtonEnabled'
+     * @return Il valore della proprietà 'validaButtonHidden'
      */
-    public boolean isApprovaButtonEnabled() {
+    public boolean isValidaButtonHidden() {
 		Optional<Progetto_rimodulazioneBulk> optModel = 
 				Optional.ofNullable(this.getModel())
 						.filter(Progetto_rimodulazioneBulk.class::isInstance)
 						.map(Progetto_rimodulazioneBulk.class::cast);
 
-        return optModel.filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).isPresent() &&
-                uoScrivania.isUoEnte();
+        return !optModel.filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).isPresent() ||
+               !uoScrivania.isUoEnte();
     }
 
     /**
-     * Restituisce il valore della proprietà 'nonApprovaButtonEnabled'
-     * Il bottone di NonApprova è disponibile solo se:
-     * - è attivo il bottone di salvataggio
+     * Restituisce il valore della proprietà 'respingiButtonHidden'
+     * Il bottone di Respingi è disponibile solo se:
      * - la proposta di variazione PDG è definitiva
      * - la UO che sta effettuando l'operazione è di tipo ENTE
      *
-     * @return Il valore della proprietà 'nonApprovaButtonEnabled'
+     * @return Il valore della proprietà 'respingiButtonHidden'
      */
-    public boolean isNonApprovaButtonEnabled() {
+    public boolean isRespingiButtonHidden() {
 		Optional<Progetto_rimodulazioneBulk> optModel = 
 				Optional.ofNullable(this.getModel())
 						.filter(Progetto_rimodulazioneBulk.class::isInstance)
 						.map(Progetto_rimodulazioneBulk.class::cast);
 
-        return optModel.filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).isPresent() &&
-                uoScrivania.isUoEnte();
+        return !optModel.filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).isPresent() ||
+               !uoScrivania.isUoEnte();
     }
 
     /**
@@ -1100,16 +1096,16 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
     }
 
     /**
-     * Gestione del salvataggio come approvata di una variazione
+     * Gestione del salvataggio come validata di una rimodulazione
      *
      * @param context L'ActionContext della richiesta
      * @throws BusinessProcessException
      */
-    public void approva(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException {
+    public void valida(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException {
         try {
         	this.save(context);
         	RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
-        	Progetto_rimodulazioneBulk bulk = comp.approva(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
+        	Progetto_rimodulazioneBulk bulk = comp.valida(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
             edit(context, bulk);
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
@@ -1190,44 +1186,20 @@ public class RimodulaProgettiRicercaBP extends AllegatiTypeCRUDBP<AllegatoProget
 					+ " all'importo già utilizzato ("
 					+ new it.cnr.contab.util.EuroFormat().format(totaleUtilizzato)
 					+ ") su voci di bilancio associate obbligatoriamente alla voce di piano economico corrispondente.");
-		
-		//Se viene azzerato l'importo provvedo a proporre variazioni alle voci azzerative per riequilibrare il tutto
-		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0) {
-			optPpe.get().getVociBilancioAssociate().stream()
-		  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
-		  		.forEach(el->{
-		  			el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate());
-		  		});
-		} else if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(optPpe.get().getIm_spesa_finanziato())==0) {
-  			//Se l'importo non viene rimodulato rimetto a zero il valore delle variazioni stesse
-			optPpe.get().getVociBilancioAssociate().stream()
-		  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
-		  		.forEach(el->{
-		  				el.setImVarFinanziatoRimodulato(BigDecimal.ZERO);
-		  		});
-    	} else {
-			//se è una sola voce collegata propongo la variazione
-			if (optPpe.get().getVociBilancioAssociate().stream()
-					.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
-			  		.count()==1)
-				optPpe.get().getVociBilancioAssociate().stream()
-			  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
-			  		.findFirst()
-			  		.ifPresent(el->{
-			  			//Se con la rimodulazione l'importo viene diminuito propongo la variazione 
-			  			//Se l'importo viene aumentato rimetto a zero il valore della variazione stessa se negativa
-			  			if (optPpe.get().getDispResiduaFinanziamentoRimodulato().add(el.getImVarFinanziatoRimodulato()).compareTo(BigDecimal.ZERO)<0) {
-			  				if (el.getSaldoSpesa().getDispAssestatoFinanziamento().compareTo(optPpe.get().getDispResiduaFinanziamentoRimodulato()
-			  						.add(el.getImVarFinanziatoRimodulato()).negate())>=0)
-			  					el.setImVarFinanziatoRimodulato(optPpe.get().getDispResiduaFinanziamentoRimodulato().add(el.getImVarFinanziatoRimodulato()));
-			  				else
-			  					el.setImVarFinanziatoRimodulato(el.getSaldoSpesa().getDispAssestatoFinanziamento().negate());
-			  			} else if (el.getImVarFinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
-			  				el.setImVarFinanziatoRimodulato(BigDecimal.ZERO);
-			  		});
-		}
     }
-
+    
+    @Override
+	protected void completeAllegato(AllegatoProgettoRimodulazioneBulk allegato) throws ApplicationException {
+    	super.completeAllegato(allegato);
+		allegato.setDaNonEliminare(Boolean.FALSE);
+    	if (Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance).map(Progetto_rimodulazioneBulk.class::cast)
+    			.filter(el->el.isStatoProvvisorio())
+    			.isPresent()){
+    		if (allegato.isRimodulazione() || allegato.isProroga())
+    			allegato.setDaNonEliminare(Boolean.TRUE);
+    	} 
+	}
+    
     public void validaImportoCofinanziatoRimodulato(ActionContext actioncontext, Optional<Progetto_piano_economicoBulk> optPpe) throws ValidationException {
         boolean isAddVoceBilancio = optPpe.flatMap(el->Optional.ofNullable(el.getVoce_piano_economico()))
 										.map(Voce_piano_economico_prgBulk::getFl_add_vocibil)

@@ -28,6 +28,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
@@ -580,7 +581,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         }
         if (!this.isFlInformix()) {
             Progetto_other_fieldBulk otherField = new Progetto_other_fieldBulk();
-            otherField.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
+            otherField.setStato(StatoProgetto.STATO_INIZIALE.value());
             otherField.setToBeCreated();
             progetto.setOtherField(otherField);
         }
@@ -755,25 +756,19 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     }
 
     public boolean isRiapriButtonHidden() {
-        return !((Optional.ofNullable(this.getModel())
+        return !(Optional.ofNullable(this.getModel())
+		                 .filter(ProgettoBulk.class::isInstance)
+		                 .map(ProgettoBulk.class::cast)
+		                 .flatMap(el -> Optional.ofNullable(el.getOtherField()))
+		                 .map(Progetto_other_fieldBulk::isStatoChiuso)
+		                 .orElse(Boolean.FALSE) &&
+        		(uoScrivania.isUoEnte() ||
+        		 Optional.ofNullable(this.getModel())
                         .filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getCd_unita_organizzativa()))
                         .filter(el -> el.equals(uoScrivania.getCd_unita_organizzativa()))
-                        .isPresent()&&
-                Optional.ofNullable(this.getModel())
-                        .filter(ProgettoBulk.class::isInstance)
-                        .map(ProgettoBulk.class::cast)
-                        .flatMap(el -> Optional.ofNullable(el.getOtherField()))
-                        .map(Progetto_other_fieldBulk::isStatoChiuso)
-                        .orElse(Boolean.FALSE))||
-                Optional.ofNullable(this.getModel())
-                        .filter(ProgettoBulk.class::isInstance)
-                        .map(ProgettoBulk.class::cast)
-                        .flatMap(el -> Optional.ofNullable(el.getCd_unita_organizzativa()))
-                        .map(el -> uoScrivania.isUoEnte())
-                        .orElse(Boolean.FALSE)
-        );
+                        .isPresent()));
     }
 
     public boolean isRimodulaButtonHidden() {
@@ -828,16 +823,16 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 
         Optional<Progetto_other_fieldBulk> optOtherField = optProgetto.flatMap(el -> Optional.ofNullable(el.getOtherField()));
 
-        if (Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(newStato)) {
+        if (StatoProgetto.STATO_NEGOZIAZIONE.value().equals(newStato)) {
             if (!optOtherField.get().isStatoIniziale())
                 throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"NEGOZIAZIONE\".");
-        } else if (Progetto_other_fieldBulk.STATO_APPROVATO.equals(newStato)) {
+        } else if (StatoProgetto.STATO_APPROVATO.value().equals(newStato)) {
             if (!optOtherField.get().isStatoIniziale() && !optOtherField.get().isStatoNegoziazione())
                 throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"APPROVATO\".");
-        } else if (Progetto_other_fieldBulk.STATO_ANNULLATO.equals(newStato)) {
+        } else if (StatoProgetto.STATO_ANNULLATO.value().equals(newStato)) {
             if (!optOtherField.get().isStatoNegoziazione())
                 throw new ValidationException("Lo stato corrente del progetto non consente il suo aggiornamento allo stato \"ANNULLATO\".");
-        } else if (ProgettoBulk.STATO_CHIUSURA.equals(newStato)) {
+        } else if (StatoProgetto.STATO_CHIUSURA.value().equals(newStato)) {
             if (optProgetto.get().isDatePianoEconomicoRequired())
                 throw new ValidationException("Attenzione! Operazione non possibile in presenza delle date del progetto.");
         } else if (ProgettoBulk.STATO_RIAPERTURA.equals(newStato)) {
@@ -861,8 +856,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         validateStato(context, optProgetto, newStato);
 
         //effettuo l'operazione richiesta
-        if (Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(newStato) || Progetto_other_fieldBulk.STATO_APPROVATO.equals(newStato) ||
-                Progetto_other_fieldBulk.STATO_ANNULLATO.equals(newStato)) {
+        if (StatoProgetto.STATO_NEGOZIAZIONE.value().equals(newStato) || StatoProgetto.STATO_APPROVATO.value().equals(newStato) ||
+        		StatoProgetto.STATO_ANNULLATO.value().equals(newStato)) {
             optOtherField.get().setStato(newStato);
             optOtherField.get().setToBeUpdated();
             if (!optProgetto.get().isDatePianoEconomicoRequired()) {
@@ -870,7 +865,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
                 optOtherField.get().setDtFine(null);
                 optOtherField.get().setDtProroga(null);
             }
-        } else if (ProgettoBulk.STATO_CHIUSURA.equals(newStato)) {
+        } else if (StatoProgetto.STATO_CHIUSURA.value().equals(newStato)) {
             optOtherField.get().setDtInizio(null);
             optOtherField.get().setDtProroga(null);
             optOtherField.get().setDtFine(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()));
@@ -892,10 +887,10 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         Optional<Progetto_other_fieldBulk> optOtherField = optProgetto.flatMap(el -> Optional.ofNullable(el.getOtherField()));
 
         if (optOtherField.isPresent() &&
-                (Progetto_other_fieldBulk.STATO_NEGOZIAZIONE.equals(stato) ||
-                        Progetto_other_fieldBulk.STATO_APPROVATO.equals(stato) ||
-                        ProgettoBulk.STATO_CHIUSURA.equals(stato) ||
-                        Progetto_other_fieldBulk.STATO_ANNULLATO.equals(stato))) {
+                (StatoProgetto.STATO_NEGOZIAZIONE.value().equals(stato) ||
+                 StatoProgetto.STATO_APPROVATO.value().equals(stato) ||
+                 StatoProgetto.STATO_CHIUSURA.value().equals(stato) ||
+                 StatoProgetto.STATO_ANNULLATO.value().equals(stato))) {
             if (!optOtherField.flatMap(el -> Optional.ofNullable(el.getTipoFinanziamento()))
                     .flatMap(el -> Optional.ofNullable(el.getCodice())).isPresent())
                 throw new ValidationException("Operazione non possibile! Indicare il tipo di finanziamento!");
