@@ -1,7 +1,6 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.ejb.EJBException;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
@@ -23,17 +21,13 @@ import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_area_progBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
@@ -55,9 +49,7 @@ import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_sacBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -575,7 +567,7 @@ public class ProgettoHome extends BulkHome {
 				if (progetto_other_fieldBulk == null) {
                     progetto_other_fieldBulk = new Progetto_other_fieldBulk();
                     progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
-                    progetto_other_fieldBulk.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
+                    progetto_other_fieldBulk.setStato(StatoProgetto.STATO_INIZIALE.value());
                     progetto_other_fieldBulk.setUser(CNRUserContext.getUser(userContext));
                     progetto_other_fieldBulk.setToBeCreated();
                     progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);

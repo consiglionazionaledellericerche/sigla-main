@@ -3,10 +3,11 @@ package it.cnr.contab.progettiric00.core.bulk;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Dictionary;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
+import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkList;
@@ -24,32 +27,25 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.si.spring.storage.StorageService;
 
 public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase implements AllegatoParentBulk {
-	public static final String STATO_PROVVISORIO = "P";
-	public static final String STATO_DEFINITIVO = "D";
-	public static final String STATO_APPROVATO = "A";
-	public static final String STATO_RESPINTO = "R";
+    public final static Map<String,String> statoKeys = Arrays.asList(StatoProgettoRimodulazione.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		StatoProgettoRimodulazione::value,
+            		StatoProgettoRimodulazione::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
+    
+    public final static Map<String,String> statoOfKeys = Arrays.asList(StatoProgetto.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		StatoProgetto::value,
+            		StatoProgetto::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
 
 	protected ProgettoBulk progetto;
-	
-	public final static Dictionary statoKeys;
-	static {
-		statoKeys = new it.cnr.jada.util.OrderedHashtable();
-		statoKeys.put(STATO_PROVVISORIO,"Provvisorio");
-		statoKeys.put(STATO_DEFINITIVO,"Definitivo");
-		statoKeys.put(STATO_APPROVATO,"Approvato");
-		statoKeys.put(STATO_RESPINTO,"Respinto");
-	};
-
-	public final static Dictionary statoOfKeys;
-	static {
-		statoOfKeys = new it.cnr.jada.util.OrderedHashtable();
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_INIZIALE,"Iniziale");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE,"Negoziazione");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_APPROVATO,"Approvato");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_ANNULLATO,"Annullato");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_MIGRAZIONE,"Migrazione");
-		statoOfKeys.put(ProgettoBulk.STATO_CHIUSURA,"Chiuso");
-	};
 	
 	private BulkList<Progetto_rimodulazione_ppeBulk> dettagliRimodulazione = new BulkList<Progetto_rimodulazione_ppeBulk>();
 	private BulkList<Progetto_rimodulazione_voceBulk> dettagliVoceRimodulazione = new BulkList<Progetto_rimodulazione_voceBulk>();
@@ -108,23 +104,23 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	}
 	
 	public boolean isStatoProvvisorio() {
-		return STATO_PROVVISORIO.equals(this.getStato());
+		return StatoProgettoRimodulazione.STATO_PROVVISORIO.value().equals(this.getStato());
 	}
 	
 	public boolean isStatoDefinitivo() {
-		return STATO_DEFINITIVO.equals(this.getStato());
+		return StatoProgettoRimodulazione.STATO_DEFINITIVO.value().equals(this.getStato());
+	}
+
+	public boolean isStatoValidato() {
+		return StatoProgettoRimodulazione.STATO_VALIDATO.value().equals(this.getStato());
 	}
 
 	public boolean isStatoApprovato() {
-		return STATO_APPROVATO.equals(this.getStato());
+		return StatoProgettoRimodulazione.STATO_APPROVATO.value().equals(this.getStato());
 	}
 
 	public boolean isStatoRespinto() {
-		return STATO_RESPINTO.equals(this.getStato());
-	}
-	
-	public Dictionary getStatoKeys() {
-		return statoKeys;
+		return StatoProgettoRimodulazione.STATO_RESPINTO.value().equals(this.getStato());
 	}
 	
 	public int addToDettagliRimodulazione(Progetto_rimodulazione_ppeBulk dett) {

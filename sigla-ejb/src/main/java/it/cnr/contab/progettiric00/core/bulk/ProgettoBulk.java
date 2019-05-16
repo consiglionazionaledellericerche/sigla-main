@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
@@ -59,7 +61,6 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 	public static final String TIPO_FASE_SEARCH_PREVISIONE_E_GESTIONE ="X";
 	public static final String TIPO_FASE_SEARCH_ALL ="A";
 
-	public static final String STATO_CHIUSURA = "CHI";
 	public static final String STATO_RIAPERTURA = "RIA";
 
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
@@ -101,7 +102,7 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 		durata_progettoKeys.put(DURATA_PROGETTO_PLURIENNALE,"Pluriennale");
 		durata_progettoKeys.put(DURATA_PROGETTO_ANNUALE,"Annuale");
 	};
-		public final static Dictionary livello_progettoKeys;
+	public final static Dictionary livello_progettoKeys;
 		static {
 		livello_progettoKeys = new it.cnr.jada.util.OrderedHashtable();
 		livello_progettoKeys.put(LIVELLO_PROGETTO_PRIMO,"Progetto");
@@ -121,17 +122,15 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 			livello_progetto2016Keys.put(new Integer(i),"Sottogruppo");
 	};
 	
-	public final static Dictionary statoOfKeys;
-	static {
-		statoOfKeys = new it.cnr.jada.util.OrderedHashtable();
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_INIZIALE,"Iniziale");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE,"Negoziazione");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_APPROVATO,"Approvato");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_ANNULLATO,"Annullato");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_MIGRAZIONE,"Migrazione");
-		statoOfKeys.put(ProgettoBulk.STATO_CHIUSURA,"Chiuso");
-	};
-	
+    public final static Map<String,String> statoOfKeys = Arrays.asList(StatoProgetto.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		StatoProgetto::value,
+            		StatoProgetto::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
+    
 	private Tipo_progettoBulk tipo;
 	private Unita_organizzativaBulk unita_organizzativa;
 	private TerzoBulk responsabile;
@@ -1237,7 +1236,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	public String getStatoPrg() {
 		Optional<Progetto_other_fieldBulk> optPrg = Optional.ofNullable(this.getOtherField());
 		if (optPrg.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent())
-			return ProgettoBulk.STATO_CHIUSURA;
+			return StatoProgetto.STATO_CHIUSURA.value();
 		return optPrg.map(el->el.getStato()).orElse(null);
 	}
 	
@@ -1325,5 +1324,13 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 					.orElse("");
 		else
 			return "0";
+	}
+	
+	public boolean isStatoPrgApprovato() {
+		return StatoProgetto.STATO_APPROVATO.value().equals(this.getStatoPrg());
+	}
+
+	public boolean isStatoPrgChiuso() {
+		return StatoProgetto.STATO_CHIUSURA.value().equals(this.getStatoPrg());
 	}
 }

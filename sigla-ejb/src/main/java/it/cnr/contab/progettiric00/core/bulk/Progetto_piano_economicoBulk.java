@@ -1,7 +1,6 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
@@ -13,10 +12,12 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.util.OrderedHashtable;
 
 public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
+	private static final long serialVersionUID = 1L;
+
 	private Voce_piano_economico_prgBulk voce_piano_economico;
 	private ProgettoBulk progetto;
 	private Progetto_rimodulazioneBulk progettoRimodulazione;
-	private BulkList<Ass_progetto_piaeco_voceBulk> vociBilancioAssociate = new BulkList();
+	private BulkList<Ass_progetto_piaeco_voceBulk> vociBilancioAssociate = new BulkList<Ass_progetto_piaeco_voceBulk>();
 
 	private java.math.BigDecimal imSpesaFinanziatoRimodulato;
 	private java.math.BigDecimal imSpesaCofinanziatoRimodulato;
@@ -348,14 +349,7 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 					"\rAssegnata (" + new it.cnr.contab.util.EuroFormat().format(this.getImSpesaCofinanziatoRimodulato())+")"+
 					" - Assestato (" + new it.cnr.contab.util.EuroFormat().format(this.getImAssestatoSpesaCofinanziatoRimodulato())+")"+
 					" = " + new it.cnr.contab.util.EuroFormat().format(el)+" - Valore negativo non consentito."));
-	
-			Optional.ofNullable(this.getVociBilancioAssociate())
-				.map(List::stream)
-				.orElse(Stream.empty())
-				.filter(el->Optional.ofNullable(el.getMessageAnomaliaDetailRimodulato()).isPresent())
-				.findAny()
-				.ifPresent(el->anomalia.add("VOCI ASSOCIATE:" +
-						"\rAlcune voci associate presentano anomalie da correggere."));
+
 		}
 		return Optional.ofNullable(anomalia).filter(el->el.length()>0).map(StringJoiner::toString).orElse(null);
 	}
@@ -381,14 +375,5 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 					.map(lastEse->lastEse.compareTo(esePpe)>=0)
 					.orElse(Boolean.TRUE);
 		}).orElse(Boolean.TRUE);
-	}
-
-	/**
-	 * Indica se l'anno del piano economico è all'interno del periodo di validità comreso
-	 * tra l'anno di attivazione del piano economico e l'ultimo anno contabile attivo
-	 * @return
-	 */
-	public boolean isQuadraturaVariazioniRequired() {
-		return isEsercizioPianoAttivo();
 	}
 }

@@ -1532,8 +1532,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			List<Pdg_modulo_speseBulk> pdgModuloList = new it.cnr.jada.bulk.BulkList(pdgModuloHome.fetchAll(sqlPdgModulo));
 		
 			if (pdgModuloList.size()>0 &&
-				!(Progetto_other_fieldBulk.STATO_APPROVATO.equals(progetto.getStatoPrg()) ||
-					ProgettoBulk.STATO_CHIUSURA.equals(progetto.getStatoPrg()))) {
+				!(progetto.isStatoPrgApprovato() || progetto.isStatoPrgChiuso())) {
 				throw new ApplicationRuntimeException("Attenzione: il progetto risulta già inserito in previsione. "
 						+ "Non è possibile attibuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
 			}
@@ -1662,8 +1661,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			List<Pdg_modulo_spese_gestBulk> pdgModuloGestList = new it.cnr.jada.bulk.BulkList(pdgModuloGestHome.fetchAll(sqlPdgModuloGest));
 
 			if (pdgModuloGestList.size()>0 &&
-				!(Progetto_other_fieldBulk.STATO_APPROVATO.equals(progetto.getStatoPrg()) ||
-					ProgettoBulk.STATO_CHIUSURA.equals(progetto.getStatoPrg()))) {
+				!(progetto.isStatoPrgApprovato() || progetto.isStatoPrgChiuso())) {
 				throw new ApplicationRuntimeException("Attenzione: il progetto risulta già inserito in previsione. "
 						+ "Non è possibile attibuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
 			}
@@ -1914,8 +1912,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 								List<Pdg_modulo_costiBulk> pdgModuloList = new it.cnr.jada.bulk.BulkList(pdgModuloHome.fetchAll(sqlPdgModulo));
 
 								if (pdgModuloList.size()>0 &&
-									!(Progetto_other_fieldBulk.STATO_APPROVATO.equals(progetto.getStatoPrg()) ||
-										ProgettoBulk.STATO_CHIUSURA.equals(progetto.getStatoPrg()))) {
+									!(progetto.isStatoPrgApprovato() || progetto.isStatoPrgChiuso())) {
 									throw new ApplicationRuntimeException("Attenzione: il progetto risulta già inserito in previsione. "
 											+ "Non è possibile attibuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
 								}

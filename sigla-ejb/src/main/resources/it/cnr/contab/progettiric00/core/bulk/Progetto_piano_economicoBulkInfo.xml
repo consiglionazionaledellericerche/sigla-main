@@ -193,6 +193,22 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Assestato Spesa" />
 	<fieldProperty
+		name="im_assestato_spesa_finanziata"
+		property="saldoSpesa.assestatoFinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa Finanziata" />
+	<fieldProperty
+		name="im_assestato_spesa_cofinanziata"
+		property="saldoSpesa.assestatoCofinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa Cofinanziata" />
+	<fieldProperty
 		name="im_disp_residua_spesa_finanziata"
 		property="dispResiduaFinanziamento"
 		inputSize="20"
@@ -225,6 +241,22 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Impegni" />
 	<fieldProperty
+		name="imUtilizzatoAssestatoFinanziamento"
+		property="saldoSpesa.utilizzatoAssestatoFinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Utilizzato Assestato Spesa Finanziato" />
+	<fieldProperty
+		name="imUtilizzatoAssestatoCofinanziamento"
+		property="saldoSpesa.utilizzatoAssestatoCofinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Utilizzato Assestato Spesa Cofinanziato" />
+	<fieldProperty
 		name="im_manris_spesa"
 		property="saldoSpesa.manris"
 		inputSize="20"
@@ -232,6 +264,22 @@
 		inputType="TEXT"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Mandati" />
+	<fieldProperty
+		name="im_manris_spesa_finanziata"
+		property="saldoSpesa.manrisFin"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati Finanziato" />
+	<fieldProperty
+		name="im_manris_spesa_cofinanziata"
+		property="saldoSpesa.manrisCofin"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati Cofinanziato" />
 
 	<fieldProperty
 		name="imAssestatoSpesaFinanziatoRimodulato"
@@ -277,12 +325,18 @@
 	<formFieldProperty name="im_assestato_entrata" />
 	<formFieldProperty name="im_disp_residua_entrata" />
 	<formFieldProperty name="im_assestato_spesa" />
+	<formFieldProperty name="im_assestato_spesa_finanziata" />
+	<formFieldProperty name="im_assestato_spesa_cofinanziata" />
 	<formFieldProperty name="im_disp_residua_spesa_finanziata" />
 	<formFieldProperty name="im_disp_residua_spesa_cofinanziata" />
+
 	<formFieldProperty name="im_trasferito_spesa" />
-	
 	<formFieldProperty name="im_impacc_spesa" />
+	<formFieldProperty name="imUtilizzatoAssestatoFinanziamento" />
+	<formFieldProperty name="imUtilizzatoAssestatoCofinanziamento" />
 	<formFieldProperty name="im_manris_spesa" />
+	<formFieldProperty name="im_manris_spesa_finanziata" />
+	<formFieldProperty name="im_manris_spesa_cofinanziata" />
 
 	<formFieldProperty name="imAssestatoSpesaFinanziatoRimodulato" />
 	<formFieldProperty name="imAssestatoSpesaCofinanziatoRimodulato" />
@@ -299,11 +353,17 @@
 	<columnFieldProperty name="im_assestato_entrata" />
 	<columnFieldProperty name="im_disp_residua_entrata" />
 	<columnFieldProperty name="im_assestato_spesa" />
+	<columnFieldProperty name="im_assestato_spesa_finanziata" />
+	<columnFieldProperty name="im_assestato_spesa_cofinanziata" />
 	<columnFieldProperty name="im_disp_residua_spesa_finanziata" />
 	<columnFieldProperty name="im_disp_residua_spesa_cofinanziata" />
 	<columnFieldProperty name="im_trasferito_spesa" />
 	<columnFieldProperty name="im_impacc_spesa" />
+	<columnFieldProperty name="imUtilizzatoAssestatoFinanziamento" />
+	<columnFieldProperty name="imUtilizzatoAssestatoCofinanziamento" />
 	<columnFieldProperty name="im_manris_spesa" />
+	<columnFieldProperty name="im_manris_spesa_finanziata" />
+	<columnFieldProperty name="im_manris_spesa_cofinanziata" />
 
 	<findFieldProperty name="cd_voce_piano" />
 	<findFieldProperty name="ds_voce_piano" />
@@ -337,40 +397,40 @@
 			label="Descrizione"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Finanziata"/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Assegnata (A)"/>
+		<columnFieldProperty
+			name="im_assestato_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
 		<columnFieldProperty
 			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
+			headerLabel="QUOTE COFINANZIATE"
+			label="Assegnata (B)"/>
+		<columnFieldProperty
+			name="im_assestato_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
 			name="imTotaleSpesa"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Totale"/> 
-		<columnFieldProperty 
-			name="im_disp_residua_spesa_finanziata"
-			headerLabel="QUOTE DA STANZIARE"
-			label="Finanziata"/>
-		<columnFieldProperty 
-			name="im_disp_residua_spesa_cofinanziata"
-			headerLabel="QUOTE DA STANZIARE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="im_assestato_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato"/>
-		<columnFieldProperty 
-			name="im_trasferito_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Trasferito"/>
-		<columnFieldProperty 
-			name="im_impacc_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Impegnato"/>
-		<columnFieldProperty 
-			name="im_manris_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Pagato"/>
+			headerLabel="TOTALE QUOTE PE"
+			label="Assegnata (A + B)"/>
 	</columnSet>
 	
 	<columnSet name="piano_economico_rimodulato">
@@ -390,24 +450,32 @@
 			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE QUOTE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>
 	
 	<columnSet name="piano_economico_rimodulato_current">
@@ -427,36 +495,44 @@
 			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesa"
-			headerLabel="QUOTE CORRENTI"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Corrente (A)"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Corrente (B)"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="TOTALE QUOTE PE"
+			label="Corrente (A + B)"/> 
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>
 
 	<form name="piano_economico1">
@@ -479,40 +555,40 @@
 			label="Descrizione"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Finanziata"/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Assegnata (A)"/>
+		<columnFieldProperty
+			name="im_assestato_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
 		<columnFieldProperty
 			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
+			headerLabel="QUOTE COFINANZIATE"
+			label="Assegnata (B)"/>
+		<columnFieldProperty
+			name="im_assestato_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
 			name="imTotaleSpesa"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Totale"/> 
-		<columnFieldProperty 
-			name="im_disp_residua_spesa_finanziata"
-			headerLabel="QUOTE DA STANZIARE"
-			label="Finanziata"/>
-		<columnFieldProperty 
-			name="im_disp_residua_spesa_cofinanziata"
-			headerLabel="QUOTE DA STANZIARE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="im_assestato_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato"/>
-		<columnFieldProperty 
-			name="im_trasferito_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Trasferito"/>
-		<columnFieldProperty 
-			name="im_impacc_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Impegnato"/>
-		<columnFieldProperty 
-			name="im_manris_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Pagato"/>
+			headerLabel="TOTALE QUOTE PE"
+			label="Assegnata (A + B)"/>	
 	</columnSet>
 
 	<columnSet name="piano_economico1_rimodulato">
@@ -528,24 +604,32 @@
 			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>
 	
 	<columnSet name="piano_economico1_rimodulato_current">
@@ -561,36 +645,44 @@
 			descProperty="messageAnomaliaDetailRimodulato"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesa"
-			headerLabel="QUOTE CORRENTI"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Corrente (A)"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Corrente (B)"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="TOTALE QUOTE PE"
+			label="Corrente (A + B)"/> 
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE QUOTE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>
 		
 	<form name="piano_economico2">
@@ -610,40 +702,40 @@
 			label="Esercizio"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Finanziata"/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Assegnata (A)"/>
+		<columnFieldProperty
+			name="im_assestato_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
 		<columnFieldProperty
 			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
+			headerLabel="QUOTE COFINANZIATE"
+			label="Assegnata (B)"/>
+		<columnFieldProperty
+			name="im_assestato_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
 			name="imTotaleSpesa"
-			headerLabel="QUOTE PIANO ECONOMICO"
-			label="Totale"/> 
-		<columnFieldProperty 
-			name="im_disp_residua_spesa_finanziata"
-			headerLabel="QUOTE DA STANZIARE"
-			label="Finanziata"/>
-		<columnFieldProperty 
-			name="im_disp_residua_spesa_cofinanziata"
-			headerLabel="QUOTE DA STANZIARE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="im_assestato_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Assestato"/>
-		<columnFieldProperty 
-			name="im_trasferito_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Trasferito"/>
-		<columnFieldProperty 
-			name="im_impacc_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Impegnato"/>
-		<columnFieldProperty 
-			name="im_manris_spesa"
-			headerLabel="SITUAZIONE SPESA"
-			label="Pagato"/>
+			headerLabel="TOTALE QUOTE PE"
+			label="Assegnata (A + B)"/>	
 	</columnSet>
 	
 	<columnSet name="piano_economico2_rimodulato">
@@ -652,24 +744,32 @@
 			label="Esercizio"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE QUOTE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>
 		
 	<columnSet name="piano_economico2_rimodulato_current">
@@ -678,36 +778,44 @@
 			label="Esercizio"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesa"
-			headerLabel="QUOTE CORRENTI"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Corrente (A)"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Corrente (B)"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="TOTALE QUOTE PE"
+			label="Corrente (A + B)"/> 
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE QUOTE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>
 		
 	<columnSet name="piano_economico3_rimodulato">
@@ -721,24 +829,32 @@
 			label="Descrizione"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE QUOTE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>	
 
 	<columnSet name="piano_economico3_rimodulato_current">
@@ -752,35 +868,43 @@
 			label="Descrizione"/>
 		<columnFieldProperty
 			name="im_spesa_finanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="im_spesa_cofinanziato"
-			headerLabel="QUOTE CORRENTI"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesa"
-			headerLabel="QUOTE CORRENTI"
-			label="Totale"/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Corrente (A)"/>
 		<columnFieldProperty
 			name="imSpesaFinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Finanziata"/>
-		<columnFieldProperty
-			name="imSpesaCofinanziatoRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Cofinanziata"/>
-		<columnFieldProperty 
-			name="imTotaleSpesaRimodulato"
-			headerLabel="QUOTE RIMODULATE"
-			label="Totale"/> 
+			headerLabel="QUOTE FINANZIATE"
+			label="Rimodulata (A1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaFinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Finanz. + Variaz."/>
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="im_spesa_cofinanziato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Corrente (B)"/>
+		<columnFieldProperty
+			name="imSpesaCofinanziatoRimodulato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Rimodulata (B1)"/>
 		<columnFieldProperty 
 			name="imAssestatoSpesaCofinanziatoRimodulato"
-			headerLabel="ASSESTATO"
-			label="Cofinanziato"/>
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty 
+			name="imTotaleSpesa"
+			headerLabel="TOTALE QUOTE PE"
+			label="Corrente (A + B)"/> 
+		<columnFieldProperty 
+			name="imTotaleSpesaRimodulato"
+			headerLabel="TOTALE QUOTE PE"
+			label="Rimodulata (A1 + B1)"/> 
 	</columnSet>	
 </bulkInfo>
