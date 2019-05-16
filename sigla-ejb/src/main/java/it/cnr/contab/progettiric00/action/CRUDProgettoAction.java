@@ -14,6 +14,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
@@ -29,10 +30,6 @@ import it.cnr.jada.util.action.OptionBP;
  * (Progetto)
  */
 public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
-
-    //Dimensione massima ammessa per il File
-    private static final long lunghezzaMax = 0x1000000;
-
     public CRUDProgettoAction() {
         super();
     }
@@ -268,7 +265,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if ( option == OptionBP.YES_BUTTON) 
 			{
 				TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-				bp.changeStato(context,Progetto_other_fieldBulk.STATO_NEGOZIAZIONE);
+				bp.changeStato(context,StatoProgetto.STATO_NEGOZIAZIONE.value());
 				bp.edit(context,bp.getModel());
 			}
 			return context.findDefaultForward();
@@ -300,7 +297,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if ( option == OptionBP.YES_BUTTON) 
 			{
 				TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-				bp.changeStato(context,Progetto_other_fieldBulk.STATO_APPROVATO);
+				bp.changeStato(context,StatoProgetto.STATO_APPROVATO.value());
 				bp.edit(context,bp.getModel());
 			}
 			return context.findDefaultForward();
@@ -332,7 +329,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if ( option == OptionBP.YES_BUTTON) 
 			{
 				TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-				bp.changeStato(context,Progetto_other_fieldBulk.STATO_ANNULLATO);
+				bp.changeStato(context,StatoProgetto.STATO_ANNULLATO.value());
 				bp.edit(context,bp.getModel());
 			}
 			return context.findDefaultForward();
@@ -365,7 +362,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if ( option == OptionBP.YES_BUTTON) 
 			{
 				TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
-				bp.changeStato(context,ProgettoBulk.STATO_CHIUSURA);
+				bp.changeStato(context,StatoProgetto.STATO_CHIUSURA.value());
 				bp.edit(context,bp.getModel());
 			}
 			return context.findDefaultForward();

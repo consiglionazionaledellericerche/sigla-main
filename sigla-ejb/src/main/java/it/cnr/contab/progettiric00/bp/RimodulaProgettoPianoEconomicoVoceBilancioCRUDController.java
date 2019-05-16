@@ -67,8 +67,6 @@ public class RimodulaProgettoPianoEconomicoVoceBilancioCRUDController extends Si
 			style.append("font-style:italic;font-weight:bold;");
 		if (assVoce.isDetailRimodulatoEliminato())
 			style.append("text-decoration: line-through;");
-		if (Optional.ofNullable(assVoce.getMessageAnomaliaDetailRimodulato()).isPresent())
-			style.append("color:red!important;");
 		return Optional.of(style).filter(el->el.length()>0).map(StringBuffer::toString).orElse(null);
 	};	
 	
