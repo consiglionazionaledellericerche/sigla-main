@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -128,7 +129,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 						if (esercizio.compareTo(CNRUserContext.getEsercizio(userContext))<0){
 							Var_stanz_resBulk varStanz = new Var_stanz_resBulk();
 							varStanz.setEsercizio(esercizio);
-							varStanz.setEsercizio_residuo(esercizio);
+							varStanz.setEsercizio_res(new Esercizio_baseBulk(esercizio));
 							varStanz.setTipologia_fin(fonte);
 							varStanz.setCdr(cdr);
 							
