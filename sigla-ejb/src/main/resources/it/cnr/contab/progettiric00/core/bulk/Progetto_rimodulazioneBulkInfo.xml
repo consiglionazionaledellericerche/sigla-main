@@ -13,8 +13,17 @@
 		inputSize="10"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		enabledOnSearch="true"
-		/>
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pg_gen_rimodulazione"
+		property="pg_gen_rimodulazione"
+		label="Prog.Gen."
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
 	<fieldProperty
 		name="find_progetto"
 		property="progetto"
@@ -27,6 +36,30 @@
       	enabledOnEdit="true"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progetto.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="progetto.ds_progetto"
+		maxLength="400"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3" />
+	<fieldProperty
+		name="unita_organizzativa_progetto"
+		property="progetto.unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="false"
+		label="UO Coordinatrice" />	
 	<fieldProperty
 		name="statoOf"
 		property="progetto.statoPrg"
@@ -95,6 +128,13 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="statoRadio"
+		property="stato"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		keysProperty="statoKeys"
+		label="Visualizza rimodulazioni in stato" />			
 	<fieldProperty
 		name="dtInizioRimodulato"
 		property="dtInizioRimodulato"
@@ -265,8 +305,13 @@
 		label="Visualizza Quote Correnti" />
 		
 	<formFieldProperty name="pg_rimodulazione" />
+	<formFieldProperty name="pg_gen_rimodulazione" />
 	<formFieldProperty name="find_progetto" />
+	<formFieldProperty name="cd_progetto" />
+	<formFieldProperty name="ds_progetto" />
+	<formFieldProperty name="unita_organizzativa_progetto" />
 	<formFieldProperty name="stato" />
+	<formFieldProperty name="statoRadio" />
 	<formFieldProperty name="dtInizioRimodulato" />
 	<formFieldProperty name="dtFineRimodulato" />
 	<formFieldProperty name="dtProrogaRimodulato" />
@@ -303,9 +348,15 @@
 	<formFieldProperty
 		name="imCofinanziatoOf" />
 
+	<columnFieldProperty name="pg_gen_rimodulazione" />
+	<columnFieldProperty name="cd_progetto" />
+	<columnFieldProperty name="ds_progetto" />
 	<columnFieldProperty name="pg_rimodulazione" />
 	<columnFieldProperty name="stato" />
 
-	<findFieldProperty name="stato" />
+	<findFieldProperty name="pg_gen_rimodulazione" />
+	<findFieldProperty name="cd_progetto" />
+	<findFieldProperty name="ds_progetto" />
 	<findFieldProperty name="pg_rimodulazione" />
+	<findFieldProperty name="stato" />
 </bulkInfo>

@@ -27,7 +27,11 @@ import it.cnr.jada.util.DateUtils;
 import it.cnr.si.spring.storage.StorageService;
 
 public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase implements AllegatoParentBulk {
-    public final static Map<String,String> statoKeys = Arrays.asList(StatoProgettoRimodulazione.values())
+	private static final long serialVersionUID = 1L;
+
+	public static final String STATO_RIMODULAZIONE_TUTTI = "TUTTI";
+
+	public final static Map<String,String> statoKeys = Arrays.asList(StatoProgettoRimodulazione.values())
             .stream()
             .collect(Collectors.toMap(
             		StatoProgettoRimodulazione::value,
@@ -370,9 +374,11 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 				.collect(Collectors.toList()));
 	}	
 
-	public BulkList<V_saldi_voce_progettoBulk> getVociMovimentateNonAssociate() {
+	public List<V_saldi_voce_progettoBulk> getVociMovimentateNonAssociate() {
 		return new BulkList<V_saldi_voce_progettoBulk>(
-				this.getProgetto().getVociBilancioMovimentate().stream()
+				Optional.ofNullable(this.getProgetto())
+				.flatMap(el->Optional.ofNullable(el.getVociBilancioMovimentate()))
+				.map(List::stream).orElse(Stream.empty())
 					.filter(voceMov->{
 						return !this.getDettagliPianoEconomicoAnnoCorrente().stream()
 								.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
