@@ -487,8 +487,20 @@ public ProgettoRicercaComponent() {
 		public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 		{
 		   ProgettoBulk progetto = (ProgettoBulk)bulk;
-		   ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+		   ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE_OTHER_FIELD");
 		   SQLBuilder sql = progettohome.createSQLBuilder();
+
+		   sql.setAutoJoins(true);
+		   sql.generateJoin("otherField", "PROGETTO_OTHER_FIELD");
+		   sql.addColumn("PROGETTO_OTHER_FIELD.DT_INIZIO");
+		   sql.addColumn("PROGETTO_OTHER_FIELD.DT_FINE");
+		   sql.addColumn("PROGETTO_OTHER_FIELD.DT_PROROGA");
+		   sql.addColumn("PROGETTO_OTHER_FIELD.IM_FINANZIATO");
+		   sql.addColumn("PROGETTO_OTHER_FIELD.IM_COFINANZIATO");
+		   
+		   sql.generateJoin(Progetto_other_fieldBulk.class, TipoFinanziamentoBulk.class, "tipoFinanziamento", "TIPO_FINANZIAMENTO");
+		   sql.addColumn("TIPO_FINANZIAMENTO.DESCRIZIONE");
+		   
 		   sql.addClause(clauses);
 		   sql.addClause(bulk.buildFindClauses(new Boolean(true)));
 		   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));

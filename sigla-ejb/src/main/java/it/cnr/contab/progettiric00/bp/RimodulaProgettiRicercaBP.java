@@ -318,9 +318,9 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
 			newToolbar[i] = toolbar[i];
-		newToolbar[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.definitiveSave");
-		newToolbar[i+1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.approva");
-		newToolbar[i+2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.nonApprova");
+		newToolbar[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.definitiveSave");
+		newToolbar[i+1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.valida");
+		newToolbar[i+2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.respingi");
         return newToolbar;
     }
     
@@ -1002,7 +1002,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 
 	@Override
 	public boolean isNewButtonHidden() {
-		return super.isNewButtonHidden() || Optional.ofNullable(this.getMainProgetto()).isPresent();
+		return true;
 	}
 
 	@Override
@@ -1021,8 +1021,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 				Optional.ofNullable(this.getModel())
 					.filter(Progetto_rimodulazioneBulk.class::isInstance)
 					.map(Progetto_rimodulazioneBulk.class::cast)
-					.map(el->el.isStatoProvvisorio() || 
-							(el.isStatoDefinitivo() && !el.getVariazioniModels().isEmpty()))
+					.map(el->el.isStatoProvvisorio())
 					.orElse(Boolean.FALSE);
 	}
 	
