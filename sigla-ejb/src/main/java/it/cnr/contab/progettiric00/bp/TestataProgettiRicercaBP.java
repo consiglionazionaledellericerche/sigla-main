@@ -110,49 +110,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         }        
     };
     
-    protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAnnoCorrente = new ProgettoPianoEconomicoVoceBilancioCRUDController("PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAnnoCorrente){
-        @Override
-        public boolean isGrowable() {
-            return super.isGrowable() &&
-                    Optional.ofNullable(getParentModel())
-                            .filter(ProgettoBulk.class::isInstance)
-                            .map(ProgettoBulk.class::cast)
-                            .map(el -> !el.isROProgettoForStato())
-                            .orElse(Boolean.FALSE);
-        }
-
-        @Override
-        public boolean isShrinkable() {
-            return super.isShrinkable() &&
-                    Optional.ofNullable(getParentModel())
-                            .filter(ProgettoBulk.class::isInstance)
-                            .map(ProgettoBulk.class::cast)
-                            .map(el -> !el.isROProgettoForStato())
-                            .orElse(Boolean.FALSE);
-        }     	
-    };
-    
-    protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAltriAnni = new ProgettoPianoEconomicoVoceBilancioCRUDController("PianoEconomicoVoceBilancioAltriAnni", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAltriAnni){
-        @Override
-        public boolean isGrowable() {
-            return super.isGrowable() &&
-                    Optional.ofNullable(getParentModel())
-                            .filter(ProgettoBulk.class::isInstance)
-                            .map(ProgettoBulk.class::cast)
-                            .map(el -> !el.isROProgettoForStato())
-                            .orElse(Boolean.FALSE);
-        }
-
-        @Override
-        public boolean isShrinkable() {
-            return super.isShrinkable() &&
-                    Optional.ofNullable(getParentModel())
-                            .filter(ProgettoBulk.class::isInstance)
-                            .map(ProgettoBulk.class::cast)
-                            .map(el -> !el.isROProgettoForStato())
-                            .orElse(Boolean.FALSE);
-        }     	
-    };
+    protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAnnoCorrente = new ProgettoPianoEconomicoVoceBilancioCRUDController("PianoEconomicoVoceBilancioAnnoCorrente", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAnnoCorrente);
+    protected SimpleDetailCRUDController crudPianoEconomicoVoceBilancioAltriAnni = new ProgettoPianoEconomicoVoceBilancioCRUDController("PianoEconomicoVoceBilancioAltriAnni", Ass_progetto_piaeco_voceBulk.class, "vociBilancioAssociate", crudPianoEconomicoAltriAnni);
 
     private boolean flNuovoPdg = false;
     private boolean flInformix = false;
@@ -163,6 +122,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     
     private Integer annoFromPianoEconomico;
     private Unita_organizzativaBulk uoScrivania;
+
     private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController("Dettagli", Progetto_uoBulk.class, "dettagli", this) {
         public void validateForDelete(ActionContext context, OggettoBulk detail)
                 throws ValidationException {

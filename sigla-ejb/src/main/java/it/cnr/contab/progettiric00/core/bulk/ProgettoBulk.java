@@ -1112,6 +1112,8 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 						return !this.getDettagliPianoEconomicoAnnoCorrente().stream()
 								.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
 								.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
+								.filter(voceAss->voceAss.getElemento_voce()!=null)
+								.filter(voceAss->voceAss.getEsercizio_voce()!=null)
 								.filter(voceAss->voceAss.getEsercizio_voce().equals(voceMov.getEsercizio_voce()))
 								.filter(voceAss->voceAss.getTi_appartenenza().equals(voceMov.getTi_appartenenza()))
 								.filter(voceAss->voceAss.getTi_gestione().equals(voceMov.getTi_gestione()))
