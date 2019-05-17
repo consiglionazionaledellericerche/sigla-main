@@ -87,6 +87,45 @@
 			columnSize="30"
 			nullable="true" />
 	</columnMap>
+
+	<columnMap
+		name="V_PROGETTO_PADRE_OTHER_FIELD"
+		tableName="V_PROGETTO_PADRE"
+		extends="V_PROGETTO_PADRE" >
+		<columnMapping
+			columnName="PROGETTO_OTHER_FIELD.DT_INIZIO"
+			propertyName="otherField.dtInizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PROGETTO_OTHER_FIELD.DT_FINE"
+			propertyName="otherField.dtFine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="PROGETTO_OTHER_FIELD.DT_PROROGA"
+			propertyName="otherField.dtProroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+			<columnMapping 
+			columnName="PROGETTO_OTHER_FIELD.IM_FINANZIATO" 
+			propertyName="otherField.imFinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" />	
+		<columnMapping 
+			columnName="PROGETTO_OTHER_FIELD.IM_COFINANZIATO" 
+			propertyName="otherField.imCofinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" />
+		<columnMapping
+			columnName="TIPO_FINANZIAMENTO.DESCRIZIONE"
+			propertyName="otherField.tipoFinanziamento.descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="1000" />			
+	</columnMap>
+
 	<columnMap
 		name="V_ABIL_PROGETTI"
 		tableName="V_ABIL_PROGETTI">

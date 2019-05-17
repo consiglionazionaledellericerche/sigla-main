@@ -1266,13 +1266,16 @@
 			name="cd_progetto_padre"
 			label="Area Progettuale"/>
 		<columnFieldProperty
-			name="cd_unita_organizzativa" />
+			name="cd_unita_organizzativa"
+			label="UO Coordinatrice" />
 		<columnFieldProperty
 			name="ds_progetto" />
 		<columnFieldProperty
-			name="cd_responsabile_terzo" />
-		<columnFieldProperty
 			name="dsTipoFinanziamentoOf" />
+		<columnFieldProperty
+			name="imFinanziatoOf" />
+		<columnFieldProperty
+			name="imCofinanziatoOf" />
 		<columnFieldProperty
 			name="dtInizioOf" />
 		<columnFieldProperty
@@ -1501,17 +1504,25 @@
 			name="cd_progetto_padre"
 			label="Area Progettuale"/>
 		<findFieldProperty
-			name="tipo_fase" />
+			name="cd_unita_organizzativa" 
+			label="UO Coordinatrice"/>
 		<findFieldProperty
-			name="cd_unita_organizzativa" />
+			name="ds_progetto" 
+			label="Descrizione Progetto"/>
 		<findFieldProperty
-			name="ds_progetto" />
+			name="dsTipoFinanziamentoOf" />
 		<findFieldProperty
-			name="cd_responsabile_terzo" />
+			name="imFinanziatoOf" />
 		<findFieldProperty
-			name="stato" />
+			name="imCofinanziatoOf" />
 		<findFieldProperty
-			name="durata_progetto" />
+			name="dtInizioOf" />
+		<findFieldProperty
+			name="dtFineOf" />
+		<findFieldProperty
+			name="dtProrogaOf" />
+		<findFieldProperty
+			name="statoOf" />
 	</freeSearchSet>
 
 	<form
