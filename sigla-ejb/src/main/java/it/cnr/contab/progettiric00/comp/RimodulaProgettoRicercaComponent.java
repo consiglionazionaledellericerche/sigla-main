@@ -12,15 +12,10 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.bulk.Var_stanz_resHome;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestHome;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestHome;
-import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -62,10 +57,6 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
 		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
-		SQLBuilder sqlExist = selectProgettoByClause(userContext, bulk, null, null);
-		sqlExist.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO"); 
-        
-		sql.addSQLExistsClause(FindClause.AND, sqlExist);
 		return sql;
 	}
 	
@@ -461,11 +452,16 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	
 			validaStatoDefinitivoRimodulazione(userContext, rimodulazione);
 
+			Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+			rimodulazione.setPg_gen_rimodulazione(
+				new Integer(((Integer)rimodHome.findAndLockMax( new Progetto_rimodulazioneBulk(), "pg_gen_rimodulazione", new Integer(0) )).intValue()+1));
 			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
 			rimodulazione.setToBeUpdated();
 			return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
+		} catch(it.cnr.jada.bulk.BusyResourceException e) {
+			 throw new it.cnr.jada.comp.ApplicationException("Operazione effettuata al momento da un'altro utente, riprovare successivamente.");
 		} catch(Exception e) {
 			throw handleException(e);
 		}

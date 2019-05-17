@@ -1,9 +1,14 @@
 package it.cnr.contab.progettiric00.action;
 
+import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Optional;
 
+import javax.ejb.RemoveException;
+
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
@@ -14,6 +19,7 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
+import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
@@ -22,9 +28,14 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.CRUDController;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.OptionBP;
+import it.cnr.jada.util.action.SelezionatoreListaAction;
+import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
  * Azione che gestisce le richieste relative alla Rimodulazione Gestione Progetto Risorse
@@ -33,6 +44,36 @@ import it.cnr.jada.util.action.SimpleCRUDBP;
 public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 	private static final long serialVersionUID = 1L;
 
+	public static class SelezionatoreRimodulazioneProgettoAction extends SelezionatoreListaAction {
+		private static final long serialVersionUID = 1L;
+
+		public SelezionatoreRimodulazioneProgettoAction() {
+			super();
+		}
+
+		public Forward doCambiaVisibilita(ActionContext actioncontext)
+				throws RemoteException {
+			SelezionatoreListaBP bp = (SelezionatoreListaBP)actioncontext.getBusinessProcess();
+			Progetto_rimodulazioneBulk bulk = (Progetto_rimodulazioneBulk)bp.getModel();
+			try {
+				fillModel(actioncontext);
+				String statoRimodulazione = bulk.getStato();
+				if (statoRimodulazione.equalsIgnoreCase(Progetto_rimodulazioneBulk.STATO_RIMODULAZIONE_TUTTI))
+					bulk.setStato(null);				
+				EJBCommonServices.closeRemoteIterator(actioncontext,bp.detachIterator());
+				bp.setIterator(actioncontext, ((RimodulaProgettoRicercaComponentSession)
+						bp.createComponentSession("CNRPROGETTIRIC00_EJB_RimodulaProgettoRicercaComponentSession", RimodulaProgettoRicercaComponentSession.class)).
+						cerca(actioncontext.getUserContext(), null, bulk));
+				bp.refresh(actioncontext);
+				bulk.setStato(statoRimodulazione);
+				return actioncontext.findDefaultForward();
+			} catch(Throwable e) {
+				bulk.setStato(null);
+				return handleException(actioncontext,e);
+			}
+		}
+	}
+	
 	public CRUDRimodulaProgettoAction() {
         super();
     }
@@ -512,4 +553,41 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 	public Forward doRiporta(ActionContext context,int option) {
 		return doRiporta(context);
 	}
+	
+	@Override
+	public Forward doCerca(ActionContext actioncontext) throws RemoteException,
+			InstantiationException, RemoveException {
+		try {
+
+			RimodulaProgettiRicercaBP rimodulaProgettiRicercaBP = (RimodulaProgettiRicercaBP) actioncontext.getBusinessProcess();
+			Progetto_rimodulazioneBulk bulk = (Progetto_rimodulazioneBulk) rimodulaProgettiRicercaBP.getModel();
+			fillModel(actioncontext);
+	        RemoteIterator remoteiterator = rimodulaProgettiRicercaBP.find(actioncontext, null, bulk);
+	        if(remoteiterator == null || remoteiterator.countElements() == 0)
+	        {
+	            EJBCommonServices.closeRemoteIterator(actioncontext,remoteiterator);
+	            rimodulaProgettiRicercaBP.setMessage("La ricerca non ha fornito alcun risultato.");
+	            return actioncontext.findDefaultForward();
+	        }
+	        if(remoteiterator.countElements() == 1)
+	        {
+	            OggettoBulk oggettobulk1 = (OggettoBulk)remoteiterator.nextElement();
+	            EJBCommonServices.closeRemoteIterator(actioncontext,remoteiterator);
+	            rimodulaProgettiRicercaBP.setMessage(FormBP.INFO_MESSAGE,"La ricerca ha fornito un solo risultato.");
+	            return doRiportaSelezione(actioncontext, oggettobulk1);
+	        } else
+	        {
+	        	rimodulaProgettiRicercaBP.setModel(actioncontext, bulk);
+	            SelezionatoreListaBP selezionatorelistabp = (SelezionatoreListaBP)actioncontext.createBusinessProcess("SelezionatoreRimodulazioneProgettoBP");
+	            selezionatorelistabp.setModel(actioncontext, bulk);
+	            selezionatorelistabp.setIterator(actioncontext, remoteiterator);
+	            selezionatorelistabp.setBulkInfo(rimodulaProgettiRicercaBP.getSearchBulkInfo());
+	            selezionatorelistabp.setColumns(getBusinessProcess(actioncontext).getSearchResultColumns());
+	            actioncontext.addHookForward("seleziona", this, "doRiportaSelezione");
+	            return actioncontext.addBusinessProcess(selezionatorelistabp);
+	        }
+		} catch (Exception e) {
+			return handleException(actioncontext, e);
+		}	
+	}	
 }

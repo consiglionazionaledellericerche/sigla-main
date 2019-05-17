@@ -39,11 +39,11 @@
 <fieldset class="fieldset">
 	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
 <%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","auto"); %>
-	</br>
+	</br></br>
 	<table class="Panel">
 	  <tr>
-	  	<TD><% controller.writeFormLabel(out,"elemento_voce");%></TD>
-	  	<TD><% controller.writeFormInput(out,null,"elemento_voce",isROProgettoForStato,null,null);%></TD>
+	  	<TD><% controllerVoci.writeFormLabel(out,"elemento_voce");%></TD>
+	  	<TD><% controllerVoci.writeFormInput(out,"elemento_voce");%></TD>
 	  </tr>	
 	</table>	
 </fieldset>
