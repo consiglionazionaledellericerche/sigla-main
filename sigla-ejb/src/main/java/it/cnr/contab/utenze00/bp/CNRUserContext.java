@@ -14,6 +14,16 @@ import java.util.Optional;
 
 public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	private static final long serialVersionUID = 1L;
+	public static final String LOGIN = "LOGIN";
+	public static final String CD_CDS = "cd_cds";
+	public static final String CD_UNITA_ORGANIZZATIVA = "cd_unita_organizzativa";
+	public static final String CD_CDR = "cd_cdr";
+	public static final String ESERCIZIO = "esercizio";
+	public static final String SESSION_ID = "sessionId";
+	public static final String HIDDEN_COLUMNS = "hiddenColumns";
+	public static final String USER = "user";
+	public static final String TRANSACTIONAL = "transactional";
+	public static final String BOOTSTRAP = "bootstrap";
 	private Hashtable<String, Serializable> attributes;
 	
 	public CNRUserContext() {
@@ -37,18 +47,20 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	public CNRUserContext(String user, String sessionId, Integer esercizio,
 			String cd_unita_organizzativa, String cd_cds, String cd_cdr) {
 		attributes = new Hashtable<String, Serializable>(7);
-		attributes.put("user", user);
-		if (esercizio != null)
-			attributes.put("esercizio", esercizio);
-		if (cd_unita_organizzativa != null)
-			attributes.put("cd_unita_organizzativa", cd_unita_organizzativa);
-		if (sessionId != null)		
-			attributes.put("sessionId", sessionId);
-		if (cd_cds != null)		
-			attributes.put("cd_cds", cd_cds);
-		if (cd_cdr != null)				
-			attributes.put("cd_cdr", cd_cdr);
-		attributes.put("hiddenColumns", new Hashtable<Object, Object>());
+		attributes.put(USER,
+				Optional.ofNullable(user).orElse(LOGIN));
+		Optional.ofNullable(esercizio)
+				.ifPresent(integer -> attributes.put(ESERCIZIO, integer));
+		Optional.ofNullable(cd_cds)
+				.ifPresent(s -> attributes.put(CD_CDS, s));
+		Optional.ofNullable(cd_unita_organizzativa)
+				.ifPresent(s -> attributes.put(CD_UNITA_ORGANIZZATIVA, s));
+		Optional.ofNullable(cd_cdr)
+				.ifPresent(s -> attributes.put(CD_CDR, s));
+		Optional.ofNullable(sessionId)
+				.ifPresent(s -> attributes.put(SESSION_ID, s));
+
+		attributes.put(HIDDEN_COLUMNS, new Hashtable<Object, Object>());
 	}
 
 	/**
@@ -58,7 +70,7 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 * @return Il valore della propriet? 'cd_cds'
 	 */
 	public java.lang.String getCd_cds() {
-		return (String) attributes.get("cd_cds");
+		return (String) attributes.get(CD_CDS);
 	}
 
 	/**
@@ -68,7 +80,7 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 * @return codice del cds
 	 */
 	public static String getCd_cds(it.cnr.jada.UserContext userContext) {
-		return (String) userContext.getAttributes().get("cd_cds");
+		return (String) userContext.getAttributes().get(CD_CDS);
 	}
 
 	/**
@@ -78,11 +90,11 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 * @return Il valore della propriet? 'cd_unita_organizzativa'
 	 */
 	public void setCd_unita_organizzativa(java.lang.String cd_unita_organizzativa) {
-		attributes.put("cd_unita_organizzativa", cd_unita_organizzativa);
+		attributes.put(CD_UNITA_ORGANIZZATIVA, cd_unita_organizzativa);
 	}
 	
 	public java.lang.String getCd_unita_organizzativa() {
-		return (String) attributes.get("cd_unita_organizzativa");
+		return (String) attributes.get(CD_UNITA_ORGANIZZATIVA);
 	}
 
 	/**
@@ -94,7 +106,7 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 */
 	public static String getCd_unita_organizzativa(
 			it.cnr.jada.UserContext userContext) {
-		return (String) userContext.getAttributes().get("cd_unita_organizzativa");
+		return (String) userContext.getAttributes().get(CD_UNITA_ORGANIZZATIVA);
 	}
 
 	/**
@@ -104,12 +116,12 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 * @return Il valore della propriet? 'esercizio'
 	 */
 	public void setEsercizio(java.lang.Integer esercizio) {
-		attributes.put("esercizio", esercizio);
+		attributes.put(ESERCIZIO, esercizio);
 	}
 	
 	public java.lang.Integer getEsercizio() {
 		return Optional.ofNullable(attributes)
-				.map(attr -> attr.get("esercizio"))
+				.map(attr -> attr.get(ESERCIZIO))
 				.filter(Integer.class::isInstance)
 				.map(Integer.class::cast)
 				.orElseGet(() -> LocalDate.now().getYear());
@@ -126,22 +138,22 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 			it.cnr.jada.UserContext userContext) {
         return Optional.ofNullable(userContext)
                 .flatMap(userContext1 -> Optional.ofNullable(userContext1.getAttributes()))
-                .map(attr -> attr.get("esercizio"))
+                .map(attr -> attr.get(ESERCIZIO))
                 .filter(Integer.class::isInstance)
                 .map(Integer.class::cast)
                 .orElseGet(() -> LocalDate.now().getYear());
 	}
 
 	public final java.lang.String getSessionId() {
-		return (String) attributes.get("sessionId");
+		return (String) attributes.get(SESSION_ID);
 	}
 
 	public void setUser(java.lang.String user) {
-		attributes.put("user", user);
+		attributes.put(USER, user);
 	}
 
 	public final java.lang.String getUser() {
-		return (String) attributes.get("user");
+		return (String) attributes.get(USER);
 	}
 
 	/**
@@ -151,11 +163,11 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 * @return codice dell'Utente
 	 */
 	public static String getUser(it.cnr.jada.UserContext userContext) {
-		return (String) userContext.getAttributes().get("user");
+		return (String) userContext.getAttributes().get(USER);
 	}
 
 	public boolean isTransactional() {
-		Boolean result = (Boolean) attributes.get("transactional");
+		Boolean result = (Boolean) attributes.get(TRANSACTIONAL);
 		if (result == null)
 			return false;
 		return result;
@@ -168,11 +180,11 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	 *            Il valore da assegnare a 'cd_cds'
 	 */
 	public void setCd_cds(java.lang.String newCd_cds) {
-		attributes.put("cd_cds", newCd_cds);
+		attributes.put(CD_CDS, newCd_cds);
 	}
 
 	public void setTransactional(boolean newTransactional) {
-		attributes.put("transactional", newTransactional);
+		attributes.put(TRANSACTIONAL, newTransactional);
 	}
 
 	/**
@@ -185,19 +197,19 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 
 	@SuppressWarnings("unchecked")
 	public Dictionary<Object, Object> getHiddenColumns() {
-		return (Dictionary<Object, Object>) attributes.get("hiddenColumns");
+		return (Dictionary<Object, Object>) attributes.get(HIDDEN_COLUMNS);
 	}
 
 	public void setCd_cdr(java.lang.String cd_cdr) {
-		attributes.put("cd_cdr", cd_cdr);
+		attributes.put(CD_CDR, cd_cdr);
 	}
 
 	public java.lang.String getCd_cdr() {
-		return (String) attributes.get("cd_cdr");
+		return (String) attributes.get(CD_CDR);
 	}
 
 	public static String getCd_cdr(it.cnr.jada.UserContext userContext) {
-		return (String) userContext.getAttributes().get("cd_cdr");
+		return (String) userContext.getAttributes().get(CD_CDR);
 	}
 
 	public Hashtable<String, Serializable> getAttributes() {
@@ -210,7 +222,7 @@ public class CNRUserContext implements it.cnr.jada.UserContext, Principal {
 	}
 
 	public boolean isFromBootstrap() {
-		return (boolean) this.getAttributes().getOrDefault("bootstrap", false);		
+		return (boolean) this.getAttributes().getOrDefault(BOOTSTRAP, false);
 	}
 
 	public static boolean isFromBootstrap(it.cnr.jada.UserContext userContext) {
