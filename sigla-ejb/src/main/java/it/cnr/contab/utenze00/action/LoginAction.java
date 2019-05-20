@@ -537,9 +537,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     ui.getUtente().getCd_utente(),
                     context.getSessionId(),
                     ui.getEsercizio(),
-                    Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase(NULL)).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
-                    Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase(NULL)).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
-                    Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase(NULL)).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
+                    Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase(NULL))
+                            .orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
+                    Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase(NULL))
+                            .orElse(CNRUserContext.getCd_cds(context.getUserContext())),
+                    Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase(NULL))
+                            .orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
 
             ui.setUnita_organizzativa(Optional.ofNullable(uo)
                     .filter(x -> !x.equalsIgnoreCase(NULL))
