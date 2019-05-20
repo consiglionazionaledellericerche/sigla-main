@@ -5434,7 +5434,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             controlliQuadraturaTotaleFattura(aUC, fatturaAttiva, dettaglio, true);
         }
 
-        if (fatturaAttiva.isFatturaEstera() && fatturaAttiva.getPartita_iva() == null && fatturaAttiva.getCliente() != null && fatturaAttiva.getCliente().getAnagrafico() != null && fatturaAttiva.getCliente().getAnagrafico().isPersonaGiuridica() ){
+        if (fatturaAttiva.getFl_intra_ue() && fatturaAttiva.getPartita_iva() == null && fatturaAttiva.getCliente() != null && fatturaAttiva.getCliente().getAnagrafico() != null && fatturaAttiva.getCliente().getAnagrafico().isPersonaGiuridica() ){
             throw new it.cnr.jada.comp.ApplicationException("Non è possibile emettere una fattura attiva estera ad un cliente non persona fisica senza partita IVA");
         }
         
