@@ -15,7 +15,6 @@ public interface IteratorTracersLocal {
     @GET
     Response map(@Context HttpServletRequest request) throws Exception;
 
-    @GET
     @POST
     @Path("/test")
     Response test(@Context HttpServletRequest request) throws Exception;
