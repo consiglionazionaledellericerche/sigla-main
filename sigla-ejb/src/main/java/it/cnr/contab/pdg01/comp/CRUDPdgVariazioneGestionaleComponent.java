@@ -11,7 +11,9 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.EJBException;
@@ -21,9 +23,11 @@ import javax.mail.internet.InternetAddress;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
@@ -32,6 +36,7 @@ import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
@@ -52,6 +57,10 @@ import it.cnr.contab.prevent00.bulk.V_assestatoHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
+import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
@@ -59,15 +68,18 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.OptionRequestException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLExceptionHandler;
@@ -77,6 +89,36 @@ import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent {
+	private class CtrlVarPianoEco {
+		public CtrlVarPianoEco(ProgettoBulk progetto) {
+			super();
+			this.progetto = progetto;
+			this.imSpeseInterne = BigDecimal.ZERO;
+			this.imSpeseEsterne = BigDecimal.ZERO;
+		}
+		private ProgettoBulk progetto;
+		private BigDecimal imSpeseInterne;
+		private BigDecimal imSpeseEsterne;
+		public ProgettoBulk getProgetto() {
+			return progetto;
+		}
+		public void setProgetto(ProgettoBulk progetto) {
+			this.progetto = progetto;
+		}
+		public BigDecimal getImSpeseInterne() {
+			return imSpeseInterne;
+		}
+		public void setImSpeseInterne(BigDecimal imSpeseInterne) {
+			this.imSpeseInterne = imSpeseInterne;
+		}
+		public BigDecimal getImSpeseEsterne() {
+			return imSpeseEsterne;
+		}
+		public void setImSpeseEsterne(BigDecimal imSpeseEsterne) {
+			this.imSpeseEsterne = imSpeseEsterne;
+		}
+	}
+	
 	private class CtrlPianoEco {
 		public CtrlPianoEco(ProgettoBulk progetto, Timestamp dtScadenza, boolean cashFund) {
 			super();
@@ -208,6 +250,8 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_pdg.getSpesa_diff())+")"+
 												   "\n" + "per il Cdr "+ ass_pdg.getCd_centro_responsabilita()+ " è diversa da zero. ");
 			}
+
+			controllaRimodulazioneProgetto(userContext,pdg);
 
 			if (!pdg.isStorno() && !pdg.getTipo_variazione().isMovimentoSuFondi())
 				controllaQuadraturaImportiAree(userContext, pdg);
@@ -1389,5 +1433,126 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 		var = (Pdg_variazioneBulk) super.modificaConBulk(userContext, var);
 		aggiornaLimiteSpesa(userContext, var);
 		return var;
+	}
+	
+	/**
+	 * Metodo che verifica se esistono rimodulazioni in stato definitivo/approvato che richiedono variazioni di competenza a quadratura.
+	 * In tal caso restituisce un errore.
+	 * 
+	 * @param userContext
+	 * @param pdgVariazione La variazione che si sta rendendo definitiva
+	 * @throws it.cnr.jada.comp.ComponentException
+	 */
+	private void controllaRimodulazioneProgetto(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws it.cnr.jada.comp.ComponentException {
+		try {
+            List<CtrlVarPianoEco> listCtrlVarPianoEco = new ArrayList<CtrlVarPianoEco>();
+			Pdg_variazioneHome detHome = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
+            for (java.util.Iterator dett = detHome.findDettagliSpesaVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
+                Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
+
+				WorkpackageBulk latt = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext,CNRUserContext.getEsercizio(userContext),
+						rigaVar.getLinea_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_attivita().getCd_linea_attivita());
+				ProgettoBulk progetto = latt.getProgetto();
+
+				BigDecimal imSpeseInterne = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_int()).compareTo(BigDecimal.ZERO)!=0
+						?rigaVar.getIm_spese_gest_decentrata_int():Utility.nvl(rigaVar.getIm_spese_gest_accentrata_int());
+				BigDecimal imSpeseEsterne = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_est()).compareTo(BigDecimal.ZERO)!=0
+						?rigaVar.getIm_spese_gest_decentrata_est():Utility.nvl(rigaVar.getIm_spese_gest_accentrata_est());
+						
+				CtrlVarPianoEco varPianoEco = listCtrlVarPianoEco.stream()
+								.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+								.findFirst()
+								.orElse(new CtrlVarPianoEco(progetto));
+			
+				varPianoEco.setImSpeseInterne(varPianoEco.getImSpeseInterne().add(imSpeseInterne));
+				varPianoEco.setImSpeseEsterne(varPianoEco.getImSpeseEsterne().add(imSpeseEsterne));
+				
+				if (!listCtrlVarPianoEco.contains(varPianoEco))
+					listCtrlVarPianoEco.add(varPianoEco);
+			}
+            
+            if (Optional.ofNullable(pdgVariazione.getPg_progetto_rimodulazione()).isPresent()) {
+	            listCtrlVarPianoEco.stream().filter(el->!el.getProgetto().getPg_progetto().equals(pdgVariazione.getPg_progetto_rimodulazione()))
+	            .findFirst().ifPresent(el->{
+	            	throw new ApplicationRuntimeException("La variazione è associata alla rimodulazione del progetto "
+	                		+ pdgVariazione.getProgettoRimodulazione().getProgetto().getCd_progetto() + ". Non è possibile movimentare con essa altri "
+	        				+ "progetti ("+el.getProgetto().getCd_progetto());
+	            });
+            } else {
+            	/**
+            	 * Verifico che per i progetti movimentati non esistino rimodulazioni che richiedono variazioni di competenza
+            	 * che sono ancora in stato definitivo o approvato
+            	 */
+            	listCtrlVarPianoEco.stream().forEach(el->{
+	            	try {
+		            	Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome) getHome(userContext, Progetto_rimodulazioneBulk.class);
+		            	rimodHome.findRimodulazioni(userContext, el.getProgetto().getPg_progetto()).stream()
+		            	.filter(rim->rim.isStatoDefinitivo()||rim.isStatoValidato())
+		            	.findFirst().ifPresent(rim->{
+		            		try {
+		            			rim = rimodHome.rebuildRimodulazione(userContext, rim);
+			            		if (rim.getVariazioniModels().stream().filter(Pdg_variazioneBulk.class::isInstance).findFirst().isPresent())
+					            	throw new ApplicationRuntimeException("La variazione movimenta il progetto "+el.getProgetto().getCd_progetto()
+					            			+ " sul quale è in corso la rimodulazione nr."+rim.getPg_rimodulazione()+" (id:"
+					            			+ rim.getPg_gen_rimodulazione()+") che si trova attualmente in stato '"
+					            			+ (rim.isStatoDefinitivo()?"Definitivo":"Validato")+"' e richiede una variazione di competenza "
+					            			+ "a quadratura della stessa.</br> Non è effettuare variazioni sul progetto "
+					            			+ "fino a quando non vengono effettuate tutte le variazioni "
+					            			+ "a quadratura e/o la suddetta rimodulazione non viene approvata/respinta.");
+			            	} catch (PersistencyException ex){
+			            		throw new DetailedRuntimeException(ex);
+			            	}
+			            });
+	            	} catch (ComponentException|PersistencyException ex){
+	            		throw new DetailedRuntimeException(ex);
+	            	}
+	            });
+            }
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
+	
+	public SQLBuilder selectProgettoRimodulatoForSearchByClause(UserContext userContext, Pdg_variazioneBulk pdgVar, ProgettoBulk prg, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, prg,"V_PROGETTO_PADRE");
+		SQLBuilder sql = progettoHome.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause(FindClause.AND,"tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
+		
+		sql.addTableToHeader("PROGETTO_RIMODULAZIONE");
+		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
+		sql.addSQLClause(FindClause.AND,"PROGETTO_RIMODULAZIONE.STATO",SQLBuilder.EQUALS,StatoProgettoRimodulazione.STATO_VALIDATO.value());
+		
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		else
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+		
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniCommesse(userContext));
+		else
+			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniModuli(userContext));
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql; 
+	}	
+	
+	public SQLBuilder selectProgettoRimodulazioneByClause (UserContext userContext, Pdg_variazioneBulk pdgVar, Progetto_rimodulazioneBulk rimod, CompoundFindClause clause) throws ComponentException, PersistencyException{	
+		SQLBuilder sql = getHome(userContext, Progetto_rimodulazioneBulk.class, "V_PROGETTO_RIMODULAZIONE").createSQLBuilder();
+		sql.addClause( clause );
+		
+		sql.setAutoJoins(true);
+		sql.generateJoin("progetto", "PROGETTO");
+		sql.addColumn("PROGETTO.CD_PROGETTO");
+
+		sql.addSQLClause(FindClause.AND,"PROGETTO.ESERCIZIO",SQLBuilder.EQUALS,pdgVar.getEsercizio());
+		sql.addSQLClause(FindClause.AND,"PROGETTO.TIPO_FASE",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+		   
+//		sql.addClause(FindClause.AND,"stato",SQLBuilder.EQUALS,StatoProgettoRimodulazione.STATO_VALIDATO.value());
+		
+		return sql;
 	}
 }
