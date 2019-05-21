@@ -647,7 +647,7 @@ public class ProgettoHome extends BulkHome {
 	public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
 	}
 	
-	public java.util.Collection<Progetto_piano_economicoBulk> findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws IntrospectionException, PersistencyException {
+	public java.util.Collection<Progetto_piano_economicoBulk> findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws PersistencyException {
 		Progetto_piano_economicoHome dettHome = (Progetto_piano_economicoHome)getHomeCache().getHome(Progetto_piano_economicoBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
@@ -776,25 +776,21 @@ public class ProgettoHome extends BulkHome {
 		return varHome.fetchAll(sqlVar);
 	}
 	
-    public ProgettoBulk initializePianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean loadSaldi) throws ComponentException, PersistencyException {
-    	try {
-			List<Progetto_piano_economicoBulk> progettoPiano = new BulkList<Progetto_piano_economicoBulk>(this.findDettagliPianoEconomico(userContext,progetto.getPg_progetto()));
-			progettoPiano.stream().forEach(el->el.setProgetto(progetto));
-			progetto.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
-			progetto.setDettagliPianoEconomicoAnnoCorrente(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
-			progetto.setDettagliPianoEconomicoAltriAnni(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
+    public ProgettoBulk initializePianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean loadSaldi) throws PersistencyException {
+		List<Progetto_piano_economicoBulk> progettoPiano = new BulkList<Progetto_piano_economicoBulk>(this.findDettagliPianoEconomico(userContext,progetto.getPg_progetto()));
+		progettoPiano.stream().forEach(el->el.setProgetto(progetto));
+		progetto.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
+		progetto.setDettagliPianoEconomicoAnnoCorrente(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
+		progetto.setDettagliPianoEconomicoAltriAnni(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
 
-			if (loadSaldi)
-				loadSaldiPianoEconomico(userContext, progetto);
+		if (loadSaldi)
+			loadSaldiPianoEconomico(userContext, progetto);
 
-			getHomeCache().fetchAll(userContext);
-			return progetto;
-		} catch(Exception e) {
-			throw new PersistencyException( e );
-		}
+		getHomeCache().fetchAll(userContext);
+		return progetto;
 	}
 
-    public ProgettoBulk loadSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException, PersistencyException {
+    public ProgettoBulk loadSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws PersistencyException {
     	try {
 			progetto.setVociBilancioMovimentate(new BulkList<V_saldi_voce_progettoBulk>(((V_saldi_voce_progettoHome)getHomeCache().getHome(V_saldi_voce_progettoBulk.class))
 									.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio())));

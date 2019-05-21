@@ -12,7 +12,6 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.bulk.Var_stanz_resHome;
@@ -812,5 +811,14 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		} catch(Exception e) {
 			throw handleException(e);
 		}
-    }    
+    }
+	
+	public Progetto_rimodulazioneBulk rebuildRimodulazione(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		try {
+			Progetto_rimodulazioneHome homeRimod = (Progetto_rimodulazioneHome)getHome(userContext,Progetto_rimodulazioneBulk.class);
+			return homeRimod.rebuildRimodulazione(userContext, rimodulazione);
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
 }
