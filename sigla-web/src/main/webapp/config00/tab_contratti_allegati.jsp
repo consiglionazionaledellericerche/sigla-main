@@ -26,29 +26,31 @@ function doScaricaAllegato() {
 	  	<td>
 			<table class="Panel" cellspacing=2>
 				<tr><td  colspan="3">
-					<div class="Group"><table>
-					<tr><td valign=top>
-				    	<span class="FormLabel" style="color:red">Attenzione:</span>
-				    </td>
-				    <td valign=top>
-				    	<span class="FormLabel">
-						al fine di rispettare le norme in materia di tutela dei dati personali, <br>
-						prima di allegare il file del contratto da pubblicare sul sito internet istituzionale del CNR <br>
-						e' necessario verificare che lo stesso esponga <b><i><u>esclusivamente</u></i></b> i seguenti dati personali: <br>
-						<b><i>Nome, Cognome, Luogo e Data di nascita, Codice Fiscale</i></b> <br>
-						Ogni altro dato personale dovrà essere <b><i>"<u>oscurato</u>"</i></b><br><br>
-						</span>
-					</td></tr>
-					<tr><td valign=top>
-				    	<span class="FormLabel" style="color:red">Attenzione:</span>
-				    </td>
-				    <td valign=top>
-				    	<span class="FormLabel">
-						ai fini della pubblicazione sul sito internet istituzionale del CNR, <i><u>si raccomanda di usare file in formato PDF</u></i><br> 
-						e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilità dell'allegato utilizzando il bottone "Apri file"<br>
-						</span>
-					</td></tr>
-					</table></div>
+					<div class="Group Group card p-2 bg-danger text-white h5">
+                        <table>
+                            <tr><td valign=top>
+                                <span class="FormLabel">Attenzione:</span>
+                            </td>
+                            <td valign=top>
+                                <span class="FormLabel">
+                                al fine di rispettare le norme in materia di tutela dei dati personali, <br>
+                                prima di allegare il file del contratto da pubblicare sul sito internet istituzionale del CNR <br>
+                                e' necessario verificare che lo stesso esponga <b><i><u>esclusivamente</u></i></b> i seguenti dati personali: <br>
+                                <b><i>Nome, Cognome, Luogo e Data di nascita, Codice Fiscale</i></b> <br>
+                                Ogni altro dato personale dovrà essere <b><i>"<u>oscurato</u>"</i></b><br><br>
+                                </span>
+                            </td></tr>
+                            <tr><td valign=top>
+                                <span class="FormLabel">Attenzione:</span>
+                            </td>
+                            <td valign=top>
+                                <span class="FormLabel">
+                                ai fini della pubblicazione sul sito internet istituzionale del CNR, <i><u>si raccomanda di usare file in formato PDF</u></i><br>
+                                e di <i><u>controllare sempre</u></i>, dopo il salvataggio, la leggibilità dell'allegato utilizzando il bottone "Apri file"<br>
+                                </span>
+                            </td></tr>
+                        </table>
+					</div>
 				</td></tr>					
 				<tr>
 			        <td><% controller.writeFormLabel(out,"default","type"); %></td>
