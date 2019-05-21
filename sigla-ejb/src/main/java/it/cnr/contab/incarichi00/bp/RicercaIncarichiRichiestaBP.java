@@ -824,28 +824,6 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			}
 			elementRichiesta.appendChild(elementAltriRapporti);
 		}
-/*
-		// si dovranno togliere i due if innestati
-		if(incarico.getDt_stipula()!=null) {
-  	        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("ddMMyyyy");		
-  	        java.util.Date dataMinima = sdf.parse("13022008");
-  	        if (incarico.getDt_stipula().after(dataMinima)) {
-
-  	        	// aggiungiamo le Informazioni sull'URL del bando
-  	        	for (Iterator i = incarico.getListDownloadUrl().iterator();i.hasNext();){
-  					Incarichi_archivioBulk rep = (Incarichi_archivioBulk)i.next();
-  					if (rep!=null) {
-  						dato = rep.getDownloadUrl();
-  						Element elementUrl = xmldoc.createElement(getTagRadice()+":url");
-  						Node nodeUrl = xmldoc.createTextNode(dato!=null?dato:"");
-  						elementUrl.appendChild(nodeUrl);
-  						elementRichiesta.appendChild(elementUrl);
-  					}
-  				}
-
-  	        }
-		}
-*/
 		return elementRichiesta;
 	}
     public void generaXML(PageContext pagecontext) throws IOException, ServletException{
