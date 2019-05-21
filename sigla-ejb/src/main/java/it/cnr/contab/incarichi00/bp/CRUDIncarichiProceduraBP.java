@@ -15,6 +15,8 @@ import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 
+import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.jada.util.action.Selection;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2447,6 +2449,54 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
 		IOUtils.copyLarge(is, os);
 	}
+
+	public String getNomeAllegatoIncarico() {
+		return Optional.ofNullable(getCrudIncarichiArchivioAllegati())
+				.map(simpleDetailCRUDController -> simpleDetailCRUDController.getModel())
+				.filter(Incarichi_archivioBulk.class::isInstance)
+				.map(Incarichi_archivioBulk.class::cast)
+				.map(Incarichi_archivioBulk::getNomeAllegato)
+				.orElse(null);
+	}
+
+
+	public String getNomeAllegato() {
+		return Optional.ofNullable(getCrudIncarichiArchivioAllegati())
+				.map(simpleDetailCRUDController -> simpleDetailCRUDController.getModel())
+				.filter(Incarichi_archivioBulk.class::isInstance)
+				.map(Incarichi_archivioBulk.class::cast)
+				.map(Incarichi_archivioBulk::getNomeAllegato)
+				.orElse(null);
+	}
+
+	public void scaricaAllegatoIncarico(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
+		final Incarichi_archivioBulk allegato = Optional.ofNullable(getCrudIncarichiArchivioAllegati())
+				.map(simpleDetailCRUDController -> simpleDetailCRUDController.getModel())
+				.filter(Incarichi_archivioBulk.class::isInstance)
+				.map(Incarichi_archivioBulk.class::cast)
+				.orElseThrow(() -> new ApplicationRuntimeException("Allegato non trovato!"));
+
+		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCms_node_ref());
+		InputStream is = storeService.getResource(allegato.getCms_node_ref());
+		((HttpActionContext) actioncontext).getResponse().setContentLength(
+				(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
+		);
+		((HttpActionContext) actioncontext).getResponse().setContentType(
+				(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
+		);
+		OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
+		((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer, 0, buflength);
+		}
+		is.close();
+		os.flush();
+
+	}
+
 
     public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
