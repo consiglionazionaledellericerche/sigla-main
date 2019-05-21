@@ -17,7 +17,7 @@
 	<fieldProperty
 		name="pg_gen_rimodulazione"
 		property="pg_gen_rimodulazione"
-		label="Prog.Gen."
+		label="Id."
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
@@ -49,7 +49,8 @@
 		maxLength="400"
 		inputType="TEXTAREA"
 		cols="80"
-		rows="3" />
+		rows="3" 
+		label="Descrizione" />
 	<fieldProperty
 		name="unita_organizzativa_progetto"
 		property="progetto.unita_organizzativa"
@@ -348,15 +349,15 @@
 	<formFieldProperty
 		name="imCofinanziatoOf" />
 
-	<columnFieldProperty name="pg_gen_rimodulazione" />
 	<columnFieldProperty name="cd_progetto" />
 	<columnFieldProperty name="ds_progetto" />
 	<columnFieldProperty name="pg_rimodulazione" />
+	<columnFieldProperty name="pg_gen_rimodulazione" />
 	<columnFieldProperty name="stato" />
 
-	<findFieldProperty name="pg_gen_rimodulazione" />
 	<findFieldProperty name="cd_progetto" />
 	<findFieldProperty name="ds_progetto" />
 	<findFieldProperty name="pg_rimodulazione" />
+	<findFieldProperty name="pg_gen_rimodulazione" />
 	<findFieldProperty name="stato" />
 </bulkInfo>

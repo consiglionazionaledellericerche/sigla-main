@@ -17,13 +17,16 @@
 	Rimodulazione
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio).map(el->" Provvisoria").orElse("")%>
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).map(el->" Definitiva").orElse("")%>
+	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoValidato).map(el->" Validata").orElse("")%>
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoApprovato).map(el->" Approvata").orElse("")%>
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoRespinto).map(el->" Respinta").orElse("")%>
 	<%=bulk.getPg_rimodulazione()!=null?" n."+bulk.getPg_rimodulazione():""%>
 	</div>
 	<div class="Group">
 	<table class="Panel card border-primary p-2 mb-2">
+	<% if (bp.isSearching() || Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getPg_gen_rimodulazione())).isPresent()) {%>
 	  <TR><% bp.getController().writeFormField(out,"pg_gen_rimodulazione");%></TR>
+	<% } %>  
 	  <TR><% bp.getController().writeFormField(out,"find_progetto");%></TR>
 	  <tr><% bp.getController().writeFormField(out,"unita_organizzativa_progetto");%></tr>	  
 	</table>  
