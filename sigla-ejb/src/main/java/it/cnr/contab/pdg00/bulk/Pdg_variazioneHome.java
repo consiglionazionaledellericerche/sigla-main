@@ -168,7 +168,7 @@ public class Pdg_variazioneHome extends BulkHome {
 	 *
 	 * @return java.util.Collection Collezione di oggetti <code>Pdg_variazione_riga_gestBulk</code>
 	 */
-	public java.util.Collection findDettagliSpesaVariazioneGestionale(Pdg_variazioneBulk testata) throws PersistencyException {
+	public java.util.Collection<Pdg_variazione_riga_gestBulk> findDettagliSpesaVariazioneGestionale(Pdg_variazioneBulk testata) throws PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Pdg_variazione_riga_gestBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause("AND","esercizio",sql.EQUALS,testata.getEsercizio());

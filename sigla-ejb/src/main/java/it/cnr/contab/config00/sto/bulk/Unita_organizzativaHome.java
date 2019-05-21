@@ -342,7 +342,7 @@ public SQLBuilder createSQLBuilderArea()
  * @throws PersistencyException	
  * @throws IntrospectionException	
  */
-public CdrBulk findCdrResponsbileUo(Unita_organizzativaBulk uo) throws PersistencyException,IntrospectionException {
+public CdrBulk findCdrResponsbileUo(Unita_organizzativaBulk uo) throws PersistencyException {
 
 	SQLBuilder sql = getHomeCache().getHome(CdrBulk.class).createSQLBuilder();
 	sql.addSQLClause("AND","TO_NUMBER(CD_PROPRIO_CDR)",sql.EQUALS,new Integer(0));

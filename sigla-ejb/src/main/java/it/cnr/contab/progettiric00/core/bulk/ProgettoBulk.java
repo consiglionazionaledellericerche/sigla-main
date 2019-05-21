@@ -1315,16 +1315,21 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 							.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_rimodulazione).reversed())
 							.findFirst();
 
-		if (lastRim.isPresent())
-			return lastRim.get().getPg_rimodulazione()+
+		if (lastRim.isPresent()) {
+			StringBuffer version = new StringBuffer(
+				lastRim.get().getPg_rimodulazione()+
 					lastRim.map(el->{
 						if (el.isStatoProvvisorio()) return "P";
 						if (el.isStatoDefinitivo()) return "D";
+						if (el.isStatoValidato()) return "V";
 						if (el.isStatoApprovato()) return "A";
 						return "";
 					})
-					.orElse("");
-		else
+					.orElse(""));
+			return version.append(Optional.ofNullable(lastRim.get().getPg_gen_rimodulazione())
+					.map(el->" (id."+el+")")
+					.orElse("")).toString();
+		} else
 			return "0";
 	}
 	
