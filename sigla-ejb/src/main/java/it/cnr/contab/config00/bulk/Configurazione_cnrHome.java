@@ -1,13 +1,18 @@
 package it.cnr.contab.config00.bulk;
 
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Configurazione_cnrHome extends BulkHome {
+    public static final String ASTERISCO = "*";
+
     /**
      * <!-- @TODO: da completare -->
      * Costruisce un Configurazione_cnrHome
@@ -73,4 +78,11 @@ public class Configurazione_cnrHome extends BulkHome {
                     .filter(configurazione_cnrBulk -> configurazione_cnrBulk.getVal01().equals(cdUnitaOrganizzativa))
                     .findAny().isPresent();
     }
+    
+    public Configurazione_cnrBulk getConfigurazioneCnrBulk(Integer esercizio, String unita_funzionale, String chiave_primaria, String chiave_secondaria) throws PersistencyException {
+        if (esercizio == null) esercizio = new Integer(0);
+        if (unita_funzionale == null) unita_funzionale = ASTERISCO;
+        if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
+        return (Configurazione_cnrBulk) getHomeCache().getHome(Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
+    }    
 }

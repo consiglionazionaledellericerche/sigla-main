@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.jada.bulk.BulkList;
 
 public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 	private static final long serialVersionUID = 1L;
@@ -237,6 +239,45 @@ public class Ass_progetto_piaeco_voceBulk extends Ass_progetto_piaeco_voceBase {
 	public boolean isROFieldRimodulazione() {
 		return isDetailRimodulatoEliminato() || 
 			   Optional.ofNullable(this.getProgetto_piano_economico()).map(Progetto_piano_economicoBulk::isROFieldRimodulazione).orElse(Boolean.TRUE);
+	}
+	
+	public void initializeSaldo(BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate) {
+		V_saldi_voce_progettoBulk saldo = 
+				vociBilancioMovimentate.stream()
+						.filter(el->el.getEsercizio_voce().equals(this.getEsercizio_voce()))
+						.filter(el->el.getTi_appartenenza().equals(this.getTi_appartenenza()))
+						.filter(el->el.getTi_gestione().equals(this.getTi_gestione()))
+						.filter(el->el.getCd_elemento_voce().equals(this.getCd_elemento_voce()))
+						.findFirst()
+						.orElseGet(()->{
+							V_saldi_voce_progettoBulk saldoNew = new V_saldi_voce_progettoBulk();
+							saldoNew.setEsercizio_voce(this.getEsercizio_voce());
+							saldoNew.setTi_appartenenza(this.getTi_appartenenza());
+							saldoNew.setTi_gestione(this.getTi_gestione());
+							saldoNew.setCd_elemento_voce(this.getCd_elemento_voce());
+
+							saldoNew.setStanziamentoFin(BigDecimal.ZERO);
+							saldoNew.setVariapiuFin(BigDecimal.ZERO);
+							saldoNew.setVariamenoFin(BigDecimal.ZERO);
+							saldoNew.setTrasfpiuFin(BigDecimal.ZERO);
+							saldoNew.setTrasfmenoFin(BigDecimal.ZERO);
+
+							saldoNew.setStanziamentoCofin(BigDecimal.ZERO);
+							saldoNew.setVariapiuCofin(BigDecimal.ZERO);
+							saldoNew.setVariamenoCofin(BigDecimal.ZERO);
+							saldoNew.setTrasfpiuCofin(BigDecimal.ZERO);
+							saldoNew.setTrasfmenoCofin(BigDecimal.ZERO);
+							
+							saldoNew.setImpaccFin(BigDecimal.ZERO);
+							saldoNew.setImpaccCofin(BigDecimal.ZERO);
+							saldoNew.setManrisFin(BigDecimal.ZERO);
+							saldoNew.setManrisCofin(BigDecimal.ZERO);
+							return saldoNew;
+						});
+		if (Elemento_voceHome.GESTIONE_ENTRATE.equals(this.getTi_gestione()))
+			this.setSaldoEntrata(saldo);
+		else
+			this.setSaldoSpesa(saldo);
 	}
 }
 
