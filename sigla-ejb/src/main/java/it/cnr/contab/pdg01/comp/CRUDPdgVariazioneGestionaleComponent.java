@@ -215,6 +215,8 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		validaDettagliEntrataSpesa(userContext, pdg);
 
 		try {
+			controllaRimodulazioneProgetto(userContext,pdg);
+
 			SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
 	
 			//Verifico che il tipo di variazione sia consentita
@@ -250,8 +252,6 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 					throw new ApplicationException("La Differenza di spesa ("+new it.cnr.contab.util.EuroFormat().format(ass_pdg.getSpesa_diff())+")"+
 												   "\n" + "per il Cdr "+ ass_pdg.getCd_centro_responsabilita()+ " è diversa da zero. ");
 			}
-
-			controllaRimodulazioneProgetto(userContext,pdg);
 
 			if (!pdg.isStorno() && !pdg.getTipo_variazione().isMovimentoSuFondi())
 				controllaQuadraturaImportiAree(userContext, pdg);
@@ -1514,45 +1514,16 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	}
 	
 	public SQLBuilder selectProgettoRimodulatoForSearchByClause(UserContext userContext, Pdg_variazioneBulk pdgVar, ProgettoBulk prg, CompoundFindClause clause) throws ComponentException, PersistencyException {
-		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, prg,"V_PROGETTO_PADRE");
-		SQLBuilder sql = progettoHome.createSQLBuilder();
-		sql.addSQLClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
-		sql.addSQLClause(FindClause.AND,"tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
+		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+
+		SQLBuilder sql = progettoHome.selectProgettiAbilitati(userContext);
 		
 		sql.addTableToHeader("PROGETTO_RIMODULAZIONE");
 		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
 		sql.addSQLClause(FindClause.AND,"PROGETTO_RIMODULAZIONE.STATO",SQLBuilder.EQUALS,StatoProgettoRimodulazione.STATO_VALIDATO.value());
-		
-		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
-		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
-		if (parCnrBulk.getFl_nuovo_pdg())
-			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
-		else
-			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
-		
-		if (parCnrBulk.getFl_nuovo_pdg())
-			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniCommesse(userContext));
-		else
-			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniModuli(userContext));
 
 		if (clause != null) 
 			sql.addClause(clause);
 		return sql; 
 	}	
-	
-	public SQLBuilder selectProgettoRimodulazioneByClause (UserContext userContext, Pdg_variazioneBulk pdgVar, Progetto_rimodulazioneBulk rimod, CompoundFindClause clause) throws ComponentException, PersistencyException{	
-		SQLBuilder sql = getHome(userContext, Progetto_rimodulazioneBulk.class, "V_PROGETTO_RIMODULAZIONE").createSQLBuilder();
-		sql.addClause( clause );
-		
-		sql.setAutoJoins(true);
-		sql.generateJoin("progetto", "PROGETTO");
-		sql.addColumn("PROGETTO.CD_PROGETTO");
-
-		sql.addSQLClause(FindClause.AND,"PROGETTO.ESERCIZIO",SQLBuilder.EQUALS,pdgVar.getEsercizio());
-		sql.addSQLClause(FindClause.AND,"PROGETTO.TIPO_FASE",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-		   
-//		sql.addClause(FindClause.AND,"stato",SQLBuilder.EQUALS,StatoProgettoRimodulazione.STATO_VALIDATO.value());
-		
-		return sql;
-	}
 }

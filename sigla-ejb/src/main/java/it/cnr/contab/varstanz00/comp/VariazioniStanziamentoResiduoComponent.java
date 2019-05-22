@@ -71,6 +71,7 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
+import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
@@ -1608,4 +1609,18 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			throw handleException(e);
 		}
 	}
+
+	public SQLBuilder selectProgettoRimodulatoForSearchByClause(UserContext userContext, Var_stanz_resBulk varStanzRes, ProgettoBulk prg, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+
+		SQLBuilder sql = progettoHome.selectProgettiAbilitati(userContext);
+		
+		sql.addTableToHeader("PROGETTO_RIMODULAZIONE");
+		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
+		sql.addSQLClause(FindClause.AND,"PROGETTO_RIMODULAZIONE.STATO",SQLBuilder.EQUALS,StatoProgettoRimodulazione.STATO_VALIDATO.value());
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql; 
+	}	
 }
