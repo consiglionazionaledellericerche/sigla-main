@@ -33,6 +33,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
@@ -215,6 +216,9 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 							+ " Operazione non possibile.");
 				});
 			progettoRimodulazione.setPg_rimodulazione(listRimodulazioni.stream().mapToInt(Progetto_rimodulazioneBulk::getPg_rimodulazione).max().orElse(0)+1);
+			progettoRimodulazione.setPg_gen_rimodulazione(
+				new Integer(((Integer)prgRimodulazioneHome.findAndLockMax( new Progetto_rimodulazioneBulk(), "pg_gen_rimodulazione", new Integer(0) )).intValue()+1));
+
 			progettoRimodulazione.setStato(StatoProgettoRimodulazione.STATO_PROVVISORIO.value());
 			progettoRimodulazione.setImVarFinanziato(progettoRimodulazione.getImFinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImFinanziato()));
 			progettoRimodulazione.setImVarCofinanziato(progettoRimodulazione.getImCofinanziatoRimodulato().subtract(progettoRimodulazione.getProgetto().getImCofinanziato()));
@@ -263,6 +267,8 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			return super.creaConBulk(usercontext, oggettobulk);
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
+		} catch (BusyResourceException e) {
+			throw new ComponentException(e);
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
@@ -451,16 +457,11 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	
 			validaStatoDefinitivoRimodulazione(userContext, rimodulazione);
 
-			Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
-			rimodulazione.setPg_gen_rimodulazione(
-				new Integer(((Integer)rimodHome.findAndLockMax( new Progetto_rimodulazioneBulk(), "pg_gen_rimodulazione", new Integer(0) )).intValue()+1));
 			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
 			rimodulazione.setToBeUpdated();
 			return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
-		} catch(it.cnr.jada.bulk.BusyResourceException e) {
-			 throw new it.cnr.jada.comp.ApplicationException("Operazione effettuata al momento da un'altro utente, riprovare successivamente.");
 		} catch(Exception e) {
 			throw handleException(e);
 		}
@@ -716,7 +717,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
     	try {
     		List<OggettoBulk> listVariazioni = this.constructVariazioniBilancio(userContext, rimodulazione);
 
-		    //Se la rimodulazione prevede variazioni di competenza procedo a verificare ce non ce ne siano sul progetto in stato definitivo
+		    //Se la rimodulazione prevede variazioni di competenza procedo a verificare che non ce ne siano sul progetto in stato definitivo
 		    if (Optional.ofNullable(listVariazioni).map(List::stream).orElse(Stream.empty())
 		    			.filter(Pdg_variazioneBulk.class::isInstance).findFirst().isPresent()) {
 	       		Pdg_variazioneHome homeVarSpe = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);

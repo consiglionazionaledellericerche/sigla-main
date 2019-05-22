@@ -11,6 +11,7 @@ import javax.ejb.EJBException;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -847,5 +848,32 @@ public class ProgettoHome extends BulkHome {
 		} catch(Exception e) {
 			throw new PersistencyException( e );
 		}
+	}
+
+    /**
+     * Ritorna la SQLBuilder per la ricerca dei progetti su cui risulta abilitato ad operare la UO collegata 
+     * nell'esercizio di scrivania (UO ed esercizio presenti sullo UserContext)
+     * 
+     * @param aUC lo UserContext
+     * @return
+     */
+	public SQLBuilder selectProgettiAbilitati(it.cnr.jada.UserContext userContext) throws PersistencyException {
+		ProgettoHome progettoHome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_PROGETTO_PADRE");    	    
+		SQLBuilder sql = progettoHome.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause(FindClause.AND,"tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
+		
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		else
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+		
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniCommesse(userContext));
+		else
+			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniModuli(userContext));
+		return sql; 
 	}
 }
