@@ -10,17 +10,6 @@
 			fetchOnly="false" />		
 	</defaultColumnMap>
 	
-	<columnMap
-		name="V_PROGETTO_RIMODULAZIONE"
-		tableName="PROGETTO_RIMODULAZIONE"
-		extends="default" >
-		<columnMapping
-			columnName="PROGETTO.CD_PROGETTO"
-			propertyName="progetto.cd_progetto"
-			sqlTypeName="VARCHAR"
-			columnSize="30"/>
-	</columnMap>
-	
 	<persistentProperty
 		name="progetto" 
 		partOfOid= "true"/>	
