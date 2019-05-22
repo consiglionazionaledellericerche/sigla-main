@@ -162,7 +162,12 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 			{
 				RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
 	        	bp.valida(context);
-				setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
+				Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)bp.getModel();
+				if (rim.isStatoApprovato()) {
+					return openConfirm(context,  "Operazione eseguita con successo! La rimodulazione è stata posta "
+		        			+ "direttamente in stato approvato non essendo previste variazioni di bilancio a supporto!", "doRiporta");
+				} else
+					setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
 			}
 			return context.findDefaultForward();
 		}		
@@ -232,12 +237,7 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 			{
 				RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
 	        	bp.salvaDefinitivo(context);
-				Progetto_rimodulazioneBulk rim = (Progetto_rimodulazioneBulk)bp.getModel();
-				if (rim.isStatoApprovato()) {
-					return openConfirm(context,  "Operazione eseguita con successo! La rimodulazione è stata posta "
-		        			+ "direttamente in stato approvato non essendo previste variazioni di bilancio a supporto!", "doRiporta");
-				} else
-					setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo!");
+				setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo!");
 			}
 			return context.findDefaultForward();
 		}		

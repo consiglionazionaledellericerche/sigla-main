@@ -46,6 +46,9 @@ import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
@@ -56,6 +59,7 @@ import it.cnr.contab.utenze00.bulk.UtenteHome;
 import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -618,12 +622,24 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
 	
 					List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
+					List<Progetto_rimodulazione_voceBulk> listRim = new BulkList<Progetto_rimodulazione_voceBulk>();
+					if (Optional.ofNullable(dett.getPdg_variazione().getProgettoRimodulazione())
+							.filter(rim->rim.getPg_progetto().equals(dett.getProgetto().getPg_progetto()))
+							.isPresent()) {
+						Progetto_rimodulazioneHome rimHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+						listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(userContext,dett.getPdg_variazione().getProgettoRimodulazione()));
+					}
 					
-					if (list.isEmpty())
+					if (list.isEmpty() && listRim.isEmpty())
 						sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
 					else {
 						sql.openParenthesis(FindClause.AND);
 						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+							//Se la voce è stata eliminata nella rimodulazione la stessa non viene proposta
+							if (listRim.stream().filter(el->el.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
+									.filter(Progetto_rimodulazione_voceBulk::isTiOperazioneEliminato)
+									.findFirst().isPresent())
+								continue;
 							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
 							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
 								sql.openParenthesis(FindClause.OR);
@@ -632,6 +648,20 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
 								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
 								sql.closeParenthesis();
+							}
+						}
+						//Aggiungo le voci di bilancio inserite nella rimodulazione
+						for (Progetto_rimodulazione_voceBulk assRimVoce : listRim) {
+							if (assRimVoce.isTiOperazioneAggiunto()) {
+								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assRimVoce.getElementoVoce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+								if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
+									sql.openParenthesis(FindClause.OR);
+									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
+									sql.closeParenthesis();
+								}
 							}
 						}
 						sql.closeParenthesis();
