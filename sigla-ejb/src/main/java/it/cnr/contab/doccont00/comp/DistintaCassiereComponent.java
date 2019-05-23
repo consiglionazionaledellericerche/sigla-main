@@ -4900,7 +4900,7 @@ public class DistintaCassiereComponent extends
                                 Optional.ofNullable(docContabile.getNumeroConto())
                                         .filter(s -> s.length() == 7)
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
-                                                "sul Mandato {0}/{1}/{2}, oppure il numero conto {} non ha la lunghezza corretta!",
+                                                "sul Mandato {0}/{1}/{2}, oppure il numero conto {3} non ha la lunghezza corretta!",
                                                 String.valueOf(bulk.getEsercizio()),
                                                 String.valueOf(bulk.getCd_cds()),
                                                 String.valueOf(bulk.getPg_documento_cont()),
