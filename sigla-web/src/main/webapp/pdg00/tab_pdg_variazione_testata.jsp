@@ -128,11 +128,13 @@
 	<table class="Panel w-100" align="left" cellspacing=1 cellpadding=1>
 	  <tr>
         <TD><% bp.getController().writeFormLabel(out,"findProgettoRimodulato");%></TD>
-        <TD><% bp.getController().writeFormInput(out,"findProgettoRimodulato");%></TD>
+	    <TD colspan="4"><% bp.getController().writeFormInput(out,"default","findProgettoRimodulato",isFieldEnabled,null,null);%></TD>      
       </tr>
 	  <tr>
-        <TD><% bp.getController().writeFormLabel(out,"pgRimodulazione");%></TD>
-        <TD><% bp.getController().writeFormInput(out,"default","pgRimodulazione",true,null,null);%></TD>
+        <TD><% bp.getController().writeFormLabel(out,"pgGenRimodulazione");%></TD>
+        <TD><% bp.getController().writeFormInput(out,"default","pgGenRimodulazione",true,null,null);%></TD>
+        <TD><% bp.getController().writeFormLabel(out,"pgRimodulazione");%>
+        	<% bp.getController().writeFormInput(out,"default","pgRimodulazione",true,null,null);%></TD>
       </tr>
    	</table>
 </div>	

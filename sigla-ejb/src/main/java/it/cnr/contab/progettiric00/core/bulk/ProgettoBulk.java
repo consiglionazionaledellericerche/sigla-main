@@ -1327,7 +1327,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 					})
 					.orElse(""));
 			return version.append(Optional.ofNullable(lastRim.get().getPg_gen_rimodulazione())
-					.map(el->" (id."+el+")")
+					.map(el->" (Rim."+el+")")
 					.orElse("")).toString();
 		} else
 			return "0";
@@ -1339,5 +1339,14 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 
 	public boolean isStatoPrgChiuso() {
 		return StatoProgetto.STATO_CHIUSURA.value().equals(this.getStatoPrg());
+	}
+	
+	@Override
+	public Object clone() {
+		ProgettoBulk prgClone = (ProgettoBulk)super.clone();
+		prgClone.setDettagliPianoEconomicoTotale(new BulkList<>(prgClone.getDettagliPianoEconomicoTotale().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
+		prgClone.setDettagliPianoEconomicoAnnoCorrente(new BulkList<>(prgClone.getDettagliPianoEconomicoAnnoCorrente().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
+		prgClone.setDettagliPianoEconomicoAltriAnni(new BulkList<>(prgClone.getDettagliPianoEconomicoAltriAnni().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
+		return prgClone;
 	}
 }

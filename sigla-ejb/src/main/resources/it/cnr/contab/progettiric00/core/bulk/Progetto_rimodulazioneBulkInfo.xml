@@ -7,7 +7,7 @@
 	<fieldProperty
 		name="pg_rimodulazione"
 		property="pg_rimodulazione"
-		label="Nr.Rimodulazione"
+		label="Versione"
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
@@ -17,7 +17,7 @@
 	<fieldProperty
 		name="pg_gen_rimodulazione"
 		property="pg_gen_rimodulazione"
-		label="Id."
+		label="Rimodulazione"
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
