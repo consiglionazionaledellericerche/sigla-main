@@ -31,13 +31,13 @@
     
     boolean isRODettaglio = procedura==null||incarico==null||variazione==null||(!variazione.isToBeCreated()&&!variazione.isProvvisorio());
 %>
-
+<% if (allegato != null) { %>
 <script language="JavaScript">
-function doScaricaFile() {	
-	doPrint('<%=(variazione==null?null:JSPUtils.getAppRoot(request) + variazione.getDownloadUrl())%>');
+function doScaricaFile() {
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=variazione.getNomeAllegato()%>?methodName=scaricaAllegatoVariazione&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
-
+<% } %>
 <table class="Panel" cellspacing=2>
 	<tr>
         <td><% controller.writeFormLabel(out,bp.getFieldTipoVariazione()); %></td>
