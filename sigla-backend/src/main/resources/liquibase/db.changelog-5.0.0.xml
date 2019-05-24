@@ -1986,6 +1986,12 @@ TRASPORTO_AEREO"/>
             <column name="im_var_spesa_cofinanziato" remarks="Importo Variazione Spesa Cofinanziato rimodulato associato al ProgettoVoce Piano Economico" type="numeric(15, 2)">
                 <constraints nullable="false"/>
             </column>
+            <column name="im_stoass_spesa_finanziato" remarks="Importo Storicizzato dell'Assestato Spesa Finanziato." type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_stoass_spesa_cofinanziato" remarks="Importo Storicizzato dell'Assestato Spesa Cofinanziato." type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
             <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
