@@ -32,7 +32,7 @@
 	
 	controller.writeHTMLTable(pageContext,"dichiarazione",true,false,true,"100%","60px");
 %>
-<% if (allegato != null) { %>
+<% if (rapporto != null) { %>
 <script language="JavaScript">
 function doScaricaFile() {
 	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=rapporto.getNomeAllegato()%>?methodName=scaricaAllegatoRapporto&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
