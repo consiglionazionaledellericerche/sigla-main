@@ -2469,107 +2469,63 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				.orElse(null);
 	}
 
-	public void scaricaAllegatoIncarico(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+	private void scaricaAllegato(ActionContext actioncontext, Incarichi_archivioBulk incarichi_archivioBulk) throws IOException {
 		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
+		StorageObject storageObject = storeService.getStorageObjectBykey(incarichi_archivioBulk.getCms_node_ref());
+		InputStream is = storeService.getResource(incarichi_archivioBulk.getCms_node_ref());
+		((HttpActionContext) actioncontext).getResponse().setContentLength(
+				(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
+		);
+		((HttpActionContext) actioncontext).getResponse().setContentType(
+				(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
+		);
+		OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
+		((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer, 0, buflength);
+		}
+		is.close();
+		os.flush();
+	}
+
+	public void scaricaAllegatoIncarico(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		final Incarichi_archivioBulk allegato = Optional.ofNullable(getCrudIncarichiArchivioAllegati())
 				.map(simpleDetailCRUDController -> simpleDetailCRUDController.getModel())
 				.filter(Incarichi_archivioBulk.class::isInstance)
 				.map(Incarichi_archivioBulk.class::cast)
 				.orElseThrow(() -> new ApplicationRuntimeException("Allegato non trovato!"));
-
-		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCms_node_ref());
-		InputStream is = storeService.getResource(allegato.getCms_node_ref());
-		((HttpActionContext) actioncontext).getResponse().setContentLength(
-				(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
-		);
-		((HttpActionContext) actioncontext).getResponse().setContentType(
-				(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
-		);
-		OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
-		((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
-		byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
-		int buflength;
-		while ((buflength = is.read(buffer)) > 0) {
-			os.write(buffer, 0, buflength);
-		}
-		is.close();
-		os.flush();
-
+		scaricaAllegato(actioncontext, allegato);
 	}
 
 	public void scaricaAllegatoRapporto(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
-		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
 		final Incarichi_archivioBulk allegato = Optional.ofNullable(getIncarichiRappColl())
 				.map(simpleDetailCRUDController -> simpleDetailCRUDController.getModel())
 				.filter(Incarichi_repertorio_rappBulk.class::isInstance)
 				.map(Incarichi_repertorio_rappBulk.class::cast)
 				.orElseThrow(() -> new ApplicationRuntimeException("Allegato non trovato!"));
-
-		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCms_node_ref());
-		InputStream is = storeService.getResource(allegato.getCms_node_ref());
-		((HttpActionContext) actioncontext).getResponse().setContentLength(
-				(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
-		);
-		((HttpActionContext) actioncontext).getResponse().setContentType(
-				(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
-		);
-		OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
-		((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
-		byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
-		int buflength;
-		while ((buflength = is.read(buffer)) > 0) {
-			os.write(buffer, 0, buflength);
-		}
-		is.close();
-		os.flush();
-
+		scaricaAllegato(actioncontext, allegato);
 	}
 
 	public void scaricaAllegatoVariazione(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
-		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
 		final Incarichi_archivioBulk allegato = Optional.ofNullable(getCrudIncarichiVariazioni())
 				.map(simpleDetailCRUDController -> simpleDetailCRUDController.getModel())
 				.filter(Incarichi_repertorio_varBulk.class::isInstance)
 				.map(Incarichi_repertorio_varBulk.class::cast)
 				.orElseThrow(() -> new ApplicationRuntimeException("Allegato non trovato!"));
-
-		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCms_node_ref());
-		InputStream is = storeService.getResource(allegato.getCms_node_ref());
-		((HttpActionContext) actioncontext).getResponse().setContentLength(
-				(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
-		);
-		((HttpActionContext) actioncontext).getResponse().setContentType(
-				(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
-		);
-		OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
-		((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
-		byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
-		int buflength;
-		while ((buflength = is.read(buffer)) > 0) {
-			os.write(buffer, 0, buflength);
-		}
-		is.close();
-		os.flush();
-
+		scaricaAllegato(actioncontext, allegato);
 	}
 
     public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
-		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
-
 		boolean multi_incarico = false;
-
 		Incarichi_proceduraBulk procedura = ((Incarichi_proceduraBulk)getModel());
-
 		if (procedura!=null && procedura.getNr_contratti()!=null && procedura.getNr_contratti().compareTo(new Integer(1))==1)
 			multi_incarico=true;
-
 		SimpleDetailCRUDController controller = multi_incarico?getCrudArchivioAllegati():getCrudArchivioAllegatiMI();
-
 		Incarichi_archivioBulk allegato;
-
 		// Recupero il valore (posizione) del record selezionato
 		int  sel = controller.getSelection().getFocus();
-		
 		/*
 		** Quando navigo la prima volta nella tab e non ci sono 
 		** record selezionati, il valore restituito è -1. 
@@ -2578,25 +2534,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		if (sel == -1)
 		   allegato = null;
 		else {
-			allegato = (Incarichi_archivioBulk)controller.getModel();	   
-
-			StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCms_node_ref());
-			InputStream is = storeService.getResource(allegato.getCms_node_ref());
-			((HttpActionContext) actioncontext).getResponse().setContentLength(
-					(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
-					);
-			((HttpActionContext) actioncontext).getResponse().setContentType(
-					(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
-					);
-			OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
-			((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
-			byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
-			int buflength;
-			while ((buflength = is.read(buffer)) > 0) {
-				os.write(buffer, 0, buflength);
-			}
-			is.close();
-			os.flush();
+			allegato = (Incarichi_archivioBulk)controller.getModel();
+			scaricaAllegato(actioncontext, allegato);
 		}
     }
 	public void mergeWithCMIS(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException
