@@ -1581,7 +1581,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
             	listCtrlVarPianoEco.stream().forEach(el->{
 	            	try {
 		            	Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome) getHome(userContext, Progetto_rimodulazioneBulk.class);
-		            	rimodHome.findRimodulazioni(userContext, el.getProgetto().getPg_progetto()).stream()
+		            	rimodHome.findRimodulazioni(el.getProgetto().getPg_progetto()).stream()
 		            	.filter(rim->rim.isStatoDefinitivo()||rim.isStatoValidato())
 		            	.findFirst().ifPresent(rim->{
 		            		try {
@@ -1589,13 +1589,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			            		if (rim.getVariazioniModels().stream().filter(Var_stanz_resBulk.class::isInstance).map(Var_stanz_resBulk.class::cast)
 			            				.filter(varRim->varRim.getEsercizio_residuo().equals(varStanzRes.getEsercizio_residuo())).findFirst().isPresent())
 					            	throw new ApplicationRuntimeException("La variazione movimenta il progetto "+el.getProgetto().getCd_progetto()
-					            			+ " sul quale è in corso la rimodulazione nr."+rim.getPg_rimodulazione()+" (id:"
-					            			+ rim.getPg_gen_rimodulazione()+") che si trova attualmente in stato '"
-					            			+ (rim.isStatoDefinitivo()?"Definitivo":"Validato")+"' e richiede una variazione di residuo "
-					            			+ "a quadratura della stessa sullo stesso anno della variazione che si sta rendendo definitiva ("
-					            			+ varStanzRes.getEsercizio_residuo()+ ").</br> Non è effettuare variazioni sul progetto "
-					            			+ "fino a quando non vengono effettuate tutte le variazioni "
-					            			+ "a quadratura e/o la suddetta rimodulazione non viene approvata/respinta.");
+					            			+ " sul quale è in corso la rimodulazione nr."+ rim.getPg_gen_rimodulazione()
+					            			+ " che si trova attualmente in stato '" + (rim.isStatoDefinitivo()?"Definitivo":"Validato")
+					            			+ "' e richiede una variazione di residuo a quadratura sull'anno residuo "
+					            			+ varStanzRes.getEsercizio_residuo()+ ".</br> Non è effettuare variazioni sull'anno residuo  "
+					            			+ varStanzRes.getEsercizio_residuo()+ " fino a quando la suddetta rimodulazione non viene "
+					            			+ "approvata/respinta.");
+				            	
 			            	} catch (PersistencyException ex){
 			            		throw new DetailedRuntimeException(ex);
 			            	}
