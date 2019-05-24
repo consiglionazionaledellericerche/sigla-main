@@ -31,7 +31,7 @@
     
     boolean isRODettaglio = procedura==null||incarico==null||variazione==null||(!variazione.isToBeCreated()&&!variazione.isProvvisorio());
 %>
-<% if (allegato != null) { %>
+<% if (variazione != null) { %>
 <script language="JavaScript">
 function doScaricaFile() {
 	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=variazione.getNomeAllegato()%>?methodName=scaricaAllegatoVariazione&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
