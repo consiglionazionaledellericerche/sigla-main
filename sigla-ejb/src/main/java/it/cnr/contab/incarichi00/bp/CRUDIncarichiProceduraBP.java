@@ -2497,6 +2497,33 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	}
 
+	public void scaricaAllegatoRapporto(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
+		final Incarichi_archivioBulk allegato = Optional.ofNullable(getIncarichiRappColl())
+				.map(simpleDetailCRUDController -> simpleDetailCRUDController.getModel())
+				.filter(Incarichi_repertorio_rappBulk.class::isInstance)
+				.map(Incarichi_repertorio_rappBulk.class::cast)
+				.orElseThrow(() -> new ApplicationRuntimeException("Allegato non trovato!"));
+
+		StorageObject storageObject = storeService.getStorageObjectBykey(allegato.getCms_node_ref());
+		InputStream is = storeService.getResource(allegato.getCms_node_ref());
+		((HttpActionContext) actioncontext).getResponse().setContentLength(
+				(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value())).intValue()
+		);
+		((HttpActionContext) actioncontext).getResponse().setContentType(
+				(String) storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
+		);
+		OutputStream os = ((HttpActionContext) actioncontext).getResponse().getOutputStream();
+		((HttpActionContext) actioncontext).getResponse().setDateHeader("Expires", 0);
+		byte[] buffer = new byte[((HttpActionContext) actioncontext).getResponse().getBufferSize()];
+		int buflength;
+		while ((buflength = is.read(buffer)) > 0) {
+			os.write(buffer, 0, buflength);
+		}
+		is.close();
+		os.flush();
+
+	}
 
     public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		ContrattiService storeService = SpringUtil.getBean(ContrattiService.class);
