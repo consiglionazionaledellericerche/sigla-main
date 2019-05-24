@@ -32,15 +32,13 @@
 	
 	controller.writeHTMLTable(pageContext,"dichiarazione",true,false,true,"100%","60px");
 %>
+<% if (allegato != null) { %>
 <script language="JavaScript">
-function doScaricaFile() {	
-   larghFinestra=5;
-   altezFinestra=5;
-   sinistra=(screen.width)/2;
-   alto=(screen.height)/2;
-   window.open("<%= (rapporto==null?null: JSPUtils.getAppRoot(request) + rapporto.getDownloadUrl()) %>","DOWNLOAD","left="+sinistra+",top="+alto+",width="+larghFinestra+", height="+altezFinestra+",menubar=no,toolbar=no,location=no")
+function doScaricaFile() {
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=rapporto.getNomeAllegato()%>?methodName=scaricaAllegatoRapporto&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
+<% } %>
 <div class="card">
 <table class="Panel m-2 p-2" cellspacing=2>
 	<tr>
