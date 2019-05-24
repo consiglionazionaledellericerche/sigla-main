@@ -690,10 +690,11 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             pdgVar.setIdMatricola(null);
             pdgVar.setIdBando(null);
         }
-        if (!pdgVar.isMotivazioneVariazioneRimodulazioneProgetto())
+        if (!pdgVar.isMotivazioneVariazioneRimodulazioneProgetto()) {
         	pdgVar.setProgettoRimodulazione(null);
-        else if (!Optional.ofNullable(pdgVar.getProgettoRimodulazione()).isPresent())
-        	pdgVar.setProgettoRimodulazione(new Progetto_rimodulazioneBulk());
+        	pdgVar.setProgettoRimodulatoForSearch(null);
+        } else if (!Optional.ofNullable(pdgVar.getProgettoRimodulazione()).isPresent())
+        	pdgVar.setProgettoRimodulatoForSearch(new ProgettoBulk());
     }
 
     @Override
@@ -706,7 +707,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                 .ifPresent(el -> {
                     el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));
                     el.setStorageMatricola(el.getIdMatricola());
-                    el.setProgettoRimodulatoForSearch(el.getProgettoRimodulazione().getProgetto());
+                    if (Optional.ofNullable(el.getProgettoRimodulazione()).isPresent())
+                    	el.setProgettoRimodulatoForSearch(el.getProgettoRimodulazione().getProgetto());
                 });
         return bulk;
     }
@@ -721,8 +723,10 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
     
     public void findAndSetRimodulazione(ActionContext actioncontext, ProgettoBulk progetto) throws BusinessProcessException {
     	try {
-    		List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", actioncontext.getUserContext(), progetto.getPg_progetto()));
-    		((Pdg_variazioneBulk)this.getModel()).setProgettoRimodulazione(list.stream().filter(Progetto_rimodulazioneBulk::isStatoValidato).findFirst().orElse(null));
+    		if (Optional.ofNullable(progetto).isPresent()) {
+	    		List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", progetto.getPg_progetto()));
+	    		((Pdg_variazioneBulk)this.getModel()).setProgettoRimodulazione(list.stream().filter(Progetto_rimodulazioneBulk::isStatoValidato).findFirst().orElse(null));
+    		}
     	} catch (Throwable e) {
 	        throw handleException(e);
 	    }

@@ -211,26 +211,6 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 	            boolean isButtonEnable = Optional.ofNullable(this.getModel()).isPresent();
 	            button.writeToolbarButton(context.getOut(), isButtonEnable, HttpActionContext.isFromBootstrap(context));
 			}
-	        {
-				Button button = new Button();
-	    		button.setImg("img/new16.gif");
-	    		button.setDisabledImg("img/new16.gif");
-	    		button.setTitle("Nuova Variazione Competenza");
-	    		button.setIconClass("fa fa fa-plus text-primary");
-	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
-	            button.setHref("javascript:submitForm('doNewVariazioneCompetenza()')");
-	            button.writeToolbarButton(context.getOut(), Boolean.TRUE, HttpActionContext.isFromBootstrap(context));
-            }
-	        {
-				Button button = new Button();
-	    		button.setImg("img/new16.gif");
-	    		button.setDisabledImg("img/new16.gif");
-	    		button.setTitle("Nuova Variazione Residua");
-	    		button.setIconClass("fa fa fa-plus text-primary");
-	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
-	            button.setHref("javascript:submitForm('doNewVariazioneResidua()')");
-	            button.writeToolbarButton(context.getOut(), Boolean.TRUE, HttpActionContext.isFromBootstrap(context));
-            }
             
             super.closeButtonGROUPToolbar(context);			
 		};
@@ -275,7 +255,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 			setLastEsercizioAperto(Optional.ofNullable(lastEsercizio).map(EsercizioBulk::getEsercizio).orElse(CNRUserContext.getEsercizio(actioncontext.getUserContext())));
 	   		
 	   		if (Optional.ofNullable(this.getMainProgetto()).isPresent()) {
-				List<Progetto_rimodulazioneBulk> listRimodulazioni = createComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", actioncontext.getUserContext(), this.getMainProgetto().getPg_progetto());
+				List<Progetto_rimodulazioneBulk> listRimodulazioni = createComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", this.getMainProgetto().getPg_progetto());
 				Optional<Progetto_rimodulazioneBulk> lastRim = listRimodulazioni.stream()
 									.filter(el->!el.isStatoApprovato()&&!el.isStatoRespinto())
 									.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_rimodulazione).reversed())
@@ -371,7 +351,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 	    } 
 
 		//Se su una rimodulazione definitiva è prevista la creazioni di variazioni visualizzo la tab corrispondente
-		if (Optional.ofNullable(progettoRimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
+		if (Optional.ofNullable(progettoRimodulazione).filter(Progetto_rimodulazioneBulk::isStatoValidato)
 				.flatMap(el->Optional.ofNullable(el.getVariazioniModels())).filter(el->!el.isEmpty())
 				.isPresent()) {
 			hash.put(i++, new String[]{ "tabVariazioniAss", "Variazioni Associate", "/progettiric00/tab_ass_progetto_rimod_variazioni.jsp" });
@@ -554,16 +534,6 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 					.filter(Progetto_rimodulazioneBulk.class::isInstance)
 					.map(Progetto_rimodulazioneBulk.class::cast)
 					.map(Progetto_rimodulazioneBulk::isStatoProvvisorio)
-					.orElse(Boolean.FALSE);
-	}
-	
-	@Override
-	public boolean isSaveButtonEnabled() {
-		return super.isSaveButtonEnabled() &&
-				Optional.ofNullable(this.getModel())
-					.filter(Progetto_rimodulazioneBulk.class::isInstance)
-					.map(Progetto_rimodulazioneBulk.class::cast)
-					.map(el->el.isStatoProvvisorio())
 					.orElse(Boolean.FALSE);
 	}
 	

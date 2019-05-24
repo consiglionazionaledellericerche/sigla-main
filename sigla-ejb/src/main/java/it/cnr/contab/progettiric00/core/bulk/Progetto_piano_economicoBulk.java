@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
@@ -375,5 +376,12 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 					.map(lastEse->lastEse.compareTo(esePpe)>=0)
 					.orElse(Boolean.TRUE);
 		}).orElse(Boolean.TRUE);
+	}
+	
+	@Override
+	public Object clone() {
+		Progetto_piano_economicoBulk ppeClone = (Progetto_piano_economicoBulk)super.clone();
+		ppeClone.setVociBilancioAssociate(new BulkList<>(ppeClone.getVociBilancioAssociate().stream().map(Ass_progetto_piaeco_voceBulk::clone).collect(Collectors.toList())));
+		return ppeClone;
 	}
 }

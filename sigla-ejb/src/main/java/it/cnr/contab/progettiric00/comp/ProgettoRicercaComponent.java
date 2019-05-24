@@ -330,7 +330,7 @@ public ProgettoRicercaComponent() {
 				   		else
 				   			testata.setPdgModuli(pdgModuliList);
 				   		
-						testata.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(userContext, Progetto_rimodulazioneBulk.class, "findRimodulazioni", userContext, testata.getPg_progetto())));
+						testata.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(userContext, Progetto_rimodulazioneBulk.class, "findRimodulazioni", testata.getPg_progetto())));
 
 						getHomeCache(userContext).fetchAll(userContext);
 						return testata;

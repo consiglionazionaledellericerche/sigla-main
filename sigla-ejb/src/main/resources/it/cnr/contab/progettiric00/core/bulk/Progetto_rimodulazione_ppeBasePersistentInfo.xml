@@ -27,6 +27,20 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
+			columnName="IM_STOASS_SPESA_FINANZIATO"
+			propertyName="imStoassSpesaFinanziato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_STOASS_SPESA_COFINANZIATO"
+			propertyName="imStoassSpesaCofinanziato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"
@@ -63,6 +77,10 @@
 		name="imVarSpesaFinanziato" />
 	<persistentProperty
 		name="imVarSpesaCofinanziato" />
+	<persistentProperty
+		name="imStoassSpesaFinanziato" />
+	<persistentProperty
+		name="imStoassSpesaCofinanziato" />
 	<persistentProperty
 		name="pg_ver_rec" />
 	<persistentProperty
