@@ -665,7 +665,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 
     public void findAndSetRimodulazione(ActionContext actioncontext, ProgettoBulk progetto) throws BusinessProcessException {
     	try {
-    		List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", actioncontext.getUserContext(), progetto.getPg_progetto()));
+    		List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", progetto.getPg_progetto()));
     		((Var_stanz_resBulk)this.getModel()).setProgettoRimodulazione(list.stream().filter(Progetto_rimodulazioneBulk::isStatoValidato).findFirst().orElse(null));
     	} catch (Throwable e) {
 	        throw handleException(e);

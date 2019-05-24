@@ -472,7 +472,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
                                 progetto.getCd_unita_organizzativa().equals(uo)))) {
 
             if (this.isFlPrgPianoEconomico() &&
-                    ((progetto.isPianoEconomicoRequired() && !isBilancioChiuso &&
+                    ((progetto.isPianoEconomicoRequired() && 
                             Optional.ofNullable(progetto.getOtherField()).flatMap(el -> Optional.ofNullable(el.getDtInizio())).isPresent() &&
                             Optional.ofNullable(progetto.getOtherField()).flatMap(el -> Optional.ofNullable(el.getDtFine())).isPresent()) ||
                             (progetto.isDettagliPianoEconomicoPresenti() &&
@@ -546,20 +546,6 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             progetto.setOtherField(otherField);
         }
         return super.initializeModelForInsert(actioncontext, oggettobulk);
-    }
-
-    @Override
-    public OggettoBulk initializeModelForEdit(ActionContext actioncontext, OggettoBulk oggettobulk)
-            throws BusinessProcessException {
-        ProgettoBulk progetto = (ProgettoBulk) super.initializeModelForEdit(actioncontext, oggettobulk);
-        if (isBilancioChiuso &&
-                Optional.ofNullable(progetto.getOtherField()).filter(Progetto_other_fieldBulk::isStatoIniziale).isPresent() &&
-                !Optional.ofNullable(progetto.getOtherField()).flatMap(el -> Optional.ofNullable(el.getImFinanziato())).isPresent() &&
-                !Optional.ofNullable(progetto.getOtherField()).flatMap(el -> Optional.ofNullable(el.getImCofinanziato())).isPresent()) {
-            progetto.getOtherField().setImFinanziato(BigDecimal.ZERO);
-            progetto.getOtherField().setImCofinanziato(BigDecimal.ZERO);
-        }
-        return progetto;
     }
 
     @Override
@@ -867,7 +853,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             if (!optOtherField.map(Progetto_other_fieldBulk::getImCofinanziato).filter(el -> !(el.compareTo(BigDecimal.ZERO) < 0)).isPresent())
                 throw new ValidationException("Operazione non possibile! Indicare l'importo cofinanziato (valore maggiore o uguale a 0)!");
 
-            if (optProgetto.get().isPianoEconomicoRequired() && !isBilancioChiuso) {
+            if (optProgetto.get().isPianoEconomicoRequired()) {
                 if (!optProgetto.map(ProgettoBulk::getImTotale).filter(el -> el.compareTo(BigDecimal.ZERO) > 0).isPresent())
                     throw new ValidationException("Operazione non possibile! Indicare almeno un importo positivo tra quello finanziato e cofinanziato!");
                 if (!optProgetto.map(ProgettoBulk::isDettagliPianoEconomicoPresenti).orElse(Boolean.TRUE))
@@ -917,10 +903,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     }
 
     public boolean isRODatiContabili() {
-        Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
-        return !this.isSearching() && 
-        		(isROProgettoForStato() || isBilancioChiuso ||
-                optProgetto.filter(ProgettoBulk::isPianoEconomicoRequired).isPresent());
+        return !this.isSearching() && isROProgettoForStato();
     }
     
     @Override

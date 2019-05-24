@@ -524,7 +524,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 					.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_rimodulazione).reversed())
 					.findFirst();
 
-			if (lastRim.filter(el->el.isStatoProvvisorio()||el.isStatoDefinitivo()).isPresent())
+			if (lastRim.filter(el->el.isStatoProvvisorio()||el.isStatoDefinitivo()||el.isStatoValidato()).isPresent())
 				return openConfirm(context, "Attenzione! Si vuole accedere alla rimodulazione in corso del progetto?", 
 	        			OptionBP.CONFIRM_YES_NO, "doConfirmRimodula");
 			else
@@ -574,7 +574,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 				if (Optional.ofNullable(rim).map(Progetto_rimodulazioneBulk::isStatoApprovato).orElse(Boolean.TRUE)) {
 					bp.basicEdit(context, progetto,Boolean.TRUE);
 				} else {
-		            List<Progetto_rimodulazioneBulk> listRimodulazioni = bp.createComponentSession().find(context.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", context.getUserContext(), progetto.getPg_progetto());
+		            List<Progetto_rimodulazioneBulk> listRimodulazioni = bp.createComponentSession().find(context.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", progetto.getPg_progetto());
 		            progetto.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(listRimodulazioni));
 				}
         	}
