@@ -20,6 +20,9 @@ import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -38,6 +41,7 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
+import it.cnr.contab.doccont00.bp.AbstractFirmaDigitaleDocContBP;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
@@ -56,6 +60,7 @@ import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoHome;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
+import it.cnr.contab.progettiric00.comp.RimodulazioneNonApprovataException;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
@@ -89,7 +94,9 @@ import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent {
-	private class CtrlVarPianoEco {
+    private static final Logger log = LoggerFactory.getLogger(CRUDPdgVariazioneGestionaleComponent.class);
+
+    private class CtrlVarPianoEco {
 		public CtrlVarPianoEco(ProgettoBulk progetto) {
 			super();
 			this.progetto = progetto;
@@ -436,6 +443,18 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			Pdg_variazioneHome testataHome = (Pdg_variazioneHome)getHome(userContext, Pdg_variazioneBulk.class);
 
 			ribaltaCostiPdGArea(userContext,varPdg);
+			
+			if (varPdg.isMotivazioneVariazioneRimodulazioneProgetto()) {
+				try {
+	            	Progetto_rimodulazioneHome prgHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+	        		Progetto_rimodulazioneBulk rimodulazione = prgHome.rebuildRimodulazione(userContext, varPdg.getProgettoRimodulazione());
+	        		prgHome.validaPassaggioStatoApprovato(userContext, rimodulazione, varPdg);
+	        		Utility.createRimodulaProgettoRicercaComponentSession().approva(userContext, rimodulazione, varPdg);
+				} catch (RimodulazioneNonApprovataException e) {
+					log.info("Approvazione Variazione di Rimodulazione "+varPdg.getEsercizio()+"\\"+varPdg.getPg_variazione_pdg()+" che non genera "
+							+"approvazione della rimodulazione associata.");
+				}
+			}
 
 			/*
 			 * Ricarico il BULK con i dati presenti sul DB che, nel frattempo, potrebbero essere
@@ -470,11 +489,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				String soggetto = "E' stata approvata la Variazione al Pdg n° "+varPdg.getPg_variazione_pdg();
 				generaEMAIL(userContext, varPdg,soggetto,soggetto +" del "+varPdg.getEsercizio()+"<BR>",null, "APP");			    	
 			}						
-		} catch (IntrospectionException e) {
-			throw new ComponentException(e);
-		} catch (PersistencyException e) {
-			throw new ComponentException(e);
-		} catch (EJBException e) {
+		} catch (IntrospectionException|PersistencyException|EJBException|RemoteException e) {
 			throw new ComponentException(e);
 		}
 		return varPdg;
@@ -1486,19 +1501,18 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
             	listCtrlVarPianoEco.stream().forEach(el->{
 	            	try {
 		            	Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome) getHome(userContext, Progetto_rimodulazioneBulk.class);
-		            	rimodHome.findRimodulazioni(userContext, el.getProgetto().getPg_progetto()).stream()
+		            	rimodHome.findRimodulazioni(el.getProgetto().getPg_progetto()).stream()
 		            	.filter(rim->rim.isStatoDefinitivo()||rim.isStatoValidato())
 		            	.findFirst().ifPresent(rim->{
 		            		try {
 		            			rim = rimodHome.rebuildRimodulazione(userContext, rim);
 			            		if (rim.getVariazioniModels().stream().filter(Pdg_variazioneBulk.class::isInstance).findFirst().isPresent())
 					            	throw new ApplicationRuntimeException("La variazione movimenta il progetto "+el.getProgetto().getCd_progetto()
-					            			+ " sul quale è in corso la rimodulazione nr."+rim.getPg_rimodulazione()+" (id:"
-					            			+ rim.getPg_gen_rimodulazione()+") che si trova attualmente in stato '"
-					            			+ (rim.isStatoDefinitivo()?"Definitivo":"Validato")+"' e richiede una variazione di competenza "
-					            			+ "a quadratura della stessa.</br> Non è effettuare variazioni sul progetto "
-					            			+ "fino a quando non vengono effettuate tutte le variazioni "
-					            			+ "a quadratura e/o la suddetta rimodulazione non viene approvata/respinta.");
+					            			+ " sul quale è in corso la rimodulazione nr."+ rim.getPg_gen_rimodulazione()
+					            			+ " che si trova attualmente in stato '"+ (rim.isStatoDefinitivo()?"Definitivo":"Validato")
+					            			+ "' e richiede una variazione di competenza a quadratura.</br> Non è possibile effettuare "
+					            			+ "variazioni a competenza sul progetto fino a quando la suddetta rimodulazione non viene "
+					            			+ "approvata/respinta.");
 			            	} catch (PersistencyException ex){
 			            		throw new DetailedRuntimeException(ex);
 			            	}

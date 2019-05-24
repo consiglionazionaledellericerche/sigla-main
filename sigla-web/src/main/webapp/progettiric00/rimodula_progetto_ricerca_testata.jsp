@@ -14,13 +14,14 @@
 	ProgettoBulk progetto = Optional.ofNullable(bulk).map(Progetto_rimodulazioneBulk::getProgetto).orElse(null);
 %>
 	<div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">
-	Rimodulazione
+	Versione
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio).map(el->" Provvisoria").orElse("")%>
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo).map(el->" Definitiva").orElse("")%>
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoValidato).map(el->" Validata").orElse("")%>
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoApprovato).map(el->" Approvata").orElse("")%>
 	<%=Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk::isStatoRespinto).map(el->" Respinta").orElse("")%>
 	<%=bulk.getPg_rimodulazione()!=null?" n."+bulk.getPg_rimodulazione():""%>
+	<%=bulk.getPg_gen_rimodulazione()!=null?" - Rimodulazione n."+bulk.getPg_gen_rimodulazione():""%>
 	</div>
 	<div class="Group">
 	<table class="Panel card border-primary p-2 mb-2">

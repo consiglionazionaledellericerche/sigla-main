@@ -38,10 +38,10 @@ public class RimodulaProgettoRicercaComponentSessionBean extends it.cnr.jada.ejb
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}	
-	public Progetto_rimodulazioneBulk approva(it.cnr.jada.UserContext param0,Progetto_rimodulazioneBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	public Progetto_rimodulazioneBulk approva(it.cnr.jada.UserContext param0,Progetto_rimodulazioneBulk param1,OggettoBulk param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
-			Progetto_rimodulazioneBulk result = ((RimodulaProgettoRicercaComponent)componentObj).approva(param0,param1);
+			Progetto_rimodulazioneBulk result = ((RimodulaProgettoRicercaComponent)componentObj).approva(param0,param1,param2);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

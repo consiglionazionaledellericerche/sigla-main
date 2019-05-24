@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addcomBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
@@ -19,6 +20,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
+import it.cnr.contab.progettiric00.comp.RimodulazioneNonApprovataException;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
@@ -26,7 +28,11 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
@@ -42,7 +48,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		super(Progetto_rimodulazioneBulk.class,conn,persistentCache);
 	}
 	
-	public java.util.Collection<Progetto_rimodulazione_ppeBulk> findDettagliRimodulazione(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk rimodulazione) throws PersistencyException {
+	public java.util.Collection<Progetto_rimodulazione_ppeBulk> findDettagliRimodulazione(Progetto_rimodulazioneBulk rimodulazione) throws PersistencyException {
 		Progetto_rimodulazione_ppeHome dettHome = (Progetto_rimodulazione_ppeHome)getHomeCache().getHome(Progetto_rimodulazione_ppeBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());
@@ -50,7 +56,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		return dettHome.fetchAll(sql);
 	}
 	
-	public java.util.Collection<Progetto_rimodulazione_voceBulk> findDettagliVoceRimodulazione(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk rimodulazione) throws PersistencyException {
+	public java.util.Collection<Progetto_rimodulazione_voceBulk> findDettagliVoceRimodulazione(Progetto_rimodulazioneBulk rimodulazione) throws PersistencyException {
 		Progetto_rimodulazione_voceHome dettHome = (Progetto_rimodulazione_voceHome)getHomeCache().getHome(Progetto_rimodulazione_voceBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());
@@ -58,14 +64,14 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		return dettHome.fetchAll(sql);
 	}
 	
-	public java.util.List<Progetto_rimodulazioneBulk> findRimodulazioni(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws PersistencyException {
+	public java.util.List<Progetto_rimodulazioneBulk> findRimodulazioni(Integer pgProgetto) throws PersistencyException {
 		Progetto_rimodulazioneHome dettHome = (Progetto_rimodulazioneHome)getHomeCache().getHome(Progetto_rimodulazioneBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
 		return dettHome.fetchAll(sql);
 	}
 	
-	public java.util.Collection<Pdg_variazioneBulk> findVariazioniCompetenzaAssociate(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk rimodulazione) throws IntrospectionException, PersistencyException {
+	public java.util.Collection<Pdg_variazioneBulk> findVariazioniCompetenzaAssociate(Progetto_rimodulazioneBulk rimodulazione) throws IntrospectionException, PersistencyException {
 		Pdg_variazioneHome dettHome = (Pdg_variazioneHome)getHomeCache().getHome(Pdg_variazioneBulk.class,"VP_PDG_VARIAZIONE");
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto_rimodulazione",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());
@@ -73,7 +79,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		return dettHome.fetchAll(sql);
 	}
 	
-	public java.util.Collection<Var_stanz_resBulk> findVariazioniResidueAssociate(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk rimodulazione) throws IntrospectionException, PersistencyException {
+	public java.util.Collection<Var_stanz_resBulk> findVariazioniResidueAssociate(Progetto_rimodulazioneBulk rimodulazione) throws IntrospectionException, PersistencyException {
 		Var_stanz_resHome dettHome = (Var_stanz_resHome)getHomeCache().getHome(Var_stanz_resBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto_rimodulazione",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());
@@ -161,6 +167,8 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				newDetail.setImVarEntrata(BigDecimal.ZERO);
 				newDetail.setImVarSpesaFinanziato(ppe.getImSpesaFinanziatoRimodulato().subtract(ppe.getIm_spesa_finanziato()));
 				newDetail.setImVarSpesaCofinanziato(ppe.getImSpesaCofinanziatoRimodulato().subtract(ppe.getIm_spesa_cofinanziato()));
+				newDetail.setImStoassSpesaFinanziato(ppe.getSaldoSpesa().getAssestatoFinanziamento());
+				newDetail.setImStoassSpesaCofinanziato(ppe.getSaldoSpesa().getAssestatoCofinanziamento());
 				return newDetail;
 			}).collect(Collectors.toList());
 	}
@@ -220,8 +228,10 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		ProgettoHome testataHome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
 		final ProgettoBulk progetto = testataHome.initializePianoEconomico(userContext, rimodulazione.getProgetto(), true);
 
-		rimodulazione.setDettagliRimodulazione(new BulkList<Progetto_rimodulazione_ppeBulk>(this.findDettagliRimodulazione(userContext,rimodulazione)));
-		rimodulazione.setDettagliVoceRimodulazione(new BulkList<Progetto_rimodulazione_voceBulk>(this.findDettagliVoceRimodulazione(userContext,rimodulazione)));
+		rimodulazione.setDettagliRimodulazione(new BulkList<Progetto_rimodulazione_ppeBulk>(this.findDettagliRimodulazione(rimodulazione)));
+		rimodulazione.setDettagliVoceRimodulazione(new BulkList<Progetto_rimodulazione_voceBulk>(this.findDettagliVoceRimodulazione(rimodulazione)));
+
+		getHomeCache().fetchAll(userContext);
 
 		rimodulazione.setProgetto(progetto);
 		rimodulazione.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>());
@@ -424,7 +434,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 	private Progetto_rimodulazioneBulk rebuildRimodulazioneChiusa(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws PersistencyException {
 		ProgettoBulk progetto = rimodulazione.getProgetto();
 		
-		List<Progetto_rimodulazioneBulk> listRimodulazioni = this.findRimodulazioni(userContext, rimodulazione.getProgetto().getPg_progetto());
+		List<Progetto_rimodulazioneBulk> listRimodulazioni = this.findRimodulazioni(rimodulazione.getProgetto().getPg_progetto());
 		listRimodulazioni.stream()
 				.filter(el->el.isStatoApprovato())
 				.filter(el->el.getPg_rimodulazione().compareTo(rimodulazione.getPg_rimodulazione())>=0)
@@ -617,5 +627,240 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				}
 			});
 		return rimodulazione;
+	}
+	
+	/**
+	 * Restituisce il progetto associato alla rimodulazione con le modifiche richieste dalla rimodulazione stessa 
+	 * Il progetto viene restituito nella versione definitiva che avrebbe se la rimodulazione venisse approvata.
+	 * 
+	 * N.B. Questo metodo deve essere richiamato solo l'oggetto Rimodulazione è stato caricato con tutti i dettagli
+	 * in caso contrario chiamare il metodo precedente.
+	 * 
+	 * @param Oggetto Rimodulazione caricato con tutti i dettagli
+	 * @return Progetto Rimodulato
+	 */
+	public ProgettoBulk getProgettoRimodulato(Progetto_rimodulazioneBulk rimodulazione) {
+		ProgettoBulk progetto = rimodulazione.getProgetto();
+		
+		if (rimodulazione.isRimodulatoDtInizio())
+			progetto.getOtherField().setDtInizio(rimodulazione.getDtInizioRimodulato());
+		if (rimodulazione.isRimodulatoDtFine())
+			progetto.getOtherField().setDtFine(rimodulazione.getDtFineRimodulato());
+		if (rimodulazione.isRimodulatoDtProroga())
+			progetto.getOtherField().setDtProroga(rimodulazione.getDtProrogaRimodulato());
+		if (rimodulazione.isRimodulatoImportoFinanziato())
+			progetto.getOtherField().setImFinanziato(rimodulazione.getImFinanziatoRimodulato());
+		if (rimodulazione.isRimodulatoImportoCofinanziato())
+			progetto.getOtherField().setImCofinanziato(rimodulazione.getImCofinanziatoRimodulato());
+
+		rimodulazione.getDettagliPianoEconomicoAnnoCorrente().stream()
+			.forEach(ppeRim->{
+				Progetto_piano_economicoBulk ppeStorage = 
+					progetto.getDettagliPianoEconomicoAnnoCorrente().stream()
+							.filter(el->el.getCd_unita_organizzativa().equals(ppeRim.getCd_unita_organizzativa()))
+							.filter(el->el.getCd_voce_piano().equals(ppeRim.getCd_voce_piano()))
+							.filter(el->el.getEsercizio_piano().equals(ppeRim.getEsercizio_piano()))
+							.findFirst().orElse(null);
+				
+				if (ppeRim.isDetailRimodulatoEliminato()) {
+					if (Optional.ofNullable(ppeStorage).isPresent()) {
+						ppeStorage.getVociBilancioAssociate().stream()
+							.forEach(ppeVocStorage->{
+								ppeVocStorage.setToBeDeleted();
+								ppeStorage.removeFromVociBilancioAssociate(ppeStorage.getVociBilancioAssociate().indexOf(ppeVocStorage));
+						});
+						ppeStorage.setToBeDeleted();
+						progetto.removeFromDettagliPianoEconomicoAnnoCorrente(progetto.getDettagliPianoEconomicoAnnoCorrente().indexOf(ppeStorage));
+					}
+				} else {
+					Progetto_piano_economicoBulk ppe = 
+							Optional.ofNullable(ppeStorage)
+								.orElseGet(()->{
+									Progetto_piano_economicoBulk newPpe = new Progetto_piano_economicoBulk();
+									newPpe.setVoce_piano_economico(ppeRim.getVoce_piano_economico());
+									newPpe.setEsercizio_piano(ppeRim.getEsercizio_piano());
+									newPpe.setToBeCreated();
+									progetto.addToDettagliPianoEconomicoAnnoCorrente(newPpe);
+									return newPpe;
+								});
+
+					ppe.setIm_entrata(ppeRim.getIm_entrata());
+					ppe.setIm_spesa_finanziato(ppeRim.getImSpesaFinanziatoRimodulato());
+					ppe.setIm_spesa_cofinanziato(ppeRim.getImSpesaCofinanziatoRimodulato());
+					ppe.setToBeUpdated();
+					
+					ppeRim.getVociBilancioAssociate().stream()
+						.forEach(ppeRimVoc->{
+							Ass_progetto_piaeco_voceBulk ppeVocStorage = 
+								ppe.getVociBilancioAssociate().stream()
+								   .filter(el->el.getCd_unita_organizzativa().equals(ppeRimVoc.getCd_unita_organizzativa()))
+								   .filter(el->el.getCd_voce_piano().equals(ppeRimVoc.getCd_voce_piano()))
+								   .filter(el->el.getEsercizio_piano().equals(ppeRimVoc.getEsercizio_piano()))
+								   .filter(el->el.getEsercizio_voce().equals(ppeRimVoc.getEsercizio_voce()))
+								   .filter(el->el.getTi_appartenenza().equals(ppeRimVoc.getTi_appartenenza()))
+								   .filter(el->el.getTi_gestione().equals(ppeRimVoc.getTi_gestione()))
+								   .filter(el->el.getCd_elemento_voce().equals(ppeRimVoc.getCd_elemento_voce()))
+								   .findFirst().orElse(null);
+
+							if (ppeRimVoc.isDetailRimodulatoEliminato()) {
+								if (Optional.ofNullable(ppeVocStorage).isPresent()){
+									ppeVocStorage.setToBeDeleted();
+									ppe.removeFromVociBilancioAssociate(ppe.getVociBilancioAssociate().indexOf(ppeVocStorage));
+								}
+							} else {
+								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
+									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
+									newPpeVoc.setElemento_voce(ppeRimVoc.getElemento_voce());
+									newPpeVoc.setToBeCreated();
+									ppe.addToVociBilancioAssociate(newPpeVoc);
+							   }
+							}
+					});
+				}
+		});
+
+		rimodulazione.getDettagliPianoEconomicoAltriAnni().stream()
+			.forEach(ppeRim->{
+				Progetto_piano_economicoBulk ppeStorage = 
+					progetto.getDettagliPianoEconomicoAltriAnni().stream()
+							.filter(el->el.getCd_unita_organizzativa().equals(ppeRim.getCd_unita_organizzativa()))
+							.filter(el->el.getCd_voce_piano().equals(ppeRim.getCd_voce_piano()))
+							.filter(el->el.getEsercizio_piano().equals(ppeRim.getEsercizio_piano()))
+							.findFirst().orElse(null);
+				
+				if (ppeRim.isDetailRimodulatoEliminato()) {
+					if (Optional.ofNullable(ppeStorage).isPresent())
+						progetto.removeFromDettagliPianoEconomicoAltriAnni(progetto.getDettagliPianoEconomicoAltriAnni().indexOf(ppeStorage));
+				} else {
+					Progetto_piano_economicoBulk ppe = 
+							Optional.ofNullable(ppeStorage)
+								.orElseGet(()->{
+									Progetto_piano_economicoBulk newPpe = new Progetto_piano_economicoBulk();
+									newPpe.setVoce_piano_economico(ppeRim.getVoce_piano_economico());
+									newPpe.setEsercizio_piano(ppeRim.getEsercizio_piano());
+									newPpe.setToBeCreated();
+									progetto.addToDettagliPianoEconomicoAltriAnni(newPpe);
+									return newPpe;
+								});
+	
+					ppe.setIm_entrata(ppeRim.getIm_entrata());
+					ppe.setIm_spesa_finanziato(ppeRim.getImSpesaFinanziatoRimodulato());
+					ppe.setIm_spesa_cofinanziato(ppeRim.getImSpesaCofinanziatoRimodulato());
+					ppe.setToBeUpdated();
+					
+					ppeRim.getVociBilancioAssociate().stream()
+						.forEach(ppeRimVoc->{
+							Ass_progetto_piaeco_voceBulk ppeVocStorage = 
+								ppe.getVociBilancioAssociate().stream()
+								   .filter(el->el.getCd_unita_organizzativa().equals(ppeRimVoc.getCd_unita_organizzativa()))
+								   .filter(el->el.getCd_voce_piano().equals(ppeRimVoc.getCd_voce_piano()))
+								   .filter(el->el.getEsercizio_piano().equals(ppeRimVoc.getEsercizio_piano()))
+								   .filter(el->el.getEsercizio_voce().equals(ppeRimVoc.getEsercizio_voce()))
+								   .filter(el->el.getTi_appartenenza().equals(ppeRimVoc.getTi_appartenenza()))
+								   .filter(el->el.getTi_gestione().equals(ppeRimVoc.getTi_gestione()))
+								   .filter(el->el.getCd_elemento_voce().equals(ppeRimVoc.getCd_elemento_voce()))
+								   .findFirst().orElse(null);
+	
+							if (ppeRimVoc.isDetailRimodulatoEliminato()) {
+								if (Optional.ofNullable(ppeVocStorage).isPresent())
+									ppe.removeFromVociBilancioAssociate(ppe.getVociBilancioAssociate().indexOf(ppeVocStorage));
+							} else {
+								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
+									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
+									newPpeVoc.setElemento_voce(ppeRimVoc.getElemento_voce());
+									newPpeVoc.setToBeCreated();
+									ppe.addToVociBilancioAssociate(newPpeVoc);
+							   }
+							}
+					});
+				}
+		});
+
+		rimodulazione.getDettagliPianoEconomicoTotale().stream()
+			.forEach(ppeRim->{
+				Progetto_piano_economicoBulk ppeStorage = 
+					progetto.getDettagliPianoEconomicoTotale().stream()
+							.filter(el->el.getCd_unita_organizzativa().equals(ppeRim.getCd_unita_organizzativa()))
+							.filter(el->el.getCd_voce_piano().equals(ppeRim.getCd_voce_piano()))
+							.filter(el->el.getEsercizio_piano().equals(ppeRim.getEsercizio_piano()))
+							.findFirst().orElse(null);
+				
+				if (ppeRim.isDetailRimodulatoEliminato()) {
+					if (Optional.ofNullable(ppeStorage).isPresent())
+						progetto.removeFromDettagliPianoEconomicoTotale(progetto.getDettagliPianoEconomicoTotale().indexOf(ppeStorage));
+				} else {
+					Progetto_piano_economicoBulk ppe = 
+							Optional.ofNullable(ppeStorage)
+								.orElseGet(()->{
+									Progetto_piano_economicoBulk newPpe = new Progetto_piano_economicoBulk();
+									newPpe.setVoce_piano_economico(ppeRim.getVoce_piano_economico());
+									newPpe.setEsercizio_piano(ppeRim.getEsercizio_piano());
+									newPpe.setToBeCreated();
+									progetto.addToDettagliPianoEconomicoTotale(newPpe);
+									return newPpe;
+								});
+	
+					ppe.setIm_entrata(ppeRim.getIm_entrata());
+					ppe.setIm_spesa_finanziato(ppeRim.getImSpesaFinanziatoRimodulato());
+					ppe.setIm_spesa_cofinanziato(ppeRim.getImSpesaCofinanziatoRimodulato());
+					ppe.setToBeUpdated();
+					
+					ppeRim.getVociBilancioAssociate().stream()
+						.forEach(ppeRimVoc->{
+							Ass_progetto_piaeco_voceBulk ppeVocStorage = 
+								ppe.getVociBilancioAssociate().stream()
+								   .filter(el->el.getCd_unita_organizzativa().equals(ppeRimVoc.getCd_unita_organizzativa()))
+								   .filter(el->el.getCd_voce_piano().equals(ppeRimVoc.getCd_voce_piano()))
+								   .filter(el->el.getEsercizio_piano().equals(ppeRimVoc.getEsercizio_piano()))
+								   .filter(el->el.getEsercizio_voce().equals(ppeRimVoc.getEsercizio_voce()))
+								   .filter(el->el.getTi_appartenenza().equals(ppeRimVoc.getTi_appartenenza()))
+								   .filter(el->el.getTi_gestione().equals(ppeRimVoc.getTi_gestione()))
+								   .filter(el->el.getCd_elemento_voce().equals(ppeRimVoc.getCd_elemento_voce()))
+								   .findFirst().orElse(null);
+	
+							if (ppeRimVoc.isDetailRimodulatoEliminato()) {
+								if (Optional.ofNullable(ppeVocStorage).isPresent())
+									ppe.removeFromVociBilancioAssociate(ppe.getVociBilancioAssociate().indexOf(ppeVocStorage));
+							} else {
+								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
+									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
+									newPpeVoc.setElemento_voce(ppeRimVoc.getElemento_voce());
+									newPpeVoc.setToBeCreated();
+									ppe.addToVociBilancioAssociate(newPpeVoc);
+							   }
+							}
+					});
+				}
+		});
+		return progetto;
+	}
+	
+	public void validaPassaggioStatoApprovato(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione, OggettoBulk variazioneInApprovazione) throws PersistencyException, IntrospectionException, RimodulazioneNonApprovataException {
+		Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoValidato)
+		.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato approvato può essere assegnato solo a rimodulazioni in stato validato!"));
+	
+		if (rimodulazione.getAllDetailsProgettoPianoEconomico().stream()
+						 .filter(el->el.getDispResiduaFinanziamentoRimodulato().compareTo(BigDecimal.ZERO)<0 ||
+								 	 el.getDispResiduaCofinanziamentoRimodulato().compareTo(BigDecimal.ZERO)<0)
+						 .findFirst().isPresent())
+			throw new RimodulazioneNonApprovataException("Operazione non possibile! Lo stato approvato può essere assegnato solo quando tutte le variazioni a quadratura sono state inserite e approvate!");
+	
+		if (this.findVariazioniCompetenzaAssociate(rimodulazione).stream()
+				.filter(el->Optional.ofNullable(variazioneInApprovazione)
+									.filter(Pdg_variazioneBulk.class::isInstance)
+									.map(varEscl->!varEscl.equalsByPrimaryKey(el))
+									.orElse(Boolean.TRUE))
+				.filter(el->el.isPropostaProvvisoria()||el.isPropostaDefinitiva())
+	    	.findFirst().isPresent())
+	    	throw new RimodulazioneNonApprovataException("Operazione non possibile! Lo stato approvato può essere assegnato solo quando tutte le variazioni a quadratura sono approvate!");
+	
+	    if (this.findVariazioniResidueAssociate(rimodulazione).stream()
+				.filter(el->Optional.ofNullable(variazioneInApprovazione)
+						.filter(Var_stanz_resBulk.class::isInstance)
+						.map(varEscl->!varEscl.equalsByPrimaryKey(el))
+						.orElse(Boolean.TRUE))
+	    		.filter(el->el.isPropostaProvvisoria()||el.isPropostaDefinitiva())
+			.findFirst().isPresent())
+			throw new RimodulazioneNonApprovataException("Operazione non possibile! Lo stato approvato può essere assegnato solo quando tutte le variazioni a quadratura sono approvate!");
 	}
 }

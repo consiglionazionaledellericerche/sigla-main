@@ -3,15 +3,15 @@ package it.cnr.contab.pdg01.comp;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 
-import it.cnr.si.spring.storage.StorageService;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -45,7 +45,6 @@ import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
@@ -53,6 +52,7 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
@@ -69,12 +69,13 @@ import it.cnr.jada.persistency.ObjectNotFoundException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.HomeCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StoreService;
 
 public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDComponent {
 	/**
@@ -627,7 +628,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 							.filter(rim->rim.getPg_progetto().equals(dett.getProgetto().getPg_progetto()))
 							.isPresent()) {
 						Progetto_rimodulazioneHome rimHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
-						listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(userContext,dett.getPdg_variazione().getProgettoRimodulazione()));
+						listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(dett.getPdg_variazione().getProgettoRimodulazione()));
 					}
 					
 					if (list.isEmpty() && listRim.isEmpty())
