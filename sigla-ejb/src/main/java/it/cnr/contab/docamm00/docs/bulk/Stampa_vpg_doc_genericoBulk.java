@@ -52,6 +52,17 @@ public String getCdTipoDocAmmCRParameter() {
 
 	return getTipo_documento().getCd_tipo_documento_amm();
 }
+
+public Integer getIdTipoDocumentoGenericoParameter() {
+
+
+	if (getTipoDocumentoGenerico()==null)
+		return null;
+	if (getTipoDocumentoGenerico().getId()==null)
+		return null;
+
+	return getTipoDocumentoGenerico().getId();
+}
 /**
  * Insert the method's description here.
  * Creation date: (19/03/2003 11.20.17)
