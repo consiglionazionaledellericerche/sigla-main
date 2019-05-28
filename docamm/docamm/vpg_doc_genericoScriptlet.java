@@ -161,7 +161,7 @@ public void beforeReportInit() throws JRScriptletException
 	java.sql.CallableStatement cs = null; 
 	try{
         	conn.setAutoCommit(false);
-		cs = conn.prepareCall("{call SPG_DOC_GENERICO(?,?,?,?,?,?,?,?,?)}");
+		cs = conn.prepareCall("{call SPG_DOC_GENERICO(?,?,?,?,?,?,?,?,?,?)}");
 		cs.setObject(1,(java.lang.String)getParameterValue("aCd_cds"));
 		cs.setObject(2,(java.lang.String)getParameterValue("aCd_uo"));
 		cs.setObject(3,(java.lang.Integer)getParameterValue("aEs"));
