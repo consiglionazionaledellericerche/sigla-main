@@ -171,6 +171,7 @@ public void beforeReportInit() throws JRScriptletException
 		cs.setObject(7,(new java.text.SimpleDateFormat("yyyy/MM/dd")).format((java.util.Date)getParameterValue("aDt_da")));
 		cs.setObject(8,(new java.text.SimpleDateFormat("yyyy/MM/dd")).format((java.util.Date)getParameterValue("aDt_a")));
 		cs.setObject(9,(java.lang.String)getParameterValue("aCd_terzo"));
+		cs.setObject(10,(java.lang.Long)getParameterValue("acd_tdg"));
 		cs.executeQuery();
 	}catch (Throwable e) {
 		throw new JRScriptletException(e.getMessage());
