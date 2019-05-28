@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_doc_generico_subreport" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="1ea23a9d-dafb-47aa-914e-b7f19ead65cf">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1087"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -111,6 +111,8 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 	<field name="PG_MAN_REV" class="java.math.BigDecimal"/>
 	<field name="IBAN_IC" class="java.lang.String"/>
 	<field name="IBAN" class="java.lang.String"/>
+	<field name="CD_TIPO_DOCUMENTO_GENERICO" class="java.lang.String"/>
+	<field name="DS_TIPO_DOCUMENTO_GENERICO" class="java.lang.String"/>
 	<variable name="PAGE" class="java.lang.Integer" resetType="Group" resetGroup="pk_generico" calculation="Highest">
 		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
 		<initialValueExpression><![CDATA[$V{PAGE_NUMBER}]]></initialValueExpression>
@@ -174,7 +176,9 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 			<band height="34" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.intValue()==1)]]></printWhenExpression>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="TNR14BOLD" x="0" y="3" width="535" height="18" uuid="724d78fa-15db-416a-828f-690f5dcbbc0d"/>
+					<reportElement key="textField" style="TNR14BOLD" x="0" y="3" width="535" height="18" uuid="724d78fa-15db-416a-828f-690f5dcbbc0d">
+						<printWhenExpression><![CDATA[!$F{CD_TIPO_DOCUMENTO_GENERICO}.startsWith( "ND" )]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -195,6 +199,19 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 					<textElement textAlignment="Center"/>
 					<textFieldExpression><![CDATA[($F{TI_ISTITUZ_COMMERC}.equals("I"))?"Istituzionale":
 "Commerciale"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR14BOLD" x="0" y="3" width="535" height="18" uuid="012beec5-8219-42f1-8956-0893f566d8b3">
+						<printWhenExpression><![CDATA[$F{CD_TIPO_DOCUMENTO_GENERICO}.startsWith( "ND" )]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{DS_TIPO_DOCUMENTO_GENERICO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -587,7 +604,7 @@ $F{CD_TIPO_DOCUMENTO_AMM}+ $F{PG_DOCUMENTO_GENERICO}]]></groupExpression>
 						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textFieldExpression><![CDATA[$F{DS_VOCE} ]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{DS_VOCE}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
