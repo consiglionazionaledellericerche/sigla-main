@@ -52,6 +52,9 @@
 	<td><% bp.getController().writeFormLabel(out,"findTerzo"); %></td>
 	<td><% bp.getController().writeFormInput(out,"findTerzo"); %></td>
   </tr>
+  <tr>
+			<% bp.getController().writeFormField(out,"findTipoDocumentoGenerico"); %>
+  </tr>
 </table>
 </div>
 <% bp.closeFormWindow(pageContext); %>
