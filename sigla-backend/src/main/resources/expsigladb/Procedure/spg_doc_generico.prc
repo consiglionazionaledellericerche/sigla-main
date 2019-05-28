@@ -32,7 +32,8 @@ CREATE OR REPLACE PROCEDURE         SPG_DOC_GENERICO
  aPg_a in number,
  aDt_da in varchar2,
  aDt_a in varchar2,
- aCd_terzo in varchar2
+ aCd_terzo in varchar2,
+ acd_tdg in number
 ) is
  aId number;
  i number;
@@ -48,15 +49,17 @@ begin
     select IBMSEQ00_CR_PACKAGE.nextval into aId from dual;
     i:=0;
 
-    for aDocGen in (select * from documento_generico dgen
+    for aDocGen in (select dgen.*, tdg.descrizione, tdg.codice from documento_generico dgen, tipo_documento_generico tdg
                     where dgen.CD_CDS_ORIGINE          = aCd_cds
                       and dgen.CD_UO_ORIGINE          = aCd_uo
                       and dgen.ESERCIZIO              = aEs
                       and dgen.CD_TIPO_DOCUMENTO_AMM  like aCd_tipo_doc_amm
                       and dgen.PG_DOCUMENTO_GENERICO  >= aPg_da
                       and dgen.PG_DOCUMENTO_GENERICO  <= aPg_a
+                      and ((acd_tdg is not null and dgen.id_tipo_documento_generico = acd_tdg) or (acd_tdg is null))
                       and dgen.DATA_REGISTRAZIONE      >= to_date(aDt_da,'YYYY/MM/DD')
                       and dgen.DATA_REGISTRAZIONE      <= to_date(aDt_a,'YYYY/MM/DD')
+											and dgen.id_tipo_documento_Generico = tdg.id(+)
                       and exists (select 1 from documento_generico_riga dgenr
                                       where dgenr.CD_CDS                  = dgen.CD_CDS
                                     and dgenr.CD_UNITA_ORGANIZZATIVA = dgen.CD_UNITA_ORGANIZZATIVA
@@ -129,7 +132,9 @@ begin
                                     VIA_FISCALE_ENTE,
                                     CAP_COMUNE_FISCALE_ENTE,
                                     DS_COMUNE_ENTE,
-                                    CD_PROVINCIA_ENTE)
+                                    CD_PROVINCIA_ENTE,
+                                    CD_TIPO_DOCUMENTO_GENERICO,
+                                    DS_TIPO_DOCUMENTO_GENERICO)
        select aId,
                  'Testata: (A,A)',
               'Stampa RPT',
@@ -161,7 +166,9 @@ begin
               vat.VIA_FISCALE || ', ' || vat.NUM_CIVICO_FISCALE,
               vat.CAP_COMUNE_FISCALE,
               vat.DS_COMUNE_FISCALE,
-              vat.CD_PROVINCIA_FISCALE
+              vat.CD_PROVINCIA_FISCALE,
+              aDocGen.codice,
+              aDocGen.descrizione
        from unita_organizzativa uo1
            ,unita_organizzativa uo2
            ,v_anagrafico_terzo vat
