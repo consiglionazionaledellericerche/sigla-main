@@ -211,7 +211,7 @@ ORDER BY CD_CDS,CD_UNITA_ORGANIZZATIVA,
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[$F{DS_TIPO_DOCUMENTO_GENERICO}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["NOTA DI ADDEBITO"]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
