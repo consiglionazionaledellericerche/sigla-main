@@ -56,10 +56,10 @@
 		property="progetto.unita_organizzativa"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		enabledOnSearch="false"
+		enabledOnSearch="true"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		enabledOnFreeSearch="false"
+		enabledOnFreeSearch="true"
 		label="UO Coordinatrice" />	
 	<fieldProperty
 		name="statoOf"
