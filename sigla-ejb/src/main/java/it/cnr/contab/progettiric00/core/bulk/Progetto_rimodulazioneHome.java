@@ -729,8 +729,15 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 							.findFirst().orElse(null);
 				
 				if (ppeRim.isDetailRimodulatoEliminato()) {
-					if (Optional.ofNullable(ppeStorage).isPresent())
+					if (Optional.ofNullable(ppeStorage).isPresent()) {
+						ppeStorage.getVociBilancioAssociate().stream()
+						.forEach(ppeVocStorage->{
+							ppeVocStorage.setToBeDeleted();
+							ppeStorage.removeFromVociBilancioAssociate(ppeStorage.getVociBilancioAssociate().indexOf(ppeVocStorage));
+						});
+						ppeStorage.setToBeDeleted();
 						progetto.removeFromDettagliPianoEconomicoAltriAnni(progetto.getDettagliPianoEconomicoAltriAnni().indexOf(ppeStorage));
+					}
 				} else {
 					Progetto_piano_economicoBulk ppe = 
 							Optional.ofNullable(ppeStorage)
@@ -762,8 +769,10 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 								   .findFirst().orElse(null);
 	
 							if (ppeRimVoc.isDetailRimodulatoEliminato()) {
-								if (Optional.ofNullable(ppeVocStorage).isPresent())
+								if (Optional.ofNullable(ppeVocStorage).isPresent()) {
+									ppeVocStorage.setToBeDeleted();
 									ppe.removeFromVociBilancioAssociate(ppe.getVociBilancioAssociate().indexOf(ppeVocStorage));
+								}
 							} else {
 								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
 									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
