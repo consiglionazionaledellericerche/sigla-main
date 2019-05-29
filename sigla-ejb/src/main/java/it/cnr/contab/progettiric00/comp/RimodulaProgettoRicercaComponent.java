@@ -58,6 +58,15 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
 		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
+		Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk.class::isInstance)
+		.map(Progetto_rimodulazioneBulk.class::cast).flatMap(el->Optional.ofNullable(el.getProgetto()))
+		.flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa())).ifPresent(cduo->{
+			sql.addTableToHeader("PROGETTO");
+			sql.addSQLClause(FindClause.AND, "PROGETTO.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sql.addSQLClause(FindClause.AND, "PROGETTO.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+			sql.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETT_RIMODULAZIONE.PG_PROGETTO");
+			sql.addSQLClause(FindClause.AND, "PROGETTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, cduo);
+		});
 		return sql;
 	}
 	
