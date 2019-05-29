@@ -14,14 +14,12 @@
 		label="Descrizione"
 		inputType="TEXT"
 		nullable="false"
-		maxLength="100"  
-		readonlyPropertyOnEdit="terzo.dipendente" />
+		maxLength="100"/>
 	<fieldProperty
 		name="fattElettronica"
 		property="fattElettronica"
 		label="Fatt. Elettronica"
 		inputType="CHECKBOX"
-		readonlyPropertyOnEdit="terzo.dipendente" 
 		/>
 	<fieldProperty
 		name="riferimento"
@@ -29,8 +27,7 @@
 		label="Riferimento"
 		inputType="TEXT"
 		nullable="false"
-		maxLength="50"  
-		readonlyPropertyOnEdit="terzo.dipendente" />
+		maxLength="50" />
 		
 	<formFieldProperty
 		name="ds_riferimento"
