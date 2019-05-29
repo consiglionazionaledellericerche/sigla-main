@@ -10,7 +10,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import it.cnr.contab.compensi00.tabrif.bulk.Esenzioni_addcomBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
@@ -28,10 +27,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.OutdatedResourceException;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -96,22 +92,22 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		Configurazione_cnrHome configurazioneCnrHome = (Configurazione_cnrHome)getHomeCache().getHome(Configurazione_cnrBulk.class);
 		Configurazione_cnrBulk configCnr = configurazioneCnrHome.getConfigurazioneCnrBulk(new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
 		BigDecimal annoFrom = Optional.ofNullable(configCnr).map(Configurazione_cnrBulk::getIm01).orElse(null);
-		
-		List<Progetto_rimodulazione_ppeBulk> listRimVoce = getDettagliRimodulazioneAggiornato(userContext, rimodulazione);
-		Map<Integer, List<Progetto_rimodulazione_ppeBulk>> mapEsercizio = 
-				listRimVoce.stream()
-						   .filter(el->el.getEsercizio_piano().compareTo(annoFrom.intValue())>=0)
-						   .filter(el->el.getImVarSpesaFinanziato().compareTo(BigDecimal.ZERO)!=0 ||
-						   			   el.getImVarSpesaCofinanziato().compareTo(BigDecimal.ZERO)!=0)
-						   .collect(Collectors.groupingBy(Progetto_rimodulazione_ppeBulk::getEsercizio_piano));
+
+		Map<Integer, List<Progetto_piano_economicoBulk>> mapEsercizio = 
+				rimodulazione.getAllDetailsProgettoPianoEconomico().stream()
+						     .filter(el->el.getEsercizio_piano().compareTo(annoFrom.intValue())>=0)
+							 .filter(Progetto_piano_economicoBulk::isDetailRimodulato)
+							 .filter(el->el.getDispResiduaFinanziamentoRimodulato().compareTo(BigDecimal.ZERO)<0 ||
+							  		     el.getDispResiduaCofinanziamentoRimodulato().compareTo(BigDecimal.ZERO)<0)
+						     .collect(Collectors.groupingBy(Progetto_piano_economicoBulk::getEsercizio_piano));
 		
 		Unita_organizzativaHome uoHome = (Unita_organizzativaHome)getHomeCache().getHome(Unita_organizzativaBulk.class);
 		CdrBulk cdr = uoHome.findCdrResponsbileUo(rimodulazione.getProgetto().getUnita_organizzativa());
 		
 		for (Integer esercizio : mapEsercizio.keySet()) {
 			Map<String, BigDecimal> newMapFonti = new HashMap<>();
-			newMapFonti.put("FIN", mapEsercizio.get(esercizio).stream().map(Progetto_rimodulazione_ppeBulk::getImVarSpesaCofinanziato).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
-			newMapFonti.put("FES", mapEsercizio.get(esercizio).stream().map(Progetto_rimodulazione_ppeBulk::getImVarSpesaFinanziato).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+			newMapFonti.put("FIN", mapEsercizio.get(esercizio).stream().map(Progetto_piano_economicoBulk::getDispResiduaCofinanziamentoRimodulato).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
+			newMapFonti.put("FES", mapEsercizio.get(esercizio).stream().map(Progetto_piano_economicoBulk::getDispResiduaFinanziamentoRimodulato).reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO));
 			newMapFonti.forEach((fonte, imVariazione) -> {
 				//creo la variazione solo per fonti esterne
 				if (fonte.equals("FES")) {
@@ -664,11 +660,15 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				
 				if (ppeRim.isDetailRimodulatoEliminato()) {
 					if (Optional.ofNullable(ppeStorage).isPresent()) {
+
+						List<Ass_progetto_piaeco_voceBulk> list = new ArrayList<>();
 						ppeStorage.getVociBilancioAssociate().stream()
 							.forEach(ppeVocStorage->{
 								ppeVocStorage.setToBeDeleted();
-								ppeStorage.removeFromVociBilancioAssociate(ppeStorage.getVociBilancioAssociate().indexOf(ppeVocStorage));
+								list.add(ppeVocStorage);
 						});
+						list.forEach(el->ppeStorage.removeFromVociBilancioAssociate(ppeStorage.getVociBilancioAssociate().indexOf(el)));
+
 						ppeStorage.setToBeDeleted();
 						progetto.removeFromDettagliPianoEconomicoAnnoCorrente(progetto.getDettagliPianoEconomicoAnnoCorrente().indexOf(ppeStorage));
 					}
@@ -730,11 +730,15 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				
 				if (ppeRim.isDetailRimodulatoEliminato()) {
 					if (Optional.ofNullable(ppeStorage).isPresent()) {
+
+						List<Ass_progetto_piaeco_voceBulk> list = new ArrayList<>();
 						ppeStorage.getVociBilancioAssociate().stream()
-						.forEach(ppeVocStorage->{
-							ppeVocStorage.setToBeDeleted();
-							ppeStorage.removeFromVociBilancioAssociate(ppeStorage.getVociBilancioAssociate().indexOf(ppeVocStorage));
+							.forEach(ppeVocStorage->{
+								ppeVocStorage.setToBeDeleted();
+								list.add(ppeVocStorage);
 						});
+						list.forEach(el->ppeStorage.removeFromVociBilancioAssociate(ppeStorage.getVociBilancioAssociate().indexOf(el)));
+
 						ppeStorage.setToBeDeleted();
 						progetto.removeFromDettagliPianoEconomicoAltriAnni(progetto.getDettagliPianoEconomicoAltriAnni().indexOf(ppeStorage));
 					}
