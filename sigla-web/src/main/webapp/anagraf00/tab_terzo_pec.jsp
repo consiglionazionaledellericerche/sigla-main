@@ -11,4 +11,4 @@
 <%	CRUDTerzoBP bp = (CRUDTerzoBP)BusinessProcess.getBusinessProcess(request); 
 	TerzoBulk terzo = (TerzoBulk)bp.getModel(); %>
 
-<% bp.getCrudPec().writeHTMLTable(pageContext,"pec",!terzo.isDipendente(),false,!terzo.isDipendente(),"100%","200px",false); %>
+<% bp.getCrudPec().writeHTMLTable(pageContext,"pec",true,false,true,"100%","200px",false); %>
