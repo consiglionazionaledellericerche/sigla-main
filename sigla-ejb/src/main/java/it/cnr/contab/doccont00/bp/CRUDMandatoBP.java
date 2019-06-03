@@ -1,34 +1,53 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
+import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.docamm00.ejb.IDocumentoAmministrativoSpesaComponentSession;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
+import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
+import it.cnr.jada.DetailedRuntimeException;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.Config;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+import org.jboss.resteasy.spi.ApplicationException;
 
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Mandato
  */
 
-public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
+public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAmministrativoBP, IDefferedUpdateSaldiBP {
     private final SimpleDetailCRUDController documentiPassivi = new SimpleDetailCRUDController("DocumentiPassivi", V_doc_passivo_obbligazioneBulk.class, "docPassiviColl", this);
     private final CRUDMandatoRigaController documentiPassiviSelezionati = new CRUDMandatoRigaController("DocumentiPassiviSelezionati", Mandato_rigaIBulk.class, "mandato_rigaColl", this);
     private final SimpleDetailCRUDController documentiAttiviPerRegolarizzazione = new SimpleDetailCRUDController("DocumentiAttiviPerRegolarizzazione", V_doc_attivo_accertamentoBulk.class, "docGenericiPerRegolarizzazione", this);
@@ -39,26 +58,69 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
         public void validate(ActionContext context, OggettoBulk model) throws ValidationException {
             validateCupCollegati(context, model);
         }
+
+        @Override
+        public boolean isShrinkable() {
+            return super.isShrinkable() || isDaVariare();
+        }
+
+        @Override
+        public boolean isGrowable() {
+            return super.isGrowable() || isDaVariare();
+        }
+
+        @Override
+        public int getStatus() {
+            if (isDaVariare())
+                return EDIT;
+            return super.getStatus();
+        }
     };
     private final SimpleDetailCRUDController siopeCupCollegati = new SimpleDetailCRUDController("siopeCupCollegati", MandatoSiopeCupIBulk.class, "mandatoSiopeCupColl", codiciSiopeCollegati) {
         public void validate(ActionContext context, OggettoBulk model) throws ValidationException {
             validateSiopeCupCollegati(context, model);
+        }
+
+        @Override
+        public boolean isShrinkable() {
+            return super.isShrinkable() || isDaVariare();
+        }
+
+        @Override
+        public boolean isGrowable() {
+            return super.isGrowable() || isDaVariare();
+        }
+
+        @Override
+        public int getStatus() {
+            if (isDaVariare())
+                return EDIT;
+            return super.getStatus();
         }
     };
     private boolean siope_attiva = false;
     private boolean cup_attivo = false;
     private boolean siope_cup_attivo = false;
     private boolean tesoreria_unica = false;
-    private boolean supervisore = false;
+    protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager= null;
 
     public CRUDMandatoBP() {
-        super();
+        super("Tr");
         setTab("tab", "tabMandato");
     }
 
     public CRUDMandatoBP(String function) {
-        super(function);
+        super(function + "Tr");
         setTab("tab", "tabMandato");
+    }
+
+    @Override
+    public String getFormTitle() {
+        if (isDaVariare()) {
+            return " - Variazione";
+        } else {
+            return super.getFormTitle();
+        }
     }
 
     /**
@@ -163,20 +225,70 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
      */
 
     protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-        Button[] toolbar = new Button[9];
-        int i = 0;
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.search");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.startSearch");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.freeSearch");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.new");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.save");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.delete");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.print");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.printpdf");
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.contabile");
-        return toolbar;
+        final Properties properties = Config.getHandler().getProperties(getClass());
+        return Stream.concat(Arrays.asList(super.createToolbar()).stream(),
+            Arrays.asList(
+                    new Button(properties, "CRUDToolbar.printpdf"),
+                    new Button(properties, "CRUDToolbar.contabile"),
+                    new Button(properties, "CRUDToolbar.davariare"),
+                    new Button(properties, "CRUDToolbar.save.variazione.sostituzione")
+            ).stream()).toArray(Button[]::new);
     }
 
+    public boolean isDaVariareButtonHidden() {
+        final Optional<MandatoBulk> mandatoBulk1 = Optional.ofNullable(getModel())
+                .filter(MandatoBulk.class::isInstance)
+                .map(MandatoBulk.class::cast)
+                .filter(mandatoBulk -> mandatoBulk.getCrudStatus() == OggettoBulk.NORMAL);
+        return !isSupervisore() ||
+                mandatoBulk1
+                .flatMap(mandatoBulk -> Optional.ofNullable(mandatoBulk.getEsitoOperazione()))
+                .map(s -> !Arrays.asList(
+                        EsitoOperazione.ACQUISITO.value(),
+                        EsitoOperazione.PAGATO.value(),
+                        EsitoOperazione.REGOLARIZZATO.value()
+                ).contains(s)).orElse(Boolean.TRUE)
+                || mandatoBulk1
+                    .map(mandatoBulk -> {
+                        return Optional.ofNullable(mandatoBulk.getStatoVarSos())
+                                .map(s -> Arrays.asList(
+                                        StatoVariazioneSostituzione.DA_VARIARE.value(),
+                                        StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value()
+                                ).contains(s))
+                                .orElse(Boolean.FALSE);
+                    }).orElse(Boolean.TRUE);
+    }
+
+    public boolean isDaVariare() {
+        return isSupervisore() &&
+                Optional.ofNullable(getModel())
+                        .filter(MandatoBulk.class::isInstance)
+                        .map(MandatoBulk.class::cast)
+                        .flatMap(mandatoBulk -> Optional.ofNullable(mandatoBulk.getStatoVarSos()))
+                        .map(s -> Arrays.asList(
+                                StatoVariazioneSostituzione.DA_VARIARE.value()
+                        ).contains(s)).orElse(Boolean.FALSE);
+    }
+
+    public boolean isSalvaVariazioneSostituzioneButtonHidden() {
+        return !isDaVariare();
+    }
+
+    public void impostaMandatoDaVariare(ActionContext actionContext) throws it.cnr.jada.action.BusinessProcessException {
+        final MandatoBulk mandatoBulk = Optional.ofNullable(getModel())
+                .filter(MandatoBulk.class::isInstance)
+                .map(MandatoBulk.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("Mandato non trovato!"));
+        mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.DA_VARIARE.value());
+        mandatoBulk.setToBeUpdated();
+        try {
+            final OggettoBulk oggettoBulk = createComponentSession().modificaConBulk(actionContext.getUserContext(), mandatoBulk);
+            commitUserTransaction();
+            basicEdit(actionContext, oggettoBulk, true);
+        } catch (ComponentException|RemoteException e) {
+            throw handleException(e);
+        }
+    }
     /**
      * Insert the method's description here.
      * Creation date: (12/11/2002 11.44.11)
@@ -278,7 +390,27 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
      * @param context <code>ActionContext</code> in uso.
      */
     public void save(ActionContext context) throws ValidationException, BusinessProcessException {
-        super.save(context);
+        final MandatoBulk mandatoBulk = Optional.ofNullable(getModel())
+                .filter(MandatoBulk.class::isInstance)
+                .map(MandatoBulk.class::cast)
+                .orElseThrow(() -> new ValidationException("Modello non trovato!"));
+        final boolean daVariare = isDaVariare();
+        final String statoTrasmissione = mandatoBulk.getStato_trasmissione();
+        if (daVariare) {
+            setStatus(EDIT);
+            mandatoBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+            mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value());
+        }
+        try {
+            super.save(context);
+        } catch (Exception _ex) {
+            if (daVariare) {
+                setStatus(VIEW);
+                mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.DA_VARIARE.value());
+                mandatoBulk.setStato_trasmissione(statoTrasmissione);
+            }
+            throw handleException(_ex);
+        }
         this.setTab("tab", "tabMandato");
     }
 
@@ -306,23 +438,10 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
         super.initialize(actioncontext);
         try {
             setSiope_attiva(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope().booleanValue());
-
-//		if (Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), ((MandatoBulk)this.getModel()).getEsercizio()).getFl_cup().booleanValue() &&
-//				Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),  ((MandatoBulk)this.getModel()).getEsercizio()).getFl_siope_cup().booleanValue()){
-//			
-//			 if (((MandatoBulk)this.getModel()).getDt_emissione()!=null){
-//					Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(actioncontext.getUserContext(), "DATA_LIMITE_CUP_SIOPE_CUP");
-//					if( ((MandatoBulk)this.getModel()).getDt_emissione().after(dataLimite))
-//						setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
-//					else
-//						setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
-//			 }
-//		}else{
             setCup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_cup().booleanValue());
             setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
             setTesoreria_unica(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_tesoreria_unica().booleanValue());
             setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));
-//		}
         } catch (Throwable throwable) {
             throw new BusinessProcessException(throwable);
         }
@@ -349,10 +468,11 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
     }
 
     public boolean isAggiungiRimuoviCodiciSiopeEnabled() {
-        return !isInputReadonly() &&
+        return (!isInputReadonly() &&
                 getStatus() != VIEW &&
                 ((MandatoBulk) getModel()).getStato_trasmissione() != null &&
-                ((MandatoBulk) getModel()).getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+                ((MandatoBulk) getModel()).getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)) ||
+                isDaVariare();
     }
 
     public void selezionaRigaSiopeDaCompletare(ActionContext actioncontext) throws it.cnr.jada.action.BusinessProcessException {
@@ -544,13 +664,423 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP {
         this.tesoreria_unica = tesoreria_unica;
     }
 
-    public boolean isSupervisore() {
-        return supervisore;
+
+    private MandatoComponentSession getMandatoComponentSession() throws BusinessProcessException {
+        return Optional.ofNullable(createComponentSession())
+                .filter(MandatoComponentSession.class::isInstance)
+                .map(MandatoComponentSession.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("Errore nella creazione dell'EJB"));
     }
 
-    public void setSupervisore(boolean supervisore) {
-        this.supervisore = supervisore;
+    private CRUDComponentSession getCRUDComponentSession() throws BusinessProcessException {
+        return Optional.ofNullable(createComponentSession("JADAEJB_CRUDComponentSession"))
+                .filter(CRUDComponentSession.class::isInstance)
+                .map(CRUDComponentSession.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("Errore nella creazione dell'EJB"));
+    }
+
+    private IDocumentoAmministrativoSpesaComponentSession getDocumentoAmministrativoSpesaComponentSession(String jndiName) throws BusinessProcessException {
+        return Optional.ofNullable(createComponentSession(jndiName))
+                .filter(IDocumentoAmministrativoSpesaComponentSession.class::isInstance)
+                .map(IDocumentoAmministrativoSpesaComponentSession.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("Errore nella creazione dell'EJB"));
     }
 
 
+    private RemoteIterator findObbligazioni(UserContext context, IDocumentoAmministrativoSpesaBulk documentoAmministrativoSpesaBulk, Filtro_ricerca_obbligazioniVBulk filtro) throws BusinessProcessException, RemoteException, ComponentException {
+        if (!Optional.ofNullable(documentoAmministrativoSpesaBulk).isPresent())
+            return null;
+        switch (documentoAmministrativoSpesaBulk.getCd_tipo_doc_amm()) {
+            case Numerazione_doc_ammBulk.TIPO_MISSIONE : {
+                return getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession")
+                        .cercaObbligazioni(context, filtro);
+            }
+            case Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA : {
+                return getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession")
+                        .cercaObbligazioni(context, filtro);
+            }
+            case Numerazione_doc_ammBulk.TIPO_COMPENSO : {
+                return getDocumentoAmministrativoSpesaComponentSession("CNRCOMPENSI00_EJB_CompensoComponentSession")
+                        .cercaObbligazioni(context, filtro);
+            }
+            case Numerazione_doc_ammBulk.TIPO_ANTICIPO : {
+                return getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_AnticipoComponentSession")
+                        .cercaObbligazioni(context, filtro);
+            }
+            case Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S : {
+                return getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_DocumentoGenericoComponentSession")
+                        .cercaObbligazioni(context, filtro);
+            }
+            default:
+                return null;
+        }
+    }
+
+    private Obbligazione_scadenzarioBulk cambiaObbligazione(UserContext context, Mandato_rigaBulk mandato_rigaBulk,
+                                    IDocumentoAmministrativoSpesaBulk documentoAmministrativoSpesaBulk,
+                                    Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk) throws BusinessProcessException, RemoteException, ComponentException {
+        switch (documentoAmministrativoSpesaBulk.getCd_tipo_doc_amm()) {
+            case Numerazione_doc_ammBulk.TIPO_MISSIONE : {
+                final IDocumentoAmministrativoSpesaComponentSession missioneComponentSession =
+                        getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession");
+                MissioneBulk missioneBulk = Optional.ofNullable(
+                        missioneComponentSession.inizializzaBulkPerModifica(context,
+                        Optional.ofNullable(documentoAmministrativoSpesaBulk)
+                                                .filter(MissioneBulk.class::isInstance)
+                                                .map(MissioneBulk.class::cast)
+                                                .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Missione!"))))
+                                .filter(MissioneBulk.class::isInstance)
+                                .map(MissioneBulk.class::cast)
+                                .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Missione!"));
+
+                final Obbligazione_scadenzarioBulk obbligazione_scadenzario = missioneBulk.getObbligazione_scadenzario();
+                obbligazione_scadenzario.setIm_associato_doc_amm(BigDecimal.ZERO);
+                obbligazione_scadenzario.setIm_associato_doc_contabile(BigDecimal.ZERO);
+                obbligazione_scadenzario.setToBeUpdated();
+                getCRUDComponentSession().modificaConBulk(context, obbligazione_scadenzario);
+
+                missioneBulk.setObbligazione_scadenzario(obbligazione_scadenzarioBulk);
+                missioneBulk.setToBeUpdated();
+                return Optional.ofNullable(missioneComponentSession.modificaConBulk(context, missioneBulk))
+                        .filter(MissioneBulk.class::isInstance)
+                        .map(MissioneBulk.class::cast)
+                        .map(MissioneBulk::getObbligazione_scadenzario)
+                        .orElseThrow(() -> new BusinessProcessException("Impegno sulla missione non trovato!"));
+
+            }
+            case Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA : {
+                final IDocumentoAmministrativoSpesaComponentSession fatturaPassivaComponentSession =
+                        getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession");
+                Fattura_passivaBulk fatturaPassivaBulk = Optional.ofNullable(
+                        fatturaPassivaComponentSession.inizializzaBulkPerModifica(context,
+                                Optional.ofNullable(documentoAmministrativoSpesaBulk)
+                                        .filter(Fattura_passivaBulk.class::isInstance)
+                                        .map(Fattura_passivaBulk.class::cast)
+                                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Fattura!"))))
+                        .filter(Fattura_passivaBulk.class::isInstance)
+                        .map(Fattura_passivaBulk.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Fattura!"));
+                final BulkList<Fattura_passiva_rigaBulk> fattura_passiva_dettColl = fatturaPassivaBulk.getFattura_passiva_dettColl();
+                final AtomicReference<Fattura_passiva_rigaBulk> fatturaPassivaRigaBulkAtomicReference = new AtomicReference<>();
+                for(Fattura_passiva_rigaBulk fattura_passiva_rigaBulk : fattura_passiva_dettColl) {
+                    if (fattura_passiva_rigaBulk.getObbligazione_scadenziario().equalsByPrimaryKey(
+                            new Obbligazione_scadenzarioBulk(
+                                    mandato_rigaBulk.getCd_cds(),
+                                    mandato_rigaBulk.getEsercizio_obbligazione(),
+                                    mandato_rigaBulk.getEsercizio_ori_obbligazione() ,
+                                    mandato_rigaBulk.getPg_obbligazione(),
+                                    mandato_rigaBulk.getPg_obbligazione_scadenzario()
+                            )
+                    )) {
+                        fatturaPassivaBulk.removeFromFattura_passiva_obbligazioniHash(fattura_passiva_rigaBulk);
+                        fatturaPassivaBulk.getDocumentiContabiliCancellati().add(fattura_passiva_rigaBulk.getObbligazione_scadenziario());
+
+                        fatturaPassivaBulk.addToFattura_passiva_obbligazioniHash(obbligazione_scadenzarioBulk, fattura_passiva_rigaBulk);
+
+                        fattura_passiva_rigaBulk.setObbligazione_scadenziario(obbligazione_scadenzarioBulk);
+                        fattura_passiva_rigaBulk.setToBeUpdated();
+                        fatturaPassivaRigaBulkAtomicReference.set(fattura_passiva_rigaBulk);
+
+                    }
+                }
+                fatturaPassivaBulk.setToBeUpdated();
+                final Fattura_passivaBulk fattura_passivaBulkNew = Optional.ofNullable(fatturaPassivaComponentSession.modificaConBulk(context, fatturaPassivaBulk))
+                        .filter(Fattura_passivaBulk.class::isInstance)
+                        .map(Fattura_passivaBulk.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Errore nell'aggiornamento della Fattura Passiva"));
+                return fattura_passivaBulkNew
+                        .getFattura_passiva_dettColl()
+                        .stream()
+                        .filter(fattura_passiva_rigaBulk -> fattura_passiva_rigaBulk.equalsByPrimaryKey(fatturaPassivaRigaBulkAtomicReference.get()))
+                        .findAny()
+                        .map(Fattura_passiva_rigaBulk::getObbligazione_scadenziario)
+                        .orElseThrow(() -> new BusinessProcessException("Impegno sulla riga non trovato!"));
+            }
+            case Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S : {
+                final IDocumentoAmministrativoSpesaComponentSession documentoGenericoComponentSession =
+                        getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_DocumentoGenericoComponentSession");
+                Documento_genericoBulk documentoGenericoPassivoBulk = Optional.ofNullable(
+                        documentoGenericoComponentSession.inizializzaBulkPerModifica(context,
+                                Optional.ofNullable(documentoAmministrativoSpesaBulk)
+                                        .filter(Documento_genericoBulk.class::isInstance)
+                                        .map(Documento_genericoBulk.class::cast)
+                                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Generico!"))))
+                        .filter(Documento_genericoBulk.class::isInstance)
+                        .map(Documento_genericoBulk.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Generico!"));
+                final BulkList<Documento_generico_rigaBulk> documento_generico_dettColl = documentoGenericoPassivoBulk.getDocumento_generico_dettColl();
+                final AtomicReference<Documento_generico_rigaBulk> documentoGenericoRigaBulkAtomicReference = new AtomicReference<>();
+                for(Documento_generico_rigaBulk documentoGenericoRigaBulk : documento_generico_dettColl) {
+                    if (documentoGenericoRigaBulk.getObbligazione_scadenziario().equalsByPrimaryKey(
+                            new Obbligazione_scadenzarioBulk(
+                                    mandato_rigaBulk.getCd_cds(),
+                                    mandato_rigaBulk.getEsercizio_obbligazione(),
+                                    mandato_rigaBulk.getEsercizio_ori_obbligazione() ,
+                                    mandato_rigaBulk.getPg_obbligazione(),
+                                    mandato_rigaBulk.getPg_obbligazione_scadenzario()
+                            )
+                    )) {
+                        documentoGenericoPassivoBulk.removeFromDocumento_generico_obbligazioniHash(documentoGenericoRigaBulk);
+                        documentoGenericoPassivoBulk.getDocumentiContabiliCancellati().add(documentoGenericoRigaBulk.getObbligazione_scadenziario());
+
+                        documentoGenericoPassivoBulk.addToDocumento_generico_obbligazioniHash(obbligazione_scadenzarioBulk, documentoGenericoRigaBulk);
+
+                        documentoGenericoRigaBulk.setObbligazione_scadenziario(obbligazione_scadenzarioBulk);
+                        documentoGenericoRigaBulk.setToBeUpdated();
+                        documentoGenericoRigaBulkAtomicReference.set(documentoGenericoRigaBulk);
+                    }
+                }
+                documentoGenericoPassivoBulk.setToBeUpdated();
+                final Documento_genericoBulk documento_genericoBulkNew = Optional.ofNullable(documentoGenericoComponentSession.modificaConBulk(context, documentoGenericoPassivoBulk))
+                        .filter(Documento_genericoBulk.class::isInstance)
+                        .map(Documento_genericoBulk.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Generico!"));
+                return documento_genericoBulkNew
+                        .getDocumento_generico_dettColl()
+                        .stream()
+                        .filter(documentoGenericoRigaBulk -> documentoGenericoRigaBulk.equalsByPrimaryKey(documentoGenericoRigaBulkAtomicReference.get()))
+                        .findAny()
+                        .map(Documento_generico_rigaBulk::getObbligazione_scadenziario)
+                        .orElseThrow(() -> new BusinessProcessException("Impegno sulla riga non trovato!"));
+            }
+            case Numerazione_doc_ammBulk.TIPO_COMPENSO : {
+                final IDocumentoAmministrativoSpesaComponentSession compensoComponentSession =
+                        getDocumentoAmministrativoSpesaComponentSession("CNRCOMPENSI00_EJB_CompensoComponentSession");
+                CompensoBulk compensoBulk = Optional.ofNullable(
+                        compensoComponentSession.inizializzaBulkPerModifica(context,
+                                Optional.ofNullable(documentoAmministrativoSpesaBulk)
+                                        .filter(CompensoBulk.class::isInstance)
+                                        .map(CompensoBulk.class::cast)
+                                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Compenso!"))))
+                        .filter(CompensoBulk.class::isInstance)
+                        .map(CompensoBulk.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Compenso!"));
+
+                final Obbligazione_scadenzarioBulk obbligazione_scadenzario = compensoBulk.getObbligazioneScadenzario();
+                obbligazione_scadenzario.setIm_associato_doc_amm(BigDecimal.ZERO);
+                obbligazione_scadenzario.setIm_associato_doc_contabile(BigDecimal.ZERO);
+                obbligazione_scadenzario.setToBeUpdated();
+                getCRUDComponentSession().modificaConBulk(context, obbligazione_scadenzario);
+
+                compensoBulk.setObbligazioneScadenzario(obbligazione_scadenzarioBulk);
+                compensoBulk.setToBeUpdated();
+                return Optional.ofNullable(compensoComponentSession.modificaConBulk(context, compensoBulk))
+                        .filter(CompensoBulk.class::isInstance)
+                        .map(CompensoBulk.class::cast)
+                        .map(CompensoBulk::getObbligazioneScadenzario)
+                        .orElseThrow(() -> new BusinessProcessException("Impegno sulla missione non trovato!"));
+            }
+            case Numerazione_doc_ammBulk.TIPO_ANTICIPO : {
+                final IDocumentoAmministrativoSpesaComponentSession anticipoComponentSession =
+                        getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_AnticipoComponentSession");
+                AnticipoBulk anticipoBulk = Optional.ofNullable(
+                        anticipoComponentSession.inizializzaBulkPerModifica(context,
+                                Optional.ofNullable(documentoAmministrativoSpesaBulk)
+                                        .filter(AnticipoBulk.class::isInstance)
+                                        .map(AnticipoBulk.class::cast)
+                                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Anticipo!"))))
+                        .filter(AnticipoBulk.class::isInstance)
+                        .map(AnticipoBulk.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Anticipo!"));
+
+                final Obbligazione_scadenzarioBulk obbligazione_scadenzario = anticipoBulk.getScadenza_obbligazione();
+                obbligazione_scadenzario.setIm_associato_doc_amm(BigDecimal.ZERO);
+                obbligazione_scadenzario.setIm_associato_doc_contabile(BigDecimal.ZERO);
+                obbligazione_scadenzario.setToBeUpdated();
+                getCRUDComponentSession().modificaConBulk(context, obbligazione_scadenzario);
+
+                anticipoBulk.setScadenza_obbligazione(obbligazione_scadenzarioBulk);
+                anticipoBulk.setToBeUpdated();
+                return Optional.ofNullable(anticipoComponentSession.modificaConBulk(context, anticipoBulk))
+                        .filter(AnticipoBulk.class::isInstance)
+                        .map(AnticipoBulk.class::cast)
+                        .map(AnticipoBulk::getScadenza_obbligazione)
+                        .orElseThrow(() -> new BusinessProcessException("Impegno sull' Anticipo non trovato!"));
+            }
+            default: {
+                return null;
+            }
+        }
+    }
+
+    private Mandato_rigaBulk getCurrentMandato_rigaBulk() throws BusinessProcessException {
+        return Optional.ofNullable(getDocumentiPassiviSelezionati().getModel())
+                .filter(Mandato_rigaBulk.class::isInstance)
+                .map(Mandato_rigaBulk.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("Riga non selezionata!"));
+    }
+
+    /**
+     * É stato richiesto un cambio Impegno sulla riga di Mandato
+     * @param context
+     * @param filtro
+     * @return
+     * @throws BusinessProcessException
+     */
+    @Override
+    public RemoteIterator findObbligazioni(UserContext context, Filtro_ricerca_obbligazioniVBulk filtro) throws BusinessProcessException {
+        try{
+            return findObbligazioni(context, getMandatoComponentSession().getDocumentoAmministrativoSpesaBulk(context, getCurrentMandato_rigaBulk()), filtro);
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            throw handleException(e);
+        } catch (java.rmi.RemoteException e) {
+            throw handleException(e);
+        }
+    }
+
+    /**
+     *
+     *
+     * @param actionContext
+     * @param clauses
+     * @param bulk
+     * @param context
+     * @param property
+     * @return
+     * @throws BusinessProcessException
+     */
+    @Override
+    public RemoteIterator findObbligazioniAttributes(ActionContext actionContext, CompoundFindClause clauses, OggettoBulk bulk, OggettoBulk context, String property) throws BusinessProcessException {
+        try {
+            return it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(
+                    actionContext,
+                    getMandatoComponentSession().cerca(
+                            actionContext.getUserContext(),
+                            clauses,
+                            bulk,
+                            context,
+                            property));
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            throw handleException(e);
+        } catch (java.rmi.RemoteException e) {
+            throw handleException(e);
+        }
+    }
+
+    public void cambiaObbligazioneScadenzario(ActionContext context, Mandato_rigaBulk mandato_rigaBulk, Obbligazione_scadenzarioBulk scadenza) throws BusinessProcessException{
+        try {
+            /**
+             * Cambio l'impegno sul documento amministrativo collegato
+             */
+            final Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk =
+                    Optional.ofNullable(
+                            cambiaObbligazione(context.getUserContext(), mandato_rigaBulk, getDocumentoAmministrativoCorrente(), scadenza)
+                    ).orElse(scadenza);
+
+            final Mandato_rigaBulk mandatoRigaClone = (Mandato_rigaBulk)mandato_rigaBulk.clone();
+            mandatoRigaClone.setMandato_siopeColl(new BulkList());
+            mandatoRigaClone.setMandatoCupColl(new BulkList());
+
+            Optional.ofNullable(
+                    getDocumentiPassiviSelezionati().removeDetail(getDocumentiPassiviSelezionati().getModelIndex())
+            )
+                    .filter(Mandato_rigaBulk.class::isInstance)
+                    .map(Mandato_rigaBulk.class::cast)
+                    .map(Mandato_rigaBulk::getMandato_siopeColl)
+                    .map(BulkList::stream)
+                    .orElse(Stream.empty())
+                    .forEach(mandato_siopeBulk -> {
+                        mandato_siopeBulk.setToBeDeleted();
+                        for (MandatoSiopeCupBulk mandatoSiopeCupBulk : mandato_siopeBulk.getMandatoSiopeCupColl()) {
+                            mandatoSiopeCupBulk.setToBeDeleted();
+                        }
+                    });
+
+            getDocumentiPassiviSelezionati().
+                    setModelIndex(context,  getDocumentiPassiviSelezionati().addDetail(mandatoRigaClone));
+
+            mandatoRigaClone.setEsercizio_obbligazione(obbligazione_scadenzarioBulk.getEsercizio());
+            mandatoRigaClone.setEsercizio_ori_obbligazione(obbligazione_scadenzarioBulk.getEsercizio_originale());
+            mandatoRigaClone.setPg_obbligazione(obbligazione_scadenzarioBulk.getPg_obbligazione());
+            mandatoRigaClone.setPg_obbligazione_scadenzario(obbligazione_scadenzarioBulk.getPg_obbligazione_scadenzario());
+            mandatoRigaClone.setElemento_voce(obbligazione_scadenzarioBulk.getObbligazione().getElemento_voce());
+            mandatoRigaClone.getMandato_siopeColl().clear();
+            mandatoRigaClone.setCodici_siopeColl(
+                    getMandatoComponentSession()
+                            .setCodiciSIOPECollegabili(context.getUserContext(), mandatoRigaClone)
+                            .getCodici_siopeColl()
+            );
+            codiciSiopeCollegabili.resync(context);
+            getModel().setToBeUpdated();
+            mandatoRigaClone.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+            setDirty(true);
+        } catch (ComponentException|RemoteException e) {
+            throw handleException(e);
+        }
+    }
+
+    @Override
+    public Accertamento_scadenzarioBulk getAccertamento_scadenziario_corrente() {
+        return null;
+    }
+
+    @Override
+    public IDocumentoAmministrativoBulk getBringBackDocAmm() {
+        return getDocumentoAmministrativoCorrente();
+    }
+
+    @Override
+    public Risultato_eliminazioneVBulk getDeleteManager() {
+        return Optional.ofNullable(deleteManager)
+                .map(risultato_eliminazioneVBulk -> {
+                    risultato_eliminazioneVBulk.reset();
+                    return risultato_eliminazioneVBulk;
+                })
+                .orElseGet(() -> new it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk());
+    }
+
+    @Override
+    public IDocumentoAmministrativoSpesaBulk getDocumentoAmministrativoCorrente() {
+        try {
+            return getMandatoComponentSession().getDocumentoAmministrativoSpesaBulk(
+                    null,
+                    getCurrentMandato_rigaBulk()
+            );
+        } catch (ComponentException | RemoteException | BusinessProcessException e) {
+            throw new DetailedRuntimeException(e);
+        }
+    }
+
+    @Override
+    public Obbligazione_scadenzarioBulk getObbligazione_scadenziario_corrente() {
+        return null;
+    }
+
+    @Override
+    public boolean isAutoGenerated() {
+        return false;
+    }
+
+    @Override
+    public boolean isDeleting() {
+        return false;
+    }
+
+    @Override
+    public boolean isManualModify() {
+        return false;
+    }
+
+    @Override
+    public void setIsDeleting(boolean newIsDeleting) {
+
+    }
+
+    @Override
+    public void validaObbligazionePerDocAmm(ActionContext actionContext, OggettoBulk bulk) throws BusinessProcessException {
+
+    }
+
+    @Override
+    public IDefferUpdateSaldi getDefferedUpdateSaldiBulk() {
+        return Optional.ofNullable(getModel())
+                    .filter(IDefferUpdateSaldi.class::isInstance)
+                    .map(IDefferUpdateSaldi.class::cast)
+                    .orElseThrow(() -> new DetailedRuntimeException("Modello non presente o non implementa IDefferUpdateSaldi"));
+    }
+
+    @Override
+    public IDefferedUpdateSaldiBP getDefferedUpdateSaldiParentBP() {
+        return this;
+    }
 }
