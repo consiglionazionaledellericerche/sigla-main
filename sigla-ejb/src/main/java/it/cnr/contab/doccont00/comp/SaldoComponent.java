@@ -1637,15 +1637,15 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
     public void checkDispPianoEconomicoProgetto(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException
     {
         String message = getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione, true);
-        if (message!=null && message.length()>0)
+    	if (message!=null && message.length()>0)
             throw new ApplicationException(
-                    "Impossibile effettuare l'operazione !\r"+message);
+                    "Impossibile effettuare l'operazione !<br>"+message);
     }
     //Controllo che restituisce errore.
     //Se la variazione passa a definitivo controllo che gli importi inseriti in variazione non superino la disponibilità residua.
     //Se la variazione passa ad approvato controllo solo che il piano economico non sia sfondato sul voci del piano economico movimentate dalla variazione
     private String getMessaggioSfondamentoPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione, boolean locked) throws ComponentException{
-		StringJoiner messaggio = new StringJoiner("\r\r");
+		StringJoiner messaggio = new StringJoiner("<br><br>");
         try {
         	Configurazione_cnrComponentSession configSession = (Configurazione_cnrComponentSession)Utility.createConfigurazioneCnrComponentSession();
 			String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
@@ -1770,10 +1770,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						else
 							pianoEconomicoList = (List<Progetto_piano_economicoBulk>)ppeHome.findProgettoPianoEconomicoList(pdgVariazione.getEsercizio(), progetto.getPg_progetto(), rigaVar.getElemento_voce());
 
-						if (pianoEconomicoList==null || pianoEconomicoList.isEmpty())
-                            messaggio.add("Non risulta essere stato imputato alcun valore nel piano economico del progetto " + progetto.getCd_progetto() +
-                            " per la Voce " + rigaVar.getCd_elemento_voce() + ".");
-		                else if (pianoEconomicoList.size()>1)
+						if (pianoEconomicoList==null || pianoEconomicoList.isEmpty()) {
+							//messaggio che non esce per rimodulazione progetto in quanto controllo effettuato in fase di approvaziomne ultima variazione
+							if (!Optional.ofNullable(progettoRimodulato).isPresent())
+								messaggio.add("Non risulta essere stato imputato alcun valore nel piano economico del progetto " + progetto.getCd_progetto() +
+											  " per la Voce " + rigaVar.getCd_elemento_voce() + ".");
+						} else if (pianoEconomicoList.size()>1)
                             messaggio.add("La Voce " + rigaVar.getCd_elemento_voce() + " risulta associata a più voci di piano economico del progetto " + 
                             		progetto.getCd_progetto() +".");
 		                else {
