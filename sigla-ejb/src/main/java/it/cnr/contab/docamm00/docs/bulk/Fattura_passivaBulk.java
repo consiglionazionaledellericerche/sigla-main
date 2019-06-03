@@ -1105,7 +1105,7 @@ public abstract class Fattura_passivaBulk
      *
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getFattura_passiva_dettColl() {
+    public it.cnr.jada.bulk.BulkList<Fattura_passiva_rigaBulk> getFattura_passiva_dettColl() {
         return fattura_passiva_dettColl;
     }
 

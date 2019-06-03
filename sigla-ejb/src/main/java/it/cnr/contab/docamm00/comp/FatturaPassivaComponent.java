@@ -853,7 +853,8 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                                     fatturaPassiva,
                                     scadenza.getObbligazione(),
                                     status);
-                        scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                        scadenza.setIm_associato_doc_amm(BigDecimal.ZERO.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                        scadenza.setIm_associato_doc_contabile(BigDecimal.ZERO.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                         updateImportoAssociatoDocAmm(userContext, scadenza);
                     }
                     /**
@@ -5289,7 +5290,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * Post: Tutte le modifiche effettuate sul compenso vengono annullate, mentre rimangono valide le
      * modifiche apportate al doc. amministrativo che ha aperto il compenso
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      */
     public void rollbackToSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -7220,8 +7221,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     private void caricaDettagliFatturaTrovato(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException, PersistencyException {
         if (fattura != null) {
-            BulkList<Fattura_passiva_rigaIBulk> dett = fattura.getFattura_passiva_dettColl();
-            for (Iterator<Fattura_passiva_rigaIBulk> j = dett.iterator(); j.hasNext(); ) {
+            BulkList<Fattura_passiva_rigaBulk> dett = fattura.getFattura_passiva_dettColl();
+            for (Iterator<Fattura_passiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
                 Fattura_passiva_rigaIBulk det = (Fattura_passiva_rigaIBulk) j.next();
                 det.setVoce_iva((Voce_ivaBulk) getHome(userContext, Voce_ivaBulk.class).findByPrimaryKey(det.getVoce_iva()));
 
