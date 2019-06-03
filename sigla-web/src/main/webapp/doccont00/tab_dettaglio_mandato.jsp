@@ -14,30 +14,35 @@
 		it.cnr.contab.doccont00.core.bulk.MandatoIBulk mandato = (it.cnr.contab.doccont00.core.bulk.MandatoIBulk)bp.getModel();
 %>
 	<div class="Group card">
-        <table border="0" cellspacing="0" cellpadding="2">
+        <table border="0" cellspacing="0" cellpadding="2" class="w-100">
             <tr>
-                <td><% bp.getController().writeFormLabel( out, "terzo_cd_terzo"); %></td>
-                <td><% bp.getController().writeFormInput( out, "terzo_cd_terzo"); %>
-                    <% bp.getController().writeFormInput( out, "terzo_ds_terzo"); %></td>
-                <td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>
-                <td><% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", mandato.isAnnullato(), null,"onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
-                    <% bp.getController().writeFormInput( out, "terzo_im_tipo_bollo"); %></td>
+                <% bp.getController().writeFormField( out, "terzo"); %>
             </tr>
+            <tr>
+                <td><% bp.getController().writeFormLabel( out, "terzo_tipo_bollo"); %></td>
+                <td>
+                    <% bp.getController().writeFormInput( out,"default", "terzo_tipo_bollo", mandato.isAnnullato(), null,"onchange=\"submitForm('doCambiaTipoBollo')\"" ); %>
+                    <% bp.getController().writeFormInput( out, "terzo_im_tipo_bollo"); %>
+                </td>
+            </tr>
+
             <% if (mandato.getTerzo_cedente() != null && mandato.getTerzo_cedente().getCd_terzo() != null ) { %>
-                <td><% bp.getController().writeFormLabel( out, "cd_terzo_cedente"); %></td>
-                <td colspan=3><% bp.getController().writeFormInput( out, "cd_terzo_cedente"); %>
-                    <% bp.getController().writeFormInput( out, "ds_terzo_cedente"); %></td>
+                <tr>
+                    <td><% bp.getController().writeFormLabel( out, "cd_terzo_cedente"); %></td>
+                    <td><% bp.getController().writeFormInput( out, "cd_terzo_cedente"); %>
+                        <% bp.getController().writeFormInput( out, "ds_terzo_cedente"); %></td>
+                </tr>
             <%}%>
             <tr>
                 <td><% bp.writeFormLabel( out, "im_mandato"); %></td>
-                <td><% bp.writeFormInput( out, "im_mandato"); %></td>
-                <td colspan=2 align = "center">
+                <td>
+                    <% bp.writeFormInput( out, "im_mandato"); %>
                     <% JSPUtils.button(out,
                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
                         bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-search-plus" : bp.encodePath("img/zoom24.gif"),
                         bp.encodePath("Disp.sui capitoli"),
                         "javascript:submitForm('doVisualizzaDispCassaCapitolo')",
-                        "btn-primary btn-outline-primary btn-title",
+                        "btn-primary btn-outline-primary btn-title ml-3",
                         bp.isDispCassaCapitoloButtonEnabled(),
                         bp.getParentRoot().isBootstrap()); %>
                 </td>
@@ -154,8 +159,7 @@
 						<td colspan="6"> 
 					        <% bp.getSiopeCupCollegati().writeHTMLTable(pageContext,"collegaARigaMandatoSiope",!mandato.isAnnullato(),false,!mandato.isAnnullato(),"100%","100px", true); %>
 						</td>
-					</tr> 
-						
+					</tr>
 					<tr>	
 						<td><% bp.getSiopeCupCollegati().writeFormField(out,"cdCup"); %> 
 			    			<% bp.getSiopeCupCollegati().writeFormField(out,"dsCup"); %>

@@ -840,7 +840,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 error.append(s.concat("\n"));
                             });
                     MandatoBulk mandato = fetchMandatoBulk(ctEsitoMandato);
-                    mandato.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    if (Optional.ofNullable(ctEsitoMandato.getEsitoOperazione())
+                            .filter(stEsitoOperazioneMandato ->
+                                    stEsitoOperazioneMandato.equals(StEsitoOperazioneMandato.VARIATO) ||
+                                            stEsitoOperazioneMandato.equals(StEsitoOperazioneMandato.NON_VARIATO)).isPresent()) {
+                        mandato.setStatoVarSos(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    } else {
+                        mandato.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    }
                     mandato.setDtOraEsitoOperazione(
                             new Timestamp(ctEsitoMandato
                                     .getDataOraEsitoOperazione()
@@ -903,7 +910,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 error.append(s.concat("\n"));
                             });
                     ReversaleBulk reversale = fetchReversaleBulk(ctEsitoReversale);
-                    reversale.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    if (Optional.ofNullable(ctEsitoReversale.getEsitoOperazione())
+                            .filter(stEsitoOperazioneReversale ->
+                                    stEsitoOperazioneReversale.equals(StEsitoOperazioneReversale.VARIATO) ||
+                                            stEsitoOperazioneReversale.equals(StEsitoOperazioneReversale.NON_VARIATO)).isPresent()) {
+                        reversale.setStatoVarSos(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    } else {
+                        reversale.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    }
                     reversale.setDtOraEsitoOperazione(
                             new Timestamp(ctEsitoReversale
                                     .getDataOraEsitoOperazione()

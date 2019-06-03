@@ -2004,4 +2004,15 @@ TRASPORTO_AEREO"/>
                 referencedColumnNames="cd_cds,esercizio,pg_reversale"
                 referencedTableName="reversale"/>
     </changeSet>
+    <changeSet author="marco.spasiano" id="alter_mandato_add_stato_var_sos">
+        <addColumn tableName="mandato">
+            <column name="stato_var_sos" type="varchar2(30)" remarks="Stato Variazione/Sostituzione SIOPE+"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="alter_reversale_add_stato_var_sos">
+        <addColumn tableName="reversale">
+            <column name="stato_var_sos" type="varchar2(30)" remarks="Stato Variazione/Sostituzione SIOPE+"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

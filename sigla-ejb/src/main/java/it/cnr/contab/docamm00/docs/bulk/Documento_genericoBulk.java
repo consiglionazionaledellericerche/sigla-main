@@ -501,7 +501,7 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 	 * Creation date: (21/09/2001 10.54.15)
 	 * @return it.cnr.jada.bulk.BulkList
 	 */
-	public it.cnr.jada.bulk.BulkList getDocumento_generico_dettColl() {
+	public it.cnr.jada.bulk.BulkList<Documento_generico_rigaBulk> getDocumento_generico_dettColl() {
 		return documento_generico_dettColl;
 	}
 	/**

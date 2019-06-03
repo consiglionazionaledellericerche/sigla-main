@@ -83,6 +83,11 @@ public class MandatoBase extends MandatoKey implements Keyed {
 	// ERRORE_SIOPE_PLUS VARCHAR2(2000)
 	private java.lang.String erroreSiopePlus;
 
+	// STATO_VAR_SOS VARCHAR2(30)
+	private java.lang.String statoVarSos;
+
+
+
 	public MandatoBase() {
 		super();
 	}
@@ -365,5 +370,13 @@ public class MandatoBase extends MandatoKey implements Keyed {
 
 	public void setDtOraEsitoOperazione(Timestamp dtOraEsitoOperazione) {
 		this.dtOraEsitoOperazione = dtOraEsitoOperazione;
+	}
+
+	public String getStatoVarSos() {
+		return statoVarSos;
+	}
+
+	public void setStatoVarSos(String statoVarSos) {
+		this.statoVarSos = statoVarSos;
 	}
 }
