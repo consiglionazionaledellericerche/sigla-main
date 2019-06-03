@@ -248,7 +248,8 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
         persistent = super.completeBulkRowByRow(userContext, persistent);
         if (persistent instanceof V_mandato_reversaleBulk) {
             V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) persistent;
-            if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)) {
+            if (!bulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) &&
+                    !(bulk.isReversale() && bulk.getCd_tipo_documento_cont_padre().equals(Numerazione_doc_contBulk.TIPO_MAN))) {
                 if (((CNRUserContext) userContext).isFromBootstrap()) {
                     bulk.setDocumento("<a class='btn btn-link' onclick='" +
                             "doVisualizzaSingoloDocumento(" + bulk.getEsercizio() + ",\"" + bulk.getCd_cds() + "\",\"" + bulk.getCd_unita_organizzativa() + "\"," + bulk.getPg_documento_cont() + ",\"" + bulk.getCd_tipo_documento_cont() + "\");' " +

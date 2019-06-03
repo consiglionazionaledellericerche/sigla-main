@@ -29,7 +29,8 @@ CREATE OR REPLACE FORCE VIEW "V_MANDATO_REVERSALE_DIST_ANN" (
     "VERSAMENTO_CORI",
     "DT_FIRMA",
     "TIPO_DEBITO_SIOPE",
-    "ESITO_OPERAZIONE"
+    "ESITO_OPERAZIONE",
+    "STATO_VAR_SOS"
     ) AS
   Select "CD_TIPO_DOCUMENTO_CONT",
             "CD_CDS",
@@ -59,11 +60,12 @@ CREATE OR REPLACE FORCE VIEW "V_MANDATO_REVERSALE_DIST_ANN" (
             "VERSAMENTO_CORI",
             "DT_FIRMA",
             "TIPO_DEBITO_SIOPE",
-            "ESITO_OPERAZIONE"
+            "ESITO_OPERAZIONE",
+            "STATO_VAR_SOS"
     From v_mandato_reversale
     where cd_tipo_documento_cont='MAN'
     and (esito_operazione is null or esito_operazione != 'NON_ACQUISITO')
-    and ((stato='A' and dt_trasmissione is not null) or
+    and (((stato='A' or stato_var_sos = 'VARIAZIONE_DEFINITIVA') and dt_trasmissione is not null) or
      exists(select 1 from mandato where
      mandato.cd_cds_origine= v_mandato_reversale.cd_cds_origine and
      mandato.esercizio=v_mandato_reversale.esercizio and
@@ -97,11 +99,12 @@ union all
          "VERSAMENTO_CORI",
          "DT_FIRMA",
          "TIPO_DEBITO_SIOPE",
-         "ESITO_OPERAZIONE"
+         "ESITO_OPERAZIONE",
+         "STATO_VAR_SOS"
     From v_mandato_reversale
     where cd_tipo_documento_cont='REV'
     and (esito_operazione is null or esito_operazione != 'NON_ACQUISITO')
-    and ((stato='A' and dt_trasmissione is not null) or
+    and (((stato='A' or stato_var_sos = 'VARIAZIONE_DEFINITIVA') and dt_trasmissione is not null) or
      exists(select 1 from reversale where
      reversale.cd_cds_origine= v_mandato_reversale.cd_cds_origine and
      reversale.esercizio=v_mandato_reversale.esercizio and
