@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBase"
+	keyClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneKey"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_RIMODULAZIONE" >
+		<columnMapping
+			columnName="PG_GEN_RIMODULAZIONE"
+			propertyName="pg_gen_rimodulazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="STATO"
+			propertyName="stato"
+			sqlTypeName="CHAR"
+			columnSize="1"/>			
+		<columnMapping
+			columnName="DT_INIZIO_OLD"
+			propertyName="dtInizioOld"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE_OLD"
+			propertyName="dtFineOld"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROROGA_OLD"
+			propertyName="dtProrogaOld"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_INIZIO"
+			propertyName="dtInizio"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_FINE"
+			propertyName="dtFine"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="DT_PROROGA"
+			propertyName="dtProroga"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping 
+			columnName="IM_VAR_FINANZIATO" 
+			propertyName="imVarFinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
+		<columnMapping 
+			columnName="IM_VAR_COFINANZIATO" 
+			propertyName="imVarCofinanziato" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="pg_gen_rimodulazione" />
+	<persistentProperty
+		name="stato" />
+	<persistentProperty
+		name="dtInizioOld" />
+	<persistentProperty
+		name="dtFineOld" /> 
+	<persistentProperty
+		name="dtProrogaOld" /> 
+	<persistentProperty
+		name="dtInizio" />
+	<persistentProperty
+		name="dtFine" /> 
+	<persistentProperty
+		name="dtProroga" /> 
+	<persistentProperty
+		name="imVarFinanziato" />
+	<persistentProperty
+		name="imVarCofinanziato" /> 
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

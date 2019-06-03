@@ -1,5 +1,9 @@
 package it.cnr.contab.pdg00.bp;
 
+import java.rmi.RemoteException;
+import java.util.List;
+import java.util.Optional;
+
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -10,6 +14,8 @@ import it.cnr.contab.pdg00.bulk.V_pdg_variazione_riepilogoBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -17,6 +23,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -26,9 +33,6 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.rmi.RemoteException;
-import java.util.Optional;
 
 /**
  * Business Process per la gestione della testata delle variazioni al PDG
@@ -686,6 +690,11 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             pdgVar.setIdMatricola(null);
             pdgVar.setIdBando(null);
         }
+        if (!pdgVar.isMotivazioneVariazioneRimodulazioneProgetto()) {
+        	pdgVar.setProgettoRimodulazione(null);
+        	pdgVar.setProgettoRimodulatoForSearch(null);
+        } else if (!Optional.ofNullable(pdgVar.getProgettoRimodulazione()).isPresent())
+        	pdgVar.setProgettoRimodulatoForSearch(new ProgettoBulk());
     }
 
     @Override
@@ -698,6 +707,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                 .ifPresent(el -> {
                     el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));
                     el.setStorageMatricola(el.getIdMatricola());
+                    if (Optional.ofNullable(el.getProgettoRimodulazione()).isPresent())
+                    	el.setProgettoRimodulatoForSearch(el.getProgettoRimodulazione().getProgetto());
                 });
         return bulk;
     }
@@ -708,5 +719,16 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
     private void setAttivaGestioneVariazioniTrasferimento(boolean attivaGestioneVariazioniTrasferimento) {
         this.attivaGestioneVariazioniTrasferimento = attivaGestioneVariazioniTrasferimento;
+    }
+    
+    public void findAndSetRimodulazione(ActionContext actioncontext, ProgettoBulk progetto) throws BusinessProcessException {
+    	try {
+    		if (Optional.ofNullable(progetto).isPresent()) {
+	    		List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", progetto.getPg_progetto()));
+	    		((Pdg_variazioneBulk)this.getModel()).setProgettoRimodulazione(list.stream().filter(Progetto_rimodulazioneBulk::isStatoValidato).findFirst().orElse(null));
+    		}
+    	} catch (Throwable e) {
+	        throw handleException(e);
+	    }
     }
 }

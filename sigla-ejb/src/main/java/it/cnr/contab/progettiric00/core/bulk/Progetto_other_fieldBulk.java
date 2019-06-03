@@ -1,35 +1,30 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Dictionary;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.cnr.contab.prevent01.bulk.Pdg_missioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.DateUtils;
 
 public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
-	public static final String STATO_INIZIALE = "INI";
-	public static final String STATO_NEGOZIAZIONE = "NEG";
-	public static final String STATO_APPROVATO = "APP";
-	public static final String STATO_ANNULLATO = "ANN";
-	public static final String STATO_MIGRAZIONE = "MIG";
 
-	public static final String OPERAZIONE_CHIUSURA = "CHI";
-	public static final String OPERAZIONE_RIAPERTURA = "RIA";
-
-	public final static Dictionary statoKeys;
-	static {
-		statoKeys = new it.cnr.jada.util.OrderedHashtable();
-		statoKeys.put(STATO_INIZIALE,"Iniziale");
-		statoKeys.put(STATO_NEGOZIAZIONE,"Negoziazione");
-		statoKeys.put(STATO_APPROVATO,"Approvato");
-		statoKeys.put(STATO_ANNULLATO,"Annullato");
-		statoKeys.put(STATO_MIGRAZIONE,"Migrazione");
-	};
-
+    public final static Map<String,String> statoKeys = Arrays.asList(StatoProgetto.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		StatoProgetto::value,
+            		StatoProgetto::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
+    
 	private Pdg_programmaBulk pdgProgramma;
 	
 	private Pdg_missioneBulk pdgMissione;
@@ -106,23 +101,23 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	}
 	
 	public boolean isStatoIniziale() {
-		return STATO_INIZIALE.equals(this.getStato());
+		return StatoProgetto.STATO_INIZIALE.value().equals(this.getStato());
 	}
 	
 	public boolean isStatoNegoziazione() {
-		return STATO_NEGOZIAZIONE.equals(this.getStato());
+		return StatoProgetto.STATO_NEGOZIAZIONE.value().equals(this.getStato());
 	}
 
 	public boolean isStatoApprovato() {
-		return STATO_APPROVATO.equals(this.getStato());
+		return StatoProgetto.STATO_APPROVATO.value().equals(this.getStato());
 	}
 
 	public boolean isStatoAnnullato() {
-		return STATO_ANNULLATO.equals(this.getStato());
+		return StatoProgetto.STATO_ANNULLATO.value().equals(this.getStato());
 	}
 
 	public boolean isStatoMigrazione() {
-		return STATO_MIGRAZIONE.equals(this.getStato());
+		return StatoProgetto.STATO_MIGRAZIONE.value().equals(this.getStato());
 	}
 
 	/*
@@ -130,8 +125,9 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 	 * e la data fine risulta essere valorizzata
 	 */
 	public boolean isStatoChiuso() {
-		return !isDatePianoEconomicoRequired() && 
-				Optional.ofNullable(this.getDtFine()).isPresent();
+		return Optional.ofNullable(this.getTipoFinanziamento()).map(TipoFinanziamentoBulk::getCodice).isPresent() &&
+			   Optional.ofNullable(this.getDtFine()).isPresent() &&
+			   !isDatePianoEconomicoRequired();
 	}
 
 	/*
@@ -164,10 +160,6 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
 	}
 
-	public Dictionary getStatoKeys() {
-		return statoKeys;
-	}
-	
 	public Integer getAnnoInizio() {
 		return Optional.ofNullable(this.getDtInizio())
 				.map(elDate->{

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizioVariazione"
+		property="esercizioVariazione"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		nullable="false"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"		
+		label="Esercizio" />
+	<fieldProperty
+		name="pg_variazione"
+		property="pg_variazione"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+        enabledOnInsert="false"
+        enabledOnEdit="false"
+        enabledOnSearch="true"
+		label="Numero Variazione" />
+	<fieldProperty
+		name="cdrVariazione"
+		property="cdrVariazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		nullable="false"
+		enabledOnFreeSearch="false"
+		label="CDR proponente" />	
+	<fieldProperty
+		name="tipoVariazione"
+		property="tipoVariazione"
+		keysProperty="tiVariazioneKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Tipologia" />
+	<fieldProperty
+		name="statoVariazione"
+		property="statoVariazione"
+		keysProperty="statoVariazioneKeys"
+		inputType="SELECT"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Stato" />
+						
+	<formFieldProperty
+		name="cdrVariazione" />
+	<formFieldProperty
+		name="tipoVariazione" />
+	<formFieldProperty
+		name="esercizioVariazione" />
+	<formFieldProperty
+		name="pg_variazione" />
+	<formFieldProperty
+		name="statoVariazione" />
+		
+	<columnFieldProperty
+		name="cdrVariazione" />
+	<columnFieldProperty
+		name="tipoVariazione" />
+	<columnFieldProperty
+		name="esercizioVariazione" />
+	<columnFieldProperty
+		name="pg_variazione" />
+	<columnFieldProperty
+		name="statoVariazione" />
+</bulkInfo>

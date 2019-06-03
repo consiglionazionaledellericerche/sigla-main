@@ -1981,7 +1981,6 @@ TRASPORTO_AEREO"/>
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
         <addPrimaryKey columnNames="id" constraintName="siope_plus_esito_pkey" tableName="siope_plus_esito"/>
         <addForeignKeyConstraint
                 baseColumnNames="cd_cds_mandato,esercizio_mandato,pg_mandato"
@@ -2015,4 +2014,237 @@ TRASPORTO_AEREO"/>
         </addColumn>
     </changeSet>
 
+    <changeSet author="raffaele.pagano" id="create-table-progetto-rimodulazione">
+        <createTable remarks="Tabella contenente le rimodulazioni dei progetti" tableName="progetto_rimodulazione">
+            <column name="pg_progetto" remarks="Progressivo del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_rimodulazione" remarks="Progressivo rimodulazione del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_gen_rimodulazione" remarks="Progressivo generale rimodulazione del progetto di ricerca" type="BIGINT"/>
+            <column name="stato" remarks="Stato della rimodulazione. P: Provvisorio - D: Definitivo - A: Approvato" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_inizio_old" remarks="Data inizio precedente alla rimodulazione del progetto." type="${date.type}"/>
+            <column name="dt_fine_old" remarks="Data fine precedente alla rimodulazione del progetto." type="${date.type}"/>
+            <column name="dt_proroga_old" remarks="Data proroga precedente alla rimodulazione del progetto." type="${date.type}"/>
+            <column name="dt_inizio" remarks="Data inizio rimodulato del progetto." type="${date.type}"/>
+            <column name="dt_fine" remarks="Data fine rimodulato del progetto." type="${date.type}"/>
+            <column name="dt_proroga" remarks="Data proroga rimodulato del progetto." type="${date.type}"/>
+            <column name="im_var_finanziato" remarks="Importo Variazione Spesa Finanziato rimodulato del progetto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_var_cofinanziato" remarks="Importo Variazione Spesa Cofinanziato rimodulato del progetto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+
+        <addPrimaryKey columnNames="pg_progetto,pg_rimodulazione" constraintName="progetto_rimodulazione_pkey" tableName="progetto_rimodulazione"/>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="create-table-progetto-rimodulazione-ppe">
+        <createTable remarks="Tabella contenente la rimodulazione del piano economico del progetto." tableName="progetto_rimodulazione_ppe">
+            <column name="pg_progetto" remarks="Progressivo del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_rimodulazione" remarks="Progressivo rimodulazione del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Unita' Organizzativa proprietaria della voce piano economico." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_voce_piano" remarks="Codice identificativo voce piano economico" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_piano" remarks="Esercizio piano economico. Se =0 indica il progetto complessivo." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_var_entrata" remarks="Importo Variazione Entrata associato al ProgettoVoce Piano Economico" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_var_spesa_finanziato" remarks="Importo Variazione Spesa Finanziato rimodulato associato al ProgettoVoce Piano Economico" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_var_spesa_cofinanziato" remarks="Importo Variazione Spesa Cofinanziato rimodulato associato al ProgettoVoce Piano Economico" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_stoass_spesa_finanziato" remarks="Importo Storicizzato dell'Assestato Spesa Finanziato." type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_stoass_spesa_cofinanziato" remarks="Importo Storicizzato dell'Assestato Spesa Cofinanziato." type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="pg_progetto, pg_rimodulazione, cd_unita_organizzativa, cd_voce_piano, esercizio_piano" constraintName="progetto_rimodulaz_ppe_pkey" tableName="progetto_rimodulazione_ppe"/>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto, pg_rimodulazione" baseTableName="progetto_rimodulazione_ppe" constraintName="fk_progetto_rimodulaz_ppe00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto, pg_rimodulazione" referencedTableName="progetto_rimodulazione"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_unita_organizzativa,cd_voce_piano" baseTableName="progetto_rimodulazione_ppe" constraintName="fk_progetto_rimodulaz_ppe01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_organizzativa,cd_voce_piano" referencedTableName="voce_piano_economico_prg"/>
+
+        <createIndex indexName="FX_PROGETTO_RIMODULAZ_PPE00" tableName="PROGETTO_RIMODULAZIONE_PPE">
+            <column name="PG_PROGETTO"/>
+            <column name="PG_RIMODULAZIONE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_PROGETTO_RIMODULAZ_PPE01" tableName="PROGETTO_RIMODULAZIONE_PPE">
+            <column name="CD_UNITA_ORGANIZZATIVA"/>
+            <column name="CD_VOCE_PIANO"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="create-table-progetto-rimodulazione-voce">
+        <createTable remarks="Tabella contenente la rimodulazione delle voci di bilancio associate al piano economico del progetto." tableName="progetto_rimodulazione_voce">
+            <column name="pg_progetto" remarks="Progressivo del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_rimodulazione" remarks="Progressivo rimodulazione del progetto di ricerca" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Unita' Organizzativa proprietaria della voce piano economico." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_voce_piano" remarks="Codice identificativo voce piano economico" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_piano" remarks="Esercizio piano economico. Se =0 indica il progetto complessivo." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_variazione" remarks="Progressivo variazione nell'ambito della rimodulazione." type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio_voce" remarks="Esercizio di riferimento" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_appartenenza" remarks="Definisce l'appartenenza (CNR o CdS) delle voci del piano finanziario di riferimento&#10;&#10;Dominio:&#10;C=CNR&#10;D=CDS" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_gestione" remarks="Definisce la sezione (entrata o spesa) delle voci del piano finanziario di riferimento.&#10;&#10;Dominio:&#10;E=Entrate&#10;S=Spese" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_elemento_voce" remarks="Codice dell'elemento voce" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ti_operazione" remarks="Tipo di modifica - D:eliminato, A:Aggiunto, M:Modificato" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_var_spesa_finanziato" remarks="Importo Variazione Spesa Finanziato rimodulato" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_var_spesa_cofinanziato" remarks="Importo Variazione Spesa Cofinanziato rimodulato" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="pg_progetto, pg_rimodulazione, cd_unita_organizzativa, cd_voce_piano, esercizio_piano, pg_variazione" constraintName="progetto_rimodulaz_voce_pkey" tableName="progetto_rimodulazione_voce"/>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto, pg_rimodulazione" baseTableName="progetto_rimodulazione_voce" constraintName="fk_progetto_rimodulaz_voce00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto, pg_rimodulazione" referencedTableName="progetto_rimodulazione"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_unita_organizzativa,cd_voce_piano" baseTableName="progetto_rimodulazione_voce" constraintName="fk_progetto_rimodulaz_voce01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_organizzativa,cd_voce_piano" referencedTableName="voce_piano_economico_prg"/>
+
+        <createIndex indexName="FX_PROGETTO_RIMODULAZ_VOCE00" tableName="PROGETTO_RIMODULAZIONE_VOCE">
+            <column name="PG_PROGETTO"/>
+            <column name="PG_RIMODULAZIONE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_PROGETTO_RIMODULAZ_VOCE01" tableName="PROGETTO_RIMODULAZIONE_VOCE">
+            <column name="CD_UNITA_ORGANIZZATIVA"/>
+            <column name="CD_VOCE_PIANO"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-variazioni-add-column-rimodulazione">
+        <addColumn tableName="pdg_variazione">
+            <column name="pg_progetto_rimodulazione" type="BIGINT" remarks="Progressivo del progetto di ricerca oggetto della rimodulazione associata alla variazione."/>
+            <column name="pg_rimodulazione" type="BIGINT" remarks="Progressivo rimodulazione del progetto di ricerca associata alla variazione."/>
+        </addColumn>
+
+        <addColumn tableName="var_stanz_res">
+            <column name="pg_progetto_rimodulazione" type="BIGINT" remarks="Progressivo del progetto di ricerca oggetto della rimodulazione associata alla variazione."/>
+            <column name="pg_rimodulazione" type="BIGINT" remarks="Progressivo rimodulazione del progetto di ricerca associata alla variazione."/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_rimodulazione, pg_rimodulazione" baseTableName="pdg_variazione" constraintName="fk_pdg_variazione03" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto, pg_rimodulazione" referencedTableName="progetto_rimodulazione"/>
+
+        <addForeignKeyConstraint baseColumnNames="pg_progetto_rimodulazione, pg_rimodulazione" baseTableName="var_stanz_res" constraintName="fk_var_stanz_res02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="pg_progetto, pg_rimodulazione" referencedTableName="progetto_rimodulazione"/>
+
+        <createIndex indexName="FX_PDG_VARIAZIONE03" tableName="PDG_VARIAZIONE">
+            <column name="PG_PROGETTO_RIMODULAZIONE"/>
+            <column name="PG_RIMODULAZIONE"/>
+        </createIndex>
+
+        <createIndex indexName="FX_VAR_STANZ_RES03" tableName="VAR_STANZ_RES">
+            <column name="PG_PROGETTO_RIMODULAZIONE"/>
+            <column name="PG_RIMODULAZIONE"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="accessi_rimodulazione_progetti">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGRIM"/>
+            <column name="ti_accesso" type="CHAR(1)"  value="" />
+            <column name="ds_accesso" type="VARCHAR(200)" value="Rimodula Progetti Area Progettuale"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGRIM"/>
+            <column name="business_process" type="VARCHAR(200)" value="RimodulaProgettiRicercaBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PROGETTI.LIV2.R"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Rimodula"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPROGERCOREPROGRIM"/>
+            <column name="business_process" type="VARCHAR(200)" value="RimodulaProgettiRicercaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="4"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="R"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PROGETTI.LIV2"/>
+            <column name="url_icona" type="VARCHAR(200)" value=""/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

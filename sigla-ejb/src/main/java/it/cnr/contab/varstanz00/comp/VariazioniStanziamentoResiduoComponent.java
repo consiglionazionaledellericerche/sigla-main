@@ -5,11 +5,11 @@
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 package it.cnr.contab.varstanz00.comp;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -37,8 +36,10 @@ import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseHome;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaHome;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -46,7 +47,6 @@ import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.CdrKey;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.CdsHome;
-import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
@@ -54,7 +54,6 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -70,7 +69,9 @@ import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
+import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
@@ -85,10 +86,10 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.Broker;
@@ -113,9 +114,36 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implements Cloneable, Serializable{
-	/**
-	 * 
-	 */
+	private class CtrlVarPianoEco {
+		public CtrlVarPianoEco(ProgettoBulk progetto) {
+			super();
+			this.progetto = progetto;
+			this.imSpeseInterne = BigDecimal.ZERO;
+			this.imSpeseEsterne = BigDecimal.ZERO;
+		}
+		private ProgettoBulk progetto;
+		private BigDecimal imSpeseInterne;
+		private BigDecimal imSpeseEsterne;
+		public ProgettoBulk getProgetto() {
+			return progetto;
+		}
+		public void setProgetto(ProgettoBulk progetto) {
+			this.progetto = progetto;
+		}
+		public BigDecimal getImSpeseInterne() {
+			return imSpeseInterne;
+		}
+		public void setImSpeseInterne(BigDecimal imSpeseInterne) {
+			this.imSpeseInterne = imSpeseInterne;
+		}
+		public BigDecimal getImSpeseEsterne() {
+			return imSpeseEsterne;
+		}
+		public void setImSpeseEsterne(BigDecimal imSpeseEsterne) {
+			this.imSpeseEsterne = imSpeseEsterne;
+		}
+	}
+
 	public VariazioniStanziamentoResiduoComponent() {
 		super();
 	}
@@ -493,6 +521,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		if (var_stanz_res.getAssociazioneCDR().isEmpty()) 
 			throw new ApplicationException("Associare almeno un Centro di Responsabilità alla Variazione.");
 		
+		controllaRimodulazioneProgetto(userContext,var_stanz_res);
+
 		try {
 			Utility.createSaldoComponentSession().checkPdgPianoEconomico(userContext, var_stanz_res);
 		} catch (RemoteException e) {
@@ -1485,4 +1515,112 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		}
 		return false;
 	}
+	
+	/**
+	 * Metodo che verifica se esistono rimodulazioni in stato definitivo/approvato che richiedono variazioni di residuo a quadratura 
+	 * sull'anno residuo uguale a quello inserito nella variazine stessa.
+	 * In tal caso restituisce un errore.
+	 * 
+	 * @param userContext
+	 * @param pdgVariazione La variazione che si sta rendendo definitiva
+	 * @throws it.cnr.jada.comp.ComponentException
+	 */
+	private void controllaRimodulazioneProgetto(UserContext userContext, Var_stanz_resBulk varStanzRes) throws it.cnr.jada.comp.ComponentException {
+		try {
+   	   		it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+   	   		BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+
+   	   		//Se la variazione residua è su un anno precedente all'attivazione dei progetti non faccio alcun controllo
+   	   		if (varStanzRes.getEsercizio_residuo().compareTo(annoFrom.intValue())<0)
+   	   			return;
+			
+   	   		String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+
+   	   		List<CtrlVarPianoEco> listCtrlVarPianoEco = new ArrayList<CtrlVarPianoEco>();
+            Var_stanz_resHome detHome = (Var_stanz_resHome) getHome(userContext, Var_stanz_resBulk.class);
+            for (java.util.Iterator dett = detHome.findAllVariazioniRiga(varStanzRes).iterator();dett.hasNext();){
+            	Var_stanz_res_rigaBulk rigaVar = (Var_stanz_res_rigaBulk)dett.next();
+
+				WorkpackageBulk latt = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext,CNRUserContext.getEsercizio(userContext),
+						rigaVar.getLinea_di_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_di_attivita().getCd_linea_attivita());
+				ProgettoBulk progetto = latt.getProgetto();
+				NaturaBulk natura = (NaturaBulk)((NaturaHome)getHome(userContext, NaturaBulk.class)).findByPrimaryKey(latt.getNatura());
+
+				BigDecimal imSpeseInterne = BigDecimal.ZERO;
+				BigDecimal imSpeseEsterne = BigDecimal.ZERO;
+				
+				if (Optional.ofNullable(natura).filter(el->el.isFonteInterna()||el.getCd_natura().equals(cdNaturaReimpiego)).isPresent())
+					imSpeseInterne = Optional.ofNullable(rigaVar.getIm_variazione()).orElse(BigDecimal.ZERO);
+				else
+					imSpeseEsterne = Optional.ofNullable(rigaVar.getIm_variazione()).orElse(BigDecimal.ZERO);
+						
+				CtrlVarPianoEco varPianoEco = listCtrlVarPianoEco.stream()
+								.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+								.findFirst()
+								.orElse(new CtrlVarPianoEco(progetto));
+			
+				varPianoEco.setImSpeseInterne(varPianoEco.getImSpeseInterne().add(imSpeseInterne));
+				varPianoEco.setImSpeseEsterne(varPianoEco.getImSpeseEsterne().add(imSpeseEsterne));
+				
+				if (!listCtrlVarPianoEco.contains(varPianoEco))
+					listCtrlVarPianoEco.add(varPianoEco);
+			}
+            
+            if (Optional.ofNullable(varStanzRes.getPg_progetto_rimodulazione()).isPresent()) {
+	            listCtrlVarPianoEco.stream().filter(el->!el.getProgetto().getPg_progetto().equals(varStanzRes.getPg_progetto_rimodulazione()))
+	            .findFirst().ifPresent(el->{
+	            	throw new ApplicationRuntimeException("La variazione è associata alla rimodulazione del progetto "
+	                		+ varStanzRes.getProgettoRimodulazione().getProgetto().getCd_progetto() + ". Non è possibile movimentare con essa altri "
+	        				+ "progetti ("+el.getProgetto().getCd_progetto());
+	            });
+            } else {
+            	/**
+            	 * Verifico che per i progetti movimentati non esistino rimodulazioni ancora in stato definitivo o approvato che 
+            	 * richiedono variazioni di residuo sull'anno della variazione in corso
+            	 */
+            	listCtrlVarPianoEco.stream().forEach(el->{
+	            	try {
+		            	Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome) getHome(userContext, Progetto_rimodulazioneBulk.class);
+		            	rimodHome.findRimodulazioni(el.getProgetto().getPg_progetto()).stream()
+		            	.filter(rim->rim.isStatoDefinitivo()||rim.isStatoValidato())
+		            	.findFirst().ifPresent(rim->{
+		            		try {
+		            			rim = rimodHome.rebuildRimodulazione(userContext, rim);
+			            		if (rim.getVariazioniModels().stream().filter(Var_stanz_resBulk.class::isInstance).map(Var_stanz_resBulk.class::cast)
+			            				.filter(varRim->varRim.getEsercizio_residuo().equals(varStanzRes.getEsercizio_residuo())).findFirst().isPresent())
+					            	throw new ApplicationRuntimeException("La variazione movimenta il progetto "+el.getProgetto().getCd_progetto()
+					            			+ " sul quale è in corso la rimodulazione nr."+ rim.getPg_gen_rimodulazione()
+					            			+ " che si trova attualmente in stato '" + (rim.isStatoDefinitivo()?"Definitivo":"Validato")
+					            			+ "' e richiede una variazione di residuo a quadratura sull'anno residuo "
+					            			+ varStanzRes.getEsercizio_residuo()+ ".</br> Non è effettuare variazioni sull'anno residuo  "
+					            			+ varStanzRes.getEsercizio_residuo()+ " fino a quando la suddetta rimodulazione non viene "
+					            			+ "approvata/respinta.");
+				            	
+			            	} catch (PersistencyException ex){
+			            		throw new DetailedRuntimeException(ex);
+			            	}
+			            });
+	            	} catch (ComponentException|PersistencyException ex){
+	            		throw new DetailedRuntimeException(ex);
+	            	}
+	            });
+            }
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
+
+	public SQLBuilder selectProgettoRimodulatoForSearchByClause(UserContext userContext, Var_stanz_resBulk varStanzRes, ProgettoBulk prg, CompoundFindClause clause) throws ComponentException, PersistencyException {
+		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+
+		SQLBuilder sql = progettoHome.selectProgettiAbilitati(userContext);
+		
+		sql.addTableToHeader("PROGETTO_RIMODULAZIONE");
+		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
+		sql.addSQLClause(FindClause.AND,"PROGETTO_RIMODULAZIONE.STATO",SQLBuilder.EQUALS,StatoProgettoRimodulazione.STATO_VALIDATO.value());
+
+		if (clause != null) 
+			sql.addClause(clause);
+		return sql; 
+	}	
 }

@@ -1,8 +1,10 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,13 +22,19 @@ import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_programmaBulk;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaNuovoBP;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Tipo_progettoBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
+import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
+import it.cnr.si.spring.storage.StorageService;
 
-public class ProgettoBulk extends ProgettoBase {
+public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 
 	public static final String TIPO_STATO_PROPOSTA  ="P";
 	public static final String TIPO_STATO_APPROVATO ="A";
@@ -53,7 +61,6 @@ public class ProgettoBulk extends ProgettoBase {
 	public static final String TIPO_FASE_SEARCH_PREVISIONE_E_GESTIONE ="X";
 	public static final String TIPO_FASE_SEARCH_ALL ="A";
 
-	public static final String STATO_CHIUSURA = "CHI";
 	public static final String STATO_RIAPERTURA = "RIA";
 
 	private it.cnr.jada.bulk.BulkList	workpackage_collegati = new it.cnr.jada.bulk.BulkList();
@@ -95,7 +102,7 @@ public class ProgettoBulk extends ProgettoBase {
 		durata_progettoKeys.put(DURATA_PROGETTO_PLURIENNALE,"Pluriennale");
 		durata_progettoKeys.put(DURATA_PROGETTO_ANNUALE,"Annuale");
 	};
-		public final static Dictionary livello_progettoKeys;
+	public final static Dictionary livello_progettoKeys;
 		static {
 		livello_progettoKeys = new it.cnr.jada.util.OrderedHashtable();
 		livello_progettoKeys.put(LIVELLO_PROGETTO_PRIMO,"Progetto");
@@ -115,17 +122,15 @@ public class ProgettoBulk extends ProgettoBase {
 			livello_progetto2016Keys.put(new Integer(i),"Sottogruppo");
 	};
 	
-	public final static Dictionary statoOfKeys;
-	static {
-		statoOfKeys = new it.cnr.jada.util.OrderedHashtable();
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_INIZIALE,"Iniziale");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE,"Negoziazione");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_APPROVATO,"Approvato");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_ANNULLATO,"Annullato");
-		statoOfKeys.put(Progetto_other_fieldBulk.STATO_MIGRAZIONE,"Migrazione");
-		statoOfKeys.put(ProgettoBulk.STATO_CHIUSURA,"Chiuso");
-	};
-	
+    public final static Map<String,String> statoOfKeys = Arrays.asList(StatoProgetto.values())
+            .stream()
+            .collect(Collectors.toMap(
+            		StatoProgetto::value,
+            		StatoProgetto::label,
+                    (oldValue, newValue) -> oldValue,
+                    Hashtable::new
+            ));
+    
 	private Tipo_progettoBulk tipo;
 	private Unita_organizzativaBulk unita_organizzativa;
 	private TerzoBulk responsabile;
@@ -136,9 +141,9 @@ public class ProgettoBulk extends ProgettoBase {
 	private BulkList dettagli = new BulkList();
 	private BulkList dettagliFinanziatori = new BulkList();
 	private BulkList dettagliPartner_esterni = new BulkList();
-	private BulkList dettagliPianoEconomicoTotale = new BulkList();
-	private BulkList dettagliPianoEconomicoAnnoCorrente = new BulkList();
-	private BulkList dettagliPianoEconomicoAltriAnni = new BulkList();
+	private BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoTotale = new BulkList<Progetto_piano_economicoBulk>();
+	private BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoAnnoCorrente = new BulkList<Progetto_piano_economicoBulk>();
+	private BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoAltriAnni = new BulkList<Progetto_piano_economicoBulk>();
 	private BulkList speseEsercizio = new BulkList();
 	private Commessa_spesaBulk spese;
 	private Parametri_cdsBulk parametriCds;
@@ -148,7 +153,10 @@ public class ProgettoBulk extends ProgettoBase {
 	private Boolean fl_gestione;
 	private String tipoFaseToSearch;
 	private Progetto_other_fieldBulk otherField;
-	private BulkList pdgModuli = new BulkList();
+	private BulkList<Pdg_moduloBulk> pdgModuli = new BulkList();
+	private BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate = new BulkList<V_saldi_voce_progettoBulk>();
+	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
+	private BulkList<Progetto_rimodulazioneBulk> rimodulazioni = new BulkList<Progetto_rimodulazioneBulk>();
 
 	public ProgettoBulk() {
 		super();
@@ -245,15 +253,16 @@ public it.cnr.jada.bulk.BulkList getDettagli() {
 public it.cnr.jada.bulk.BulkList getDettagliFinanziatori() {
 	return dettagliFinanziatori;
 }
-public BulkList getDettagliPianoEconomicoTotale() {
+public BulkList<Progetto_piano_economicoBulk> getDettagliPianoEconomicoTotale() {
 	return dettagliPianoEconomicoTotale;
 }
-public BulkList getDettagliPianoEconomicoAnnoCorrente() {
+public BulkList<Progetto_piano_economicoBulk> getDettagliPianoEconomicoAnnoCorrente() {
 	return dettagliPianoEconomicoAnnoCorrente;
 }
-public BulkList getDettagliPianoEconomicoAltriAnni() {
+public BulkList<Progetto_piano_economicoBulk> getDettagliPianoEconomicoAltriAnni() {
 	return dettagliPianoEconomicoAltriAnni;
 }
+
 /**
  * Restituisce il valore della proprietà 'rOprogetto'
  *
@@ -381,13 +390,13 @@ public void setDettagli(it.cnr.jada.bulk.BulkList newDettagli) {
 public void setDettagliFinanziatori(it.cnr.jada.bulk.BulkList newDettagliFinanziatori) {
 	dettagliFinanziatori = newDettagliFinanziatori;
 }
-public void setDettagliPianoEconomicoTotale(BulkList dettagliPianoEconomicoTotale) {
+public void setDettagliPianoEconomicoTotale(BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoTotale) {
 	this.dettagliPianoEconomicoTotale = dettagliPianoEconomicoTotale;
 }
-public void setDettagliPianoEconomicoAnnoCorrente(BulkList dettagliPianoEconomicoAnnoCorrente) {
+public void setDettagliPianoEconomicoAnnoCorrente(BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoAnnoCorrente) {
 	this.dettagliPianoEconomicoAnnoCorrente = dettagliPianoEconomicoAnnoCorrente;
 }
-public void setDettagliPianoEconomicoAltriAnni(BulkList dettagliPianoEconomicoAltriAnni) {
+public void setDettagliPianoEconomicoAltriAnni(BulkList<Progetto_piano_economicoBulk> dettagliPianoEconomicoAltriAnni) {
 	this.dettagliPianoEconomicoAltriAnni = dettagliPianoEconomicoAltriAnni;
 }
 /**
@@ -1042,47 +1051,19 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 						bulk.setIm_spesa_finanziato(resultByVoce.get(vocePiano).stream().map(el->Optional.ofNullable(el.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						bulk.setIm_spesa_cofinanziato(resultByVoce.get(vocePiano).stream().map(el->Optional.ofNullable(el.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						
-						V_saldi_piano_econom_progettoBulk saldoSpesa = new V_saldi_piano_econom_progettoBulk();
 						List<V_saldi_piano_econom_progettoBulk> listSaldiSpesa = resultByVoce.get(vocePiano).stream()
 								.filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
 								.map(Progetto_piano_economicoBulk::getSaldoSpesa).collect(Collectors.toList());
-						saldoSpesa.setImportoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setStanziamentoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariapiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariamenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfpiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfmenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setImportoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setStanziamentoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariapiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setImpacc(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setManris(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						Ass_progetto_piaeco_voceBulk dettSpesa = new Ass_progetto_piaeco_voceBulk();
+						dettSpesa.setSaldoSpesa(V_saldi_voce_progettoBulk.getSaldoAccorpato(listSaldiSpesa));
+						bulk.addToVociBilancioAssociate(dettSpesa);
 
-						bulk.setSaldoSpesa(saldoSpesa);
-
-						V_saldi_piano_econom_progettoBulk saldoEntrata = new V_saldi_piano_econom_progettoBulk();
 						List<V_saldi_piano_econom_progettoBulk> listSaldiEntrata = resultByVoce.get(vocePiano).stream()
 								.filter(el->Optional.ofNullable(el.getSaldoEntrata()).isPresent())
 								.map(Progetto_piano_economicoBulk::getSaldoEntrata).collect(Collectors.toList());
-						saldoEntrata.setImportoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setStanziamentoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setImportoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setStanziamentoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setImpacc(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setManris(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-
-						bulk.setSaldoEntrata(saldoEntrata);
+						Ass_progetto_piaeco_voceBulk dettEntrata = new Ass_progetto_piaeco_voceBulk();
+						dettEntrata.setSaldoEntrata(V_saldi_voce_progettoBulk.getSaldoAccorpato(listSaldiEntrata));
+						bulk.addToVociBilancioAssociate(dettEntrata);
 
 						return bulk;
 					})
@@ -1105,51 +1086,41 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 						bulk.setIm_spesa_finanziato(resultByEsercizio.get(esercizioPiano).stream().map(el->Optional.ofNullable(el.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						bulk.setIm_spesa_cofinanziato(resultByEsercizio.get(esercizioPiano).stream().map(el->Optional.ofNullable(el.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
 						
-						V_saldi_piano_econom_progettoBulk saldoSpesa = new V_saldi_piano_econom_progettoBulk();
 						List<V_saldi_piano_econom_progettoBulk> listSaldiSpesa = resultByEsercizio.get(esercizioPiano).stream()
 								.filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
 								.map(Progetto_piano_economicoBulk::getSaldoSpesa).collect(Collectors.toList());
-						saldoSpesa.setImportoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setStanziamentoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariapiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariamenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfpiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfmenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setImportoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setStanziamentoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariapiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setImpacc(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoSpesa.setManris(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
+						Ass_progetto_piaeco_voceBulk dettSpesa = new Ass_progetto_piaeco_voceBulk();
+						dettSpesa.setSaldoSpesa(V_saldi_voce_progettoBulk.getSaldoAccorpato(listSaldiSpesa));
+						bulk.addToVociBilancioAssociate(dettSpesa);
 
-						bulk.setSaldoSpesa(saldoSpesa);
-
-						V_saldi_piano_econom_progettoBulk saldoEntrata = new V_saldi_piano_econom_progettoBulk();
 						List<V_saldi_piano_econom_progettoBulk> listSaldiEntrata = resultByEsercizio.get(esercizioPiano).stream()
 								.filter(el->Optional.ofNullable(el.getSaldoEntrata()).isPresent())
 								.map(Progetto_piano_economicoBulk::getSaldoEntrata).collect(Collectors.toList());
-						saldoEntrata.setImportoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setStanziamentoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoFin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoFin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setImportoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getImportoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setStanziamentoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getStanziamentoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariapiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariapiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setVariamenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getVariamenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfpiuCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfpiuCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setTrasfmenoCofin(listSaldiSpesa.stream().map(el->Optional.ofNullable(el.getTrasfmenoCofin()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setImpacc(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getImpacc()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-						saldoEntrata.setManris(listSaldiEntrata.stream().map(el->Optional.ofNullable(el.getManris()).orElse(BigDecimal.ZERO)).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO));
-
-						bulk.setSaldoEntrata(saldoEntrata);
+						Ass_progetto_piaeco_voceBulk dettEntrata = new Ass_progetto_piaeco_voceBulk();
+						dettEntrata.setSaldoEntrata(V_saldi_voce_progettoBulk.getSaldoAccorpato(listSaldiEntrata));
+						bulk.addToVociBilancioAssociate(dettEntrata);
 
 						return bulk;
 					})
 				.collect(Collectors.toList()));
+	}
+	
+	public BulkList<V_saldi_voce_progettoBulk> getVociMovimentateNonAssociate() {
+		return new BulkList<V_saldi_voce_progettoBulk>(
+				getVociBilancioMovimentate().stream()
+					.filter(voceMov->{
+						return !this.getDettagliPianoEconomicoAnnoCorrente().stream()
+								.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
+								.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
+								.filter(voceAss->voceAss.getElemento_voce()!=null)
+								.filter(voceAss->voceAss.getEsercizio_voce()!=null)
+								.filter(voceAss->voceAss.getEsercizio_voce().equals(voceMov.getEsercizio_voce()))
+								.filter(voceAss->voceAss.getTi_appartenenza().equals(voceMov.getTi_appartenenza()))
+								.filter(voceAss->voceAss.getTi_gestione().equals(voceMov.getTi_gestione()))
+								.filter(voceAss->voceAss.getCd_elemento_voce().equals(voceMov.getCd_elemento_voce()))
+								.findAny().isPresent();
+					})
+					.collect(Collectors.toList()));
 	}
 	
 	public boolean isDettagliPianoEconomicoPresenti() {
@@ -1244,8 +1215,18 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		this.pdgModuli = pdgModuli;
 	}
 
-	public boolean isROProgettoPianoEconomico() {
+	//Indica se il progetto è in stato RO a causa dello stato che possiede
+	//Un progetto è readonly se Approvato, Chiuso o Annullato
+	public boolean isROProgettoForStato() {
 		return Optional.ofNullable(this)
+				.flatMap(el->Optional.ofNullable(el.getOtherField()))
+				.filter(el->el.isStatoAnnullato()||el.isStatoChiuso()||el.isStatoApprovato())
+				.isPresent();
+	}
+	
+	public boolean isROProgettoPianoEconomico() {
+		return isROProgettoForStato() ||
+				Optional.ofNullable(this)
 				.flatMap(el->Optional.ofNullable(el.getPdgModuli()))
 				.map(el->el.stream())
 				.orElse(Stream.empty())
@@ -1257,7 +1238,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	public String getStatoPrg() {
 		Optional<Progetto_other_fieldBulk> optPrg = Optional.ofNullable(this.getOtherField());
 		if (optPrg.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent())
-			return ProgettoBulk.STATO_CHIUSURA;
+			return StatoProgetto.STATO_CHIUSURA.value();
 		return optPrg.map(el->el.getStato()).orElse(null);
 	}
 	
@@ -1266,5 +1247,106 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				Optional.of(this.getOtherField().getDtFineEffettiva())
 						.map(dtScadenza->dtScadenza.before(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp()))
 						.orElse(Boolean.FALSE);
+	}
+	
+	public BulkList<V_saldi_voce_progettoBulk> getVociBilancioMovimentate() {
+		return vociBilancioMovimentate;
+	}
+	
+	public void setVociBilancioMovimentate(BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate) {
+		this.vociBilancioMovimentate = vociBilancioMovimentate;
+	}
+	
+	@Override
+	public int addToArchivioAllegati(AllegatoGenericoBulk allegato) {
+		Optional.ofNullable(allegato)
+			    .filter(AllegatoProgettoBulk.class::isInstance)
+			    .map(AllegatoProgettoBulk.class::cast)
+			    .ifPresent(el->el.setProgetto(this));
+		archivioAllegati.add(allegato);
+		return archivioAllegati.size()-1;
+	}
+
+	@Override
+	public AllegatoGenericoBulk removeFromArchivioAllegati(int index) {
+		AllegatoGenericoBulk dett = (AllegatoGenericoBulk)getArchivioAllegati().remove(index);
+		return dett;
+	}
+
+	@Override
+	public BulkList<AllegatoGenericoBulk> getArchivioAllegati() {
+		return archivioAllegati;
+	}
+
+	@Override
+	public void setArchivioAllegati(BulkList<AllegatoGenericoBulk> archivioAllegati) {
+		this.archivioAllegati = archivioAllegati;
+	}
+	
+	public String getStorePath() {
+		return Arrays.asList(
+				SpringUtil.getBean(StorePath.class).getPathComunicazioniDal(),
+				this.getCd_unita_organizzativa(),
+				"Progetti",
+				getCMISFolderName()
+		).stream().collect(
+				Collectors.joining(StorageService.SUFFIX)
+		);
+	}
+	
+	public String getCMISFolderName() {
+		String suffix = "Progetto ";
+		suffix = suffix.concat(String.valueOf(this.getCd_progetto()));
+		suffix = suffix.concat(" - "+String.valueOf(this.getPg_progetto()));
+		return suffix;
+	}
+	
+	public BulkList<Progetto_rimodulazioneBulk> getRimodulazioni() {
+		return rimodulazioni;
+	}
+	
+	public void setRimodulazioni(BulkList<Progetto_rimodulazioneBulk> rimodulazioni) {
+		this.rimodulazioni = rimodulazioni;
+	}
+	
+	public String getVersione() {
+		Optional<Progetto_rimodulazioneBulk> lastRim = getRimodulazioni().stream()
+							.filter(el->!el.isStatoRespinto())
+							.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_rimodulazione).reversed())
+							.findFirst();
+
+		if (lastRim.isPresent()) {
+			StringBuffer version = new StringBuffer(
+				lastRim.get().getPg_rimodulazione()+
+					lastRim.map(el->{
+						if (el.isStatoProvvisorio()) return "P";
+						if (el.isStatoDefinitivo()) return "D";
+						if (el.isStatoValidato()) return "V";
+						if (el.isStatoApprovato()) return "A";
+						return "";
+					})
+					.orElse(""));
+			return version.append(Optional.ofNullable(lastRim.get().getPg_gen_rimodulazione())
+					.map(el->" (Rim."+el+")")
+					.orElse("")).toString();
+		} else
+			return "0";
+	}
+	
+	public boolean isStatoPrgApprovato() {
+		return StatoProgetto.STATO_APPROVATO.value().equals(this.getStatoPrg());
+	}
+
+	public boolean isStatoPrgChiuso() {
+		return StatoProgetto.STATO_CHIUSURA.value().equals(this.getStatoPrg());
+	}
+	
+	@Override
+	public Object clone() {
+		ProgettoBulk prgClone = (ProgettoBulk)super.clone();
+		prgClone.setDettagliPianoEconomicoTotale(new BulkList<>(prgClone.getDettagliPianoEconomicoTotale().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
+		prgClone.setDettagliPianoEconomicoAnnoCorrente(new BulkList<>(prgClone.getDettagliPianoEconomicoAnnoCorrente().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
+		prgClone.setDettagliPianoEconomicoAltriAnni(new BulkList<>(prgClone.getDettagliPianoEconomicoAltriAnni().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
+		return prgClone;
 	}
 }

@@ -1,0 +1,74 @@
+﻿<model xmlns="http://www.alfresco.org/model/dictionary/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="sigla_progetti_attachment:sigla_progetti_attachmentModel" xsi:schemaLocation="http://www.alfresco.org/model/dictionary/1.0 modelSchema.xsd">
+	<description>Sigla Dynamic Model</description>
+	<author>raffaele.pagano</author>
+	<version>1.0</version>
+	<imports>
+		<import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+		<import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+	</imports>
+	<namespaces>
+		<namespace uri="http://www.cnr.it/model/sigla/progetti/attachment/cmis" prefix="sigla_progetti_attachment"/>
+	</namespaces>
+	<types>
+		<type name="sigla_progetti_attachment:document">
+			<title>Allegati ai Progetti di Sigla</title>
+			<description>Allegati ai Progetti di Sigla</description>
+			<parent>cm:content</parent>
+		</type>
+		<type name="sigla_progetti_attachment:provvedimento_costituzione">
+			<title>Allegato di tipo Provvedimento di Costituzione del Progetto</title>
+			<description>Allegato di tipo Provvedimento di Costituzione del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
+		<type name="sigla_progetti_attachment:richiesta_anticipo">
+			<title>Allegato di tipo Richiesta di Anticipo del Progetto</title>
+			<description>Allegato di tipo Richiesta di Anticipo del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
+		<type name="sigla_progetti_attachment:rendicontazione">
+			<title>Allegato di tipo Rendicontazione del Progetto</title>
+			<description>Allegato di tipo Rendicontazione del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
+		<type name="sigla_progetti_attachment:stralcio">
+			<title>Allegato di tipo Stralcio del Progetto</title>
+			<description>Allegato di tipo Stralcio del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
+		<type name="sigla_progetti_attachment:controdeduzioni">
+			<title>Allegato di tipo Controdeduzioni del Progetto</title>
+			<description>Allegato di tipo Controdeduzioni del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
+		<type name="sigla_progetti_attachment:final_statement_payment">
+			<title>Allegato di tipo Final Statement Payment del Progetto</title>
+			<description>Allegato di tipo Final Statement Payment del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
+		<type name="sigla_progetti_attachment:allegato_generico">
+			<title>Allegato Generico del Progetto</title>
+			<description>Allegato Generico del Progetto</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>		
+		<type name="sigla_progetti_attachment:rimodulazione_attachment">
+			<title>Allegati alle Rimodulazioni dei Progetti di Sigla</title>
+			<description>Allegati alle Rimodulazioni dei Progetti di Sigla</description>
+			<parent>sigla_progetti_attachment:document</parent>
+		</type>
+		<type name="sigla_progetti_attachment:rimodulazione_attestato">
+			<title>Allegato di tipo Rimodulazione del Progetto</title>
+			<description>Allegato di tipo Rimodulazione del Progetto</description>
+			<parent>sigla_progetti_attachment:rimodulazione_attachment</parent>
+		</type>
+		<type name="sigla_progetti_attachment:rimodulazione_proroga">
+			<title>Allegato di tipo Proroga del Progetto</title>
+			<description>Allegato di tipo Proroga del Progetto</description>
+			<parent>sigla_progetti_attachment:rimodulazione_attachment</parent>
+		</type>
+		<type name="sigla_progetti_attachment:rimodulazione_allegato_generico">
+			<title>Allegato Generico della Rimodulazione del Progetto</title>
+			<description>Allegato Generico della Rimodulazione del Progetto</description>
+			<parent>sigla_progetti_attachment:rimodulazione_attachment</parent>
+		</type>
+	</types>
+</model>

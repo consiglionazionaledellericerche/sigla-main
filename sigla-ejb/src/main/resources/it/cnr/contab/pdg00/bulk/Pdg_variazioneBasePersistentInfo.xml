@@ -178,7 +178,19 @@
 			propertyName="ds_causale"
 			sqlTypeName="VARCHAR"
 			columnSize="50"
-			nullable="true" />		
+			nullable="true" />
+		<columnMapping
+			columnName="PG_PROGETTO_RIMODULAZIONE"
+			propertyName="pg_progetto_rimodulazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="PG_RIMODULAZIONE"
+			propertyName="pg_rimodulazione"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="true" />	
 	</defaultColumnMap>
 		
 	<persistentProperty
@@ -238,5 +250,9 @@
 	<persistentProperty
 		name="dt_firma" />
 	<persistentProperty
-		name="ds_causale" />	
+		name="ds_causale" />
+	<persistentProperty
+		name="pg_progetto_rimodulazione" />
+	<persistentProperty
+		name="pg_rimodulazione" />		
 </SQLPersistentInfo>

@@ -28,9 +28,13 @@
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 		<columnMapping columnName="TRASFMENO_COFIN" propertyName="trasfmenoCofin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
-		<columnMapping columnName="IMPACC" propertyName="impacc"
+		<columnMapping columnName="IMPACC_FIN" propertyName="impaccFin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
-		<columnMapping columnName="MANRIS" propertyName="manris"
+		<columnMapping columnName="IMPACC_COFIN" propertyName="impaccCofin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="MANRIS_FIN" propertyName="manrisFin"
+			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
+		<columnMapping columnName="MANRIS_COFIN" propertyName="manrisCofin"
 			sqlTypeName="DECIMAL" columnSize="15" columnScale="2" />
 	</defaultColumnMap>
 
@@ -46,6 +50,8 @@
 	<persistentProperty name="variamenoCofin" />
 	<persistentProperty name="trasfpiuCofin" />
 	<persistentProperty name="trasfmenoCofin" />
-	<persistentProperty name="impacc" />
-	<persistentProperty name="manris" />
+	<persistentProperty name="impaccFin" />
+	<persistentProperty name="impaccCofin" />
+	<persistentProperty name="manrisFin" />
+	<persistentProperty name="manrisCofin" />
 </SQLPersistentInfo>

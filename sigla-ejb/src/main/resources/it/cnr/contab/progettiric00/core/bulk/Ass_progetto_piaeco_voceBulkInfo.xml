@@ -24,10 +24,137 @@
 		inputSize="100"
 		inputType="ROTEXT"
 		label="Descrizione"/>
+	<fieldProperty
+		name="im_assestato_spesa"
+		property="saldoSpesa.assestato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa" />
+	<fieldProperty
+		name="im_trasferito_spesa"
+		property="saldoSpesa.trasferito"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Trasferito" />
+	<fieldProperty
+		name="im_impacc_spesa"
+		property="saldoSpesa.impacc"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegni" />
+	<fieldProperty
+		name="im_manris_spesa"
+		property="saldoSpesa.manris"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati" />
+	<fieldProperty
+		name="im_manris_spesa_finanziata"
+		property="saldoSpesa.manrisFin"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati Finanziato" />
+	<fieldProperty
+		name="im_manris_spesa_cofinanziata"
+		property="saldoSpesa.manrisCofin"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Mandati Cofinanziato" />		
+	<fieldProperty
+		name="imVarFinanziatoRimodulato"
+		property="imVarFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		command="doDefault"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Finanziata Variata" />
+	<fieldProperty
+		name="imVarCofinanziatoRimodulato"
+		property="imVarCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		command="doDefault"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Quota Cofinanziata Variata" />
+	<fieldProperty
+		name="imTotaleVarRimodulato"
+		property="imTotaleVarRimodulato"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale Spesa Variata" />		
 
+	<fieldProperty
+		name="imAssestatoSpesaFinanziato"
+		property="saldoSpesa.assestatoFinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa Finanziato" />
+	<fieldProperty
+		name="imUtilizzatoAssestatoFinanziamento"
+		property="saldoSpesa.utilizzatoAssestatoFinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Utilizzato Assestato Spesa Finanziato" />
+
+	<fieldProperty
+		name="imAssestatoSpesaCofinanziato"
+		property="saldoSpesa.assestatoCofinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Spesa Cofinanziato" />
+	<fieldProperty
+		name="imUtilizzatoAssestatoCofinanziamento"
+		property="saldoSpesa.utilizzatoAssestatoCofinanziamento"
+		inputSize="20"
+		maxLength="18"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Utilizzato Assestato Spesa Cofinanziato" />
+		
 	<formFieldProperty name="elemento_voce" />
 	<formFieldProperty name="cd_elemento_voce"/>
 	<formFieldProperty name="ds_elemento_voce"/>
+
+	<formFieldProperty name="im_assestato_spesa" />
+	<formFieldProperty name="im_trasferito_spesa" />
+	<formFieldProperty name="im_impacc_spesa" />
+	<formFieldProperty name="im_manris_spesa" />
+
+	<formFieldProperty name="imVarFinanziatoRimodulato" />
+	<formFieldProperty name="imVarCofinanziatoRimodulato" />
+	<formFieldProperty name="imTotaleVarRimodulato" />
+
+	<formFieldProperty name="imAssestatoSpesaFinanziato" />
+	<formFieldProperty name="imUtilizzatoAssestatoFinanziamento" />
+	<formFieldProperty name="imAssestatoSpesaCofinanziato" />
+	<formFieldProperty name="imUtilizzatoAssestatoCofinanziamento" />
+
+	<formFieldProperty name="im_manris_spesa_finanziata" />
+	<formFieldProperty name="im_manris_spesa_cofinanziata" />
 	
 	<columnFieldProperty name="elemento_voce" />
 
@@ -36,6 +163,29 @@
 			name="cd_elemento_voce"/>
 		<columnFieldProperty
 			name="ds_elemento_voce"/>
+		<columnFieldProperty
+			name="imAssestatoSpesaFinanziato"
+			headerLabel="QUOTE FINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_finanziata"
+			headerLabel="QUOTE FINANZIATE"
+			label="Pagata"/>	
+		<columnFieldProperty
+			name="imAssestatoSpesaCofinanziato"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>	
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>
 	</columnSet>
-	
 </bulkInfo>
