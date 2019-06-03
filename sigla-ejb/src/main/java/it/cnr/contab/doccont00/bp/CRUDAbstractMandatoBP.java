@@ -14,6 +14,7 @@ import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HookForward;
@@ -28,6 +29,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +46,8 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
     private ContabiliService contabiliService;
 	private DocumentiContabiliService documentiContabiliService;
 	private String nodeRefDocumento;
-	
+	private boolean supervisore = false;
+
 	public CRUDAbstractMandatoBP() {}
 	public CRUDAbstractMandatoBP( String function ) 
 	{
@@ -116,13 +119,33 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			else if ( mandato != null && !mandato.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) &&
 					!mandato.isMandatoAccreditamento() && !mandato.getStato().equals( mandato.STATO_MANDATO_ANNULLATO ) ) {
 				setStatus(VIEW);
-				setMessage("Verificare lo stato di trasmissione del mandato. Non consentita la modifica.");
+				if (!isDaVariare())
+					setMessage("Verificare lo stato di trasmissione del mandato. Non consentita la modifica.");
 			}
 			else if( mandato != null  && mandato.getStato().equals( mandato.STATO_MANDATO_ANNULLATO ) && mandato.getFl_riemissione()!=null && mandato.getFl_riemissione() && !mandato.getStato_trasmissione_annullo().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)){
 				setStatus(VIEW);
 				setMessage("Verificare lo stato di trasmissione del mandato annullato. Non consentita la modifica.");
 			}
 		} 
+	}
+
+	public boolean isSupervisore() {
+		return supervisore;
+	}
+
+	public void setSupervisore(boolean supervisore) {
+		this.supervisore = supervisore;
+	}
+
+	public boolean isDaVariare() {
+		return isSupervisore() &&
+				Optional.ofNullable(getModel())
+						.filter(MandatoBulk.class::isInstance)
+						.map(MandatoBulk.class::cast)
+						.flatMap(mandatoBulk -> Optional.ofNullable(mandatoBulk.getStatoVarSos()))
+						.map(s -> Arrays.asList(
+								StatoVariazioneSostituzione.DA_VARIARE.value()
+						).contains(s)).orElse(Boolean.FALSE);
 	}
 	/**
 	 * Metodo utilizzato per gestire il caricamento dei sospesi.

@@ -76,6 +76,9 @@ public class ReversaleBase extends ReversaleKey implements Keyed {
 	// ERRORE_SIOPE_PLUS VARCHAR2(2000)
 	private java.lang.String erroreSiopePlus;
 
+	// STATO_VAR_SOS VARCHAR2(30)
+	private java.lang.String statoVarSos;
+
 	public ReversaleBase() {
 		super();
 	}
@@ -340,5 +343,13 @@ public class ReversaleBase extends ReversaleKey implements Keyed {
 
 	public void setDtOraEsitoOperazione(Timestamp dtOraEsitoOperazione) {
 		this.dtOraEsitoOperazione = dtOraEsitoOperazione;
+	}
+
+	public String getStatoVarSos() {
+		return statoVarSos;
+	}
+
+	public void setStatoVarSos(String statoVarSos) {
+		this.statoVarSos = statoVarSos;
 	}
 }
