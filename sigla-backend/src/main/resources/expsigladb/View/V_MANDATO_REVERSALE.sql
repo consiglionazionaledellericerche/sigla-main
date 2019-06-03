@@ -31,7 +31,8 @@
     "VERSAMENTO_CORI",
     "DT_FIRMA",
     "TIPO_DEBITO_SIOPE",
-    "ESITO_OPERAZIONE") AS
+    "ESITO_OPERAZIONE",
+    "STATO_VAR_SOS") AS
   SELECT
 --
 --
@@ -116,7 +117,7 @@
           a.im_documento_cont, a.im_ritenute, a.im_pagato_incassato, 'C',
           a.cd_terzo, a.cd_tipo_documento_cont_padre,
           a.pg_documento_cont_padre, a.ti_documento_cont_padre, a.pg_ver_rec,
-          NULL, a.dt_firma, a.tipo_debito_siope,a.esito_operazione
+          NULL, a.dt_firma, a.tipo_debito_siope,a.esito_operazione, a.stato_var_sos
      FROM v_mandato_reversale_pre a
     WHERE NOT EXISTS (
              SELECT 1
@@ -153,7 +154,7 @@
                    a.im_documento_cont, a.im_ritenute, a.im_pagato_incassato,
                    d.ti_cc_bi, a.cd_terzo, a.cd_tipo_documento_cont_padre,
                    a.pg_documento_cont_padre, a.ti_documento_cont_padre,
-                   a.pg_ver_rec, NULL, a.dt_firma, a.tipo_debito_siope,a.esito_operazione
+                   a.pg_ver_rec, NULL, a.dt_firma, a.tipo_debito_siope,a.esito_operazione,a.stato_var_sos
               FROM v_mandato_reversale_pre a, sospeso_det_etr b, sospeso d
              WHERE a.cd_tipo_documento_cont = 'REV'
                AND b.cd_cds_reversale = a.cd_cds
@@ -176,7 +177,7 @@
                    a.im_documento_cont, a.im_ritenute, a.im_pagato_incassato,
                    'C', a.cd_terzo, a.cd_tipo_documento_cont_padre,
                    a.pg_documento_cont_padre, a.ti_documento_cont_padre,
-                   a.pg_ver_rec, NULL, a.dt_firma, a.tipo_debito_siope,a.esito_operazione
+                   a.pg_ver_rec, NULL, a.dt_firma, a.tipo_debito_siope,a.esito_operazione, a.stato_var_sos
               FROM v_mandato_reversale_pre a, sospeso_det_usc b
              WHERE a.cd_tipo_documento_cont = 'MAN'
                AND b.cd_cds_mandato = a.cd_cds

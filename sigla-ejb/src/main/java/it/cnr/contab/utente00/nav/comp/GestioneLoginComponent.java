@@ -689,7 +689,7 @@ public class GestioneLoginComponent
 				sqlUtente.addClause("AND","fl_autenticazione_ldap",sqlUtente.EQUALS,Boolean.TRUE);
 				sqlUtente.addSQLClause("AND","lower(cd_utente_uid)",sqlUtente.EQUALS,userid);
 				//sqlUtente.addSQLClause("AND","dt_fine_validita",sqlUtente.GREATER,EJBCommonServices.getServerTimestamp());
-	
+
 				if (faseValidazione==VALIDA_FASE_INIZIALE_UTENTE_MULTIPLO)
 					sqlUtente.addSQLClause("AND","cd_utente",sqlUtente.EQUALS,utente.getUtente_multiplo());
 	
@@ -700,7 +700,7 @@ public class GestioneLoginComponent
 				UtenteBulk uteValido=null;
 				for (Iterator it=result.iterator(); it.hasNext();) {
 					UtenteBulk ute = (UtenteBulk) it.next();
-					if(ute.getDt_fine_validita() != null && ute.getDt_fine_validita().after(EJBCommonServices.getServerTimestamp())&&
+					if((ute.getDt_fine_validita() == null || (ute.getDt_fine_validita() != null && ute.getDt_fine_validita().after(EJBCommonServices.getServerTimestamp()))) &&
 					   ute.getDt_inizio_validita() != null && ute.getDt_inizio_validita().before(EJBCommonServices.getServerTimestamp())) {
 						uteValido=ute;
 						numValidi++;
