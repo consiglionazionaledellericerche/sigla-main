@@ -64,7 +64,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			sql.addTableToHeader("PROGETTO");
 			sql.addSQLClause(FindClause.AND, "PROGETTO.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 			sql.addSQLClause(FindClause.AND, "PROGETTO.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-			sql.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETT_RIMODULAZIONE.PG_PROGETTO");
+			sql.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
 			sql.addSQLClause(FindClause.AND, "PROGETTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, cduo);
 		});
 		return sql;

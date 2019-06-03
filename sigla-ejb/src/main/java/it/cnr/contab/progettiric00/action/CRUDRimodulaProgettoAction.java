@@ -590,5 +590,14 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		} catch (Exception e) {
 			return handleException(actioncontext, e);
 		}	
-	}	
+	}
+	
+	@Override
+	public Forward doRiportaSelezione(ActionContext actioncontext, OggettoBulk oggettobulk) throws RemoteException {
+		Optional.ofNullable(oggettobulk).filter(Progetto_rimodulazioneBulk.class::isInstance)
+		.map(Progetto_rimodulazioneBulk.class::cast).filter(el->el.isStatoProvvisorio()||el.isStatoDefinitivo()||el.isStatoValidato())
+		.orElseThrow(()->new it.cnr.jada.action.MessageToUser("Rimodulazione progetto non selezionabile! E' possibile selezionare solo "
+				+ "rimodulazioni in corso con stato diverso da Approvato/Respinto."));
+		return super.doRiportaSelezione(actioncontext, oggettobulk);
+	}
 }
