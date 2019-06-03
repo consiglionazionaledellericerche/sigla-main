@@ -2038,7 +2038,22 @@ TRASPORTO_AEREO"/>
             <column name="im_var_cofinanziato" remarks="Importo Variazione Spesa Cofinanziato rimodulato del progetto" type="numeric(15, 2)">
                 <constraints nullable="false"/>
             </column>
-
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
         <addPrimaryKey columnNames="pg_progetto,pg_rimodulazione" constraintName="progetto_rimodulazione_pkey" tableName="progetto_rimodulazione"/>
     </changeSet>
     <changeSet author="raffaele.pagano" id="create-table-progetto-rimodulazione-ppe">
