@@ -209,7 +209,7 @@ public abstract class Mandato_siopeBulk extends Mandato_siopeBase {
 		if (codice_siope != null) this.getCodice_siope().setCd_siope(cd_siope);
 	}
 
-	public BulkList getMandatoSiopeCupColl() {
+	public BulkList<MandatoSiopeCupBulk> getMandatoSiopeCupColl() {
 		return mandatoSiopeCupColl;
 	}
 

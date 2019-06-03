@@ -244,8 +244,10 @@ public class Mandato_rigaHome extends BulkHome {
             case Numerazione_doc_ammBulk.TIPO_COMPENSO : {
                 return CompensoBulk.class;
             }
+            default:{
+                return Documento_generico_passivoBulk.class;
+            }
         }
-        return null;
     }
 
     /**
