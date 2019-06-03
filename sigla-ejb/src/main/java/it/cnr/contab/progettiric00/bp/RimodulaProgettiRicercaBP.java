@@ -326,6 +326,16 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		return progettoRimodulazione;
 	}
 	
+	@Override
+	public OggettoBulk initializeModelForSearch(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+		oggettobulk = super.initializeModelForSearch(actioncontext, oggettobulk);
+		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)oggettobulk;
+		ProgettoBulk progetto = new ProgettoBulk();
+		progetto.setUnita_organizzativa(new Unita_organizzativaBulk());
+		progettoRimodulazione.setProgetto(progetto);
+		return progettoRimodulazione;
+	}
+	
 	public String[][] getTabs(HttpSession session) {
 		String uo = CNRUserContext.getCd_unita_organizzativa(HttpActionContext.getUserContext(session));
 		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)this.getModel();
