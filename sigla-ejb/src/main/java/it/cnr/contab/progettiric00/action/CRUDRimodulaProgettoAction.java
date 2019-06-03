@@ -7,8 +7,6 @@ import java.util.Optional;
 import javax.ejb.RemoveException;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
-import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
