@@ -2038,24 +2038,25 @@ TRASPORTO_AEREO"/>
             <column name="im_var_cofinanziato" remarks="Importo Variazione Spesa Cofinanziato rimodulato del progetto" type="numeric(15, 2)">
                 <constraints nullable="false"/>
             </column>
-            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+            <column name="dacr" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
-            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+            <column name="utcr" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+            <column name="duva" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
-            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+            <column name="utuv" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+            <column name="pg_ver_rec" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
         <addPrimaryKey columnNames="pg_progetto,pg_rimodulazione" constraintName="progetto_rimodulazione_pkey" tableName="progetto_rimodulazione"/>
     </changeSet>
+
     <changeSet author="raffaele.pagano" id="create-table-progetto-rimodulazione-ppe">
         <createTable remarks="Tabella contenente la rimodulazione del piano economico del progetto." tableName="progetto_rimodulazione_ppe">
             <column name="pg_progetto" remarks="Progressivo del progetto di ricerca" type="BIGINT">
