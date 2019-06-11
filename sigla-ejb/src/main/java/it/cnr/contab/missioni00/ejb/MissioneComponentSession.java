@@ -67,4 +67,5 @@ public DivisaBulk getDivisaDefault(UserContext userContext) throws ComponentExce
 public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 public MissioneBulk caricaTerzoInModificaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
+public void cancellazioneMissioneDaGemis(UserContext userContext, Long idRimborsoMissioneGemis) throws ComponentException,java.rmi.RemoteException;
 }
