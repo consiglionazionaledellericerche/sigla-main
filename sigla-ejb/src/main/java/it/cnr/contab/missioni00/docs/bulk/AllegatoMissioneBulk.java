@@ -29,6 +29,7 @@ public class AllegatoMissioneBulk extends AllegatoGenericoBulk {
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:scontrini","Giustificativo");
 		aspectNamesKeys.put("P:missioni_ordine_attachment:ordine","Ordine Di Missione");
 		aspectNamesKeys.put("P:missioni_rimborso_attachment:rimborso","Rimborso Missione");
+		aspectNamesKeys.put("P:missioni_rimborso_attachment:allegati_annullamento","Allegato Annullamento Rimborso Missione");
 		aspectNamesKeys.put(FLUSSO_ORDINE,FLUSSO_ORDINE_LABEL);
 		aspectNamesKeys.put(FLUSSO_RIMBORSO,FLUSSO_RIMBORSO_LABEL);
 		aspectNamesKeys.put(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA,"Allegati vari alla Missione SIGLA");
