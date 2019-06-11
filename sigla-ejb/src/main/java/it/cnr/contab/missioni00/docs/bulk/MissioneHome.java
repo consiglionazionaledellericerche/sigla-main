@@ -290,6 +290,27 @@ public class MissioneHome extends BulkHome implements
         return missione;
     }
 
+	/**
+	 * Il metodo carica la missione legata all'ID di gemis
+	 */
+	public MissioneBulk loadMissione(it.cnr.jada.UserContext userContext,
+			Long idRimborsoMissioneGemis)
+			throws PersistencyException {
+
+		SQLBuilder sql = createSQLBuilder();
+		sql.addSQLClause("AND", "ID_RIMBORSO_MISSIONE", sql.EQUALS, idRimborsoMissioneGemis);
+
+		MissioneBulk missione = null;
+		Broker broker = createBroker(sql);
+		if (broker.next())
+			missione = (MissioneBulk) fetch(broker);
+		broker.close();
+		getHomeCache().fetchAll(userContext);
+
+		return missione;
+	}
+
+
     /**
      * Metodo richiesto dall'interfaccia IDocumentoAmministrativoSpesaHome Il
      * metodo aggiorna la missione dopo che e' stata collegata ad una spesa del
