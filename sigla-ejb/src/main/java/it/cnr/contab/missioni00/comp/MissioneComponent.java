@@ -4508,5 +4508,17 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
             throw handleException(tappa, e);
         }
     }
+    public void cancellazioneMissioneDaGemis(UserContext userContext, Long idRimborsoMissioneGemis) throws ComponentException {
+        try {
+    		MissioneHome home = (MissioneHome) getHome(userContext, MissioneBulk.class);
+    		MissioneBulk missione = home.loadMissione(userContext, idRimborsoMissioneGemis);
+            missione = (MissioneBulk) inizializzaBulkPerModifica(userContext, missione);
+            eliminaConBulk(userContext, missione);
+        } catch (Throwable e) {
+            throw handleException(e);
+        }
+
+    }
+
 
 }
