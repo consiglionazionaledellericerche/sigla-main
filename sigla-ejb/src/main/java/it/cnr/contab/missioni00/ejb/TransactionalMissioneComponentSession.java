@@ -1255,4 +1255,20 @@ public class TransactionalMissioneComponentSession extends
             }
         }
     }
+    public void cancellazioneMissioneDaGemis(UserContext userContext, Long idRimborsoMissioneGemis) throws ComponentException,
+    java.rmi.RemoteException {
+    	try {
+    		invoke("cancellazioneMissioneDaGemis", new Object[] { userContext, idRimborsoMissioneGemis});
+    	} catch (java.rmi.RemoteException e) {
+    		throw e;
+    	} catch (java.lang.reflect.InvocationTargetException e) {
+    		try {
+    			throw e.getTargetException();
+    		} catch (it.cnr.jada.comp.ComponentException ex) {
+    			throw ex;
+    		} catch (Throwable ex) {
+    			throw new java.rmi.RemoteException("Uncaugth exception", ex);
+    		}
+    	}
+    }
 }
