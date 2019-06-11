@@ -1156,4 +1156,23 @@ public class MissioneComponentSessionBean extends
         }
 
     }
+    public void cancellazioneMissioneDaGemis(UserContext userContext, Long idRimborsoMissioneGemis)  throws ComponentException,
+    javax.ejb.EJBException {
+    	pre_component_invocation(userContext, componentObj);
+    	try {
+    		((MissioneComponent) componentObj).cancellazioneMissioneDaGemis(userContext, idRimborsoMissioneGemis);
+    		component_invocation_succes(userContext, componentObj);
+    	} catch (it.cnr.jada.comp.NoRollbackException e) {
+    		component_invocation_succes(userContext, componentObj);
+    		throw e;
+    	} catch (it.cnr.jada.comp.ComponentException e) {
+    		component_invocation_failure(userContext, componentObj);
+    		throw e;
+    	} catch (RuntimeException e) {
+    		throw uncaughtRuntimeException(userContext, componentObj, e);
+    	} catch (Error e) {
+    		throw uncaughtError(userContext, componentObj, e);
+    	}
+
+    }
 }
