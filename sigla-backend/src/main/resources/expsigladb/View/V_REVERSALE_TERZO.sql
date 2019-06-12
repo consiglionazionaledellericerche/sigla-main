@@ -39,7 +39,8 @@
   "PG_REVERSALE_RIEMISSIONE",
   "ESITO_OPERAZIONE",
   "DT_ORA_ESITO_OPERAZIONE",
-  "ERRORE_SIOPE_PLUS"
+  "ERRORE_SIOPE_PLUS",
+  "STATO_VAR_SOS"
   ) AS
   SELECT
 --
@@ -107,7 +108,8 @@ a.dt_firma_annullo,
 a.pg_reversale_riemissione,
 a.esito_operazione,
 a.dt_ora_esito_operazione,
-a.errore_siope_plus
+a.errore_siope_plus,
+a.stato_var_sos
 FROM   REVERSALE A,
 REVERSALE_TERZO B,
 TERZO C
