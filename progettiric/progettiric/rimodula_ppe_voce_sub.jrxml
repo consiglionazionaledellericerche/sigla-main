@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rimodula_ppe_anno_sub" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ed4c3ee2-64bb-4905-8efa-d1579b9f05c9">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="165"/>
+	<property name="ireport.x" value="167"/>
 	<property name="ireport.y" value="0"/>
 	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
@@ -28,30 +28,54 @@
 	<field name="dsVoce" class="java.lang.String">
 		<fieldDescription><![CDATA[dsVoce]]></fieldDescription>
 	</field>
-	<field name="quotaFinanziataCorrente" class="java.math.BigDecimal">
+	<field name="quotaFinanziataCorrente" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaFinanziataCorrente]]></fieldDescription>
 	</field>
-	<field name="quotaFinanziataRimodulata" class="java.math.BigDecimal">
+	<field name="quotaFinanziataRimodulata" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaFinanziataRimodulata]]></fieldDescription>
 	</field>
-	<field name="quotaFinanziataStanziata" class="java.math.BigDecimal">
+	<field name="quotaFinanziataStanziata" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaFinanziataStanziata]]></fieldDescription>
 	</field>
 	<field name="quotaFinanziataPagata" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaFinanziataPagata]]></fieldDescription>
 	</field>
-	<field name="quotaCofinanziataCorrente" class="java.math.BigDecimal">
+	<field name="quotaCofinanziataCorrente" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaCofinanziataCorrente]]></fieldDescription>
 	</field>
-	<field name="quotaCofinanziataRimodulata" class="java.math.BigDecimal">
+	<field name="quotaCofinanziataRimodulata" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaCofinanziataRimodulata]]></fieldDescription>
 	</field>
-	<field name="quotaCofinanziataStanziata" class="java.math.BigDecimal">
+	<field name="quotaCofinanziataStanziata" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaCofinanziataStanziata]]></fieldDescription>
 	</field>
-	<field name="quotaCofinanziataPagata" class="java.math.BigDecimal">
+	<field name="quotaCofinanziataPagata" class="java.lang.String">
 		<fieldDescription><![CDATA[quotaCofinanziataPagata]]></fieldDescription>
 	</field>
+	<variable name="varQuotaFinanziataCorrente" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaFinanziataCorrente})]]></variableExpression>
+	</variable>
+	<variable name="varQuotaFinanziataRimodulata" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaFinanziataRimodulata})]]></variableExpression>
+	</variable>
+	<variable name="varQuotaFinanziataStanziata" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaFinanziataStanziata})]]></variableExpression>
+	</variable>
+	<variable name="varQuotaFinanziataPagata" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaFinanziataPagata})]]></variableExpression>
+	</variable>
+	<variable name="varQuotaCofinanziataCorrente" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaCofinanziataCorrente})]]></variableExpression>
+	</variable>
+	<variable name="varQuotaCofinanziataRimodulata" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaCofinanziataRimodulata})]]></variableExpression>
+	</variable>
+	<variable name="varQuotaCofinanziataStanziata" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaCofinanziataStanziata})]]></variableExpression>
+	</variable>
+	<variable name="varQuotaCofinanziataPagata" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{quotaCofinanziataPagata})]]></variableExpression>
+	</variable>
 	<columnHeader>
 		<band height="53">
 			<staticText>
@@ -201,16 +225,17 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="160" height="20" uuid="b7d7b00a-4d62-4f7a-94a8-55753a1ea308"/>
-				<box>
+				<box leftPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cdVoce}+" - "+$F{dsVoce}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
@@ -223,7 +248,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaFinanziataCorrente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaFinanziataCorrente}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="240" y="0" width="80" height="20" uuid="4082a771-5492-432f-b2f4-fce424c3ace5"/>
@@ -235,11 +260,11 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaFinanziataRimodulata}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaFinanziataRimodulata}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="320" y="0" width="80" height="20" uuid="e25f01b9-37cc-4115-a26b-839fa59c4cb0"/>
-				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="3">
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -247,7 +272,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaFinanziataStanziata}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaFinanziataStanziata}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="400" y="0" width="80" height="20" uuid="3dab516a-f668-403c-a6e4-49aa0f7d6476"/>
@@ -259,7 +284,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaCofinanziataCorrente}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaCofinanziataCorrente}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="480" y="0" width="80" height="20" uuid="f4daf768-a6f1-4b76-911c-a887d9d209f2"/>
@@ -271,7 +296,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaCofinanziataRimodulata}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaCofinanziataRimodulata}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="560" y="0" width="80" height="20" uuid="645aa15c-854e-4290-9547-4bc75f152269"/>
@@ -283,7 +308,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaCofinanziataStanziata}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaCofinanziataStanziata}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="640" y="0" width="82" height="20" uuid="0eaf7f37-9f7f-40af-af71-e34edc153eff"/>
@@ -295,7 +320,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaFinanziataCorrente}.add($F{quotaCofinanziataCorrente})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaFinanziataCorrente}.add($V{varQuotaCofinanziataCorrente})]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="722" y="0" width="80" height="20" uuid="ca5fc044-a2fa-43f8-892c-0b61e4d3a610"/>
@@ -307,7 +332,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{quotaFinanziataRimodulata}.add($F{quotaCofinanziataRimodulata})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varQuotaFinanziataRimodulata}.add($V{varQuotaCofinanziataRimodulata})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

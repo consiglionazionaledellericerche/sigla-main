@@ -1,0 +1,76 @@
+{
+  "cdProgetto": "DTA.AD003.293",
+  "dsProgetto": "DPC Art. 11 2018 - Accordo ai sensi dell'Art. 15 della L. 241/190 per interventi di prevenzione del rischio sismico. Ordinanza /2018",
+  "pgRimodulazione": 1,
+  "pgGenRimodulazione": 2,
+  "uoCoordinatrice": "042.000",
+  "tipoFinanziamento": "Finanziamento - Finanziamento",
+  "dataInizio": "12/12/2018",
+  "dataFine": "11/12/2021",
+  "dataProroga": "",
+  "importoFinanziato": 1200000,
+  "importoCofinanziato": 0,
+  "importoFinanziatoRimodulato": 1200000,
+  "importoCofinanziatoRimodulato": 0,
+  "dataProrogaRimodulata": "",
+  "anniPianoEconomico": [
+    {
+      "anno": 2019,
+      "vociPianoEconomico": [
+        {
+          "cdVoce": "ALTRO",
+          "dsVoce": "Altro",
+          "quotaFinanziataCorrente": 26700.53,
+          "quotaFinanziataRimodulata": 4453.00,
+          "quotaFinanziataStanziata": 4453.00,
+          "quotaFinanziataPagata": 0.00,
+          "quotaCofinanziataCorrente": 0,
+          "quotaCofinanziataRimodulata": 0,
+          "quotaCofinanziataStanziata": 0,
+          "quotaCofinanziataPagata": 0
+        },
+        {
+          "cdVoce": "CONS",
+          "dsVoce": "Consumabili specifici di progetto",
+          "quotaFinanziataCorrente": 2500,
+          "quotaFinanziataRimodulata": 0,
+          "quotaFinanziataStanziata": 0,
+          "quotaFinanziataPagata": 0,
+          "quotaCofinanziataCorrente": 0,
+          "quotaCofinanziataRimodulata": 0,
+          "quotaCofinanziataStanziata": 0,
+          "quotaCofinanziataPagata": 0
+        }
+      ]
+    },
+    {
+      "anno": 2020,
+      "vociPianoEconomico": [
+        {
+          "cdVoce": "ALTRO",
+          "dsVoce": "Altro",
+          "quotaFinanziataCorrente": 30000,
+          "quotaFinanziataRimodulata": 30000,
+          "quotaFinanziataStanziata": 0,
+          "quotaFinanziataPagata": 0,
+          "quotaCofinanziataCorrente": 0,
+          "quotaCofinanziataRimodulata": 0,
+          "quotaCofinanziataStanziata": 0,
+          "quotaCofinanziataPagata": 0
+        },
+        {
+          "cdVoce": "CONS",
+          "dsVoce": "Consumabili specifici di progetto",
+          "quotaFinanziataCorrente": 20000,
+          "quotaFinanziataRimodulata": 18000,
+          "quotaFinanziataStanziata": 0,
+          "quotaFinanziataPagata": 0,
+          "quotaCofinanziataCorrente": 0,
+          "quotaCofinanziataRimodulata": 0,
+          "quotaCofinanziataStanziata": 0,
+          "quotaCofinanziataPagata": 0
+        }
+      ]
+    }
+  ]
+}

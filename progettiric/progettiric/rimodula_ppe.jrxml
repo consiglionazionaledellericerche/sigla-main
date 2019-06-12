@@ -186,12 +186,12 @@
 			<rectangle radius="10">
 				<reportElement x="116" y="106" width="284" height="20" uuid="9a9477c1-6ad8-422a-bb37-2b6c623d62de"/>
 			</rectangle>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="320" y="106" width="80" height="20" uuid="a4feb6b2-0cb4-48ac-ac42-61e10e69c07e"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{dataProrogaRimodulata}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="177" y="106" width="80" height="20" uuid="9c73a3e9-6304-48c7-bf4b-a82c57672422"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{dataProroga}]]></textFieldExpression>
