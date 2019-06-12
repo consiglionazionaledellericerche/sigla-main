@@ -65,6 +65,11 @@
 			<description>Allegato di tipo Proroga del Progetto</description>
 			<parent>sigla_progetti_attachment:rimodulazione_attachment</parent>
 		</type>
+		<type name="sigla_progetti_attachment:rimodulazione_stampa_automatica">
+			<title>Allegato di tipo Stampa Automatica della Rimodulazione</title>
+			<description>Allegato di tipo Stampa Automatica della Rimodulazione</description>
+			<parent>sigla_progetti_attachment:rimodulazione_attachment</parent>
+		</type>
 		<type name="sigla_progetti_attachment:rimodulazione_allegato_generico">
 			<title>Allegato Generico della Rimodulazione del Progetto</title>
 			<description>Allegato Generico della Rimodulazione del Progetto</description>
