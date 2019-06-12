@@ -36,16 +36,16 @@
 	<field name="dataProroga" class="java.lang.String">
 		<fieldDescription><![CDATA[dataProroga]]></fieldDescription>
 	</field>
-	<field name="importoFinanziato" class="java.lang.String">
+	<field name="importoFinanziato" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[importoFinanziato]]></fieldDescription>
 	</field>
-	<field name="importoCofinanziato" class="java.lang.String">
+	<field name="importoCofinanziato" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[importoCofinanziato]]></fieldDescription>
 	</field>
-	<field name="importoFinanziatoRimodulato" class="java.lang.String">
+	<field name="importoFinanziatoRimodulato" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[importoFinanziatoRimodulato]]></fieldDescription>
 	</field>
-	<field name="importoCofinanziatoRimodulato" class="java.lang.Boolean">
+	<field name="importoCofinanziatoRimodulato" class="java.math.BigDecimal">
 		<fieldDescription><![CDATA[importoCofinanziatoRimodulato]]></fieldDescription>
 	</field>
 	<field name="dataProrogaRimodulata" class="java.lang.String">
@@ -55,7 +55,7 @@
 		<fieldDescription><![CDATA[anniPianoEconomico]]></fieldDescription>
 	</field>
 	<title>
-		<band height="121" splitType="Stretch">
+		<band height="133" splitType="Stretch">
 			<staticText>
 				<reportElement mode="Opaque" x="10" y="10" width="776" height="24" forecolor="#000000" backcolor="#CCCCCC" uuid="1a1e9ed9-da88-4067-91f4-e4da24d968dd"/>
 				<box>
@@ -72,47 +72,145 @@
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="45" width="50" height="20" uuid="71f4d904-aaac-4675-95b0-204d4b3ac9dd"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Progetto:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="60" y="45" width="100" height="20" uuid="c1430968-3563-424e-a655-91d6f06ba73d"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cdProgetto}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="85" width="90" height="20" uuid="73d6d0e6-9fdc-4a55-a579-7a77a4c79348"/>
+				<reportElement x="412" y="65" width="90" height="20" uuid="73d6d0e6-9fdc-4a55-a579-7a77a4c79348"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Rimodulazione:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="65" width="90" height="20" uuid="11fab2ea-7f90-4d30-b01a-8875b57e28a8"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Uo Coordinatrice:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="110" y="65" width="676" height="20" uuid="0ac242b3-6ff5-4cd3-aa0b-bef4971c1982"/>
+				<reportElement x="110" y="65" width="290" height="20" uuid="0ac242b3-6ff5-4cd3-aa0b-bef4971c1982"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{uoCoordinatrice}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="45" width="626" height="20" uuid="53a69b9d-803f-4f91-aafe-e085ed07b25b"/>
+				<reportElement x="160" y="45" width="642" height="20" uuid="53a69b9d-803f-4f91-aafe-e085ed07b25b"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{dsProgetto}]]></textFieldExpression>
 			</textField>
 			<rectangle radius="10">
-				<reportElement x="116" y="85" width="260" height="20" uuid="e8c0aebb-a8ec-4456-a227-e0a5d1398a0a"/>
+				<reportElement x="518" y="65" width="260" height="20" uuid="e8c0aebb-a8ec-4456-a227-e0a5d1398a0a"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="127" y="85" width="50" height="20" uuid="cb40ea31-fd17-4004-a856-bb8f34761709"/>
+				<reportElement x="529" y="65" width="50" height="20" uuid="cb40ea31-fd17-4004-a856-bb8f34761709"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Versione:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="177" y="85" width="61" height="20" uuid="fe70e847-b823-45f5-9523-c003b2610d9d"/>
+				<reportElement x="579" y="65" width="61" height="20" uuid="fe70e847-b823-45f5-9523-c003b2610d9d"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{pgRimodulazione}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="253" y="85" width="23" height="20" uuid="43fc111f-b182-4493-88f3-b80885e72ec3"/>
+				<reportElement x="655" y="65" width="23" height="20" uuid="43fc111f-b182-4493-88f3-b80885e72ec3"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Nr.:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="276" y="85" width="100" height="20" uuid="62576744-3040-46cc-a217-fb31d9fccc59"/>
+				<reportElement x="678" y="65" width="100" height="20" uuid="62576744-3040-46cc-a217-fb31d9fccc59"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{pgGenRimodulazione}]]></textFieldExpression>
 			</textField>
+			<rectangle radius="10">
+				<reportElement x="116" y="85" width="284" height="20" uuid="07dce4b9-4a32-4aa6-8647-3eeddf246e27"/>
+			</rectangle>
+			<textField pattern="#,##0.00">
+				<reportElement x="177" y="85" width="80" height="20" uuid="19d00ba9-d382-4639-86a3-4ed43520de4b"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{importoFinanziato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="320" y="86" width="80" height="20" uuid="28925ca4-42f0-4ee1-9193-32c2cba42939"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{importoFinanziatoRimodulato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="85" width="100" height="20" uuid="da018597-6b0e-470d-a6e7-4a1885d839f8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Importo Finanziato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="127" y="85" width="50" height="20" uuid="2146c21d-a2cc-41ed-a735-231dc9aec5fb"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Iniziale:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="85" width="63" height="20" uuid="bbe3c805-88d3-4d81-ae95-70b1dd5a8d76"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Rimodulato:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="518" y="86" width="284" height="20" uuid="2a6930d2-c147-4b0b-a3b8-ac5fe673d1ac"/>
+			</rectangle>
+			<textField pattern="#,##0.00">
+				<reportElement x="722" y="86" width="80" height="20" uuid="dc0f6724-bee5-479c-8c0e-c65514d9fba7"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{importoCofinanziatoRimodulato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="579" y="86" width="80" height="20" uuid="53cf34e4-d329-4242-b0fa-4c8d31ecc9a9"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{importoCofinanziato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="412" y="86" width="106" height="20" uuid="6018e9a2-1452-42a6-b223-8fb2a136c9f3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Importo Cofinanziato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="659" y="86" width="63" height="20" uuid="888a1f17-0132-44b4-93e2-ad8742d653f1"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Rimodulato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="529" y="86" width="50" height="20" uuid="d5774445-892f-4190-a412-bb7dab25c7c8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Iniziale:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="116" y="106" width="284" height="20" uuid="9a9477c1-6ad8-422a-bb37-2b6c623d62de"/>
+			</rectangle>
+			<textField>
+				<reportElement x="320" y="106" width="80" height="20" uuid="a4feb6b2-0cb4-48ac-ac42-61e10e69c07e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dataProrogaRimodulata}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="177" y="106" width="80" height="20" uuid="9c73a3e9-6304-48c7-bf4b-a82c57672422"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dataProroga}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="106" width="100" height="20" uuid="da6045ff-92f1-4aab-bd70-20a7b4476735"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Data Proroga:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="257" y="106" width="63" height="20" uuid="92cb9270-82c1-4651-9404-975a772f2b03"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Rimodulato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="127" y="106" width="50" height="20" uuid="78a393b5-e6bd-4d78-90da-1713d3bb71a4"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Iniziale:]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>
