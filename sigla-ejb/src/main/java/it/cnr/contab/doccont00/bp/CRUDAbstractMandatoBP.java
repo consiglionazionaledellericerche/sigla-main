@@ -200,7 +200,8 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			validate(context);
 			getModel().setToBeUpdated();
 			setModel( context, ((MandatoComponentSession) createComponentSession()).annullaMandato(context.getUserContext(),(MandatoBulk)getModel(), param));
-			setStatus(VIEW);			
+			commitUserTransaction();
+			setStatus(VIEW);
 		} catch(Exception e) {
 			getModel().setCrudStatus(crudStatus);
 			throw handleException(e);
