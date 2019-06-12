@@ -1512,6 +1512,14 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     }
 
     public void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws ComponentException {
+    	validaPianoEconomico(userContext,progetto,false);
+    }
+
+    public void validaPianoEconomicoRimodulato(UserContext userContext, ProgettoBulk progetto) throws ComponentException {
+    	validaPianoEconomico(userContext,progetto,true);
+    }
+
+    private void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean isFromRimodulazione) throws ComponentException {
     	try {
 			validaDatePianoEconomico(userContext, progetto);
 
@@ -1520,7 +1528,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	   		if (Optional.ofNullable(annoFrom).isPresent()) {
 		   		validaVociPianoEconomicoDecisionale(userContext, progetto, annoFrom.intValue());
 		   		validaVociPianoEconomicoGestionale(userContext, progetto, annoFrom.intValue());
-		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue());
+		   		validaSaldiPianoEconomico(userContext, progetto, annoFrom.intValue(), isFromRimodulazione);
 		   		validaTipoFinanziamento(userContext, progetto, annoFrom.intValue());
 		   		validaQuadraturaPianoEconomico(userContext, progetto, annoFrom.intValue());
 	   		};
@@ -1729,7 +1737,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	}
     }
 
-    private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom) throws ComponentException {
+    private void validaSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto, Integer annoFrom, boolean isFromRimodulazione) throws ComponentException {
 		try{
 			//SE IL PROGETTO NON HA PIANO ECONOMICO IL CONTROLLO VIENE FATTO SEMPRE E SOLO SUI TOTALI PROGETTO
 			if (!progetto.isPianoEconomicoRequired()) {
@@ -1818,16 +1826,33 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE");
 				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE");			
 				
-				sqlSaldi.addSQLNotExistsClause(FindClause.AND, sqlExist);
+				if (!isFromRimodulazione)
+					sqlSaldi.addSQLNotExistsClause(FindClause.AND, sqlExist);
 	
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
 				
-				saldiList.stream().findFirst().ifPresent(el->{
-	               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
-	               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
-	               			" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " + 
-	               			"Operazione non consentita!");
-				});
+				if (!isFromRimodulazione)
+					saldiList.stream().findFirst().ifPresent(el->{
+		               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
+		               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
+		               			" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " + 
+		               			"Operazione non consentita!");
+					});
+				else
+					saldiList.stream().filter(el->{
+						return !progetto.getAllDetailsProgettoPianoEconomico().stream()
+							.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
+							.filter(vocePpe->vocePpe.getEsercizio_piano().equals(el.getEsercizio_res()))
+							.filter(vocePpe->vocePpe.getTi_appartenenza().equals(el.getTi_appartenenza()))
+							.filter(vocePpe->vocePpe.getTi_gestione().equals(el.getTi_gestione()))
+							.filter(vocePpe->vocePpe.getCd_elemento_voce().equals(el.getCd_elemento_voce()))
+							.findFirst().isPresent();
+					}).findFirst().ifPresent(el->{
+		               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
+		               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
+		               			" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " + 
+		               			"Operazione non consentita!");
+					});
 			}
 		} catch(Throwable e) {
 			throw handleException(e);
