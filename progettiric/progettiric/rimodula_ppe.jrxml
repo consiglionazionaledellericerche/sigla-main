@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PianoEconomicoProgetto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed4c3ee2-64bb-4905-8efa-d1579b9f05c9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="cdProgetto" class="java.lang.String">
+		<fieldDescription><![CDATA[cdProgetto]]></fieldDescription>
+	</field>
+	<field name="dsProgetto" class="java.lang.String">
+		<fieldDescription><![CDATA[dsProgetto]]></fieldDescription>
+	</field>
+	<field name="pgRimodulazione" class="java.lang.String">
+		<fieldDescription><![CDATA[pgRimodulazione]]></fieldDescription>
+	</field>
+	<field name="pgGenRimodulazione" class="java.lang.String">
+		<fieldDescription><![CDATA[pgGenRimodulazione]]></fieldDescription>
+	</field>
+	<field name="uoCoordinatrice" class="java.lang.String">
+		<fieldDescription><![CDATA[uoCoordinatrice]]></fieldDescription>
+	</field>
+	<field name="tipoFinanziamento" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoFinanziamento]]></fieldDescription>
+	</field>
+	<field name="dataInizio" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInizio]]></fieldDescription>
+	</field>
+	<field name="dataFine" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[dataFine]]></fieldDescription>
+	</field>
+	<field name="dataProroga" class="java.lang.String">
+		<fieldDescription><![CDATA[dataProroga]]></fieldDescription>
+	</field>
+	<field name="importoFinanziato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoFinanziato]]></fieldDescription>
+	</field>
+	<field name="importoCofinanziato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoCofinanziato]]></fieldDescription>
+	</field>
+	<field name="importoFinanziatoRimodulato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoFinanziatoRimodulato]]></fieldDescription>
+	</field>
+	<field name="importoCofinanziatoRimodulato" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[importoCofinanziatoRimodulato]]></fieldDescription>
+	</field>
+	<field name="dataProrogaRimodulata" class="java.lang.String">
+		<fieldDescription><![CDATA[dataProrogaRimodulata]]></fieldDescription>
+	</field>
+	<field name="anniPianoEconomico" class="java.lang.Object">
+		<fieldDescription><![CDATA[anniPianoEconomico]]></fieldDescription>
+	</field>
+	<title>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="10" y="10" width="776" height="24" forecolor="#000000" backcolor="#CCCCCC" uuid="1a1e9ed9-da88-4067-91f4-e4da24d968dd"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consiglio Nazionale delle Ricerche - Rimodulazione Piano Economico di Progetto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="45" width="50" height="20" uuid="71f4d904-aaac-4675-95b0-204d4b3ac9dd"/>
+				<text><![CDATA[Progetto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="45" width="100" height="20" uuid="c1430968-3563-424e-a655-91d6f06ba73d"/>
+				<textFieldExpression><![CDATA[$F{cdProgetto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="85" width="90" height="20" uuid="73d6d0e6-9fdc-4a55-a579-7a77a4c79348"/>
+				<text><![CDATA[Rimodulazione:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="65" width="90" height="20" uuid="11fab2ea-7f90-4d30-b01a-8875b57e28a8"/>
+				<text><![CDATA[Uo Coordinatrice:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="65" width="676" height="20" uuid="0ac242b3-6ff5-4cd3-aa0b-bef4971c1982"/>
+				<textFieldExpression><![CDATA[$F{uoCoordinatrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="45" width="626" height="20" uuid="53a69b9d-803f-4f91-aafe-e085ed07b25b"/>
+				<textFieldExpression><![CDATA[$F{dsProgetto}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="116" y="85" width="260" height="20" uuid="e8c0aebb-a8ec-4456-a227-e0a5d1398a0a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="127" y="85" width="50" height="20" uuid="cb40ea31-fd17-4004-a856-bb8f34761709"/>
+				<text><![CDATA[Versione:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="177" y="85" width="61" height="20" uuid="fe70e847-b823-45f5-9523-c003b2610d9d"/>
+				<textFieldExpression><![CDATA[$F{pgRimodulazione}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="253" y="85" width="23" height="20" uuid="43fc111f-b182-4493-88f3-b80885e72ec3"/>
+				<text><![CDATA[Nr.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="276" y="85" width="100" height="20" uuid="62576744-3040-46cc-a217-fb31d9fccc59"/>
+				<textFieldExpression><![CDATA[$F{pgGenRimodulazione}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<subreport isUsingCache="false">
+				<reportElement x="0" y="0" width="786" height="24" uuid="0a1cf568-a357-43cb-8689-c112cda0716c"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("anniPianoEconomico")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rimodula_ppe_anno_sub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
