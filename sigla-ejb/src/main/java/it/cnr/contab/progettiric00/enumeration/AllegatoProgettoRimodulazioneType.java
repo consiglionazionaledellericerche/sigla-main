@@ -3,6 +3,7 @@ package it.cnr.contab.progettiric00.enumeration;
 public enum AllegatoProgettoRimodulazioneType {
 	RIMODULAZIONE("Rimodulazione", "D:sigla_progetti_attachment:rimodulazione_attestato"),
 	PROROGA("Proroga", "D:sigla_progetti_attachment:rimodulazione_proroga"),
+	AUTOMATICO("Stampa Automatica Rimodulazione", "D:sigla_progetti_attachment:rimodulazione_stampa_automatica"),
 	GENERICO("Allegato Generico", "D:sigla_progetti_attachment:rimodulazione_allegato_generico");
 
     private final String label, value;

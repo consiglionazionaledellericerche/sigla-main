@@ -48,6 +48,10 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoRimodulazioneType.PROROGA.value())).orElse(Boolean.FALSE);
 	}
 
+	public boolean isStampaAutomatica() {
+		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoRimodulazioneType.AUTOMATICO.value())).orElse(Boolean.FALSE);
+	}
+
 	public boolean isGenerico() {
 		return Optional.ofNullable(getObjectType()).map(el->el.equals(AllegatoProgettoRimodulazioneType.GENERICO.value())).orElse(Boolean.FALSE);
 	}
@@ -65,27 +69,32 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 		return null;
 	}
 
+	public String constructNomeFile() {
+		StringJoiner name = new StringJoiner("-");
+		Optional.ofNullable(this.getRimodulazione())
+				.flatMap(el->Optional.ofNullable(el.getProgetto()))
+				.flatMap(el->Optional.ofNullable(el.getPg_progetto()))
+				.ifPresent(el->name.add("PRG" + el));
+		Optional.ofNullable(this.getRimodulazione()).flatMap(el->Optional.ofNullable(el.getPg_rimodulazione()))
+				.map(el->StringUtils.leftPad(el.toString(), 3, "0"))
+				.ifPresent(el->name.add("RIM" + el));
+		if (this.isRimodulazione())	
+			name.add("ATT");
+		if (this.isProroga())	
+			name.add("PRG");
+		if (this.isStampaAutomatica())	
+			name.add("AUT");
+		if (this.isGenerico())	
+			name.add("GEN");
+		return name.toString();
+	}
+
 	@Override
 	public void validate() throws ValidationException {
 		super.validate();
 		if (getObjectType() == null)
 			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
-		else if (this.isToBeCreated() || this.getNome().isEmpty()) {
-			StringJoiner name = new StringJoiner("-");
-			Optional.ofNullable(this.getRimodulazione())
-					.flatMap(el->Optional.ofNullable(el.getProgetto()))
-					.flatMap(el->Optional.ofNullable(el.getPg_progetto()))
-					.ifPresent(el->name.add("PRG" + el));
-			Optional.ofNullable(this.getRimodulazione()).flatMap(el->Optional.ofNullable(el.getPg_rimodulazione()))
-					.map(el->StringUtils.leftPad(el.toString(), 3, "0"))
-					.ifPresent(el->name.add("RIM" + el));
-			if (this.isRimodulazione())	
-				name.add("ATT");
-			if (this.isProroga())	
-				name.add("PRG");
-			if (this.isGenerico())	
-				name.add("GEN");
-			this.setNome(name.toString());
-		}
+		else if (this.isToBeCreated() || this.getNome().isEmpty())
+			this.setNome(this.constructNomeFile());
 	}
 }
