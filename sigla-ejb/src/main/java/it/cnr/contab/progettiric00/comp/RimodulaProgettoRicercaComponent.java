@@ -1,10 +1,16 @@
 package it.cnr.contab.progettiric00.comp;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.google.gson.GsonBuilder;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -25,9 +31,14 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
+import it.cnr.contab.progettiric00.enumeration.AllegatoProgettoRimodulazioneType;
 import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
@@ -35,6 +46,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
@@ -44,11 +56,219 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.si.spring.storage.StoreService;
 
 public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDComponent {
 	private static final long serialVersionUID = 1L;
 
-	/**
+	private class ModelPpeForPrint {
+		String cdProgetto;
+		String dsProgetto;
+		String pgRimodulazione;
+		String pgGenRimodulazione;
+		String uoCoordinatrice;
+		String tipoFinanziamento;
+		String dataInizio;
+		String dataFine;
+		String dataProroga;
+		BigDecimal importoFinanziato;
+		BigDecimal importoCofinanziato;
+		BigDecimal importoFinanziatoRimodulato;
+		BigDecimal importoCofinanziatoRimodulato;
+		String dataProrogaRimodulata;
+		List<ModelPpeAnnoForPrint> anniPianoEconomico;
+		public ModelPpeForPrint() {
+			super();
+		}
+		public String getCdProgetto() {
+			return cdProgetto;
+		}
+		public void setCdProgetto(String cdProgetto) {
+			this.cdProgetto = cdProgetto;
+		}
+		public String getDsProgetto() {
+			return dsProgetto;
+		}
+		public void setDsProgetto(String dsProgetto) {
+			this.dsProgetto = dsProgetto;
+		}
+		public String getPgRimodulazione() {
+			return pgRimodulazione;
+		}
+		public void setPgRimodulazione(String pgRimodulazione) {
+			this.pgRimodulazione = pgRimodulazione;
+		}
+		public String getPgGenRimodulazione() {
+			return pgGenRimodulazione;
+		}
+		public void setPgGenRimodulazione(String pgGenRimodulazione) {
+			this.pgGenRimodulazione = pgGenRimodulazione;
+		}
+		public String getUoCoordinatrice() {
+			return uoCoordinatrice;
+		}
+		public void setUoCoordinatrice(String uoCoordinatrice) {
+			this.uoCoordinatrice = uoCoordinatrice;
+		}
+		public String getTipoFinanziamento() {
+			return tipoFinanziamento;
+		}
+		public void setTipoFinanziamento(String tipoFinanziamento) {
+			this.tipoFinanziamento = tipoFinanziamento;
+		}
+		public String getDataInizio() {
+			return dataInizio;
+		}
+		public void setDataInizio(String dataInizio) {
+			this.dataInizio = dataInizio;
+		}
+		public String getDataFine() {
+			return dataFine;
+		}
+		public void setDataFine(String dataFine) {
+			this.dataFine = dataFine;
+		}
+		public String getDataProroga() {
+			return dataProroga;
+		}
+		public void setDataProroga(String dataProroga) {
+			this.dataProroga = dataProroga;
+		}
+		public BigDecimal getImportoFinanziato() {
+			return importoFinanziato;
+		}
+		public void setImportoFinanziato(BigDecimal importoFinanziato) {
+			this.importoFinanziato = importoFinanziato;
+		}
+		public BigDecimal getImportoCofinanziato() {
+			return importoCofinanziato;
+		}
+		public void setImportoCofinanziato(BigDecimal importoCofinanziato) {
+			this.importoCofinanziato = importoCofinanziato;
+		}
+		public BigDecimal getImportoFinanziatoRimodulato() {
+			return importoFinanziatoRimodulato;
+		}
+		public void setImportoFinanziatoRimodulato(BigDecimal importoFinanziatoRimodulato) {
+			this.importoFinanziatoRimodulato = importoFinanziatoRimodulato;
+		}
+		public BigDecimal getImportoCofinanziatoRimodulato() {
+			return importoCofinanziatoRimodulato;
+		}
+		public void setImportoCofinanziatoRimodulato(BigDecimal importoCofinanziatoRimodulato) {
+			this.importoCofinanziatoRimodulato = importoCofinanziatoRimodulato;
+		}
+		public String getDataProrogaRimodulata() {
+			return dataProrogaRimodulata;
+		}
+		public void setDataProrogaRimodulata(String dataProrogaRimodulata) {
+			this.dataProrogaRimodulata = dataProrogaRimodulata;
+		}
+		public List<ModelPpeAnnoForPrint> getAnniPianoEconomico() {
+			return anniPianoEconomico;
+		}
+		public void setAnniPianoEconomico(List<ModelPpeAnnoForPrint> anniPianoEconomico) {
+			this.anniPianoEconomico = anniPianoEconomico;
+		}
+	}
+	
+	private class ModelPpeAnnoForPrint {
+		Integer anno;
+		List<ModelPpeVoceForPrint> vociPianoEconomico = new ArrayList<ModelPpeVoceForPrint>();
+		public ModelPpeAnnoForPrint() {
+			super();
+		}
+		public Integer getAnno() {
+			return anno;
+		}
+		public void setAnno(Integer anno) {
+			this.anno = anno;
+		}
+		public List<ModelPpeVoceForPrint> getVociPianoEconomico() {
+			return vociPianoEconomico;
+		}
+		public void setVociPianoEconomico(List<ModelPpeVoceForPrint> vociPianoEconomico) {
+			this.vociPianoEconomico = vociPianoEconomico;
+		}
+	}
+
+	private class ModelPpeVoceForPrint {
+		String cdVoce;
+		String dsVoce;
+		BigDecimal quotaFinanziataCorrente;
+		BigDecimal quotaFinanziataRimodulata;
+		BigDecimal quotaFinanziataStanziata;
+		BigDecimal quotaFinanziataPagata;
+		BigDecimal quotaCofinanziataCorrente;
+		BigDecimal quotaCofinanziataRimodulata;
+		BigDecimal quotaCofinanziataStanziata;
+		BigDecimal quotaCofinanziataPagata;
+		public ModelPpeVoceForPrint() {
+			super();
+		}
+		public String getCdVoce() {
+			return cdVoce;
+		}
+		public void setCdVoce(String cdVoce) {
+			this.cdVoce = cdVoce;
+		}
+		public String getDsVoce() {
+			return dsVoce;
+		}
+		public void setDsVoce(String dsVoce) {
+			this.dsVoce = dsVoce;
+		}
+		public BigDecimal getQuotaFinanziataCorrente() {
+			return quotaFinanziataCorrente;
+		}
+		public void setQuotaFinanziataCorrente(BigDecimal quotaFinanziataCorrente) {
+			this.quotaFinanziataCorrente = quotaFinanziataCorrente;
+		}
+		public BigDecimal getQuotaFinanziataRimodulata() {
+			return quotaFinanziataRimodulata;
+		}
+		public void setQuotaFinanziataRimodulata(BigDecimal quotaFinanziataRimodulata) {
+			this.quotaFinanziataRimodulata = quotaFinanziataRimodulata;
+		}
+		public BigDecimal getQuotaFinanziataStanziata() {
+			return quotaFinanziataStanziata;
+		}
+		public void setQuotaFinanziataStanziata(BigDecimal quotaFinanziataStanziata) {
+			this.quotaFinanziataStanziata = quotaFinanziataStanziata;
+		}
+		public BigDecimal getQuotaFinanziataPagata() {
+			return quotaFinanziataPagata;
+		}
+		public void setQuotaFinanziataPagata(BigDecimal quotaFinanziataPagata) {
+			this.quotaFinanziataPagata = quotaFinanziataPagata;
+		}
+		public BigDecimal getQuotaCofinanziataCorrente() {
+			return quotaCofinanziataCorrente;
+		}
+		public void setQuotaCofinanziataCorrente(BigDecimal quotaCofinanziataCorrente) {
+			this.quotaCofinanziataCorrente = quotaCofinanziataCorrente;
+		}
+		public BigDecimal getQuotaCofinanziataRimodulata() {
+			return quotaCofinanziataRimodulata;
+		}
+		public void setQuotaCofinanziataRimodulata(BigDecimal quotaCofinanziataRimodulata) {
+			this.quotaCofinanziataRimodulata = quotaCofinanziataRimodulata;
+		}
+		public BigDecimal getQuotaCofinanziataStanziata() {
+			return quotaCofinanziataStanziata;
+		}
+		public void setQuotaCofinanziataStanziata(BigDecimal quotaCofinanziataStanziata) {
+			this.quotaCofinanziataStanziata = quotaCofinanziataStanziata;
+		}
+		public BigDecimal getQuotaCofinanziataPagata() {
+			return quotaCofinanziataPagata;
+		}
+		public void setQuotaCofinanziataPagata(BigDecimal quotaCofinanziataPagata) {
+			this.quotaCofinanziataPagata = quotaCofinanziataPagata;
+		}
+	}
+
+		/**
 	 * RimodulaProgettoRicercaComponent constructor comment.
 	 */
 	public RimodulaProgettoRicercaComponent() {
@@ -475,7 +695,9 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 
 			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
 			rimodulazione.setToBeUpdated();
-			return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
+			rimodulazione = (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
+			createReportRimodulazione(userContext, rimodulazione);
+			return rimodulazione;
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
 		} catch(Exception e) {
@@ -509,9 +731,84 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 				rimodulazione.setToBeUpdated();
 				return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 		    }
+		    
 		} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
 		} catch(Exception e) {
+			throw handleException(e);
+		}
+	}
+
+	private void createReportRimodulazione(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		try {
+			ModelPpeForPrint modelPrint = new ModelPpeForPrint();
+			modelPrint.setCdProgetto(rimodulazione.getProgetto().getCd_progetto());
+			modelPrint.setDsProgetto(rimodulazione.getProgetto().getDs_progetto());
+			modelPrint.setPgRimodulazione(rimodulazione.getPg_rimodulazione().toString());
+			modelPrint.setPgGenRimodulazione(rimodulazione.getPg_gen_rimodulazione().toString());
+			modelPrint.setUoCoordinatrice(rimodulazione.getProgetto().getCd_unita_organizzativa()+" - "+rimodulazione.getProgetto().getUnita_organizzativa().getDs_unita_organizzativa());
+			modelPrint.setTipoFinanziamento(rimodulazione.getProgetto().getOtherField().getTipoFinanziamento().getCodice()+" - "+rimodulazione.getProgetto().getOtherField().getTipoFinanziamento().getDescrizione());
+			modelPrint.setDataInizio(new SimpleDateFormat("dd-MM-yyyy").format(rimodulazione.getProgetto().getOtherField().getDtInizio()));
+			modelPrint.setDataFine(new SimpleDateFormat("dd-MM-yyyy").format(rimodulazione.getProgetto().getOtherField().getDtFine()));
+			if (rimodulazione.getProgetto().getOtherField().getDtProroga()!=null)
+				modelPrint.setDataProroga(new SimpleDateFormat("dd-MM-yyyy").format(rimodulazione.getProgetto().getOtherField().getDtProroga()));
+
+			modelPrint.setImportoFinanziato(rimodulazione.getProgetto().getOtherField().getImFinanziato());
+			modelPrint.setImportoCofinanziato(rimodulazione.getProgetto().getOtherField().getImCofinanziato());
+			modelPrint.setImportoFinanziatoRimodulato(rimodulazione.getImFinanziatoRimodulato());
+			modelPrint.setImportoCofinanziatoRimodulato(rimodulazione.getImCofinanziatoRimodulato());
+
+			if (rimodulazione.getDtProrogaRimodulato()!=null)
+				modelPrint.setDataProrogaRimodulata(new SimpleDateFormat("dd-MM-yyyy").format(rimodulazione.getDtProrogaRimodulato()));
+
+			modelPrint.setAnniPianoEconomico(
+				rimodulazione.getAllDetailsProgettoPianoEconomico().stream().map(el->el.getEsercizio_piano()).distinct().map(currentAnno->{
+					ModelPpeAnnoForPrint modelPpeAnno = new ModelPpeAnnoForPrint();
+					modelPpeAnno.setAnno(currentAnno);
+					modelPpeAnno.setVociPianoEconomico(
+							rimodulazione.getAllDetailsProgettoPianoEconomico().stream().filter(el->el.getEsercizio_piano().equals(currentAnno))
+							.map(detail->{
+								ModelPpeVoceForPrint modelPpeVoce = new ModelPpeVoceForPrint();
+								modelPpeVoce.setCdVoce(detail.getVoce_piano_economico().getCd_voce_piano());
+								modelPpeVoce.setDsVoce(detail.getVoce_piano_economico().getDs_voce_piano());
+								modelPpeVoce.setQuotaFinanziataCorrente(detail.getIm_spesa_finanziato());
+								modelPpeVoce.setQuotaFinanziataRimodulata(detail.getImSpesaFinanziatoRimodulato());
+								modelPpeVoce.setQuotaFinanziataStanziata(detail.getImAssestatoSpesaFinanziatoRimodulato());
+								modelPpeVoce.setQuotaFinanziataPagata(detail.getSaldoSpesa().getManrisFin());
+								modelPpeVoce.setQuotaCofinanziataCorrente(detail.getIm_spesa_cofinanziato());
+								modelPpeVoce.setQuotaCofinanziataRimodulata(detail.getImSpesaCofinanziatoRimodulato());
+								modelPpeVoce.setQuotaCofinanziataStanziata(detail.getImAssestatoSpesaCofinanziatoRimodulato());
+								modelPpeVoce.setQuotaCofinanziataPagata(detail.getSaldoSpesa().getManrisCofin());
+								return modelPpeVoce;
+							}).collect(Collectors.toList()));
+					return modelPpeAnno;
+				}).collect(Collectors.toList()));
+			
+			Print_spoolerBulk print = new Print_spoolerBulk();
+			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			print.setFlEmail(false);
+			print.setReport("/progettiric/progettiric/rimodula_ppe.jasper");
+			print.setNomeFile("Rimodulazione al piano economico n. " + rimodulazione.getPg_rimodulazione() + ".pdf");
+			print.setUtcr(userContext.getUser());
+			print.addParam("REPORT_DATA_SOURCE", new GsonBuilder().create().toJson(modelPrint),String.class);
+			Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+			String cmisPath = rimodulazione.getStorePath();
+			AllegatoProgettoRimodulazioneBulk allegato = new AllegatoProgettoRimodulazioneBulk();
+			allegato.setObjectType(AllegatoProgettoRimodulazioneType.AUTOMATICO.value());
+			allegato.setRimodulazione(rimodulazione);
+			allegato.setNome(allegato.constructNomeFile());
+			allegato.setToBeCreated();
+			SpringUtil.getBean("storeService", StoreService.class).storeSimpleDocument(
+					allegato,
+			        report.getInputStream(),
+			        report.getContentType(),
+			        report.getName(),
+			        cmisPath,
+			        allegato.getObjectType(),
+			        false);
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (IOException e) {
 			throw handleException(e);
 		}
 	}
