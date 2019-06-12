@@ -5,10 +5,14 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.StringTokenizer;
+
+import org.springframework.expression.spel.ast.BooleanLiteral;
 
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPBulk;
 import it.cnr.contab.compensi00.docs.bulk.VCompensoSIPHome;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
@@ -564,16 +568,18 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
  */
 public WorkpackageBulk inizializzaNaturaPerInsieme(UserContext userContext,WorkpackageBulk linea_attivita) throws it.cnr.jada.comp.ComponentException {
 	try {
-		if (linea_attivita.TI_GESTIONE_SPESE.equals(linea_attivita.getTi_gestione()) &&
+		String cdNaturaReimpiego = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+		if (WorkpackageBulk.TI_GESTIONE_SPESE.equals(linea_attivita.getTi_gestione()) &&
 			linea_attivita.getInsieme_la() != null &&
-			linea_attivita.getCentro_responsabilita() != null) {
+			linea_attivita.getCentro_responsabilita() != null &&
+			Optional.ofNullable(linea_attivita.getCd_natura()).map(el->!el.equals(cdNaturaReimpiego)).orElse(Boolean.TRUE)) {
 			NaturaHome home = (NaturaHome)getHome(userContext,NaturaBulk.class);
 			SQLBuilder sql = home.createSQLBuilder();
 			sql.addTableToHeader("LINEA_ATTIVITA");
 			sql.addSQLJoin("LINEA_ATTIVITA.CD_NATURA","NATURA.CD_NATURA");
-			sql.addSQLClause("AND","LINEA_ATTIVITA.CD_INSIEME_LA",sql.EQUALS,linea_attivita.getCd_insieme_la());
-			sql.addSQLClause("AND","LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA",sql.EQUALS,linea_attivita.getCd_centro_responsabilita());
-			sql.addSQLClause("AND","LINEA_ATTIVITA.TI_GESTIONE",sql.EQUALS,linea_attivita.TI_GESTIONE_ENTRATE);
+			sql.addSQLClause("AND","LINEA_ATTIVITA.CD_INSIEME_LA",SQLBuilder.EQUALS,linea_attivita.getCd_insieme_la());
+			sql.addSQLClause("AND","LINEA_ATTIVITA.CD_CENTRO_RESPONSABILITA",SQLBuilder.EQUALS,linea_attivita.getCd_centro_responsabilita());
+			sql.addSQLClause("AND","LINEA_ATTIVITA.TI_GESTIONE",SQLBuilder.EQUALS,WorkpackageBulk.TI_GESTIONE_ENTRATE);
 			Broker broker = home.createBroker(sql);
 			if (broker.next()) {
 				linea_attivita.setNatura((NaturaBulk)broker.fetch(NaturaBulk.class));
