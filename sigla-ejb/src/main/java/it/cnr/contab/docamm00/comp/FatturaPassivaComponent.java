@@ -7824,7 +7824,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     BigDecimal value = mapNatura.get(key);
                     BigDecimal valueEle = mapNaturaEle.get(key);
                     if (noSegno)
-                        valueEle = valueEle.abs();
+                        valueEle = Optional.ofNullable(valueEle)
+                                            .map(BigDecimal::abs)
+                                            .orElse(null);
                     BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
                     if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
                         if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||
