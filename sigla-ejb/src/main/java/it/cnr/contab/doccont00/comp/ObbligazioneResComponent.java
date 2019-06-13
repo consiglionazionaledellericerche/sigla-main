@@ -7,7 +7,9 @@
 package it.cnr.contab.doccont00.comp;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -221,13 +223,31 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 									+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
 									+ "rispetto alla data odierna."));
 					}
-					Optional.ofNullable(
-						Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
-							.filter(dt->!dt.before(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp())))
-							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
-									+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-									+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
-									+ "rispetto alla data odierna."));
+					
+					GregorianCalendar gcFineProgetto = new GregorianCalendar();
+					gcFineProgetto.setTime(Optional.ofNullable(progetto.getOtherField().getDtProroga())
+									 			   .orElse(Optional.ofNullable(progetto.getOtherField().getDtFine())
+													 	           .orElse(DateUtils.firstDateOfTheYear(3000))));
+					
+					int ggProroga = Optional.ofNullable(obbligazione.getElemento_voce())
+											.flatMap(el->{
+												if (obbligazione.isCompetenza())
+													return Optional.ofNullable(el.getGg_deroga_obbl_comp_prg_scad());
+												else
+													return Optional.ofNullable(el.getGg_deroga_obbl_res_prg_scad());
+											})
+											.filter(el->el.compareTo(0)>0)
+											.orElse(0);
+					
+					gcFineProgetto.add(Calendar.DAY_OF_YEAR, ggProroga);
+					
+					if (gcFineProgetto.before(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp())))
+						throw new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+									+ "La data fine/proroga del progetto "+progetto.getCd_progetto()
+									+ (ggProroga>0?", aumentata di " + ggProroga +" giorni,":"") + " ("
+								    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(gcFineProgetto.getTime())
+									+ ") è precedente rispetto alla data odierna ("
+								    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
 				}
 				if ( !obbligazione.getFl_calcolo_automatico().booleanValue() ) { 
 					String errore = "L'importo (" +
