@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PianoEconomicoProgetto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed4c3ee2-64bb-4905-8efa-d1579b9f05c9">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="131"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -138,13 +138,13 @@
 			<rectangle radius="10">
 				<reportElement x="116" y="85" width="284" height="20" uuid="07dce4b9-4a32-4aa6-8647-3eeddf246e27"/>
 			</rectangle>
-			<textField pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00">
 				<reportElement x="177" y="85" width="80" height="20" uuid="19d00ba9-d382-4639-86a3-4ed43520de4b"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{varImportoFinanziato}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00">
 				<reportElement x="320" y="86" width="80" height="20" uuid="28925ca4-42f0-4ee1-9193-32c2cba42939"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
@@ -168,13 +168,13 @@
 			<rectangle radius="10">
 				<reportElement x="518" y="86" width="284" height="20" uuid="2a6930d2-c147-4b0b-a3b8-ac5fe673d1ac"/>
 			</rectangle>
-			<textField pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00">
 				<reportElement x="579" y="86" width="80" height="20" uuid="53cf34e4-d329-4242-b0fa-4c8d31ecc9a9"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{varImportoCofinanziato}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00">
 				<reportElement x="722" y="86" width="80" height="20" uuid="dc0f6724-bee5-479c-8c0e-c65514d9fba7"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
