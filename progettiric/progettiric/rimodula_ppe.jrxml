@@ -36,16 +36,16 @@
 	<field name="dataProroga" class="java.lang.String">
 		<fieldDescription><![CDATA[dataProroga]]></fieldDescription>
 	</field>
-	<field name="importoFinanziato" class="java.math.BigDecimal">
+	<field name="importoFinanziato" class="java.lang.String">
 		<fieldDescription><![CDATA[importoFinanziato]]></fieldDescription>
 	</field>
-	<field name="importoCofinanziato" class="java.math.BigDecimal">
+	<field name="importoCofinanziato" class="java.lang.String">
 		<fieldDescription><![CDATA[importoCofinanziato]]></fieldDescription>
 	</field>
-	<field name="importoFinanziatoRimodulato" class="java.math.BigDecimal">
+	<field name="importoFinanziatoRimodulato" class="java.lang.String">
 		<fieldDescription><![CDATA[importoFinanziatoRimodulato]]></fieldDescription>
 	</field>
-	<field name="importoCofinanziatoRimodulato" class="java.math.BigDecimal">
+	<field name="importoCofinanziatoRimodulato" class="java.lang.String">
 		<fieldDescription><![CDATA[importoCofinanziatoRimodulato]]></fieldDescription>
 	</field>
 	<field name="dataProrogaRimodulata" class="java.lang.String">
@@ -54,6 +54,18 @@
 	<field name="anniPianoEconomico" class="java.lang.Object">
 		<fieldDescription><![CDATA[anniPianoEconomico]]></fieldDescription>
 	</field>
+	<variable name="varImportoFinanziato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoFinanziato})]]></variableExpression>
+	</variable>
+	<variable name="varImportoCofinanziato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoCofinanziato})]]></variableExpression>
+	</variable>
+	<variable name="varImportoFinanziatoRimodulato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoFinanziatoRimodulato})]]></variableExpression>
+	</variable>
+	<variable name="varImportoCofinanziatoRimodulato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoCofinanziatoRimodulato})]]></variableExpression>
+	</variable>
 	<title>
 		<band height="133" splitType="Stretch">
 			<staticText>
@@ -130,13 +142,13 @@
 				<reportElement x="177" y="85" width="80" height="20" uuid="19d00ba9-d382-4639-86a3-4ed43520de4b"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{importoFinanziato}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varImportoFinanziato}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="320" y="86" width="80" height="20" uuid="28925ca4-42f0-4ee1-9193-32c2cba42939"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{importoFinanziatoRimodulato}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varImportoFinanziatoRimodulato}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="85" width="100" height="20" uuid="da018597-6b0e-470d-a6e7-4a1885d839f8"/>
@@ -157,16 +169,16 @@
 				<reportElement x="518" y="86" width="284" height="20" uuid="2a6930d2-c147-4b0b-a3b8-ac5fe673d1ac"/>
 			</rectangle>
 			<textField pattern="#,##0.00">
-				<reportElement x="722" y="86" width="80" height="20" uuid="dc0f6724-bee5-479c-8c0e-c65514d9fba7"/>
-				<box rightPadding="3"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{importoCofinanziatoRimodulato}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.00">
 				<reportElement x="579" y="86" width="80" height="20" uuid="53cf34e4-d329-4242-b0fa-4c8d31ecc9a9"/>
 				<box rightPadding="3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{importoCofinanziato}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{varImportoCofinanziato}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="722" y="86" width="80" height="20" uuid="dc0f6724-bee5-479c-8c0e-c65514d9fba7"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{varImportoCofinanziatoRimodulato}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="412" y="86" width="106" height="20" uuid="6018e9a2-1452-42a6-b223-8fb2a136c9f3"/>
