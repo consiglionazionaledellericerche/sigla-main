@@ -2166,4 +2166,11 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-elemento-voce-add-column-rimodulazione">
+        <addColumn tableName="elemento_voce">
+            <column name="gg_deroga_obbl_comp_prg_scad" type="BIGINT" remarks="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di competenza."/>
+            <column name="gg_deroga_obbl_res_prg_scad" type="BIGINT" remarks="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di residuo."/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
