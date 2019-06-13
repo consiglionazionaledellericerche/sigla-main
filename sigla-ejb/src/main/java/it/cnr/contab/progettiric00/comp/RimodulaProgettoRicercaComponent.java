@@ -753,8 +753,8 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			if (rimodulazione.getProgetto().getOtherField().getDtProroga()!=null)
 				modelPrint.setDataProroga(new SimpleDateFormat("dd-MM-yyyy").format(rimodulazione.getProgetto().getOtherField().getDtProroga()));
 
-			modelPrint.setImportoFinanziato(rimodulazione.getProgetto().getOtherField().getImFinanziato());
-			modelPrint.setImportoCofinanziato(rimodulazione.getProgetto().getOtherField().getImCofinanziato());
+			modelPrint.setImportoFinanziato(rimodulazione.getImFinanziatoRimodulato().subtract(rimodulazione.getImVarFinanziato()));
+			modelPrint.setImportoCofinanziato(rimodulazione.getImCofinanziatoRimodulato().subtract(rimodulazione.getImVarCofinanziato()));
 			modelPrint.setImportoFinanziatoRimodulato(rimodulazione.getImFinanziatoRimodulato());
 			modelPrint.setImportoCofinanziatoRimodulato(rimodulazione.getImCofinanziatoRimodulato());
 
