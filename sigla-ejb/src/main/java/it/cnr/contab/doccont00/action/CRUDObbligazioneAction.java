@@ -2,7 +2,9 @@ package it.cnr.contab.doccont00.action;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -45,6 +47,7 @@ import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
@@ -1007,18 +1010,31 @@ public Forward handleException(ActionContext context, Throwable ex)
 												+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
 								return context.findDefaultForward();
 						}
-						if (Optional.ofNullable(
-								Optional.ofNullable(voceSel.getProgetto_dt_proroga()).orElse(voceSel.getProgetto_dt_fine()))
-								.map(dt->dt.before(obbligazione.getDt_registrazione()))
-								.orElse(Boolean.FALSE)) {
-								bp.setMessage("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
-												+ "La data fine/proroga ("
-												+ new java.text.SimpleDateFormat("dd/MM/yyyy")
-												.format(Optional.ofNullable(voceSel.getProgetto_dt_proroga()).orElse(voceSel.getProgetto_dt_fine()))
-												+ ") del progetto "+voceSel.getCd_modulo()+" associato è precedente "
-												+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
-								return context.findDefaultForward();
-						}
+						
+						GregorianCalendar gcFineProgetto = new GregorianCalendar();
+						gcFineProgetto.setTime(Optional.ofNullable(voceSel.getProgetto_dt_proroga())
+										 			   .orElse(Optional.ofNullable(voceSel.getProgetto_dt_fine())
+														 	           .orElse(DateUtils.firstDateOfTheYear(3000))));
+						
+						int ggProroga = Optional.ofNullable(obbligazione.getElemento_voce())
+												.flatMap(el->{
+													if (obbligazione.isCompetenza())
+														return Optional.ofNullable(el.getGg_deroga_obbl_comp_prg_scad());
+													else
+														return Optional.ofNullable(el.getGg_deroga_obbl_res_prg_scad());
+												})
+												.filter(el->el.compareTo(0)>0)
+												.orElse(0);
+						
+						gcFineProgetto.add(Calendar.DAY_OF_YEAR, ggProroga);
+						
+						if (gcFineProgetto.before(obbligazione.getDt_registrazione()))
+							throw new ApplicationException("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
+										+ "La data fine/proroga del progetto "+voceSel.getCd_modulo()
+										+ (ggProroga>0?", aumentata di " + ggProroga +" giorni,":"") + " ("
+									    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(gcFineProgetto.getTime())
+										+ ") è precedente rispetto alla data di registrazione dell'impegno ("
+									    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
 					}
 				}
 
