@@ -725,7 +725,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			    //Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
 				Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
 				ProgettoBulk progettoRimodulato = rimodHome.getProgettoRimodulato(rimodulazione);
-				Utility.createProgettoRicercaComponentSession().validaPianoEconomicoRimodulato(userContext, progettoRimodulato);
+				Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato, rimodulazione);
 				
 				rimodulazione.setStato(StatoProgettoRimodulazione.STATO_VALIDATO.value());
 				rimodulazione.setToBeUpdated();
@@ -921,7 +921,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		    //Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
 			Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
 			ProgettoBulk progettoRimodulato = rimodHome.getProgettoRimodulato(rimodulazione);
-			Utility.createProgettoRicercaComponentSession().validaPianoEconomicoRimodulato(userContext, progettoRimodulato);
+			Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato, rimodulazione);
     	} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
 		} catch (PersistencyException e) {
