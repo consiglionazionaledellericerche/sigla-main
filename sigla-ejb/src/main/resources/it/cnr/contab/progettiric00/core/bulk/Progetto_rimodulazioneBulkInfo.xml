@@ -62,6 +62,13 @@
 		enabledOnFreeSearch="true"
 		label="UO Coordinatrice" />	
 	<fieldProperty
+		name="cd_unita_organizzativa_progetto"
+		property="progetto.unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Uo Coordinatrice" />		
+	<fieldProperty
 		name="statoOf"
 		property="progetto.statoPrg"
 		label="Stato"
@@ -311,6 +318,7 @@
 	<formFieldProperty name="cd_progetto" />
 	<formFieldProperty name="ds_progetto" />
 	<formFieldProperty name="unita_organizzativa_progetto" />
+	<formFieldProperty name="cd_unita_organizzativa_progetto" />
 	<formFieldProperty name="stato" />
 	<formFieldProperty name="statoRadio" />
 	<formFieldProperty name="dtInizioRimodulato" />
@@ -349,12 +357,14 @@
 	<formFieldProperty
 		name="imCofinanziatoOf" />
 
+	<columnFieldProperty name="cd_unita_organizzativa_progetto" />
 	<columnFieldProperty name="cd_progetto" />
 	<columnFieldProperty name="ds_progetto" />
 	<columnFieldProperty name="pg_rimodulazione" />
 	<columnFieldProperty name="pg_gen_rimodulazione" />
 	<columnFieldProperty name="stato" />
 
+	<findFieldProperty name="cd_unita_organizzativa_progetto" />
 	<findFieldProperty name="cd_progetto" />
 	<findFieldProperty name="ds_progetto" />
 	<findFieldProperty name="pg_rimodulazione" />
