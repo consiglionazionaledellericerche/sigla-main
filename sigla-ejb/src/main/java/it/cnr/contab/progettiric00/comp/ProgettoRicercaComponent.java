@@ -1814,16 +1814,17 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				sqlSaldi.addSQLClause(FindClause.OR,"VOCE_F_SALDI_CDR_LINEA.VAR_MENO_OBBL_RES_PRO",SQLBuilder.GREATER,BigDecimal.ZERO);
 				sqlSaldi.closeParenthesis();
 				
-				Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
-				SQLBuilder sqlExist = assPiaecoHome.createSQLBuilder();
-				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO");
-				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES");
-				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","VOCE_F_SALDI_CDR_LINEA.TI_APPARTENENZA");
-				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE");
-				sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE");			
-				
-				if (!Optional.ofNullable(rimodulazione).isPresent())
+				if (!Optional.ofNullable(rimodulazione).isPresent()) {
+					Ass_progetto_piaeco_voceHome assPiaecoHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+					SQLBuilder sqlExist = assPiaecoHome.createSQLBuilder();
+					sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO","V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO");
+					sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO","VOCE_F_SALDI_CDR_LINEA.ESERCIZIO_RES");
+					sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA","VOCE_F_SALDI_CDR_LINEA.TI_APPARTENENZA");
+					sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE","VOCE_F_SALDI_CDR_LINEA.TI_GESTIONE");
+					sqlExist.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE","VOCE_F_SALDI_CDR_LINEA.CD_ELEMENTO_VOCE");			
+
 					sqlSaldi.addSQLNotExistsClause(FindClause.AND, sqlExist);
+				}
 	
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
 				
