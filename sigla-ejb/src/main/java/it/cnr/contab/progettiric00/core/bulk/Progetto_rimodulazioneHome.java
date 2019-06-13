@@ -113,7 +113,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				if (fonte.equals("FES")) {
 					if (esercizio.compareTo(CNRUserContext.getEsercizio(userContext))<0){
 						Var_stanz_resBulk varStanz = new Var_stanz_resBulk();
-						varStanz.setEsercizio(esercizio);
+						varStanz.setEsercizio(CNRUserContext.getEsercizio(userContext));
 						varStanz.setEsercizio_res(new Esercizio_baseBulk(esercizio));
 						varStanz.setTipologia_fin(fonte);
 						varStanz.setCdr(cdr);
@@ -126,7 +126,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 						result.add(varStanz);
 					} else if (esercizio.compareTo(CNRUserContext.getEsercizio(userContext))==0){
 						Pdg_variazioneBulk pdgVar = new Pdg_variazioneBulk();
-						pdgVar.setEsercizio(esercizio);
+						pdgVar.setEsercizio(CNRUserContext.getEsercizio(userContext));
 						pdgVar.setTipologia_fin(fonte);
 						pdgVar.setCentro_responsabilita(cdr);
 						
@@ -141,6 +141,37 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				}
 			});
 		}
+		
+		rimodulazione.getVociMovimentateNonAssociate().stream().forEach(voce->{
+			if (voce.getEsercizio().compareTo(CNRUserContext.getEsercizio(userContext))<0){
+				Var_stanz_resBulk varStanz = new Var_stanz_resBulk();
+				varStanz.setEsercizio(CNRUserContext.getEsercizio(userContext));
+				varStanz.setEsercizio_res(new Esercizio_baseBulk(voce.getEsercizio()));
+				varStanz.setTipologia_fin("FES");
+				varStanz.setCdr(cdr);
+				
+				Ass_var_stanz_res_cdrBulk assCdr = new Ass_var_stanz_res_cdrBulk();
+				assCdr.setCentro_di_responsabilita(cdr);
+				assCdr.setIm_spesa(voce.getAssestato().negate());
+				varStanz.addToAssociazioneCDR(assCdr);
+			
+				result.add(varStanz);
+			} else if (voce.getEsercizio().compareTo(CNRUserContext.getEsercizio(userContext))==0){
+				Pdg_variazioneBulk pdgVar = new Pdg_variazioneBulk();
+				pdgVar.setEsercizio(CNRUserContext.getEsercizio(userContext));
+				pdgVar.setTipologia_fin("FES");
+				pdgVar.setCentro_responsabilita(cdr);
+				
+				Ass_pdg_variazione_cdrBulk assCdr = new Ass_pdg_variazione_cdrBulk();
+				assCdr.setCentro_responsabilita(cdr);
+				assCdr.setIm_entrata(BigDecimal.ZERO);
+				assCdr.setIm_spesa(voce.getAssestato().negate());
+				pdgVar.addToAssociazioneCDR(assCdr);
+
+				result.add(pdgVar);
+			}
+		});
+
 		return result;
 	}
 	
