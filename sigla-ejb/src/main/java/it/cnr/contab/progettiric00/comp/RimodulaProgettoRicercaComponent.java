@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,6 +58,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.SimpleFindClause;
 import it.cnr.si.spring.storage.StoreService;
 
 public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDComponent {
@@ -278,15 +281,32 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	public Query select(UserContext userContext,CompoundFindClause clauses,OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
 		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
-		Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk.class::isInstance)
-		.map(Progetto_rimodulazioneBulk.class::cast).flatMap(el->Optional.ofNullable(el.getProgetto()))
-		.flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa())).ifPresent(cduo->{
+
+		Optional<String> optCdUo = Optional.ofNullable(bulk).filter(Progetto_rimodulazioneBulk.class::isInstance)
+				.map(Progetto_rimodulazioneBulk.class::cast).flatMap(el->Optional.ofNullable(el.getProgetto()))
+				.flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()));
+
+		Optional<String> optCdUo2 = Optional.empty();
+
+		if (clauses!=null){
+			Enumeration<SimpleFindClause> e = clauses.getClauses();
+			while(e.hasMoreElements()){
+				SimpleFindClause findClause = e.nextElement();
+				if (findClause.getPropertyName().equals("progetto.unita_organizzativa.cd_unita_organizzativa"))
+					optCdUo2 = Optional.of(findClause.getValue().toString());
+			}
+		}
+		
+		if (optCdUo.isPresent() || optCdUo2.isPresent()) {
 			sql.addTableToHeader("PROGETTO");
 			sql.addSQLClause(FindClause.AND, "PROGETTO.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 			sql.addSQLClause(FindClause.AND, "PROGETTO.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
 			sql.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
-			sql.addSQLClause(FindClause.AND, "PROGETTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, cduo);
-		});
+			if (optCdUo.isPresent())
+				sql.addSQLClause(FindClause.AND, "PROGETTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo.get());
+			if (optCdUo2.isPresent())
+				sql.addSQLClause(FindClause.AND, "PROGETTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo2.get());
+		}
 		return sql;
 	}
 	
