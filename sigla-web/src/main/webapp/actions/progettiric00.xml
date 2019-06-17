@@ -38,6 +38,7 @@
     <init-param name="freeSearchSet" value="filtro_ricerca_prog2"/>
     <init-param name="searchResultColumnSet" value="filtro_ricerca_prog2"/>
 	<init-param name="defaultAction" value="CRUDProgettiRicercaAction"/>
+    <init-param name="printbp" value="OfflineReportPrintBP" />		
   </businessProcess>
 
   <businessProcess
