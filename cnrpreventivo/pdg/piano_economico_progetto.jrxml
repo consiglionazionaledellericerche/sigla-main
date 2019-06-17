@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921235"/>
-	<property name="ireport.x" value="429"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -48,7 +48,7 @@
 		<defaultValueExpression><![CDATA["084.000.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[Integer.valueOf(30264)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[Integer.valueOf(25841)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT a.CD_PROGETTO, a.DS_PROGETTO,

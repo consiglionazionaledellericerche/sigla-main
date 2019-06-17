@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6934217901613347"/>
-	<property name="ireport.x" value="751"/>
+	<property name="ireport.x" value="847"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -195,55 +195,86 @@ ORDER BY A.ORDINE_ESERCIZIO, A.cd_unita_piano,
 	<field name="IMPACC_COFIN" class="java.math.BigDecimal"/>
 	<field name="MANRIS_FIN" class="java.math.BigDecimal"/>
 	<field name="MANRIS_COFIN" class="java.math.BigDecimal"/>
+	<variable name="ASSESTATO_FIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{STANZIAMENTO_FIN}.add($F{VARIAPIU_FIN}).subtract($F{VARIAMENO_FIN})]]></variableExpression>
+	</variable>
+	<variable name="ASSESTATO_COFIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{STANZIAMENTO_COFIN}.add($F{VARIAPIU_COFIN}).subtract($F{VARIAMENO_COFIN})]]></variableExpression>
+	</variable>
+	<variable name="TRASFERITO_FIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN}).compareTo(BigDecimal.ZERO)<0?
+$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN}).abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TRASFERITO_COFIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN}).compareTo(BigDecimal.ZERO)<0?  $F{TRASFPIU_COFIN}.subtract($F{TRASFMENO_COFIN}).abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="DISP_IMPEGNO_FIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}.subtract($F{IMPACC_FIN})]]></variableExpression>
+	</variable>
+	<variable name="DISP_IMPEGNO_COFIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}.subtract($F{IMPACC_COFIN})]]></variableExpression>
+	</variable>
 	<variable name="SUM_IMPORTO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPORTO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_ASSESTATO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO_FIN}.add($F{VARIAPIU_FIN}).subtract($F{VARIAMENO_FIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_TRASFERITO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
-		<variableExpression><![CDATA[$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{TRASFERITO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_IMPACC_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPACC_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_IMPORTO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPORTO_COFIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_ASSESTATO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO_COFIN}.add($F{VARIAPIU_COFIN}).subtract($F{VARIAMENO_COFIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_TRASFERITO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
-		<variableExpression><![CDATA[$F{TRASFPIU_COFIN}.subtract($F{TRASFMENO_COFIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{TRASFERITO_COFIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_IMPACC_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPACC_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_IMPORTO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPORTO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_ASSESTATO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO_FIN}.add($F{VARIAPIU_FIN}).subtract($F{VARIAMENO_FIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_TRASFERITO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
-		<variableExpression><![CDATA[$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{TRASFERITO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_IMPACC_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPACC_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_IMPORTO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPORTO_COFIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_ASSESTATO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
-		<variableExpression><![CDATA[$F{STANZIAMENTO_COFIN}.add($F{VARIAPIU_COFIN}).subtract($F{VARIAMENO_COFIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_TRASFERITO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
-		<variableExpression><![CDATA[$F{TRASFPIU_COFIN}.subtract($F{TRASFMENO_COFIN})]]></variableExpression>
+		<variableExpression><![CDATA[$V{TRASFERITO_COFIN}]]></variableExpression>
 	</variable>
 	<variable name="SUM_IMPACC_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
 		<variableExpression><![CDATA[$F{IMPACC_COFIN}]]></variableExpression>
 	</variable>
-	<variable name="cdrPrinted" class="java.lang.Integer" resetType="Group" resetGroup="CDR" incrementType="Group" incrementGroup="CDR">
+	<variable name="SUM_DISP_IMPEGNO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="cdrPrinted" class="java.lang.Integer" resetType="Group" resetGroup="VOCE_ECONOMICA" incrementType="Group" incrementGroup="CDR">
 		<variableExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}!=null&&
 ($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
 $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})) ?
@@ -331,9 +362,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_VOCE_ECONOMICA}
-.subtract($V{SUM_TRASFERITO_FIN_VOCE_ECONOMICA})
-.subtract($V{SUM_IMPACC_FIN_VOCE_ECONOMICA})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="8c528cd8-0be5-4352-bb95-95608f6f6de6"/>
@@ -378,8 +407,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 						<rightPen lineWidth="0.0" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_VOCE_ECONOMICA}
-.subtract($V{SUM_IMPACC_COFIN_VOCE_ECONOMICA})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="933dfdfe-01c7-4026-9093-c5cd955e0783"/>
@@ -451,9 +479,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 						<topPen lineWidth="0.5" lineStyle="Double"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_VOCE_ECONOMICA}
-.subtract($V{SUM_TRASFERITO_FIN_VOCE_ECONOMICA})
-.subtract($V{SUM_IMPACC_FIN_VOCE_ECONOMICA})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="1" width="59" height="15" uuid="e5214980-037b-4a57-90bd-8ed35b166b78"/>
@@ -488,8 +514,7 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 						<topPen lineWidth="0.5" lineStyle="Double"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_VOCE_ECONOMICA}
-.subtract($V{SUM_IMPACC_COFIN_VOCE_ECONOMICA})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -605,9 +630,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 						<topPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_CDR}
-.subtract($V{SUM_TRASFERITO_FIN_CDR})
-.subtract($V{SUM_IMPACC_FIN_CDR})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_CDR}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="5b0fe940-6f0d-40bd-bc7f-73d3a90dd5e7"/>
@@ -623,8 +646,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 						<topPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_CDR}
-.subtract($V{SUM_IMPACC_COFIN_CDR})]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_CDR}]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="303" y="1" width="59" height="15" uuid="9d76cbd7-58ec-41f6-b47a-34e0d332d0e2"/>
@@ -1078,7 +1100,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO_FIN}.add($F{VARIAPIU_FIN}).subtract($F{VARIAMENO_FIN})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{ASSESTATO_FIN}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="98972277-2d4b-4741-b00a-ddce3203beaf"/>
@@ -1089,7 +1111,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{TRASFERITO_FIN}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="539" y="1" width="59" height="15" uuid="fe2d640b-c3ce-4b2e-b562-26ff6e2b3543"/>
@@ -1100,9 +1122,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO_FIN}.add($F{VARIAPIU_FIN}).subtract($F{VARIAMENO_FIN})
-.subtract($F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN}))
-.subtract($F{IMPACC_FIN})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="26b662df-3e87-4ea6-b494-3699c15552b3"/>
@@ -1113,7 +1133,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO_COFIN}.add($F{VARIAPIU_COFIN}).subtract($F{VARIAMENO_COFIN})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{ASSESTATO_COFIN}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="775" y="1" width="59" height="15" uuid="6f2fd695-95de-4533-bd69-b22c548401fc"/>
@@ -1124,9 +1144,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{STANZIAMENTO_COFIN}.add($F{VARIAPIU_COFIN}).subtract($F{VARIAMENO_COFIN})
-.subtract($F{TRASFPIU_COFIN}.subtract($F{TRASFMENO_COFIN}))
-.subtract($F{IMPACC_COFIN})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
