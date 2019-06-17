@@ -8,12 +8,15 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.w3c.dom.views.AbstractView;
+
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
@@ -30,6 +33,8 @@ import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
+import it.cnr.contab.reports.bp.OfflineReportPrintBP;
+import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
@@ -47,6 +52,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.si.spring.storage.StorageObject;
@@ -121,6 +127,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     private boolean isUoCdsCollegata = false;
     
     private Integer annoFromPianoEconomico;
+    private Integer esercizioScrivania;
+    private String cdrScrivania;
     private Unita_organizzativaBulk uoScrivania;
 
     private SimpleDetailCRUDController crudDettagli = new SimpleDetailCRUDController("Dettagli", Progetto_uoBulk.class, "dettagli", this) {
@@ -166,6 +174,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
             setFlInformix(parEnte.getFl_informix().booleanValue());
             setFlPrgPianoEconomico(parEnte.getFl_prg_pianoeco().booleanValue());
+            esercizioScrivania = CNRUserContext.getEsercizio(actioncontext.getUserContext());
+            cdrScrivania = CNRUserContext.getCd_cdr(actioncontext.getUserContext());
             uoScrivania = (Unita_organizzativaBulk) Utility.createUnita_organizzativaComponentSession().findUOByCodice(actioncontext.getUserContext(), CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext()));
             isUoCdsCollegata = uoScrivania.getFl_uo_cds();
 
@@ -733,10 +743,20 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
                         .orElse(Boolean.FALSE));
     }
 
+    public boolean isPrintButtonHidden() {
+    	Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel())
+		         .filter(ProgettoBulk.class::isInstance)
+		         .map(ProgettoBulk.class::cast);
+		return !optProgetto.isPresent() ||
+			   !optProgetto.flatMap(el -> Optional.ofNullable(el.getOtherField()))
+				.map(Progetto_other_fieldBulk::isStatoApprovato)
+				.orElse(Boolean.FALSE);
+    }
+    
     @Override
     protected Button[] createToolbar() {
         Button[] toolbar = super.createToolbar();
-        Button[] newToolbar = new Button[toolbar.length + 6];
+        Button[] newToolbar = new Button[toolbar.length + 7];
         int i;
         for (i = 0; i < toolbar.length; i++)
             newToolbar[i] = toolbar[i];
@@ -752,6 +772,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         newToolbar[i + 4].setSeparator(true);
         newToolbar[i + 5] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.rimodula");
         newToolbar[i + 5].setSeparator(true);
+        newToolbar[i + 6] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.print");
+        newToolbar[i + 6].setSeparator(true);
 
         return newToolbar;
     }
@@ -930,4 +952,31 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     	});
         return oggettobulk;
     }
+    
+    protected void initializePrintBP(AbstractPrintBP bp) {
+        OfflineReportPrintBP printbp = (OfflineReportPrintBP) bp;
+
+        Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+        if (optProgetto.isPresent()) {
+	        printbp.setReportName("/cnrpreventivo/pdg/piano_economico_progetto.jasper");
+	
+	        Print_spooler_paramBulk param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_ESERCIZIO");
+	        param.setValoreParam(esercizioScrivania.toString());
+	        param.setParamType("java.lang.Integer");
+	        printbp.addToPrintSpoolerParam(param);
+	
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_CENTRO_RESPONSABILITA");
+	        param.setValoreParam(cdrScrivania);
+	        param.setParamType("java.lang.String");
+	        printbp.addToPrintSpoolerParam(param);
+
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_PG_PROGETTO");
+	        param.setValoreParam(optProgetto.get().getPg_progetto().toString());
+	        param.setParamType("java.lang.Integer");
+	        printbp.addToPrintSpoolerParam(param);
+    	}    
+	}
 }
