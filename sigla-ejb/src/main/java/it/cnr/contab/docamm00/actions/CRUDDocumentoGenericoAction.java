@@ -270,8 +270,8 @@ private Forward basicDoRicercaAccertamento(ActionContext context, Documento_gene
                     cd_terzo= riga.getTerzo().getCd_terzo();
                 if (riga.getTerzo().getCd_terzo() == null)
                     throw new it.cnr.jada.comp.ApplicationException("Non è possibile contabilizzare poiché su un dettaglio\n non è stato selezionato alcun terzo.");
-                if (riga.getIm_imponibile() == null || riga.getIm_imponibile().compareTo(new java.math.BigDecimal(0)) == 0)
-                    throw new it.cnr.jada.comp.ApplicationException("Non è possibile contabilizzare poiché un dettaglio\nselezionato ha un importo pari a 0.");
+//                if (riga.getIm_imponibile() == null || riga.getIm_imponibile().compareTo(new java.math.BigDecimal(0)) == 0)
+//                    throw new it.cnr.jada.comp.ApplicationException("Non è possibile contabilizzare poiché un dettaglio\nselezionato ha un importo pari a 0.");
                 if (!diversi && ((!riga.getTerzo().getCd_terzo().equals(cd_terzo))))
                     diversi= true;
             }
