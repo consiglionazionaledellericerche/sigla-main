@@ -8,6 +8,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -28,5 +29,9 @@ public interface MissioneLocal {
 
     @PUT
     public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception;
+
+    @DELETE
+    public Response delete(@Context HttpServletRequest request, Long idRimborsoMissione) throws Exception;
+ 
 
 }
