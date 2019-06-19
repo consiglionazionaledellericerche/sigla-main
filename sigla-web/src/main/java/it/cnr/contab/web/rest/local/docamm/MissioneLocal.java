@@ -12,6 +12,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -31,7 +32,8 @@ public interface MissioneLocal {
     public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception;
 
     @DELETE
-    public Response delete(@Context HttpServletRequest request, Long idRimborsoMissione) throws Exception;
- 
+    @Path("{id}")
+    public Response delete(@Context HttpServletRequest request, @PathParam("id") long idRimborsoMissione) throws Exception;
+
 
 }
