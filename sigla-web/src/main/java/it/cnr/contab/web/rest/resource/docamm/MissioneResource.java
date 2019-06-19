@@ -181,7 +181,7 @@ public class MissioneResource implements MissioneLocal {
     	return Optional.of(getUoEnte(userContext)).filter(x -> x.getCd_unita_organizzativa().equals(((CNRUserContext)userContext).getCd_unita_organizzativa())).isPresent();
 	}	
     
-    public Response delete(@Context HttpServletRequest request, Long idRimborsoMissione) throws Exception {
+    public Response delete(@Context HttpServletRequest request, @PathParam("id") long idRimborsoMissione) throws Exception {
     	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
     	Optional.ofNullable(idRimborsoMissione).
 		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Id Rimborso missione Obbligatorio"));
