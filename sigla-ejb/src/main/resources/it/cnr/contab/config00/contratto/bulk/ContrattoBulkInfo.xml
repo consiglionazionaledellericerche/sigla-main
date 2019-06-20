@@ -637,6 +637,20 @@
                 inputSize="20"
                 maxLength="10"
                	label="CIG comunicato dal Committente da esporre sulla Fattura Attiva" />
+		<fieldProperty
+				name="findProgetto"
+				property="progetto"
+				inputType="SEARCHTOOL"
+				label="Progetto"
+				formName="form_searchtool_progetto"
+				readonlyProperty="ROProgetto"
+				enabledOnInsert="true"
+		      	enabledOnEdit="true"
+				enabledOnSearch="true" 
+				enabledOnFreeSearch="true"
+				freeSearchSet="filtro_ricerca_prog2"
+				columnSet="nuovoPdg"/>
+               	
 	    <form name="searchtool">
 	          <formFieldProperty
 	                name="esercizio"
@@ -824,6 +838,8 @@
                 name="cup" />
         <formFieldProperty
                 name="crea_cup" />
+		<formFieldProperty
+				name="findProgetto"/>
 
         <findFieldProperty
                 name="stato"/>

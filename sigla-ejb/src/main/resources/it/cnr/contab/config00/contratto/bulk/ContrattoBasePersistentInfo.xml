@@ -193,7 +193,13 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
-			nullable="true" /> 				
+			nullable="true" />
+		<columnMapping 
+			columnName="PG_PROGETTO" 
+			propertyName="pg_progetto" 
+			sqlTypeName="DECIMAL" 
+			columnSize="10" 
+			nullable="true"/>
 	</defaultColumnMap>
 	
         <persistentProperty
@@ -259,4 +265,6 @@
                 name="pg_ver_rec"/>
  		 <persistentProperty
                 name="im_contratto_passivo_netto"/>                   
+ 		 <persistentProperty
+                name="pg_progetto"/> 
 </SQLPersistentInfo>

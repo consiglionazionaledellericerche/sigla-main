@@ -2173,4 +2173,18 @@ TRASPORTO_AEREO"/>
             <column name="gg_deroga_obbl_res_prg_scad" type="BIGINT" remarks="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di residuo."/>
         </addColumn>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-contratto-add-column-progetto">
+        <addColumn tableName="contratto">
+            <column name="pg_progetto" type="BIGINT" remarks="Progressivo del progetto di ricerca associato al contratto attivo."/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-tipo-finanziamento-add-flag-quad-contratto">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="fl_quadra_contratto" type="CHAR(1)" defaultValue="N" remarks="Flag che indica se è consentito associare ad un progetto contratti per un importo superiore al finanziato - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>    
 </databaseChangeLog>
