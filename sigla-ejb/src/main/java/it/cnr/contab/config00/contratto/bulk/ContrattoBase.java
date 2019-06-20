@@ -131,6 +131,9 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 //	FL_PUBBLICA_CONTRATTO CHAR(1)
 	private java.lang.Boolean fl_pubblica_contratto;
 	
+	// PG_PROGETTO DECIMAL(10,0) NOT NULL
+	private java.lang.Integer pg_progetto;
+	
 	public ContrattoBase() {
 		super();
 	}
@@ -527,5 +530,12 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	public void setIm_contratto_passivo_netto(
 			java.math.BigDecimal im_contratto_passivo_netto) {
 		this.im_contratto_passivo_netto = im_contratto_passivo_netto;
+	}
+	
+	public java.lang.Integer getPg_progetto() {
+		return pg_progetto;
+	}
+	public void setPg_progetto(java.lang.Integer pg_progetto) {
+		this.pg_progetto = pg_progetto;
 	}
 }

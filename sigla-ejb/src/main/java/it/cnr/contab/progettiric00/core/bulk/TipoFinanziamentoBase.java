@@ -47,6 +47,9 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 //  FL_ALL_PREV_FIN CHAR(1) NOT NULL
 	private Boolean flAllPrevFin;
 
+//  FL_QUADRA_CONTRATTO CHAR(1) NOT NULL
+	private Boolean flQuadraContratto;
+	
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: TIPO_FINANZIAMENTO
@@ -246,5 +249,13 @@ public class TipoFinanziamentoBase extends TipoFinanziamentoKey implements Keyed
 	
 	public void setFlAllPrevFin(Boolean flAllPrevFin) {
 		this.flAllPrevFin = flAllPrevFin;
+	}
+	
+	public Boolean getFlQuadraContratto() {
+		return flQuadraContratto;
+	}
+	
+	public void setFlQuadraContratto(Boolean flQuadraContratto) {
+		this.flQuadraContratto = flQuadraContratto;
 	}
 }
