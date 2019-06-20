@@ -24,6 +24,7 @@ import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
@@ -31,6 +32,12 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
+import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -41,6 +48,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.IPrintMgr;
 import it.cnr.jada.persistency.Broker;
@@ -55,9 +63,12 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
 
 import javax.ejb.EJBException;
@@ -81,7 +92,11 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 	public Query select(UserContext userContext,CompoundFindClause clauses,ContrattoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException 
 	{
 	   SQLBuilder sql = (SQLBuilder)super.select(userContext,clauses,bulk);
-	   sql.addSQLClause("AND","ESERCIZIO",sql.LESS_EQUALS,CNRUserContext.getEsercizio(userContext));
+	   sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.LESS_EQUALS,CNRUserContext.getEsercizio(userContext));
+
+	   Optional.ofNullable(bulk.getPg_progetto()).ifPresent(el->{
+		   sql.addSQLClause(FindClause.AND,"PG_PROGETTO",SQLBuilder.EQUALS,el);
+	   });
 	   // Se uo 999.000 in scrivania: visualizza tutti i contratti
 	   /*Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 	   if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
@@ -381,7 +396,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		} catch (EJBException e) {
 			throw handleException(e);
 		}
-		
+		if (bulk.isDefinitivo() && 
+				(bulk.isAttivo() || bulk.isAttivo_e_Passivo())) {
+			Optional.ofNullable(bulk.getPg_progetto())
+			.orElseThrow(()->new ApplicationRuntimeException("Valorizzare il progetto a fronte del quale il contratto è stato assunto."));
+			
+			controllaProgetti(uc, bulk.getProgetto(), null);
+		}
 	}
 	public void controllaCancellazioneAssociazioneUo(UserContext userContext, Ass_contratto_uoBulk ass_contratto_uo) throws ComponentException{
 		Ass_contratto_uoHome home = (Ass_contratto_uoHome)getHome(userContext, Ass_contratto_uoBulk.class);
@@ -444,7 +465,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				}
 		    }else 
 		    	contratto.setFl_pubblica_contratto(Boolean.FALSE);
-
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		} catch (IntrospectionException e) {
@@ -566,6 +586,10 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			
 			ContrattoHome testataHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
 			testata.setDitteInvitate(new it.cnr.jada.bulk.BulkList(testataHome.findDitteAssociate(userContext, testata, Ass_contratto_ditteBulk.LISTA_INVITATE)));
+
+			if (Optional.ofNullable(testata.getPg_progetto()).isPresent())
+				testata.setProgetto((ProgettoBulk)getHome(userContext, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(CNRUserContext.getEsercizio(userContext), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA)));
+			
 			return calcolaTotDocCont(userContext,testata);
 		} catch(Exception e) {
 				throw handleException(e);
@@ -1444,6 +1468,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(contratto.getClass()).getFieldProperty("cig").getLabel());
 			}
 
+			if (contratto.isAttivo() || contratto.isAttivo_e_Passivo()) {
+				Optional.ofNullable(contratto.getPg_progetto())
+				.orElseThrow(()->new ApplicationRuntimeException("Valorizzare il progetto a fronte del quale il contratto è stato assunto."));
+				
+				controllaProgetti(userContext, contratto.getProgetto(), contratto);
+			}
+
 			StorageObject storageObject = contrattoService.getFolderContratto(contratto);
 			if (storageObject == null || !contrattoService.isDocumentoContrattoPresent(contratto))
 				throw handleException(new ApplicationException("Bisogna allegare il file del Contratto!"));
@@ -1897,5 +1928,71 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			} catch (PersistencyException e) {
 				throw handleException(e);
 			}
-		}		
+		}
+
+		public SQLBuilder selectProgettoByClause (UserContext userContext,
+			      ContrattoBulk contratto,
+			      ProgettoBulk progetto,
+			      CompoundFindClause clause) throws ComponentException, PersistencyException {
+			ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+			SQLBuilder sql = progettohome.createSQLBuilder();
+			sql.addClause( clause );
+			
+			Parametri_cnrBulk parCnr = null;
+			try {
+				parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(userContext, CNRUserContext.getEsercizio(userContext));
+			} catch (RemoteException e) {
+			throw handleException(contratto,e);
+			} 
+			
+			if (parCnr.getFl_nuovo_pdg())
+				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			else
+				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS, Integer.valueOf(2016));
+			
+			if (contratto.getProgetto()!=null)
+				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.PG_PROGETTO", SQLBuilder.EQUALS, contratto.getProgetto().getPg_progetto());
+			
+			sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
+			sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.LIVELLO", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+
+			sql.addSQLExistsClause(FindClause.AND,progettohome.abilitazioniCommesse(userContext));
+
+			if (clause != null) 
+				sql.addClause(clause);
+			
+			return sql;
+		}
+		
+		private void controllaProgetti(UserContext userContext, ProgettoBulk progetto, ContrattoBulk contrattoNew) throws ComponentException {
+			try {
+				Progetto_other_fieldHome otherFieldHome = (Progetto_other_fieldHome)getHome(userContext, Progetto_other_fieldBulk.class);
+				Progetto_other_fieldBulk otherFieldBulk = (Progetto_other_fieldBulk)otherFieldHome.findByPrimaryKey(new Progetto_other_fieldBulk(progetto.getPg_progetto()));
+
+				Optional.ofNullable(otherFieldBulk).filter(Progetto_other_fieldBulk::isStatoApprovato)
+				.orElseThrow(()->new ApplicationRuntimeException("Associazione progetto non possibile! Il progetto da associare deve risultare approvato!"));
+
+				TipoFinanziamentoHome tipoFinanziamentoHome = (TipoFinanziamentoHome)getHome(userContext, TipoFinanziamentoBulk.class);
+				TipoFinanziamentoBulk tipoFinanziamentoBulk = (TipoFinanziamentoBulk)tipoFinanziamentoHome.findByPrimaryKey(new TipoFinanziamentoBulk(otherFieldBulk.getIdTipoFinanziamento()));
+
+				if (Optional.ofNullable(tipoFinanziamentoBulk).filter(TipoFinanziamentoBulk::getFlQuadraContratto).isPresent()) {
+					ContrattoHome contrattoHome = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
+					SQLBuilder sql = contrattoHome.createSQLBuilder();
+					sql.addSQLClause(FindClause.AND, "CONTRATTO.PG_PROGETTO", SQLBuilder.EQUALS, progetto.getPg_progetto());
+					sql.addSQLClause(FindClause.AND, "CONTRATTO.STATO", SQLBuilder.EQUALS, ContrattoBulk.STATO_DEFINITIVO);
+		
+					List<ContrattoBulk> list = contrattoHome.fetchAll(sql);
+					
+					BigDecimal totAssociatoSto = list.stream().map(ContrattoBulk::getIm_contratto_attivo).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
+					BigDecimal totAssociato = totAssociatoSto.add(Optional.ofNullable(contrattoNew).flatMap(el->Optional.of(el.getIm_contratto_attivo())).orElse(BigDecimal.ZERO));
+					if (totAssociato.compareTo(otherFieldBulk.getImFinanziato())>0)
+						throw new ApplicationException("Associazione progetto non possibile. L'importo attivo del contratto è superiore alla quota "
+								+ "residua associabile del progetto ("
+								+ new it.cnr.contab.util.EuroFormat().format(otherFieldBulk.getImFinanziato().subtract(totAssociatoSto))
+								+ ")");
+				}
+			}catch(it.cnr.jada.persistency.PersistencyException ex){
+				throw handleException(ex);
+			}
+		}
 }

@@ -4,7 +4,6 @@
 */
 package it.cnr.contab.config00.contratto.bulk;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,7 +13,6 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
@@ -22,9 +20,7 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
-import it.cnr.si.spring.storage.annotation.StoragePolicy;
-import it.cnr.si.spring.storage.annotation.StorageProperty;
-import it.cnr.si.spring.storage.annotation.StorageType;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
@@ -32,6 +28,9 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
 @StorageType(name="F:sigla_contratti:appalti")
 @JsonInclude(value=Include.NON_NULL)
 public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamente{
@@ -75,6 +74,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private V_persona_fisicaBulk direttore;
 	private CigBulk cig;
 	private CupBulk cup;
+	private ProgettoBulk progetto;
 	
 	private String cdCigRest;
 	private String cdCupRest;
@@ -923,4 +923,23 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	public void setListaUoAbilitateRest(List<String> listaUoAbilitateRest) {
 		this.listaUoAbilitateRest = listaUoAbilitateRest;
 	}
+	public ProgettoBulk getProgetto() {
+		return progetto;
+	}
+	public void setProgetto(ProgettoBulk progetto) {
+		this.progetto = progetto;
+	}
+    public java.lang.Integer getPg_progetto() {
+		return Optional.ofNullable(this.getProgetto()).map(ProgettoBulk::getPg_progetto)
+				.orElse(null);
+    }
+	public void setPg_progetto(java.lang.Integer progetto) {
+		if (!Optional.ofNullable(this.getProgetto()).isPresent())
+			this.setProgetto(new ProgettoBulk());
+		this.getProgetto().setPg_progetto(progetto);
+	}
+	
+	public boolean isROProgetto(){
+		return Boolean.FALSE;
+	}	
 }
