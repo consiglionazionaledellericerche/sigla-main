@@ -162,7 +162,9 @@
         			<td><% bp.getController().writeFormInput(out,"default","cup", bp.isPublishHidden(),null,null);%></td>                	            
 		      <%}%>
 		      </tr>
-		      <% if ((ContrattoBulk)bp.getModel() != null && (((ContrattoBulk)bp.getModel()).isAttivo() || ((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo())){%>
+		      <% if (bp.isSearching() ||
+		    		  ((ContrattoBulk)bp.getModel() != null && (((ContrattoBulk)bp.getModel()).isAttivo() || ((ContrattoBulk)bp.getModel()).isAttivo_e_Passivo()))){%>
+			  <tr><% bp.getController().writeFormField(out,"findProgetto");%></tr>
 			  <tr>         
 		        <td><% bp.getController().writeFormLabel(out,"cdCigFatturaAttiva");%></td>
 		      	  <% if (((ContrattoBulk)bp.getModel()).getCdCigFatturaAttiva() == null ){%>
