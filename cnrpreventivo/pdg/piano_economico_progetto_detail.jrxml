@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="situazione_sintetica_x_progetto_main" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto_detail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6934217901613347"/>
-	<property name="ireport.x" value="847"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -66,9 +66,11 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_FL_PIANO_ECO_FIN" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="P_IM_FINANZIATO" class="java.math.BigDecimal"/>
-	<parameter name="P_IM_COFINANZIATO" class="java.math.BigDecimal"/>
 	<parameter name="P_UO_COORDINATRICE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_IM_FINANZIATO" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_IM_COFINANZIATO" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_TOTALE_ENTRATE" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_TOTALE_REVERSALI" class="java.math.BigDecimal" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[SELECT   a.ORDINE_ESERCIZIO,
          a.pg_progetto, a.esercizio, a.cd_unita_piano, a.cd_voce_piano,
@@ -709,6 +711,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 			</staticText>
 			<textField>
 				<reportElement style="VER8" x="77" y="3" width="117" height="10" uuid="935337f3-c06a-403d-b742-989899778d34"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{P_DESC_FINANZIAMENTO}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -724,6 +727,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement style="VER8" x="46" y="15" width="54" height="10" uuid="1dbef90c-197c-4ca0-ac6e-4540ead43385"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{P_DT_INIZIO}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -739,6 +743,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement style="VER8" x="140" y="15" width="54" height="10" uuid="2094448e-4da9-4fa6-9235-66580f53a225"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{P_DT_FINE}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -756,6 +761,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement style="VER8" x="247" y="15" width="54" height="10" uuid="bf63dece-b75b-434d-a328-b44d0d270bd4"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{P_DT_PROROGA}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -771,10 +777,11 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement style="VER8" x="260" y="3" width="41" height="10" uuid="4e4b3d4b-9f51-45b8-aec7-e9faa4f03158"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{P_FL_PIANO_ECO_FIN}.equals("Y")?"SI":"NO"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="5" y="27" width="64" height="10" uuid="c67d1cb0-d30b-467a-a8bd-12e5cdce4756"/>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="27" width="67" height="10" uuid="c67d1cb0-d30b-467a-a8bd-12e5cdce4756"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -785,7 +792,7 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 				<text><![CDATA[Quota Finanziata:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="155" y="27" width="70" height="10" uuid="8fe1f6f7-9771-4eb7-9011-d31009186e81"/>
+				<reportElement key="staticText-54" style="VERB8" x="147" y="27" width="85" height="10" uuid="8fe1f6f7-9771-4eb7-9011-d31009186e81"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -796,15 +803,19 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 				<text><![CDATA[Quota Cofinanziata:]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement style="VER8" x="69" y="27" width="86" height="10" uuid="d97b51a7-bc91-4bf8-885c-09e43d44da0d"/>
+				<reportElement style="VER8" x="77" y="27" width="60" height="10" uuid="d97b51a7-bc91-4bf8-885c-09e43d44da0d"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{P_IM_FINANZIATO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement style="VER8" x="225" y="27" width="76" height="10" uuid="c0b4807c-e819-4591-8922-1b6b003b4228"/>
+				<reportElement style="VER8" x="232" y="27" width="60" height="10" uuid="c0b4807c-e819-4591-8922-1b6b003b4228"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{P_IM_COFINANZIATO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="5" y="41" width="67" height="10" uuid="ac8047d7-4b20-4df4-8b22-a8e398f081fc"/>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="42" width="72" height="10" uuid="ac8047d7-4b20-4df4-8b22-a8e398f081fc"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -814,8 +825,14 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Importo Accertato:]]></text>
 			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement style="VER8" x="77" y="42" width="60" height="10" uuid="f6471376-74eb-4509-aba9-be350f1eb88a"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_TOTALE_ENTRATE}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="5" y="53" width="67" height="10" uuid="eb0c1f03-781b-4f5d-8391-b02de29eab55"/>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="56" width="67" height="10" uuid="eb0c1f03-781b-4f5d-8391-b02de29eab55"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -825,8 +842,14 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Importo Riscosso:]]></text>
 			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement style="VER8" x="77" y="56" width="60" height="10" uuid="cc757d9a-9073-4f6e-a9a3-165ca3c34c0d"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_TOTALE_ENTRATE}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="140" y="53" width="80" height="10" uuid="052add31-aa09-47ca-bf74-9b758d269a39"/>
+				<reportElement key="staticText-54" style="VERB8" x="147" y="56" width="85" height="10" uuid="052add31-aa09-47ca-bf74-9b758d269a39"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -836,8 +859,14 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Importo da Riscuotere:]]></text>
 			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement style="VER8" x="232" y="42" width="60" height="10" uuid="8cafe4c2-b67a-463b-925d-b86337014c90"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_IM_FINANZIATO}.subtract($P{P_TOTALE_ENTRATE})]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement key="staticText-54" style="VERB8" x="140" y="42" width="80" height="10" uuid="fcbdc88c-169e-4bb9-bcdb-47c3796fc140"/>
+				<reportElement key="staticText-54" style="VERB8" x="147" y="42" width="85" height="10" uuid="fcbdc88c-169e-4bb9-bcdb-47c3796fc140"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 					<topPen lineWidth="0.0" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineColor="#000000"/>
@@ -847,6 +876,12 @@ $F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pr
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Importo da Accertare:]]></text>
 			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement style="VER8" x="232" y="56" width="60" height="10" uuid="4ff7775c-7b63-41af-acd3-ceaf6547d0f2"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_IM_FINANZIATO}.subtract($P{P_TOTALE_REVERSALI})]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement key="staticText-44" style="VERB8" x="303" y="1" width="295" height="29" uuid="680fbaa5-b5d5-4184-b061-0ea83f472fc1"/>
 				<box>
