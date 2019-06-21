@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -157,6 +158,7 @@ public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 	private BulkList<V_saldi_voce_progettoBulk> vociBilancioMovimentate = new BulkList<V_saldi_voce_progettoBulk>();
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private BulkList<Progetto_rimodulazioneBulk> rimodulazioni = new BulkList<Progetto_rimodulazioneBulk>();
+	private BulkList<ContrattoBulk> contratti = new BulkList<ContrattoBulk>();
 
 	public ProgettoBulk() {
 		super();
@@ -1348,5 +1350,12 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		prgClone.setDettagliPianoEconomicoAnnoCorrente(new BulkList<>(prgClone.getDettagliPianoEconomicoAnnoCorrente().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
 		prgClone.setDettagliPianoEconomicoAltriAnni(new BulkList<>(prgClone.getDettagliPianoEconomicoAltriAnni().stream().map(Progetto_piano_economicoBulk::clone).collect(Collectors.toList())));
 		return prgClone;
+	}
+	
+	public BulkList<ContrattoBulk> getContratti() {
+		return contratti;
+	}
+	public void setContratti(BulkList<ContrattoBulk> contratti) {
+		this.contratti = contratti;
 	}
 }

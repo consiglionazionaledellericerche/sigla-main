@@ -1501,7 +1501,8 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
             	listCtrlVarPianoEco.stream().forEach(el->{
 	            	try {
 		            	Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome) getHome(userContext, Progetto_rimodulazioneBulk.class);
-		            	rimodHome.findRimodulazioni(el.getProgetto().getPg_progetto()).stream()
+		            	ProgettoHome prgHome = (ProgettoHome) getHome(userContext, ProgettoBulk.class);
+		            	prgHome.findRimodulazioni(el.getProgetto().getPg_progetto()).stream()
 		            	.filter(rim->rim.isStatoDefinitivo()||rim.isStatoValidato())
 		            	.findFirst().ifPresent(rim->{
 		            		try {

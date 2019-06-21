@@ -160,6 +160,14 @@ public class Progetto_other_fieldBulk extends Progetto_other_fieldBase {
 			throw new ValidationException( "La \"Data di proroga\" del progetto deve essere uguale o superiore alla \"Data di fine\".");
 	}
 
+	public void validaDateFideiussioneProgetto() throws ValidationException {
+		if (!Optional.ofNullable(this.getDtInizioFideiussione()).isPresent() && Optional.ofNullable(this.getDtFineFideiussione()).isPresent())  
+		    throw new ValidationException( "Non \350 possibile indicare la \"Data di fine fideiussione\" senza indicare la \"Data di inizio fideiussione\".");
+		if (Optional.ofNullable(this.getDtInizioFideiussione()).isPresent() && Optional.ofNullable(this.getDtFineFideiussione()).isPresent() &&
+			this.getDtInizioFideiussione().after(this.getDtFineFideiussione()))
+			throw new ValidationException( "La \"Data di fine fideiussione\" del progetto deve essere uguale o superiore alla \"Data di inizio fideiussione\".");
+	}
+
 	public Integer getAnnoInizio() {
 		return Optional.ofNullable(this.getDtInizio())
 				.map(elDate->{

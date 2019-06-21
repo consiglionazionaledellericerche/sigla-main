@@ -60,13 +60,6 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		return dettHome.fetchAll(sql);
 	}
 	
-	public java.util.List<Progetto_rimodulazioneBulk> findRimodulazioni(Integer pgProgetto) throws PersistencyException {
-		Progetto_rimodulazioneHome dettHome = (Progetto_rimodulazioneHome)getHomeCache().getHome(Progetto_rimodulazioneBulk.class);
-		SQLBuilder sql = dettHome.createSQLBuilder();
-		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
-		return dettHome.fetchAll(sql);
-	}
-	
 	public java.util.Collection<Pdg_variazioneBulk> findVariazioniCompetenzaAssociate(Progetto_rimodulazioneBulk rimodulazione) throws IntrospectionException, PersistencyException {
 		Pdg_variazioneHome dettHome = (Pdg_variazioneHome)getHomeCache().getHome(Pdg_variazioneBulk.class,"VP_PDG_VARIAZIONE");
 		SQLBuilder sql = dettHome.createSQLBuilder();
@@ -460,8 +453,8 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 
 	private Progetto_rimodulazioneBulk rebuildRimodulazioneChiusa(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws PersistencyException {
 		ProgettoBulk progetto = rimodulazione.getProgetto();
-		
-		List<Progetto_rimodulazioneBulk> listRimodulazioni = this.findRimodulazioni(rimodulazione.getProgetto().getPg_progetto());
+		ProgettoHome prgHome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
+		List<Progetto_rimodulazioneBulk> listRimodulazioni = prgHome.findRimodulazioni(rimodulazione.getProgetto().getPg_progetto());
 		listRimodulazioni.stream()
 				.filter(el->el.isStatoApprovato())
 				.filter(el->el.getPg_rimodulazione().compareTo(rimodulazione.getPg_rimodulazione())>=0)
