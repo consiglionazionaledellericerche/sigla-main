@@ -21,6 +21,12 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 	
 	private java.math.BigDecimal imCofinanziato;
 	
+	private java.math.BigDecimal imFideiussione;
+
+	private java.sql.Timestamp dtInizioFideiussione;
+
+	private java.sql.Timestamp dtFineFideiussione;
+
 	public Progetto_other_fieldBase() {
 		super();
 	}
@@ -99,5 +105,29 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 
 	public void setImCofinanziato(java.math.BigDecimal imCofinanziato) {
 		this.imCofinanziato = imCofinanziato;
+	}
+
+	public java.math.BigDecimal getImFideiussione() {
+		return imFideiussione;
+	}
+
+	public void setImFideiussione(java.math.BigDecimal imFideiussione) {
+		this.imFideiussione = imFideiussione;
+	}
+
+	public java.sql.Timestamp getDtInizioFideiussione() {
+		return dtInizioFideiussione;
+	}
+
+	public void setDtInizioFideiussione(java.sql.Timestamp dtInizioFideiussione) {
+		this.dtInizioFideiussione = dtInizioFideiussione;
+	}
+
+	public java.sql.Timestamp getDtFineFideiussione() {
+		return dtFineFideiussione;
+	}
+
+	public void setDtFineFideiussione(java.sql.Timestamp dtFineFideiussione) {
+		this.dtFineFideiussione = dtFineFideiussione;
 	}
 }

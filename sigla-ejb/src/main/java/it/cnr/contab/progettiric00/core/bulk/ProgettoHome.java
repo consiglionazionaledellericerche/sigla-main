@@ -14,6 +14,9 @@ import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
@@ -876,4 +879,18 @@ public class ProgettoHome extends BulkHome {
 			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniModuli(userContext));
 		return sql; 
 	}
+	
+	public java.util.List<Progetto_rimodulazioneBulk> findRimodulazioni(Integer pgProgetto) throws PersistencyException {
+		Progetto_rimodulazioneHome dettHome = (Progetto_rimodulazioneHome)getHomeCache().getHome(Progetto_rimodulazioneBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
+		return dettHome.fetchAll(sql);
+	}
+	
+	public java.util.List<ContrattoBulk> findContratti(Integer pgProgetto) throws PersistencyException {
+		ContrattoHome dettHome = (ContrattoHome)getHomeCache().getHome(ContrattoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
+		return dettHome.fetchAll(sql);
+	}	
 }

@@ -2187,4 +2187,12 @@ TRASPORTO_AEREO"/>
             </column>
         </addColumn>
     </changeSet>    
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_other_field_modify_column2">
+        <addColumn tableName="progetto_other_field">
+            <column name="im_fideiussione" remarks="Importo della fideiussione" type="numeric(15, 2)"/>
+            <column name="dt_inizio_fideiussione" remarks="Data inizio della fideiussione." type="${date.type}"/>
+            <column name="dt_fine_fideiussione" remarks="Data fine della fideiussione." type="${date.type}"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
