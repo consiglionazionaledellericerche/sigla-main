@@ -1,3 +1,4 @@
+<%@page import="it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk"%>
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
@@ -186,7 +187,19 @@
 	  </tr>
      </table>
 	 </div>
+     <% if (Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent()) { %>
+  	 <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Fideiussione</div>
+	 <div class="Group">
+     <table class="Panel card border-info p-2">
+	  <tr><% bp.getController().writeFormField(out,"imFideiussioneOf");%></tr>
+	  <tr>
+	  	<% bp.getController().writeFormField(out,"dtInizioFideiussioneOf");%>
+	  	<% bp.getController().writeFormField(out,"dtFineFideiussioneOf");%>
+	  </tr>
+     </table>
+	 </div>
 	 <% } %> 
+	<% } %> 
 <% } else { %>
      <div class="GroupLabel">
        	<% if (isFlNuovoPdg) {
@@ -288,5 +301,17 @@
 		</tr>
 	</table>
 	</div>
+    <% if (Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent()) { %>
+    <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Fideiussione</div>
+	 <div class="Group">
+     <table class="Panel card border-info p-2">
+	  <tr><% bp.getController().writeFormField(out,"imFideiussioneOf");%></tr>
+	  <tr>
+	  	<% bp.getController().writeFormField(out,"dtInizioFideiussioneOf");%>
+	  	<% bp.getController().writeFormField(out,"dtFineFideiussioneOf");%>
+	  </tr>
+     </table>
+	</div>
+	<% } %> 
 	<% } %>  
 <%}%>  

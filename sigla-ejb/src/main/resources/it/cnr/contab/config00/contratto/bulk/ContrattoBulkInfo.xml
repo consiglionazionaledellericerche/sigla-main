@@ -981,4 +981,31 @@
                 name="dt_fine_validita"/>
         <columnFieldProperty
                 name="dt_proroga"/>
+                
+   	<columnSet name="contrattiAssociatiProgetto">
+        <columnFieldProperty
+                name="stato"/>
+        <columnFieldProperty
+                name="esercizio"/>
+        <columnFieldProperty
+                name="pg_contratto"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="cd_unita_organizzativa"/>
+        <columnFieldProperty
+                name="oggetto"/>
+        <columnFieldProperty
+                name="natura_contabile"/>
+        <columnFieldProperty
+                name="im_contratto_attivo"/>
+        <columnFieldProperty
+                name="dt_stipula"/>
+        <columnFieldProperty
+                name="dt_inizio_validita"/>
+        <columnFieldProperty
+                name="dt_fine_validita"/>
+        <columnFieldProperty
+                name="dt_proroga"/>
+	</columnSet>
 </bulkInfo>

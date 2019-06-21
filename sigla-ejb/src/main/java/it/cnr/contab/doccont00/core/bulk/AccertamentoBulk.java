@@ -54,7 +54,7 @@ public class AccertamentoBulk extends AccertamentoBase implements IDocumentoCont
 	private CdsBulk cdsEnte;
 	private it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk unita_organizzativa = new it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk();
 	
-	private BulkList accertamento_scadenzarioColl = new BulkList();
+	private BulkList<Accertamento_scadenzarioBulk> accertamento_scadenzarioColl = new BulkList<Accertamento_scadenzarioBulk>();
 	private BulkList<Pdg_vincoloBulk> pdgVincoliColl = new BulkList();
 	private BulkList<Accertamento_vincolo_perenteBulk> accertamentoVincoliPerentiColl = new BulkList();
 	
