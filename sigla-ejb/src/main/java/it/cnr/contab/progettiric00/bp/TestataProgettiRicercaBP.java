@@ -8,15 +8,13 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.w3c.dom.views.AbstractView;
-
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
@@ -149,6 +147,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     private SimpleDetailCRUDController pianoEconomicoSummaryVoce = new SimpleDetailCRUDController("PianoEconomicoSummaryVoce", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryVoce", this);
     private SimpleDetailCRUDController pianoEconomicoSummaryAnno = new SimpleDetailCRUDController("PianoEconomicoSummaryAnno", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryAnno", this);
     private SimpleDetailCRUDController pianoEconomicoVociBilancioDaAssociare = new SimpleDetailCRUDController("VociMovimentateNonAssociate", V_saldi_voce_progettoBulk.class, "vociMovimentateNonAssociate", this);
+    private SimpleDetailCRUDController contrattiAssociati = new SimpleDetailCRUDController("ContrattiAssociati", ContrattoBulk.class, "contratti", this);
 
     /**
      * TestataProgettiRicercaBP constructor comment.
@@ -460,10 +459,11 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             throws BusinessProcessException {
         super.basicEdit(actioncontext, oggettobulk, flag);
         ProgettoBulk progetto = (ProgettoBulk) getModel();
-        if (Optional.ofNullable(progetto.getCd_unita_organizzativa())
-                .map(el -> !el.equals(CNRUserContext.getCd_unita_organizzativa(actioncontext.getUserContext())))
+        if (!uoScrivania.isUoEnte() &&
+        	(Optional.ofNullable(progetto.getCd_unita_organizzativa())
+                .map(el -> !el.equals(uoScrivania.getCd_unita_organizzativa()))
                 .orElse(Boolean.TRUE) ||
-                Optional.ofNullable(progetto.getOtherField()).filter(el -> el.isStatoChiuso() || el.isStatoAnnullato()).isPresent())
+             Optional.ofNullable(progetto.getOtherField()).filter(el -> el.isStatoChiuso() || el.isStatoAnnullato()).isPresent()))
             this.setStatus(VIEW);
     }
 
@@ -497,8 +497,10 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
             }
         }
 
-        if (!isSearching())
+        if (!isSearching()) {
+            hash.put(i++, new String[]{"tabContratti", "Contratti", "/progettiric00/progetto_contratti_associati.jsp"});
             hash.put(i++, new String[]{"tabAllegati", "Allegati", "/util00/tab_allegati.jsp"});
+        }
 
         String[][] tabs = new String[i][3];
         for (int j = 0; j < i; j++) {
@@ -659,6 +661,10 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         return pianoEconomicoVociBilancioDaAssociare;
     }
 
+    public SimpleDetailCRUDController getContrattiAssociati() {
+        return contrattiAssociati;
+    }
+    
     public boolean isNegoziazioneButtonHidden() {
         return !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
                 .map(ProgettoBulk.class::cast).flatMap(el -> Optional.ofNullable(el.getOtherField()))
@@ -979,4 +985,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 	        printbp.addToPrintSpoolerParam(param);
     	}    
 	}
+    
+    public Unita_organizzativaBulk getUoScrivania() {
+    	return uoScrivania;
+    }
 }

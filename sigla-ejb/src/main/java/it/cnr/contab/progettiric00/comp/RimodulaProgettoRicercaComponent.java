@@ -452,9 +452,9 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	public OggettoBulk creaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
 		try {
 			Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)oggettobulk;
-	
 			Progetto_rimodulazioneHome prgRimodulazioneHome = (Progetto_rimodulazioneHome)getHome(usercontext, Progetto_rimodulazioneBulk.class);
-			BulkList<Progetto_rimodulazioneBulk> listRimodulazioni = new BulkList<Progetto_rimodulazioneBulk>(prgRimodulazioneHome.findRimodulazioni(progettoRimodulazione.getPg_progetto()));
+			ProgettoHome prgHome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class);
+			BulkList<Progetto_rimodulazioneBulk> listRimodulazioni = new BulkList<Progetto_rimodulazioneBulk>(prgHome.findRimodulazioni(progettoRimodulazione.getPg_progetto()));
 			listRimodulazioni.stream()
 				.filter(el->!el.equalsByPrimaryKey(this))
 				.filter(el->!el.isStatoApprovato())
