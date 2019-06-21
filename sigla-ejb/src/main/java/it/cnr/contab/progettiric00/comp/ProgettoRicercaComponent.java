@@ -17,6 +17,7 @@ import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -330,7 +331,8 @@ public ProgettoRicercaComponent() {
 				   		else
 				   			testata.setPdgModuli(pdgModuliList);
 				   		
-						testata.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(Utility.createRimodulaProgettoRicercaComponentSession().find(userContext, Progetto_rimodulazioneBulk.class, "findRimodulazioni", testata.getPg_progetto())));
+						testata.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(find(userContext, ProgettoBulk.class, "findRimodulazioni", testata.getPg_progetto())));
+						testata.setContratti(new BulkList<ContrattoBulk>(find(userContext, ProgettoBulk.class, "findContratti", testata.getPg_progetto())));
 
 						getHomeCache(userContext).fetchAll(userContext);
 						return testata;
