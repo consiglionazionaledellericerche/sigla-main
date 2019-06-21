@@ -14,6 +14,7 @@ import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
+import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
@@ -25,11 +26,14 @@ import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.doccont00.comp.CheckDisponibilitaContrattoFailed;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
+import it.cnr.contab.doccont00.core.bulk.AccertamentoHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -57,6 +61,7 @@ import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
@@ -68,8 +73,11 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 
@@ -447,6 +455,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		try {
 			validaCampiObbligatori(userContext,(ContrattoBulk)bulk);
 			ContrattoBulk contratto=(ContrattoBulk)bulk;
+			validaAssociazioneContrattoAccertamenti(userContext,(ContrattoBulk)bulk);
+
 			Date dataStipulaParametri = ((Parametri_cnrBulk)getHome(userContext, Parametri_cnrBulk.class).
 					findByPrimaryKey(new Parametri_cnrBulk(CNRUserContext.getEsercizio(userContext)))).getData_stipula_contratti();
 			
@@ -1995,4 +2005,53 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				throw handleException(ex);
 			}
 		}
+		
+		
+		private void validaAssociazioneContrattoAccertamenti(UserContext userContext, ContrattoBulk contratto) throws ComponentException{
+		try {
+			WorkpackageHome gaeHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
+	        PersistentHome dettHome = getHome(userContext, VContrattiTotaliDetBulk.class);
+	        SQLBuilder sql = dettHome.createSQLBuilder();
+	        sql.addSQLClause(FindClause.AND, "ESERCIZIO_CONTRATTO", SQLBuilder.EQUALS, contratto.getEsercizio());
+	        sql.addSQLClause(FindClause.AND, "STATO_CONTRATTO", SQLBuilder.EQUALS, contratto.getStato());
+	        sql.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.EQUALS, contratto.getPg_contratto());
+
+			List<VContrattiTotaliDetBulk> result = dettHome.fetchAll(sql);
+
+			BigDecimal totale = result.stream().map(VContrattiTotaliDetBulk::getTotaleEntrate).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
+			if (totale.compareTo(contratto.getIm_contratto_attivo()) > 0)
+				throw handleException( new CheckDisponibilitaContrattoFailed("La somma degli accertamenti associati ("
+								+ new it.cnr.contab.util.EuroFormat().format(totale) + ") supera l'importo definito nel contratto."));
+
+			Optional<Integer> optPrgContratto = Optional.ofNullable(contratto)
+					.flatMap(el->Optional.ofNullable(el.getPg_progetto()));
+			
+			if (optPrgContratto.isPresent()) {
+				Map<String, List<VContrattiTotaliDetBulk>> cdrMap = 
+						result.stream().collect(Collectors.groupingBy(VContrattiTotaliDetBulk::getCdr));
+			
+				cdrMap.keySet().stream().forEach(cdr->{
+					Map<String, List<VContrattiTotaliDetBulk>> gaeMap = 
+							cdrMap.get(cdr).stream().collect(Collectors.groupingBy(VContrattiTotaliDetBulk::getLinea));
+					gaeMap.keySet().stream().forEach(gae->{
+						try {
+							WorkpackageBulk lineaAttivita = gaeHome.searchGAECompleta(userContext, contratto.getEsercizio(), cdr, gae);
+							if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
+								VContrattiTotaliDetBulk dett = gaeMap.get(gae).get(0);
+								throw new ApplicationRuntimeException("Progetto "+contratto.getProgetto().getCd_progetto()+
+										" non associabile al contratto. L'accertamento "+
+										dett.getEsercizioObbAcr()+"/"+dett.getPgObbligazioneAccertamento()+
+										" collegato al contratto è associato, tramite la Linea di Attività "+gae+" del CDR "+cdr+
+										" ad un'altro progetto "+lineaAttivita.getCd_progetto()+".");
+							}
+						} catch (ComponentException e) {
+							throw new ApplicationRuntimeException(e);
+						}
+					});
+				});
+			}
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
 }

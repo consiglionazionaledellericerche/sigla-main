@@ -255,7 +255,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 			setLastEsercizioAperto(Optional.ofNullable(lastEsercizio).map(EsercizioBulk::getEsercizio).orElse(CNRUserContext.getEsercizio(actioncontext.getUserContext())));
 	   		
 	   		if (Optional.ofNullable(this.getMainProgetto()).isPresent()) {
-				List<Progetto_rimodulazioneBulk> listRimodulazioni = createComponentSession().find(actioncontext.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", this.getMainProgetto().getPg_progetto());
+				List<Progetto_rimodulazioneBulk> listRimodulazioni = this.createComponentSession().find(actioncontext.getUserContext(), ProgettoBulk.class, "findRimodulazioni", this.getMainProgetto().getPg_progetto());
 				Optional<Progetto_rimodulazioneBulk> lastRim = listRimodulazioni.stream()
 									.filter(el->!el.isStatoApprovato()&&!el.isStatoRespinto())
 									.sorted(Comparator.comparing(Progetto_rimodulazioneBulk::getPg_rimodulazione).reversed())

@@ -745,6 +745,30 @@
 		enabledOnSearch="true"
 		label="Importo Cofinanziato" />
 	<fieldProperty
+		name="imFideiussioneOf"
+		property="otherField.imFideiussione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo" />
+	<fieldProperty
+		name="dtInizioFideiussioneOf"
+		property="otherField.dtInizioFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		command="doOnDtInizioFideiussioneOfChange"
+		label="Data Inizio" />
+	<fieldProperty
+		name="dtFineFideiussioneOf"
+		property="otherField.dtFineFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		command="doOnDtFineFideiussioneOfChange"
+		label="Data Fine" />
+
+	<fieldProperty
 		name="imTotale"
 		property="imTotale"
 		inputType="ROTEXT"
@@ -958,6 +982,14 @@
 		name="imFinanziatoOf" />
 	<formFieldProperty
 		name="imCofinanziatoOf" />
+		
+	<formFieldProperty
+		name="imFideiussioneOf" />
+	<formFieldProperty
+		name="dtInizioFideiussioneOf" />
+	<formFieldProperty
+		name="dtFineFideiussioneOf" />
+		
 	<formFieldProperty
 		name="imTotale" />
 	<formFieldProperty

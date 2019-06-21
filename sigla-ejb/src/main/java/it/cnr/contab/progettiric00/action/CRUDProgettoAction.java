@@ -475,6 +475,74 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 		}
 	}
 
+	public Forward doOnDtInizioFideiussioneOfChange(ActionContext context) {
+		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(bp.getModel())
+				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+
+		Optional<Progetto_other_fieldBulk> optOtherField = 
+				optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
+
+		Optional<Timestamp> optData = optOtherField.flatMap(el->Optional.ofNullable(el.getDtInizioFideiussione()));
+	
+		java.sql.Timestamp oldDate=null;
+		if (optData.isPresent())
+			oldDate = (java.sql.Timestamp)optData.get().clone();
+	
+		try {
+			fillModel(context);
+			if (optOtherField.isPresent())
+				optOtherField.get().validaDateFideiussioneProgetto();
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			// In caso di errore ripropongo la data precedente
+			optOtherField.get().setDtInizioFideiussione(oldDate);
+			try
+			{
+				return handleException(context, ex);			
+			}
+			catch (Throwable e) 
+			{
+				return handleException(context, e);
+			}
+		}
+	}
+
+	public Forward doOnDtFineFideiussioneOfChange(ActionContext context) {
+		TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(context);
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(bp.getModel())
+				.filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+
+		Optional<Progetto_other_fieldBulk> optOtherField = 
+				optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField()));
+
+		Optional<Timestamp> optData = optOtherField.flatMap(el->Optional.ofNullable(el.getDtFineFideiussione()));
+	
+		java.sql.Timestamp oldDate=null;
+		if (optData.isPresent())
+			oldDate = (java.sql.Timestamp)optData.get().clone();
+	
+		try {
+			fillModel(context);
+			if (optOtherField.isPresent())
+				optOtherField.get().validaDateFideiussioneProgetto();
+			return context.findDefaultForward();
+		}
+		catch (Throwable ex) {
+			// In caso di errore ripropongo la data precedente
+			optOtherField.get().setDtFineFideiussione(oldDate);
+			try
+			{
+				return handleException(context, ex);			
+			}
+			catch (Throwable e) 
+			{
+				return handleException(context, e);
+			}
+		}
+	}
+	
 	public Forward doRiapriOf(ActionContext context){
 		try 
 		{
@@ -574,7 +642,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 				if (Optional.ofNullable(rim).map(Progetto_rimodulazioneBulk::isStatoApprovato).orElse(Boolean.TRUE)) {
 					bp.basicEdit(context, progetto,Boolean.TRUE);
 				} else {
-		            List<Progetto_rimodulazioneBulk> listRimodulazioni = bp.createComponentSession().find(context.getUserContext(), Progetto_rimodulazioneBulk.class, "findRimodulazioni", progetto.getPg_progetto());
+		            List<Progetto_rimodulazioneBulk> listRimodulazioni = bp.createComponentSession().find(context.getUserContext(), ProgettoBulk.class, "findRimodulazioni", progetto.getPg_progetto());
 		            progetto.setRimodulazioni(new BulkList<Progetto_rimodulazioneBulk>(listRimodulazioni));
 				}
         	}
