@@ -177,8 +177,8 @@
         </dependency>
         <dependency>
             <groupId>it.cnr.si</groupId>
-            <artifactId>storage-cloud-cmis</artifactId>
-            <version>${storage-cloud.version}</version>
+            <artifactId>storage-cloud-commons</artifactId>
+            <version>${storage.cloud.version}</version>
             <scope>${scope}</scope>
         </dependency>
         <dependency>
@@ -230,7 +230,7 @@
                 <slf4j.version>1.7.21</slf4j.version>
                 <maven.javadoc.skip>true</maven.javadoc.skip>
                 <pdfbox.version>2.0.0</pdfbox.version>
-                <storage-cloud.version>0.0.6</storage-cloud.version>
+                <storage.cloud.version>1.0.2</storage.cloud.version>
 
                 <version.maven-war-plugin>2.3</version.maven-war-plugin>
                 <version.maven-failsafe-plugin>2.19.1</version.maven-failsafe-plugin>
@@ -528,11 +528,6 @@
                     <version>20160810</version>
                 </dependency>
                 <dependency>
-                    <groupId>it.cnr.si</groupId>
-                    <artifactId>storage-cloud-cmis</artifactId>
-                    <version>${storage-cloud.version}</version>
-                </dependency>
-                <dependency>
                     <groupId>org.bouncycastle</groupId>
                     <artifactId>bcmail-jdk15on</artifactId>
                     <version>1.52</version>
@@ -629,6 +624,39 @@
                     <artifactId>slf4j-api</artifactId>
                     <version>${slf4j.version}</version>
                     <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>CMIS</id>
+            <dependencies>
+                <dependency>
+                    <groupId>it.cnr.si</groupId>
+                    <artifactId>storage-cloud-cmis</artifactId>
+                    <version>${storage.cloud.version}</version>
+                </dependency>
+            </dependencies>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>AZURE</id>
+            <dependencies>
+                <dependency>
+                    <groupId>it.cnr.si</groupId>
+                    <artifactId>storage-cloud-azure</artifactId>
+                    <version>${storage.cloud.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>S3</id>
+            <dependencies>
+                <dependency>
+                    <groupId>it.cnr.si</groupId>
+                    <artifactId>storage-cloud-s3</artifactId>
+                    <version>${storage.cloud.version}</version>
                 </dependency>
             </dependencies>
         </profile>

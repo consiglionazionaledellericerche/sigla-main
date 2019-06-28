@@ -241,7 +241,7 @@
         <dependency>
             <groupId>it.cnr.si</groupId>
             <artifactId>storage-cloud-commons</artifactId>
-            <version>${storage-cloud.version}</version>
+            <version>${storage.cloud.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
