@@ -183,13 +183,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	public String getNomeAllegato(){
 		return getNome_file()!=null?getNome_file().replace("'", "_"):"";		
 	}
-	public String getDownloadUrl() {
-		if(this == null ||this.getCms_node_ref() == null)
-			return null;
-		StringBuffer stringbuffer = new StringBuffer("download_incarichi/"+this.getNome_file());
-		stringbuffer.append("?cmisNodeRef="+this.getCms_node_ref());	
-		return stringbuffer.toString();
-	}
+
 	public String constructCMISNomeFile() {
 		StringBuffer nome = new StringBuffer();
     	if (this.isBando())

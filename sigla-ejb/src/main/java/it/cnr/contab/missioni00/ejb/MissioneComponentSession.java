@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.docamm00.ejb.IDocumentoAmministrativoSpesaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
@@ -18,7 +19,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 @Remote
-public interface MissioneComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession {
+public interface MissioneComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession, IDocumentoAmministrativoSpesaComponentSession {
 it.cnr.contab.missioni00.docs.bulk.MissioneBulk cancellaCompensoPhisically(it.cnr.jada.UserContext param0,it.cnr.contab.missioni00.docs.bulk.MissioneBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.missioni00.docs.bulk.MissioneBulk cancellaDiariaPhisically(it.cnr.jada.UserContext param0,it.cnr.contab.missioni00.docs.bulk.MissioneBulk param1) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,java.rmi.RemoteException;
 it.cnr.contab.missioni00.docs.bulk.MissioneBulk cancellaRimborsoPhisically(it.cnr.jada.UserContext param0,it.cnr.contab.missioni00.docs.bulk.MissioneBulk param1) throws it.cnr.jada.comp.ComponentException,it.cnr.jada.persistency.PersistencyException,java.rmi.RemoteException;
@@ -66,4 +67,5 @@ public DivisaBulk getDivisaDefault(UserContext userContext) throws ComponentExce
 public Obbligazione_scadenzarioBulk recuperoObbligazioneDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 public AnticipoBulk recuperoAnticipoDaGemis(UserContext aUC, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
 public MissioneBulk caricaTerzoInModificaMissione(UserContext userContext, MissioneBulk missione) throws ComponentException,java.rmi.RemoteException;
+public void cancellazioneMissioneDaGemis(UserContext userContext, Long idRimborsoMissioneGemis) throws ComponentException,java.rmi.RemoteException;
 }

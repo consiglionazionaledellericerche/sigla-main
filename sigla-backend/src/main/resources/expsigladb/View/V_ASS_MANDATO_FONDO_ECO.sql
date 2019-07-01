@@ -40,7 +40,8 @@
     "DT_PAGAMENTO_RICHIESTA",
     "ESITO_OPERAZIONE",
     "DT_ORA_ESITO_OPERAZIONE",
-    "ERRORE_SIOPE_PLUS") AS
+    "ERRORE_SIOPE_PLUS",
+    "STATO_VAR_SOS") AS
   SELECT
 --==============================================================================
 --
@@ -96,7 +97,8 @@
        a.DT_PAGAMENTO_RICHIESTA,
        a.esito_operazione,
        a.dt_ora_esito_operazione,
-       a.errore_siope_plus
+       a.errore_siope_plus,
+       a.stato_var_sos
 FROM   MANDATO A,
        MANDATO_TERZO T,
        FONDO_ECONOMALE F
@@ -152,7 +154,8 @@ SELECT A.cd_cds,
        a.DT_PAGAMENTO_RICHIESTA,
        a.esito_operazione,
        a.dt_ora_esito_operazione,
-       a.errore_siope_plus
+       a.errore_siope_plus,
+       a.stato_var_sos
 FROM   MANDATO A,
        MANDATO_TERZO T,
        ASS_FONDO_ECO_MANDATO M

@@ -26,13 +26,15 @@
   <businessProcess name="CRUDCaricoInventarioBP" className="it.cnr.contab.inventario01.bp.CRUDCaricoInventarioBP">
 	<forward name="default" path="/inventario00/carico_inventario.jsp"/>
 	<forward name="daFattura" path="/inventario00/inventario_aggrega.jsp"/>    
-	<forward name="daDocumento" path="/inventario00/inventario_aggrega_doc.jsp"/>    
+	<forward name="daDocumento" path="/inventario00/inventario_aggrega_doc.jsp"/>
+	<init-param name="printbp" value="OfflineReportPrintBP"/>
 	<init-param name="bulkClassName" value="it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk" />
 	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>
 	<init-param name="defaultAction" value="CRUDCaricoBuonoAction"/>
   </businessProcess>
   <businessProcess name="CRUDScaricoInventarioBP" className="it.cnr.contab.inventario01.bp.CRUDScaricoInventarioBP">
 	<forward name="default" path="/inventario00/scarico_inventario.jsp"/>
+	<init-param name="printbp" value="OfflineReportPrintBP"/>
 	<init-param name="bulkClassName" value="it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk" />
 	<init-param name="componentSessionName" value="CNRINVENTARIO01_EJB_BuonoCaricoScaricoComponentSession"/>
 	<init-param name="defaultAction" value="CRUDScaricoBuonoAction"/>

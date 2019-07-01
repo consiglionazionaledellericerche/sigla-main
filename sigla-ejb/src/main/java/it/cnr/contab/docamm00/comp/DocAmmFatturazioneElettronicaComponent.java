@@ -18,6 +18,8 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioBulk;
+import it.cnr.contab.anagraf00.core.bulk.Anagrafico_esercizioHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -26,6 +28,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaHome;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_rigaIBulk;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
@@ -353,7 +356,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		}
 	}
 
-	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
+	public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws ComponentException {
 		try {
 
 			ObjectFactory factory = new ObjectFactory();
@@ -600,7 +603,18 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				}
 			}
 			
-			return factory.createFatturaElettronica(fatturaType);
+			return fatturaType;
+		} catch(Exception e) {
+			throw handleException(e);
+		}
+		
+	}
+	
+	public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException {
+		try {
+
+			ObjectFactory factory = new ObjectFactory();
+			return factory.createFatturaElettronica(preparaFattura(userContext, fattura));
 		} catch(Exception e) {
 			throw handleException(e);
 		}
