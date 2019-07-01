@@ -6,17 +6,16 @@ import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.OrderedHashtable;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class MandatoBulk extends MandatoBase implements IManRevBulk {
+public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpdateSaldi {
     public final static String STATO_MANDATO_ANNULLATO = "A";
     public final static String STATO_MANDATO_EMESSO = "E";
     public final static String STATO_MANDATO_PAGATO = "P";
@@ -43,16 +42,12 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
     public final static String TIPO_PAGAMENTO = "P";
     public final static java.util.Dictionary tipoMandatoCNRKeys;
     public final static java.util.Dictionary tipoMandatoCdSKeys;
-    public final static  Map<String,String> esito_OperazioneKeys = Arrays.asList(EsitoOperazione.values())
-            .stream()
-            .collect(Collectors.toMap(
-                    EsitoOperazione::value,
-                    EsitoOperazione::label,
-                    (oldValue, newValue) -> oldValue,
-                    Hashtable::new
-            ));
+
+    public final static  Map<String,String> esito_OperazioneKeys = EsitoOperazione.KEYS;
+    public final static  Map<String,String> statoVariazioneSostituzioneKeys = StatoVariazioneSostituzione.KEYS;
 
     protected final static java.util.Dictionary classeDiPagamentoKeys = it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk.TI_PAGAMENTO_KEYS;
+    private it.cnr.jada.bulk.PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
 
     static {
         statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -159,7 +154,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
      * Aggiunge un nuovo dettaglio (Mandato_rigaBulk) alla lista di dettagli definiti per il mandato
      * inizializzandone alcuni campi
      *
-     * @param mr dettaglio da aggiungere alla lista
+     * @param riga dettaglio da aggiungere alla lista
      * @return int
      */
     public int addToMandato_rigaColl(Mandato_rigaBulk riga) {
@@ -200,7 +195,6 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
      * bulk da rendere persistenti insieme al ricevente.
      * L'implementazione standard restituisce <code>null</code>.
      *
-     * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
      */
     public BulkCollection[] getBulkLists() {
         return new it.cnr.jada.bulk.BulkCollection[]{
@@ -213,7 +207,6 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
      * insieme al ricevente.
      * L'implementazione standard restituisce <code>null</code>.
      *
-     * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
      */
     public OggettoBulk[] getBulksForPersistentcy() {
         return new OggettoBulk[]{
@@ -371,7 +364,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
      * Insert the method's description here.
      * Creation date: (27/11/2002 15.32.36)
      *
-     * @param newIm_disp_cassa_cds java.math.BigDecimal
+     * @param newIm_disp_cassa_CNR java.math.BigDecimal
      */
     public void setIm_disp_cassa_CNR(java.math.BigDecimal newIm_disp_cassa_CNR) {
         im_disp_cassa_CNR = newIm_disp_cassa_CNR;
@@ -1024,5 +1017,49 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk {
     public void setPg_mandato_riemissione(Long pg_mandato_riemissione) {
         if (getV_man_rev() != null)
             getV_man_rev().setPg_documento_cont(pg_mandato_riemissione);
+    }
+
+    @Override
+    public void addToDefferredSaldi(IDocumentoContabileBulk docCont, Map values) {
+        Optional.ofNullable(docCont)
+                .ifPresent(iDocumentoContabileBulk -> {
+                    final PrimaryKeyHashMap primaryKeyHashMap = Optional.ofNullable(deferredSaldi)
+                            .orElse(new PrimaryKeyHashMap());
+                    if(primaryKeyHashMap.containsKey(iDocumentoContabileBulk)) {
+                        primaryKeyHashMap.put(docCont, values);
+                    } else {
+                        Map firstValues = (Map)primaryKeyHashMap.get(iDocumentoContabileBulk);
+                        primaryKeyHashMap.remove(iDocumentoContabileBulk);
+                        primaryKeyHashMap.put(iDocumentoContabileBulk, firstValues);
+                    }
+                });
+    }
+
+    @Override
+    public PrimaryKeyHashMap getDefferredSaldi() {
+        return deferredSaldi;
+    }
+
+    @Override
+    public IDocumentoContabileBulk getDefferredSaldoFor(IDocumentoContabileBulk docCont) {
+        return Optional.ofNullable(docCont)
+                .flatMap(iDocumentoContabileBulk -> Optional.ofNullable(deferredSaldi))
+                .map(primaryKeyHashMap -> primaryKeyHashMap.get(docCont))
+                .filter(IDocumentoContabileBulk.class::isInstance)
+                .map(IDocumentoContabileBulk.class::cast)
+                .orElse(null);
+    }
+
+    @Override
+    public void removeFromDefferredSaldi(IDocumentoContabileBulk docCont) {
+        Optional.ofNullable(docCont)
+                .flatMap(iDocumentoContabileBulk -> Optional.ofNullable(deferredSaldi))
+                .filter(primaryKeyHashMap -> primaryKeyHashMap.containsKey(docCont))
+                .ifPresent(primaryKeyHashMap -> primaryKeyHashMap.remove(docCont));
+    }
+
+    @Override
+    public void resetDefferredSaldi() {
+        deferredSaldi = null;
     }
 }

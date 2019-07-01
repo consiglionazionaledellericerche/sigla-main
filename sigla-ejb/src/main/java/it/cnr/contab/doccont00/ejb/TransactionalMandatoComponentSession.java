@@ -534,4 +534,23 @@ public class TransactionalMandatoComponentSession extends it.cnr.jada.ejb.Transa
             }
         }
     }
+
+
+	public Mandato_rigaBulk setCodiciSIOPECollegabili(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (Mandato_rigaBulk)invoke("setCodiciSIOPECollegabili",new Object[] {
+					param0,
+					param1 });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

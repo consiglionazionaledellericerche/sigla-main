@@ -26,6 +26,7 @@ import it.cnr.contab.model.MessaggioXML;
 import it.cnr.contab.model.Risultato;
 import it.cnr.contab.service.GiornaleDiCassaSiopePlusService;
 import it.cnr.contab.service.OrdinativiSiopePlusService;
+import it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoBulk;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBulk;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -312,7 +313,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         }
         email.setFrom(pecMailFromBanca, pecMailFromBanca);
         if (nrDistinta != null)
-            email.setSubject("Invio Distinta " + nrDistinta + " e Documenti");
+            email.setSubject(nrDistinta);
         else
             email.setSubject("Invio Distinta e Documenti");
         email.setMsg("In allegato i documenti");
@@ -390,7 +391,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         }
     }
 
-    public String signDocuments(SignP7M signP7M, String url) throws StorageException {
+    public String signDocuments(SignP7M signP7M, String url, String path) throws StorageException {
         if (storageService.getStoreType().equals(StorageService.StoreType.CMIS) && signDocumentsFromRepository) {
             return signDocuments(new GsonBuilder().create().toJson(signP7M), url);
         } else {
@@ -408,7 +409,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 return storeSimpleDocument(
                         new ByteArrayInputStream(bytes),
                         MimeTypes.P7M.mimetype(),
-                        storageObject.getPath().substring(0, storageObject.getPath().lastIndexOf(StorageService.SUFFIX) + 1),
+                        path,
                         metadataProperties).getKey();
             } catch (ArubaSignServiceException | IOException e) {
                 throw new StorageException(StorageException.Type.GENERIC, e);
@@ -785,9 +786,10 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     .forEach(s -> nodes.add(s));
             if (nodes.size() > 1) {
                 inviaDistintaPEC(nodes, isEstero,
-                        "Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
+                        "Invio Distinta Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
                                 " Progressivo Flusso: " + distinta.getProgFlusso() +
-                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlussoBT(),
+                                " Identificativo Flusso BT: " + distinta.getIdentificativoFlussoBT() +
+                                " e Documenti",
                         isDistintaStipendi(dettagliMan));
                 return Boolean.TRUE;
             }
@@ -838,7 +840,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 error.append(s.concat("\n"));
                             });
                     MandatoBulk mandato = fetchMandatoBulk(ctEsitoMandato);
-                    mandato.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    if (Optional.ofNullable(ctEsitoMandato.getEsitoOperazione())
+                            .filter(stEsitoOperazioneMandato ->
+                                    stEsitoOperazioneMandato.equals(StEsitoOperazioneMandato.VARIATO) ||
+                                            stEsitoOperazioneMandato.equals(StEsitoOperazioneMandato.NON_VARIATO)).isPresent()) {
+                        mandato.setStatoVarSos(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    } else {
+                        mandato.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                    }
                     mandato.setDtOraEsitoOperazione(
                             new Timestamp(ctEsitoMandato
                                     .getDataOraEsitoOperazione()
@@ -852,6 +861,28 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                     .orElse(null)
                     );
                     mandato.setToBeUpdated();
+                    try {
+                        SIOPEPlusEsitoBulk siopePlusEsitoBulk = new SIOPEPlusEsitoBulk();
+                        siopePlusEsitoBulk.setMandato(mandato);
+                        siopePlusEsitoBulk.setProgEsitoApplicativo(risultato.getProgEsitoApplicativo());
+                        siopePlusEsitoBulk.setDataUpload(Optional.ofNullable(risultato.getDataUpload())
+                                .map(Date::getTime)
+                                .map(aLong -> new Timestamp(aLong))
+                                .orElse(null));
+                        siopePlusEsitoBulk.setIdentificativoFlusso(ctEsitoMandato.getIdentificativoFlusso());
+                        siopePlusEsitoBulk.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
+                        siopePlusEsitoBulk.setDtOraEsitoOperazione(
+                                new Timestamp(ctEsitoMandato
+                                    .getDataOraEsitoOperazione()
+                                    .toGregorianCalendar()
+                                    .getTimeInMillis()
+                                )
+                        );
+                        siopePlusEsitoBulk.setToBeCreated();
+                        crudComponentSession.creaConBulk(userContext, siopePlusEsitoBulk);
+                    } catch (ComponentException | RemoteException e) {
+                        logger.error("SIOPE+ CREAZIONE MANDATO ESITO [{}/{}] ERROR", mandato.getEsercizio(), mandato.getPg_mandato(), e);
+                    }
                     try {
                         return crudComponentSession.modificaConBulk(userContext, mandato);
                     } catch (ComponentException | RemoteException e) {
@@ -879,7 +910,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                 error.append(s.concat("\n"));
                             });
                     ReversaleBulk reversale = fetchReversaleBulk(ctEsitoReversale);
-                    reversale.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    if (Optional.ofNullable(ctEsitoReversale.getEsitoOperazione())
+                            .filter(stEsitoOperazioneReversale ->
+                                    stEsitoOperazioneReversale.equals(StEsitoOperazioneReversale.VARIATO) ||
+                                            stEsitoOperazioneReversale.equals(StEsitoOperazioneReversale.NON_VARIATO)).isPresent()) {
+                        reversale.setStatoVarSos(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    } else {
+                        reversale.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                    }
                     reversale.setDtOraEsitoOperazione(
                             new Timestamp(ctEsitoReversale
                                     .getDataOraEsitoOperazione()
@@ -893,6 +931,28 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                     .orElse(null)
                     );
                     reversale.setToBeUpdated();
+                    try {
+                        SIOPEPlusEsitoBulk siopePlusEsitoBulk = new SIOPEPlusEsitoBulk();
+                        siopePlusEsitoBulk.setReversale(reversale);
+                        siopePlusEsitoBulk.setProgEsitoApplicativo(risultato.getProgEsitoApplicativo());
+                        siopePlusEsitoBulk.setDataUpload(Optional.ofNullable(risultato.getDataUpload())
+                                .map(Date::getTime)
+                                .map(aLong -> new Timestamp(aLong))
+                                .orElse(null));
+                        siopePlusEsitoBulk.setIdentificativoFlusso(ctEsitoReversale.getIdentificativoFlusso());
+                        siopePlusEsitoBulk.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoReversale.getEsitoOperazione().value()));
+                        siopePlusEsitoBulk.setDtOraEsitoOperazione(
+                                new Timestamp(ctEsitoReversale
+                                        .getDataOraEsitoOperazione()
+                                        .toGregorianCalendar()
+                                        .getTimeInMillis()
+                                )
+                        );
+                        siopePlusEsitoBulk.setToBeCreated();
+                        crudComponentSession.creaConBulk(userContext, siopePlusEsitoBulk);
+                    } catch (ComponentException | RemoteException e) {
+                        logger.error("SIOPE+ CREAZIONE REVERSALE ESITO [{}/{}] ERROR", reversale.getEsercizio(), reversale.getPg_reversale(), e);
+                    }
                     try {
                         return crudComponentSession.modificaConBulk(userContext, reversale);
                     } catch (ComponentException | RemoteException e) {

@@ -57,12 +57,13 @@
 	boolean isUrlDaIndicare = allegato!=null && allegato.isUrlRequired();
 %>
 
+<% if (allegato != null) { %>
 <script language="JavaScript">
 function doScaricaFile() {	
 	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=allegato.getNomeAllegato()%>?methodName=scaricaAllegato&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
-
+<% } %>
 <div class="card p-2 mt-2 ">
 <table class="Panel w-100">
 	<tr>

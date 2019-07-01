@@ -7,7 +7,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>5.3.32-SNAPSHOT</version>
+        <version>5.3.49-SNAPSHOT</version>
     </parent>
     <properties>
         <wildfly.deployment.filename>SIGLA.ear</wildfly.deployment.filename>
@@ -434,10 +434,40 @@
             <artifactId>json</artifactId>
             <version>20160810</version>
         </dependency>
-        <dependency>
-            <groupId>it.cnr.si</groupId>
-            <artifactId>storage-cloud-cmis</artifactId>
-            <version>${storage-cloud.version}</version>
-        </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>CMIS</id>
+            <dependencies>
+                <dependency>
+                    <groupId>it.cnr.si</groupId>
+                    <artifactId>storage-cloud-cmis</artifactId>
+                    <version>${storage.cloud.version}</version>
+                </dependency>
+            </dependencies>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>AZURE</id>
+            <dependencies>
+                <dependency>
+                    <groupId>it.cnr.si</groupId>
+                    <artifactId>storage-cloud-azure</artifactId>
+                    <version>${storage.cloud.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>S3</id>
+            <dependencies>
+                <dependency>
+                    <groupId>it.cnr.si</groupId>
+                    <artifactId>storage-cloud-s3</artifactId>
+                    <version>${storage.cloud.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>

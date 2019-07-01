@@ -64,6 +64,23 @@ public JAXBElement<FatturaElettronicaType> creaFatturaElettronicaType(it.cnr.jad
 		}
 	}
 }
+public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws RemoteException,ComponentException{
+	try {
+		return (FatturaElettronicaType)invoke("preparaFattura",new Object[] {
+				userContext,
+				fattura});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 public String recuperoInizioNomeFile(UserContext param0) throws RemoteException,ComponentException {
 	try {
 		return (String)invoke("recuperoInizioNomeFile",new Object[] {

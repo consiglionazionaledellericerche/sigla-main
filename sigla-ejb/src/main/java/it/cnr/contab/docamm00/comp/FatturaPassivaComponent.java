@@ -853,7 +853,8 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                                     fatturaPassiva,
                                     scadenza.getObbligazione(),
                                     status);
-                        scadenza.setIm_associato_doc_amm(new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                        scadenza.setIm_associato_doc_amm(BigDecimal.ZERO.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
+                        scadenza.setIm_associato_doc_contabile(BigDecimal.ZERO.setScale(2, java.math.BigDecimal.ROUND_HALF_UP));
                         updateImportoAssociatoDocAmm(userContext, scadenza);
                     }
                     /**
@@ -1303,6 +1304,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
         java.math.BigDecimal impTotaleAddebitati = new java.math.BigDecimal(0).setScale(2, java.math.BigDecimal.ROUND_HALF_UP);
         java.util.HashMap dettagliDaStornare = caricaStorniPer(userContext, dettagli);
         java.util.HashMap dettagliDaAddebitare = caricaAddebitiPer(userContext, dettagli);
+
         if (dettagliDaStornare != null) {
             Vector dettagliStornati = null;
             boolean quadraturaInDeroga = false;
@@ -1310,6 +1312,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 Fattura_passiva_rigaIBulk key = (Fattura_passiva_rigaIBulk) dett.next();
                 for (Iterator i = ((Vector) dettagliDaStornare.get(key)).iterator(); i.hasNext(); ) {
                     Nota_di_credito_rigaBulk riga = (Nota_di_credito_rigaBulk) i.next();
+ 
                     if (!quadraturaInDeroga && riga.getFattura_passiva().quadraturaInDeroga())
                         quadraturaInDeroga = true;
 
@@ -1604,6 +1607,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             java.util.List dettagliFattura)
             throws it.cnr.jada.comp.ComponentException {
 
+        Nota_di_debitoHome notaHome = (Nota_di_debitoHome) getHome(userContext, Nota_di_debitoBulk.class);
         java.util.HashMap dettagliCaricati = new java.util.HashMap();
         if (dettagliFattura != null) {
             Nota_di_debito_rigaHome home = (Nota_di_debito_rigaHome) getHomeCache(userContext).getHome(Nota_di_debito_rigaBulk.class, "default", "testata");
@@ -1613,6 +1617,18 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 if (righeNdD != null && !righeNdD.isEmpty()) {
                     for (Iterator it = righeNdD.iterator(); it.hasNext(); ) {
                         Nota_di_debito_rigaBulk rigaNdD = (Nota_di_debito_rigaBulk) it.next();
+                        try {
+    						Nota_di_debitoBulk nota = (Nota_di_debitoBulk) notaHome.findByPrimaryKey(
+    						        new Nota_di_creditoBulk(
+    						        		rigaNdD.getCd_cds(),
+    						        		rigaNdD.getCd_unita_organizzativa(),
+    						        		rigaNdD.getEsercizio(),
+    						        		rigaNdD.getPg_fattura_passiva()
+    						        ));
+    						rigaNdD.setFattura_passiva(nota);
+    					} catch (PersistencyException e) {
+    						throw new ComponentException(e);
+    					}
                         if (rigaNdD.getFattura_passiva().getFattura_passiva_dettColl() == null ||
                                 rigaNdD.getFattura_passiva().getFattura_passiva_dettColl().isEmpty()) {
                             try {
@@ -1724,6 +1740,7 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             throws it.cnr.jada.comp.ComponentException {
 
         java.util.HashMap dettagliCaricati = new java.util.HashMap();
+        Nota_di_creditoHome notaHome = (Nota_di_creditoHome) getHome(userContext, Nota_di_creditoBulk.class);
         if (dettagliFattura != null) {
             Nota_di_credito_rigaHome home = (Nota_di_credito_rigaHome) getHomeCache(userContext).getHome(Nota_di_credito_rigaBulk.class, "default", "testata");
             for (Iterator i = dettagliFattura.iterator(); i.hasNext(); ) {
@@ -1732,6 +1749,19 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 if (righeNdC != null && !righeNdC.isEmpty()) {
                     for (Iterator it = righeNdC.iterator(); it.hasNext(); ) {
                         Nota_di_credito_rigaBulk rigaNdC = (Nota_di_credito_rigaBulk) it.next();
+                        try {
+    						Nota_di_creditoBulk nota = (Nota_di_creditoBulk) notaHome.findByPrimaryKey(
+    						        new Nota_di_creditoBulk(
+    						        		rigaNdC.getCd_cds(),
+    						        		rigaNdC.getCd_unita_organizzativa(),
+    						        		rigaNdC.getEsercizio(),
+    						        		rigaNdC.getPg_fattura_passiva()
+    						        ));
+    						rigaNdC.setFattura_passiva(nota);
+    					} catch (PersistencyException e) {
+    						throw new ComponentException(e);
+    					}
+
                         if (rigaNdC.getFattura_passiva().getFattura_passiva_dettColl() == null ||
                                 rigaNdC.getFattura_passiva().getFattura_passiva_dettColl().isEmpty()) {
                             try {
@@ -5260,7 +5290,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
      * Post: Tutte le modifiche effettuate sul compenso vengono annullate, mentre rimangono valide le
      * modifiche apportate al doc. amministrativo che ha aperto il compenso
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext    lo UserContext che ha generato la richiesta
      */
     public void rollbackToSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -7191,8 +7221,8 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 
     private void caricaDettagliFatturaTrovato(UserContext userContext, Fattura_passivaBulk fattura) throws ComponentException, PersistencyException {
         if (fattura != null) {
-            BulkList<Fattura_passiva_rigaIBulk> dett = fattura.getFattura_passiva_dettColl();
-            for (Iterator<Fattura_passiva_rigaIBulk> j = dett.iterator(); j.hasNext(); ) {
+            BulkList<Fattura_passiva_rigaBulk> dett = fattura.getFattura_passiva_dettColl();
+            for (Iterator<Fattura_passiva_rigaBulk> j = dett.iterator(); j.hasNext(); ) {
                 Fattura_passiva_rigaIBulk det = (Fattura_passiva_rigaIBulk) j.next();
                 det.setVoce_iva((Voce_ivaBulk) getHome(userContext, Voce_ivaBulk.class).findByPrimaryKey(det.getVoce_iva()));
 
@@ -7794,7 +7824,9 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     BigDecimal value = mapNatura.get(key);
                     BigDecimal valueEle = mapNaturaEle.get(key);
                     if (noSegno)
-                        valueEle = valueEle.abs();
+                        valueEle = Optional.ofNullable(valueEle)
+                                            .map(BigDecimal::abs)
+                                            .orElse(null);
                     BigDecimal valueEleArr = Utility.nvl(mapNaturaEleArr.get(key));
                     if (!(value != null && valueEle != null && value.compareTo(valueEle) == 0))
                         if ((valueEleArr.compareTo(new BigDecimal(0)) == 0 && value != null && valueEle != null && value.compareTo(valueEle) != 0) ||

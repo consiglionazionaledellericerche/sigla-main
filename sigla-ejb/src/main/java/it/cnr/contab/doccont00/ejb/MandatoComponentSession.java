@@ -42,4 +42,5 @@ java.lang.Boolean isMandatoCollegatoAnnullodaRiemettere(it.cnr.jada.UserContext 
 java.lang.Boolean isVerificataModPagMandato(it.cnr.jada.UserContext userContext,V_mandato_reversaleBulk mandato_reversaleBulk )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 Mandato_rigaBulk inizializzaTi_fattura(UserContext userContext, Mandato_rigaBulk riga) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 IDocumentoAmministrativoSpesaBulk getDocumentoAmministrativoSpesaBulk(UserContext userContext, Mandato_rigaBulk mandatoRiga) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+Mandato_rigaBulk setCodiciSIOPECollegabili(UserContext userContext, Mandato_rigaBulk riga) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

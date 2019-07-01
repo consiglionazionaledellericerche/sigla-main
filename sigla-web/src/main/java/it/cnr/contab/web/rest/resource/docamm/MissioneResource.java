@@ -32,6 +32,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
@@ -180,4 +181,14 @@ public class MissioneResource implements MissioneLocal {
     private Boolean isUoEnte(UserContext userContext) throws PersistencyException, ComponentException, java.rmi.RemoteException {
     	return Optional.of(getUoEnte(userContext)).filter(x -> x.getCd_unita_organizzativa().equals(((CNRUserContext)userContext).getCd_unita_organizzativa())).isPresent();
 	}	
+    
+    public Response delete(@Context HttpServletRequest request, @PathParam("id") long idRimborsoMissione) throws Exception {
+    	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+    	Optional.ofNullable(idRimborsoMissione).
+		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Id Rimborso missione Obbligatorio"));
+
+    	missioneComponentSession.cancellazioneMissioneDaGemis(userContext, idRimborsoMissione);
+    	return Response.ok("OK").build();
+
+    }
 }

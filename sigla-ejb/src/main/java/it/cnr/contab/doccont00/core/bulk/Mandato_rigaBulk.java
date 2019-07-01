@@ -12,9 +12,7 @@ import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 
 import java.math.BigDecimal;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
 
@@ -402,7 +400,7 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
     /**
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getMandato_siopeColl() {
+    public it.cnr.jada.bulk.BulkList<Mandato_siopeBulk> getMandato_siopeColl() {
         return mandato_siopeColl;
     }
 
@@ -495,10 +493,11 @@ public abstract class Mandato_rigaBulk extends Mandato_rigaBase {
     }
 
     public BigDecimal getIm_associato_siope() {
-        BigDecimal totale = Utility.ZERO;
-        for (Iterator i = getMandato_siopeColl().iterator(); i.hasNext(); )
-            totale = totale.add(Utility.nvl(((Mandato_siopeBulk) i.next()).getImporto()));
-        return Utility.nvl(totale);
+        final BulkList<Mandato_siopeBulk> bulkList = Optional.ofNullable(getMandato_siopeColl())
+                .orElse(new BulkList());
+        return bulkList.stream()
+                .map(Mandato_siopeBulk::getImporto)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal getIm_da_associare_siope() {
