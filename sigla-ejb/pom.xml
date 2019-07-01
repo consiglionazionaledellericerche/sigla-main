@@ -5,7 +5,7 @@
     <parent>
         <groupId>it.cnr</groupId>
         <artifactId>sigla</artifactId>
-        <version>5.3.32-SNAPSHOT</version>
+        <version>5.3.49-SNAPSHOT</version>
     </parent>
     <build>
         <pluginManagement>
@@ -241,7 +241,7 @@
         <dependency>
             <groupId>it.cnr.si</groupId>
             <artifactId>storage-cloud-commons</artifactId>
-            <version>${storage-cloud.version}</version>
+            <version>${storage.cloud.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Chiave Primaria." />
+	<fieldProperty
+		name="progEsitoApplicativo"
+		property="progEsitoApplicativo"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Progressivo esito applicativo" />
+	<fieldProperty
+		name="dataUpload"
+		property="dataUpload"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data upload" />
+	<fieldProperty
+		name="identificativoFlusso"
+		property="identificativoFlusso"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo flusso" />
+	<fieldProperty
+		name="esitoOperazione"
+		property="esitoOperazione"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Esito operazione" />
+	<fieldProperty
+		name="dtOraEsitoOperazione"
+		property="dtOraEsitoOperazione"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Data Esito operazione siope+" />
+	<fieldProperty
+		name="esercizioMandato"
+		property="esercizioMandato"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio mandato" />
+	<fieldProperty
+		name="cdCdsMandato"
+		property="cdCdsMandato"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="CdS mandato" />
+	<fieldProperty
+		name="pgMandato"
+		property="pgMandato"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio mandato" />
+	<fieldProperty
+		name="esercizioReversale"
+		property="esercizioReversale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio reversale" />
+	<fieldProperty
+		name="cdCdsReversale"
+		property="cdCdsReversale"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="CdS reversale" />
+	<fieldProperty
+		name="pgReversale"
+		property="pgReversale"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		label="Esercizio reversale" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="progEsitoApplicativo" />
+	<formFieldProperty
+		name="dataUpload" />
+	<formFieldProperty
+		name="identificativoFlusso" />
+	<formFieldProperty
+		name="esitoOperazione" />
+	<formFieldProperty
+		name="dtOraEsitoOperazione" />
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="progEsitoApplicativo" />
+	<findFieldProperty
+		name="dataUpload" />
+	<findFieldProperty
+		name="identificativoFlusso" />
+	<findFieldProperty
+		name="esitoOperazione" />
+	<findFieldProperty
+		name="dtOraEsitoOperazione" />
+	<findFieldProperty
+		name="esercizioMandato" />
+	<findFieldProperty
+		name="cdCdsMandato" />
+	<findFieldProperty
+		name="pgMandato" />
+	<findFieldProperty
+		name="esercizioReversale" />
+	<findFieldProperty
+		name="cdCdsReversale" />
+	<findFieldProperty
+		name="pgReversale" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="progEsitoApplicativo" />
+	<columnFieldProperty
+		name="dataUpload" />
+	<columnFieldProperty
+		name="identificativoFlusso" />
+	<columnFieldProperty
+		name="esitoOperazione" />
+	<columnFieldProperty
+		name="dtOraEsitoOperazione" />
+	<columnFieldProperty
+		name="esercizioMandato" />
+	<columnFieldProperty
+		name="cdCdsMandato" />
+	<columnFieldProperty
+		name="pgMandato" />
+	<columnFieldProperty
+		name="esercizioReversale" />
+	<columnFieldProperty
+		name="cdCdsReversale" />
+	<columnFieldProperty
+		name="pgReversale" />
+</bulkInfo>

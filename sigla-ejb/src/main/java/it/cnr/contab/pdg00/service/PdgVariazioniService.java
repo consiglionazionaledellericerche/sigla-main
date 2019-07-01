@@ -37,7 +37,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                 })));
     }
 
-    private String getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
+    public String getCMISPath(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
         return Arrays.asList(
                 SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(),
                 Optional.ofNullable(archiviaStampaPdgVariazioneBulk.getEsercizio())

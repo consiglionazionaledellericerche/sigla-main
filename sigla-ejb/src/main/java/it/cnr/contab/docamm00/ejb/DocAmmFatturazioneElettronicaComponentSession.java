@@ -28,4 +28,5 @@ public interface DocAmmFatturazioneElettronicaComponentSession extends
 
 	public String recuperoInizioNomeFile(UserContext userContext)
 			throws RemoteException, ComponentException;
+	public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws RemoteException, ComponentException;
 }

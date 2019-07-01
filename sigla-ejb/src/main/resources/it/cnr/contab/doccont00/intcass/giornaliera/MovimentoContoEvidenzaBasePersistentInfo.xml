@@ -101,7 +101,7 @@
 			columnName="CODICE_RIF_OPERAZIONE"
 			propertyName="codiceRifOperazione"
 			sqlTypeName="VARCHAR"
-			columnSize="20"
+			columnSize="250"
 			nullable="true" />
 		<columnMapping
 			columnName="CODICE_RIF_INTERNO"
