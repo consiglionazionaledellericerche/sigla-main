@@ -2014,5 +2014,7 @@ TRASPORTO_AEREO"/>
             <column name="stato_var_sos" type="varchar2(30)" remarks="Stato Variazione/Sostituzione SIOPE+"/>
         </addColumn>
     </changeSet>
-
+    <changeSet author="marco.spasiano" id="movimento_conto_evidenza_codice_rif_operazione">
+        <modifyDataType tableName="movimento_conto_evidenza" columnName="codice_rif_operazione" newDataType="VARCHAR(250)"/>
+    </changeSet>
 </databaseChangeLog>
