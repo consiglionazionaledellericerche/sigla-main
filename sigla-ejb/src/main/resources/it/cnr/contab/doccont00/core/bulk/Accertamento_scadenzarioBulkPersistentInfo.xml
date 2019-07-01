@@ -96,6 +96,13 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />
+		<columnMapping
+			columnName="IM_ASSOCIATO_DOC_CONTABILE"
+			propertyName="im_associato_doc_contabile"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
 	</columnMap>
 	<persistentProperty
 		name="accertamento"

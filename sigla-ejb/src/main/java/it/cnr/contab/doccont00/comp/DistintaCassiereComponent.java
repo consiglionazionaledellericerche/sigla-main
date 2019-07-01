@@ -24,6 +24,7 @@ import it.cnr.contab.config00.sto.bulk.EnteBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.*;
+import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_stato_invio_reversaliBulk;
 import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.*;
@@ -34,6 +35,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
@@ -97,6 +99,7 @@ public class DistintaCassiereComponent extends
     public static final String DOC_EQUIVALENTE = "DOC_EQUIVALENTE";
     public static final String REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
     public static final String SCOSTAMENTO = "0.03";
+    public static final String VARIAZIONE = "VARIAZIONE";
 
     final String regexBic = "[A-Z|a-z||0-9]{11}|[A-Z|a-z||0-9]{8}";
     final Pattern patternBic = Pattern.compile(regexBic, Pattern.MULTILINE);
@@ -222,51 +225,6 @@ public class DistintaCassiereComponent extends
                         stato_trasmissione);
             }
             broker.close();
-
-            /*
-             *
-             * String schema =
-             * it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema();
-             * Timestamp ts = getHome( userContext,
-             * Distinta_cassiereBulk.class).getServerTimestamp();
-             * java.sql.PreparedStatement ps = null; ps =
-             * getConnection(userContext).prepareStatement( "UPDATE "+ schema+
-             * "MANDATO A " + "SET STATO_TRASMISSIONE = ?, " +
-             * "PG_VER_REC = PG_VER_REC + 1, " + "DUVA = ?, " + "UTUV = ? " +
-             * "WHERE EXISTS " + "(SELECT 1 FROM  " + schema +
-             * "DISTINTA_CASSIERE_DET B " + "WHERE " + "CD_CDS = ? AND " +
-             * "CD_UNITA_ORGANIZZATIVA = ? AND " + "ESERCIZIO = ? AND " +
-             * "PG_DISTINTA = ? AND " + "PG_MANDATO IS NOT NULL AND " +
-             * "A.CD_CDS = B.CD_CDS AND " + "A.ESERCIZIO = B.ESERCIZIO AND " +
-             * "A.PG_MANDATO = B.PG_MANDATO) " );
-             *
-             * ps.setString(1, stato_trasmissione); ps.setTimestamp( 2, ts );
-             * ps.setString(3, distinta.getUser()); ps.setString(4,
-             * distinta.getCd_cds()); ps.setString(5,
-             * distinta.getCd_unita_organizzativa()); ps.setObject(6,
-             * distinta.getEsercizio()); ps.setObject(7,
-             * distinta.getPg_distinta()); LoggableStatement.execute(ps);
-             * try{ps.close();}catch( java.sql.SQLException e ){};
-             *
-             * ps = getConnection(userContext).prepareStatement( "UPDATE "+
-             * schema+ "REVERSALE A " + "SET STATO_TRASMISSIONE = ?, " +
-             * "PG_VER_REC = PG_VER_REC + 1, " + "DUVA = ?, " + "UTUV = ? " +
-             * "WHERE EXISTS " + "(SELECT 1 FROM  " + schema +
-             * "DISTINTA_CASSIERE_DET B " + "WHERE " + "CD_CDS = ? AND " +
-             * "CD_UNITA_ORGANIZZATIVA = ? AND " + "ESERCIZIO = ? AND " +
-             * "PG_DISTINTA = ? AND " + "PG_REVERSALE IS NOT NULL AND " +
-             * "A.CD_CDS = B.CD_CDS AND " + "A.ESERCIZIO = B.ESERCIZIO AND " +
-             * "A.PG_REVERSALE = B.PG_REVERSALE) " );
-             *
-             * ps.setString(1, stato_trasmissione); ps.setTimestamp( 2, ts );
-             * ps.setString(3, distinta.getUser()); ps.setString(4,
-             * distinta.getCd_cds()); ps.setString(5,
-             * distinta.getCd_unita_organizzativa()); ps.setObject(6,
-             * distinta.getEsercizio()); ps.setObject(7,
-             * distinta.getPg_distinta()); LoggableStatement.execute(ps);
-             * try{ps.close();}catch( java.sql.SQLException e ){};
-             */
-
         } catch (Exception e) {
             throw handleException(e);
         }
@@ -362,7 +320,14 @@ public class DistintaCassiereComponent extends
                         mandato.setDt_ritrasmissione(DateServices
                                 .getTs_valido(userContext));
                     }
-                } else mandato.setDt_ritrasmissione(null);
+                    if (Optional.ofNullable(mandato.getStatoVarSos())
+                                .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                                .orElse(Boolean.FALSE)){
+                        mandato.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value());
+                    }
+                } else {
+                    mandato.setDt_ritrasmissione(null);
+                }
             }
         }
         mandato.setUser(userContext.getUser());
@@ -455,8 +420,14 @@ public class DistintaCassiereComponent extends
                         mandato.setDt_ritrasmissione(DateServices
                                 .getTs_valido(userContext));
                     }
-
-                } else mandato.setDt_ritrasmissione(null);
+                    if (Optional.ofNullable(mandato.getStatoVarSos())
+                            .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                            .orElse(Boolean.FALSE)){
+                        mandato.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value());
+                    }
+                } else {
+                    mandato.setDt_ritrasmissione(null);
+                }
             }
         }
         mandato.setUser(userContext.getUser());
@@ -551,7 +522,14 @@ public class DistintaCassiereComponent extends
                         reversale.setDt_ritrasmissione(DateServices
                                 .getTs_valido(userContext));
                     }
-                } else reversale.setDt_ritrasmissione(null);
+                    if (Optional.ofNullable(reversale.getStatoVarSos())
+                            .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                            .orElse(Boolean.FALSE)){
+                        reversale.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value());
+                    }
+                } else {
+                    reversale.setDt_ritrasmissione(null);
+                }
             }
         }
         reversale.setUser(userContext.getUser());
@@ -1295,6 +1273,7 @@ public class DistintaCassiereComponent extends
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.STATO_MANDATO_ANNULLATO);
+                sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato_var_sos", SQLBuilder.ISNULL, null);
                 if (isInserisciMandatiVersamentoCori(userContext)) {
                     sql.addSQLClause("AND", "v_mandato_reversale_dist_xml.versamento_cori = 'N'");
                 }
@@ -1383,6 +1362,7 @@ public class DistintaCassiereComponent extends
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_sepa.stato", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.STATO_MANDATO_ANNULLATO);
+                sql.addSQLClause("AND", "v_mandato_reversale_dist_sepa.stato_var_sos", SQLBuilder.ISNULL, null);
 
                 sql.addSQLJoin("v_mandato_reversale_dist_sepa.CD_TIPO_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_sepa.CD_TIPO_DOCUMENTO_CONT");
                 sql.addSQLJoin("v_mandato_reversale_dist_sepa.PG_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_sepa.PG_DOCUMENTO_CONT");
@@ -1420,9 +1400,7 @@ public class DistintaCassiereComponent extends
                 }
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
-//			sql.addSQLClause("AND", "v_mandato_reversale_dist_sepa.stato", SQLBuilder.NOT_EQUALS,
-//					MandatoBulk.STATO_MANDATO_ANNULLATO);
-//
+
                 sql.addSQLJoin("v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT");
                 sql.addSQLJoin("v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT");
                 if (Utility.createParametriCnrComponentSession().getParametriCnr(
@@ -1486,6 +1464,25 @@ public class DistintaCassiereComponent extends
                                 "V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
                         sql3.addSQLJoin("V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT",
                                 "V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
+
+                        // Aggiunto per query troppo lenta
+                        if (!tesoreriaUnica(userContext, distinta)) {
+                            sql3.addSQLClause("AND", "v_mandato_reversale_dist_xml.cd_cds", SQLBuilder.EQUALS, ((CNRUserContext) userContext).getCd_cds());
+                            sql3.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato_trasmissione", SQLBuilder.EQUALS,
+                                    MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+                        } else {
+                            sql3.addSQLClause("AND", "v_mandato_reversale_dist_xml.dt_firma", SQLBuilder.ISNOTNULL, null);
+                            sql3.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato_trasmissione", SQLBuilder.EQUALS,
+                                    MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+                        }
+                        sql3.addSQLClause("AND", "v_mandato_reversale_dist_xml.ti_documento_cont", SQLBuilder.NOT_EQUALS,
+                                MandatoBulk.TIPO_REGOLARIZZAZIONE);
+                        sql3.addSQLClause("AND", "v_mandato_reversale_dist_xml.stato", SQLBuilder.NOT_EQUALS,
+                                MandatoBulk.STATO_MANDATO_ANNULLATO);
+                        sql3.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT_PADRE", "V_MANDATO_REVERSALE_DIST_XML.CD_TIPO_DOCUMENTO_CONT");
+                        sql3.addSQLJoin("V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT_PADRE", "V_MANDATO_REVERSALE_DIST_XML.PG_DOCUMENTO_CONT");
+
+
                         sql.addSQLNotExistsClause("AND", sql3);
 
                         SQLBuilder sql4 = getHome(userContext, V_mandato_reversaleBulk.class,
@@ -1507,6 +1504,8 @@ public class DistintaCassiereComponent extends
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
                 sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.STATO_MANDATO_ANNULLATO);
+                sql.addSQLClause("AND", "v_mandato_reversale_distinta.stato_var_sos", SQLBuilder.ISNULL, null);
+
                 if (isInserisciMandatiVersamentoCori(userContext)) {
                     sql.addSQLClause("AND", "v_mandato_reversale_distinta.versamento_cori = 'N'");
                 }
@@ -4542,21 +4541,52 @@ public class DistintaCassiereComponent extends
         }
     }
 
-    private String getTipoOperazione(V_mandato_reversaleBulk bulk) {
+    private String getTipoOperazioneVariazione(UserContext userContext, V_mandato_reversaleBulk bulk, String stato) throws ComponentException, PersistencyException {
+        /**
+         * Cerco il Mandato associato alla reversale
+         *
+         */
+        Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
+                .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                .orElse(Boolean.FALSE);
+        if (bulk.isReversale()) {
+            isVariazioneDefinitiva = Optional.ofNullable(getHome(userContext, V_mandato_reversaleBulk.class)
+                .findByPrimaryKey(
+                        new V_mandato_reversaleBulk(
+                                bulk.getEsercizio(),
+                                bulk.getCd_tipo_documento_cont_padre(),
+                                bulk.getCd_cds(),
+                                bulk.getPg_documento_cont_padre())
+                ))
+                .filter(V_mandato_reversaleBulk.class::isInstance)
+                .map(V_mandato_reversaleBulk.class::cast)
+                .filter(V_mandato_reversaleBulk::isMandato)
+                .flatMap(v_mandato_reversaleBulk -> Optional.ofNullable(v_mandato_reversaleBulk.getStatoVarSos()))
+                .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                .orElse(Boolean.FALSE);
+        }
+        if (isVariazioneDefinitiva) {
+            return VARIAZIONE;
+        } else {
+            return stato;
+        }
+
+    }
+
+    private String getTipoOperazione(UserContext userContext, V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException {
         switch (bulk.getStato()) {
             case MandatoBulk.STATO_MANDATO_ANNULLATO : {
-                return ANNULLO;
+                return getTipoOperazioneVariazione(userContext, bulk, ANNULLO);
             }
             case MandatoBulk.STATO_MANDATO_EMESSO : {
-                return INSERIMENTO;
+                return getTipoOperazioneVariazione(userContext, bulk, INSERIMENTO);
             }
 
             default: {
-                return INSERIMENTO;
+                return getTipoOperazioneVariazione(userContext, bulk, INSERIMENTO);
             }
         }
     }
-
 
     private it.siopeplus.Reversale creaReversaleFlussoSiopeplus(UserContext userContext,
                                                                 V_mandato_reversaleBulk bulk) throws ComponentException,
@@ -4565,7 +4595,7 @@ public class DistintaCassiereComponent extends
             final ObjectFactory objectFactory = new ObjectFactory();
             it.siopeplus.Reversale reversale = objectFactory.createReversale();
             List list = findDocumentiFlusso(userContext, bulk);
-            reversale.setTipoOperazione(getTipoOperazione(bulk));
+            reversale.setTipoOperazione(getTipoOperazione(userContext, bulk));
 
             GregorianCalendar gcdi = new GregorianCalendar();
             it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk docContabile = null;
@@ -4747,7 +4777,7 @@ public class DistintaCassiereComponent extends
             BancaBulk bancauo = recuperaIbanUo(userContext, bulk.getUo());
             it.siopeplus.Mandato mandato = objectFactory.createMandato();
             List list = findDocumentiFlusso(userContext, bulk);
-            mandato.setTipoOperazione(getTipoOperazione(bulk));
+            mandato.setTipoOperazione(getTipoOperazione(userContext, bulk));
             GregorianCalendar gcdi = new GregorianCalendar();
 
             it.siopeplus.Mandato.InformazioniBeneficiario infoben = objectFactory.createMandatoInformazioniBeneficiario();
@@ -4900,7 +4930,7 @@ public class DistintaCassiereComponent extends
                                 Optional.ofNullable(docContabile.getNumeroConto())
                                         .filter(s -> s.length() == 7)
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
-                                                "sul Mandato {0}/{1}/{2}, oppure il numero conto {} non ha la lunghezza corretta!",
+                                                "sul Mandato {0}/{1}/{2}, oppure il numero conto {3} non ha la lunghezza corretta!",
                                                 String.valueOf(bulk.getEsercizio()),
                                                 String.valueOf(bulk.getCd_cds()),
                                                 String.valueOf(bulk.getPg_documento_cont()),

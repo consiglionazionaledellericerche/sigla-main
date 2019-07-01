@@ -9,6 +9,7 @@ import java.util.*;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.bulk.*;
 
 public class MandatoIBulk extends MandatoBulk {
@@ -235,12 +236,17 @@ public boolean isROPg_accertamento()
 public Mandato_rigaBulk removeFromMandato_rigaColl(int index) 
 {
 	Mandato_rigaIBulk riga = (Mandato_rigaIBulk) super.removeFromMandato_rigaColl( index );
-	if ( riga.getCd_sospeso() != null )
-		getSospesiDa1210List().remove( riga.getCd_sospeso());
-	if(riga.getMandato_siopeColl()!=null && !riga.getMandato_siopeColl().isEmpty())
-		riga.setMandato_siopeColl(null);
-	if(riga.getMandatoCupColl()!=null && !riga.getMandatoCupColl().isEmpty())
-		riga.setMandatoCupColl(null);
+	if (Optional.ofNullable(riga.getMandatoI())
+			.flatMap(mandatoIBulk -> Optional.ofNullable(mandatoIBulk.getStatoVarSos()))
+			.map(s -> !s.equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
+			.orElse(Boolean.TRUE)) {
+		if ( riga.getCd_sospeso() != null )
+			getSospesiDa1210List().remove( riga.getCd_sospeso());
+		if(riga.getMandato_siopeColl()!=null && !riga.getMandato_siopeColl().isEmpty())
+			riga.setMandato_siopeColl(null);
+		if(riga.getMandatoCupColl()!=null && !riga.getMandatoCupColl().isEmpty())
+			riga.setMandatoCupColl(null);
+	}
 	return riga;
 }
 /**

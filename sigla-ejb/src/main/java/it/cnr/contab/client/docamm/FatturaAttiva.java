@@ -26,6 +26,8 @@ public class FatturaAttiva  implements Serializable{
 	
 	private java.util.ArrayList<FatturaAttivaIntra> righeIntra;
 	
+	private String numeroFattura;
+
 	private String cod_errore;
 	private String desc_errore;
 	private String ti_causale_emissione;
@@ -343,6 +345,12 @@ public class FatturaAttiva  implements Serializable{
 	}
 	public void setFl_pagamento_anticipato(String fl_pagamento_anticipato) {
 		this.fl_pagamento_anticipato = fl_pagamento_anticipato;
+	}
+	public String getNumeroFattura() {
+		return numeroFattura;
+	}
+	public void setNumeroFattura(String numeroFattura) {
+		this.numeroFattura = numeroFattura;
 	}
 
 }
