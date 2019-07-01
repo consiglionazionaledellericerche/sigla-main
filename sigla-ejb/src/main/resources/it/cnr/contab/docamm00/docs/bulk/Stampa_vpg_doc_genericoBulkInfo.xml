@@ -68,6 +68,9 @@
 	<fieldProperty
 		name="cdTipoDocAmmCRParameter"
 		property="cdTipoDocAmmCRParameter" />
+	<fieldProperty
+		name="idTipoDocumentoGenericoParameter"
+		property="idTipoDocumentoGenericoParameter" />
 		
 	<formFieldProperty
 		name="esercizio"
@@ -86,6 +89,7 @@
 	<formFieldProperty name="dsTerzo" />
 	<formFieldProperty name="findTerzo" />
 	<formFieldProperty name="tipo_doc_for_search" />
+	<formFieldProperty name="tipo_doc_gen_for_search" />
 
 	<form
 		name="/docamm/docamm/vpg_doc_generico.rpt">
@@ -106,6 +110,7 @@
 		<formFieldProperty name="dsTerzo" />
 		<formFieldProperty name="findTerzo" />
 		<formFieldProperty name="tipo_doc_for_search" />
+		<formFieldProperty name="tipo_doc_gen_for_search" />
 	</form>
 
 	<printForm
@@ -149,6 +154,10 @@
 		<printFieldProperty
 			name="cdTerzoCRParameter"
 			parameterPosition="9"
+			parameterType="STRING" />
+		<printFieldProperty				  
+			name="idTipoDocumentoGenericoParameter"
+			parameterPosition="10"
 			parameterType="STRING" />
 	</printForm>
 <printForm
@@ -207,5 +216,11 @@
 			parameterType="STRING"
 			paramNameJR="aCd_terzo"
 			paramTypeJR="java.lang.String" />
+		<printFieldProperty				  
+			name="idTipoDocumentoGenericoParameter"
+			parameterPosition="9"
+			parameterType="STRING"
+			paramNameJR="acd_tdg"
+			paramTypeJR="java.lang.Long"  />
 	</printForm>
 </bulkInfo>

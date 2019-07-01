@@ -81,6 +81,9 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 
 	private String esitoOperazione;
 
+	// STATO_VAR_SOS VARCHAR2(30)
+	private java.lang.String statoVarSos;
+
 	public V_mandato_reversaleBase() {
 		super();
 	}
@@ -374,5 +377,13 @@ public class V_mandato_reversaleBase extends V_mandato_reversaleKey implements P
 
 	public void setEsitoOperazione(String esitoOperazione) {
 		this.esitoOperazione = esitoOperazione;
+	}
+
+	public String getStatoVarSos() {
+		return statoVarSos;
+	}
+
+	public void setStatoVarSos(String statoVarSos) {
+		this.statoVarSos = statoVarSos;
 	}
 }

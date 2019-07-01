@@ -22,6 +22,7 @@
 			sqlTypeName="VARCHAR"
 			columnSize="200"/>
 	</defaultColumnMap>
+
 	<persistentProperty
 		name="cd_terzo"/>		
 	<persistentProperty

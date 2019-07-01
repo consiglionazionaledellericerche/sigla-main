@@ -537,9 +537,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     ui.getUtente().getCd_utente(),
                     context.getSessionId(),
                     ui.getEsercizio(),
-                    Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase(NULL)).orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
-                    Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase(NULL)).orElse(CNRUserContext.getCd_cds(context.getUserContext())),
-                    Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase(NULL)).orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
+                    Optional.ofNullable(uo).filter(x -> !x.equalsIgnoreCase(NULL))
+                            .orElse(CNRUserContext.getCd_unita_organizzativa(context.getUserContext())),
+                    Optional.ofNullable(cds).filter(x -> !x.equalsIgnoreCase(NULL))
+                            .orElse(CNRUserContext.getCd_cds(context.getUserContext())),
+                    Optional.ofNullable(cdr).filter(x -> !x.equalsIgnoreCase(NULL))
+                            .orElse(CNRUserContext.getCd_cdr(context.getUserContext())));
 
             ui.setUnita_organizzativa(Optional.ofNullable(uo)
                     .filter(x -> !x.equalsIgnoreCase(NULL))
@@ -555,7 +558,7 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                     .map(Unita_organizzativaBulk.class::cast)
                     .orElse(null));
 
-            ui.setCdr(Optional.ofNullable(cdr)
+            final CdrBulk cdrBulk1 = Optional.ofNullable(cdr)
                     .filter(x -> !x.equalsIgnoreCase(NULL))
                     .map(x -> new CdrBulk(x))
                     .map(cdrBulk -> {
@@ -588,8 +591,16 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                             }
                         }
                         return null;
-                    })
-            );
+                    });
+            ui.setCdr(cdrBulk1);
+            final String cdCdR = Optional.ofNullable(userContext.getCd_cdr())
+                    .orElseGet(() ->
+                            Optional.ofNullable(cdrBulk1)
+                                    .flatMap(cdrBulk -> Optional.ofNullable(cdrBulk.getCd_centro_responsabilita()))
+                                    .orElse(null)
+                    );
+            if (Optional.ofNullable(cdCdR).isPresent())
+                userContext.setCd_cdr(cdCdR);
             userContext.getAttributes().put(BOOTSTRAP, true);
             bp.setBootstrap(true);
             context.setUserContext(userContext);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoBulk"
+	homeClassName="it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoHome">
+	<defaultColumnMap
+		tableName="SIOPE_PLUS_ESITO">
+		<columnMapping
+			columnName="ESERCIZIO_MANDATO"
+			propertyName="mandato.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_MANDATO"
+			propertyName="mandato.cd_cds" />
+		<columnMapping
+			columnName="PG_MANDATO"
+			propertyName="mandato.pg_mandato" />
+		<columnMapping
+			columnName="ESERCIZIO_REVERSALE"
+			propertyName="reversale.esercizio" />
+		<columnMapping
+			columnName="CD_CDS_REVERSALE"
+			propertyName="reversale.cd_cds" />
+		<columnMapping
+			columnName="PG_REVERSALE"
+			propertyName="reversale.pg_reversale" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="mandato" />
+	<persistentProperty
+		name="reversale" />
+</SQLPersistentInfo>

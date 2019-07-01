@@ -1,11 +1,15 @@
 package it.cnr.contab.doccont00.bp;
 
+import it.cnr.contab.docamm00.bp.CRUDDocumentoGenericoPassivoBP;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaIBulk;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+
+import java.util.Optional;
 
 public class CRUDMandatoRigaController extends it.cnr.jada.util.action.SimpleDetailCRUDController {
     public CRUDMandatoRigaController(String name, Class modelClass, String listPropertyName, it.cnr.jada.util.action.FormController parent) {
@@ -49,10 +53,18 @@ public class CRUDMandatoRigaController extends it.cnr.jada.util.action.SimpleDet
                         row.getEsercizio_ori_obbligazione().equals(rigaDaCancellare.getEsercizio_ori_obbligazione()) &&
                         row.getPg_obbligazione().equals(rigaDaCancellare.getPg_obbligazione()) &&
                         row.getPg_obbligazione_scadenzario().equals(rigaDaCancellare.getPg_obbligazione_scadenzario())) {
-//				row = (Mandato_rigaIBulk) ((MandatoBulk)getParentModel()).removeFromMandato_rigaColl( i );
                     row.setToBeDeleted();
                 }
             }
+            rigaDaCancellare.setToBeDeleted();
+            ((MandatoBulk) getParentModel()).removeFromMandato_rigaColl(index);
+            return rigaDaCancellare;
+        } else if (
+                Optional.ofNullable(getParentModel())
+                    .filter(MandatoBulk.class::isInstance)
+                    .map(MandatoBulk.class::cast)
+                    .map(mandatoBulk -> mandatoBulk.getStatoVarSos().equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
+                    .orElse(Boolean.FALSE)){
             rigaDaCancellare.setToBeDeleted();
             ((MandatoBulk) getParentModel()).removeFromMandato_rigaColl(index);
             return rigaDaCancellare;
@@ -98,7 +110,6 @@ public class CRUDMandatoRigaController extends it.cnr.jada.util.action.SimpleDet
      * per la ricerca rapida della riga da quadrare con il SIOPE
      *
      * @param context  Il contesto dell'azione
-     * @param scadenza La scadenza dell'oggetto bulk in uso
      */
     @Override
     public void writeHTMLToolbar(
@@ -121,6 +132,16 @@ public class CRUDMandatoRigaController extends it.cnr.jada.util.action.SimpleDet
                         true,
                         "SIOPE - Vai a riga successiva da completare",
                         "btn-sm btn-outline-primary",
+                        isFromBootstrap);
+            }
+            if (bp.isDaVariare()) {
+                it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+                        context,
+                        isFromBootstrap ? "fa fa-fw fa-bolt" : "img/history16.gif",
+                        "javascript:submitForm('doRicercaObbligazione')",
+                        true,
+                        "Cambia impegno",
+                        "btn-sm btn-outline-primary btn-title",
                         isFromBootstrap);
             }
         }

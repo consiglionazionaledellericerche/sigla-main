@@ -231,6 +231,16 @@
 		inputSize="40"
 		/>
 	<fieldProperty
+		name="terzo"
+		property="mandato_terzo.terzo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		label="Beneficiario"/>
+
+	<fieldProperty
 		name="cd_terzo_cedente"
 		property="terzo_cedente.cd_terzo"
 		inputType="ROTEXT"
@@ -337,6 +347,15 @@
 			cols="100"
 			rows="3"
 			label="Errore"/>
+	<fieldProperty
+			name="statoVarSos"
+			property="statoVarSos"
+			keysProperty="statoVariazioneSostituzioneKeys"
+			inputType="SELECT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Stato Variazione/Sostituzione"/>
 
 	<form name="searchtool">
 		<formFieldProperty
@@ -397,6 +416,8 @@
 	<formFieldProperty
 		name="terzo_ds_terzo"/>
 	<formFieldProperty
+		name="terzo" />
+	<formFieldProperty
 		name="cd_terzo_cedente"/>
 	<formFieldProperty
 		name="ds_terzo_cedente"/>
@@ -421,7 +442,8 @@
 		name="dtOraEsitoOperazione" />
 	<formFieldProperty
 		name="erroreSiopePlus" />
-
+	<formFieldProperty
+		name="statoVarSos" />
 
 
 	<columnFieldProperty
@@ -522,4 +544,6 @@
 			name="dtOraEsitoOperazione" />
 	<findFieldProperty
 			name="erroreSiopePlus" />
+	<findFieldProperty
+			name="statoVarSos" />
 </bulkInfo>
