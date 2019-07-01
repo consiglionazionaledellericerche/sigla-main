@@ -50,7 +50,7 @@
 
 <script language="JavaScript">
 function doScaricaFile() {	
-	doPrint('<%=(allegato==null?null:JSPUtils.getAppRoot(request) + allegato.getDownloadUrl())%>');
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/<%=bp.getNomeAllegatoIncarico()%>?methodName=scaricaAllegatoIncarico&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>');
 }
 </script>
 
@@ -64,10 +64,10 @@ function doScaricaFile() {
 	    	  (allegato.isContratto() || allegato.isCurriculumVincitore())) {%>
 		<tr>
 			<td colspan=5>
-			<div class="Group"><table>
+			<div class="Group Group card p-2 bg-danger text-white h5"><table>
 				<% if (allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
 				<tr><td valign=top>
-			    	<span class="FormLabel" style="color:red">Attenzione:</span>
+			    	<span class="FormLabel">Attenzione:</span>
 			    </td>
 			    <td valign=top>
 			    	<span class="FormLabel">
@@ -79,7 +79,7 @@ function doScaricaFile() {
 					</span>
 				</td></tr>
 				<tr><td valign=top>
-			    	<span class="FormLabel" style="color:red">Attenzione:</span>
+			    	<span class="FormLabel">Attenzione:</span>
 			    </td>
 			    <td valign=top>
 			    	<span class="FormLabel">

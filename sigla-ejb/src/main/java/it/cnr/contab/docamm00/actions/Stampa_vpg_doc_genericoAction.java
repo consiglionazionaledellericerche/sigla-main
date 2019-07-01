@@ -34,4 +34,17 @@ public Forward doOnTipoDocumentoChange(ActionContext context) {
         return handleException(context, t);
     }
 }
+public Forward doOnTipoDocumentoGenericoChange(ActionContext context) {
+
+    try {
+        fillModel(context);
+        
+        ParametricPrintBP bp= (ParametricPrintBP) context.getBusinessProcess();
+        Stampa_vpg_doc_genericoBulk stampa = (Stampa_vpg_doc_genericoBulk) bp.getModel();
+
+        return context.findDefaultForward();
+    } catch (Throwable t) {
+        return handleException(context, t);
+    }
+}
 }

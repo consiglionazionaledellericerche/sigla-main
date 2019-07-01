@@ -188,6 +188,12 @@
                 propertyName="erroreSiopePlus"
                 sqlTypeName="VARCHAR"
                 columnSize="2000"/>
+        <columnMapping
+                columnName="STATO_VAR_SOS"
+                propertyName="statoVarSos"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+
     </defaultColumnMap>
     <persistentProperty
             name="dt_annullamento"/>
@@ -253,5 +259,6 @@
             name="dtOraEsitoOperazione"/>
     <persistentProperty
             name="erroreSiopePlus"/>
-
+    <persistentProperty
+            name="statoVarSos"/>
 </SQLPersistentInfo>

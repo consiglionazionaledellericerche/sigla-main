@@ -41,6 +41,7 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.contab.util00.ejb.ProcedureComponentSession;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -60,7 +61,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -69,7 +69,6 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
@@ -183,10 +182,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
              */
 
             /* verifico se sono a consumo o a copertura completa */
-            if (scadenza.getIm_scadenza().compareTo(riga.getIm_mandato_riga()) == 0)
-                flConsumo = false;
-            else
-                flConsumo = true;
+            flConsumo = scadenza.getIm_scadenza().compareTo(riga.getIm_mandato_riga()) != 0;
             /* ricerco le scad_voce */
             Obbligazione_scad_voceBulk osv = new Obbligazione_scad_voceBulk();
             osv.setEsercizio(riga.getEsercizio_obbligazione());
@@ -370,7 +366,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * doc.contabile
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato        <code>MandatoBulk</code> il Mandato per cui aggiornare le
+     * @param mandato     <code>MandatoBulk</code> il Mandato per cui aggiornare le
      *                    scadenze dell'obbligazione
      */
     protected void aggiornaImportoObbligazioni(UserContext userContext,
@@ -540,7 +536,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 } else
                     continue;
 
-                if (sospeso.STATO_SOSP_IN_SOSPESO.equals(sospeso
+                if (SospesoBulk.STATO_SOSP_IN_SOSPESO.equals(sospeso
                         .getStato_sospeso())
                         && sospeso.getCd_cds_origine() == null)
                     sospeso.setCds_origine(new CdsBulk(mandato
@@ -548,7 +544,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
                 sospeso.setToBeUpdated();
                 sospeso
-                        .setUser(((it.cnr.contab.utenze00.bp.CNRUserContext) aUC)
+                        .setUser(aUC
                                 .getUser());
             }
             /*
@@ -593,7 +589,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     continue;
                 sospeso.setToBeUpdated();
                 sospeso
-                        .setUser(((it.cnr.contab.utenze00.bp.CNRUserContext) aUC)
+                        .setUser(aUC
                                 .getUser());
             }
             return mandato;
@@ -615,11 +611,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * resettata e vengono aggiornati i saldi relativi al pagato delle voci del
      * piano presenti nel mandato
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoBulk</code> mandato per cui aggiornare lo stato e
-     *                i saldi pagati
-     * @param action  <code>String</code> azione effettuata sul mandato. ( I -
-     *                inserimento, M - modifica, A annullamento)
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoBulk</code> mandato per cui aggiornare lo stato e
+     *                    i saldi pagati
+     * @param action      <code>String</code> azione effettuata sul mandato. ( I -
+     *                    inserimento, M - modifica, A annullamento)
      */
 
     private void aggiornaSaldoPagato(UserContext userContext,
@@ -791,39 +787,38 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 // creo mandato_riga
                 riga = creaMandatoRiga(aUC, mandato, docPassivo);
                 //controllo cap /swift
-                if (riga.getBanca() != null && 
-                		((Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getBanca().getTi_pagamento())
-             			||(Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca().getTi_pagamento()))))) {
-                	
-                	  BancaBulk banca = (BancaBulk) getHome(aUC,
-                			  BancaBulk.class).findByPrimaryKey(
-                              new BancaBulk(riga.getCd_terzo(),riga.getPg_banca()));
-                    
-                	if (banca!=null && banca.getCodice_iban()!=null && riga.getBanca().getAbi()!=null && banca.getCodice_iban().startsWith("IT")){
-                    if (riga.getCd_terzo() != null) {
-                        TerzoBulk terzo = (TerzoBulk) getHome(aUC,
-                                TerzoBulk.class).findByPrimaryKey(
-                                new TerzoBulk(riga.getCd_terzo()));
-                        if (terzo.getPg_comune_sede() != null) {
-                            ComuneBulk comune = (ComuneBulk) getHome(aUC,
-                                    ComuneBulk.class).findByPrimaryKey(
-                                    new ComuneBulk(terzo.getPg_comune_sede()));
-                            if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede() == null)
-                                throw new ApplicationException(
-                                        "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
+                if (riga.getBanca() != null &&
+                        ((Rif_modalita_pagamentoBulk.BANCARIO.equals(riga.getBanca().getTi_pagamento())
+                                || (Rif_modalita_pagamentoBulk.IBAN.equals(riga.getBanca().getTi_pagamento()))))) {
+
+                    BancaBulk banca = (BancaBulk) getHome(aUC,
+                            BancaBulk.class).findByPrimaryKey(
+                            new BancaBulk(riga.getCd_terzo(), riga.getPg_banca()));
+
+                    if (banca != null && banca.getCodice_iban() != null && riga.getBanca().getAbi() != null && banca.getCodice_iban().startsWith("IT")) {
+                        if (riga.getCd_terzo() != null) {
+                            TerzoBulk terzo = (TerzoBulk) getHome(aUC,
+                                    TerzoBulk.class).findByPrimaryKey(
+                                    new TerzoBulk(riga.getCd_terzo()));
+                            if (terzo.getPg_comune_sede() != null) {
+                                ComuneBulk comune = (ComuneBulk) getHome(aUC,
+                                        ComuneBulk.class).findByPrimaryKey(
+                                        new ComuneBulk(terzo.getPg_comune_sede()));
+                                if (comune.getTi_italiano_estero().equals(NazioneBulk.ITALIA) && terzo.getCap_comune_sede() == null)
+                                    throw new ApplicationException(
+                                            "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il cap sul terzo.");
+                            }
                         }
-                      }
-                    }
-                	else if (banca!=null && banca.getCodice_iban()!=null && riga.getBanca().getAbi()==null ){
+                    } else if (banca != null && banca.getCodice_iban() != null && riga.getBanca().getAbi() == null) {
                         NazioneHome nazioneHome = (NazioneHome) getHome(aUC,
                                 NazioneBulk.class);
                         SQLBuilder sqlExists = nazioneHome.createSQLBuilder();
-                        sqlExists.addSQLClause("AND","NAZIONE.CD_ISO",SQLBuilder.EQUALS,banca.getCodice_iban().substring(0, 2));
-                        sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
-                        if (sqlExists.executeCountQuery(getConnection(aUC))!=0 && riga.getBanca().getCodice_swift()==null) 
-                		          throw new ApplicationException(
-                                            "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il codice swift/bic.");
-                        }
+                        sqlExists.addSQLClause("AND", "NAZIONE.CD_ISO", SQLBuilder.EQUALS, banca.getCodice_iban().substring(0, 2));
+                        sqlExists.addSQLClause("AND", "NAZIONE.FL_SEPA", SQLBuilder.EQUALS, "Y");
+                        if (sqlExists.executeCountQuery(getConnection(aUC)) != 0 && riga.getBanca().getCodice_swift() == null)
+                            throw new ApplicationException(
+                                    "Attenzione per la modalità di pagamento presente sul documento è necessario indicare il codice swift/bic.");
+                    }
                 }
                 // estrae le eventuali note di credito/debito
                 docPassiviCollegati = ((MandatoIHome) getHome(aUC, mandato
@@ -920,9 +915,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         && ass.getCd_tipo_documento_cont_coll().equals(Numerazione_doc_contBulk.TIPO_REV)) {
                     /** il mandato ha una reversale associata **/
                     reversale = (ReversaleBulk) revSession.inizializzaBulkPerModifica(userContext,
-                                    new ReversaleIBulk(ass.getCd_cds_coll(),
-                                            ass.getEsercizio_coll(),
-                                            ass.getPg_documento_cont_coll()));
+                            new ReversaleIBulk(ass.getCd_cds_coll(),
+                                    ass.getEsercizio_coll(),
+                                    ass.getPg_documento_cont_coll()));
                     revSession.annullaReversale(userContext, reversale, false);
                     rimuoviVincoliAlMandato(userContext, mandato);
                 }
@@ -949,7 +944,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             final Collection<Ass_mandato_reversaleBulk> ass = Optional.ofNullable(ass_mandato_reversaleHome.findReversali(userContext, mandatoBulk))
                     .filter(collection -> !collection.isEmpty())
                     .orElse(Collections.emptyList());
-            for(Ass_mandato_reversaleBulk ass_mandato_reversaleBulk : ass){
+            for (Ass_mandato_reversaleBulk ass_mandato_reversaleBulk : ass) {
                 ReversaleBulk reversale =
                         Optional.ofNullable(super.findByPrimaryKey(userContext,
                                 new ReversaleIBulk(ass_mandato_reversaleBulk.getCd_cds_reversale(),
@@ -959,10 +954,10 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                 .map(ReversaleBulk.class::cast)
                                 .orElse(null);
                 if (Optional.ofNullable(reversale)
-                                .flatMap(reversaleBulk -> Optional.ofNullable(reversaleBulk.getEsitoOperazione()))
-                                .filter(s -> s.equalsIgnoreCase(EsitoOperazione.ACQUISITO.value()) ||
-                                        s.equalsIgnoreCase(EsitoOperazione.NON_ESEGUIBILE.value()))
-                                .isPresent()
+                        .flatMap(reversaleBulk -> Optional.ofNullable(reversaleBulk.getEsitoOperazione()))
+                        .filter(s -> s.equalsIgnoreCase(EsitoOperazione.ACQUISITO.value()) ||
+                                s.equalsIgnoreCase(EsitoOperazione.NON_ESEGUIBILE.value()))
+                        .isPresent()
                 ) {
                     ass_mandato_reversaleBulk.setToBeDeleted();
                     try {
@@ -1046,7 +1041,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             sduFromDb.getIm_associato()));
                     sospeso.setToBeUpdated();
                     sospeso
-                            .setUser(((it.cnr.contab.utenze00.bp.CNRUserContext) aUC)
+                            .setUser(aUC
                                     .getUser());
 
                 }
@@ -1176,7 +1171,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      *
      * @param userContext      lo <code>UserContext</code> che ha generato la richiesta
      * @param mandato          <code>MandatoBulk</code> il mandato da annullare
-     * @param p            il parametro che indica se il controllo sul compenso e'
+     * @param p                il parametro che indica se il controllo sul compenso e'
      *                         necessario
      * @param annullaCollegati valore booleano che indica se procedere o meno con
      *                         l'annullamento dei doc. contabili collegati al mandato
@@ -1268,8 +1263,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             mandato.setDt_annullamento(DateServices
                     .getTs_valido(userContext));
 
-            if (mandato.getStato_coge().equals(mandato.STATO_COGE_C))
-                mandato.setStato_coge(mandato.STATO_COGE_R);
+            if (mandato.getStato_coge().equals(MandatoBulk.STATO_COGE_C))
+                mandato.setStato_coge(MandatoBulk.STATO_COGE_R);
             if (!MandatoBulk.TIPO_REGOLARIZZAZIONE.equals(mandato
                     .getTi_mandato())) {
                 mandato.setFl_riemissione(riemissione);
@@ -1301,12 +1296,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             // aggiornaSaldoPagato( userContext, mandato,
             // ANNULLAMENTO_MANDATO_ACTION );
 
-            if (mandato.getTi_mandato().equals(mandato.TIPO_ACCREDITAMENTO)
+            if (mandato.getTi_mandato().equals(MandatoBulk.TIPO_ACCREDITAMENTO)
                     && mandato.getReversaliColl().size() > 0) {
                 annullaDocumentoGenerico(userContext, mandato);
                 annullaReversaleDiTrasferimento(userContext, mandato);
             } else if (mandato.getTi_mandato().equals(
-                    mandato.TIPO_REGOLARIZZAZIONE)
+                    MandatoBulk.TIPO_REGOLARIZZAZIONE)
                     && mandato.getReversaliColl().size() > 0) {
                 aggiornaSaldoPagato(userContext, mandato,
                         ANNULLAMENTO_MANDATO_ACTION);
@@ -1458,9 +1453,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * disponibile = importo iniziale del sospeso - importo già associato a
      * mandati) maggiore di zero, stato uguale a ASSOCIATO A CDS
      *
-     * @param userContext      lo <code>UserContext</code> che ha generato la richiesta
-     * @param clausole le clausole specificate dall'utente
-     * @param mandato  <code>MandatoBulk</code> il mandato
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param clausole    le clausole specificate dall'utente
+     * @param mandato     <code>MandatoBulk</code> il mandato
      * @return il RemoteIterator della lista dei sospesi di spesa
      */
 
@@ -1576,7 +1571,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             ass.setUser(mandato.getUser());
             ass.setMandato(mandato);
             ass.setReversale(reversale);
-            ass.setTi_origine(ass.TIPO_ORIGINE_SPESA);
+            ass.setTi_origine(Ass_mandato_reversaleBulk.TIPO_ORIGINE_SPESA);
             insertBulk(userContext, ass);
             mandato.getReversaliColl().add(ass);
             reversale.getMandatiColl().add(ass);
@@ -1675,7 +1670,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         if (mandatoCompetenza == null) {
                             mandatoCompetenza = creaMandatoAccreditamento(
                                     userContext, wizard,
-                                    mandatoCompetenza.TIPO_COMPETENZA);
+                                    MandatoBulk.TIPO_COMPETENZA);
                             docCompetenza = docGenerico_creaDocumentoGenerico(
                                     userContext, mandatoCompetenza, wizard
                                             .getImpegniSelezionatiColl());
@@ -1687,7 +1682,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         if (mandatoResiduo == null) {
                             mandatoResiduo = creaMandatoAccreditamento(
                                     userContext, wizard,
-                                    mandatoResiduo.TIPO_RESIDUO);
+                                    MandatoBulk.TIPO_RESIDUO);
                             docResiduo = docGenerico_creaDocumentoGenerico(
                                     userContext, mandatoResiduo, wizard
                                             .getImpegniSelezionatiColl());
@@ -1744,7 +1739,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 aggiornaImportoObbligazioni(userContext, mandato);
 
                 if (mandato.getTi_mandato().equals(
-                        mandato.TIPO_REGOLARIZZAZIONE))
+                        MandatoBulk.TIPO_REGOLARIZZAZIONE))
                     mandato.setIm_pagato(mandato.getIm_mandato());
 
                 mandato = (MandatoBulk) super.creaConBulk(userContext, bulk);
@@ -1761,7 +1756,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 // aggiornaSaldoPagato( userContext, mandato,
                 // INSERIMENTO_MANDATO_ACTION );
                 if (mandato.getTi_mandato().equals(
-                        mandato.TIPO_REGOLARIZZAZIONE)) {
+                        MandatoBulk.TIPO_REGOLARIZZAZIONE)) {
                     aggiornaSaldoPagato(userContext, mandato,
                             INSERIMENTO_MANDATO_ACTION);
 
@@ -1792,13 +1787,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     ente.getCd_unita_organizzativa())) {
                                 // Ricarico il mandato che potrebbe essere stato
                                 // aggiornato dalla creazione reversale
-                                bulk = (MandatoIBulk) inizializzaBulkPerModifica(
+                                bulk = inizializzaBulkPerModifica(
                                         userContext, mandato);
                                 if (Utility.createParametriCnrComponentSession().getParametriCnr(userContext, mandato.getEsercizio()).getFl_tesoreria_unica().booleanValue()) {
                                     ((MandatoIBulk) bulk)
                                             .setStato_coge(MandatoIBulk.STATO_COGE_X);
                                     bulk.setToBeUpdated();
-                                    bulk = (MandatoBulk) super.modificaConBulk(
+                                    bulk = super.modificaConBulk(
                                             userContext, bulk);
                                     mandato = (MandatoIBulk) bulk;
                                 } else {
@@ -1809,7 +1804,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     ((MandatoIBulk) bulk)
                                             .setStato_coge(MandatoIBulk.STATO_COGE_X);
                                     bulk.setToBeUpdated();
-                                    bulk = (MandatoBulk) super.modificaConBulk(
+                                    bulk = super.modificaConBulk(
                                             userContext, bulk);
 
                                     ((MandatoIBulk) bulk)
@@ -1873,21 +1868,21 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             mandato
                     .setCd_uo_origine(((it.cnr.contab.utenze00.bp.CNRUserContext) userContext)
                             .getCd_unita_organizzativa());
-            mandato.setStato(mandato.STATO_MANDATO_EMESSO);
+            mandato.setStato(MandatoBulk.STATO_MANDATO_EMESSO);
             mandato.setDt_emissione(wizard.getDt_emissione());
             mandato.setIm_mandato(new BigDecimal(0));
             mandato.setIm_pagato(new BigDecimal(0));
-            mandato.setDs_mandato(mandato.DS_MANDATO_ACCREDITAMENTO
+            mandato.setDs_mandato(MandatoAccreditamentoBulk.DS_MANDATO_ACCREDITAMENTO
                     + wizard.getCodice_cds());
-            mandato.setTi_mandato(mandato.TIPO_ACCREDITAMENTO);
+            mandato.setTi_mandato(MandatoBulk.TIPO_ACCREDITAMENTO);
             mandato
                     .setCd_tipo_documento_cont(Numerazione_doc_contBulk.TIPO_MAN);
             mandato.setTi_competenza_residuo(ti_competenza_residuo);
             mandato.setBanca(wizard.getBanca());
             mandato.setModalita_pagamento(wizard.getModalita_pagamento());
             mandato
-                    .setStato_trasmissione(mandato.STATO_TRASMISSIONE_NON_INSERITO);
-            mandato.setStato_coge(mandato.STATO_COGE_N);
+                    .setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+            mandato.setStato_coge(MandatoBulk.STATO_COGE_N);
             mandato.setIm_ritenute(new java.math.BigDecimal(0));
 
             mandato.setMandato_terzo(new MandatoAccreditamento_terzoBulk(
@@ -1931,7 +1926,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             MandatoAccreditamento_rigaBulk riga = new MandatoAccreditamento_rigaBulk();
             riga.setToBeCreated();
             riga.setUser(mandato.getUser());
-            riga.setStato(riga.STATO_INIZIALE);
+            riga.setStato(Mandato_rigaBulk.STATO_INIZIALE);
             riga.setIm_mandato_riga(impegno.getIm_da_trasferire());
             riga.setIm_ritenute_riga(new java.math.BigDecimal(0));
             riga.setMandato(mandato);
@@ -2006,7 +2001,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             Mandato_rigaIBulk riga = new Mandato_rigaIBulk();
             riga.setToBeCreated();
             riga.setUser(mandato.getUser());
-            riga.setStato(riga.STATO_INIZIALE);
+            riga.setStato(Mandato_rigaBulk.STATO_INIZIALE);
             riga.setIm_mandato_riga(docPassivo.getIm_mandato_riga());
             if (docPassivo.getFl_fai_reversale().booleanValue()) {
                 riga.setIm_ritenute_riga(docPassivo.getIm_iva_doc_amm());
@@ -2230,9 +2225,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             boolean isSac = false;
             SQLBuilder sql = getHome(userContext, CdsBulk.class)
                     .createSQLBuilder();
-            sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", sql.EQUALS,
+            sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,
                     mandato.getCodice_cds());
-            sql.addSQLClause("AND", "CD_TIPO_UNITA", sql.EQUALS,
+            sql.addSQLClause("AND", "CD_TIPO_UNITA", SQLBuilder.EQUALS,
                     Tipo_unita_organizzativaHome.TIPO_UO_SAC);
             List result = getHome(userContext, CdsBulk.class).fetchAll(sql);
             if (result.size() != 0)
@@ -2244,9 +2239,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             if (!isSac) {
                 sql = getHome(userContext, Unita_organizzativaBulk.class)
                         .createSQLBuilder();
-                sql.addSQLClause("AND", "CD_UNITA_PADRE", sql.EQUALS, mandato
+                sql.addSQLClause("AND", "CD_UNITA_PADRE", SQLBuilder.EQUALS, mandato
                         .getCodice_cds());
-                sql.addSQLClause("AND", "FL_UO_CDS", sql.EQUALS, "Y");
+                sql.addSQLClause("AND", "FL_UO_CDS", SQLBuilder.EQUALS, "Y");
                 result = getHome(userContext, Unita_organizzativaBulk.class)
                         .fetchAll(sql);
                 if (result.size() != 1)
@@ -2274,7 +2269,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             // imposto il terzo
 
             sql = getHome(userContext, TerzoBulk.class).createSQLBuilder();
-            sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, cd_uo);
+            sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, cd_uo);
             result = getHome(userContext, TerzoBulk.class).fetchAll(sql);
             if (result.size() == 0)
                 throw handleException(new ApplicationException(
@@ -2603,7 +2598,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             Documento_genericoBulk documento = new Documento_genericoBulk();
             documento.setToBeCreated();
             documento.setUser(mandato.getUser());
-            documento.setTi_entrate_spese(documento.SPESE);
+            documento.setTi_entrate_spese(Documento_genericoBulk.SPESE);
             documento.setEsercizio(mandato.getEsercizio());
             documento.setCd_cds(mandato.getCd_cds());
             documento.setCd_unita_organizzativa(mandato
@@ -2612,11 +2607,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             documento.setCd_uo_origine(mandato.getCd_uo_origine());
             documento.setTipo_documento(new Tipo_documento_ammBulk(
                     Numerazione_doc_ammBulk.TIPO_TRASF_S));
-            documento.setTi_istituz_commerc(documento.ISTITUZIONALE);
-            documento.setStato_cofi(documento.STATO_CONTABILIZZATO);
-            documento.setStato_coge(documento.NON_REGISTRATO_IN_COGE);
+            documento.setTi_istituz_commerc(Documento_genericoBulk.ISTITUZIONALE);
+            documento.setStato_cofi(Documento_genericoBulk.STATO_CONTABILIZZATO);
+            documento.setStato_coge(Documento_genericoBulk.NON_REGISTRATO_IN_COGE);
             // documento.setFl_modifica_coge(new Boolean( false));
-            documento.setStato_coan(documento.NON_CONTABILIZZATO_IN_COAN);
+            documento.setStato_coan(Documento_genericoBulk.NON_CONTABILIZZATO_IN_COAN);
             documento.setStato_pagamento_fondo_eco("N");
             documento.setTi_associato_manrev("T");
             documento.setData_registrazione(mandato.getDt_emissione());
@@ -2636,12 +2631,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 impegno = (V_impegnoBulk) i.next();
                 if (impegno.isCompetenza()
                         && mandato.getTi_competenza_residuo().equals(
-                        mandato.TIPO_COMPETENZA))
+                        MandatoBulk.TIPO_COMPETENZA))
                     dRiga = docGenerico_creaDocumentoGenericoRiga(userContext,
                             documento, impegno, mandato);
                 else if (!impegno.isCompetenza()
                         && mandato.getTi_competenza_residuo().equals(
-                        mandato.TIPO_RESIDUO))
+                        MandatoBulk.TIPO_RESIDUO))
                     dRiga = docGenerico_creaDocumentoGenericoRiga(userContext,
                             documento, impegno, mandato);
             }
@@ -2690,7 +2685,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             riga.setCd_unita_organizzativa(documento
                     .getCd_unita_organizzativa());
             riga.setCd_tipo_documento_amm(documento.getCd_tipo_documento_amm());
-            riga.setStato_cofi(riga.STATO_CONTABILIZZATO);
+            riga.setStato_cofi(Documento_generico_rigaBulk.STATO_CONTABILIZZATO);
             riga.setDt_a_competenza_coge(documento.getData_registrazione());
             riga.setDt_da_competenza_coge(documento.getData_registrazione());
             riga.setTerzo(mandato.getMandato_terzo().getTerzo()); // CNR
@@ -2777,7 +2772,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     ps.close();
                 } catch (java.sql.SQLException e) {
                 }
-                ;
             }
 
         } catch (SQLException e) {
@@ -2791,7 +2785,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * viene ricercata e inizializzata
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-     * @param impegno        <code>Reversale_rigaIBulk</code> la riga della reversale
+     * @param impegno     <code>Reversale_rigaIBulk</code> la riga della reversale
      * @return List la lista delle banche definite per il terzo della reversale
      */
 
@@ -2808,13 +2802,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 "ACCERTAMENTO.ESERCIZIO_ORIGINALE");
         sql.addJoin("ASS_OBB_ACR_PGIRO.PG_ACCERTAMENTO",
                 "ACCERTAMENTO.ACCERTAMENTO");
-        sql.addClause("AND", "ASS_OBB_ACR_PGIRO.CD_CDS", sql.EQUALS, impegno
+        sql.addClause("AND", "ASS_OBB_ACR_PGIRO.CD_CDS", SQLBuilder.EQUALS, impegno
                 .getCd_cds());
-        sql.addSQLClause("AND", "ASS_OBB_ACR_PGIRO.ESERCIZIO", sql.EQUALS,
+        sql.addSQLClause("AND", "ASS_OBB_ACR_PGIRO.ESERCIZIO", SQLBuilder.EQUALS,
                 impegno.getEsercizio());
         sql.addClause("AND", "ASS_OBB_ACR_PGIRO.ESERCIZIO_ORI_OBBLIGAZIONE",
-                sql.EQUALS, impegno.getEsercizio_originale());
-        sql.addClause("AND", "ASS_OBB_ACR_PGIRO.PG_OBBLIGAZIONE", sql.EQUALS,
+                SQLBuilder.EQUALS, impegno.getEsercizio_originale());
+        sql.addClause("AND", "ASS_OBB_ACR_PGIRO.PG_OBBLIGAZIONE", SQLBuilder.EQUALS,
                 impegno.getPg_obbligazione());
         List result = getHome(userContext, AccertamentoPGiroBulk.class)
                 .fetchAll(sql);
@@ -2854,13 +2848,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             return null;
         SQLBuilder sql = getHome(userContext, BancaBulk.class)
                 .createSQLBuilder();
-        sql.addClause("AND", "cd_terzo", sql.EQUALS, riga.getCd_terzo());
-        sql.addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", sql.ISNULL, null);
-        sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", sql.EQUALS, "N");
+        sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, riga.getCd_terzo());
+        sql.addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", SQLBuilder.ISNULL, null);
+        sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", SQLBuilder.EQUALS, "N");
         /* if ( riga instanceof Mandato_rigaIBulk) */
         if (riga.getBanca() != null
                 && riga.getBanca().getTi_pagamento() != null)
-            sql.addClause("AND", "ti_pagamento", sql.EQUALS, riga.getBanca()
+            sql.addClause("AND", "ti_pagamento", SQLBuilder.EQUALS, riga.getBanca()
                     .getTi_pagamento());
         return getHome(userContext, BancaBulk.class).fetchAll(sql);
     }
@@ -2891,12 +2885,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             SQLBuilder sql = getHome(userContext, BancaBulk.class)
                     .createSQLBuilder();
-            sql.addClause("AND", "cd_terzo", sql.EQUALS, mandato
+            sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, mandato
                     .getMandato_terzo().getCd_terzo());
             sql
-                    .addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", sql.ISNULL,
+                    .addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", SQLBuilder.ISNULL,
                             null);
-            sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", sql.EQUALS, "N");
+            sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", SQLBuilder.EQUALS, "N");
             sql.addOrderBy("FL_CC_CDS DESC");
             if (mandato.getModalita_pagamento() != null
                     && mandato.getModalita_pagamento().getCd_modalita_pag() != null) {
@@ -2905,17 +2899,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 sql2.setHeader("SELECT TI_PAGAMENTO ");
                 sql2.addTableToHeader("rif_modalita_pagamento");
                 sql2.addSQLClause("AND", "modalita_pagamento.cd_terzo",
-                        sql.EQUALS, mandato.getMandato_terzo().getCd_terzo());
+                        SQLBuilder.EQUALS, mandato.getMandato_terzo().getCd_terzo());
                 sql2.addSQLClause("AND", "modalita_pagamento.cd_modalita_pag",
-                        sql.EQUALS, mandato.getModalita_pagamento()
+                        SQLBuilder.EQUALS, mandato.getModalita_pagamento()
                                 .getCd_modalita_pag());
                 sql2.addSQLJoin("modalita_pagamento.cd_modalita_pag",
                         "rif_modalita_pagamento.cd_modalita_pag");
                 sql2.addSQLClause("AND",
-                        "MODALITA_PAGAMENTO.CD_TERZO_DELEGATO", sql.ISNULL,
+                        "MODALITA_PAGAMENTO.CD_TERZO_DELEGATO", SQLBuilder.ISNULL,
                         null);
 
-                sql.addSQLClause("AND", "TI_PAGAMENTO", sql.EQUALS, sql2);
+                sql.addSQLClause("AND", "TI_PAGAMENTO", SQLBuilder.EQUALS, sql2);
             }
 
             List result = getHome(userContext, BancaBulk.class).fetchAll(sql);
@@ -2931,13 +2925,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     mandato.getMandato_terzo().getCd_terzo()));
             SQLBuilder sql = getHome(userContext, BancaBulk.class)
                     .createSQLBuilder();
-            sql.addClause("AND", "cd_terzo", sql.EQUALS, mandato
+            sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, mandato
                     .getMandato_terzo().getCd_terzo());
             sql
-                    .addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", sql.ISNULL,
+                    .addSQLClause("AND", "BANCA.CD_TERZO_DELEGATO", SQLBuilder.ISNULL,
                             null);
-            sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", sql.EQUALS, "N");
-            sql.addSQLClause("AND", "BANCA.FL_CC_CDS", sql.EQUALS, "Y");
+            sql.addSQLClause("AND", "BANCA.FL_CANCELLATO", SQLBuilder.EQUALS, "N");
+            sql.addSQLClause("AND", "BANCA.FL_CC_CDS", SQLBuilder.EQUALS, "Y");
 
             if (mandato.getModalita_pagamento() != null
                     && mandato.getModalita_pagamento().getCd_modalita_pag() != null) {
@@ -2946,17 +2940,17 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 sql2.setHeader("SELECT TI_PAGAMENTO ");
                 sql2.addTableToHeader("rif_modalita_pagamento");
                 sql2.addSQLClause("AND", "modalita_pagamento.cd_terzo",
-                        sql.EQUALS, mandato.getMandato_terzo().getCd_terzo());
+                        SQLBuilder.EQUALS, mandato.getMandato_terzo().getCd_terzo());
                 sql2.addSQLClause("AND", "modalita_pagamento.cd_modalita_pag",
-                        sql.EQUALS, mandato.getModalita_pagamento()
+                        SQLBuilder.EQUALS, mandato.getModalita_pagamento()
                                 .getCd_modalita_pag());
                 sql2.addSQLJoin("modalita_pagamento.cd_modalita_pag",
                         "rif_modalita_pagamento.cd_modalita_pag");
                 sql2.addSQLClause("AND",
-                        "MODALITA_PAGAMENTO.CD_TERZO_DELEGATO", sql.ISNULL,
+                        "MODALITA_PAGAMENTO.CD_TERZO_DELEGATO", SQLBuilder.ISNULL,
                         null);
 
-                sql.addSQLClause("AND", "TI_PAGAMENTO", sql.EQUALS, sql2);
+                sql.addSQLClause("AND", "TI_PAGAMENTO", SQLBuilder.EQUALS, sql2);
             }
 
             List result = getHome(userContext, BancaBulk.class).fetchAll(sql);
@@ -2977,7 +2971,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * scadenze dell'obbligazione pagate dalla riga del mandato
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga     <code>Mandato_rigaBulk</code> la riga del mandato di cui si
+     * @param riga        <code>Mandato_rigaBulk</code> la riga del mandato di cui si
      *                    verifica disponibilità sui capitoli
      */
 
@@ -2997,15 +2991,15 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             SQLBuilder sql = home.createSQLBuilder();
             sql.setDistinctClause(true);
             sql.addTableToHeader("obbligazione_scad_voce", "b");
-            sql.addSQLClause("AND", "b.cd_cds", sql.EQUALS, riga.getCd_cds());
-            sql.addSQLClause("AND", "b.esercizio", sql.EQUALS, riga
+            sql.addSQLClause("AND", "b.cd_cds", SQLBuilder.EQUALS, riga.getCd_cds());
+            sql.addSQLClause("AND", "b.esercizio", SQLBuilder.EQUALS, riga
                     .getEsercizio_obbligazione());
-            sql.addSQLClause("AND", "b.esercizio_originale", sql.EQUALS, riga
+            sql.addSQLClause("AND", "b.esercizio_originale", SQLBuilder.EQUALS, riga
                     .getEsercizio_ori_obbligazione());
-            sql.addSQLClause("AND", "b.pg_obbligazione", sql.EQUALS, riga
+            sql.addSQLClause("AND", "b.pg_obbligazione", SQLBuilder.EQUALS, riga
                     .getPg_obbligazione());
             sql.addSQLClause("AND", "b.pg_obbligazione_scadenzario",
-                    sql.EQUALS, riga.getPg_obbligazione_scadenzario());
+                    SQLBuilder.EQUALS, riga.getPg_obbligazione_scadenzario());
             sql.addSQLJoin("b.esercizio", "voce_f_saldi_cmp.esercizio");
             sql.addSQLJoin("b.CD_VOCE", "voce_f_saldi_cmp.cd_voce");
             sql.addSQLJoin("b.ti_gestione", "voce_f_saldi_cmp.ti_gestione");
@@ -3079,9 +3073,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Cds - modello 1210 emessi dal Cds) PostCondition: Viene restituita la
      * disponibilità di cassa del cds
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilità di cassa
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
+     *                    verifica disponibilità di cassa
      */
 
     private BigDecimal findDisponibilitaDiCassaPerCDS(UserContext userContext,
@@ -3089,9 +3083,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         try {
             SQLBuilder sql = getHome(userContext, V_disp_cassa_cdsBulk.class)
                     .createSQLBuilder();
-            sql.addClause("AND", "esercizio", sql.EQUALS, mandato
+            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, mandato
                     .getEsercizio());
-            sql.addClause("AND", "cd_cds", sql.EQUALS,
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS,
                     ((CNRUserContext) userContext).getCd_cds());
             List result = getHome(userContext, V_disp_cassa_cdsBulk.class)
                     .fetchAll(sql);
@@ -3118,9 +3112,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * ai mandati) PostCondition: Viene restituita la disponibilità di cassa
      * dell'ente
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilità di cassa
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
+     *                    verifica disponibilità di cassa
      */
 
     private BigDecimal findDisponibilitaDiCassaPerCNR(UserContext userContext,
@@ -3130,9 +3124,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     .findAll().get(0);
             SQLBuilder sql = getHome(userContext, V_disp_cassa_cnrBulk.class)
                     .createSQLBuilder();
-            sql.addClause("AND", "esercizio", sql.EQUALS, mandato
+            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, mandato
                     .getEsercizio());
-            sql.addClause("AND", "cd_cds", sql.EQUALS, ente
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, ente
                     .getCd_unita_organizzativa());
             List result = getHome(userContext, V_disp_cassa_cnrBulk.class)
                     .fetchAll(sql);
@@ -3166,9 +3160,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * ai mandati) PostCondition: Viene restituita la disponibilità di cassa
      * dell'ente
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilità di cassa
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
+     *                    verifica disponibilità di cassa
      */
 
     private BigDecimal findDisponibilitaDiCassaPerContoCorrente(
@@ -3205,11 +3199,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 "V_IMPEGNO.PG_OBBLIGAZIONE");
         sql.addSQLJoin("MANDATO_RIGA.PG_OBBLIGAZIONE_SCADENZARIO",
                 "V_IMPEGNO.PG_OBBLIGAZIONE_SCADENZARIO");
-        sql.addSQLClause("AND", "MANDATO_RIGA.ESERCIZIO", sql.EQUALS, mandato
+        sql.addSQLClause("AND", "MANDATO_RIGA.ESERCIZIO", SQLBuilder.EQUALS, mandato
                 .getEsercizio());
-        sql.addSQLClause("AND", "MANDATO_RIGA.CD_CDS", sql.EQUALS, mandato
+        sql.addSQLClause("AND", "MANDATO_RIGA.CD_CDS", SQLBuilder.EQUALS, mandato
                 .getCd_cds());
-        sql.addSQLClause("AND", "MANDATO_RIGA.PG_MANDATO", sql.EQUALS, mandato
+        sql.addSQLClause("AND", "MANDATO_RIGA.PG_MANDATO", SQLBuilder.EQUALS, mandato
                 .getPg_mandato());
         List result = getHome(userContext, V_impegnoBulk.class).fetchAll(sql);
         // imposto l'importo da trasferire per ogni impegno
@@ -3263,13 +3257,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         sql.addTableToHeader("RIF_MODALITA_PAGAMENTO");
         sql.addSQLJoin("MODALITA_PAGAMENTO.CD_MODALITA_PAG",
                 "RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
-        sql.addClause("AND", "cd_terzo", sql.EQUALS, riga.getCd_terzo());
-        sql.addClause("AND", "cd_terzo_delegato", sql.ISNULL, null);
+        sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, riga.getCd_terzo());
+        sql.addClause("AND", "cd_terzo_delegato", SQLBuilder.ISNULL, null);
         /* if ( riga instanceof Mandato_rigaIBulk) */
         if (riga.getBanca() != null
                 && riga.getBanca().getTi_pagamento() != null)
             sql.addSQLClause("AND", "RIF_MODALITA_PAGAMENTO.TI_PAGAMENTO",
-                    sql.EQUALS, riga.getBanca().getTi_pagamento());
+                    SQLBuilder.EQUALS, riga.getBanca().getTi_pagamento());
         return getHome(userContext, Modalita_pagamentoBulk.class).fetchAll(sql);
     }
 
@@ -3299,13 +3293,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             sql.addTableToHeader("RIF_MODALITA_PAGAMENTO");
             sql.addSQLJoin("MODALITA_PAGAMENTO.CD_MODALITA_PAG",
                     "RIF_MODALITA_PAGAMENTO.CD_MODALITA_PAG");
-            sql.addClause("AND", "cd_terzo", sql.EQUALS, mandato
+            sql.addClause("AND", "cd_terzo", SQLBuilder.EQUALS, mandato
                     .getMandato_terzo().getCd_terzo());
-            sql.addClause("AND", "cd_terzo_delegato", sql.ISNULL, null);
+            sql.addClause("AND", "cd_terzo_delegato", SQLBuilder.ISNULL, null);
 
             if (mandato.isMandatoAccreditamentoBulk())
                 sql.addSQLClause("AND", "MODALITA_PAGAMENTO.CD_MODALITA_PAG",
-                        sql.EQUALS, "BO");
+                        SQLBuilder.EQUALS, "BO");
             // if ( riga instanceof Mandato_rigaIBulk)
             // sql.addSQLClause( "AND", "RIF_MODALITA_PAGAMENTO.TI_PAGAMENTO",
             // sql.EQUALS,
@@ -3339,7 +3333,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             it.cnr.jada.persistency.IntrospectionException, ComponentException {
         SQLBuilder sql = getHome(userContext, Tipo_bolloBulk.class)
                 .createSQLBuilder();
-        sql.addClause("AND", "ti_entrata_spesa", sql.NOT_EQUALS,
+        sql.addClause("AND", "ti_entrata_spesa", SQLBuilder.NOT_EQUALS,
                 Tipo_bolloBulk.TIPO_ENTRATA);
         sql.addOrderBy("cd_tipo_bollo");
         return getHome(userContext, Tipo_bolloBulk.class).fetchAll(sql);
@@ -3670,7 +3664,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     .hasNext(); ) {
                 sdu = (Sospeso_det_uscBulk) i.next();
                 sdu.setMandato(mandato);
-                if (sdu.getStato().equals(sdu.STATO_ANNULLATO))
+                if (sdu.getStato().equals(Sospeso_det_uscBulk.STATO_ANNULLATO))
                     i.remove();
             }
 
@@ -3706,7 +3700,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             // per mandati a regolamento sospeso con ritenute e reversale
             // associate verifico se la reversale è stata generata
             // perchè fattura estera istituzuionale di beni intraue o san marino
-            if (mandato.TIPO_REGOLAM_SOSPESO.equals(mandato.getTi_mandato())
+            if (MandatoBulk.TIPO_REGOLAM_SOSPESO.equals(mandato.getTi_mandato())
                     && mandato.getIm_ritenute().compareTo(new BigDecimal(0)) > 0)
                 mandato = inizializzaFlagFaiReversale(aUC,
                         (MandatoIBulk) mandato);
@@ -3771,7 +3765,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if (mandato instanceof MandatoAccreditamentoBulk
                     // || MandatoBulk.TIPO_REGOLARIZZAZIONE.equals( ((MandatoBulk)
                     // bulk).getTi_mandato())
-                        ) {
+                ) {
                     mandato.setCds((CdsBulk) getHome(aUC, EnteBulk.class)
                             .findAll().get(0));
                     mandato
@@ -3935,9 +3929,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
         // stampa.setUnita_organizzativa(new Unita_organizzativaBulk());
 
-        stampa.setTi_mandato(stampa.TIPO_TUTTI);
-        stampa.setStato(stampa.STATO_MANDATO_TUTTI);
-        stampa.setStato_trasmissione(stampa.STATO_TRASMISSIONE_TUTTI);
+        stampa.setTi_mandato(Stampa_giornale_mandatiBulk.TIPO_TUTTI);
+        stampa.setStato(Stampa_giornale_mandatiBulk.STATO_MANDATO_TUTTI);
+        stampa.setStato_trasmissione(Stampa_giornale_mandatiBulk.STATO_TRASMISSIONE_TUTTI);
 
         try {
             CdsHome cds_home = (CdsHome) getHome(userContext, CdsBulk.class);
@@ -4106,7 +4100,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         rs.close();
                     } catch (java.sql.SQLException e) {
                     }
-                    ;
                 }
             } catch (SQLException e) {
                 throw handleException(e);
@@ -4115,7 +4108,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     ps.close();
                 } catch (java.sql.SQLException e) {
                 }
-                ;
             }
         } catch (SQLException e) {
             throw handleException(e);
@@ -4173,7 +4165,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         rs.close();
                     } catch (java.sql.SQLException e) {
                     }
-                    ;
                 }
             } catch (SQLException e) {
                 throw handleException(e);
@@ -4182,7 +4173,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     ps.close();
                 } catch (java.sql.SQLException e) {
                 }
-                ;
             }
         } catch (SQLException e) {
             throw handleException(e);
@@ -4284,7 +4274,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     ps.close();
                 } catch (java.sql.SQLException e) {
                 }
-                ;
             }
 
         } catch (Exception e) {
@@ -4299,8 +4288,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * regolarizzazione PostCondition: Vengono ricercati tutti i documenti
      * attivi che sono stati contabilizzati sulle scadenze dell'accertamento
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoIBulk</code> il mandato
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoIBulk</code> il mandato
      * @return mandato il Mandato dopo la ricerca dei documenti attivi
      */
 
@@ -4551,7 +4540,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             .hasNext(); ) {
                         riga = (Mandato_rigaBulk) i.next();
                         // if (riga.isToBeCreated())
-                        riga = (Mandato_rigaBulk) aggiornaLegameSIOPE(
+                        riga = aggiornaLegameSIOPE(
                                 userContext, riga);
                     }
                 }
@@ -4561,21 +4550,19 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             } else {
                 aggiornaImportoSospesi(userContext, mandato);
-                /*
-                 * Mandato_rigaBulk riga;
-                 *
-                 * SaldoComponentSession session =
-                 * createSaldoComponentSession(); //itera su tutte le righe for
-                 * ( Iterator i = mandato.getMandato_rigaColl().iterator();
-                 * i.hasNext(); ) { riga = (Mandato_rigaBulk) i.next();
-                 * aggiornaImportoObbligazione(userContext, riga );
-                 * aggiornaCapitoloSaldoRiga( userContext, riga, session ); }
-                 *
-                 * mandato = (MandatoBulk) super.modificaConBulk( userContext,
-                 * bulk); // aggiornaStatoFattura( userContext, mandato );
-                 */
-                mandato = (MandatoBulk) super
-                        .modificaConBulk(userContext, bulk);
+                if (Optional.ofNullable(mandato.getStatoVarSos())
+                        .map(s -> s.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                        .orElse(Boolean.FALSE)) {
+                    aggiornaImportoObbligazioni(userContext, mandato);
+                    SaldoComponentSession session = createSaldoComponentSession(); //itera su tutte le righe
+                    for (Iterator i = mandato.getMandato_rigaColl().iterator(); i.hasNext(); ) {
+                        Mandato_rigaBulk riga = (Mandato_rigaBulk) i.next();
+                        aggiornaCapitoloSaldoRiga(userContext, riga, session);
+                    }
+                    mandato = (MandatoBulk) super.modificaConBulk(userContext, bulk);
+                } else {
+                    mandato = (MandatoBulk) super.modificaConBulk(userContext, bulk);
+                }
             }
             return mandato;
         } catch (Exception e) {
@@ -4636,6 +4623,14 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                            OggettoBulk bulk) throws ComponentException,
             it.cnr.jada.persistency.PersistencyException {
         /* COMPORTAMENTO DI DEFAULT - INIZIO */
+        final Optional<V_mandato_terzoBulk> v_mandato_terzoBulk1 =
+                Optional.ofNullable(bulk)
+                        .filter(V_mandato_terzoBulk.class::isInstance)
+                        .map(V_mandato_terzoBulk.class::cast);
+        v_mandato_terzoBulk1
+                .flatMap(v_mandato_terzoBulk -> Optional.ofNullable(v_mandato_terzoBulk.getMandato_terzo()))
+                .flatMap(mandato_terzoBulk -> Optional.ofNullable(mandato_terzoBulk.getCd_terzo()))
+                .ifPresent(cdTerzo -> v_mandato_terzoBulk1.get().setCd_terzo(cdTerzo));
         if (clauses == null) {
             if (bulk != null)
                 clauses = bulk.buildFindClauses(null);
@@ -4650,7 +4645,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         SQLBuilder sql = getHome(userContext, bulk).selectByClause(clauses);
 
         if (!(bulk instanceof MandatoAccreditamentoBulk))
-            sql.addClause("AND", "ti_mandato", sql.NOT_EQUALS,
+            sql.addClause("AND", "ti_mandato", SQLBuilder.NOT_EQUALS,
                     MandatoBulk.TIPO_ACCREDITAMENTO);
         // else if ( bulk instanceof MandatoBulk &&
         // MandatoBulk((MandatoBulk)bulk).getTi_mandato()
@@ -4662,7 +4657,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
         if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals(
                 ((MandatoBulk) bulk).getCd_uo_ente()))
-            sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS,
+            sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS,
                     ((MandatoBulk) bulk).getCd_uo_ente());
         return sql;
     }
@@ -4707,34 +4702,34 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         // CDS
         {
             sql.openParenthesis("AND");
-            sql.addClause("AND", "cd_cds", sql.EQUALS, ente
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, ente
                     .getCd_unita_organizzativa());
-            sql.addClause("OR", "cd_cds", sql.EQUALS, mandato.getCd_cds());
+            sql.addClause("OR", "cd_cds", SQLBuilder.EQUALS, mandato.getCd_cds());
             sql.closeParenthesis();
         } else
             // mandato CNR
-            sql.addClause("AND", "cd_cds", sql.EQUALS, mandato.getCd_cds());
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, mandato.getCd_cds());
 
-        sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
-        sql.addClause("AND", "cd_tipo_documento_cont", sql.NOT_EQUALS,
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, mandato.getEsercizio());
+        sql.addClause("AND", "cd_tipo_documento_cont", SQLBuilder.NOT_EQUALS,
                 Numerazione_doc_contBulk.TIPO_ACR_SIST);
-        sql.addClause("AND", "cd_tipo_documento_cont", sql.NOT_EQUALS,
+        sql.addClause("AND", "cd_tipo_documento_cont", SQLBuilder.NOT_EQUALS,
                 Numerazione_doc_contBulk.TIPO_ACR_PLUR);
-        sql.addClause("AND", "dt_cancellazione", sql.ISNULL, null);
-        sql.addSQLClause("AND", "riportato", sql.EQUALS, "N");
+        sql.addClause("AND", "dt_cancellazione", SQLBuilder.ISNULL, null);
+        sql.addSQLClause("AND", "riportato", SQLBuilder.EQUALS, "N");
         if (!mandato.getCd_cds().equals(ente.getCd_unita_organizzativa())) // mandato
         // CDS
         {
-            sql.addClause("AND", "cd_cds_origine", sql.EQUALS, mandato
+            sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, mandato
                     .getCd_cds_origine());
-            sql.addClause("AND", "cd_uo_origine", sql.EQUALS, mandato
+            sql.addClause("AND", "cd_uo_origine", SQLBuilder.EQUALS, mandato
                     .getCd_uo_origine());
             sql.addSQLClause("AND", "IM_ACCERTAMENTO - IM_REVERSALE",
-                    sql.GREATER, new BigDecimal(0));
+                    SQLBuilder.GREATER, new BigDecimal(0));
         } else
             // mandato CNR
             sql.addSQLClause("AND", "IM_ACCERTAMENTO - IM_REVERSALE",
-                    sql.GREATER, new BigDecimal(0));
+                    SQLBuilder.GREATER, new BigDecimal(0));
 
         sql.addClause(clauses);
         return sql;
@@ -4767,7 +4762,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         Unita_organizzativaHome home = (Unita_organizzativaHome) getHome(
                 userContext, Unita_organizzativaBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "cd_unita_padre", sql.EQUALS, bulk.getCd_cds());
+        sql.addClause("AND", "cd_unita_padre", SQLBuilder.EQUALS, bulk.getCd_cds());
         sql.addClause(clauses);
         return sql;
     }
@@ -4799,7 +4794,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         Unita_organizzativaHome home = (Unita_organizzativaHome) getHome(
                 userContext, Unita_organizzativaBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "cd_unita_padre", sql.EQUALS, bulk.getCd_cds());
+        sql.addClause("AND", "cd_unita_padre", SQLBuilder.EQUALS, bulk.getCd_cds());
         sql.addClause(clauses);
         return sql;
     }
@@ -4812,7 +4807,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         Unita_organizzativaHome home = (Unita_organizzativaHome) getHome(
                 userContext, Unita_organizzativaBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
-        sql.addClause("AND", "cd_unita_padre", sql.EQUALS, bulk.getCd_cds());
+        sql.addClause("AND", "cd_unita_padre", SQLBuilder.EQUALS, bulk.getCd_cds());
         sql.addClause(clauses);
         return sql;
     }
@@ -5027,9 +5022,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * tutti i precedenti controlli sono stati superati PostCondition: Il
      * mandato ha superato la validazione e può pertanto essere salvato
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
-     *                correttezza
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoBulk</code> il mandato di cui si verifica la
+     *                    correttezza
      */
 
     private void verifica1210(UserContext userContext, MandatoIBulk mandato)
@@ -5086,9 +5081,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * cassa del conto corrente ed e' pertanto possibile proseguire con il suo
      * salvataggio
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
-     *                verifica disponibilità di cassa
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoIBulk</code> il mandato emesso dal Cds di cui si
+     *                    verifica disponibilità di cassa
      */
 
     private void verificaDisponibilitaDiCassaPerContoCorrente(
@@ -5186,7 +5181,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     "E' necessario selezionare almeno un documento passivo"));
 
         // il mandato a regolamento sospeso deve avere dei sospesi associati
-        if (mandato.getTi_mandato().equals(mandato.TIPO_REGOLAM_SOSPESO)) {
+        if (mandato.getTi_mandato().equals(MandatoBulk.TIPO_REGOLAM_SOSPESO)) {
             if (mandato.getSospeso_det_uscColl().size() == 0)
                 throw handleException(new ApplicationException(
                         "E' necessario selezionare almeno un sospeso"));
@@ -5209,7 +5204,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         }
 
         // mandato di regolarizzazione
-        if (mandato.getTi_mandato().equals(mandato.TIPO_REGOLARIZZAZIONE))
+        if (mandato.getTi_mandato().equals(MandatoBulk.TIPO_REGOLARIZZAZIONE))
             verificaMandatoDiRegolarizzazione(aUC, (MandatoIBulk) mandato);
 
         try {
@@ -5241,7 +5236,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                             dataUltMandato));
                 // verifica disponibilità su CC
                 if (!mandato.getTi_mandato().equals(
-                        mandato.TIPO_REGOLARIZZAZIONE))
+                        MandatoBulk.TIPO_REGOLARIZZAZIONE))
                     verificaDisponibilitaDiCassaPerContoCorrente(aUC, mandato);
 
             }
@@ -5251,7 +5246,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 verificaSospesiDa1210(aUC, (MandatoIBulk) mandato);
             }
             verificaModalitaPagamento(aUC, mandato);
-            if (mandato.getTi_mandato().equals(mandato.TIPO_PAGAMENTO))
+            if (mandato.getTi_mandato().equals(MandatoBulk.TIPO_PAGAMENTO))
                 verificaTracciabilitaPagamenti(aUC, mandato);
         } catch (Exception e) {
             throw handleException(e);
@@ -5281,12 +5276,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 .stream()
                 .collect(Collectors.groupingBy(Mandato_siopeBulk::getCd_siope));
 
-        for(String codiceSiope : codiciSiope.keySet()) {
+        for (String codiceSiope : codiciSiope.keySet()) {
             List<String> codiciCIG = new ArrayList<String>();
             List<String> motiviAssenzaCIG = new ArrayList<String>();
             boolean isExistsFatturaEstera = false;
-            for(Mandato_siopeBulk siopeBulk : codiciSiope.get(codiceSiope)) {
-                if(siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)) {
+            for (Mandato_siopeBulk siopeBulk : codiciSiope.get(codiceSiope)) {
+                if (siopeBulk.getCd_tipo_documento_amm().equals(Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA)) {
                     final Fattura_passivaBulk fattura_passivaBulk = Optional.ofNullable(
                             fattura_passivaHome.findByPrimaryKey(
                                     new Fattura_passiva_IBulk(
@@ -5452,7 +5447,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         .iterator(); i.hasNext(); ) {
                     Accertamento_scadenzarioBulk asMandato = (Accertamento_scadenzarioBulk) i
                             .next();
-                    Accertamento_scadenzarioBulk asDB = (Accertamento_scadenzarioBulk) accertamento
+                    Accertamento_scadenzarioBulk asDB = accertamento
                             .getAccertamento_scadenzarioColl().get(
                                     accertamento
                                             .getAccertamento_scadenzarioColl()
@@ -5653,7 +5648,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
              * == null) //mandato di regolarizzazione return;
              */
             if (riga.getBanca() == null
-                    || mandato.TIPO_REGOLARIZZAZIONE.equals(mandato
+                    || MandatoBulk.TIPO_REGOLARIZZAZIONE.equals(mandato
                     .getTi_mandato())) // mandato di regolarizzazione
                 return;
             if (riga.getModalita_pagamento() != null) {
@@ -5663,16 +5658,16 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if (rifModPag.isMandatoRegSospeso() && !mandato.isRegolamentoSospeso())
                     throw new ApplicationException(
                             "Attenzione per la modalità di pagamento indicata il mandato deve essere a regolamento sospeso.");
-                if(rifModPag.getCd_modalita_pag().compareTo("F24EP")==0 && mandato.getDt_pagamento_richiesta()==null )
-                	throw new ApplicationException(
+                if (rifModPag.getCd_modalita_pag().compareTo("F24EP") == 0 && mandato.getDt_pagamento_richiesta() == null)
+                    throw new ApplicationException(
                             "Attenzione per la modalità di pagamento indicata il mandato deve avere la data pagamento richiesta.");
-                if(rifModPag.getCd_modalita_pag().compareTo("F24EP")!=0 && mandato.getDt_pagamento_richiesta()!=null )
-                	throw new ApplicationException(
-                            "Attenzione per la modalità di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non deve essere indicata."); 
-                if(rifModPag.getCd_modalita_pag().compareTo("F24EP")==0 && mandato.getDt_pagamento_richiesta()!=null && 
-                	mandato.getDt_emissione()!=null && 	mandato.getDt_pagamento_richiesta().before(mandato.getDt_emissione()))
-                	throw new ApplicationException(
-                            "Attenzione per la modalità di pagamento "+rifModPag.getCd_modalita_pag()+" la data pagamento richiesta non può essere inferiore alla data contabilizzazione.");
+                if (rifModPag.getCd_modalita_pag().compareTo("F24EP") != 0 && mandato.getDt_pagamento_richiesta() != null)
+                    throw new ApplicationException(
+                            "Attenzione per la modalità di pagamento " + rifModPag.getCd_modalita_pag() + " la data pagamento richiesta non deve essere indicata.");
+                if (rifModPag.getCd_modalita_pag().compareTo("F24EP") == 0 && mandato.getDt_pagamento_richiesta() != null &&
+                        mandato.getDt_emissione() != null && mandato.getDt_pagamento_richiesta().before(mandato.getDt_emissione()))
+                    throw new ApplicationException(
+                            "Attenzione per la modalità di pagamento " + rifModPag.getCd_modalita_pag() + " la data pagamento richiesta non può essere inferiore alla data contabilizzazione.");
 
                 if (Optional.ofNullable(rifModPag)
                         .map(Rif_modalita_pagamentoBase::getTi_pagamento)
@@ -5681,16 +5676,15 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         !Arrays.asList(
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value(),
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value())
-                        .contains(Optional.ofNullable(rifModPag)
-                                .map(Rif_modalita_pagamentoBase::getTipo_pagamento_siope)
-                                .orElse(null)
-                        )
-                    ) {
+                                .contains(Optional.ofNullable(rifModPag)
+                                        .map(Rif_modalita_pagamentoBase::getTipo_pagamento_siope)
+                                        .orElse(null)
+                                )
+                ) {
                     throw new ApplicationMessageFormatException(
-                            "Attenzione la modalità di pagamento {0} non può essere utilizzata per l''emissione del Mandato!",rifModPag.getCd_modalita_pag());
+                            "Attenzione la modalità di pagamento {0} non può essere utilizzata per l''emissione del Mandato!", rifModPag.getCd_modalita_pag());
                 }
             }
-
 
 
             if (riga.getBanca() == null
@@ -5712,11 +5706,11 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         .flatMap(bancaBulk -> Optional.ofNullable(bancaBulk.getCodice_iban()))
                         .map(s -> s.substring(0, 2));
                 if (codiceNazione.isPresent()) {
-                    NazioneHome nazioneHome = (NazioneHome) getHome(aUC,NazioneBulk.class);
+                    NazioneHome nazioneHome = (NazioneHome) getHome(aUC, NazioneBulk.class);
                     SQLBuilder sqlExists = nazioneHome.createSQLBuilder();
-                    sqlExists.addSQLClause("AND","NAZIONE.CD_ISO",SQLBuilder.EQUALS,codiceNazione.get());
-                    sqlExists.addSQLClause("AND","NAZIONE.FL_SEPA",SQLBuilder.EQUALS,"Y");
-                    if (sqlExists.executeCountQuery(getConnection(aUC))!=0 )
+                    sqlExists.addSQLClause("AND", "NAZIONE.CD_ISO", SQLBuilder.EQUALS, codiceNazione.get());
+                    sqlExists.addSQLClause("AND", "NAZIONE.FL_SEPA", SQLBuilder.EQUALS, "Y");
+                    if (sqlExists.executeCountQuery(getConnection(aUC)) != 0)
                         throw new ApplicationMessageFormatException("Attenzione la modalità di pagamento {0} presente sul documento non è " +
                                 "coerente con la nazione {1} del beneficiario!", cd_modalita_pag, codiceNazione.get());
                 }
@@ -5798,9 +5792,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * tutti i precedenti controlli sono stati superati PostCondition: Il
      * mandato ha superato la validazione e può pertanto essere salvato
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
-     *                correttezza
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoBulk</code> il mandato di cui si verifica la
+     *                    correttezza
      */
 
     private void verificaSospesiDa1210(UserContext userContext,
@@ -5822,7 +5816,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                     }
                 }
                 if (!found)
-                    if (mandato.TIPO_REGOLAM_SOSPESO.equals(mandato
+                    if (MandatoBulk.TIPO_REGOLAM_SOSPESO.equals(mandato
                             .getTi_mandato()))
                         throw new ApplicationException(
                                 "Attenzione! Il mandato deve essere associato al sospeso "
@@ -5854,7 +5848,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         if (esercizio == null)
             throw handleException(new ApplicationException(
                     "Inserimento impossibile: esercizio inesistente!"));
-        if (!esercizio.STATO_APERTO.equals(esercizio.getSt_apertura_chiusura()))
+        if (!EsercizioBulk.STATO_APERTO.equals(esercizio.getSt_apertura_chiusura()))
             throw handleException(new ApplicationException(
                     "Inserimento impossibile: esercizio non aperto!"));
     }
@@ -5862,9 +5856,9 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     /**
      * verifica tipo bollo PreCondition: PostCondition:
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoBulk</code> il mandato di cui si verifica la
-     *                correttezza
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoBulk</code> il mandato di cui si verifica la
+     *                    correttezza
      */
 
     private void verificaTipoBollo(UserContext userContext, MandatoBulk mandato)
@@ -6058,7 +6052,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         String formDate = "dd/MM/yyyy";
         SimpleDateFormat formatterDate = new SimpleDateFormat(formDate, Config
                 .getHandler().getLocale());
-        String text = new String();
+        String text = "";
         Utente_indirizzi_mailHome utente_indirizzi_mailHome = (Utente_indirizzi_mailHome) getHome(
                 userContext, Utente_indirizzi_mailBulk.class);
         if (preText != null)
@@ -6078,7 +6072,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 Utente_indirizzi_mailBulk utente_indirizzi = (Utente_indirizzi_mailBulk) i
                         .next();
                 if (addressTO == null)
-                    addressTO = new String();
+                    addressTO = "";
                 else
                     addressTO = addressTO + ",";
                 addressTO = addressTO + utente_indirizzi.getIndirizzo_mail();
@@ -6103,8 +6097,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * istanza di Mandato_siopeBulk per l'importo complessivo della riga del
      * mandato
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga <code>Mandato_rigaBulk</code> la riga mandato da aggiornare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param riga        <code>Mandato_rigaBulk</code> la riga mandato da aggiornare
      * @return riga <code>Mandato_rigaBulk</code> la riga mandato aggiornato
      */
 
@@ -6116,7 +6110,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         userContext, Mandato_rigaBulk.class);
                 if (riga.isToBeCreated()
                         || mandato_rigaHome.findCodiciCollegatiSIOPE(
-                        userContext, (Mandato_rigaBulk) riga).isEmpty()) {
+                        userContext, riga).isEmpty()) {
                     BulkList list = new BulkList(mandato_rigaHome
                             .findCodiciCollegabiliSIOPE(userContext, riga));
                     if (list.size() == 1) {
@@ -6146,12 +6140,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Vengono caricati i codici SIOPE disponibili per l'associazione della riga
      * del mandato
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga <code>Mandato_rigaBulk</code> la riga mandato da aggiornare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param riga        <code>Mandato_rigaBulk</code> la riga mandato da aggiornare
      * @return riga <code>Mandato_rigaBulk</code> la riga mandato aggiornato
      */
-    private Mandato_rigaBulk setCodiciSIOPECollegabili(UserContext userContext,
-                                                       Mandato_rigaBulk riga) throws ComponentException {
+    public Mandato_rigaBulk setCodiciSIOPECollegabili(UserContext userContext,
+                                                      Mandato_rigaBulk riga) throws ComponentException {
         try {
 
             Mandato_rigaHome mandato_rigaHome = (Mandato_rigaHome) getHome(
@@ -6201,8 +6195,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * completamente a codici SIOPE PostCondition: Ritorna TRUE se la riga del
      * mandato è associata completamente a codici SIOPE
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga <code>Mandato_rigaBulk</code> la riga mandato da controllare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param riga        <code>Mandato_rigaBulk</code> la riga mandato da controllare
      * @return Boolean
      */
     private java.lang.Boolean isCollegamentoSiopeCompleto(
@@ -6234,8 +6228,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * associate a codici SIOPE. Ritorna TRUE se tutte le righe del mandato sono
      * associate completamente a codici SIOPE
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoBulk</code> il mandato da controllare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoBulk</code> il mandato da controllare
      * @return Boolean
      */
     public java.lang.Boolean isCollegamentoSiopeCompleto(
@@ -6266,8 +6260,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * regolarizzazione PostCondition: Vengono ricercate tutte le scadenze
      * dell'accertamento con importo disponibile positivo
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>MandatoIBulk</code> il mandato
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param mandato     <code>MandatoIBulk</code> il mandato
      * @return mandato il Mandato dopo la ricerca delle scadenze
      */
 
@@ -6289,8 +6283,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     public SQLBuilder selectCupByClause(UserContext userContext, MandatoCupIBulk mandato, CupBulk cup, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = getHome(userContext, CupBulk.class).createSQLBuilder();
         sql.openParenthesis("AND");
-        sql.addClause("AND", "dt_canc", sql.ISNULL, null);
-        sql.addClause("OR", "dt_canc", sql.GREATER, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+        sql.addClause("AND", "dt_canc", SQLBuilder.ISNULL, null);
+        sql.addClause("OR", "dt_canc", SQLBuilder.GREATER, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
         sql.closeParenthesis();
         sql.addClause(clauses);
         return sql;
@@ -6325,8 +6319,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     public SQLBuilder selectCupByClause(UserContext userContext, MandatoSiopeCupIBulk bulk, CupBulk cup, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = getHome(userContext, CupBulk.class).createSQLBuilder();
         sql.openParenthesis("AND");
-        sql.addClause("AND", "dt_canc", sql.ISNULL, null);
-        sql.addClause("OR", "dt_canc", sql.GREATER, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
+        sql.addClause("AND", "dt_canc", SQLBuilder.ISNULL, null);
+        sql.addClause("OR", "dt_canc", SQLBuilder.GREATER, it.cnr.jada.util.ejb.EJBCommonServices.getServerDate());
         sql.closeParenthesis();
         sql.addClause(clauses);
         return sql;
@@ -6398,14 +6392,14 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
             if (parametriCnr.getFl_tesoreria_unica()) {
                 UtenteBulk utente = (UtenteBulk) (getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
                 if (mandato.getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) == 0)
-                    return new String("S");
+                    return "S";
                 else if (mandato.getStato_trasmissione().compareTo(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO) == 0 &&
                         utente.isSupervisore()) {
-                    return new String("F");
+                    return "F";
                 } else
-                    return new String("N");
+                    return "N";
             }
-            return new String("S");
+            return "S";
         } catch (Exception e) {
             throw handleException(e);
         }
@@ -6428,7 +6422,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 for (Iterator i = mandato.getSospeso_det_uscColl().iterator(); i.hasNext(); ) {
                     sdu = (Sospeso_det_uscBulk) i.next();
                     sdu.setMandato(mandato);
-                    if (sdu.getStato().equals(sdu.STATO_ANNULLATO))
+                    if (sdu.getStato().equals(Sospeso_det_uscBulk.STATO_ANNULLATO))
                         i.remove();
                 }
                 return mandato.isSospesoTotalmenteAssociato();
@@ -6462,13 +6456,13 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
     public SQLBuilder selectV_man_revByClause(UserContext userContext, MandatoBulk bulk, V_mandato_reversaleBulk v_man_rev, CompoundFindClause clauses) throws ComponentException, it.cnr.jada.persistency.PersistencyException {
         SQLBuilder sql = getHome(userContext, V_mandato_reversaleBulk.class).createSQLBuilder();
-        sql.addClause("AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
-        sql.addClause("AND", "esercizio", sql.EQUALS, bulk.getEsercizio());
+        sql.addClause("AND", "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
+        sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio());
         //sql.addClause( "AND", "cd_cds", sql.EQUALS, bulk.getCd_cds() );
-        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, ((CNRUserContext) userContext).getCd_unita_organizzativa());
-        sql.addClause("AND", "ti_documento_cont", sql.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE);
-        sql.addClause("AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_EMESSO);
-        sql.addSQLClause("AND", "dt_trasmissione", sql.ISNULL, null);
+        sql.addClause("AND", "cd_unita_organizzativa", SQLBuilder.EQUALS, ((CNRUserContext) userContext).getCd_unita_organizzativa());
+        sql.addClause("AND", "ti_documento_cont", SQLBuilder.NOT_EQUALS, MandatoBulk.TIPO_REGOLARIZZAZIONE);
+        sql.addClause("AND", "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_EMESSO);
+        sql.addSQLClause("AND", "dt_trasmissione", SQLBuilder.ISNULL, null);
         sql.addClause(clauses);
         return sql;
     }
@@ -6477,10 +6471,10 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                                          Integer esercizio, String cds) throws ComponentException {
         try {
             SQLBuilder sql = getHome(userContext, MandatoIBulk.class).createSQLBuilder();
-            sql.addClause("AND", "esercizio", sql.EQUALS, esercizio);
-            sql.addClause("AND", "cd_cds_origine", sql.EQUALS, cds);
-            sql.addClause("AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
-            sql.addSQLClause("AND", "pg_mandato_riemissione", sql.ISNULL, null);
+            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, esercizio);
+            sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, cds);
+            sql.addClause("AND", "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
+            sql.addSQLClause("AND", "pg_mandato_riemissione", SQLBuilder.ISNULL, null);
             sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
             if (sql.executeCountQuery(getConnection(userContext)) > 0)
                 return Boolean.TRUE;
@@ -6495,12 +6489,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                                          MandatoBulk mandato) throws ComponentException {
         try {
             SQLBuilder sql = getHome(userContext, MandatoIBulk.class).createSQLBuilder();
-            sql.addClause("AND", "esercizio", sql.EQUALS, mandato.getEsercizio());
-            sql.addClause("AND", "cd_cds_origine", sql.EQUALS, mandato.getCd_cds_origine());
-            sql.addClause("AND", "stato", sql.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
-            sql.addSQLClause("AND", "pg_mandato_riemissione", sql.EQUALS, mandato.getPg_mandato());
+            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, mandato.getEsercizio());
+            sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, mandato.getCd_cds_origine());
+            sql.addClause("AND", "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
+            sql.addSQLClause("AND", "pg_mandato_riemissione", SQLBuilder.EQUALS, mandato.getPg_mandato());
             sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
-            sql.addClause("AND", "stato_trasmissione_annullo", sql.NOT_EQUALS, MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
+            sql.addClause("AND", "stato_trasmissione_annullo", SQLBuilder.NOT_EQUALS, MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
             if (sql.executeCountQuery(getConnection(userContext)) > 0)
                 return Boolean.TRUE;
             else

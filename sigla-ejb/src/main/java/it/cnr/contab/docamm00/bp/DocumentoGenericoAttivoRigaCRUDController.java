@@ -44,8 +44,8 @@ public class DocumentoGenericoAttivoRigaCRUDController extends it.cnr.jada.util.
                 throw new ValidationException("Inserire una descrizione");
             if ((Documento_generico_rigaBulk) model != null && ((Documento_generico_rigaBulk) model).getModalita_pagamento_uo_cds() == null)
                 throw new ValidationException("Inserire una modalità di pagamento");
-            if ((Documento_generico_rigaBulk) model != null && (((Documento_generico_rigaBulk) model).getIm_riga() == null || ((Documento_generico_rigaBulk) model).getIm_riga().compareTo(new java.math.BigDecimal(0)) == 0))
-                throw new ValidationException("Inserire un importo positivo");
+//            if ((Documento_generico_rigaBulk) model != null && (((Documento_generico_rigaBulk) model).getIm_riga() == null || ((Documento_generico_rigaBulk) model).getIm_riga().compareTo(new java.math.BigDecimal(0)) == 0))
+//                throw new ValidationException("Inserire un importo positivo");
             if ((Documento_generico_rigaBulk) model != null && ((Documento_generico_rigaBulk) model).getBanca_uo_cds() == null)
                 throw new ValidationException("Inserire dei riferimenti bancari corretti");
             ((DocumentoGenericoComponentSession) (((SimpleCRUDBP) getParentController()).createComponentSession())).validaRiga(context.getUserContext(), (Documento_generico_rigaBulk) model);
