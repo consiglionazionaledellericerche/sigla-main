@@ -2,11 +2,12 @@
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
-		it.cnr.jada.util.jsp.*"
+		it.cnr.jada.util.jsp.*,
+		it.cnr.contab.pdg00.bp.*"
 %>
 
 <%
-	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
+	PdGVariazioneBP bp = (PdGVariazioneBP)BusinessProcess.getBusinessProcess(request);
 %>
 <%!     static String[][] tabs = null;
 %>
@@ -20,18 +21,11 @@
 </head>
 
 <body class="Form">
-<% bp.openFormWindow(pageContext);
-   tabs = new String[][] {
-	               { "tabTestata","Testata","/pdg00/tab_pdg_variazione_testata.jsp" },
-	               { "tabCDR","CDR abilitati a concorrervi","/pdg00/tab_ass_pdg_variazione_cdr.jsp" },
-	               { "tabArchivio","Archivio Consultazioni","/pdg00/tab_pdg_variazione_archivio.jsp" },
-	               { "tabRiepilogo","Riepilogo per CdR/Dipartimento","/pdg00/tab_pdg_variazione_riepilogo.jsp" }
-	               };   
-%>
+<% bp.openFormWindow(pageContext);%>
    <% JSPUtils.tabbed(
                    pageContext,
                    "tab",
-                   tabs,
+                   bp.getTabs(session),
                    bp.getTab("tab"),
                    "center",
                    "100%",

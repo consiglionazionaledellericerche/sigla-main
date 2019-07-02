@@ -494,12 +494,14 @@
 		property="progettoRimodulazione.pg_rimodulazione"
 		inputType="TEXT"
 		inputSize="10" 
+		enabledOnSearch="true"
 		label="Versione Rimodulazione" />
 	<fieldProperty
 		name="pgGenRimodulazione"
 		property="progettoRimodulazione.pg_gen_rimodulazione"
 		inputType="TEXT"
 		inputSize="10" 
+		enabledOnSearch="true"
 		label="Nr. Rimodulazione" />
 			
     <form
@@ -690,7 +692,14 @@
 		name="idBando" />
 	<findFieldProperty
 		name="ds_causale" />
-
+	<findFieldProperty
+		name="findProgettoRimodulato" />
+	<findFieldProperty
+		name="cdProgettoRimodulazione" />
+	<findFieldProperty
+		name="pgRimodulazione" />
+		
+		
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
