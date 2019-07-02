@@ -2,13 +2,12 @@
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
 		it.cnr.jada.util.action.*,
-		it.cnr.jada.util.jsp.*"
+		it.cnr.jada.util.jsp.*,
+		it.cnr.contab.varstanz00.bp.*"
 %>
 
 <%
-	SimpleCRUDBP bp = (SimpleCRUDBP)BusinessProcess.getBusinessProcess(request);
-%>
-<%!     static String[][] tabs = null;
+CRUDVar_stanz_resBP bp = (CRUDVar_stanz_resBP)BusinessProcess.getBusinessProcess(request);
 %>
 <html>
 
@@ -20,16 +19,11 @@
 </head>
 
 <body class="Form">
-<% bp.openFormWindow(pageContext);
-   tabs = new String[][] {
-	               { "tabTestataVarStanzRes","Testata","/pdg01/tab_var_stanz_res_testata.jsp" },
-	               { "tabCDR","CDR abilitati a concorrervi","/pdg01/tab_ass_var_stanz_res_cdr.jsp" }
-	               };   
-%>
+<% bp.openFormWindow(pageContext); %>
    <% JSPUtils.tabbed(
                    pageContext,
                    "tab",
-                   tabs,
+                   bp.getTabs(session),
                    bp.getTab("tab"),
                    "center",
                    "100%",

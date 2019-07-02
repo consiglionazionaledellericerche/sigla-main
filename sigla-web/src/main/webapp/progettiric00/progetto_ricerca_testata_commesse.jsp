@@ -13,6 +13,7 @@
 	boolean isFlNuovoPdg = bp.isFlNuovoPdg();
 	boolean isFlInformix = bp.isFlInformix();
 	boolean isROFieldInformix = !bp.isSearching()&&isFlInformix;
+	boolean isUoEnte = Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent();
 	ProgettoBulk bulk = (ProgettoBulk)bp.getModel();
 %>
 <% if (bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT || bp.getStatus() == bp.VIEW) {%>
@@ -187,18 +188,43 @@
 	  </tr>
      </table>
 	 </div>
-     <% if (Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent()) { %>
-  	 <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Fideiussione</div>
+    <% if (isUoEnte ||
+    		Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField()))
+    		.filter(other->Optional.ofNullable(other.getImFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtInizioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtFineFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtRilascioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtSvincoloFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getImSvincolatoFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getIdEsternoFideiussione()).isPresent())
+    		.isPresent()) { %>
+    <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Fideiussione</div>
 	 <div class="Group">
      <table class="Panel card border-info p-2">
-	  <tr><% bp.getController().writeFormField(out,"imFideiussioneOf");%></tr>
 	  <tr>
-	  	<% bp.getController().writeFormField(out,"dtInizioFideiussioneOf");%>
-	  	<% bp.getController().writeFormField(out,"dtFineFideiussioneOf");%>
+	  	<td><% bp.getController().writeFormLabel(out,"imFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imFideiussioneOf",!isUoEnte,null,null); %></td>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtInizioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtInizioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"dtFineFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtFineFideiussioneOf",!isUoEnte,null,null); %></td>
 	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtRilascioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtRilascioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"idEsternoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","idEsternoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtSvincoloFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtSvincoloFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"imSvincolatoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imSvincolatoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>	  
      </table>
-	 </div>
-	 <% } %> 
+	</div>
+	<% } %> 	 
 	<% } %> 
 <% } else { %>
      <div class="GroupLabel">
@@ -301,15 +327,40 @@
 		</tr>
 	</table>
 	</div>
-    <% if (Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent()) { %>
+    <% if (isUoEnte ||
+    		Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField()))
+    		.filter(other->Optional.ofNullable(other.getImFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtInizioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtFineFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtRilascioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtSvincoloFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getImSvincolatoFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getIdEsternoFideiussione()).isPresent())
+    		.isPresent()) { %>
     <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Fideiussione</div>
 	 <div class="Group">
      <table class="Panel card border-info p-2">
-	  <tr><% bp.getController().writeFormField(out,"imFideiussioneOf");%></tr>
 	  <tr>
-	  	<% bp.getController().writeFormField(out,"dtInizioFideiussioneOf");%>
-	  	<% bp.getController().writeFormField(out,"dtFineFideiussioneOf");%>
+	  	<td><% bp.getController().writeFormLabel(out,"imFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imFideiussioneOf",!isUoEnte,null,null); %></td>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtInizioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtInizioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"dtFineFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtFineFideiussioneOf",!isUoEnte,null,null); %></td>
 	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtRilascioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtRilascioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"idEsternoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","idEsternoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtSvincoloFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtSvincoloFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"imSvincolatoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imSvincolatoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>	  
      </table>
 	</div>
 	<% } %> 
