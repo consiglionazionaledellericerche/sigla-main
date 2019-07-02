@@ -744,6 +744,7 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
 		label="Importo Cofinanziato" />
+
 	<fieldProperty
 		name="imFideiussioneOf"
 		property="otherField.imFideiussione"
@@ -767,7 +768,33 @@
 		formatName="date_short"
 		command="doOnDtFineFideiussioneOfChange"
 		label="Data Fine" />
-
+	<fieldProperty
+		name="dtRilascioFideiussioneOf"
+		property="otherField.dtRilascioFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Rilascio" />
+	<fieldProperty
+		name="imSvincolatoFideiussioneOf"
+		property="otherField.imSvincolatoFideiussione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Svincolato" />
+	<fieldProperty
+		name="dtSvincoloFideiussioneOf"
+		property="otherField.dtSvincoloFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Svincolo" />
+	<fieldProperty
+		name="idEsternoFideiussioneOf"
+		property="otherField.idEsternoFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Id.Esterno" />
 	<fieldProperty
 		name="imTotale"
 		property="imTotale"
@@ -989,6 +1016,14 @@
 		name="dtInizioFideiussioneOf" />
 	<formFieldProperty
 		name="dtFineFideiussioneOf" />
+	<formFieldProperty
+		name="dtRilascioFideiussioneOf" />
+	<formFieldProperty
+		name="imSvincolatoFideiussioneOf" />
+	<formFieldProperty
+		name="dtSvincoloFideiussioneOf" />
+	<formFieldProperty
+		name="idEsternoFideiussioneOf" />
 		
 	<formFieldProperty
 		name="imTotale" />

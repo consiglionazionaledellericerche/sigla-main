@@ -10,8 +10,10 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.ejb.RemoveException;
+import javax.servlet.http.HttpSession;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -21,6 +23,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -29,6 +32,7 @@ import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSessio
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -638,10 +642,6 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 				var.setIdBando(null);
 			}
 		}
-        if (!var.isMotivazioneVariazioneRimodulazioneProgetto())
-        	var.setProgettoRimodulazione(null);
-        else if (!Optional.ofNullable(var.getProgettoRimodulazione()).isPresent())
-        	var.setProgettoRimodulazione(new Progetto_rimodulazioneBulk());
 	}
 	
 	@Override
@@ -679,4 +679,23 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
     public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
         this.annoFromPianoEconomico = annoFromPianoEconomico;
     }
+    
+    public String[][] getTabs(HttpSession session) {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        
+        pages.put(i++, new String[]{"tabTestataVarStanzRes", "Testata", "/pdg01/tab_var_stanz_res_testata.jsp"});
+        pages.put(i++, new String[]{"tabCDR", "CDR abilitati a concorrervi", "/pdg01/tab_ass_var_stanz_res_cdr.jsp"});
+        
+        if (Optional.ofNullable(this.getAnnoFromPianoEconomico())
+        			.filter(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
+        			.isPresent())
+        	pages.put(i++, new String[]{"tabRimodulazione", "Rimodulazione Progetto", "/pdg00/tab_pdg_variazione_rimodulazione.jsp"});
+
+        String[][] tabs = new String[i][3];
+
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
+    }    
 }

@@ -2195,4 +2195,12 @@ TRASPORTO_AEREO"/>
             <column name="dt_fine_fideiussione" remarks="Data fine della fideiussione." type="${date.type}"/>
         </addColumn>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_progetto_other_field_modify_column3">
+        <addColumn tableName="progetto_other_field">
+            <column name="dt_rilascio_fideiussione" remarks="Data rilascio della fideiussione." type="${date.type}"/>
+            <column name="im_svincolato_fideiussione" remarks="Importo svincolato della fideiussione" type="numeric(15, 2)"/>
+            <column name="dt_svincolo_fideiussione" remarks="Data svincolo della fideiussione." type="${date.type}"/>
+            <column name="id_esterno_fideiussione" remarks="Identificativo esterno della fideiussione" type="VARCHAR(30)"/>
+        </addColumn>
+    </changeSet>    
 </databaseChangeLog>

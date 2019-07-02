@@ -1839,7 +1839,12 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 					});
 				else
 					saldiList.stream()
-					.filter(el-> //Non è associato al piano economico
+					.filter(el-> 
+						//Nella rimodulazione risulta impegnata e quindi non scollegabile. 
+						//Se solo assestato l'incongruenza può essere eliminata tramite variazione
+						el.getTotImpCompetenza().compareTo(BigDecimal.ZERO)>0 ||
+						el.getTotImpResiduoImproprio().compareTo(BigDecimal.ZERO)>0
+					).filter(el-> //Non è associata al piano economico
 						!progetto.getAllDetailsProgettoPianoEconomico().stream()
 							.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
 							.filter(vocePpe->vocePpe.getEsercizio_piano().equals(el.getEsercizio_res()))
@@ -1849,9 +1854,9 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 							.findFirst().isPresent()
 					).filter(el-> //Non è associata ad una voce di piano economico che con la rimodulazione è stata eliminata
 						!rimodulazione.getAllDetailsProgettoPianoEconomico().stream()
-							.filter(ppe->ppe.isDetailRimodulatoEliminato())
+							.filter(ppe->!ppe.isDetailRimodulatoEliminato())
 							.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
-							.filter(vocePpe->vocePpe.isDetailRimodulatoEliminato())
+							.filter(vocePpe->!vocePpe.isDetailRimodulatoEliminato())
 							.filter(vocePpe->vocePpe.getEsercizio_piano().equals(el.getEsercizio_res()))
 							.filter(vocePpe->vocePpe.getTi_appartenenza().equals(el.getTi_appartenenza()))
 							.filter(vocePpe->vocePpe.getTi_gestione().equals(el.getTi_gestione()))

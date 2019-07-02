@@ -1,9 +1,14 @@
 package it.cnr.contab.pdg00.bp;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeMap;
 
+import javax.servlet.http.HttpSession;
+
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -50,6 +55,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
     private it.cnr.contab.config00.sto.bulk.CdsBulk centro_di_spesa_scrivania;
     private Unita_organizzativaBulk uoSrivania;
     private DipartimentoBulk dipartimentoSrivania;
+    private Integer annoFromPianoEconomico;
+    
     private SimpleDetailCRUDController crudAssCDR = new SimpleDetailCRUDController("AssociazioneCDR", Ass_pdg_variazione_cdrBulk.class, "associazioneCDR", this) {
         public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
             if (!detail.isToBeCreated())
@@ -147,6 +154,11 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                 setDipartimentoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context));
             setAttivaGestioneVariazioniTrasferimento(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext()).getFl_variazioni_trasferimento());
             validaAccessoBP(context);
+
+            it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
+            BigDecimal annoFrom = configSession.getIm01(context.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+            if (Optional.ofNullable(annoFrom).isPresent())
+                setAnnoFromPianoEconomico(annoFrom.intValue());            
         } catch (ComponentException e) {
             throw handleException(e);
         } catch (RemoteException e) {
@@ -690,11 +702,6 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             pdgVar.setIdMatricola(null);
             pdgVar.setIdBando(null);
         }
-        if (!pdgVar.isMotivazioneVariazioneRimodulazioneProgetto()) {
-        	pdgVar.setProgettoRimodulazione(null);
-        	pdgVar.setProgettoRimodulatoForSearch(null);
-        } else if (!Optional.ofNullable(pdgVar.getProgettoRimodulazione()).isPresent())
-        	pdgVar.setProgettoRimodulatoForSearch(new ProgettoBulk());
     }
 
     @Override
@@ -730,5 +737,35 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
     	} catch (Throwable e) {
 	        throw handleException(e);
 	    }
+    }
+    
+    public String[][] getTabs(HttpSession session) {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+
+        pages.put(i++, new String[]{"tabTestata", "Testata", "/pdg00/tab_pdg_variazione_testata.jsp"});
+        pages.put(i++, new String[]{"tabCDR", "CDR abilitati a concorrervi", "/pdg00/tab_ass_pdg_variazione_cdr.jsp"});
+        
+        if (Optional.ofNullable(this.getAnnoFromPianoEconomico())
+        			.filter(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
+        			.isPresent())
+        	pages.put(i++, new String[]{"tabRimodulazione", "Rimodulazione Progetto", "/pdg00/tab_pdg_variazione_rimodulazione.jsp"});
+
+        pages.put(i++, new String[]{"tabArchivio", "Archivio Consultazioni", "/pdg00/tab_pdg_variazione_archivio.jsp"});
+        pages.put(i++, new String[]{"tabRiepilogo", "Riepilogo per CdR/Dipartimento", "/pdg00/tab_pdg_variazione_riepilogo.jsp"});
+
+        String[][] tabs = new String[i][3];
+
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
+    }
+    
+    protected Integer getAnnoFromPianoEconomico() {
+        return annoFromPianoEconomico;
+    }
+
+    public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
+        this.annoFromPianoEconomico = annoFromPianoEconomico;
     }
 }

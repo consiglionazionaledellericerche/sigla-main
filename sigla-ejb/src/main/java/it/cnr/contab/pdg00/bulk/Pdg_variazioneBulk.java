@@ -47,7 +47,6 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	final public static String STATO_INVIATA = "INV";
 
 	final public static String MOTIVAZIONE_GENERICO = "GEN";
-	final public static String MOTIVAZIONE_RIMODULAZIONE = "RIM";
 	final public static String MOTIVAZIONE_BANDO = "BAN";
 	final public static String MOTIVAZIONE_PROROGA = "PRG";
 	final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
@@ -193,7 +192,6 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
 		java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_GENERICO,"Variazione Generica");
-		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_RIMODULAZIONE,"Rimodulazione Progetto");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando in corso");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
@@ -693,8 +691,6 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione di proroga contratto.");
 		if (this.isMotivazioneVariazioneAltreSpesePersonale() && getIdMatricola()==null) 
 			throw new ValidationException("Occorre inserire la matricola del dipendente per cui si effettua la variazione per altre spese del personale.");
-		if (this.isMotivazioneVariazioneRimodulazioneProgetto() && !Optional.ofNullable(this.getPg_progetto_rimodulazione()).isPresent()) 
-			throw new ValidationException("Occorre inserire la rimodulazione del progetto per cui si effettua la variazione.");
 	}
 	
 	public Tipo_variazioneBulk getTipo_variazione() {
@@ -772,10 +768,6 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		return this.isMotivazioneVariazioneBandoPersonale()||
 			   this.isMotivazioneVariazioneProrogaPersonale()||
 			   this.isMotivazioneVariazioneAltreSpesePersonale();
-	}
-
-	public boolean isMotivazioneVariazioneRimodulazioneProgetto() {
-		return MOTIVAZIONE_RIMODULAZIONE.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneVariazioneBandoPersonale() {
@@ -858,5 +850,11 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el->{
 			el.setPg_rimodulazione(pg_rimodulazione);	
 		});
+	}
+	
+	public boolean isVariazioneRimodulazioneProgetto() {
+		return Optional.ofNullable(this.getProgettoRimodulazione())
+					   .flatMap(el->Optional.ofNullable(el.getPg_gen_rimodulazione()))
+					   .isPresent();
 	}
 }
