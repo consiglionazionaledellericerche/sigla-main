@@ -864,10 +864,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	       		sqlVarSpe.addTableToHeader("PDG_VARIAZIONE_RIGA_GEST");
 	       		sqlVarSpe.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO", "PDG_VARIAZIONE.ESERCIZIO");
 	       		sqlVarSpe.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE.PG_VARIAZIONE_PDG");
-	       		sqlVarSpe.openParenthesis(FindClause.AND);
-	       		sqlVarSpe.addClause(FindClause.OR,"stato",SQLBuilder.EQUALS,Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
-	       		sqlVarSpe.addClause(FindClause.OR,"stato",SQLBuilder.EQUALS,Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
-	       		sqlVarSpe.closeParenthesis();
+	       		sqlVarSpe.addClause(FindClause.AND,"stato",SQLBuilder.EQUALS,Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
 	       		
 	       		sqlVarSpe.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
 	       		sqlVarSpe.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
@@ -878,7 +875,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	       		List<Pdg_variazioneBulk> resultVarSpe = homeVarSpe.fetchAll(sqlVarSpe);
 	       		resultVarSpe.stream().findFirst().ifPresent(el->{
 	    			throw new ApplicationRuntimeException("Operazione non possibile! Esiste la variazione di competenza "+el.getEsercizio()+
-	    					"/"+el.getPg_variazione_pdg()+" con stato "+el.getStato()+" che non consente di rendere definitiva la rimodulazione! "+
+	    					"/"+el.getPg_variazione_pdg()+" con stato Definitivo che non consente di rendere definitiva la rimodulazione! "+
 	    					" Approvare o annullare la variazione e rieffettuare l'operazione!");
 	      		});
 		    }
