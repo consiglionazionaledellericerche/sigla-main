@@ -80,6 +80,31 @@
 			columnSize="7"
 			nullable="true" />
 		<columnMapping
+			columnName="DT_RILASCIO_FIDEIUSSIONE"
+			propertyName="dtRilascioFideiussione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping 
+			columnName="IM_SVINCOLATO_FIDEIUSSIONE" 
+			propertyName="imSvincolatoFideiussione" 
+			sqlTypeName="DECIMAL" 
+			columnSize="15" 
+			columnScale="2" 
+			nullable="true"/>	
+		<columnMapping
+			columnName="DT_SVINCOLO_FIDEIUSSIONE"
+			propertyName="dtSvincoloFideiussione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_ESTERNO_FIDEIUSSIONE"
+			propertyName="idEsternoFideiussione"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="true"/>
+		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"
@@ -134,6 +159,14 @@
 		name="dtInizioFideiussione" />
 	<persistentProperty
 		name="dtFineFideiussione" />
+	<persistentProperty
+		name="dtRilascioFideiussione" />
+	<persistentProperty
+		name="imSvincolatoFideiussione" />
+	<persistentProperty
+		name="dtSvincoloFideiussione" />
+	<persistentProperty
+		name="idEsternoFideiussione" />
 	<persistentProperty
 		name="pg_ver_rec" />
 	<persistentProperty
