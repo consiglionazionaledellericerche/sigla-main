@@ -85,7 +85,8 @@
 		   	}
       		%>      	
 	  	</td>
-	  	<td><% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %></td>
+	  	<td><% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %>
+	        (<%=bulk.getPg_progetto()%>)</td>
 	  </tr>
 
 	  <% if (!isFlNuovoPdg) {%>
@@ -246,7 +247,9 @@
 					   }
 			      	%>      	
 				</td>
-				<td colspan="3"><% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %></td>
+				<td colspan="3">
+					<% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %>
+			  	</td>
 	  		</tr>
 		    <% if (!(bp instanceof TestataProgettiRicercaNuovoBP)){%>
 	  		<tr>

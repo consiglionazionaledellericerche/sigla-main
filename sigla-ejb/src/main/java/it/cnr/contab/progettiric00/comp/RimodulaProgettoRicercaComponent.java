@@ -297,15 +297,26 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			}
 		}
 		
-		if (optCdUo.isPresent() || optCdUo2.isPresent()) {
-			sql.addTableToHeader("PROGETTO");
-			sql.addSQLClause(FindClause.AND, "PROGETTO.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
-			sql.addSQLClause(FindClause.AND, "PROGETTO.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
-			sql.addSQLJoin("PROGETTO.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
+	    Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+		boolean isUoEnte = ((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa());
+	    
+	    if (optCdUo.isPresent() || optCdUo2.isPresent() || !isUoEnte) {
+	 	    sql.addTableToHeader("V_PROGETTO_PADRE");
+			sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
+			sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_NON_DEFINITA);
 			if (optCdUo.isPresent())
-				sql.addSQLClause(FindClause.AND, "PROGETTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo.get());
+				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo.get());
 			if (optCdUo2.isPresent())
-				sql.addSQLClause(FindClause.AND, "PROGETTO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo2.get());
+				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, optCdUo2.get());
+			if (!isUoEnte) {
+				try {
+			    	ProgettoHome progettohome = (ProgettoHome)getHome(userContext, ProgettoBulk.class,"V_PROGETTO_PADRE");
+					sql.addSQLExistsClause(FindClause.AND,progettohome.abilitazioniCommesse(userContext));
+				} catch (Exception e) {
+					throw handleException(e);
+				}
+			}
 		}
 		return sql;
 	}
