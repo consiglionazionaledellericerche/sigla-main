@@ -3,7 +3,7 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="2.0490403660952152"/>
-	<property name="ireport.x" value="1204"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
@@ -72,6 +72,9 @@
 	<parameter name="P_TOTALE_ENTRATE" class="java.math.BigDecimal" isForPrompting="false"/>
 	<parameter name="P_TOTALE_REVERSALI" class="java.math.BigDecimal" isForPrompting="false"/>
 	<parameter name="P_PRINT_DETAIL" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_UO_ENTE" class="java.lang.String">
 		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
@@ -672,7 +675,8 @@ $F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldE
 				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
 $F{CD_CENTRO_RESPONSABILITA}!=null&&
 ($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
-$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></printWhenExpression>
+$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="VERB8" x="42" y="1" width="261" height="15" uuid="a35d304d-4645-4736-afd3-9e54dc4ec887"/>
 					<textElement verticalAlignment="Middle">
@@ -737,7 +741,8 @@ $P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></pri
 				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
 $F{CD_CENTRO_RESPONSABILITA}!=null&&
 ($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
-$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></printWhenExpression>
+$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
 				<staticText>
 					<reportElement key="staticText-54" style="VERB8" x="16" y="1" width="53" height="15" uuid="8dab7f75-3cf6-417f-84ee-768c4f254fff"/>
 					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
@@ -1257,7 +1262,8 @@ Economico]]></text>
 			<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
 $F{CD_CENTRO_RESPONSABILITA}!=null&&
 ($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
-$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE}))]]></printWhenExpression>
+$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
 			<textField>
 				<reportElement style="VERB8" x="27" y="1" width="62" height="15" uuid="97325fb5-eaf7-46d3-8bad-657925cdf9fa"/>
 				<textElement verticalAlignment="Middle"/>
