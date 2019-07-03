@@ -501,7 +501,7 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 			fillModel(context);
 			ContrattoBulk contratto = (ContrattoBulk)bp.getModel();	
 			AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk) bp.getCrudArchivioAllegati().getModel();
-			if (!allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO)){
+			if (!allegato.isTipoAllegatoDuplicabile()){
 				for (AllegatoContrattoDocumentBulk child : contratto.getArchivioAllegati()) {
 					if (!child.equals(allegato) && child.getType().equals(allegato.getType())){
 						setErrorMessage(context,"Attenzione! Il tipo selezionato risulta gia' presente!");
@@ -509,6 +509,10 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 						break;
 					}
 				}
+			}
+			if (contratto.isFromFlussoAcquisti() && allegato.isTipoAllegatoContratto()){
+				setErrorMessage(context,"Attenzione! Contratto proveniente da flusso acquisti, non è possibile allegare il contratto!");
+				allegato.setType(null);
 			}
 		} catch (FillException ex) {
 			return handleException(context, ex);

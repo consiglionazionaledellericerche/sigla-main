@@ -29,7 +29,6 @@
 			columnName="FIG_GIUR_EST"
 			propertyName="figura_giuridica_esterna.cd_terzo"
 			sqlTypeName="DECIMAL"
-			nullable="false"
 			columnSize="8" />
 		<columnMapping
 			columnName="CD_TERZO_RESP"
@@ -45,7 +44,6 @@
 			columnName="CD_TIPO_CONTRATTO"
 			propertyName="tipo_contratto.cd_tipo_contratto"
 			sqlTypeName="VARCHAR"
-			nullable="false"
 			columnSize="5" />
 		<columnMapping
 			columnName="CD_TIPO_ATTO"
@@ -57,7 +55,6 @@
 			columnName="CD_ORGANO"
 			propertyName="organo.cd_organo"
 			sqlTypeName="VARCHAR"
-			nullable="false"
 			columnSize="5" />
 		<columnMapping
 			columnName="CD_TIPO_ATTO_ANN"
@@ -79,7 +76,6 @@
 			columnName="CD_PROC_AMM"
 			propertyName="procedura_amministrativa.cd_proc_amm"
 			sqlTypeName="VARCHAR"
-			nullable="false"
 			columnSize="5" />			
 		<columnMapping
 			columnName="CD_TIPO_NORMA_PERLA"

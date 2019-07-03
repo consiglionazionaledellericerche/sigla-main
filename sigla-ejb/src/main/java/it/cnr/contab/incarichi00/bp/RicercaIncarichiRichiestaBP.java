@@ -2,9 +2,11 @@ package it.cnr.contab.incarichi00.bp;
 
 import it.cnr.contab.config00.bp.ResponseXMLBP;
 import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
+import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
@@ -518,33 +520,27 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 					ditte.appendChild(ditta);	
 				}	
 			}
-		elementContratto.appendChild(ditte);
+			elementContratto.appendChild(ditte);
 		}
-		//eliminata pubblicazione dei file
-		for (AllegatoContrattoDocumentBulk allegato : contratto.getArchivioAllegati()) {
-			if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO)){
-				Element elementLink = xmldoc.createElement(getTagRadice()+":url_contratto");
-				dato =null;// "genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
-				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
-				elementContratto.appendChild(elementLink);
-			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.PROGETTO)) {
-				if (allegato.getLink()!= null){
-					Element elementLink = xmldoc.createElement(getTagRadice()+":url_esterno_progetto");
-					dato = null;//allegato.getLink(); 					
-					elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
-					elementContratto.appendChild(elementLink);
-				}else if (allegato.isContentStreamPresent()) {
-					Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
-					dato =null; //"genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
-					elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
-					elementContratto.appendChild(elementLink);
-				}
-			}else if (allegato.getType().equals(AllegatoContrattoDocumentBulk.CAPITOLATO)) {
-				Element elementLink = xmldoc.createElement(getTagRadice()+":url_capitolato");
-				dato = null;//"genericdownload/"+allegato.getName()+"?nodeRef="+allegato.getNodeId(); 
-				elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
-				elementContratto.appendChild(elementLink);
+		if (!contratto.getArchivioAllegatiFlusso().isEmpty()){
+			Element allegati = xmldoc.createElement(getTagRadice()+":allegati");
+			
+			for (AllegatoContrattoFlussoDocumentBulk allegato : contratto.getArchivioAllegatiFlusso()) {
+				Element all = xmldoc.createElement(getTagRadice()+allegato.getType());
+
+				Element label = xmldoc.createElement(getTagRadice()+":label");
+				dato =allegato.getLabel(); 					
+				label.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+				all.appendChild(label);
+				
+				Element nodeRef = xmldoc.createElement(getTagRadice()+":id");
+				dato =allegato.getNodeId();
+				nodeRef.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+				all.appendChild(nodeRef);
+
+				allegati.appendChild(all);
 			}
+			elementContratto.appendChild(allegati);
 		}
 		return elementContratto;
 	}	
@@ -993,13 +989,18 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 	@SuppressWarnings("rawtypes")
 	private List<ContrattoBulk> completaListaContrattiElenco(UserContext userContext, List list) throws ApplicationException {
 		List<ContrattoBulk> result = new ArrayList<ContrattoBulk>();
-//		ContrattoService contrattoService = SpringUtil.getBean("contrattoService",
-//				ContrattoService.class);		
+		ContrattoService contrattoService = SpringUtil.getBean("contrattoService", ContrattoService.class);		
 		for (Object object : list) {
 			ContrattoBulk contratto = (ContrattoBulk)object;
-//			for (AllegatoContrattoDocumentBulk allegato :  contrattoService.findAllegatiContratto(contratto)) {
-//				contratto.addToArchivioAllegati(allegato);
-//			}
+			
+			for (AllegatoContrattoFlussoDocumentBulk allegato :  contrattoService.findAllegatiFlussoContratto(contratto)) {
+				if (allegato != null && allegato.getTrasparenza() != null && !allegato.getTrasparenza()){
+					if (allegato.getLabel() == null){
+						allegato.setLabel((String)allegato.getTi_allegatoFlussoKeys().get(allegato.getType()));
+					}
+					contratto.addToArchivioAllegatiFlusso(allegato);
+				}
+			}
 			try {
 				ContrattoComponentSession contrattoComponentSession= (ContrattoComponentSession)createComponentSession("CNRCONFIG00_EJB_ContrattoComponentSession",ContrattoComponentSession.class);
 				contratto=(ContrattoBulk)contrattoComponentSession.calcolaTotDocCont(userContext, contratto);
