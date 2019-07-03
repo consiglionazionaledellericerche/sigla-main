@@ -68,6 +68,7 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
@@ -441,6 +442,19 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 
 			ribaltaCostiPdGArea(userContext,varPdg);
 			
+			/*
+			 * Ricarico il BULK con i dati presenti sul DB che, nel frattempo, potrebbero essere
+			 * aumentati a causa di procedure DB lanciate da comandi precedenti (es. ribaltaCostiPdGArea)
+			 */
+			varPdg = (Pdg_variazioneBulk)testataHome.findByPrimaryKey(varPdg);
+			varPdg.setAssociazioneCDR(new it.cnr.jada.bulk.BulkList(testataHome.findAssociazioneCDR(varPdg)));
+	
+			for (Iterator righe = testataHome.findDettagliVariazioneGestionale(varPdg).iterator();righe.hasNext();){
+				Pdg_variazione_riga_gestBulk varRiga = (Pdg_variazione_riga_gestBulk)righe.next();
+				if (!varRiga.isDettaglioScaricato())
+					aggiornaSaldiCdrLinea(userContext,varRiga);
+			}
+			
 			if (varPdg.isVariazioneRimodulazioneProgetto()) {
 				try {
 	            	Progetto_rimodulazioneHome prgHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
@@ -450,16 +464,14 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 				} catch (RimodulazioneNonApprovataException e) {
 					log.info("Approvazione Variazione di Rimodulazione "+varPdg.getEsercizio()+"\\"+varPdg.getPg_variazione_pdg()+" che non genera "
 							+"approvazione della rimodulazione associata.");
+				} catch (ComponentException e) {
+					throw new ApplicationMessageFormatException("Anomalia in fase di approvazione Rimodulazione Progetto.<br>{0}",
+							Optional.ofNullable(e.getDetail())
+							.map(el->el.getMessage())
+							.orElse(e.getMessage()));
 				}
 			}
 
-			/*
-			 * Ricarico il BULK con i dati presenti sul DB che, nel frattempo, potrebbero essere
-			 * aumentati a causa di procedure DB lanciate da comandi precedenti (es. ribaltaCostiPdGArea)
-			 */
-			varPdg = (Pdg_variazioneBulk)testataHome.findByPrimaryKey(varPdg);
-			varPdg.setAssociazioneCDR(new it.cnr.jada.bulk.BulkList(testataHome.findAssociazioneCDR(varPdg)));
-	
 			/*
 			 * Spedisco i messaggi di avvertimento a tutti i CDR interessati alla Variazione 
 			 */
@@ -473,12 +485,6 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 						super.creaConBulk(userContext, messaggio);
 					}
 				}
-			}
-
-			for (Iterator righe = testataHome.findDettagliVariazioneGestionale(varPdg).iterator();righe.hasNext();){
-				Pdg_variazione_riga_gestBulk varRiga = (Pdg_variazione_riga_gestBulk)righe.next();
-				if (!varRiga.isDettaglioScaricato())
-					aggiornaSaldiCdrLinea(userContext,varRiga);
 			}
 
 			generaVariazioneBilancio(userContext, varPdg);

@@ -1831,7 +1831,9 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
 				
 				if (!Optional.ofNullable(rimodulazione).isPresent())
-					saldiList.stream().findFirst().ifPresent(el->{
+					saldiList.stream()
+						.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 || 
+								el.getAssestatoResiduoImproprio().compareTo(BigDecimal.ZERO)>0).findFirst().ifPresent(el->{
 		               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
 		               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
 		               			" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " + 
