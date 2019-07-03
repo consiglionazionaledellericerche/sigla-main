@@ -194,6 +194,36 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="true" /> 				
+  		<columnMapping
+			columnName="CD_CIG_EXT"
+			propertyName="cdCigExt"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="true" />
+		<columnMapping
+			columnName="CODFIS_PIVA_RUP_EXT"
+			propertyName="codfisPivaRupExt"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODFIS_PIVA_FIRMATARIO_EXT"
+			propertyName="codfisPivaFirmatarioExt"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODFIS_PIVA_AGGIUDICATARIO_EXT"
+			propertyName="codfisPivaAggiudicatarioExt"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="true" />
+		<columnMapping
+			columnName="CODICE_FLUSSO_ACQUISTI"
+			propertyName="codiceFlussoAcquisti"
+			sqlTypeName="VARCHAR"
+			columnSize="50"
+			nullable="true" />
 	</defaultColumnMap>
 	
         <persistentProperty
@@ -259,4 +289,14 @@
                 name="pg_ver_rec"/>
  		 <persistentProperty
                 name="im_contratto_passivo_netto"/>                   
+   		 <persistentProperty
+                name="cdCigExt"/>                   
+ 		 <persistentProperty
+                name="codfisPivaRupExt"/>                   
+ 		 <persistentProperty
+                name="codfisPivaFirmatarioExt"/>                   
+ 		 <persistentProperty
+                name="codfisPivaAggiudicatarioExt"/>
+ 		 <persistentProperty
+                name="codiceFlussoAcquisti"/>                                   
 </SQLPersistentInfo>
