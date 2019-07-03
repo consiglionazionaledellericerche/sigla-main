@@ -854,7 +854,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	
 	public boolean isVariazioneRimodulazioneProgetto() {
 		return Optional.ofNullable(this.getProgettoRimodulazione())
-					   .flatMap(el->Optional.ofNullable(el.getPg_gen_rimodulazione()))
+					   .flatMap(el->Optional.ofNullable(el.getPg_rimodulazione()))
 					   .isPresent();
 	}
 }
