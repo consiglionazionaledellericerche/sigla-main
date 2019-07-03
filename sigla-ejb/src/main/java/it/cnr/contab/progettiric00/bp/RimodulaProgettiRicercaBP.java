@@ -28,6 +28,7 @@ import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -38,6 +39,8 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
@@ -362,7 +365,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 
 		//Se su una rimodulazione definitiva è prevista la creazioni di variazioni visualizzo la tab corrispondente
 		if (Optional.ofNullable(progettoRimodulazione).filter(Progetto_rimodulazioneBulk::isStatoValidato)
-				.flatMap(el->Optional.ofNullable(el.getVariazioniModels())).filter(el->!el.isEmpty())
+				.flatMap(el->Optional.ofNullable(el.getVariazioniAssociate())).filter(el->!el.isEmpty())
 				.isPresent()) {
 			hash.put(i++, new String[]{ "tabVariazioniAss", "Variazioni Associate", "/progettiric00/tab_ass_progetto_rimod_variazioni.jsp" });
 		}
@@ -747,4 +750,28 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 					+ new it.cnr.contab.util.EuroFormat().format(totaleUtilizzato)
 					+ ") su voci di bilancio associate obbligatoriamente alla voce di piano economico corrispondente.");
 	}
+    
+    @Override
+    protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
+    	return Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance)
+    			.map(Progetto_rimodulazioneBulk.class::cast)
+    			.map(el->!el.isROFieldRimodulazione())
+    			.orElse(Boolean.TRUE) && super.isPossibileCancellazione(allegato);
+    }
+    
+    @Override
+    protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
+    	return Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance)
+    			.map(Progetto_rimodulazioneBulk.class::cast)
+    			.map(el->!el.isROFieldRimodulazione())
+    			.orElse(Boolean.TRUE) && super.isPossibileModifica(allegato);
+    }
+    
+    @Override
+    public RemoteIterator find(ActionContext actioncontext, CompoundFindClause compoundfindclause,
+    		OggettoBulk oggettobulk) throws BusinessProcessException {
+    	Optional.ofNullable(oggettobulk).filter(Progetto_rimodulazioneBulk.class::isInstance)
+		.map(Progetto_rimodulazioneBulk.class::cast).ifPresent(el->el.setStato(null));
+    	return super.find(actioncontext, compoundfindclause, oggettobulk);
+    }
 }

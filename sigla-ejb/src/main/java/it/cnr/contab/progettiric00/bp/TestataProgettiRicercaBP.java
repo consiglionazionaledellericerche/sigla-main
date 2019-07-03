@@ -147,7 +147,25 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     private SimpleDetailCRUDController pianoEconomicoSummaryVoce = new SimpleDetailCRUDController("PianoEconomicoSummaryVoce", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryVoce", this);
     private SimpleDetailCRUDController pianoEconomicoSummaryAnno = new SimpleDetailCRUDController("PianoEconomicoSummaryAnno", Progetto_piano_economicoBulk.class, "pianoEconomicoSummaryAnno", this);
     private SimpleDetailCRUDController pianoEconomicoVociBilancioDaAssociare = new SimpleDetailCRUDController("VociMovimentateNonAssociate", V_saldi_voce_progettoBulk.class, "vociMovimentateNonAssociate", this);
-    private SimpleDetailCRUDController contrattiAssociati = new SimpleDetailCRUDController("ContrattiAssociati", ContrattoBulk.class, "contratti", this);
+    private SimpleDetailCRUDController contrattiAssociati = new SimpleDetailCRUDController("ContrattiAssociati", ContrattoBulk.class, "contratti", this) {
+		public void writeHTMLToolbar(javax.servlet.jsp.PageContext context, boolean reset, boolean find, boolean delete, boolean closedToolbar) throws java.io.IOException ,javax.servlet.ServletException {
+			super.openButtonGROUPToolbar(context);
+
+			{
+				Button button = new Button();
+	    		button.setImg("img/open16.gif");
+	    		button.setDisabledImg("img/open16.gif");
+	    		button.setTitle("Apri Contratto");
+	    		button.setIconClass("fa fa-folder-open-o text-primary");
+	    		button.setButtonClass("btn-sm btn-secondary btn-outline-secondary btn-title");
+	            button.setHref("javascript:submitForm('doOpenContratto(" + getInputPrefix() + ")')");
+	            boolean isButtonEnable = Optional.ofNullable(this.getModel()).isPresent();
+	            button.writeToolbarButton(context.getOut(), isButtonEnable, HttpActionContext.isFromBootstrap(context));
+			}
+            
+            super.closeButtonGROUPToolbar(context);			
+		};    	
+    };
 
     /**
      * TestataProgettiRicercaBP constructor comment.
@@ -766,19 +784,19 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         int i;
         for (i = 0; i < toolbar.length; i++)
             newToolbar[i] = toolbar[i];
-        newToolbar[i] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.negoziazione");
+        newToolbar[i] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.printsintetica");
         newToolbar[i].setSeparator(true);
-        newToolbar[i + 1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.approva");
+        newToolbar[i + 1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.negoziazione");
         newToolbar[i + 1].setSeparator(true);
-        newToolbar[i + 2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.annulla");
+        newToolbar[i + 2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.approva");
         newToolbar[i + 2].setSeparator(true);
-        newToolbar[i + 3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.chiusura");
+        newToolbar[i + 3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.annulla");
         newToolbar[i + 3].setSeparator(true);
-        newToolbar[i + 4] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.riapri");
+        newToolbar[i + 4] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.chiusura");
         newToolbar[i + 4].setSeparator(true);
-        newToolbar[i + 5] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.rimodula");
+        newToolbar[i + 5] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.riapri");
         newToolbar[i + 5].setSeparator(true);
-        newToolbar[i + 6] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.print");
+        newToolbar[i + 6] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.rimodula");
         newToolbar[i + 6].setSeparator(true);
 
         return newToolbar;
@@ -982,6 +1000,57 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 	        param.setNomeParam("P_PG_PROGETTO");
 	        param.setValoreParam(optProgetto.get().getPg_progetto().toString());
 	        param.setParamType("java.lang.Integer");
+	        printbp.addToPrintSpoolerParam(param);
+
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_UO_ENTE");
+			param.setValoreParam(uoScrivania.isUoEnte()?"Y":"N");
+			param.setParamType("java.lang.String");
+	        printbp.addToPrintSpoolerParam(param);
+
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_PRINT_DETAIL");
+			param.setValoreParam("Y");
+			param.setParamType("java.lang.String");
+	        printbp.addToPrintSpoolerParam(param);
+        }    
+	}
+    
+    public void initializePrintSinteticaBP(AbstractPrintBP bp) {
+        OfflineReportPrintBP printbp = (OfflineReportPrintBP) bp;
+
+        Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast);
+        if (optProgetto.isPresent()) {
+	        printbp.setReportName("/cnrpreventivo/pdg/piano_economico_progetto.jasper");
+	
+	        Print_spooler_paramBulk param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_ESERCIZIO");
+	        param.setValoreParam(esercizioScrivania.toString());
+	        param.setParamType("java.lang.Integer");
+	        printbp.addToPrintSpoolerParam(param);
+	
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_CENTRO_RESPONSABILITA");
+	        param.setValoreParam(cdrScrivania);
+	        param.setParamType("java.lang.String");
+	        printbp.addToPrintSpoolerParam(param);
+
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_PG_PROGETTO");
+	        param.setValoreParam(optProgetto.get().getPg_progetto().toString());
+	        param.setParamType("java.lang.Integer");
+	        printbp.addToPrintSpoolerParam(param);
+	        
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_UO_ENTE");
+			param.setValoreParam(uoScrivania.isUoEnte()?"Y":"N");
+			param.setParamType("java.lang.String");
+	        printbp.addToPrintSpoolerParam(param);
+
+	        param = new Print_spooler_paramBulk();
+	        param.setNomeParam("P_PRINT_DETAIL");
+			param.setValoreParam("N");
+			param.setParamType("java.lang.String");
 	        printbp.addToPrintSpoolerParam(param);
     	}    
 	}
