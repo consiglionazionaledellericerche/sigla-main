@@ -781,23 +781,31 @@ public class ProgettoHome extends BulkHome {
 	}
 	
     public ProgettoBulk initializePianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean loadSaldi) throws PersistencyException {
-		List<Progetto_piano_economicoBulk> progettoPiano = new BulkList<Progetto_piano_economicoBulk>(this.findDettagliPianoEconomico(userContext,progetto.getPg_progetto()));
-		progettoPiano.stream().forEach(el->el.setProgetto(progetto));
-		progetto.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
-		progetto.setDettagliPianoEconomicoAnnoCorrente(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
-		progetto.setDettagliPianoEconomicoAltriAnni(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(progetto.getEsercizio())).collect(Collectors.toList())));
+    	ProgettoBulk myProgetto = (ProgettoBulk)findByPrimaryKey(userContext,progetto);
+    	List<Progetto_piano_economicoBulk> progettoPiano = new BulkList<Progetto_piano_economicoBulk>(this.findDettagliPianoEconomico(userContext,myProgetto.getPg_progetto()));
+		progettoPiano.stream().forEach(el->el.setProgetto(myProgetto));
+		myProgetto.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
+		myProgetto.setDettagliPianoEconomicoAnnoCorrente(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(myProgetto.getEsercizio())).collect(Collectors.toList())));
+		myProgetto.setDettagliPianoEconomicoAltriAnni(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(myProgetto.getEsercizio())).collect(Collectors.toList())));
 
 		if (loadSaldi)
-			loadSaldiPianoEconomico(userContext, progetto);
+			loadSaldiPianoEconomico(userContext, myProgetto);
 
 		getHomeCache().fetchAll(userContext);
-		return progetto;
+		return myProgetto;
 	}
 
     public ProgettoBulk loadSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws PersistencyException {
     	try {
-			progetto.setVociBilancioMovimentate(new BulkList<V_saldi_voce_progettoBulk>(((V_saldi_voce_progettoHome)getHomeCache().getHome(V_saldi_voce_progettoBulk.class))
-									.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio())));
+    		List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHomeCache().getHome(V_saldi_voce_progettoBulk.class))
+					.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio());
+
+    		progetto.setVociBilancioMovimentate(
+					new BulkList<V_saldi_voce_progettoBulk>(
+							vociMovimentate.stream()
+								.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
+										el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
+								.collect(Collectors.toList())));
 				
 			progetto.getDettagliPianoEconomicoAnnoCorrente().stream().forEach(ppe->{
 				try {

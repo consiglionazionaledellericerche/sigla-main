@@ -29,7 +29,7 @@ public class Ass_progetto_piaeco_voceHome extends BulkHome {
 		super(Ass_progetto_piaeco_voceBulk.class,conn,persistentCache);
 	}
 
-	public java.util.Collection findAssProgettoPiaecoVoceList( java.lang.Integer pgProgetto, java.lang.String cdUnitaOrganizzativa, java.lang.String cdVocePiano, java.lang.Integer esercizioPiano ) throws PersistencyException {
+	public java.util.Collection<Ass_progetto_piaeco_voceBulk> findAssProgettoPiaecoVoceList( java.lang.Integer pgProgetto, java.lang.String cdUnitaOrganizzativa, java.lang.String cdVocePiano, java.lang.Integer esercizioPiano ) throws PersistencyException {
 		SQLBuilder sql = this.createSQLBuilder();
 		sql.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, pgProgetto);
 		sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, cdUnitaOrganizzativa);
