@@ -6,6 +6,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
@@ -13,17 +16,26 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcess;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.AbstractPrintBP;
+import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
+import it.cnr.jada.util.action.CRUDController;
 import it.cnr.jada.util.action.FormField;
 import it.cnr.jada.util.action.OptionBP;
+import it.cnr.jada.util.action.SimpleCRUDBP;
 
 /**
  * Azione che gestisce le richieste relative alla Gestione Progetto Risorse
@@ -652,5 +664,74 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
         }
     }
 	
+	public Forward doOpenContratto(ActionContext context, String s)
+	{
+		try 
+		{
+			fillModel( context );
+			CRUDController crudController = getController(context, s);
+
+			TestataProgettiRicercaBP bp= (TestataProgettiRicercaBP) getBusinessProcess(context);
+
+			String function = bp.isEditable() ? "M" : "V";
+			function += "R";
+
+			CRUDConfigAnagContrattoBP newbp = null;
+			// controlliamo prima che abbia l'accesso al BP per dare un messaggio più preciso
+			String mode = it.cnr.contab.utenze00.action.GestioneUtenteAction.getComponentSession().validaBPPerUtente(context.getUserContext(),((CNRUserInfo)context.getUserInfo()).getUtente(),((CNRUserInfo)context.getUserInfo()).getUtente().isUtenteComune() ? ((CNRUserInfo)context.getUserInfo()).getUnita_organizzativa().getCd_unita_organizzativa() : "*","CRUDConfigAnagContrattoBP");
+			if (mode == null) 
+				throw new it.cnr.jada.action.MessageToUser("Accesso non consentito alla mappa del contratto. Impossibile continuare.");
+
+			if (!Optional.ofNullable(crudController.getModel()).isPresent())
+				throw new it.cnr.jada.action.MessageToUser("Selezionare il contratto al quale si vuole accesso.");
+
+			newbp = (CRUDConfigAnagContrattoBP) context.getUserInfo().createBusinessProcess(context,"CRUDConfigAnagContrattoBP",new Object[] { function});
+			OggettoBulk contratto = newbp.initializeModelForEdit(context, ((ContrattoBulk)crudController.getModel()));
+			newbp.setModel(context, contratto);
+			return context.addBusinessProcess(newbp);
+		} catch(Exception e) {
+			return handleException(context,e);
+		}
+	}
+	
+    public Forward doPrintSintetica(ActionContext actioncontext)
+    {
+        try
+        {
+            BulkBP bulkbp = (BulkBP)actioncontext.getBusinessProcess();
+            fillModel(actioncontext);
+            if(bulkbp.isDirty())
+                return openContinuePrompt(actioncontext, "doConfirmPrintSintetica");
+            else
+                return doConfirmPrintSintetica(actioncontext, 4);
+        }
+        catch(Throwable throwable)
+        {
+            return handleException(actioncontext, throwable);
+        }
+    }
+    
+    public Forward doConfirmPrintSintetica(ActionContext actioncontext, int i)
+    {
+        try
+        {
+            if(i == 4)
+            {
+            	TestataProgettiRicercaBP bulkbp = (TestataProgettiRicercaBP)actioncontext.getBusinessProcess();
+                it.cnr.jada.action.BusinessProcess businessprocess = actioncontext.createBusinessProcess(bulkbp.getPrintbp());
+                bulkbp.initializePrintSinteticaBP((AbstractPrintBP)businessprocess);
+                if (bulkbp.getTransactionPolicy()!= BusinessProcess.IGNORE_TRANSACTION)
+                	actioncontext.closeBusinessProcess(bulkbp);
+                return actioncontext.addBusinessProcess(businessprocess);
+            } else
+            {
+                return actioncontext.findDefaultForward();
+            }
+        }
+        catch(BusinessProcessException businessprocessexception)
+        {
+            return handleException(actioncontext, businessprocessexception);
+        }
+    }
 }
 

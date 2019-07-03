@@ -873,6 +873,8 @@
 	<formFieldProperty
 		name="cd_progetto" />
 	<formFieldProperty
+		name="pg_progetto" />
+	<formFieldProperty
 		name="cd_progetto_area" />
 	<formFieldProperty
 		name="ds_progetto" />
