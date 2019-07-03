@@ -6,14 +6,20 @@
  */
 package it.cnr.contab.config00.comp;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaHome;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.bulk.CigHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.RicercaContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoHome;
@@ -24,12 +30,16 @@ import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
+import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.service.ContrattoService;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.util.Constants;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupHome;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.si.spring.storage.StorageObject;
@@ -38,6 +48,8 @@ import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -58,6 +70,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.ejb.EJBException;
@@ -153,7 +166,7 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 		if(contratto.getResponsabile() == null || contratto.getResponsabile().getCd_terzo() == null)
 		   throw new ApplicationException("Per effettuare la ricerca valorizzare il campo Responsabile!");  
 		sql.addSQLClause(FindClause.AND, "CD_TERZO_RUP", SQLBuilder.EQUALS, contratto.getResponsabile().getCd_terzo());
-		sql.addClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, Boolean.TRUE);
+		sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
 		SQLBuilder sqlNotExists = getHome(userContext, contratto).createSQLBuilder();
 		sqlNotExists.addSQLJoin("CD_CIG", SQLBuilder.EQUALS, "CIG.CD_CIG");
 		if (contratto.getPg_contratto() != null){
@@ -161,11 +174,47 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 			sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
 			sqlNotExists.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
 		}
+		if (contratto.getCdCigExt() != null){
+			sql.addSQLClause("AND","CD_CIG",sql.EQUALS,contratto.getCdCigExt());
+		}
 		sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
 		if (clause != null) 
 		  sql.addClause(clause);
 		return sql;
 	}
+	
+	public SQLBuilder selectResponsabileByClause (UserContext userContext, ContrattoBulk contratto, V_persona_fisicaBulk responsabile,CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		  clause = responsabile.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, responsabile).createSQLBuilder();
+		if (contratto.getCodfisPivaAggiudicatarioExt() != null){
+			sql.openParenthesis("AND");
+			sql.addSQLClause("AND","CODICE_FISCALE",sql.EQUALS,contratto.getCodfisPivaRupExt());
+			sql.addSQLClause("OR","PARTITA_IVA",sql.EQUALS,contratto.getCodfisPivaRupExt());
+			sql.closeParenthesis();
+		}
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
+	}
+
+	public SQLBuilder selectFirmatarioByClause (UserContext userContext, ContrattoBulk contratto, V_persona_fisicaBulk firmatario,CompoundFindClause clause)	throws ComponentException, PersistencyException
+	{
+		if (clause == null) 
+		  clause = firmatario.buildFindClauses(null);
+		SQLBuilder sql = getHome(userContext, firmatario).createSQLBuilder();
+		if (contratto.getCodfisPivaAggiudicatarioExt() != null){
+			sql.openParenthesis("AND");
+			sql.addSQLClause("AND","CODICE_FISCALE",sql.EQUALS,contratto.getCodfisPivaFirmatarioExt());
+			sql.addSQLClause("OR","PARTITA_IVA",sql.EQUALS,contratto.getCodfisPivaFirmatarioExt());
+			sql.closeParenthesis();
+		}
+		if (clause != null) 
+		  sql.addClause(clause);
+		return sql;
+	}
+
 	
 	public SQLBuilder selectTipoNormaPerlaByClause (UserContext userContext, OggettoBulk bulk, Tipo_norma_perlaBulk tipo_norma_perla,CompoundFindClause clause)	throws ComponentException, PersistencyException
 	{
@@ -262,6 +311,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		TerzoHome home = (TerzoHome)getHome(userContext, TerzoBulk.class, "V_TERZO_CF_PI");
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addSQLClause("AND","DT_FINE_RAPPORTO",sql.ISNULL,null);
+		ContrattoBulk contratto = (ContrattoBulk)bulk;
+		if (contratto.getCodfisPivaAggiudicatarioExt() != null){
+			sql.openParenthesis("AND");
+			sql.addSQLClause("AND","CODICE_FISCALE_ANAGRAFICO",sql.EQUALS,contratto.getCodfisPivaAggiudicatarioExt());
+			sql.addSQLClause("OR","PARTITA_IVA_ANAGRAFICO",sql.EQUALS,contratto.getCodfisPivaAggiudicatarioExt());
+			sql.closeParenthesis();
+		}
 		sql.addClause(clauses); 
 		return sql;
 }
@@ -290,6 +346,9 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	 * @throws ComponentException
 	 */
 	private void validaCampiObbligatori(UserContext uc, ContrattoBulk bulk) throws ComponentException, ApplicationException, IntrospectionException, PersistencyException, SQLException{
+		if ((!bulk.isToBeCreated() || bulk.getCodiceFlussoAcquisti() == null) && (bulk.getFigura_giuridica_esterna() == null || bulk.getFigura_giuridica_esterna().getCd_terzo() == null )){
+			throw new ApplicationException("E' necessario valorizzare il campo figura giuridica esterna.");
+		}
 		if(bulk.getDt_fine_validita() != null && bulk.getDt_inizio_validita() != null && 
 		   bulk.getDt_fine_validita().before(bulk.getDt_inizio_validita()))
 		   throw new ApplicationException("La data di inizio non può essere superiore alla data di fine.");
@@ -365,8 +424,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			Date data_stipula_contratti = Utility.createParametriCnrComponentSession().
 			getParametriCnr(uc, CNRUserContext.getEsercizio(uc)).getData_stipula_contratti();
 			if (!(bulk.getDt_stipula().before(data_stipula_contratti))){
-				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && ((bulk.getDirettore() == null)|| bulk.getDirettore().getCd_terzo()==null ))
-					  throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("direttore").getLabel());
+				if (!bulk.isFromFlussoAcquisti() && (bulk.isPassivo() || bulk.isAttivo_e_Passivo() || bulk.isSenzaFlussiFinanziari()) && ((bulk.getDirettore() == null)|| bulk.getDirettore().getCd_terzo()==null ))
+					throw new ApplicationException("Valorizzare "+BulkInfo.getBulkInfo(bulk.getClass()).getFieldProperty("direttore").getLabel());
 			}
 			if (!(bulk.getDt_stipula().before(data_stipula_contratti)) && bulk.isDefinitivo()){
 				if ((bulk.isPassivo() || bulk.isAttivo_e_Passivo()) && bulk.getFl_mepa() == null) 
@@ -411,6 +470,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			} catch (SQLException e) {
 				throw new ComponentException(e);
 			}
+		ContrattoBulk contratto = (ContrattoBulk)oggettobulk;
+		if (contratto.getCig() != null && contratto.getCig().isToBeCreated()){
+			super.creaConBulk(usercontext, contratto.getCig());
+		}
+		if (contratto.getCup() != null && contratto.getCup().isToBeCreated()){
+			super.creaConBulk(usercontext, contratto.getCup());
+		}
 		return super.creaConBulk(usercontext, oggettobulk);
 	}	
 	public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException{
@@ -594,8 +660,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	}			
 	public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk)throws ComponentException
 	{
-		if (oggettobulk instanceof ContrattoBulk)
-		  initializzaUo(usercontext, (ContrattoBulk) oggettobulk);
+		if (oggettobulk instanceof ContrattoBulk){
+			ContrattoBulk contratto = (ContrattoBulk) oggettobulk;
+			if (!contratto.isFromFlussoAcquisti()){
+				  initializzaUo(usercontext, contratto);
+			}
+		}
 		return super.inizializzaBulkPerInserimento(usercontext, oggettobulk);  
 	}			
 	private void initializzaUo(UserContext usercontext, ContrattoBulk contratto)throws ComponentException
@@ -1514,11 +1584,15 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 
 			ContrattoBulk contrattoDefinitivo = (ContrattoBulk)super.creaConBulk(userContext,contrattoClone);
 			if (storageObject != null){
-				contrattoService.changeProgressivoNodeRef(storageObject, contrattoDefinitivo);
-				StorageObject storageObject1 = contrattoService.getFolderContratto(contrattoDefinitivo);
-				if (storageObject1 != null){
-					contrattoService.addAspect(storageObject1, "P:sigla_contratti_aspect:stato_definitivo");
-					contrattoService.addConsumer(storageObject1,"GROUP_CONTRATTI");
+				
+				if (!contrattoDefinitivo.isFromFlussoAcquisti()){
+					contrattoService.changeProgressivoNodeRef(storageObject, contrattoDefinitivo);
+					StorageObject storageObject1 = contrattoService.getFolderContratto(contrattoDefinitivo);
+					storageObject = storageObject1;
+				}
+				if (storageObject != null){
+					contrattoService.addAspect(storageObject, "P:sigla_contratti_aspect:stato_definitivo");
+					contrattoService.addConsumer(storageObject,"GROUP_CONTRATTI");
 					contrattoService.setInheritedPermission(
 							contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo)),
 							Boolean.FALSE);
@@ -1897,5 +1971,136 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			} catch (PersistencyException e) {
 				throw handleException(e);
 			}
-		}		
+		}
+
+		public ContrattoBulk creaContrattoDaFlussoAcquisti(UserContext userContext, ContrattoBulk contratto) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException {
+			try {
+				controlloFlussoAcquistiGiaEsistente(userContext, contratto);
+				TerzoBulk terzoUo = selectTerzoFromUo(userContext, contratto.getUnita_organizzativa());
+				if (terzoUo != null){
+					contratto.setFigura_giuridica_interna(terzoUo);
+				} else {
+					throw new ComponentException("La uo indicata non ha il terzo corrispondente");
+				}
+				contratto.setResponsabile(getPersonaFisicaFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaRupExt()));
+				contratto.setFirmatario(getPersonaFisicaFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaFirmatarioExt()));
+				contratto.setFigura_giuridica_esterna(getTerzoFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaAggiudicatarioExt()));
+
+				gestioneCigSuContrattoDaFlows(userContext, contratto);
+				gestioneCupSuContrattoDaFlows(userContext, contratto);
+			
+				contratto = (ContrattoBulk)creaConBulk(userContext, contratto);
+				return contratto;
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
+		}
+		private void controlloFlussoAcquistiGiaEsistente(UserContext userContext, ContrattoBulk contratto)
+				throws ComponentException, PersistencyException {
+			if (contratto.getCd_unita_organizzativa() != null && contratto.getEsercizio() != null && contratto.getCodiceFlussoAcquisti() != null){
+				ContrattoHome home = (ContrattoHome)getHome(userContext, ContrattoBulk.class);
+				SQLBuilder sql = home.createSQLBuilder();
+				sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, contratto.getCd_unita_organizzativa());
+				sql.addClause("AND", "esercizio", sql.EQUALS, contratto.getEsercizio());
+				sql.addClause("AND", "codiceFlussoAcquisti", sql.EQUALS, contratto.getCodiceFlussoAcquisti());
+			    List lista = home.fetchAll(sql);
+			    if (lista != null && lista.size() > 0){
+					throw new ComponentException("Il codice flusso acquisti indicato gia esiste");
+			    }
+			} else {
+				throw new ComponentException("E' necessario valorizzare tutti i campi essenziali per l'inserimento");
+			}
+		}
+		private void gestioneCigSuContrattoDaFlows(UserContext userContext, ContrattoBulk contratto)
+				throws ComponentException, PersistencyException {
+			if (contratto.getCdCigExt() != null){
+				CigBulk cig = new CigBulk();
+				cig.setCdCig(contratto.getCdCigExt());
+				CigHome cigHome = (CigHome)getHome(userContext, cig);
+				CigBulk cigDb = (CigBulk)cigHome.findByPrimaryKey(cig);
+				if (cigDb != null){
+					contratto.setCig(cigDb);
+				} else {
+					TerzoBulk terzo = new TerzoBulk();
+					TerzoHome terzoHome = (TerzoHome)getHome(userContext, terzo);
+					terzo.setCd_terzo(contratto.getResponsabile().getCd_terzo());
+					terzo = (TerzoBulk)terzoHome.findByPrimaryKey(terzo);
+					cig.setTerzo(terzo);
+					cig.setDsCig(contratto.getOggetto());
+					cig.setUnitaOrganizzativa(contratto.getUnita_organizzativa());
+					cig.setUser(contratto.getUser());
+					cig.setToBeCreated();
+					contratto.setCig(cig);
+				}
+				
+			}
+		}
+		private void gestioneCupSuContrattoDaFlows(UserContext userContext, ContrattoBulk contratto)
+				throws ComponentException, PersistencyException {
+			if (contratto.getCdCupExt() != null){
+				
+				CupBulk cup = new CupBulk();
+				cup.setCdCup(contratto.getCdCupExt());
+				cup.setDescrizione(contratto.getOggetto());
+				CupHome cupHome = (CupHome)getHome(userContext, cup);
+				CupBulk cupDb = (CupBulk)cupHome.findByPrimaryKey(cup);
+				if (cupDb != null){
+					contratto.setCup(cupDb);
+				} else {
+					cup.setUser(contratto.getUser());
+					cup.setToBeCreated();
+					contratto.setCup(cup);
+				}
+			}
+		}
+		private TerzoBulk getTerzoFromCodiceFiscalePiva(UserContext userContext, String codFisPiva)throws it.cnr.jada.comp.ComponentException{
+			try {
+				AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(userContext,AnagraficoBulk.class);
+				List<AnagraficoBulk> anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
+						codFisPiva,
+						codFisPiva);
+				if (anagraficoBulks != null && !anagraficoBulks.isEmpty()) {
+					TerzoHome terzoHome = (TerzoHome)getHome(userContext,TerzoBulk.class);
+					if (anagraficoBulks.size() == 1) {
+						List<TerzoBulk> terzi = terzoHome.findTerzi(anagraficoBulks.get(0));
+						if (terzi != null && !terzi.isEmpty() && terzi.size() == 1) {
+							return terzi.get(0);
+						}
+					} else {
+						return null;
+					}
+				}
+				return null;
+			} catch (PersistencyException | IntrospectionException e) {
+				throw new ComponentException(e);
+			}
+		}
+ 		
+		private V_persona_fisicaBulk getPersonaFisicaFromCodiceFiscalePiva(UserContext userContext, String codFisPiva)throws it.cnr.jada.comp.ComponentException{
+			try {
+				V_persona_fisicaHome home = (V_persona_fisicaHome)getHome(userContext,V_persona_fisicaBulk.class);
+				SQLBuilder sql = home.createSQLBuilder();
+				sql.addClause("AND", "codice_fiscale", sql.EQUALS, codFisPiva);
+				sql.addClause("or", "partita_iva", sql.EQUALS, codFisPiva);
+		        List lista = home.fetchAll(sql);
+		        if (lista != null){
+			        return (V_persona_fisicaBulk) lista.get(0);
+		        }
+		        return null;
+			} catch (PersistencyException e) {
+				throw new ComponentException(e);
+			}
+		}
+ 		
+		private TerzoBulk selectTerzoFromUo(UserContext userContext, Unita_organizzativaBulk uo)	throws ComponentException, PersistencyException
+		{
+			BulkHome home = getHome(userContext, TerzoBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+	        sql.addClause("AND", "cd_unita_organizzativa", sql.EQUALS, uo.getCd_unita_organizzativa());
+	        List lista = home.fetchAll(sql);
+	        if (lista != null){
+		        return (TerzoBulk) lista.get(0);
+	        }
+	        return null;
+		}	
 }
