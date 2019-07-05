@@ -690,7 +690,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
         if (Optional.ofNullable(this.getAnnoFromPianoEconomico())
         			.filter(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
         			.isPresent())
-        	pages.put(i++, new String[]{"tabRimodulazione", "Rimodulazione Progetto", "/pdg00/tab_pdg_variazione_rimodulazione.jsp"});
+        	pages.put(i++, new String[]{"tabRimodulazione", "Rimodulazione Progetto", "/pdg01/tab_var_stanz_res_rimodulazione.jsp"});
 
         String[][] tabs = new String[i][3];
 
