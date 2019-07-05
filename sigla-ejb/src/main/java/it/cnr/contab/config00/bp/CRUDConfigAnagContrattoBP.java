@@ -7,42 +7,12 @@
 package it.cnr.contab.config00.bp;
 
 
-import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.ejb.ContrattoComponentSession;
-import it.cnr.contab.config00.service.ContrattoService;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
-import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
-import it.cnr.contab.service.SpringUtil;
-import it.cnr.contab.util.ApplicationMessageFormatException;
-import it.cnr.jada.DetailedRuntimeException;
-import it.cnr.si.spring.storage.StorageException;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.HttpActionContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.action.SimpleCRUDBP;
-import it.cnr.jada.util.action.SimpleDetailCRUDController;
-import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.cnr.jada.util.upload.UploadedFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.Date;
@@ -60,6 +30,33 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoDocumentBulk;
+import it.cnr.contab.config00.contratto.bulk.AllegatoContrattoFlussoDocumentBulk;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
+import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.ejb.ContrattoComponentSession;
+import it.cnr.contab.config00.service.ContrattoService;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.util.upload.UploadedFile;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 /**
  * @author mspasiano
  *
@@ -103,15 +100,15 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 					throw new ValidationException("Attenzione: selezionare un File da caricare oppure valorizzare il Link al Progetto.");
 			}
 			
-			if (!(file == null || file.getName().equals(""))) {
-				allegato.setFile(file.getFile());
-				allegato.setContentType(file.getContentType());
-				allegato.setNome(file.getName());
-			}
-			if (allegato.isContentStreamPresent())
-				allegato.setToBeUpdated();
-			getParentController().setDirty(true);
-			super.validate(actioncontext, oggettobulk);
+				if (!(file == null || file.getName().equals(""))) {
+						allegato.setFile(file.getFile());
+						allegato.setContentType(file.getContentType());
+						allegato.setNome(file.getName());
+				}
+				if (allegato.isContentStreamPresent() )
+					allegato.setToBeUpdated();
+				getParentController().setDirty(true);
+				super.validate(actioncontext, oggettobulk);
 		}
 
 		public void validateForDelete(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
@@ -125,6 +122,26 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		};
 		public boolean isGrowable() {
 			return super.isGrowable();// && isAllegatiEnabled();			
+		};
+	};
+	
+	@SuppressWarnings("serial")
+	private SimpleDetailCRUDController crudArchivioAllegatiFlusso = new SimpleDetailCRUDController( "ArchivioAllegatiFlusso", AllegatoContrattoFlussoDocumentBulk.class, "archivioAllegatiFlusso", this){
+		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+
+		}
+
+		public void validateForDelete(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
+			throw new ValidationException("Documento non inserito in SIGLA non sono consentite cancellazioni.");
+		}
+		public OggettoBulk removeDetail(OggettoBulk oggettobulk, int i) {
+			return oggettobulk;
+		}
+		public boolean isShrinkable() {
+			return false;
+		};
+		public boolean isGrowable() {
+			return false;			
 		};
 	};
 	
@@ -196,6 +213,17 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 				return true;
 		}
 		return isPublishCRUDButtonHidden();
+	}
+
+	public boolean isFromFlussoAcquisti(){
+		if (isSearching() || isInserting())
+			return false;
+		if (getModel()!=null){
+			ContrattoBulk contratto = (ContrattoBulk) getModel();
+			if (contratto.isFromFlussoAcquisti())
+				return true;
+		}
+		return false;
 	}
 
 	public boolean isPublishCRUDButtonHidden(){
@@ -272,6 +300,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			getCrudAssUODisponibili().setEnabled(false);
 		}
 			getCrudArchivioAllegati().setEnabled(true);
+			getCrudArchivioAllegatiFlusso().setEnabled(true);
 	}	
 	/**
 	 * @return
@@ -426,6 +455,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		}
 	}
 	
+	@Deprecated
 	public void pubblicaContratto(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
 		ContrattoBulk contratto = (ContrattoBulk) getModel();
 		try {
@@ -495,6 +525,14 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	
 	public SimpleDetailCRUDController getCrudArchivioAllegati() {
 		return crudArchivioAllegati;
+	}
+
+	public SimpleDetailCRUDController getCrudArchivioAllegatiFlusso() {
+		return crudArchivioAllegatiFlusso;
+	}
+
+	public void setCrudArchivioAllegatiFlusso(SimpleDetailCRUDController crudArchivioAllegatiFlusso) {
+		this.crudArchivioAllegatiFlusso = crudArchivioAllegatiFlusso;
 	}
 
 	public void setCrudArchivioAllegati(
@@ -581,13 +619,15 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 		} catch (ApplicationException e) {
 			throw handleException(e);
 		}
-		StorageObject folder;
-		try {
-			folder = contrattoService.getFolderContratto((ContrattoBulk) getModel());
-			if (folder != null)
-				contrattoService.updateProperties(getModel(), folder);
-		} catch (ApplicationException e) {
-			throw handleException(e);
+		if (!((ContrattoBulk) getModel()).isFromFlussoAcquisti()){
+			StorageObject folder;
+			try {
+				folder = contrattoService.getFolderContratto((ContrattoBulk) getModel());
+				if (folder != null)
+					contrattoService.updateProperties(getModel(), folder);
+			} catch (ApplicationException e) {
+				throw handleException(e);
+			}
 		}
 	}
 	
@@ -621,17 +661,44 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 					.orElse(Stream.empty())
 					.filter(storageObject -> Optional.ofNullable(storageObject.getKey()).isPresent())
 					.forEach(child -> {
-						AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
-						allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-						allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
-						allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-						allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
-						allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
-						allegato.setLink(child.<String>getPropertyValue("sigla_contratti_aspect_link:url"));
-						allegato.setCrudStatus(OggettoBulk.NORMAL);
-						contratto.addToArchivioAllegati(allegato);
-						if (!allegato.isContentStreamPresent())
-							setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
+						contratto.setAllegatoFlusso(false);
+						if (contratto.isFromFlussoAcquisti()){
+							AllegatoContrattoFlussoDocumentBulk allegato = AllegatoContrattoFlussoDocumentBulk.construct(child);
+							Optional.ofNullable(child.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+									.map(strings -> strings.stream())
+									.ifPresent(stringStream -> {
+										stringStream
+										.filter(s -> AllegatoContrattoFlussoDocumentBulk.ti_allegatoFlussoKeys.get(s) != null)
+										.findFirst()
+										.ifPresent(s -> allegato.setType(s));
+										if (allegato.getType() != null){
+											allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+											allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+											allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
+											allegato.setNome(allegato.getTitolo());
+											allegato.setCrudStatus(OggettoBulk.NORMAL);
+											contratto.addToArchivioAllegatiFlusso(allegato);
+											contratto.setAllegatoFlusso(true);
+											if (!allegato.isContentStreamPresent())
+												setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
+										}
+									});
+						}
+						if (contratto.getAllegatoFlusso() == false){
+							AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
+							allegato.setContentType(child.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+							allegato.setDescrizione(child.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+							allegato.setTitolo(child.getPropertyValue(StoragePropertyNames.TITLE.value()));
+							allegato.setNome(child.getPropertyValue("sigla_contratti_attachment:original_name"));
+							allegato.setType(child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
+
+							allegato.setLink(child.<String>getPropertyValue("sigla_contratti_aspect_link:url"));
+							allegato.setCrudStatus(OggettoBulk.NORMAL);
+							contratto.addToArchivioAllegati(allegato);
+							if (!allegato.isContentStreamPresent())
+								setMessage(ERROR_MESSAGE, "Attenzione l'allegato [" + allegato.getName() + "] risulta privo di contenuto!");
+						}
+
 					});
 		} catch (ApplicationException e) {
 			throw handleException(e);
@@ -650,7 +717,16 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 	
 	public void scaricaAllegato(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
 		AllegatoContrattoDocumentBulk allegato = (AllegatoContrattoDocumentBulk)getCrudArchivioAllegati().getModel();
-		StorageObject storageObject = contrattoService.getStorageObjectBykey(allegato.getNodeId());
+		scarica(actioncontext, allegato.getNodeId());
+	}
+
+	public void scaricaAllegatoFlusso(ActionContext actioncontext) throws IOException, ServletException, ApplicationException {
+		AllegatoContrattoFlussoDocumentBulk allegato = (AllegatoContrattoFlussoDocumentBulk)getCrudArchivioAllegatiFlusso().getModel();
+		scarica(actioncontext, allegato.getNodeId());
+	}
+
+	private void scarica(ActionContext actioncontext, String nodeId) throws IOException {
+		StorageObject storageObject = contrattoService.getStorageObjectBykey(nodeId);
 		InputStream is = contrattoService.getResource(storageObject);
 		((HttpActionContext)actioncontext).getResponse().setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
 		((HttpActionContext)actioncontext).getResponse().setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
