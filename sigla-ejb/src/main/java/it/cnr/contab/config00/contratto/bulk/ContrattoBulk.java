@@ -4,27 +4,26 @@
 */
 package it.cnr.contab.config00.contratto.bulk;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.Transient;
 
+import org.springframework.util.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.contratto.model.DittaInvitataExt;
+import it.cnr.contab.config00.contratto.model.UoAbilitataExt;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
-import it.cnr.si.spring.storage.annotation.StoragePolicy;
-import it.cnr.si.spring.storage.annotation.StorageProperty;
-import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
@@ -32,6 +31,9 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.annotation.StorageType;
 @StorageType(name="F:sigla_contratti:appalti")
 @JsonInclude(value=Include.NON_NULL)
 public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamente{
@@ -76,12 +78,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private CigBulk cig;
 	private CupBulk cup;
 	
-	private String cdCigRest;
-	private String cdCupRest;
-	private String codfisPivaRupRest;
-	private String codfisPivaFirmatarioRest;
-	private String codfisPivaAggiudicatarioRest;
-	private List<String> listaUoAbilitateRest;
+	private Boolean allegatoFlusso;
+	private String cdCupExt;
+	
+	
+	private BulkList<UoAbilitataExt> listaUoAbilitateExt;
+	private BulkList<DittaInvitataExt> listaDitteInvitateExt;
 	
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
@@ -89,6 +91,8 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		
 	@Transient
 	private BulkList<AllegatoContrattoDocumentBulk> archivioAllegati = new BulkList();
+	@Transient
+	private BulkList<AllegatoContrattoFlussoDocumentBulk> archivioAllegatiFlusso = new BulkList();
 	
 	private java.math.BigDecimal tot_ordini;
 
@@ -154,6 +158,9 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	
 	public boolean isCIGVisible(){
+		if (isFromFlussoAcquisti()){
+			return true;
+		}
 		if (getTipo_contratto() == null)
 			return false;
 		if (getTipo_contratto().getFl_cig() == null || !getTipo_contratto().getFl_cig())
@@ -416,7 +423,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	}
 	
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili(),getArchivioAllegati(),getDitteInvitate()};
+		return new it.cnr.jada.bulk.BulkCollection[] {getAssociazioneUO(),getAssociazioneUODisponibili(),getArchivioAllegati(),getArchivioAllegatiFlusso(),getDitteInvitate()};
 	}
 	public Ass_contratto_uoBulk removeFromAssociazioneUO(int index) {
 		Ass_contratto_uoBulk dett = (Ass_contratto_uoBulk)getAssociazioneUO().remove(index);
@@ -731,8 +738,29 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 		AllegatoContrattoDocumentBulk dett = (AllegatoContrattoDocumentBulk)getArchivioAllegati().remove(index);
 		return dett;
 	}
+	public BulkList<AllegatoContrattoFlussoDocumentBulk> getArchivioAllegatiFlusso() {
+		return archivioAllegatiFlusso;
+	}
+
+	public void setArchivioAllegatiFlusso(
+			BulkList<AllegatoContrattoFlussoDocumentBulk> archivioAllegatiFlusso) {
+		this.archivioAllegatiFlusso = archivioAllegatiFlusso;
+	}
+	
+	public int addToArchivioAllegatiFlusso(AllegatoContrattoFlussoDocumentBulk dett) {
+		dett.setContrattoBulk(this);
+		getArchivioAllegatiFlusso().add(dett);
+		return getArchivioAllegatiFlusso().size()-1;
+	}	
+	public AllegatoContrattoFlussoDocumentBulk removeFromArchivioAllegatiFlusso(int index) {
+		AllegatoContrattoFlussoDocumentBulk dett = (AllegatoContrattoFlussoDocumentBulk)getArchivioAllegatiFlusso().remove(index);
+		return dett;
+	}
 	@StorageProperty(name="cmis:name")
 	public String getCMISFolderName(){
+		if (isFromFlussoAcquisti())
+			return getCodiceFlussoAcquisti();
+		
 		return Arrays.asList(
 				"Contratto ", 
 				String.valueOf(getEsercizio()), 
@@ -886,41 +914,32 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	public void setTot_docamm_cont_spe_netto(
 			java.math.BigDecimal tot_docamm_cont_spe_netto) {
 		this.tot_docamm_cont_spe_netto = tot_docamm_cont_spe_netto;
+	}
+	public String getCdCupExt() {
+		return cdCupExt;
+	}
+	public void setCdCupExt(String cdCupExt) {
+		this.cdCupExt = cdCupExt;
+	}
+	public BulkList<UoAbilitataExt> getListaUoAbilitateExt() {
+		return listaUoAbilitateExt;
+	}
+	public void setListaUoAbilitateExt(BulkList<UoAbilitataExt> listaUoAbilitateExt) {
+		this.listaUoAbilitateExt = listaUoAbilitateExt;
 	}	
-	public String getCdCigRest() {
-		return cdCigRest;
+	public Boolean isFromFlussoAcquisti() {
+		return !StringUtils.isEmpty(getCodiceFlussoAcquisti());
 	}
-	public void setCdCigRest(String cdCigRest) {
-		this.cdCigRest = cdCigRest;
+	public BulkList<DittaInvitataExt> getListaDitteInvitateExt() {
+		return listaDitteInvitateExt;
 	}
-	public String getCdCupRest() {
-		return cdCupRest;
+	public void setListaDitteInvitateExt(BulkList<DittaInvitataExt> listaDitteInvitateExt) {
+		this.listaDitteInvitateExt = listaDitteInvitateExt;
 	}
-	public void setCdCupRest(String cdCupRest) {
-		this.cdCupRest = cdCupRest;
+	public Boolean getAllegatoFlusso() {
+		return allegatoFlusso;
 	}
-	public String getCodfisPivaRupRest() {
-		return codfisPivaRupRest;
-	}
-	public void setCodfisPivaRupRest(String codfisPivaRupRest) {
-		this.codfisPivaRupRest = codfisPivaRupRest;
-	}
-	public String getCodfisPivaFirmatarioRest() {
-		return codfisPivaFirmatarioRest;
-	}
-	public void setCodfisPivaFirmatarioRest(String codfisPivaFirmatarioRest) {
-		this.codfisPivaFirmatarioRest = codfisPivaFirmatarioRest;
-	}
-	public String getCodfisPivaAggiudicatarioRest() {
-		return codfisPivaAggiudicatarioRest;
-	}
-	public void setCodfisPivaAggiudicatarioRest(String codfisPivaAggiudicatarioRest) {
-		this.codfisPivaAggiudicatarioRest = codfisPivaAggiudicatarioRest;
-	}
-	public List<String> getListaUoAbilitateRest() {
-		return listaUoAbilitateRest;
-	}
-	public void setListaUoAbilitateRest(List<String> listaUoAbilitateRest) {
-		this.listaUoAbilitateRest = listaUoAbilitateRest;
+	public void setAllegatoFlusso(Boolean allegatoFlusso) {
+		this.allegatoFlusso = allegatoFlusso;
 	}
 }
