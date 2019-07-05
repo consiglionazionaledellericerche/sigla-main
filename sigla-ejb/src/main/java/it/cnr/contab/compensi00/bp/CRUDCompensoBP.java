@@ -857,7 +857,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         if (compenso != null && compenso.isStatoCompensoEseguiCalcolo())
             return false;
 
-        return (compenso != null && compenso.getObbligazioneScadenzario() != null);
+        return (compenso != null && compenso.getObbligazioneScadenzario() != null && !compenso.isStatoCofiPagato() && !compenso.isAnnullato());
     }
 
     public boolean isBottoneEseguiCalcoloEnabled() throws BusinessProcessException {
@@ -893,7 +893,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
             return false;
 
         return (compenso != null &&
-                compenso.getObbligazioneScadenzario() != null);
+                compenso.getObbligazioneScadenzario() != null && !compenso.isStatoCofiPagato() && !compenso.isAnnullato());
     }
 
     public boolean isBottoneVisualizzaDocContPrincipaleEnabled() throws BusinessProcessException {

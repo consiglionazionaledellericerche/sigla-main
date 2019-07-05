@@ -131,6 +131,12 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 //	FL_PUBBLICA_CONTRATTO CHAR(1)
 	private java.lang.Boolean fl_pubblica_contratto;
 	
+	private String cdCigExt;
+	private String codfisPivaRupExt;
+	private String codfisPivaFirmatarioExt;
+	private String codfisPivaAggiudicatarioExt;
+	private String codiceFlussoAcquisti;
+
 	public ContrattoBase() {
 		super();
 	}
@@ -527,5 +533,35 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	public void setIm_contratto_passivo_netto(
 			java.math.BigDecimal im_contratto_passivo_netto) {
 		this.im_contratto_passivo_netto = im_contratto_passivo_netto;
+	}
+	public String getCdCigExt() {
+		return cdCigExt;
+	}
+	public void setCdCigExt(String cdCigExt) {
+		this.cdCigExt = cdCigExt;
+	}
+	public String getCodfisPivaRupExt() {
+		return codfisPivaRupExt;
+	}
+	public void setCodfisPivaRupExt(String codfisPivaRupExt) {
+		this.codfisPivaRupExt = codfisPivaRupExt;
+	}
+	public String getCodfisPivaFirmatarioExt() {
+		return codfisPivaFirmatarioExt;
+	}
+	public void setCodfisPivaFirmatarioExt(String codfisPivaFirmatarioExt) {
+		this.codfisPivaFirmatarioExt = codfisPivaFirmatarioExt;
+	}
+	public String getCodfisPivaAggiudicatarioExt() {
+		return codfisPivaAggiudicatarioExt;
+	}
+	public void setCodfisPivaAggiudicatarioExt(String codfisPivaAggiudicatarioExt) {
+		this.codfisPivaAggiudicatarioExt = codfisPivaAggiudicatarioExt;
+	}
+	public String getCodiceFlussoAcquisti() {
+		return codiceFlussoAcquisti;
+	}
+	public void setCodiceFlussoAcquisti(String codiceFlussoAcquisti) {
+		this.codiceFlussoAcquisti = codiceFlussoAcquisti;
 	}
 }
