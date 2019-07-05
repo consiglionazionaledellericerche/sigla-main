@@ -2290,10 +2290,18 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
     private ReversaleBulk creaReversaleDiIncassoIVA(UserContext userContext,
                                                     MandatoIBulk mandato) throws ComponentException {
         try {
+            /**
+             * Quando viene creata la reversale di incasso IVA imposto
+             * lo UserContext non transazionale per evitare la creazione
+             * di numeri negativi
+             */
+            Boolean isTransactional = userContext.isTransactional();
+            userContext.setTransactional(false);
             ReversaleComponentSession revSession = createReversaleComponentSession();
             ReversaleBulk reversale = revSession.creaReversaleDiIncassoIVA(
                     userContext, mandato);
             creaAss_mandato_reversale(userContext, mandato, reversale);
+            userContext.setTransactional(isTransactional);
             return reversale;
         } catch (Exception e) {
             throw handleException(e);
