@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 	<!-- Definition of new Model -->
 <model name="sigla_contratti_aspect:sigla_contratti_aspectModel" 
 	xmlns="http://www.alfresco.org/model/dictionary/1.0"
@@ -31,6 +31,20 @@
 		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/appalti/cmis" prefix="sigla_contratti_aspect_appalti" />
 		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/tipo_norma/cmis" prefix="sigla_contratti_aspect_tipo_norma" />
 		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/link/cmis" prefix="sigla_contratti_aspect_link" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/decisione_contrattare/cmis" prefix="sigla_contratti_aspect_decisione_contrattare" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/modifiche_varianti_art106/cmis" prefix="sigla_contratti_aspect_modifiche_varianti_art106" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/bando_avvisi/cmis" prefix="sigla_contratti_aspect_bando_avvisi" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/lettera_invito/cmis" prefix="sigla_contratti_aspect_lettera_invito" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/provvedimento_ammessi_esclusi/cmis" prefix="sigla_contratti_aspect_provvedimento_ammessi_esclusi" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/provvedimento_nomina_commissione/cmis" prefix="sigla_contratti_aspect_provvedimento_nomina_commissione" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/aspect_elenco_verbali/cmis" prefix="sigla_contratti_aspect_elenco_verbali" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/stipula/cmis" prefix="sigla_contratti_aspect_stipula" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/avviso_post_informazione/cmis" prefix="sigla_contratti_aspect_avviso_post_informazione" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/richiesta_di_acquisto/cmis" prefix="sigla_contratti_aspect_richiesta_di_acquisto" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/provvedimento_di_revoca/cmis" prefix="sigla_contratti_aspect_provvedimento_di_revoca" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/provvedimento_aggiudicazione/cmis" prefix="sigla_contratti_aspect_provvedimento_aggiudicazione" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/contratto/cmis" prefix="sigla_contratti_aspect_contratto" />
+		<namespace uri="http://www.cnr.it/model/sigla/contratti/aspect/allegato/cmis" prefix="sigla_contratti_aspect_allegato" />
 	</namespaces>
 	<aspects>
 		<aspect name="sigla_contratti_aspect:link">
@@ -142,98 +156,143 @@
 		</aspect>
 		<aspect name="sigla_contratti_aspect:stato_definitivo">
 			<title>Stato del contratto</title>
-		</aspect>
-		<aspect name="sigla_contratti_aspect:flusso_acquisti">
-			<title>Metadati Flusso Acquisti</title>
+		</aspect>			
+		<aspect name="sigla_contratti_aspect:documento_sigla">
+			<title>Documento Sigla</title>
+		</aspect>			
+		<aspect name="sigla_contratti_aspect:doc_flusso_decisione_contrattare">
+			<title>Decisione a Contrattare</title>
 			<properties>
-				<property name="sigla_contratti_aspect:oggetto_acquisizione">
-					<title>Oggetto Acquisizione</title>
-					<description>Oggetto Acquisizione</description>
+				<property name="sigla_contratti_aspect_decisione_contrattare:name">
+					<title>Name</title>
 					<type>d:text</type>
 				</property>
-				<property name="sigla_contratti_aspect:descrizione_acquisizione">
-					<title>Descrizione Acquisizione</title>
-					<description>Descrizione Acquisizione</description>
+				<property name="sigla_contratti_aspect_decisione_contrattare:label">
+					<title>Label</title>
 					<type>d:text</type>
 				</property>
-				<property name="sigla_contratti_aspect:tipologia_acquisizione">
-					<title>Tipologia di Acquisizione</title>
-					<description>Tipologia di Acquisizione</description>
+				<property name="sigla_contratti_aspect_decisione_contrattare:filename">
+					<title>Filename</title>
 					<type>d:text</type>
 				</property>
-				<property name="sigla_contratti_aspect:strumento_acquisizione">
-					<title>Strumento di Acquisizione</title>
-					<description>Strumento di Acquisizione</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:lista_impegni_provvisori_json">
-					<title>Lista Impegni Provvisori Json</title>
-					<description>Lista Impegni Provvisori Json</description>
-					<type>d:text</type>
-					<multiple>true</multiple>
-				</property>
-				<property name="sigla_contratti_aspect:rup">
-					<title>Responsabile Unico del Procedimento (RUP)</title>
-					<description>Responsabile Unico del Procedimento (RUP)</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:cig">
-					<title>Codice Identificativo Gara (CIG)</title>
-					<description>Codice Identificativo Gara (CIG)</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:cup">
-					<title>Codice Unico Progetto (CUP)</title>
-					<description>Codice Unico Progetto (CUP)</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:p_iva_codice_fiscale_ditta_aggiudicataria">
-					<title>p.iva / Codice Fiscale Ditta Aggiudicataria</title>
-					<description>p.iva / Codice Fiscale Ditta Aggiudicataria</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:ragione_sociale_ditta_aggiudicataria">
-					<title>Ragione Sociale Ditta Aggiudicataria</title>
-					<description>Ragione Sociale Ditta Aggiudicataria</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:elenco_ditte_candidate">
-					<title>Elenco Ditte candidate</title>
-					<description>Elenco Ditte candidate</description>
-					<type>d:text</type>
-					<multiple>true</multiple>
-				</property>
-				<property name="sigla_contratti_aspect:verifiche_requisiti_di_legge">
-					<title>Verifiche Requisiti di Legge</title>
-					<description>Verifiche Requisiti di Legge</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:id_provvedimento_di_aggiudicazione ">
-					<title>Identificativo Provvedimento di Aggiudicazione </title>
-					<description>Identificativo Provvedimento di Aggiudicazione </description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:id_rdine">
-					<title>Identificativo Ordine</title>
-					<description>Identificativo Ordine</description>
-					<type>d:text</type>
-				</property>	
-				<property name="sigla_contratti_aspect:descrizione_ordine">
-					<title>Descrizione Ordine</title>
-					<description>Descrizione Ordine</description>
-					<type>d:text</type>
-				</property>
-				<property name="sigla_contratti_aspect:nr_rdine">
-					<title>nr Ordine</title>
-					<description>nr Ordine</description>
-					<type>d:text</type>
-				</property>	
-				<property name="sigla_contratti_aspect:nr_rdo">
-					<title>Nr. RDO</title>
-					<description>Nr. RDO</description>
+			</properties>
+		</aspect>				
+		<aspect name="sigla_contratti_aspect:doc_flusso_modifiche_varianti_art106">
+			<title>modificheVariantiArt106</title>
+			<properties>
+				<property name="sigla_contratti_aspect_modifiche_varianti_art106:label">
+					<title>Label</title>
 					<type>d:text</type>
 				</property>
 			</properties>
 		</aspect>
+		<aspect name="sigla_contratti_aspect:doc_flusso_bando_avvisi">
+			<title>Bando Avvisi</title>
+			<properties>
+				<property name="sigla_contratti_aspect_bando_avvisi:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:doc_flusso_lettera_invito">
+			<title>Lettera Invito</title>
+			<properties>
+				<property name="sigla_contratti_aspect_lettera_invito:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:doc_flusso_provvedimento_ammessi_esclusi">
+			<title>Provvedimento Ammessi Esclusi</title>
+			<properties>
+				<property name="sigla_contratti_aspect_provvedimento_ammessi_esclusi:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:doc_flusso_provvedimento_nomina_commissione">
+			<title>Provvedimento Nomina Commissione</title>
+			<properties>
+				<property name="sigla_contratti_aspect_provvedimento_nomina_commissione:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:doc_flusso_elenco_verbali">
+			<title>Elenco Verbali</title>
+			<properties>
+				<property name="sigla_contratti_aspect_elenco_verbali:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_contratti_aspect:doc_flusso_stipula">
+			<title>Stipula</title>
+			<properties>
+				<property name="sigla_contratti_aspect_stipula:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>		
+		<aspect name="sigla_contratti_aspect:doc_flusso_avviso_post_informazione">
+			<title>Avviso Post Informazione</title>
+			<properties>
+				<property name="sigla_contratti_aspect_avviso_post_informazione:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>		
+		<aspect name="sigla_contratti_aspect:doc_flusso_richiesta_di_acquisto">
+			<title>Richiesta Di Acquisto</title>
+			<properties>
+				<property name="sigla_contratti_aspect_richiesta_di_acquisto:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>		
+		<aspect name="sigla_contratti_aspect:doc_flusso_provvedimento_di_revoca">
+			<title>ProvvedimentoDiRevoca</title>
+			<properties>
+				<property name="sigla_contratti_aspect_provvedimento_di_revoca:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>				
+		<aspect name="sigla_contratti_aspect:doc_flusso_provvedimento_aggiudicazione">
+			<title>Provvedimento Aggiudicazione</title>
+			<properties>
+				<property name="sigla_contratti_aspect_provvedimento_aggiudicazione:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>				
+		<aspect name="sigla_contratti_aspect:doc_flusso_contratto">
+			<title>Contratto</title>
+			<properties>
+				<property name="sigla_contratti_aspect_contratto:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>			
+		<aspect name="sigla_contratti_aspect:doc_flusso_allegato">
+			<title>Allegato</title>
+			<properties>
+				<property name="sigla_contratti_aspect_allegato:label">
+					<title>Label</title>
+					<type>d:text</type>
+				</property>
+			</properties>
+		</aspect>			
 	</aspects>
 </model>
