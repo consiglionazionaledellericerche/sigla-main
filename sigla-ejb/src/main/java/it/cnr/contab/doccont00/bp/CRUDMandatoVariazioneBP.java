@@ -35,9 +35,4 @@ public class CRUDMandatoVariazioneBP extends CRUDMandatoBP {
             throw handleException(e);
         }
     }
-
-    @Override
-    public void edit(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
-        super.edit(actioncontext, oggettobulk, true);
-    }
 }
