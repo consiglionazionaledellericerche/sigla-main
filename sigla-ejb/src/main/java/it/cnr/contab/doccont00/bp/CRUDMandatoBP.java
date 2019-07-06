@@ -301,7 +301,11 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
         if (Optional.ofNullable(mandatoBulk.getStatoVarSos())
                 .map(s -> s.equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
                 .orElse(Boolean.FALSE)) {
-            try {
+            if(!isAbilitatoCrudMandatoVariazioneBP) {
+                setModel(context, createEmptyModelForSearch(context));
+                setStatus(SEARCH);
+                setMessage("Mandato in stato 'DA VARIARE', accesso non consentito!");
+            } else {
                 CRUDMandatoVariazioneBP crudMandatoVariazioneBP =
                         Optional.ofNullable(context.getUserInfo().createBusinessProcess(context, "CRUDMandatoVariazioneBP", new Object[]{"M"}))
                                 .filter(CRUDMandatoVariazioneBP.class::isInstance)
@@ -310,9 +314,6 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                 crudMandatoVariazioneBP.setModel(context, mandatoBulk);
                 context.closeBusinessProcess();
                 context.addBusinessProcess(crudMandatoVariazioneBP);
-            } catch (MessageToUser _ex){
-                setModel(context, null);
-                throw _ex;
             }
         }
     }
