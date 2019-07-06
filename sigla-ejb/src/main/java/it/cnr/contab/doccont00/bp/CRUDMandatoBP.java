@@ -304,7 +304,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
             if(!isAbilitatoCrudMandatoVariazioneBP) {
                 setModel(context, createEmptyModelForSearch(context));
                 setStatus(SEARCH);
-                setMessage("Mandato in stato 'DA VARIARE', accesso non consentito!");
+                setMessage(ERROR_MESSAGE, "Mandato in stato 'DA VARIARE', accesso non consentito!");
             } else {
                 CRUDMandatoVariazioneBP crudMandatoVariazioneBP =
                         Optional.ofNullable(context.getUserInfo().createBusinessProcess(context, "CRUDMandatoVariazioneBP", new Object[]{"M"}))
