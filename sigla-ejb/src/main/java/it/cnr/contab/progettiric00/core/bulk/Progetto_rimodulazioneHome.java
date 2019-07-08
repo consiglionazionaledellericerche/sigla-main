@@ -703,6 +703,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 									Progetto_piano_economicoBulk newPpe = new Progetto_piano_economicoBulk();
 									newPpe.setVoce_piano_economico(ppeRim.getVoce_piano_economico());
 									newPpe.setEsercizio_piano(ppeRim.getEsercizio_piano());
+									newPpe.setFl_ctrl_disp(Boolean.TRUE);
 									newPpe.setToBeCreated();
 									progetto.addToDettagliPianoEconomicoAnnoCorrente(newPpe);
 									return newPpe;
@@ -773,6 +774,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 									Progetto_piano_economicoBulk newPpe = new Progetto_piano_economicoBulk();
 									newPpe.setVoce_piano_economico(ppeRim.getVoce_piano_economico());
 									newPpe.setEsercizio_piano(ppeRim.getEsercizio_piano());
+									newPpe.setFl_ctrl_disp(Boolean.TRUE);
 									newPpe.setToBeCreated();
 									progetto.addToDettagliPianoEconomicoAltriAnni(newPpe);
 									return newPpe;
@@ -832,6 +834,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 									Progetto_piano_economicoBulk newPpe = new Progetto_piano_economicoBulk();
 									newPpe.setVoce_piano_economico(ppeRim.getVoce_piano_economico());
 									newPpe.setEsercizio_piano(ppeRim.getEsercizio_piano());
+									newPpe.setFl_ctrl_disp(Boolean.TRUE);
 									newPpe.setToBeCreated();
 									progetto.addToDettagliPianoEconomicoTotale(newPpe);
 									return newPpe;
