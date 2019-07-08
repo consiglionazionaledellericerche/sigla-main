@@ -157,13 +157,13 @@
 			<rectangle radius="10">
 				<reportElement x="106" y="110" width="284" height="20" uuid="07dce4b9-4a32-4aa6-8647-3eeddf246e27"/>
 			</rectangle>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="VER8" x="167" y="110" width="80" height="20" uuid="19d00ba9-d382-4639-86a3-4ed43520de4b"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{varImportoFinanziato}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="VER8" x="310" y="111" width="80" height="20" uuid="28925ca4-42f0-4ee1-9193-32c2cba42939"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
@@ -187,13 +187,13 @@
 			<rectangle radius="10">
 				<reportElement x="535" y="111" width="284" height="20" uuid="2a6930d2-c147-4b0b-a3b8-ac5fe673d1ac"/>
 			</rectangle>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="VER8" x="596" y="111" width="80" height="20" uuid="53cf34e4-d329-4242-b0fa-4c8d31ecc9a9"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{varImportoCofinanziato}]]></textFieldExpression>
 			</textField>
-			<textField evaluationTime="Report" pattern="#,##0.00">
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement style="VER8" x="739" y="111" width="80" height="20" uuid="dc0f6724-bee5-479c-8c0e-c65514d9fba7"/>
 				<box rightPadding="4"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
@@ -217,12 +217,12 @@
 			<rectangle radius="10">
 				<reportElement x="106" y="131" width="284" height="20" uuid="9a9477c1-6ad8-422a-bb37-2b6c623d62de"/>
 			</rectangle>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement style="VER8" x="310" y="131" width="80" height="20" uuid="a4feb6b2-0cb4-48ac-ac42-61e10e69c07e"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{dataProrogaRimodulata}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="false">
+			<textField isBlankWhenNull="true">
 				<reportElement style="VER8" x="167" y="131" width="80" height="20" uuid="9c73a3e9-6304-48c7-bf4b-a82c57672422"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{dataProroga}]]></textFieldExpression>
