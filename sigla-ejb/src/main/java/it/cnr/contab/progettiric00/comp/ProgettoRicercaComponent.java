@@ -1764,7 +1764,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	
 	            if (Optional.ofNullable(progetto.getImCofinanziato()).orElse(BigDecimal.ZERO).compareTo(assestatoSpePrgReimpiego)<0)
 	   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato ("+
-             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImFinanziato()) +
+             		   	   new it.cnr.contab.util.EuroFormat().format(progetto.getImCofinanziato()) +
                             ") non può essere inferiore all'assestato totale spese 'fonti interne' e 'natura reimpiego' (" +
                             new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego) + ")!");
 			} else { //PROGETTO CON PIANO ECONOMICO

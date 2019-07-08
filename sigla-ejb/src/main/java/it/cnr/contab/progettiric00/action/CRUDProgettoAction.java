@@ -685,9 +685,7 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 			if (!Optional.ofNullable(crudController.getModel()).isPresent())
 				throw new it.cnr.jada.action.MessageToUser("Selezionare il contratto al quale si vuole accesso.");
 
-			newbp = (CRUDConfigAnagContrattoBP) context.getUserInfo().createBusinessProcess(context,"CRUDConfigAnagContrattoBP",new Object[] { function});
-			OggettoBulk contratto = newbp.initializeModelForEdit(context, ((ContrattoBulk)crudController.getModel()));
-			newbp.setModel(context, contratto);
+			newbp = (CRUDConfigAnagContrattoBP) context.getUserInfo().createBusinessProcess(context,"CRUDConfigAnagContrattoBP",new Object[] { function, (ContrattoBulk)crudController.getModel(), "V"});
 			return context.addBusinessProcess(newbp);
 		} catch(Exception e) {
 			return handleException(context,e);
