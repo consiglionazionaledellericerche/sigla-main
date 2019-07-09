@@ -139,6 +139,16 @@
 	   <init-param name="printbp" value="OfflineReportPrintBP" />		
   </businessProcess>
 
+	<businessProcess
+			name="CRUDMandatoVariazioneBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoVariazioneBP">
+		<forward name="default" path="/doccont00/main_mandato.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk" />
+		<init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk" />
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
+		<init-param name="defaultAction" value="CRUDMandatoAction" />
+		<init-param name="printbp" value="OfflineReportPrintBP" />
+	</businessProcess>
+
    <businessProcess
       name="CRUDMandatoRegolarizzazioneBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoBP">
     <forward name="default" path="/doccont00/main_mandato.jsp"/>
