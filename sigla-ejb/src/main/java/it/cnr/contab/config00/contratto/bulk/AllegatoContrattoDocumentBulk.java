@@ -1,18 +1,16 @@
 package it.cnr.contab.config00.contratto.bulk;
 
-import it.cnr.contab.util.ApplicationMessageFormatException;
-import it.cnr.jada.comp.ApplicationException;
-import it.cnr.si.spring.storage.bulk.StorageTypeName;
-import it.cnr.si.spring.storage.annotation.StoragePolicy;
-import it.cnr.si.spring.storage.annotation.StorageProperty;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.cnr.contab.util.Utility;
-import it.cnr.jada.bulk.OggettoBulk;
-
 import java.io.File;
 import java.math.BigInteger;
 import java.util.Optional;
+
+import it.cnr.contab.util.Utility;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.annotation.StoragePolicy;
+import it.cnr.si.spring.storage.annotation.StorageProperty;
+import it.cnr.si.spring.storage.bulk.StorageTypeName;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
 public class AllegatoContrattoDocumentBulk extends OggettoBulk implements StorageTypeName {
 	private static final long serialVersionUID = 1L;
@@ -160,17 +158,24 @@ public class AllegatoContrattoDocumentBulk extends OggettoBulk implements Storag
 	@StorageProperty(name="cmis:name")
 	public String getDocumentName() {
 		StringBuffer name = new StringBuffer();
-		if (getType().equals(CONTRATTO))
+		String tipo = getType();
+		if (tipo.equals(CONTRATTO))
 			name.append("CTR");
-		else if (getType().equals(PROGETTO))
+		else if (tipo.equals(PROGETTO))
 			name.append("PRG");
-		else if (getType().equals(CAPITOLATO))
+		else if (tipo.equals(CAPITOLATO))
 			name.append("CAP");
-		else if (getType().equals(GENERICO))
+		else if (tipo.equals(GENERICO))
 			name.append("GEN");
 		name.append("-").append(contrattoBulk.getUnita_organizzativa().getCd_unita_organizzativa());
 		name.append("-").append(contrattoBulk.getEsercizio()).append(contrattoBulk.getStato()).append(Utility.lpad(contrattoBulk.getPg_contratto(), 9, '0'));
 		name.append(".").append(getNome()==null?"Progetto.link":getNome());
 		return name.toString();
+	}
+	public Boolean isTipoAllegatoDuplicabile(){
+		return getType().equals(AllegatoContrattoDocumentBulk.GENERICO);
+	}
+	public Boolean isTipoAllegatoContratto(){
+		return getType().equals(AllegatoContrattoDocumentBulk.CONTRATTO);
 	}
 }
