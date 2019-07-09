@@ -1386,6 +1386,10 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		return Optional.ofNullable(getStato_cofi()).map(x -> x.equals(STATO_ANNULLATO)).orElse(false);
 	}
 
+	public boolean isStatoCofiPagato() {
+		return Optional.ofNullable(getStato_cofi()).map(x -> x.equals(STATO_PAGATO)).orElse(false);
+	}
+
 	public boolean isApertoDaMinicarriera() {
 		return isDaMinicarriera() && getAperturaDaMinicarriera().booleanValue();
 	}

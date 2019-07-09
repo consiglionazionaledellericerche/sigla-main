@@ -2017,4 +2017,44 @@ TRASPORTO_AEREO"/>
     <changeSet author="marco.spasiano" id="movimento_conto_evidenza_codice_rif_operazione">
         <modifyDataType tableName="movimento_conto_evidenza" columnName="codice_rif_operazione" newDataType="VARCHAR(250)"/>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter-table-contratto-flusso">
+        <addColumn tableName="contratto">
+            <column name="cd_cig_ext" type="VARCHAR(10)" remarks="Codice CIG proveniente da applicativo esterno"/>
+            <column name="codfis_piva_rup_ext" type="VARCHAR(20)" remarks="Codice Fiscale o Partita IVA del rup proveniente da applicativo esterno"/>
+            <column name="codfis_piva_firmatario_ext" type="VARCHAR(20)" remarks="Codice Fiscale o Partita IVA del firmatario proveniente da applicativo esterno"/>
+            <column name="codfis_piva_aggiudicatario_ext" type="VARCHAR(20)" remarks="Codice Fiscale o Partita IVA dell'aggiudicatario proveniente da applicativo esterno"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter-table-contratto-codice-flusso-acquisti">
+        <addColumn tableName="contratto">
+            <column name="codice_flusso_acquisti" type="VARCHAR(50)" remarks="Codice Identificativo del flusso Acquisti"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="remove-table-contratto-not-null-fig-giur-est">
+	    <dropNotNullConstraint 
+            columnName="fig_giur_est"
+            tableName="contratto"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="add-accesso-variazione-mandati">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCMANDATCOREVARIAZM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Variazione Mandato Trasmesso"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="DOCMANDATCOREVARIAZM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDMandatoVariazioneBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SIGLA"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

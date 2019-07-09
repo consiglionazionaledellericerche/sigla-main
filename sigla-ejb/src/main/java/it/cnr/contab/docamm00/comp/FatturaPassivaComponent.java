@@ -6210,7 +6210,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
 	    	        (!Optional.ofNullable(riga.getCig()).isPresent() && !Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
 		        throw new ApplicationException("Inserire il CIG o il motivo di assenza dello stesso!");
 		    }
-		    if ((Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent())) {
+		    if (Optional.ofNullable(riga.getCig()).isPresent() && Optional.ofNullable(riga.getCig().getCdCig()).isPresent() && Optional.ofNullable(riga.getMotivo_assenza_cig()).isPresent()) {
     		    throw new ApplicationException("Inserire solo uno tra il CIG e il motivo di assenza dello stesso!");
 		    }
 		}
