@@ -14,7 +14,9 @@
 
     <bean id="pdgVariazioniService" class="it.cnr.contab.pdg00.service.PdgVariazioniService" />
     <bean id="contrattiService" class="it.cnr.contab.incarichi00.service.ContrattiService" />
-    <bean id="contrattoService" class="it.cnr.contab.config00.service.ContrattoService" />
+    <bean id="contrattoService" class="it.cnr.contab.config00.service.ContrattoService"> 
+            <property name="folderFlowsName" value="${contratto.flows.folder}"/>
+    </bean>
     <bean id="contabiliService" class="it.cnr.contab.doccont00.service.ContabiliService" />
 
     <bean id="documentiContabiliService" class="it.cnr.contab.doccont00.service.DocumentiContabiliService" >

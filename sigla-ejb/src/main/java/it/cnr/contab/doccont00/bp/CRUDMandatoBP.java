@@ -12,6 +12,7 @@ import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.missioni00.docs.bulk.AnticipoBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
+import it.cnr.contab.utenze00.action.GestioneUtenteAction;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.Utility;
@@ -21,6 +22,7 @@ import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
@@ -31,16 +33,11 @@ import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
-import org.jboss.resteasy.spi.ApplicationException;
 
-import javax.servlet.ServletException;
-import javax.servlet.jsp.PageContext;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -98,19 +95,20 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
             return super.getStatus();
         }
     };
+    protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager = null;
+    boolean isAbilitatoCrudMandatoVariazioneBP = Boolean.FALSE;
     private boolean siope_attiva = false;
     private boolean cup_attivo = false;
     private boolean siope_cup_attivo = false;
     private boolean tesoreria_unica = false;
-    protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager= null;
 
     public CRUDMandatoBP() {
-        super("Tr");
+        super();
         setTab("tab", "tabMandato");
     }
 
     public CRUDMandatoBP(String function) {
-        super(function + "Tr");
+        super(function);
         setTab("tab", "tabMandato");
     }
 
@@ -227,36 +225,38 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
     protected it.cnr.jada.util.jsp.Button[] createToolbar() {
         final Properties properties = Config.getHandler().getProperties(getClass());
         return Stream.concat(Arrays.asList(super.createToolbar()).stream(),
-            Arrays.asList(
-                    new Button(properties, "CRUDToolbar.printpdf"),
-                    new Button(properties, "CRUDToolbar.contabile"),
-                    new Button(properties, "CRUDToolbar.davariare"),
-                    new Button(properties, "CRUDToolbar.save.variazione.sostituzione")
-            ).stream()).toArray(Button[]::new);
+                Arrays.asList(
+                        new Button(properties, "CRUDToolbar.printpdf"),
+                        new Button(properties, "CRUDToolbar.contabile"),
+                        new Button(properties, "CRUDToolbar.davariare"),
+                        new Button(properties, "CRUDToolbar.save.variazione.sostituzione")
+                ).stream()).toArray(Button[]::new);
     }
 
     public boolean isDaVariareButtonHidden() {
+        if (!isAbilitatoCrudMandatoVariazioneBP)
+            return Boolean.TRUE;
         final Optional<MandatoBulk> mandatoBulk1 = Optional.ofNullable(getModel())
                 .filter(MandatoBulk.class::isInstance)
                 .map(MandatoBulk.class::cast)
                 .filter(mandatoBulk -> mandatoBulk.getCrudStatus() == OggettoBulk.NORMAL);
         return !isSupervisore() ||
                 mandatoBulk1
-                .flatMap(mandatoBulk -> Optional.ofNullable(mandatoBulk.getEsitoOperazione()))
-                .map(s -> !Arrays.asList(
-                        EsitoOperazione.ACQUISITO.value(),
-                        EsitoOperazione.PAGATO.value(),
-                        EsitoOperazione.REGOLARIZZATO.value()
-                ).contains(s)).orElse(Boolean.TRUE)
+                        .flatMap(mandatoBulk -> Optional.ofNullable(mandatoBulk.getEsitoOperazione()))
+                        .map(s -> !Arrays.asList(
+                                EsitoOperazione.ACQUISITO.value(),
+                                EsitoOperazione.PAGATO.value(),
+                                EsitoOperazione.REGOLARIZZATO.value()
+                        ).contains(s)).orElse(Boolean.TRUE)
                 || mandatoBulk1
-                    .map(mandatoBulk -> {
-                        return Optional.ofNullable(mandatoBulk.getStatoVarSos())
-                                .map(s -> Arrays.asList(
-                                        StatoVariazioneSostituzione.DA_VARIARE.value(),
-                                        StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value()
-                                ).contains(s))
-                                .orElse(Boolean.FALSE);
-                    }).orElse(Boolean.TRUE);
+                .map(mandatoBulk -> {
+                    return Optional.ofNullable(mandatoBulk.getStatoVarSos())
+                            .map(s -> Arrays.asList(
+                                    StatoVariazioneSostituzione.DA_VARIARE.value(),
+                                    StatoVariazioneSostituzione.VARIAZIONE_TRASMESSA.value()
+                            ).contains(s))
+                            .orElse(Boolean.FALSE);
+                }).orElse(Boolean.TRUE);
     }
 
     public boolean isDaVariare() {
@@ -279,16 +279,45 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                 .filter(MandatoBulk.class::isInstance)
                 .map(MandatoBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Mandato non trovato!"));
-        mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.DA_VARIARE.value());
-        mandatoBulk.setToBeUpdated();
-        try {
-            final OggettoBulk oggettoBulk = createComponentSession().modificaConBulk(actionContext.getUserContext(), mandatoBulk);
-            commitUserTransaction();
-            basicEdit(actionContext, oggettoBulk, true);
-        } catch (ComponentException|RemoteException e) {
-            throw handleException(e);
+        CRUDMandatoVariazioneBP crudMandatoVariazioneBP =
+                Optional.ofNullable(actionContext.getUserInfo().createBusinessProcess(actionContext, "CRUDMandatoVariazioneBP"))
+                        .filter(CRUDMandatoVariazioneBP.class::isInstance)
+                        .map(CRUDMandatoVariazioneBP.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione del Manadato"));
+        crudMandatoVariazioneBP.setModel(actionContext, mandatoBulk);
+        crudMandatoVariazioneBP.setDaVariare(actionContext);
+        actionContext.closeBusinessProcess();
+        actionContext.addBusinessProcess(crudMandatoVariazioneBP);
+    }
+
+
+    @Override
+    public void basicEdit(ActionContext context, OggettoBulk bulk, boolean doInitializeForEdit) throws BusinessProcessException {
+        super.basicEdit(context, bulk, doInitializeForEdit);
+        final MandatoBulk mandatoBulk = Optional.ofNullable(getModel())
+                .filter(MandatoBulk.class::isInstance)
+                .map(MandatoBulk.class::cast)
+                .orElseThrow(() -> new BusinessProcessException("Mandato non trovato!"));
+        if (Optional.ofNullable(mandatoBulk.getStatoVarSos())
+                .map(s -> s.equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
+                .orElse(Boolean.FALSE)) {
+            if(!isAbilitatoCrudMandatoVariazioneBP) {
+                setModel(context, createEmptyModelForSearch(context));
+                setStatus(SEARCH);
+                setMessage(ERROR_MESSAGE, "Mandato in stato 'DA VARIARE', accesso non consentito!");
+            } else {
+                CRUDMandatoVariazioneBP crudMandatoVariazioneBP =
+                        Optional.ofNullable(context.getUserInfo().createBusinessProcess(context, "CRUDMandatoVariazioneBP", new Object[]{"M"}))
+                                .filter(CRUDMandatoVariazioneBP.class::isInstance)
+                                .map(CRUDMandatoVariazioneBP.class::cast)
+                                .orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione del Manadato"));
+                crudMandatoVariazioneBP.setModel(context, mandatoBulk);
+                context.closeBusinessProcess();
+                context.addBusinessProcess(crudMandatoVariazioneBP);
+            }
         }
     }
+
     /**
      * Insert the method's description here.
      * Creation date: (12/11/2002 11.44.11)
@@ -442,6 +471,18 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
             setSiope_cup_attivo(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_siope_cup().booleanValue());
             setTesoreria_unica(Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(), CNRUserContext.getEsercizio(actioncontext.getUserContext())).getFl_tesoreria_unica().booleanValue());
             setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));
+            final CNRUserInfo cnrUserInfo = Optional.ofNullable(actioncontext)
+                    .flatMap(actionContext -> Optional.ofNullable(actionContext.getUserInfo()))
+                    .filter(CNRUserInfo.class::isInstance)
+                    .map(CNRUserInfo.class::cast)
+                    .orElseThrow(() -> new BusinessProcessException("Cannot find UserInfo in context"));
+
+            isAbilitatoCrudMandatoVariazioneBP = Optional.ofNullable(GestioneUtenteAction.getComponentSession()
+                    .validaBPPerUtente(actioncontext.getUserContext(),
+                            cnrUserInfo.getUtente(),
+                            cnrUserInfo.getUtente().isUtenteComune() ?
+                                    cnrUserInfo.getUnita_organizzativa().getCd_unita_organizzativa() : "*", "CRUDMandatoVariazioneBP")).isPresent();
+
         } catch (Throwable throwable) {
             throw new BusinessProcessException(throwable);
         }
@@ -691,23 +732,23 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
         if (!Optional.ofNullable(documentoAmministrativoSpesaBulk).isPresent())
             return null;
         switch (documentoAmministrativoSpesaBulk.getCd_tipo_doc_amm()) {
-            case Numerazione_doc_ammBulk.TIPO_MISSIONE : {
+            case Numerazione_doc_ammBulk.TIPO_MISSIONE: {
                 return getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession")
                         .cercaObbligazioni(context, filtro);
             }
-            case Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA : {
+            case Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA: {
                 return getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession")
                         .cercaObbligazioni(context, filtro);
             }
-            case Numerazione_doc_ammBulk.TIPO_COMPENSO : {
+            case Numerazione_doc_ammBulk.TIPO_COMPENSO: {
                 return getDocumentoAmministrativoSpesaComponentSession("CNRCOMPENSI00_EJB_CompensoComponentSession")
                         .cercaObbligazioni(context, filtro);
             }
-            case Numerazione_doc_ammBulk.TIPO_ANTICIPO : {
+            case Numerazione_doc_ammBulk.TIPO_ANTICIPO: {
                 return getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_AnticipoComponentSession")
                         .cercaObbligazioni(context, filtro);
             }
-            case Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S : {
+            case Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S: {
                 return getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_DocumentoGenericoComponentSession")
                         .cercaObbligazioni(context, filtro);
             }
@@ -717,21 +758,21 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
     }
 
     private Obbligazione_scadenzarioBulk cambiaObbligazione(UserContext context, Mandato_rigaBulk mandato_rigaBulk,
-                                    IDocumentoAmministrativoSpesaBulk documentoAmministrativoSpesaBulk,
-                                    Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk) throws BusinessProcessException, RemoteException, ComponentException {
+                                                            IDocumentoAmministrativoSpesaBulk documentoAmministrativoSpesaBulk,
+                                                            Obbligazione_scadenzarioBulk obbligazione_scadenzarioBulk) throws BusinessProcessException, RemoteException, ComponentException {
         switch (documentoAmministrativoSpesaBulk.getCd_tipo_doc_amm()) {
-            case Numerazione_doc_ammBulk.TIPO_MISSIONE : {
+            case Numerazione_doc_ammBulk.TIPO_MISSIONE: {
                 final IDocumentoAmministrativoSpesaComponentSession missioneComponentSession =
                         getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_MissioneComponentSession");
                 MissioneBulk missioneBulk = Optional.ofNullable(
                         missioneComponentSession.inizializzaBulkPerModifica(context,
-                        Optional.ofNullable(documentoAmministrativoSpesaBulk)
-                                                .filter(MissioneBulk.class::isInstance)
-                                                .map(MissioneBulk.class::cast)
-                                                .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Missione!"))))
-                                .filter(MissioneBulk.class::isInstance)
-                                .map(MissioneBulk.class::cast)
-                                .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Missione!"));
+                                Optional.ofNullable(documentoAmministrativoSpesaBulk)
+                                        .filter(MissioneBulk.class::isInstance)
+                                        .map(MissioneBulk.class::cast)
+                                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Missione!"))))
+                        .filter(MissioneBulk.class::isInstance)
+                        .map(MissioneBulk.class::cast)
+                        .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Missione!"));
 
                 final Obbligazione_scadenzarioBulk obbligazione_scadenzario = missioneBulk.getObbligazione_scadenzario();
                 obbligazione_scadenzario.setIm_associato_doc_amm(BigDecimal.ZERO);
@@ -748,7 +789,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                         .orElseThrow(() -> new BusinessProcessException("Impegno sulla missione non trovato!"));
 
             }
-            case Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA : {
+            case Numerazione_doc_ammBulk.TIPO_FATTURA_PASSIVA: {
                 final IDocumentoAmministrativoSpesaComponentSession fatturaPassivaComponentSession =
                         getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_FatturaPassivaComponentSession");
                 Fattura_passivaBulk fatturaPassivaBulk = Optional.ofNullable(
@@ -762,12 +803,12 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                         .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Fattura!"));
                 final BulkList<Fattura_passiva_rigaBulk> fattura_passiva_dettColl = fatturaPassivaBulk.getFattura_passiva_dettColl();
                 final AtomicReference<Fattura_passiva_rigaBulk> fatturaPassivaRigaBulkAtomicReference = new AtomicReference<>();
-                for(Fattura_passiva_rigaBulk fattura_passiva_rigaBulk : fattura_passiva_dettColl) {
+                for (Fattura_passiva_rigaBulk fattura_passiva_rigaBulk : fattura_passiva_dettColl) {
                     if (fattura_passiva_rigaBulk.getObbligazione_scadenziario().equalsByPrimaryKey(
                             new Obbligazione_scadenzarioBulk(
                                     mandato_rigaBulk.getCd_cds(),
                                     mandato_rigaBulk.getEsercizio_obbligazione(),
-                                    mandato_rigaBulk.getEsercizio_ori_obbligazione() ,
+                                    mandato_rigaBulk.getEsercizio_ori_obbligazione(),
                                     mandato_rigaBulk.getPg_obbligazione(),
                                     mandato_rigaBulk.getPg_obbligazione_scadenzario()
                             )
@@ -796,7 +837,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                         .map(Fattura_passiva_rigaBulk::getObbligazione_scadenziario)
                         .orElseThrow(() -> new BusinessProcessException("Impegno sulla riga non trovato!"));
             }
-            case Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S : {
+            case Numerazione_doc_ammBulk.TIPO_DOC_GENERICO_S: {
                 final IDocumentoAmministrativoSpesaComponentSession documentoGenericoComponentSession =
                         getDocumentoAmministrativoSpesaComponentSession("CNRDOCAMM00_EJB_DocumentoGenericoComponentSession");
                 Documento_genericoBulk documentoGenericoPassivoBulk = Optional.ofNullable(
@@ -810,12 +851,12 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                         .orElseThrow(() -> new BusinessProcessException("Documento amministrativo non di tipo Generico!"));
                 final BulkList<Documento_generico_rigaBulk> documento_generico_dettColl = documentoGenericoPassivoBulk.getDocumento_generico_dettColl();
                 final AtomicReference<Documento_generico_rigaBulk> documentoGenericoRigaBulkAtomicReference = new AtomicReference<>();
-                for(Documento_generico_rigaBulk documentoGenericoRigaBulk : documento_generico_dettColl) {
+                for (Documento_generico_rigaBulk documentoGenericoRigaBulk : documento_generico_dettColl) {
                     if (documentoGenericoRigaBulk.getObbligazione_scadenziario().equalsByPrimaryKey(
                             new Obbligazione_scadenzarioBulk(
                                     mandato_rigaBulk.getCd_cds(),
                                     mandato_rigaBulk.getEsercizio_obbligazione(),
-                                    mandato_rigaBulk.getEsercizio_ori_obbligazione() ,
+                                    mandato_rigaBulk.getEsercizio_ori_obbligazione(),
                                     mandato_rigaBulk.getPg_obbligazione(),
                                     mandato_rigaBulk.getPg_obbligazione_scadenzario()
                             )
@@ -843,7 +884,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                         .map(Documento_generico_rigaBulk::getObbligazione_scadenziario)
                         .orElseThrow(() -> new BusinessProcessException("Impegno sulla riga non trovato!"));
             }
-            case Numerazione_doc_ammBulk.TIPO_COMPENSO : {
+            case Numerazione_doc_ammBulk.TIPO_COMPENSO: {
                 final IDocumentoAmministrativoSpesaComponentSession compensoComponentSession =
                         getDocumentoAmministrativoSpesaComponentSession("CNRCOMPENSI00_EJB_CompensoComponentSession");
                 CompensoBulk compensoBulk = Optional.ofNullable(
@@ -870,7 +911,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                         .map(CompensoBulk::getObbligazioneScadenzario)
                         .orElseThrow(() -> new BusinessProcessException("Impegno sulla missione non trovato!"));
             }
-            case Numerazione_doc_ammBulk.TIPO_ANTICIPO : {
+            case Numerazione_doc_ammBulk.TIPO_ANTICIPO: {
                 final IDocumentoAmministrativoSpesaComponentSession anticipoComponentSession =
                         getDocumentoAmministrativoSpesaComponentSession("CNRMISSIONI00_EJB_AnticipoComponentSession");
                 AnticipoBulk anticipoBulk = Optional.ofNullable(
@@ -912,6 +953,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
 
     /**
      * É stato richiesto un cambio Impegno sulla riga di Mandato
+     *
      * @param context
      * @param filtro
      * @return
@@ -919,7 +961,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
      */
     @Override
     public RemoteIterator findObbligazioni(UserContext context, Filtro_ricerca_obbligazioniVBulk filtro) throws BusinessProcessException {
-        try{
+        try {
             return findObbligazioni(context, getMandatoComponentSession().getDocumentoAmministrativoSpesaBulk(context, getCurrentMandato_rigaBulk()), filtro);
         } catch (it.cnr.jada.comp.ComponentException e) {
             throw handleException(e);
@@ -929,8 +971,6 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
     }
 
     /**
-     *
-     *
      * @param actionContext
      * @param clauses
      * @param bulk
@@ -957,7 +997,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
         }
     }
 
-    public void cambiaObbligazioneScadenzario(ActionContext context, Mandato_rigaBulk mandato_rigaBulk, Obbligazione_scadenzarioBulk scadenza) throws BusinessProcessException{
+    public void cambiaObbligazioneScadenzario(ActionContext context, Mandato_rigaBulk mandato_rigaBulk, Obbligazione_scadenzarioBulk scadenza) throws BusinessProcessException {
         try {
             /**
              * Cambio l'impegno sul documento amministrativo collegato
@@ -967,7 +1007,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                             cambiaObbligazione(context.getUserContext(), mandato_rigaBulk, getDocumentoAmministrativoCorrente(), scadenza)
                     ).orElse(scadenza);
 
-            final Mandato_rigaBulk mandatoRigaClone = (Mandato_rigaBulk)mandato_rigaBulk.clone();
+            final Mandato_rigaBulk mandatoRigaClone = (Mandato_rigaBulk) mandato_rigaBulk.clone();
             mandatoRigaClone.setMandato_siopeColl(new BulkList());
             mandatoRigaClone.setMandatoCupColl(new BulkList());
 
@@ -987,7 +1027,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                     });
 
             getDocumentiPassiviSelezionati().
-                    setModelIndex(context,  getDocumentiPassiviSelezionati().addDetail(mandatoRigaClone));
+                    setModelIndex(context, getDocumentiPassiviSelezionati().addDetail(mandatoRigaClone));
 
             mandatoRigaClone.setEsercizio_obbligazione(obbligazione_scadenzarioBulk.getEsercizio());
             mandatoRigaClone.setEsercizio_ori_obbligazione(obbligazione_scadenzarioBulk.getEsercizio_originale());
@@ -1004,7 +1044,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
             getModel().setToBeUpdated();
             mandatoRigaClone.setCrudStatus(OggettoBulk.TO_BE_CREATED);
             setDirty(true);
-        } catch (ComponentException|RemoteException e) {
+        } catch (ComponentException | RemoteException e) {
             throw handleException(e);
         }
     }
@@ -1074,9 +1114,9 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
     @Override
     public IDefferUpdateSaldi getDefferedUpdateSaldiBulk() {
         return Optional.ofNullable(getModel())
-                    .filter(IDefferUpdateSaldi.class::isInstance)
-                    .map(IDefferUpdateSaldi.class::cast)
-                    .orElseThrow(() -> new DetailedRuntimeException("Modello non presente o non implementa IDefferUpdateSaldi"));
+                .filter(IDefferUpdateSaldi.class::isInstance)
+                .map(IDefferUpdateSaldi.class::cast)
+                .orElseThrow(() -> new DetailedRuntimeException("Modello non presente o non implementa IDefferUpdateSaldi"));
     }
 
     @Override

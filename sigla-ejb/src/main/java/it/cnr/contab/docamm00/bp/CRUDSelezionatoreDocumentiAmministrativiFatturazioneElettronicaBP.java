@@ -406,11 +406,20 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
 											documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
 													.concat(StorageService.SUFFIX).concat(nomeFileP7m)));
 							if (storageObjectByPath.isPresent()) {
-								documentiCollegatiDocAmmService.updateStream(
-										storageObjectByPath.get().getKey(),
-										new ByteArrayInputStream(byteSigned),
-										MimeTypes.P7M.mimetype()
-								);
+								/**
+								 * Se trovo il p7m caricato manualmente allora non aggiorno il contenuto
+								 */
+								if (!Optional.ofNullable(storageObjectByPath.get())
+										.flatMap(storageObject1 -> Optional.ofNullable(storageObject1.<String>getPropertyValue("cm:title")))
+										.filter(title -> title.equalsIgnoreCase("skip"))
+										.isPresent()
+								) {
+									documentiCollegatiDocAmmService.updateStream(
+											storageObjectByPath.get().getKey(),
+											new ByteArrayInputStream(byteSigned),
+											MimeTypes.P7M.mimetype()
+									);
+								}
 							} else {
 								documentiCollegatiDocAmmService.storeSimpleDocument(
 										new ByteArrayInputStream(byteSigned),
