@@ -51,10 +51,19 @@ function doScaricaAllegato() {
                             </td></tr>
                         </table>
 					</div>
-				</td></tr>					
+				</td></tr>
+
 				<tr>
-			        <td><% controller.writeFormLabel(out,"default","type"); %></td>
-			        <td colspan="2"><% controller.writeFormInput(out,"default","type", !bp.isAllegatiEnabled(),null,null); %></td>
+					<td>
+						<%
+							controller.writeFormLabel(out, "default", "type");
+						%>
+					</td>
+					<td colspan="2">
+						<%
+							controller.writeFormInput(out, "default", "type", !bp.isAllegatiEnabled(), null, null);
+						%>
+					</td>
 				</tr>
 				<% if (bulk != null && AllegatoContrattoDocumentBulk.PROGETTO.equals(bulk.getType())){%>
 				<tr>
