@@ -109,6 +109,13 @@
 			nullable="false"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
+			columnName="FL_ASSOCIA_CONTRATTO"
+			propertyName="flAssociaContratto"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
 			columnName="DACR"
 			propertyName="dacr"
 			sqlTypeName="TIMESTAMP"
@@ -169,6 +176,8 @@
 		name="flAllPrevFin" />
 	<persistentProperty
 		name="flQuadraContratto" />
+	<persistentProperty
+		name="flAssociaContratto" />
 	<persistentProperty
 		name="dacr" />
 	<persistentProperty

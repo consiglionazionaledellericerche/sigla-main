@@ -71,6 +71,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -409,7 +410,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			Optional.ofNullable(bulk.getPg_progetto())
 			.orElseThrow(()->new ApplicationRuntimeException("Valorizzare il progetto a fronte del quale il contratto è stato assunto."));
 			
-			controllaProgetti(uc, bulk.getProgetto(), null);
+			controllaProgetti(uc, bulk.getProgetto(), bulk);
 		}
 	}
 	public void controllaCancellazioneAssociazioneUo(UserContext userContext, Ass_contratto_uoBulk ass_contratto_uo) throws ComponentException{
@@ -1955,6 +1956,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			throw handleException(contratto,e);
 			} 
 			
+			sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.FL_ASSOCIA_CONTRATTO", SQLBuilder.EQUALS, "Y");
+
 			if (parCnr.getFl_nuovo_pdg())
 				sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
 			else
@@ -1982,6 +1985,53 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				Optional.ofNullable(otherFieldBulk).filter(Progetto_other_fieldBulk::isStatoApprovato)
 				.orElseThrow(()->new ApplicationRuntimeException("Associazione progetto non possibile! Il progetto da associare deve risultare approvato!"));
 
+				//Le date del contratto devono contenere il progetto (data inizio e fine con data inizio e fine) 
+				Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtInizio()))
+						.filter(dt->dt.before(contrattoNew.getDt_inizio_validita())||dt.after(contrattoNew.getDt_fine_validita()))
+						.ifPresent(dt->{
+							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "La data inizio del progetto ("
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)+") "
+									+ "deve essere compresa tra la data di inizio validità ("
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_inizio_validita())+") "
+									+ "e la data di fine validità ("
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_fine_validita())+") "
+									+ "del contratto.");
+						});
+
+				Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtFine()))
+				.filter(dt->dt.before(contrattoNew.getDt_inizio_validita())||dt.after(contrattoNew.getDt_fine_validita()))
+				.ifPresent(dt->{
+					throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+							+ "La data fine del progetto ("
+							+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)+") "
+							+ "deve essere compresa tra la data di inizio validità ("
+							+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_inizio_validita())+") "
+							+ "e la data di fine validità ("
+							+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_fine_validita())+") "
+							+ "del contratto.");
+				});
+
+				Optional<Timestamp> optDtProroga = Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtProroga()));
+				if (optDtProroga.isPresent()) {
+					if (!Optional.ofNullable(contrattoNew.getDt_proroga()).isPresent())
+						throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+								+ "E' possibile associare un progetto prorogato solo se il contratto risulta anche esso prorogato!");
+					else 
+						optDtProroga
+						.filter(dt->dt.after(contrattoNew.getDt_fine_validita()) && !dt.after(contrattoNew.getDt_proroga()))
+						.ifPresent(dt->{
+							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "La data proroga del progetto ("
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)+") "
+									+ "deve essere compresa tra la data di fine validità ("
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_fine_validita())+") "
+									+ "e la data di proroga ("
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_proroga())+") "
+									+ "del contratto.");
+						});
+				}
+				
 				TipoFinanziamentoHome tipoFinanziamentoHome = (TipoFinanziamentoHome)getHome(userContext, TipoFinanziamentoBulk.class);
 				TipoFinanziamentoBulk tipoFinanziamentoBulk = (TipoFinanziamentoBulk)tipoFinanziamentoHome.findByPrimaryKey(new TipoFinanziamentoBulk(otherFieldBulk.getIdTipoFinanziamento()));
 
@@ -1993,7 +2043,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		
 					List<ContrattoBulk> list = contrattoHome.fetchAll(sql);
 					
-					BigDecimal totAssociatoSto = list.stream().map(ContrattoBulk::getIm_contratto_attivo).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
+					BigDecimal totAssociatoSto = list.stream()
+							.filter(el->!Optional.ofNullable(contrattoNew).isPresent()||
+									!el.getEsercizio().equals(contrattoNew.getEsercizio())||
+									!el.getStato().equals(contrattoNew.getStato())||
+									!el.getPg_contratto().equals(contrattoNew.getPg_contratto()))
+							.map(ContrattoBulk::getIm_contratto_attivo).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
 					BigDecimal totAssociato = totAssociatoSto.add(Optional.ofNullable(contrattoNew).flatMap(el->Optional.of(el.getIm_contratto_attivo())).orElse(BigDecimal.ZERO));
 					if (totAssociato.compareTo(otherFieldBulk.getImFinanziato())>0)
 						throw new ApplicationException("Associazione progetto non possibile. L'importo attivo del contratto è superiore alla quota "
@@ -2001,8 +2056,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 								+ new it.cnr.contab.util.EuroFormat().format(otherFieldBulk.getImFinanziato().subtract(totAssociatoSto))
 								+ ")");
 				}
-			}catch(it.cnr.jada.persistency.PersistencyException ex){
-				throw handleException(ex);
+			} catch (Throwable e) {
+				throw handleException(e);
 			}
 		}
 		

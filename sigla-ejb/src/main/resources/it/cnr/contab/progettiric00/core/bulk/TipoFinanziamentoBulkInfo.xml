@@ -119,6 +119,13 @@
             inputType="CHECKBOX"
             nullable="false"
             label="Quadra Associazione Progetto/Contratti"/>
+    <fieldProperty
+            name="flAssociaContratto"
+            property="flAssociaContratto"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Consenti Associazione Progetto/Contratti"/>            
     <form
             name="searchtool">
         <formFieldProperty
@@ -158,6 +165,8 @@
             name="flAllPrevFin" />
     <formFieldProperty
             name="flQuadraContratto" />
+    <formFieldProperty
+            name="flAssociaContratto" />
 
     <findFieldProperty
             name="id"/>
@@ -191,7 +200,9 @@
             name="flAllPrevFin" />
     <findFieldProperty
             name="flQuadraContratto" />
-                        
+    <findFieldProperty
+            name="flAssociaContratto" />
+                                    
     <columnFieldProperty
             name="id"/>
     <columnFieldProperty
@@ -224,4 +235,6 @@
             name="flAllPrevFin" />
     <columnFieldProperty
             name="flQuadraContratto" />
+    <columnFieldProperty
+            name="flAssociaContratto" />            
 </bulkInfo>

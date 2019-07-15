@@ -21,6 +21,8 @@ import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
@@ -59,6 +61,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
@@ -82,6 +85,7 @@ import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.ObjectNotFoundException;
@@ -1631,6 +1635,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
             throw handleException(  e );
         }
     }
+    
     //Controllo che restituisce errore.
     //Se la variazione passa a definitivo controllo che gli importi inseriti in variazione non superino la disponibilità residua.
     //Se la variazione passa ad approvato controllo solo che il piano economico non sia sfondato sul voci del piano economico movimentate dalla variazione
@@ -1641,6 +1646,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
             throw new ApplicationException(
                     "Impossibile effettuare l'operazione !<br>"+message);
     }
+    
     //Controllo che restituisce errore.
     //Se la variazione passa a definitivo controllo che gli importi inseriti in variazione non superino la disponibilità residua.
     //Se la variazione passa ad approvato controllo solo che il piano economico non sia sfondato sul voci del piano economico movimentate dalla variazione
@@ -1722,6 +1728,28 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	                    		new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
 	                            ") non può essere superiore alla quota finanziata (" +
                                 new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ").");
+		            
+					if (progetto.getOtherField().getTipoFinanziamento().getFlAssociaContratto()) {
+						//Recupero la lista dei contratti attivi collegati al progetto
+						ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+						java.util.Collection<ContrattoBulk> contrattiAssociati = progettoHome.findContratti(progetto.getPg_progetto());
+
+						BigDecimal impContrattiAttivi = contrattiAssociati.stream()
+								.filter(el->el.isAttivo()||el.isAttivo_e_Passivo())
+				    			.filter(el->!el.getDt_stipula().after(pdgVariazione.getDt_chiusura()))
+				    			.map(ContrattoBulk::getIm_contratto_attivo)
+								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+						
+						if (impContrattiAttivi.compareTo(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato()))<0)
+		                   messaggio.add("Progetto " + progetto.getCd_progetto() + ": "+
+			                           (ctrlFinanziamentoAnnuale?"per l'esercizio "+pdgVariazione.getEsercizio()+" ":"")+
+			                            "l'assestato entrate "+ (ctrlFinanziamentoAnnuale?"":"totale ")+ "("+
+			                    		new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
+			                            ") non può essere superiore alla somma dei contratti associati al progetto (" + 
+			                    		new it.cnr.contab.util.EuroFormat().format(impContrattiAttivi) +
+								        ") stipulati in data precedente rispetto alla data di chiusura della variazione (" +
+								        new java.text.SimpleDateFormat("dd/MM/yyyy").format(pdgVariazione.getDt_chiusura())+").");
+					}
 	            }
 
 	            List<CtrlDispPianoEco> listCtrlDispPianoEco = new ArrayList<CtrlDispPianoEco>();
@@ -2051,12 +2079,34 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					    .orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
 											+ "La data fine del progetto non risulta impostata."));
 						
-						Optional.of(progetto.getOtherField().getDtInizio())
-				 	    		.filter(dt->!dt.after(variazione.getDt_chiusura()))
-								.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
-										+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-										+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
-										+ "rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+")."));
+						//Nelle variazioni controllare la più piccola data tra data inizio progetto e data stipula contratto definitivo
+						ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+						java.util.Collection<ContrattoBulk> contratti = progettoHome.findContratti(progetto.getPg_progetto());
+
+						Optional<ContrattoBulk> optContratto = 
+								contratti.stream().filter(el->el.isAttivo()||el.isAttivo_e_Passivo())
+								 .min((p1, p2) -> p1.getDt_stipula().compareTo(p2.getDt_stipula()))
+				    			 .filter(el->el.getDt_stipula().before(progetto.getOtherField().getDtInizio()));
+						
+						if (optContratto.isPresent())
+							optContratto
+			 	    			.filter(ctr->ctr.getDt_stipula().after(variazione.getDt_chiusura()))
+			 	    			.ifPresent(ctr->{
+			 	    				throw new ApplicationRuntimeException(
+			 	    						"Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+  										  + "La data stipula ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(ctr.getDt_stipula())
+										  + ") del primo contratto " + ctr.getEsercizio()+"/"+ctr.getStato()+"/"+ctr.getPg_contratto()
+				    				   	  + " associato al progetto "+progetto.getCd_progetto()+" è successiva "
+										  + "rispetto alla data di chiusura della variazione ("+
+				    				   	  new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+").");
+				    			  });
+						else
+							Optional.of(progetto.getOtherField().getDtInizio())
+					 	    		.filter(dt->!dt.after(variazione.getDt_chiusura()))
+									.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+											+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+											+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+											+ "rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+")."));
 					}
 
 					//recupero il record se presente altrimenti ne creo uno nuovo
@@ -2164,14 +2214,37 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					    .orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
 											+ "La data fine del progetto non risulta impostata."));
 						
-						Optional.of(progetto.getOtherField().getDtInizio())
-				 	    		.filter(dt->!dt.after(variazione.getDt_chiusura()))
-								.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
-										+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-										+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
-										+ "rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+")."));
-					}
+						//Nelle variazioni controllare la più piccola data tra data inizio progetto e data stipula contratto definitivo
+						//Recupero la lista dei contratti attivi collegati al progetto
+						ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+						java.util.Collection<ContrattoBulk> contrattiAssociati = progettoHome.findContratti(progetto.getPg_progetto());
+
+						Optional<ContrattoBulk> optContratto = 
+								contrattiAssociati.stream().filter(el->el.isAttivo()||el.isAttivo_e_Passivo())
+								 .min((p1, p2) -> p1.getDt_stipula().compareTo(p2.getDt_stipula()))
+				    			 .filter(el->el.getDt_stipula().before(progetto.getOtherField().getDtInizio()));
 						
+						if (optContratto.isPresent())
+							optContratto
+			 	    			.filter(ctr->ctr.getDt_stipula().after(variazione.getDt_chiusura()))
+			 	    			.ifPresent(ctr->{
+			 	    				throw new ApplicationRuntimeException(
+			 	    						"Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+  										  + "La data stipula ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(ctr.getDt_stipula())
+										  + ") del primo contratto " + ctr.getEsercizio()+"/"+ctr.getStato()+"/"+ctr.getPg_contratto()
+				    				   	  + " associato al progetto "+progetto.getCd_progetto()+" è successiva "
+										  + "rispetto alla data di chiusura della variazione ("+
+				    				   	  new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+").");
+				    			  });
+						else
+							Optional.of(progetto.getOtherField().getDtInizio())
+					 	    		.filter(dt->!dt.after(variazione.getDt_chiusura()))
+									.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+											+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+											+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+											+ "rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(variazione.getDt_chiusura())+")."));
+					}
+					
 					//recupero il record se presente altrimenti ne creo uno nuovo
 					CtrlPianoEco pianoEco = listCtrlPianoEco.stream()
 							.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
