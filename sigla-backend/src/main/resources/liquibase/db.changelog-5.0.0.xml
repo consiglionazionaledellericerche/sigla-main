@@ -2202,5 +2202,10 @@ TRASPORTO_AEREO"/>
             <column name="dt_svincolo_fideiussione" remarks="Data svincolo della fideiussione." type="${date.type}"/>
             <column name="id_esterno_fideiussione" remarks="Identificativo esterno della fideiussione" type="VARCHAR(30)"/>
         </addColumn>
-    </changeSet>    
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column">
+        <addColumn tableName="tipo_finanziamento">
+            <column name="fl_collega_contratto" type="CHAR(1)" defaultValue="N" remarks="Indica che i progetti aventi i tipi di finanziamento possono essere collegati a contratto - Dominio: S = Sì; N = No;"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
