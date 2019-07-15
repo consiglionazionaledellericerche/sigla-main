@@ -648,8 +648,8 @@
 		      	enabledOnEdit="true"
 				enabledOnSearch="true" 
 				enabledOnFreeSearch="true"
-				freeSearchSet="filtro_ricerca_prog2"
-				columnSet="nuovoPdg"/>
+				columnSet="filtro_ricerca_prog2"
+				freeSearchSet="filtro_ricerca_prog2" />
                	
 	    <form name="searchtool">
 	          <formFieldProperty
