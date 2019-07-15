@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Optional;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
@@ -22,6 +23,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -29,6 +31,7 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -216,12 +219,35 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
 									+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
 					if (progetto.isDatePianoEconomicoRequired()) {
-						Optional.ofNullable(progetto.getOtherField().getDtInizio())
-							.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
-							.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
-									+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-									+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
-									+ "rispetto alla data odierna."));
+						//Negli impegni controllare la più piccola data tra data inizio progetto e data stipula contratto definitivo
+						ProgettoHome progettoHome = (ProgettoHome)getHome(aUC, ProgettoBulk.class);
+						java.util.Collection<ContrattoBulk> contratti = progettoHome.findContratti(progetto.getPg_progetto());
+
+						Optional<ContrattoBulk> optContratto = 
+								contratti.stream().filter(el->el.isAttivo()||el.isAttivo_e_Passivo())
+								 .min((p1, p2) -> p1.getDt_stipula().compareTo(p2.getDt_stipula()))
+				    			 .filter(el->el.getDt_stipula().before(progetto.getOtherField().getDtInizio()));
+						
+						if (optContratto.isPresent())
+							optContratto
+			 	    			.filter(ctr->ctr.getDt_stipula().after(obbligazione.getDt_registrazione()))
+			 	    			.ifPresent(ctr->{
+			 	    				throw new ApplicationRuntimeException(
+			 	    						"Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+											  + "La data stipula ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(ctr.getDt_stipula())
+											  + ") del primo contratto " + ctr.getEsercizio()+"/"+ctr.getStato()+"/"+ctr.getPg_contratto()
+											  + " associato al progetto "+progetto.getCd_progetto()+" è successiva "
+											  + "rispetto alla data di registrazione dell'obbligazione ("
+											  + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
+				    			  });
+						else
+							Optional.ofNullable(progetto.getOtherField().getDtInizio())
+								.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
+								.orElseThrow(()->new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
+										+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+										+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+										+ "rispetto alla data di registrazione dell'obbligazione ("
+										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
 					}
 					
 					GregorianCalendar gcFineProgetto = new GregorianCalendar();
