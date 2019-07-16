@@ -921,7 +921,8 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     }
 
     public boolean isROProgettoForStato(ProgettoBulk progettoBulk) {
-		return Optional.ofNullable(progettoBulk)
+		return !(this instanceof AmministraTestataProgettiRicercaBP) &&
+				Optional.ofNullable(progettoBulk)
 				.map(ProgettoBulk::isROProgettoForStato)
                 .orElse(Boolean.TRUE);
 	}
