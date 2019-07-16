@@ -248,8 +248,10 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 		ProgettoHome testataHome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
 		final ProgettoBulk progetto = testataHome.initializePianoEconomico(userContext, rimodulazione.getProgetto(), true);
 
-		rimodulazione.setDettagliRimodulazione(new BulkList<Progetto_rimodulazione_ppeBulk>(this.findDettagliRimodulazione(rimodulazione)));
-		rimodulazione.setDettagliVoceRimodulazione(new BulkList<Progetto_rimodulazione_voceBulk>(this.findDettagliVoceRimodulazione(rimodulazione)));
+		if (Optional.ofNullable(rimodulazione).flatMap(el->Optional.ofNullable(el.getPg_rimodulazione())).isPresent()) {
+			rimodulazione.setDettagliRimodulazione(new BulkList<Progetto_rimodulazione_ppeBulk>(this.findDettagliRimodulazione(rimodulazione)));
+			rimodulazione.setDettagliVoceRimodulazione(new BulkList<Progetto_rimodulazione_voceBulk>(this.findDettagliVoceRimodulazione(rimodulazione)));
+		}
 
 		getHomeCache().fetchAll(userContext);
 
