@@ -1875,7 +1875,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
     												.filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
     												.map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
     												.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO)
-    												.subtract(saldo.getAssestatoFinanziamento());
+    												.subtract(Optional.ofNullable(saldo).map(V_saldi_piano_econom_progettoBulk::getAssestatoFinanziamento)
+    														.orElse(BigDecimal.ZERO));
     							//Se l'importo della variazione richiesta per la voce economica è negativa mi aspetto solo variazioni 
     							//in negativo sulle voci associate al fine di quadrare la variazione
     							if (imVariazione.compareTo(BigDecimal.ZERO)<0) { 
@@ -1896,17 +1897,24 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			                            messaggio.add("La disponibilità rimodulata della quota finanziata del piano economico "+ppe.getCd_voce_piano()+
 			                                    " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
 			                                    (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
-			                                    " ("+new it.cnr.contab.util.EuroFormat().format(saldo.getDispResiduaFinanziamento())+")"+
+			                                    " ("+new it.cnr.contab.util.EuroFormat().format(Optional.ofNullable(saldo)
+			                                    		.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
+			                                    		.orElse(BigDecimal.ZERO))+")"+
 			                                    " non è sufficiente a coprire la variazione (" +
 			                                    new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
     							}
     						} else {
-    							BigDecimal dispResiduaFin = saldo.getDispResiduaFinanziamento().subtract(ctrlDispPianoEco.getImpFinanziato());
+    							BigDecimal dispResiduaFin = Optional.ofNullable(saldo)
+                                		.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
+                                		.orElse(BigDecimal.ZERO)
+                                		.subtract(ctrlDispPianoEco.getImpFinanziato());
 		                        if (dispResiduaFin.compareTo(BigDecimal.ZERO)<0)
 		                            messaggio.add("La disponibilità quota finanziata del piano economico "+ppe.getCd_voce_piano()+
 		                                    " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
 		                                    (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
-		                                    " ("+new it.cnr.contab.util.EuroFormat().format(saldo.getDispResiduaFinanziamento())+")"+
+		                                    " ("+new it.cnr.contab.util.EuroFormat().format(Optional.ofNullable(saldo)
+		                                    		.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
+		                                    		.orElse(BigDecimal.ZERO))+")"+
 		                                    " non è sufficiente a coprire la variazione (" +
 		                                    new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
     						}    
@@ -1925,7 +1933,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
     												.filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
     												.map(Progetto_piano_economicoBulk::getIm_spesa_cofinanziato)
     												.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO)
-    												.subtract(saldo.getAssestatoCofinanziamento());
+    												.subtract(Optional.ofNullable(saldo)
+    			                                    		.map(V_saldi_piano_econom_progettoBulk::getAssestatoCofinanziamento)
+    			                                    		.orElse(BigDecimal.ZERO));
     							//Se l'importo della variazione richiesta per la voce economica è negativa mi aspetto solo variazioni 
     							//in negativo sulle voci associate al fine di quadrare la variazione
 								if (imVariazione.compareTo(BigDecimal.ZERO)<0) { 
