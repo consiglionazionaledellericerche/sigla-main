@@ -951,7 +951,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     		throws BusinessProcessException {
     	ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettobulk);
     	//Aggiungo gli allegati delle rimodulazioni approvate
-    	progetto.getRimodulazioni().stream().filter(el->el.isStatoApprovato() || el.isStatoDefinitivo())
+    	progetto.getRimodulazioni().stream().filter(el->el.isStatoApprovato() || el.isStatoValidato())
     	.forEach(rimodulazione->{
     		rimodulazione.setProgetto(progetto);
             String path = rimodulazione.getStorePath();
