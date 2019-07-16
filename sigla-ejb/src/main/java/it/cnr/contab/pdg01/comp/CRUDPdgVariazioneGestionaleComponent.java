@@ -677,7 +677,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			int contaRigheSpesa = Utility.ZERO.intValue();
 
 			if (Optional.of(pdg).filter(el->el.isMotivazioneTrasferimentoAutorizzato()).isPresent() &&
-					!pdg.getCentro_responsabilita().isCdrSAC())
+					!pdg.getCentro_responsabilita().isCdrAC())
 				throw new ApplicationException("Variazione di tipo 'Trasferimento in deroga' " +
 						"consentita solo alla UO Ente.");
 
