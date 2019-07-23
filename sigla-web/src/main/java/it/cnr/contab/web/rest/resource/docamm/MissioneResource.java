@@ -187,6 +187,7 @@ public class MissioneResource implements MissioneLocal {
     	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
     	Optional.ofNullable(idRimborsoMissione).
 		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Id Rimborso missione Obbligatorio"));
+        LOGGER.info("Inizio Cancellazione Missione "+idRimborsoMissione);
 
     	missioneComponentSession.cancellazioneMissioneDaGemis(userContext, idRimborsoMissione);
     	return Response.ok("OK").build();
