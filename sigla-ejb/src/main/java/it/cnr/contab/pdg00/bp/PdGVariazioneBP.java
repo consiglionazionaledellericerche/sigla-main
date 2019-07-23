@@ -25,6 +25,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.MotivazioneVariazione;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.HttpActionContext;
@@ -690,7 +691,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
     public void aggiornaMotivazioneVariazione(ActionContext context) throws BusinessProcessException {
         Pdg_variazioneBulk pdgVar = (Pdg_variazioneBulk) this.getModel();
-        pdgVar.setTiMotivazioneVariazione(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(pdgVar.getMapMotivazioneVariazione())
+        pdgVar.setTiMotivazioneVariazione(MotivazioneVariazione.GENERICO.value().equals(pdgVar.getMapMotivazioneVariazione())
                 ? null
                 : pdgVar.getMapMotivazioneVariazione());
 
@@ -712,7 +713,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                 .filter(Pdg_variazioneBulk.class::isInstance)
                 .map(Pdg_variazioneBulk.class::cast)
                 .ifPresent(el -> {
-                    el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));
+                    el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(MotivazioneVariazione.GENERICO.value()));
                     el.setStorageMatricola(el.getIdMatricola());
                     if (Optional.ofNullable(el.getProgettoRimodulazione()).isPresent())
                     	el.setProgettoRimodulatoForSearch(el.getProgettoRimodulazione().getProgetto());

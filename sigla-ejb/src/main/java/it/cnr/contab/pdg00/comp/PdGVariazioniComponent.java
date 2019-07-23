@@ -82,6 +82,7 @@ import it.cnr.contab.utenze00.bulk.UtenteKey;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.varstanz00.bulk.MotivazioneVariazione;
 import it.cnr.contab.varstanz00.bulk.V_var_stanz_resBulk;
 import it.cnr.contab.varstanz00.bulk.V_var_stanz_resHome;
 import it.cnr.jada.DetailedException;
@@ -407,7 +408,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		Optional.ofNullable(bulk)
 			.filter(Pdg_variazioneBulk.class::isInstance)
 			.map(Pdg_variazioneBulk.class::cast)
-			.filter(el->Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(el.getMapMotivazioneVariazione()))
+			.filter(el->MotivazioneVariazione.GENERICO.value().equals(el.getMapMotivazioneVariazione()))
 			.ifPresent(var->sql.addSQLClause(FindClause.AND,"VP_PDG_VARIAZIONE.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.ISNULL,null));
 			
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
