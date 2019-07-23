@@ -27,6 +27,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
+import it.cnr.contab.varstanz00.bulk.MotivazioneVariazione;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 import it.cnr.jada.action.ActionContext;
@@ -289,7 +290,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 				.filter(Var_stanz_resBulk.class::isInstance)
 				.map(Var_stanz_resBulk.class::cast)
 				.ifPresent(el->{
-					el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));	
+					el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(MotivazioneVariazione.GENERICO.value()));	
 					el.setStorageMatricola(el.getIdMatricola());
 					el.setAnnoFromPianoEconomico(this.getAnnoFromPianoEconomico());
 				});
@@ -628,7 +629,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 
 	public void aggiornaMotivazioneVariazione(ActionContext context) throws BusinessProcessException{
 		Var_stanz_resBulk var = (Var_stanz_resBulk)this.getModel();
-		var.setTiMotivazioneVariazione(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(var.getMapMotivazioneVariazione())
+		var.setTiMotivazioneVariazione(MotivazioneVariazione.GENERICO.value().equals(var.getMapMotivazioneVariazione())
 											?null
 											:var.getMapMotivazioneVariazione());
 
