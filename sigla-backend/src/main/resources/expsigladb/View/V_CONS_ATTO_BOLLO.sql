@@ -48,7 +48,7 @@ AS
                    fattura_attiva.cd_uo_origine,
                    unita_organizzativa.ds_unita_organizzativa,
                    CASE
-                      WHEN fattura_attiva.codice_univoco_ufficio_ipa IS NOT NULL
+                      WHEN fattura_attiva.fl_fattura_elettronica = 'N'
                          THEN (SELECT val01
                                  FROM configurazione_cnr
                                 WHERE configurazione_cnr.esercizio =
@@ -94,7 +94,43 @@ AS
                                                 bene_servizio.cd_bene_servizio
                AND bene_servizio.fl_bollo = 'Y'
                AND fattura_attiva.cd_uo_origine =
-                                    unita_organizzativa.cd_unita_organizzativa) a,
+                                    unita_organizzativa.cd_unita_organizzativa
+            UNION ALL
+            SELECT documento_generico.esercizio, documento_generico.ds_documento_generico,
+                   documento_generico.cd_uo_origine,
+                   unita_organizzativa.ds_unita_organizzativa,
+                   configurazione_cnr.val01 codice_bollo,
+                   documento_generico.cd_cds
+                   || '/'
+                   || documento_generico.esercizio
+                   || '/'
+                   || documento_generico.pg_documento_generico num_fattura,
+                   'E' ti_dettagli, 1 num_dettagli,
+                   (select tipo_atto_bollo.im_bollo from tipo_atto_bollo
+                     where tipo_atto_bollo.codice = configurazione_cnr.val01
+                       and to_char(tipo_atto_bollo.dt_ini_validita,'YYYYMMDD') <= 
+                               to_char(documento_generico.data_registrazione,'YYYYMMDD')
+                       and (tipo_atto_bollo.dt_fin_validita is null OR
+                            to_char(tipo_atto_bollo.dt_fin_validita,'YYYYMMDD') >= 
+                                to_char(documento_generico.data_registrazione,'YYYYMMDD'))) im_bollo,
+                   (select tipo_atto_bollo.im_bollo from tipo_atto_bollo
+                     where tipo_atto_bollo.codice = configurazione_cnr.val01
+                       and to_char(tipo_atto_bollo.dt_ini_validita,'YYYYMMDD') <= 
+                               to_char(documento_generico.data_registrazione,'YYYYMMDD')
+                       and (tipo_atto_bollo.dt_fin_validita is null OR
+                            to_char(tipo_atto_bollo.dt_fin_validita,'YYYYMMDD') >= 
+                                to_char(documento_generico.data_registrazione,'YYYYMMDD'))) im_totale_bollo
+              FROM documento_generico,
+                   tipo_documento_generico,
+                   configurazione_cnr,
+                   unita_organizzativa
+             WHERE documento_generico.id_tipo_documento_generico = tipo_documento_generico.id
+               AND tipo_documento_generico.soggetto_bollo = 'Y'
+               AND configurazione_cnr.esercizio = documento_generico.esercizio
+               AND configurazione_cnr.cd_unita_funzionale = '*'
+               AND configurazione_cnr.cd_chiave_primaria = 'BOLLO_VIRTUALE'
+               AND configurazione_cnr.cd_chiave_secondaria = 'CODICE_DOCUMENTO_FATTURA_ATTIVA'
+               AND documento_generico.cd_uo_origine = unita_organizzativa.cd_unita_organizzativa) a,
            tipo_atto_bollo
      WHERE a.codice_bollo = tipo_atto_bollo.codice(+)
            AND tipo_atto_bollo.dt_fin_validita IS NULL);
