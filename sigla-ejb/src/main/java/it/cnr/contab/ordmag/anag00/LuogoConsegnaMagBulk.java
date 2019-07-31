@@ -1,5 +1,5 @@
 /*
- * Created by BulkGenerator 2.0 [07/12/2009]
+ù * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 26/04/2017
  */
 package it.cnr.contab.ordmag.anag00;
@@ -15,7 +15,7 @@ public class LuogoConsegnaMagBulk extends LuogoConsegnaMagBase {
 	/**
 	 * [COMUNE Codifica dei comuni italiani e delle città estere.E' definito un dialogo utente per popolare le città estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
-	private ComuneBulk comune =  new ComuneBulk();
+	private ComuneBulk comuneItaliano =  new ComuneBulk();
 	/**
 	 * [NAZIONE Codifica delle nazioni. Non è stato definito un dialogo utente sulla tabella ma si prevede il recupero in sede di migrazione]
 	 **/
@@ -53,15 +53,15 @@ public class LuogoConsegnaMagBulk extends LuogoConsegnaMagBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Codifica dei comuni italiani e delle città estere.E' definito un dialogo utente per popolare le città estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
-	public ComuneBulk getComune() {
-		return comune;
+	public ComuneBulk getComuneItaliano() {
+		return comuneItaliano;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [Codifica dei comuni italiani e delle città estere.E' definito un dialogo utente per popolare le città estere; per i comuni italiani si prevede il recupero in sede di migrazione]
 	 **/
-	public void setComune(ComuneBulk comune)  {
-		this.comune=comune;
+	public void setComuneItaliano(ComuneBulk comuneItaliano)  {
+		this.comuneItaliano=comuneItaliano;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -99,17 +99,17 @@ public class LuogoConsegnaMagBulk extends LuogoConsegnaMagBase {
 	 * Restituisce il valore di: [pgComune]
 	 **/
 	public java.lang.Long getPgComune() {
-		ComuneBulk comune = this.getComune();
+		ComuneBulk comune = this.getComuneItaliano();
 		if (comune == null)
 			return null;
-		return getComune().getPg_comune();
+		return getComuneItaliano().getPg_comune();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [pgComune]
 	 **/
 	public void setPgComune(java.lang.Long pgComune)  {
-		this.getComune().setPg_comune(pgComune);
+		this.getComuneItaliano().setPg_comune(pgComune);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
