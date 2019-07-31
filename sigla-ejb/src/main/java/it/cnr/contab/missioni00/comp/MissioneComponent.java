@@ -1109,8 +1109,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
      */
     private void deleteLogically(UserContext userContext, MissioneBulk missione) throws ComponentException {
         try {
-            missione.setToBeUpdated();
-
+        	missione.setCrudStatus(OggettoBulk.TO_BE_UPDATED);
             // ************
             //	Se l'esercizio di scrivania e' diverso da quello solare
             //	inizializzo la data di cancellazione al 31/12/esercizio missione
@@ -1194,10 +1193,13 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
                 scadenza.setIm_associato_doc_amm(new BigDecimal(0));
                 updateImportoAssociatoDocAmm(aUC, scadenza);
             }
-            if (rc == missione.CANCELLAZIONE_FISICA)
+            if (rc == missione.CANCELLAZIONE_FISICA){
+                logger.info("Cancellazione Fisica Missione "+missione.getPg_missione());
                 super.eliminaConBulk(aUC, missione);
-            else if (rc == missione.CANCELLAZIONE_LOGICA)
+            } else if (rc == missione.CANCELLAZIONE_LOGICA){
+                logger.info("Cancellazione Logica Missione "+missione.getPg_missione());
                 deleteLogically(aUC, missione);
+            }
 
             // Restore dell'hash map dei saldi
             if (missione.getDefferredSaldi() != null)
@@ -4515,6 +4517,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
             logger.info("Missione Recuperata "+missione.getPg_missione());
             missione = (MissioneBulk) inizializzaBulkPerModifica(userContext, missione);
             logger.info("Missione Inizializzata "+missione.getPg_missione());
+            missione.setToBeDeleted();
             eliminaConBulk(userContext, missione);
             logger.info("Missione Eliminata "+missione.getPg_missione());
         } catch (Throwable e) {
