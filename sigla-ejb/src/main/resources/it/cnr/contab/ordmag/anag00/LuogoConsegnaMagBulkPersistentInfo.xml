@@ -9,7 +9,7 @@
 			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
 		<columnMapping
 			columnName="PG_COMUNE"
-			propertyName="comune.pg_comune" />
+			propertyName="comuneItaliano.pg_comune" />
 		<columnMapping
 			columnName="PG_NAZIONE"
 			propertyName="nazione.pg_nazione" />
@@ -18,7 +18,7 @@
 		name="unitaOrganizzativa"
 		partOfOid="true" />
 	<persistentProperty
-		name="comune" />
+		name="comuneItaliano" />
 	<persistentProperty
 		name="nazione" />
 </SQLPersistentInfo>
