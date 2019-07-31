@@ -1,11 +1,16 @@
 package it.cnr.contab.anagraf00.tabter.bulk;
 
-import java.sql.PreparedStatement;
-
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.persistency.Broker;
+import it.cnr.jada.persistency.IntrospectionException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.LoggableStatement;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 
 public class ComuneHome extends BulkHome {
@@ -105,4 +110,7 @@ public SQLBuilder selectByClause(CompoundFindClause compoundfindclause) throws P
 }
 	return sql;
 }
+
+
+
 }

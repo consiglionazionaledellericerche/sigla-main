@@ -69,6 +69,20 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data Cancellazione" />
+	<fieldProperty
+		name="findComune"
+		property="comuneItaliano"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Comune" />
+	<fieldProperty
+		name="findNazione"
+		property="nazione"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Nazione" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -87,6 +101,10 @@
 		name="cap" />
 	<formFieldProperty
 		name="dtCancellazione" />
+	<formFieldProperty
+		name="findComune" />
+	<formFieldProperty
+		name="findNazione" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
