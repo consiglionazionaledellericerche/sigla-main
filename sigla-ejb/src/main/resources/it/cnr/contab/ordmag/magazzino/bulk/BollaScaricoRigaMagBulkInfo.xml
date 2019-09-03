@@ -72,7 +72,7 @@
 		enabledOnSearch="false"
 		nullable="false"
 		label="Riga" />
-	<fieldProperty
+<!--  	<fieldProperty
 		name="cdBeneServizio"
 		property="cdBeneServizio"
 		inputType="TEXT"
@@ -111,7 +111,7 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="coeffConv" />
+		label="coeffConv" />-->
 	<fieldProperty
 		name="findRichiestaUopRiga"
 		property="richiestaUopRiga"
@@ -176,7 +176,7 @@
 		maxLength="500"
 		enabledOnEdit="false"
 		label="note" />
-	<fieldProperty
+<!--  	<fieldProperty
 		name="findLottoMag"
 		property="lottoMag"
 		inputType="searchtool"
@@ -227,7 +227,7 @@
 		maxLength="6"
 		enabledOnEdit="false"
 		nullable="false"
-		label="pgLotto" />
+		label="pgLotto" />-->
 	<fieldProperty
 		name="findMovimentiMag"
 		property="movimentiMag"
@@ -253,7 +253,7 @@
 		enabledOnEdit="false"
 		nullable="false"
 		label="stato" />
-	<fieldProperty
+<!--  	<fieldProperty
 		name="findOrdineAcqConsegna"
 		property="ordineAcqConsegna"
 		inputType="searchtool"
@@ -315,7 +315,7 @@
 		inputSize="6"
 		maxLength="6"
 		enabledOnEdit="false"
-		label="consegna" />
+		label="consegna" />-->
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"

@@ -2057,4 +2057,60 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_movimenti_mag_drop_dup_columns">
+			  <dropIndex indexName="FX_FX_MOVIMENTI_MAG05" tableName="movimenti_mag"/>
+			  <dropIndex indexName="FX_MOVIMENTI_MAG01" tableName="movimenti_mag"/>
+			  <dropIndex indexName="FX_MOVIMENTI_MAG04" tableName="movimenti_mag"/>
+			  <dropIndex indexName="FX_MOVIMENTI_MAG07" tableName="movimenti_mag"/>
+			  <dropIndex indexName="FX_MOVIMENTI_MAG11" tableName="movimenti_mag"/>
+        <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK01"/>
+        <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK04"/>
+        <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK05"/>
+        <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK07"/>
+        <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK11"/>
+
+        <dropColumn columnName="CD_CDS_ORDINE" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_UNITA_OPERATIVA_ORDINE" tableName="movimenti_mag"/>
+        <dropColumn columnName="ESERCIZIO_ORDINE" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_NUMERATORE_ORDINE" tableName="movimenti_mag"/>
+        <dropColumn columnName="NUMERO_ORDINE" tableName="movimenti_mag"/>
+        <dropColumn columnName="RIGA_ORDINE" tableName="movimenti_mag"/>
+        <dropColumn columnName="CONSEGNA" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_CDS_MAG" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_MAGAZZINO" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_BENE_SERVIZIO" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_VOCE_IVA" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_CDS_BOLLA_SCA" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_MAGAZZINO_BOLLA_SCA" tableName="movimenti_mag"/>
+        <dropColumn columnName="ESERCIZIO_BOLLA_SCA" tableName="movimenti_mag"/>
+        <dropColumn columnName="CD_NUMERATORE_BOLLA_SCA" tableName="movimenti_mag"/>
+        <dropColumn columnName="PG_BOLLA_SCA" tableName="movimenti_mag"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_bolla_scarico_riga_mag_drop_dup_columns">
+			  <dropIndex indexName="FX_FX_BOLLA_SCARICO_RIGA_MAG02" tableName="bolla_scarico_riga_mag"/>
+			  <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG00" tableName="bolla_scarico_riga_mag"/>
+			  <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG01" tableName="bolla_scarico_riga_mag"/>
+			  <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG04" tableName="bolla_scarico_riga_mag"/>
+        <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK00"/>
+        <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK01"/>
+        <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK02"/>
+        <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK04"/>
+
+        <dropColumn columnName="CD_CDS_ORDINE" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CD_UNITA_OPERATIVA" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="ESERCIZIO_ORDINE" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CD_NUMERATORE_ORDINE" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="NUMERO_ORDINE" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="RIGA_ORDINE" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CONSEGNA" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CD_BENE_SERVIZIO" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CD_UNITA_MISURA" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="QUANTITA" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="COEFF_CONV" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CD_CDS_LOTTO" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CD_MAGAZZINO_LOTTO" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="ESERCIZIO_LOTTO" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="CD_NUMERATORE_LOTTO" tableName="bolla_scarico_riga_mag"/>
+        <dropColumn columnName="PG_LOTTO" tableName="bolla_scarico_riga_mag"/>
+    </changeSet>
 </databaseChangeLog>

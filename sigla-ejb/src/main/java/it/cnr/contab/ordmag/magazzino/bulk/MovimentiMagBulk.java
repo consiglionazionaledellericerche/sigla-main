@@ -18,15 +18,15 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public final static String STATO_ANNULLATO = "ANN";
 	
 	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
-	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
+	private OrdineAcqConsegnaBulk ordineAcqConsegnaUt =  new OrdineAcqConsegnaBulk();
 	private TerzoBulk terzo =  new TerzoBulk();
 	private UnitaMisuraBulk unitaMisura =  new UnitaMisuraBulk();
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
 	private LottoMagBulk lottoMag =  new LottoMagBulk();
-	private MagazzinoBulk magazzino =  new MagazzinoBulk();
-	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
-	private Voce_ivaBulk voceIva =  new Voce_ivaBulk();
-	private BollaScaricoMagBulk bollaScaricoMag =  new BollaScaricoMagBulk();
+	private MagazzinoBulk magazzinoUt =  new MagazzinoBulk();
+	private Bene_servizioBulk beneServizioUt =  new Bene_servizioBulk();
+//	private Voce_ivaBulk voceIva =  new Voce_ivaBulk();
+//	private BollaScaricoMagBulk bollaScaricoMag =  new BollaScaricoMagBulk();
 	private DivisaBulk divisa =  new DivisaBulk();
 	public MovimentiMagBulk() {
 		super();
@@ -40,11 +40,11 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setTipoMovimentoMag(TipoMovimentoMagBulk tipoMovimentoMag)  {
 		this.tipoMovimentoMag=tipoMovimentoMag;
 	}
-	public OrdineAcqConsegnaBulk getOrdineAcqConsegna() {
-		return ordineAcqConsegna;
+	public OrdineAcqConsegnaBulk getOrdineAcqConsegnaUt() {
+		return ordineAcqConsegnaUt;
 	}
-	public void setOrdineAcqConsegna(OrdineAcqConsegnaBulk ordineAcqConsegna)  {
-		this.ordineAcqConsegna=ordineAcqConsegna;
+	public void setOrdineAcqConsegnaUt(OrdineAcqConsegnaBulk ordineAcqConsegna)  {
+		this.ordineAcqConsegnaUt=ordineAcqConsegna;
 	}
 	public TerzoBulk getTerzo() {
 		return terzo;
@@ -70,30 +70,30 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setLottoMag(LottoMagBulk lottoMag)  {
 		this.lottoMag=lottoMag;
 	}
-	public MagazzinoBulk getMagazzino() {
-		return magazzino;
+	public MagazzinoBulk getMagazzinoUt() {
+		return magazzinoUt;
 	}
-	public void setMagazzino(MagazzinoBulk magazzino)  {
-		this.magazzino=magazzino;
+	public void setMagazzinoUt(MagazzinoBulk magazzino)  {
+		this.magazzinoUt=magazzino;
 	}
-	public Bene_servizioBulk getBeneServizio() {
-		return beneServizio;
+	public Bene_servizioBulk getBeneServizioUt() {
+		return beneServizioUt;
 	}
-	public void setBeneServizio(Bene_servizioBulk beneServizio)  {
-		this.beneServizio=beneServizio;
+	public void setBeneServizioUt(Bene_servizioBulk beneServizio)  {
+		this.beneServizioUt=beneServizio;
 	}
-	public Voce_ivaBulk getVoceIva() {
-		return voceIva;
-	}
-	public void setVoceIva(Voce_ivaBulk voceIva)  {
-		this.voceIva=voceIva;
-	}
-	public BollaScaricoMagBulk getBollaScaricoMag() {
-		return bollaScaricoMag;
-	}
-	public void setBollaScaricoMag(BollaScaricoMagBulk bollaScaricoMag)  {
-		this.bollaScaricoMag=bollaScaricoMag;
-	}
+//	public Voce_ivaBulk getVoceIva() {
+//		return voceIva;
+//	}
+//	public void setVoceIva(Voce_ivaBulk voceIva)  {
+//		this.voceIva=voceIva;
+//	}
+//	public BollaScaricoMagBulk getBollaScaricoMag() {
+//		return bollaScaricoMag;
+//	}
+//	public void setBollaScaricoMag(BollaScaricoMagBulk bollaScaricoMag)  {
+//		this.bollaScaricoMag=bollaScaricoMag;
+//	}
 	public DivisaBulk getDivisa() {
 		return divisa;
 	}
@@ -253,87 +253,87 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setPgLotto(java.lang.Integer pgLotto)  {
 		this.getLottoMag().setPgLotto(pgLotto);
 	}
-	public java.lang.String getCdCdsMag() {
-		MagazzinoBulk magazzino = this.getMagazzino();
-		if (magazzino == null)
-			return null;
-		return getMagazzino().getCdCds();
-	}
-	public void setCdCdsMag(java.lang.String cdCdsMag)  {
-		this.getMagazzino().setCdCds(cdCdsMag);
-	}
-	public java.lang.String getCdMagazzino() {
-		MagazzinoBulk magazzino = this.getMagazzino();
-		if (magazzino == null)
-			return null;
-		return getMagazzino().getCdMagazzino();
-	}
-	public void setCdMagazzino(java.lang.String cdMagazzino)  {
-		this.getMagazzino().setCdMagazzino(cdMagazzino);
-	}
-	public java.lang.String getCdBeneServizio() {
-		Bene_servizioBulk beneServizio = this.getBeneServizio();
-		if (beneServizio == null)
-			return null;
-		return getBeneServizio().getCd_bene_servizio();
-	}
-	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
-		this.getBeneServizio().setCd_bene_servizio(cdBeneServizio);
-	}
-	public java.lang.String getCdVoceIva() {
-		Voce_ivaBulk voceIva = this.getVoceIva();
-		if (voceIva == null)
-			return null;
-		return getVoceIva().getCd_voce_iva();
-	}
-	public void setCdVoceIva(java.lang.String cdVoceIva)  {
-		this.getVoceIva().setCd_voce_iva(cdVoceIva);
-	}
-	public java.lang.String getCdCdsBollaSca() {
-		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-		if (bollaScaricoMag == null)
-			return null;
-		return getBollaScaricoMag().getCdCds();
-	}
-	public void setCdCdsBollaSca(java.lang.String cdCdsBollaSca)  {
-		this.getBollaScaricoMag().setCdCds(cdCdsBollaSca);
-	}
-	public java.lang.String getCdMagazzinoBollaSca() {
-		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-		if (bollaScaricoMag == null)
-			return null;
-		return getBollaScaricoMag().getCdMagazzino();
-	}
-	public void setCdMagazzinoBollaSca(java.lang.String cdMagazzinoBollaSca)  {
-		this.getBollaScaricoMag().setCdMagazzino(cdMagazzinoBollaSca);
-	}
-	public java.lang.Integer getEsercizioBollaSca() {
-		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-		if (bollaScaricoMag == null)
-			return null;
-		return bollaScaricoMag.getEsercizio();
-	}
-	public void setEsercizioBollaSca(java.lang.Integer esercizioBollaSca)  {
-		this.getBollaScaricoMag().setEsercizio(esercizioBollaSca);
-	}
-	public java.lang.String getCdNumeratoreBollaSca() {
-		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-		if (bollaScaricoMag == null)
-			return null;
-		return bollaScaricoMag.getCdNumeratoreMag();
-	}
-	public void setCdNumeratoreBollaSca(java.lang.String cdNumeratoreBollaSca)  {
-		this.getBollaScaricoMag().setCdNumeratoreMag(cdNumeratoreBollaSca);
-	}
-	public java.lang.Integer getPgBollaSca() {
-		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-		if (bollaScaricoMag == null)
-			return null;
-		return getBollaScaricoMag().getPgBollaSca();
-	}
-	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
-		this.getBollaScaricoMag().setPgBollaSca(pgBollaSca);
-	}
+//	public java.lang.String getCdCdsMag() {
+//		MagazzinoBulk magazzino = this.getMagazzino();
+//		if (magazzino == null)
+//			return null;
+//		return getMagazzino().getCdCds();
+//	}
+//	public void setCdCdsMag(java.lang.String cdCdsMag)  {
+//		this.getMagazzino().setCdCds(cdCdsMag);
+//	}
+//	public java.lang.String getCdMagazzino() {
+//		MagazzinoBulk magazzino = this.getMagazzino();
+//		if (magazzino == null)
+//			return null;
+//		return getMagazzino().getCdMagazzino();
+//	}
+//	public void setCdMagazzino(java.lang.String cdMagazzino)  {
+//		this.getMagazzino().setCdMagazzino(cdMagazzino);
+//	}
+//	public java.lang.String getCdBeneServizio() {
+//		Bene_servizioBulk beneServizio = this.getBeneServizio();
+//		if (beneServizio == null)
+//			return null;
+//		return getBeneServizio().getCd_bene_servizio();
+//	}
+//	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
+//		this.getBeneServizio().setCd_bene_servizio(cdBeneServizio);
+//	}
+//	public java.lang.String getCdVoceIva() {
+//		Voce_ivaBulk voceIva = this.getVoceIva();
+//		if (voceIva == null)
+//			return null;
+//		return getVoceIva().getCd_voce_iva();
+//	}
+//	public void setCdVoceIva(java.lang.String cdVoceIva)  {
+//		this.getVoceIva().setCd_voce_iva(cdVoceIva);
+//	}
+//	public java.lang.String getCdCdsBollaSca() {
+//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+//		if (bollaScaricoMag == null)
+//			return null;
+//		return getBollaScaricoMag().getCdCds();
+//	}
+//	public void setCdCdsBollaSca(java.lang.String cdCdsBollaSca)  {
+//		this.getBollaScaricoMag().setCdCds(cdCdsBollaSca);
+//	}
+//	public java.lang.String getCdMagazzinoBollaSca() {
+//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+//		if (bollaScaricoMag == null)
+//			return null;
+//		return getBollaScaricoMag().getCdMagazzino();
+//	}
+//	public void setCdMagazzinoBollaSca(java.lang.String cdMagazzinoBollaSca)  {
+//		this.getBollaScaricoMag().setCdMagazzino(cdMagazzinoBollaSca);
+//	}
+//	public java.lang.Integer getEsercizioBollaSca() {
+//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+//		if (bollaScaricoMag == null)
+//			return null;
+//		return bollaScaricoMag.getEsercizio();
+//	}
+//	public void setEsercizioBollaSca(java.lang.Integer esercizioBollaSca)  {
+//		this.getBollaScaricoMag().setEsercizio(esercizioBollaSca);
+//	}
+//	public java.lang.String getCdNumeratoreBollaSca() {
+//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+//		if (bollaScaricoMag == null)
+//			return null;
+//		return bollaScaricoMag.getCdNumeratoreMag();
+//	}
+//	public void setCdNumeratoreBollaSca(java.lang.String cdNumeratoreBollaSca)  {
+//		this.getBollaScaricoMag().setCdNumeratoreMag(cdNumeratoreBollaSca);
+//	}
+//	public java.lang.Integer getPgBollaSca() {
+//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+//		if (bollaScaricoMag == null)
+//			return null;
+//		return getBollaScaricoMag().getPgBollaSca();
+//	}
+//	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
+//		this.getBollaScaricoMag().setPgBollaSca(pgBollaSca);
+//	}
 	public java.lang.String getCdDivisa() {
 		DivisaBulk divisa = this.getDivisa();
 		if (divisa == null)
@@ -343,67 +343,67 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setCdDivisa(java.lang.String cdDivisa)  {
 		this.getDivisa().setCd_divisa(cdDivisa);
 	}
-	public java.lang.String getCdCdsOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdCds();
-	}
-	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
-		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
-	}
-	public java.lang.String getCdUnitaOperativaOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdUnitaOperativa();
-	}
-	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativa)  {
-		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
-	}
-	public java.lang.Integer getEsercizioOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getEsercizio();
-	}
-	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
-		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
-	}
-	public java.lang.String getCdNumeratoreOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdNumeratore();
-	}
-	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
-		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
-	}
-	public java.lang.Integer getNumeroOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getNumero();
-	}
-	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
-		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
-	}
-	public java.lang.Integer getRigaOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getRiga();
-	}
-	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
-		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
-	}
-	public java.lang.Integer getConsegna() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getConsegna();
-	}
-	public void setConsegna(java.lang.Integer consegna)  {
-		this.getOrdineAcqConsegna().setConsegna(consegna);
-	}
+//	public java.lang.String getCdCdsOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getCdCds();
+//	}
+//	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
+//		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
+//	}
+//	public java.lang.String getCdUnitaOperativaOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getCdUnitaOperativa();
+//	}
+//	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativa)  {
+//		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
+//	}
+//	public java.lang.Integer getEsercizioOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getEsercizio();
+//	}
+//	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
+//		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
+//	}
+//	public java.lang.String getCdNumeratoreOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getCdNumeratore();
+//	}
+//	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
+//		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
+//	}
+//	public java.lang.Integer getNumeroOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getNumero();
+//	}
+//	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
+//		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
+//	}
+//	public java.lang.Integer getRigaOrdine() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getRiga();
+//	}
+//	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
+//		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
+//	}
+//	public java.lang.Integer getConsegna() {
+//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
+//		if (ordineAcqConsegna == null)
+//			return null;
+//		return getOrdineAcqConsegna().getConsegna();
+//	}
+//	public void setConsegna(java.lang.Integer consegna)  {
+//		this.getOrdineAcqConsegna().setConsegna(consegna);
+//	}
 }

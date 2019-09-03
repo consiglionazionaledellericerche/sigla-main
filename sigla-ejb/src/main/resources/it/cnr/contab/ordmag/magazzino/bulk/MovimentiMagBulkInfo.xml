@@ -91,15 +91,8 @@
 		enabledOnEdit="false"
 		label="dtRiferimento" />
 	<fieldProperty
-		name="findOrdineAcqConsegna"
-		property="ordineAcqConsegna"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="OrdineAcqConsegna" />
-	<fieldProperty
 		name="cdCdsOrdine"
-		property="ordineAcqConsegna.cdCds"
+		property="lottoMag.ordineAcqConsegna.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -107,7 +100,7 @@
 		label="cdCdsOrdine" />
 	<fieldProperty
 		name="cdUnitaOperativaOrdine"
-		property="ordineAcqConsegna.cdUnitaOperativa"
+		property="lottoMag.ordineAcqConsegna.cdUnitaOperativa"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -115,7 +108,7 @@
 		label="cdUnitaOperativaOrdine" />
 	<fieldProperty
 		name="esercizioOrdine"
-		property="ordineAcqConsegna.esercizio"
+		property="lottoMag.ordineAcqConsegna.esercizio"
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
@@ -123,7 +116,7 @@
 		label="esercizioOrdine" />
 	<fieldProperty
 		name="cdNumeratoreOrdine"
-		property="ordineAcqConsegna.cdNumeratore"
+		property="lottoMag.ordineAcqConsegna.cdNumeratore"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
@@ -131,7 +124,7 @@
 		label="cdNumeratoreOrdine" />
 	<fieldProperty
 		name="numeroOrdine"
-		property="ordineAcqConsegna.numero"
+		property="lottoMag.ordineAcqConsegna.numero"
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="6"
@@ -139,7 +132,7 @@
 		label="numeroOrdine" />
 	<fieldProperty
 		name="rigaOrdine"
-		property="ordineAcqConsegna.riga"
+		property="lottoMag.ordineAcqConsegna.riga"
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="6"
@@ -147,7 +140,7 @@
 		label="rigaOrdine" />
 	<fieldProperty
 		name="consegna"
-		property="ordineAcqConsegna.consegna"
+		property="lottoMag.ordineAcqConsegna.consegna"
 		inputType="TEXT"
 		inputSize="6"
 		maxLength="6"
@@ -275,15 +268,8 @@
 		nullable="false"
 		label="pgLotto" />
 	<fieldProperty
-		name="findMagazzino"
-		property="magazzino"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="Magazzino" />
-	<fieldProperty
 		name="cdCdsMag"
-		property="magazzino.cdCds"
+		property="lottoMag.magazzino.cdCds"
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
@@ -292,7 +278,7 @@
 		label="cdCdsMag" />
 	<fieldProperty
 		name="cdMagazzino"
-		property="magazzino.cdMagazzino"
+		property="lottoMag.magazzino.cdMagazzino"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
@@ -301,7 +287,7 @@
 		label="cdMagazzino" />
 	<fieldProperty
 		name="cdBeneServizio"
-		property="cdBeneServizio"
+		property="lottoMag.beneServizio.cdBeneServizio"
 		inputType="TEXT"
 		inputSize="15"
 		maxLength="15"
@@ -310,7 +296,7 @@
 		label="cdBeneServizio" />
 	<fieldProperty
 		name="cdVoceIva"
-		property="cdVoceIva"
+		property="lottoMag.ordineAcqConsegna.voceIva.cdVoceIva"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
@@ -340,53 +326,6 @@
 		maxLength="5"
 		enabledOnEdit="false"
 		label="sconto3" />
-	<fieldProperty
-		name="findBollaScaricoMag"
-		property="bollaScaricoMag"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="BollaScaricoMag" />
-	<fieldProperty
-		name="cdCdsBollaSca"
-		property="bollaScaricoMag.cdCds"
-		inputType="TEXT"
-		inputSize="30"
-		maxLength="30"
-		enabledOnEdit="false"
-		label="cdCdsBollaSca" />
-	<fieldProperty
-		name="cdMagazzinoBollaSca"
-		property="bollaScaricoMag.cdMagazzino"
-		inputType="TEXT"
-		inputSize="10"
-		maxLength="10"
-		enabledOnEdit="false"
-		label="cdMagazzinoBollaSca" />
-	<fieldProperty
-		name="esercizioBollaSca"
-		property="bollaScaricoMag.esercizio"
-		inputType="TEXT"
-		inputSize="22"
-		maxLength="22"
-		enabledOnEdit="false"
-		label="esercizioBollaSca" />
-	<fieldProperty
-		name="cdNumeratoreBollaSca"
-		property="bollaScaricoMag.cdNumeratoreMag"
-		inputType="TEXT"
-		inputSize="3"
-		maxLength="3"
-		enabledOnEdit="false"
-		label="cdNumeratoreBollaSca" />
-	<fieldProperty
-		name="pgBollaSca"
-		property="bollaScaricoMag.pgBollaSca"
-		inputType="TEXT"
-		inputSize="6"
-		maxLength="6"
-		enabledOnEdit="false"
-		label="pgBollaSca" />
 	<fieldProperty
 		name="importo"
 		property="importo"
@@ -514,8 +453,6 @@
 	<formFieldProperty
 		name="dtRiferimento" />
 	<formFieldProperty
-		name="findOrdineAcqConsegna" />
-	<formFieldProperty
 		name="findUnitaMisura" />
 	<formFieldProperty
 		name="quantita" />
@@ -530,15 +467,11 @@
 	<formFieldProperty
 		name="findLottoMag" />
 	<formFieldProperty
-		name="findMagazzino" />
-	<formFieldProperty
 		name="sconto1" />
 	<formFieldProperty
 		name="sconto2" />
 	<formFieldProperty
 		name="sconto3" />
-	<formFieldProperty
-		name="findBollaScaricoMag" />
 	<formFieldProperty
 		name="importo" />
 	<formFieldProperty

@@ -12,12 +12,8 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	 * [BOLLA_SCARICO_MAG Archivio per la testata delle Bolle di Scarico]
 	 **/
 	private BollaScaricoMagBulk bollaScaricoMag =  new BollaScaricoMagBulk();
-	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
-	private UnitaMisuraBulk unitaMisura =  new UnitaMisuraBulk();
 	private RichiestaUopRigaBulk richiestaUopRiga =  new RichiestaUopRigaBulk();
-	private LottoMagBulk lottoMag =  new LottoMagBulk();
 	private MovimentiMagBulk movimentiMag =  new MovimentiMagBulk();
-	private OrdineAcqConsegnaBulk ordineAcqConsegna =  new OrdineAcqConsegnaBulk();
 	public BollaScaricoRigaMagBulk() {
 		super();
 	}
@@ -43,41 +39,17 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	public void setBollaScaricoMag(BollaScaricoMagBulk bollaScaricoMag)  {
 		this.bollaScaricoMag=bollaScaricoMag;
 	}
-	public Bene_servizioBulk getBeneServizio() {
-		return beneServizio;
-	}
-	public void setBeneServizio(Bene_servizioBulk beneServizio)  {
-		this.beneServizio=beneServizio;
-	}
-	public UnitaMisuraBulk getUnitaMisura() {
-		return unitaMisura;
-	}
-	public void setUnitaMisura(UnitaMisuraBulk unitaMisura)  {
-		this.unitaMisura=unitaMisura;
-	}
 	public RichiestaUopRigaBulk getRichiestaUopRiga() {
 		return richiestaUopRiga;
 	}
 	public void setRichiestaUopRiga(RichiestaUopRigaBulk richiestaUopRiga)  {
 		this.richiestaUopRiga=richiestaUopRiga;
 	}
-	public LottoMagBulk getLottoMag() {
-		return lottoMag;
-	}
-	public void setLottoMag(LottoMagBulk lottoMag)  {
-		this.lottoMag=lottoMag;
-	}
 	public MovimentiMagBulk getMovimentiMag() {
 		return movimentiMag;
 	}
 	public void setMovimentiMag(MovimentiMagBulk movimentiMag)  {
 		this.movimentiMag=movimentiMag;
-	}
-	public OrdineAcqConsegnaBulk getOrdineAcqConsegna() {
-		return ordineAcqConsegna;
-	}
-	public void setOrdineAcqConsegna(OrdineAcqConsegnaBulk ordineAcqConsegna)  {
-		this.ordineAcqConsegna=ordineAcqConsegna;
 	}
 	public java.lang.String getCdCds() {
 		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
@@ -160,24 +132,6 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
 		this.getBollaScaricoMag().setPgBollaSca(pgBollaSca);
 	}
-	public java.lang.String getCdBeneServizio() {
-		Bene_servizioBulk beneServizio = this.getBeneServizio();
-		if (beneServizio == null)
-			return null;
-		return getBeneServizio().getCd_bene_servizio();
-	}
-	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
-		this.getBeneServizio().setCd_bene_servizio(cdBeneServizio);
-	}
-	public java.lang.String getCdUnitaMisura() {
-		UnitaMisuraBulk unitaMisura = this.getUnitaMisura();
-		if (unitaMisura == null)
-			return null;
-		return getUnitaMisura().getCdUnitaMisura();
-	}
-	public void setCdUnitaMisura(java.lang.String cdUnitaMisura)  {
-		this.getUnitaMisura().setCdUnitaMisura(cdUnitaMisura);
-	}
 	public java.lang.String getCdCdsRich() {
 		RichiestaUopRigaBulk richiestaUopRiga = this.getRichiestaUopRiga();
 		if (richiestaUopRiga == null)
@@ -232,51 +186,6 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	public void setRigaRich(java.lang.Integer rigaRich)  {
 		this.getRichiestaUopRiga().setRiga(rigaRich);
 	}
-	public java.lang.String getCdCdsLotto() {
-		LottoMagBulk lottoMag = this.getLottoMag();
-		if (lottoMag == null)
-			return null;
-		return getLottoMag().getCdCds();
-	}
-	public void setCdCdsLotto(java.lang.String cdCdsLotto)  {
-		this.getLottoMag().setCdCds(cdCdsLotto);
-	}
-	public java.lang.String getCdMagazzinoLotto() {
-		LottoMagBulk lottoMag = this.getLottoMag();
-		if (lottoMag == null)
-			return null;
-		return getLottoMag().getCdMagazzino();
-	}
-	public void setCdMagazzinoLotto(java.lang.String cdMagazzinoLotto)  {
-		this.getLottoMag().setCdMagazzino(cdMagazzinoLotto);
-	}
-	public java.lang.Integer getEsercizioLotto() {
-		LottoMagBulk lottoMag = this.getLottoMag();
-		if (lottoMag == null)
-			return null;
-		return getLottoMag().getEsercizio();
-	}
-	public void setEsercizioLotto(java.lang.Integer esercizioLotto)  {
-		this.getLottoMag().setEsercizio(esercizioLotto);
-	}
-	public java.lang.String getCdNumeratoreLotto() {
-		LottoMagBulk lottoMag = this.getLottoMag();
-		if (lottoMag == null)
-			return null;
-		return getLottoMag().getCdNumeratoreMag();
-	}
-	public void setCdNumeratoreLotto(java.lang.String cdNumeratoreLotto)  {
-		this.getLottoMag().setCdNumeratoreMag(cdNumeratoreLotto);
-	}
-	public java.lang.Integer getPgLotto() {
-		LottoMagBulk lottoMag = this.getLottoMag();
-		if (lottoMag == null)
-			return null;
-		return getLottoMag().getPgLotto();
-	}
-	public void setPgLotto(java.lang.Integer pgLotto)  {
-		this.getLottoMag().setPgLotto(pgLotto);
-	}
 	public java.lang.Long getPgMovimento() {
 		MovimentiMagBulk movimentiMag = this.getMovimentiMag();
 		if (movimentiMag == null)
@@ -285,68 +194,5 @@ public class BollaScaricoRigaMagBulk extends BollaScaricoRigaMagBase {
 	}
 	public void setPgMovimento(java.lang.Long pgMovimento)  {
 		this.getMovimentiMag().setPgMovimento(pgMovimento);
-	}
-	public java.lang.String getCdCdsOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdCds();
-	}
-	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
-		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
-	}
-	public java.lang.String getCdUnitaOperativa() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdUnitaOperativa();
-	}
-	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
-		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
-	}
-	public java.lang.Integer getEsercizioOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getEsercizio();
-	}
-	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
-		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
-	}
-	public java.lang.String getCdNumeratoreOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getCdNumeratore();
-	}
-	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
-		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
-	}
-	public java.lang.Integer getNumeroOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getNumero();
-	}
-	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
-		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
-	}
-	public java.lang.Integer getRigaOrdine() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getRiga();
-	}
-	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
-		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
-	}
-	public java.lang.Integer getConsegna() {
-		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-		if (ordineAcqConsegna == null)
-			return null;
-		return getOrdineAcqConsegna().getConsegna();
-	}
-	public void setConsegna(java.lang.Integer consegna)  {
-		this.getOrdineAcqConsegna().setConsegna(consegna);
 	}
 }
