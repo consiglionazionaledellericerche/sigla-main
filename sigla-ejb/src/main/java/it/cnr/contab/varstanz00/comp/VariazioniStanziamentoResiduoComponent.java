@@ -81,7 +81,6 @@ import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrHome;
-import it.cnr.contab.varstanz00.bulk.MotivazioneVariazione;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
@@ -812,7 +811,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		Optional.ofNullable(bulk)
 			.filter(Var_stanz_resBulk.class::isInstance)
 			.map(Var_stanz_resBulk.class::cast)
-			.filter(el->MotivazioneVariazione.GENERICO.value().equals(el.getMapMotivazioneVariazione()))
+			.filter(el->Pdg_variazioneBulk.MOTIVAZIONE_GENERICO.equals(el.getMapMotivazioneVariazione()))
 			.ifPresent(var->sql.addSQLClause(FindClause.AND,"VAR_STANZ_RES.TI_MOTIVAZIONE_VARIAZIONE",SQLBuilder.ISNULL,null));
 
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
