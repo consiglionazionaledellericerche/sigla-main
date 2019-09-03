@@ -6,32 +6,6 @@
 	<defaultColumnMap
 		tableName="BOLLA_SCARICO_RIGA_MAG">
 		<columnMapping
-			columnName="CD_BENE_SERVIZIO"
-			propertyName="cdBeneServizio"
-			sqlTypeName="VARCHAR"
-			columnSize="15"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_UNITA_MISURA"
-			propertyName="cdUnitaMisura"
-			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="true" />
-		<columnMapping
-			columnName="QUANTITA"
-			propertyName="quantita"
-			sqlTypeName="DECIMAL"
-			columnSize="12"
-			columnScale="5"
-			nullable="true" />
-		<columnMapping
-			columnName="COEFF_CONV"
-			propertyName="coeffConv"
-			sqlTypeName="DECIMAL"
-			columnSize="12"
-			columnScale="5"
-			nullable="true" />
-		<columnMapping
 			columnName="CD_CDS_RICH"
 			propertyName="cdCdsRich"
 			sqlTypeName="VARCHAR"
@@ -74,36 +48,6 @@
 			columnSize="500"
 			nullable="true" />
 		<columnMapping
-			columnName="CD_CDS_LOTTO"
-			propertyName="cdCdsLotto"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_MAGAZZINO_LOTTO"
-			propertyName="cdMagazzinoLotto"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
-			columnName="ESERCIZIO_LOTTO"
-			propertyName="esercizioLotto"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_NUMERATORE_LOTTO"
-			propertyName="cdNumeratoreLotto"
-			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="false" />
-		<columnMapping
-			columnName="PG_LOTTO"
-			propertyName="pgLotto"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
-			nullable="false" />
-		<columnMapping
 			columnName="PG_MOVIMENTO"
 			propertyName="pgMovimento"
 			sqlTypeName="DECIMAL"
@@ -115,48 +59,6 @@
 			sqlTypeName="VARCHAR"
 			columnSize="3"
 			nullable="false" />
-		<columnMapping
-			columnName="CD_CDS_ORDINE"
-			propertyName="cdCdsOrdine"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_UNITA_OPERATIVA"
-			propertyName="cdUnitaOperativa"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="ESERCIZIO_ORDINE"
-			propertyName="esercizioOrdine"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_NUMERATORE_ORDINE"
-			propertyName="cdNumeratoreOrdine"
-			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="true" />
-		<columnMapping
-			columnName="NUMERO_ORDINE"
-			propertyName="numeroOrdine"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
-			nullable="true" />
-		<columnMapping
-			columnName="RIGA_ORDINE"
-			propertyName="rigaOrdine"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
-			nullable="true" />
-		<columnMapping
-			columnName="CONSEGNA"
-			propertyName="consegna"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
-			nullable="true" />
 		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
@@ -195,14 +97,6 @@
 			nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="cdBeneServizio" />
-	<persistentProperty
-		name="cdUnitaMisura" />
-	<persistentProperty
-		name="quantita" />
-	<persistentProperty
-		name="coeffConv" />
-	<persistentProperty
 		name="cdCdsRich" />
 	<persistentProperty
 		name="cdUnitaOperativaRich" />
@@ -217,33 +111,9 @@
 	<persistentProperty
 		name="note" />
 	<persistentProperty
-		name="cdCdsLotto" />
-	<persistentProperty
-		name="cdMagazzinoLotto" />
-	<persistentProperty
-		name="esercizioLotto" />
-	<persistentProperty
-		name="cdNumeratoreLotto" />
-	<persistentProperty
-		name="pgLotto" />
-	<persistentProperty
 		name="pgMovimento" />
 	<persistentProperty
 		name="stato" />
-	<persistentProperty
-		name="cdCdsOrdine" />
-	<persistentProperty
-		name="cdUnitaOperativa" />
-	<persistentProperty
-		name="esercizioOrdine" />
-	<persistentProperty
-		name="cdNumeratoreOrdine" />
-	<persistentProperty
-		name="numeroOrdine" />
-	<persistentProperty
-		name="rigaOrdine" />
-	<persistentProperty
-		name="consegna" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty
