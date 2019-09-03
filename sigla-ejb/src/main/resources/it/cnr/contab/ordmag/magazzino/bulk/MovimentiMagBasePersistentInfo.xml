@@ -54,48 +54,6 @@
 			columnSize="7"
 			nullable="true" />
 		<columnMapping
-			columnName="CD_CDS_ORDINE"
-			propertyName="cdCdsOrdine"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_UNITA_OPERATIVA_ORDINE"
-			propertyName="cdUnitaOperativaOrdine"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="ESERCIZIO_ORDINE"
-			propertyName="esercizioOrdine"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_NUMERATORE_ORDINE"
-			propertyName="cdNumeratoreOrdine"
-			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="true" />
-		<columnMapping
-			columnName="NUMERO_ORDINE"
-			propertyName="numeroOrdine"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
-			nullable="true" />
-		<columnMapping
-			columnName="RIGA_ORDINE"
-			propertyName="rigaOrdine"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
-			nullable="true" />
-		<columnMapping
-			columnName="CONSEGNA"
-			propertyName="consegna"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
-			nullable="true" />
-		<columnMapping
 			columnName="CD_TERZO"
 			propertyName="cdTerzo"
 			sqlTypeName="DECIMAL"
@@ -170,30 +128,6 @@
 			columnSize="6"
 			nullable="false" />
 		<columnMapping
-			columnName="CD_CDS_MAG"
-			propertyName="cdCdsMag"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_MAGAZZINO"
-			propertyName="cdMagazzino"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_BENE_SERVIZIO"
-			propertyName="cdBeneServizio"
-			sqlTypeName="VARCHAR"
-			columnSize="15"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_VOCE_IVA"
-			propertyName="cdVoceIva"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="true" />
-		<columnMapping
 			columnName="SCONTO1"
 			propertyName="sconto1"
 			sqlTypeName="DECIMAL"
@@ -213,36 +147,6 @@
 			sqlTypeName="DECIMAL"
 			columnSize="5"
 			columnScale="2"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_CDS_BOLLA_SCA"
-			propertyName="cdCdsBollaSca"
-			sqlTypeName="VARCHAR"
-			columnSize="30"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_MAGAZZINO_BOLLA_SCA"
-			propertyName="cdMagazzinoBollaSca"
-			sqlTypeName="VARCHAR"
-			columnSize="10"
-			nullable="true" />
-		<columnMapping
-			columnName="ESERCIZIO_BOLLA_SCA"
-			propertyName="esercizioBollaSca"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="true" />
-		<columnMapping
-			columnName="CD_NUMERATORE_BOLLA_SCA"
-			propertyName="cdNumeratoreBollaSca"
-			sqlTypeName="VARCHAR"
-			columnSize="3"
-			nullable="true" />
-		<columnMapping
-			columnName="PG_BOLLA_SCA"
-			propertyName="pgBollaSca"
-			sqlTypeName="DECIMAL"
-			columnSize="6"
 			nullable="true" />
 		<columnMapping
 			columnName="IMPORTO"
@@ -369,20 +273,6 @@
 	<persistentProperty
 		name="dtRiferimento" />
 	<persistentProperty
-		name="cdCdsOrdine" />
-	<persistentProperty
-		name="cdUnitaOperativaOrdine" />
-	<persistentProperty
-		name="esercizioOrdine" />
-	<persistentProperty
-		name="cdNumeratoreOrdine" />
-	<persistentProperty
-		name="numeroOrdine" />
-	<persistentProperty
-		name="rigaOrdine" />
-	<persistentProperty
-		name="consegna" />
-	<persistentProperty
 		name="cdTerzo" />
 	<persistentProperty
 		name="cdUnitaMisura" />
@@ -407,29 +297,11 @@
 	<persistentProperty
 		name="pgLotto" />
 	<persistentProperty
-		name="cdCdsMag" />
-	<persistentProperty
-		name="cdMagazzino" />
-	<persistentProperty
-		name="cdBeneServizio" />
-	<persistentProperty
-		name="cdVoceIva" />
-	<persistentProperty
 		name="sconto1" />
 	<persistentProperty
 		name="sconto2" />
 	<persistentProperty
 		name="sconto3" />
-	<persistentProperty
-		name="cdCdsBollaSca" />
-	<persistentProperty
-		name="cdMagazzinoBollaSca" />
-	<persistentProperty
-		name="esercizioBollaSca" />
-	<persistentProperty
-		name="cdNumeratoreBollaSca" />
-	<persistentProperty
-		name="pgBollaSca" />
 	<persistentProperty
 		name="importo" />
 	<persistentProperty
