@@ -4,15 +4,7 @@
 */
 package it.cnr.contab.pdg00.bulk;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
@@ -24,15 +16,12 @@ import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
-import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
-import it.cnr.contab.varstanz00.bulk.MotivazioneVariazione;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.DateUtils;
-import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellatoLogicamente{
@@ -40,6 +29,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private static final java.util.Dictionary ti_tipologia_finKeys = new it.cnr.jada.util.OrderedHashtable();
 	private static final java.util.Dictionary stato_invioKeys = new it.cnr.jada.util.OrderedHashtable();
 	
+	//Elenco completo delle Finalità della Variazioni utilizzato dalle mappe in modalità ricerca
+	public static final java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
+
 	private static final java.util.Dictionary ds_causaleKeys = new it.cnr.jada.util.OrderedHashtable();
 	
 	private Long storageMatricola;
@@ -54,13 +46,17 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	final public static String STATO_DA_INVIARE = "DAI";
 	final public static String STATO_INVIATA = "INV";
 
+	final public static String MOTIVAZIONE_GENERICO = "GEN";
+	final public static String MOTIVAZIONE_BANDO = "BAN";
+	final public static String MOTIVAZIONE_PROROGA = "PRG";
+	final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
+	final public static String MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO = "TAU";
+	final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
+
 	final public static String FONDO = "Fondo Perequativo Stabilizzazioni";
 	final public static String OVERHEAD = "Overhead/Spese Generali";
 
-	//Elenco completo delle Finalità della Variazioni utilizzato dalle mappe in modalità ricerca
-    public final static java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
-
-    static {
+	static {
 		ti_statoKeys.put(STATO_PROPOSTA_PROVVISORIA,"Proposta Provvisoria");
 		ti_statoKeys.put(STATO_PROPOSTA_DEFINITIVA,"Proposta Definitiva");
 		ti_statoKeys.put(STATO_APPROVATA,"Approvata");
@@ -74,16 +70,16 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		stato_invioKeys.put(STATO_DA_INVIARE,"Da inviare");
 		stato_invioKeys.put(STATO_INVIATA,"Inviata");
 
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
+		
 		ds_causaleKeys.put(FONDO,"Fondo Perequativo Stabilizzazioni");
 		ds_causaleKeys.put(OVERHEAD,"Overhead/Spese Generali");
+	}
 
-		Arrays.asList(MotivazioneVariazione.values())
-            .stream()
-            .filter(el->!el.value().equals(MotivazioneVariazione.GENERICO.value()))
-            .forEachOrdered(el->tiMotivazioneVariazioneForSearchKeys.put(el.value(), el.label()));
-
-    }
-    
 	private BulkList associazioneCDR = new BulkList();
 	private BulkList archivioConsultazioni = new BulkList();
 	private CdrBulk centro_responsabilita;
@@ -192,29 +188,41 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public final java.util.Dictionary getTi_causale_respintaKeys() {
 		return ti_causale_respintaKeys;
 	}
-	
-	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
-		boolean isUoEnte = Optional.ofNullable(this.getCentro_responsabilita()).flatMap(el->Optional.ofNullable(el.getUnita_padre()))
-							.map(Unita_organizzativaBulk::isUoEnte).orElse(Boolean.FALSE);
-		
-	    java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
 
-	    Arrays.asList(MotivazioneVariazione.values())
-			  .stream()
-			  .filter(el->{
-			   	if (el.value().equals(MotivazioneVariazione.TRASFERIMENTO_AREA.value()))
-			   		return isMotivazioneTrasferimentoArea() || (!isUoEnte && !isVariazioneInternaIstituto());
-			   	if (el.value().equals(MotivazioneVariazione.TRASFERIMENTO_RAGIONERIA.value()))
-			   		return isMotivazioneTrasferimentoRagioneria() || (!isUoEnte && !isVariazioneInternaIstituto());
-			   	if (el.value().equals(MotivazioneVariazione.TRASFERIMENTO_AUTORIZZATO.value()))
-			   		return isMotivazioneTrasferimentoAutorizzato() || isUoEnte;
-			   	return true;
-			  })
-		      .forEachOrdered(el->tiMotivazioneVariazioneKeys.put(el.value(), el.label()));
-	    
+	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
+		java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_GENERICO,"Variazione Generica");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando in corso");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
+
+		if (Optional.ofNullable(this.getCentro_responsabilita())
+				.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+				.filter(el->!el.isUoArea() && !el.isUoEnte())
+				.isPresent()) {
+			if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea()) {
+				if (Optional.ofNullable(this.getCentro_responsabilita())
+						.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+						.map(Unita_organizzativaBulk::isUoArea)
+						.orElse(Boolean.FALSE))
+					tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento da Aree di Ricerca");
+				else
+					tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+			}
+		}
+		if (Optional.ofNullable(this.getCentro_responsabilita())
+					.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+					.map(Unita_organizzativaBulk::isUoEnte)
+					.orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoAutorizzato())
+			tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
+		
 		return tiMotivazioneVariazioneKeys;
 	}	
 
+	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
+		return tiMotivazioneVariazioneForSearchKeys;
+	}	
+	
 	/**
 	 * @return
 	 */
@@ -763,27 +771,23 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	}
 
 	public boolean isMotivazioneVariazioneBandoPersonale() {
-		return MotivazioneVariazione.BANDO.value().equals(this.getTiMotivazioneVariazione());
+		return MOTIVAZIONE_BANDO.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneVariazioneProrogaPersonale() {
-		return MotivazioneVariazione.PROROGA.value().equals(this.getTiMotivazioneVariazione());
+		return MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
-		return MotivazioneVariazione.ALTRE_SPESE.value().equals(this.getTiMotivazioneVariazione());
+		return MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneTrasferimentoArea() {
-		return MotivazioneVariazione.TRASFERIMENTO_AREA.value().equals(this.getTiMotivazioneVariazione());
+		return MOTIVAZIONE_TRASFERIMENTO_AREA.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneTrasferimentoRagioneria() {
-		return MotivazioneVariazione.TRASFERIMENTO_RAGIONERIA.value().equals(this.getTiMotivazioneVariazione());
-	}
-	
 	public boolean isMotivazioneTrasferimentoAutorizzato() {
-		return MotivazioneVariazione.TRASFERIMENTO_AUTORIZZATO.value().equals(this.getTiMotivazioneVariazione());
+		return MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneGenerico() {

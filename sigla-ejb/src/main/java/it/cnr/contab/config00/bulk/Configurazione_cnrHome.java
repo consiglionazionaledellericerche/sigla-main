@@ -5,13 +5,10 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public class Configurazione_cnrHome extends BulkHome {
     public static final String ASTERISCO = "*";
@@ -87,15 +84,5 @@ public class Configurazione_cnrHome extends BulkHome {
         if (unita_funzionale == null) unita_funzionale = ASTERISCO;
         if (chiave_secondaria == null) chiave_secondaria = ASTERISCO;
         return (Configurazione_cnrBulk) getHomeCache().getHome(Configurazione_cnrBulk.class).findByPrimaryKey(new it.cnr.contab.config00.bulk.Configurazione_cnrKey(chiave_primaria, chiave_secondaria, unita_funzionale, esercizio));
-    }
-    
-    public String getCDRSpecialePersonale() throws PersistencyException {
-    	Configurazione_cnrBulk conf = getConfigurazioneCnrBulk(new Integer(0), null, Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_PERSONALE);
-    	return Optional.ofNullable(conf).map(Configurazione_cnrBulk::getVal01).orElse(null);
-    }
-
-    public String getCDRSpecialeRagioneria() throws PersistencyException {
-    	Configurazione_cnrBulk conf = getConfigurazioneCnrBulk(new Integer(0), null, Configurazione_cnrBulk.PK_CDR_SPECIALE, Configurazione_cnrBulk.SK_CDR_RAGIONERIA);
-    	return Optional.ofNullable(conf).map(Configurazione_cnrBulk::getVal01).orElse(null);
-    }
+    }    
 }
