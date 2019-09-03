@@ -5,14 +5,8 @@
 package it.cnr.contab.varstanz00.bulk;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.GregorianCalendar;
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import it.cnr.contab.config00.esercizio.bulk.Esercizio_baseBulk;
 import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
@@ -75,17 +69,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	final public static String FONDO = "Fondo Perequativo Stabilizzazioni";
 	final public static String OVERHEAD = "Overhead/Spese Generali";
 
-	//Elenco completo delle Finalità della Variazioni utilizzato dalle mappe in modalità ricerca
-    public final static java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
-
 	static{
 		ds_causaleKeys.put(FONDO,"Fondo Perequativo Stabilizzazioni");
 		ds_causaleKeys.put(OVERHEAD,"Overhead/Spese Generali");
-		
-		Arrays.asList(MotivazioneVariazione.values())
-	        .stream()
-	        .filter(el->!el.value().equals(MotivazioneVariazione.GENERICO.value()))
-	        .forEachOrdered(el->tiMotivazioneVariazioneForSearchKeys.put(el.value(), el.label()));		
 	}
 
 	private CdsBulk centroDiSpesa;
@@ -503,33 +489,28 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	}
 
 	public boolean isMotivazioneVariazioneBandoPersonale() {
-		return MotivazioneVariazione.BANDO.value().equals(this.getTiMotivazioneVariazione());
+		return Pdg_variazioneBulk.MOTIVAZIONE_BANDO.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneVariazioneProrogaPersonale() {
-		return MotivazioneVariazione.PROROGA.value().equals(this.getTiMotivazioneVariazione());
+		return Pdg_variazioneBulk.MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
-		return MotivazioneVariazione.ALTRE_SPESE.value().equals(this.getTiMotivazioneVariazione());
-	}
-
-	public boolean isMotivazioneTrasferimentoArea() {
-		return MotivazioneVariazione.TRASFERIMENTO_AREA.value().equals(this.getTiMotivazioneVariazione());
-	}
-
-	public boolean isMotivazioneTrasferimentoRagioneria() {
-		return MotivazioneVariazione.TRASFERIMENTO_RAGIONERIA.value().equals(this.getTiMotivazioneVariazione());
-	}
-
-	public boolean isMotivazioneTrasferimentoAutorizzato() {
-		return MotivazioneVariazione.TRASFERIMENTO_AUTORIZZATO.value().equals(this.getTiMotivazioneVariazione());
-	}
-	
 	public boolean isMotivazionePersonale() {
 		return isMotivazioneVariazioneBandoPersonale() || isMotivazioneVariazioneProrogaPersonale() || isMotivazioneVariazioneAltreSpesePersonale();
 	}
+	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
+	}
 
+	public boolean isMotivazioneTrasferimentoArea() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneTrasferimentoAutorizzato() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO.equals(this.getTiMotivazioneVariazione());
+	}
+	
 	public boolean isMotivazioneGenerico() {
 		return this.getTiMotivazioneVariazione()==null;
 	}
@@ -543,27 +524,29 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public void setMapMotivazioneVariazione(String mapMotivazioneVariazione) {
 		this.mapMotivazioneVariazione = mapMotivazioneVariazione; 
 	}
-
+	
 	public final java.util.Dictionary getTiMotivazioneVariazioneKeys() {
-		boolean isUoEnte = Optional.ofNullable(this.getCentroDiResponsabilita()).flatMap(el->Optional.ofNullable(el.getUnita_padre()))
-							.map(Unita_organizzativaBulk::isUoEnte).orElse(Boolean.FALSE);
+		java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO,"Variazione Generica");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_BANDO,"Personale - Bando in corso");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
 
-	    java.util.Dictionary tiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
+		if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea())
+			tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
+		
+		if (Optional.ofNullable(this.getCentroDiResponsabilita())
+					.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
+					.map(Unita_organizzativaBulk::isUoEnte)
+					.orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoAutorizzato())
+			tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
+		
+		return tiMotivazioneVariazioneKeys;
+	}
 
-	    Arrays.asList(MotivazioneVariazione.values())
-		      .stream()
-		      .filter(el->{
-		       	if (el.value().equals(MotivazioneVariazione.TRASFERIMENTO_AREA.value()))
-		       		return isMotivazioneTrasferimentoArea() || (!isUoEnte && !isVariazioneInternaIstituto());
-			   	if (el.value().equals(MotivazioneVariazione.TRASFERIMENTO_RAGIONERIA.value()))
-			   		return isMotivazioneTrasferimentoRagioneria() || (!isUoEnte && !isVariazioneInternaIstituto());
-		       	if (el.value().equals(MotivazioneVariazione.TRASFERIMENTO_AUTORIZZATO.value()))
-		       		return isMotivazioneTrasferimentoAutorizzato() || isUoEnte;
-		       	return true;
-		      })
-		      .forEachOrdered(el->tiMotivazioneVariazioneKeys.put(el.value(), el.label()));
-	    return tiMotivazioneVariazioneKeys;
-	}	
+	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
+		return Pdg_variazioneBulk.tiMotivazioneVariazioneForSearchKeys;
+	}
 	
 	public Long getStorageMatricola() {
 		return storageMatricola;
