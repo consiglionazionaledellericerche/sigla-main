@@ -51,7 +51,6 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	
 	public final static String PK_CDR_SPECIALE = "CDR_SPECIALE";
 	public final static String SK_CDR_PERSONALE = "CDR_PERSONALE";
-	public final static String SK_CDR_RAGIONERIA = "CDR_RAGIONERIA";
 
 	public final static String PK_FATTURAZIONE_ELETTRONICA = "FATTURAZIONE_ELETTRONICA";
 
