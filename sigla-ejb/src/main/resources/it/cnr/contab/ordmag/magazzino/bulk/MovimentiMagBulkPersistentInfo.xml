@@ -35,59 +35,9 @@
 			columnName="PG_LOTTO"
 			propertyName="lottoMag.pgLotto" />
 		<columnMapping
-			columnName="CD_CDS_MAG"
-			propertyName="magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="CD_MAGAZZINO"
-			propertyName="magazzino.cdMagazzino" />
-		<columnMapping
-			columnName="CD_BENE_SERVIZIO"
-			propertyName="beneServizio.cd_bene_servizio" />
-		<columnMapping
-			columnName="CD_VOCE_IVA"
-			propertyName="voceIva.cd_voce_iva" />
-		<columnMapping
-			columnName="CD_CDS_BOLLA_SCA"
-			propertyName="bollaScaricoMag.numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="CD_MAGAZZINO_BOLLA_SCA"
-			propertyName="bollaScaricoMag.numerazioneMag.magazzino.cdMagazzino" />
-		<columnMapping
-			columnName="ESERCIZIO_BOLLA_SCA"
-			propertyName="bollaScaricoMag.numerazioneMag.esercizio" />
-		<columnMapping
-			columnName="CD_NUMERATORE_BOLLA_SCA"
-			propertyName="bollaScaricoMag.numerazioneMag.cdNumeratoreMag" />
-		<columnMapping
-			columnName="PG_BOLLA_SCA"
-			propertyName="bollaScaricoMag.pgBollaSca" />
-		<columnMapping
 			columnName="CD_DIVISA"
 			propertyName="divisa.cd_divisa" />
--  		<columnMapping
-			columnName="CD_CDS_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.unitaOrganizzativa.cd_unita_organizzativa" />
-		<columnMapping
-			columnName="CD_UNITA_OPERATIVA_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.unitaOperativaOrd.cdUnitaOperativa" />
-		<columnMapping
-			columnName="ESERCIZIO_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.esercizio" />
-		<columnMapping
-			columnName="CD_NUMERATORE_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numerazioneOrd.cdNumeratore" />
-		<columnMapping
-			columnName="NUMERO_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.ordineAcq.numero" />
-		<columnMapping
-			columnName="RIGA_ORDINE"
-			propertyName="ordineAcqConsegna.ordineAcqRiga.riga" />
-		<columnMapping
-			columnName="CONSEGNA"
-			propertyName="ordineAcqConsegna.consegna" />
 	</defaultColumnMap>
-	<persistentProperty
-		name="ordineAcqConsegna" />
   	<persistentProperty
 		name="tipoMovimentoMag" />
 	<persistentProperty
@@ -98,14 +48,6 @@
 		name="unitaOperativaOrd" />
 	<persistentProperty
 		name="lottoMag" />
-	<persistentProperty
-		name="magazzino" />
-	<persistentProperty
-		name="beneServizio" />
-	<persistentProperty
-		name="voceIva" />
-	<persistentProperty
-		name="bollaScaricoMag" />
 	<persistentProperty
 		name="divisa" />
 </SQLPersistentInfo>
