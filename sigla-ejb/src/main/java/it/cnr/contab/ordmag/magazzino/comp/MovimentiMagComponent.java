@@ -53,7 +53,6 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
-import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -73,11 +72,11 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 		MovimentiMagHome homeMag = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
 		
 		MovimentiMagBulk movimentoMag = new MovimentiMagBulk();
-		movimentoMag.setBeneServizio(beneServizio);
+		movimentoMag.setBeneServizioUt(beneServizio);
 		movimentoMag.setQuantita(quantitaBeneServizio);
 		movimentoMag.setDtMovimento(new Timestamp(System.currentTimeMillis()));
 		movimentoMag.setDtRiferimento(dataRiferimento);
-		movimentoMag.setMagazzino(magazzino);
+		movimentoMag.setMagazzinoUt(magazzino);
 		movimentoMag.setUnitaOperativaOrd(unitaOperativa);
 		movimentoMag.setTipoMovimentoMag(tipoMovimento);
 		movimentoMag.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
@@ -107,7 +106,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 							consegna.getOrdineAcqRiga().getCoefConv());
 
 		movimentoMag.setDataBolla(evasioneOrdineRiga.getEvasioneOrdine().getDataBolla());
-		movimentoMag.setOrdineAcqConsegna(consegna);
+		movimentoMag.setOrdineAcqConsegnaUt(consegna);
 
 		try {
 			movimentoMag.setPrezzoUnitario(recuperoPrezzoUnitario(userContext, consegna));
@@ -127,13 +126,13 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 
     private LottoMagBulk createLottoMagazzino(UserContext userContext, MovimentiMagBulk movimentoCaricoMag) throws ComponentException, PersistencyException {
 		LottoMagBulk lotto = new LottoMagBulk();
-		lotto.setBeneServizio(movimentoCaricoMag.getBeneServizio());
+		lotto.setBeneServizio(movimentoCaricoMag.getBeneServizioUt());
 		lotto.setDivisa(movimentoCaricoMag.getDivisa());
 		lotto.setCambio(movimentoCaricoMag.getCambio());
 		lotto.setDtScadenza(movimentoCaricoMag.getDtScadenza()!=null?movimentoCaricoMag.getDtScadenza():lotto.getDtScadenza());
 		lotto.setEsercizio(CNRUserContext.getEsercizio(userContext));
-		lotto.setMagazzino(movimentoCaricoMag.getMagazzino());
-		lotto.setOrdineAcqConsegna(movimentoCaricoMag.getOrdineAcqConsegna()!=null?movimentoCaricoMag.getOrdineAcqConsegna():lotto.getOrdineAcqConsegna());
+		lotto.setMagazzino(movimentoCaricoMag.getMagazzinoUt());
+		lotto.setOrdineAcqConsegna(movimentoCaricoMag.getOrdineAcqConsegnaUt()!=null?movimentoCaricoMag.getOrdineAcqConsegnaUt():lotto.getOrdineAcqConsegna());
 		lotto.setDivisa(Optional.ofNullable(movimentoCaricoMag.getDivisa()).orElse(lotto.getDivisa()));
 		lotto.setTerzo(Optional.ofNullable(movimentoCaricoMag.getTerzo()).orElse(lotto.getTerzo()));
 		lotto.setStato(LottoMagBulk.STATO_INSERITO);
@@ -224,7 +223,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 	
 				listaMovimenti.stream()
 	   				.collect(Collectors.groupingBy(MovimentiMagBulk::getUnitaOperativaOrd,
-	   							Collectors.groupingBy(MovimentiMagBulk::getMagazzino,
+	   							Collectors.groupingBy(MovimentiMagBulk::getMagazzinoUt,
 	   									Collectors.groupingBy(MovimentiMagBulk::getDtRiferimento))))
 	   				.entrySet().stream().forEach(unitaOperativaSet->{
 	   					unitaOperativaSet.getValue().entrySet().stream().forEach(magazzinoSet->{
@@ -239,13 +238,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 	
 		   	    					dtRiferimentoSet.getValue().stream().forEach(movimento->{
 		   	   	    	    			BollaScaricoRigaMagBulk riga = new BollaScaricoRigaMagBulk();
-		   	   	    	    			riga.setCoeffConv(movimento.getCoeffConv());
-		   	   	    	    			riga.setBeneServizio(movimento.getBeneServizio());
-		   	   	    	    			riga.setUnitaMisura(movimento.getUnitaMisura());
-		   	   	    	    			riga.setQuantita(movimento.getQuantita());
-		   	   	    	    			riga.setOrdineAcqConsegna(movimento.getOrdineAcqConsegna());
 		   	   	    	    			riga.setMovimentiMag(movimento);
-		   	   	    	    			riga.setLottoMag(movimento.getLottoMag());
 		   	   	    	    			riga.setToBeCreated();
 		   	   	    	    			bollaScarico.addToRigheColl(riga);
 		   	    					});
@@ -257,13 +250,6 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 	   					});
 					});
 				
-				listaBolleScarico.stream().forEach(bollaScarico->{
-					try {
-						this.aggiornaMovimentiConBollaScarico(userContext, bollaScarico);	
-					} catch (ComponentException ex) {
-						throw new DetailedRuntimeException(ex);
-					}
-				});
 				return listaBolleScarico;
 	    	}
 	    	return null;
@@ -481,29 +467,4 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 				"default");
     }
     
-    private void aggiornaMovimentiConBollaScarico(UserContext userContext, BollaScaricoMagBulk bollaScaricoMag) throws ComponentException{
-    	try {
-	    	BollaScaricoMagHome bollaHome = (BollaScaricoMagHome)getHome(userContext, BollaScaricoMagBulk.class);
-	    	MovimentiMagHome movHome = (MovimentiMagHome)getHome(userContext, BollaScaricoMagBulk.class);
-	    	Optional.ofNullable(bollaHome.findBollaScaricoRigaMagList(bollaScaricoMag))
-	    	.filter(list->!list.isEmpty())
-	    	.ifPresent(list->{
-	    		list.stream()
-	    		.forEach(bollaRiga->{
-	    			try{
-	    				MovimentiMagBulk movimentoMag = (MovimentiMagBulk)movHome.findByPrimaryKey(bollaRiga.getMovimentiMag());
-	    				movimentoMag.setBollaScaricoMag(bollaRiga.getBollaScaricoMag());
-	    				movimentoMag.setToBeUpdated();
-	    				super.modificaConBulk(userContext, movimentoMag);
-	    			} catch (ComponentException|PersistencyException ex) {
-	    				throw new DetailedRuntimeException(ex);
-	    			}
-			    });
-		    });
-		} catch (DetailedRuntimeException ex) {
-			throw handleException(ex.getDetail());
-    	} catch(PersistencyException|IntrospectionException e) {
-    		throw new ComponentException(e);
-    	}
-    }
 }

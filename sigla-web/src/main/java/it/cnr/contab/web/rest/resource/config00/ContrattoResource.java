@@ -22,6 +22,7 @@ import it.cnr.contab.config00.contratto.model.DittaInvitataExt;
 import it.cnr.contab.config00.contratto.model.UoAbilitataExt;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.local.config00.ContrattoLocal;
@@ -72,6 +73,7 @@ public class ContrattoResource implements ContrattoLocal {
 				Ass_contratto_uoBulk uo = new Ass_contratto_uoBulk();
 				if (uoExt.getUo() != null){
 					if (uoExt.getUo().length() == 6){
+						uo.setUnita_organizzativa(new Unita_organizzativaBulk());
 						uo.setCd_unita_organizzativa(uoExt.getUo().substring(0, 3)+"."+uoExt.getUo().substring(3));
 						uo.setContratto(contrattoBulk);
 						uo.setEsercizio(contrattoBulk.getEsercizio());
