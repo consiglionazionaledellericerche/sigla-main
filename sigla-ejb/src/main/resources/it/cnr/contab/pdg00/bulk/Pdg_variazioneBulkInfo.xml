@@ -471,7 +471,39 @@
         enabledOnSearch="true"		
 		nullable="true"
 		label="Delibera 210/2018" />	
-	
+
+	<fieldProperty
+		name="findProgettoRimodulato"
+		property="progettoRimodulatoForSearch"
+		inputType="SEARCHTOOL"
+		formName="form_searchtool_progetto"
+		columnSet="nuovoPdg"
+		label="Progetto" 
+        enabledOnInsert="true"
+        enabledOnEdit="true"
+		enabledOnSearch="true"
+		completeOnSave="false" />
+	<fieldProperty
+		name="cdProgettoRimodulazione"
+		property="progettoRimodulazione.progetto.cd_progetto"
+		inputType="TEXT"
+		inputSize="30" 
+		label="Codice Progetto" />
+	<fieldProperty
+		name="pgRimodulazione"
+		property="progettoRimodulazione.pg_rimodulazione"
+		inputType="TEXT"
+		inputSize="10" 
+		enabledOnSearch="true"
+		label="Versione Rimodulazione" />
+	<fieldProperty
+		name="pgGenRimodulazione"
+		property="progettoRimodulazione.pg_gen_rimodulazione"
+		inputType="TEXT"
+		inputSize="10" 
+		enabledOnSearch="true"
+		label="Nr. Rimodulazione" />
+			
     <form
         name="searchtool">
 	 	<formFieldProperty
@@ -601,7 +633,14 @@
 		name="idBando" />
 	<formFieldProperty
 		name="ds_causale" />	
-		
+	<formFieldProperty
+		name="findProgettoRimodulato" />
+	<formFieldProperty
+		name="cdProgettoRimodulazione" />
+	<formFieldProperty
+		name="pgRimodulazione" />
+	<formFieldProperty
+		name="pgGenRimodulazione" />
 							
 	<findFieldProperty
 		name="esercizio" />
@@ -653,7 +692,14 @@
 		name="idBando" />
 	<findFieldProperty
 		name="ds_causale" />
-
+	<findFieldProperty
+		name="findProgettoRimodulato" />
+	<findFieldProperty
+		name="cdProgettoRimodulazione" />
+	<findFieldProperty
+		name="pgRimodulazione" />
+		
+		
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty

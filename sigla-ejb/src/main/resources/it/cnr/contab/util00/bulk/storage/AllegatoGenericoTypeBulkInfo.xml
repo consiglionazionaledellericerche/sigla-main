@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="objectType"
+		property="objectType"
+		label="Tipo"
+		inputSize="20"
+		keysProperty="ti_allegatoKeys"
+		inputType="SELECT"
+		nullable="false"/>
+
+	<formFieldProperty
+		name="objectType" />
+
+	<columnFieldProperty
+		name="objectType" />		
+
+	<form name="default">
+		<formFieldProperty
+			name="objectType" />
+		<formFieldProperty
+			name="nome" />
+		<formFieldProperty
+			name="descrizione" />
+		<formFieldProperty
+			name="titolo" />
+		<formFieldProperty
+			name="file" />
+		<formFieldProperty
+			name="attivaFile" />
+	</form>
+
+	<columnSet name="default">
+		<columnFieldProperty
+			name="objectType" />		
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="titolo" />
+	</columnSet>
+	
+	<form name="readonly">
+		<formFieldProperty
+			name="objectType"   
+			enabledOnEdit="false" />		
+		<formFieldProperty
+			name="nome" />
+		<formFieldProperty
+			name="descrizione" 
+			enabledOnEdit="false" />
+		<formFieldProperty
+			name="titolo"  
+			enabledOnEdit="false" />
+		<formFieldProperty
+			name="attivaFile" />
+	</form>
+
+	<columnSet
+		name="readonly" >
+		<columnFieldProperty
+			name="objectType" />		
+		<columnFieldProperty
+			name="nome" />
+		<columnFieldProperty
+			name="descrizione" />
+		<columnFieldProperty
+			name="titolo" />
+	</columnSet>	
+</bulkInfo>
