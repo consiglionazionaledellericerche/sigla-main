@@ -231,28 +231,6 @@ public class CdsBulk extends CdsBase {
 			throw new ValidationException( "Il campo Esercizio di terminazione deve essere di quattro cifre. " );
 
 		if ( responsabile.getCd_terzo() == null )
-			throw new ValidationException( "Il campo RESPONSABILE è obbligatorio. " );	
-		if ( !isNullOrEmpty( getCd_proprio_unita() ) )
-		{
-			long cdLong;
-			try
-			{
-				cdLong = Long.parseLong( getCd_proprio_unita() );
-			}
-			catch (java.lang.NumberFormatException e)
-			{
-				throw new ValidationException( "Il campo CODICE deve essere numerico. " );			
-			}
-			if ( cdLong < 0 )
-				throw new ValidationException( "Il campo CODICE deve essere maggiore di 0. " );			
-		}
-		/*
-	if ( getPrc_copertura_obblig_2() != null && (getPrc_copertura_obblig_2().floatValue() > 100 || getPrc_copertura_obblig_2().floatValue() < 0))
-		throw new ValidationException( "Il campo PERCENTUALE deve essere inferiore a 100. " );
-
-	if ( getPrc_copertura_obblig_3() != null && (getPrc_copertura_obblig_3().floatValue() > 100 || getPrc_copertura_obblig_3().floatValue() < 0))
-		throw new ValidationException( "Il campo PERCENTUALE deve essere inferiore a 100. " );	
-		 */	
-
+			throw new ValidationException( "Il campo RESPONSABILE è obbligatorio. " );
 	}
 }
