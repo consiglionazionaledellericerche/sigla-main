@@ -315,38 +315,6 @@ public class Unita_organizzativaComponent extends it.cnr.jada.comp.CRUDComponent
             if (cdsBulk.getArea_scientifica() == null || cdsBulk.getArea_scientifica().getCd_area_scientifica() == null)
                 throw new ApplicationException("Area scientifica non definita");
 
-            if (cdsBulk.getCd_tipo_unita().equalsIgnoreCase(Tipo_unita_organizzativaHome.TIPO_UO_SAC)) {
-                // verfica se esiste già un CDS di tipo SAC
-                CdsBulk tmp = new CdsBulk();
-                tmp.setCd_tipo_unita(Tipo_unita_organizzativaHome.TIPO_UO_SAC);
-                it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(userContext, tmp).select(tmp, false);
-                LoggableStatement stm = sql.prepareStatement(getConnection(userContext));
-                try {
-                    ResultSet rs = stm.executeQuery();
-                    try {
-                        if (rs.next())
-                            throw new ApplicationException("Creazione impossibile. Un CDS di tipo SAC è già presente.");
-                    } catch (SQLException e) {
-                        throw new PersistencyException(e);
-                    } finally {
-                        try {
-                            rs.close();
-                        } catch (java.sql.SQLException e) {
-                        }
-                        ;
-                    }
-                } catch (SQLException e) {
-                    throw new PersistencyException(e);
-                } finally {
-                    try {
-                        stm.close();
-                    } catch (java.sql.SQLException e) {
-                    }
-                    ;
-                }
-
-            }
-
             if (cdsBulk.getCd_proprio_unita() == null || cdsBulk.getCd_proprio_unita().equals("")) {
                 String cod = cdsHome.creaNuovoCodice();
                 cdsBulk.setCd_proprio_unita(getLunghezza_chiavi().formatCdsKey(userContext, cod));
