@@ -112,6 +112,20 @@
             inputType="CHECKBOX"
             nullable="false"
             label="Previsione totale quota finanziata"/>
+    <fieldProperty
+            name="flQuadraContratto"
+            property="flQuadraContratto"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Quadra Associazione Progetto/Contratti"/>
+    <fieldProperty
+            name="flAssociaContratto"
+            property="flAssociaContratto"
+            enabledOnSearch="true"
+            inputType="CHECKBOX"
+            nullable="false"
+            label="Consenti Associazione Progetto/Contratti"/>            
     <form
             name="searchtool">
         <formFieldProperty
@@ -149,6 +163,10 @@
             name="flIncCons"/>
     <formFieldProperty
             name="flAllPrevFin" />
+    <formFieldProperty
+            name="flQuadraContratto" />
+    <formFieldProperty
+            name="flAssociaContratto" />
 
     <findFieldProperty
             name="id"/>
@@ -180,7 +198,11 @@
             name="flIncCons"/>
     <findFieldProperty
             name="flAllPrevFin" />
-            
+    <findFieldProperty
+            name="flQuadraContratto" />
+    <findFieldProperty
+            name="flAssociaContratto" />
+                                    
     <columnFieldProperty
             name="id"/>
     <columnFieldProperty
@@ -211,4 +233,8 @@
             name="flIncCons"/>
     <columnFieldProperty
             name="flAllPrevFin" />
+    <columnFieldProperty
+            name="flQuadraContratto" />
+    <columnFieldProperty
+            name="flAssociaContratto" />            
 </bulkInfo>

@@ -379,6 +379,18 @@
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		label="Voce del piano economico" />
+	<fieldProperty
+		name="gg_deroga_obbl_comp_prg_scad"
+		property="gg_deroga_obbl_comp_prg_scad"
+		label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di competenza"
+		inputType="TEXT"
+		maxLength="10" />
+	<fieldProperty
+		name="gg_deroga_obbl_res_prg_scad"
+		property="gg_deroga_obbl_res_prg_scad"
+		label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di residuo"
+		inputType="TEXT"
+		maxLength="10" />
 				
 	<form
 		name="searchtool" >
@@ -633,7 +645,11 @@
 		name="fl_trovato" />
 	<formFieldProperty 
 		name="voce_piano_economico" />
-
+	<formFieldProperty
+		name="gg_deroga_obbl_comp_prg_scad" />
+	<formFieldProperty
+		name="gg_deroga_obbl_res_prg_scad" />	
+		
 	<findFieldProperty
 		name="esercizio"
 		/>
@@ -684,6 +700,10 @@
 		name="fl_trovato" />
 	<findFieldProperty
 		name="ti_gestione" />
+	<findFieldProperty
+		name="gg_deroga_obbl_comp_prg_scad" />
+	<findFieldProperty
+		name="gg_deroga_obbl_res_prg_scad" />	
 
 	<form
 		name="searchtool_x_var_stanz_res" >

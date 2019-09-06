@@ -6,16 +6,24 @@
  */
 package it.cnr.contab.varstanz00.bp;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Optional;
+import java.util.TreeMap;
 
 import javax.ejb.RemoveException;
+import javax.servlet.http.HttpSession;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -23,6 +31,9 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
+import it.cnr.jada.action.HttpActionContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
@@ -43,6 +54,8 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	private it.cnr.contab.config00.sto.bulk.CdsBulk centro_di_spesa_scrivania;	
 	private Unita_organizzativaBulk uoSrivania;
 	private Accertamento_modificaBulk acrMod;
+    private Integer annoFromPianoEconomico;
+	private Progetto_rimodulazioneBulk mainProgettoRimodulazione;
 	
 	private SimpleDetailCRUDController crudAssCDR = new SimpleDetailCRUDController( "AssociazioneCDR", Ass_var_stanz_res_cdrBulk.class, "associazioneCDR", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
@@ -77,6 +90,11 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 		setAcrMod(acrMod);
 	}
 
+    public CRUDVar_stanz_resBP(String function, Progetto_rimodulazioneBulk rimodulazione) {
+		super(function);
+		setMainProgettoRimodulazione(rimodulazione);
+    }
+    
 	protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 		setTab("tab","tabTestataVarStanzRes");
 	}
@@ -215,6 +233,19 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
       
 	}		
 	
+	@Override
+	protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+		try {
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+	        BigDecimal annoFrom = configSession.getIm01(actioncontext.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+	        if (Optional.ofNullable(annoFrom).isPresent())
+	            setAnnoFromPianoEconomico(annoFrom.intValue());
+	    } catch (Throwable e) {
+	        throw new BusinessProcessException(e);
+	    }
+		super.init(config, actioncontext);
+	}
+	
 	protected void initialize(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
 		super.initialize(context);
 		try {
@@ -246,6 +277,8 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			var.setTipologia(Var_stanz_resBulk.TIPOLOGIA_ECO);
 			var.setAccMod(getAccMod());
 		}
+		var.setProgettoRimodulazione(getMainProgettoRimodulazione());
+		var.setAnnoFromPianoEconomico(this.getAnnoFromPianoEconomico());
 		return var;
 	}
 	public OggettoBulk initializeModelForEdit(ActionContext context,OggettoBulk bulk) throws BusinessProcessException {
@@ -258,6 +291,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 				.ifPresent(el->{
 					el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));	
 					el.setStorageMatricola(el.getIdMatricola());
+					el.setAnnoFromPianoEconomico(this.getAnnoFromPianoEconomico());
 				});
 		return var;
 	}
@@ -620,4 +654,48 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 					.orElseThrow(()->new ValidationException("Occorre indicare la motivazione per cui viene effettuata la variazione."));
 		super.validate(actioncontext);
 	}
+	
+	public Progetto_rimodulazioneBulk getMainProgettoRimodulazione() {
+		return mainProgettoRimodulazione;
+	}
+	
+	private void setMainProgettoRimodulazione(Progetto_rimodulazioneBulk mainProgettoRimodulazione) {
+		this.mainProgettoRimodulazione = mainProgettoRimodulazione;
+	}
+
+    public void findAndSetRimodulazione(ActionContext actioncontext, ProgettoBulk progetto) throws BusinessProcessException {
+    	try {
+    		List<Progetto_rimodulazioneBulk> list = new BulkList<Progetto_rimodulazioneBulk>(this.createComponentSession().find(actioncontext.getUserContext(), ProgettoBulk.class, "findRimodulazioni", progetto.getPg_progetto()));
+    		((Var_stanz_resBulk)this.getModel()).setProgettoRimodulazione(list.stream().filter(Progetto_rimodulazioneBulk::isStatoValidato).findFirst().orElse(null));
+    	} catch (Throwable e) {
+	        throw handleException(e);
+	    }
+    }
+    
+    protected Integer getAnnoFromPianoEconomico() {
+        return annoFromPianoEconomico;
+    }
+
+    public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
+        this.annoFromPianoEconomico = annoFromPianoEconomico;
+    }
+    
+    public String[][] getTabs(HttpSession session) {
+        TreeMap<Integer, String[]> pages = new TreeMap<Integer, String[]>();
+        int i = 0;
+        
+        pages.put(i++, new String[]{"tabTestataVarStanzRes", "Testata", "/pdg01/tab_var_stanz_res_testata.jsp"});
+        pages.put(i++, new String[]{"tabCDR", "CDR abilitati a concorrervi", "/pdg01/tab_ass_var_stanz_res_cdr.jsp"});
+        
+        if (Optional.ofNullable(this.getAnnoFromPianoEconomico())
+        			.filter(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
+        			.isPresent())
+        	pages.put(i++, new String[]{"tabRimodulazione", "Rimodulazione Progetto", "/pdg01/tab_var_stanz_res_rimodulazione.jsp"});
+
+        String[][] tabs = new String[i][3];
+
+        for (int j = 0; j < i; j++)
+            tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
+        return tabs;
+    }    
 }
