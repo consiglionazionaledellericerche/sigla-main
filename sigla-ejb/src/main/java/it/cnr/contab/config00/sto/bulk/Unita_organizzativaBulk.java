@@ -424,22 +424,7 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 			throw new ValidationException( "Il campo CODICE CDS è obbligatorio. " );
 		if ( responsabile.getCd_terzo() == null )
 			throw new ValidationException( "Il campo RESPONSABILE è obbligatorio. " );	
-		//	if ( responsabile_amm.getCd_terzo() == null )
-		//		throw new ValidationException( "Il campo RESPONSABILE AMM. è obbligatorio. " );				
-		if ( !isNullOrEmpty( getCd_proprio_unita() ) )
-		{
-			long cdLong;
-			try
-			{
-				cdLong = Long.parseLong( getCd_proprio_unita() );
-			}
-			catch (java.lang.NumberFormatException e)
-			{
-				throw new ValidationException( "Il campo CODICE deve essere numerico. " );
-			}
-			if ( cdLong < 0 )
-				throw new ValidationException( "Il campo CODICE deve essere maggiore di 0. " );		
-		}
+
 		if ( !getFl_rubrica().booleanValue() && uoDiRiferimento.getCd_unita_organizzativa() == null )
 			throw new ValidationException( "Il campo Unita' Organizzativa di Riferimento deve essere valorizzato. " );			
 
