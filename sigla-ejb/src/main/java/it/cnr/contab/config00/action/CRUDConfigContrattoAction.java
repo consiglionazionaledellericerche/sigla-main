@@ -66,12 +66,14 @@ public class CRUDConfigContrattoAction extends CRUDAction {
 					contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_SENZA_FLUSSI_FINANZIARI)){
 				contratto.setIm_contratto_attivo(null);
 				contratto.setIm_contratto_passivo(null);				
+				contratto.setProgetto(null);
 			}else if (contratto.getNatura_contabile()!= null && 
 					contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_ATTIVO)){
 				contratto.setIm_contratto_passivo(null);
 			}else if (contratto.getNatura_contabile()!= null && 
 					contratto.getNatura_contabile().equals(ContrattoBulk.NATURA_CONTABILE_PASSIVO)){
 				contratto.setIm_contratto_attivo(null);
+				contratto.setProgetto(null);
 			}
 			return context.findDefaultForward();
 

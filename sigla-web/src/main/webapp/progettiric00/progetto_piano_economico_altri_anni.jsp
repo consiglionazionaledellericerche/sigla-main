@@ -12,14 +12,16 @@
 	TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)BusinessProcess.getBusinessProcess(request);
 	SimpleDetailCRUDController controller = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomicoAltriAnni();
 	SimpleDetailCRUDController controllerVoci = ( (TestataProgettiRicercaBP)bp ).getCrudPianoEconomicoVoceBilancioAltriAnni();
-    String fieldAmm = Optional.ofNullable(bp)
+	String fieldAmm = Optional.ofNullable(bp)
                 .filter(AmministraTestataProgettiRicercaBP.class::isInstance)
                 .map(amm -> "_amm")
                 .orElse("");
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
+	boolean isROProgettoForStato = Optional.ofNullable(bp.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast)
+			.map(ProgettoBulk::isROProgettoForStato).orElse(Boolean.FALSE);
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico",true,false,true,"100%","100px"); %>
+<%	controller.writeHTMLTable(pageContext,"piano_economico",true,false,true,"100%","auto"); %>
 <table class="Panel card p-2 mt-1">
   <TR>
   	<TD><% controller.writeFormLabel(out,"esercizio_piano");%></TD>
@@ -30,17 +32,22 @@
   	<TD colspan="3"><% controller.writeFormInput(out,null,"voce_piano" + fieldAmm,isKeyEditable,null,null);%></TD>
   </TR>
   <TR>
-  	<% controller.writeFormField(out,"im_spesa_finanziato" + fieldAmm);%>
-  	<% controller.writeFormField(out,"im_spesa_cofinanziato" + fieldAmm);%>
+  	<TD><% controller.writeFormLabel(out,"im_spesa_finanziato");%></TD>
+  	<TD><% controller.writeFormInput(out,null,"im_spesa_finanziato" + fieldAmm,isROProgettoForStato,null,null);%></TD>
+  	<TD><% controller.writeFormLabel(out,"im_spesa_cofinanziato");%></TD>
+  	<TD><% controller.writeFormInput(out,null,"im_spesa_cofinanziato" + fieldAmm,isROProgettoForStato,null,null);%></TD>
   	<% controller.writeFormField(out,"imTotaleSpesa");%>
   </TR>
 </table>
 </br>
 <fieldset class="fieldset">
 	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
-<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","100px"); %>
-	</br>
+<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","auto"); %>
+	</br></br>
 	<table class="Panel">
-	  <tr><% controllerVoci.writeFormField(out,"elemento_voce");%></tr>
+	  <tr>
+	  	<TD><% controllerVoci.writeFormLabel(out,"elemento_voce");%></TD>
+	  	<TD><% controllerVoci.writeFormInput(out,"elemento_voce");%></TD>
+	  </tr>
 	</table>
 </fieldset>

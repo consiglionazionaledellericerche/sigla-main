@@ -21,6 +21,20 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 	
 	private java.math.BigDecimal imCofinanziato;
 	
+	private java.math.BigDecimal imFideiussione;
+
+	private java.sql.Timestamp dtInizioFideiussione;
+
+	private java.sql.Timestamp dtFineFideiussione;
+
+	private java.sql.Timestamp dtRilascioFideiussione;
+
+	private java.math.BigDecimal imSvincolatoFideiussione;
+
+	private java.sql.Timestamp dtSvincoloFideiussione;
+
+	private String idEsternoFideiussione;
+
 	public Progetto_other_fieldBase() {
 		super();
 	}
@@ -99,5 +113,61 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 
 	public void setImCofinanziato(java.math.BigDecimal imCofinanziato) {
 		this.imCofinanziato = imCofinanziato;
+	}
+
+	public java.math.BigDecimal getImFideiussione() {
+		return imFideiussione;
+	}
+
+	public void setImFideiussione(java.math.BigDecimal imFideiussione) {
+		this.imFideiussione = imFideiussione;
+	}
+
+	public java.sql.Timestamp getDtInizioFideiussione() {
+		return dtInizioFideiussione;
+	}
+
+	public void setDtInizioFideiussione(java.sql.Timestamp dtInizioFideiussione) {
+		this.dtInizioFideiussione = dtInizioFideiussione;
+	}
+
+	public java.sql.Timestamp getDtFineFideiussione() {
+		return dtFineFideiussione;
+	}
+
+	public void setDtFineFideiussione(java.sql.Timestamp dtFineFideiussione) {
+		this.dtFineFideiussione = dtFineFideiussione;
+	}
+
+	public java.sql.Timestamp getDtRilascioFideiussione() {
+		return dtRilascioFideiussione;
+	}
+
+	public void setDtRilascioFideiussione(java.sql.Timestamp dtRilascioFideiussione) {
+		this.dtRilascioFideiussione = dtRilascioFideiussione;
+	}
+
+	public java.math.BigDecimal getImSvincolatoFideiussione() {
+		return imSvincolatoFideiussione;
+	}
+
+	public void setImSvincolatoFideiussione(java.math.BigDecimal imSvincolatoFideiussione) {
+		this.imSvincolatoFideiussione = imSvincolatoFideiussione;
+	}
+
+	public java.sql.Timestamp getDtSvincoloFideiussione() {
+		return dtSvincoloFideiussione;
+	}
+
+	public void setDtSvincoloFideiussione(java.sql.Timestamp dtSvincoloFideiussione) {
+		this.dtSvincoloFideiussione = dtSvincoloFideiussione;
+	}
+
+	public String getIdEsternoFideiussione() {
+		return idEsternoFideiussione;
+	}
+
+	public void setIdEsternoFideiussione(String idEsternoFideiussione) {
+		this.idEsternoFideiussione = idEsternoFideiussione;
 	}
 }

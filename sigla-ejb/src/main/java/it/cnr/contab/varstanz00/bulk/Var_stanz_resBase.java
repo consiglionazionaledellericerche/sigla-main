@@ -3,7 +3,9 @@
 * Date 15/02/2006
 */
 package it.cnr.contab.varstanz00.bulk;
+
 import it.cnr.jada.persistency.Keyed;
+
 public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 //    CD_CDS VARCHAR(30) NOT NULL
 	private java.lang.String cd_cds;
@@ -56,8 +58,15 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 	// ID_BANDO VARCHAR2(30)
 	private java.lang.String idBando;
 	
+	// DS_CAUSALE VARCHAR2(50)
 	private java.lang.String ds_causale;
 
+	// PG_PROGETTO_RIMODULAZIONE NUMBER (10) NULL
+	private java.lang.Integer pg_progetto_rimodulazione;
+
+	// PG_RIMODULAZIONE NUMBER (10) NULL
+	private java.lang.Integer pg_rimodulazione;
+	
 	public Var_stanz_resBase() {
 		super();
 	}
@@ -187,10 +196,28 @@ public class Var_stanz_resBase extends Var_stanz_resKey implements Keyed {
 	public void setIdBando(java.lang.String idBando) {
 		this.idBando = idBando;
 	}
+	
 	public java.lang.String getDs_causale() {
 		return ds_causale;
 	}
+	
 	public void setDs_causale(java.lang.String ds_causale) {
 		this.ds_causale = ds_causale;
+	}
+
+	public java.lang.Integer getPg_progetto_rimodulazione() {
+		return pg_progetto_rimodulazione;
+	}
+	
+	public void setPg_progetto_rimodulazione(java.lang.Integer pg_progetto_rimodulazione) {
+		this.pg_progetto_rimodulazione = pg_progetto_rimodulazione;
+	}
+	
+	public java.lang.Integer getPg_rimodulazione() {
+		return pg_rimodulazione;
+	}
+
+	public void setPg_rimodulazione(java.lang.Integer pg_rimodulazione) {
+		this.pg_rimodulazione = pg_rimodulazione;
 	}
 }

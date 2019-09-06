@@ -16,6 +16,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
@@ -26,6 +28,11 @@ import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoLogicamente{
 	private static final java.util.Dictionary ti_statoKeys = new it.cnr.jada.util.OrderedHashtable();
+	/*
+	 * variabile valorizzata dal BP per segnare l'anno da cui parte il piano economico ed è quindi possibile
+	 * creare variazioni di tipo Rimodulazione
+	 */
+	private Integer annoFromPianoEconomico;
 
 	final public static String STATO_PROPOSTA_PROVVISORIA = "PRP";
 	final public static String STATO_PROPOSTA_DEFINITIVA = "PRD";
@@ -87,7 +94,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	private boolean erroreEsitaVariazioneBilancio = false;
 	
 	private Var_bilancioBulk var_bilancio;
-
+	private ProgettoBulk progettoRimodulatoForSearch;
+	private Progetto_rimodulazioneBulk progettoRimodulazione;
+	
 	private Accertamento_modificaBulk accMod;
 	private boolean approvazioneControllata = false;
 	
@@ -564,4 +573,58 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
     public boolean isVariazioneInternaIstituto() {
     	return Var_stanz_resBulk.TIPOLOGIA_STO_INT.equalsIgnoreCase(this.getTipologia());
     }
+    
+	public ProgettoBulk getProgettoRimodulatoForSearch() {
+		return progettoRimodulatoForSearch;
+	}
+	
+	public void setProgettoRimodulatoForSearch(ProgettoBulk progettoRimodulatoForSearch) {
+		this.progettoRimodulatoForSearch = progettoRimodulatoForSearch;
+	}
+
+	public Progetto_rimodulazioneBulk getProgettoRimodulazione() {
+		return progettoRimodulazione;
+	}
+	
+	public void setProgettoRimodulazione(Progetto_rimodulazioneBulk progettoRimodulazione) {
+		this.progettoRimodulazione = progettoRimodulazione;
+	}
+	
+	@Override
+	public Integer getPg_progetto_rimodulazione() {
+		return Optional.ofNullable(this.getProgettoRimodulazione()).map(Progetto_rimodulazioneBulk::getPg_progetto).orElse(null);
+	}
+	
+	@Override
+	public void setPg_progetto_rimodulazione(Integer pg_progetto_rimodulazione) {
+		Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el->{
+			el.setPg_progetto(pg_progetto_rimodulazione);	
+		});
+	}
+
+	@Override
+	public Integer getPg_rimodulazione() {
+		return Optional.ofNullable(this.getProgettoRimodulazione()).map(Progetto_rimodulazioneBulk::getPg_rimodulazione).orElse(null);
+	}
+	
+	@Override
+	public void setPg_rimodulazione(Integer pg_rimodulazione) {
+		Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el->{
+			el.setPg_rimodulazione(pg_rimodulazione);	
+		});
+	}    
+	
+	public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
+		this.annoFromPianoEconomico = annoFromPianoEconomico;
+	}
+	
+	public Integer getAnnoFromPianoEconomico() {
+		return annoFromPianoEconomico;
+	}
+	
+	public boolean isVariazioneRimodulazioneProgetto() {
+		return Optional.ofNullable(this.getProgettoRimodulazione())
+					   .flatMap(el->Optional.ofNullable(el.getPg_gen_rimodulazione()))
+					   .isPresent();
+	}	
 }

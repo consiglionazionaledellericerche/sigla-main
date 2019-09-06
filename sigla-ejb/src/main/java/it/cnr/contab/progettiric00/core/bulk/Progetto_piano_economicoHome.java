@@ -1,6 +1,8 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
@@ -32,25 +34,6 @@ public class Progetto_piano_economicoHome extends BulkHome {
 		SQLBuilder sql = this.createSQLBuilder();
 		sql.addClause(FindClause.AND, "pg_progetto",SQLBuilder.EQUALS,pgProgetto);
 		return this.fetchAll(sql);
-	}
-
-	@Override
-	public Persistent completeBulkRowByRow(UserContext userContext, Persistent persistent) throws PersistencyException {
-		Progetto_piano_economicoBulk prgPiaeco = (Progetto_piano_economicoBulk)persistent;
-		V_saldi_piano_econom_progettoBulk saldoSpesa = ((V_saldi_piano_econom_progettoHome)getHomeCache().getHome(V_saldi_piano_econom_progettoBulk.class )).
-				cercaSaldoPianoEconomico(prgPiaeco, "S");
-
-		V_saldi_piano_econom_progettoBulk saldoEntrata = ((V_saldi_piano_econom_progettoHome)getHomeCache().getHome(V_saldi_piano_econom_progettoBulk.class )).
-				cercaSaldoPianoEconomico(prgPiaeco, "E");
-
-		prgPiaeco.setSaldoSpesa(saldoSpesa);
-		prgPiaeco.setSaldoEntrata(saldoEntrata);
-
-		prgPiaeco.setVociBilancioAssociate(new BulkList(((Ass_progetto_piaeco_voceHome)getHomeCache().getHome(Ass_progetto_piaeco_voceBulk.class ))
-				.findAssProgettoPiaecoVoceList(prgPiaeco.getPg_progetto(), prgPiaeco.getCd_unita_organizzativa(), prgPiaeco.getCd_voce_piano(), 
-						prgPiaeco.getEsercizio_piano())));
-
-		return super.completeBulkRowByRow(userContext, persistent);
 	}
 
 	public SQLBuilder selectProgettoPianoEconomicoList( java.lang.Integer esercizio, java.lang.Integer pgProgetto, Integer idClassificazione ) throws PersistencyException {
