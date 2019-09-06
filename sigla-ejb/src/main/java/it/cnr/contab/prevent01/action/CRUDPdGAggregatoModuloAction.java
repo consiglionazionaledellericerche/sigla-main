@@ -23,6 +23,7 @@ import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.DetailedRuntimeException;
@@ -163,7 +164,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 			}
 			if (!Optional.ofNullable(progetto.getOtherField())
 					.flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
-					.filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
+					.filter(stato -> Arrays.asList(StatoProgetto.STATO_NEGOZIAZIONE.value(), StatoProgetto.STATO_APPROVATO.value()).indexOf(stato) != -1).isPresent()) {
 				if (!progetto.getCd_unita_organizzativa().equals(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()))) {
 					setErrorMessage(context,"Attenzione: il progetto non ha uno stato utile alla previsione! Deve essere completatato dalla UO responsabile!");
 					return context.findDefaultForward();
@@ -379,7 +380,7 @@ public class CRUDPdGAggregatoModuloAction extends CRUDAction  {
 					mod.setProgetto(progetto);
                     if (!Optional.ofNullable(progetto.getOtherField())
                             .flatMap(progetto_other_fieldBulk -> Optional.ofNullable(progetto_other_fieldBulk.getStato()))
-                            .filter(stato -> Arrays.asList(Progetto_other_fieldBulk.STATO_NEGOZIAZIONE, Progetto_other_fieldBulk.STATO_APPROVATO).indexOf(stato) != -1).isPresent()) {
+                            .filter(stato -> Arrays.asList(StatoProgetto.STATO_NEGOZIAZIONE.value(), StatoProgetto.STATO_APPROVATO.value()).indexOf(stato) != -1).isPresent()) {
                             errorMessage +="Il progetto " + progetto.getCd_progetto() +" non ha uno stato utile alla previsione!";
                             errorMessage += bp.getParentRoot().isBootstrap() ? "<br>" : "\n";
                             continue;

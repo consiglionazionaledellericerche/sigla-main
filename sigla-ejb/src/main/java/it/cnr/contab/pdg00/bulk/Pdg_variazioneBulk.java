@@ -14,14 +14,14 @@ import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
-import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.DateUtils;
-import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellatoLogicamente{
@@ -87,6 +87,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	private Tipo_variazioneBulk tipo_variazione;
 	private java.util.Dictionary ti_causale_respintaKeys = new it.cnr.jada.util.OrderedHashtable();
 	protected java.util.Collection tipologie_variazione;
+	private ProgettoBulk progettoRimodulatoForSearch;
+	private Progetto_rimodulazioneBulk progettoRimodulazione;
 	
 	private boolean isBulkforSearch = false; 
 	private BigDecimal somma_spesa_var_piu;
@@ -808,5 +810,51 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	
 	public void setStorageMatricola(Long storageMatricola) {
 		this.storageMatricola = storageMatricola;
+	}
+	
+	public ProgettoBulk getProgettoRimodulatoForSearch() {
+		return progettoRimodulatoForSearch;
+	}
+	
+	public void setProgettoRimodulatoForSearch(ProgettoBulk progettoRimodulatoForSearch) {
+		this.progettoRimodulatoForSearch = progettoRimodulatoForSearch;
+	}
+	
+	public Progetto_rimodulazioneBulk getProgettoRimodulazione() {
+		return progettoRimodulazione;
+	}
+	
+	public void setProgettoRimodulazione(Progetto_rimodulazioneBulk progettoRimodulazione) {
+		this.progettoRimodulazione = progettoRimodulazione;
+	}
+	
+	@Override
+	public Integer getPg_progetto_rimodulazione() {
+		return Optional.ofNullable(this.getProgettoRimodulazione()).map(Progetto_rimodulazioneBulk::getPg_progetto).orElse(null);
+	}
+	
+	@Override
+	public void setPg_progetto_rimodulazione(Integer pg_progetto_rimodulazione) {
+		Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el->{
+			el.setPg_progetto(pg_progetto_rimodulazione);	
+		});
+	}
+
+	@Override
+	public Integer getPg_rimodulazione() {
+		return Optional.ofNullable(this.getProgettoRimodulazione()).map(Progetto_rimodulazioneBulk::getPg_rimodulazione).orElse(null);
+	}
+	
+	@Override
+	public void setPg_rimodulazione(Integer pg_rimodulazione) {
+		Optional.ofNullable(this.getProgettoRimodulazione()).ifPresent(el->{
+			el.setPg_rimodulazione(pg_rimodulazione);	
+		});
+	}
+	
+	public boolean isVariazioneRimodulazioneProgetto() {
+		return Optional.ofNullable(this.getProgettoRimodulazione())
+					   .flatMap(el->Optional.ofNullable(el.getPg_rimodulazione()))
+					   .isPresent();
 	}
 }

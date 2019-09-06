@@ -1,8 +1,10 @@
 package it.cnr.contab.progettiric00.ejb;
-import it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent;
-
 import javax.annotation.PostConstruct;
-import javax.ejb.*;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+
+import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
+import it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent;
 @Stateless(name="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession")
 public class ProgettoRicercaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean  implements ProgettoRicercaComponentSession{
 @PostConstruct
@@ -244,6 +246,59 @@ public void validaCancellazioneVoceAssociataPianoEconomico(it.cnr.jada.UserConte
 	} catch(Error e) {
 		throw uncaughtError(param0,componentObj,e);
 	}
+}
+public it.cnr.contab.progettiric00.core.bulk.ProgettoBulk initializePianoEconomico(it.cnr.jada.UserContext param0,it.cnr.contab.progettiric00.core.bulk.ProgettoBulk param1, boolean param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		it.cnr.contab.progettiric00.core.bulk.ProgettoBulk result = ((ProgettoRicercaComponent)componentObj).initializePianoEconomico(param0,param1,param2);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
+public void validaPianoEconomico(it.cnr.jada.UserContext param0, it.cnr.contab.progettiric00.core.bulk.ProgettoBulk param1, it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		((ProgettoRicercaComponent)componentObj).validaPianoEconomico(param0,param1,param2);
+		component_invocation_succes(param0,componentObj);
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
 }	
+public Pdg_esercizioBulk getPdgEsercizio(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+	pre_component_invocation(param0,componentObj);
+	try {
+		Pdg_esercizioBulk result = ((ProgettoRicercaComponent)componentObj).getPdgEsercizio(param0);
+		component_invocation_succes(param0,componentObj);
+		return result;
+	} catch(it.cnr.jada.comp.NoRollbackException e) {
+		component_invocation_succes(param0,componentObj);
+		throw e;
+	} catch(it.cnr.jada.comp.ComponentException e) {
+		component_invocation_failure(param0,componentObj);
+		throw e;
+	} catch(RuntimeException e) {
+		throw uncaughtRuntimeException(param0,componentObj,e);
+	} catch(Error e) {
+		throw uncaughtError(param0,componentObj,e);
+	}
+}
 }
 

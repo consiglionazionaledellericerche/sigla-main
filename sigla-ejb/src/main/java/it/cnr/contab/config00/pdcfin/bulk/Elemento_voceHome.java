@@ -409,7 +409,7 @@ public class Elemento_voceHome extends BulkHome implements ConsultazioniRestHome
 		return sql;
 	}
 
-    public java.util.List<Elemento_voceBulk> findElementoVociAssociate(Progetto_piano_economicoBulk progettoPiaeco) throws IntrospectionException, PersistencyException {
+    public java.util.List<Elemento_voceBulk> findElementoVociAssociate(Progetto_piano_economicoBulk progettoPiaeco) throws PersistencyException {
         PersistentHome home = getHomeCache().getHome(Elemento_voceBulk.class);
         SQLBuilder sql = home.createSQLBuilder();
     	sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, progettoPiaeco.getEsercizio_piano());

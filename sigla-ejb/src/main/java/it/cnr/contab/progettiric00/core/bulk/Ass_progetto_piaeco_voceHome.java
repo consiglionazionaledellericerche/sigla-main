@@ -8,9 +8,12 @@ import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.PersistentHome;
@@ -26,7 +29,7 @@ public class Ass_progetto_piaeco_voceHome extends BulkHome {
 		super(Ass_progetto_piaeco_voceBulk.class,conn,persistentCache);
 	}
 
-	public java.util.Collection findAssProgettoPiaecoVoceList( java.lang.Integer pgProgetto, java.lang.String cdUnitaOrganizzativa, java.lang.String cdVocePiano, java.lang.Integer esercizioPiano ) throws PersistencyException {
+	public java.util.Collection<Ass_progetto_piaeco_voceBulk> findAssProgettoPiaecoVoceList( java.lang.Integer pgProgetto, java.lang.String cdUnitaOrganizzativa, java.lang.String cdVocePiano, java.lang.Integer esercizioPiano ) throws PersistencyException {
 		SQLBuilder sql = this.createSQLBuilder();
 		sql.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, pgProgetto);
 		sql.addClause(FindClause.AND, "cd_unita_organizzativa", SQLBuilder.EQUALS, cdUnitaOrganizzativa);
@@ -61,5 +64,4 @@ public class Ass_progetto_piaeco_voceHome extends BulkHome {
 		}
 		return sql;
 	}
-
 }

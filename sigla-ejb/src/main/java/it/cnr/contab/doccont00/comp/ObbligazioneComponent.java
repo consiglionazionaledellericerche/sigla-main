@@ -1,5 +1,25 @@
 package it.cnr.contab.doccont00.comp;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Vector;
+
+import javax.ejb.EJBException;
+
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
 import it.cnr.contab.anagraf00.core.bulk.Anagrafico_terzoBulk;
@@ -7,7 +27,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsHome; 
+import it.cnr.contab.config00.bulk.Parametri_cdsHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
@@ -38,7 +58,6 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
@@ -88,7 +107,6 @@ import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -100,6 +118,7 @@ import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.comp.IPrintMgr;
@@ -115,27 +134,6 @@ import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Vector;
-
-import javax.ejb.EJBException;
 
 /* Gestisce documenti di tipo
 	OBB - bilancio Cds
@@ -1674,21 +1672,63 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 						.filter(el->el.isStatoApprovato()||el.isStatoChiuso())
 						.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
 								+ "Il progetto associato "+progetto.getCd_progetto()+" non risulta in stato Approvato o Chiuso."));
+
 			if (progetto.isDatePianoEconomicoRequired()) {
-				Optional.ofNullable(progetto.getOtherField().getDtInizio())
-					.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
-					.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
-							+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
-							+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
-							+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
+				//Negli impegni controllare la più piccola data tra data inizio progetto e data stipula contratto definitivo
+				ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+				java.util.Collection<ContrattoBulk> contratti = progettoHome.findContratti(progetto.getPg_progetto());
+
+				Optional<ContrattoBulk> optContratto = 
+						contratti.stream().filter(el->el.isAttivo()||el.isAttivo_e_Passivo())
+						 .min((p1, p2) -> p1.getDt_stipula().compareTo(p2.getDt_stipula()))
+		    			 .filter(el->el.getDt_stipula().before(progetto.getOtherField().getDtInizio()));
+				
+				if (optContratto.isPresent())
+					optContratto
+	 	    			.filter(ctr->ctr.getDt_stipula().after(obbligazione.getDt_registrazione()))
+	 	    			.ifPresent(ctr->{
+	 	    				throw new ApplicationRuntimeException(
+	 	    						"Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+									  + "La data stipula ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(ctr.getDt_stipula())
+								  + ") del primo contratto " + ctr.getEsercizio()+"/"+ctr.getStato()+"/"+ctr.getPg_contratto()
+		    				   	  + " associato al progetto "+progetto.getCd_progetto()+" è successiva "
+								  + "rispetto alla data di registrazione dell'obbligazione ("
+		    				   	  + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
+		    			});
+				else
+					Optional.of(progetto.getOtherField().getDtInizio())
+			 	    		.filter(dt->!dt.after(obbligazione.getDt_registrazione()))
+							.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+									+ "La data inizio ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(progetto.getOtherField().getDtInizio())
+									+ ") del progetto "+progetto.getCd_progetto()+" associato è successiva "
+									+ "rispetto alla data di registrazione dell'obbligazione ("
+									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
 			}
-			Optional.ofNullable(
-				Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(Optional.ofNullable(progetto.getOtherField().getDtFine()).orElse(DateUtils.firstDateOfTheYear(3000))))
-					.filter(dt->!dt.before(obbligazione.getDt_registrazione()))
-					.orElseThrow(()->new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
-							+ "La data fine/proroga ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
-							+ ") del progetto "+progetto.getCd_progetto()+" associato è precedente "
-							+ "rispetto alla data di registrazione dell'impegno ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
+			
+			GregorianCalendar gcFineProgetto = new GregorianCalendar();
+			gcFineProgetto.setTime(Optional.ofNullable(progetto.getOtherField().getDtProroga())
+							 			   .orElse(Optional.ofNullable(progetto.getOtherField().getDtFine())
+											 	           .orElse(DateUtils.firstDateOfTheYear(3000))));
+			
+			int ggProroga = Optional.ofNullable(obbligazione.getElemento_voce())
+										.flatMap(el->{
+											if (obbligazione.isCompetenza())
+												return Optional.ofNullable(el.getGg_deroga_obbl_comp_prg_scad());
+											else
+												return Optional.ofNullable(el.getGg_deroga_obbl_res_prg_scad());
+										})
+										.filter(el->el.compareTo(0)>0)
+										.orElse(0);
+			
+			gcFineProgetto.add(Calendar.DAY_OF_YEAR, ggProroga);
+			
+			if (gcFineProgetto.before(obbligazione.getDt_registrazione()))
+				throw new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
+							+ "La data fine/proroga del progetto "+progetto.getCd_progetto()
+							+ (ggProroga>0?", aumentata di " + ggProroga +" giorni,":"") + " ("
+						    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(gcFineProgetto.getTime())
+							+ ") è precedente rispetto alla data di registrazione dell'impegno ("
+						    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
 		}
 	} catch ( Exception e )
 	{

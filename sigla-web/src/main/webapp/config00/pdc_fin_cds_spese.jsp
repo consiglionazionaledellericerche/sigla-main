@@ -122,6 +122,12 @@
 	<tr>
 	  <% bp.getController().writeFormField(out,"fl_missioni");%>
 	</tr>
+	<tr>
+	  <% bp.getController().writeFormField(out,"gg_deroga_obbl_comp_prg_scad");%>
+	</tr>
+	<tr>
+	  <% bp.getController().writeFormField(out,"gg_deroga_obbl_res_prg_scad");%>
+	</tr>	
 	</table>		
 	<% if (!bp.isFlNuovoPdg()) ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>
 

@@ -1,37 +1,37 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
-import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
+import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_area_progBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_attivitaBulk;
 import it.cnr.contab.progettiric00.geco.bulk.Geco_commessaBulk;
@@ -53,11 +53,11 @@ import it.cnr.contab.progettiric00.geco.bulk.Geco_progetto_sacBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
@@ -571,7 +571,7 @@ public class ProgettoHome extends BulkHome {
 				if (progetto_other_fieldBulk == null) {
                     progetto_other_fieldBulk = new Progetto_other_fieldBulk();
                     progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
-                    progetto_other_fieldBulk.setStato(Progetto_other_fieldBulk.STATO_INIZIALE);
+                    progetto_other_fieldBulk.setStato(StatoProgetto.STATO_INIZIALE.value());
                     progetto_other_fieldBulk.setUser(CNRUserContext.getUser(userContext));
                     progetto_other_fieldBulk.setToBeCreated();
                     progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
@@ -651,16 +651,12 @@ public class ProgettoHome extends BulkHome {
 	public void handleObjectNotFoundException(ObjectNotFoundException objectnotfoundexception) throws ObjectNotFoundException {
 	}
 	
-	public java.util.Collection findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws IntrospectionException, PersistencyException {
+	public java.util.Collection<Progetto_piano_economicoBulk> findDettagliPianoEconomico(it.cnr.jada.UserContext userContext,Integer pgProgetto) throws PersistencyException {
 		Progetto_piano_economicoHome dettHome = (Progetto_piano_economicoHome)getHomeCache().getHome(Progetto_piano_economicoBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
 		sql.addOrderBy("esercizio_piano, cd_voce_piano");
-		List<Progetto_piano_economicoBulk> pianoList = dettHome.fetchAll(sql);
-		List<Progetto_piano_economicoBulk> pianoListNew = new ArrayList<>();
-		for (Progetto_piano_economicoBulk progetto_piano_economicoBulk : pianoList)
-			pianoListNew.add((Progetto_piano_economicoBulk)dettHome.completeBulkRowByRow(userContext, progetto_piano_economicoBulk));
-		return pianoListNew;
+		return dettHome.fetchAll(sql);
 	}
 	
 	public Progetto_other_fieldBulk findProgettoOtherField(it.cnr.jada.UserContext userContext,ProgettoBulk testata) throws IntrospectionException, PersistencyException {
@@ -783,4 +779,126 @@ public class ProgettoHome extends BulkHome {
 		
 		return varHome.fetchAll(sqlVar);
 	}
+	
+    public ProgettoBulk initializePianoEconomico(UserContext userContext, ProgettoBulk progetto, boolean loadSaldi) throws PersistencyException {
+    	ProgettoBulk myProgetto = (ProgettoBulk)findByPrimaryKey(userContext,progetto);
+    	List<Progetto_piano_economicoBulk> progettoPiano = new BulkList<Progetto_piano_economicoBulk>(this.findDettagliPianoEconomico(userContext,myProgetto.getPg_progetto()));
+		progettoPiano.stream().forEach(el->el.setProgetto(myProgetto));
+		myProgetto.setDettagliPianoEconomicoTotale(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(Integer.valueOf(0))).collect(Collectors.toList())));
+		myProgetto.setDettagliPianoEconomicoAnnoCorrente(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(myProgetto.getEsercizio())).collect(Collectors.toList())));
+		myProgetto.setDettagliPianoEconomicoAltriAnni(new BulkList<Progetto_piano_economicoBulk>(progettoPiano.stream().filter(e->!e.getEsercizio_piano().equals(Integer.valueOf(0)) && !e.getEsercizio_piano().equals(myProgetto.getEsercizio())).collect(Collectors.toList())));
+
+		if (loadSaldi)
+			loadSaldiPianoEconomico(userContext, myProgetto);
+
+		getHomeCache().fetchAll(userContext);
+		return myProgetto;
+	}
+
+    public ProgettoBulk loadSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws PersistencyException {
+    	try {
+    		List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHomeCache().getHome(V_saldi_voce_progettoBulk.class))
+					.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio());
+
+    		progetto.setVociBilancioMovimentate(
+					new BulkList<V_saldi_voce_progettoBulk>(
+							vociMovimentate.stream()
+								.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
+										el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
+								.collect(Collectors.toList())));
+				
+			progetto.getDettagliPianoEconomicoAnnoCorrente().stream().forEach(ppe->{
+				try {
+					ppe.setVociBilancioAssociate(new BulkList<Ass_progetto_piaeco_voceBulk>(((Ass_progetto_piaeco_voceHome)getHomeCache().getHome(Ass_progetto_piaeco_voceBulk.class ))
+						.findAssProgettoPiaecoVoceList(ppe.getPg_progetto(), ppe.getCd_unita_organizzativa(), ppe.getCd_voce_piano(), 
+								ppe.getEsercizio_piano())));
+				} catch (PersistencyException ex){
+					throw new DetailedRuntimeException(ex.getMessage());
+				}
+				ppe.getVociBilancioAssociate().stream().forEach(voceAss->{
+					V_saldi_voce_progettoBulk saldo = 
+							progetto.getVociBilancioMovimentate().stream()
+									.filter(el->el.getEsercizio_voce().equals(voceAss.getEsercizio_voce()))
+									.filter(el->el.getTi_appartenenza().equals(voceAss.getTi_appartenenza()))
+									.filter(el->el.getTi_gestione().equals(voceAss.getTi_gestione()))
+									.filter(el->el.getCd_elemento_voce().equals(voceAss.getCd_elemento_voce()))
+									.findFirst()
+									.orElseGet(()->{
+										V_saldi_voce_progettoBulk saldoNew = new V_saldi_voce_progettoBulk();
+										saldoNew.setEsercizio_voce(voceAss.getEsercizio_voce());
+										saldoNew.setTi_appartenenza(voceAss.getTi_appartenenza());
+										saldoNew.setTi_gestione(voceAss.getTi_gestione());
+										saldoNew.setCd_elemento_voce(voceAss.getCd_elemento_voce());
+
+										saldoNew.setStanziamentoFin(BigDecimal.ZERO);
+										saldoNew.setVariapiuFin(BigDecimal.ZERO);
+										saldoNew.setVariamenoFin(BigDecimal.ZERO);
+										saldoNew.setTrasfpiuFin(BigDecimal.ZERO);
+										saldoNew.setTrasfmenoFin(BigDecimal.ZERO);
+
+										saldoNew.setStanziamentoCofin(BigDecimal.ZERO);
+										saldoNew.setVariapiuCofin(BigDecimal.ZERO);
+										saldoNew.setVariamenoCofin(BigDecimal.ZERO);
+										saldoNew.setTrasfpiuCofin(BigDecimal.ZERO);
+										saldoNew.setTrasfmenoCofin(BigDecimal.ZERO);
+										
+										saldoNew.setImpaccFin(BigDecimal.ZERO);
+										saldoNew.setImpaccCofin(BigDecimal.ZERO);
+										saldoNew.setManrisFin(BigDecimal.ZERO);
+										saldoNew.setManrisCofin(BigDecimal.ZERO);
+										return saldoNew;
+									});
+					if (Elemento_voceHome.GESTIONE_SPESE.equals(voceAss.getTi_gestione()))
+						voceAss.setSaldoSpesa(saldo);
+					else
+						voceAss.setSaldoEntrata(saldo);
+					
+				});
+			});
+			return progetto;
+		} catch(Exception e) {
+			throw new PersistencyException( e );
+		}
+	}
+
+    /**
+     * Ritorna la SQLBuilder per la ricerca dei progetti su cui risulta abilitato ad operare la UO collegata 
+     * nell'esercizio di scrivania (UO ed esercizio presenti sullo UserContext)
+     * 
+     * @param aUC lo UserContext
+     * @return
+     */
+	public SQLBuilder selectProgettiAbilitati(it.cnr.jada.UserContext userContext) throws PersistencyException {
+		ProgettoHome progettoHome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_PROGETTO_PADRE");    	    
+		SQLBuilder sql = progettoHome.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause(FindClause.AND,"tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
+		
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		else
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+		
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniCommesse(userContext));
+		else
+			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniModuli(userContext));
+		return sql; 
+	}
+	
+	public java.util.List<Progetto_rimodulazioneBulk> findRimodulazioni(Integer pgProgetto) throws PersistencyException {
+		Progetto_rimodulazioneHome dettHome = (Progetto_rimodulazioneHome)getHomeCache().getHome(Progetto_rimodulazioneBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
+		return dettHome.fetchAll(sql);
+	}
+	
+	public java.util.List<ContrattoBulk> findContratti(Integer pgProgetto) throws PersistencyException {
+		ContrattoHome dettHome = (ContrattoHome)getHomeCache().getHome(ContrattoBulk.class);
+		SQLBuilder sql = dettHome.createSQLBuilder();
+		sql.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,pgProgetto);
+		return dettHome.fetchAll(sql);
+	}	
 }

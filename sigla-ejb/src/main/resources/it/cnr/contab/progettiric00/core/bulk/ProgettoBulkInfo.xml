@@ -744,6 +744,57 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		enabledOnSearch="true"
 		label="Importo Cofinanziato" />
+
+	<fieldProperty
+		name="imFideiussioneOf"
+		property="otherField.imFideiussione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo" />
+	<fieldProperty
+		name="dtInizioFideiussioneOf"
+		property="otherField.dtInizioFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		command="doOnDtInizioFideiussioneOfChange"
+		label="Data Inizio" />
+	<fieldProperty
+		name="dtFineFideiussioneOf"
+		property="otherField.dtFineFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		command="doOnDtFineFideiussioneOfChange"
+		label="Data Fine" />
+	<fieldProperty
+		name="dtRilascioFideiussioneOf"
+		property="otherField.dtRilascioFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Rilascio" />
+	<fieldProperty
+		name="imSvincolatoFideiussioneOf"
+		property="otherField.imSvincolatoFideiussione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnSearch="true"
+		label="Importo Svincolato" />
+	<fieldProperty
+		name="dtSvincoloFideiussioneOf"
+		property="otherField.dtSvincoloFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		formatName="date_short"
+		label="Data Svincolo" />
+	<fieldProperty
+		name="idEsternoFideiussioneOf"
+		property="otherField.idEsternoFideiussione"
+		inputType="TEXT"
+		enabledOnSearch="true"
+		label="Id.Esterno" />
 	<fieldProperty
 		name="imTotale"
 		property="imTotale"
@@ -821,6 +872,8 @@
 		name="cd_divisa" />
 	<formFieldProperty
 		name="cd_progetto" />
+	<formFieldProperty
+		name="pg_progetto" />
 	<formFieldProperty
 		name="cd_progetto_area" />
 	<formFieldProperty
@@ -958,6 +1011,22 @@
 		name="imFinanziatoOf" />
 	<formFieldProperty
 		name="imCofinanziatoOf" />
+		
+	<formFieldProperty
+		name="imFideiussioneOf" />
+	<formFieldProperty
+		name="dtInizioFideiussioneOf" />
+	<formFieldProperty
+		name="dtFineFideiussioneOf" />
+	<formFieldProperty
+		name="dtRilascioFideiussioneOf" />
+	<formFieldProperty
+		name="imSvincolatoFideiussioneOf" />
+	<formFieldProperty
+		name="dtSvincoloFideiussioneOf" />
+	<formFieldProperty
+		name="idEsternoFideiussioneOf" />
+		
 	<formFieldProperty
 		name="imTotale" />
 	<formFieldProperty
@@ -1266,13 +1335,16 @@
 			name="cd_progetto_padre"
 			label="Area Progettuale"/>
 		<columnFieldProperty
-			name="cd_unita_organizzativa" />
+			name="cd_unita_organizzativa"
+			label="UO Coordinatrice" />
 		<columnFieldProperty
 			name="ds_progetto" />
 		<columnFieldProperty
-			name="cd_responsabile_terzo" />
-		<columnFieldProperty
 			name="dsTipoFinanziamentoOf" />
+		<columnFieldProperty
+			name="imFinanziatoOf" />
+		<columnFieldProperty
+			name="imCofinanziatoOf" />
 		<columnFieldProperty
 			name="dtInizioOf" />
 		<columnFieldProperty
@@ -1501,17 +1573,25 @@
 			name="cd_progetto_padre"
 			label="Area Progettuale"/>
 		<findFieldProperty
-			name="tipo_fase" />
+			name="cd_unita_organizzativa" 
+			label="UO Coordinatrice"/>
 		<findFieldProperty
-			name="cd_unita_organizzativa" />
+			name="ds_progetto" 
+			label="Descrizione Progetto"/>
 		<findFieldProperty
-			name="ds_progetto" />
+			name="dsTipoFinanziamentoOf" />
 		<findFieldProperty
-			name="cd_responsabile_terzo" />
+			name="imFinanziatoOf" />
 		<findFieldProperty
-			name="stato" />
+			name="imCofinanziatoOf" />
 		<findFieldProperty
-			name="durata_progetto" />
+			name="dtInizioOf" />
+		<findFieldProperty
+			name="dtFineOf" />
+		<findFieldProperty
+			name="dtProrogaOf" />
+		<findFieldProperty
+			name="statoOf" />
 	</freeSearchSet>
 
 	<form
