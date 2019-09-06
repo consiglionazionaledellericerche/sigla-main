@@ -2,7 +2,7 @@
 --  DDL for View V_PDG_VARIAZIONE
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_PDG_VARIAZIONE" ("ESERCIZIO", "PG_VARIAZIONE_PDG", "DS_VARIAZIONE_PDG", "RIFERIMENTI", "CD_CDR_PROPONENTE", "DS_CDR_PROPONENTE", "CD_CDR", "DS_CDR", "ENTRATA", "SPESA", "STATO", "QUOTA_RIPARTITA_SPE", "QUOTA_RIPARTITA_ETR") AS 
+  CREATE OR REPLACE FORCE VIEW "V_PDG_VARIAZIONE" ("ESERCIZIO", "PG_VARIAZIONE_PDG", "DS_VARIAZIONE_PDG", "RIFERIMENTI", "CD_CDR_PROPONENTE", "DS_CDR_PROPONENTE", "CD_CDR", "DS_CDR", "ENTRATA", "SPESA", "STATO", "QUOTA_RIPARTITA_SPE", "QUOTA_RIPARTITA_ETR","PG_PROGETTO_RIMODULAZIONE","PG_RIMODULAZIONE") AS 
   select /*+ RULE*/
 --
 -- Date: 04/10/2010
@@ -66,7 +66,9 @@ Decode(par.fl_regolamento_2006, 'N',
            And   pdgVar.pg_variazione_pdg = pdg.pg_variazione_pdg
            And   pdgVar.cd_cdr_assegnatario = assPdg.cd_centro_responsabilita
            And   pdgVar.categoria_dettaglio != 'SCR'
-           And   pdgVar.ti_gestione = 'E')) QUOTA_RIPARTITA_ETR
+           And   pdgVar.ti_gestione = 'E')) QUOTA_RIPARTITA_ETR,
+pdg.pg_progetto_rimodulazione,
+pdg.pg_rimodulazione
 From pdg_variazione pdg, ass_pdg_variazione_cdr assPdg, cdr cdr_prop, cdr, parametri_cnr par
 Where pdg.esercizio = assPdg.esercizio
 And   pdg.pg_variazione_pdg = assPdg.pg_variazione_pdg

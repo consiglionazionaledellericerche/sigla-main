@@ -11,48 +11,31 @@ import java.sql.SQLException;
 import java.util.Iterator;
 
 import javax.ejb.EJBException;
-import javax.ejb.RemoveException;
 
-import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.missioni00.bp.CRUDAnticipoBP;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
-import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.pdg01.bp.SelezionatoreAssestatoBP;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
-import it.cnr.contab.varstanz00.bp.SelezionatoreAssestatoResiduoBP;
-import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.bulk.FillException;
-import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.OptionBP;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
-import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
  * @author mspasiano
@@ -637,6 +620,33 @@ public class PdGVariazioneAction extends it.cnr.jada.util.action.CRUDAction {
 		try {
 			fillModel(context);
 			((PdGVariazioneBP)getBusinessProcess(context)).aggiornaMotivazioneVariazione(context);
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}			
+	}
+	
+	public Forward doBlankSearchFindProgettoRimodulato(ActionContext context, Pdg_variazioneBulk variazione) {
+		try {
+			fillModel(context);
+			variazione.setProgettoRimodulatoForSearch(new ProgettoBulk());
+			variazione.setProgettoRimodulazione(null);
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}			
+	}
+
+	public Forward doBringBackSearchFindProgettoRimodulato(ActionContext context, Pdg_variazioneBulk variazione, ProgettoBulk progetto) {
+		try {
+			fillModel(context);
+			PdGVariazioneBP bp = (PdGVariazioneBP)getBusinessProcess(context);
+			variazione.setProgettoRimodulatoForSearch(progetto);
+			bp.findAndSetRimodulazione(context, progetto);
 			return context.findDefaultForward();
 		}catch(java.lang.ClassCastException ex){
 			return context.findDefaultForward();

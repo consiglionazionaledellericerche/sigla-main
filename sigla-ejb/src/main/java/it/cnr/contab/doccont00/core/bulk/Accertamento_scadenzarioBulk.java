@@ -20,7 +20,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	protected java.lang.Boolean fl_aggiorna_scad_successiva;
 	protected Accertamento_scadenzarioBulk scadenza_iniziale;
 
-	private BulkList accertamento_scad_voceColl = new BulkList();	
+	private BulkList<Accertamento_scad_voceBulk> accertamento_scad_voceColl = new BulkList<Accertamento_scad_voceBulk>();	
 
 	public static final int STATUS_NOT_CONFIRMED = 0;
 	public static final int STATUS_CONFIRMED = 1;
@@ -91,7 +91,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	/**
 	 * @return it.cnr.jada.bulk.BulkList
 	 */
-	public it.cnr.jada.bulk.BulkList getAccertamento_scad_voceColl() {
+	public it.cnr.jada.bulk.BulkList<Accertamento_scad_voceBulk> getAccertamento_scad_voceColl() {
 		return accertamento_scad_voceColl;
 	}
 	public BulkCollection[] getBulkLists() 
@@ -252,7 +252,7 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	 *
 	 * @param newAccertamento_scad_voceColl	Il valore da assegnare a 'accertamento_scad_voceColl'
 	 */
-	public void setAccertamento_scad_voceColl(it.cnr.jada.bulk.BulkList newAccertamento_scad_voceColl) {
+	public void setAccertamento_scad_voceColl(it.cnr.jada.bulk.BulkList<Accertamento_scad_voceBulk> newAccertamento_scad_voceColl) {
 		accertamento_scad_voceColl = newAccertamento_scad_voceColl;
 	}	
 	public void setCd_cds(java.lang.String cd_cds) 

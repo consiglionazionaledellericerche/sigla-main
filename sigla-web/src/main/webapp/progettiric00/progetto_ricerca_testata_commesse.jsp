@@ -1,3 +1,4 @@
+<%@page import="it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk"%>
 <%@ page pageEncoding="UTF-8"
 	import="it.cnr.jada.action.*,
 		it.cnr.jada.bulk.*,
@@ -12,6 +13,7 @@
 	boolean isFlNuovoPdg = bp.isFlNuovoPdg();
 	boolean isFlInformix = bp.isFlInformix();
 	boolean isROFieldInformix = !bp.isSearching()&&isFlInformix;
+	boolean isUoEnte = Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent();
 	ProgettoBulk bulk = (ProgettoBulk)bp.getModel();
 %>
 <% if (bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT || bp.getStatus() == bp.VIEW) {%>
@@ -22,6 +24,7 @@
 			   bp.getController().writeFormInput(out,null,"livello_padre",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } 
 		%>
+		<div style="float: right;" class="GroupLabel h3 text-primary ">Ver.<%=bulk.getVersione()%></div>
 	 </div>
 	 <div class="Group">
 	 <table class="Panel card border-primary p-2 mb-2">
@@ -82,7 +85,8 @@
 		   	}
       		%>      	
 	  	</td>
-	  	<td><% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %></td>
+	  	<td><% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %>
+	        (<%=bulk.getPg_progetto()%>)</td>
 	  </tr>
 
 	  <% if (!isFlNuovoPdg) {%>
@@ -158,34 +162,71 @@
 	  </tr>	  
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "tipoFinanziamentoOf"); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipoFinanziamentoOf",bp.isROProgettoForStato(),null,null); %></td>
 	  </tr>	  
       <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "dtInizioOf"); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","dtInizioOf",bp.isRODatiContabili(),null,null); %></td>
 	  </tr>
 	  <% } %>	  
       <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent() ||
     		  Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField())).map(Progetto_other_fieldBulk::isStatoChiuso).orElse(Boolean.FALSE)) { %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dtFineOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "dtFineOf"); %></td>
+	  	<td><% bp.getController().writeFormInput(out, "default","dtFineOf",bp.isRODatiContabili(),null,null); %></td>
       <% if (Optional.ofNullable(bulk).filter(ProgettoBulk::isDatePianoEconomicoRequired).isPresent()) { %>
 	  	<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "dtProrogaOf"); %></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtProrogaOf",bp.isRODatiContabili(),null,null); %></td>	  
 	  <% } %> 
 	  </tr>
 	  <% } %> 
 	  <tr>
-	  	<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "imFinanziatoOf"); %></td>
-	  	<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
-	  	<td><% bp.getController().writeFormInput( out, "imCofinanziatoOf"); %></td>
+		<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
+		<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",bp.isRODatiContabili(),null,null); %></td>	  
 	  </tr>
      </table>
 	 </div>
-	 <% } %> 
+    <% if (isUoEnte ||
+    		Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField()))
+    		.filter(other->Optional.ofNullable(other.getImFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtInizioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtFineFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtRilascioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtSvincoloFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getImSvincolatoFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getIdEsternoFideiussione()).isPresent())
+    		.isPresent()) { %>
+    <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Fideiussione</div>
+	 <div class="Group">
+     <table class="Panel card border-info p-2">
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"imFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imFideiussioneOf",!isUoEnte,null,null); %></td>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtInizioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtInizioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"dtFineFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtFineFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtRilascioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtRilascioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"idEsternoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","idEsternoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtSvincoloFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtSvincoloFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"imSvincolatoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imSvincolatoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>	  
+     </table>
+	</div>
+	<% } %> 	 
+	<% } %> 
 <% } else { %>
      <div class="GroupLabel">
        	<% if (isFlNuovoPdg) {
@@ -206,7 +247,9 @@
 					   }
 			      	%>      	
 				</td>
-				<td colspan="3"><% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %></td>
+				<td colspan="3">
+					<% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %>
+			  	</td>
 	  		</tr>
 		    <% if (!(bp instanceof TestataProgettiRicercaNuovoBP)){%>
 	  		<tr>
@@ -262,22 +305,67 @@
 		<tr>
 		  	<td colspan="4">
 		  		<table>
-		  			<tr><% bp.getController().writeFormField( out, "tipoFinanziamentoOf"); %></tr>
+		  			<tr>
+						<td><% bp.getController().writeFormLabel(out,"tipoFinanziamentoOf");%></td>
+						<td><% bp.getController().writeFormInput( out, "default","tipoFinanziamentoOf",bp.isROProgettoForStato(),null,null); %></td>
+		  			</tr>
 		  		</table>
 		  	</td>
 		</tr>	  
 		<tr>
-		  	<% bp.getController().writeFormField(out,"dtInizioOf");%>
-		  	<% bp.getController().writeFormField(out,"dtFineOf");%>
+			<td><% bp.getController().writeFormLabel(out,"dtInizioOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","dtInizioOf",bp.isRODatiContabili(),null,null); %></td>
+			<td><% bp.getController().writeFormLabel(out,"dtFineOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","dtFineOf",bp.isRODatiContabili(),null,null); %></td>
 		</tr>
 		<tr>
-		  	<% bp.getController().writeFormField(out,"dtProrogaOf");%>
+			<td><% bp.getController().writeFormLabel(out,"dtProrogaOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","dtProrogaOf",bp.isRODatiContabili(),null,null); %></td>
 	  	</tr>
 		<tr>
-		  	<% bp.getController().writeFormField(out,"imFinanziatoOf");%>
-		  	<% bp.getController().writeFormField(out,"imCofinanziatoOf");%>
+			<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
+			<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
+			<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
 		</tr>
 	</table>
 	</div>
+    <% if (isUoEnte ||
+    		Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField()))
+    		.filter(other->Optional.ofNullable(other.getImFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtInizioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtFineFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtRilascioFideiussione()).isPresent()||
+    				Optional.ofNullable(other.getDtSvincoloFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getImSvincolatoFideiussione()).isPresent() ||
+					Optional.ofNullable(other.getIdEsternoFideiussione()).isPresent())
+    		.isPresent()) { %>
+    <div class="GroupLabel h3 text-primary" style="border-style: none; cursor:default; background-color:initial;">Fideiussione</div>
+	 <div class="Group">
+     <table class="Panel card border-info p-2">
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"imFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imFideiussioneOf",!isUoEnte,null,null); %></td>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtInizioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtInizioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"dtFineFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtFineFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtRilascioFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtRilascioFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"idEsternoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","idEsternoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>
+	  <tr>
+	  	<td><% bp.getController().writeFormLabel(out,"dtSvincoloFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","dtSvincoloFideiussioneOf",!isUoEnte,null,null); %></td>
+	  	<td><% bp.getController().writeFormLabel(out,"imSvincolatoFideiussioneOf");%></td>
+		<td><% bp.getController().writeFormInput( out, "default","imSvincolatoFideiussioneOf",!isUoEnte,null,null); %></td>
+	  </tr>	  
+     </table>
+	</div>
+	<% } %> 
 	<% } %>  
 <%}%>  

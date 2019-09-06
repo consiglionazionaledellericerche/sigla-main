@@ -24,6 +24,7 @@ import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
@@ -77,6 +78,7 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private V_persona_fisicaBulk direttore;
 	private CigBulk cig;
 	private CupBulk cup;
+	private ProgettoBulk progetto;
 	
 	private Boolean allegatoFlusso;
 	private String cdCupExt;
@@ -942,4 +944,23 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	public void setAllegatoFlusso(Boolean allegatoFlusso) {
 		this.allegatoFlusso = allegatoFlusso;
 	}
+	public ProgettoBulk getProgetto() {
+		return progetto;
+	}
+	public void setProgetto(ProgettoBulk progetto) {
+		this.progetto = progetto;
+	}
+    public java.lang.Integer getPg_progetto() {
+		return Optional.ofNullable(this.getProgetto()).map(ProgettoBulk::getPg_progetto)
+				.orElse(null);
+    }
+	public void setPg_progetto(java.lang.Integer progetto) {
+		if (!Optional.ofNullable(this.getProgetto()).isPresent())
+			this.setProgetto(new ProgettoBulk());
+		this.getProgetto().setPg_progetto(progetto);
+	}
+	
+	public boolean isROProgetto(){
+		return Boolean.FALSE;
+	}	
 }

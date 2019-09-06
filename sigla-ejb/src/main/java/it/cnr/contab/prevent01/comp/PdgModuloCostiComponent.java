@@ -118,8 +118,8 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 			testata.setTot_massa_spendibile_anno_in_corso(Utility.ZERO);
 			
 			ProgettoHome progettoHome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class);
-			List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(progettoHome.findDettagliPianoEconomico(usercontext,testata.getPg_progetto()));
-			testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
+			ProgettoBulk progetto = progettoHome.initializePianoEconomico(usercontext,new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA), true);
+			testata.setDettagliPianoEconomicoAnnoCorrente(progetto.getDettagliPianoEconomicoAnnoCorrente());
 			getHomeCache(usercontext).fetchAll(usercontext);			
 		}catch (IntrospectionException e) {
 			throw new ComponentException(e);
@@ -182,8 +182,8 @@ public class PdgModuloCostiComponent extends CRUDComponent {
 			}
 			
 			ProgettoHome progettoHome = (ProgettoHome)getHome(usercontext, ProgettoBulk.class);
-			List<Progetto_piano_economicoBulk> progettoPiano = new it.cnr.jada.bulk.BulkList(progettoHome.findDettagliPianoEconomico(usercontext,testata.getPg_progetto()));
-			testata.setDettagliPianoEconomicoAnnoCorrente(new it.cnr.jada.bulk.BulkList(progettoPiano.stream().filter(e->e.getEsercizio_piano().equals(testata.getEsercizio())).collect(Collectors.toList())));
+			ProgettoBulk progetto = progettoHome.initializePianoEconomico(usercontext,new ProgettoBulk(testata.getEsercizio(), testata.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA), true);
+			testata.setDettagliPianoEconomicoAnnoCorrente(progetto.getDettagliPianoEconomicoAnnoCorrente());
 			getHomeCache(usercontext).fetchAll(usercontext);
 			return testata;
 		} catch (IntrospectionException e) {

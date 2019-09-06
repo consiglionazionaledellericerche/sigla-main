@@ -17,28 +17,33 @@
 	            .map(amm -> "_amm")
 	            .orElse("");
 	boolean isKeyEditable = controller.getModel()!=null && controller.getModel().isNotNew();
+	boolean isROProgettoForStato = Optional.ofNullable(bp.getModel()).filter(ProgettoBulk.class::isInstance).map(ProgettoBulk.class::cast)
+			.map(ProgettoBulk::isROProgettoForStato).orElse(Boolean.FALSE);
 %>
 
-<%	controller.writeHTMLTable(pageContext,"piano_economico1",true,false,true,"100%","100px"); %>
+<%	controller.writeHTMLTable(pageContext,"piano_economico1",true,false,true,"100%","auto"); %>
 <table class="Panel card p-2 mt-1">
   <tr>
   	<td><% controller.writeFormLabel(out,"voce_piano");%></td>
   	<td colspan="3"><% controller.writeFormInput(out,null,"voce_piano" + fieldAmm,isKeyEditable,null,null);%></td>
   </tr>
   <tr>
-  	<% controller.writeFormField(out,"im_spesa_finanziato" + fieldAmm);%>
-  	<% controller.writeFormField(out,"im_spesa_cofinanziato" + fieldAmm);%>
+  	<TD><% controller.writeFormLabel(out,"im_spesa_finanziato");%></TD>
+  	<TD><% controller.writeFormInput(out,null,"im_spesa_finanziato" + fieldAmm,isROProgettoForStato,null,null);%></TD>
+  	<TD><% controller.writeFormLabel(out,"im_spesa_cofinanziato");%></TD>
+  	<TD><% controller.writeFormInput(out,null,"im_spesa_cofinanziato" + fieldAmm,isROProgettoForStato,null,null);%></TD> 
   	<% controller.writeFormField(out,"imTotaleSpesa");%>
   </tr>
 </table>
 </br>
 <fieldset class="fieldset">
 	<legend class="GroupLabel text-primary">Voci Bilancio Associate</legend>
-<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","100px"); %>
-	</br>
+<%	controllerVoci.writeHTMLTable(pageContext,"voce_bilancio",true,false,true,"100%","auto"); %>
+	</br></br>
 	<table class="Panel">
-	  <TR>
-	  	<% controllerVoci.writeFormField(out,"elemento_voce");%>
-	  </TR>
+	  <tr>
+	  	<TD><% controllerVoci.writeFormLabel(out,"elemento_voce");%></TD>
+	  	<TD><% controllerVoci.writeFormInput(out,"elemento_voce");%></TD>
+	  </tr>	
 	</table>	
 </fieldset>

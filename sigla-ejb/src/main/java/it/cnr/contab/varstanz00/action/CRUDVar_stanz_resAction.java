@@ -15,6 +15,7 @@ import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resBP;
 import it.cnr.contab.varstanz00.bp.CRUDVar_stanz_resRigaBP;
 import it.cnr.contab.varstanz00.bp.SelezionatoreAssestatoResiduoBP;
@@ -312,6 +313,7 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 			return handleException(context, ex);
 		}			
 	}
+
 	public Forward doOnChangeTipologia(ActionContext context) {
 		CRUDVar_stanz_resBP testataBP = (CRUDVar_stanz_resBP)getBusinessProcess(context);
 		Var_stanz_resBulk var_stanz_res = (Var_stanz_resBulk)testataBP.getModel();
@@ -331,4 +333,31 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 			return handleException(context,e);
 		}		
 	}
+
+	public Forward doBlankSearchFindProgettoRimodulato(ActionContext context, Var_stanz_resBulk variazione) {
+		try {
+			fillModel(context);
+			variazione.setProgettoRimodulatoForSearch(new ProgettoBulk());
+			variazione.setProgettoRimodulazione(null);
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}			
+	}
+
+	public Forward doBringBackSearchFindProgettoRimodulato(ActionContext context, Var_stanz_resBulk variazione, ProgettoBulk progetto) {
+		try {
+			fillModel(context);
+			CRUDVar_stanz_resBP bp = (CRUDVar_stanz_resBP)getBusinessProcess(context);
+			variazione.setProgettoRimodulatoForSearch(progetto);
+			bp.findAndSetRimodulazione(context, progetto);
+			return context.findDefaultForward();
+		}catch(java.lang.ClassCastException ex){
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}			
+	}	
 }

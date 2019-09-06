@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="pg_rimodulazione"
+		property="pg_rimodulazione"
+		label="Versione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="pg_gen_rimodulazione"
+		property="pg_gen_rimodulazione"
+		label="Rimodulazione"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true" />
+	<fieldProperty
+		name="find_progetto"
+		property="progetto"
+		inputType="SEARCHTOOL"
+		label="Progetto"
+		formName="form_searchtool_progetto"
+		freeSearchSet="filtro_ricerca_prog2"
+    	columnSet="filtro_ricerca_prog2"
+		enabledOnInsert="true"
+      	enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="cd_progetto"
+		property="progetto.cd_progetto"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="progetto.ds_progetto"
+		maxLength="400"
+		inputType="TEXTAREA"
+		cols="80"
+		rows="3" 
+		label="Descrizione" />
+	<fieldProperty
+		name="unita_organizzativa_progetto"
+		property="progetto.unita_organizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnFreeSearch="true"
+		label="UO Coordinatrice" />	
+	<fieldProperty
+		name="cd_unita_organizzativa_progetto"
+		property="progetto.unita_organizzativa.cd_unita_organizzativa"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="Codice Uo Coordinatrice" />		
+	<fieldProperty
+		name="statoOf"
+		property="progetto.statoPrg"
+		label="Stato"
+		inputType="SELECT"
+		keysProperty="statoOfKeys"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		inputSize="20"
+		maxLength="20"/>
+	<fieldProperty
+		name="tipoFinanziamentoOf"
+		property="progetto.otherField.tipoFinanziamento"
+		label="Tipo Finanziamento"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="false" />
+	<fieldProperty
+		name="dsTipoFinanziamentoOf"
+		property="progetto.otherField.tipoFinanziamento.descrizione"
+		inputType="ROTEXT"
+		label="Finanziamento" />
+	<fieldProperty
+		name="dtInizioOf"
+		property="progetto.otherField.dtInizio"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Inizio" />
+	<fieldProperty
+		name="dtFineOf"
+		property="progetto.otherField.dtFine"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Fine" />
+	<fieldProperty
+		name="dtProrogaOf"
+		property="progetto.otherField.dtProroga"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Proroga" />
+	<fieldProperty
+		name="imFinanziatoOf"
+		property="progetto.otherField.imFinanziato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Finanziato" />
+	<fieldProperty
+		name="imCofinanziatoOf"
+		property="progetto.otherField.imCofinanziato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Cofinanziato" />
+
+	<fieldProperty
+		name="stato"
+		property="stato"
+		keysProperty="statoKeys"
+		label="Stato"
+		inputType="SELECT"
+		maxLength="1"
+		inputSize="2"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="statoRadio"
+		property="stato"
+		inputType="RADIOGROUP"
+		layout="HORIZONTAL"
+		keysProperty="statoKeys"
+		label="Visualizza rimodulazioni in stato" />			
+	<fieldProperty
+		name="dtInizioRimodulato"
+		property="dtInizioRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="ROTEXT"
+		formatName="date_short"
+		command="doOnDtInizioRimodulatoChange"
+		label="Data Inizio" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />		
+	<fieldProperty
+		name="dtInizioRimodulatoModificato"
+		property="dtInizioRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="ROTEXT"
+		formatName="date_short"
+		command="doOnDtInizioRimodulatoChange"
+		label="Data Inizio" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="dtFineRimodulato"
+		property="dtFineRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="ROTEXT"
+		formatName="date_short"
+		command="doOnDtFineRimodulatoChange"
+		label="Data Fine" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="dtFineRimodulatoModificato"
+		property="dtFineRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="ROTEXT"
+		formatName="date_short"
+		command="doOnDtFineRimodulatoChange"
+		label="Data Fine" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="dtProrogaRimodulato"
+		property="dtProrogaRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtProrogaRimodulatoChange"
+		label="Data Proroga" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="dtProrogaRimodulatoModificato"
+		property="dtProrogaRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="TEXT"
+		formatName="date_short"
+		command="doOnDtProrogaRimodulatoChange"
+		label="Data Proroga" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imFinanziatoRimodulato"
+		property="imFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doDefault"
+		label="Importo Finanziato" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imFinanziatoRimodulatoModificato"
+		property="imFinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doDefault"
+		label="Importo Finanziato" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imCofinanziatoRimodulato"
+		property="imCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doDefault"
+		label="Importo Cofinanziato" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imCofinanziatoRimodulatoModificato"
+		property="imCofinanziatoRimodulato"
+		readonlyProperty="ROFieldRimodulazione"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doDefault"
+		label="Importo Cofinanziato" 
+		labelStyle="font-style: italic;font-weight: bold;"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imTotaleRimodulato"
+		property="imTotaleRimodulato"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale Rimodulato" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imFinanziatoRimodulatoRipartito"
+		property="imFinanziatoRimodulatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Finanziato Ripartito" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imCofinanziatoRimodulatoRipartito"
+		property="imCofinanziatoRimodulatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Cofinanziato Ripartito" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imTotaleRimodulatoRipartito"
+		property="imTotaleRimodulatoRipartito"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale Rimodulato Ripartito" 
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imFinanziatoRimodulatoDaRipartire"
+		property="imFinanziatoRimodulatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Finanziato Rimodulato da Ripartire"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imCofinanziatoRimodulatoDaRipartire"
+		property="imCofinanziatoRimodulatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Cofinanziato Rimodulato da Ripartire"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="imTotaleRimodulatoDaRipartire"
+		property="imTotaleRimodulatoDaRipartire"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Importo Totale Rimodulato da Ripartire"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="flViewCurrent"
+		property="flViewCurrent"
+		inputType="CHECKBOX"
+		command="doDefault"
+		enabledOnView="true"
+		label="Visualizza Quote Correnti" />
+		
+	<formFieldProperty name="pg_rimodulazione" />
+	<formFieldProperty name="pg_gen_rimodulazione" />
+	<formFieldProperty name="find_progetto" />
+	<formFieldProperty name="cd_progetto" />
+	<formFieldProperty name="ds_progetto" />
+	<formFieldProperty name="unita_organizzativa_progetto" />
+	<formFieldProperty name="cd_unita_organizzativa_progetto" />
+	<formFieldProperty name="stato" />
+	<formFieldProperty name="statoRadio" />
+	<formFieldProperty name="dtInizioRimodulato" />
+	<formFieldProperty name="dtFineRimodulato" />
+	<formFieldProperty name="dtProrogaRimodulato" />
+	<formFieldProperty name="imFinanziatoRimodulato" />
+	<formFieldProperty name="imCofinanziatoRimodulato" />
+	<formFieldProperty name="dtInizioRimodulatoModificato" />
+	<formFieldProperty name="dtFineRimodulatoModificato" />
+	<formFieldProperty name="dtProrogaRimodulatoModificato" />
+	<formFieldProperty name="imFinanziatoRimodulatoModificato" />
+	<formFieldProperty name="imCofinanziatoRimodulatoModificato" />
+	<formFieldProperty name="imTotaleRimodulato" />
+	<formFieldProperty name="imFinanziatoRimodulatoRipartito" />
+	<formFieldProperty name="imCofinanziatoRimodulatoRipartito" />
+	<formFieldProperty name="imTotaleRimodulatoRipartito" />
+	<formFieldProperty name="imFinanziatoRimodulatoDaRipartire" />
+	<formFieldProperty name="imCofinanziatoRimodulatoDaRipartire" />
+	<formFieldProperty name="imTotaleRimodulatoDaRipartire" />
+	<formFieldProperty name="flViewCurrent" />
+		
+	<formFieldProperty
+		name="statoOf" />
+	<formFieldProperty
+		name="tipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dsTipoFinanziamentoOf" />
+	<formFieldProperty
+		name="dtInizioOf" />
+	<formFieldProperty
+		name="dtFineOf" />
+	<formFieldProperty
+		name="dtProrogaOf" />
+	<formFieldProperty
+		name="imFinanziatoOf" />
+	<formFieldProperty
+		name="imCofinanziatoOf" />
+
+	<columnFieldProperty name="cd_unita_organizzativa_progetto" />
+	<columnFieldProperty name="cd_progetto" />
+	<columnFieldProperty name="ds_progetto" />
+	<columnFieldProperty name="pg_rimodulazione" />
+	<columnFieldProperty name="pg_gen_rimodulazione" />
+	<columnFieldProperty name="stato" />
+
+	<findFieldProperty name="cd_unita_organizzativa_progetto" />
+	<findFieldProperty name="cd_progetto" />
+	<findFieldProperty name="ds_progetto" />
+	<findFieldProperty name="pg_rimodulazione" />
+	<findFieldProperty name="pg_gen_rimodulazione" />
+	<findFieldProperty name="stato" />
+</bulkInfo>

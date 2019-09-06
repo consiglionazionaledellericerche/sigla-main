@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_RIMODULAZIONE" >
+		<columnMapping
+			columnName="PG_PROGETTO"
+			propertyName="progetto.pg_progetto"
+			fetchOnly="false" />		
+	</defaultColumnMap>
+	
+	<persistentProperty
+		name="progetto" 
+		partOfOid= "true"/>	
+</SQLPersistentInfo>

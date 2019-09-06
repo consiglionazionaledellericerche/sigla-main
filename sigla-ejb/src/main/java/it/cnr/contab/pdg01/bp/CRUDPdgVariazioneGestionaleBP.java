@@ -1,28 +1,23 @@
 package it.cnr.contab.pdg01.bp;
 
-import java.rmi.RemoteException;
-
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
-import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
-import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
-import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
-import it.cnr.contab.varstanz00.ejb.VariazioniStanziamentoResiduoComponentSession;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.jsp.Button;
 
 /**
  * Business Process per la gestione della testata delle variazioni al PDG
  */
-
 public class CRUDPdgVariazioneGestionaleBP extends it.cnr.contab.pdg00.bp.PdGVariazioneBP {
+	private Progetto_rimodulazioneBulk mainProgettoRimodulazione;
+
 	public CRUDPdgVariazioneGestionaleBP() {
 		super();
 	}
@@ -31,6 +26,11 @@ public class CRUDPdgVariazioneGestionaleBP extends it.cnr.contab.pdg00.bp.PdGVar
 		super(function);
 	}
 
+    public CRUDPdgVariazioneGestionaleBP(String function, Progetto_rimodulazioneBulk rimodulazione) {
+		super(function);
+		setMainProgettoRimodulazione(rimodulazione);
+    }
+    
 	protected void validaAccessoBP(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.comp.ApplicationException, it.cnr.jada.action.BusinessProcessException {
 		try	{
 			if(!isUoEnte() && !isUoArea()) {
@@ -98,5 +98,20 @@ public class CRUDPdgVariazioneGestionaleBP extends it.cnr.contab.pdg00.bp.PdGVar
 	public boolean isAssestatoSpeseButtonHidden() {
 		return isAssestatoButtonHidden() || 
 			   !((Pdg_variazioneBulk)getModel()).isGestioneSpeseEnable();
+	}
+	
+	public Progetto_rimodulazioneBulk getMainProgettoRimodulazione() {
+		return mainProgettoRimodulazione;
+	}
+	
+	private void setMainProgettoRimodulazione(Progetto_rimodulazioneBulk mainProgettoRimodulazione) {
+		this.mainProgettoRimodulazione = mainProgettoRimodulazione;
+	}
+	
+	@Override
+	public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+		Pdg_variazioneBulk pdgVariazione = (Pdg_variazioneBulk)super.initializeModelForInsert(actioncontext, oggettobulk);
+		pdgVariazione.setProgettoRimodulazione(getMainProgettoRimodulazione());
+		return pdgVariazione;
 	}
 }
