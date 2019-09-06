@@ -102,10 +102,7 @@
 	<%	if (bp.getParametriCnr().getFl_nuovo_pdg().booleanValue()) { %> 
 	<tr>   
 		<% bp.getRigheVariazioneGestionale().writeFormField(out,"missione");%>
-		<td colspan="2">
-			<% bp.getRigheVariazioneGestionale().writeFormLabel(out,"programma");%>
-			<% bp.getRigheVariazioneGestionale().writeFormInput(out,"programma");%>
-		</td>
+		<% bp.getRigheVariazioneGestionale().writeFormField(out,"programma");%>
 	</tr>
 	<% } %>
 	<tr> 

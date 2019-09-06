@@ -98,6 +98,12 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// CD_VOCE_PIANO VARCHAR(10) NOT NULL
 	private java.lang.String cd_voce_piano;
 
+	// GG_DEROGA_OBBL_COMP_PRG_SCAD INTEGER
+	private java.lang.Integer gg_deroga_obbl_comp_prg_scad;
+	
+	// GG_DEROGA_OBBL_RES_PRG_SCAD INTEGER
+	private java.lang.Integer gg_deroga_obbl_res_prg_scad;
+
 public Elemento_voceBase() {
 	super();
 }
@@ -453,5 +459,21 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	
 	public void setCd_voce_piano(java.lang.String cd_voce_piano) {
 		this.cd_voce_piano = cd_voce_piano;
+	}
+	
+	public java.lang.Integer getGg_deroga_obbl_comp_prg_scad() {
+		return gg_deroga_obbl_comp_prg_scad;
+	}
+	
+	public void setGg_deroga_obbl_comp_prg_scad(java.lang.Integer gg_deroga_obbl_comp_prg_scad) {
+		this.gg_deroga_obbl_comp_prg_scad = gg_deroga_obbl_comp_prg_scad;
+	}
+	
+	public java.lang.Integer getGg_deroga_obbl_res_prg_scad() {
+		return gg_deroga_obbl_res_prg_scad;
+	}
+	
+	public void setGg_deroga_obbl_res_prg_scad(java.lang.Integer gg_deroga_obbl_res_prg_scad) {
+		this.gg_deroga_obbl_res_prg_scad = gg_deroga_obbl_res_prg_scad;
 	}
 }

@@ -341,6 +341,10 @@ public class Unita_organizzativaBulk extends Unita_organizzativaBase {
 	public boolean isUoEnte() {
 		return Tipo_unita_organizzativaHome.TIPO_UO_ENTE.equals(getCd_tipo_unita());
 	}
+
+	public boolean isUoSAC() {
+		return Tipo_unita_organizzativaHome.TIPO_UO_SAC.equals(getCd_tipo_unita());
+	}
 	
 	/**
 	 * <!-- @TODO: da completare -->

@@ -1,6 +1,7 @@
 package it.cnr.contab.pdg00.ejb;
 
-import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
+import javax.ejb.Remote;
+
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
@@ -9,8 +10,6 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
-
-import javax.ejb.Remote;
 
 @Remote
 public interface PdGVariazioniComponentSession extends it.cnr.jada.ejb.CRUDComponentSession, it.cnr.jada.ejb.PrintComponentSession {

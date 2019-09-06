@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeBase"
+	keyClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeKey"
+	homeClassName="it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_ppeHome" >
+	<defaultColumnMap
+		tableName="PROGETTO_RIMODULAZIONE_PPE" >
+		<columnMapping
+			columnName="IM_VAR_ENTRATA"
+			propertyName="imVarEntrata"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_VAR_SPESA_FINANZIATO"
+			propertyName="imVarSpesaFinanziato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_VAR_SPESA_COFINANZIATO"
+			propertyName="imVarSpesaCofinanziato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_STOASS_SPESA_FINANZIATO"
+			propertyName="imStoassSpesaFinanziato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="IM_STOASS_SPESA_COFINANZIATO"
+			propertyName="imStoassSpesaCofinanziato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="imVarEntrata" />
+	<persistentProperty
+		name="imVarSpesaFinanziato" />
+	<persistentProperty
+		name="imVarSpesaCofinanziato" />
+	<persistentProperty
+		name="imStoassSpesaFinanziato" />
+	<persistentProperty
+		name="imStoassSpesaCofinanziato" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

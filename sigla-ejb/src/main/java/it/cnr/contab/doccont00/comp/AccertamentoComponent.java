@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
+import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 
@@ -99,6 +100,8 @@ import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -118,6 +121,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
@@ -1183,7 +1187,8 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	bulk = super.creaConBulk( uc, bulk );
 
 	verificaCoperturaContratto( uc, (AccertamentoBulk) bulk );
-
+	verificaCoerenzaGaeContratto( uc, (AccertamentoBulk) bulk );
+	
 	if ( !uc.isTransactional() )
 		aggiornaCapitoloSaldoAccertamento( uc, (AccertamentoBulk) bulk, INSERIMENTO );
 
@@ -2356,26 +2361,12 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 	generaDettagliScadenzaAccertamento( aUC, (AccertamentoBulk) bulk, null );
 	verificaAccertamento( aUC, (AccertamentoBulk) bulk );
 
-/*
- * Raffaele Pagano: controllo eliminato a seguito di nuova gestione residui che prevede la non possibilità
- * 					di modificare sia l'importo che la voce dei residui
- */
-/*	try
-	{
-		//	segnalo impossibilità di modificare un residuo se l'esercizio precedente è ancora aperto
-		if ( ((AccertamentoBulk) bulk).getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_ACR_RES))
-			verificaStatoEsercizioEsPrecedente( aUC, ((AccertamentoBulk) bulk).getEsercizio(), ((AccertamentoBulk) bulk).getCd_cds());
-	}
-	catch (Exception e )
-	{
-		throw handleException( e );
-	}
-*/
-
 	bulk =  super.modificaConBulk( aUC, bulk );
 
 	verificaCoperturaContratto( aUC, (AccertamentoBulk) bulk );
-   if ( !aUC.isTransactional() )
+	verificaCoerenzaGaeContratto( aUC, (AccertamentoBulk) bulk );
+
+	if ( !aUC.isTransactional() )
    {
   		aggiornaCapitoloSaldoAccertamento( aUC, (AccertamentoBulk) bulk, MODIFICA );
 		aggiornaStatoCOAN_COGEDocAmm( aUC, (AccertamentoBulk) bulk );
@@ -3323,6 +3314,38 @@ public void verificaCoperturaContratto (UserContext aUC,AccertamentoBulk accerta
 		  throw new it.cnr.jada.comp.ComponentException(e1);
 	  }
   }
+}
+
+public void verificaCoerenzaGaeContratto(UserContext aUC,AccertamentoBulk accertamento) throws ComponentException {
+	try {
+		Optional<Integer> optPrgContratto = Optional.ofNullable(accertamento)
+				.flatMap(el->Optional.ofNullable(el.getContratto()))
+				.flatMap(el->Optional.ofNullable(el.getPg_progetto()));
+		
+		if (optPrgContratto.isPresent()) {
+			ProgettoHome progettoHome = (ProgettoHome)getHome(aUC, ProgettoBulk.class);
+			WorkpackageHome home = (WorkpackageHome)getHome(aUC, WorkpackageBulk.class);
+			accertamento.getAccertamento_scadenzarioColl().stream()
+				.flatMap(el->Optional.ofNullable(el.getAccertamento_scad_voceColl()).map(List::stream).orElse(Stream.empty()))
+				.map(el->el.getLinea_attivita())
+				.distinct()
+				.forEach(el->{
+					try {
+						WorkpackageBulk lineaAttivita = home.searchGAECompleta(aUC, accertamento.getEsercizio(), el.getCd_centro_responsabilita(), el.getCd_linea_attivita());
+						if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
+							ProgettoBulk prgContratto = (ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(accertamento.getEsercizio(), optPrgContratto.get(), ProgettoBulk.TIPO_FASE_NON_DEFINITA));
+							throw new ApplicationRuntimeException("Linea di Attività "+el.getCd_linea_attivita()+" del CDR "+el.getCd_centro_responsabilita()+
+									" non selezionabile in quanto appartenente al progetto "+lineaAttivita.getCd_progetto()+" diverso dal progetto " +
+									prgContratto.getCd_progetto()+" del contratto associato all'accertamento.");
+						}
+					} catch (ComponentException|PersistencyException e) {
+						throw new ApplicationRuntimeException(e);
+					}
+				});
+		}
+	} catch (Throwable e) {
+		throw handleException(e);
+	}
 }
 
 /**

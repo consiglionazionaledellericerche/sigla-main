@@ -137,6 +137,9 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	private String codfisPivaAggiudicatarioExt;
 	private String codiceFlussoAcquisti;
 
+	// PG_PROGETTO DECIMAL(10,0) NOT NULL
+	private java.lang.Integer pg_progetto;
+	
 	public ContrattoBase() {
 		super();
 	}
@@ -563,5 +566,12 @@ public class ContrattoBase extends ContrattoKey implements Keyed {
 	}
 	public void setCodiceFlussoAcquisti(String codiceFlussoAcquisti) {
 		this.codiceFlussoAcquisti = codiceFlussoAcquisti;
+	}
+	
+	public java.lang.Integer getPg_progetto() {
+		return pg_progetto;
+	}
+	public void setPg_progetto(java.lang.Integer pg_progetto) {
+		this.pg_progetto = pg_progetto;
 	}
 }

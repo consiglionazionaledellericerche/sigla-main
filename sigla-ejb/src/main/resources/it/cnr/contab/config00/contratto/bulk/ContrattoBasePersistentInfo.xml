@@ -224,6 +224,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="50"
 			nullable="true" />
+		<columnMapping 
+			columnName="PG_PROGETTO" 
+			propertyName="pg_progetto" 
+			sqlTypeName="DECIMAL" 
+			columnSize="10" 
+			nullable="true"/>
 	</defaultColumnMap>
 	
         <persistentProperty
@@ -299,4 +305,6 @@
                 name="codfisPivaAggiudicatarioExt"/>
  		 <persistentProperty
                 name="codiceFlussoAcquisti"/>                                   
+ 		 <persistentProperty
+                name="pg_progetto"/> 
 </SQLPersistentInfo>
