@@ -15,6 +15,9 @@
 	boolean isROFieldInformix = !bp.isSearching()&&isFlInformix;
 	boolean isUoEnte = Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent();
 	ProgettoBulk bulk = (ProgettoBulk)bp.getModel();
+	boolean isROImporti = Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField()))
+			.map(el->el.isStatoAnnullato()||el.isStatoChiuso()||(el.isStatoApprovato() && el.isPianoEconomicoRequired()))
+			.orElse(Boolean.FALSE);
 %>
 <% if (bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT || bp.getStatus() == bp.VIEW) {%>
      <div class="GroupLabel">
@@ -183,9 +186,9 @@
 	  <% } %> 
 	  <tr>
 		<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
-		<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
+		<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",isROImporti,null,null); %></td>
 		<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
-		<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",bp.isRODatiContabili(),null,null); %></td>	  
+		<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",isROImporti,null,null); %></td>	  
 	  </tr>
      </table>
 	 </div>
@@ -324,9 +327,9 @@
 	  	</tr>
 		<tr>
 			<td><% bp.getController().writeFormLabel(out,"imFinanziatoOf");%></td>
-			<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
+			<td><% bp.getController().writeFormInput( out, "default","imFinanziatoOf",isROImporti,null,null); %></td>
 			<td><% bp.getController().writeFormLabel(out,"imCofinanziatoOf");%></td>
-			<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",bp.isRODatiContabili(),null,null); %></td>
+			<td><% bp.getController().writeFormInput( out, "default","imCofinanziatoOf",isROImporti,null,null); %></td>
 		</tr>
 	</table>
 	</div>
