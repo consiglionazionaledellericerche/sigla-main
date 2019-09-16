@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="fattura_attiva_provvisoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4bb7c89d-e7c1-4040-8fca-6e403eb37b53">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="4"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="552"/>
 	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
 	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNRC8" fontName="Times New Roman" fontSize="8" isItalic="true" pdfFontName="Times-Italic"/>
@@ -36,9 +36,10 @@
 	<queryString>
 		<![CDATA[select distinct ter.denominazione_sede as ds_cd_terzo, ter2.denominazione_sede as ds_cd_uo_origine, uo.*, fa.*, frg.*,
 vi.cd_voce_iva, vi.ds_voce_iva, rmp.ds_modalita_pag as ds_modalita_pag_uo_cds, rmp.ti_pagamento,
-AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split, decode(anag.ti_entita,'F','Codice Fiscale: '||anag.codice_fiscale,decode(anag.partita_iva,null,'Codice Fiscale: '||anag.codice_fiscale,'Partita IVA: '||anag.partita_iva)) codfis_piva, ter.via_sede||' '||ter.cap_comune_sede||' '||com.ds_comune indirizzo, ter2.via_sede||','||ter2.numero_civico_sede||' -  '||ter2.cap_comune_sede||' '||com2.ds_comune||', '||com2.cd_provincia indirizzo_cds_uo,  'Codice Fiscale '|| anag2.codice_fiscale||' - Partita IVA '||anag2.partita_iva dati_fiscali_cds_uo
+AC.ESERCIZIO_CONTRATTO, AC.PG_CONTRATTO, CO.CD_CIG_fattura_attiva, CO.CD_CUP,decode(Cnr.dt01-fa.dt_registrazione,abs(Cnr.dt01-fa.dt_registrazione),'N',fl_liquidazione_differita) split, decode(anag.ti_entita,'F','Codice Fiscale: '||anag.codice_fiscale,decode(anag.partita_iva,null,'Codice Fiscale: '||anag.codice_fiscale,'Partita IVA: '||anag.partita_iva)) codfis_piva, ter.via_sede||' '||ter.cap_comune_sede||' '||com.ds_comune indirizzo, ter2.via_sede||','||ter2.numero_civico_sede||' -  '||ter2.cap_comune_sede||' '||com2.ds_comune||', '||com2.cd_provincia indirizzo_cds_uo,  'Codice Fiscale '|| anag2.codice_fiscale||' - Partita IVA '||anag2.partita_iva dati_fiscali_cds_uo, decode(fa.protocollo_iva, null, null, replace(fa.cd_uo_origine, '.', '')||fa.esercizio||lpad(substr(fa.cd_tipo_sezionale,3,4),4,'0')||
+fa.Ti_fattura||lpad(fa.protocollo_iva,5,'0')) numero_fattura, cnr_ass.VAL01 motivo_assolvimento, (select count(0) from fattura_attiva_riga R, BENE_SERVIZIO B where Fa.ESERCIZIO = R.ESERCIZIO AND Fa.CD_CDS = R.CD_CDS AND Fa.CD_UNITA_ORGANIZZATIVA = R.CD_UNITA_ORGANIZZATIVA AND Fa.PG_FATTURA_ATTIVA = R.PG_FATTURA_ATTIVA AND R.CD_BENE_SERVIZIO = B.CD_BENE_SERVIZIO AND B.FL_BOLLO = 'Y') CONTA_ESISTE_BOLLO
 from fattura_attiva fa, terzo ter, terzo ter2, unita_organizzativa uo, fattura_attiva_riga frg, voce_iva vi,
-rif_modalita_pagamento rmp, accertamento ac, contratto co,configurazione_cnr cnr, anagrafico anag, comune com, comune com2, anagrafico anag2
+rif_modalita_pagamento rmp, accertamento ac, contratto co,configurazione_cnr cnr, anagrafico anag, comune com, comune com2, anagrafico anag2, configurazione_cnr cnr_ass
 where fa.esercizio = $P{esercizio}
 and fa.cd_uo_origine =  $P{cd_uo_origine}
 and fa.pg_fattura_attiva =  $P{pg_fattura}
@@ -65,7 +66,11 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
  and Cnr.ESERCIZIO = 0
   and Cnr.cd_chiave_primaria = 'SPLIT_PAYMENT'
   AND Cnr.cd_chiave_secondaria = 'ATTIVA'
-  AND Cnr.cd_unita_funzionale = '*']]>
+  AND Cnr.cd_unita_funzionale = '*'
+  and fa.esercizio = Cnr_ass.ESERCIZIO(+)
+  and 'BOLLO_VIRTUALE' = Cnr_ass.cd_chiave_primaria(+)
+  AND 'ANNOTAZIONE_ASSOLVIMENTO' = Cnr_ass.cd_chiave_secondaria(+)
+  AND '*' = Cnr_ass.cd_unita_funzionale (+)]]>
 	</queryString>
 	<field name="DS_CD_TERZO" class="java.lang.String"/>
 	<field name="DS_CD_UO_ORIGINE" class="java.lang.String"/>
@@ -197,6 +202,9 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 	<field name="INDIRIZZO" class="java.lang.String"/>
 	<field name="INDIRIZZO_CDS_UO" class="java.lang.String"/>
 	<field name="DATI_FISCALI_CDS_UO" class="java.lang.String"/>
+	<field name="NUMERO_FATTURA" class="java.lang.String"/>
+	<field name="MOTIVO_ASSOLVIMENTO" class="java.lang.String"/>
+	<field name="CONTA_ESISTE_BOLLO" class="java.math.BigDecimal"/>
 	<group name="Numero_Fattura">
 		<groupExpression><![CDATA[$F{PG_FATTURA_ATTIVA}]]></groupExpression>
 		<groupHeader>
@@ -244,11 +252,11 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<reportElement x="1" y="210" width="554" height="1" uuid="7834a03d-1664-41ba-9a2c-94bd1224906d"/>
 				</line>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="140" width="156" height="14" isRemoveLineWhenBlank="true" uuid="40d0d305-1648-4143-b063-c8ed2080eb1d"/>
-					<textFieldExpression><![CDATA[$F{PROTOCOLLO_IVA}]]></textFieldExpression>
+					<reportElement style="TNR10" x="110" y="140" width="176" height="14" isRemoveLineWhenBlank="true" uuid="40d0d305-1648-4143-b063-c8ed2080eb1d"/>
+					<textFieldExpression><![CDATA[$F{NUMERO_FATTURA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="156" width="156" height="14" isRemoveLineWhenBlank="true" uuid="8775c333-8934-4a36-8dbc-b7f3fc643722"/>
+					<reportElement style="TNR10" x="110" y="156" width="176" height="14" isRemoveLineWhenBlank="true" uuid="8775c333-8934-4a36-8dbc-b7f3fc643722"/>
 					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DT_EMISSIONE})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
@@ -333,7 +341,7 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="113">
+			<band height="125">
 				<staticText>
 					<reportElement style="TNRGC12" x="3" y="18" width="100" height="15" uuid="cf9d8963-7295-4c2d-875a-618f0e960070"/>
 					<text><![CDATA[Totali]]></text>
@@ -347,7 +355,7 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<text><![CDATA[Totale IVA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="TNRG10" x="3" y="93" width="98" height="14" uuid="53f8064e-b140-4c87-9285-3aedc1f49d25"/>
+					<reportElement style="TNRG10" x="3" y="85" width="98" height="14" uuid="53f8064e-b140-4c87-9285-3aedc1f49d25"/>
 					<text><![CDATA[Totale Fattura:]]></text>
 				</staticText>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
@@ -356,7 +364,7 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<textFieldExpression><![CDATA[$F{IM_TOTALE_IVA}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00" isBlankWhenNull="true">
-					<reportElement style="TNR10" x="110" y="93" width="84" height="14" isRemoveLineWhenBlank="true" uuid="c68c5661-2768-4cd5-8ea7-257a7f63c7fe"/>
+					<reportElement style="TNR10" x="110" y="85" width="84" height="14" isRemoveLineWhenBlank="true" uuid="c68c5661-2768-4cd5-8ea7-257a7f63c7fe"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{IM_TOTALE_FATTURA}]]></textFieldExpression>
 				</textField>
@@ -372,10 +380,10 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<reportElement x="1" y="77" width="554" height="1" uuid="ba132823-8dcb-4d40-b5db-1d58db1584b2"/>
 				</line>
 				<line>
-					<reportElement x="1" y="89" width="554" height="1" uuid="4efd22a3-3fae-410a-a3a7-90dd1284e294"/>
+					<reportElement x="1" y="81" width="554" height="1" uuid="4efd22a3-3fae-410a-a3a7-90dd1284e294"/>
 				</line>
 				<line>
-					<reportElement x="1" y="110" width="554" height="1" uuid="260706f3-7413-4cd4-892a-8de37d4b48af"/>
+					<reportElement x="1" y="102" width="554" height="1" uuid="260706f3-7413-4cd4-892a-8de37d4b48af"/>
 				</line>
 				<line>
 					<reportElement x="555" y="41" width="1" height="36" uuid="b6a99d6d-31d9-4cbc-8e16-67e95cc387ca"/>
@@ -384,10 +392,10 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 					<reportElement x="0" y="41" width="1" height="36" uuid="06299089-3a07-420c-9685-0e94df4f328b"/>
 				</line>
 				<line>
-					<reportElement x="555" y="90" width="1" height="21" uuid="f913f998-ed78-4a6f-b318-7dfe3eed8508"/>
+					<reportElement x="555" y="82" width="1" height="21" uuid="f913f998-ed78-4a6f-b318-7dfe3eed8508"/>
 				</line>
 				<line>
-					<reportElement x="0" y="90" width="1" height="20" uuid="1b84f6a3-7a9f-41f4-91c1-4ae32adaff9e"/>
+					<reportElement x="0" y="82" width="1" height="20" uuid="1b84f6a3-7a9f-41f4-91c1-4ae32adaff9e"/>
 				</line>
 				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 					<reportElement key="textField-79" style="TNRG11" positionType="Float" x="200" y="59" width="131" height="14" uuid="a2046d8f-b51e-4854-a8c3-19cd35de073d"/>
@@ -398,6 +406,12 @@ and AC.STATO_CONTRATTO = CO.STATO(+)
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textFieldExpression><![CDATA[($F{SPLIT}.equals("Y"))?"Scissione dei pagamenti":""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+					<reportElement style="TNR10" positionType="Float" x="3" y="108" width="552" height="14" isRemoveLineWhenBlank="true" uuid="1c6d2120-64db-4306-bcc8-7d69c69639e1">
+						<printWhenExpression><![CDATA[$F{CONTA_ESISTE_BOLLO}.compareTo(BigDecimal.ZERO) > 0]]></printWhenExpression>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{MOTIVO_ASSOLVIMENTO}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
