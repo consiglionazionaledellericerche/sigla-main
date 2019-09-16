@@ -2214,13 +2214,17 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 							+ "del contratto.");
 				});
 
-				Optional<Timestamp> optDtProroga = Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtProroga()));
-				if (optDtProroga.isPresent()) {
-					if (!Optional.ofNullable(contrattoNew.getDt_proroga()).isPresent())
+				Optional<Timestamp> optDtProrogaPrg = Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtProroga()));
+				Optional<Timestamp> optDtProrogaCtr = Optional.ofNullable(contrattoNew.getDt_proroga());
+				if (optDtProrogaPrg.isPresent() || optDtProrogaCtr.isPresent()) {
+					if (optDtProrogaPrg.isPresent() && !optDtProrogaCtr.isPresent())
 						throw new ApplicationRuntimeException("Associazione progetto non possibile! "
 								+ "E' possibile associare un progetto prorogato solo se il contratto risulta anche esso prorogato!");
-					else 
-						optDtProroga
+					if (!optDtProrogaPrg.isPresent() && optDtProrogaCtr.isPresent())
+						throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "Essendo il contratto prorogato è possibile associare solo un progetto anche esso prorogato!");
+
+					optDtProrogaPrg
 						.filter(dt->dt.after(contrattoNew.getDt_fine_validita()) && !dt.after(contrattoNew.getDt_proroga()))
 						.ifPresent(dt->{
 							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
