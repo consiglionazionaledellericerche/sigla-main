@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto_detail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.6934217901613347"/>
+	<property name="ireport.x" value="45"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI9" fontName="Times New Roman" fontSize="9" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["084.000.000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Integer.valueOf(30264)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO_CONTRATTO" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new BigDecimal(2018)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_STATO_CONTRATTO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PG_CONTRATTO" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new BigDecimal(18942)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ORDINE_ESERCIZIO, ESERCIZIO_PIANO, CD_UNITA_ORGANIZZATIVA, cd_voce_piano, ds_voce_piano,
+ti_gestione, cd_elemento_voce, ds_elemento_voce
+from (select CASE
+               WHEN a.ESERCIZIO_PIANO = $P{P_ESERCIZIO}
+               THEN -10000
+               ELSE a.ESERCIZIO_PIANO - $P{P_ESERCIZIO}
+             END ORDINE_ESERCIZIO,
+             a.ESERCIZIO_PIANO, B.CD_UNITA_ORGANIZZATIVA, b.cd_voce_piano, b.ds_voce_piano,
+             c.ti_gestione, c.cd_elemento_voce, c.ds_elemento_voce
+      from ass_progetto_piaeco_voce a, voce_piano_economico_prg b, elemento_voce c
+      where A.CD_UNITA_ORGANIZZATIVA = B.CD_UNITA_ORGANIZZATIVA
+      and   A.CD_VOCE_PIANO = B.CD_VOCE_PIANO
+      and   A.ESERCIZIO_VOCE = C.ESERCIZIO
+      and   A.TI_APPARTENENZA = C.TI_APPARTENENZA
+      and   A.TI_GESTIONE = C.TI_GESTIONE
+      and   A.CD_ELEMENTO_VOCE = C.CD_ELEMENTO_VOCE
+      and   A.PG_PROGETTO = $P{P_PG_PROGETTO})
+order by ORDINE_ESERCIZIO
+]]>
+	</queryString>
+	<field name="ORDINE_ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO_PIANO" class="java.lang.Integer"/>
+	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="CD_VOCE_PIANO" class="java.lang.String"/>
+	<field name="DS_VOCE_PIANO" class="java.lang.String"/>
+	<field name="TI_GESTIONE" class="java.lang.String"/>
+	<field name="CD_ELEMENTO_VOCE" class="java.lang.String"/>
+	<field name="DS_ELEMENTO_VOCE" class="java.lang.String"/>
+	<group name="ESERCIZIO_PIANO">
+		<groupExpression><![CDATA[$F{ESERCIZIO_PIANO}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<textField>
+					<reportElement style="VERB8" x="17" y="1" width="809" height="15" uuid="f9c8217a-d56c-497f-a0f5-5509ac17ee30"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{ESERCIZIO_PIANO} + " - Esercizio " +
+($F{ESERCIZIO_PIANO}.compareTo($P{P_ESERCIZIO})==0?"di COMPETENZA":
+$F{ESERCIZIO_PIANO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="VOCE_ECONOMICA">
+		<groupExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}+$F{CD_VOCE_PIANO}]]></groupExpression>
+		<groupHeader>
+			<band height="18">
+				<textField>
+					<reportElement style="VERB8" x="105" y="1" width="721" height="15" uuid="9a980857-97c1-4230-a54d-5626865a06b6"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CD_VOCE_PIANO}+" - "+$F{DS_VOCE_PIANO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="VERB8" x="33" y="1" width="72" height="15" uuid="534e56c1-561b-47f3-afc1-61a0ed83f56e"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Voce Economica]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="18">
+			<staticText>
+				<reportElement style="VERB8" x="10" y="1" width="300" height="15" uuid="ef646348-29bd-4e0c-be25-219a657ddeaa"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Associazione Voci Economiche - Voce Finanziarie]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="17">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="VER8" x="47" y="1" width="779" height="15" uuid="3ac7599d-55fe-4ea5-a466-88a034c52280"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="1"/>
+	</pageFooter>
+</jasperReport>

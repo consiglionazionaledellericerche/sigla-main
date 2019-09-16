@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.5394743546921235"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="NORMAL" isDefault="true" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["G:/Sorgenti/Sigla/sigla-reports/img/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["999.000.000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Integer.valueOf(26910)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PRINT_DETAIL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_UO_ENTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT a.CD_PROGETTO, a.DS_PROGETTO, b.DT_INIZIO, b.DT_FINE, b.DT_PROROGA, b.stato,
+c.descrizione desc_finanziamento, c.fl_piano_eco_fin, a.cd_unita_organizzativa, d.ds_unita_organizzativa, b.im_finanziato, b.im_cofinanziato, e.totale_entrate,
+e.totale_reversali
+FROM PROGETTO a, PROGETTO_OTHER_FIELD b, TIPO_FINANZIAMENTO C, UNITA_ORGANIZZATIVA D,
+     (SELECT SUM(totale_entrate) totale_entrate, SUM(totale_reversali) totale_reversali
+      FROM V_CONTRATTI_TOTALI
+      WHERE PG_PROGETTO_CONTRATTO = $P{P_PG_PROGETTO}) e
+WHERE A.ESERCIZIO = $P{P_ESERCIZIO}
+AND A.PG_PROGETTO = $P{P_PG_PROGETTO}
+AND A.TIPO_FASE='X'
+AND B.PG_PROGETTO = A.PG_PROGETTO
+AND C.ID = B.ID_TIPO_FINANZIAMENTO
+AND D.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_ORGANIZZATIVA]]>
+	</queryString>
+	<field name="CD_PROGETTO" class="java.lang.String"/>
+	<field name="DS_PROGETTO" class="java.lang.String"/>
+	<field name="DT_INIZIO" class="java.sql.Timestamp"/>
+	<field name="DT_FINE" class="java.sql.Timestamp"/>
+	<field name="DT_PROROGA" class="java.sql.Timestamp"/>
+	<field name="STATO" class="java.lang.String"/>
+	<field name="DESC_FINANZIAMENTO" class="java.lang.String"/>
+	<field name="FL_PIANO_ECO_FIN" class="java.lang.String"/>
+	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="DS_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
+	<field name="IM_FINANZIATO" class="java.math.BigDecimal"/>
+	<field name="IM_COFINANZIATO" class="java.math.BigDecimal"/>
+	<field name="TOTALE_ENTRATE" class="java.math.BigDecimal"/>
+	<field name="TOTALE_REVERSALI" class="java.math.BigDecimal"/>
+	<pageHeader>
+		<band height="54">
+			<image scaleImage="RetainShape">
+				<reportElement key="image-1" mode="Transparent" x="0" y="0" width="400" height="36" uuid="a6c0e0c6-960d-450b-b2be-ebe6ce55b00a"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="VERB8" x="758" y="38" width="67" height="13" uuid="3d050614-9313-4481-b3bb-b87192d98ca6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STATO}.equals("APP")?"Approvato":
+$F{STATO}.equals("VAL")?"Validato":
+$F{STATO}.equals("RES")?"Respinto":
+$F{STATO}.equals("DEF")?"Definitivo":
+$F{STATO}.equals("PRP")?"Provvisorio":""]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="VERB10" x="576" y="38" width="182" height="13" uuid="db51019d-f557-43c6-b0a0-179006ac8cbd"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}+" - "+$F{DS_UNITA_ORGANIZZATIVA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="VERB10" x="48" y="38" width="431" height="13" uuid="209c4ca9-c7ad-424f-8612-5cfdaca8644d"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CD_PROGETTO}+" - id: "+$P{P_PG_PROGETTO}+" - "+$F{DS_PROGETTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="VERB10" x="1" y="38" width="48" height="13" uuid="cff1fd19-4a41-40fa-871d-d0b864b55915"/>
+				<text><![CDATA[Progetto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB10" x="479" y="38" width="97" height="13" uuid="974b6861-09c2-4d34-b3b2-62927c491a9f"/>
+				<text><![CDATA[Uo Coordinatrice:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="23">
+			<subreport>
+				<reportElement x="0" y="0" width="842" height="23" isPrintInFirstWholeBand="true" uuid="0cd2a161-c443-4e5b-bb29-4c7594984da5"/>
+				<subreportParameter name="P_TOTALE_REVERSALI">
+					<subreportParameterExpression><![CDATA[$F{TOTALE_REVERSALI}==null?BigDecimal.ZERO:$F{TOTALE_REVERSALI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DT_FINE">
+					<subreportParameterExpression><![CDATA[$F{DT_FINE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_UO_ENTE">
+					<subreportParameterExpression><![CDATA[$P{P_UO_ENTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DT_INIZIO">
+					<subreportParameterExpression><![CDATA[$F{DT_INIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TOTALE_ENTRATE">
+					<subreportParameterExpression><![CDATA[$F{TOTALE_ENTRATE}==null?BigDecimal.ZERO:$F{TOTALE_ENTRATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_IM_FINANZIATO">
+					<subreportParameterExpression><![CDATA[$F{IM_FINANZIATO}==null?BigDecimal.ZERO:$F{IM_FINANZIATO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_FL_PIANO_ECO_FIN">
+					<subreportParameterExpression><![CDATA[$F{FL_PIANO_ECO_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PRINT_DETAIL">
+					<subreportParameterExpression><![CDATA[$P{P_PRINT_DETAIL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_IM_COFINANZIATO">
+					<subreportParameterExpression><![CDATA[$F{IM_COFINANZIATO}==null?BigDecimal.ZERO:$F{IM_COFINANZIATO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_UO_COORDINATRICE">
+					<subreportParameterExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DESC_FINANZIAMENTO">
+					<subreportParameterExpression><![CDATA[$F{DESC_FINANZIAMENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGETTO">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGETTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "piano_economico_progetto_detail.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="25">
+			<break>
+				<reportElement x="0" y="0" width="100" height="1" uuid="9e148865-5c48-46ac-9e19-03fda2cd26a1"/>
+			</break>
+			<subreport>
+				<reportElement x="0" y="1" width="842" height="23" isPrintInFirstWholeBand="true" uuid="2fe5232d-47ed-4abc-a09b-86cbb8a812f3"/>
+				<subreportParameter name="P_TOTALE_ENTRATE">
+					<subreportParameterExpression><![CDATA[$F{TOTALE_ENTRATE}==null?BigDecimal.ZERO:$F{TOTALE_ENTRATE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TOTALE_REVERSALI">
+					<subreportParameterExpression><![CDATA[$F{TOTALE_REVERSALI}==null?BigDecimal.ZERO:$F{TOTALE_REVERSALI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_IM_FINANZIATO">
+					<subreportParameterExpression><![CDATA[$F{IM_FINANZIATO}==null?BigDecimal.ZERO:$F{IM_FINANZIATO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_IM_COFINANZIATO">
+					<subreportParameterExpression><![CDATA[$F{IM_COFINANZIATO}==null?BigDecimal.ZERO:$F{IM_COFINANZIATO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DT_FINE">
+					<subreportParameterExpression><![CDATA[$F{DT_FINE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DT_INIZIO">
+					<subreportParameterExpression><![CDATA[$F{DT_INIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_FL_PIANO_ECO_FIN">
+					<subreportParameterExpression><![CDATA[$F{FL_PIANO_ECO_FIN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_UO_COORDINATRICE">
+					<subreportParameterExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DESC_FINANZIAMENTO">
+					<subreportParameterExpression><![CDATA[$F{DESC_FINANZIAMENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGETTO">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGETTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "piano_economico_progetto_detail2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="25">
+			<break>
+				<reportElement x="0" y="0" width="100" height="1" uuid="d42a04a6-69f2-49c6-9a93-619deb416d1e"/>
+			</break>
+			<subreport>
+				<reportElement x="0" y="1" width="842" height="23" isPrintInFirstWholeBand="true" uuid="493a030e-8717-4b13-a970-f751fcef562a"/>
+				<subreportParameter name="P_CENTRO_RESPONSABILITA">
+					<subreportParameterExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_PG_PROGETTO">
+					<subreportParameterExpression><![CDATA[$P{P_PG_PROGETTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "piano_economico_progetto_detail4.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement style="VERB8" x="721" y="5" width="80" height="15" uuid="7bfbeba6-138d-4f9d-b483-5a371be1c6a8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="VERB8" x="801" y="5" width="40" height="15" uuid="1dd73075-101a-4cc1-9b19-22d1d945c6da"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement style="VERB8" x="61" y="5" width="54" height="15" uuid="195477b1-44a6-46a2-9080-5e1555055827"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-37" style="VERB8" x="4" y="5" width="57" height="15" uuid="15bfea64-73cf-4a78-a21d-36eacbb7e9d6"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Data di Stampa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-37" style="VERB8" x="247" y="5" width="79" height="15" uuid="ccd3e19b-c637-416a-8899-3446bb9aec5b"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Esercizio di scrivania:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="VERB8" x="326" y="5" width="100" height="15" uuid="095298f2-1d47-47a7-9133-d35d51adea43"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_ESERCIZIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-37" style="VERB8" x="449" y="5" width="65" height="15" uuid="bd31d305-5f3e-4bc5-930a-c39fa9b7594e"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[CDR Richiedente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="VERB8" x="514" y="5" width="121" height="15" uuid="8d15afbc-e4cd-4c77-9c3f-f2e563f7cf22"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_CENTRO_RESPONSABILITA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
