@@ -2402,4 +2402,8 @@ TRASPORTO_AEREO"/>
             <column name="fl_associa_contratto" type="CHAR(1)" defaultValue="N" remarks="Indica che i progetti aventi i tipi di finanziamento possono essere collegati a contratto - Dominio: S = Sì; N = No;"/>
         </addColumn>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" runOnChange="true" id="create-view-V_SALDI_GAE_VOCE_PROGETTO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SALDI_GAE_VOCE_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>    
 </databaseChangeLog>

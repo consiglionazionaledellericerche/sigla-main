@@ -2280,7 +2280,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			List<VContrattiTotaliDetBulk> result = dettHome.fetchAll(sql);
 
 			BigDecimal totale = result.stream().map(VContrattiTotaliDetBulk::getTotaleEntrate).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
-			if (totale.compareTo(contratto.getIm_contratto_attivo()) > 0)
+			if (totale.compareTo(Optional.ofNullable(contratto.getIm_contratto_attivo()).orElse(BigDecimal.ZERO)) > 0)
 				throw handleException( new CheckDisponibilitaContrattoFailed("La somma degli accertamenti associati ("
 								+ new it.cnr.contab.util.EuroFormat().format(totale) + ") supera l'importo definito nel contratto."));
 
