@@ -12,12 +12,13 @@ sudo docker run --name sigla-postgres -p 5432:5432 -v $PWD/sigla-backend/init-us
 **_Cambiare la variabile di ambiente_**
    * oracle
       * linux 
-        ```
-        export SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
-        ```
+       ```
+       export SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
+       ```
       * windows
        ```
-        set SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
+       set SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
+       ```
 
    * postgres
       * linux 
