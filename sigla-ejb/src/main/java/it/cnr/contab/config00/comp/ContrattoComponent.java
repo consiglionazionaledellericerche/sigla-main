@@ -1640,12 +1640,10 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				}
 			}
 			return contrattoDefinitivo;
-		} catch (it.cnr.jada.persistency.PersistencyException e) {
-		 throw handleException(contratto,e);
-		} catch (it.cnr.jada.bulk.OutdatedResourceException e) {
-		 throw handleException(contratto,e);
-		} catch (it.cnr.jada.bulk.BusyResourceException e) {
-		 throw handleException(contratto,e);
+		} catch (it.cnr.jada.persistency.PersistencyException|it.cnr.jada.bulk.OutdatedResourceException|it.cnr.jada.bulk.BusyResourceException e) {
+			throw handleException(contratto,e);
+		} catch (ApplicationRuntimeException e) {
+			throw handleException(e);
 		}
 	}
 
