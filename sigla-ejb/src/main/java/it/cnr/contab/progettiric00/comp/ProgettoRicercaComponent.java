@@ -500,9 +500,6 @@ public ProgettoRicercaComponent() {
 		   sql.addColumn("PROGETTO_OTHER_FIELD.IM_FINANZIATO");
 		   sql.addColumn("PROGETTO_OTHER_FIELD.IM_COFINANZIATO");
 		   
-		   sql.generateJoin(Progetto_other_fieldBulk.class, TipoFinanziamentoBulk.class, "tipoFinanziamento", "TIPO_FINANZIAMENTO");
-		   sql.addColumn("TIPO_FINANZIAMENTO.DESCRIZIONE");
-		   
 		   sql.addClause(clauses);
 		   sql.addClause(bulk.buildFindClauses(new Boolean(true)));
 		   sql.addSQLClause(FindClause.AND, "V_PROGETTO_PADRE.ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));

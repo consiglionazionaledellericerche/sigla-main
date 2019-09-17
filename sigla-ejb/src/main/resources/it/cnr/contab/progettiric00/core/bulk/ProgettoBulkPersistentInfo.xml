@@ -119,11 +119,6 @@
 			sqlTypeName="DECIMAL" 
 			columnSize="15" 
 			columnScale="2" />
-		<columnMapping
-			columnName="TIPO_FINANZIAMENTO.DESCRIZIONE"
-			propertyName="otherField.tipoFinanziamento.descrizione"
-			sqlTypeName="VARCHAR"
-			columnSize="1000" />			
 	</columnMap>
 
 	<columnMap
