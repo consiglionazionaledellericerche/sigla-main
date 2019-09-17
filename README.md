@@ -2,7 +2,7 @@ SIGLA
 ===
 #### _Per avviare una istanza di oracle locale_ 
 ```
-sudo docker run -d --name oracle-xe -p 1521:1521 -v $PWD/sigla-backend/initdb-oracle:/etc/entrypoint-initdb.d alexeiled/docker-oracle-xe-11g
+sudo docker run -d --name oracle-xe -p 1521:1521 -v $PWD/sigla-backend/initdb-oracle:/etc/entrypoint-initdb.d orangehrm/oracle-xe-11g
 ```
 #### _Per avviare una istanza di postgres locale_
 ```
@@ -11,9 +11,14 @@ sudo docker run --name sigla-postgres -p 5432:5432 -v $PWD/sigla-backend/init-us
 
 **_Cambiare la variabile di ambiente_**
    * oracle
+      * linux 
         ```
         export SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
         ```
+      * windows
+       ```
+        set SIGLA_CONNECTION_URL=jdbc:oracle:thin:@localhost:1521:xe
+
    * postgres
       * linux 
        ```
