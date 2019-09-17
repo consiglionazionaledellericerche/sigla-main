@@ -2237,7 +2237,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		try {
 			CdrBulk cdrUC = Utility.createCdrComponentSession().cdrFromUserContext(userContext);
 			CdrBulk cdrPrimoLivello;
-			if (cdrUC.getLivello().intValue() == 1)
+			if (cdrUC.getLivello().intValue() == 1 || (cdrUC.getUnita_padre().isUoArea() && cdrUC.getLivello().intValue() == 2))
 				cdrPrimoLivello = cdrUC;
 			else {
 				try {
