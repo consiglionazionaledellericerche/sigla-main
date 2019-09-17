@@ -465,9 +465,12 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 		}
 		if (bulk.isDefinitivo() && 
 				(bulk.isAttivo() || bulk.isAttivo_e_Passivo())) {
-			Optional.ofNullable(bulk.getPg_progetto())
-			.orElseThrow(()->new ApplicationRuntimeException("Valorizzare il progetto a fronte del quale il contratto è stato assunto."));
-			
+			try {
+				Optional.ofNullable(bulk.getPg_progetto())
+				.orElseThrow(()->new ApplicationRuntimeException("Valorizzare il progetto a fronte del quale il contratto è stato assunto."));
+			} catch (ApplicationRuntimeException e) {
+				throw handleException(e);
+			}			
 			controllaProgetti(uc, bulk.getProgetto(), bulk);
 		}
 	}
