@@ -30,6 +30,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.CRUDAction;
+import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.upload.UploadedFile;
 
@@ -683,4 +684,30 @@ public Forward doCaricaDitteInvitate(ActionContext context) {
 	}
 }
 
+/**
+ * Metodo utilizzato per gestire la conferma dell'inserimento/modifica di un importo che sfonda
+ * il totale accertamenti associati
+ *
+ * @param context <code>ActionContext</code> in uso.
+ * @param option  Esito della risposta alla richiesta di sfondamento
+ * @return <code>Forward</code>
+ * @throws <code>RemoteException</code>
+ */
+
+public Forward doOnCheckDisponibilitaContrattoFailed(ActionContext context, int option) {
+    if (option == it.cnr.jada.util.action.OptionBP.OK_BUTTON) {
+        try {
+            CRUDBP bp = getBusinessProcess(context);
+            ((ContrattoBulk) bp.getModel()).setCheckDisponibilitaContrattoEseguito(true);
+            if (bp.isBringBack())
+                return doConfermaRiporta(context, option);
+            else
+                doSalva(context);
+            ((ContrattoBulk) bp.getModel()).setCheckDisponibilitaContrattoEseguito(false);
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+    return context.findDefaultForward();
+}
 }
