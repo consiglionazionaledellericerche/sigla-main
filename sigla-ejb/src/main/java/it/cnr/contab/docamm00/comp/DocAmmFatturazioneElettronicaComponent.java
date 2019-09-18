@@ -438,7 +438,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				if ((!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) && fattura.getCodice_fiscale() == null){
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()); 
 				}
-				if (!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) {
+				if (!fattura.isFatturaEstera() ) {
 					datiAnagraficiClienteType.setCodiceFiscale(fattura.getCodice_fiscale());
 				}
 
@@ -446,6 +446,11 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
 				} else if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale())){
 					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
+				} else if (fattura.isFatturaEstera() && cliente.getAnagrafico().isPersonaFisica()){
+					IdFiscaleType idFiscale= factory.createIdFiscaleType();
+					idFiscale.setIdCodice("99999999999");
+					idFiscale.setIdPaese(impostaCodicePaese(userContext, cliente));
+					datiAnagraficiClienteType.setIdFiscaleIVA(idFiscale);
 				}
 				if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale()) && !StringUtils.hasLength(datiAnagraficiClienteType.getIdFiscaleIVA().getIdCodice())){
 					datiAnagraficiClienteType.getIdFiscaleIVA().setIdCodice("99999999999");
