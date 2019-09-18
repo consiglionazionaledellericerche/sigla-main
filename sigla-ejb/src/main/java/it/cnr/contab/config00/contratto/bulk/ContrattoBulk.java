@@ -109,7 +109,9 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private java.math.BigDecimal tot_doccont_cont_etr;
 	
 	private java.math.BigDecimal tot_docamm_cont_spe_netto;
-	
+
+	private boolean checkDisponibilitaContrattoEseguito = false;
+
 	public ContrattoBulk() {
 		super();
 	}
@@ -962,5 +964,19 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	
 	public boolean isROProgetto(){
 		return Boolean.FALSE;
-	}	
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isCheckDisponibilitaContrattoEseguito() {
+		return checkDisponibilitaContrattoEseguito;
+	}
+
+	/**
+	 * @param b
+	 */
+	public void setCheckDisponibilitaContrattoEseguito(boolean b) {
+		checkDisponibilitaContrattoEseguito = b;
+	}
 }

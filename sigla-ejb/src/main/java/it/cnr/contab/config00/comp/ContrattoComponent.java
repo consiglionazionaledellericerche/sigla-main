@@ -2268,7 +2268,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 			}
 		}
 		
-		
 		private void validaAssociazioneContrattoAccertamenti(UserContext userContext, ContrattoBulk contratto) throws ComponentException{
 		try {
 			WorkpackageHome gaeHome = (WorkpackageHome)getHome(userContext, WorkpackageBulk.class);
@@ -2279,11 +2278,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 	        sql.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.EQUALS, contratto.getPg_contratto());
 
 			List<VContrattiTotaliDetBulk> result = dettHome.fetchAll(sql);
-
-			BigDecimal totale = result.stream().map(VContrattiTotaliDetBulk::getTotaleEntrate).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
-			if (totale.compareTo(Optional.ofNullable(contratto.getIm_contratto_attivo()).orElse(BigDecimal.ZERO)) > 0)
-				throw handleException( new CheckDisponibilitaContrattoFailed("La somma degli accertamenti associati ("
-								+ new it.cnr.contab.util.EuroFormat().format(totale) + ") supera l'importo definito nel contratto."));
 
 			Optional<Integer> optPrgContratto = Optional.ofNullable(contratto)
 					.flatMap(el->Optional.ofNullable(el.getPg_progetto()));
@@ -2311,6 +2305,13 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 						}
 					});
 				});
+			}
+
+			if (!contratto.isCheckDisponibilitaContrattoEseguito()) {
+				BigDecimal totale = result.stream().map(VContrattiTotaliDetBulk::getTotaleEntrate).reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
+				if (totale.compareTo(Optional.ofNullable(contratto.getIm_contratto_attivo()).orElse(BigDecimal.ZERO)) > 0)
+					throw handleException( new CheckDisponibilitaContrattoFailed("La somma degli accertamenti associati ("
+									+ new it.cnr.contab.util.EuroFormat().format(totale) + ") supera l'importo definito nel contratto."));
 			}
 		} catch (Throwable e) {
 			throw handleException(e);
