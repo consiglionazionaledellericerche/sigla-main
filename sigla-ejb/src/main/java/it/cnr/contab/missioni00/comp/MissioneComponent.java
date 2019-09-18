@@ -4514,12 +4514,14 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         try {
     		MissioneHome home = (MissioneHome) getHome(userContext, MissioneBulk.class);
     		MissioneBulk missione = home.loadMissione(userContext, idRimborsoMissioneGemis);
-            logger.info("Missione Recuperata "+missione.getPg_missione());
-            missione = (MissioneBulk) inizializzaBulkPerModifica(userContext, missione);
-            logger.info("Missione Inizializzata "+missione.getPg_missione());
-            missione.setToBeDeleted();
-            eliminaConBulk(userContext, missione);
-            logger.info("Missione Eliminata "+missione.getPg_missione());
+    		if (missione != null){
+                logger.info("Missione Recuperata "+missione.getPg_missione());
+                missione = (MissioneBulk) inizializzaBulkPerModifica(userContext, missione);
+                logger.info("Missione Inizializzata "+missione.getPg_missione());
+                missione.setToBeDeleted();
+                eliminaConBulk(userContext, missione);
+                logger.info("Missione Eliminata "+missione.getPg_missione());
+    		}
         } catch (Throwable e) {
             throw handleException(e);
         }
