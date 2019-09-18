@@ -1579,8 +1579,6 @@
 			name="ds_progetto" 
 			label="Descrizione Progetto"/>
 		<findFieldProperty
-			name="dsTipoFinanziamentoOf" />
-		<findFieldProperty
 			name="imFinanziatoOf" />
 		<findFieldProperty
 			name="imCofinanziatoOf" />
