@@ -3624,7 +3624,7 @@ protected AccertamentoBulk generaDettagliScadenzaAccertamento (UserContext aUC,A
 	{
 		BigDecimal tot = new BigDecimal(0);
 		for ( Iterator i = accertamento.getNuoveLineeAttivitaColl().iterator(); i.hasNext(); )
-			tot = tot.add( ((Linea_attivitaBulk)i.next()).getPrcImputazioneFin());
+			tot = tot.add( Utility.nvl(((Linea_attivitaBulk)i.next()).getPrcImputazioneFin()));
 		if ( tot.compareTo( new BigDecimal(100)) != 0 )
 			throw new ApplicationException( "La somma delle percentuali dei nuovi GAE e' diversa da 100");
 
