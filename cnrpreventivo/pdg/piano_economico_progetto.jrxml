@@ -45,10 +45,10 @@
 		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["113.000.000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["042.000.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[Integer.valueOf(9713)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[Integer.valueOf(26910)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PRINT_DETAIL" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
