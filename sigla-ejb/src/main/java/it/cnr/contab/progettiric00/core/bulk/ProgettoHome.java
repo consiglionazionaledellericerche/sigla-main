@@ -855,6 +855,15 @@ public class ProgettoHome extends BulkHome {
 					
 				});
 			});
+			progetto.getDettagliPianoEconomicoAltriAnni().stream().forEach(ppe->{
+				try {
+					ppe.setVociBilancioAssociate(new BulkList<Ass_progetto_piaeco_voceBulk>(((Ass_progetto_piaeco_voceHome)getHomeCache().getHome(Ass_progetto_piaeco_voceBulk.class ))
+						.findAssProgettoPiaecoVoceList(ppe.getPg_progetto(), ppe.getCd_unita_organizzativa(), ppe.getCd_voce_piano(), 
+								ppe.getEsercizio_piano())));
+				} catch (PersistencyException ex){
+					throw new DetailedRuntimeException(ex.getMessage());
+				}
+			});
 			return progetto;
 		} catch(Exception e) {
 			throw new PersistencyException( e );
