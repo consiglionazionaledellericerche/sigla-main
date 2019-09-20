@@ -1200,6 +1200,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 			});
 
 		this.getAllDetailsProgettoPianoEconomico().stream()
+			.filter(progetto_piano_economicoBulk -> Optional.ofNullable(progetto_piano_economicoBulk.getEsercizio_piano()).isPresent())
 			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoFineOf())>0)
 			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
 			.max(Comparator.comparing(Integer::valueOf))
