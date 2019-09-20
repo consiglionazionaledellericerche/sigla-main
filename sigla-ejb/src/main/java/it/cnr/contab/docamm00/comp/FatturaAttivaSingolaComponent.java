@@ -5619,7 +5619,8 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         }
 
         if (fatturaRiga.getFattura_attiva().getTi_causale_emissione().equals(fatturaRiga.getFattura_attiva().TARIFFARIO) &&
-                (fatturaRiga.getTariffario() == null || fatturaRiga.getTariffario().getCrudStatus() == OggettoBulk.UNDEFINED))
+                (fatturaRiga.getTariffario() == null || fatturaRiga.getTariffario().getCd_tariffario() == null || 
+                 fatturaRiga.getTariffario().getCrudStatus() == OggettoBulk.UNDEFINED))
             throw new it.cnr.jada.comp.ApplicationException(
                     "Selezionare un tariffario!");
 

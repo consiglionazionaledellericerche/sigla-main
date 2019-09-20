@@ -749,7 +749,7 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 				voceSel.setCd_voce(osv.getCd_voce());
 				voceSel.setImp_da_assegnare(Utility.nvl(osv.getIm_voce()));
 				hashVociList.put(voceSel, new BigDecimal(0));
-				totaleSelVoci = totaleSelVoci.add(osv.getIm_voce());
+				totaleSelVoci = totaleSelVoci.add(Utility.nvl(osv.getIm_voce()));
 			}
 		}
 	}
