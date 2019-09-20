@@ -24,6 +24,7 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.sql.*;
+import java.util.Optional;
 import java.util.StringTokenizer;
 import java.rmi.*;
 
@@ -93,6 +94,7 @@ public CdrBulk cdrFromUserContext(UserContext userContext) throws ComponentExcep
 
 		CdrBulk cdr = new CdrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext));
 		cdr = (CdrBulk)getHome(userContext, CdrBulk.class, null, getFetchPolicyName("find")).findByPrimaryKey(cdr);
+		Optional.ofNullable(cdr).orElseThrow(()->new ApplicationException("Errore: CDR di Scrivania non individuato!"));
 		cdr.setUnita_padre((Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdr.getCd_unita_organizzativa())));
 		return cdr;
 	} catch (it.cnr.jada.persistency.PersistencyException e) {
