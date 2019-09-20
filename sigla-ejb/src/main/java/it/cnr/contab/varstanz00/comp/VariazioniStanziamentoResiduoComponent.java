@@ -1451,6 +1451,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
 		if (oggettobulk instanceof Var_stanz_resBulk){
 			Var_stanz_resBulk var = (Var_stanz_resBulk)oggettobulk;
+			Optional.ofNullable(var.getEsercizio_res()).flatMap(el->Optional.ofNullable(el.getEsercizio()))
+				.orElseThrow(()->new ApplicationException("Operazione non possibile! Indicare l'esercizio residuo della variazione!"));	
 			validaOrigineFontiPerAnnoResiduo(usercontext, var.getEsercizio_residuo(), var.getTipologia_fin());
 		}
 		super.validaCreaModificaConBulk(usercontext, oggettobulk);
