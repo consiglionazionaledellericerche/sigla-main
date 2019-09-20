@@ -44,6 +44,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
+import java.util.Optional;
 import java.util.Vector;
 
 
@@ -2790,6 +2791,7 @@ private boolean isStatoCompatibile (String statoAttuale, int livello, String nuo
 	private SQLBuilder listaCdrPdGPerUtenteIncludeEnte (UserContext userContext) throws it.cnr.jada.comp.ComponentException {
 
 		CdrBulk cdr = cdrFromUserContext(userContext);
+		Optional.ofNullable(cdr).orElseThrow(()->new ApplicationException("Errore: CDR di Scrivania non individuato!"));
 		int livelloResponsabilita = getLivelloResponsabilitaCDR(userContext, cdr);
 
 		//lista dei CDR visibili all'utente

@@ -1467,7 +1467,7 @@ public ObbligazioneBulk refreshNuoveLineeAttivitaColl( UserContext usercontext, 
 				nuovaLatt = (it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk) i.next();
 				totPrc = totPrc.add( nuovaLatt.getPrcImputazioneFin());
 			}
-			if ( totPrc.compareTo( new BigDecimal(100)) != 0 )
+			if ( totPrc.compareTo( new BigDecimal(100)) != 0 && !nuoveLineeAttivitaColl.isEmpty())
 			{
 				nuovaLatt = (it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk)nuoveLineeAttivitaColl.get(0);
 				nuovaLatt.setPrcImputazioneFin( nuovaLatt.getPrcImputazioneFin().add( new BigDecimal(100).subtract( totPrc)));
