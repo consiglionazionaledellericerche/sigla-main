@@ -1,0 +1,9 @@
+CD_MODALITA_TRASPORTO,DS_MODALITA_TRASPORTO,UTCR,UTUV,PG_VER_REC
+"1","Trasporto marittimo","SYSTEM","SYSTEM","1"
+"2","Trasporto ferroviario","SYSTEM","SYSTEM","1"
+"3","Trasporto stradale","SYSTEM","SYSTEM","1"
+"4","Trasporto aereo","SYSTEM","SYSTEM","1"
+"5","Spedizioni postali","SYSTEM","SYSTEM","1"
+"7","Installazioni fisse di trasporto","SYSTEM","SYSTEM","1"
+"8","Trasporto per vie d'acqua","SYSTEM","SYSTEM","1"
+"9","Propulsione propria","SYSTEM","SYSTEM","1"

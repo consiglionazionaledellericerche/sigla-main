@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="urn:jboss:module:1.0" name="com.oracle.jdbc">
      <resources>
-        <resource-root path="ojdbc5.jar"/>
+        <resource-root path="ojdbc7-12.1.0.2.0.jar"/>
     </resources>
     <dependencies>
         <module name="javax.api"/>

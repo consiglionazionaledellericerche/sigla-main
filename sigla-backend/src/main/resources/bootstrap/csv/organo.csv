@@ -1,0 +1,11 @@
+CD_ORGANO,DS_ORGANO,DT_INIZIO_VALIDITA,DT_FINE_VALIDITA,FL_CANCELLATO,FL_NON_DEFINITO,UTCR,UTUV,PG_VER_REC
+"PRES","Presidente del CNR","2000-01-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"DG","Direttore Generale del CNR","2000-01-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"DIDIP","Direttore del Dipartimento","2000-01-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"DIST","Direttore di Istituto","2000-01-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"RAdR","Responsabile dell'Area di Ricerca","2000-01-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"ALTRO","Altro soggetto","1960-01-01","2000-12-31","N","Y","SYSTEM","SYSTEM","1"
+"RUOS","Delegato Responsabile UOS","1960-01-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"DCSPI","Direttore centrale DCSPI","2000-01-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"DCSGR","Direttore centrale DCSGR","2000-12-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"
+"DDUAC","Direttore/dirigente ufficio a.c.","2000-12-01","2000-12-31","N","N","SYSTEM","SYSTEM","1"

@@ -1,0 +1,5 @@
+CD_TIPO_RAPPORTO,DS_TIPO_RAPPORTO,TI_DIPENDENTE_ALTRO,FL_INQUADRAMENTO,FL_BONUS,FL_VISIBILE_A_TUTTI,UTCR,UTUV,PG_VER_REC
+"PROF","Professionista","A","Y","N","Y","SYSTEM","SYSTEM","1"
+"STI","Interfaccia stipendi","D","Y","N","Y","SYSTEM","SYSTEM","1"
+"OCCA","Lavoratori autonomi occasionali","A","Y","N","Y","SYSTEM","SYSTEM","1"
+"RECRITE","Recupero versamenti anno precedente, gestione IVA con F24EP e recupero acconto IVA","A","N","N","Y","SYSTEM","SYSTEM","1"
