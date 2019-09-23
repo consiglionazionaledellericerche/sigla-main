@@ -1,0 +1,5 @@
+CD_TIPO_ATTO,DS_TIPO_ATTO,FL_CANCELLATO,FL_NON_DEFINITO,UTCR,UTUV,PG_VER_REC
+"DEL","Deliberazione","N","N","SYSTEM","SYSTEM","1"
+"DET","Determinazione","N","N","SYSTEM","SYSTEM","1"
+"DEC","Decreto","N","N","SYSTEM","SYSTEM","1"
+"ALTRO","Altro atto diverso dai precedenti","N","Y","SYSTEM","SYSTEM","1"

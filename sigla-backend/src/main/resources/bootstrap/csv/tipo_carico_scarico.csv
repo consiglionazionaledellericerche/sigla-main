@@ -1,0 +1,13 @@
+CD_TIPO_CARICO_SCARICO,DS_TIPO_CARICO_SCARICO,TI_DOCUMENTO,FL_FATTURABILE,FL_AUMENTO_VALORE,FL_ELABORA_BUONO_COGE,FL_BUONO_PER_TRASFERIMENTO,FL_STORNO_FONDO,FL_CHIUDE_FONDO,FL_VENDITA,UTCR,UTUV,PG_VER_REC
+"13","scarico per trasferimento","S","N","N","N","Y","N","N","N","SYSTEM","SYSTEM","1"
+"15","Scarico per Vendita","S","Y","N","N","N","N","N","Y","SYSTEM","SYSTEM","1"
+"11","aumento valore visibile da documento amministrativo","C","Y","Y","N","N","N","N","N","SYSTEM","SYSTEM","1"
+"14","Scarico per Permuta","S","Y","N","N","N","N","N","N","SYSTEM","SYSTEM","1"
+"12","carico per trasferimento","C","N","N","N","Y","N","N","N","SYSTEM","SYSTEM","1"
+"1","Carico visibile da documento amministrativo","C","Y","N","N","N","N","N","N","SYSTEM","SYSTEM","1"
+"2","Scarico visibile da documento amministrativo","S","Y","N","N","N","Y","Y","N","SYSTEM","SYSTEM","1"
+"3","Dismissione","S","N","N","N","N","Y","N","N","SYSTEM","SYSTEM","1"
+"4","Omaggio","C","N","N","Y","N","N","N","N","SYSTEM","SYSTEM","1"
+"5","aumento valore non visibile da documento amministrativo","C","N","Y","Y","N","N","N","N","SYSTEM","SYSTEM","1"
+"6","carico non visibile da documento amministrativo","C","N","N","Y","N","N","N","N","SYSTEM","SYSTEM","1"
+"9","scarico non visibile da documento amministrativo","S","N","N","N","N","Y","N","N","SYSTEM","SYSTEM","1"

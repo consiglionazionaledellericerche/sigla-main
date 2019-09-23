@@ -1,0 +1,1613 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="sigla" id="1516802834820-1">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/abi.csv" quotchar="&quot;" separator="," tableName="abi"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-2">
+        <addDefaultValue tableName="abicab" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="abicab" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/abicab.csv" quotchar="&quot;" separator="," tableName="abicab"/>
+
+        <dropDefaultValue tableName="abicab" columnName="dacr"/>
+        <dropDefaultValue tableName="abicab" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-3">
+        <addDefaultValue tableName="accesso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="accesso" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/accesso.csv" quotchar="&quot;" separator="," tableName="accesso"/>
+
+        <dropDefaultValue tableName="accesso" columnName="dacr"/>
+        <dropDefaultValue tableName="accesso" columnName="duva"/>
+    </changeSet>
+
+   <changeSet author="sigla" id="1516802834820-4">
+        <addDefaultValue tableName="albero_main" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="albero_main" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/albero_main.csv" quotchar="&quot;" separator="," tableName="albero_main"/>
+
+        <dropDefaultValue tableName="albero_main" columnName="dacr"/>
+        <dropDefaultValue tableName="albero_main" columnName="duva"/>
+    </changeSet>
+ 
+     <changeSet author="sigla" id="1516802834820-5">
+        <addDefaultValue tableName="anagrafico" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="anagrafico" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/anagrafico.csv" quotchar="&quot;" separator="," tableName="anagrafico">
+            <column header="data_avvio_fatt_elettr" name="data_avvio_fatt_elettr" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="anagrafico" columnName="dacr"/>
+        <dropDefaultValue tableName="anagrafico" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-6">
+        <addDefaultValue tableName="ass_bp_accesso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_bp_accesso" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_bp_accesso.csv" quotchar="&quot;" separator="," tableName="ass_bp_accesso"/>
+
+        <dropDefaultValue tableName="ass_bp_accesso" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_bp_accesso" columnName="duva"/>
+    </changeSet> 
+
+    <changeSet author="sigla" id="1516802834820-7">
+        <addDefaultValue tableName="ass_dipartimento_area" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_dipartimento_area" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_dipartimento_area" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_dipartimento_area.csv" quotchar="&quot;" separator="," tableName="ass_dipartimento_area"/>
+
+        <dropDefaultValue tableName="ass_dipartimento_area" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_dipartimento_area" columnName="duva"/>
+        <dropDefaultValue tableName="ass_dipartimento_area" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-8">
+        <addDefaultValue tableName="ass_ev_ev" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ev_ev" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ev_ev" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_ev_ev.csv" quotchar="&quot;" separator="," tableName="ass_ev_ev"/>
+
+        <dropDefaultValue tableName="ass_ev_ev" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_ev_ev" columnName="duva"/>
+        <dropDefaultValue tableName="ass_ev_ev" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-9">
+        <addDefaultValue tableName="ass_ev_siope" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ev_siope" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ev_siope" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+        <addDefaultValue tableName="ass_ev_siope" columnName="esercizio_siope" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_ev_siope.csv" quotchar="&quot;" separator="," tableName="ass_ev_siope"/>
+
+        <dropDefaultValue tableName="ass_ev_siope" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_ev_siope" columnName="duva"/>
+        <dropDefaultValue tableName="ass_ev_siope" columnName="esercizio"/>
+        <dropDefaultValue tableName="ass_ev_siope" columnName="esercizio_siope"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-10">
+        <addDefaultValue tableName="ass_ev_voceep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ev_voceep" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ev_voceep" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_ev_voceep.csv" quotchar="&quot;" separator="," tableName="ass_ev_voceep"/>
+
+        <dropDefaultValue tableName="ass_ev_voceep" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_ev_voceep" columnName="duva"/>
+        <dropDefaultValue tableName="ass_ev_voceep" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-11">
+        <addDefaultValue tableName="ass_linea_attivita_esercizio" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_linea_attivita_esercizio" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_linea_attivita_esercizio" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_linea_attivita_esercizio.csv" quotchar="&quot;" separator="," tableName="ass_linea_attivita_esercizio"/>
+
+        <dropDefaultValue tableName="ass_linea_attivita_esercizio" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_linea_attivita_esercizio" columnName="duva"/>
+        <dropDefaultValue tableName="ass_linea_attivita_esercizio" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-12">
+        <addDefaultValue tableName="ass_partita_giro" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_partita_giro" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_partita_giro" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_partita_giro.csv" quotchar="&quot;" separator="," tableName="ass_partita_giro"/>
+
+        <dropDefaultValue tableName="ass_partita_giro" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_partita_giro" columnName="duva"/>
+        <dropDefaultValue tableName="ass_partita_giro" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-13">
+        <addDefaultValue tableName="ass_ti_rapp_ti_prest" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ti_rapp_ti_prest" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_ti_rapp_ti_prest.csv" quotchar="&quot;" separator="," tableName="ass_ti_rapp_ti_prest"/>
+
+        <dropDefaultValue tableName="ass_ti_rapp_ti_prest" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_ti_rapp_ti_prest" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-14">
+        <addDefaultValue tableName="ass_ti_rapp_ti_tratt" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_ti_rapp_ti_tratt" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_ti_rapp_ti_tratt.csv" quotchar="&quot;" separator="," tableName="ass_ti_rapp_ti_tratt"/>
+
+        <dropDefaultValue tableName="ass_ti_rapp_ti_tratt" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_ti_rapp_ti_tratt" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-15">
+        <addDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="dt_ini_validita" defaultValueDate="${firstday}"/>
+        <addDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+        <addDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="esercizio_siope_s" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+        <addDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="esercizio_siope_e" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_tipo_contr_ritenuta_siope.csv" quotchar="&quot;" separator="," tableName="ass_tipo_contr_ritenuta_siope"/>
+
+        <dropDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="duva"/>
+        <dropDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="dt_ini_validita"/>
+        <dropDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="esercizio"/>
+        <dropDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="esercizio_siope_s"/>
+        <dropDefaultValue tableName="ass_tipo_contr_ritenuta_siope" columnName="esercizio_siope_e"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-16">
+        <addDefaultValue tableName="ass_tipo_cori_ev" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_cori_ev" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_cori_ev" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_tipo_cori_ev.csv" quotchar="&quot;" separator="," tableName="ass_tipo_cori_ev"/>
+
+        <dropDefaultValue tableName="ass_tipo_cori_ev" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_tipo_cori_ev" columnName="duva"/>
+        <dropDefaultValue tableName="ass_tipo_cori_ev" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-17">
+        <addDefaultValue tableName="ass_tipo_cori_voce_ep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_cori_voce_ep" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_cori_voce_ep" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_tipo_cori_voce_ep.csv" quotchar="&quot;" separator="," tableName="ass_tipo_cori_voce_ep"/>
+
+        <dropDefaultValue tableName="ass_tipo_cori_voce_ep" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_tipo_cori_voce_ep" columnName="duva"/>
+        <dropDefaultValue tableName="ass_tipo_cori_voce_ep" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-18">
+        <addDefaultValue tableName="ass_tipo_la_cdr" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_la_cdr" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_tipo_la_cdr.csv" quotchar="&quot;" separator="," tableName="ass_tipo_la_cdr"/>
+
+        <dropDefaultValue tableName="ass_tipo_la_cdr" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_tipo_la_cdr" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-19">
+        <addDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_tipo_ruolo_privilegio.csv" quotchar="&quot;" separator="," tableName="ass_tipo_ruolo_privilegio"/>
+
+        <dropDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-20">
+        <addDefaultValue tableName="ass_tipologia_istat_siope" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipologia_istat_siope" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipologia_istat_siope" columnName="esercizio_siope" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ass_tipologia_istat_siope.csv" quotchar="&quot;" separator="," tableName="ass_tipologia_istat_siope"/>
+
+        <dropDefaultValue tableName="ass_tipologia_istat_siope" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_tipologia_istat_siope" columnName="duva"/>
+        <dropDefaultValue tableName="ass_tipologia_istat_siope" columnName="esercizio_siope"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-21">
+        <addDefaultValue tableName="banca" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="banca" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/banca.csv" quotchar="&quot;" separator="," tableName="banca"/>
+
+        <dropDefaultValue tableName="banca" columnName="dacr"/>
+        <dropDefaultValue tableName="banca" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-22">
+        <addDefaultValue tableName="attivita_commerciale" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="attivita_commerciale" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/attivita_commerciale.csv" quotchar="&quot;" separator="," tableName="attivita_commerciale"/>
+
+        <dropDefaultValue tableName="attivita_commerciale" columnName="dacr"/>
+        <dropDefaultValue tableName="attivita_commerciale" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-23">
+        <addDefaultValue tableName="attivita_sigla" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="attivita_sigla" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="attivita_sigla" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/attivita_sigla.csv" quotchar="&quot;" separator="," tableName="attivita_sigla"/>
+
+        <dropDefaultValue tableName="attivita_sigla" columnName="dacr"/>
+        <dropDefaultValue tableName="attivita_sigla" columnName="duva"/>
+        <dropDefaultValue tableName="attivita_sigla" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-24">
+        <addDefaultValue tableName="batch_log_tipo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="batch_log_tipo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/batch_log_tipo.csv" quotchar="&quot;" separator="," tableName="batch_log_tipo"/>
+
+        <dropDefaultValue tableName="batch_log_tipo" columnName="dacr"/>
+        <dropDefaultValue tableName="batch_log_tipo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-25">
+        <addDefaultValue tableName="batch_procedura" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="batch_procedura" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/batch_procedura.csv" quotchar="&quot;" separator="," tableName="batch_procedura"/>
+
+        <dropDefaultValue tableName="batch_procedura" columnName="dacr"/>
+        <dropDefaultValue tableName="batch_procedura" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-26">
+        <addDefaultValue tableName="batch_procedura_parametro" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="batch_procedura_parametro" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/batch_procedura_parametro.csv" quotchar="&quot;" separator="," tableName="batch_procedura_parametro"/>
+
+        <dropDefaultValue tableName="batch_procedura_parametro" columnName="dacr"/>
+        <dropDefaultValue tableName="batch_procedura_parametro" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-27">
+        <addDefaultValue tableName="bene_servizio" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="bene_servizio" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/bene_servizio.csv" quotchar="&quot;" separator="," tableName="bene_servizio"/>
+
+        <dropDefaultValue tableName="bene_servizio" columnName="dacr"/>
+        <dropDefaultValue tableName="bene_servizio" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-28">
+        <addDefaultValue tableName="bframe_blob_tipo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="bframe_blob_tipo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/bframe_blob_tipo.csv" quotchar="&quot;" separator="," tableName="bframe_blob_tipo"/>
+
+        <dropDefaultValue tableName="bframe_blob_tipo" columnName="dacr"/>
+        <dropDefaultValue tableName="bframe_blob_tipo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-29">
+        <addDefaultValue tableName="bilancio_preventivo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="bilancio_preventivo" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="bilancio_preventivo" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/bilancio_preventivo.csv" quotchar="&quot;" separator="," tableName="bilancio_preventivo"/>
+
+        <dropDefaultValue tableName="bilancio_preventivo" columnName="dacr"/>
+        <dropDefaultValue tableName="bilancio_preventivo" columnName="duva"/>
+        <dropDefaultValue tableName="bilancio_preventivo" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-30">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/cab.csv" quotchar="&quot;" separator="," tableName="cab"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-31">
+        <addDefaultValue tableName="cap" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="cap" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/cap.csv" quotchar="&quot;" separator="," tableName="cap"/>
+
+        <dropDefaultValue tableName="cap" columnName="dacr"/>
+        <dropDefaultValue tableName="cap" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-32">
+        <addDefaultValue tableName="capoconto_fin" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="capoconto_fin" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/capoconto_fin.csv" quotchar="&quot;" separator="," tableName="capoconto_fin"/>
+
+        <dropDefaultValue tableName="capoconto_fin" columnName="dacr"/>
+        <dropDefaultValue tableName="capoconto_fin" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-33">
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/categorie_ipa.csv" quotchar="&quot;" separator="," tableName="categorie_ipa"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-34">
+        <addDefaultValue tableName="causale_coge" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="causale_coge" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="causale_coge" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/causale_coge.csv" quotchar="&quot;" separator="," tableName="causale_coge"/>
+
+        <dropDefaultValue tableName="causale_coge" columnName="dacr"/>
+        <dropDefaultValue tableName="causale_coge" columnName="duva"/>
+        <dropDefaultValue tableName="causale_coge" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-35">
+        <addDefaultValue tableName="causale_var_bilancio" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="causale_var_bilancio" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/causale_var_bilancio.csv" quotchar="&quot;" separator="," tableName="causale_var_bilancio"/>
+
+        <dropDefaultValue tableName="causale_var_bilancio" columnName="dacr"/>
+        <dropDefaultValue tableName="causale_var_bilancio" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-36">
+        <addDefaultValue tableName="cdr" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="cdr" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="cdr" columnName="esercizio_inizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/cdr.csv" quotchar="&quot;" separator="," tableName="cdr"/>
+
+        <dropDefaultValue tableName="cdr" columnName="dacr"/>
+        <dropDefaultValue tableName="cdr" columnName="duva"/>
+        <dropDefaultValue tableName="cdr" columnName="esercizio_inizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-37">
+        <addDefaultValue tableName="classificazione_anag" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_anag" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/classificazione_anag.csv" quotchar="&quot;" separator="," tableName="classificazione_anag"/>
+
+        <dropDefaultValue tableName="classificazione_anag" columnName="dacr"/>
+        <dropDefaultValue tableName="classificazione_anag" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-38">
+        <addDefaultValue tableName="classificazione_cori" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_cori" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/classificazione_cori.csv" quotchar="&quot;" separator="," tableName="classificazione_cori"/>
+
+        <dropDefaultValue tableName="classificazione_cori" columnName="dacr"/>
+        <dropDefaultValue tableName="classificazione_cori" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-39">
+        <addDefaultValue tableName="classificazione_entrate" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_entrate" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_entrate" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/classificazione_entrate.csv" quotchar="&quot;" separator="," tableName="classificazione_entrate"/>
+
+        <dropDefaultValue tableName="classificazione_entrate" columnName="dacr"/>
+        <dropDefaultValue tableName="classificazione_entrate" columnName="duva"/>
+        <dropDefaultValue tableName="classificazione_entrate" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-40">
+        <addDefaultValue tableName="classificazione_montanti" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_montanti" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/classificazione_montanti.csv" quotchar="&quot;" separator="," tableName="classificazione_montanti"/>
+
+        <dropDefaultValue tableName="classificazione_montanti" columnName="dacr"/>
+        <dropDefaultValue tableName="classificazione_montanti" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-41">
+        <addDefaultValue tableName="classificazione_spese" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_spese" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_spese" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/classificazione_spese.csv" quotchar="&quot;" separator="," tableName="classificazione_spese"/>
+
+        <dropDefaultValue tableName="classificazione_spese" columnName="dacr"/>
+        <dropDefaultValue tableName="classificazione_spese" columnName="duva"/>
+        <dropDefaultValue tableName="classificazione_spese" columnName="esercizio"/>
+    </changeSet>
+    
+    <changeSet author="sigla" id="1516802834820-42">
+        <addDefaultValue tableName="classificazione_voci" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_voci" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_voci" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/classificazione_voci.csv" quotchar="&quot;" separator="," tableName="classificazione_voci"/>
+
+        <dropDefaultValue tableName="classificazione_voci" columnName="dacr"/>
+        <dropDefaultValue tableName="classificazione_voci" columnName="duva"/>
+        <dropDefaultValue tableName="classificazione_voci" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-43">
+        <addDefaultValue tableName="classificazione_voci_ep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_voci_ep" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="classificazione_voci_ep" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/classificazione_voci_ep.csv" quotchar="&quot;" separator="," tableName="classificazione_voci_ep"/>
+
+        <dropDefaultValue tableName="classificazione_voci_ep" columnName="dacr"/>
+        <dropDefaultValue tableName="classificazione_voci_ep" columnName="duva"/>
+        <dropDefaultValue tableName="classificazione_voci_ep" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-44">
+        <addDefaultValue tableName="cnr_ass_conto_gruppo_ep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="cnr_ass_conto_gruppo_ep" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="cnr_ass_conto_gruppo_ep" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/cnr_ass_conto_gruppo_ep.csv" quotchar="&quot;" separator="," tableName="cnr_ass_conto_gruppo_ep"/>
+
+        <dropDefaultValue tableName="cnr_ass_conto_gruppo_ep" columnName="dacr"/>
+        <dropDefaultValue tableName="cnr_ass_conto_gruppo_ep" columnName="duva"/>
+        <dropDefaultValue tableName="cnr_ass_conto_gruppo_ep" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-45">
+        <addDefaultValue tableName="cnr_gruppo_ep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="cnr_gruppo_ep" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/cnr_gruppo_ep.csv" quotchar="&quot;" separator="," tableName="cnr_gruppo_ep"/>
+
+        <dropDefaultValue tableName="cnr_gruppo_ep" columnName="dacr"/>
+        <dropDefaultValue tableName="cnr_gruppo_ep" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-46">
+        <addDefaultValue tableName="codici_altra_forma_ass_inps" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="codici_altra_forma_ass_inps" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/codici_altra_forma_ass_inps.csv" quotchar="&quot;" separator="," tableName="codici_altra_forma_ass_inps"/>
+
+        <dropDefaultValue tableName="codici_altra_forma_ass_inps" columnName="dacr"/>
+        <dropDefaultValue tableName="codici_altra_forma_ass_inps" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-47">
+        <addDefaultValue tableName="codici_attivita_inps" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="codici_attivita_inps" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/codici_attivita_inps.csv" quotchar="&quot;" separator="," tableName="codici_attivita_inps"/>
+
+        <dropDefaultValue tableName="codici_attivita_inps" columnName="dacr"/>
+        <dropDefaultValue tableName="codici_attivita_inps" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-48">
+        <addDefaultValue tableName="codici_cpa" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="codici_cpa" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="codici_cpa" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/codici_cpa.csv" quotchar="&quot;" separator="," tableName="codici_cpa"/>
+
+        <dropDefaultValue tableName="codici_cpa" columnName="dacr"/>
+        <dropDefaultValue tableName="codici_cpa" columnName="duva"/>
+        <dropDefaultValue tableName="codici_cpa" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-49">
+        <addDefaultValue tableName="codici_rapporti_inps" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="codici_rapporti_inps" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/codici_rapporti_inps.csv" quotchar="&quot;" separator="," tableName="codici_rapporti_inps"/>
+
+        <dropDefaultValue tableName="codici_rapporti_inps" columnName="dacr"/>
+        <dropDefaultValue tableName="codici_rapporti_inps" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-50">
+        <addDefaultValue tableName="codici_siope" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="codici_siope" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="codici_siope" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/codici_siope.csv" quotchar="&quot;" separator="," tableName="codici_siope"/>
+
+        <dropDefaultValue tableName="codici_siope" columnName="dacr"/>
+        <dropDefaultValue tableName="codici_siope" columnName="duva"/>
+        <dropDefaultValue tableName="codici_siope" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-51">
+        <addDefaultValue tableName="cofog" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="cofog" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/cofog.csv" quotchar="&quot;" separator="," tableName="cofog"/>
+
+        <dropDefaultValue tableName="cofog" columnName="dacr"/>
+        <dropDefaultValue tableName="cofog" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-52">
+        <addDefaultValue tableName="comune" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="comune" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/comune.csv" quotchar="&quot;" separator="," tableName="comune"/>
+
+        <dropDefaultValue tableName="comune" columnName="dacr"/>
+        <dropDefaultValue tableName="comune" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-53">
+        <addDefaultValue tableName="condizione_bene" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="condizione_bene" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/condizione_bene.csv" quotchar="&quot;" separator="," tableName="condizione_bene"/>
+
+        <dropDefaultValue tableName="condizione_bene" columnName="dacr"/>
+        <dropDefaultValue tableName="condizione_bene" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-54">
+        <addDefaultValue tableName="condizione_consegna" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="condizione_consegna" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="condizione_consegna" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/condizione_consegna.csv" quotchar="&quot;" separator="," tableName="condizione_consegna"/>
+
+        <dropDefaultValue tableName="condizione_consegna" columnName="dacr"/>
+        <dropDefaultValue tableName="condizione_consegna" columnName="duva"/>
+        <dropDefaultValue tableName="condizione_consegna" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-55">
+        <addDefaultValue tableName="configurazione_cnr" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="configurazione_cnr" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="configurazione_cnr" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/configurazione_cnr.csv" quotchar="&quot;" separator="," tableName="configurazione_cnr">
+            <column name="im01" type="NUMERIC"/>
+            <column name="im02" type="NUMERIC"/>
+            <column name="dt01" type="${date.type}"/>
+            <column name="dt02" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="configurazione_cnr" columnName="dacr"/>
+        <dropDefaultValue tableName="configurazione_cnr" columnName="duva"/>
+        <dropDefaultValue tableName="configurazione_cnr" columnName="esercizio"/>
+
+        <update tableName="configurazione_cnr">
+            <column name="esercizio" value="${liquibase.bootstrap.esercizio}"/>
+            <where>esercizio=-1</where>
+        </update>
+
+        <update tableName="configurazione_cnr">
+            <column name="im01" value="${liquibase.bootstrap.esercizio}"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='ESERCIZIO_SPECIALE' AND CD_CHIAVE_SECONDARIA='ESERCIZIO_PARTENZA'</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-56">
+        <addDefaultValue tableName="controllo_accesso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="controllo_accesso" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="controllo_accesso" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/controllo_accesso.csv" quotchar="&quot;" separator="," tableName="controllo_accesso"/>
+
+        <dropDefaultValue tableName="controllo_accesso" columnName="dacr"/>
+        <dropDefaultValue tableName="controllo_accesso" columnName="duva"/>
+        <dropDefaultValue tableName="controllo_accesso" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-57">
+        <addDefaultValue tableName="dipartimento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="dipartimento" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="dipartimento" columnName="dt_istituzione" defaultValueDate="${firstday}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/dipartimento.csv" quotchar="&quot;" separator="," tableName="dipartimento"/>
+
+        <dropDefaultValue tableName="dipartimento" columnName="dacr"/>
+        <dropDefaultValue tableName="dipartimento" columnName="duva"/>
+        <dropDefaultValue tableName="dipartimento" columnName="dt_istituzione"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-58">
+        <addDefaultValue tableName="dipartimento_peso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="dipartimento_peso" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="dipartimento_peso" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/dipartimento_peso.csv" quotchar="&quot;" separator="," tableName="dipartimento_peso"/>
+
+        <dropDefaultValue tableName="dipartimento_peso" columnName="dacr"/>
+        <dropDefaultValue tableName="dipartimento_peso" columnName="duva"/>
+        <dropDefaultValue tableName="dipartimento_peso" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-59">
+        <addDefaultValue tableName="divisa" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="divisa" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/divisa.csv" quotchar="&quot;" separator="," tableName="divisa"/>
+
+        <dropDefaultValue tableName="divisa" columnName="dacr"/>
+        <dropDefaultValue tableName="divisa" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-60">
+        <addDefaultValue tableName="elemento_voce" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="elemento_voce" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="elemento_voce" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+        <addDefaultValue tableName="elemento_voce" columnName="esercizio_cla_e" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+        <addDefaultValue tableName="elemento_voce" columnName="esercizio_cla_s" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/elemento_voce.csv" quotchar="&quot;" separator="," tableName="elemento_voce"/>
+
+        <dropDefaultValue tableName="elemento_voce" columnName="dacr"/>
+        <dropDefaultValue tableName="elemento_voce" columnName="duva"/>
+        <dropDefaultValue tableName="elemento_voce" columnName="esercizio"/>
+        <dropDefaultValue tableName="elemento_voce" columnName="esercizio_cla_e"/>
+        <dropDefaultValue tableName="elemento_voce" columnName="esercizio_cla_s"/>
+
+        <update tableName="elemento_voce">
+            <column name="esercizio_cla_e"/>
+            <where>cod_cla_e is null</where>
+        </update>
+        <update tableName="elemento_voce">
+            <column name="esercizio_cla_s"/>
+            <where>cod_cla_s is null</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-61">
+        <addDefaultValue tableName="esercizio" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="esercizio" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="esercizio" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/esercizio.csv" quotchar="&quot;" separator="," tableName="esercizio"/>
+
+        <dropDefaultValue tableName="esercizio" columnName="dacr"/>
+        <dropDefaultValue tableName="esercizio" columnName="duva"/>
+        <dropDefaultValue tableName="esercizio" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-62">
+        <addDefaultValue tableName="esercizio_base" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="esercizio_base" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="esercizio_base" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/esercizio_base.csv" quotchar="&quot;" separator="," tableName="esercizio_base"/>
+
+        <dropDefaultValue tableName="esercizio_base" columnName="dacr"/>
+        <dropDefaultValue tableName="esercizio_base" columnName="duva"/>
+        <dropDefaultValue tableName="esercizio_base" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-63">
+        <addDefaultValue tableName="funzione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="funzione" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/funzione.csv" quotchar="&quot;" separator="," tableName="funzione"/>
+
+        <dropDefaultValue tableName="funzione" columnName="dacr"/>
+        <dropDefaultValue tableName="funzione" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-64">
+        <addDefaultValue tableName="gruppo_cr" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="gruppo_cr" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="gruppo_cr" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/gruppo_cr.csv" quotchar="&quot;" separator="," tableName="gruppo_cr"/>
+
+        <dropDefaultValue tableName="gruppo_cr" columnName="dacr"/>
+        <dropDefaultValue tableName="gruppo_cr" columnName="duva"/>
+        <dropDefaultValue tableName="gruppo_cr" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-65">
+        <addDefaultValue tableName="gruppo_cr_det" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="gruppo_cr_det" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="gruppo_cr_det" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/gruppo_cr_det.csv" quotchar="&quot;" separator="," tableName="gruppo_cr_det"/>
+
+        <dropDefaultValue tableName="gruppo_cr_det" columnName="dacr"/>
+        <dropDefaultValue tableName="gruppo_cr_det" columnName="duva"/>
+        <dropDefaultValue tableName="gruppo_cr_det" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-66">
+        <addDefaultValue tableName="gruppo_file" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="gruppo_file" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/gruppo_file.csv" quotchar="&quot;" separator="," tableName="gruppo_file"/>
+
+        <dropDefaultValue tableName="gruppo_file" columnName="dacr"/>
+        <dropDefaultValue tableName="gruppo_file" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-67">
+        <addDefaultValue tableName="gruppo_inquadramento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="gruppo_inquadramento" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/gruppo_inquadramento.csv" quotchar="&quot;" separator="," tableName="gruppo_inquadramento"/>
+
+        <dropDefaultValue tableName="gruppo_inquadramento" columnName="dacr"/>
+        <dropDefaultValue tableName="gruppo_inquadramento" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-68">
+        <addDefaultValue tableName="gruppo_iva" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="gruppo_iva" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/gruppo_iva.csv" quotchar="&quot;" separator="," tableName="gruppo_iva"/>
+
+        <dropDefaultValue tableName="gruppo_iva" columnName="dacr"/>
+        <dropDefaultValue tableName="gruppo_iva" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-69">
+        <addDefaultValue tableName="help_lkt" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="help_lkt" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/help_lkt.csv" quotchar="&quot;" separator="," tableName="help_lkt"/>
+
+        <dropDefaultValue tableName="help_lkt" columnName="dacr"/>
+        <dropDefaultValue tableName="help_lkt" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-70">
+        <addDefaultValue tableName="linea_attivita" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="linea_attivita" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="linea_attivita" columnName="esercizio_inizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/linea_attivita.csv" quotchar="&quot;" separator="," tableName="linea_attivita"/>
+
+        <dropDefaultValue tableName="linea_attivita" columnName="dacr"/>
+        <dropDefaultValue tableName="linea_attivita" columnName="duva"/>
+        <dropDefaultValue tableName="linea_attivita" columnName="esercizio_inizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-71">
+        <addDefaultValue tableName="lunghezza_chiavi" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="lunghezza_chiavi" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/lunghezza_chiavi.csv" quotchar="&quot;" separator="," tableName="lunghezza_chiavi"/>
+
+        <dropDefaultValue tableName="lunghezza_chiavi" columnName="dacr"/>
+        <dropDefaultValue tableName="lunghezza_chiavi" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-72">
+        <addDefaultValue tableName="missione_abbattimenti" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="missione_abbattimenti" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/missione_abbattimenti.csv" quotchar="&quot;" separator="," tableName="missione_abbattimenti">
+            <column name="percentuale_abbattimento" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="missione_abbattimenti" columnName="dacr"/>
+        <dropDefaultValue tableName="missione_abbattimenti" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-73">
+        <addDefaultValue tableName="missione_diaria" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="missione_diaria" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/missione_diaria.csv" quotchar="&quot;" separator="," tableName="missione_diaria">
+            <column name="im_diaria" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="missione_diaria" columnName="dacr"/>
+        <dropDefaultValue tableName="missione_diaria" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-74">
+        <addDefaultValue tableName="missione_quota_esente" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="missione_quota_esente" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/missione_quota_esente.csv" quotchar="&quot;" separator="," tableName="missione_quota_esente">
+            <column name="quota_esente" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="missione_quota_esente" columnName="dacr"/>
+        <dropDefaultValue tableName="missione_quota_esente" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-75">
+        <addDefaultValue tableName="missione_quota_rimborso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="missione_quota_rimborso" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/missione_quota_rimborso.csv" quotchar="&quot;" separator="," tableName="missione_quota_rimborso">
+            <column name="im_rimborso" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="missione_quota_rimborso" columnName="dacr"/>
+        <dropDefaultValue tableName="missione_quota_rimborso" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-76">
+        <addDefaultValue tableName="missione_rimborso_km" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="missione_rimborso_km" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/missione_rimborso_km.csv" quotchar="&quot;" separator="," tableName="missione_rimborso_km">
+            <column name="indennita_chilometrica" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="missione_rimborso_km" columnName="dacr"/>
+        <dropDefaultValue tableName="missione_rimborso_km" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-77">
+        <addDefaultValue tableName="missione_tipo_pasto" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="missione_tipo_pasto" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/missione_tipo_pasto.csv" quotchar="&quot;" separator="," tableName="missione_tipo_pasto">
+            <column name="limite_max_pasto" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="missione_tipo_pasto" columnName="dacr"/>
+        <dropDefaultValue tableName="missione_tipo_pasto" columnName="duva"/>
+    </changeSet>
+    
+    <changeSet author="sigla" id="1516802834820-78">
+        <addDefaultValue tableName="missione_tipo_spesa" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="missione_tipo_spesa" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/missione_tipo_spesa.csv" quotchar="&quot;" separator="," tableName="missione_tipo_spesa">
+            <column name="quota_esente" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="missione_tipo_spesa" columnName="dacr"/>
+        <dropDefaultValue tableName="missione_tipo_spesa" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-79">
+        <addDefaultValue tableName="modalita_erogazione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="modalita_erogazione" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="modalita_erogazione" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/modalita_erogazione.csv" quotchar="&quot;" separator="," tableName="modalita_erogazione"/>
+
+        <dropDefaultValue tableName="modalita_erogazione" columnName="dacr"/>
+        <dropDefaultValue tableName="modalita_erogazione" columnName="duva"/>
+        <dropDefaultValue tableName="modalita_erogazione" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-80">
+        <addDefaultValue tableName="modalita_incasso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="modalita_incasso" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="modalita_incasso" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/modalita_incasso.csv" quotchar="&quot;" separator="," tableName="modalita_incasso"/>
+
+        <dropDefaultValue tableName="modalita_incasso" columnName="dacr"/>
+        <dropDefaultValue tableName="modalita_incasso" columnName="duva"/>
+        <dropDefaultValue tableName="modalita_incasso" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-81">
+        <addDefaultValue tableName="modalita_pagamento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="modalita_pagamento" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/modalita_pagamento.csv" quotchar="&quot;" separator="," tableName="modalita_pagamento"/>
+
+        <dropDefaultValue tableName="modalita_pagamento" columnName="dacr"/>
+        <dropDefaultValue tableName="modalita_pagamento" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-82">
+        <addDefaultValue tableName="modalita_trasporto" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="modalita_trasporto" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="modalita_trasporto" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/modalita_trasporto.csv" quotchar="&quot;" separator="," tableName="modalita_trasporto"/>
+
+        <dropDefaultValue tableName="modalita_trasporto" columnName="dacr"/>
+        <dropDefaultValue tableName="modalita_trasporto" columnName="duva"/>
+        <dropDefaultValue tableName="modalita_trasporto" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-83">
+        <addDefaultValue tableName="natura" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="natura" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/natura.csv" quotchar="&quot;" separator="," tableName="natura"/>
+
+        <dropDefaultValue tableName="natura" columnName="dacr"/>
+        <dropDefaultValue tableName="natura" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-84">
+        <addDefaultValue tableName="nazione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="nazione" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/nazione.csv" quotchar="&quot;" separator="," tableName="nazione"/>
+
+        <dropDefaultValue tableName="nazione" columnName="dacr"/>
+        <dropDefaultValue tableName="nazione" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-85">
+        <addDefaultValue tableName="nazione_blacklist" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="nazione_blacklist" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="nazione_blacklist" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/nazione_blacklist.csv" quotchar="&quot;" separator="," tableName="nazione_blacklist"/>
+
+        <dropDefaultValue tableName="nazione_blacklist" columnName="dacr"/>
+        <dropDefaultValue tableName="nazione_blacklist" columnName="duva"/>
+        <dropDefaultValue tableName="nazione_blacklist" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-86">
+        <addDefaultValue tableName="numerazione_base" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_base" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_base" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/numerazione_base.csv" quotchar="&quot;" separator="," tableName="numerazione_base"/>
+
+        <dropDefaultValue tableName="numerazione_base" columnName="dacr"/>
+        <dropDefaultValue tableName="numerazione_base" columnName="duva"/>
+        <dropDefaultValue tableName="numerazione_base" columnName="esercizio"/>
+
+        <update tableName="numerazione_base">
+            <column name="esercizio" value="${liquibase.bootstrap.esercizio}"/>
+            <where>esercizio=-1</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-87">
+        <addDefaultValue tableName="numerazione_coge_coan" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_coge_coan" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_coge_coan" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/numerazione_coge_coan.csv" quotchar="&quot;" separator="," tableName="numerazione_coge_coan"/>
+
+        <dropDefaultValue tableName="numerazione_coge_coan" columnName="dacr"/>
+        <dropDefaultValue tableName="numerazione_coge_coan" columnName="duva"/>
+        <dropDefaultValue tableName="numerazione_coge_coan" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-88">
+        <addDefaultValue tableName="numerazione_doc_amm" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_doc_amm" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_doc_amm" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/numerazione_doc_amm.csv" quotchar="&quot;" separator="," tableName="numerazione_doc_amm"/>
+
+        <dropDefaultValue tableName="numerazione_doc_amm" columnName="dacr"/>
+        <dropDefaultValue tableName="numerazione_doc_amm" columnName="duva"/>
+        <dropDefaultValue tableName="numerazione_doc_amm" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-89">
+        <addDefaultValue tableName="numerazione_doc_cont" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_doc_cont" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="numerazione_doc_cont" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/numerazione_doc_cont.csv" quotchar="&quot;" separator="," tableName="numerazione_doc_cont"/>
+
+        <dropDefaultValue tableName="numerazione_doc_cont" columnName="dacr"/>
+        <dropDefaultValue tableName="numerazione_doc_cont" columnName="duva"/>
+        <dropDefaultValue tableName="numerazione_doc_cont" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-90">
+        <addDefaultValue tableName="organo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="organo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/organo.csv" quotchar="&quot;" separator="," tableName="organo">
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="organo" columnName="dacr"/>
+        <dropDefaultValue tableName="organo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-91">
+        <addDefaultValue tableName="parametri_cds" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_cds" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_cds" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/parametri_cds.csv" quotchar="&quot;" separator="," tableName="parametri_cds"/>
+
+        <dropDefaultValue tableName="parametri_cds" columnName="dacr"/>
+        <dropDefaultValue tableName="parametri_cds" columnName="duva"/>
+        <dropDefaultValue tableName="parametri_cds" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-92">
+        <addDefaultValue tableName="parametri_cnr" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_cnr" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_cnr" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/parametri_cnr.csv" quotchar="&quot;" separator="," tableName="parametri_cnr">
+            <column name="data_stipula_contratti" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="parametri_cnr" columnName="dacr"/>
+        <dropDefaultValue tableName="parametri_cnr" columnName="duva"/>
+        <dropDefaultValue tableName="parametri_cnr" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-93">
+        <addDefaultValue tableName="parametri_ente" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_ente" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/parametri_ente.csv" quotchar="&quot;" separator="," tableName="parametri_ente"/>
+
+        <dropDefaultValue tableName="parametri_ente" columnName="dacr"/>
+        <dropDefaultValue tableName="parametri_ente" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-94">
+        <addDefaultValue tableName="parametri_livelli" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_livelli" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_livelli" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/parametri_livelli.csv" quotchar="&quot;" separator="," tableName="parametri_livelli"/>
+
+        <dropDefaultValue tableName="parametri_livelli" columnName="dacr"/>
+        <dropDefaultValue tableName="parametri_livelli" columnName="duva"/>
+        <dropDefaultValue tableName="parametri_livelli" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-95">
+        <addDefaultValue tableName="parametri_livelli_ep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_livelli_ep" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="parametri_livelli_ep" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/parametri_livelli_ep.csv" quotchar="&quot;" separator="," tableName="parametri_livelli_ep"/>
+
+        <dropDefaultValue tableName="parametri_livelli_ep" columnName="dacr"/>
+        <dropDefaultValue tableName="parametri_livelli_ep" columnName="duva"/>
+        <dropDefaultValue tableName="parametri_livelli_ep" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-96">
+        <addDefaultValue tableName="pdg_programma" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="pdg_programma" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/pdg_programma.csv" quotchar="&quot;" separator="," tableName="pdg_programma"/>
+
+        <dropDefaultValue tableName="pdg_programma" columnName="dacr"/>
+        <dropDefaultValue tableName="pdg_programma" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-97">
+        <addDefaultValue tableName="print_priority" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="print_priority" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/print_priority.csv" quotchar="&quot;" separator="," tableName="print_priority"/>
+
+        <dropDefaultValue tableName="print_priority" columnName="dacr"/>
+        <dropDefaultValue tableName="print_priority" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-98">
+        <addDefaultValue tableName="privilegio" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="privilegio" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/privilegio.csv" quotchar="&quot;" separator="," tableName="privilegio"/>
+
+        <dropDefaultValue tableName="privilegio" columnName="dacr"/>
+        <dropDefaultValue tableName="privilegio" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-99">
+        <addDefaultValue tableName="provincia" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="provincia" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/provincia.csv" quotchar="&quot;" separator="," tableName="provincia"/>
+
+        <dropDefaultValue tableName="provincia" columnName="dacr"/>
+        <dropDefaultValue tableName="provincia" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-100">
+        <addDefaultValue tableName="rapporto" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="rapporto" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/rapporto.csv" quotchar="&quot;" separator="," tableName="rapporto">
+            <column name="dt_ini_validita" type="${date.type}"/>
+            <column name="dt_fin_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="rapporto" columnName="dacr"/>
+        <dropDefaultValue tableName="rapporto" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-101">
+        <addDefaultValue tableName="regione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="regione" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/regione.csv" quotchar="&quot;" separator="," tableName="regione"/>
+
+        <dropDefaultValue tableName="regione" columnName="dacr"/>
+        <dropDefaultValue tableName="regione" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-102">
+        <addDefaultValue tableName="rif_aree_paesi_esteri" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="rif_aree_paesi_esteri" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/rif_aree_paesi_esteri.csv" quotchar="&quot;" separator="," tableName="rif_aree_paesi_esteri"/>
+
+        <dropDefaultValue tableName="rif_aree_paesi_esteri" columnName="dacr"/>
+        <dropDefaultValue tableName="rif_aree_paesi_esteri" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-103">
+        <addDefaultValue tableName="rif_inquadramento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="rif_inquadramento" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/rif_inquadramento.csv" quotchar="&quot;" separator="," tableName="rif_inquadramento"/>
+
+        <dropDefaultValue tableName="rif_inquadramento" columnName="dacr"/>
+        <dropDefaultValue tableName="rif_inquadramento" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-104">
+        <addDefaultValue tableName="rif_modalita_pagamento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="rif_modalita_pagamento" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/rif_modalita_pagamento.csv" quotchar="&quot;" separator="," tableName="rif_modalita_pagamento"/>
+
+        <dropDefaultValue tableName="rif_modalita_pagamento" columnName="dacr"/>
+        <dropDefaultValue tableName="rif_modalita_pagamento" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-105">
+        <addDefaultValue tableName="rif_termini_pagamento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="rif_termini_pagamento" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/rif_termini_pagamento.csv" quotchar="&quot;" separator="," tableName="rif_termini_pagamento"/>
+
+        <dropDefaultValue tableName="rif_termini_pagamento" columnName="dacr"/>
+        <dropDefaultValue tableName="rif_termini_pagamento" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-106">
+        <addDefaultValue tableName="ruolo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ruolo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ruolo.csv" quotchar="&quot;" separator="," tableName="ruolo"/>
+
+        <dropDefaultValue tableName="ruolo" columnName="dacr"/>
+        <dropDefaultValue tableName="ruolo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-107">
+        <addDefaultValue tableName="ruolo_accesso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ruolo_accesso" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/ruolo_accesso.csv" quotchar="&quot;" separator="," tableName="ruolo_accesso"/>
+
+        <dropDefaultValue tableName="ruolo_accesso" columnName="dacr"/>
+        <dropDefaultValue tableName="ruolo_accesso" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-108">
+        <addDefaultValue tableName="scaglione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="scaglione" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/scaglione.csv" quotchar="&quot;" separator="," tableName="scaglione">
+            <column name="im_inferiore" type="NUMERIC"/>
+            <column name="im_superiore" type="NUMERIC"/>
+            <column name="aliquota" type="NUMERIC"/>
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="scaglione" columnName="dacr"/>
+        <dropDefaultValue tableName="scaglione" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-109">
+        <addDefaultValue tableName="sezionale" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="sezionale" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="sezionale" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/sezionale.csv" quotchar="&quot;" separator="," tableName="sezionale"/>
+
+        <dropDefaultValue tableName="sezionale" columnName="dacr"/>
+        <dropDefaultValue tableName="sezionale" columnName="duva"/>
+        <dropDefaultValue tableName="sezionale" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-110">
+        <addDefaultValue tableName="terzo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="terzo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/terzo.csv" quotchar="&quot;" separator="," tableName="terzo"/>
+
+        <dropDefaultValue tableName="terzo" columnName="dacr"/>
+        <dropDefaultValue tableName="terzo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-111">
+        <addDefaultValue tableName="tipo_ammortamento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_ammortamento" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_ammortamento.csv" quotchar="&quot;" separator="," tableName="tipo_ammortamento"/>
+
+        <dropDefaultValue tableName="tipo_ammortamento" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_ammortamento" columnName="duva"/>
+    </changeSet> 
+
+    <changeSet author="sigla" id="1516802834820-112">
+        <addDefaultValue tableName="tipo_articolo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_articolo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_articolo.csv" quotchar="&quot;" separator="," tableName="tipo_articolo"/>
+
+        <dropDefaultValue tableName="tipo_articolo" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_articolo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-113">
+        <addDefaultValue tableName="tipo_atto_amministrativo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_atto_amministrativo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_atto_amministrativo.csv" quotchar="&quot;" separator="," tableName="tipo_atto_amministrativo"/>
+
+        <dropDefaultValue tableName="tipo_atto_amministrativo" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_atto_amministrativo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-114">
+        <addDefaultValue tableName="tipo_bollo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_bollo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_bollo.csv" quotchar="&quot;" separator="," tableName="tipo_bollo"/>
+
+        <dropDefaultValue tableName="tipo_bollo" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_bollo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-115">
+        <addDefaultValue tableName="tipo_carico_scarico" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_carico_scarico" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_carico_scarico.csv" quotchar="&quot;" separator="," tableName="tipo_carico_scarico"/>
+
+        <dropDefaultValue tableName="tipo_carico_scarico" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_carico_scarico" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-116">
+        <addDefaultValue tableName="tipo_contratto" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_contratto" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_contratto.csv" quotchar="&quot;" separator="," tableName="tipo_contratto"/>
+
+        <dropDefaultValue tableName="tipo_contratto" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_contratto" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-117">
+        <addDefaultValue tableName="tipo_contributo_ritenuta" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_contributo_ritenuta" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_contributo_ritenuta.csv" quotchar="&quot;" separator="," tableName="tipo_contributo_ritenuta">
+            <column name="dt_ini_validita" type="${date.type}"/>
+            <column name="dt_fin_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="tipo_contributo_ritenuta" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_contributo_ritenuta" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-118">
+        <addDefaultValue tableName="tipo_cr_base" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_cr_base" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_cr_base" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_cr_base.csv" quotchar="&quot;" separator="," tableName="tipo_cr_base"/>
+
+        <dropDefaultValue tableName="tipo_cr_base" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_cr_base" columnName="duva"/>
+        <dropDefaultValue tableName="tipo_cr_base" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-119">
+        <addDefaultValue tableName="tipo_documento_amm" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_documento_amm" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_documento_amm.csv" quotchar="&quot;" separator="," tableName="tipo_documento_amm"/>
+
+        <dropDefaultValue tableName="tipo_documento_amm" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_documento_amm" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-120">
+        <addDefaultValue tableName="tipo_documento_cont" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_documento_cont" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_documento_cont.csv" quotchar="&quot;" separator="," tableName="tipo_documento_cont"/>
+
+        <dropDefaultValue tableName="tipo_documento_cont" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_documento_cont" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-121">
+        <addDefaultValue tableName="tipo_linea_attivita" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_linea_attivita" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_linea_attivita.csv" quotchar="&quot;" separator="," tableName="tipo_linea_attivita"/>
+
+        <dropDefaultValue tableName="tipo_linea_attivita" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_linea_attivita" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-122">
+        <addDefaultValue tableName="tipo_missione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_missione" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_missione.csv" quotchar="&quot;" separator="," tableName="tipo_missione"/>
+
+        <dropDefaultValue tableName="tipo_missione" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_missione" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-123">
+        <addDefaultValue tableName="tipo_norma_perla" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_norma_perla" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_norma_perla.csv" quotchar="&quot;" separator="," tableName="tipo_norma_perla">
+            <column name="dt_tipo_norma" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="tipo_norma_perla" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_norma_perla" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-124">
+        <addDefaultValue tableName="tipo_obbligazione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_obbligazione" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_obbligazione.csv" quotchar="&quot;" separator="," tableName="tipo_obbligazione"/>
+
+        <dropDefaultValue tableName="tipo_obbligazione" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_obbligazione" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-125">
+        <addDefaultValue tableName="tipo_operazione_ord" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_operazione_ord" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_operazione_ord.csv" quotchar="&quot;" separator="," tableName="tipo_operazione_ord"/>
+
+        <dropDefaultValue tableName="tipo_operazione_ord" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_operazione_ord" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-126">
+        <addDefaultValue tableName="tipo_prestazione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_prestazione" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_prestazione.csv" quotchar="&quot;" separator="," tableName="tipo_prestazione"/>
+
+        <dropDefaultValue tableName="tipo_prestazione" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_prestazione" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-127">
+        <addDefaultValue tableName="tipo_prestazione_compenso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_prestazione_compenso" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_prestazione_compenso.csv" quotchar="&quot;" separator="," tableName="tipo_prestazione_compenso"/>
+
+        <dropDefaultValue tableName="tipo_prestazione_compenso" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_prestazione_compenso" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-128">
+        <addDefaultValue tableName="tipo_rapporto" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_rapporto" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_rapporto.csv" quotchar="&quot;" separator="," tableName="tipo_rapporto"/>
+
+        <dropDefaultValue tableName="tipo_rapporto" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_rapporto" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-129">
+        <addDefaultValue tableName="tipo_ruolo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_ruolo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_ruolo.csv" quotchar="&quot;" separator="," tableName="tipo_ruolo"/>
+
+        <dropDefaultValue tableName="tipo_ruolo" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_ruolo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-130">
+        <addDefaultValue tableName="tipo_sezionale" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_sezionale" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_sezionale.csv" quotchar="&quot;" separator="," tableName="tipo_sezionale"/>
+
+        <dropDefaultValue tableName="tipo_sezionale" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_sezionale" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-131">
+        <addDefaultValue tableName="tipo_trattamento" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_trattamento" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_trattamento.csv" quotchar="&quot;" separator="," tableName="tipo_trattamento">
+            <column name="dt_ini_validita" type="${date.type}"/>
+            <column name="dt_fin_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="tipo_trattamento" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_trattamento" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-132">
+        <addDefaultValue tableName="tipo_unita_organizzativa" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_unita_organizzativa" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_unita_organizzativa.csv" quotchar="&quot;" separator="," tableName="tipo_unita_organizzativa"/>
+
+        <dropDefaultValue tableName="tipo_unita_organizzativa" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_unita_organizzativa" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-133">
+        <addDefaultValue tableName="tipo_variazione" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_variazione" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_variazione" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipo_variazione.csv" quotchar="&quot;" separator="," tableName="tipo_variazione"/>
+
+        <dropDefaultValue tableName="tipo_variazione" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_variazione" columnName="duva"/>
+        <dropDefaultValue tableName="tipo_variazione" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-134">
+        <addDefaultValue tableName="tipologie_istat" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipologie_istat" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/tipologie_istat.csv" quotchar="&quot;" separator="," tableName="tipologie_istat"/>
+
+        <dropDefaultValue tableName="tipologie_istat" columnName="dacr"/>
+        <dropDefaultValue tableName="tipologie_istat" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-135">
+        <addDefaultValue tableName="trattamento_cori" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="trattamento_cori" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/trattamento_cori.csv" quotchar="&quot;" separator="," tableName="trattamento_cori">
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="trattamento_cori" columnName="dacr"/>
+        <dropDefaultValue tableName="trattamento_cori" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-136">
+        <addDefaultValue tableName="unita_misura" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="unita_misura" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/unita_misura.csv" quotchar="&quot;" separator="," tableName="unita_misura"/>
+
+        <dropDefaultValue tableName="unita_misura" columnName="dacr"/>
+        <dropDefaultValue tableName="unita_misura" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-137">
+        <addDefaultValue tableName="unita_organizzativa" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="unita_organizzativa" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="unita_organizzativa" columnName="esercizio_inizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/unita_organizzativa.csv" quotchar="&quot;" separator="," tableName="unita_organizzativa"/>
+
+        <dropDefaultValue tableName="unita_organizzativa" columnName="dacr"/>
+        <dropDefaultValue tableName="unita_organizzativa" columnName="duva"/>
+        <dropDefaultValue tableName="unita_organizzativa" columnName="esercizio_inizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-138">
+        <addDefaultValue tableName="utente" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/utente.csv" quotchar="&quot;" separator="," tableName="utente">
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="utente" columnName="dacr"/>
+        <dropDefaultValue tableName="utente" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-139">
+        <addDefaultValue tableName="utente_unita_accesso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente_unita_accesso" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/utente_unita_accesso.csv" quotchar="&quot;" separator="," tableName="utente_unita_accesso"/>
+
+        <dropDefaultValue tableName="utente_unita_accesso" columnName="dacr"/>
+        <dropDefaultValue tableName="utente_unita_accesso" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-140">
+        <addDefaultValue tableName="utente_unita_ruolo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente_unita_ruolo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/utente_unita_ruolo.csv" quotchar="&quot;" separator="," tableName="utente_unita_ruolo"/>
+
+        <dropDefaultValue tableName="utente_unita_ruolo" columnName="dacr"/>
+        <dropDefaultValue tableName="utente_unita_ruolo" columnName="duva"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-141">
+        <addDefaultValue tableName="voce_ep" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="voce_ep" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="voce_ep" columnName="esercizio" defaultValueDate="${liquibase.bootstrap.esercizio}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/voce_ep.csv" quotchar="&quot;" separator="," tableName="voce_ep"/>
+
+        <dropDefaultValue tableName="voce_ep" columnName="dacr"/>
+        <dropDefaultValue tableName="voce_ep" columnName="duva"/>
+        <dropDefaultValue tableName="voce_ep" columnName="esercizio"/>
+    </changeSet>
+
+    <changeSet author="sigla" id="1516802834820-142">
+        <addDefaultValue tableName="voce_iva" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="voce_iva" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/voce_iva.csv" quotchar="&quot;" separator="," tableName="voce_iva">
+            <column name="dt_inizio_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="voce_iva" columnName="dacr"/>
+        <dropDefaultValue tableName="voce_iva" columnName="duva"/>
+    </changeSet>    
+
+    <changeSet author="sigla" id="1516802834820-143">
+        <addDefaultValue tableName="log_registry" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="log_registry" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="bootstrap/csv/log_registry.csv" quotchar="&quot;" separator="," tableName="log_registry"/>
+
+        <dropDefaultValue tableName="log_registry" columnName="dacr"/>
+        <dropDefaultValue tableName="log_registry" columnName="duva"/>
+    </changeSet>    
+</databaseChangeLog>

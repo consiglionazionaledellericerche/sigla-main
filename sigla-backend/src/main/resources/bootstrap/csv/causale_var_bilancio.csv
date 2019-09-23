@@ -1,0 +1,10 @@
+CD_CAUSALE_VAR_BILANCIO,DS_CAUSALE_VAR_BILANCIO,TI_CAUSALE,UTCR,UTUV,PG_VER_REC
+"STO_ST_RES","Storno Stanziamento Residuo","U","SYSTEM","SYSTEM","1"
+"STO_S_PDG","Storno tra spese derivante da Storno al PDG","U","SYSTEM","SYSTEM","1"
+"VAR_PDG","Variazione spese derivante da Variazione al PDG","U","SYSTEM","SYSTEM","1"
+"PREL_FON","Prelievo da fondi derivante da Prelievo sul PDG","U","SYSTEM","SYSTEM","1"
+"RIP_AUT_EN","Ripartizione automatica entrate bilancio CNR","S","SYSTEM","SYSTEM","1"
+"S-storno","Storno tra capitoli di spesa","U","SYSTEM","SYSTEM","1"
+"E-storno","Storno tra capitoli di entrate","U","SYSTEM","SYSTEM","1"
+"Variazione","Variazione di bilancio","U","SYSTEM","SYSTEM","1"
+"ECO_ST_RES","Economia da Stanziamento Residuo","U","SYSTEM","SYSTEM","1"

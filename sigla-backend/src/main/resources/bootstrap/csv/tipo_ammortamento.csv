@@ -1,0 +1,7 @@
+CD_TIPO_AMMORTAMENTO,TI_AMMORTAMENTO,DS_TIPO_AMMORTAMENTO,PERC_PRIMO_ANNO,PERC_SUCCESSIVI,UTCR,UTUV,PG_VER_REC
+"1","O","Immobili",3,3,"SYSTEM","SYSTEM","1"
+"2","O","Mobili e Arredi",12,12,"SYSTEM","SYSTEM","1"
+"3","O","Macchine e Strumentazioni Scientifiche",20,20,"SYSTEM","SYSTEM","1"
+"4","O","Automezzi",25,25,"SYSTEM","SYSTEM","1"
+"5","O","Opere dell'ingegno (Software)",20,20,"SYSTEM","SYSTEM","1"
+"6","O","Altri mezzi di trasporto",25,25,"SYSTEM","SYSTEM","1"
