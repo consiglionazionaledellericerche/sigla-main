@@ -1,5 +1,0 @@
-"esercizio","cd_unita_funzionale","cd_chiave_primaria","cd_chiave_secondaria","val01","val02","val03","val04","im01","im02","dt01","dt02","dacr","utcr","duva","utuv","pg_ver_rec"
-"2018","*","BOLLO_VIRTUALE","DICITURA_PER_STAMPE","Esente da imposta di bollo DPR 642/72","NULL","NULL","NULL","NULL","NULL","NULL","NULL","2018-02-16T18:10:00.000","SIGLA","2018-02-16T18:10:00.000","SIGLA","1"
-"2018","*","BOLLO_VIRTUALE","ANNOTAZIONE_ASSOLVIMENTO","imposta di bollo assolta in modo virtuale ex DM 17/06/2014. Autorizzazione n° XXX del ...","NULL","NULL","NULL","NULL","NULL","NULL","NULL","2018-02-16T18:10:00.000","SIGLA","2018-02-16T18:10:00.000","SIGLA","1"
-"2018","*","BOLLO_VIRTUALE","IMPORTO_LIMITE","NULL","NULL","NULL","NULL",77.47,"NULL","NULL","NULL","2018-02-16T18:10:00.000","SIGLA","2018-02-16T18:10:00.000","SIGLA","1"
-"2018","*","BOLLO_VIRTUALE","CODICE_DOCUMENTO_FATTURA_ATTIVA","25","NULL","NULL","NULL","NULL","NULL","NULL","NULL","2018-02-16T18:10:00.000","SIGLA","2018-02-16T18:10:00.000","SIGLA","1"
