@@ -1,0 +1,6 @@
+CD_TI_PRESTAZIONE,DS_TI_PRESTAZIONE,FL_INCARICO,FL_CONTRATTO,FL_CONTROLLO_FONDI,UTCR,UTUV,PG_VER_REC
+"PSERV","Prestazione di Servizi","N","Y","N","SYSTEM","SYSTEM","1"
+"INC","Incarico di collaborazione","Y","N","Y","SYSTEM","SYSTEM","1"
+"FUNZ","Funzionario Onorario (riservato sede)","N","N","N","SYSTEM","SYSTEM","1"
+"GETT","Gettoni per commissioni concorsi/gare/organismi","N","N","N","SYSTEM","SYSTEM","1"
+"PCONT","Pagamenti da contenzioso (CTU, Avvocato controparte, ecc.)","N","N","N","SYSTEM","SYSTEM","1"
