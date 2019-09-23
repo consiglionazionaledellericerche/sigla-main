@@ -1,0 +1,2 @@
+CD_TIPO,DS_TIPO,FL_BINARIO,ROOT,UPD_CALLBACK,DEL_CALLBACK,UTCR,UTUV,PG_VER_REC
+"INT_CASS00","Interfaccia di ritorno cassiere","N","/cassiere/","CNRCTB750.carica_ext_cassiere","CNRCTB750.checkRemoveFile","SYSTEM","SYSTEM","1"

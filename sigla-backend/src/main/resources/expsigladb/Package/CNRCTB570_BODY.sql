@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
+CREATE OR REPLACE PACKAGE BODY "CNRCTB570" AS
  procedure annullaLiquidazione(aLGCori liquid_gruppo_cori%rowtype, aUser varchar2) is
   aLC liquid_cori%rowtype;
   aUOVERSACC unita_organizzativa%rowtype;

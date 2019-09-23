@@ -1,0 +1,7 @@
+CD_RUOLO,DS_RUOLO,CD_CDS,TIPO,UTCR,UTUV,PG_VER_REC
+"VISUALIZZAT","Visualizzazione di tutta l'applicazione","000","NULL","SYSTEM","SYSTEM","1"
+"ENTE","Funzioni ENTE","000","000000","SYSTEM","SYSTEM","1"
+"PDGPC","PDGP Compilatore","000","TUTTO","SYSTEM","SYSTEM","1"
+"PDGPH","PDGP Supervisore","000","TUTTO","SYSTEM","SYSTEM","1"
+"PDGPV","PDGP Valutatore","000","TUTTO","SYSTEM","SYSTEM","1"
+"TUTTO","Tutti gli accessi","000","TUTTO","SYSTEM","SYSTEM","1"
