@@ -3,6 +3,9 @@
 * Date 21/04/2006
 */
 package it.cnr.contab.pdg01.bulk;
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
@@ -231,22 +234,22 @@ public class Pdg_variazione_riga_gestBulk extends Pdg_variazione_riga_gestBase {
 				(getPdg_variazione().getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_POSITIVA_ISTITUTI_DIVERSI)||
 				 getPdg_variazione().getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO))) 
 			{
-				if (getIm_entrata().compareTo(Utility.ZERO)==-1 ||
-					getIm_spese_gest_accentrata_est().compareTo(Utility.ZERO)==-1 ||
-					getIm_spese_gest_decentrata_est().compareTo(Utility.ZERO)==-1 ||
-					getIm_spese_gest_accentrata_int().compareTo(Utility.ZERO)==-1 ||
-					getIm_spese_gest_decentrata_int().compareTo(Utility.ZERO)==-1) 
+				if (Optional.ofNullable(getIm_entrata()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==-1 ||
+					Optional.ofNullable(getIm_spese_gest_accentrata_est()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==-1 ||
+					Optional.ofNullable(getIm_spese_gest_decentrata_est()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==-1 ||
+					Optional.ofNullable(getIm_spese_gest_accentrata_int()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==-1 ||
+					Optional.ofNullable(getIm_spese_gest_decentrata_int()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==-1) 
 					throw new ValidationException("Non è possibile inserire valori negativi in una variazione a quadratura per maggiori entrate/spese.");
 			}
 			if (getPdg_variazione()!=null &&
 				(getPdg_variazione().getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_NEGATIVA_ISTITUTI_DIVERSI)||
 				 getPdg_variazione().getTipologia().equals(Tipo_variazioneBulk.VARIAZIONE_NEGATIVA_STESSO_ISTITUTO))) 
 			{
-				if (getIm_entrata().compareTo(Utility.ZERO)==1 ||
-					getIm_spese_gest_accentrata_est().compareTo(Utility.ZERO)==1 ||
-					getIm_spese_gest_decentrata_est().compareTo(Utility.ZERO)==1 ||
-					getIm_spese_gest_accentrata_int().compareTo(Utility.ZERO)==1 ||
-					getIm_spese_gest_decentrata_int().compareTo(Utility.ZERO)==1) 
+				if (Optional.ofNullable(getIm_entrata()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==1 ||
+					Optional.ofNullable(getIm_spese_gest_accentrata_est()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==1 ||
+					Optional.ofNullable(getIm_spese_gest_decentrata_est()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==1 ||
+					Optional.ofNullable(getIm_spese_gest_accentrata_int()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==1 ||
+					Optional.ofNullable(getIm_spese_gest_decentrata_int()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==1) 
 					throw new ValidationException("Non è possibile inserire valori positivi in una variazione a quadratura per minori entrate/spese.");
 			}
 	}
