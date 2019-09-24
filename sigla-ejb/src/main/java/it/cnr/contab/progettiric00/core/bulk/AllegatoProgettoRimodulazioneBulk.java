@@ -94,7 +94,7 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 		super.validate();
 		if (getObjectType() == null)
 			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
-		else if (this.isToBeCreated() || this.getNome().isEmpty())
+		else if (this.isToBeCreated() || this.getNome()==null || this.getNome().isEmpty())
 			this.setNome(this.constructNomeFile());
 	}
 }
