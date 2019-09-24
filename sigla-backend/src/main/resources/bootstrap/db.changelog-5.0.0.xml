@@ -2575,5 +2575,9 @@ TRASPORTO_AEREO"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-    </changeSet>    
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" runOnChange="true" id="create-view-v-saldi-voce-progetto">
+        <sqlFile dbms="oracle" path="../expsigladb/View/V_SALDI_VOCE_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
 </databaseChangeLog>
