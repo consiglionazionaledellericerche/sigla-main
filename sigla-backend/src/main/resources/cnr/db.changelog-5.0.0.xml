@@ -14,9 +14,14 @@
             <column name="val01" type="STRING" value="O5WZO8"/>
             <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_ENTE'</where>
         </update>
-        <update tableName="configurazione_cnr">
+        <update tableName="configurazione_cnr" dbms="oracle">
             <column name="val01" type="STRING" value="0000767"/>
             <column name="im01" type="NUMERIC" value="77,47"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_ENTE_BT'</where>
+        </update>
+        <update tableName="configurazione_cnr" dbms="postgres">
+            <column name="val01" type="STRING" value="0000767"/>
+            <column name="im01" type="NUMERIC" value="77.47"/>
             <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_ENTE_BT'</where>
         </update>
         <update tableName="configurazione_cnr">
