@@ -720,7 +720,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
     	if (Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance).map(Progetto_rimodulazioneBulk.class::cast)
     			.filter(el->el.isStatoProvvisorio())
     			.isPresent()){
-    		if (allegato.isRimodulazione() || allegato.isProroga() || allegato.isStampaAutomatica())
+    		if (allegato.isProroga() || allegato.isStampaAutomatica())
     			allegato.setDaNonEliminare(Boolean.TRUE);
     	} 
 	}
