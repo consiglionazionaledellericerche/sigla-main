@@ -701,8 +701,9 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		BigDecimal totaleUtilizzato = optPpe.get().getVociBilancioAssociate().stream()
 			  		.filter(el->!isAddVoceBilancio||Optional.ofNullable(el.getElemento_voce()).isPresent())
 			  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
+			  		.filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
 			  		.map(Ass_progetto_piaeco_voceBulk::getSaldoSpesa)
-			  		.map(V_saldi_voce_progettoBulk::getUtilizzatoAssestatoFinanziamento)
+			  		.map(el->Optional.ofNullable(el.getUtilizzatoAssestatoFinanziamento()).orElse(BigDecimal.ZERO))
 			  		.reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
 		
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(totaleUtilizzato)<0)
@@ -740,10 +741,11 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		BigDecimal totaleUtilizzato = optPpe.get().getVociBilancioAssociate().stream()
 			  		.filter(el->!isAddVoceBilancio||Optional.ofNullable(el.getElemento_voce()).isPresent())
 			  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
+			  		.filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
 			  		.map(Ass_progetto_piaeco_voceBulk::getSaldoSpesa)
-			  		.map(V_saldi_voce_progettoBulk::getUtilizzatoAssestatoCofinanziamento)
+			  		.map(el->Optional.ofNullable(el.getUtilizzatoAssestatoCofinanziamento()).orElse(BigDecimal.ZERO))
 			  		.reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
-		
+  		
 		if (optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(totaleUtilizzato)<0)
 			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore inferiore"
 					+ " all'importo già utilizzato ("
