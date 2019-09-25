@@ -1767,7 +1767,19 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			} else { //PROGETTO CON PIANO ECONOMICO
 				progetto.getAllDetailsProgettoPianoEconomico().stream()
 					.filter(el->el.getEsercizio_piano().compareTo(annoFrom)>=0).forEach(ppe->{
-		   			V_saldi_piano_econom_progettoBulk saldo;
+		            if (Optional.ofNullable(ppe.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<0)
+		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato del piano economico "+
+		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+		   	    				" non può essere negativo ("+
+			   	    			new EuroFormat().format(ppe.getIm_spesa_finanziato())+")!");
+
+		            if (Optional.ofNullable(ppe.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<0)
+		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato del piano economico "+
+		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+		   	    				" non può essere negativo ("+
+			   	    			new EuroFormat().format(ppe.getIm_spesa_cofinanziato())+")!");
+
+		            V_saldi_piano_econom_progettoBulk saldo;
 		   			try{
 		                saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
 		                        cercaSaldoPianoEconomico(ppe, "S");
@@ -1775,19 +1787,31 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			    		throw new ApplicationRuntimeException(e);
 			    	}    			
 		
-		   			Optional.ofNullable(saldo).filter(el->el.getDispResiduaFinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato del piano economico "+
-		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
-		   	    				" non può essere inferiore all'assestato spese 'fonti esterne' ("+
-		   	           			el.getAssestatoFinanziamento()+")!");
-					});
-		
-		  			Optional.ofNullable(saldo).filter(el->el.getDispResiduaCofinanziamento().compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-		   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato del piano economico "+
-		   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
-		   	    				" non può essere inferiore all'assestato spese 'fonti interne' e 'natura reimpiego' ("+
-		   	           			el.getAssestatoCofinanziamento()+")!");
-					});
+		   			if (Optional.ofNullable(saldo).isPresent()) {
+		   				BigDecimal imFinanziato = saldo.getImportoFin();
+		   				BigDecimal imCofinanziato = saldo.getImportoCofin();
+		   				
+		   				if (Optional.ofNullable(rimodulazione).isPresent()) {
+		   					imFinanziato = ppe.getIm_spesa_finanziato();
+		   					imCofinanziato = ppe.getIm_spesa_cofinanziato();
+		   				}
+		   				
+			   			Optional.ofNullable(imFinanziato)
+			   				.filter(el->el.subtract(saldo.getAssestatoFinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+			   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato del piano economico "+
+			   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+			   	    				" non può essere inferiore all'assestato spese 'fonti esterne' ("+
+			   	    				new EuroFormat().format(saldo.getAssestatoFinanziamento())+")!");
+						});
+			
+			   			Optional.ofNullable(imCofinanziato)
+		   					.filter(el->el.subtract(saldo.getAssestatoCofinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+			   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato del piano economico "+
+			   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+			   	    				" non può essere inferiore all'assestato spese 'fonti interne' e 'natura reimpiego' ("+
+			   	    				new EuroFormat().format(saldo.getAssestatoCofinanziamento())+")!");
+						});
+		   			}
 		   		});
 				
 				Voce_f_saldi_cdr_lineaHome saldiHome = (Voce_f_saldi_cdr_lineaHome)getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class);
