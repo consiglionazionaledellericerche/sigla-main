@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
+﻿CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
  procedure annullaLiquidazione(aLGCori liquid_gruppo_cori%rowtype, aUser varchar2) is
   aLC liquid_cori%rowtype;
   aUOVERSACC unita_organizzativa%rowtype;
@@ -818,7 +818,52 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
   aAccConScad varchar2(1):='Y';
   recParametriCNR PARAMETRI_CNR%Rowtype;
   TROVATO_DETTAGLIO_P_GIRO VARCHAR2(1);
+  SOMMA_OPPOSTA NUMBER;
 Begin
+
+
+/***************GGGGGGGGGGGGGGG PENSO CHE BISOGNA MODIFICARE QUESTA PARTE....DEVO SOMMARE GLI IMPORTI DI SEGNO INVERSO CHE TROVO SU CONTRIBUTO_RITENUTA CHE DEVO METTERE IN JOIN
+ CON LIQUID_GRUPPO_CORI_DET....POI L'IMPORTO IN VALORE ASSOLUTO LO DEVO SOMMARE ALL'IMPORTO LIQUIDATO E DEVO CREARE I DOCUMENTI CONTABILI E AMMINISTRATIVI DI SEGNO OPPOSTO...  
+ 
+Nel 2017 ci sono accertamenti e impegni in partita di giro sul cds dell'istituto per ogni compenso...questi vengono ribaltati a 0. 
+Nel 2018: 
+
+ nel caso di ammontare positivo nel 2018 viene creato un unico impegno a residuo tronco (con accertamento a 0) per tutti gli istituti...sulla uo 000.407......l'impegno viene registrato su liquid_gruppo_cori,
+e l'importo dell'impegno deriva dalla somma di tutte le liquidazioni positive degli istituti, somma che si può ricavare da questa select:
+
+
+select sum(im_liquidato)
+from liquid_gruppo_cori
+where
+ ESERCIZIO = 2018
+ AND cd_gruppo_cr = '1004'
+AND IM_LIQUIDATO > 0
+ AND cd_cds  != '000'
+ AND PG_LIQUIDAZIONE = 0
+ AND (ESERCIZIO_ORI_OBB_ACCENTR = 2017 or
+ ESERCIZIO_ORI_OBB_ACCENTR is null)
+
+ nel caso di ammontare negativo per ciascun istituto viene creato un accertamento a residuo tronco (con impegno a 0)...sulla uo 000.407...per ogni istituto che ha ritenute da versare...l'accertamento viene registrato su liquid_gruppo_centro_comp,
+e l'importo dell'accertamento deriva dalla somma algebrica di impegni e accertamenti dell'istituto, 
+
+le somme si possono ricavare da questa select:
+
+select sum(ammontare) from
+contributo_ritenuta c, liquid_gruppo_Cori_Det l
+where c.esercizio = l.esercizio_contributo_ritenuta and
+c.pg_compenso = l.pg_compenso and
+C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
+c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+l.ESERCIZIO = 2018 and
+l.cd_uo_origine = '014.000' and pg_liquidazione = 0 and
+l.cd_gruppo_cr = '1004'
+
+ 
+ 
+ 
+ CONTROLLARE BENE COME FA CON I GENERICI I MANDATI E LE REVERSALI.... FORSE DEVO MODIFICARE ANCHE ALTRO */
+
+
 
   if aAggregato.im_liquidato = 0 then
    -- ATTENZIONE!!! Se l'importo da liquidare è 0 non c'è niente da aggiornare al centro
@@ -850,6 +895,28 @@ Begin
 
       aObbPG:=null;
       aObbPGScad:=null;
+
+
+			select NVL(sum(ammontare),0) 
+			INTO SOMMA_OPPOSTA
+			from
+			contributo_ritenuta c, liquid_gruppo_Cori_Det l
+			where c.esercizio = l.esercizio_contributo_ritenuta and
+			c.pg_compenso = l.pg_compenso and
+			C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
+			c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+			l.CD_CDS = aAggregato.CD_CDS and
+			l.ESERCIZIO = aAggregato.esercizio and
+			l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
+			l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
+			l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
+			l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
+			l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
+			l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
+			l.CD_REGIONE = aAggregato.CD_REGIONE and
+			l.PG_COMUNE = aAggregato.PG_COMUNE and
+			C.AMMONTARE > 0;
+
       begin
        select distinct a.cd_elemento_voce
        into aCdEV
@@ -910,10 +977,79 @@ Begin
       aAcc.UTUV:=aUser;
       aAcc.PG_VER_REC:=1;
       aAcc.ESERCIZIO_COMPETENZA:=aAcc.ESERCIZIO;
-      aAcc.IM_ACCERTAMENTO:=abs(aAggregato.im_liquidato);
+      aAcc.IM_ACCERTAMENTO:=abs(aAggregato.im_liquidato) + SOMMA_OPPOSTA;
       CNRCTB040.CREAACCERTAMENTOPGIROTRONC(false,aAcc,aAccScad,aObbPG,aObbPGScad,trunc(aTSNow));
       aAccPG:=aAcc;
       aAccPGScad:=aAccScad;
+
+
+-- GG MODIFICA PER RIBALTARE ANCHE GLI IMPEGNI E NON CREARE SOLO GLI ACCERTAMENTI...IN QUESTO MODO IL FINE ANNO DEGLI IMPEGNI QUADRA CON L'INIZIO ANNO SUCCESSIVO
+
+      begin
+       select distinct a.cd_elemento_voce
+       into aCdEV
+       from ass_tipo_cori_ev a, tipo_cr_base b
+       where b.esercizio = aAggregato.esercizio
+         and b.cd_gruppo_cr = aAggregato.cd_gruppo_cr
+         and a.cd_contributo_ritenuta = b.cd_contributo_ritenuta
+         and a.esercizio = aAggregato.esercizio
+         and a.ti_gestione = CNRCTB001.GESTIONE_SPESE
+         and a.ti_appartenenza = CNRCTB001.APPARTENENZA_CNR;
+      exception when TOO_MANY_ROWS then
+         IBMERR001.RAISE_ERR_GENERICO('Esiste più di un conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr);
+             when NO_DATA_FOUND then
+               IBMERR001.RAISE_ERR_GENERICO('Conto finanziario associato a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non trovato');
+      end;
+      begin
+        select  *
+        into    elementoVoce
+        from    elemento_Voce
+        where esercizio = aAggregato.esercizio
+          and ti_appartenenza = CNRCTB001.APPARTENENZA_CNR
+          and ti_gestione = CNRCTB001.GESTIONE_SPESE
+          and cd_elemento_voce = aCdEV;
+      exception when NO_DATA_FOUND then
+        IBMERR001.RAISE_ERR_GENERICO('Codice voce '||aCdEV||' associata a CORI del gruppo '||aAggregato.cd_gruppo_cr||' non esistente');
+      end;
+
+      aObb:=null;
+      aObbScad:=null;
+      aObb.CD_CDS:=aUOVERSACC.cd_unita_padre;
+      aObb.ESERCIZIO:=aAggregato.esercizio;
+      if aL.da_esercizio_precedente = 'Y' then
+        aObb.ESERCIZIO_ORIGINALE:=aAggregato.esercizio - 1;
+        aObb.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_OBB_PGIRO_RES;
+        aObb.pg_obbligazione:=CNRCTB018.getNextNumDocCont(CNRCTB018.TI_DOC_OBB_PGIRO, aObb.ESERCIZIO_ORIGINALE, aObb.CD_CDS, aUser);
+      else
+        aObb.ESERCIZIO_ORIGINALE:=aAggregato.esercizio;
+        aObb.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_OBB_PGIRO;
+      end if;
+
+      aObb.CD_UNITA_ORGANIZZATIVA:=aUOVERSACC.cd_unita_organizzativa;
+      aObb.CD_CDS_ORIGINE:=aUOVERSACC.cd_unita_padre;
+      aObb.CD_UO_ORIGINE:=aUOVERSACC.cd_unita_organizzativa;
+      aObb.TI_APPARTENENZA:=elementoVoce.TI_APPARTENENZA;
+      aObb.TI_GESTIONE:=elementoVoce.TI_GESTIONE;
+      -- Utilizzo come conto il primo conto che trovo di un CORI appartenente al gruppo
+      aObb.CD_ELEMENTO_VOCE:=aCdEV;
+      aObb.CD_VOCE:=elementoVoce.cd_elemento_voce;
+      aObb.DT_REGISTRAZIONE:=TRUNC(aDateCont);
+      aObb.DS_OBBLIGAZIONE:='CORI-VA compensazione per il segno opposto gruppo cr:'||aAggregato.cd_gruppo_cr||'.'||aAggregato.cd_regione||'.'||aAggregato.pg_comune;
+      aObb.NOTE_OBBLIGAZIONE:='';
+      aObb.CD_TERZO:=aCdTerzoAcc_unica;
+      aObb.FL_PGIRO:='Y';
+      aObb.RIPORTATO:='N';
+      aObb.DACR:=aTSNow;
+      aObb.UTCR:=aUser;
+      aObb.DUVA:=aTSNow;
+      aObb.UTUV:=aUser;
+      aObb.PG_VER_REC:=1;
+      aObb.ESERCIZIO_COMPETENZA:=aObb.ESERCIZIO;
+      aObb.IM_OBBLIGAZIONE:=SOMMA_OPPOSTA;
+      CNRCTB030.CREAOBBLIGAZIONEPGIROTRONC(false,aObb,aObbScad,aAcc,aAccScad,trunc(aTSNow));
+      aObbPG:=aObb;
+      aObbPGScad:=aObbScad;
+
       TROVATO_DETTAGLIO_P_GIRO := 'N';
 begin
       For i in 1..Nvl(tb_ass_pgiro.Count,0) Loop
@@ -944,6 +1080,7 @@ end;
          IBMERR001.RAISE_ERR_GENERICO('Per il cds '||aAggregato.cd_cds||', l''esercizio '||aAggregato.esercizio||', la UO '||aAggregato.cd_unita_organizzativa||', la liquidazione '||aAggregato.pg_liquidazione||
               ', il gruppo '||aAggregato.cd_gruppo_cr||', la regione '||aAggregato.cd_regione||', il comune '||aAggregato.pg_comune||' non è stata trovata la partita di giro di dettaglio');
       END IF;     
+
     ELSE
       aAccPG:=null;
       aAccPGScad:=null;
@@ -2101,6 +2238,7 @@ end;
             -- e crearla sempre tronca sulla UO di versamento (999.000)
             If aCdUo = aUOVERSCONTOBI.cd_unita_organizzativa 
 --GG CONDIZIONE AGGIUNTA PER EVITARE LA PARTITA DI GIRO DALLA 000.407 ALLA 999.000            
+-- da qui non dovrebbe passare più
             and aUOVERSACC.cd_unita_organizzativa != aUOVERSCONTOBI.cd_unita_organizzativa then
                   --prendo la pgiro duale (e verifico che sia effettivamente chiusa prima di renderla tronca)
                   --aObbOld.cd_cds:=aGruppoCentro.cd_cds_obb_accentr;
