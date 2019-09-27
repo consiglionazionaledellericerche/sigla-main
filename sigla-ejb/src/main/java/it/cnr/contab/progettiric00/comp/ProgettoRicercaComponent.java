@@ -1788,29 +1788,40 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			    	}    			
 		
 		   			if (Optional.ofNullable(saldo).isPresent()) {
-		   				BigDecimal imFinanziato = saldo.getImportoFin();
-		   				BigDecimal imCofinanziato = saldo.getImportoCofin();
-		   				
 		   				if (Optional.ofNullable(rimodulazione).isPresent()) {
-		   					imFinanziato = ppe.getIm_spesa_finanziato();
-		   					imCofinanziato = ppe.getIm_spesa_cofinanziato();
-		   				}
+		   					Optional.ofNullable(ppe.getIm_spesa_finanziato())
+				   				.filter(el->el.subtract(saldo.getUtilizzatoAssestatoFinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+				   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato rimodulato del piano economico "+
+				   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+				   	    				" non può essere inferiore all'utilizzato spese 'fonti esterne' ("+
+				   	    				new EuroFormat().format(saldo.getUtilizzatoAssestatoFinanziamento())+")!");
+							});
+				
+				   			Optional.ofNullable(ppe.getIm_spesa_cofinanziato())
+			   					.filter(el->el.subtract(saldo.getUtilizzatoAssestatoCofinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+				   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato rimodulato del piano economico "+
+				   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+				   	    				" non può essere inferiore all'utilizzato spese 'fonti interne' e 'natura reimpiego' ("+
+				   	    				new EuroFormat().format(saldo.getUtilizzatoAssestatoCofinanziamento())+")!");
+							});
 		   				
-			   			Optional.ofNullable(imFinanziato)
-			   				.filter(el->el.subtract(saldo.getAssestatoFinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-			   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato del piano economico "+
-			   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
-			   	    				" non può essere inferiore all'assestato spese 'fonti esterne' ("+
-			   	    				new EuroFormat().format(saldo.getAssestatoFinanziamento())+")!");
-						});
-			
-			   			Optional.ofNullable(imCofinanziato)
-		   					.filter(el->el.subtract(saldo.getAssestatoCofinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
-			   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato del piano economico "+
-			   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
-			   	    				" non può essere inferiore all'assestato spese 'fonti interne' e 'natura reimpiego' ("+
-			   	    				new EuroFormat().format(saldo.getAssestatoCofinanziamento())+")!");
-						});
+		   				} else {
+		   					Optional.ofNullable(saldo.getImportoFin())
+				   				.filter(el->el.subtract(saldo.getAssestatoFinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+				   	           	throw new ApplicationRuntimeException("Attenzione: l'importo finanziato del piano economico "+
+				   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+				   	    				" non può essere inferiore all'assestato spese 'fonti esterne' ("+
+				   	    				new EuroFormat().format(saldo.getAssestatoFinanziamento())+")!");
+							});
+				
+				   			Optional.ofNullable(saldo.getImportoCofin())
+			   					.filter(el->el.subtract(saldo.getAssestatoCofinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
+				   	           	throw new ApplicationRuntimeException("Attenzione: l'importo cofinanziato del piano economico "+
+				   	    				ppe.getEsercizio_piano()+"/"+ppe.getCd_voce_piano()+
+				   	    				" non può essere inferiore all'assestato spese 'fonti interne' e 'natura reimpiego' ("+
+				   	    				new EuroFormat().format(saldo.getAssestatoCofinanziamento())+")!");
+							});
+			   			}
 		   			}
 		   		});
 				

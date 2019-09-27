@@ -1,11 +1,13 @@
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -84,8 +86,40 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 			name.add("PRG");
 		if (this.isStampaAutomatica())	
 			name.add("AUT");
-		if (this.isGenerico())	
+		if (this.isGenerico()) {
 			name.add("GEN");
+
+			name.add(
+				Optional.ofNullable(this.getNome())
+						.filter(el->!el.isEmpty())
+						.filter(el->el.indexOf("GEN")>=0)
+						.map(el->el.substring(el.length() - 3, el.length()))
+						.orElseGet(()->{
+							return Optional.ofNullable(this.getRimodulazione())
+							    .flatMap(el->Optional.ofNullable(el.getArchivioAllegati()))
+								.map(el->el.stream())
+								.orElse(Stream.empty())
+								.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+								.map(AllegatoProgettoRimodulazioneBulk.class::cast)
+								.filter(AllegatoProgettoRimodulazioneBulk::isGenerico)
+								.filter(el->Optional.ofNullable(el.getNome()).isPresent())
+								.map(AllegatoProgettoRimodulazioneBulk::getNome)
+								.map(el->el.substring(el.length() - 3, el.length()))
+								.filter(el->{
+									try {
+										Integer.valueOf(el);
+										return true;
+									}catch (NumberFormatException e){
+										return false;
+									}
+								})
+								.map(Integer::valueOf)
+								.max(Comparator.comparing(Integer::valueOf))
+								.map(el->el+1)
+								.map(el->StringUtils.leftPad(el.toString(), 3, "0"))
+								.orElse("001");
+						}));
+		}
 		return name.toString();
 	}
 
