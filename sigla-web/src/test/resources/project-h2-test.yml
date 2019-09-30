@@ -2,13 +2,6 @@ logger:
   level: DEBUG
 
 thorntail:
-  arquillian:
-    daemon:
-      port: 12346
-  network:
-    socket-binding-groups:
-      standard-sockets:
-        default-interface: public
   datasources:
     jdbc-drivers:
       h2:
