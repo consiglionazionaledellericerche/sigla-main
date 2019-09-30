@@ -8,7 +8,6 @@ thorntail:
   network:
     socket-binding-groups:
       standard-sockets:
-        port-offset: 10
         default-interface: public
   datasources:
     jdbc-drivers:
