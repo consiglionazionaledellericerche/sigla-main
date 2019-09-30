@@ -45,7 +45,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
-		<maven.javadoc.skip>true</maven.javadoc.skip>
 		<liquibase.version>3.5.3</liquibase.version>
 		<pdfbox.version>2.0.0</pdfbox.version>
 		<storage.cloud.version>1.0.5</storage.cloud.version>
@@ -71,6 +70,16 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
   <scm>
     <connection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</connection>
