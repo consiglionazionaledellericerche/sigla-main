@@ -43,11 +43,10 @@ public class ActionDeployments extends Deployments {
          */
         Boolean pageSourceNotFound = true;
         Integer iterate = 0;
-        while(pageSourceNotFound && iterate < 120) {
+        while(pageSourceNotFound && iterate < 60) {
             TimeUnit.SECONDS.sleep(5);
             browser.navigate().to(deploymentURL.toString().concat("/Login.do"));
             pageSourceNotFound = browser.getPageSource().contains("404 - Not Found");
-            System.out.println(deploymentURL.toString().concat("/Login.do") + " iterate" + iterate);
             iterate++;
         }
         browser.switchTo().frame("desktop");
