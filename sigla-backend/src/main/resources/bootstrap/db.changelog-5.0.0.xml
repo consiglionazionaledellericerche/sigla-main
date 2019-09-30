@@ -1,4 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1162,9 +1179,9 @@
             <column name="fl_all_prev_fin" remarks="Previsione totale quota finanziata" type="CHAR(1)" />
         </addColumn>
         <update tableName="tipo_finanziamento">
-            <column name="fl_all_prev_fin" value='Y' type="CHAR(1)"/>
+            <column name="fl_all_prev_fin" value='Y' type="CHAR(1)" />
         </update>
-        <addNotNullConstraint columnName="fl_all_prev_fin" tableName="tipo_finanziamento"/>
+        <addNotNullConstraint columnName="fl_all_prev_fin" tableName="tipo_finanziamento" columnDataType="CHAR(1)"/>
 
         <addColumn tableName="voce_piano_economico_prg">
             <column name="fl_all_prev_fin" remarks="Previsione totale quota finanziata" type="CHAR(1)" />
@@ -1172,7 +1189,7 @@
         <update tableName="voce_piano_economico_prg">
             <column name="fl_all_prev_fin" value='Y' type="CHAR(1)"/>
         </update>
-        <addNotNullConstraint columnName="fl_all_prev_fin" tableName="voce_piano_economico_prg"/>
+        <addNotNullConstraint columnName="fl_all_prev_fin" tableName="voce_piano_economico_prg" columnDataType="CHAR(1)"/>
     </changeSet>
 
     <changeSet id="voce_menu_tipo_progetto" author="marco.spasiano">
@@ -1349,8 +1366,12 @@
     <changeSet author="rosangela.pucciarelli" id="create-table-flusso-giornale-cassa">
         <createTable remarks="Tabella contenente la testata del flusso della giornaliera." tableName="flusso_giornale_di_cassa">
             <column name="codice_abi_bt"  type="BIGINT"/>
-            <column name="esercizio"  type="INT"/>
-            <column name="identificativo_flusso" type="VARCHAR(50)"/>
+            <column name="esercizio"  type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identificativo_flusso" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
             <column name="data_ora_creazione_flusso" type="DATE"/>
             <column name="data_inizio_periodo_rif" type="DATE"/>
             <column name="data_fine_periodo_rif" type="DATE"/>
@@ -1400,9 +1421,15 @@
         <addPrimaryKey columnNames="esercizio,identificativo_flusso" constraintName="px_flusso_giornale_di_cassa" tableName="flusso_giornale_di_cassa"/>
 
         <createTable remarks="Tabella contenente i conti presenti nel flusso della giornaliera." tableName="informazioni_conto_evidenza">
-            <column name="esercizio" type="INT"/>
-            <column name="identificativo_flusso" type="VARCHAR(50)"/>
-            <column name="conto_evidenza" type="VARCHAR(20)"/>
+            <column name="esercizio" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identificativo_flusso" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="conto_evidenza" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
             <column name="descrizione_conto_evidenza" type="VARCHAR(50)"/>
             <column name="saldo_precedente_conto_evid" type="numeric(15, 2)"/>
             <column name="totale_entrate_conto_evidenza" type="numeric(15, 2)"/>
@@ -1433,11 +1460,21 @@
         </createIndex>
         
         <createTable remarks="Tabella contenente il dettaglio dei movimenti dei conti presenti nel flusso della giornaliera." tableName="movimento_conto_evidenza">
-            <column name="esercizio" type="INT"/>
-            <column name="identificativo_flusso" type="VARCHAR(50)"/>
-            <column name="progressivo" type="BIGINT"/>
-            <column name="conto_evidenza" type="VARCHAR(20)"/>
-            <column name="stato" type="CHAR(1)"/>
+            <column name="esercizio" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identificativo_flusso" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="progressivo" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="conto_evidenza" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stato" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
             <column name="tipo_movimento" type="VARCHAR(10)"/>
             <column name="tipo_documento" type="VARCHAR(20)"/>
             <column name="tipo_operazione" type="VARCHAR(20)"/>
@@ -2432,7 +2469,8 @@ TRASPORTO_AEREO"/>
     <changeSet author="gianfranco.gasparro" id="remove-table-contratto-not-null-fig-giur-est">
 	    <dropNotNullConstraint 
             columnName="fig_giur_est"
-            tableName="contratto"/>
+            tableName="contratto"
+            columnDataType="INT"/>
     </changeSet>
 
     <changeSet author="marco.spasiano" id="add-accesso-variazione-mandati">
@@ -2459,16 +2497,16 @@ TRASPORTO_AEREO"/>
     </changeSet>
 
     <changeSet author="gianfranco.gasparro" id="alter_movimenti_mag_drop_dup_columns">
-        <dropIndex indexName="FX_FX_MOVIMENTI_MAG05" tableName="movimenti_mag"/>
-        <dropIndex indexName="FX_MOVIMENTI_MAG01" tableName="movimenti_mag"/>
-        <dropIndex indexName="FX_MOVIMENTI_MAG04" tableName="movimenti_mag"/>
-        <dropIndex indexName="FX_MOVIMENTI_MAG07" tableName="movimenti_mag"/>
-        <dropIndex indexName="FX_MOVIMENTI_MAG11" tableName="movimenti_mag"/>
         <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK01"/>
         <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK04"/>
         <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK05"/>
         <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK07"/>
         <dropForeignKeyConstraint baseTableName="movimenti_mag" constraintName="MOVIMENTI_MAG_FK11"/>
+        <dropIndex indexName="FX_FX_MOVIMENTI_MAG05" tableName="movimenti_mag"/>
+        <dropIndex indexName="FX_MOVIMENTI_MAG01" tableName="movimenti_mag"/>
+        <dropIndex indexName="FX_MOVIMENTI_MAG04" tableName="movimenti_mag"/>
+        <dropIndex indexName="FX_MOVIMENTI_MAG07" tableName="movimenti_mag"/>
+        <dropIndex indexName="FX_MOVIMENTI_MAG11" tableName="movimenti_mag"/>
 
         <dropColumn columnName="CD_CDS_ORDINE" tableName="movimenti_mag"/>
         <dropColumn columnName="CD_UNITA_OPERATIVA_ORDINE" tableName="movimenti_mag"/>
@@ -2489,14 +2527,14 @@ TRASPORTO_AEREO"/>
     </changeSet>
     
     <changeSet author="gianfranco.gasparro" id="alter_bolla_scarico_riga_mag_drop_dup_columns">
-        <dropIndex indexName="FX_FX_BOLLA_SCARICO_RIGA_MAG02" tableName="bolla_scarico_riga_mag"/>
-        <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG00" tableName="bolla_scarico_riga_mag"/>
-        <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG01" tableName="bolla_scarico_riga_mag"/>
-        <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG04" tableName="bolla_scarico_riga_mag"/>
         <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK00"/>
         <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK01"/>
         <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK02"/>
         <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK04"/>
+        <dropIndex indexName="FX_FX_BOLLA_SCARICO_RIGA_MAG02" tableName="bolla_scarico_riga_mag"/>
+        <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG00" tableName="bolla_scarico_riga_mag"/>
+        <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG01" tableName="bolla_scarico_riga_mag"/>
+        <dropIndex indexName="FX_BOLLA_SCARICO_RIGA_MAG04" tableName="bolla_scarico_riga_mag"/>
 
         <dropColumn columnName="CD_CDS_ORDINE" tableName="bolla_scarico_riga_mag"/>
         <dropColumn columnName="CD_UNITA_OPERATIVA" tableName="bolla_scarico_riga_mag"/>

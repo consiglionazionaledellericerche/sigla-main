@@ -1,4 +1,21 @@
 /*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/*
  * Created on 22-nov-04
  * Table Metadata Model
  */
@@ -8,8 +25,7 @@ import it.cnr.contab.generator.artifacts.ForeignKey;
 import it.cnr.contab.generator.artifacts.Tags;
 import it.cnr.contab.generator.properties.Preferences;
 import it.cnr.contab.generator.util.DatabaseUtil;
-import oracle.jdbc.driver.OracleConnection;
-import oracle.jdbc.driver.T4CXAConnection;
+import oracle.jdbc.OracleConnection;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -48,7 +64,6 @@ public class TableMetaData {
                 .ifPresent(oracleConnection -> {
                     oracleConnection.setRemarksReporting(true);
                 });
-
         //oc.setRemarksReporting(true);
 
         String schema = bean.getSchema();

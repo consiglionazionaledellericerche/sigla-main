@@ -1,4 +1,21 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <changeSet author="sigla" runOnChange="true" id="create-view-CNR_IFAC_DETT_OBBLIGAZIONI">
         <sqlFile dbms="oracle" path="../expsigladb/View/CNR_IFAC_DETT_OBBLIGAZIONI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
@@ -29,9 +46,6 @@
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="create-view-ELENCO_CF">
         <sqlFile dbms="oracle" path="../expsigladb/View/ELENCO_CF.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
-    </changeSet>
-    <changeSet author="sigla" runOnChange="true" id="create-view-FATTURE_BREVETTI">
-        <sqlFile dbms="oracle" path="../expsigladb/View/FATTURE_BREVETTI.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="create-view-FATTURE_BREVETTI_ATTIVE">
         <sqlFile dbms="oracle" path="../expsigladb/View/FATTURE_BREVETTI_ATTIVE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
@@ -1990,7 +2004,7 @@
             v_esercizi b
             WHERE ((b.esercizio &gt;= a.esercizio_inizio) AND (b.esercizio &lt;= a.esercizio_fine));</createView>
     </changeSet>
-    <changeSet dbms="h2, postgresql" author="sigla" runOnChange="true" id="createView-v_unita_organizzativa">
+    <changeSet dbms="postgresql" author="sigla" runOnChange="true" id="createView-v_unita_organizzativa">
         <createView fullDefinition="false" viewName="v_unita_organizzativa"> SELECT uo_cds.cd_unita_organizzativa AS cd_uo,
             unita_organizzativa.esercizio,
             unita_organizzativa.esercizio_inizio,
@@ -2111,7 +2125,147 @@
             FROM v_unita_organizzativa_valida unita_organizzativa
             WHERE ((unita_organizzativa.fl_rubrica = 'N'::bpchar) AND ((unita_organizzativa.cd_tipo_unita)::text = 'SAC'::text));</createView>
     </changeSet>
-    <changeSet dbms="h2, postgresql" author="sigla" runOnChange="true" id="createView-v_utente_unita_organizzativa">
+    <changeSet dbms="h2" author="sigla" runOnChange="true" id="createView-v_unita_organizzativa-h2">
+        <createView fullDefinition="false" viewName="v_unita_organizzativa"> SELECT uo_cds.cd_unita_organizzativa AS cd_uo,
+            unita_organizzativa.esercizio,
+            unita_organizzativa.esercizio_inizio,
+            unita_organizzativa.cd_unita_organizzativa,
+            unita_organizzativa.cd_proprio_unita,
+            unita_organizzativa.cd_tipo_unita,
+            unita_organizzativa.fl_cds,
+            unita_organizzativa.fl_uo_cds,
+            unita_organizzativa.fl_rubrica,
+            unita_organizzativa.cd_unita_padre,
+            unita_organizzativa.livello,
+            unita_organizzativa.ds_unita_organizzativa,
+            unita_organizzativa.prc_copertura_obblig_2,
+            unita_organizzativa.prc_copertura_obblig_3,
+            unita_organizzativa.dacr,
+            unita_organizzativa.cd_area_ricerca,
+            unita_organizzativa.fl_presidente_area,
+            unita_organizzativa.cd_responsabile,
+            unita_organizzativa.utcr,
+            unita_organizzativa.duva,
+            unita_organizzativa.cd_responsabile_amm,
+            unita_organizzativa.utuv,
+            unita_organizzativa.pg_ver_rec,
+            unita_organizzativa.esercizio_fine,
+            unita_organizzativa.cd_area_scientifica,
+            unita_organizzativa.id_funzione_pubblica
+            FROM v_unita_organizzativa_valida unita_organizzativa,
+            v_unita_organizzativa_valida uo_cds
+            WHERE ((uo_cds.fl_uo_cds = 'Y')
+                AND ((uo_cds.cd_tipo_unita) &lt;&gt; 'SAC')
+                AND ((unita_organizzativa.cd_unita_padre) = (uo_cds.cd_unita_padre)))
+            UNION ALL
+            SELECT unita_organizzativa.cd_unita_organizzativa AS cd_uo,
+            unita_organizzativa.esercizio,
+            unita_organizzativa.esercizio_inizio,
+            unita_organizzativa.cd_unita_organizzativa,
+            unita_organizzativa.cd_proprio_unita,
+            unita_organizzativa.cd_tipo_unita,
+            unita_organizzativa.fl_cds,
+            unita_organizzativa.fl_uo_cds,
+            unita_organizzativa.fl_rubrica,
+            unita_organizzativa.cd_unita_padre,
+            unita_organizzativa.livello,
+            unita_organizzativa.ds_unita_organizzativa,
+            unita_organizzativa.prc_copertura_obblig_2,
+            unita_organizzativa.prc_copertura_obblig_3,
+            unita_organizzativa.dacr,
+            unita_organizzativa.cd_area_ricerca,
+            unita_organizzativa.fl_presidente_area,
+            unita_organizzativa.cd_responsabile,
+            unita_organizzativa.utcr,
+            unita_organizzativa.duva,
+            unita_organizzativa.cd_responsabile_amm,
+            unita_organizzativa.utuv,
+            unita_organizzativa.pg_ver_rec,
+            unita_organizzativa.esercizio_fine,
+            unita_organizzativa.cd_area_scientifica,
+            unita_organizzativa.id_funzione_pubblica
+            FROM v_unita_organizzativa_valida unita_organizzativa
+            WHERE ((unita_organizzativa.fl_uo_cds = 'N')
+                AND ((unita_organizzativa.cd_tipo_unita) &lt;&gt; 'SAC'))
+            UNION ALL
+            SELECT uo_rubrica.cd_unita_organizzativa AS cd_uo,
+            unita_organizzativa.esercizio,
+            unita_organizzativa.esercizio_inizio,
+            unita_organizzativa.cd_unita_organizzativa,
+            unita_organizzativa.cd_proprio_unita,
+            unita_organizzativa.cd_tipo_unita,
+            unita_organizzativa.fl_cds,
+            unita_organizzativa.fl_uo_cds,
+            unita_organizzativa.fl_rubrica,
+            unita_organizzativa.cd_unita_padre,
+            unita_organizzativa.livello,
+            unita_organizzativa.ds_unita_organizzativa,
+            unita_organizzativa.prc_copertura_obblig_2,
+            unita_organizzativa.prc_copertura_obblig_3,
+            unita_organizzativa.dacr,
+            unita_organizzativa.cd_area_ricerca,
+            unita_organizzativa.fl_presidente_area,
+            unita_organizzativa.cd_responsabile,
+            unita_organizzativa.utcr,
+            unita_organizzativa.duva,
+            unita_organizzativa.cd_responsabile_amm,
+            unita_organizzativa.utuv,
+            unita_organizzativa.pg_ver_rec,
+            unita_organizzativa.esercizio_fine,
+            unita_organizzativa.cd_area_scientifica,
+            unita_organizzativa.id_funzione_pubblica
+            FROM v_unita_organizzativa_valida unita_organizzativa,
+            v_unita_organizzativa_valida uo_rubrica,
+            v_cdr_valido cdr,
+            v_cdr_valido cdr_rubrica
+            WHERE ((uo_rubrica.esercizio = unita_organizzativa.esercizio)
+                AND (cdr.esercizio = unita_organizzativa.esercizio)
+                AND (cdr_rubrica.esercizio = unita_organizzativa.esercizio)
+                AND (uo_rubrica.fl_rubrica = 'Y')
+                AND ((unita_organizzativa.cd_tipo_unita) = 'SAC')
+                AND ((uo_rubrica.cd_tipo_unita) = 'SAC')
+                AND ((unita_organizzativa.cd_unita_padre) = (uo_rubrica.cd_unita_padre))
+                AND ((cdr.cd_unita_organizzativa) = (unita_organizzativa.cd_unita_organizzativa))
+                AND ((cdr_rubrica.cd_unita_organizzativa) = (uo_rubrica.cd_unita_organizzativa))
+                AND ((((unita_organizzativa.cd_unita_organizzativa) &lt;&gt; (uo_rubrica.cd_unita_organizzativa))
+                AND (
+                    (cdr.cd_cdr_afferenza) = (cdr_rubrica.cd_centro_responsabilita)))
+                    OR ((unita_organizzativa.cd_unita_organizzativa) = (uo_rubrica.cd_unita_organizzativa)))
+                )
+            UNION ALL
+            SELECT unita_organizzativa.cd_unita_organizzativa AS cd_uo,
+            unita_organizzativa.esercizio,
+            unita_organizzativa.esercizio_inizio,
+            unita_organizzativa.cd_unita_organizzativa,
+            unita_organizzativa.cd_proprio_unita,
+            unita_organizzativa.cd_tipo_unita,
+            unita_organizzativa.fl_cds,
+            unita_organizzativa.fl_uo_cds,
+            unita_organizzativa.fl_rubrica,
+            unita_organizzativa.cd_unita_padre,
+            unita_organizzativa.livello,
+            unita_organizzativa.ds_unita_organizzativa,
+            unita_organizzativa.prc_copertura_obblig_2,
+            unita_organizzativa.prc_copertura_obblig_3,
+            unita_organizzativa.dacr,
+            unita_organizzativa.cd_area_ricerca,
+            unita_organizzativa.fl_presidente_area,
+            unita_organizzativa.cd_responsabile,
+            unita_organizzativa.utcr,
+            unita_organizzativa.duva,
+            unita_organizzativa.cd_responsabile_amm,
+            unita_organizzativa.utuv,
+            unita_organizzativa.pg_ver_rec,
+            unita_organizzativa.esercizio_fine,
+            unita_organizzativa.cd_area_scientifica,
+            unita_organizzativa.id_funzione_pubblica
+            FROM v_unita_organizzativa_valida unita_organizzativa
+            WHERE ((unita_organizzativa.fl_rubrica = 'N')
+                AND ((unita_organizzativa.cd_tipo_unita) = 'SAC'));
+        </createView>
+    </changeSet>
+
+    <changeSet dbms="postgresql" author="sigla" runOnChange="true" id="createView-v_utente_unita_organizzativa">
         <createView fullDefinition="false" viewName="v_utente_unita_organizzativa"> SELECT utente.cd_utente,
             v_unita_organizzativa.esercizio,
             v_unita_organizzativa.esercizio_inizio,
@@ -2218,7 +2372,138 @@
             ass_tipo_ruolo_privilegio
             WHERE (((ruolo_accesso.cd_ruolo)::text = (ruolo.cd_ruolo)::text) AND ((ruolo.tipo)::text = (ass_tipo_ruolo_privilegio.tipo)::text) AND ((ass_tipo_ruolo_privilegio.cd_privilegio)::text = 'SUPVIS'::text)))));</createView>
     </changeSet>
-    <changeSet dbms="h2, postgresql" author="sigla" runOnChange="true" id="createView-v_albero_main_unita_utente">
+    <changeSet dbms="h2" author="sigla" runOnChange="true" id="createView-v_utente_unita_organizzativa-h2">
+        <createView fullDefinition="false" viewName="v_utente_unita_organizzativa">
+            SELECT utente.cd_utente,
+            v_unita_organizzativa.esercizio,
+            v_unita_organizzativa.esercizio_inizio,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.cd_proprio_unita,
+            v_unita_organizzativa.cd_tipo_unita,
+            v_unita_organizzativa.fl_cds,
+            v_unita_organizzativa.fl_uo_cds,
+            v_unita_organizzativa.fl_rubrica,
+            v_unita_organizzativa.cd_unita_padre,
+            v_unita_organizzativa.livello,
+            v_unita_organizzativa.ds_unita_organizzativa,
+            v_unita_organizzativa.prc_copertura_obblig_2,
+            v_unita_organizzativa.prc_copertura_obblig_3,
+            v_unita_organizzativa.dacr,
+            v_unita_organizzativa.cd_area_ricerca,
+            v_unita_organizzativa.fl_presidente_area,
+            v_unita_organizzativa.cd_responsabile,
+            v_unita_organizzativa.utcr,
+            v_unita_organizzativa.duva,
+            v_unita_organizzativa.cd_responsabile_amm,
+            v_unita_organizzativa.utuv,
+            v_unita_organizzativa.pg_ver_rec,
+            v_unita_organizzativa.esercizio_fine,
+            v_unita_organizzativa.cd_area_scientifica,
+            v_unita_organizzativa.id_funzione_pubblica
+            FROM v_unita_organizzativa,
+            utente,
+            configurazione_cnr
+            WHERE ((configurazione_cnr.esercizio = 0)
+                AND ((configurazione_cnr.cd_unita_funzionale) = '*')
+                AND ((configurazione_cnr.cd_chiave_primaria) = 'ESERCIZIO_SPECIALE')
+                AND ((configurazione_cnr.cd_chiave_secondaria) = 'ESERCIZIO_PARTENZA')
+                AND ((v_unita_organizzativa.esercizio) &gt;= configurazione_cnr.im01)
+                AND (
+                    (EXISTS ( SELECT 1 FROM utente_unita_accesso
+                                WHERE (((utente_unita_accesso.cd_unita_organizzativa) = (v_unita_organizzativa.cd_uo))
+                                AND ((utente_unita_accesso.cd_utente) = (utente.cd_utente)))))
+                OR (EXISTS ( SELECT 1 FROM utente_unita_ruolo a
+                                WHERE (((a.cd_unita_organizzativa) = (v_unita_organizzativa.cd_uo))
+                                AND ((a.cd_utente) = (utente.cd_utente))))))
+                )
+            UNION
+            SELECT utente.cd_utente,
+            v_unita_organizzativa.esercizio,
+            v_unita_organizzativa.esercizio_inizio,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.cd_proprio_unita,
+            v_unita_organizzativa.cd_tipo_unita,
+            v_unita_organizzativa.fl_cds,
+            v_unita_organizzativa.fl_uo_cds,
+            v_unita_organizzativa.fl_rubrica,
+            v_unita_organizzativa.cd_unita_padre,
+            v_unita_organizzativa.livello,
+            v_unita_organizzativa.ds_unita_organizzativa,
+            v_unita_organizzativa.prc_copertura_obblig_2,
+            v_unita_organizzativa.prc_copertura_obblig_3,
+            v_unita_organizzativa.dacr,
+            v_unita_organizzativa.cd_area_ricerca,
+            v_unita_organizzativa.fl_presidente_area,
+            v_unita_organizzativa.cd_responsabile,
+            v_unita_organizzativa.utcr,
+            v_unita_organizzativa.duva,
+            v_unita_organizzativa.cd_responsabile_amm,
+            v_unita_organizzativa.utuv,
+            v_unita_organizzativa.pg_ver_rec,
+            v_unita_organizzativa.esercizio_fine,
+            v_unita_organizzativa.cd_area_scientifica,
+            v_unita_organizzativa.id_funzione_pubblica
+            FROM v_unita_organizzativa,
+            utente utente_templ,
+            utente,
+            configurazione_cnr
+            WHERE ((configurazione_cnr.esercizio = 0)
+                AND ((configurazione_cnr.cd_unita_funzionale) = '*')
+                AND ((configurazione_cnr.cd_chiave_primaria) = 'ESERCIZIO_SPECIALE')
+                AND ((configurazione_cnr.cd_chiave_secondaria) = 'ESERCIZIO_PARTENZA')
+                AND ((v_unita_organizzativa.esercizio) &gt;= configurazione_cnr.im01)
+                AND ((utente_templ.cd_utente) = (utente.cd_utente_templ))
+                AND ((EXISTS ( SELECT 1 FROM utente_unita_accesso
+                                WHERE (((utente_unita_accesso.cd_unita_organizzativa) = (v_unita_organizzativa.cd_uo))
+                                AND ((utente_unita_accesso.cd_utente) = (utente_templ.cd_utente)))))
+                OR (EXISTS ( SELECT 1 FROM utente_unita_ruolo a
+                                WHERE (((a.cd_unita_organizzativa) = (v_unita_organizzativa.cd_uo))
+                                AND ((a.cd_utente) = (utente_templ.cd_utente))))))
+                )
+            UNION
+            SELECT utente.cd_utente,
+            v_unita_organizzativa.esercizio,
+            v_unita_organizzativa.esercizio_inizio,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.cd_proprio_unita,
+            v_unita_organizzativa.cd_tipo_unita,
+            v_unita_organizzativa.fl_cds,
+            v_unita_organizzativa.fl_uo_cds,
+            v_unita_organizzativa.fl_rubrica,
+            v_unita_organizzativa.cd_unita_padre,
+            v_unita_organizzativa.livello,
+            v_unita_organizzativa.ds_unita_organizzativa,
+            v_unita_organizzativa.prc_copertura_obblig_2,
+            v_unita_organizzativa.prc_copertura_obblig_3,
+            v_unita_organizzativa.dacr,
+            v_unita_organizzativa.cd_area_ricerca,
+            v_unita_organizzativa.fl_presidente_area,
+            v_unita_organizzativa.cd_responsabile,
+            v_unita_organizzativa.utcr,
+            v_unita_organizzativa.duva,
+            v_unita_organizzativa.cd_responsabile_amm,
+            v_unita_organizzativa.utuv,
+            v_unita_organizzativa.pg_ver_rec,
+            v_unita_organizzativa.esercizio_fine,
+            v_unita_organizzativa.cd_area_scientifica,
+            v_unita_organizzativa.id_funzione_pubblica
+            FROM v_unita_organizzativa,
+            utente,
+            configurazione_cnr
+            WHERE ((configurazione_cnr.esercizio = 0)
+                AND ((configurazione_cnr.cd_unita_funzionale) = '*')
+                AND ((configurazione_cnr.cd_chiave_primaria) = 'ESERCIZIO_SPECIALE')
+                AND ((configurazione_cnr.cd_chiave_secondaria) = 'ESERCIZIO_PARTENZA')
+                AND ((v_unita_organizzativa.esercizio) &gt;= configurazione_cnr.im01)
+                AND (utente.fl_supervisore = 'Y')
+                AND (EXISTS ( SELECT 1 FROM ruolo_accesso, ruolo, ass_tipo_ruolo_privilegio
+                                WHERE (((ruolo_accesso.cd_ruolo) = (ruolo.cd_ruolo))
+                                AND ((ruolo.tipo) = (ass_tipo_ruolo_privilegio.tipo))
+                                AND ((ass_tipo_ruolo_privilegio.cd_privilegio) = 'SUPVIS'))))
+            );
+        </createView>
+    </changeSet>
+    <changeSet dbms="postgresql" author="sigla" runOnChange="true" id="createView-v_albero_main_unita_utente">
         <createView fullDefinition="false" viewName="v_albero_main_unita_utente"> SELECT v_unita_organizzativa.esercizio,
             utente.cd_utente,
             v_unita_organizzativa.cd_unita_organizzativa,
@@ -2384,6 +2669,203 @@
             albero_main
             WHERE (albero_main.fl_terminale = 'N'::bpchar);</createView>
     </changeSet>
+    <changeSet dbms="h2" author="sigla" runOnChange="true" id="createView-v_albero_main_unita_utente-h2">
+        <createView fullDefinition="false" viewName="v_albero_main_unita_utente"> SELECT v_unita_organizzativa.esercizio,
+            utente.cd_utente,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            albero_main.cd_nodo,
+            albero_main.cd_nodo_padre,
+            albero_main.cd_accesso,
+            albero_main.cd_proprio_nodo,
+            albero_main.ds_nodo,
+            ass_bp_accesso.ti_funzione,
+            albero_main.fl_terminale,
+            albero_main.business_process,
+            albero_main.url_icona,
+            albero_main.url_icona_open,
+            albero_main.pg_ordinamento,
+            albero_main.livello,
+            albero_main.dacr,
+            albero_main.utcr,
+            albero_main.duva,
+            albero_main.utuv,
+            albero_main.pg_ver_rec
+            FROM ass_bp_accesso,
+            albero_main,
+            utente,
+            v_unita_organizzativa
+            WHERE
+            ASS_BP_ACCESSO.CD_ACCESSO = ALBERO_MAIN.CD_ACCESSO AND
+            ASS_BP_ACCESSO.BUSINESS_PROCESS = ALBERO_MAIN.BUSINESS_PROCESS AND
+            (ASS_BP_ACCESSO.ESERCIZIO_INIZIO_VALIDITA Is Null Or
+            V_UNITA_ORGANIZZATIVA.ESERCIZIO &gt;= ASS_BP_ACCESSO.ESERCIZIO_INIZIO_VALIDITA) And
+            (ASS_BP_ACCESSO.ESERCIZIO_FINE_VALIDITA Is Null Or
+            V_UNITA_ORGANIZZATIVA.ESERCIZIO &lt;= ASS_BP_ACCESSO.ESERCIZIO_FINE_VALIDITA) And
+            exists (select 1 from utente_unita_accesso where
+            CD_ACCESSO = ALBERO_MAIN.CD_ACCESSO AND
+            CD_UNITA_ORGANIZZATIVA = V_UNITA_ORGANIZZATIVA.CD_UO AND
+            CD_UTENTE in (UTENTE.CD_UTENTE, UTENTE.CD_UTENTE_TEMPL)
+            )
+            UNION
+            SELECT 0 AS esercizio,
+            utente.cd_utente,
+            '*' AS cd_unita_organizzativa,
+            albero_main.cd_nodo,
+            albero_main.cd_nodo_padre,
+            albero_main.cd_accesso,
+            albero_main.cd_proprio_nodo,
+            albero_main.ds_nodo,
+            ass_bp_accesso.ti_funzione,
+            albero_main.fl_terminale,
+            albero_main.business_process,
+            albero_main.url_icona,
+            albero_main.url_icona_open,
+            albero_main.pg_ordinamento,
+            albero_main.livello,
+            albero_main.dacr,
+            albero_main.utcr,
+            albero_main.duva,
+            albero_main.utuv,
+            albero_main.pg_ver_rec
+            FROM ass_bp_accesso,
+            albero_main,
+            utente
+            WHERE
+            ASS_BP_ACCESSO.CD_ACCESSO = ALBERO_MAIN.CD_ACCESSO AND
+            ASS_BP_ACCESSO.BUSINESS_PROCESS = ALBERO_MAIN.BUSINESS_PROCESS AND
+            Exists (select 1 from utente_unita_accesso where
+            CD_ACCESSO = ALBERO_MAIN.CD_ACCESSO AND
+            CD_UNITA_ORGANIZZATIVA = '*' AND
+            CD_UTENTE = UTENTE.CD_UTENTE)
+            UNION
+            SELECT v_unita_organizzativa.esercizio,
+            utente.cd_utente,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            albero_main.cd_nodo,
+            albero_main.cd_nodo_padre,
+            albero_main.cd_accesso,
+            albero_main.cd_proprio_nodo,
+            albero_main.ds_nodo,
+            ass_bp_accesso.ti_funzione,
+            albero_main.fl_terminale,
+            albero_main.business_process,
+            albero_main.url_icona,
+            albero_main.url_icona_open,
+            albero_main.pg_ordinamento,
+            albero_main.livello,
+            albero_main.dacr,
+            albero_main.utcr,
+            albero_main.duva,
+            albero_main.utuv,
+            albero_main.pg_ver_rec
+            FROM ass_bp_accesso,
+            albero_main,
+            utente,
+            v_unita_organizzativa
+            WHERE
+            ASS_BP_ACCESSO.CD_ACCESSO = ALBERO_MAIN.CD_ACCESSO AND
+            ASS_BP_ACCESSO.BUSINESS_PROCESS = ALBERO_MAIN.BUSINESS_PROCESS AND
+            (ASS_BP_ACCESSO.ESERCIZIO_INIZIO_VALIDITA Is Null Or
+            V_UNITA_ORGANIZZATIVA.ESERCIZIO &gt;= ASS_BP_ACCESSO.ESERCIZIO_INIZIO_VALIDITA) And
+            (ASS_BP_ACCESSO.ESERCIZIO_FINE_VALIDITA Is Null Or
+            V_UNITA_ORGANIZZATIVA.ESERCIZIO &lt;= ASS_BP_ACCESSO.ESERCIZIO_FINE_VALIDITA) And
+            exists (select 1 from utente_unita_ruolo a where
+            a.CD_UNITA_ORGANIZZATIVA = V_UNITA_ORGANIZZATIVA.CD_UO AND
+            a.CD_UTENTE in (UTENTE.CD_UTENTE, UTENTE.CD_UTENTE_TEMPL) AND
+            exists (select 1 from RUOLO_ACCESSO where
+            cd_ruolo = a.CD_RUOLO
+            and cd_accesso = ALBERO_MAIN.CD_ACCESSO))
+            UNION
+            SELECT v_unita_organizzativa.esercizio,
+            utente.cd_utente,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            albero_main.cd_nodo,
+            albero_main.cd_nodo_padre,
+            albero_main.cd_accesso,
+            albero_main.cd_proprio_nodo,
+            albero_main.ds_nodo,
+            ass_bp_accesso.ti_funzione,
+            albero_main.fl_terminale,
+            albero_main.business_process,
+            albero_main.url_icona,
+            albero_main.url_icona_open,
+            albero_main.pg_ordinamento,
+            albero_main.livello,
+            albero_main.dacr,
+            albero_main.utcr,
+            albero_main.duva,
+            albero_main.utuv,
+            albero_main.pg_ver_rec
+            FROM ass_bp_accesso,
+            albero_main,
+            utente,
+            v_unita_organizzativa
+            WHERE
+            ASS_BP_ACCESSO.CD_ACCESSO = ALBERO_MAIN.CD_ACCESSO AND
+            ASS_BP_ACCESSO.BUSINESS_PROCESS = ALBERO_MAIN.BUSINESS_PROCESS AND
+            (ASS_BP_ACCESSO.ESERCIZIO_INIZIO_VALIDITA Is Null Or
+            V_UNITA_ORGANIZZATIVA.ESERCIZIO &gt;= ASS_BP_ACCESSO.ESERCIZIO_INIZIO_VALIDITA) And
+            (ASS_BP_ACCESSO.ESERCIZIO_FINE_VALIDITA Is Null Or
+            V_UNITA_ORGANIZZATIVA.ESERCIZIO &lt;= ASS_BP_ACCESSO.ESERCIZIO_FINE_VALIDITA) And
+            utente.fl_supervisore='Y' And
+            exists (select 1
+            from RUOLO_ACCESSO, RUOLO, ASS_TIPO_RUOLO_PRIVILEGIO
+            where RUOLO_ACCESSO.CD_RUOLO=RUOLO.CD_RUOLO
+            And RUOLO.TIPO=ASS_TIPO_RUOLO_PRIVILEGIO.TIPO
+            and ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO='SUPVIS'
+            And RUOLO_ACCESSO.cd_ruolo = utente.CD_RUOLO_SUPERVISORE
+            And RUOLO_ACCESSO.cd_accesso = ALBERO_MAIN.CD_ACCESSO)
+            UNION
+            SELECT esercizio_base.esercizio,
+            utente.cd_utente,
+            unita_organizzativa.cd_unita_organizzativa,
+            albero_main.cd_nodo,
+            albero_main.cd_nodo_padre,
+            albero_main.cd_accesso,
+            albero_main.cd_proprio_nodo,
+            albero_main.ds_nodo,
+            NULL AS ti_funzione,
+            albero_main.fl_terminale,
+            albero_main.business_process,
+            albero_main.url_icona,
+            albero_main.url_icona_open,
+            albero_main.pg_ordinamento,
+            albero_main.livello,
+            albero_main.dacr,
+            albero_main.utcr,
+            albero_main.duva,
+            albero_main.utuv,
+            albero_main.pg_ver_rec
+            FROM albero_main,
+            utente,
+            unita_organizzativa,
+            esercizio_base
+            WHERE (albero_main.fl_terminale = 'N')
+            UNION
+            SELECT 0 AS esercizio,
+            utente.cd_utente,
+            '*' AS cd_unita_organizzativa,
+            albero_main.cd_nodo,
+            albero_main.cd_nodo_padre,
+            albero_main.cd_accesso,
+            albero_main.cd_proprio_nodo,
+            albero_main.ds_nodo,
+            NULL AS ti_funzione,
+            albero_main.fl_terminale,
+            albero_main.business_process,
+            albero_main.url_icona,
+            albero_main.url_icona_open,
+            albero_main.pg_ordinamento,
+            albero_main.livello,
+            albero_main.dacr,
+            albero_main.utcr,
+            albero_main.duva,
+            albero_main.utuv,
+            albero_main.pg_ver_rec
+            FROM utente,
+            albero_main
+            WHERE (albero_main.fl_terminale = 'N');</createView>
+    </changeSet>
     <changeSet dbms="h2, postgresql" author="sigla" runOnChange="true" id="createView-v_terzo_cf_pi">
         <createView fullDefinition="false" viewName="v_terzo_cf_pi"> SELECT t.cd_terzo,
             t.frazione_sede,
@@ -2410,12 +2892,14 @@
             a.partita_iva AS partita_iva_anagrafico,
             t.codice_univoco_ufficio_ipa,
             t.codice_univoco_pcc,
-            t.denominazione_pcc
+            t.denominazione_pcc,
+            t.CODICE_DESTINATARIO_FATT,
+            t.FL_SBLOCCO_FATTURA_ELETTRONICA
             FROM terzo t,
             anagrafico a
             WHERE (t.cd_anag = a.cd_anag);</createView>
     </changeSet>
-    <changeSet dbms="h2, postgresql" author="sigla" runOnChange="true" id="createView-v_utente_accesso">
+    <changeSet dbms="postgresql" author="sigla" runOnChange="true" id="createView-v_utente_accesso">
         <createView fullDefinition="false" viewName="v_utente_accesso"> SELECT utente_unita_accesso.cd_utente,
             utente_unita_accesso.cd_accesso,
             v_unita_organizzativa.cd_unita_organizzativa,
@@ -2465,6 +2949,57 @@
             'UTENTE_*_ACCESSO'::text AS origine
             FROM utente_unita_accesso
             WHERE ((utente_unita_accesso.cd_unita_organizzativa)::text = '*'::text);</createView>
+    </changeSet>
+    <changeSet dbms="h2" author="sigla" runOnChange="true" id="createView-v_utente_accesso-h2">
+        <createView fullDefinition="false" viewName="v_utente_accesso"> SELECT utente_unita_accesso.cd_utente,
+            utente_unita_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'UTENTE_UNITA_ACCESSO' AS origine
+            FROM utente_unita_accesso,
+            v_unita_organizzativa
+            WHERE ((v_unita_organizzativa.cd_uo) = (utente_unita_accesso.cd_unita_organizzativa))
+            UNION ALL
+            SELECT utente_unita_ruolo.cd_utente,
+            ruolo_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'RUOLO_ACCESSO' AS origine
+            FROM utente_unita_ruolo,
+            ruolo_accesso,
+            ruolo,
+            v_unita_organizzativa
+            WHERE (((ruolo_accesso.cd_ruolo) = (ruolo.cd_ruolo)) AND ((ruolo.cd_ruolo) = (utente_unita_ruolo.cd_ruolo)) AND ((v_unita_organizzativa.cd_unita_organizzativa) = (utente_unita_ruolo.cd_unita_organizzativa)))
+            UNION ALL
+            SELECT utente.cd_utente,
+            utente_unita_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'UTENTE_TEMPL_UNITA_ACCESSO' AS origine
+            FROM utente_unita_accesso,
+            utente,
+            v_unita_organizzativa
+            WHERE (((utente_unita_accesso.cd_utente) = (utente.cd_utente_templ)) AND ((v_unita_organizzativa.cd_uo) = (utente_unita_accesso.cd_unita_organizzativa)))
+            UNION ALL
+            SELECT utente.cd_utente,
+            ruolo_accesso.cd_accesso,
+            v_unita_organizzativa.cd_unita_organizzativa,
+            v_unita_organizzativa.esercizio,
+            'RUOLO_TEMPL_ACCESSO' AS origine
+            FROM utente_unita_ruolo,
+            ruolo_accesso,
+            ruolo,
+            utente,
+            v_unita_organizzativa
+            WHERE (((ruolo.cd_ruolo) = (utente_unita_ruolo.cd_ruolo)) AND ((ruolo_accesso.cd_ruolo) = (ruolo.cd_ruolo)) AND ((utente_unita_ruolo.cd_utente) = (utente.cd_utente_templ)) AND ((v_unita_organizzativa.cd_uo) = (utente_unita_ruolo.cd_unita_organizzativa)))
+            UNION ALL
+            SELECT utente_unita_accesso.cd_utente,
+            utente_unita_accesso.cd_accesso,
+            '*' AS cd_unita_organizzativa,
+            0 AS esercizio,
+            'UTENTE_*_ACCESSO' AS origine
+            FROM utente_unita_accesso
+            WHERE ((utente_unita_accesso.cd_unita_organizzativa) = '*');</createView>
     </changeSet>
     <changeSet dbms="h2, postgresql" author="sigla" runOnChange="true" id="createView-prt_prev_dip">
         <createView fullDefinition="false" viewName="prt_prev_dip"> SELECT  Distinct

@@ -1,5 +1,23 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.anagraf00.comp;
 
+import it.cnr.contab.WSAttributes;
 import it.cnr.contab.client.docamm.ModalitaErogazione;
 import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.docamm00.intrastat.bulk.Modalita_erogazioneBulk;
@@ -14,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
@@ -39,11 +58,11 @@ import org.jboss.ws.api.annotation.WebContext;
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.ModalitaErogazioneComponentSessionWS")
 @XmlSeeAlso({ java.util.ArrayList.class })
-@DeclareRoles({ "WSUserRole", "IITRole" })
-@WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
+@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
+@WebContext(authMethod = WSAttributes.AUTHMETHOD)
 public class ModalitaErogazioneComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
-
+	@RolesAllowed({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
 	public java.util.ArrayList<ModalitaErogazione> cercaModalitaErogazione(
 			String query, Integer esercizio, String dominio, Integer numMax,
 			String user, String ricerca) throws Exception {

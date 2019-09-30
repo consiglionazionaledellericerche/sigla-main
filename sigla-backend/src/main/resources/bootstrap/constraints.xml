@@ -1,4 +1,21 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <changeSet author="sigla" id="1517416281033-2378">
         <addForeignKeyConstraint baseColumnNames="cd_cds_mag,cd_magazzino_mag" baseTableName="bolla_scarico_mag" constraintName="bolla_scarico_mag_fk00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cds,cd_magazzino" referencedTableName="magazzino"/>
@@ -2904,8 +2921,11 @@
     <changeSet author="sigla" id="1517416281033-3345">
         <addForeignKeyConstraint baseColumnNames="cd_attivita_commerciale" baseTableName="tipo_sezionale" constraintName="fk_tipo_sezionale00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_attivita_commerciale" referencedTableName="attivita_commerciale"/>
     </changeSet>
-    <changeSet author="sigla" id="1517416281033-3346">
+    <changeSet author="sigla" id="1517416281033-3346" dbms="oracle,postgresql">
         <addForeignKeyConstraint baseColumnNames="sid" baseTableName="translock" constraintName="fk_translock" deferrable="true" initiallyDeferred="true" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sid" referencedTableName="translock_master"/>
+    </changeSet>
+    <changeSet author="sigla" id="1517416281033-3346-h2" dbms="h2">
+        <addForeignKeyConstraint baseColumnNames="sid" baseTableName="translock" constraintName="fk_translock" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sid" referencedTableName="translock_master"/>
     </changeSet>
     <changeSet author="sigla" id="1517416281033-3347">
         <addForeignKeyConstraint baseColumnNames="cd_bene_servizio" baseTableName="unita_misura_coeff_mag" constraintName="fk_unita_misura_coeff_mag00" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_bene_servizio" referencedTableName="bene_servizio"/>
