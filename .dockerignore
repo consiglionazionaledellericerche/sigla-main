@@ -1,4 +1,3 @@
-SIGLA/
 .git/
 sigla-*/
-!SIGLA/target/*.ear
+!sigla-web/target/*-thorntail.jar

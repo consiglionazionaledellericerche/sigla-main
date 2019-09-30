@@ -16,14 +16,14 @@ INVENTARIO_BENI.ESERCIZIO_CARICO_BENE,
 INVENTARIO_BENI.ETICHETTA,
 INVENTARIO_BENI.DS_BENE,
 DECODE(BUONO_CARICO_SCARICO_DETT.TI_DOCUMENTO,'C',DECODE(BUONO_CARICO_SCARICO_DETT.PG_BUONO_C_S,(SELECT MIN(dett.PG_BUONO_C_S)
-                                    FROM PCIR009.BUONO_CARICO_SCARICO_DETT dett
+                                    FROM BUONO_CARICO_SCARICO_DETT dett
                                     WHERE dett.TI_DOCUMENTO = 'C'
 				      AND dett.PG_INVENTARIO = INVENTARIO_BENI.PG_INVENTARIO
                                       AND dett.NR_INVENTARIO = INVENTARIO_BENI.NR_INVENTARIO
                                       AND dett.PROGRESSIVO   = INVENTARIO_BENI.PROGRESSIVO
                                       AND dett.ESERCIZIO = BUONO_CARICO_SCARICO_DETT.ESERCIZIO
                                       AND dett.ESERCIZIO = (SELECT MIN(dett2.ESERCIZIO)
-                                                            FROM PCIR009.BUONO_CARICO_SCARICO_DETT dett2
+                                                            FROM BUONO_CARICO_SCARICO_DETT dett2
                                                             WHERE dett2.PG_INVENTARIO = dett.PG_INVENTARIO
                                                               AND dett2.NR_INVENTARIO = dett.NR_INVENTARIO
                                                               AND dett2.PROGRESSIVO   = dett.PROGRESSIVO
@@ -39,14 +39,14 @@ BUONO_CARICO_SCARICO.DATA_REGISTRAZIONE,
 TIPO_CARICO_SCARICO.CD_TIPO_CARICO_SCARICO,
 TIPO_CARICO_SCARICO.DS_TIPO_CARICO_SCARICO,
 DECODE(BUONO_CARICO_SCARICO_DETT.PG_BUONO_C_S,(SELECT MIN(dett.PG_BUONO_C_S)
-                                    FROM PCIR009.BUONO_CARICO_SCARICO_DETT dett
+                                    FROM BUONO_CARICO_SCARICO_DETT dett
                                     WHERE dett.TI_DOCUMENTO = 'C'
 				      AND dett.PG_INVENTARIO = INVENTARIO_BENI.PG_INVENTARIO
                                       AND dett.NR_INVENTARIO = INVENTARIO_BENI.NR_INVENTARIO
                                       AND dett.PROGRESSIVO   = INVENTARIO_BENI.PROGRESSIVO
                                       AND dett.ESERCIZIO = BUONO_CARICO_SCARICO_DETT.ESERCIZIO
                                       AND dett.ESERCIZIO = (SELECT MIN(dett2.ESERCIZIO)
-                                                            FROM PCIR009.BUONO_CARICO_SCARICO_DETT dett2
+                                                            FROM BUONO_CARICO_SCARICO_DETT dett2
                                                             WHERE dett2.PG_INVENTARIO = dett.PG_INVENTARIO
                                                               AND dett2.NR_INVENTARIO = dett.NR_INVENTARIO
                                                               AND dett2.PROGRESSIVO   = dett.PROGRESSIVO
@@ -68,15 +68,15 @@ INVENTARIO_UTILIZZATORI_LA.PERCENTUALE_UTILIZZO_CDR,
 INVENTARIO_UTILIZZATORI_LA.PERCENTUALE_UTILIZZO_LA,
 AMMORTAMENTO_BENE_INV.ESERCIZIO
 FROM
-pcir009.INVENTARIO_BENI ,
-pcir009.UBICAZIONE_BENE,
-Pcir009.CATEGORIA_GRUPPO_INVENT,
-Pcir009.BUONO_CARICO_SCARICO_DETT,
-pcir009.TERZO,
-pcir009.BUONO_CARICO_SCARICO,
-pcir009.TIPO_CARICO_SCARICO,
-pcir009.AMMORTAMENTO_BENE_INV,
-pcir009.INVENTARIO_UTILIZZATORI_LA
+INVENTARIO_BENI ,
+UBICAZIONE_BENE,
+CATEGORIA_GRUPPO_INVENT,
+BUONO_CARICO_SCARICO_DETT,
+TERZO,
+BUONO_CARICO_SCARICO,
+TIPO_CARICO_SCARICO,
+AMMORTAMENTO_BENE_INV,
+INVENTARIO_UTILIZZATORI_LA
 WHERE
 INVENTARIO_BENI.CD_CDS = UBICAZIONE_BENE.CD_CDS
 AND INVENTARIO_BENI.CD_UNITA_ORGANIZZATIVA = UBICAZIONE_BENE.CD_UNITA_ORGANIZZATIVA

@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
@@ -11,22 +28,22 @@ import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
-import it.cnr.contab.doccont00.intcass.bulk.*;
+import it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk;
+import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
+import it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.intcass.xmlbnl.FlussoOrdinativi;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione;
 import it.cnr.contab.doccont00.intcass.xmlbnl.ObjectFactory;
 import it.cnr.contab.doccont00.intcass.xmlbnl.Reversale;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
-import it.cnr.contab.exception.SIOPEPlusServiceUnavailable;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
-import it.cnr.contab.model.Risultato;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
-import it.cnr.contab.service.OrdinativiSiopePlusService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -44,9 +61,6 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.firma.arss.ArubaSignServiceClient;
-import it.cnr.jada.firma.arss.ArubaSignServiceException;
-import it.cnr.jada.firma.arss.stub.XmlSignatureType;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
@@ -54,6 +68,12 @@ import it.cnr.jada.util.action.RemoteDetailCRUDController;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceException;
+import it.cnr.si.firmadigitale.firma.arss.stub.XmlSignatureType;
+import it.cnr.si.siopeplus.exception.SIOPEPlusServiceUnavailable;
+import it.cnr.si.siopeplus.model.Risultato;
+import it.cnr.si.siopeplus.service.OrdinativiSiopePlusService;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
@@ -375,6 +395,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             return Boolean.FALSE;
         }
     }
+
     /**
      * Abilito il bottone di delete se la data di invio della distinta è nulla.
      * <p>
@@ -523,12 +544,9 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
-        if (getParametriCnr().getFl_versamenti_cori().booleanValue()
+        return getParametriCnr().getFl_versamenti_cori().booleanValue()
                 && day >= getParametriCnr().getVersamenti_cori_giorno()
-                .intValue())
-            return (true);
-        else
-            return (false);
+                .intValue();
     }
 
     /**
@@ -628,10 +646,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     }
 
     public boolean isScaricaButtonEnabled() {
-        if (!isEstraiButtonHidden() && getFile() != null)
-            return true;
-        else
-            return false;
+        return !isEstraiButtonHidden() && getFile() != null;
     }
 
     public boolean isInviaSiopeplusButtonHidden() {
@@ -743,7 +758,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             Liquid_coriComponentSession component = (Liquid_coriComponentSession) this.createComponentSession("CNRCORI00_EJB_Liquid_coriComponentSession", Liquid_coriComponentSession.class);
             AnagraficoBulk uoEnte = null;
             if (Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), distinta.getEsercizio()).getFl_tesoreria_unica().booleanValue()) {
-                uoEnte = (AnagraficoBulk) component.getAnagraficoEnte(context.getUserContext());
+                uoEnte = component.getAnagraficoEnte(context.getUserContext());
                 currentFlusso.setDescrizioneEnte(uoEnte.getRagione_sociale());
             } else
                 currentFlusso.setDescrizioneEnte(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getDs_unita_organizzativa());
@@ -770,7 +785,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             for (Iterator i = dettagliRev.iterator(); i.hasNext(); ) {
                 V_mandato_reversaleBulk bulk = (V_mandato_reversaleBulk) i
                         .next();
-                currentReversale = (Reversale) recuperaDatiReversaleFlusso(
+                currentReversale = recuperaDatiReversaleFlusso(
                         context.getUserContext(), bulk);
                 //modifica per tesorà
 				/*if (bulk.getTi_cc_bi().compareTo(SospesoBulk.TIPO_BANCA_ITALIA) == 0) {
@@ -962,7 +977,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         }
                     }
                     if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) == 0))) {
-                        clas = ((it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione) (infoben.getClassificazione().get(0)));
+                        clas = infoben.getClassificazione().get(0);
                         if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01")) == 0)
                             clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
                         else
@@ -1103,7 +1118,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         }
                     }
                     if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal("0.01")) == 0))) {
-                        clas = ((it.cnr.contab.doccont00.intcass.xmlbnl.Mandato.InformazioniBeneficiario.Classificazione) (infoben.getClassificazione().get(0)));
+                        clas = infoben.getClassificazione().get(0);
                         if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal("0.01")) == 0)
                             clas.setImporto(clas.getImporto().subtract(new BigDecimal("0.01")));
                         else
@@ -1477,7 +1492,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     }
                     if (obb_conto) {
                         aggiuntive.setRiferimentoDocumentoEsterno(docContabile
-                                .getNumeroConto().toString());
+                                .getNumeroConto());
                         infoben.setInformazioniAggiuntive(aggiuntive);
                     }
                     if (obb_iban && (docContabile.getCdIso().compareTo("IT") != 0 || docContabile.getAbi() == null)) {
@@ -1786,12 +1801,9 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 && (((Distinta_cassiereBulk) getModel()).getDt_invio_pec() == null)
                 && (!isFlusso()))
             return true;
-        if (super.isDeleteButtonEnabled()
+        return super.isDeleteButtonEnabled()
                 && (((Distinta_cassiereBulk) getModel()).getDt_invio() != null)
-                && (isFlusso()))
-            return true;
-        else
-            return false;
+                && (isFlusso());
     }
 
     public boolean isSalvaDefButtonHidden() {
@@ -1801,10 +1813,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .map(Distinta_cassiereBulk.class::cast)
                     .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta()))
                     .isPresent() || isViewing() || isDirty();
-        if (!isFlusso())
-            return true;
-        else
-            return false;
+        return !isFlusso();
     }
 
     public boolean isSalvaDefButtonEnabled() {
@@ -1815,11 +1824,8 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()))
                     .isPresent();
         } else {
-            if (isSaveButtonEnabled()
-                    && (((Distinta_cassiereBulk) getModel()).getDt_invio() == null))
-                return true;
-            else
-                return false;
+            return isSaveButtonEnabled()
+                    && (((Distinta_cassiereBulk) getModel()).getDt_invio() == null);
         }
     }
 
@@ -1859,7 +1865,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     @Override
     protected void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag) throws BusinessProcessException {
         super.basicEdit(actioncontext, oggettobulk, isEditable());
-        if(!isEditable()) {
+        if (!isEditable()) {
             initializeModelForEditAllegati(actioncontext, oggettobulk);
             calcolaTotali(actioncontext);
         }
@@ -1894,7 +1900,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     }
 
     private StorageObject archiviaStampa(ActionContext context,
-                                Distinta_cassiereBulk distinta) throws IOException, ComponentException {
+                                         Distinta_cassiereBulk distinta) throws IOException, ComponentException {
         Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Print_spoolerBulk print = new Print_spoolerBulk();
         print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
@@ -1988,7 +1994,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 }
                 distinta.setDt_invio_pec(DateServices.getDt_valida(context
                         .getUserContext()));
-                distinta.setUser(((CNRUserContext) context.getUserContext())
+                distinta.setUser(context.getUserContext()
                         .getUser());
                 distinta.setToBeUpdated();
                 setModel(context, createComponentSession().modificaConBulk(context.getUserContext(), distinta));
@@ -2035,7 +2041,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     String nomeFile = file.getName();
                     String nomeFileP7m = nomeFile + ".p7m";
                     SignP7M signP7M = new SignP7M(
-                            storageFile.getStorageObject().<String>getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
+                            storageFile.getStorageObject().getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()),
                             firmaOTPBulk.getUserName(),
                             firmaOTPBulk.getPassword(),
                             firmaOTPBulk.getOtp(),
@@ -2049,7 +2055,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                                 "<acquisizione_flusso_ordinativi_sepa>");
 
                         distinta.setDt_invio_pec(DateServices.getDt_valida(context.getUserContext()));
-                        distinta.setUser(((CNRUserContext) context.getUserContext()).getUser());
+                        distinta.setUser(context.getUserContext().getUser());
                         distinta.setToBeUpdated();
                         final OggettoBulk oggettoBulk = createComponentSession().modificaConBulk(context.getUserContext(), distinta);
                         commitUserTransaction();
@@ -2108,7 +2114,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             .ifPresent(storageObject -> {
                                 httpActionContext.getResponse().setCharacterEncoding("UTF-8");
                                 httpActionContext.getResponse().setContentType(
-                                        storageObject.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
+                                        storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
                                 );
                                 httpActionContext.getResponse().setDateHeader("Expires", 0);
                                 try {
@@ -2149,7 +2155,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .ifPresent(storageObject -> {
                         httpActionContext.getResponse().setCharacterEncoding("UTF-8");
                         httpActionContext.getResponse().setContentType(
-                                storageObject.<String>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
+                                storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value())
                         );
                         httpActionContext.getResponse().setDateHeader("Expires", 0);
                         try {
@@ -2211,26 +2217,20 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
     public boolean isDownloadDocumentaleButtonHidden() {
         if (((Distinta_cassiereBulk) getModel()).getDt_invio() == null)
             return true;
-        if (((Distinta_cassiereBulk) getModel()) != null
+        return getModel() != null
                 && ((Distinta_cassiereBulk) getModel()).getDt_invio() != null
                 && !checkPresenteSuDocumentale(
-                ((Distinta_cassiereBulk) getModel()), false))
-            return true;
-        else
-            return false;
+                ((Distinta_cassiereBulk) getModel()), false);
 
     }
 
     public boolean isDownloadFirmatoDocumentaleButtonHidden() {
         if (((Distinta_cassiereBulk) getModel()).getDt_invio() == null)
             return true;
-        if (((Distinta_cassiereBulk) getModel()) != null
+        return getModel() != null
                 && ((Distinta_cassiereBulk) getModel()).getDt_invio() != null
                 && !checkPresenteSuDocumentale(
-                ((Distinta_cassiereBulk) getModel()), true))
-            return true;
-        else
-            return false;
+                ((Distinta_cassiereBulk) getModel()), true);
 
     }
 
@@ -2315,7 +2315,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         IOUtils.toByteArray(documentiContabiliService.getResource(storageObject)),
                         XmlSignatureType.XMLENVELOPED);
             } catch (ArubaSignServiceException _ex) {
-                logger.error("SIOPE+ firma flusso ",_ex);
+                logger.error("SIOPE+ firma flusso ", _ex);
                 throw new ApplicationException(FirmaOTPBulk.errorMessage(_ex.getMessage()));
             }
 
@@ -2402,7 +2402,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         return Boolean.FALSE;
     }
 
-    public Boolean reinviaPEC(ActionContext context, Distinta_cassiereBulk model) throws BusinessProcessException{
+    public Boolean reinviaPEC(ActionContext context, Distinta_cassiereBulk model) throws BusinessProcessException {
         try {
             return documentiContabiliService.inviaPEC(context.getUserContext(), model);
         } catch (ComponentException e) {
