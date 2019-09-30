@@ -122,8 +122,8 @@ public class Deployments {
         Files.walk(resourceTestPath)
                 .filter(p -> !p.toString().equals(resourceTestPath.toString()))
                 .forEach((p) -> {
-                        webArchive.addAsResource(
-                                p.toString().substring(resourceTestPath.toString().length() + 1).replace("\\", "/"));
+                    webArchive.addAsResource(
+                            p.toString().substring(resourceTestPath.toString().length() + 1).replace("\\", "/"));
                 });
 
         Path resourcePath = Paths.get("src", "main", "resources");
