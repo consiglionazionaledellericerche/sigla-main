@@ -1,7 +1,12 @@
 logger:
   level: DEBUG
-swarm:
+
+thorntail:
   datasources:
+    jdbc-drivers:
+      oracle:
+        driver-class-name: oracle.jdbc.OracleDriver
+        driver-module-name: com.oracle.jdbc
     data-sources:
       SIGLA:
         driver-name: oracle
@@ -12,22 +17,211 @@ swarm:
         jndi-name: java:/jdbc/CIR
   transactions:
     default-timeout: 3600
-  institute:
-    acronym: CNR
   bind:
     address: 0.0.0.0
   context:
     path: SIGLA
-spring:
-  profiles:
-    active: CMIS
+  logging:
+    loggers:
+      org.jboss.as.ejb3:
+        level: ERROR
+      org.jboss.as.dependency.private:
+        level: ERROR
+      org.jboss.as.server.deployment:
+        level: ERROR
+      io.undertow.servlet:
+        level: ERROR
+  management:
+    http-interface-management-interface:
+      security-realm: ManagementRealm
+    security-realms:
+      ManagementRealm:
+        local-authentication:
+          default-user: '$local'
+          skip-group-loading: true
+        in-memory-authentication:
+          users:
+            admin:
+              password: changeit!
+        in-memory-authorization:
+          users:
+            admin:
+              roles:
+                - admin
+      ApplicationRealm:
+        local-authentication:
+          default-user: '$local'
+          allowed-users: '*'
+          skip-group-loading: true
+        in-memory-authentication:
+          users:
+            iit:
+              password: changeit!
+            brevetti:
+              password: changeit!
+        in-memory-authorization:
+          users:
+            iit:
+              roles:
+                - IITRole
+            brevetti:
+              roles:
+                - BrevettiRole
+  remoting:
+    http-connectors:
+      http-remoting-connector:
+        connector-ref: default
+        security-realm: ApplicationRealm
+  ejb3:
+    default-security-domain: other
+    default-missing-method-permissions-deny-access: true
+
 repository:
   base:
     url: http://as1dock.si.cnr.it:8080/alfresco/
+org:
+  apache:
+    chemistry:
+      opencmis:
+        user: admin
+        password: admin
+        session:
+          repository:
+            id: -default-
+        binding:
+          browser:
+            url: ${repository.base.url}api/${org.apache.chemistry.opencmis.session.repository.id}/public/cmis/versions/1.1/browser
+          spi:
+            type: browser
+          connecttimeout: 50000
+          readtimeout: 3000000
+          httpinvoker:
+            classname: org.apache.chemistry.opencmis.client.bindings.spi.http.DefaultHttpInvoker
+          auth:
+            http:
+              basic: true
+            soap:
+              usernametoken: false
+        cache:
+          path:
+            omit: true
+
+siopeplus:
+  certificate:
+    path: file:${user.home}/cert/siope+/cert.p12
+    password: changeit
+  codice:
+    a2a: A2A-00000000
+    uni:
+      uo: 000000
+liquibase:
+  bootstrap:
+    esercizio: 2019
+---
+project:
+  stage: demo-postgres
+thorntail:
+  datasources:
+    jdbc-drivers:
+      postgresql:
+        driver-class-name: org.postgresql.Driver
+        driver-module-name: org.postgresql.postgresql
+    data-sources:
+      SIGLA:
+        driver-name: postgresql
+        connection-url: jdbc:postgresql://localhost:5432/sigladb?schema=public
+        user-name: sigla
+        password: siglapw
+  deployment:
+    timeout: 1200
+
+spring:
+  profiles:
+    active: liquibase
+---
+project:
+  stage: demo-oracle
+thorntail:
+  datasources:
+    data-sources:
+      SIGLA:
+        connection-url: jdbc:oracle:thin:@localhost:1521:xe
+        user-name: SIGLA
+        password: siglapw
+  deployment:
+    timeout: 1200
+
+spring:
+  profiles:
+    active: liquibase-cnr
+---
+project:
+  stage: production-cnr
+thorntail:
+  datasources:
+    jdbc-drivers:
+      informix:
+        driver-class-name: com.informix.jdbc.IfxDriver
+        driver-module-name: com.informix.jdbc
+    data-sources:
+      SIGLA:
+        connection-url: jdbc:oracle:thin:@sigladb.cedrc.cnr.it:1521:SIGLAP
+        initial-pool-size: 1
+        min-pool-size: 10
+        max-pool-size: 250
+        timeout:
+          idle-timeout-minutes: 1
+          query-timeout: 600
+      GECO:
+        driver-name: informix
+        connection-url: jdbc:informix-sqli://150.146.205.6:1526/geco:INFORMIXSERVER=ius_dbserver_tcp
+        user-name: cedrc
+        jndi-name: java:/jdbc/GECO
+  mail:
+    mail-sessions:
+      SIGLA:
+        from: sigla@cnr.it
+        jndi-name: java:jboss/mail/Default
+        smtp-server:
+          outbound-socket-binding-ref: sigla-smtp
+      PEC:
+        from: sisca@pec.cnr.it
+        jndi-name: java:jboss/mail/PecMailSession
+        smtp-server:
+          ssl: true
+          username: sisca@pec.cnr.it
+          outbound-socket-binding-ref: sigla-pec-smtp
+
+  network:
+    socket-binding-groups:
+      standard-sockets:
+        outbound-socket-bindings:
+          sigla-smtp:
+            remote-host: smtp.amministrazione.cnr.it
+            remote-port: 25
+            remote-auth: false
+          sigla-pec-smtp:
+            remote-host: smtps.pec.aruba.it
+            remote-port: 465
+  webservices:
+    statistics-enabled: true
+    wsdl-host: contab.cnr.it
+    wsdl-secure-port: 9090
+    wsdl-port: 9090
+    wsdl-uri-scheme: http
+
+  deployment:
+    timeout: 1200
+repository:
+  base:
+    url: http://gestdoc.cnr.it:90/alfresco/
+spring:
+  profiles:
+    active: no-liquibase
 ---
 project:
   stage: development-isin
-swarm:
+thorntail:
   datasources:
     data-sources:
       SIGLA:
@@ -37,16 +231,15 @@ swarm:
 
 spring:
   profiles:
-    active: CMIS,liquibase-isin
+    active: liquibase-isin
 ---
 project:
   stage: production-isin
-swarm:
+thorntail:
   datasources:
     data-sources:
       SIGLA:
         connection-url: jdbc:oracle:thin:@db0.cedrc.cnr.it:1521:SIGLAX
-        password: DBISIN
         min-pool-size: 10
         max-pool-size: 100
   deployment:
@@ -54,4 +247,4 @@ swarm:
 
 spring:
   profiles:
-    active: CMIS,liquibase-isin
+    active: liquibase-isin

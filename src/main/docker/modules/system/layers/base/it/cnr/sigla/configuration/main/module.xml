@@ -1,5 +1,0 @@
-<module xmlns="urn:jboss:module:1.1" name="it.cnr.sigla.configuration">
-    <resources>
-        <resource-root path="."/>
-    </resources>
-</module>

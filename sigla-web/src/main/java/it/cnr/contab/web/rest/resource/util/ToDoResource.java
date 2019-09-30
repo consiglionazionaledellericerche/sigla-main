@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.web.rest.resource.util;
 
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -9,11 +26,9 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.ejb.MissioneComponentSession;
-import it.cnr.contab.model.Esito;
 import it.cnr.contab.pdg00.bulk.ArchiviaStampaPdgVariazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
@@ -83,7 +98,7 @@ public class ToDoResource implements ToDoLocal {
                                         .filter(Unita_organizzativaBulk.class::isInstance)
                                         .map(Unita_organizzativaBulk.class::cast)
                                         .filter(Unita_organizzativaBulk::isUoEnte).isPresent();
-                            } catch (ComponentException|RemoteException e) {
+                            } catch (ComponentException | RemoteException e) {
                                 return false;
                             }
                         })
@@ -96,7 +111,7 @@ public class ToDoResource implements ToDoLocal {
                                         try {
                                             return gestioneLoginComponentSession.isBPEnableForUser(userContext, utente,
                                                     CNRUserContext.getCd_unita_organizzativa(userContext), toDoBP.name());
-                                        } catch (ComponentException|RemoteException e) {
+                                        } catch (ComponentException | RemoteException e) {
                                             return Boolean.FALSE;
                                         }
                                     }).collect(Collectors.toList());
@@ -373,10 +388,10 @@ public class ToDoResource implements ToDoLocal {
                 case SelezionatoreDocAmmFatturazioneElettronica: {
                     if (UtenteBulk.isAbilitatoFirmaFatturazioneElettronica(userContext)
                             && Optional.ofNullable(userContext)
-                                .filter(CNRUserContext.class::isInstance)
-                                .map(CNRUserContext.class::cast)
-                                .flatMap(cnrUserContext -> Optional.ofNullable(cnrUserContext.getEsercizio()))
-                                .isPresent()) {
+                            .filter(CNRUserContext.class::isInstance)
+                            .map(CNRUserContext.class::cast)
+                            .flatMap(cnrUserContext -> Optional.ofNullable(cnrUserContext.getEsercizio()))
+                            .isPresent()) {
                         BulkLoaderIterator remoteIterator =
                                 Optional.ofNullable(crudComponentSession.cerca(
                                         userContext,
@@ -500,7 +515,7 @@ public class ToDoResource implements ToDoLocal {
             LOGGER.error("ERROR in todo method for: {}", toDoBP, e);
         }
         return Response.ok(result).build();
-    };
+    }
 
     private UserContext getUserContext(HttpServletRequest request) {
         return Optional.ofNullable(securityContext.getUserPrincipal())

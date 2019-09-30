@@ -81,4 +81,4 @@ ATTRIBUTO_22,		  -- cd_id_codice_fiscale_estero,
 ATTRIBUTO_23,		  -- cd_nazione 770,
 ATTRIBUTO_24,		  -- cd_trattamento,
 ATTRIBUTO_27	  	-- cf_pi_pignorato
-from pcir009.tmp_report_generico;
+from tmp_report_generico;

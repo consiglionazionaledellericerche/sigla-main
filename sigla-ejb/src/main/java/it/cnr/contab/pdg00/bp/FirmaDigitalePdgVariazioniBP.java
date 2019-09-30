@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.pdg00.bp;
 
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
@@ -17,7 +34,6 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
 import it.cnr.contab.util.SignP7M;
 import it.cnr.contab.util.Utility;
-import it.cnr.jada.DetailedException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
@@ -30,14 +46,14 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.firma.DatiPEC;
 import it.cnr.jada.firma.FirmaInfos;
-import it.cnr.jada.firma.NotSignedEnvelopeException;
-import it.cnr.jada.firma.Verifica;
 import it.cnr.jada.firma.bp.SendPecMail;
 import it.cnr.jada.util.ListRemoteIterator;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.jada.util.jsp.JSPUtils;
 import it.cnr.jada.util.upload.UploadedFile;
+import it.cnr.si.firmadigitale.firma.NotSignedEnvelopeException;
+import it.cnr.si.firmadigitale.firma.Verifica;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageService;
@@ -128,8 +144,8 @@ public class FirmaDigitalePdgVariazioniBP extends
             ArchiviaStampaPdgVariazioneBulk bulk = (ArchiviaStampaPdgVariazioneBulk) getModel();
             bulk.setPdg_variazioneForPrint((Pdg_variazioneBulk) obj);
             if (!isTestSession()) {
-                    bulk.setPdgVariazioneDocument(pdgVariazioniService
-                            .getPdgVariazioneDocument(bulk));
+                bulk.setPdgVariazioneDocument(pdgVariazioniService
+                        .getPdgVariazioneDocument(bulk));
             } else {
                 PdgVariazioneDocument varDoc = new PdgVariazioneDocument(null);
                 bulk.setPdgVariazioneDocument(varDoc);
@@ -289,16 +305,16 @@ public class FirmaDigitalePdgVariazioniBP extends
                 try {
                     cds = Utility.createParametriEnteComponentSession().getCds(
                             context.getUserContext(),
-                            CNRUserContext.getCd_cds((CNRUserContext) context
+                            CNRUserContext.getCd_cds(context
                                     .getUserContext()));
                     uo = Utility.createParametriEnteComponentSession().getUo(
                             context.getUserContext(),
                             CNRUserContext
-                                    .getCd_unita_organizzativa((CNRUserContext) context
+                                    .getCd_unita_organizzativa(context
                                             .getUserContext()));
                     cdr = Utility.createParametriEnteComponentSession().getCdr(
                             context.getUserContext(),
-                            CNRUserContext.getCd_cdr((CNRUserContext) context
+                            CNRUserContext.getCd_cdr(context
                                     .getUserContext()));
                 } catch (ComponentException e) {
                     throw handleException(e);
@@ -309,7 +325,7 @@ public class FirmaDigitalePdgVariazioniBP extends
                 }
                 bulk.setPg_variazione_pdg(new Long(0));
                 bulk.setCentro_responsabilita(cdr);
-                bulk.setCd_centro_responsabilita(CNRUserContext.getCd_cdr((CNRUserContext) context.getUserContext()));
+                bulk.setCd_centro_responsabilita(CNRUserContext.getCd_cdr(context.getUserContext()));
                 bulk.setDs_variazione("VARIAZIONE PER TEST DI FIRMA DIGITALE");
                 BulkList<OggettoBulk> list = new BulkList<OggettoBulk>();
                 list.add(bulk);
@@ -554,10 +570,7 @@ public class FirmaDigitalePdgVariazioniBP extends
         if (servizioPec == null)
             throw new ValidationException(
                     "L'ufficio di competenza per l'invio della posta certificata non ? definito. Impossibile procedere!");
-        if (!parametriEnte.getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE) || isTestSession())
-            testMode = true;
-        else
-            testMode = false;
+        testMode = !parametriEnte.getTipo_db().equals(Parametri_enteBulk.DB_PRODUZIONE) || isTestSession();
 
         CdsBulk cds = null;
         Unita_organizzativaBulk uo = null;
@@ -565,16 +578,16 @@ public class FirmaDigitalePdgVariazioniBP extends
         try {
             cds = Utility.createParametriEnteComponentSession().getCds(
                     context.getUserContext(),
-                    CNRUserContext.getCd_cds((CNRUserContext) context
+                    CNRUserContext.getCd_cds(context
                             .getUserContext()));
             uo = Utility.createParametriEnteComponentSession().getUo(
                     context.getUserContext(),
                     CNRUserContext
-                            .getCd_unita_organizzativa((CNRUserContext) context
+                            .getCd_unita_organizzativa(context
                                     .getUserContext()));
             cdr = Utility.createParametriEnteComponentSession().getCdr(
                     context.getUserContext(),
-                    CNRUserContext.getCd_cdr((CNRUserContext) context
+                    CNRUserContext.getCd_cdr(context
                             .getUserContext()));
         } catch (ComponentException e) {
             throw handleException(e);
@@ -590,7 +603,7 @@ public class FirmaDigitalePdgVariazioniBP extends
         if (cds.getCd_tipo_unita().equals(
                 Tipo_unita_organizzativaHome.TIPO_UO_SAC)) {
             datiPEC.setUo(CNRUserContext
-                    .getCd_unita_organizzativa((CNRUserContext) context
+                    .getCd_unita_organizzativa(context
                             .getUserContext()));
             datiPEC.setDsUo(uo.getDs_unita_organizzativa());
             cdUoPec = uo.getCd_unita_organizzativa();

@@ -1,5 +1,23 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.anagraf00.comp;
 
+import it.cnr.contab.WSAttributes;
 import it.cnr.contab.client.docamm.Voce;
 import it.cnr.contab.config00.ejb.PDCFinComponentSession;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -58,13 +76,13 @@ import org.w3c.dom.Node;
 @Stateless
 @XmlSeeAlso({ java.util.ArrayList.class })
 @WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.VoceComponentSessionWS")
-@DeclareRoles({ "WSUserRole", "IITRole" })
-@WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
+@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
+@WebContext(authMethod = WSAttributes.AUTHMETHOD)
 public class VoceComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
 	@EJB PDCFinComponentSession pdcFinComponentSession;
 	
-	@RolesAllowed({ "WSUserRole", "IITRole" })
+	@RolesAllowed({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
 	public java.util.ArrayList<Voce> cercaVoci(Integer esercizio, String uo,
 			String tipo, String query, String dominio, Integer numMax,
 			String user, String ricerca) throws Exception {
@@ -143,7 +161,7 @@ public class VoceComponentWS {
 		}
 	}
 
-	@RolesAllowed({ "WSUserRole", "IITRole" })
+	@RolesAllowed({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
 	public String cercaVociXml(String esercizio, String uo, String tipo,
 			String query, String dominio, String numMax, String user,
 			String ricerca) throws Exception {
