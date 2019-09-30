@@ -81,7 +81,7 @@ public class CRUDBltVisiteBP extends it.cnr.jada.util.action.SimpleCRUDBP implem
 	}
 	/**
 	 * Secondo costruttore della classe <code>CRUDBltVisiteBP</code>.
-	 * @param String function
+	 * @param function
 	 */
 	public CRUDBltVisiteBP(String function) {
 		super(function+"Tr");
