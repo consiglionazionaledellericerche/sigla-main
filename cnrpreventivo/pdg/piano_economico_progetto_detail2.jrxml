@@ -248,7 +248,7 @@ ORDER BY ESERCIZIO, STATO, PG_CONTRATTO]]>
 				<reportElement style="VER8" x="77" y="56" width="60" height="10" uuid="cc757d9a-9073-4f6e-a9a3-165ca3c34c0d"/>
 				<box topPadding="0" rightPadding="4"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{P_TOTALE_ENTRATE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_TOTALE_REVERSALI}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement key="staticText-54" style="VERB8" x="147" y="56" width="85" height="10" uuid="052add31-aa09-47ca-bf74-9b758d269a39"/>
