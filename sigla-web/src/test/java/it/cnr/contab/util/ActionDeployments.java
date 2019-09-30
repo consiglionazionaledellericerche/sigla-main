@@ -17,16 +17,22 @@
 
 package it.cnr.contab.util;
 
+import org.apache.http.HttpStatus;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.junit.Assert;
+import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import javax.swing.text.html.Option;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -37,18 +43,33 @@ public class ActionDeployments extends Deployments {
     @ArquillianResource
     protected URL deploymentURL;
 
-    protected void doLogin(String user, String password) throws Exception {
+    @Before
+    @RunAsClient
+    @OperateOnDeployment(TEST_H2)
+    public void waitUntilApplicationStarted() throws Exception{
         /**
          * Workaround to wait application started.
          */
         Boolean pageSourceNotFound = true;
         Integer iterate = 0;
+        URL url = new URL(deploymentURL.toString().concat("/Login.do"));
         while(pageSourceNotFound && iterate < 60) {
-            TimeUnit.SECONDS.sleep(5);
-            browser.navigate().to(deploymentURL.toString().concat("/Login.do"));
-            pageSourceNotFound = browser.getPageSource().contains("404 - Not Found");
-            iterate++;
+            try {
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.connect();
+                pageSourceNotFound = connection.getResponseCode() == HttpStatus.SC_NOT_FOUND;
+                if (pageSourceNotFound)
+                    TimeUnit.SECONDS.sleep(5);
+                iterate++;
+            } catch (IllegalStateException _ex) {
+                iterate++;
+            }
         }
+    }
+
+    protected void doLogin(String user, String password) throws Exception {
+        browser.navigate().to(deploymentURL.toString().concat("/Login.do"));
         browser.switchTo().frame("desktop");
         final WebElement comandoEntra = browser.findElement(By.name("comando.doEntra"));
         Assert.assertTrue(Optional.ofNullable(comandoEntra).isPresent());
