@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.doccont00.service;
 
 import com.google.gson.GsonBuilder;
@@ -20,12 +37,6 @@ import it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.FlussoGiornaleDiCassaKey;
 import it.cnr.contab.doccont00.intcass.giornaliera.InformazioniContoEvidenzaBulk;
 import it.cnr.contab.doccont00.intcass.giornaliera.MovimentoContoEvidenzaBulk;
-import it.cnr.contab.model.Esito;
-import it.cnr.contab.model.Lista;
-import it.cnr.contab.model.MessaggioXML;
-import it.cnr.contab.model.Risultato;
-import it.cnr.contab.service.GiornaleDiCassaSiopePlusService;
-import it.cnr.contab.service.OrdinativiSiopePlusService;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusEsitoBulk;
 import it.cnr.contab.siope.plus.bulk.SIOPEPlusRisultatoBulk;
 import it.cnr.contab.utenze00.bp.WSUserContext;
@@ -38,17 +49,26 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
-import it.cnr.jada.firma.arss.ArubaSignServiceClient;
-import it.cnr.jada.firma.arss.ArubaSignServiceException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.mail.SimplePECMail;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceClient;
+import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceException;
+import it.cnr.si.siopeplus.EsitoFlusso;
+import it.cnr.si.siopeplus.MessaggiEsitoApplicativo;
+import it.cnr.si.siopeplus.MessaggioRifiutoFlusso;
+import it.cnr.si.siopeplus.giornaledicassa.FlussoGiornaleDiCassa;
+import it.cnr.si.siopeplus.model.Esito;
+import it.cnr.si.siopeplus.model.Lista;
+import it.cnr.si.siopeplus.model.MessaggioXML;
+import it.cnr.si.siopeplus.model.Risultato;
+import it.cnr.si.siopeplus.service.GiornaleDiCassaSiopePlusService;
+import it.cnr.si.siopeplus.service.OrdinativiSiopePlusService;
 import it.cnr.si.spring.storage.*;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.siopeplus.*;
-import it.siopeplus.giornaledicassa.FlussoGiornaleDiCassa;
 import it.siopeplus.giornaledicassa.InformazioniContoEvidenza;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.NotImplementedException;
@@ -358,7 +378,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                     .collect(Collectors.toList()))
                     .orElse(Collections.emptyList());
             try {
-                it.cnr.jada.firma.arss.stub.PdfSignApparence apparence = new it.cnr.jada.firma.arss.stub.PdfSignApparence();
+                it.cnr.si.firmadigitale.firma.arss.stub.PdfSignApparence apparence = new it.cnr.si.firmadigitale.firma.arss.stub.PdfSignApparence();
                 apparence.setImage(signDocumentURL);
                 apparence.setLeftx(pdfSignApparence.getApparence().getLeftx());
                 apparence.setLefty(pdfSignApparence.getApparence().getLefty());
@@ -804,7 +824,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .map(bulk -> {
                     try {
                         return distintaCassiereComponentSession.findModPag(userContext, bulk);
-                    } catch (ComponentException|RemoteException e) {
+                    } catch (ComponentException | RemoteException e) {
                         return null;
                     }
                 })
@@ -873,9 +893,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         siopePlusEsitoBulk.setEsitoOperazione(EsitoOperazione.getValueFromLabel(ctEsitoMandato.getEsitoOperazione().value()));
                         siopePlusEsitoBulk.setDtOraEsitoOperazione(
                                 new Timestamp(ctEsitoMandato
-                                    .getDataOraEsitoOperazione()
-                                    .toGregorianCalendar()
-                                    .getTimeInMillis()
+                                        .getDataOraEsitoOperazione()
+                                        .toGregorianCalendar()
+                                        .getTimeInMillis()
                                 )
                         );
                         siopePlusEsitoBulk.setToBeCreated();
