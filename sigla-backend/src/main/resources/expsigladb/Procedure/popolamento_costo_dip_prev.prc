@@ -25,11 +25,11 @@ CREATE OR REPLACE PROCEDURE         POPOLAMENTO_COSTO_DIP_PREV( aEsAnnoPrev IN N
 --
 begin
 
- PCIR009.IBMUTL015.SETRBSBIG;
+ IBMUTL015.SETRBSBIG;
  -- =================================================================================================
  -- Esiste l'indicazione dell'UNITA_ORGANIZZATIVA
  -- =================================================================================================
- INSERT INTO PCIR009.COSTO_DEL_DIPENDENTE
+ INSERT INTO COSTO_DEL_DIPENDENTE
        (ESERCIZIO,
         TI_PREV_CONS,
         ID_MATRICOLA,
@@ -96,7 +96,7 @@ begin
         bMese,
 	      Decode(ltrim(rtrim(B.TIPO_CONTRATTO)), '01','FIN','11','FIN','00','FIN',null,'FIN','FES'),
 	      Decode(ltrim(rtrim(B.RAPP_IMPIEGO)), '13','Y','N')
- FROM    PCIR009.VM_COSTI_DIP_PREV_VIEW A, PCIR009.CNR_ANADIP B
+ FROM    VM_COSTI_DIP_PREV_VIEW A, CNR_ANADIP B
  WHERE   A.ESERCIZIO = aEsAnnoPrev AND
         A.cd_unita_organizzativa IS NOT NULL AND
         B.matricola = A.matricola And
@@ -111,13 +111,13 @@ begin
         B.mese_rif = bMese And
         EXISTS
            (SELECT 1
-            FROM   PCIR009.UNITA_ORGANIZZATIVA C
+            FROM   UNITA_ORGANIZZATIVA C
             WHERE  C.cd_unita_organizzativa = A.cd_unita_organizzativa);
  -- =================================================================================================
  -- Non esiste l'indicazione dell'UNITA_ORGANIZZATIVA
  -- =================================================================================================
  begin
- INSERT INTO PCIR009.COSTO_DEL_DIPENDENTE
+ INSERT INTO COSTO_DEL_DIPENDENTE
        (ESERCIZIO,
         TI_PREV_CONS,
         ID_MATRICOLA,
@@ -184,7 +184,7 @@ begin
         bMese,
 	      Decode(ltrim(rtrim(B.TIPO_CONTRATTO)), '01','FIN','11','FIN','00','FIN',null,'FIN','FES'),
 	      Decode(ltrim(rtrim(B.RAPP_IMPIEGO)), '13','Y','N')
- FROM    PCIR009.VM_COSTI_DIP_PREV_VIEW A, PCIR009.CNR_ANADIP B
+ FROM    VM_COSTI_DIP_PREV_VIEW A, CNR_ANADIP B
  WHERE   A.ESERCIZIO = aEsAnnoPrev AND
         B.matricola = A.matricola And
         /*
@@ -198,19 +198,19 @@ begin
         B.mese_rif = bMese And
         NOT EXISTS
            (SELECT 1
-            FROM   PCIR009.UNITA_ORGANIZZATIVA C
+            FROM   UNITA_ORGANIZZATIVA C
             WHERE  C.cd_unita_organizzativa = A.cd_unita_organizzativa);
 	exception when dup_val_on_index then
 	  for duplicati in
   	(select  A.im_a1, A.im_oneri_cnr_a1, A.im_tfr_a1,A.matricola,a.cd_elemento_voce
-   	FROM    PCIR009.VM_COSTI_DIP_PREV_VIEW A, PCIR009.CNR_ANADIP B
+   	FROM    VM_COSTI_DIP_PREV_VIEW A, CNR_ANADIP B
  		WHERE   A.ESERCIZIO = aEsAnnoPrev AND
         B.matricola = A.matricola And
         B.anno_rif = aEsAnnoPrev And
         B.mese_rif = bMese And
         NOT EXISTS
            (SELECT 1
-            FROM   PCIR009.UNITA_ORGANIZZATIVA C
+            FROM   UNITA_ORGANIZZATIVA C
             WHERE  C.cd_unita_organizzativa = A.cd_unita_organizzativa)
         and exists
         (select 1 from costo_del_dipendente d

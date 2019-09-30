@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <!-- Schema iniziale-->
+    <include file="db-changelog-master.xml"/>
+    <!-- Dati di Test -->
+    <changeSet author="test" id="create-user-test">
+        <addDefaultValue tableName="utente" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente_unita_accesso" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente_unita_accesso" columnName="duva" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente_unita_ruolo" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="utente_unita_ruolo" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="liquibase/csv/utente.csv" quotchar="&quot;" separator="," tableName="utente">
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="liquibase/csv/utente_unita_accesso.csv" quotchar="&quot;" separator="," tableName="utente_unita_accesso">
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="liquibase/csv/utente_unita_ruolo.csv" quotchar="&quot;" separator="," tableName="utente_unita_ruolo">
+            <column name="dt_inizio_validita" type="${date.type}"/>
+            <column name="dt_fine_validita" type="${date.type}"/>
+        </loadData>
+
+        <dropDefaultValue tableName="utente" columnName="dacr"/>
+        <dropDefaultValue tableName="utente" columnName="duva"/>
+        <dropDefaultValue tableName="utente_unita_accesso" columnName="dacr"/>
+        <dropDefaultValue tableName="utente_unita_accesso" columnName="duva"/>
+        <dropDefaultValue tableName="utente_unita_ruolo" columnName="dacr"/>
+        <dropDefaultValue tableName="utente_unita_ruolo" columnName="duva"/>
+    </changeSet>
+
+</databaseChangeLog>
