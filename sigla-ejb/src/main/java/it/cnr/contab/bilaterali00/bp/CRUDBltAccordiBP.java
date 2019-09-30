@@ -167,7 +167,7 @@ public class CRUDBltAccordiBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
 	/**
 	 * Secondo costruttore della classe <code>CRUDIncarichiRepertorioBP</code>.
-	 * @param String function
+	 * @param function
 	 */
 	public CRUDBltAccordiBP(String function) {
 		super(function);

@@ -50,7 +50,7 @@ public LogRegistryComponent() {
  *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
  *			ottenuto concatenando il nome della component con la stringa ".find"
  *
- * @param	uc	lo UserContext che ha generato la richiesta
+ * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	clausole	Una CompoundFindClause che descrive l'albero di clausole
  * 			da applicare nella ricerca
  * @param	bulk	l'OggettoBulk che è stato usato come prototipo per la generazione

@@ -326,6 +326,8 @@ public class BltVisiteAction extends it.cnr.jada.util.action.CRUDAction{
     /**
      * Ricerca un'obbligazione valida da associare al doc amm
      * richeide la validità delle selezioni effettuate
+     * @param context
+     * @return crea obbligazione
      */
     public Forward doCreaObbligazione(ActionContext context) {
     	try {
