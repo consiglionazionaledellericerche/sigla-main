@@ -35,6 +35,7 @@
 		<module>sigla-web</module>
 	</modules>
 	<properties>
+		<maven.javadoc.skip>true</maven.javadoc.skip>
     	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
 		<siopeplus.version>0.0.3</siopeplus.version>
@@ -70,20 +71,105 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.3</version>
-				<configuration>
-					<additionalparam>-Xdoclint:none</additionalparam>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
-  <scm>
-    <connection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</connection>
-    <developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</developerConnection>
-    <tag>HEAD</tag>
-  </scm>
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<maven.javadoc.skip>false</maven.javadoc.skip>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.10.3</version>
+						<configuration>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<licenses>
+		<license>
+			<name>GNU AFFERO GENERAL PUBLIC LICENSE</name>
+			<url>https://www.gnu.org/licenses/agpl-3.0.html</url>
+			<comments>
+				Copyright (C) 2019 Consiglio Nazionale delle Ricerche
+
+				This program is free software: you can redistribute it and/or modify
+				it under the terms of the GNU Affero General Public License as
+				published by the Free Software Foundation, either version 3 of the
+				License, or (at your option) any later version.
+
+				This program is distributed in the hope that it will be useful,
+				but WITHOUT ANY WARRANTY; without even the implied warranty of
+				MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+				GNU Affero General Public License for more details.
+
+				You should have received a copy of the GNU Affero General Public License
+				along with this program.  If not, see https://www.gnu.org/licenses/
+			</comments>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>marco.spasiano</id>
+			<name>Marco Spasiano</name>
+			<email>marco.spasiano@cnr.it</email>
+			<organization>Consiglio Nazionale delle Ricerche</organization>
+			<organizationUrl>http://www.cnr.it</organizationUrl>
+			<roles>
+				<role>project lead</role>
+				<role>architet</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>raffaele.pagano</id>
+			<name>Raffaele Pagano</name>
+			<email>raffaele.pagano@cnr.it</email>
+			<organization>Consiglio Nazionale delle Ricerche</organization>
+			<organizationUrl>http://www.cnr.it</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>gianfranco.gasparro</id>
+			<name>Gianfranco Gasparro</name>
+			<email>gianfranco.gasparro@cnr.it</email>
+			<organization>Consiglio Nazionale delle Ricerche</organization>
+			<organizationUrl>http://www.cnr.it</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>rosangela.pucciarelli</id>
+			<name>Rosangela Pucciarelli</name>
+			<email>rosangela.pucciarelli@cnr.it</email>
+			<organization>Consiglio Nazionale delle Ricerche</organization>
+			<organizationUrl>http://www.cnr.it</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>francesco.uliana</id>
+			<name>Francesco Uliana</name>
+			<email>francesco@uliana.it</email>
+			<roles>
+				<role>architet</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</connection>
+		<developerConnection>scm:git:ssh://git@git.si.cnr.it/dev/sigla-main.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
 </project>
