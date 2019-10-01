@@ -24,7 +24,7 @@ cache:
 maven-deploy:
   stage: deploy
   image: maven:alpine
-  script: "mvn clean deploy $MAVEN_CLI_OPTS -Pprod -DskipTests"
+  script: "mvn clean deploy $MAVEN_CLI_OPTS"
   artifacts:
     paths:
       - sigla-web/target/sigla-thorntail.jar
@@ -45,7 +45,7 @@ maven-install:
 maven-deploy-tag:
   stage: deploy
   image: maven:alpine
-  script: "mvn clean deploy $MAVEN_CLI_OPTS -Pprod"
+  script: "mvn clean deploy $MAVEN_CLI_OPTS -Pprod -DskipTests"
   artifacts:
     paths:
       - sigla-web/target/sigla-thorntail.jar
@@ -135,8 +135,8 @@ perform-maven-release-maven-central:
     - echo "pinentry-mode loopback" > /root/.gnupg/gpg.conf
     - echo "allow-loopback-pinentry" > /root/.gnupg/gpg-agent.conf
     - gpg --batch --import <(echo "$GPG_PRIVATE_KEY")
-    - mvn release:clean release:prepare -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
-    - mvn release:perform -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
+    - mvn release:clean release:prepare -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
+    - mvn release:perform -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
   only:
     - master
   when: manual
