@@ -320,15 +320,18 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	public boolean isSaveButtonEnabled()
 	{
 		Var_stanz_resBulk varStanzRes = (Var_stanz_resBulk)getModel();
-		if (!isAbilitatoModificaDescVariazioni() && varStanzRes.isApprovata())
-			return false;
-		else if ((isUoEnte() || isCdrScrivania()) && 
-				(varStanzRes.isApprovata() || varStanzRes.isApprovazioneControllata()) &&
+		if (isCdrScrivania() || isUoEnte()) {
+			if ((varStanzRes.isApprovata() || varStanzRes.isApprovazioneControllata()) &&
 				varStanzRes.isMotivazioneVariazioneBandoPersonale() && varStanzRes.getStorageMatricola()==null)
-			return true;
-		else
-			return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte());
-	}	
+				return true;
+			else if (!isAbilitatoModificaDescVariazioni() && varStanzRes.isApprovata())
+				return false;
+			else
+				return super.isSaveButtonEnabled();
+		}
+		return false;
+	}
+	
 	public boolean isDeleteButtonEnabled()
 	{
 		return super.isDeleteButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !((Var_stanz_resBulk)getModel()).isApprovata();
