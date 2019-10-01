@@ -1,0 +1,121 @@
+logger:
+  level: DEBUG
+
+thorntail:
+  datasources:
+    jdbc-drivers:
+      h2:
+        driver-class-name: org.h2.Driver
+        xa-datasource-class-name: org.h2.jdbcx.JdbcDataSource
+        driver-module-name: com.h2database.h2
+    data-sources:
+      SIGLA:
+        driver-name: h2
+        connection-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        user-name: sa
+        password: sa
+        use-java-context: true
+        jndi-name: java:/jdbc/CIR
+  transactions:
+    default-timeout: 3600
+  bind:
+    address: 0.0.0.0
+  context:
+    path: SIGLA
+  logging:
+    loggers:
+      org.jboss.as.ejb3:
+        level: ERROR
+      org.jboss.as.dependency.private:
+        level: ERROR
+      org.jboss.as.server.deployment:
+        level: ERROR
+      io.undertow.servlet:
+        level: ERROR
+  management:
+    http-interface-management-interface:
+      security-realm: ManagementRealm
+    security-realms:
+      ManagementRealm:
+        local-authentication:
+          default-user: '$local'
+          skip-group-loading: true
+        in-memory-authentication:
+          users:
+            admin:
+              password: changeit!
+        in-memory-authorization:
+          users:
+            admin:
+              roles:
+                - admin
+      ApplicationRealm:
+        local-authentication:
+          default-user: '$local'
+          allowed-users: '*'
+          skip-group-loading: true
+        in-memory-authentication:
+          users:
+            iit:
+              password: changeit!
+            brevetti:
+              password: changeit!
+        in-memory-authorization:
+          users:
+            iit:
+              roles:
+                - IITRole
+            brevetti:
+              roles:
+                - BrevettiRole
+  remoting:
+    http-connectors:
+      http-remoting-connector:
+        connector-ref: default
+        security-realm: ApplicationRealm
+  ejb3:
+    default-security-domain: other
+    default-missing-method-permissions-deny-access: true
+
+repository:
+  base:
+    url: http://as1dock.si.cnr.it:8080/alfresco/
+org:
+  apache:
+    chemistry:
+      opencmis:
+        user: admin
+        password: admin
+        session:
+          repository:
+            id: -default-
+        binding:
+          browser:
+            url: ${repository.base.url}api/${org.apache.chemistry.opencmis.session.repository.id}/public/cmis/versions/1.1/browser
+          spi:
+            type: browser
+          connecttimeout: 50000
+          readtimeout: 3000000
+          httpinvoker:
+            classname: org.apache.chemistry.opencmis.client.bindings.spi.http.DefaultHttpInvoker
+          auth:
+            http:
+              basic: true
+            soap:
+              usernametoken: false
+        cache:
+          path:
+            omit: true
+
+siopeplus:
+  certificate:
+    path: file:${user.home}/cert/siope+/cert.p12
+    password: changeit
+  codice:
+    a2a: A2A-00000000
+    uni:
+      uo: 000000
+
+liquibase:
+  bootstrap:
+    esercizio: 2019

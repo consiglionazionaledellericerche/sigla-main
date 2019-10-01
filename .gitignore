@@ -6,3 +6,4 @@
 .settings
 target/
 build/
+*audit-log.log*

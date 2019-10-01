@@ -30,14 +30,14 @@
        inventario_beni.nr_inventario,
        INVENTARIO_BENI.TI_COMMERCIALE_ISTITUZIONALE,inventario_beni.FL_AMMORTAMENTO,
        inventario_beni.progressivo
-  FROM pcir009.inventario_beni,
-       pcir009.ubicazione_bene,
-       pcir009.categoria_gruppo_invent,
-       pcir009.categoria_gruppo_invent categoria_gruppo_invent2,
-       pcir009.buono_carico_scarico_dett,
-       pcir009.terzo,
-       pcir009.buono_carico_scarico,
-       pcir009.tipo_carico_scarico
+  FROM inventario_beni,
+       ubicazione_bene,
+       categoria_gruppo_invent,
+       categoria_gruppo_invent categoria_gruppo_invent2,
+       buono_carico_scarico_dett,
+       terzo,
+       buono_carico_scarico,
+       tipo_carico_scarico
  WHERE inventario_beni.cd_cds = ubicazione_bene.cd_cds
    AND inventario_beni.cd_unita_organizzativa =
                                         ubicazione_bene.cd_unita_organizzativa
