@@ -28,6 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
@@ -35,13 +37,17 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(Arquillian.class)
 public class LoginTest extends ActionDeployments {
+    private transient final static Logger LOGGER = LoggerFactory.getLogger(LoginTest.class);
+    public static final String USERNAME = "TEST";
+    public static final String PASSWORD = "TESTTEST";
 
     @Test
     @RunAsClient
     @OperateOnDeployment(TEST_H2)
     @InSequence(1)
     public void testLogin() throws Exception {
-        doLogin("TEST", "");
+        LOGGER.info("try to connect with user {}", USERNAME);
+        doLogin(USERNAME, "");
     }
 
     @Test
@@ -63,8 +69,8 @@ public class LoginTest extends ActionDeployments {
                 .map(GrapheneElement.class::cast)
                 .orElseThrow(() -> new RuntimeException("Cannot find element with name main.confermaPassword"));
 
-        elementNuovaPassword.writeIntoElement("TESTTEST");
-        elementConfermaPassword.writeIntoElement("TESTTEST");
+        elementNuovaPassword.writeIntoElement(PASSWORD);
+        elementConfermaPassword.writeIntoElement(PASSWORD);
 
         comandoAssegnapassword.click();
     }
