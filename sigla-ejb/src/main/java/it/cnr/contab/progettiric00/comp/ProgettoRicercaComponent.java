@@ -1804,7 +1804,6 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				   	    				" non può essere inferiore all'utilizzato spese 'fonti interne' e 'natura reimpiego' ("+
 				   	    				new EuroFormat().format(saldo.getUtilizzatoAssestatoCofinanziamento())+")!");
 							});
-		   				
 		   				} else {
 		   					Optional.ofNullable(saldo.getImportoFin())
 				   				.filter(el->el.subtract(saldo.getAssestatoFinanziamento()).compareTo(BigDecimal.ZERO)<0).ifPresent(el->{
@@ -2039,16 +2038,19 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	    		sql.addClause(FindClause.AND, "flPianoEcoFin", SQLBuilder.EQUALS, Boolean.TRUE);
 	    		
 	        	if (progetto.getAllDetailsProgettoPianoEconomico().stream()
+	        			.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).isPresent())
 	        			.filter(el->el.getVoce_piano_economico().isVocePersonaleTempoDeterminato())
 	        			.count()>0)
 	        		sql.addClause(FindClause.AND, "flAssCatVociDet", SQLBuilder.EQUALS, Boolean.TRUE);
 	
 	        	if (progetto.getAllDetailsProgettoPianoEconomico().stream()
+	        			.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).isPresent())
 	        			.filter(el->el.getVoce_piano_economico().isVocePersonaleTempoIndeterminato())
 	        			.count()>0)
 	        		sql.addClause(FindClause.AND, "flAssCatVociInd", SQLBuilder.EQUALS, Boolean.TRUE);
 	
 	        	if (progetto.getAllDetailsProgettoPianoEconomico().stream()
+	        			.filter(el->Optional.ofNullable(el.getVoce_piano_economico()).isPresent())
 	        			.filter(el->el.getVoce_piano_economico().isVocePersonaleAltraTipologia())
 	        			.count()>0)
 	        		sql.addClause(FindClause.AND, "flAssCatVociAltro", SQLBuilder.EQUALS, Boolean.TRUE);
