@@ -23,7 +23,6 @@ cache:
   
 maven-deploy:
   stage: deploy
-  image: maven:alpine
   script: "mvn clean deploy $MAVEN_CLI_OPTS"
   artifacts:
     paths:
@@ -33,7 +32,6 @@ maven-deploy:
 
 maven-install:
   stage: deploy
-  image: maven:alpine
   script: "mvn clean install $MAVEN_CLI_OPTS -DskipTests"
   artifacts:
     paths:
@@ -44,7 +42,6 @@ maven-install:
 
 maven-deploy-tag:
   stage: deploy
-  image: maven:alpine
   script: "mvn clean deploy $MAVEN_CLI_OPTS -Pprod -DskipTests"
   artifacts:
     paths:
@@ -107,7 +104,6 @@ catapult-deploy-image:
 #la release è opzionale e manuale.
 perform-maven-release-maven-central:
   stage: release
-  image: maven:alpine
   script:
     - 'which git || (apk add --update git && rm -rf /var/cache/apk/*)'
     # Install ssh-agent if not already installed, it is required by Docker.
