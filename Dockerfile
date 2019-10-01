@@ -1,5 +1,5 @@
 # DOCKER-VERSION 17.10.0-ce
-FROM anapsix/alpine-java:jdk8
+FROM openjdk:8-jdk-alpine
 MAINTAINER Marco Spasiano <marco.spasiano@cnr.it>
 
 COPY sigla-web/target/sigla-thorntail.jar /opt/sigla-thorntail.jar
