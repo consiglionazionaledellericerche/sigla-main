@@ -113,7 +113,6 @@ perform-maven-release-maven-central:
     # Install ssh-agent if not already installed, it is required by Docker.
     # (change apt-get to yum if you use a CentOS-based image)
     - 'which ssh-agent || ( apk add --update openssh-client && rm -rf /var/cache/apk/*)'
-    - 'which nodejs || (apk add --update nodejs nodejs-npm && rm -rf /var/cache/apk/*)'
     # Run ssh-agent (inside the build environment)
     - eval $(ssh-agent -s)
 
