@@ -1,0 +1,143 @@
+image: docker:git
+services:
+  - docker:dind
+
+stages:
+  - deploy
+  - build
+  - catapult
+  - release
+
+variables:
+  MAVEN_OPTS: "-Djava.awt.headless=true -Dsonar.host.url=$SONAR_HOST_URL"
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml -Dmaven.repo.local=./.m2/repository -Dnexus.url=$NEXUS_URL -Dnexus.login=$NEXUS_USERNAME -Dnexus.pwd=$NEXUS_PASSWORD --batch-mode --errors --fail-at-end --show-version"
+  MAVEN_CLI_CENTRAL_OPTS: "-s .m2/settings.xml -Dmaven.repo.local=./.m2/repository -Pprod,maven-central -Dnexus.url=$NEXUS_URL -Dsonatype.login=$SONATYPE_USERNAME -Dsonatype.pwd=$SONATYPE_PASSWORD -DskipTests --batch-mode --errors --fail-at-end --show-version"
+  CONTAINER_TEST_IMAGE: $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
+  CONTAINER_RELEASE_IMAGE: $CI_PROJECT_PATH:latest
+
+cache:
+  paths:
+    - ./.m2/repository
+  # keep cache across branch
+  key: "$CI_BUILD_REF_NAME"
+  
+maven-deploy:
+  stage: deploy
+  image: maven:alpine
+  script: "mvn clean deploy $MAVEN_CLI_OPTS"
+  artifacts:
+    paths:
+      - sigla-web/target/sigla-thorntail.jar
+  only:
+    - master
+
+maven-install:
+  stage: deploy
+  image: maven:alpine
+  script: "mvn clean install $MAVEN_CLI_OPTS -DskipTests"
+  artifacts:
+    paths:
+      - sigla-web/target/sigla-thorntail.jar
+  except:
+    - master
+    - tags
+
+maven-deploy-tag:
+  stage: deploy
+  image: maven:alpine
+  script: "mvn clean deploy $MAVEN_CLI_OPTS -Pprod -DskipTests"
+  artifacts:
+    paths:
+      - sigla-web/target/sigla-thorntail.jar
+  only:
+    - tags
+
+#Ad ogni nuovo tag viene fatta la push sul docker hub.
+docker-build-push-hub:
+  stage: build
+  script:
+    - docker build -t $CI_PROJECT_NAME:$CI_COMMIT_REF_NAME .
+    - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
+    - docker tag $CI_PROJECT_NAME:$CI_COMMIT_REF_NAME $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
+    - docker tag $CI_PROJECT_NAME:$CI_COMMIT_REF_NAME $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:latest
+    - docker push $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
+    - docker push $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:latest
+  only:
+    - tags
+
+
+#Ad ogni nuovo commit sul master viene fatta la push sul docker registry locale.
+docker-build-push-master:
+  stage: build
+  script:
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker tag $CONTAINER_TEST_IMAGE $CI_REGISTRY/$CONTAINER_RELEASE_IMAGE
+    - docker push $CI_REGISTRY/$CONTAINER_RELEASE_IMAGE
+  only:
+    - master
+
+
+#Ad ogni nuovo commit sul branch viene fatta la push sul docker registry locale.
+docker-build-push-branches:
+  stage: build
+  script:
+    - docker build -t $CONTAINER_TEST_IMAGE .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker tag $CONTAINER_TEST_IMAGE $CI_REGISTRY/$CONTAINER_TEST_IMAGE
+    - docker push $CI_REGISTRY/$CONTAINER_TEST_IMAGE
+  except:
+    - tags
+    - master
+
+#Aggiorno il container con l'immagine docker creata.
+catapult-deploy-image:
+  stage: catapult
+  dependencies:
+    - docker-build-push-branches
+    - docker-build-push-master
+  before_script:
+    - apk add --update-cache --upgrade curl && rm -rf /var/cache/apk/*
+  script:
+    - >
+      curl --fail -s -X POST $CATAPULT_URL -H 'Content-type:application/json' --data '{"id":"'"$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME"'", "git":true}'
+  except:
+    - tags
+
+#la release è opzionale e manuale.
+perform-maven-release-maven-central:
+  stage: release
+  image: maven:alpine
+  script:
+    - 'which git || (apk add --update git && rm -rf /var/cache/apk/*)'
+    # Install ssh-agent if not already installed, it is required by Docker.
+    # (change apt-get to yum if you use a CentOS-based image)
+    - 'which ssh-agent || ( apk add --update openssh-client && rm -rf /var/cache/apk/*)'
+    # Run ssh-agent (inside the build environment)
+    - eval $(ssh-agent -s)
+
+    # Add the SSH key stored in GIT_SSH_PRIV_KEY variable to the agent store
+    - ssh-add <(echo "$GIT_SSH_PRIV_KEY")
+
+    # For Docker builds disable host key checking. Be aware that by adding that
+    # you are susceptible to man-in-the-middle attacks.
+    # WARNING: Use this only with the Docker executor, if you use it with shell
+    # you will overwrite your user's SSH config.
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - git config --global user.email "marco.spasiano@cnr.it"
+    - git config --global user.name "marco.spasiano"
+    - git checkout -B "$CI_BUILD_REF_NAME"
+
+    # Add gpg private key
+    - 'which gnupg || ( apk add --update gnupg && rm -rf /var/cache/apk/*)'
+    - gpg -v --list-keys
+    - echo "pinentry-mode loopback" > /root/.gnupg/gpg.conf
+    - echo "allow-loopback-pinentry" > /root/.gnupg/gpg-agent.conf
+    - gpg --batch --import <(echo "$GPG_PRIVATE_KEY")
+    - mvn release:clean release:prepare -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
+    - mvn release:perform -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
+  only:
+    - master
+  when: manual
+  
