@@ -1,78 +1,95 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <changeSet author="sigla" runOnChange="true" id="createProcedure-ibmutl001_lock_transaction">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/ibmutl001_lock_transaction.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-ibmutl001_unlock_transaction">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/ibmutl001_unlock_transaction.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-ibmutl001_trace_user_connection">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/ibmutl001_trace_user_connection.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-ibmutl001_getdbrefreshdate">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/ibmutl001_getdbrefreshdate.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-cnrctb850_unregister">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/cnrctb850_unregister.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-cnrctb850_register">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/cnrctb850_register.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-cnrctb850_unregister">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/cnrctb850_unregister.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-cnrctb850_getandlock">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/cnrctb850_getandlock.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-cnrctb850_ins_controllo_accesso">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/cnrctb850_ins_controllo_accesso.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-cnrctb850_ins_controllo_accesso_utente">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/cnrctb850_ins_controllo_accesso_utente.sql"
                 relativeToChangelogFile="true"/>
     </changeSet>
     <changeSet author="sigla" runOnChange="true" id="createProcedure-decode">
         <createProcedure
-                dbms="h2, postgresql"
+                dbms="postgresql"
                 encoding="utf8"
                 path="../postgresql/function/decode.sql"
                 relativeToChangelogFile="true"/>
