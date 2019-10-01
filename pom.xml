@@ -74,7 +74,7 @@
 	</build>
 	<profiles>
 		<profile>
-			<id>prod</id>
+			<id>javadoc</id>
 			<properties>
 				<maven.javadoc.skip>false</maven.javadoc.skip>
 			</properties>
