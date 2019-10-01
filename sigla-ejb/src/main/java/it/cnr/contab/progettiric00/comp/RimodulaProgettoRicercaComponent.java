@@ -468,6 +468,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			BulkList<Progetto_rimodulazioneBulk> listRimodulazioni = new BulkList<Progetto_rimodulazioneBulk>(prgHome.findRimodulazioni(progettoRimodulazione.getPg_progetto()));
 			listRimodulazioni.stream()
 				.filter(el->!el.equalsByPrimaryKey(this))
+				.filter(el->!el.isStatoRespinto())
 				.filter(el->!el.isStatoApprovato())
 				.findFirst().ifPresent(el->{
 					throw new ApplicationRuntimeException("Attenzione! La rimodulazione n."+el.getPg_rimodulazione()+" del progetto "

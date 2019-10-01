@@ -270,13 +270,13 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
     public boolean isSaveButtonEnabled() {
         Pdg_variazioneBulk pdgVariazione = (Pdg_variazioneBulk) getModel();
-        if (!isAbilitatoModificaDescVariazioni() && pdgVariazione.isApprovata())
-            return false;
-        else if (isUoEnte() && this.abilitatoModificaDescVariazioni && pdgVariazione.isPropostaDefinitiva())
-            return true;
-        else if ((isUoEnte() || isCdrScrivania()) &&
+        if ((isUoEnte() || isCdrScrivania()) &&
                 (pdgVariazione.isApprovata() || pdgVariazione.isApprovazioneFormale()) &&
                 pdgVariazione.isMotivazioneVariazioneBandoPersonale() && pdgVariazione.getStorageMatricola() == null)
+            return true;
+        else if (!isAbilitatoModificaDescVariazioni() && pdgVariazione.isApprovata())
+            return false;
+        else if (isUoEnte() && this.abilitatoModificaDescVariazioni && pdgVariazione.isPropostaDefinitiva())
             return true;
         else
             return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !(pdgVariazione.getStatoDocumentale() != null);

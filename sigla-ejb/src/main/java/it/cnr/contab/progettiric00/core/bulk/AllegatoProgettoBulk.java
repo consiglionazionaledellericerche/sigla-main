@@ -82,7 +82,7 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 		super.validate();
 		if (getObjectType() == null)
 			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
-		else if (this.isToBeCreated() || this.getNome().isEmpty()) {
+		else if (this.isToBeCreated() || this.getNome()==null || this.getNome().isEmpty()) {
 			StringJoiner name = new StringJoiner("-");
 			Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getPg_progetto()))
 					.ifPresent(el->name.add("PRG" + el));
