@@ -24,7 +24,7 @@ cache:
 maven-deploy:
   stage: deploy
   image: maven:alpine
-  script: "mvn clean deploy -Parquillian,CMIS -Dorg.apache.maven.user-settings=.m2/settings.xml $MAVEN_CLI_OPTS"
+  script: "mvn clean deploy $MAVEN_CLI_OPTS"
   artifacts:
     paths:
       - sigla-web/target/sigla-thorntail.jar
@@ -34,7 +34,7 @@ maven-deploy:
 maven-install:
   stage: deploy
   image: maven:alpine
-  script: "mvn clean install -Parquillian,CMIS -Dorg.apache.maven.user-settings=.m2/settings.xml $MAVEN_CLI_OPTS -DskipTests"
+  script: "mvn clean install $MAVEN_CLI_OPTS -DskipTests"
   artifacts:
     paths:
       - sigla-web/target/sigla-thorntail.jar

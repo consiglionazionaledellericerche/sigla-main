@@ -547,26 +547,6 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>arquillian</id>
-            <properties>
-                <org.apache.maven.user-settings></org.apache.maven.user-settings>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.9</version><!-- or upper -->
-                        <configuration>
-                            <systemPropertyVariables>
-                                <org.apache.maven.user-settings>${org.apache.maven.user-settings}</org.apache.maven.user-settings>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>CMIS</id>
             <dependencies>
                 <dependency>
