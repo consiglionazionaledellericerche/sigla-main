@@ -32,7 +32,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select * from PRT_VPG_SIT_CASSA
-Order by ORDINAMENTO,ORDINE]]>
+Order by SEQUENZA,ORDINE]]>
 	</queryString>
 	<field name="ID" class="java.math.BigDecimal"/>
 	<field name="CHIAVE" class="java.lang.String"/>
