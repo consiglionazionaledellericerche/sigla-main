@@ -707,12 +707,18 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 										.map(Voce_piano_economico_prgBulk::getFl_add_vocibil)
 										.orElse(Boolean.FALSE);
 
+		if (!Optional.ofNullable(optPpe.get().getImSpesaFinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo finanziato non può assumere un valore nullo.");
+
+		if (!Optional.ofNullable(optPpe.get().getImSpesaCofinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore nullo.");
+
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
 			throw new ValidationException("Operazione non possibile! Il campo importo finanziato non può assumere un valore negativo.");
 
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0 && 
 				optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0)
-			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono essere entrambi nulli.");
+			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono assumere entrambi valore 0.");
 
 		//Calcolo il valore minimo al di sotto del quale non si può andare
 		BigDecimal totaleUtilizzato = optPpe.get().getVociBilancioAssociate().stream()
@@ -747,12 +753,18 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 										.map(Voce_piano_economico_prgBulk::getFl_add_vocibil)
 										.orElse(Boolean.FALSE);
 
+		if (!Optional.ofNullable(optPpe.get().getImSpesaFinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo finanziato non può assumere un valore nullo.");
+
+		if (!Optional.ofNullable(optPpe.get().getImSpesaCofinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore nullo.");
+
 		if (optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
 			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore negativo.");
 
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0 && 
 				optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0)
-			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono essere entrambi nulli.");
+			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono assumere entrambi valore 0.");
 
 		//Calcolo il valore minimo al di sotto del quale non si può andare
 		BigDecimal totaleUtilizzato = optPpe.get().getVociBilancioAssociate().stream()
