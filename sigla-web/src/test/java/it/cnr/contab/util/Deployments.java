@@ -43,7 +43,7 @@ public class Deployments {
     }
 
     private static WebArchive createDeployment(String yml) throws Exception {
-        final PomEquippedResolveStage pom = Maven.configureResolver().withMavenCentralRepo(false)
+        final PomEquippedResolveStage pom = Maven.resolver()
                 .loadPomFromFile("pom.xml");
 
         WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
