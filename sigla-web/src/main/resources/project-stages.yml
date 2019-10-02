@@ -119,6 +119,30 @@ liquibase:
     esercizio: 2019
 ---
 project:
+  stage: demo-h2
+thorntail:
+  datasources:
+    jdbc-drivers:
+      h2:
+        driver-class-name: org.h2.Driver
+        xa-datasource-class-name: org.h2.jdbcx.JdbcDataSource
+        driver-module-name: com.h2database.h2
+    data-sources:
+      SIGLA:
+        driver-name: h2
+        connection-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+        user-name: sa
+        password: sa
+        use-java-context: true
+        jndi-name: java:/jdbc/CIR
+  deployment:
+    timeout: 1200
+
+spring:
+  profiles:
+    active: liquibase
+---
+project:
   stage: demo-postgres
 thorntail:
   datasources:
@@ -153,7 +177,7 @@ thorntail:
 
 spring:
   profiles:
-    active: liquibase-cnr
+    active: liquibase
 ---
 project:
   stage: production-cnr
