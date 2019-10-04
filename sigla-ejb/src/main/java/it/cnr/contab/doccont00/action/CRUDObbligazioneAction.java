@@ -19,6 +19,8 @@ package it.cnr.contab.doccont00.action;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
@@ -54,6 +56,7 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -107,7 +110,6 @@ public Forward doBlankSearchFind_creditore(ActionContext context,ObbligazioneBul
  * Gestisce il caricamento dei capitoli di spesa
  	 * @param context <code>ActionContext</code> in uso.
 	 * @param obbligazione Oggetto di tipo <code>ObbligazioneBulk</code>
-	 * @param capitolo Oggetto di tipo <code>Elemento_voceBulk</code>
 	 *
 	 * @return <code>Forward</code>
  */
@@ -158,8 +160,6 @@ public Forward doBringBackCRUDCrea_creditore(ActionContext context, Obbligazione
 /**
  * Gestisce il caricamento delle nuove linee di attività
  	 * @param context <code>ActionContext</code> in uso.
-	 * @param nuovaLatt Oggetto di tipo <code>Linea_attivitaBulk</code> (istanza doc contabili)
-	 * @param latt Oggetto di tipo <code>Linea_attivitaBulk</code>
 	 *
 	 * @return <code>Forward</code>
  */
@@ -1028,11 +1028,10 @@ public Forward handleException(ActionContext context, Throwable ex)
 								return context.findDefaultForward();
 						}
 						
-						GregorianCalendar gcFineProgetto = new GregorianCalendar();
-						gcFineProgetto.setTime(Optional.ofNullable(voceSel.getProgetto_dt_proroga())
-										 			   .orElse(Optional.ofNullable(voceSel.getProgetto_dt_fine())
-														 	           .orElse(DateUtils.firstDateOfTheYear(3000))));
-						
+						LocalDate localDateFineProgetto = Optional.ofNullable(voceSel.getProgetto_dt_proroga())
+								.orElse(Optional.ofNullable(voceSel.getProgetto_dt_fine())
+										.orElse(DateUtils.firstDateOfTheYear(3000))).toLocalDateTime().toLocalDate();
+
 						int ggProroga = Optional.ofNullable(obbligazione.getElemento_voce())
 												.flatMap(el->{
 													if (obbligazione.isCompetenza())
@@ -1042,16 +1041,17 @@ public Forward handleException(ActionContext context, Throwable ex)
 												})
 												.filter(el->el.compareTo(0)>0)
 												.orElse(0);
-						
-						gcFineProgetto.add(Calendar.DAY_OF_YEAR, ggProroga);
-						
-						if (gcFineProgetto.before(obbligazione.getDt_registrazione()))
-							throw new ApplicationException("Attenzione! GAE "+voceSel.getCd_linea_attivita()+" non selezionabile. "
-										+ "La data fine/proroga del progetto "+voceSel.getCd_modulo()
-										+ (ggProroga>0?", aumentata di " + ggProroga +" giorni,":"") + " ("
-									    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(gcFineProgetto.getTime())
-										+ ") è precedente rispetto alla data di registrazione dell'impegno ("
-									    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
+
+						localDateFineProgetto.plusDays(ggProroga);
+
+						if (localDateFineProgetto.isBefore(obbligazione.getDt_registrazione().toLocalDateTime().toLocalDate()))
+							throw new ApplicationMessageFormatException("Attenzione! GAE {0} non selezionabile. "
+										+ "La data fine/proroga del progetto {1} {2} ({3}) è precedente rispetto alla data di registrazione dell''impegno ({4}).",
+									voceSel.getCd_linea_attivita(),
+									voceSel.getCd_modulo(),
+									(ggProroga>0?", aumentata di " + ggProroga +" giorni,":""),
+									localDateFineProgetto.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+									new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione()));
 					}
 				}
 
