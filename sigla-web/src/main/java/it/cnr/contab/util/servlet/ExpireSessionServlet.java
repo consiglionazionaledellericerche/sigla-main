@@ -76,7 +76,7 @@ public class ExpireSessionServlet extends HttpServlet implements Serializable,Ht
 			resp.setContentType("text/html");			
 			resp.getWriter().println("<body bgcolor=\"#C4CAD4\"><em><font color=\"#6666aa\" size=\"2\" face=\"Arial, Helvetica, sans-serif\">");		
 			resp.getWriter().println("<TABLE border=1>");
-			resp.getWriter().println("<TR><TD align=center>Num.</TD><TD align=center>User</TD><TD align=center>Session Id</TD><TD align=center>Creation Time</TD><TD align=center>Last Access Time</TD></TR>");
+			resp.getWriter().println("<TR><TD align=center>Num.</TD><TD align=center>Users</TD><TD align=center>Session Id</TD><TD align=center>Creation Time</TD><TD align=center>Last Access Time</TD></TR>");
 	    	for (Enumeration sessions = sessionObjects.elements();sessions.hasMoreElements();){
 				try{
 		    		HttpSession session = (HttpSession)sessions.nextElement();
