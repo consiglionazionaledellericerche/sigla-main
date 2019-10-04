@@ -24,6 +24,8 @@
 package it.cnr.contab.doccont00.comp;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -42,6 +44,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -53,6 +56,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 /**
  * @author rpagano
@@ -266,11 +270,10 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 										+ "rispetto alla data di registrazione dell'obbligazione ("
 										+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
 					}
-					
-					GregorianCalendar gcFineProgetto = new GregorianCalendar();
-					gcFineProgetto.setTime(Optional.ofNullable(progetto.getOtherField().getDtProroga())
-									 			   .orElse(Optional.ofNullable(progetto.getOtherField().getDtFine())
-													 	           .orElse(DateUtils.firstDateOfTheYear(3000))));
+
+					LocalDate localDateFineProgetto = Optional.ofNullable(progetto.getOtherField().getDtProroga())
+							.orElse(Optional.ofNullable(progetto.getOtherField().getDtFine())
+							.orElse(DateUtils.firstDateOfTheYear(3000))).toLocalDateTime().toLocalDate();
 					
 					int ggProroga = Optional.ofNullable(obbligazione.getElemento_voce())
 											.flatMap(el->{
@@ -281,18 +284,19 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 											})
 											.filter(el->el.compareTo(0)>0)
 											.orElse(0);
-					
-					gcFineProgetto.add(Calendar.DAY_OF_YEAR, ggProroga);
-					
-					if (gcFineProgetto.before(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp())))
-						throw new ApplicationException("Attenzione! Aumento importo GAE "+latt.getCd_linea_attivita()+" non consentito. "
-									+ "La data fine/proroga del progetto "+progetto.getCd_progetto()
-									+ (ggProroga>0?", aumentata di " + ggProroga +" giorni,":"") + " ("
-								    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(gcFineProgetto.getTime())
-									+ ") è precedente rispetto alla data odierna ("
-								    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
+
+					localDateFineProgetto.plusDays(ggProroga);
+
+					if (localDateFineProgetto.isBefore(EJBCommonServices.getServerDate().toLocalDateTime().toLocalDate()))
+						throw new ApplicationMessageFormatException("Attenzione! Aumento importo GAE {0} non consentito. "
+								+ "La data fine/proroga del progetto {1} {2} ({3}) è precedente rispetto alla data odierna.",
+								latt.getCd_linea_attivita(),
+								progetto.getCd_progetto(),
+								(ggProroga>0?", aumentata di " + ggProroga +" giorni,":""),
+								localDateFineProgetto.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 				}
-				if ( !obbligazione.getFl_calcolo_automatico().booleanValue() ) { 
+
+				if ( !obbligazione.getFl_calcolo_automatico().booleanValue() ) {
 					String errore = "L'importo (" +
 					new it.cnr.contab.util.EuroFormat().format(totaleScad) + 
 					") assegnato alla GAE " + key.getCd_linea_attivita() + 
