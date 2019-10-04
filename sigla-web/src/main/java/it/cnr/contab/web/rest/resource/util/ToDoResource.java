@@ -142,7 +142,7 @@ public class ToDoResource implements ToDoLocal {
                                         result.add(new ToDoDetail(
                                                 cdNodo,
                                                 "fa fa-fw fa-clipboard text-primary",
-                                                "Varizioni al PdG",
+                                                "Variazioni al PdG",
                                                 firstLabel(i),
                                                 detailLabel(i, "Variazione", "Variazioni", "in attesa di firma digitale.")
                                         ));
