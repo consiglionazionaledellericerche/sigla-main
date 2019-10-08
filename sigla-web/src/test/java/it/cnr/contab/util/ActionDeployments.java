@@ -28,15 +28,17 @@ import org.junit.Before;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class ActionDeployments extends Deployments {
+    private transient final static Logger LOGGER = LoggerFactory.getLogger(ActionDeployments.class);
+
     @Drone
     protected WebDriver browser;
 
@@ -46,14 +48,14 @@ public class ActionDeployments extends Deployments {
     @Before
     @RunAsClient
     @OperateOnDeployment(TEST_H2)
-    public void waitUntilApplicationStarted() throws Exception{
+    public void waitUntilApplicationStarted() throws Exception {
         /**
          * Workaround to wait application started.
          */
         Boolean pageSourceNotFound = true;
         Integer iterate = 0;
         URL url = new URL(deploymentURL.toString().concat("/Login.do"));
-        while(pageSourceNotFound && iterate < 60) {
+        while (pageSourceNotFound && iterate < 12) {
             try {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -61,6 +63,7 @@ public class ActionDeployments extends Deployments {
                 pageSourceNotFound = connection.getResponseCode() == HttpStatus.SC_NOT_FOUND;
                 if (pageSourceNotFound)
                     TimeUnit.SECONDS.sleep(5);
+                LOGGER.info("Try to connect to url {} iterate: {}", url.toString(), iterate);
                 iterate++;
             } catch (IllegalStateException _ex) {
                 iterate++;
