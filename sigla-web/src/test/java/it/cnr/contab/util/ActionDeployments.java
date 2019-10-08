@@ -63,7 +63,7 @@ public class ActionDeployments extends Deployments {
                 pageSourceNotFound = connection.getResponseCode() == HttpStatus.SC_NOT_FOUND;
                 if (pageSourceNotFound)
                     TimeUnit.SECONDS.sleep(5);
-                LOGGER.info("Try to connect to url {} iterate: {}", url.toString(), iterate);
+                LOGGER.warn("Try to connect to url: {} iterate: {}", url.toString(), iterate);
                 iterate++;
             } catch (IllegalStateException _ex) {
                 iterate++;
