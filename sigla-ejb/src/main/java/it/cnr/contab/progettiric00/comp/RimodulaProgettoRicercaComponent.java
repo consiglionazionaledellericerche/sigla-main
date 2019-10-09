@@ -308,9 +308,10 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		if (clauses!=null){
 			Enumeration<SimpleFindClause> e = clauses.getClauses();
 			while(e.hasMoreElements()){
-				SimpleFindClause findClause = e.nextElement();
-				if (findClause.getPropertyName().equals("progetto.unita_organizzativa.cd_unita_organizzativa"))
-					optCdUo2 = Optional.of(findClause.getValue().toString());
+				FindClause findClause = e.nextElement();
+				if (findClause instanceof SimpleFindClause)
+					if (((SimpleFindClause)findClause).getPropertyName().equals("progetto.unita_organizzativa.cd_unita_organizzativa"))
+						optCdUo2 = Optional.of(((SimpleFindClause)findClause).getValue().toString());
 			}
 		}
 		

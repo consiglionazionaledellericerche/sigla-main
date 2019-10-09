@@ -52,6 +52,8 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 
 	private String idEsternoFideiussione;
 
+	private Boolean flControlliDisabled;
+
 	public Progetto_other_fieldBase() {
 		super();
 	}
@@ -186,5 +188,13 @@ public class Progetto_other_fieldBase extends Progetto_other_fieldKey implements
 
 	public void setIdEsternoFideiussione(String idEsternoFideiussione) {
 		this.idEsternoFideiussione = idEsternoFideiussione;
+	}
+
+	public Boolean getFlControlliDisabled() {
+		return flControlliDisabled;
+	}
+
+	public void setFlControlliDisabled(Boolean flControlliDisabled) {
+		this.flControlliDisabled = flControlliDisabled;
 	}
 }

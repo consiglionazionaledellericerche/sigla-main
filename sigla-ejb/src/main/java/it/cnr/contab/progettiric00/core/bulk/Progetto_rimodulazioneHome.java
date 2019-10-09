@@ -202,10 +202,14 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				newDetail.setVocePianoEconomico(ppe.getVoce_piano_economico());
 				newDetail.setEsercizio_piano(ppe.getEsercizio_piano());
 				newDetail.setImVarEntrata(BigDecimal.ZERO);
-				newDetail.setImVarSpesaFinanziato(ppe.getImSpesaFinanziatoRimodulato().subtract(ppe.getIm_spesa_finanziato()));
-				newDetail.setImVarSpesaCofinanziato(ppe.getImSpesaCofinanziatoRimodulato().subtract(ppe.getIm_spesa_cofinanziato()));
-				newDetail.setImStoassSpesaFinanziato(ppe.getSaldoSpesa().getAssestatoFinanziamento());
-				newDetail.setImStoassSpesaCofinanziato(ppe.getSaldoSpesa().getAssestatoCofinanziamento());
+				newDetail.setImVarSpesaFinanziato(Optional.ofNullable(ppe.getImSpesaFinanziatoRimodulato()).orElse(BigDecimal.ZERO)
+						.subtract(Optional.ofNullable(ppe.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)));
+				newDetail.setImVarSpesaCofinanziato(Optional.ofNullable(ppe.getImSpesaCofinanziatoRimodulato()).orElse(BigDecimal.ZERO)
+						.subtract(Optional.ofNullable(ppe.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)));
+				newDetail.setImStoassSpesaFinanziato(Optional.ofNullable(ppe.getSaldoSpesa())
+						.map(V_saldi_piano_econom_progettoBulk::getAssestatoFinanziamento).orElse(BigDecimal.ZERO));
+				newDetail.setImStoassSpesaCofinanziato(Optional.ofNullable(ppe.getSaldoSpesa())
+						.map(V_saldi_piano_econom_progettoBulk::getAssestatoCofinanziamento).orElse(BigDecimal.ZERO));
 				return newDetail;
 			}).collect(Collectors.toList());
 	}
@@ -675,7 +679,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 	 * N.B. Questo metodo deve essere richiamato solo l'oggetto Rimodulazione è stato caricato con tutti i dettagli
 	 * in caso contrario chiamare il metodo precedente.
 	 * 
-	 * @param Oggetto Rimodulazione caricato con tutti i dettagli
+	 * @param rimodulazione Rimodulazione caricato con tutti i dettagli
 	 * @return Progetto Rimodulato
 	 */
 	public ProgettoBulk getProgettoRimodulato(Progetto_rimodulazioneBulk rimodulazione) {
