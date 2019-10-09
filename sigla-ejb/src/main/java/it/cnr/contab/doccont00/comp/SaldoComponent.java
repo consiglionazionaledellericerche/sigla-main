@@ -1745,8 +1745,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	                    		new it.cnr.contab.util.EuroFormat().format(assestatoEtrPrg.add(ctrlDispPianoEco.getImpFinanziato())) +
 	                            ") non può essere superiore alla quota finanziata (" +
                                 new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ").");
-		            
-					if (progetto.getOtherField().getTipoFinanziamento().getFlAssociaContratto()) {
+
+		            if (progetto.getOtherField().getTipoFinanziamento().getFlAssociaContratto() && !progetto.getOtherField().getFlControlliDisabled()) {
 						//Recupero la lista dei contratti attivi collegati al progetto
 						ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 						java.util.Collection<ContrattoBulk> contrattiAssociati = progettoHome.findContratti(progetto.getPg_progetto());

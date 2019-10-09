@@ -2618,4 +2618,10 @@ TRASPORTO_AEREO"/>
     <changeSet author="raffaele.pagano" runOnChange="true" id="create-view-v-saldi-voce-progetto">
         <sqlFile dbms="oracle" path="../expsigladb/View/V_SALDI_VOCE_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_other_field_add_column">
+        <addColumn tableName="progetto_other_field">
+            <column name="fl_controlli_disabled" type="CHAR(1)" defaultValue="N" remarks="Indica se alcuni controlli sui progetti sono disattivati - Dominio: S = Sì; N = No;"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

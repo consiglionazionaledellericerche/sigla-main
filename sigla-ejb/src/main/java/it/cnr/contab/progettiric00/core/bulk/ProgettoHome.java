@@ -589,6 +589,7 @@ public class ProgettoHome extends BulkHome {
                     progetto_other_fieldBulk = new Progetto_other_fieldBulk();
                     progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
                     progetto_other_fieldBulk.setStato(StatoProgetto.STATO_INIZIALE.value());
+					progetto_other_fieldBulk.setFlControlliDisabled(Boolean.FALSE);
                     progetto_other_fieldBulk.setUser(CNRUserContext.getUser(userContext));
                     progetto_other_fieldBulk.setToBeCreated();
                     progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);

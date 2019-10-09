@@ -589,6 +589,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         if (!this.isFlInformix()) {
             Progetto_other_fieldBulk otherField = new Progetto_other_fieldBulk();
             otherField.setStato(StatoProgetto.STATO_INIZIALE.value());
+            otherField.setFlControlliDisabled(Boolean.FALSE);
             otherField.setToBeCreated();
             progetto.setOtherField(otherField);
         }
