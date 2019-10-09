@@ -70,6 +70,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.util.DateUtils;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
@@ -101,6 +102,9 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -2205,57 +2209,127 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				Optional.ofNullable(otherFieldBulk).filter(Progetto_other_fieldBulk::isStatoApprovato)
 				.orElseThrow(()->new ApplicationRuntimeException("Associazione progetto non possibile! Il progetto da associare deve risultare approvato!"));
 
-				//Le date del contratto devono contenere il progetto (data inizio e fine con data inizio e fine) 
-				Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtInizio()))
-						.filter(dt->dt.before(contrattoNew.getDt_inizio_validita())||dt.after(contrattoNew.getDt_fine_validita()))
-						.ifPresent(dt->{
+				Optional<LocalDate> optLdInizioValiditaPrg = Optional.ofNullable(otherFieldBulk)
+						.flatMap(el->Optional.ofNullable(el.getDtInizio()))
+						.map(Timestamp::toLocalDateTime)
+						.map(LocalDateTime::toLocalDate);
+
+				Optional<LocalDate> optLdFineValiditaPrg = Optional.ofNullable(otherFieldBulk)
+						.flatMap(el->Optional.ofNullable(el.getDtFine()))
+						.map(Timestamp::toLocalDateTime)
+						.map(LocalDateTime::toLocalDate);
+
+				Optional<LocalDate> optLdProrogaPrg = Optional.ofNullable(otherFieldBulk)
+						.flatMap(el->Optional.ofNullable(el.getDtProroga()))
+						.map(Timestamp::toLocalDateTime)
+						.map(LocalDateTime::toLocalDate);
+
+				Optional<LocalDate> optLdInizioValiditaCtr = Optional.ofNullable(contrattoNew.getDt_fine_validita())
+						.map(Timestamp::toLocalDateTime)
+						.map(LocalDateTime::toLocalDate);
+
+				Optional<LocalDate> optLdFineValiditaCtr = Optional.ofNullable(contrattoNew.getDt_fine_validita())
+						.map(Timestamp::toLocalDateTime)
+						.map(LocalDateTime::toLocalDate);
+
+				Optional<LocalDate> optLdProrogaCtr = Optional.ofNullable(contrattoNew.getDt_proroga())
+						.map(Timestamp::toLocalDateTime)
+						.map(LocalDateTime::toLocalDate);
+
+				//La data di inizio del contratto non può essere precedente alla data di inizio del progetto
+				optLdInizioValiditaCtr
+						.filter(ld->optLdInizioValiditaPrg.isPresent())
+						.filter(ld->ld.isBefore(optLdInizioValiditaPrg.get()))
+						.ifPresent(ld->{
 							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
-									+ "La data inizio del progetto ("
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)+") "
-									+ "deve essere compresa tra la data di inizio validità ("
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_inizio_validita())+") "
-									+ "e la data di fine validità ("
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_fine_validita())+") "
-									+ "del contratto.");
+									+ "La data inizio validità del contratto ("
+									+ ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ") non può essere precedente alla data di inizio del progetto ("
+									+ optLdInizioValiditaPrg.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ").");
 						});
 
-				Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtFine()))
-				.filter(dt->dt.before(contrattoNew.getDt_inizio_validita())||dt.after(contrattoNew.getDt_fine_validita()))
-				.ifPresent(dt->{
-					throw new ApplicationRuntimeException("Associazione progetto non possibile! "
-							+ "La data fine del progetto ("
-							+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)+") "
-							+ "deve essere compresa tra la data di inizio validità ("
-							+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_inizio_validita())+") "
-							+ "e la data di fine validità ("
-							+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_fine_validita())+") "
-							+ "del contratto.");
-				});
-
-				Optional<Timestamp> optDtProrogaPrg = Optional.ofNullable(otherFieldBulk).flatMap(el->Optional.ofNullable(el.getDtProroga()));
-				Optional<Timestamp> optDtProrogaCtr = Optional.ofNullable(contrattoNew.getDt_proroga());
-				if (optDtProrogaPrg.isPresent() || optDtProrogaCtr.isPresent()) {
-					if (optDtProrogaPrg.isPresent() && !optDtProrogaCtr.isPresent())
-						throw new ApplicationRuntimeException("Associazione progetto non possibile! "
-								+ "E' possibile associare un progetto prorogato solo se il contratto risulta anche esso prorogato!");
-					if (!optDtProrogaPrg.isPresent() && optDtProrogaCtr.isPresent())
-						throw new ApplicationRuntimeException("Associazione progetto non possibile! "
-									+ "Essendo il contratto prorogato è possibile associare solo un progetto anche esso prorogato!");
-
-					optDtProrogaPrg
-						.filter(dt->dt.after(contrattoNew.getDt_fine_validita()) && !dt.after(contrattoNew.getDt_proroga()))
-						.ifPresent(dt->{
+				//La data di inizio del contratto non può essere successiva alla data di fine del progetto se non prorogato
+				optLdInizioValiditaCtr
+						.filter(ld->optLdFineValiditaPrg.isPresent())
+						.filter(ld->!optLdProrogaPrg.isPresent())
+						.filter(ld->ld.isAfter(optLdFineValiditaPrg.get()))
+						.ifPresent(ld->{
 							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
-									+ "La data proroga del progetto ("
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(dt)+") "
-									+ "deve essere compresa tra la data di fine validità ("
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_fine_validita())+") "
-									+ "e la data di proroga ("
-									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(contrattoNew.getDt_proroga())+") "
-									+ "del contratto.");
+									+ "La data inizio validità del contratto ("
+									+ ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ") non può essere successiva alla data di fine del progetto ("
+									+ optLdFineValiditaPrg.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ").");
 						});
-				}
-				
+
+				//La data di inizio del contratto non può essere successiva alla data di proroga del progetto se prorogato
+				optLdInizioValiditaCtr
+						.filter(ld->optLdProrogaPrg.isPresent())
+						.filter(ld->ld.isAfter(optLdProrogaPrg.get()))
+						.ifPresent(ld->{
+							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "La data inizio validità del contratto ("
+									+ ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ") non può essere successiva alla data di proroga del progetto ("
+									+ optLdProrogaPrg.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ").");
+						});
+
+				//La data di fine del contratto non può essere successiva alla data di fine del progetto se non prorogato
+				optLdFineValiditaCtr
+						.filter(ld->optLdFineValiditaPrg.isPresent())
+						.filter(ld->!optLdProrogaPrg.isPresent())
+						.filter(ld->ld.isAfter(optLdFineValiditaPrg.get()))
+						.ifPresent(ld->{
+							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "La data fine validità del contratto ("
+									+ ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ") non può essere successiva alla data di fine del progetto ("
+									+ optLdFineValiditaPrg.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ").");
+						});
+
+				//La data di fine del contratto non può essere successiva alla data di proroga del progetto se prorogato
+				optLdFineValiditaCtr
+						.filter(ld->optLdProrogaPrg.isPresent())
+						.filter(ld->ld.isAfter(optLdProrogaPrg.get()))
+						.ifPresent(ld->{
+							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "La data fine validità del contratto ("
+									+ ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ") non può essere successiva alla data di proroga del progetto ("
+									+ optLdProrogaPrg.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ").");
+						});
+
+				//La data di proroga del contratto non può essere successiva alla data di fine del progetto se non prorogato
+				optLdProrogaCtr
+						.filter(ld->optLdFineValiditaPrg.isPresent())
+						.filter(ld->!optLdProrogaPrg.isPresent())
+						.filter(ld->ld.isAfter(optLdFineValiditaPrg.get()))
+						.ifPresent(ld->{
+							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "La data proroga del contratto ("
+									+ ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ") non può essere successiva alla data di fine del progetto ("
+									+ optLdFineValiditaPrg.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ").");
+						});
+
+				//La data di proroga del contratto non può essere successiva alla data di proroga del progetto se prorogato
+				optLdProrogaCtr
+						.filter(ld->optLdProrogaPrg.isPresent())
+						.filter(ld->ld.isAfter(optLdProrogaPrg.get()))
+						.ifPresent(ld->{
+							throw new ApplicationRuntimeException("Associazione progetto non possibile! "
+									+ "La data proroga del contratto ("
+									+ ld.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ") non può essere successiva alla data di proroga del progetto ("
+									+ optLdProrogaPrg.get().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+									+ ").");
+						});
+
 				TipoFinanziamentoHome tipoFinanziamentoHome = (TipoFinanziamentoHome)getHome(userContext, TipoFinanziamentoBulk.class);
 				TipoFinanziamentoBulk tipoFinanziamentoBulk = (TipoFinanziamentoBulk)tipoFinanziamentoHome.findByPrimaryKey(new TipoFinanziamentoBulk(otherFieldBulk.getIdTipoFinanziamento()));
 

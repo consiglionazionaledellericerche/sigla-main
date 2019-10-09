@@ -49,7 +49,7 @@ public class ProgettoPianoEconomicoVoceBilancioCRUDController extends SimpleProg
 			            .map(el -> el.isROProgettoForStato())
 			            .orElse(Boolean.FALSE))
 		        	Optional.ofNullable(detail).filter(Ass_progetto_piaeco_voceBulk.class::isInstance).map(Ass_progetto_piaeco_voceBulk.class::cast)
-		        	.filter(el->el.getSaldoSpesa().getAssestato().compareTo(BigDecimal.ZERO)==0)
+		        	.filter(el->Optional.ofNullable(el.getSaldoSpesa()).map(saldo->saldo.getAssestato().compareTo(BigDecimal.ZERO)==0).orElse(Boolean.TRUE))
 		        	.orElseThrow(()->new ValidationException("Non è possibile disassociare voci di bilancio movimentate. E' possibile solo tramite rimodulazione!"));
 
 				Utility.createProgettoRicercaComponentSession().validaCancellazioneVoceAssociataPianoEconomico(

@@ -562,6 +562,7 @@
     </changeSet>
 
     <changeSet author="sigla" id="1516802834820-52">
+        <validCheckSum>7:d6316ca7814dee5ac0274ff6fb9e7270</validCheckSum>
         <addDefaultValue tableName="comune" columnName="dacr" defaultValueDate="${now}"/>
         <addDefaultValue tableName="comune" columnName="duva" defaultValueDate="${now}"/>
 
@@ -1265,6 +1266,7 @@
     </changeSet>
 
     <changeSet author="sigla" id="1516802834820-110">
+        <validCheckSum>7:772b0999c34f69a39ba3fa4fb7d48d9e</validCheckSum>
         <addDefaultValue tableName="terzo" columnName="dacr" defaultValueDate="${now}"/>
         <addDefaultValue tableName="terzo" columnName="duva" defaultValueDate="${now}"/>
 
