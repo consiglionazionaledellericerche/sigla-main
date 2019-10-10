@@ -26,11 +26,18 @@
 	<div class="Group">
 	<table class="Panel card border-primary p-2 mb-2">
 	<% if (bp.isSearching() || Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getPg_gen_rimodulazione())).isPresent()) {%>
-	  <TR><% bp.getController().writeFormField(out,"pg_gen_rimodulazione");%></TR>
-	<% } %>  
-	  <TR><% bp.getController().writeFormField(out,"find_progetto");%></TR>
-	  <tr><% bp.getController().writeFormField(out,"unita_organizzativa_progetto");%></tr>	  
-	</table>  
+	  <TR><% bp.getController().writeFormField(out,"pg_gen_rimodulazione");%>
+	  <% if (Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getDtStatoDefinitivo())).isPresent()) {%>
+    	  <% bp.getController().writeFormField(out,"dtStatoDefinitivo");%>
+      <% } %>
+      </TR>
+	<% } %>
+	  <TR>
+	    <td><% bp.getController().writeFormLabel(out,"find_progetto");%></td>
+	    <td colspan="3"><% bp.getController().writeFormInput(out,"find_progetto");%></td>
+	  </TR>
+	  <TR><% bp.getController().writeFormField(out,"unita_organizzativa_progetto");%></TR>
+	</table>
 	</div> 
 
     <% if (!bp.isSearching() && Optional.ofNullable(progetto).flatMap(el->Optional.ofNullable(el.getOtherField())).isPresent()) { %>
