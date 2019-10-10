@@ -190,6 +190,13 @@ public class EsercizioBulk extends EsercizioBase {
         return Optional.ofNullable(getCds()).map(CdsBulk::getCd_unita_organizzativa).orElse(super.getCd_cds());
     }
 
+    @Override
+    public void setCd_cds(String cd_cds) {
+        Optional.ofNullable(getCds())
+                .orElse(new CdsBulk())
+                .setCd_unita_organizzativa(cd_cds);
+        super.setCd_cds(cd_cds);
+    }
 
     public CdsBulk getCds() {
         return cds;
