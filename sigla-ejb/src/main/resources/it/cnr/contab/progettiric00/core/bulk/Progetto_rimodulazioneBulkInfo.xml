@@ -224,6 +224,29 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />
 	<fieldProperty
+		name="dtStatoDefinitivo"
+		property="dtStatoDefinitivo"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Stato Definitivo"
+		labelStyle="font-style: italic;font-weight: bold;" />
+	<fieldProperty
+		name="motivoRifiuto"
+		property="motivoRifiuto"
+		label="Motivo Rifiuto"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		nullable="true" />
+	<fieldProperty
+		name="note"
+		property="note"
+		label="Annotazioni"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		nullable="true" />
+	<fieldProperty
 		name="imFinanziatoRimodulato"
 		property="imFinanziatoRimodulato"
 		readonlyProperty="ROFieldRimodulazione"
@@ -356,7 +379,7 @@
 	<formFieldProperty name="imCofinanziatoRimodulatoDaRipartire" />
 	<formFieldProperty name="imTotaleRimodulatoDaRipartire" />
 	<formFieldProperty name="flViewCurrent" />
-		
+
 	<formFieldProperty
 		name="statoOf" />
 	<formFieldProperty
@@ -373,6 +396,10 @@
 		name="imFinanziatoOf" />
 	<formFieldProperty
 		name="imCofinanziatoOf" />
+
+	<formFieldProperty name="dtStatoDefinitivo" />
+	<formFieldProperty name="motivoRifiuto" />
+	<formFieldProperty name="note" />
 
 	<columnFieldProperty name="cd_unita_organizzativa_progetto" />
 	<columnFieldProperty name="cd_progetto" />

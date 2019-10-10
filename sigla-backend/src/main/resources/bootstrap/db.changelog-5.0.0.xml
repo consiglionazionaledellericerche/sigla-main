@@ -2624,4 +2624,17 @@ TRASPORTO_AEREO"/>
             <column name="fl_controlli_disabled" type="CHAR(1)" defaultValue="N" remarks="Indica se alcuni controlli sui progetti sono disattivati - Dominio: S = Sì; N = No;"/>
         </addColumn>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_rimodulazione_add_column">
+        <addColumn tableName="progetto_rimodulazione">
+            <column name="dt_stato_definitivo" remarks="Data in cui la rimodulazione ha assunto stato definitivo." type="${date.type}"/>
+            <column name="motivo_rifiuto" remarks="Motivazione per cui la rimodulazione è stata rifiutata." type="VARCHAR(500)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter_progetto_rimodulazione_add_column001">
+        <addColumn tableName="progetto_rimodulazione">
+            <column name="note" remarks="Annotazioni varie" type="VARCHAR(1000)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

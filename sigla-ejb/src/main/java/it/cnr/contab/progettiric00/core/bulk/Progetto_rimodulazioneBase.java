@@ -19,6 +19,8 @@ package it.cnr.contab.progettiric00.core.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
+import java.sql.Timestamp;
+
 public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implements Keyed {
 	private java.lang.Integer pg_gen_rimodulazione;
 	
@@ -35,6 +37,12 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 	private java.sql.Timestamp dtFine;
 
 	private java.sql.Timestamp dtProroga;
+
+	private java.sql.Timestamp dtStatoDefinitivo;
+
+	private String motivoRifiuto;
+
+	private String note;
 
 	private java.math.BigDecimal imVarFinanziato;
 	
@@ -111,7 +119,31 @@ public class Progetto_rimodulazioneBase extends Progetto_rimodulazioneKey implem
 	public void setDtProroga(java.sql.Timestamp dtProroga) {
 		this.dtProroga = dtProroga;
 	}
-	
+
+	public Timestamp getDtStatoDefinitivo() {
+		return dtStatoDefinitivo;
+	}
+
+	public void setDtStatoDefinitivo(Timestamp dtStatoDefinitivo) {
+		this.dtStatoDefinitivo = dtStatoDefinitivo;
+	}
+
+	public String getMotivoRifiuto() {
+		return motivoRifiuto;
+	}
+
+	public void setMotivoRifiuto(String motivoRifiuto) {
+		this.motivoRifiuto = motivoRifiuto;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	public java.math.BigDecimal getImVarFinanziato() {
 		return imVarFinanziato;
 	}

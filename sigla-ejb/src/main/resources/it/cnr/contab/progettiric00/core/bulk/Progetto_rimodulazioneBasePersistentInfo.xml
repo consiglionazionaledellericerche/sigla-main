@@ -69,7 +69,25 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="true" />
-		<columnMapping 
+		<columnMapping
+			columnName="DT_STATO_DEFINITIVO"
+			propertyName="dtStatoDefinitivo"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="MOTIVO_RIFIUTO"
+			propertyName="motivoRifiuto"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="500"
+			nullable="true" />
+		<columnMapping
 			columnName="IM_VAR_FINANZIATO" 
 			propertyName="imVarFinanziato" 
 			sqlTypeName="DECIMAL" 
@@ -129,7 +147,13 @@
 	<persistentProperty
 		name="dtFine" /> 
 	<persistentProperty
-		name="dtProroga" /> 
+		name="dtProroga" />
+	<persistentProperty
+		name="dtStatoDefinitivo" />
+	<persistentProperty
+		name="motivoRifiuto" />
+	<persistentProperty
+		name="note" />
 	<persistentProperty
 		name="imVarFinanziato" />
 	<persistentProperty
