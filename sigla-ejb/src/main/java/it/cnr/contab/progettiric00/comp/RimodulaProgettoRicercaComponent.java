@@ -76,6 +76,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.si.spring.storage.StoreService;
 
 public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDComponent {
@@ -726,7 +727,10 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	
 	public Progetto_rimodulazioneBulk respingi(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
 		Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
-		.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato respinto può essere assegnato solo a rimodulazioni in stato definitivo!"));
+		.orElseThrow(()->new ApplicationException("Operazione non possibile! Lo stato respinto può essere assegnato solo a rimodulazioni in stato definitivo!"));
+
+		Optional.of(rimodulazione).flatMap(el->Optional.ofNullable(el.getMotivoRifiuto()))
+				.orElseThrow(()->new ApplicationException("Operazione non possibile! Inserire la motivazione per cui la rimodulazione viene respinta!"));
 
 		rimodulazione.setStato(StatoProgettoRimodulazione.STATO_RESPINTO.value());
 		rimodulazione.setToBeUpdated();
@@ -744,6 +748,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			validaStatoDefinitivoRimodulazione(userContext, rimodulazione);
 
 			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
+			rimodulazione.setDtStatoDefinitivo(EJBCommonServices.getServerTimestamp());
 			rimodulazione.setToBeUpdated();
 			rimodulazione = (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 			createReportRimodulazione(userContext, rimodulazione);

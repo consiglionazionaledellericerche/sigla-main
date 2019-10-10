@@ -455,7 +455,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 								.filter(dettPpe->dettPpe.getCd_voce_piano().equals(rimVoce.getCd_voce_piano()))
 								.filter(dettPpe->dettPpe.getEsercizio_piano().equals(rimVoce.getEsercizio_piano()))
 								.findAny().orElse(null);
-					if (Optional.of(ppe).isPresent()) {
+					if (Optional.ofNullable(ppe).isPresent()) {
 						Ass_progetto_piaeco_voceBulk newPpeVoce = new Ass_progetto_piaeco_voceBulk();
 						newPpeVoce.setElemento_voce(rimVoce.getElementoVoce());
 						newPpeVoce.setDetailRimodulatoAggiunto(Boolean.TRUE);
