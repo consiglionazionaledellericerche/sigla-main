@@ -192,9 +192,9 @@ public class EsercizioBulk extends EsercizioBase {
 
     @Override
     public void setCd_cds(String cd_cds) {
-        Optional.ofNullable(getCds())
-                .orElse(new CdsBulk())
-                .setCd_unita_organizzativa(cd_cds);
+        setCds(Optional.ofNullable(getCds())
+                .orElse(new CdsBulk()));
+        getCds().setCd_unita_organizzativa(cd_cds);
         super.setCd_cds(cd_cds);
     }
 
