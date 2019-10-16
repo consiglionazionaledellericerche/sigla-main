@@ -2637,4 +2637,12 @@ TRASPORTO_AEREO"/>
             <column name="note" remarks="Annotazioni varie" type="VARCHAR(1000)"/>
         </addColumn>
     </changeSet>
+
+    <changeSet author="marco.spasiano" id="alter-distinta-cassiere-add-invia-pec">
+        <addColumn tableName="distinta_cassiere">
+            <column name="fl_invia_pec" type="CHAR(1)" defaultValue="Y" remarks="Invia PEC per le distinte con allegati - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
