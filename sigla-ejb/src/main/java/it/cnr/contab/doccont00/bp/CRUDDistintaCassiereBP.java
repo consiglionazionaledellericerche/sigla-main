@@ -389,7 +389,10 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .filter(Distinta_cassiereBulk.class::isInstance)
                     .map(Distinta_cassiereBulk.class::cast)
                     .map(distinta_cassiereBulk -> {
-                        return !Optional.ofNullable(distinta_cassiereBulk.getStato()).filter(s -> s.equals(Distinta_cassiereBulk.Stato.ACCETTATO_BT.value())).isPresent();
+                        return !Optional.ofNullable(distinta_cassiereBulk.getStato())
+                                .filter(s -> s.equals(Distinta_cassiereBulk.Stato.ACCETTATO_BT.value()))
+                                .isPresent()
+                                || !Optional.ofNullable(distinta_cassiereBulk.getInviaPEC()).orElse(Boolean.TRUE);
                     }).orElse(Boolean.TRUE);
         } else {
             return Boolean.FALSE;
