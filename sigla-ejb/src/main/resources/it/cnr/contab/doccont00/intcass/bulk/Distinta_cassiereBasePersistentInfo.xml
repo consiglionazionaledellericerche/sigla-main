@@ -149,6 +149,13 @@
 			propertyName="stato"
 			sqlTypeName="CHAR"
 			columnSize="3" />
+		<columnMapping
+			columnName="FL_INVIA_PEC"
+			propertyName="inviaPEC"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_distinta_def" />
@@ -192,5 +199,7 @@
 		name="identificativoFlussoBT" />
 	<persistentProperty
 		name="stato" />
+	<persistentProperty
+		name="inviaPEC" />
 
 </SQLPersistentInfo>

@@ -388,6 +388,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 
 		setEsercizio( it.cnr.contab.utenze00.bulk.CNRUserInfo.getEsercizio(context) );
 		setUnita_organizzativa( it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
+		setInviaPEC(Boolean.TRUE);
 		if(bp instanceof CRUDDistintaCassiereBP){
 			setFl_flusso(((CRUDDistintaCassiereBP)bp).isFlusso());
 			setFl_sepa(((CRUDDistintaCassiereBP)bp).isSepa());

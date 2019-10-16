@@ -436,7 +436,16 @@
 		enabledOnSearch="true"
 		maxLength="50"
 		inputSize="50"/>
-
+	<fieldProperty
+		name="fl_invia_pec"
+		property="inviaPEC"
+		inputType="CHECKBOX"
+		nullable="false"
+		enabledOnInsert="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		label="Invia PEC" />
 
 	<formFieldProperty
 		name="cd_cds" />
@@ -544,6 +553,8 @@
 		name="stato"/>
 	<formFieldProperty
 		name="statoLabel"/>
+	<formFieldProperty
+		name="fl_invia_pec"/>
 
 
 	<columnFieldProperty

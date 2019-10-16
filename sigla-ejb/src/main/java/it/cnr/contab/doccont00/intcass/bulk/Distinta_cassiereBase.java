@@ -53,6 +53,7 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 	private java.lang.Boolean fl_sepa;
 	private java.lang.Boolean fl_annulli;
 	private java.sql.Timestamp dt_invio_pec;
+	private java.lang.Boolean inviaPEC;
 
 	private Integer progFlusso;
 	private String identificativoFlussoBT;
@@ -219,5 +220,14 @@ public class Distinta_cassiereBase extends Distinta_cassiereKey implements Keyed
 
 	public void setStato(String stato) {
 		this.stato = stato;
+	}
+
+
+	public Boolean getInviaPEC() {
+		return inviaPEC;
+	}
+
+	public void setInviaPEC(Boolean inviaPEC) {
+		this.inviaPEC = inviaPEC;
 	}
 }
