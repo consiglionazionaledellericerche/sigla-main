@@ -877,8 +877,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					}
 				else 
 					storageFile = allegato.getCMISFile(contrattiService.getStorageObjectBykey(allegato.getCms_node_ref()));
-	
-				if (storageFile !=null) {
+
+				if (storageFile!=null && storageFile.getInputStream()!=null) {
 					//E' previsto solo l'inserimento ma non l'aggiornamento
 					if (allegato.getCms_node_ref()==null || allegato.isAnnullato()) {
 						String path = storageFile.getStorageParentPath();
