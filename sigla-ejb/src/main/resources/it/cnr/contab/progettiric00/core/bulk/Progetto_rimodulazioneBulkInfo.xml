@@ -407,6 +407,7 @@
 	<columnFieldProperty name="pg_rimodulazione" />
 	<columnFieldProperty name="pg_gen_rimodulazione" />
 	<columnFieldProperty name="stato" />
+	<columnFieldProperty name="dtStatoDefinitivo" />
 
 	<findFieldProperty name="cd_unita_organizzativa_progetto" />
 	<findFieldProperty name="cd_progetto" />
