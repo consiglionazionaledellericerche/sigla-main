@@ -18,9 +18,13 @@
 package it.cnr.contab.progettiric00.bp;
 
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.jsp.Button;
+
+import java.util.Optional;
 
 public class AmministraTestataProgettiRicercaBP extends TestataProgettiRicercaBP {
     public AmministraTestataProgettiRicercaBP() {
@@ -39,5 +43,36 @@ public class AmministraTestataProgettiRicercaBP extends TestataProgettiRicercaBP
     public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag) throws BusinessProcessException {
         super.basicEdit(actioncontext, oggettobulk, flag);
         this.setStatus(EDIT);
+    }
+
+    @Override
+    protected Button[] createToolbar() {
+        Button[] toolbar = super.createToolbar();
+        Button[] newToolbar = new Button[toolbar.length + 1];
+        int i;
+        for (i = 0; i < toolbar.length; i++)
+            newToolbar[i] = toolbar[i];
+        newToolbar[i] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "Toolbar.removePianoEconomico");
+        newToolbar[i].setSeparator(true);
+
+        return newToolbar;
+    }
+
+    /*
+        Il bottone viene visualizzato solo se:
+        1) esiste piano economico
+        2) il progetto è in stato approvato
+     */
+    public boolean isRemovePianoEconomicoButtonHidden() {
+        return Optional.ofNullable(this.getModel())
+                .filter(ProgettoBulk.class::isInstance)
+                .map(ProgettoBulk.class::cast)
+                .map(el->el.getAllDetailsProgettoPianoEconomico().isEmpty())
+                .orElse(Boolean.TRUE) ||
+               Optional.ofNullable(this.getModel())
+                .filter(ProgettoBulk.class::isInstance)
+                .map(ProgettoBulk.class::cast)
+                .flatMap(el -> Optional.ofNullable(el.getOtherField()))
+                .map(el->!el.isStatoApprovato()).orElse(Boolean.TRUE);
     }
 }

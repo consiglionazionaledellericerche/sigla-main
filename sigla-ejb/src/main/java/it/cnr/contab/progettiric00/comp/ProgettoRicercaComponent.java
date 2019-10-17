@@ -18,6 +18,7 @@
 package it.cnr.contab.progettiric00.comp;
 
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -68,25 +69,7 @@ import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Stampa_anag_progettiVBulk;
-import it.cnr.contab.progettiric00.core.bulk.Stampa_progettiVBulk;
-import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
-import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
-import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.V_saldi_piano_econom_progettoHome;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -94,6 +77,7 @@ import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.EuroFormat;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
@@ -112,6 +96,8 @@ import it.cnr.jada.persistency.sql.SQLBroker;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
+import org.apache.commons.lang.ObjectUtils;
+
 public class ProgettoRicercaComponent extends it.cnr.jada.comp.CRUDComponent implements IProgettoRicercaMgr,IPrintMgr {
 	public static final String TIPO_PROGETTO = "C";
 /**
@@ -1402,12 +1388,11 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
                    "è già stata collegata al preventivo decisionale del progetto -  parte entrate.");
 
     		Pdg_modulo_speseHome homeSpe = (Pdg_modulo_speseHome)getHome(userContext,Pdg_modulo_speseBulk.class);
-    		SQLBuilder sqlSpe = homeSpe.createSQLBuilder();
-    		sqlSpe.addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piano.getPg_progetto());    		
-    		sqlSpe.addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_unita_organizzativa());
-    		sqlSpe.addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_voce_piano());    		
+			homeSpe.createSQLBuilder().addClause(FindClause.AND,"pg_progetto",SQLBuilder.EQUALS,piano.getPg_progetto());
+    		homeSpe.createSQLBuilder().addClause(FindClause.AND,"cd_unita_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_unita_organizzativa());
+    		homeSpe.createSQLBuilder().addClause(FindClause.AND,"cd_voce_piano",SQLBuilder.EQUALS,piano.getVoce_piano_economico().getCd_voce_piano());
 
-    		List resultSpe = homeSpe.fetchAll(sqlSpe);
+    		List resultSpe = homeSpe.fetchAll(homeSpe.createSQLBuilder());
     		if (!resultSpe.isEmpty())
     			throw new ApplicationException("Impossibile cancellare la voce "+piano.getCd_voce_piano()+" in quanto "+
                    "è già stata collegata al preventivo decisionale del progetto -  parte spese.");
@@ -2097,7 +2082,8 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			Optional<Progetto_other_fieldBulk> optOtherField = Optional.ofNullable(progetto.getOtherField());
 			boolean ctrlDtInizio = progetto.isDatePianoEconomicoRequired();
 			boolean ctrlDtFine = progetto.isDatePianoEconomicoRequired() || optOtherField.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent();
-			boolean ctrlStato = !optOtherField.get().isStatoApprovato() && !optOtherField.get().isStatoChiuso();
+			boolean ctrlStato = !optOtherField.filter(Progetto_other_fieldBulk::isStatoApprovato).isPresent() &&
+								!optOtherField.filter(Progetto_other_fieldBulk::isStatoChiuso).isPresent();
 					
 			if (ctrlDtInizio)
 	    		Optional.ofNullable(progetto.getOtherField().getDtInizio())
@@ -2307,4 +2293,121 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		}
 	}
 
+	public void removePianoEconomico(UserContext userContext, ProgettoBulk bulk) throws ComponentException {
+		try {
+			ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
+			ProgettoBulk progetto = progettoHome.initializePianoEconomico(userContext,new ProgettoBulk(bulk.getEsercizio(), bulk.getPg_progetto(), ProgettoBulk.TIPO_FASE_NON_DEFINITA), false);
+
+			if (progetto.getAllDetailsProgettoPianoEconomico().isEmpty())
+				throw new ApplicationRuntimeException("Eliminazione piano economico non possibile! Piano economico non presente!");
+			if (!progetto.getRimodulazioni().isEmpty())
+				throw new ApplicationRuntimeException("Eliminazione piano economico non possibile! Esistono rimodulazioni!");
+
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = (it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession.class);
+			BigDecimal annoFrom = configSession.getIm01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
+
+			List<Pdg_Modulo_EntrateBulk> entrateList = null;
+			List<Pdg_modulo_speseBulk> speseList = null;
+
+			{
+				Pdg_Modulo_EntrateHome pdgModuloEntrateHome = (Pdg_Modulo_EntrateHome) getHome(userContext, Pdg_Modulo_EntrateBulk.class);
+				SQLBuilder sqlPdgModuloEntrate = pdgModuloEntrateHome.createSQLBuilder();
+				if (Optional.ofNullable(annoFrom).isPresent())
+					sqlPdgModuloEntrate.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
+				sqlPdgModuloEntrate.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
+
+				entrateList = pdgModuloEntrateHome.fetchAll(sqlPdgModuloEntrate);
+
+				entrateList.stream().filter(el->Optional.ofNullable(el.getVoce_piano_economico()).isPresent()).forEach(moduloEntrata->{
+					try {
+						moduloEntrata.setVoce_piano_economico(null);
+						moduloEntrata.setUser(userContext.getUser());
+						moduloEntrata.setToBeUpdated();
+						pdgModuloEntrateHome.update(moduloEntrata, userContext);
+					} catch (PersistencyException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				});
+			}
+			{
+				Pdg_modulo_speseHome pdgModuloSpeseHome = (Pdg_modulo_speseHome) getHome(userContext, Pdg_modulo_speseBulk.class);
+				SQLBuilder sqlPdgModuloSpese = pdgModuloSpeseHome.createSQLBuilder();
+				if (Optional.ofNullable(annoFrom).isPresent())
+					sqlPdgModuloSpese.addClause(FindClause.AND, "esercizio", SQLBuilder.GREATER_EQUALS, progetto.getEsercizio());
+				sqlPdgModuloSpese.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, progetto.getPg_progetto());
+
+				speseList = pdgModuloSpeseHome.fetchAll(sqlPdgModuloSpese);
+
+				speseList.stream().filter(el->Optional.ofNullable(el.getVoce_piano_economico()).isPresent()).forEach(moduloSpesa->{
+					try {
+						moduloSpesa.setVoce_piano_economico(null);
+						moduloSpesa.setUser(userContext.getUser());
+						moduloSpesa.setToBeUpdated();
+						pdgModuloSpeseHome.update(moduloSpesa, userContext);
+					} catch (PersistencyException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				});
+			}
+			{
+				BulkList<Progetto_piano_economicoBulk> pianoEconomicoList = progetto.getAllDetailsProgettoPianoEconomico();
+				for (int i = 0; pianoEconomicoList.size() > i; i++) {
+					Progetto_piano_economicoBulk pianoEconomico = pianoEconomicoList.get(i);
+					List<Ass_progetto_piaeco_voceBulk> vociAssociateList =
+							new BulkList<Ass_progetto_piaeco_voceBulk>(((Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class ))
+							.findAssProgettoPiaecoVoceList(pianoEconomico.getPg_progetto(), pianoEconomico.getCd_unita_organizzativa(), pianoEconomico.getCd_voce_piano(),
+									pianoEconomico.getEsercizio_piano()));
+
+					for (int y = 0; vociAssociateList.size() > y; y++) {
+						Ass_progetto_piaeco_voceBulk piaecoVoce = vociAssociateList.get(y);
+						piaecoVoce.setUser(userContext.getUser());
+						piaecoVoce.setToBeDeleted();
+						getHome(userContext, Ass_progetto_piaeco_voceBulk.class).delete(piaecoVoce, userContext);
+					}
+					pianoEconomico.setToBeDeleted();
+					getHome(userContext, Progetto_piano_economicoBulk.class).delete(pianoEconomico, userContext);
+				}
+			}
+			{
+				Progetto_other_fieldBulk otherField = progetto.getOtherField();
+				//cerco il primo tipo di finanziamento che non prevede il piano economico
+				List<TipoFinanziamentoBulk> finanzList = getHome(userContext, TipoFinanziamentoBulk.class).findAll();
+				TipoFinanziamentoBulk tipoFinanziamento = null;
+				if (Optional.ofNullable(otherField.getTipoFinanziamento()).flatMap(el->Optional.ofNullable(el.getCodice())).isPresent()) {
+					if (otherField.getTipoFinanziamento().getCodice().equals(TipoFinanziamentoBulk.CODICE_FIN))
+						tipoFinanziamento = finanzList.stream().filter(el->el.getCodice().equals(TipoFinanziamentoBulk.CODICE_ATT_COM))
+								.findFirst().orElse(null);
+					else if (otherField.getTipoFinanziamento().getCodice().equals(TipoFinanziamentoBulk.CODICE_FOE_PRO))
+						tipoFinanziamento = finanzList.stream().filter(el->el.getCodice().equals(TipoFinanziamentoBulk.CODICE_FOE))
+								.findFirst().orElse(null);
+					else if (otherField.getTipoFinanziamento().getCodice().equals(TipoFinanziamentoBulk.CODICE_AUT))
+						tipoFinanziamento = finanzList.stream().filter(el->el.getCodice().equals(TipoFinanziamentoBulk.CODICE_AUT_AREE))
+								.findFirst().orElse(null);
+					else if (otherField.getTipoFinanziamento().getCodice().equals(TipoFinanziamentoBulk.CODICE_COF))
+						tipoFinanziamento = finanzList.stream().filter(el->el.getCodice().equals(TipoFinanziamentoBulk.CODICE_ATT_COM))
+								.findFirst().orElse(null);
+					else if (otherField.getTipoFinanziamento().getCodice().equals(TipoFinanziamentoBulk.CODICE_ATT_COMM_SUB))
+						tipoFinanziamento = finanzList.stream().filter(el->el.getCodice().equals(TipoFinanziamentoBulk.CODICE_ATT_COM))
+								.findFirst().orElse(null);
+				}
+				//Se il tipo di finanziamento non prevede inserimento in bilancio ma ci sono dati in bilancio allora seleziono un tipo di finanziamento che non prevede piano economico
+				//e prevede inserimento in bilancio
+				if (Optional.ofNullable(tipoFinanziamento).map(el->!el.getFlPrevEntSpesa()).orElse(Boolean.FALSE) && (entrateList.isEmpty() || speseList.isEmpty()))
+					tipoFinanziamento = finanzList.stream().filter(el->!el.getFlPianoEcoFin())
+							.filter(TipoFinanziamentoBase::getFlPrevEntSpesa)
+							.findFirst().orElse(null);
+
+				otherField.setTipoFinanziamento(Optional.ofNullable(tipoFinanziamento).orElse(finanzList.stream().filter(el->!el.getFlPianoEcoFin())
+						.findFirst().orElse(null)));
+				otherField.setDtInizio(null);
+				otherField.setDtFine(null);
+				otherField.setDtProroga(null);
+				otherField.setUser(userContext.getUser());
+				otherField.setToBeUpdated();
+				getHome(userContext, Progetto_other_fieldBulk.class).update(otherField,userContext);
+			}
+		} catch (PersistencyException| RemoteException e) {
+			throw new ComponentException(e);
+		}
+	}
 }

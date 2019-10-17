@@ -655,12 +655,13 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 
     @Override
     public boolean isSaveButtonEnabled() {
-        return super.isSaveButtonEnabled() &&
+        return (this instanceof AmministraTestataProgettiRicercaBP) ||
+                (super.isSaveButtonEnabled() &&
                 (!this.isFlInformix() || !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getOtherField()))
                         .filter(el -> el.isStatoAnnullato() || el.isStatoChiuso())
-                        .isPresent());
+                        .isPresent()));
     }
 
     @Override
@@ -1076,5 +1077,18 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     
     public Unita_organizzativaBulk getUoScrivania() {
     	return uoScrivania;
+    }
+
+    public void removePianoEconomico(ActionContext context) throws BusinessProcessException {
+        try {
+            if (this instanceof AmministraTestataProgettiRicercaBP) {
+                ((ProgettoRicercaComponentSession) createComponentSession()).removePianoEconomico(
+                    context.getUserContext(),
+                    (ProgettoBulk) getModel());
+                this.setModel(context, this.initializeModelForEdit(context,this.getModel()));
+            }
+        } catch (ComponentException | RemoteException e) {
+            throw handleException(e);
+        }
     }
 }

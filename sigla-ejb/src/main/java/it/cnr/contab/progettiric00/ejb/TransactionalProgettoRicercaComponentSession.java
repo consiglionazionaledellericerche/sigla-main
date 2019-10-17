@@ -527,4 +527,21 @@ public Pdg_esercizioBulk getPdgEsercizio(it.cnr.jada.UserContext param0) throws 
 		}
 	}
 }
+public void removePianoEconomico(it.cnr.jada.UserContext param0, it.cnr.contab.progettiric00.core.bulk.ProgettoBulk param1) throws ComponentException, RemoteException {
+	try {
+		invoke("removePianoEconomico",new Object[] {
+				param0,
+				param1});
+	} catch(java.rmi.RemoteException e) {
+		throw e;
+	} catch(java.lang.reflect.InvocationTargetException e) {
+		try {
+			throw e.getTargetException();
+		} catch(it.cnr.jada.comp.ComponentException ex) {
+			throw ex;
+		} catch(Throwable ex) {
+			throw new java.rmi.RemoteException("Uncaugth exception",ex);
+		}
+	}
+}
 }
