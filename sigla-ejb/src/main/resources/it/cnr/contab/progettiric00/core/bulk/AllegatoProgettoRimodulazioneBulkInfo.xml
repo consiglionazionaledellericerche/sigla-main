@@ -20,7 +20,46 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
 		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+			name="objectInsertType"
+			property="objectType"
+			label="Tipo"
+			inputSize="20"
+			keysProperty="ti_allegato_insertKeys"
+			inputType="SELECT"
+			nullable="false"/>
+
 	<formFieldProperty
 		name="objectType"
 		readonlyPropertyOnEdit="typeEnabled" />
+
+	<formFieldProperty
+		name="objectInsertType"
+		readonlyPropertyOnEdit="typeEnabled" />
+
+	<form name="insert">
+		<formFieldProperty
+				name="objectInsertType" />
+		<formFieldProperty
+				name="nome" />
+		<formFieldProperty
+				name="descrizione" />
+		<formFieldProperty
+				name="titolo" />
+		<formFieldProperty
+				name="file" />
+		<formFieldProperty
+				name="attivaFile" />
+	</form>
+
+	<columnSet name="insert">
+		<columnFieldProperty
+				name="objectType" />
+		<columnFieldProperty
+				name="nome" />
+		<columnFieldProperty
+				name="descrizione" />
+		<columnFieldProperty
+				name="titolo" />
+	</columnSet>
 </bulkInfo>

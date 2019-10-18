@@ -770,9 +770,10 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk findAndLock(UserContex
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
-  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo  
+  * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la ricerca del saldo
-  *   
+  * @param esercizio_res esercizio residuo per cui ricercare il saldo
+  *
 */
 private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res) throws ComponentException
 {
@@ -809,8 +810,10 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk find(UserContext
   *      Una segnalazione di errore comunica all'utente che la voce non e' presente nei saldi
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param esercizio esercizio per cui effettuare la ricerca del saldo
+  * @param esercizio_res esercizio residuo per cui effettuare la ricerca del saldo
   * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
-  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo  
+  * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la ricerca del saldo
   *   
 */
@@ -844,11 +847,12 @@ private it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk findAndLock(User
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
-  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo
+  * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
   * @param esercizio_res l'anno del residuo
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
-  *  
+  * @param tipo_residuo il tipo di residuo (proprio o improprio)
+  *
 */
 public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, BigDecimal importo, String tipo_residuo) throws ComponentException
 {
@@ -884,10 +888,11 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
-  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo
+  * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
   * @param esercizio_res l'anno del residuo
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
+  * @param tipo_residuo il tipo di residuo (proprio o improprio)
   * @param checkDisponibilitaCassa  valore booleano che indica se eseguire la verifica della disponibilità di cassa sulla
   *        voce del piano
 */
@@ -943,10 +948,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaMandatiReversali(UserContext userConte
   *      Il mandato supera la validazione di Cassa ed e' pertanto possibile proseguire con il suo salvataggio
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
+  * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui effettuare la verifica di disponibilità di cassa
-  * @param cd_cds il codice del Cds per cui effettuare la verifica di disponibilità di cassa
   * @param importo l'importo (positivo o negativo) per cui effettuare la verifica di disponibilità di cassa
-  * @param ti_competenza_residuo identifica il tipo di voce (di competenza o residuo) per cui effettuare la verifica di disponibilità di cassa
 */
 public Voce_f_saldi_cdr_lineaBulk checkDisponabilitaCassaMandati(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, BigDecimal importo ) throws ComponentException
 {
@@ -1014,10 +1019,12 @@ public String checkDispObbligazioniAccertamenti(UserContext userContext, String 
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
-  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo
+  * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
   * @param esercizio_res l'anno del residuo
+  * @param tipo_residuo il tipo di residuo (proprio o improprio)
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
+  * @param tipo_doc_cont il tipo di documento contabile
 */
 
 public Voce_f_saldi_cdr_lineaBulk aggiornaObbligazioniAccertamenti(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce, Integer esercizio_res, String tipo_residuo, BigDecimal importo, String tipo_doc_cont) throws ComponentException
@@ -1382,7 +1389,7 @@ public void aggiornaSaldiAnniSuccessivi(UserContext userContext, String cd_cdr, 
   *
   * @param userContext lo <code>UserContext</code> che ha generato la richiesta
   * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo
-  * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo
+  * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo
   * @param voce <code>Voce_fBulk</code> la voce del piano per cui aggiornare i saldi
   * @param esercizio_res l'anno del residuo
   * @param importo l'importo (positivo o negativo) della modifica da apportare al saldo
@@ -1417,10 +1424,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaPagamentiIncassi(UserContext userConte
  *  come sommatoria dei saldi di tutti gli anni residui presenti 
  *
  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
- * @param esercizio l'anno di competenza
  * @param cd_cdr il codice del CDR per cui effettuare la ricerca del saldo dei residui
- * @param cd_linea il codice del Workpackage per cui effettuare la ricerca del saldo dei residui
- * @param cd_voce il codice della voce del piano per cui ricercare il saldo dei residui 
+ * @param cd_linea_attivita il codice del Workpackage per cui effettuare la ricerca del saldo dei residui
+ * @param voce la voce del piano per cui ricercare il saldo dei residui
 */
 public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, String cd_cdr, String cd_linea_attivita, IVoceBilancioBulk voce) throws ComponentException
 {
@@ -2613,19 +2619,20 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		
 				/**
 				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo prelevandoli dallo stesso progetto 
-				 *    da GAE di natura 6
+				 *    da GAE di natura 6 (regola non valida per progetti di Aree)
 				 */
-				listCtrlPianoEco.stream()
-					.filter(el->!el.isScaduto(dataChiusura))
-					.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
-					.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego())!=0)
-					.findFirst().ifPresent(el->{
-						throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi dal progetto "+
-								el.getProgetto().getCd_progetto()+"(" + 
-								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-								") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
-								"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
-								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");});
+				if (!isVariazioneArea)
+					listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
+						.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego())!=0)
+						.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi dal progetto "+
+									el.getProgetto().getCd_progetto()+"(" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
+									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
+									"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");});
 		
 				/**
 				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
@@ -2810,40 +2817,74 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					}
 				}
 				{
-					/**
-					 * 90. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
-					 * 		a. un progetto scaduto
-					 * 		b. dalla voce speciale (11048)
-					 * 		c. da una GAE di natura 6 sullo stesso progetto
-					 */
-					listCtrlPianoEco.stream()
-					.filter(el->!el.isScaduto(dataChiusura))
-					.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
-					.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego())!=0)
-					.findFirst().ifPresent(el->{
-						throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto "+
-								el.getProgetto().getCd_progetto()+"(" + 
-								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-								") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
-								"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
-								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");});
-	
-					BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
-							.filter(el->el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO)>0)
-							.map(el->el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()))
-							.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-					
-					if (saldoPositivoNaturaReimpiego.compareTo(BigDecimal.ZERO)>0) {
-						BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
-								.filter(el->!el.isScaduto(dataChiusura))
-								.filter(el->el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
-								.map(CtrlPianoEco::getImpSpesaNegativiVoceSpeciale)
+					if (!isVariazioneArea) {
+						/**
+						 * 90. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
+						 * 		a. un progetto scaduto
+						 * 		b. dalla voce speciale (11048)
+						 * 		c. da una GAE di natura 6 sullo stesso progetto
+						 * 	(regola non valida per trasferimenti ad Aree)
+						 */
+						listCtrlPianoEco.stream()
+								.filter(el -> !el.isScaduto(dataChiusura))
+								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
+								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
+								.findFirst().ifPresent(el -> {
+							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
+									el.getProgetto().getCd_progetto() + "(" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
+									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
+									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
+						});
+
+						BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
+								.filter(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(BigDecimal.ZERO) > 0)
+								.map(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()))
+								.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
+
+						if (saldoPositivoNaturaReimpiego.compareTo(BigDecimal.ZERO) > 0) {
+							BigDecimal impNegativiVoceSpecialePrgInCorso = listCtrlPianoEco.stream()
+									.filter(el -> !el.isScaduto(dataChiusura))
+									.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
+									.map(CtrlPianoEco::getImpSpesaNegativiVoceSpeciale)
+									.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
+							if (saldoPositivoNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso)) != 0)
+								throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
+										+ " per un importo di " + new it.cnr.contab.util.EuroFormat().format(saldoPositivoNaturaReimpiego)
+										+ " che non corrisponde all'importo prelevato da progetti scaduti e/o dalla voce " + cdVoceSpeciale
+										+ " (" + new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti) + ").");
+						}
+					} else {
+						/**
+						 * 90. in una variazione di area se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
+						 */
+						BigDecimal impSaldoNaturaReimpiego = listCtrlPianoEco.stream()
+								.map(CtrlPianoEco::getDett)
+								.flatMap(List::stream)
+								.filter(el->!el.isUoArea())
+								.filter(el->el.isNaturaReimpiego())
+								.map(CtrlPianoEcoDett::getImporto)
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-						if (saldoPositivoNaturaReimpiego.compareTo(impNegativiPrgScaduti.add(impNegativiVoceSpecialePrgInCorso))!=0)
-							throw new ApplicationException("Attenzione! Risultano trasferimenti a GAE di natura 6 - 'Reimpiego di risorse' "
-									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(saldoPositivoNaturaReimpiego)
-									+ " che non corrisponde all'importo prelevato da progetti scaduti e/o dalla voce "+cdVoceSpeciale
-									+" ("+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)+").");
+
+						if (impSaldoNaturaReimpiego.compareTo(BigDecimal.ZERO)<0) {
+							//Vuol dire che ho ridotto su GAE Natura 6 per cui deve essere bilanciato solo con Aree di uguale natura
+							BigDecimal impSaldoNaturaReimpiegoArea = listCtrlPianoEco.stream()
+									.map(CtrlPianoEco::getDett)
+									.flatMap(List::stream)
+									.filter(el->el.isUoArea())
+									.filter(el->el.isNaturaReimpiego())
+									.map(CtrlPianoEcoDett::getImporto)
+									.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+							if (impSaldoNaturaReimpiegoArea.compareTo(BigDecimal.ZERO)<0 ||
+									impSaldoNaturaReimpiegoArea.abs().compareTo(impSaldoNaturaReimpiego.abs())!=0)
+								throw new ApplicationException("Attenzione! Risultano prelievi"
+										+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiego.abs())
+										+ " su GAE di natura 6 - 'Reimpiego di risorse' che non risultano totalmente coperti da variazioni a favore"
+										+ " di Aree su GAE di natura 6 - 'Reimpiego di risorse' ("
+										+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiegoArea.abs())+").");
+						}
 					}
 				}
 				{

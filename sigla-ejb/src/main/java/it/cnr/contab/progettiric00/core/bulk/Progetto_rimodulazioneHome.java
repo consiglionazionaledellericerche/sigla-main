@@ -226,6 +226,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 	public List<Progetto_rimodulazione_voceBulk> getDettagliRimodulazioneVoceAggiornato(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk progettoRimodulazione) {
 		return progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
 			.flatMap(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).map(List::stream).orElse(Stream.empty()))
+			.filter(el->Optional.ofNullable(el.getElemento_voce()).flatMap(el1->Optional.ofNullable(el.getCd_elemento_voce())).isPresent())
 			.filter(Ass_progetto_piaeco_voceBulk::isDetailRimodulato)
 			.map(ppeVoce->{
 				Progetto_rimodulazione_voceBulk newRimVoce = new Progetto_rimodulazione_voceBulk();
