@@ -2382,7 +2382,8 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 							cdrMap.get(cdr).stream().collect(Collectors.groupingBy(VContrattiTotaliDetBulk::getLinea));
 					gaeMap.keySet().stream().forEach(gae->{
 						try {
-							WorkpackageBulk lineaAttivita = gaeHome.searchGAECompleta(userContext, contratto.getEsercizio(), cdr, gae);
+							//recupero la linea attività passando come esercizio quello del primo accertamento legato al contratto
+							WorkpackageBulk lineaAttivita = gaeHome.searchGAECompleta(userContext, gaeMap.get(gae).get(0).getEsercizioObbAcr(), cdr, gae);
 							if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
 								VContrattiTotaliDetBulk dett = gaeMap.get(gae).get(0);
 								throw new ApplicationRuntimeException("Progetto "+contratto.getProgetto().getCd_progetto()+

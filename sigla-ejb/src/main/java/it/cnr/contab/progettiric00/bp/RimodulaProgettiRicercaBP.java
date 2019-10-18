@@ -114,6 +114,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 				Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
 				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)getParentController().getParentController().getModel();
 				rimodulazione.getDettagliPianoEconomicoAnnoCorrente().stream()
+					.filter(ppe->Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
 					.filter(ppe->!ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
 					.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
 					.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
@@ -168,6 +169,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 				Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
 				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)getParentController().getParentController().getModel();
 				rimodulazione.getDettagliPianoEconomicoAltriAnni().stream()
+					.filter(ppe->Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
 					.filter(ppe->!ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
 					.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
 					.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
@@ -852,5 +854,13 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 
 	public Unita_organizzativaBulk getUoScrivania() {
 		return uoScrivania;
+	}
+
+	@Override
+	public String getAllegatiFormName() {
+    	String formName = super.getAllegatiFormName();
+    	if ("default".equals(formName) && Optional.ofNullable(this.getArchivioAllegati().getModel()).map(el->el.isNew()).orElse(Boolean.TRUE))
+    		return "insert";
+    	return formName;
 	}
 }

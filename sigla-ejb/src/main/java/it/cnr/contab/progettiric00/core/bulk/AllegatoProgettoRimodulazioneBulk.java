@@ -45,7 +45,16 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
                     (oldValue, newValue) -> oldValue,
                     Hashtable::new
             ));
-    
+
+	public final static Map<String,String> ti_allegato_insertKeys = Arrays.asList(AllegatoProgettoRimodulazioneType.values())
+			.stream()
+			.filter(el->!el.value().equals(AllegatoProgettoRimodulazioneType.AUTOMATICO.value()))
+			.collect(Collectors.toMap(
+					AllegatoProgettoRimodulazioneType::value,
+					AllegatoProgettoRimodulazioneType::label,
+					(oldValue, newValue) -> oldValue,
+					Hashtable::new
+			));
 
     public AllegatoProgettoRimodulazioneBulk() {
 		super();
