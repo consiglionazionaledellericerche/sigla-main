@@ -1440,7 +1440,14 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
         		sqlVarSpe.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
         		sqlVarSpe.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
         		sqlVarSpe.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
-        		sqlVarSpe.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,assVoce.getPg_progetto());    		
+
+				sqlVarSpe.addTableToHeader("PDG_VARIAZIONE");
+				sqlVarSpe.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
+				sqlVarSpe.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
+				sqlVarSpe.addSQLClause(FindClause.AND,"PDG_VARIAZIONE.STATO",SQLBuilder.NOT_EQUALS,Pdg_variazioneBulk.STATO_ANNULLATA);
+				sqlVarSpe.addSQLClause(FindClause.AND,"PDG_VARIAZIONE.STATO",SQLBuilder.NOT_EQUALS,Pdg_variazioneBulk.STATO_RESPINTA);
+
+        		sqlVarSpe.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,assVoce.getPg_progetto());
         		sqlVarSpe.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,assVoce.getEsercizio_voce());
         		sqlVarSpe.addClause(FindClause.AND,"ti_appartenenza",SQLBuilder.EQUALS,assVoce.getTi_appartenenza());    		
         		sqlVarSpe.addClause(FindClause.AND,"ti_gestione",SQLBuilder.EQUALS,assVoce.getTi_gestione());
@@ -2162,7 +2169,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		List<Pdg_variazioneBulk> listVar = (List<Pdg_variazioneBulk>)prgHome.findVariazioniCompetenzaAssociate(progetto.getPg_progetto(), annoFrom.intValue());
 	
 		    		if (ctrlStato) {
-		    			listVar.stream().filter(el->!el.isAnnullata()).findFirst().ifPresent(el->{
+		    			listVar.stream().filter(el->!el.isAnnullata()).filter(el->!el.isRespinta()).findFirst().ifPresent(el->{
 							throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di competenza emesse sul progetto. ("
 									+"Var. "+el.getEsercizio()+"/"+el.getPg_variazione_pdg()+"). "
 									+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
@@ -2171,6 +2178,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		if (ctrlDtInizio)
 						listVar.stream()
 							   .filter(el->!el.isAnnullata())
+							   .filter(el->!el.isRespinta())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 			    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
@@ -2188,6 +2196,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		if (ctrlDtFine)
 			    		listVar.stream()
 			    			   .filter(el->!el.isAnnullata())
+							   .filter(el->!el.isRespinta())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 				 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
@@ -2208,7 +2217,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		List<Var_stanz_resBulk> listVar = (List<Var_stanz_resBulk>)prgHome.findVariazioniResiduoAssociate(progetto.getPg_progetto(),annoFrom.intValue());
 	
 		    		if (ctrlStato) {
-		    			listVar.stream().filter(el->!el.isAnnullata()).findFirst().ifPresent(el->{
+		    			listVar.stream().filter(el->!el.isAnnullata()).filter(el->!el.isRespinta()).findFirst().ifPresent(el->{
 							throw new ApplicationRuntimeException("Attenzione: risultano già variazioni di residuo emesse sul progetto ("
 									+"Var. "+el.getEsercizio()+"/"+el.getPg_variazione()+"). "
 									+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
@@ -2218,6 +2227,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		if (ctrlDtInizio)
 						listVar.stream()
   						       .filter(el->!el.isAnnullata())
+							   .filter(el->!el.isRespinta())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 			    			   .min((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
@@ -2235,6 +2245,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		if (ctrlDtFine)
 			    		listVar.stream()
  					           .filter(el->!el.isAnnullata())
+							   .filter(el->!el.isRespinta())
 							   .filter(el->Optional.ofNullable(el.getDt_chiusura()).isPresent())
 							   .filter(el->!Optional.ofNullable(el.getDt_annullamento()).isPresent())
 				 			   .max((p1, p2) -> p1.getDt_chiusura().compareTo(p2.getDt_chiusura()))
