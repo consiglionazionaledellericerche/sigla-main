@@ -27,6 +27,9 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Transient;
 
+import it.cnr.contab.util.PercentFormat;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.util.action.CRUDBP;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -995,5 +998,12 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	 */
 	public void setCheckDisponibilitaContrattoEseguito(boolean b) {
 		checkDisponibilitaContrattoEseguito = b;
+	}
+
+	@Override
+	public OggettoBulk initializeForFreeSearch(CRUDBP crudbp, ActionContext actioncontext) {
+		if (!Optional.ofNullable(getResponsabile()).isPresent())
+			setResponsabile(new V_persona_fisicaBulk());
+		return super.initializeForFreeSearch(crudbp, actioncontext);
 	}
 }
