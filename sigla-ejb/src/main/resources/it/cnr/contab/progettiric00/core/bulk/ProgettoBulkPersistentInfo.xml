@@ -110,32 +110,37 @@
 		tableName="V_PROGETTO_PADRE"
 		extends="V_PROGETTO_PADRE" >
 		<columnMapping
-			columnName="PROGETTO_OTHER_FIELD.DT_INIZIO"
+			columnName="DT_INIZIO_OTHER_FIELD"
 			propertyName="otherField.dtInizio"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
 		<columnMapping
-			columnName="PROGETTO_OTHER_FIELD.DT_FINE"
+			columnName="DT_FINE_OTHER_FIELD"
 			propertyName="otherField.dtFine"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
 		<columnMapping
-			columnName="PROGETTO_OTHER_FIELD.DT_PROROGA"
+			columnName="DT_PROROGA_OTHER_FIELD"
 			propertyName="otherField.dtProroga"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
-			<columnMapping 
-			columnName="PROGETTO_OTHER_FIELD.IM_FINANZIATO" 
+		<columnMapping
+			columnName="IM_FINANZIATO_OTHER_FIELD"
 			propertyName="otherField.imFinanziato" 
 			sqlTypeName="DECIMAL" 
 			columnSize="15" 
 			columnScale="2" />	
 		<columnMapping 
-			columnName="PROGETTO_OTHER_FIELD.IM_COFINANZIATO" 
+			columnName="IM_COFINANZIATO_OTHER_FIELD"
 			propertyName="otherField.imCofinanziato" 
 			sqlTypeName="DECIMAL" 
 			columnSize="15" 
 			columnScale="2" />
+		<columnMapping
+			columnName="STATO_OTHER_FIELD"
+			propertyName="otherField.stato"
+			sqlTypeName="CHAR"
+			columnSize="1"/>
 	</columnMap>
 
 	<columnMap
