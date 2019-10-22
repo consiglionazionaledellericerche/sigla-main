@@ -50,8 +50,8 @@
 	</types>
 	<aspects>
 		<aspect name="sigla_fatture_attachment:fattura_elettronica_inviata">
-			<title>Indica se il file XML è stato già inviato a SDI</title>
-			<description>Indica se il file XML è stato già inviato a SDI</description>
+			<title>Indica se il file XML e' inviato a SDI</title>
+			<description>Indica se il file XML e' inviato a SDI</description>
 		</aspect>
 		<aspect name="sigla_fatture_attachment:stampa_fattura_prima_protocollo">
 			<title>Stampa Fattura Prima della Protocollazione</title>
