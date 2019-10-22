@@ -29,6 +29,7 @@ public enum StorageDocAmmAspect {
 	SIGLA_CONTRATTI_STATO_DEFINITIVO("P:sigla_contratti_aspect:stato_definitivo"),
 	SIGLA_STRUTTURA_ORGANIZZATIVA_CDR("P:strorg:cdr"),
 	SIGLA_CONTRATTI_LINK("P:sigla_contratti_aspect_link"),
+	SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_INVIATA("P:sigla_fatture_attachment:fattura_elettronica_inviata"),
 	SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_PRIMA_PROTOCOLLO("P:sigla_fatture_attachment:stampa_fattura_prima_protocollo"),
 	SIGLA_FATTURE_ATTACHMENT_STAMPA_FATTURA_DOPO_PROTOCOLLO("P:sigla_fatture_attachment:stampa_fattura_dopo_protocollo"),
 	SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_XML_ANTE_FIRMA("P:sigla_fatture_attachment:fattura_elettronica_xml_ante_firma"),
