@@ -27,6 +27,13 @@ function doVisualizzaDocumenti() {
 			mainTableSelection += "&" + elementName + "=" + document.mainForm.elements[j].value;
 	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Documenti Contabili.pdf?methodName=scaricaDocumenti&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>&mainTable.focus=0' + mainTableSelection);
 }
+function doScaricaZip() {
+	elementName = "mainTable.selection", mainTableSelection = "";
+	for (j = 0;j < document.mainForm.elements.length;j++)
+		if (document.mainForm.elements[j].name == elementName && document.mainForm.elements[j].checked)
+			mainTableSelection += "&" + elementName + "=" + document.mainForm.elements[j].value;
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/Documenti Contabili.pdf?methodName=scaricaZip&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>&mainTable.focus=0' + mainTableSelection);
+}
 </script>
 </head>
 <body class="Form">
