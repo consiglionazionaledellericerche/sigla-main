@@ -878,7 +878,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				else 
 					storageFile = allegato.getCMISFile(contrattiService.getStorageObjectBykey(allegato.getCms_node_ref()));
 
-				if (storageFile!=null && storageFile.getInputStream()!=null) {
+				if (Optional.ofNullable(storageFile).isPresent()) {
 					//E' previsto solo l'inserimento ma non l'aggiornamento
 					if (allegato.getCms_node_ref()==null || allegato.isAnnullato()) {
 						String path = storageFile.getStorageParentPath();
@@ -887,6 +887,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							alternativePath = storageFile.getStorageAlternativeParentPath();
 						
 						if (allegato.getCms_node_ref()==null) {
+							if (storageFile.getInputStream()==null)
+								throw new ApplicationException("Errore nella registrazione degli allegati - Non è stato possibile recuperare InputStream");
+
 							try {
 								StorageObject storageObject =
                                         contrattiService.restoreSimpleDocument(
