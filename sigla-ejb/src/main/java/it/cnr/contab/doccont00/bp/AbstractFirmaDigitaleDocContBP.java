@@ -223,8 +223,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
 
     public boolean isZipDocumentiButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-        return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) ||
-                oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
+        return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
     }
 
     @SuppressWarnings("unchecked")
@@ -260,8 +259,6 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
             response.setStatus(HttpStatus.SC_NO_CONTENT);
             return;
         }
-        StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-        if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO)) {
             PDFMergerUtility ut = new PDFMergerUtility();
             ut.setDestinationStream(new ByteArrayOutputStream());
             for (StatoTrasmissione cons : selectelElements) {
@@ -283,7 +280,18 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                 is.close();
                 os.flush();
             }
-        } else {
+    }
+
+    @SuppressWarnings("unchecked")
+    public void scaricaZip(ActionContext actioncontext) throws Exception {
+        setSelection(actioncontext);
+        List<StatoTrasmissione> selectelElements = getSelectedElements(actioncontext);
+        final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
+        final DocumentiContabiliService documentiContabiliService = SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class);
+        if (selectelElements == null || selectelElements.isEmpty()) {
+            response.setStatus(HttpStatus.SC_NO_CONTENT);
+            return;
+        }
             final ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
             final ContabiliService contabiliService = SpringUtil.getBean("contabiliService", ContabiliService.class);
             final DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
@@ -400,7 +408,6 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                     });
             zos.close();
             response.getOutputStream().flush();
-        }
     }
 
     public abstract StatoTrasmissione getStatoTrasmissione(ActionContext actioncontext, Integer esercizio,

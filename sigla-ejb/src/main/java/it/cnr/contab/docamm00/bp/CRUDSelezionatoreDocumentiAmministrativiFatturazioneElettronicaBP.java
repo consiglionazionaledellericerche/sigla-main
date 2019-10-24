@@ -437,20 +437,22 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                             }
 
                             List<String> aspects = storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
-                            aspects.add(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
-                            documentiCollegatiDocAmmService.updateProperties(
-                                    Collections.singletonMap(
-                                            StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
-                                            aspects),
-                                    storageObject);
                             try {
-                                logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(), fattura_attivaBulk.getProgrUnivocoAnno());
+                                boolean daInviare = true;
+                                if (documentiCollegatiDocAmmService.hasAspect(storageObject, StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_INVIATA.value())){
+                                    daInviare = false;
+                                } else {
+                                    if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()){
+                                        aspects.add(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_FATTURA_ELETTRONICA_INVIATA.value());
+                                    }
+                                }
+                                aspects.add(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
                                 final Fattura_attivaBulk fatturaAttivaByPrimaryKey =
                                         Optional.ofNullable(componentFatturaAttiva.findByPrimaryKey(userContext, fattura_attivaBulk))
                                                 .filter(Fattura_attivaBulk.class::isInstance)
                                                 .map(Fattura_attivaBulk.class::cast)
                                                 .orElseThrow(() -> new DetailedRuntimeException("Fattura non trovata!"));
-                                if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi()) {
+                                if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi() && daInviare) {
                                     final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fatturaAttivaByPrimaryKey).concat(".p7m");
                                     fatturaService.inviaFatturaElettronica(
                                             config.getVal01(),
@@ -460,7 +462,13 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                     fatturaAttivaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
                                     logger.info("File firmato inviato");
                                 }
+                                documentiCollegatiDocAmmService.updateProperties(
+                                        Collections.singletonMap(
+                                                StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                                                aspects),
+                                        storageObject);
                                 componentFatturaAttiva.aggiornaFatturaInvioSDI(userContext, fatturaAttivaByPrimaryKey);
+                                logger.info("Fattura con progressivo univoco {}/{} aggiornata.", fattura_attivaBulk.getEsercizio(), fattura_attivaBulk.getProgrUnivocoAnno());
                                 indexInviate.getAndIncrement();
                             } catch (PersistencyException | ComponentException | IOException | EmailException e) {
                                 throw new DetailedRuntimeException("Errore nell'invio della mail PEC per la fatturazione elettronica. Ripetere l'operazione di firma!", e);
