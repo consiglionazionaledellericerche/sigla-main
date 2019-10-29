@@ -59,14 +59,14 @@
 	<queryString>
 		<![CDATA[SELECT a.CD_PROGETTO, a.DS_PROGETTO, b.DT_INIZIO, b.DT_FINE, b.DT_PROROGA, b.stato,
 c.descrizione desc_finanziamento, c.fl_piano_eco_fin, a.cd_unita_organizzativa, d.ds_unita_organizzativa, b.im_finanziato, b.im_cofinanziato,
-(SELECT NVL(SUM(p_totale_entrate),9) FROM
+(SELECT NVL(SUM(p_totale_entrate),0) FROM
 (SELECT (SELECT SUM(totale_entrate) FROM V_CONTRATTI_TOTALI
          WHERE ESERCIZIO_CONTRATTO = CONTRATTO.ESERCIZIO
          AND   STATO_CONTRATTO = CONTRATTO.STATO
          AND   PG_CONTRATTO = CONTRATTO.PG_CONTRATTO) p_totale_entrate
  FROM CONTRATTO
  WHERE PG_PROGETTO = $P{P_PG_PROGETTO})) totale_entrate,
-(SELECT NVL(SUM(p_totale_entrate),9) FROM
+(SELECT NVL(SUM(p_totale_entrate),0) FROM
 (SELECT (SELECT SUM(totale_reversali) FROM V_CONTRATTI_TOTALI
          WHERE ESERCIZIO_CONTRATTO = CONTRATTO.ESERCIZIO
          AND   STATO_CONTRATTO = CONTRATTO.STATO
