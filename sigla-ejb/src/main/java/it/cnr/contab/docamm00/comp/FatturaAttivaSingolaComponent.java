@@ -5556,7 +5556,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                     if (differenzaIva.compareTo(BigDecimal.ZERO) > 0 && differenzaIva.compareTo(tolleranza) > 0){
                         throw new it.cnr.jada.comp.ApplicationException("Il totale documento per aliquota iva è maggiore di "+differenzaIva+" rispetto alla somma dei dettagli del documento. Aggiungere " + differenzaIva+" all'importo IVA(forzandolo) di una delle righe del documento.");
                     }
-                    if (differenzaIva.compareTo(BigDecimal.ZERO) < 0 && differenzaIva.abs().compareTo(tolleranza) < 0){
+                    if (differenzaIva.compareTo(BigDecimal.ZERO) < 0 && differenzaIva.abs().compareTo(tolleranza) > 0){
                         throw new it.cnr.jada.comp.ApplicationException("Il totale documento per aliquota iva è minore di "+differenzaIva+" rispetto alla somma dei dettagli del documento. Sottrarre " + differenzaIva.abs()+" dall'importo IVA(forzandolo) di una delle righe del documento.");
                     }
                 }
