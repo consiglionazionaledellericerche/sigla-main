@@ -1,8 +1,4 @@
---------------------------------------------------------
---  DDL for Package Body CNRCTB680
---------------------------------------------------------
-
-  CREATE OR REPLACE PACKAGE BODY "CNRCTB680" AS
+CREATE OR REPLACE PACKAGE BODY "CNRCTB680" AS
 
  function getDescCori(aCori stipendi_cofi_cori%rowtype) return varchar2 is
  begin
@@ -39,7 +35,7 @@
   aStip stipendi_cofi%rowtype,
   aComp compenso%rowtype,
   aCori stipendi_cofi_cori%rowtype,
-  aUOPersonale unita_organizzativa%rowtype,
+  aUOGestoreRitenuta unita_organizzativa%rowtype,
   aTerzoVersamento terzo%rowtype,
   aManP in mandato%rowtype,
   aRev in out reversale%rowtype,
@@ -108,7 +104,7 @@
   end if;
 
   -- Estrae il terzo associato all'UO di stipendi_cofi e le sue modalità di pagamento di tipo bancario più recenti
-  CNRCTB080.getTerzoPerUO(aUOPersonale.cd_unita_organizzativa, aCdTerzoUO, aCdModPagUO, aPgBancaUO,aCori.esercizio);
+  CNRCTB080.getTerzoPerUO(aUOGestoreRitenuta.cd_unita_organizzativa, aCdTerzoUO, aCdModPagUO, aPgBancaUO,aCori.esercizio);
   if(parametriCnr.fl_nuovo_pdg ='N') then
   begin
    select * into aAssCoriFin from ass_tipo_cori_ev where
@@ -152,12 +148,12 @@ end if;
    isCoriEntrata:=true;
    aAcc:=null;
    aAccScad:=null;
-   aAcc.CD_CDS:=aUOPersonale.cd_unita_padre;
+   aAcc.CD_CDS:=aUOGestoreRitenuta.cd_unita_padre;
    aAcc.ESERCIZIO:=aStip.esercizio;
    aAcc.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_ACC_PGIRO;
-   aAcc.CD_UNITA_ORGANIZZATIVA:=aUOPersonale.cd_unita_organizzativa;
-   aAcc.CD_CDS_ORIGINE:=aUOPersonale.cd_unita_padre;
-   aAcc.CD_UO_ORIGINE:=aUOPersonale.cd_unita_organizzativa;
+   aAcc.CD_UNITA_ORGANIZZATIVA:=aUOGestoreRitenuta.cd_unita_organizzativa;
+   aAcc.CD_CDS_ORIGINE:=aUOGestoreRitenuta.cd_unita_padre;
+   aAcc.CD_UO_ORIGINE:=aUOGestoreRitenuta.cd_unita_organizzativa;
    aAcc.TI_APPARTENENZA:=aAssCoriFin.ti_appartenenza;
    aAcc.TI_GESTIONE:=aAssCoriFin.ti_gestione;
    aAcc.CD_ELEMENTO_VOCE:=aAssCoriFin.cd_elemento_voce;
@@ -198,12 +194,12 @@ end if;
    end;
    aObb:=null;
    aObbScad:=null;
-   aObb.CD_CDS:=aUOPersonale.cd_unita_padre;
+   aObb.CD_CDS:=aUOGestoreRitenuta.cd_unita_padre;
    aObb.ESERCIZIO:=aStip.esercizio;
    aObb.CD_TIPO_DOCUMENTO_CONT:=CNRCTB018.TI_DOC_OBB_PGIRO;
-   aObb.CD_UNITA_ORGANIZZATIVA:=aUOPersonale.cd_unita_organizzativa;
-   aObb.CD_CDS_ORIGINE:=aUOPersonale.cd_unita_padre;
-   aObb.CD_UO_ORIGINE:=aUOPersonale.cd_unita_organizzativa;
+   aObb.CD_UNITA_ORGANIZZATIVA:=aUOGestoreRitenuta.cd_unita_organizzativa;
+   aObb.CD_CDS_ORIGINE:=aUOGestoreRitenuta.cd_unita_padre;
+   aObb.CD_UO_ORIGINE:=aUOGestoreRitenuta.cd_unita_organizzativa;
    aObb.TI_APPARTENENZA:=aContoColl.ti_appartenenza_clg;
    aObb.TI_GESTIONE:=aContoColl.ti_gestione_clg;
    aObb.CD_ELEMENTO_VOCE:=aContoColl.cd_voce_clg;
@@ -468,10 +464,10 @@ end if;
    CNRCTB560.addAssCompDocNMP(aComp,aMan,aManRighe);
   end if;
 
-  aCoriComp.CD_CDS:=aUOPersonale.cd_unita_padre;
-  aCoriComp.CD_UNITA_ORGANIZZATIVA:=aUOPersonale.cd_unita_organizzativa;
-  aCoriComp.ESERCIZIO:=aCori.ESERCIZIO;
-  aCoriComp.PG_COMPENSO:=aComp.pg_compenso;
+  aCoriComp.CD_CDS:=aComp.CD_CDS;
+  aCoriComp.CD_UNITA_ORGANIZZATIVA:=aComp.CD_UNITA_ORGANIZZATIVA;
+  aCoriComp.ESERCIZIO:=aComp.ESERCIZIO;
+  aCoriComp.PG_COMPENSO:=aComp.PG_COMPENSO;
   aCoriComp.CD_CONTRIBUTO_RITENUTA:=aTipoCoriLoc.CD_CONTRIBUTO_RITENUTA;
   aCoriComp.TI_ENTE_PERCIPIENTE:=aCori.TI_ENTE_PERCIPIENTE;
   aCoriComp.DT_INI_VALIDITA:=aTipoCoriLoc.DT_INI_VALIDITA;
@@ -687,46 +683,68 @@ end if;
   aTotCoriPercipiente:=0;
 
   Declare
-    aRevI reversale%rowtype;
+    aDateCont date := CNRCTB008.getTimestampContabile(aStip.esercizio,aTSNow);
+    aUOGestoreRitenuta unita_organizzativa%rowtype;
   Begin
-    For aCoriStip In (Select *
-                      From  stipendi_cofi_cori
-                      Where esercizio = aStip.esercizio And
-                            mese = aStip.mese) Loop
-      aCori := gestioneCori(aStip,aComp,aCoriStip,aUOPersonale,aTerzoVersamento,aManP,aRevI,aUser,aTSNow);
+    --Individuo quante reversali devono essere create sulla base delle UO gestoiri delle ritenute
+    For recUoGestoriRitenuta in (Select distinct nvl(b.uo_gestore, aUOPersonale.cd_unita_organizzativa) cd_unita_organizzativa
+                                 From  stipendi_cofi_cori a, tipo_contributo_ritenuta b
+                                 Where a.esercizio = aStip.esercizio
+                                 And   a.mese = aStip.mese 
+                                 And   a.cd_contributo_ritenuta = b.cd_contributo_ritenuta
+                                 And   b.dt_ini_validita <= trunc(aDateCont)
+                                 And   (b.dt_fin_validita is null or b.dt_fin_validita >= trunc(aDateCont))) LOOP
+      
+      aUOGestoreRitenuta:=CNRCTB020.GETUOVALIDA(aStip.esercizio,recUoGestoriRitenuta.cd_unita_organizzativa);
 
-      if aCori.esercizio is not null then
-        if aCori.ti_ente_percipiente = 'E' then
-          aTotCoriEnte:=aTotCoriEnte + aCori.ammontare;
-        else
-          aTotCoriPercipiente:=aTotCoriPercipiente + aCori.ammontare;
-        end if;
+      Declare
+        aRevI reversale%rowtype;
+      Begin
+        For aCoriStip In (Select a.*
+                          From  stipendi_cofi_cori a, tipo_contributo_ritenuta b
+                          Where a.esercizio = aStip.esercizio 
+                          And   a.mese = aStip.mese
+                          And   a.cd_contributo_ritenuta = b.cd_contributo_ritenuta
+                          And   b.dt_ini_validita <= trunc(aDateCont)
+                          And   (b.dt_fin_validita is null or b.dt_fin_validita >= trunc(aDateCont))
+                          And   nvl(b.uo_gestore, aUOPersonale.cd_unita_organizzativa) = aUOGestoreRitenuta.cd_unita_organizzativa) Loop
+          
+          aCori := gestioneCori(aStip,aComp,aCoriStip,aUOGestoreRitenuta,aTerzoVersamento,aManP,aRevI,aUser,aTSNow);
 
-        CNRCTB545.insCONTRIBUTORITENUTA(aCori);
-      end if;
-    End loop;
+          if aCori.esercizio is not null then
+            if aCori.ti_ente_percipiente = 'E' then
+              aTotCoriEnte:=aTotCoriEnte + aCori.ammontare;
+            else
+              aTotCoriPercipiente:=aTotCoriPercipiente + aCori.ammontare;
+            end if;
 
-    -- Aggiorno l'importo e la descrzione della reversale
-    update REVERSALE
-    Set IM_REVERSALE = aRevI.IM_REVERSALE,
-        DS_REVERSALE = substr(aRevI.DS_REVERSALE,1,300)
-    Where esercizio = aRevI.esercizio And
-          cd_cds = aRevI.cd_cds And
-          pg_reversale = aRevI.pg_reversale;
+            CNRCTB545.insCONTRIBUTORITENUTA(aCori);
+          end if;
+        End loop;
 
-    CNRCTB037.updScadAccertamento(aRevI);
-    CNRCTB037.updSaldoCapitoliR(aRevI,'I','A');
+        -- Aggiorno l'importo e la descrzione della reversale
+        update REVERSALE
+        Set IM_REVERSALE = aRevI.IM_REVERSALE,
+            DS_REVERSALE = substr(aRevI.DS_REVERSALE,1,300)
+        Where esercizio = aRevI.esercizio And
+              cd_cds = aRevI.cd_cds And
+              pg_reversale = aRevI.pg_reversale;
 
-    CNRCTB300.leggiMandatoReversale(aRevI.CD_CDS, aRevI.ESERCIZIO, aRevI.PG_REVERSALE, 'REV', 'I', aRevI.utuv);
+        CNRCTB037.updScadAccertamento(aRevI);
+        CNRCTB037.updSaldoCapitoliR(aRevI,'I','A');
 
-    -- Aggiorno l'importo ritenute del mandato principale
-    update mandato
-    Set im_ritenute = im_ritenute + aRevI.IM_REVERSALE
-    Where esercizio = aManP.esercizio And
-          cd_cds = aManP.cd_cds And
-          pg_mandato = aManp.pg_mandato;
+        CNRCTB300.leggiMandatoReversale(aRevI.CD_CDS, aRevI.ESERCIZIO, aRevI.PG_REVERSALE, 'REV', 'I', aRevI.utuv);
+
+        -- Aggiorno l'importo ritenute del mandato principale
+        update mandato
+        Set im_ritenute = im_ritenute + aRevI.IM_REVERSALE
+        Where esercizio = aManP.esercizio And
+              cd_cds = aManP.cd_cds And
+              pg_mandato = aManp.pg_mandato;
+      End;
+    End Loop;
   End;
-
+  
   Update compenso
   Set IM_CR_PERCIPIENTE    = aTotCoriPercipiente,
       IM_CR_ENTE           = aTotCoriEnte,
@@ -874,14 +892,6 @@ end if;
         IBMERR001.RAISE_ERR_GENERICO('Impegno n. '||aStipObb.pg_obbligazione||' associato a liquidazione stipendi mese n.'||aStip.mese||' es. '||aStip.esercizio);
       End If;
    End;
-
-   If aUOPersonale.cd_unita_organizzativa != aObb.cd_unita_organizzativa then
-      If cnrutil.isLabelObbligazione() Then
-        IBMERR001.RAISE_ERR_GENERICO('Obbligazione n. '||aObb.pg_obbligazione||' associata a liquidazione stipendi mese n. '||aStip.mese||' es '||aStip.esercizio||' ha UO non uguale a quella del personale');
-      Else
-        IBMERR001.RAISE_ERR_GENERICO('Impegno n. '||aObb.pg_obbligazione||' associato a liquidazione stipendi mese n. '||aStip.mese||' es. '||aStip.esercizio||' ha UO non uguale a quella del personale');
-      End If;
-   End If;
 
    If aIndex=1 then
     Select * into aTerzoVersamento
@@ -1112,7 +1122,6 @@ end if;
    -- POICHE' LA PROCEDURA STANDARD EMETTE PRIMA MANDATI E REVERSALI E POI GENERA CONTRIBUTO_RITENUTA
    -- LA PROCEDURA INS_SIOPE_AUTOMATICO NON TROVA L'ACCERTAMENTO SU CONTRIBUTO_RIITENUTA
    -- MI DEVO FARE UN NUOVO LOOP DOPO
-
    For RIGHE_REV In (Select RR.*
                      From   STIPENDI_COFI SC, REVERSALE_RIGA RR, ASS_MANDATO_REVERSALE AMR
                      Where  SC.ESERCIZIO            = aStip.ESERCIZIO And
@@ -1123,6 +1132,21 @@ end if;
                             amr.CD_CDS_REVERSALE    = rr.CD_CDS And
                             amr.ESERCIZIO_REVERSALE = rr.ESERCIZIO And
                             amr.PG_REVERSALE        = rr.pg_REVERSALE) Loop
+        --ELIMINO EVENTUALI PRECEDENTI CARICAMENTI DELLA TABELLA REVERSALE_SIOPE
+        --PER RICARICARLA IN MANIERA PULITA
+        DELETE REVERSALE_SIOPE
+        WHERE CD_CDS = RIGHE_REV.CD_CDS
+        AND   ESERCIZIO = RIGHE_REV.ESERCIZIO
+        AND   PG_REVERSALE = RIGHE_REV.PG_REVERSALE
+        AND   ESERCIZIO_ACCERTAMENTO = RIGHE_REV.ESERCIZIO_ACCERTAMENTO
+        AND   ESERCIZIO_ORI_ACCERTAMENTO = RIGHE_REV.ESERCIZIO_ORI_ACCERTAMENTO
+        AND   PG_ACCERTAMENTO = RIGHE_REV.PG_ACCERTAMENTO
+        AND   PG_ACCERTAMENTO_SCADENZARIO = RIGHE_REV.PG_ACCERTAMENTO_SCADENZARIO
+        AND   CD_CDS_DOC_AMM = RIGHE_REV.CD_CDS_DOC_AMM
+        AND   CD_UO_DOC_AMM = RIGHE_REV.CD_UO_DOC_AMM
+        AND   ESERCIZIO_DOC_AMM = RIGHE_REV.ESERCIZIO_DOC_AMM
+        AND   CD_TIPO_DOCUMENTO_AMM = RIGHE_REV.CD_TIPO_DOCUMENTO_AMM
+        AND   PG_DOC_AMM = RIGHE_REV.PG_DOC_AMM;
 
         Begin
           cnrctb037.inserisci_siope_automatico (RIGHE_REV);
@@ -1131,7 +1155,6 @@ end if;
         End;
 
    End Loop;
-
   -- CNRCTB207.regStipendiCOGE(aEs, aMese, aUser);
  end;
 
