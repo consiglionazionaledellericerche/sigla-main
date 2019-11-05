@@ -4805,7 +4805,7 @@ public class DistintaCassiereComponent extends
             it.siopeplus.Beneficiario benef = objectFactory.createBeneficiario();
             it.siopeplus.Mandato.InformazioniBeneficiario.Sospeso sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
             it.siopeplus.Ritenute riten = objectFactory.createRitenute();
-            it.siopeplus.InformazioniAggiuntive aggiuntive = objectFactory.createInformazioniAggiuntive();
+            Mandato.InformazioniBeneficiario.InformazioniAggiuntive aggiuntive = objectFactory.createMandatoInformazioniBeneficiarioInformazioniAggiuntive();
             for (Iterator i = list.iterator(); i.hasNext(); ) {
                 final it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk  docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
                 final String modalitaPagamento = docContabile.getModalitaPagamento();
@@ -4897,7 +4897,7 @@ public class DistintaCassiereComponent extends
                     benef = objectFactory.createBeneficiario();
                     sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
                     riten = objectFactory.createRitenute();
-                    aggiuntive = objectFactory.createInformazioniAggiuntive();
+                    aggiuntive = objectFactory.createMandatoInformazioniBeneficiarioInformazioniAggiuntive();
 
                     infoben = objectFactory.createMandatoInformazioniBeneficiario();
                     infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre
@@ -5152,7 +5152,7 @@ public class DistintaCassiereComponent extends
                     benef = objectFactory.createBeneficiario();
                     sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
                     riten = objectFactory.createRitenute();
-                    aggiuntive = objectFactory.createInformazioniAggiuntive();
+                    aggiuntive = objectFactory.createMandatoInformazioniBeneficiarioInformazioniAggiuntive();
                     infoben = objectFactory.createMandatoInformazioniBeneficiario();
                     totSiope = BigDecimal.ZERO;
                     infoben.setProgressivoBeneficiario(2);
@@ -5669,7 +5669,7 @@ public class DistintaCassiereComponent extends
 
     private void caricaInformazioniAggiuntive(it.siopeplus.Mandato.InformazioniBeneficiario infoben,
                                               V_mandato_reversaleBulk bulk,
-                                              InformazioniAggiuntive aggiuntive,
+                                              Mandato.InformazioniBeneficiario.InformazioniAggiuntive aggiuntive,
                                               Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus) {
         if (Arrays.asList(
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,
