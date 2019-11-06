@@ -1546,7 +1546,6 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
    	   		    Progetto_piano_economicoHome ppeHome = (Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class);
    	   			List<Progetto_piano_economicoBulk> pianoEconomicoList = (List<Progetto_piano_economicoBulk>)ppeHome.findProgettoPianoEconomicoList(moduloCosti.getPg_progetto());
 	
-	            List<Pdg_modulo_speseBulk> speseListDB = (List<Pdg_modulo_speseBulk>)((Pdg_modulo_costiHome)getHome(userContext,Pdg_modulo_costiBulk.class)).findPdgModuloSpeseDettagli(userContext, moduloCosti);
 	            List<Pdg_modulo_speseBulk> speseList = (List<Pdg_modulo_speseBulk>)moduloCosti.getDettagliSpese();
 	
 	            pianoEconomicoList.stream()
@@ -1570,22 +1569,14 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	
 	                                BigDecimal dispResiduaFin = saldo.getDispResiduaFinanziamento();
 	
-	                                if (!isFromChangeStato) {
-		                                dispResiduaFin = dispResiduaFin.add(
-		                                        speseListDB.stream()
-		                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
-		                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
-		                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
-		                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
-		
+	                                if (!isFromChangeStato)
 		                                dispResiduaFin = dispResiduaFin.subtract(
 		                                        speseList.stream()
 		                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
 		                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
 		                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_est()))
 		                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
-	                                }
-	                                
+
 	                                if (dispResiduaFin.compareTo(BigDecimal.ZERO)<0)
 	                                    throw new ApplicationException(
 	                                            "Impossibile effettuare l'operazione !\n"+
@@ -1618,22 +1609,14 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	                                		
 	                                BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento();
 	
-	                                if (!isFromChangeStato) {
-		                                dispResiduaCofin = dispResiduaCofin.add(
-		                                        speseListDB.stream()
-		                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
-		                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
-		                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_int()))
-		                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
-		
+	                                if (!isFromChangeStato)
 		                                dispResiduaCofin = dispResiduaCofin.subtract(
 		                                        speseList.stream()
 		                                        		.filter(x->Optional.ofNullable(x.getVoce_piano_economico()).isPresent())
 		                                                .filter(x->x.getVoce_piano_economico().equalsByPrimaryKey(e.getVoce_piano_economico()))
 		                                                .map(el->Utility.nvl(el.getIm_spese_gest_decentrata_int()))
 		                                                .collect(Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)));
-	                                }
-	                                
+
 	                                if (dispResiduaCofin.compareTo(BigDecimal.ZERO)<0)
 	                                    throw new ApplicationException(
 	                                            "Impossibile effettuare l'operazione !\n"+
