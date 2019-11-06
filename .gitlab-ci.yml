@@ -29,7 +29,10 @@ maven-deploy:
     paths:
       - sigla-web/target/sigla-thorntail.jar
   only:
-    - master
+    variables:
+      - $CI_COMMIT_MESSAGE !~ /prepare release/ && $CI_COMMIT_MESSAGE !~ /prepare for next development iteration/
+    refs:
+      - master
 
 maven-install:
   stage: deploy
@@ -75,7 +78,10 @@ docker-build-push-master:
     - docker tag $CONTAINER_TEST_IMAGE $CI_REGISTRY/$CONTAINER_RELEASE_IMAGE
     - docker push $CI_REGISTRY/$CONTAINER_RELEASE_IMAGE
   only:
-    - master
+    variables:
+      - $CI_COMMIT_MESSAGE !~ /prepare release/ && $CI_COMMIT_MESSAGE !~ /prepare for next development iteration/
+    refs:
+      - master
 
 
 #Ad ogni nuovo commit sul branch viene fatta la push sul docker registry locale.
@@ -102,7 +108,8 @@ catapult-deploy-image:
     - >
       curl --fail -s -X POST $CATAPULT_URL -H 'Content-type:application/json' --data '{"id":"'"$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME"'", "git":true}'
   except:
-    - tags
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /prepare release/ || $CI_COMMIT_MESSAGE =~ /prepare for next development iteration/
 
 #la release è opzionale e manuale.
 perform-maven-release-maven-central:
@@ -138,6 +145,9 @@ perform-maven-release-maven-central:
     - mvn release:clean release:prepare -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
     - mvn release:perform -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
   only:
-    - master
+    variables:
+      - $CI_COMMIT_MESSAGE !~ /prepare release/ && $CI_COMMIT_MESSAGE !~ /prepare for next development iteration/
+    refs:
+      - master
   when: manual
   
