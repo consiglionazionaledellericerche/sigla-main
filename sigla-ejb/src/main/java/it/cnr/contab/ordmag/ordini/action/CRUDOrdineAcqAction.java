@@ -16,6 +16,7 @@ import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.TitoloDiCreditoDebitoBP;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
@@ -123,6 +124,13 @@ public Forward doBlankSearchFind_contratto(ActionContext context, OrdineAcqBulk 
         return handleException(context, e);
     }
 }
+public Forward doBringBackCRUDFind_contratto(ActionContext context,
+		OrdineAcqBulk ordine,
+		ContrattoBulk contratto)
+				throws java.rmi.RemoteException {
+	return doBringBackSearchFind_contratto(context, ordine, contratto);
+}
+
 public Forward doBringBackSearchFind_contratto(ActionContext context,
 		OrdineAcqBulk ordine,
 		ContrattoBulk contratto) 

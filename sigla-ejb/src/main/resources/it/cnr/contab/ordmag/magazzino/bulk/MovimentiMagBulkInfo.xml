@@ -3,8 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
 	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
-	shortDescription="Archivio dei Movimenti"
-	longDescription="Archivio dei Movimenti">
+	shortDescription="Movimenti di Magazzino"
+	longDescription="Movimenti di Magazzino">
 	<fieldProperty
 		name="pgMovimento"
 		property="pgMovimento"
@@ -14,7 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="pgMovimento" />
+		label="Progr." />
 	<fieldProperty
 		name="pgMovimentoRif"
 		property="pgMovimentoRif"
@@ -42,14 +42,14 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
-		label="dtMovimento" />
+		label="Data Movimento" />
 	<fieldProperty
 		name="findTipoMovimentoMag"
 		property="tipoMovimentoMag"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="TipoMovimentoMag" />
+		label="Tipo Movimento" />
 	<fieldProperty
 		name="cdCdsTipoMovimento"
 		property="tipoMovimentoMag.cdCds"
@@ -67,14 +67,14 @@
 		maxLength="3"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdTipoMovimento" />
+		label="Tipo Mov." />
 	<fieldProperty
 		name="dataBolla"
 		property="dataBolla"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dataBolla" />
+		label="Dt Bolla" />
 	<fieldProperty
 		name="numeroBolla"
 		property="numeroBolla"
@@ -82,14 +82,14 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="numeroBolla" />
+		label="Numero Bolla" />
 	<fieldProperty
 		name="dtRiferimento"
 		property="dtRiferimento"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtRiferimento" />
+		label="Data Competenza" />
 	<fieldProperty
 		name="cdCdsOrdine"
 		property="lottoMag.ordineAcqConsegna.cdCds"
@@ -105,7 +105,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdUnitaOperativaOrdine" />
+		label="Uop Ordine" />
 	<fieldProperty
 		name="esercizioOrdine"
 		property="lottoMag.ordineAcqConsegna.esercizio"
@@ -113,7 +113,7 @@
 		inputSize="4"
 		maxLength="4"
 		enabledOnEdit="false"
-		label="esercizioOrdine" />
+		label="Anno Ordine" />
 	<fieldProperty
 		name="cdNumeratoreOrdine"
 		property="lottoMag.ordineAcqConsegna.cdNumeratore"
@@ -121,7 +121,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdNumeratoreOrdine" />
+		label="Cod. Ordine" />
 	<fieldProperty
 		name="numeroOrdine"
 		property="lottoMag.ordineAcqConsegna.numero"
@@ -129,7 +129,7 @@
 		inputSize="6"
 		maxLength="6"
 		enabledOnEdit="false"
-		label="numeroOrdine" />
+		label="Num. Ordine" />
 	<fieldProperty
 		name="rigaOrdine"
 		property="lottoMag.ordineAcqConsegna.riga"
@@ -137,7 +137,7 @@
 		inputSize="6"
 		maxLength="6"
 		enabledOnEdit="false"
-		label="rigaOrdine" />
+		label="Riga" />
 	<fieldProperty
 		name="consegna"
 		property="lottoMag.ordineAcqConsegna.consegna"
@@ -145,7 +145,7 @@
 		inputSize="6"
 		maxLength="6"
 		enabledOnEdit="false"
-		label="consegna" />
+		label="Cons." />
 	<fieldProperty
 		name="cdTerzo"
 		property="cdTerzo"
@@ -153,14 +153,14 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdTerzo" />
+		label="Terzo" />
 	<fieldProperty
 		name="findUnitaMisura"
 		property="unitaMisura"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaMisura" />
+		label="Unita Misura" />
 	<fieldProperty
 		name="cdUnitaMisura"
 		property="unitaMisura.cdUnitaMisura"
@@ -168,7 +168,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="cdUnitaMisura" />
+		label="UM" />
 	<fieldProperty
 		name="quantita"
 		property="quantita"
@@ -176,7 +176,7 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="quantita" />
+		label="Quantita" />
 	<fieldProperty
 		name="coeffConv"
 		property="coeffConv"
@@ -184,14 +184,14 @@
 		inputSize="12"
 		maxLength="12"
 		enabledOnEdit="false"
-		label="coeffConv" />
+		label="Coeff" />
 	<fieldProperty
 		name="findUnitaOperativaOrd"
 		property="unitaOperativaOrd"
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="UnitaOperativaOrd" />
+		label="UOp Ric" />
 	<fieldProperty
 		name="cdUop"
 		property="unitaOperativaOrd.cdUnitaOperativa"
@@ -199,14 +199,22 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="cdUop" />
+		label="Cd UOp Ricev." />
+	<fieldProperty
+		name="dsUop"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="200"
+		maxLength="200"
+		enabledOnEdit="false"
+		label="Descr. UOp Ricev." />
 	<fieldProperty
 		name="dtScadenza"
 		property="dtScadenza"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtScadenza" />
+		label="Dt Scadenza" />
 	<fieldProperty
 		name="lottoFornitore"
 		property="lottoFornitore"
@@ -214,7 +222,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="lottoFornitore" />
+		label="Lotto Forn." />
 	<fieldProperty
 		name="findLottoMag"
 		property="lottoMag"
@@ -239,7 +247,7 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdMagazzinoLotto" />
+		label="Cod. Mag." />
 	<fieldProperty
 		name="esercizioLotto"
 		property="lottoMag.esercizio"
@@ -248,7 +256,7 @@
 		maxLength="4"
 		enabledOnEdit="false"
 		nullable="false"
-		label="esercizioLotto" />
+		label="Anno Lotto" />
 	<fieldProperty
 		name="cdNumeratoreLotto"
 		property="lottoMag.cdNumeratoreMag"
@@ -266,7 +274,7 @@
 		maxLength="6"
 		enabledOnEdit="false"
 		nullable="false"
-		label="pgLotto" />
+		label="Lotto" />
 	<fieldProperty
 		name="cdCdsMag"
 		property="lottoMag.magazzino.cdCds"
@@ -284,24 +292,42 @@
 		maxLength="10"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdMagazzino" />
+		label="Cod. Mag." />
 	<fieldProperty
 		name="cdBeneServizio"
-		property="lottoMag.beneServizio.cdBeneServizio"
+		property="lottoMag.beneServizio.cd_bene_servizio"
 		inputType="TEXT"
 		inputSize="15"
 		maxLength="15"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cdBeneServizio" />
+		label="Cod. Articolo" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="lottoMag.beneServizio.ds_bene_servizio"
+		inputType="TEXT"
+		inputSize="300"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Descr. Articolo" />
+	<fieldProperty
+		name="ragioneSocialeTerzo"
+		property="terzo.anagrafico.ragione_sociale"
+		inputType="TEXT"
+		inputSize="300"
+		maxLength="300"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Ragione Soc." />
 	<fieldProperty
 		name="cdVoceIva"
-		property="lottoMag.ordineAcqConsegna.voceIva.cdVoceIva"
+		property="lottoMag.ordineAcqConsegna.ordineAcqRiga.voce_iva.cd_voce_iva"
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdVoceIva" />
+		label="Cod. IVA" />
 	<fieldProperty
 		name="sconto1"
 		property="sconto1"
@@ -399,7 +425,7 @@
 		maxLength="15"
 		enabledOnEdit="false"
 		nullable="false"
-		label="cambio" />
+		label="Cambio" />
 	<fieldProperty
 		name="dtCambio"
 		property="dtCambio"
@@ -414,7 +440,7 @@
 		inputSize="21"
 		maxLength="21"
 		enabledOnEdit="false"
-		label="prezzoUnitario" />
+		label="Prezzo Unit." />
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -602,110 +628,63 @@
 		name="stato" />
 	<findFieldProperty
 		name="dtCancellazione" />
-	<columnFieldProperty
-		name="pgMovimento" />
-	<columnFieldProperty
-		name="pgMovimentoRif" />
-	<columnFieldProperty
-		name="pgMovimentoAnn" />
-	<columnFieldProperty
-		name="dtMovimento" />
-	<columnFieldProperty
-		name="cdCdsTipoMovimento" />
-	<columnFieldProperty
-		name="cdTipoMovimento" />
-	<columnFieldProperty
-		name="dataBolla" />
-	<columnFieldProperty
-		name="numeroBolla" />
-	<columnFieldProperty
-		name="dtRiferimento" />
-	<columnFieldProperty
-		name="cdCdsOrdine" />
-	<columnFieldProperty
-		name="cdUnitaOperativaOrdine" />
-	<columnFieldProperty
-		name="esercizioOrdine" />
-	<columnFieldProperty
-		name="cdNumeratoreOrdine" />
-	<columnFieldProperty
-		name="numeroOrdine" />
-	<columnFieldProperty
-		name="rigaOrdine" />
-	<columnFieldProperty
-		name="consegna" />
-	<columnFieldProperty
-		name="cdTerzo" />
-	<columnFieldProperty
-		name="cdUnitaMisura" />
-	<columnFieldProperty
-		name="quantita" />
-	<columnFieldProperty
-		name="coeffConv" />
-	<columnFieldProperty
-		name="cdUop" />
-	<columnFieldProperty
-		name="dtScadenza" />
-	<columnFieldProperty
-		name="lottoFornitore" />
-	<columnFieldProperty
-		name="cdCdsLotto" />
-	<columnFieldProperty
-		name="cdMagazzinoLotto" />
-	<columnFieldProperty
-		name="esercizioLotto" />
-	<columnFieldProperty
-		name="cdNumeratoreLotto" />
-	<columnFieldProperty
-		name="pgLotto" />
-	<columnFieldProperty
-		name="cdCdsMag" />
-	<columnFieldProperty
-		name="cdMagazzino" />
-	<columnFieldProperty
-		name="cdBeneServizio" />
-	<columnFieldProperty
-		name="cdVoceIva" />
-	<columnFieldProperty
-		name="sconto1" />
-	<columnFieldProperty
-		name="sconto2" />
-	<columnFieldProperty
-		name="sconto3" />
-	<columnFieldProperty
-		name="cdCdsBollaSca" />
-	<columnFieldProperty
-		name="cdMagazzinoBollaSca" />
-	<columnFieldProperty
-		name="esercizioBollaSca" />
-	<columnFieldProperty
-		name="cdNumeratoreBollaSca" />
-	<columnFieldProperty
-		name="pgBollaSca" />
-	<columnFieldProperty
-		name="importo" />
-	<columnFieldProperty
-		name="importoCeff" />
-	<columnFieldProperty
-		name="importoCmp" />
-	<columnFieldProperty
-		name="importoFifo" />
-	<columnFieldProperty
-		name="importoLifo" />
-	<columnFieldProperty
-		name="importoCmpp" />
-	<columnFieldProperty
-		name="importoCmpist" />
-	<columnFieldProperty
-		name="cdDivisa" />
-	<columnFieldProperty
-		name="cambio" />
-	<columnFieldProperty
-		name="dtCambio" />
-	<columnFieldProperty
-		name="prezzoUnitario" />
-	<columnFieldProperty
-		name="stato" />
-	<columnFieldProperty
-		name="dtCancellazione" />
+	<columnSet
+		name="default">
+		<columnFieldProperty
+			name="dtMovimento" />
+		<columnFieldProperty
+			name="dtRiferimento" />
+		<columnFieldProperty
+			name="cdTipoMovimento" />
+		<columnFieldProperty
+			name="cdBeneServizio" />
+		<columnFieldProperty
+			name="dsBeneServizio" />
+		<columnFieldProperty
+			name="cdUnitaMisura" />
+		<columnFieldProperty
+			name="quantita" 
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="prezzoUnitario"  
+			columnStyle="text-align: right"/>
+		<columnFieldProperty
+			name="cdUop" />
+		<columnFieldProperty
+			name="dsUop" />
+		<columnFieldProperty
+			name="cdTerzo" />
+		<columnFieldProperty
+			name="ragioneSocialeTerzo" />
+		<columnFieldProperty
+			name="esercizioOrdine" />
+		<columnFieldProperty
+			name="cdNumeratoreOrdine" />
+		<columnFieldProperty
+			name="numeroOrdine" />
+		<columnFieldProperty
+			name="rigaOrdine" />
+		<columnFieldProperty
+			name="consegna" />
+		<columnFieldProperty
+			name="cdVoceIva" />
+		<columnFieldProperty
+			name="dataBolla" />
+		<columnFieldProperty
+			name="numeroBolla" />
+		<columnFieldProperty
+			name="dtScadenza" />
+		<columnFieldProperty
+			name="lottoFornitore" />
+		<columnFieldProperty
+			name="esercizioLotto" />
+		<columnFieldProperty
+			name="pgLotto" />
+		<columnFieldProperty
+			name="esercizioBollaSca" />
+		<columnFieldProperty
+			name="cdNumeratoreBollaSca" />
+		<columnFieldProperty
+			name="pgBollaSca" />
+	</columnSet>
 </bulkInfo>

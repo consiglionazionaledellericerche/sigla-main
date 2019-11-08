@@ -180,7 +180,10 @@
 		formatName="it.cnr.contab.util.PercentFormat"
 		inputSize="5"
 		maxLength="5"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
 		label="Prorata" />
 	<fieldProperty
 		name="findFornitore"

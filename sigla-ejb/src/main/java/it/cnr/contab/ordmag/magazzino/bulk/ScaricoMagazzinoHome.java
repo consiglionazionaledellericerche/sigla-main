@@ -24,7 +24,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 
-public class ScaricoMagazzinoHome extends BulkHome {
+public class ScaricoMagazzinoHome extends MovimentiMagazzinoHome {
 	private static final long serialVersionUID = 1L;
 
 	public ScaricoMagazzinoHome(Connection conn) {
@@ -33,16 +33,6 @@ public class ScaricoMagazzinoHome extends BulkHome {
 	
 	public ScaricoMagazzinoHome(Connection conn, PersistentCache persistentCache) {
 		super(ScaricoMagazzinoBulk.class, conn, persistentCache);
-	}
-
-	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, ScaricoMagazzinoBulk bulk, UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk, 
-			CompoundFindClause compoundfindclause) throws PersistencyException{
-		return unitaOperativaHome.selectUnitaOperativeAbilitateByClause(userContext, compoundfindclause, TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO);
-	}
-	
-	public SQLBuilder selectMagazzinoAbilitatoByClause(UserContext userContext, ScaricoMagazzinoBulk bulk, MagazzinoHome magazzinoHome, MagazzinoBulk magazzinoBulk,  
-			CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
-		return magazzinoHome.selectMagazziniAbilitatiByClause(userContext, bulk.getUnitaOperativaAbilitata(), TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO, compoundfindclause);
 	}
 
 	public SQLBuilder selectTipoMovimentoMagByClause(UserContext userContext, ScaricoMagazzinoBulk bulk, TipoMovimentoMagHome tipoMovimentoMagHome, TipoMovimentoMagBulk tipoMovimentoMagBulk,  

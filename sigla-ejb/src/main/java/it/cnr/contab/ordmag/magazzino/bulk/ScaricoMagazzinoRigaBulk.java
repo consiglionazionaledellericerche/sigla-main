@@ -12,63 +12,23 @@ import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.BulkList;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.persistency.KeyedPersistent;
 
-public class ScaricoMagazzinoRigaBulk extends OggettoBulk implements KeyedPersistent{
+public class ScaricoMagazzinoRigaBulk extends MovimentiMagazzinoRigaBulk{
 	private static final long serialVersionUID = 1L;
 
-	private Bene_servizioBulk beneServizio =  new Bene_servizioBulk();
 	private UnitaOperativaOrdBulk unitaOperativaRicevente = new UnitaOperativaOrdBulk();
-	private UnitaMisuraBulk unitaMisura = new UnitaMisuraBulk();	
-	private ScaricoMagazzinoBulk scaricoMagazzino;
-	private java.math.BigDecimal coefConv;
-	private java.math.BigDecimal qtScarico;
 	private List<ScaricoMagazzinoRigaLottoBulk> scaricoMagazzinoRigaLottoColl = new BulkList<ScaricoMagazzinoRigaLottoBulk>();
-	private String anomalia;
 
 	public ScaricoMagazzinoRigaBulk() {
 		super();
 	}
 
-	public Bene_servizioBulk getBeneServizio() {
-		return beneServizio;
-	}
-	
-	public void setBeneServizio(Bene_servizioBulk beneServizio) {
-		this.beneServizio = beneServizio;
-	}
-	
 	public UnitaOperativaOrdBulk getUnitaOperativaRicevente() {
 		return unitaOperativaRicevente;
 	}
 	
 	public void setUnitaOperativaRicevente(UnitaOperativaOrdBulk unitaOperativaRicevente) {
 		this.unitaOperativaRicevente = unitaOperativaRicevente;
-	}
-	
-	public UnitaMisuraBulk getUnitaMisura() {
-		return unitaMisura;
-	}
-	
-	public void setUnitaMisura(UnitaMisuraBulk unitaMisura) {
-		this.unitaMisura = unitaMisura;
-	}
-	
-	public java.math.BigDecimal getCoefConv() {
-		return coefConv;
-	}
-	
-	public void setCoefConv(java.math.BigDecimal coefConv) {
-		this.coefConv = coefConv;
-	}
-
-	public java.math.BigDecimal getQtScarico() {
-		return qtScarico;
-	}
-	
-	public void setQtScarico(java.math.BigDecimal qtScarico) {
-		this.qtScarico = qtScarico;
 	}
 	
 	public List<ScaricoMagazzinoRigaLottoBulk> getScaricoMagazzinoRigaLottoColl() {
@@ -79,24 +39,9 @@ public class ScaricoMagazzinoRigaBulk extends OggettoBulk implements KeyedPersis
 		this.scaricoMagazzinoRigaLottoColl = scaricoMagazzinoRigaLottoColl;
 	}
 	
-	public ScaricoMagazzinoBulk getScaricoMagazzino() {
-		return scaricoMagazzino;
-	}
 	
-	public void setScaricoMagazzino(ScaricoMagazzinoBulk scaricoMagazzino) {
-		this.scaricoMagazzino = scaricoMagazzino;
-	}
-	
-	public String getAnomalia() {
-		return anomalia;
-	}
-	
-	public void setAnomalia(String anomalia) {
-		this.anomalia = anomalia;
-	}
-
 	public java.math.BigDecimal getQtScaricoConvertita() {
-		return Utility.round5Decimali(Optional.ofNullable(this.getQtScarico()).orElse(BigDecimal.ZERO)
+		return Utility.round5Decimali(Optional.ofNullable(this.getQuantita()).orElse(BigDecimal.ZERO)
 				.multiply(Optional.ofNullable(this.getCoefConv()).orElse(BigDecimal.ZERO)));
 	}
 	
@@ -123,21 +68,11 @@ public class ScaricoMagazzinoRigaBulk extends OggettoBulk implements KeyedPersis
 	}
 
 	public boolean isImputazioneScaricoSuLottiEnable() {
-		return Optional.ofNullable(this.getQtScarico()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==0;
+		return Optional.ofNullable(this.getQuantita()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)==0;
 	}
 
 	public boolean isImputazioneScaricoSuBeneEnable() {
 		return getTotQtScaricoLotti().compareTo(BigDecimal.ZERO)==0;
 	}
 	
-	public boolean isROCoefConv(){
-		return !Optional.ofNullable(this.getUnitaMisura())
-				.map(UnitaMisuraBulk::getCdUnitaMisura)
-				.filter(cdUM->!Optional.ofNullable(this.getBeneServizio())
-								.map(Bene_servizioBulk::getUnitaMisura)
-								.filter(umBene->umBene.getCdUnitaMisura().equals(cdUM))
-								.isPresent()
-				)
-				.isPresent();
-	}
 }

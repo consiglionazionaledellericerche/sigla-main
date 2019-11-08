@@ -42,7 +42,8 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
-		label="Codice Numeratore" />
+		label="Codice Numeratore" 
+		caseSensitiveSearch="false"/>
 	<fieldProperty
 		name="dsNumeratore"
 		property="dsNumeratore"

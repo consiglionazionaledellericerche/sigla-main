@@ -207,6 +207,7 @@
 		<columnFieldProperty name="pg_obbligazione"/>
 		<columnFieldProperty name="pg_obbligazione_scadenzario"/>
 		<columnFieldProperty name="cd_tipo_documento_amm"/>
+		<columnFieldProperty name="pg_doc_amm"/>
 		<columnFieldProperty name="ds_mandato_riga"/>
 		<columnFieldProperty name="stato"/>
 		<columnFieldProperty name="im_mandato_riga"/>

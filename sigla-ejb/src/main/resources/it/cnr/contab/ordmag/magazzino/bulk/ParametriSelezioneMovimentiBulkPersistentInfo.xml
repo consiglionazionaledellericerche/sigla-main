@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk"
+	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiHome">
+</SQLPersistentInfo>

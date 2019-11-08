@@ -5,8 +5,14 @@ import java.util.List;
 
 import javax.ejb.Remote;
 
+import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.CaricoMagazzinoBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoRigaBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
@@ -20,6 +26,11 @@ public interface MovimentiMagComponentSession extends it.cnr.jada.ejb.CRUDCompon
 	MovimentiMagBulk caricoDaOrdine(UserContext userContext, OrdineAcqConsegnaBulk consegna, EvasioneOrdineRigaBulk evasioneOrdineRiga) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
     List<BollaScaricoMagBulk> generaBolleScarico(UserContext userContext, List<MovimentiMagBulk> listaMovimentiScarico) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
     ScaricoMagazzinoBulk scaricaMagazzino(UserContext userContext, ScaricoMagazzinoBulk scaricoMagazzino) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
-	ScaricoMagazzinoBulk initializeScaricoMagazzino(UserContext usercontext, ScaricoMagazzinoBulk scaricoMagazzinoBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
-    RemoteIterator preparaQueryBolleScaricoDaVisualizzare(UserContext userContext, List<BollaScaricoMagBulk> bolle)throws ComponentException,java.rmi.RemoteException;
+    CaricoMagazzinoBulk caricaMagazzino(UserContext userContext, CaricoMagazzinoBulk caricoMagazzino) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
+    void annullaMovimento(UserContext userContext, MovimentiMagBulk movimentiMagBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
+    MovimentiMagazzinoBulk initializeMovimentiMagazzino(UserContext usercontext, MovimentiMagazzinoBulk movimentiMagazzinoBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
+	AbilitazioneMagazzinoBulk initializeAbilitazioneMovimentiMagazzino(UserContext usercontext, AbilitazioneMagazzinoBulk abilitazioneMagazzinoBulk) throws PersistencyException, ComponentException , RemoteException, ApplicationException;
+	RemoteIterator preparaQueryBolleScaricoDaVisualizzare(UserContext userContext, List<BollaScaricoMagBulk> bolle)throws ComponentException,java.rmi.RemoteException;
+    public java.util.Collection<LottoMagBulk> findLottiMagazzino(UserContext userContext, MovimentiMagazzinoRigaBulk movimentiMagazzinoRigaBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
+    public it.cnr.jada.util.RemoteIterator ricercaMovimenti(UserContext userContext, ParametriSelezioneMovimentiBulk parametri) throws ComponentException, RemoteException;
 }

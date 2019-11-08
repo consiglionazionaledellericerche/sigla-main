@@ -23,6 +23,15 @@
   <action 
       path="/ScaricoMagazzinoAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ScaricoMagazzinoAction">
   </action>
+  <action 
+      path="/CaricoMagazzinoAction" actionClass="it.cnr.contab.ordmag.magazzino.action.CaricoMagazzinoAction">
+  </action>
+  <action 
+      path="/ParametriSelezioneMovimentiAction" actionClass="it.cnr.contab.ordmag.magazzino.action.ParametriSelezioneMovimentiAction">
+  </action> 
+  <action 
+      path="/SelezionaListaMovimentiDaAnnullareAction" actionClass="it.cnr.contab.ordmag.magazzino.action.SelezionaListaMovimentiDaAnnullareAction">
+  </action> 
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.GruppoMerceologicoBulk"/>
@@ -181,4 +190,23 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
   </businessProcess>
+  <businessProcess
+	 name="ParametriSelezioneMovimentiMagBP" className="it.cnr.contab.ordmag.magazzino.bp.ParametriSelezioneMovimentiMagBP">
+        <forward name="default" path="/ordmag/magazzini/parametri_selezione_movimenti.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk"/>
+		<init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>								
+	    <init-param name="defaultAction" value="ParametriSelezioneMovimentiAction"/>	    
+  </businessProcess>  
+  <businessProcess name="CaricoManualeMagazzinoBP" className="it.cnr.contab.ordmag.magazzino.bp.CaricoManualeMagazzinoBP">
+    <forward name="default" path="/ordmag/magazzini/carico_magazzino.jsp" />
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.CaricoMagazzinoBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
+	<init-param name="defaultAction" value="CaricoMagazzinoAction"/>
+  </businessProcess>
+	<businessProcess name="SelezionatoreMovimentiDaAnnullareBP" className="it.cnr.contab.ordmag.magazzino.bp.SelezionatoreMovimentiDaAnnullareBP">
+		<forward name="default" path="/util/form_lista.jsp" />
+		<init-param name="defaultAction" value="SelezionaListaMovimentiDaAnnullareAction" />
+    	<init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk"/>
+	</businessProcess>
 </action-mappings>

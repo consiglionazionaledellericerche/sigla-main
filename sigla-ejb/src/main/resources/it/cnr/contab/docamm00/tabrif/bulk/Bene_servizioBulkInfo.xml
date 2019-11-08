@@ -140,7 +140,8 @@
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		nullable="false"
-	 	label="Codice" />
+	 	label="Codice" 
+		caseSensitiveSearch="false"/>
 	<fieldProperty
 		name="fl_gestione_magazzino"
 		property="fl_gestione_magazzino"

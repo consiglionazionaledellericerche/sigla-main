@@ -66,9 +66,21 @@ CREATE OR REPLACE PROCEDURE PRT_S_SIT_CASSA_ALL_J
  UO_PCK          VARCHAR2(100);
  EM_INV_RIS_PCK  VARCHAR2(100);
  CDS_ENTE        VARCHAR2(30);
+ CONTATORE NUMBER;
+ ORD        VARCHAR2(2000);
+ CONTA        NUMBER;
  parametri_esercizio  parametri_cnr%rowtype;
 Begin
-
+	IF gId is not null then
+		SELECT (nvl(COUNT(DISTINCT SUBSTR(ORDINAMENTO,1,4)),0) + 1) * 50
+		INTO CONTATORE 
+		FROM PRT_VPG_SIT_CASSA
+		WHERE	ID = gId	AND
+					CHIAVE = 'chiave' AND
+					( TIPO = 'C' OR TIPO = 't');
+	else
+		contatore := 0;
+  end if;
  -- 12.03.2008 PERIODO (TESTO RELATIVO AD INTERVALLO TRA DATE)
  If da_data = a_data Then
   periodo := 'il '||To_Char(to_date(a_data, 'yyyy/mm/dd'), 'dd/mm/yyyy');
@@ -111,8 +123,9 @@ Begin
                  From UNITA_ORGANIZZATIVA
                   Where FL_CDS = 'Y'
                   Order By 1) Loop
-     Insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
-     VALUES (aId, 'chiave', 'C', '1'||Rec.CD_UNITA_ORGANIZZATIVA||'001', 1,
+     CONTATORE := CONTATORE + 1;
+     Insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
+     VALUES (aId, 'chiave', 'C', CONTATORE, '1'||Rec.CD_UNITA_ORGANIZZATIVA||'001',1,
      Rec.CD_UNITA_ORGANIZZATIVA, 'CDS: '||Rec.CD_UNITA_ORGANIZZATIVA, null, Null, 'S');
      PRT_S_SIT_CASSA_ALL_J(inEs, Rec.CD_UNITA_ORGANIZZATIVA, uo, EM_INV_RIS, DA_DATA, A_DATA , aId);
    End Loop;
@@ -168,59 +181,72 @@ LP       := PRT_CIR_sitcas.TOT_LETTERE_PAGAMENTO_NON_ASS(INES, CDS_PCK, to_date(
 
 -- inserimento dello schema di riclassificazione NELLA VIEW (FISSO)
 if (FCI is not null) then
-	Insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
-	VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'008', 08, CDS_PCK,
+     CONTATORE := CONTATORE + 1;
+	Insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
+	VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'008', 08, CDS_PCK,
 	'Fondo di Cassa iniziale', null, FCI, 'S');
 END IF;
 if (parametri_esercizio.fl_tesoreria_unica='N') then
-	insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-	VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'011', 11, CDS_PCK, 'Reversali di Trasferimento', RT, NULL);
+  CONTATORE := CONTATORE + 1;
+	insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+	VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'011', 11, CDS_PCK, 'Reversali di Trasferimento', RT, NULL);
 end if;
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'020', 20, CDS_PCK, 'Reversali di Incasso', RI, NULL);
-
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'030', 30, CDS_PCK, 'Reversali a regolamento di sospeso', RS, NULL);
+CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'020', 20, CDS_PCK, 'Reversali di Incasso', RI, NULL);
+CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'030', 30, CDS_PCK, 'Reversali a regolamento di sospeso', RS, NULL);
 
 IF EM_INV_RIS = 'E' THEN  -- ESCE SOLO PER L'EMESSO
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'040', 40, CDS_PCK, 'Reversali di Regolarizzazione', RR, NULL);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'040', 40, CDS_PCK, 'Reversali di Regolarizzazione', RR, NULL);
 END IF;
 
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'045', 45, CDS_PCK, 'Totale Reversali', null, TR, 'S', '(+)');
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'045', 45, CDS_PCK, 'Totale Reversali', null, TR, 'S', '(+)');
 if (parametri_esercizio.fl_tesoreria_unica='N') then
-	insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-	VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'050', 50, CDS_PCK, 'Mandati di Accreditamento', MA, NULL);
+  CONTATORE := CONTATORE + 1;
+	insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+	VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'050', 50, CDS_PCK, 'Mandati di Accreditamento', MA, NULL);
 end if;
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'060', 60, CDS_PCK, 'Mandati di Pagamento', MP, NULL);
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'060', 60, CDS_PCK, 'Mandati di Pagamento', MP, NULL);
 
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'070', 70, CDS_PCK, 'Mandati a regolamento di sospeso', MS, NULL);
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'070', 70, CDS_PCK, 'Mandati a regolamento di sospeso', MS, NULL);
 
 IF EM_INV_RIS = 'E' THEN  -- ESCE SOLO PER L'EMESSO
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'080', 80, CDS_PCK, 'Mandati di Regolarizzazione', MR, NULL);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'080', 80, CDS_PCK, 'Mandati di Regolarizzazione', MR, NULL);
 END IF;
 
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'085', 85, CDS_PCK, 'Totale Mandati', null, TM, 'S', '(-)');
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'085', 85, CDS_PCK, 'Totale Mandati', null, TM, 'S', '(-)');
 
 -- riga vuota
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'086', 86, CDS_PCK, Null);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'086', 86, CDS_PCK, Null);
 
 
 IF EM_INV_RIS = 'E' THEN  -- ESCE SOLO PER L'EMESSO
 	if (parametri_esercizio.fl_tesoreria_unica='N') then
-	 insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
-	 VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'090', 90, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+	 insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
+	 VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'090', 90, CDS_PCK,
 	 '* Reversali di Trasferimento Provvisorie (non contribuiscono al calcolo del Totale Reversali)',
 	 RTP, NULL, 'C');
 
-	 insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
-	 VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'095', 95, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+	 insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
+	 VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'095', 95, CDS_PCK,
 	 '* Reversali a regolamento di sospeso Provvisorie (non contribuiscono al calcolo del Totale Reversali)',
 	 RSP, NULL, 'C');
  end if;
@@ -228,32 +254,38 @@ END IF;
 
 -- SOSPESI DA REGOLARE (SIA DI ENTRATA CHE DI SPESA)
 
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'100', 100, CDS_PCK, 'Sospesi di Entrata emessi '||PERIODO||' da regolare con Reversale',
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'100', 100, CDS_PCK, 'Sospesi di Entrata emessi '||PERIODO||' da regolare con Reversale',
 null, TOT_SOS_E - TOT_SOS_RIS, 'S', '(+)');
 
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'110', 110, CDS_PCK, 'Sospesi di Spesa emessi '||periodo||' da regolare con Mandato', null,
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'110', 110, CDS_PCK, 'Sospesi di Spesa emessi '||periodo||' da regolare con Mandato', null,
 TOT_SOS_S - TOT_SOS_PAG, 'S', '(-)');
 
 -- riga vuota
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'115', 115, CDS_PCK, Null);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'115', 115, CDS_PCK, Null);
 
 
 -- NON ESCE PER IL RISCONTRATO
 
 IF EM_INV_RIS != 'R' THEN
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'120', 120, CDS_PCK, 'Lettere di Pagamento all''Estero da eseguire', null, LP,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't',CONTATORE, '1'||CDS_PCK||'120', 120, CDS_PCK, 'Lettere di Pagamento all''Estero da eseguire', null, LP,
   'S', '(-)');
 
 -- riga vuota
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'125', 125, CDS_PCK, Null);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'125', 125, CDS_PCK, Null);
 if (FCI is not null) then
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'130', 130, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'130', 130, CDS_PCK,
   'Situazione di Cassa Attuale', null,  NVL(FCI,0) + TR - TM - (TOT_SOS_S - TOT_SOS_PAG) +
   (TOT_SOS_E - TOT_SOS_RIS) - LP, 'S');
 END IF;
@@ -263,20 +295,23 @@ ELSIF EM_INV_RIS = 'R' THEN
 
 -- REVERSALI E MANDATI DA TRASMETTERE
 if (parametri_esercizio.fl_tesoreria_unica='N') then
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'140', 140, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'140', 140, CDS_PCK,
   'Reversali di Trasferimento emesse '||periodo||' da trasmettere', null,
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'A', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), 'E', 'D', NULL)-
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'A', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), 'D', null, NULL),
   'S', '(+)');
 end if;
 -- riga vuota
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'145', 145, CDS_PCK, Null);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'145', 145, CDS_PCK, Null);
 
 
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'150', 150, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'150', 150, CDS_PCK,
   'Reversali a Regolamento di Sospesi emesse '||periodo||' ma non trasmesse (nello stesso '||giorno||')', null,
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'S', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), 'E', 'D', NULL)-
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'S',
@@ -285,8 +320,9 @@ end if;
                                 Null, Null,
                                 'D', null, NULL), 'S', '(+)');
 
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'160', 160, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'160', 160, CDS_PCK,
   'Mandati a Regolamento di Sospesi emessi '||periodo||' ma non trasmessi (nello stesso '||giorno||')', null,
   PRT_CIR_sitcas.TOT_MANDATI (ines, CDS_PCK, UO_PCK, 'S', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), 'E', NULL)-
   PRT_CIR_sitcas.TOT_MANDATI (ines, CDS_PCK, UO_PCK, 'S',
@@ -295,8 +331,9 @@ end if;
                               Null, Null,                                                    -- periodo invio distinte mandati
                               'D', NULL), 'S', '(-)');
 
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'161', 161, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'161', 161, CDS_PCK,
   'Reversali di ritenute emesse '||periodo||' ma non trasmesse (nello stesso '||giorno||') collegate a mandati a Regolamento di Sospesi', null,
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'I', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), 'E', 'D', NULL,'S')-
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'I',
@@ -306,27 +343,31 @@ insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZ
                                 'D', null, NULL,'S'), 'S', '(+)');
 
 -- riga vuota
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'165', 165, CDS_PCK, Null);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'165', 165, CDS_PCK, Null);
 
 
 -- REVERSALI DI TRASFERIMENTO DA ESEGUIRE
 if (parametri_esercizio.fl_tesoreria_unica='N') then
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'170', 170, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'170', 170, CDS_PCK,
   'Reversali di Trasferimento inserite in distinte emesse '||periodo||' ancora da eseguire', null,
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'A', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), 'D', null, NULL)-
   PRT_CIR_sitcas.TOT_REVERSALI_RISCONTRATE (ines, CDS_PCK, UO_PCK, 'A', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), NULL),
   'S', '(+)');
 end if;
 -- riga vuota
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'175', 175, CDS_PCK, Null);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'175', 175, CDS_PCK, Null);
 
 -- REVERSALI A COPERTURA DI SOSPESO DA ESEGUIRE
 
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'180', 180, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'180', 180, CDS_PCK,
   'Reversali a Regolamento di Sospesi inserite in distinte emesse '||periodo||' ancora da eseguire', null,
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'S',
                                 Null, Null,
@@ -341,8 +382,9 @@ end if;
 
 -- MANDATI A COPERTURA DI SOSPESO DA ESEGUIRE
 
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'190', 190, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'190', 190, CDS_PCK,
   'Mandati a Regolamento di Sospesi inseriti in distinte emesse '||periodo||' ancora da eseguire', null,
   PRT_CIR_sitcas.TOT_MANDATI (ines, CDS_PCK, UO_PCK, 'S',
                               Null, Null, -- PERIODO EMISSIONE MANDATI
@@ -355,8 +397,9 @@ end if;
                                           NULL),
   'S', '(-)');
 
-insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'191', 191, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'191', 191, CDS_PCK,
   'Reversali di ritenute inserite in distinte emesse '||periodo||' ancora da eseguire collegate a mandati a Regolamento di Sospesi', null,
   PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'I',
                                 Null, Null,
@@ -369,14 +412,16 @@ insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZ
                                             NULL,'S'),
   'S', '(+)');
 -- riga vuota
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'195', 195, CDS_PCK, Null);
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'195', 195, CDS_PCK, Null);
 
 
 -- SITUAZIONE FINALE
 if (FCI is not null) then
-  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
-  VALUES (aId, 'chiave', 't', '1'||CDS_PCK||'200', 200, CDS_PCK,
+  CONTATORE := CONTATORE + 1;
+  insert into PRT_VPG_SIT_CASSA  (ID, CHIAVE, TIPO, SEQUENZA, ORDINAMENTO, ORDINE, CDS, DESCRIZIONE, IMPORTO_PARZ, TOTALE, FL_TOTALE, SEGNO)
+  VALUES (aId, 'chiave', 't', CONTATORE, '1'||CDS_PCK||'200', 200, CDS_PCK,
   'Situazione di Cassa a quadratura con Istituto Cassiere', null,
   NVL(FCI,0) + TR - TM + (TOT_SOS_E - TOT_SOS_RIS) - (TOT_SOS_S - TOT_SOS_PAG)
 + (PRT_CIR_sitcas.TOT_REVERSALI (ines, CDS_PCK, UO_PCK, 'A', to_date(da_data, 'yyyy/mm/dd'), to_date(a_data, 'yyyy/mm/dd'), 'E', 'D', NULL)-

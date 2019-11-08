@@ -37,6 +37,11 @@ public class MagazzinoHome extends BulkHome {
 		return repHome.fetchAll(sql);
 	}
 	
+	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause) throws PersistencyException {
+		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
+	    sql.addClause("AND","cdCds",SQLBuilder.EQUALS, CNRUserContext.getCd_cds(usercontext));
+		return sql;
+	}
 	public SQLBuilder selectMagazziniAbilitatiByClause(UserContext userContext, UnitaOperativaOrdBulk unitaOperativa, String tipoOperazione, CompoundFindClause compoundfindclause) throws PersistencyException {
 		SQLBuilder sql = this.selectByClause(compoundfindclause);
 		sql.addClause(FindClause.AND, "cdCds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));

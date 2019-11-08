@@ -385,7 +385,15 @@
                         pg_obb_pgiro       number(10),
                         ti_origine_pgiro	  varchar2(1),	--'E' o 'S'
 												 uo_obb_pgiro				varchar2(30),
-												 voce_obb_pgiro			varchar2(20));
+												 voce_obb_pgiro			varchar2(20),
+                        CD_CDS_ACC_PGIRO_OPP VARCHAR2(30), 
+                        ES_ACC_PGIRO_OPP number(4), 
+                        ES_ORIG_ACC_PGIRO_OPP number(4), 
+                        PG_ACC_PGIRO_OPP number(9), 
+                        CD_CDS_OBB_PGIRO_OPP VARCHAR2(30), 
+                        ES_OBB_PGIRO_OPP number(4), 
+                        ES_ORIG_OBB_PGIRO_OPP number(4), 
+                        PG_OBB_PGIRO_OPP number(9));
 
  type tab_ass_pgiro is table of rec_ass_pgiro index by binary_integer;
  tb_ass_pgiro            tab_ass_pgiro;

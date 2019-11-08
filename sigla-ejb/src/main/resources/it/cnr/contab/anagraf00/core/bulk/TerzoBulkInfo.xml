@@ -567,6 +567,8 @@
 		name="codiceUnivocoPcc" />
 	<columnFieldProperty
 		name="denominazionePcc" />	
+	<columnFieldProperty
+		name="cd_precedente" />	
 
 	<columnSet
 		name="columnSet01" >

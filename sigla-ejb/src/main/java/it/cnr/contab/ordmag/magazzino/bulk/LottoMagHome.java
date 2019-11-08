@@ -131,16 +131,16 @@ public class LottoMagHome extends BulkHome {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public List<LottoMagBulk> findLottiMagazzinoByClause( ScaricoMagazzinoRigaBulk scaricoMagazzinoRigaBulk ) throws PersistencyException 
+	public List<LottoMagBulk> findLottiMagazzinoByClause( MovimentiMagazzinoRigaBulk movimentiMagazzinoRigaBulk ) throws PersistencyException 
 	{
 		SQLBuilder sql = this.createSQLBuilder();
 
-		sql.addClause(FindClause.AND, "magazzino", SQLBuilder.EQUALS, scaricoMagazzinoRigaBulk.getScaricoMagazzino().getMagazzinoAbilitato());
-		sql.addClause(FindClause.AND, "beneServizio", SQLBuilder.EQUALS, scaricoMagazzinoRigaBulk.getBeneServizio());
+		sql.addClause(FindClause.AND, "magazzino", SQLBuilder.EQUALS, movimentiMagazzinoRigaBulk.getMovimentiMagazzinoBulk().getMagazzinoAbilitato());
+		sql.addClause(FindClause.AND, "beneServizio", SQLBuilder.EQUALS, movimentiMagazzinoRigaBulk.getBeneServizio());
 		sql.addClause(FindClause.AND, "giacenza", SQLBuilder.GREATER, BigDecimal.ZERO);
-		sql.addClause(FindClause.AND, "dtCarico", SQLBuilder.LESS_EQUALS, DateUtils.truncate(scaricoMagazzinoRigaBulk.getScaricoMagazzino().getDataCompetenza()));
+		sql.addClause(FindClause.AND, "dtCarico", SQLBuilder.LESS_EQUALS, DateUtils.truncate(movimentiMagazzinoRigaBulk.getMovimentiMagazzinoBulk().getDataCompetenza()));
 
-		TipoMovimentoMagAzBulk tipoMovimentoAz = new TipoMovimentoMagAzBulk(scaricoMagazzinoRigaBulk.getScaricoMagazzino().getTipoMovimentoMag().getCdCds(), scaricoMagazzinoRigaBulk.getScaricoMagazzino().getTipoMovimentoMag().getCdTipoMovimento());
+		TipoMovimentoMagAzBulk tipoMovimentoAz = new TipoMovimentoMagAzBulk(movimentiMagazzinoRigaBulk.getMovimentiMagazzinoBulk().getTipoMovimentoMag().getCdCds(), movimentiMagazzinoRigaBulk.getMovimentiMagazzinoBulk().getTipoMovimentoMag().getCdTipoMovimento());
 		TipoMovimentoMagAzHome home = (TipoMovimentoMagAzHome)getHomeCache().getHome(TipoMovimentoMagAzBulk.class);
 		tipoMovimentoAz = (TipoMovimentoMagAzBulk)home.findByPrimaryKey(tipoMovimentoAz);
 

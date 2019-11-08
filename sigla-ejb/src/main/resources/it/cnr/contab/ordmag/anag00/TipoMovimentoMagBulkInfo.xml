@@ -26,6 +26,7 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
+        formatName="it.cnr.jada.util.UppercaseStringFormat"
 		label="Codice" />
 	<fieldProperty
 		name="dsTipoMovimento"
@@ -89,9 +90,10 @@
 	<form
 		name="searchtool">
 		<formFieldProperty
-			name="cdCds" />
-		<formFieldProperty
 			name="cdTipoMovimento" />
+		<formFieldProperty
+			name="dsTipoMovimento"  
+			inputSize="35"/>
 	</form>
 	<formFieldProperty
 		name="cdTipoMovimento" />
@@ -124,23 +126,11 @@
 	<findFieldProperty
 		name="dtCancellazione" />
 	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
 		name="cdTipoMovimento" />
 	<columnFieldProperty
 		name="dsTipoMovimento" />
 	<columnFieldProperty
 		name="tipo" />
 	<columnFieldProperty
-		name="segno" />
-	<columnFieldProperty
-		name="cdCdsStorno" />
-	<columnFieldProperty
 		name="cdTipoMovimentoStorno" />
-	<columnFieldProperty
-		name="cdCdsAlt" />
-	<columnFieldProperty
-		name="cdTipoMovimentoAlt" />
-	<columnFieldProperty
-		name="dtCancellazione" />
 </bulkInfo>

@@ -180,25 +180,6 @@ public it.cnr.jada.util.RemoteIterator findIncarichi(UserContext userContext, VI
 		
 	}
 	
-//	boolean searchTerzo = procedura.getV_terzoForSearch()!=null && procedura.getV_terzoForSearch().getTerzo()!=null &&
-//			 			  procedura.getV_terzoForSearch().getTerzo().getCd_terzo()!=null;
-//	boolean searchIncarico = procedura.getIncaricoRepertorioForSearch()!=null &&
-//						  	 procedura.getIncaricoRepertorioForSearch().getEsercizio()!=null &&
-//						  	 procedura.getIncaricoRepertorioForSearch().getPg_repertorio()!=null;
-//
-//	if (searchTerzo || searchIncarico) {
-//		SQLBuilder sqlExists = getHome(userContext, Incarichi_repertorioBulk.class).createSQLBuilder();
-//		sqlExists.addSQLJoin( "INCARICHI_REPERTORIO.ESERCIZIO_PROCEDURA", "INCARICHI_PROCEDURA.ESERCIZIO");
-//		sqlExists.addSQLJoin( "INCARICHI_REPERTORIO.PG_PROCEDURA", "INCARICHI_PROCEDURA.PG_PROCEDURA");
-//		if (searchTerzo)
-//			sqlExists.addClause(FindClause.AND, "cd_terzo", SQLBuilder.EQUALS, procedura.getV_terzoForSearch().getTerzo().getCd_terzo());
-//		if (searchIncarico) {
-//			sqlExists.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, procedura.getIncaricoRepertorioForSearch().getEsercizio());
-//			sqlExists.addClause(FindClause.AND, "pg_repertorio", SQLBuilder.EQUALS, procedura.getIncaricoRepertorioForSearch().getPg_repertorio());
-//		}
-//		sql.addSQLExistsClause(FindClause.AND, sqlExists);
-//	}
-
 	sql.addOrderBy("ESERCIZIO");
 	sql.addOrderBy("PG_REPERTORIO");
 	
@@ -265,58 +246,6 @@ public it.cnr.jada.util.RemoteIterator findIncarichi(UserContext userContext, VI
 
 		sql.closeParenthesis();
 	}
-	
-//	sql.addSQLBetweenClause("AND","v_incarichi_ass_ric_borse_st.DT_APPROVAZIONE",incarichi.getDt_validita_da(),incarichi.getDt_validita_a());
-	
-	
-//	sql2.addTableToHeader("PDG_VARIAZIONE_RIGA_GEST");
-//	sql2.addTableToHeader("V_CLASSIFICAZIONE_VOCI");
-//	sql2.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO",sql2.EQUALS,"V_CONS_VAR_PDGG.ESERCIZIO");
-//	sql2.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG",sql2.EQUALS,"V_CONS_VAR_PDGG.PG_VARIAZIONE_PDG");
-//	sql2.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO",sql2.EQUALS,"ELEMENTO_VOCE.ESERCIZIO");
-//	sql2.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.TI_APPARTENENZA",sql2.EQUALS,"ELEMENTO_VOCE.TI_APPARTENENZA");
-//	sql2.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE",sql2.EQUALS,"ELEMENTO_VOCE.TI_GESTIONE");
-//	sql2.addSQLJoin("PDG_VARIAZIONE_RIGA_GEST.CD_ELEMENTO_VOCE",sql2.EQUALS,"ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
-//	sql2.addSQLJoin("ELEMENTO_VOCE.ID_CLASSIFICAZIONE",sql2.EQUALS,"V_CLASSIFICAZIONE_VOCI.ID_CLASSIFICAZIONE");
-//	sql2.addSQLClause("AND","PDG_VARIAZIONE_RIGA_GEST.TI_GESTIONE",sql2.EQUALS,variazioni.getTi_gestione());
-//	sql2.addSQLClause("AND","V_CLASSIFICAZIONE_VOCI.CD_LIVELLO1",sql2.EQUALS,variazioni.getV_classificazione_voci().getCd_livello1());
-//	sql2.addSQLClause("AND","ROWNUM",sql2.LESS,"2");
-//	sql.addSQLClause("AND","V_CONS_VAR_PDGG.ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-//	sql.addSQLBetweenClause("AND","V_CONS_VAR_PDGG.ABS_TOT_VARIAZIONE",variazioni.getAbs_tot_variazione_da(),variazioni.getAbs_tot_variazione_a());
-//	sql.addSQLExistsClause("AND",sql2);
-//	sql.openParenthesis("AND");
-//	if (variazioni.getRagr_NO_TIPO()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"NO_TIPO");
-//	if (variazioni.getRagr_PREL_FON()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"PREL_FON");
-//	if (variazioni.getRagr_STO_E_CDS()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"STO_E_CDS");
-//	if (variazioni.getRagr_STO_E_TOT()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"STO_E_TOT");
-//	if (variazioni.getRagr_STO_S_CDS()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"STO_S_CDS");
-//	if (variazioni.getRagr_STO_S_TOT()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"STO_S_TOT");
-//	if (variazioni.getRagr_VAR_MENO_CDS()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"VAR_MENO_CDS");
-//	if (variazioni.getRagr_VAR_MENO_TOT()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"VAR_MENO_TOT");
-//	if (variazioni.getRagr_VAR_PIU_CDS()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"VAR_PIU_CDS");
-//	if (variazioni.getRagr_VAR_PIU_TOT()==true)
-//	sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"VAR_PIU_TOT");
-//	
-//	if (variazioni.getRagr_REST_FOND()==true)
-//		sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"REST_FOND");
-//	if (variazioni.getRagr_STO_E_AREA()==true)
-//		sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"STO_E_AREA");
-//	if (variazioni.getRagr_STO_S_AREA()==true)
-//		sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"STO_S_AREA");
-//	if (variazioni.getRagr_VAR_MENO_FON()==true)
-//		sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"VAR_MENO_FON");
-//	if (variazioni.getRagr_VAR_PIU_FON()==true)
-//		sql.addSQLClause("OR","V_CONS_VAR_PDGG.TIPOLOGIA",sql.EQUALS,"VAR_PIU_FON");
-//	sql.closeParenthesis();
 	return  iterator(userContext,sql,VIncarichiAssRicBorseStBulk.class,null);
 }
 

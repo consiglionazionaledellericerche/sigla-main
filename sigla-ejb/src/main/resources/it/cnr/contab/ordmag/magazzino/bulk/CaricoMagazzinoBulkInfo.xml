@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Carico Manuale Magazzino"
+	longDescription="Carico Manuale Magazzino">
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaAbilitata"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		readonlyProperty="ROTestata"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzinoAbilitato"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROTestata"
+		label="Magazzino" />
+	<fieldProperty
+		name="findTipoMovimentoMag"
+		property="tipoMovimentoMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		readonlyProperty="ROTestata"
+		label="Tipo Movimento" />
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Terzo" />
+	<fieldProperty
+		name="dataCompetenza"
+		property="dataCompetenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		nullable="false"
+		command="doOnDtCompetenzaChange"
+		readonlyProperty="ROTestata"
+		label="Data Competenza" />
+	<fieldProperty
+		name="dataMovimento"
+		property="dataMovimento"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Movimento" />
+
+	<formFieldProperty
+		name="findTerzo" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findTipoMovimentoMag" />
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="dataCompetenza" />
+	<formFieldProperty
+		name="dataMovimento" />
+</bulkInfo>

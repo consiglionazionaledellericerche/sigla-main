@@ -108,7 +108,7 @@
 		name="qtScaricoMagazzino" />
 
 	<columnSet
-		name="scaricoMagazzino" >
+		name="datiLottoMovimentiMagazzino" >
 		<columnFieldProperty
 			name="esercizio" />
 		<columnFieldProperty
