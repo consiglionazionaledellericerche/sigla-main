@@ -31,15 +31,27 @@ import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.mail.*;
+import javax.mail.search.*;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PdgVariazioniService extends DocumentiContabiliService {
+    private transient static final Logger logger = LoggerFactory.getLogger(PdgVariazioniService.class);
+    private Properties pecMailConf;
+
+    @Value("${pec.variazioni.username}")
+    private String pecVariazioniUsername;
+    @Value("${pec.variazioni.password}")
+    private String pecVariazioniPassword;
+
 
     public PdgVariazioneDocument getPdgVariazioneDocument(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
         return PdgVariazioneDocument.construct((Optional.ofNullable(getStorageObjectByPath(getCMISPath(archiviaStampaPdgVariazioneBulk)))
@@ -211,4 +223,59 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                     .collect(Collectors.toList());
         }
     }
+
+    public void setPecMailConf(Properties pecMailConf) {
+        this.pecMailConf = pecMailConf;
+    }
+
+    public void executeDeletePECMessage() {
+        final javax.mail.Session session = javax.mail.Session.getInstance(pecMailConf);
+        URLName urlName = new URLName(String.valueOf(pecMailConf.get("pec.url.name")));
+        Store store = null;
+        javax.mail.Folder folder = null;
+        try {
+            store = session.getStore(urlName);
+            store.connect(pecVariazioniUsername, pecVariazioniPassword);
+            folder = store.getFolder("INBOX");
+            folder.open(Folder.READ_WRITE);
+
+            final List<SearchTerm> searchTerms = Arrays.asList(new SubjectTerm("CONSEGNA: Variazione"),
+                    new ReceivedDateTerm(ComparisonTerm.LE,
+                            Date.from(LocalDate.now().minusDays(10)
+                                    .atStartOfDay(ZoneId.systemDefault()).toInstant())));
+            final List<Message> search = Arrays.asList(
+                    folder.search(new AndTerm(searchTerms.toArray((new SearchTerm[searchTerms.size()]))))
+            );
+            search.stream()
+                    .forEach(message -> {
+                                try {
+                                    message.setFlag(Flags.Flag.DELETED, true);
+                                } catch (MessagingException e) {
+                                    logger.error("PEC DELETE Message cannot be delete", e);
+                                }
+                            }
+                    );
+            logger.info("PEC DELETE deleted {} message.", search.size());
+        } catch (AuthenticationFailedException e) {
+            logger.warn("PEC DELETE with username {} failed to authenticate", pecVariazioniUsername);
+        } catch (MessagingException e) {
+            logger.error("PEC DELETE", e);
+        } finally {
+            Optional.ofNullable(folder).ifPresent(x -> {
+                try {
+                    x.close(true);
+                } catch (Exception e) {
+                    logger.error("PEC DELETE", e);
+                }
+            });
+            Optional.ofNullable(store).ifPresent(x -> {
+                try {
+                    x.close();
+                } catch (Exception e) {
+                    logger.error("PEC DELETE", e);
+                }
+            });
+        }
+    }
+
 }
