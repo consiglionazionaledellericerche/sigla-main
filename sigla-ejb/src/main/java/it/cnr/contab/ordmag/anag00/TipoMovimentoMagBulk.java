@@ -187,5 +187,7 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
 		return super.initialize(bp,context);
 	}
-
+	public Boolean isMovimentoDiCarico(){
+		return getTipo() != null && (getTipo().equals(CARICO_MANUALE) || getTipo().equals(CARICO_AUTOMATICO) || getTipo().equals(CARICO_TRASFERIMENTO));
+	}
 }

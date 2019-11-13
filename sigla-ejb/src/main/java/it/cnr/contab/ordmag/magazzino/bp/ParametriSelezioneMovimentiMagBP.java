@@ -5,6 +5,7 @@ import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
@@ -16,9 +17,6 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
  * @author: Roberto Peli
  */
 public class ParametriSelezioneMovimentiMagBP extends BulkBP {
-/**
- * DocumentiAmministrativiProtocollabiliBP constructor comment.
- */
 
 public ParametriSelezioneMovimentiMagBP() {
 	this("");
@@ -80,7 +78,6 @@ public RemoteIterator find(ActionContext actioncontext, CompoundFindClause claus
 						clauses,
 						bulk, 
 						getModel(),
-						//(OggettoBulk)((Filtro_ricerca_doc_ammVBulk)getModel()).getInstance(),
 						property));
 	} catch (it.cnr.jada.comp.ComponentException e) {
 		throw handleException(e);
@@ -95,7 +92,10 @@ public RemoteIterator ricercaMovimenti(ActionContext actioncontext) throws Busin
 		MovimentiMagComponentSession cs = (MovimentiMagComponentSession)createComponentSession(actioncontext);
 		if (cs == null) return null;
 		ParametriSelezioneMovimentiBulk parametriSelezioneMovimentiBulk = (ParametriSelezioneMovimentiBulk)getModel();
-		return cs.ricercaMovimenti(actioncontext.getUserContext(), parametriSelezioneMovimentiBulk);
+		if (parametriSelezioneMovimentiBulk.isIndicatoAlmenoUnCriterioDiSelezione()){
+			return cs.ricercaMovimenti(actioncontext.getUserContext(), parametriSelezioneMovimentiBulk);
+		}
+		throw new ApplicationException("E' necessario indicare almeno un criterio di selezione");
 	} catch (it.cnr.jada.comp.ComponentException e) {
 		throw handleException(e);
 	} catch (java.rmi.RemoteException e) {

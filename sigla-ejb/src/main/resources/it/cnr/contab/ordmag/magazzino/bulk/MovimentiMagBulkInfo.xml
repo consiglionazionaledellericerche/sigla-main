@@ -457,6 +457,53 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		label="dtCancellazione" />
+	<fieldProperty
+		name="findBollaScaricoMag"
+		property="bollaScaricoMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="BollaScaricoMag" />
+	<fieldProperty
+		name="cdCdsBollaSca"
+		property="bollaScaricoMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCdsBollaSca" />
+	<fieldProperty
+		name="cdMagazzinoBollaSca"
+		property="bollaScaricoMag.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdMagazzinoBollaSca" />
+	<fieldProperty
+		name="esercizioBollaSca"
+		property="bollaScaricoMag.esercizio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Esercizio Bolla Scarico" />
+	<fieldProperty
+		name="cdNumeratoreBollaSca"
+		property="bollaScaricoMag.cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Numerat. Bolla Scarico" />
+	<fieldProperty
+		name="pgBollaSca"
+		property="bollaScaricoMag.pgBollaSca"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="Numero Bolla Scarico" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -630,6 +677,8 @@
 		name="dtCancellazione" />
 	<columnSet
 		name="default">
+		<columnFieldProperty
+			name="pgMovimento" />
 		<columnFieldProperty
 			name="dtMovimento" />
 		<columnFieldProperty

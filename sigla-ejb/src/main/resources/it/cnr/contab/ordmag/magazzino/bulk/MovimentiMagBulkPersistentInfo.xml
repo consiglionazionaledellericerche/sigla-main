@@ -37,6 +37,27 @@
 		<columnMapping
 			columnName="CD_DIVISA"
 			propertyName="divisa.cd_divisa" />
+  		<columnMapping
+			columnName="PG_MOVIMENTO_RIF"
+			propertyName="movimentoRif.pgMovimento" />
+		<columnMapping
+			columnName="PG_MOVIMENTO_ANN"
+			propertyName="movimentoAnn.pgMovimento" />
+		<columnMapping
+			columnName="CD_CDS_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="ESERCIZIO_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.cdNumeratoreMag" />
+		<columnMapping
+			columnName="PG_BOLLA_SCA"
+			propertyName="bollaScaricoMag.pgBollaSca" />
 	</defaultColumnMap>
   	<persistentProperty
 		name="tipoMovimentoMag" />
@@ -50,4 +71,10 @@
 		name="lottoMag" />
 	<persistentProperty
 		name="divisa" />
+  	<persistentProperty
+		name="movimentoRif" />
+	<persistentProperty
+		name="movimentoAnn" />
+	<persistentProperty
+		name="bollaScaricoMag" />
 </SQLPersistentInfo>

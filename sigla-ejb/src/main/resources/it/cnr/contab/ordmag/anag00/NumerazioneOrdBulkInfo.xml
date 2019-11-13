@@ -148,6 +148,14 @@
 		<formFieldProperty
 			name="dsNumeratore" />
 	</form>
+	<form
+		name="searchtool_ridotto">
+		<formFieldProperty
+			name="cdNumeratore"/>
+		<formFieldProperty
+			name="dsNumeratore" 
+			inputSize="35"/>
+	</form>
 	<formFieldProperty
 		name="findUnitaOperativaOrd" />
 	<formFieldProperty

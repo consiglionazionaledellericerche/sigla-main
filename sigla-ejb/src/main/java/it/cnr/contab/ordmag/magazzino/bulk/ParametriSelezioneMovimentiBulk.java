@@ -7,6 +7,7 @@ import java.util.Dictionary;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.magazzino.bp.ParametriSelezioneMovimentiMagBP;
@@ -19,6 +20,8 @@ public class ParametriSelezioneMovimentiBulk extends AbilitazioneMagazzinoBulk i
 	private java.sql.Timestamp aDataCompetenza; 
 	private java.sql.Timestamp daDataMovimento;
 	private java.sql.Timestamp aDataMovimento;
+	private NumerazioneOrdBulk numerazioneOrd = new NumerazioneOrdBulk();
+	private UnitaOperativaOrdBulk unitaOperativaOrdine = new UnitaOperativaOrdBulk();
 	private UnitaOperativaOrdBulk daUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
 	private UnitaOperativaOrdBulk aUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
 	private TerzoBulk terzo = new TerzoBulk();
@@ -32,12 +35,12 @@ public class ParametriSelezioneMovimentiBulk extends AbilitazioneMagazzinoBulk i
 	private java.lang.Integer annoLotto; 
 	private java.sql.Timestamp daDataOrdine; 
 	private java.sql.Timestamp aDataOrdine; 
-	private String cdNumeratoreOrdine; 
 	private java.lang.Integer daNumeroOrdine; 
 	private java.lang.Integer aNumeroOrdine; 
-	private String cdUnitaOperativaOrdine; 
 	private java.sql.Timestamp daDataOrdineDef; 
 	private java.sql.Timestamp aDataOrdineDef; 
+	private java.lang.Long daProgressivo; 
+	private java.lang.Long aProgressivo; 
 
 	public final static Dictionary tipoMovimentoKeys;
 
@@ -216,14 +219,6 @@ public class ParametriSelezioneMovimentiBulk extends AbilitazioneMagazzinoBulk i
 		this.aDataOrdine = aDataOrdine;
 	}
 
-	public String getCdNumeratoreOrdine() {
-		return cdNumeratoreOrdine;
-	}
-
-	public void setCdNumeratoreOrdine(String cdNumeratoreOrdine) {
-		this.cdNumeratoreOrdine = cdNumeratoreOrdine;
-	}
-
 	public java.lang.Integer getDaNumeroOrdine() {
 		return daNumeroOrdine;
 	}
@@ -238,14 +233,6 @@ public class ParametriSelezioneMovimentiBulk extends AbilitazioneMagazzinoBulk i
 
 	public void setaNumeroOrdine(java.lang.Integer aNumeroOrdine) {
 		this.aNumeroOrdine = aNumeroOrdine;
-	}
-
-	public String getCdUnitaOperativaOrdine() {
-		return cdUnitaOperativaOrdine;
-	}
-
-	public void setCdUnitaOperativaOrdine(String cdUnitaOperativaOrdine) {
-		this.cdUnitaOperativaOrdine = cdUnitaOperativaOrdine;
 	}
 
 	public java.sql.Timestamp getDaDataOrdineDef() {
@@ -268,6 +255,50 @@ public class ParametriSelezioneMovimentiBulk extends AbilitazioneMagazzinoBulk i
 			it.cnr.jada.action.ActionContext context) {
 
 		return this;
+	}
+
+	public java.lang.Long getDaProgressivo() {
+		return daProgressivo;
+	}
+
+	public void setDaProgressivo(java.lang.Long daProgressivo) {
+		this.daProgressivo = daProgressivo;
+	}
+
+	public java.lang.Long getaProgressivo() {
+		return aProgressivo;
+	}
+
+	public void setaProgressivo(java.lang.Long aProgressivo) {
+		this.aProgressivo = aProgressivo;
+	}
+
+	public boolean isIndicatoAlmenoUnCriterioDiSelezione() {
+		if ((aBeneServizio == null || aBeneServizio.getCd_bene_servizio() == null) && (daBeneServizio == null || daBeneServizio.getCd_bene_servizio() == null) && 
+		aDataCompetenza == null && aDataMovimento == null && aDataOrdine == null && aDataOrdineDef == null && aNumeroOrdine == null && aProgressivo == null && 
+		(aUnitaOperativaRicevente == null || aUnitaOperativaRicevente.getCdUnitaOperativa() == null)  && (daUnitaOperativaRicevente == null || daUnitaOperativaRicevente.getCdUnitaOperativa() == null) &&  
+		annoLotto == null && (numerazioneOrd == null || numerazioneOrd.getCdNumeratore() == null) && (unitaOperativaOrdine == null || unitaOperativaOrdine.getCdUnitaOperativa() == null) && 
+		daDataCompetenza == null && daDataMovimento == null && daDataOrdine == null && 
+	  daDataOrdineDef == null && daNumeroOrdine == null && daProgressivo == null && dataBolla == null && lottoFornitore == null && numeroBolla == null && 
+	  (terzo == null || terzo.getCd_terzo() == null) && tipoMovimento == null && (tipoMovimentoMag == null || tipoMovimentoMag.getCdTipoMovimento() == null))
+			return false;
+		return true;
+	}
+
+	public NumerazioneOrdBulk getNumerazioneOrd() {
+		return numerazioneOrd;
+	}
+
+	public void setNumerazioneOrd(NumerazioneOrdBulk numerazioneOrd) {
+		this.numerazioneOrd = numerazioneOrd;
+	}
+
+	public UnitaOperativaOrdBulk getUnitaOperativaOrdine() {
+		return unitaOperativaOrdine;
+	}
+
+	public void setUnitaOperativaOrdine(UnitaOperativaOrdBulk unitaOperativaOrdine) {
+		this.unitaOperativaOrdine = unitaOperativaOrdine;
 	}
 
 }

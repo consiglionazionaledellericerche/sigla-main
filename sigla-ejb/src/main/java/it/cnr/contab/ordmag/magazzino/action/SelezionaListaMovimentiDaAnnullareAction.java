@@ -24,6 +24,7 @@ public class SelezionaListaMovimentiDaAnnullareAction extends SelezionatoreLista
 		try {
 			fillModel(context);
 			bp.setSelection(context);
+			bp.annullaMovimenti(context);
 			return context.findDefaultForward();
 		} catch(Exception e) {
 			return handleException(context,e);

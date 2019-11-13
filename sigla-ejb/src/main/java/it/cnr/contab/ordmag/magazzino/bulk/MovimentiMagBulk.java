@@ -6,17 +6,17 @@ package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
-import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 public class MovimentiMagBulk extends MovimentiMagBase {
 	public final static String STATO_INSERITO = "INS";
 	public final static String STATO_ANNULLATO = "ANN";
 	
+	private MovimentiMagBulk movimentoRif;
+	private MovimentiMagBulk movimentoAnn;
 	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
 	private OrdineAcqConsegnaBulk ordineAcqConsegnaUt =  new OrdineAcqConsegnaBulk();
 	private TerzoBulk terzo =  new TerzoBulk();
@@ -25,8 +25,7 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	private LottoMagBulk lottoMag =  new LottoMagBulk();
 	private MagazzinoBulk magazzinoUt =  new MagazzinoBulk();
 	private Bene_servizioBulk beneServizioUt =  new Bene_servizioBulk();
-//	private Voce_ivaBulk voceIva =  new Voce_ivaBulk();
-//	private BollaScaricoMagBulk bollaScaricoMag =  new BollaScaricoMagBulk();
+	private BollaScaricoMagBulk bollaScaricoMag =  new BollaScaricoMagBulk();
 	private DivisaBulk divisa =  new DivisaBulk();
 	public MovimentiMagBulk() {
 		super();
@@ -82,18 +81,12 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setBeneServizioUt(Bene_servizioBulk beneServizio)  {
 		this.beneServizioUt=beneServizio;
 	}
-//	public Voce_ivaBulk getVoceIva() {
-//		return voceIva;
-//	}
-//	public void setVoceIva(Voce_ivaBulk voceIva)  {
-//		this.voceIva=voceIva;
-//	}
-//	public BollaScaricoMagBulk getBollaScaricoMag() {
-//		return bollaScaricoMag;
-//	}
-//	public void setBollaScaricoMag(BollaScaricoMagBulk bollaScaricoMag)  {
-//		this.bollaScaricoMag=bollaScaricoMag;
-//	}
+	public BollaScaricoMagBulk getBollaScaricoMag() {
+		return bollaScaricoMag;
+	}
+	public void setBollaScaricoMag(BollaScaricoMagBulk bollaScaricoMag)  {
+		this.bollaScaricoMag=bollaScaricoMag;
+	}
 	public DivisaBulk getDivisa() {
 		return divisa;
 	}
@@ -118,71 +111,30 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setCdTipoMovimento(java.lang.String cdTipoMovimento)  {
 		this.getTipoMovimentoMag().setCdTipoMovimento(cdTipoMovimento);
 	}
-//	public java.lang.String getCdCdsOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getCdCds();
-//	}
-//	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
-//		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
-//	}
-//	public java.lang.String getCdUnitaOperativaOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getCdUnitaOperativa();
-//	}
-//	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativaOrdine)  {
-//		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativaOrdine);
-//	}
-//	public java.lang.Integer getEsercizioOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getEsercizio();
-//	}
-//	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
-//		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
-//	}
-//	public java.lang.String getCdNumeratoreOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getCdNumeratore();
-//	}
-//	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
-//		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
-//	}
-//	public java.lang.Integer getNumeroOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getNumero();
-//	}
-//	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
-//		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
-//	}
-//	public java.lang.Integer getRigaOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getRiga();
-//	}
-//	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
-//		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
-//	}
-//	public java.lang.Integer getConsegna() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getConsegna();
-//	}
-//	public void setConsegna(java.lang.Integer consegna)  {
-//		this.getOrdineAcqConsegna().setConsegna(consegna);
-//	}
+	public Long getPgMovimentoRif() {
+		MovimentiMagBulk rif = this.getMovimentoRif();
+		if (rif == null)
+			return null;
+		return getMovimentoRif().getPgMovimento();
+	}  
+	public void setPgMovimentoRif(java.lang.Long pgMovimento)  {
+		if (this.getMovimentoRif() == null)
+			setMovimentoRif(new MovimentiMagBulk());
+		this.getMovimentoRif().setPgMovimento(pgMovimento);
+	}
+	public Long getPgMovimentoAnn() {
+		MovimentiMagBulk ann = this.getMovimentoAnn();
+		if (ann == null)
+			return null;
+		return getMovimentoAnn().getPgMovimento();
+	}
+	public void setPgMovimentoAnn(java.lang.Long pgMovimento)  {
+		if (this.getMovimentoAnn() == null)
+			setMovimentoAnn(new MovimentiMagBulk());
+		this.getMovimentoAnn().setPgMovimento(pgMovimento);
+	}
 	public Integer getCdTerzo() {
-		TerzoBulk terzo = this.getTerzo();
+		TerzoBulk terzo = this.getTerzo();  
 		if (terzo == null)
 			return null;
 		return getTerzo().getCd_terzo();
@@ -253,87 +205,51 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setPgLotto(java.lang.Integer pgLotto)  {
 		this.getLottoMag().setPgLotto(pgLotto);
 	}
-//	public java.lang.String getCdCdsMag() {
-//		MagazzinoBulk magazzino = this.getMagazzino();
-//		if (magazzino == null)
-//			return null;
-//		return getMagazzino().getCdCds();
-//	}
-//	public void setCdCdsMag(java.lang.String cdCdsMag)  {
-//		this.getMagazzino().setCdCds(cdCdsMag);
-//	}
-//	public java.lang.String getCdMagazzino() {
-//		MagazzinoBulk magazzino = this.getMagazzino();
-//		if (magazzino == null)
-//			return null;
-//		return getMagazzino().getCdMagazzino();
-//	}
-//	public void setCdMagazzino(java.lang.String cdMagazzino)  {
-//		this.getMagazzino().setCdMagazzino(cdMagazzino);
-//	}
-//	public java.lang.String getCdBeneServizio() {
-//		Bene_servizioBulk beneServizio = this.getBeneServizio();
-//		if (beneServizio == null)
-//			return null;
-//		return getBeneServizio().getCd_bene_servizio();
-//	}
-//	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
-//		this.getBeneServizio().setCd_bene_servizio(cdBeneServizio);
-//	}
-//	public java.lang.String getCdVoceIva() {
-//		Voce_ivaBulk voceIva = this.getVoceIva();
-//		if (voceIva == null)
-//			return null;
-//		return getVoceIva().getCd_voce_iva();
-//	}
-//	public void setCdVoceIva(java.lang.String cdVoceIva)  {
-//		this.getVoceIva().setCd_voce_iva(cdVoceIva);
-//	}
-//	public java.lang.String getCdCdsBollaSca() {
-//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-//		if (bollaScaricoMag == null)
-//			return null;
-//		return getBollaScaricoMag().getCdCds();
-//	}
-//	public void setCdCdsBollaSca(java.lang.String cdCdsBollaSca)  {
-//		this.getBollaScaricoMag().setCdCds(cdCdsBollaSca);
-//	}
-//	public java.lang.String getCdMagazzinoBollaSca() {
-//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-//		if (bollaScaricoMag == null)
-//			return null;
-//		return getBollaScaricoMag().getCdMagazzino();
-//	}
-//	public void setCdMagazzinoBollaSca(java.lang.String cdMagazzinoBollaSca)  {
-//		this.getBollaScaricoMag().setCdMagazzino(cdMagazzinoBollaSca);
-//	}
-//	public java.lang.Integer getEsercizioBollaSca() {
-//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-//		if (bollaScaricoMag == null)
-//			return null;
-//		return bollaScaricoMag.getEsercizio();
-//	}
-//	public void setEsercizioBollaSca(java.lang.Integer esercizioBollaSca)  {
-//		this.getBollaScaricoMag().setEsercizio(esercizioBollaSca);
-//	}
-//	public java.lang.String getCdNumeratoreBollaSca() {
-//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-//		if (bollaScaricoMag == null)
-//			return null;
-//		return bollaScaricoMag.getCdNumeratoreMag();
-//	}
-//	public void setCdNumeratoreBollaSca(java.lang.String cdNumeratoreBollaSca)  {
-//		this.getBollaScaricoMag().setCdNumeratoreMag(cdNumeratoreBollaSca);
-//	}
-//	public java.lang.Integer getPgBollaSca() {
-//		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
-//		if (bollaScaricoMag == null)
-//			return null;
-//		return getBollaScaricoMag().getPgBollaSca();
-//	}
-//	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
-//		this.getBollaScaricoMag().setPgBollaSca(pgBollaSca);
-//	}
+	public java.lang.String getCdCdsBollaSca() {
+		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+		if (bollaScaricoMag == null)
+			return null;
+		return getBollaScaricoMag().getCdCds();
+	}
+	public void setCdCdsBollaSca(java.lang.String cdCdsBollaSca)  {
+		this.getBollaScaricoMag().setCdCds(cdCdsBollaSca);
+	}
+	public java.lang.String getCdMagazzinoBollaSca() {
+		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+		if (bollaScaricoMag == null)
+			return null;
+		return getBollaScaricoMag().getCdMagazzino();
+	}
+	public void setCdMagazzinoBollaSca(java.lang.String cdMagazzinoBollaSca)  {
+		this.getBollaScaricoMag().setCdMagazzino(cdMagazzinoBollaSca);
+	}
+	public java.lang.Integer getEsercizioBollaSca() {
+		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+		if (bollaScaricoMag == null)
+			return null;
+		return bollaScaricoMag.getEsercizio();
+	}
+	public void setEsercizioBollaSca(java.lang.Integer esercizioBollaSca)  {
+		this.getBollaScaricoMag().setEsercizio(esercizioBollaSca);
+	}
+	public java.lang.String getCdNumeratoreBollaSca() {
+		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+		if (bollaScaricoMag == null)
+			return null;
+		return bollaScaricoMag.getCdNumeratoreMag();
+	}
+	public void setCdNumeratoreBollaSca(java.lang.String cdNumeratoreBollaSca)  {
+		this.getBollaScaricoMag().setCdNumeratoreMag(cdNumeratoreBollaSca);
+	}
+	public java.lang.Integer getPgBollaSca() {
+		BollaScaricoMagBulk bollaScaricoMag = this.getBollaScaricoMag();
+		if (bollaScaricoMag == null)
+			return null;
+		return getBollaScaricoMag().getPgBollaSca();
+	}
+	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
+		this.getBollaScaricoMag().setPgBollaSca(pgBollaSca);
+	}
 	public java.lang.String getCdDivisa() {
 		DivisaBulk divisa = this.getDivisa();
 		if (divisa == null)
@@ -343,67 +259,16 @@ public class MovimentiMagBulk extends MovimentiMagBase {
 	public void setCdDivisa(java.lang.String cdDivisa)  {
 		this.getDivisa().setCd_divisa(cdDivisa);
 	}
-//	public java.lang.String getCdCdsOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getCdCds();
-//	}
-//	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
-//		this.getOrdineAcqConsegna().setCdCds(cdCdsOrdine);
-//	}
-//	public java.lang.String getCdUnitaOperativaOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getCdUnitaOperativa();
-//	}
-//	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativa)  {
-//		this.getOrdineAcqConsegna().setCdUnitaOperativa(cdUnitaOperativa);
-//	}
-//	public java.lang.Integer getEsercizioOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getEsercizio();
-//	}
-//	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
-//		this.getOrdineAcqConsegna().setEsercizio(esercizioOrdine);
-//	}
-//	public java.lang.String getCdNumeratoreOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getCdNumeratore();
-//	}
-//	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
-//		this.getOrdineAcqConsegna().setCdNumeratore(cdNumeratoreOrdine);
-//	}
-//	public java.lang.Integer getNumeroOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getNumero();
-//	}
-//	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
-//		this.getOrdineAcqConsegna().setNumero(numeroOrdine);
-//	}
-//	public java.lang.Integer getRigaOrdine() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getRiga();
-//	}
-//	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
-//		this.getOrdineAcqConsegna().setRiga(rigaOrdine);
-//	}
-//	public java.lang.Integer getConsegna() {
-//		OrdineAcqConsegnaBulk ordineAcqConsegna = this.getOrdineAcqConsegna();
-//		if (ordineAcqConsegna == null)
-//			return null;
-//		return getOrdineAcqConsegna().getConsegna();
-//	}
-//	public void setConsegna(java.lang.Integer consegna)  {
-//		this.getOrdineAcqConsegna().setConsegna(consegna);
-//	}
+	public MovimentiMagBulk getMovimentoRif() {
+		return movimentoRif;
+	}
+	public void setMovimentoRif(MovimentiMagBulk movimentoRif) {
+		this.movimentoRif = movimentoRif;
+	}
+	public MovimentiMagBulk getMovimentoAnn() {
+		return movimentoAnn;
+	}
+	public void setMovimentoAnn(MovimentiMagBulk movimentoAnn) {
+		this.movimentoAnn = movimentoAnn;
+	}
 }

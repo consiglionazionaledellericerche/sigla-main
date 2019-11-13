@@ -145,6 +145,138 @@
 			<tr>
 				<td>
 					<%
+						bp.getController().writeFormLabel(out, "daProgressivo");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "daProgressivo");
+					%>
+				</td>
+				<td class="pl-5">
+					<%
+						bp.getController().writeFormLabel(out, "aProgressivo");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "aProgressivo");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "findTipoMovimentoMag");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "findTipoMovimentoMag");
+					%>
+				</td>
+				<td class="pl-5">
+					<%
+						bp.getController().writeFormLabel(out, "tipoMovimento");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "tipoMovimento");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "findUnitaOperativaOrdine");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "findUnitaOperativaOrdine");
+					%>
+				</td>
+				<td class="pl-5">
+					<%
+						bp.getController().writeFormLabel(out, "findNumerazioneOrd");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "findNumerazioneOrd");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "daDataOrdine");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "daDataOrdine");
+					%>
+				</td>
+				<td class="pl-5">
+					<%
+						bp.getController().writeFormLabel(out, "aDataOrdine");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "aDataOrdine");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "daDataOrdineDef");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "daDataOrdineDef");
+					%>
+				</td>
+				<td class="pl-5">
+					<%
+						bp.getController().writeFormLabel(out, "aDataOrdineDef");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "aDataOrdineDef");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
+						bp.getController().writeFormLabel(out, "daNumeroOrdine");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "daNumeroOrdine");
+					%>
+				</td>
+				<td class="pl-5">
+					<%
+						bp.getController().writeFormLabel(out, "aNumeroOrdine");
+					%>
+				</td>
+				<td>
+					<%
+						bp.getController().writeFormInput(out, "aNumeroOrdine");
+					%>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%
 						bp.getController().writeFormLabel(out, "findTipoMovimentoMag");
 					%>
 				</td>

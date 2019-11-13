@@ -10,9 +10,11 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 public class MovimentiMagHome extends BulkHome {
 	public MovimentiMagHome(Connection conn) {
 		super(MovimentiMagBulk.class, conn);
@@ -42,5 +44,18 @@ public class MovimentiMagHome extends BulkHome {
 		lotto.setToBeUpdated();
 		lottoHome.update(lotto, userContext);
 		super.insert(persistent, userContext);
+	}
+	public java.util.List recuperoMovimentiDaLotto(Persistent persistent) throws IntrospectionException,PersistencyException {
+		MovimentiMagBulk movimentoMag = (MovimentiMagBulk)persistent;
+		SQLBuilder sql = createSQLBuilder();
+
+		sql.addClause("AND","cdCds",SQLBuilder.EQUALS, movimentoMag.getCdCdsLotto());
+		sql.addClause("AND","cdMagazzino",SQLBuilder.EQUALS, movimentoMag.getCdMagazzinoLotto());
+		sql.addClause("AND","esercizio",SQLBuilder.EQUALS, movimentoMag.getEsercizioLotto());
+		sql.addClause("AND","cdNumeratoreMag",SQLBuilder.EQUALS, movimentoMag.getCdNumeratoreLotto());
+		sql.addClause("AND","stato",SQLBuilder.EQUALS, MovimentiMagBulk.STATO_INSERITO);
+		sql.addClause("AND","pgLotto",SQLBuilder.EQUALS, movimentoMag.getPgLotto());
+		return fetchAll(sql);
+
 	}
 }

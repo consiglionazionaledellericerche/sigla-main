@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
-import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
 import it.cnr.jada.UserContext;
@@ -66,6 +64,8 @@ public class SelezionatoreMovimentiDaAnnullareBP extends SelezionatoreListaBP {
 	            MovimentiMagBulk mov = (MovimentiMagBulk)i.next();
 	            component.annullaMovimento(context.getUserContext(), mov);
 	        }
+
+            commitUserTransaction();
             setFocusedElement(context, null);
             refresh(context);
 			

@@ -4,8 +4,14 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import java.sql.Connection;
+
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 public class NumerazioneOrdHome extends BulkHome {
 	public NumerazioneOrdHome(Connection conn) {
 		super(NumerazioneOrdBulk.class, conn);
@@ -13,4 +19,15 @@ public class NumerazioneOrdHome extends BulkHome {
 	public NumerazioneOrdHome(Connection conn, PersistentCache persistentCache) {
 		super(NumerazioneOrdBulk.class, conn, persistentCache);
 	}
+	
+	@Override
+	public SQLBuilder selectByClause(UserContext userContext,
+			CompoundFindClause compoundfindclause) throws PersistencyException {
+		SQLBuilder sql = super.selectByClause(userContext, compoundfindclause);
+		sql.addSQLClause("AND","ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+
+		return sql;
+	}
+
+
 }

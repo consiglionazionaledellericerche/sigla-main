@@ -70,6 +70,72 @@
 		enabledOnInsert="true"
 		label="A Data Movimento" />
 	<fieldProperty
+		name="daDataOrdine"
+		property="daDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineChange"
+		label="Da Data Ordine" />
+	<fieldProperty
+		name="aDataOrdine"
+		property="aDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Data Ordine" />
+	<fieldProperty
+		name="daDataOrdineDef"
+		property="daDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineChange"
+		label="Da Dt Conferma Ord." />
+	<fieldProperty
+		name="aDataOrdineDef"
+		property="aDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Dt Conferma Ord." />
+	<fieldProperty
+		name="daNumeroOrdine"
+		property="daNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Da Numero Ordine" />
+	<fieldProperty
+		name="aNumeroOrdine"
+		property="aNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Numero Ordine" />
+	<fieldProperty
+		name="findUnitaOperativaOrdine"
+		property="unitaOperativaOrdine"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UOp Ordine" />
+	<fieldProperty
+		name="findNumerazioneOrd"
+		property="numerazioneOrd"
+		inputType="searchtool"
+		formName="searchtool_ridotto"
+		enabledOnSearch="true"
+		label="Numerat. Ordine" />
+	<fieldProperty
 		name="findDaUnitaOperativaOrd"
 		property="daUnitaOperativaRicevente"
 		inputType="searchtool"
@@ -98,6 +164,24 @@
 		enabledOnEdit="true"
 		enabledOnInsert="true"
 		label="Numero Bolla" />
+	<fieldProperty
+		name="daProgressivo"
+		property="daProgressivo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Da Progressvo" />
+	<fieldProperty
+		name="aProgressivo"
+		property="aProgressivo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Progressivo" />
 	<fieldProperty
 		name="lottoFornitore"
 		property="lottoFornitore"
@@ -161,4 +245,24 @@
 		name="findABeneServizio" />
 	<formFieldProperty
 		name="findDaBeneServizio" />
+	<formFieldProperty
+		name="daProgressivo" />
+	<formFieldProperty
+		name="aProgressivo" />
+	<formFieldProperty
+		name="findNumerazioneOrd" />
+	<formFieldProperty
+		name="findUnitaOperativaOrdine" />
+	<formFieldProperty
+		name="daDataOrdine" />
+	<formFieldProperty
+		name="daDataOrdineDef" />
+	<formFieldProperty
+		name="daNumeroOrdine" />
+	<formFieldProperty
+		name="aDataOrdine" />
+	<formFieldProperty
+		name="aDataOrdineDef" />
+	<formFieldProperty
+		name="aNumeroOrdine" />
 </bulkInfo>
