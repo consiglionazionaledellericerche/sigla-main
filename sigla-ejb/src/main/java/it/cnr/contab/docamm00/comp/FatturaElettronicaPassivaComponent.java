@@ -577,8 +577,6 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			  doc.setDataRicevimentoMailRifiuto(dataRicevimentoMail!=null?new Timestamp(dataRicevimentoMail.getTime().getTime()):doc.getDataRicevimentoMailRifiuto());
 				doc.setToBeUpdated();
 				updateBulk(userContext, doc);
-				SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI."+ doc.getIdentificativoSdi(), 
-						"Fattura Passiva: Scarto Esito. Id SDI "+doc.getIdentificativoSdi());				
 		}
 	}
 
