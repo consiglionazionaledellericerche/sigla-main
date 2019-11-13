@@ -25,14 +25,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.activation.DataHandler;
@@ -579,10 +572,27 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
             docTrasmissione.addToDocEleTestataColl(docTestata);
             if (fatturaElettronicaBody.getDatiBeniServizi() != null) {
                 if (fatturaElettronicaBody.getDatiBeniServizi().getDettaglioLinee() != null) {
+                    final List<Integer> numeroLineas = fatturaElettronicaBody
+                            .getDatiBeniServizi()
+                            .getDettaglioLinee()
+                            .stream()
+                            .map(DettaglioLineeType::getNumeroLinea)
+                            .collect(Collectors.toList());
+                    Set<Integer> duplicates = numeroLineas
+                            .stream()
+                            .filter(numeroLinea -> Collections.frequency(numeroLineas, numeroLinea) > 1)
+                            .collect(Collectors.toSet());
+
                     for (DettaglioLineeType dettaglioLinea : fatturaElettronicaBody.getDatiBeniServizi().getDettaglioLinee()) {
                         DocumentoEleLineaBulk docEleLinea = new DocumentoEleLineaBulk(idTrasmittente.getIdPaese(),
                                 idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long) progressivoTestata,
                                 dettaglioLinea.getNumeroLinea());
+                        /**
+                         * FIX duplicate numero linea
+                         */
+                        if (!duplicates.isEmpty())
+                            docEleLinea.setNumeroLinea(fatturaElettronicaBody.getDatiBeniServizi().getDettaglioLinee().indexOf(dettaglioLinea));
+
                         if (dettaglioLinea.getTipoCessionePrestazione() != null)
                             docEleLinea.setTipoCessione(dettaglioLinea.getTipoCessionePrestazione().value());
                         List<String> anomalie = new ArrayList<String>();
