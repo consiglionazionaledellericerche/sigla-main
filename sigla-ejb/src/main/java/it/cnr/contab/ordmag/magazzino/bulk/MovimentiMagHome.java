@@ -4,7 +4,13 @@
  */
 package it.cnr.contab.ordmag.magazzino.bulk;
 import java.sql.Connection;
+import java.util.Arrays;
 
+import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
+import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.sto.bulk.CdsBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BusyResourceException;
@@ -14,6 +20,7 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 public class MovimentiMagHome extends BulkHome {
 	public MovimentiMagHome(Connection conn) {
@@ -57,5 +64,13 @@ public class MovimentiMagHome extends BulkHome {
 		sql.addClause("AND","pgLotto",SQLBuilder.EQUALS, movimentoMag.getPgLotto());
 		return fetchAll(sql);
 
+	}
+	public java.util.List findRigheBollaDiScarico( MovimentiMagBulk movimento ) throws IntrospectionException,PersistencyException 
+	{
+		PersistentHome evHome = getHomeCache().getHome(BollaScaricoRigaMagBulk.class);
+		SQLBuilder sql = evHome.createSQLBuilder();
+		sql.addClause("AND","pgMovimento",sql.EQUALS, movimento.getPgMovimento());
+		sql.addClause("AND","stato",sql.EQUALS, MovimentiMagBulk.STATO_INSERITO);
+		return evHome.fetchAll(sql);	
 	}
 }
