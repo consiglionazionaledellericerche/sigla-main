@@ -60,6 +60,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.ws.soap.SOAPFaultException;
 
 import it.cnr.jada.comp.CRUDDuplicateKeyException;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.*;
 import it.gov.fatturapa.EsitoRicezioneType;
 import it.gov.fatturapa.FileSdIConMetadatiType;
 import it.gov.fatturapa.FileSdIType;
@@ -103,27 +104,6 @@ import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageService;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.AllegatiType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CedentePrestatoreType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.CessionarioCommittenteType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiBolloType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiCassaPrevidenzialeType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDDTType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiDocumentiCorrelatiType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiGeneraliDocumentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiRiepilogoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasmissioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DatiTrasportoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioLineeType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.DettaglioPagamentoType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaBodyType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FormatoTrasmissioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.IdFiscaleType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RappresentanteFiscaleType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.ScontoMaggiorazioneType;
-import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TerzoIntermediarioSoggettoEmittenteType;
 
 
 @Stateless
@@ -648,10 +628,15 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                             if (dettaglioLinea.getAltriDatiGestionali().size() > 1) {
                                 anomalie.add("Sono presenti piu di un dettaglio di Dati Gestionali!");
                             } else {
-                                docEleLinea.setTipoDato(dettaglioLinea.getAltriDatiGestionali().get(0).getTipoDato());
-                                docEleLinea.setRiferimentoTesto(dettaglioLinea.getAltriDatiGestionali().get(0).getRiferimentoTesto());
-                                docEleLinea.setRiferimentoNumero(dettaglioLinea.getAltriDatiGestionali().get(0).getRiferimentoNumero());
-                                docEleLinea.setRiferimentodata(convert(dettaglioLinea.getAltriDatiGestionali().get(0).getRiferimentoData()));
+                                final AltriDatiGestionaliType altriDatiGestionaliType = dettaglioLinea.getAltriDatiGestionali().stream().findAny().orElse(null);
+                                docEleLinea.setTipoDato(altriDatiGestionaliType.getTipoDato());
+                                docEleLinea.setRiferimentoTesto(altriDatiGestionaliType.getRiferimentoTesto());
+                                docEleLinea.setRiferimentoNumero(
+                                        Optional.ofNullable(altriDatiGestionaliType.getRiferimentoNumero())
+                                            .map(bigDecimal -> bigDecimal.setScale(2))
+                                            .orElse(BigDecimal.ZERO)
+                                );
+                                docEleLinea.setRiferimentodata(convert(altriDatiGestionaliType.getRiferimentoData()));
                             }
                         }
                         if (!anomalie.isEmpty())
@@ -1102,7 +1087,6 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                         try {
                             component.aggiornaScartoEsitoPec(userContext, docs, getDate(dataRicevimentoMail));
                             LOGGER.info("Fatture Elettroniche: Passive: Pec: aggiornamento scarto esito con id SDI " + identificativoSdi);
-                            SendMail.sendErrorMail("Fatture Elettroniche: Passive: E' stato ricevuto uno scarto dell'esito per l'Id SDI." + identificativoSdi, "Fattura Passiva: Scarto Esito. Id SDI " + identificativoSdi);
                         } catch (Exception ex) {
                             LOGGER.error("Fatture Elettroniche: Passive: Pec: Errore nell'elaborazione dello scarto esito con id SDI " + identificativoSdi + ". Errore:" + ex.getMessage() == null ? (ex.getCause() == null ? "" : ex.getCause().toString()) : ex.getMessage());
                             java.io.StringWriter sw = new java.io.StringWriter();
