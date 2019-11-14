@@ -88,7 +88,7 @@ Lo scopo principale di questo repository è continuare ad evolvere SIGLA. Voglia
 
 ## <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f4c4.png " width="30"> Licenza
 
-SIGLA è concesso in licenza GNU AFFERO GENERAL PUBLIC LICENSE, come si trova nel file [LICENSE] [l].
+SIGLA è concesso in licenza GNU AFFERO GENERAL PUBLIC LICENSE, come si trova nel file [LICENSE][l].
 
 [l]: https://github.com/consiglionazionaledellericerche/cool-jconon/blob/master/LICENSE
 
