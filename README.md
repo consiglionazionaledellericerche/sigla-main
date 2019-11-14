@@ -77,6 +77,21 @@ Le componenti funzionali del Sistema coprono aspetti contabili e aspetti amminis
     • Gestione degli Incarichi di collaborazione;
     • Gestione dell’Inventario.
 
+## <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f30d.png " width="30"> Applicazioni on line
+
+* [SIGLA - CNR](https://contab.cnr.it/SIGLANG)
+* [SIGLA - ISIN](https://isin.cnr.it)
+
+## <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f44f.png " width="30"> Come Contribuire 
+
+Lo scopo principale di questo repository è continuare ad evolvere SIGLA. Vogliamo contribuire a questo progetto nel modo più semplice e trasparente possibile e siamo grati alla comunità per ogni contribuito a correggere bug e miglioramenti.
+
+## <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f4c4.png " width="30"> Licenza
+
+SIGLA è concesso in licenza GNU AFFERO GENERAL PUBLIC LICENSE, come si trova nel file [LICENSE] [l].
+
+[l]: https://github.com/consiglionazionaledellericerche/cool-jconon/blob/master/LICENSE
+
 # <img src="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png" width=80> Startup
 
 #### _Per avviare una istanza di SIGLA con h2 in memoria_ 
