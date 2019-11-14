@@ -18,8 +18,8 @@
 |[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud.svg)|
 |[JADA JEE Framework](https://github.com/consiglionazionaledellericerche/jada) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/jada.svg)|
 
-
-
+![main](docs/screenshot/main.png)
+ 
 ## Introduzione
 Al fine di fornire elementi generali della Soluzione applicativa, evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di proprietà del CNR, che si occupa di processi amministrativi e contabili, di previsione, gestione e di rendicontazione. Il Sistema si rivolge ad Enti pubblici, in particolare Enti di ricerca, che operano in regime di Contabilità Finanziaria, con obbligo di adozione, in aggiunta, del sistema di contabilità basato su rilevazione dei fatti di gestione in termini economici, patrimoniali ed analitici.
 
@@ -79,9 +79,7 @@ Le componenti funzionali del Sistema coprono aspetti contabili e aspetti amminis
     • Gestione degli Incarichi di collaborazione;
     • Gestione dell’Inventario.
 
-<center>
-    <img src="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png" width=200>
-</center>
+# <img src="https://www.docker.com/sites/default/files/d8/2019-07/Moby-logo.png" width=80> Startup
 
 #### _Per avviare una istanza di SIGLA con h2 in memoria_ 
 ```
@@ -89,11 +87,17 @@ docker run -p 8080:8080  -e THORNTAIL_PROJECT_STAGE="demo-h2" -ti consiglionazio
 ```
 #### _Per avviare una istanza di SIGLA con oracle locale_ 
 ```
+git clone git@github.com:consiglionazionaledellericerche/sigla-main.git
+cd sigla-main
 docker run -d --name sigla-oracle -v $PWD/sigla-backend/initdb-oracle:/etc/entrypoint-initdb.d orangehrm/oracle-xe-11g
 docker run -p 8080:8080 --link sigla-oracle:db -e LC_ALL="it_IT.UTF-8" -e LANG="it_IT.UTF-8" -e LANGUAGE="it_IT:it" -e THORNTAIL_DATASOURCES_DATA-SOURCES_SIGLA_CONNECTION-URL="jdbc:oracle:thin:@db:1521:xe" -e THORNTAIL_PROJECT_STAGE="demo-oracle" -ti consiglionazionalericerche/sigla-main:latest
 ```
 #### _Per avviare una istanza di SIGLA con postgres locale_
 ```
+git clone git@github.com:consiglionazionaledellericerche/sigla-main.git
+cd sigla-main
 docker run --name sigla-postgres -v $PWD/sigla-backend/init-user-postgres-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh -e POSTGRES_PASSWORD=mysecretpassword -d postgres:9.6
 docker run -p 8080:8080 --link sigla-postgres:db -e LC_ALL="it_IT.UTF-8" -e LANG="it_IT.UTF-8" -e LANGUAGE="it_IT:it" -e THORNTAIL_DATASOURCES_DATA-SOURCES_SIGLA_CONNECTION-URL="jdbc:postgresql://db:5432/sigladb?schema=public" -e THORNTAIL_PROJECT_STAGE="demo-postgres" -ti consiglionazionalericerche/sigla-main:latest
 ```
+
+Collegarsi a http://localhost:8080/SIGLA/Login.do username: _ENTE_ password da impostare al primo login. 

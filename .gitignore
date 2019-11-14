@@ -7,3 +7,4 @@
 target/
 build/
 *audit-log.log*
+/sigla-web/src/main/webapp/tmp/*.*

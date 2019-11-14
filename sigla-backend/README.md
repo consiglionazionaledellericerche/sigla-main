@@ -3,7 +3,7 @@
 ```
 -Dspring.profiles.active=CMIS,liquibase
 ```
-#### Il ChangeLog file master è: _src/main/resources/db-changelog-master.xml_
+#### Il ChangeLog file master : _src/main/resources/db-changelog-master.xml_
 ```
 Per gli aggiornamenti di view, package, procedure e funzioni limitarsi a modificare il file senza aggiungere nessun changeset
 ```  
