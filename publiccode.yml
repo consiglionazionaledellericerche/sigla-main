@@ -1,0 +1,95 @@
+# This repository adheres to the publiccode.yml standard by including this
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+name: sigla
+releaseDate: '2019-11-14'
+url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
+applicationSuite: jada
+softwareVersion: 6.0.12
+developmentStatus: stable
+softwareType: standalone/web
+platforms:
+  - web
+  - linux
+usedBy:
+  - Consiglio Nazionale delle Ricerche - CNR
+  - Ispettorato Nazionale per la Sicurezza e la Radioprotezione - ISIN
+  - Istituto Superiore di Sanità - ISS
+categories:
+  - accounting
+  - billing-and-invoicing
+logo: docs/logo.png
+maintenance:
+  type: internal
+  contacts:
+    - name: Marco Spasiano
+      email: marco.spasiano@cnr.it
+      affiliation: Consiglio Nazionale delle Ricerche
+legal:
+  license: AGPL-3.0-or-later
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - it
+it:
+  riuso:
+    codiceIPA: cnr
+  piattaforme:
+    spid: false
+description:
+  it:
+    longDescription: "### **Introduzione**\n\nAl fine di fornire elementi generali della Soluzione applicativa, evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di proprietà del CNR, che si occupa di processi amministrativi e contabili, di previsione, gestione e di rendicontazione. Il Sistema si rivolge ad Enti pubblici, in particolare Enti di ricerca, che operano in regime di Contabilità Finanziaria, con obbligo di adozione, in aggiunta, del sistema di contabilità basato su rilevazione dei fatti di gestione in termini economici, patrimoniali ed analitici.\n\n### **Premessa**\n\nL'attività di progettazione e sviluppo dell'applicazione è stata avviata nel 2001 quando emerse per il CNR la necessità di dotarsi di un nuovo sistema integrato per la gestione della contabilità, in attuazione del Regolamento di disciplina dell'amministrazione e dell'attività contrattuale del CNR, approvato con DPCNR n. 015448 del 14/01/2000, ispirato ai nuovi principi di contabilità pubblica introdotti dalla legge 94/97 e dal Decreto legislativo 279/97.\n\nUna significativa revisione dell'impianto dell'applicazione è stata operata durante il 2004, in attuazione del decreto legislativo n. 127 del 4/06/2003, al fine di migliorare il controllo di gestione delle risorse ed allineare la gestione contabile interna ai criteri di rendicontazione dei progetti (con particolare riferimento a progetti europei e nazionali).\n\nAd oggi il sistema informativo SIGLA risulta completamente coerente ed adattabile all’impostazione dei bilanci ed alla gestione delle attività previste dalla normativa vigente in materia di contabilità pubblica.\n\n### **Informazioni generali del Sistema**\n\nIl **S**istema **I**ntegrato per la **G**estione delle **L**inee di **A**ttività è un sistema applicativo modulare, organizzato in componenti funzionali integrate tra loro e gestibili autonomamente l’una dall’altra.\n\n**L’accesso** al sistema, anche tramite web, ai dati e alle funzionalità, è controllato da parte degli amministratori del sistema attraverso la definizione di profili utente che limitano la visibilità e l’utilizzo delle funzioni, nonché la gestione di alcuni dati o l’utilizzo di particolari funzionalità. L’accesso all’applicazione è veicolato anche alla struttura organizzativa dell’Ente a cui si è abilitati.\n\nLa soluzione applicativa è _‘Multiente’ _e si articola su tre livelli di organizzazione dell’Ente, che nel caso specifico del CNR, sono:\n\n- Centro \tdi Spesa;\n- Unità \tOrganizzativa;\n- Centro \tdi Responsabilità.\n\n**L’architettura e la tecnologia** utilizzate nello sviluppo consentono una facile manutenzione ed evoluzione del sistema. La possibilità di utilizzare o implementare servizi a supporto delle integrazioni, semplifica il dialogo dell’applicazione stessa con altre applicazioni all’interno dell’Ente e consente di poter utilizzare solo alcune componenti SIGLA, sostituendone alcune con quelle eventualmente già presenti nella realtà di interesse. La documentazione e l’help online previsti completano la semplice usabilità dell’applicativo.\n\nLe interfacce semplici e intuitive dell’applicazione aiutano l’utente ad orientarsi nei vari processi funzionali previsti.\n\n**Sigla** copre diversi aspetti amministrativi e di gestione contabile, e pone alla base di tutti i processi funzionali il controllo dell’uso delle risorse a supporto dell’attività di ricerca, o di una qualsiasi attività pubblica _progettuale._ L’elemento trasversale alle varie funzionalità è infatti rappresentato dal _Progetto articolato in linee di attività_.\n\nOrganizzato in questo modo il sistema prevede gestisce e controlla l’aspetto analitico, a partire dalla fase di previsione fino alla completa rendicontazione, del Bilancio contabile.\n\n**La possibilità** di estrarre in _excel _tutti i dati presenti sulle funzioni di consultazione e di produrre _report _in autonomia, rappresenta una grande utilità per gli utenti che organizzano il proprio lavoro in maniera semplice ed autonoma. Così come la possibilità di _schedulare report_ periodici e di farli recapitare automaticamente al proprio indirizzo mail o a quello di altri collaboratori.\n\n### **Componenti - Funzionali SIGLA**\n\nLe componenti funzionali del Sistema coprono aspetti contabili e aspetti amministrativo-contabili che forniscono automaticamente risultati contabili. Gli argomenti possono essere raggruppati come di seguito indicato e si articolano, chiaramente, in gestioni e funzionalità di dettaglio:\n\n- **Gestione delle utenze e degli aspetti di configurazione del Sistema**\n \n    - Amministrazione dei Profili e delle Abilitazioni;\n \n    - Definizione Struttura organizzativa dell’Ente;\n \n    - Configurazione del sistema.\n \n- **Gestione delle Anagrafiche fondamentali**\n \n    - Progetti e GAE (gestione azioni elementari);\n \n    - Anagrafica Terzi;\n \n    - Piano dei Conti Finanziario ed Economico;\n \n    - Anagrafiche di base.\n \n- **Gestione della Programmazione Economica e Finanziaria**\n \n    - Bilancio di previsione Decisionale/Gestionale;\n \n    - Variazioni e Storni di Bilancio.\n \n- **Gestione contabile;**\n \n    - Impegni e Accertamenti;\n \n    - Mandati, Reversali e interfaccia Cassiere;\n \n    - Documenti Amministrativi;\n \n    - Gestione IVA.\n \n- **Gestioni consuntive;**\n \n    - Gestione delle rendicontazioni analitiche;\n \n    - Bilancio economico;\n \n    - Operazioni di fine anno.\n \n- **Gestione delle Missioni;\n **\n- **Gestione degli Incarichi di collaborazione;\n **\n- **Gestione dell’Inventario.**\n \n"
+    localisedName: SIGLA
+    genericName: Sistema Informativo Contabile
+    shortDescription: >-
+      SIGLA – Sistema informativo contabile per Enti Pubblici basato sulla
+      contabilità finanziaria con rendicontazione anche economica ed analitica.
+    documentation: >-
+      https://github.com/consiglionazionaledellericerche/sigla-main/tree/master/docs
+    apiDocumentation: 'https://github.com/consiglionazionaledellericerche/sigla-main'
+    screenshots:
+      - docs/screenshot/main.png
+      - docs/screenshot/home.png
+      - docs/screenshot/home_2.png
+      - docs/screenshot/navbar.png
+      - docs/screenshot/navbar_2.png
+      - docs/screenshot/navbar_3.png
+      - docs/screenshot/toolbar.png
+      - docs/screenshot/bookmark.png
+      - docs/screenshot/workspace.png
+      - docs/screenshot/workspace_2.png
+      - docs/screenshot/workspace_3.png
+      - docs/screenshot/map.png
+      - docs/screenshot/map_2.png
+      - docs/screenshot/search.png
+      - docs/screenshot/message.png
+      - docs/screenshot/calendar.png
+      - docs/screenshot/tree.png
+      - docs/screenshot/tree_search.png
+      - docs/screenshot/validation.png
+      - docs/screenshot/print.png
+      - docs/screenshot/print_2.png
+      - docs/screenshot/print_3.png
+    features:
+      - Amministrazione dei Profili e delle Abilitazioni
+      - Definizione Struttura organizzativa dell’Ente
+      - Progetti e GAE (gestione azioni elementari)
+      - Anagrafica Terzi
+      - Piano dei Conti Finanziario ed Economico
+      - Bilancio di previsione Decisionale/Gestionale
+      - Variazioni e Storni di Bilancio
+      - Impegni e Accertamenti
+      - Mandati Reversali e interfaccia Cassiere
+      - Documenti Amministrativi
+      - Gestione IVA
+      - Gestione delle rendicontazioni analitiche
+      - Bilancio economico
+      - Operazioni di fine anno
+      - Gestione delle Missioni
+      - Gestione degli Incarichi di collaborazione
+      - Gestione dell’Inventario
+intendedAudience:
+  scope:
+    - finance-and-economic-development
