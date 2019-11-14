@@ -29,6 +29,9 @@ maintenance:
       affiliation: Consiglio Nazionale delle Ricerche
 legal:
   license: AGPL-3.0-or-later
+intendedAudience:
+  scope:
+    - finance-and-economic-development
 localisation:
   localisationReady: false
   availableLanguages:
@@ -90,6 +93,5 @@ description:
       - Gestione delle Missioni
       - Gestione degli Incarichi di collaborazione
       - Gestione dell’Inventario
-intendedAudience:
-  scope:
-    - finance-and-economic-development
+    videos:
+      - docs/videos/startup_h2.mp4

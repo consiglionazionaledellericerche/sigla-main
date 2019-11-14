@@ -83,6 +83,9 @@ Le componenti funzionali del Sistema coprono aspetti contabili e aspetti amminis
 ```
 docker run -p 8080:8080  -e THORNTAIL_PROJECT_STAGE="demo-h2" -ti consiglionazionalericerche/sigla-main:latest
 ```
+
+[![Startup](docs/videos/startup_h2.png)](docs/videos/startup_h2.mp4)
+
 #### _Per avviare una istanza di SIGLA con oracle locale_ 
 ```
 git clone git@github.com:consiglionazionaledellericerche/sigla-main.git
