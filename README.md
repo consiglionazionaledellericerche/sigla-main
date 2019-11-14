@@ -17,8 +17,6 @@
 |[SIOPE+](https://github.com/consiglionazionaledellericerche/siopeplus) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/siopeplus.svg)|
 |[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud.svg)|
 |[JADA JEE Framework](https://github.com/consiglionazionaledellericerche/jada) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/jada.svg)|
-
-![main](docs/screenshot/main.png)
  
 ## Introduzione
 Al fine di fornire elementi generali della Soluzione applicativa, evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di proprietà del CNR, che si occupa di processi amministrativi e contabili, di previsione, gestione e di rendicontazione. Il Sistema si rivolge ad Enti pubblici, in particolare Enti di ricerca, che operano in regime di Contabilità Finanziaria, con obbligo di adozione, in aggiunta, del sistema di contabilità basato su rilevazione dei fatti di gestione in termini economici, patrimoniali ed analitici.
