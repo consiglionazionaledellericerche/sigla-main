@@ -486,6 +486,8 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 				throw  new it.cnr.jada.comp.ApplicationException( "Utente Gestore non definito" );		
 			utente.setGestore( gestore );
 			utente.setUtente_indirizzi_mail(new it.cnr.jada.bulk.BulkList(((UtenteHome)getHome(userContext, UtenteBulk.class )).findUtente_indirizzi_email(utente)));
+			utente.setUtente_abil_ordine(new it.cnr.jada.bulk.BulkList(((UtenteHome)getHome(userContext, UtenteBulk.class )).findUtente_abil_ordine(utente)));
+			getHomeCache(userContext).fetchAll(userContext);
 			if ( utente instanceof UtenteAmministratoreBulk )
 			{ // carico il cds
 				UtenteAmministratoreBulk admin = (UtenteAmministratoreBulk) utente;

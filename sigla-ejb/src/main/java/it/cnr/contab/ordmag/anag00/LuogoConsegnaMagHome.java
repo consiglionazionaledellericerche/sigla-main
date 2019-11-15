@@ -25,6 +25,7 @@ public class LuogoConsegnaMagHome extends BulkHome {
 	public SQLBuilder selectComuneItalianoByClause(it.cnr.jada.UserContext userContext, LuogoConsegnaMagBulk luogoConsegnaMagBulk, ComuneHome comuneHome,ComuneBulk comune,CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
 		SQLBuilder sql = comuneHome.createSQLBuilder();
 		sql.addSQLClause("AND","PG_NAZIONE",SQLBuilder.EQUALS, new Long(1));
+		sql.addClause(clause);
 		return sql;
 	}
 }

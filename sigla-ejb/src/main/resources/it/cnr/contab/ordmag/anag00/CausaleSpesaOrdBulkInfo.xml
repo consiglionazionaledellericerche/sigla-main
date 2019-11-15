@@ -14,6 +14,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
+		formName="searchtool"
 		nullable="false"
 		label="Cds" />
 	<fieldProperty
@@ -34,6 +35,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
+		formName="searchtool"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
@@ -51,14 +53,20 @@
 		property="cdVoceIva"
 		inputType="TEXT"
 		inputSize="10"
-		maxLength="10"
+		maxLength="10"				
+		label="Codice IVA" />		
+	<fieldProperty
+		name="findVoceIva"
+		property="voceIva"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
 		label="Codice IVA" />
 	<fieldProperty
 		name="flagSpese"
 		property="flagSpese"
-		inputType="TEXT"
-		inputSize="1"
-		maxLength="1"
+		inputType="CHECKBOX"		
+		enabledOnEdit="true"
 		nullable="false"
 		label="Spese" />
 	<fieldProperty
@@ -67,25 +75,30 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data Cancellazione" />
-	<form
+	<!-- <form
 		name="searchtool">
 		<formFieldProperty
-			name="cdCds" />
-		<formFieldProperty
+			name="cdVoceIva" />
+		 <formFieldProperty
 			name="esercizio" />
 		<formFieldProperty
-			name="cdCausaleSpesa" />
-	</form>
+			name="cdCausaleSpesa" /> 
+	</form> -->
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
 		name="cdCausaleSpesa" />
 	<formFieldProperty
 		name="dsCausaleSpesa" />
+		
+	<formFieldProperty
+		name="findVoceIva" />
+		
 	<formFieldProperty
 		name="flagSpese" />
 	<formFieldProperty
 		name="dtCancellazione" />
+	
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

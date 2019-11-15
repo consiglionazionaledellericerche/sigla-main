@@ -231,7 +231,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 			//creo il legame del movimento di carico con il movimento di scarico
 			movimentoCaricoMag.setMovimentoRif(movimentoScaricoMag);
 			movimentoCaricoMag.setToBeUpdated();
-			super.modificaConBulk(userContext, movimentoCaricoMag);
+			modificaConBulk(userContext, movimentoCaricoMag);
 			
 			//codice di controllo: il lotto creato deve avere le movimentazioni a zero essendo carico/scarico contestuale
 	    	LottoMagHome lottoHome = (LottoMagHome)getHome(userContext,LottoMagBulk.class);
@@ -315,24 +315,46 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     		}
     		movimentoDiStorno.setMovimentoRif(movimentoRifDiStorno);
     		movimentoRifDiStorno.setMovimentoRif(movimentoDiStorno);
-    		super.modificaConBulk(userContext, movimentoDiStorno);
-    		super.modificaConBulk(userContext, movimentoRifDiStorno);
+    		modificaConBulk(userContext, movimentoDiStorno);
+    		modificaConBulk(userContext, movimentoRifDiStorno);
     	} else {
     		effettuaAnnullamento(userContext, movimentoDaAnnullare, movimentoDiStorno);
     	}
     }
 
 	private MovimentiMagBulk effettuaAnnullamento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare,
-			MovimentiMagBulk movimentoDiStorno) throws ComponentException {
+			MovimentiMagBulk movimentoDiStorno) throws ComponentException, PersistencyException, ApplicationException {
 		movimentoDiStorno = (MovimentiMagBulk)super.creaConBulk(userContext, movimentoDiStorno);
 		movimentoDaAnnullare.setStato(MovimentiMagBulk.STATO_ANNULLATO);
 		movimentoDaAnnullare.setDtCancellazione(movimentoDiStorno.getDtMovimento());
 		movimentoDaAnnullare.setPgMovimentoAnn(movimentoDiStorno.getPgMovimento());
 		movimentoDaAnnullare.setToBeUpdated();
-		super.modificaConBulk(userContext, movimentoDaAnnullare);
+		modificaConBulk(userContext, movimentoDaAnnullare);
+		if (movimentoDaAnnullare.getBollaScaricoMag() != null && movimentoDaAnnullare.getBollaScaricoMag().getPgBollaSca() != null ){
+			annullaRigaBollaDiScarico(userContext, movimentoDaAnnullare);
+		}
 		return movimentoDiStorno;
 	}
 
+	private void annullaRigaBollaDiScarico(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare)
+			throws ComponentException, PersistencyException, ApplicationException {
+		MovimentiMagHome movimentiHome = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
+		try {
+			List listaRigaBolle = movimentiHome.findRigheBollaDiScarico(movimentoDaAnnullare);
+			if (listaRigaBolle != null){
+				for (Object obj : listaRigaBolle){
+					BollaScaricoRigaMagBulk riga = (BollaScaricoRigaMagBulk)obj;
+					riga.setStato(MovimentiMagBulk.STATO_ANNULLATO);
+					riga.setToBeUpdated();
+					super.modificaConBulk(userContext, movimentoDaAnnullare);
+				}
+			}
+		} catch (IntrospectionException e) {
+			throw new ComponentException(e);
+		}
+		
+	}
+	
 	private void controlliAnnullamento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare)
 			throws ComponentException, PersistencyException, ApplicationException {
 		if (movimentoDaAnnullare.getTipoMovimentoMag().isMovimentoDiCarico()){
@@ -777,7 +799,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 	    				MovimentiMagBulk movimentoMag = (MovimentiMagBulk)movHome.findByPrimaryKey(bollaRiga.getMovimentiMag());
 	    				movimentoMag.setBollaScaricoMag(bollaRiga.getBollaScaricoMag());
 	    				movimentoMag.setToBeUpdated();
-	    				super.modificaConBulk(userContext, movimentoMag);
+	    				modificaConBulk(userContext, movimentoMag);
 	    			} catch (ComponentException|PersistencyException ex) {
 	    				throw new DetailedRuntimeException(ex);
 	    			}

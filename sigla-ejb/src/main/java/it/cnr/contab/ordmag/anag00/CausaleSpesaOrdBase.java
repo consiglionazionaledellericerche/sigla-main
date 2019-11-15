@@ -12,7 +12,7 @@ public class CausaleSpesaOrdBase extends CausaleSpesaOrdKey implements Keyed {
 	private java.lang.String cdVoceIva;
  
 //    FLAG_SPESE VARCHAR(1) NOT NULL
-	private java.lang.String flagSpese;
+	private java.lang.Boolean flagSpese;
  
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
@@ -59,14 +59,14 @@ public class CausaleSpesaOrdBase extends CausaleSpesaOrdKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [flagSpese]
 	 **/
-	public java.lang.String getFlagSpese() {
+	public java.lang.Boolean getFlagSpese() {
 		return flagSpese;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [flagSpese]
 	 **/
-	public void setFlagSpese(java.lang.String flagSpese)  {
+	public void setFlagSpese(java.lang.Boolean flagSpese)  {
 		this.flagSpese=flagSpese;
 	}
 	/**

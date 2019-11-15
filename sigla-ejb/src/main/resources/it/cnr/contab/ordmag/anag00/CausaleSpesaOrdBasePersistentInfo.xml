@@ -20,8 +20,9 @@
 		<columnMapping
 			columnName="FLAG_SPESE"
 			propertyName="flagSpese"
-			sqlTypeName="VARCHAR"
+			sqlTypeName="CHAR"
 			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 			nullable="false" />
 		<columnMapping
 			columnName="DT_CANCELLAZIONE"

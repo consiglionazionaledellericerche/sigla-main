@@ -6,7 +6,10 @@
 		tableName="TIPO_MOVIMENTO_MAG_AZ">
 		<columnMapping
 			columnName="CD_CDS"
-			propertyName="unitaOrganizzativa.cd_unita_organizzativa" />
+			propertyName="tipoMovimentoMag.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_TIPO_MOVIMENTO"
+			propertyName="tipoMovimentoMag.cdTipoMovimento" />
 		<columnMapping
 			columnName="CD_CDS_RIF"
 			propertyName="tipoMovimentoMagRif.unitaOrganizzativa.cd_unita_organizzativa" />
@@ -15,7 +18,7 @@
 			propertyName="tipoMovimentoMagRif.cdTipoMovimento" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="unitaOrganizzativa"
+		name="tipoMovimentoMag"
 		partOfOid="true" />
 	<persistentProperty
 		name="tipoMovimentoMagRif" />

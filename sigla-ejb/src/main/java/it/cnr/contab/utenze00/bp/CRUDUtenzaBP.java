@@ -9,6 +9,7 @@ package it.cnr.contab.utenze00.bp;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
@@ -28,10 +29,11 @@ import java.rmi.RemoteException;
 import java.util.Optional;
 
 public class CRUDUtenzaBP extends SimpleCRUDBP {
-    private final SimpleDetailCRUDController crudAccessi = new SimpleDetailCRUDController("Accessi", AccessoBulk.class, "accessi", this);
+    private final SimpleDetailCRUDController crudAccessi = new SimpleDetailCRUDController( "Accessi", AccessoBulk.class, "accessi", this);
     private final SimpleDetailCRUDController crudRuoli_disponibili = new SimpleDetailCRUDController("Ruoli_disponibili", RuoloBulk.class, "ruoli_disponibili", this);
     private final SimpleDetailCRUDController crudRuoli = new SimpleDetailCRUDController("Ruoli", RuoloBulk.class, "ruoli", this);
     private final SimpleDetailCRUDController crudUtente_indirizzi_mail = new SimpleDetailCRUDController("Utente_indirizzi_mail", Utente_indirizzi_mailBulk.class, "utente_indirizzi_mail", this);
+    private final SimpleDetailCRUDController crudUtente_abil_ordini = new SimpleDetailCRUDController("Abil_ordine", AbilUtenteUopOperBulk.class, "utente_abil_ordine", this);
     private CompoundFindClause compoundfindclauseAccessiDisponibili = null;
     private final SimpleDetailCRUDController crudAccessi_disponibili = new SimpleDetailCRUDController("Accessi_disponibili", AccessoBulk.class, "accessi_disponibili", this) {
         public void setFilter(ActionContext actioncontext, CompoundFindClause compoundfindclause) {
@@ -209,7 +211,11 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
         return crudUtente_indirizzi_mail;
     }
 
-    public boolean isCdrConfiguratoreAll(UserContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public SimpleDetailCRUDController getCrudUtente_abil_ordini() {
+		return crudUtente_abil_ordini;
+	}
+
+	public boolean isCdrConfiguratoreAll(UserContext context) throws it.cnr.jada.action.BusinessProcessException {
         try {
             return ((UtenteComponentSession) createComponentSession()).isCdrConfiguratoreAll(context).booleanValue();
         } catch (ComponentException e) {
@@ -285,4 +291,8 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     		throw handleException(e);
     	}
     }
+    
+    protected void setTab() {
+		setTab("tabAbilOrdiniDettaglio","tabAbilOrdiniDettaglio");
+	}
 }

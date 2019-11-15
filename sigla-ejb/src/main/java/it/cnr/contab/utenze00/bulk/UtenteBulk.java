@@ -13,6 +13,7 @@ import javax.ejb.EJBException;
 
 
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bp.CRUDUtenzaAmministratoreBP;
 import it.cnr.contab.utenze00.bp.CRUDUtenzaBP;
@@ -32,7 +33,7 @@ public class UtenteBulk extends UtenteBase {
 	public static final String UTENTE_SUPERUTENTE_KEY = "S";
 	public static final String DEFAULT_PSWD = "PASSWORD";
 	private it.cnr.jada.bulk.BulkList	utente_indirizzi_mail   = new it.cnr.jada.bulk.BulkList();
-
+	private it.cnr.jada.bulk.BulkList	utente_abil_ordine   = new it.cnr.jada.bulk.BulkList();
 	private UtenteBulk gestore;
 	private DipartimentoBulk dipartimento = new DipartimentoBulk();
 	private RuoloBulk ruolo_supervisore = new RuoloBulk();
@@ -60,6 +61,22 @@ public class UtenteBulk extends UtenteBase {
 	}
 	public Utente_indirizzi_mailBulk removeFromUtente_indirizzi_mail(int index) {
 		Utente_indirizzi_mailBulk dett = (Utente_indirizzi_mailBulk)getUtente_indirizzi_mail().remove(index);
+		return dett;
+	}
+	
+	public it.cnr.jada.bulk.BulkList getUtente_abil_ordine() {
+		return utente_abil_ordine;
+	}
+	public void setUtente_abil_ordine(it.cnr.jada.bulk.BulkList utente_abil_ordine) {
+		this.utente_abil_ordine = utente_abil_ordine;
+	}
+	public int addToUtente_abil_ordine(AbilUtenteUopOperBulk dett) {
+		dett.setUtente(this);
+		getUtente_abil_ordine().add(dett);
+		return getUtente_abil_ordine().size()-1;
+	}
+	public AbilUtenteUopOperBulk removeFromUtente_abil_ordine(int index) {
+		AbilUtenteUopOperBulk dett = (AbilUtenteUopOperBulk)getUtente_abil_ordine().remove(index);
 		return dett;
 	}
 	/**

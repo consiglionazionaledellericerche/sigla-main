@@ -572,6 +572,14 @@ public Forward doSalvaDefinitivo(ActionContext actioncontext) throws RemoteExcep
 		OrdineAcqBulk ordine = (OrdineAcqBulk) bp.getModel();
 		if (ordine.isStatoDefinitivo()){
 			ordine.setStato(OrdineAcqBulk.STATO_DEFINITIVO);
+			java.sql.Timestamp dataReg = null;
+			try {
+				dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+			} catch (javax.ejb.EJBException e) {
+				throw new it.cnr.jada.DetailedRuntimeException(e);
+			}
+
+			ordine.setDataOrdineDef(dataReg);
 		}
 		if (ordine.isStatoInserito()){
 			try {
@@ -580,6 +588,14 @@ public Forward doSalvaDefinitivo(ActionContext actioncontext) throws RemoteExcep
 //					ordine.setStato(OrdineAcqBulk.STATO_INVIATA_ORDINE);
 				} else {
 				 	ordine.setStato(OrdineAcqBulk.STATO_DEFINITIVO);
+					java.sql.Timestamp dataReg = null;
+					try {
+						dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+					} catch (javax.ejb.EJBException e) {
+						throw new it.cnr.jada.DetailedRuntimeException(e);
+					}
+
+					ordine.setDataOrdineDef(dataReg);
 				}
 				try {
 					bp.setModel(actioncontext,ordine);

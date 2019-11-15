@@ -7,6 +7,7 @@ import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -229,6 +230,13 @@ public java.util.Collection findUtenteByCDRIncludeFirstLevel(String cdr) throws 
 
 public java.util.Collection findUtente_indirizzi_email(UtenteBulk utente) throws IntrospectionException, PersistencyException, ApplicationException {
 	PersistentHome uurHome = getHomeCache().getHome( Utente_indirizzi_mailBulk.class);
+	SQLBuilder sql = uurHome.createSQLBuilder();
+	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
+	return uurHome.fetchAll(sql);
+}
+
+public java.util.Collection findUtente_abil_ordine(UtenteBulk utente) throws IntrospectionException, PersistencyException, ApplicationException {
+	PersistentHome uurHome = getHomeCache().getHome( AbilUtenteUopOperBulk.class);
 	SQLBuilder sql = uurHome.createSQLBuilder();
 	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
 	return uurHome.fetchAll(sql);

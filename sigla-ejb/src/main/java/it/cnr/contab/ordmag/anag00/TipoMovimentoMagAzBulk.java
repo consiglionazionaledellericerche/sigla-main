@@ -3,8 +3,9 @@
  * Date 28/04/2017
  */
 package it.cnr.contab.ordmag.anag00;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.action.CRUDBP;
 public class TipoMovimentoMagAzBulk extends TipoMovimentoMagAzBase {
 	public final static String AZIONE_AZZERA = "0";
 	public final static String AZIONE_SOSTITUISCE = "S";
@@ -14,7 +15,7 @@ public class TipoMovimentoMagAzBulk extends TipoMovimentoMagAzBase {
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/
-	private Unita_organizzativaBulk unitaOrganizzativa =  new Unita_organizzativaBulk();
+	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
 	/**
 	 * [TIPO_MOVIMENTO_MAG Anagrafica delle Tipologie dei Movimenti.]
 	 **/
@@ -26,28 +27,62 @@ public class TipoMovimentoMagAzBulk extends TipoMovimentoMagAzBase {
 	public TipoMovimentoMagAzBulk() {
 		super();
 	}
+	
+	
+	@Override
+	public OggettoBulk initializeForInsert(CRUDBP crudbp, ActionContext actioncontext) {
+		// TODO Auto-generated method stub
+		super.initializeForInsert(crudbp, actioncontext);
+		
+		this.setAggTipmovUltimoConsumo("N");
+		this.setAggTipmovUltimoConsumo("N");
+		this.setAggDataUltimoCarico("N");
+		this.setAggTipmovUltimoCarico("N");
+		this.setAggUltimoFornitore("N");
+		this.setModAggProgrValCarichi("+");
+		this.setAggDataUltimoCaricoVal("N");
+		this.setModAggQtaValMagazzino("0");
+		this.setModAggProgrQtaCarichi("-");
+		this.setAggDataUltimoCaricoVal("N");
+		this.setModAggProgrValScarichi("+");
+		this.setModAggProgrQtaScarichi("-");
+		this.setModAggProgrConsumi("0");
+		this.setAggDataUltimoScaricoVal("N");
+		this.setAggDataUltimoScaricoQta("N");
+		this.setModAggQtaInizioAnno("N");
+		this.setModAggValoreInizioAnno("N");
+		this.setModAggTempoMedioApprov("+");
+		this.setModAggScortaMin("+");
+		this.setModAggQtaOrdine("0");
+		this.setModAggQtaMagazzino("+");
+		this.setRiportaLottoFornitore("N");
+		this.setQtaInizialeLotto("-");
+		this.setValoreInizialeLotto("+");
+		this.setRiportoDataCaricoLotto("N");
+		this.setCdCdsRif(null);
+		this.setCdTipoMovimentoRif(null);
+		this.setFlagSpese("N");
+		this.setQtaCaricoLotto("+");
+		this.setModAggValoreLotto("+");
+		this.setFlMovimentaLottiBloccati(false);
+		this.setGeneraBollaScarico("N");
+		this.setValido("N");
+		this.setModAggQtaPropSca("-");
+		this.setValorizzazioneCostoEffettivo("N");		
+		return this;
+	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: TIPO_MOVIMENTO_MAG_AZ
 	 **/
 	public TipoMovimentoMagAzBulk(java.lang.String cdCds, java.lang.String cdTipoMovimento) {
 		super(cdCds, cdTipoMovimento);
-		setUnitaOrganizzativa( new Unita_organizzativaBulk(cdCds) );
+		TipoMovimentoMagBulk tipoMovimento = new TipoMovimentoMagBulk();
+		tipoMovimento.setCdCds(cdCds);
+		tipoMovimento.setCdTipoMovimento(cdTipoMovimento);
+		setTipoMovimentoMag(tipoMovimento);
 	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Restituisce il valore di: [Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
-	 **/
-	public Unita_organizzativaBulk getUnitaOrganizzativa() {
-		return unitaOrganizzativa;
-	}
-	/**
-	 * Created by BulkGenerator 2.0 [07/12/2009]
-	 * Setta il valore di: [Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
-	 **/
-	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa)  {
-		this.unitaOrganizzativa=unitaOrganizzativa;
-	}
+	
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [Anagrafica delle Tipologie dei Movimenti.]
@@ -62,22 +97,45 @@ public class TipoMovimentoMagAzBulk extends TipoMovimentoMagAzBase {
 	public void setTipoMovimentoMagRif(TipoMovimentoMagBulk tipoMovimentoMagRif)  {
 		this.tipoMovimentoMagRif=tipoMovimentoMagRif;
 	}
+	public TipoMovimentoMagBulk getTipoMovimentoMag() {
+		return tipoMovimentoMag;
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [Anagrafica delle Tipologie dei Movimenti.]
+	 **/
+	public void setTipoMovimentoMag(TipoMovimentoMagBulk tipoMovimentoMag)  {
+		this.tipoMovimentoMag=tipoMovimentoMag;
+	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCds]
 	 **/
 	public java.lang.String getCdCds() {
-		Unita_organizzativaBulk unitaOrganizzativa = this.getUnitaOrganizzativa();
-		if (unitaOrganizzativa == null)
+		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMag();
+		if (tipoMovimentoMag == null)
 			return null;
-		return getUnitaOrganizzativa().getCd_unita_organizzativa();
+		return getTipoMovimentoMag().getCdCds();
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCds]
 	 **/
 	public void setCdCds(java.lang.String cdCds)  {
-		this.getUnitaOrganizzativa().setCd_unita_organizzativa(cdCds);
+		this.getTipoMovimentoMag().setCdCds(cdCds);
+	}
+	public java.lang.String getCdTipoMovimento() {
+		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMag();
+		if (tipoMovimentoMag == null)
+			return null;
+		return getTipoMovimentoMag().getCdTipoMovimento();
+	}
+	/**
+	 * Created by BulkGenerator 2.0 [07/12/2009]
+	 * Setta il valore di: [cdCds]
+	 **/
+	public void setCdTipoMovimento(java.lang.String cdTipoMovimento)  {
+		this.getTipoMovimentoMag().setCdTipoMovimento(cdTipoMovimento);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]

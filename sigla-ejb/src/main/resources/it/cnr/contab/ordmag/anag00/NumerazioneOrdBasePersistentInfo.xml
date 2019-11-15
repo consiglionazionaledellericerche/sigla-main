@@ -9,13 +9,13 @@
 			columnName="DS_NUMERATORE"
 			propertyName="dsNumeratore"
 			sqlTypeName="VARCHAR"
-			columnSize="100"
+			columnSize="100"			
 			nullable="false" />
 		<columnMapping
 			columnName="CD_TIPO_OPERAZIONE"
 			propertyName="cdTipoOperazione"
 			sqlTypeName="VARCHAR"
-			columnSize="3"
+			columnSize="3"			
 			nullable="false" />
 		<columnMapping
 			columnName="CORRENTE"
@@ -33,7 +33,7 @@
 			columnName="CD_TIPO_SEZIONALE"
 			propertyName="cdTipoSezionale"
 			sqlTypeName="VARCHAR"
-			columnSize="10"
+			columnSize="10"			
 			nullable="true" />
 		<columnMapping
 			columnName="PERC_PRORATA"

@@ -21,6 +21,9 @@ public class UtenteTemplateBulk extends UtenteBulk
 	private it.cnr.jada.bulk.BulkList	utente_unita_accessi = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	utente_unita_ruoli   = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	utente_firma_dettaglio   = new it.cnr.jada.bulk.BulkList();
+	
+	
+	
 
 	private List utente_unita_accessi_disponibili = new Vector();;	
 	private List utente_unita_ruoli_disponibili   = new Vector();;
@@ -30,6 +33,7 @@ public class UtenteTemplateBulk extends UtenteBulk
 	private List accessi_disponibili = new it.cnr.jada.util.Collect(utente_unita_accessi_disponibili,"accesso");
 	private List ruoli_disponibili   = new it.cnr.jada.util.Collect(utente_unita_ruoli_disponibili,"ruolo");		
 
+	
 	public UtenteTemplateBulk() {
 		super();
 		inizializza();	
@@ -115,7 +119,8 @@ public class UtenteTemplateBulk extends UtenteBulk
 				utente_unita_accessi,
 				utente_unita_ruoli,
 				getUtente_indirizzi_mail(),
-				utente_firma_dettaglio};
+				utente_firma_dettaglio,
+				getUtente_abil_ordine()};
 	}
 	/**
 	 * @return java.util.List

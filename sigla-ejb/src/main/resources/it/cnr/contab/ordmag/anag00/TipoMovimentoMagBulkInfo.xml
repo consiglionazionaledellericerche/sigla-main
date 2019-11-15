@@ -39,19 +39,21 @@
 	<fieldProperty
 		name="tipo"
 		property="tipo"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="2"
 		maxLength="2"
 		enabledOnEdit="false"
 		nullable="false"
+		keysProperty="tipoKeys"
 		label="Tipo" />
 	<fieldProperty
 		name="segno"
 		property="segno"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="1"
 		maxLength="1"
 		enabledOnEdit="false"
+		keysProperty="segnoKeys"
 		label="Segno" />
 	<fieldProperty
 		name="cdCdsStorno"
@@ -59,14 +61,22 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Cds Storno" />
+		label="Cds Storno" />		
+	<fieldProperty
+		name="findTipoMovimentoStorno"
+		property="tipoMovimentoMagStorno"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Movimento Storno" />
 	<fieldProperty
 		name="cdTipoMovimentoStorno"
-		property="cdTipoMovimentoStorno"
+		property="tipoMovimentoMagStorno.cdTipoMovimentoStorno"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
 		label="Codice Movimento di Storno" />
+		
 	<fieldProperty
 		name="cdCdsAlt"
 		property="cdCdsAlt"
@@ -74,13 +84,23 @@
 		inputSize="30"
 		maxLength="30"
 		label="Cds Alternativo" />
+		
+	<fieldProperty
+		name="findTipoMovimentoAlt"
+		property="tipoMovimentoMagAlt"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Movimento Alt" />
+		
 	<fieldProperty
 		name="cdTipoMovimentoAlt"
-		property="cdTipoMovimentoAlt"
+		property="tipoMovimentoMagAlt.cdTipoMovimentoAlt"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
 		label="Codice Movimento Alternativo" />
+		
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
@@ -88,13 +108,18 @@
 		formatName="date_short"
 		label="Data Cancellazione" />
 	<form
-		name="searchtool">
+		name="searchtool">		
 		<formFieldProperty
 			name="cdTipoMovimento" />
 		<formFieldProperty
-			name="dsTipoMovimento"  
+			name="dsTipoMovimento"   
 			inputSize="35"/>
 	</form>
+	<formFieldProperty
+		name="findTipoMovimentoStorno" />
+		
+	<formFieldProperty
+		name="findTipoMovimentoAlt" />		
 	<formFieldProperty
 		name="cdTipoMovimento" />
 	<formFieldProperty

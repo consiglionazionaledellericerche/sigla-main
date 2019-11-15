@@ -21,7 +21,16 @@ public Forward doFirmaOrdine(ActionContext actioncontext) throws RemoteException
 		OrdineAcqBulk ordine = (OrdineAcqBulk) bp.getModel();
 		if (ordine.isStatoAllaFirma()){
 			ordine.setStato(OrdineAcqBulk.STATO_DEFINITIVO);
+			java.sql.Timestamp dataReg = null;
+			try {
+				dataReg = it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+			} catch (javax.ejb.EJBException e) {
+				throw new it.cnr.jada.DetailedRuntimeException(e);
+			}
+
+			ordine.setDataOrdineDef(dataReg);
 		}
+
 		getBusinessProcess(actioncontext).save(actioncontext);
 		return actioncontext.findDefaultForward();
 	}

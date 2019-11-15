@@ -30,51 +30,58 @@
 	<fieldProperty
 		name="aggDataUltimoConsumo"
 		property="aggDataUltimoConsumo"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
-		maxLength="1"
+		maxLength="1"		
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
 		label="Aggiorna Data Ultimo Consumo" />
 	<fieldProperty
 		name="aggTipmovUltimoConsumo"
 		property="aggTipmovUltimoConsumo"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
 		maxLength="1"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"		
 		label="Aggiorna Tipo Movimento Ultimo Consumo" />
 	<fieldProperty
 		name="aggDataUltimoCarico"
 		property="aggDataUltimoCarico"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
-		maxLength="1"
+		maxLength="1"		
 		label="Aggiorna Data Ultimo Carico" />
 	<fieldProperty
 		name="aggTipmovUltimoCarico"
 		property="aggTipmovUltimoCarico"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
 		maxLength="1"
 		label="Aggiorna Tipo movimento Ultimo Carico" />
 	<fieldProperty
 		name="aggUltimoFornitore"
 		property="aggUltimoFornitore"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
-		maxLength="1"
+		maxLength="1"		
 		label="Aggiorna Ultimo Fornitore" />
 	<fieldProperty
 		name="modAggProgrValCarichi"
 		property="modAggProgrValCarichi"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="1"
 		maxLength="1"
+		keysProperty="aggQuantitaKeys"
 		label="Modalità Aggiornamento Progressivo a Valore Carichi" />
 	<fieldProperty
 		name="aggDataUltimoCaricoVal"
 		property="aggDataUltimoCaricoVal"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
-		maxLength="1"
+		maxLength="1"		
 		label="Aggiorna Data Ultimo Carico a Valore" />
 	<fieldProperty
 		name="modAggQtaValMagazzino"
@@ -93,9 +100,9 @@
 	<fieldProperty
 		name="aggDataUltimoCaricoQta"
 		property="aggDataUltimoCaricoQta"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
-		maxLength="1"
+		maxLength="1"		
 		label="Aggiorna Data Ultimo Carico a Quantità" />
 	<fieldProperty
 		name="modAggProgrValScarichi"
@@ -121,16 +128,16 @@
 	<fieldProperty
 		name="aggDataUltimoScaricoVal"
 		property="aggDataUltimoScaricoVal"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
-		maxLength="1"
+		maxLength="1"		
 		label="Aggiorna Data Ultimo Scarico a Valore" />
 	<fieldProperty
 		name="aggDataUltimoScaricoQta"
 		property="aggDataUltimoScaricoQta"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
-		maxLength="1"
+		maxLength="1"		
 		label="Aggiorna Data Ultimo Scarico a Quantità" />
 	<fieldProperty
 		name="modAggQtaInizioAnno"

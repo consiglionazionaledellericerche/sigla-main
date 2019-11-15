@@ -10,36 +10,41 @@
 			propertyName="aggDataUltimoConsumo"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 			nullable="true" />
 		<columnMapping
 			columnName="AGG_TIPMOV_ULTIMO_CONSUMO"
 			propertyName="aggTipmovUltimoConsumo"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 			nullable="true" />
 		<columnMapping
 			columnName="AGG_DATA_ULTIMO_CARICO"
 			propertyName="aggDataUltimoCarico"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 			nullable="true" />
 		<columnMapping
 			columnName="AGG_TIPMOV_ULTIMO_CARICO"
 			propertyName="aggTipmovUltimoCarico"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 			nullable="true" />
 		<columnMapping
 			columnName="AGG_ULTIMO_FORNITORE"
 			propertyName="aggUltimoFornitore"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 			nullable="true" />
 		<columnMapping
 			columnName="MOD_AGG_PROGR_VAL_CARICHI"
 			propertyName="modAggProgrValCarichi"
 			sqlTypeName="VARCHAR"
-			columnSize="1"
+			columnSize="1"			
 			nullable="true" />
 		<columnMapping
 			columnName="AGG_DATA_ULTIMO_CARICO_VAL"
@@ -64,6 +69,7 @@
 			propertyName="aggDataUltimoCaricoQta"
 			sqlTypeName="VARCHAR"
 			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
 			nullable="true" />
 		<columnMapping
 			columnName="MOD_AGG_PROGR_VAL_SCARICHI"
