@@ -30,7 +30,7 @@
 		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CDS" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["999"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DaData" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[(new SimpleDateFormat("yyyy/MM/dd")).parse("2019/01/01")]]></defaultValueExpression>
