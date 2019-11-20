@@ -14,16 +14,16 @@
 	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
 	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[2018]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[2019]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_inventario" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[277]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[347]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ti_documento" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_buono_c_s" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[59]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -48,12 +48,13 @@ INVENTARIO.CD_UNITA_ORGANIZZATIVA,
 UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA,
 TIPO_CARICO_SCARICO.DS_TIPO_CARICO_SCARICO,
 TESTATA.DS_BUONO_CARICO_SCARICO,
-(SELECT DENOMINAZIONE_SEDE FROM TERZO
+(SELECT CD_TERZO||' - '||DENOMINAZIONE_SEDE FROM TERZO
   WHERE CD_TERZO = INVENTARIO_CONSEGNATARIO.CD_CONSEGNATARIO) CONSEGNATARIO,
 (SELECT DENOMINAZIONE_SEDE FROM TERZO
   WHERE CD_TERZO = INVENTARIO_CONSEGNATARIO.CD_DELEGATO) DELEGATO,
-(SELECT DENOMINAZIONE_SEDE FROM TERZO
-  WHERE CD_TERZO = INVENTARIO.CD_ASSEGNATARIO) ASSEGNATARIO
+(SELECT CD_CATEGORIA_GRUPPO||' '||DS_CATEGORIA_GRUPPO FROM CATEGORIA_GRUPPO_INVENT
+  WHERE CD_CATEGORIA_GRUPPO = INVENTARIO.CD_CATEGORIA_GRUPPO) CATEGORIA_GRUPPO,
+INVENTARIO.TI_COMMERCIALE_ISTITUZIONALE
 FROM BUONO_CARICO_SCARICO TESTATA,
 BUONO_CARICO_SCARICO_DETT DETTAGLIO,
 INVENTARIO_BENI  INVENTARIO,
@@ -96,22 +97,23 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 	<field name="DS_TIPO_CARICO_SCARICO" class="java.lang.String"/>
 	<field name="CONSEGNATARIO" class="java.lang.String"/>
 	<field name="DELEGATO" class="java.lang.String"/>
-	<field name="ASSEGNATARIO" class="java.lang.String"/>
+	<field name="CATEGORIA_GRUPPO" class="java.lang.String"/>
+	<field name="TI_COMMERCIALE_ISTITUZIONALE" class="java.lang.String"/>
 	<variable name="TOTALE" class="java.math.BigDecimal" resetType="Group" resetGroup="TESTATA" calculation="Sum">
 		<variableExpression><![CDATA[$F{VALORE_UNITARIO}.multiply($F{QUANTITA})]]></variableExpression>
 	</variable>
 	<group name="TESTATA">
 		<groupExpression><![CDATA[$F{PG_INVENTARIO}]]></groupExpression>
 		<groupHeader>
-			<band height="20">
+			<band height="24">
 				<textField>
-					<reportElement key="staticText-1" style="TNRG12" x="248" y="3" width="282" height="13" uuid="9ee3ebde-a7fe-415c-9581-09a78d1f60cc"/>
+					<reportElement key="staticText-1" style="TNRG12" x="142" y="3" width="388" height="13" uuid="9ee3ebde-a7fe-415c-9581-09a78d1f60cc"/>
 					<textElement textAlignment="Right" markup="none">
 						<font size="10" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA["BUONO DI " +
+					<textFieldExpression><![CDATA["ANNO "+$F{ESERCIZIO} +" BUONO DI " +
 ($F{TI_DOCUMENTO}.equals("C")? "CARICO":"SCARICO") +
-" N. " + $F{PG_BUONO_C_S}]]></textFieldExpression>
+" N. " + $F{PG_BUONO_C_S}+ " del "+new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{DATA_REGISTRAZIONE})]]></textFieldExpression>
 				</textField>
 			</band>
 			<band height="14">
@@ -135,7 +137,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					<textFieldExpression><![CDATA["Tipo Movimento: " + $F{DS_TIPO_CARICO_SCARICO}]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="14">
+			<band height="21">
 				<textField>
 					<reportElement key="staticText-1" style="TNR10" x="0" y="0" width="530" height="13" uuid="1a5b293f-e79d-41ee-ac76-a868d83b53f5"/>
 					<textElement markup="none"/>
@@ -144,7 +146,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 			</band>
 			<band height="19">
 				<staticText>
-					<reportElement key="staticText-4" style="TNRG10" x="0" y="3" width="57" height="13" uuid="1fa6494d-d77f-4909-81aa-4735ba42b4e7"/>
+					<reportElement key="staticText-4" style="TNRG10" x="0" y="3" width="182" height="13" uuid="1fa6494d-d77f-4909-81aa-4735ba42b4e7"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -154,20 +156,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[CODICE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement key="staticText-4" style="TNRG10" x="58" y="3" width="190" height="13" uuid="850cfa8f-21c2-4ef1-8462-b953e78d1095"/>
-					<box>
-						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-						<bottomPen lineWidth="0.0" lineColor="#000000"/>
-						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					</box>
-					<textElement>
-						<font isBold="true"/>
-					</textElement>
-					<text><![CDATA[DESCRIZIONE]]></text>
+					<text><![CDATA[BENE]]></text>
 				</staticText>
 				<staticText>
 					<reportElement key="staticText-4" style="TNRG10" x="335" y="3" width="26" height="13" uuid="55c96b68-808d-4f18-8ad4-46541da58321"/>
@@ -215,17 +204,30 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					</graphicElement>
 				</line>
 				<staticText>
-					<reportElement key="staticText-4" style="TNRG10" x="248" y="3" width="87" height="13" uuid="13d42d84-fe34-4bb8-8cc5-403a5dea0d2e"/>
+					<reportElement key="staticText-4" style="TNRG10" x="184" y="3" width="124" height="13" uuid="13d42d84-fe34-4bb8-8cc5-403a5dea0d2e"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Right">
+					<textElement>
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[ASSEGNATARIO]]></text>
+					<text><![CDATA[CATEGORIA/GRUPPO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="306" y="3" width="26" height="13" uuid="d6359cb3-1028-45c1-b059-21b777c0635d"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO]]></text>
 				</staticText>
 			</band>
 		</groupHeader>
@@ -304,22 +306,9 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="16" splitType="Stretch">
-			<textField isBlankWhenNull="true">
-				<reportElement key="textField-11" style="TNR10" x="0" y="2" width="57" height="13" isRemoveLineWhenBlank="true" uuid="6754687c-56fd-4c03-a917-441500033bc8"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement>
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{NR_INVENTARIO}+"-"+String.format("%03d", $F{PROGRESSIVO}.intValue())]]></textFieldExpression>
-			</textField>
+		<band height="32" splitType="Stretch">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement key="textField-11" style="TNR10" x="58" y="2" width="190" height="13" isRemoveLineWhenBlank="true" uuid="d92b5976-93aa-4f62-8a34-3d4766186b74"/>
+				<reportElement key="textField-11" style="TNR10" x="0" y="2" width="182" height="13" isRemoveLineWhenBlank="true" uuid="6754687c-56fd-4c03-a917-441500033bc8"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -329,7 +318,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 				<textElement>
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{DS_BENE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NR_INVENTARIO}+"-"+String.format("%03d", $F{PROGRESSIVO}.intValue())+"  "+$F{DS_BENE}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement key="textField-11" style="TNR10" x="335" y="2" width="26" height="13" isRemoveLineWhenBlank="true" uuid="035c98f5-18d7-4718-9383-fbfc14c86d52"/>
@@ -370,18 +359,31 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[new DecimalFormat("¤ #,##0.00").format($F{VALORE_UNITARIO}.multiply($F{QUANTITA}))]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement key="textField-11" style="TNR10" x="248" y="2" width="87" height="13" isRemoveLineWhenBlank="true" uuid="b642a7f5-82e3-4039-8f03-9df516e48ed6"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="184" y="2" width="124" height="13" isRemoveLineWhenBlank="true" uuid="b642a7f5-82e3-4039-8f03-9df516e48ed6"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Right">
+				<textElement>
 					<font isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ASSEGNATARIO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CATEGORIA_GRUPPO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="308" y="2" width="20" height="13" isRemoveLineWhenBlank="true" uuid="222b2c85-d6e7-42b0-8711-873216d8e92d"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TI_COMMERCIALE_ISTITUZIONALE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
