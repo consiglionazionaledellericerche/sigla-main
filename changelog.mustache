@@ -17,6 +17,9 @@
 
 {{#commits}}
 >**{{{messageTitle}}}**
+{{#messageBodyItems}}
+> * {{.}}
+{{/messageBodyItems}}
 >
 >[{{hash}}](https://github.com/consiglionazionaledellericerche/{{repoName}}/commit/{{hash}}) {{authorName}} *{{commitTime}}*
 
