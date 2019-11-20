@@ -1,5 +1,21 @@
 # sigla-main Changelog
 
+## Release 6.0.14  -- _2019-11-20 13:41:06_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[affb7d9ceb1e93a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/affb7d9ceb1e93a) marco.spasiano *2019-11-20 13:41:04*
+
+>**Add profile publiccode on gitlab-ci**
+>
+>[960b1bb59226547](https://github.com/consiglionazionaledellericerche/sigla-main/commit/960b1bb59226547) marco.spasiano *2019-11-20 13:21:59*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[d9a6af442c528bc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9a6af442c528bc) marco.spasiano *2019-11-20 13:09:51*
+
+
 ## Release 6.0.13  -- _2019-11-20 12:59:22_ 
 ### Jira ORA-01722 
 
