@@ -49,6 +49,7 @@
 		<liquibase.version>3.5.3</liquibase.version>
 		<pdfbox.version>2.0.0</pdfbox.version>
 		<storage.cloud.version>1.0.5</storage.cloud.version>
+		<git.changelog.maven.plugin.version>1.60</git.changelog.maven.plugin.version>
 		<version.thorntail>2.5.0.Final</version.thorntail>
 
 		<version.arquillian>1.2.1.Final</version.arquillian>
@@ -71,6 +72,19 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>se.bjurr.gitchangelog</groupId>
+				<artifactId>git-changelog-maven-plugin</artifactId>
+				<version>${git.changelog.maven.plugin.version}</version>
+				<inherited>false</inherited>
+				<configuration>
+					<dateFormat>MMMM dd, yyyy</dateFormat>
+					<templateFile>changelog.mustache</templateFile>
+					<file>CHANGELOG.md</file>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 	<profiles>
 		<profile>
@@ -89,6 +103,24 @@
 						</configuration>
 					</plugin>
 				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>changelog</id>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-scm-plugin</artifactId>
+							<configuration>
+								<includes>CHANGELOG.md</includes>
+								<message>Generate CHANGELOG.md [ci skip]</message>
+								<pushChanges>true</pushChanges>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
 			</build>
 		</profile>
 	</profiles>
