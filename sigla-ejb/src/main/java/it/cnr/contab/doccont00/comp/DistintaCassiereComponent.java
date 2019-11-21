@@ -5071,14 +5071,16 @@ public class DistintaCassiereComponent extends
                             oldDoc = doc;
                         }
                     }
-                    if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) == 0))) {
-                        clas = infoben.getClassificazione().get(0);
-                        if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal(SCOSTAMENTO)) == 0)
-                            clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
-                        else
-                            clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
-                    } else if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) != 0))) {
-                        throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+
+                    if (totSiope.compareTo(infoben.getImportoBeneficiario()) != 0) {
+                        if (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) <= 0) {
+                            clas = infoben.getClassificazione().get(0);
+                            if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(BigDecimal.ZERO) > 0)
+                                clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
+                            else
+                                clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
+                        } else
+                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
@@ -5209,14 +5211,15 @@ public class DistintaCassiereComponent extends
                             oldDoc = doc;
                         }
                     }
-                    if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) == 0))) {
-                        clas = infoben.getClassificazione().get(0);
-                        if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(new BigDecimal(SCOSTAMENTO)) == 0)
-                            clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
-                        else
-                            clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
-                    } else if ((totSiope.compareTo(infoben.getImportoBeneficiario()) != 0 && (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) != 0))) {
-                        throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
+                    if (totSiope.compareTo(infoben.getImportoBeneficiario()) != 0) {
+                        if (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) <= 0) {
+                            clas = infoben.getClassificazione().get(0);
+                            if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(BigDecimal.ZERO) > 0)
+                                clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
+                            else
+                                clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
+                        } else
+                            throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
 
                     bollo.setAssoggettamentoBollo(docContabile
