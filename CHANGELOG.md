@@ -1,5 +1,25 @@
 # sigla-main Changelog
 
+## Release 6.0.16  -- _November 21, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[b7cf61096a8524a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b7cf61096a8524a) marco.spasiano *November 21, 2019*
+
+>**Cancellazione PEC Variazioni al PdG cambiato Subject Term**
+>
+>[9afe3b12a9ab090](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9afe3b12a9ab090) marco.spasiano *November 21, 2019*
+
+>**Bug Distinta Cassiere: corretto controllo sullo scostamento SIOPE**
+>
+>[e56fd7a1754e688](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e56fd7a1754e688) raffaele.pagano *November 21, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[f4fe7aacc8e4a2b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f4fe7aacc8e4a2b) marco.spasiano *November 20, 2019*
+
+
 ## Release 6.0.15  -- _November 20, 2019_ 
 ### No issue
 
