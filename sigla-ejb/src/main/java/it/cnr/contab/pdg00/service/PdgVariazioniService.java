@@ -239,7 +239,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
             folder = store.getFolder("INBOX");
             folder.open(Folder.READ_WRITE);
 
-            final List<SearchTerm> searchTerms = Arrays.asList(new SubjectTerm("CONSEGNA: Variazione"),
+            final List<SearchTerm> searchTerms = Arrays.asList(new SubjectTerm("Variazione al PdG"),
                     new ReceivedDateTerm(ComparisonTerm.LE,
                             Date.from(LocalDate.now().minusDays(10)
                                     .atStartOfDay(ZoneId.systemDefault()).toInstant())));
