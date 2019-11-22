@@ -5076,9 +5076,9 @@ public class DistintaCassiereComponent extends
                         if (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) <= 0) {
                             clas = infoben.getClassificazione().get(0);
                             if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(BigDecimal.ZERO) > 0)
-                                clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
+                                clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
-                                clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
+                                clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                         } else
                             throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
@@ -5215,9 +5215,9 @@ public class DistintaCassiereComponent extends
                         if (totSiope.subtract(infoben.getImportoBeneficiario()).abs().compareTo(new BigDecimal(SCOSTAMENTO)) <= 0) {
                             clas = infoben.getClassificazione().get(0);
                             if (totSiope.subtract(infoben.getImportoBeneficiario()).compareTo(BigDecimal.ZERO) > 0)
-                                clas.setImporto(clas.getImporto().subtract(new BigDecimal(SCOSTAMENTO)));
+                                clas.setImporto(clas.getImporto().subtract(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                             else
-                                clas.setImporto(clas.getImporto().add(new BigDecimal(SCOSTAMENTO)));
+                                clas.setImporto(clas.getImporto().add(totSiope.subtract(infoben.getImportoBeneficiario()).abs()));
                         } else
                             throw new ApplicationException("Impossibile generare il flusso, ripartizione per siope errata!");
                     }
