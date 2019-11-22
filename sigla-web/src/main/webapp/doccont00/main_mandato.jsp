@@ -36,7 +36,7 @@ function doVisualizzaMandato() {
 
 <body class="Form">
 	<%
-		if ( bp.isInserting() || bp.isDaSostituire())
+		if ( bp.isInserting())
 			JSPUtils.tabbed(
 						pageContext,
 						"tab",
