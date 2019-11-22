@@ -1,5 +1,21 @@
 # sigla-main Changelog
 
+## Release 6.0.17  -- _November 22, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[8cc4d04063cb777](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8cc4d04063cb777) marco.spasiano *November 22, 2019*
+
+>**Bug Distinta Cassiere: corretto controllo sullo scostamento SIOPE**
+>
+>[b223701bddd5ccb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b223701bddd5ccb) raffaele.pagano *November 22, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[2d7b8b8338a6d7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2d7b8b8338a6d7c) marco.spasiano *November 21, 2019*
+
+
 ## Release 6.0.16  -- _November 21, 2019_ 
 ### No issue
 
