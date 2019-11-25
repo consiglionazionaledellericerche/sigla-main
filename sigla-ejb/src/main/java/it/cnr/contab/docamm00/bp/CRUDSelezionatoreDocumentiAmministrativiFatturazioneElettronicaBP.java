@@ -452,15 +452,17 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                                                 .filter(Fattura_attivaBulk.class::isInstance)
                                                 .map(Fattura_attivaBulk.class::cast)
                                                 .orElseThrow(() -> new DetailedRuntimeException("Fattura non trovata!"));
-                                if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi() && daInviare) {
+                                if (!fattura_attivaBulk.isNotaCreditoDaNonInviareASdi() ) {
                                     final String nomeFileInvioSDI = component.recuperoNomeFileXml(userContext, fatturaAttivaByPrimaryKey).concat(".p7m");
-                                    fatturaService.inviaFatturaElettronica(
-                                            config.getVal01(),
-                                            password,
-                                            new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
-                                            nomeFileInvioSDI);
                                     fatturaAttivaByPrimaryKey.setNomeFileInvioSdi(nomeFileInvioSDI);
-                                    logger.info("File firmato inviato");
+                                    if (daInviare){
+                                        fatturaService.inviaFatturaElettronica(
+                                                config.getVal01(),
+                                                password,
+                                                new ByteArrayDataSource(new ByteArrayInputStream(byteSigned), MimeTypes.P7M.mimetype()),
+                                                nomeFileInvioSDI);
+                                        logger.info("File firmato inviato");
+                                    }
                                 }
                                 documentiCollegatiDocAmmService.updateProperties(
                                         Collections.singletonMap(
