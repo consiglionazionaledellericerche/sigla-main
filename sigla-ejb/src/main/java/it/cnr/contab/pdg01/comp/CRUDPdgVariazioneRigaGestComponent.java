@@ -58,13 +58,7 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
 import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazione_voceBulk;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
@@ -587,7 +581,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 	 * 		 - il CD_TIPO_UNITA è uguale a quello della UO associata al CDR
 	 * 
 	 * @param userContext lo userContext che ha generato la richiesta
-	 * @param clauses clausole di ricerca gia' specificate dall'utente
+	 * @param clause clausole di ricerca gia' specificate dall'utente
 	 * @return il SQLBuilder con la clausola aggiuntiva sul gestore
 	 */
 	public SQLBuilder selectElemento_voceByClause (UserContext userContext, 
@@ -651,11 +645,25 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 					if (list.isEmpty() && listRim.isEmpty())
 						sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
 					else {
+						//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
+						//all'utente di effettuare una variazione negativa
+						List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHome(userContext, V_saldi_voce_progettoBulk.class))
+								.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio()).stream()
+												.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
+														el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
+												.collect(Collectors.toList());
+
 						sql.openParenthesis(FindClause.AND);
 						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
 							//Se la voce è stata eliminata nella rimodulazione la stessa non viene proposta
-							if (listRim.stream().filter(el->el.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
+							if (listRim.stream().filter(voceRim->voceRim.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
 									.filter(Progetto_rimodulazione_voceBulk::isTiOperazioneEliminato)
+									.filter(voceRim->!vociMovimentate.stream()
+												.filter(voceMov->voceMov.getEsercizio_voce().equals(voceRim.getElementoVoce().getEsercizio()))
+												.filter(voceMov->voceMov.getTi_appartenenza().equals(voceRim.getElementoVoce().getTi_appartenenza()))
+												.filter(voceMov->voceMov.getTi_gestione().equals(voceRim.getElementoVoce().getTi_gestione()))
+												.filter(voceMov->voceMov.getCd_elemento_voce().equals(voceRim.getElementoVoce().getCd_elemento_voce()))
+												.findFirst().isPresent())
 									.findFirst().isPresent())
 								continue;
 							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));

@@ -35,6 +35,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -82,12 +83,7 @@ import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resHome;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceHome;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneHome;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
@@ -103,6 +99,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
@@ -305,8 +302,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	/**
 	 * 
 	 * @param userContext
-	 * @param var_stanz_res
-	 * @param cds
+	 * @param ass_cdr
+	 * @param cdr
 	 * @param clause
 	 * @return
 	 * @throws ComponentException
@@ -427,11 +424,49 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
 	
 					List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
-					
-					if (list.isEmpty())
+					List<Progetto_rimodulazione_voceBulk> listRim = new BulkList<Progetto_rimodulazione_voceBulk>();
+					if (Optional.ofNullable(var_stanz_res_riga.getVar_stanz_res().getProgettoRimodulazione())
+							.filter(rim->rim.getPg_progetto().equals(var_stanz_res_riga.getProgetto().getPg_progetto()))
+							.isPresent()) {
+						Progetto_rimodulazioneHome rimHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+						listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(var_stanz_res_riga.getVar_stanz_res().getProgettoRimodulazione()));
+					}
+
+					if (list.isEmpty() && listRim.isEmpty())
 						sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
 					else {
+						//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
+						//all'utente di effettuare una variazione negativa
+						List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHome(userContext, V_saldi_voce_progettoBulk.class))
+								.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio()).stream()
+								.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
+										el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
+								.collect(Collectors.toList());
+
 						sql.openParenthesis(FindClause.AND);
+						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+							//Se la voce è stata eliminata nella rimodulazione la stessa non viene proposta
+							if (listRim.stream().filter(voceRim->voceRim.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
+									.filter(Progetto_rimodulazione_voceBulk::isTiOperazioneEliminato)
+									.filter(voceRim->!vociMovimentate.stream()
+											.filter(voceMov->voceMov.getEsercizio_voce().equals(voceRim.getElementoVoce().getEsercizio()))
+											.filter(voceMov->voceMov.getTi_appartenenza().equals(voceRim.getElementoVoce().getTi_appartenenza()))
+											.filter(voceMov->voceMov.getTi_gestione().equals(voceRim.getElementoVoce().getTi_gestione()))
+											.filter(voceMov->voceMov.getCd_elemento_voce().equals(voceRim.getElementoVoce().getCd_elemento_voce()))
+											.findFirst().isPresent())
+									.findFirst().isPresent())
+								continue;
+							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
+							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
+								sql.openParenthesis(FindClause.OR);
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
+								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
+								sql.closeParenthesis();
+							}
+						}
+						//Aggiungo le voci di bilancio inserite nella rimodulazione
 						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
 							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
 							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
@@ -1541,7 +1576,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	 * In tal caso restituisce un errore.
 	 * 
 	 * @param userContext
-	 * @param pdgVariazione La variazione che si sta rendendo definitiva
+	 * @param varStanzRes La variazione che si sta rendendo definitiva
 	 * @throws it.cnr.jada.comp.ComponentException
 	 */
 	private void controllaRimodulazioneProgetto(UserContext userContext, Var_stanz_resBulk varStanzRes) throws it.cnr.jada.comp.ComponentException {

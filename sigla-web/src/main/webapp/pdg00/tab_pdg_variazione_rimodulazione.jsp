@@ -11,10 +11,9 @@
 <%
 	PdGVariazioneBP bp = (PdGVariazioneBP)BusinessProcess.getBusinessProcess(request);
 	Pdg_variazioneBulk bk = (Pdg_variazioneBulk) bp.getModel();
-	boolean isFieldEnabled = !((bp.isSearching())||(bp.isCdrScrivania()&&bk.isPropostaProvvisoria()));
+	boolean isFieldEnabled = !(bp.isSearching()||(bp.isCdrScrivania()&&bk.isPropostaProvvisoria()&&!bk.isROTipologia()));
 	boolean isFieldStoEnabled = !((bp.isSearching())||(bp.isCdrScrivania()&&bk.isPropostaProvvisoria())&& bk.isStorno()&&bk.isGestioneSpeseEnable());
 	boolean isFieldNonApprovaEnabled = !(bp.isSearching()||bk.isPropostaDefinitiva());
-//	boolean isAbilitato = !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni());
 	boolean isAbilitato =( isFieldEnabled && !(bp.isCdrScrivania() &&bk.isApprovata() && bp.isAbilitatoModificaDescVariazioni()));
 %>
 <div class="Group card">
@@ -28,7 +27,7 @@
 	<table class="Panel w-100" cellspacing=1 cellpadding=1>
 	  <tr>
         <TD><% bp.getController().writeFormLabel(out,"findProgettoRimodulato");%></TD>
-	    <TD colspan="4"><% bp.getController().writeFormInput(out,"default","findProgettoRimodulato",isFieldEnabled,null,null);%></TD>      
+	    <TD colspan="4"><% bp.getController().writeFormInput(out,"default","findProgettoRimodulato",isFieldEnabled,null,null);%></TD>
       </tr>
 	  <tr>
         <TD><% bp.getController().writeFormLabel(out,"pgGenRimodulazione");%></TD>

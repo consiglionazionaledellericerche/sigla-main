@@ -323,6 +323,13 @@
 		inputType="TEXT"
 		inputSize="10" 
 		label="Versione Rimodulazione" />
+	<fieldProperty
+		name="pgGenRimodulazione"
+		property="progettoRimodulazione.pg_gen_rimodulazione"
+		inputType="TEXT"
+		inputSize="10"
+		enabledOnSearch="true"
+		label="Nr. Rimodulazione" />
 
 	<form name="searchtool">
     	<formFieldProperty
@@ -405,7 +412,9 @@
 		name="cdProgettoRimodulazione" />
 	<formFieldProperty
 		name="pgRimodulazione" />
-		
+	<formFieldProperty
+		name="pgGenRimodulazione" />
+
 	<findFieldProperty
 		name="esercizio" />
 	<findFieldProperty
