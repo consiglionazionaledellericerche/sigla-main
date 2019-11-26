@@ -1868,38 +1868,34 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                                     cercaSaldoPianoEconomico(ppe, "S");
 		
     						if (Optional.ofNullable(progettoRimodulato).isPresent()) {
-    							BigDecimal imVariazione = rimodulazione.getDettagliRimodulazione().stream()
-											 .filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
-											 .filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
-											 .filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
-											 .map(Progetto_rimodulazione_ppeBulk::getImVarSpesaFinanziato)
-    										 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-								
-    							BigDecimal dispResiduaFin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
-    												.filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
-    												.filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
-    												.filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
-    												.map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
-    												.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO)
-    												.subtract(Optional.ofNullable(saldo).map(V_saldi_piano_econom_progettoBulk::getAssestatoFinanziamento)
-    														.orElse(BigDecimal.ZERO));
-    							//Se l'importo della variazione richiesta per la voce economica è negativa mi aspetto solo variazioni 
-    							//in negativo sulle voci associate al fine di quadrare la variazione
-    							if (imVariazione.compareTo(BigDecimal.ZERO)<0) { 
+    							//Controllo quota FINANZIATA
+								BigDecimal imRimodulatoFin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
+										.filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
+										.filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
+										.filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
+										.map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
+										.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+    							BigDecimal imStanziatoFin = Optional.ofNullable(saldo).map(V_saldi_piano_econom_progettoBulk::getAssestatoFinanziamento).orElse(BigDecimal.ZERO);
+
+    							//Se l'importo stanziato è superiore a quello rimodulato, l'importo della variazione deve essere negativa al fine di riportare lo stanziato a quadrare con il rimodulato
+    							if (imStanziatoFin.compareTo(imRimodulatoFin)>0) {
     								if (ctrlDispPianoEco.getImpFinanziato().compareTo(BigDecimal.ZERO)>0)
 			                            messaggio.add("La variazione della quota finanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
 			                            		" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + 
 			                                    ") risulta essere positiva laddove la variazione richiesta dalla rimodulazione del progetto "+ 
 			                                    ctrlDispPianoEco.getProgetto().getCd_progetto() + " deve essere solo negativa.");
-
-    								if (dispResiduaFin.subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)>0)
+    								//La variazione negativa non deve essere superiore a quanto richiesto dalla rimodulazione
+									//Es. se imRimodulato=1000 e imStanziato=2000 la variazione negativa non deve essere superiore a -1000
+    								if (imRimodulatoFin.subtract(imStanziatoFin).subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)>0)
 			                            messaggio.add("La variazione della quota finanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
 			                            		" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + 
 			                                    ") risulta essere superiore alla variazione richiesta dalla rimodulazione del progetto "+ 
 			                                    ctrlDispPianoEco.getProgetto().getCd_progetto() + 
-			                                    " ("+new it.cnr.contab.util.EuroFormat().format(dispResiduaFin.abs()) + ").");
+			                                    " ("+new it.cnr.contab.util.EuroFormat().format(imRimodulatoFin.subtract(imStanziatoFin)) + ").");
     							} else {
-    								if (dispResiduaFin.subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)<0)
+    								//La variazione non deve superare la disponibiltà residua data dalla differenza tra imRimodulato e imStanzato
+    								if (imRimodulatoFin.subtract(imStanziatoFin).subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)<0)
 			                            messaggio.add("La disponibilità rimodulata della quota finanziata del piano economico "+ppe.getCd_voce_piano()+
 			                                    " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
 			                                    (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
@@ -1909,7 +1905,45 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			                                    " non è sufficiente a coprire la variazione (" +
 			                                    new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
     							}
-    						} else {
+
+								//Controllo quota COFINANZIATA
+								BigDecimal imRimodulatoCofin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
+										.filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
+										.filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
+										.filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
+										.map(Progetto_piano_economicoBulk::getIm_spesa_cofinanziato)
+										.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+								BigDecimal imStanziatoCofin = Optional.ofNullable(saldo).map(V_saldi_piano_econom_progettoBulk::getAssestatoCofinanziamento).orElse(BigDecimal.ZERO);
+
+								//Se l'importo stanziato è superiore a quello rimodulato, l'importo della variazione deve essere negativa al fine di riportare lo stanziato a quadrare con il rimodulato
+								if (imStanziatoCofin.compareTo(imRimodulatoCofin)>0) {
+									if (ctrlDispPianoEco.getImpCofinanziato().compareTo(BigDecimal.ZERO)>0)
+										messaggio.add("La variazione della quota cofinanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
+												" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) +
+												") risulta essere positiva laddove la variazione richiesta dalla rimodulazione del progetto "+
+												ctrlDispPianoEco.getProgetto().getCd_progetto() + " deve essere solo negativa.");
+									//La variazione negativa non deve essere superiore a quanto richiesto dalla rimodulazione
+									//Es. se imRimodulato=1000 e imStanziato=2000 la variazione negativa non deve essere superiore a -1000
+									if (imRimodulatoCofin.subtract(imStanziatoCofin).subtract(ctrlDispPianoEco.getImpCofinanziato()).compareTo(BigDecimal.ZERO)>0)
+										messaggio.add("La variazione della quota cofinanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
+												" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) +
+												") risulta essere superiore alla variazione richiesta dalla rimodulazione del progetto "+
+												ctrlDispPianoEco.getProgetto().getCd_progetto() +
+												" ("+new it.cnr.contab.util.EuroFormat().format(imRimodulatoCofin.subtract(imStanziatoCofin)) + ").");
+								} else {
+									//La variazione non deve superare la disponibilità residua data dalla differenza tra imRimodulato e imStanzato
+									if (imRimodulatoCofin.subtract(imStanziatoCofin).subtract(ctrlDispPianoEco.getImpCofinanziato()).compareTo(BigDecimal.ZERO)<0)
+										messaggio.add("La disponibilità rimodulata della quota cofinanziata del piano economico "+ppe.getCd_voce_piano()+
+												" associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
+												(ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
+												" ("+new it.cnr.contab.util.EuroFormat().format(Optional.ofNullable(saldo)
+												.map(V_saldi_piano_econom_progettoBulk::getDispResiduaCofinanziamento)
+												.orElse(BigDecimal.ZERO))+")"+
+												" non è sufficiente a coprire la variazione (" +
+												new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + ").");
+								}
+							} else {
     							BigDecimal dispResiduaFin = Optional.ofNullable(saldo)
                                 		.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
                                 		.orElse(BigDecimal.ZERO)
@@ -1923,58 +1957,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		                                    		.orElse(BigDecimal.ZERO))+")"+
 		                                    " non è sufficiente a coprire la variazione (" +
 		                                    new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
-    						}    
 
-    						if (Optional.ofNullable(progettoRimodulato).isPresent()) {
-    							BigDecimal imVariazione = rimodulazione.getDettagliRimodulazione().stream()
-										 .filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
-										 .filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
-										 .filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
-										 .map(Progetto_rimodulazione_ppeBulk::getImVarSpesaCofinanziato)
-										 .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-    							
-    							BigDecimal dispResiduaCofin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
-    												.filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
-    												.filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
-    												.filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
-    												.map(Progetto_piano_economicoBulk::getIm_spesa_cofinanziato)
-    												.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO)
-    												.subtract(Optional.ofNullable(saldo)
-    			                                    		.map(V_saldi_piano_econom_progettoBulk::getAssestatoCofinanziamento)
-    			                                    		.orElse(BigDecimal.ZERO));
-    							//Se l'importo della variazione richiesta per la voce economica è negativa mi aspetto solo variazioni 
-    							//in negativo sulle voci associate al fine di quadrare la variazione
-								if (imVariazione.compareTo(BigDecimal.ZERO)<0) { 
-									if (ctrlDispPianoEco.getImpCofinanziato().compareTo(BigDecimal.ZERO)>0)
-			                            messaggio.add("La variazione della quota cofinanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
-			                            		" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + 
-			                                    ") risulta essere positiva laddove la variazione richiesta dalla rimodulazione del progetto "+ 
-			                                    ctrlDispPianoEco.getProgetto().getCd_progetto() + " deve essere solo negativa.");
-
-									if (dispResiduaCofin.subtract(ctrlDispPianoEco.getImpCofinanziato()).compareTo(BigDecimal.ZERO)>0)
-			                            messaggio.add("La variazione della quota cofinanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
-			                            		" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + 
-			                                    ") risulta essere superiore alla variazione richiesta dalla rimodulazione del progetto "+ 
-			                                    ctrlDispPianoEco.getProgetto().getCd_progetto() + 
-			                                    " ("+new it.cnr.contab.util.EuroFormat().format(dispResiduaCofin.abs()) + ").");
-								} else {
-									if (dispResiduaCofin.subtract(ctrlDispPianoEco.getImpCofinanziato()).compareTo(BigDecimal.ZERO)<0)
-			                            messaggio.add("La disponibilità rimodulata della quota cofinanziata del piano economico "+ppe.getCd_voce_piano()+
-			                                    " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
-			                                    (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
-			                                    " ("+new it.cnr.contab.util.EuroFormat().format(saldo.getDispResiduaCofinanziamento())+")"+
-			                                    " non è sufficiente a coprire la variazione (" +
-			                                    new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + ").");
-								}
-    						} else {
-    							BigDecimal dispResiduaCofin = saldo.getDispResiduaCofinanziamento().subtract(ctrlDispPianoEco.getImpCofinanziato());
-	                            if (dispResiduaCofin.compareTo(BigDecimal.ZERO)<0)
-	                                messaggio.add("La disponibilità quota cofinanziata del piano economico "+ppe.getCd_voce_piano()+
-	                                        " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
-	                                        (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
-		                                    " ("+new it.cnr.contab.util.EuroFormat().format(saldo.getDispResiduaFinanziamento())+")"+
-	                                        " non è sufficiente a coprire la variazione (" +
-	                                        new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + ").");
+								BigDecimal dispResiduaCofin = Optional.ofNullable(saldo)
+										.map(V_saldi_piano_econom_progettoBulk::getDispResiduaCofinanziamento)
+										.orElse(BigDecimal.ZERO)
+										.subtract(ctrlDispPianoEco.getImpCofinanziato());
+								if (dispResiduaCofin.compareTo(BigDecimal.ZERO)<0)
+									messaggio.add("La disponibilità quota cofinanziata del piano economico "+ppe.getCd_voce_piano()+
+											" associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
+											(ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
+											" ("+new it.cnr.contab.util.EuroFormat().format(saldo.getDispResiduaCofinanziamento())+")"+
+											" non è sufficiente a coprire la variazione (" +
+											new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + ").");
     						}
     					}
                         catch (Exception ex ){
