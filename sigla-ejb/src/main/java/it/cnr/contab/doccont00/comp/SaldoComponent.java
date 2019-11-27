@@ -1432,6 +1432,7 @@ public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, Strin
 {
 	try
 	{
+		Pdg_vincoloHome home = (Pdg_vincoloHome)getHome(userContext, Pdg_vincoloBulk.class);
 		java.math.BigDecimal saldoResiduo = new java.math.BigDecimal(0);
 		Voce_f_saldi_cdr_lineaBulk comp = find( userContext, cd_cdr, cd_linea_attivita, voce);
 		if (comp != null) {
@@ -1440,6 +1441,11 @@ public java.math.BigDecimal getTotaleSaldoResidui(UserContext userContext, Strin
 			for (Iterator i = residui.iterator(); i.hasNext();) {
 				Voce_f_saldi_cdr_lineaBulk residuo = (Voce_f_saldi_cdr_lineaBulk)i.next();
 				saldoResiduo = saldoResiduo.add(residuo.getDispAdImpResiduoImproprio());
+
+				//calcolo i vincoli e li sottraggo in quanto quota riservata
+				List<Pdg_vincoloBulk> listVincoli = home.cercaDettagliVincolati(residuo);
+				BigDecimal impVincolo = listVincoli.stream().map(e->e.getIm_vincolo()).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+				saldoResiduo = saldoResiduo.subtract(impVincolo);
 			}
 		}
 		return saldoResiduo;

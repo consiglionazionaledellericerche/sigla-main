@@ -121,9 +121,7 @@ import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
-import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
+import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -1660,6 +1658,7 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 			 **/
 			if (totaleOldScad.compareTo(totaleNewScad)==-1 || !found) {
 				BigDecimal totaleResidui = session.getTotaleSaldoResidui(userContext,cdr,latt,voce);
+
 				if (totaleResidui.compareTo(param_cds.getIm_soglia_consumo_residuo())==1) 
 					if (!found)
 						throw new ApplicationException("Non è possibile assumere impegni di competenza per il CDR/GAE/Voce (" + 
