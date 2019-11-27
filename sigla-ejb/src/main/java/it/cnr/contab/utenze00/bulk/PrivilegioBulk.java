@@ -39,7 +39,8 @@ public class PrivilegioBulk extends PrivilegioBase {
 	final public static String ABILITA_VARIAZIONI = "MODVAR";
 	final public static String ABILITA_ALL_TRATT = "ALLTRA";
 	final public static String ABILITA_AUTORIZZA_DIARIA = "DIARIA";
-	
+	final public static String ABILITA_REVERSALE_INCASSO = "REVINC";
+
 	public static final String TIPO_RISERVATO_CNR 	= "C";
 	public static final String TIPO_PUBBLICO 		= "D";
 

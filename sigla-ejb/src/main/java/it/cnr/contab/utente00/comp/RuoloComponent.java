@@ -31,12 +31,11 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBroker;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
+import org.apache.poi.hssf.record.formula.functions.Find;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Collection;
 
 
@@ -744,67 +743,7 @@ public class RuoloComponent extends it.cnr.jada.comp.CRUDComponent implements IC
     }
 
     public boolean isAbilitatoPubblicazioneSito(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
-        try {
-            SQLBuilder sql = null;
-            SQLBroker broker = null;
-
-            UtenteBulk utente = (UtenteBulk) (getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
-
-            if (utente.isSupervisore() && utente.getCd_ruolo_supervisore() != null) {
-                RuoloBulk ruolo = (RuoloBulk) (getHome(userContext, RuoloBulk.class).findByPrimaryKey(new RuoloBulk(utente.getCd_ruolo_supervisore())));
-                if (ruolo != null && ruolo.getTipo() != null) {
-                    SQLBuilder sql2 = getHome(userContext, Tipo_ruoloBulk.class).createSQLBuilder();
-                    sql2.addSQLClause("AND", "TIPO_RUOLO.TIPO", SQLBuilder.EQUALS, ruolo.getTipo());
-
-                    sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
-                    sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
-                    sql2.openParenthesis("AND");
-                    sql2.addSQLClause("AND", "ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO", SQLBuilder.EQUALS, PrivilegioBulk.ABILITA_PUBBLICAZIONE_SITO);
-                    sql2.addSQLClause("OR", "ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO", SQLBuilder.EQUALS, PrivilegioBulk.ABILITA_FUNZIONI_DIRETTORE);
-                    sql2.closeParenthesis();
-
-                    if (sql2.executeExistsQuery(getConnection(userContext)))
-                        return true;
-                }
-            } else {
-                sql = getHome(userContext, Utente_unita_ruoloBulk.class).createSQLBuilder();
-                sql.addSQLClause("AND", "UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
-                sql.addSQLClause("AND", "UTENTE_UNITA_RUOLO.CD_UTENTE", SQLBuilder.EQUALS, CNRUserContext.getUser(userContext));
-                broker = getHome(userContext, Utente_unita_ruoloBulk.class).createBroker(sql);
-                Utente_unita_ruoloBulk utente_unita_ruolo;
-                while (broker.next()) {
-                    utente_unita_ruolo = (Utente_unita_ruoloBulk) broker.fetch(Utente_unita_ruoloBulk.class);
-                    RuoloBulk ruolo = (RuoloBulk) (getHome(userContext, RuoloBulk.class).findByPrimaryKey(new RuoloBulk(utente_unita_ruolo.getCd_ruolo())));
-                    if (ruolo != null && ruolo.getTipo() != null) {
-
-                        SQLBuilder sql2 = getHome(userContext, Tipo_ruoloBulk.class).createSQLBuilder();
-                        sql2.addSQLClause("AND", "TIPO_RUOLO.TIPO", SQLBuilder.EQUALS, ruolo.getTipo());
-
-                        //sql2.addSQLClause("AND","TIPO_RUOLO.FL_APPROVA_BIL",SQLBuilder.EQUALS,"Y");
-                        sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
-                        sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
-                        sql2.openParenthesis("AND");
-                        sql2.addSQLClause("AND", "ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO", SQLBuilder.EQUALS, PrivilegioBulk.ABILITA_PUBBLICAZIONE_SITO);
-                        sql2.addSQLClause("OR", "ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO", SQLBuilder.EQUALS, PrivilegioBulk.ABILITA_FUNZIONI_DIRETTORE);
-                        sql2.closeParenthesis();
-
-                        if (sql2.executeExistsQuery(getConnection(userContext))) {
-
-                            broker.close();
-                            return true;
-                        }
-                    }
-                }
-                broker.close();
-            }
-        } catch (PersistencyException e) {
-            throw new ComponentException(e);
-        } catch (java.sql.SQLException e) {
-            throw handleException(e);
-        }
-
-
-        return (false);
+        return isAbilitatoPrivilegio(userContext,PrivilegioBulk.ABILITA_PUBBLICAZIONE_SITO,PrivilegioBulk.ABILITA_FUNZIONI_DIRETTORE);
     }
 
     public boolean isAbilitatoFunzioniIncarichi(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
@@ -1209,4 +1148,70 @@ public class RuoloComponent extends it.cnr.jada.comp.CRUDComponent implements IC
         return (false);
     }
 
+    public boolean isAbilitatoReversaleIncasso(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+        return isAbilitatoPrivilegio(userContext,PrivilegioBulk.ABILITA_REVERSALE_INCASSO);
+    }
+
+    private boolean isAbilitatoPrivilegio(UserContext userContext, String... privilegi) throws it.cnr.jada.comp.ComponentException {
+        try {
+            SQLBuilder sql = null;
+            SQLBroker broker = null;
+
+            UtenteBulk utente = (UtenteBulk) (getHome(userContext, UtenteBulk.class).findByPrimaryKey(new UtenteBulk(CNRUserContext.getUser(userContext))));
+
+            if (utente.isSupervisore() && utente.getCd_ruolo_supervisore() != null) {
+                RuoloBulk ruolo = (RuoloBulk) (getHome(userContext, RuoloBulk.class).findByPrimaryKey(new RuoloBulk(utente.getCd_ruolo_supervisore())));
+                if (ruolo != null && ruolo.getTipo() != null) {
+                    SQLBuilder sql2 = getHome(userContext, Tipo_ruoloBulk.class).createSQLBuilder();
+                    sql2.addSQLClause(FindClause.AND, "TIPO_RUOLO.TIPO", SQLBuilder.EQUALS, ruolo.getTipo());
+
+                    sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
+                    sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
+                    sql2.openParenthesis(FindClause.AND);
+                    Arrays.stream(privilegi).forEach(privilegio->
+                        sql2.addSQLClause(FindClause.OR, "ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO", SQLBuilder.EQUALS, privilegio)
+                    );
+                    sql2.closeParenthesis();
+
+                    if (sql2.executeExistsQuery(getConnection(userContext)))
+                        return true;
+                }
+            } else {
+                sql = getHome(userContext, Utente_unita_ruoloBulk.class).createSQLBuilder();
+                sql.addSQLClause(FindClause.AND, "UTENTE_UNITA_RUOLO.CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS, CNRUserContext.getCd_unita_organizzativa(userContext));
+                sql.addSQLClause(FindClause.AND, "UTENTE_UNITA_RUOLO.CD_UTENTE", SQLBuilder.EQUALS, CNRUserContext.getUser(userContext));
+                broker = getHome(userContext, Utente_unita_ruoloBulk.class).createBroker(sql);
+                Utente_unita_ruoloBulk utente_unita_ruolo;
+                while (broker.next()) {
+                    utente_unita_ruolo = (Utente_unita_ruoloBulk) broker.fetch(Utente_unita_ruoloBulk.class);
+                    RuoloBulk ruolo = (RuoloBulk) (getHome(userContext, RuoloBulk.class).findByPrimaryKey(new RuoloBulk(utente_unita_ruolo.getCd_ruolo())));
+                    if (ruolo != null && ruolo.getTipo() != null) {
+
+                        SQLBuilder sql2 = getHome(userContext, Tipo_ruoloBulk.class).createSQLBuilder();
+                        sql2.addSQLClause(FindClause.AND, "TIPO_RUOLO.TIPO", SQLBuilder.EQUALS, ruolo.getTipo());
+
+                        //sql2.addSQLClause("AND","TIPO_RUOLO.FL_APPROVA_BIL",SQLBuilder.EQUALS,"Y");
+                        sql2.addTableToHeader("ASS_TIPO_RUOLO_PRIVILEGIO");
+                        sql2.addSQLJoin("TIPO_RUOLO.TIPO", "ASS_TIPO_RUOLO_PRIVILEGIO.TIPO");
+                        sql2.openParenthesis(FindClause.AND);
+                        Arrays.stream(privilegi).forEach(privilegio->
+                            sql2.addSQLClause(FindClause.OR, "ASS_TIPO_RUOLO_PRIVILEGIO.CD_PRIVILEGIO", SQLBuilder.EQUALS, privilegio)
+                        );
+                        sql2.closeParenthesis();
+
+                        if (sql2.executeExistsQuery(getConnection(userContext))) {
+                            broker.close();
+                            return true;
+                        }
+                    }
+                }
+                broker.close();
+            }
+        } catch (PersistencyException e) {
+            throw new ComponentException(e);
+        } catch (java.sql.SQLException e) {
+            throw handleException(e);
+        }
+        return (false);
+    }
 }

@@ -21,5 +21,16 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-
+    <changeSet author="raffaele.pagano" id="abilitazione-privilegio-reversale-incasso">
+        <addDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="duva" defaultValueDate="${now}"/>
+        <sql>
+            insert into ass_tipo_ruolo_privilegio (tipo,cd_privilegio,utcr,utuv,pg_ver_rec)
+            select tipo,'REVINC','SYSTEM','SYSTEM',1
+            from tipo_ruolo
+            <comment>Associazione privilegio ai tipi ruolo</comment>
+        </sql>
+        <dropDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="dacr"/>
+        <dropDefaultValue tableName="ass_tipo_ruolo_privilegio" columnName="duva"/>
+    </changeSet>
 </databaseChangeLog>

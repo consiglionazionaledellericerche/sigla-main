@@ -301,4 +301,7 @@ public class UtenteBulk extends UtenteBase {
 	public static boolean isAbilitatoAutorizzareDiaria(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
 		return getRuoloComponentSession().isAbilitatoAutorizzareDiaria(param0);
 	}
+	public static boolean isAbilitatoReversaleIncasso(it.cnr.jada.UserContext param0) throws ComponentException, RemoteException{
+		return getRuoloComponentSession().isAbilitatoReversaleIncasso(param0);
+	}
 }

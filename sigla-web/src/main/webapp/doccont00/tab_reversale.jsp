@@ -39,10 +39,10 @@
 	<tr>
 		<td>
 			<%
-			if (bp.isEnteCNR())
-				bp.getController().writeFormInput( out, "ti_reversaleCNR" ); 
-			else
+			if (bp.isReversaleIncassoAbilitata())
 				bp.getController().writeFormInput( out, "ti_reversale" );
+			else
+				bp.getController().writeFormInput( out, "ti_reversale_disab" );
 			%>
 		</td>
 	</tr>

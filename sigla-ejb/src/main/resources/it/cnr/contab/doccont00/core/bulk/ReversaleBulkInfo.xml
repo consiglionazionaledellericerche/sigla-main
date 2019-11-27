@@ -117,7 +117,7 @@
 		enabledOnFreeSearch="false"		
 		label="Tipo documento contabile" />		
 	<fieldProperty
-		name="ti_reversaleCNR"
+		name="ti_reversale_disab"
 		property="ti_reversale"
 		maxLength="1"
 		inputSize="1"
@@ -371,7 +371,7 @@
 	<formFieldProperty
 		name="ti_reversale" />
 	<formFieldProperty
-		name="ti_reversaleCNR" />
+		name="ti_reversale_disab" />
 	<formFieldProperty
 		name="pg_reversale" />
 	<formFieldProperty

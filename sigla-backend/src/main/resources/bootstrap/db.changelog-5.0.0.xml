@@ -2670,4 +2670,17 @@ TRASPORTO_AEREO"/>
                           remarks="Motivazione per cui viene effettuata la variazione di trasferimento per il personale - Dominio: BAN = Bando; PRG = Proroga; ALT = Altre Spese; GEN = Generico; INC = Compensi Incentivanti; DER = Variazioni in deroga; TAE = Trasferimento Area; TAU = Trasferimento Autorizzato."
         />
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="inserimento-privilegio-reversale-incasso">
+        <insert tableName="privilegio">
+            <column name="cd_privilegio" type="STRING" value="REVINC"/>
+            <column name="ds_privilegio" type="STRING" value="Abilitato alla selezione della tipologia di reversale in fase di emissione."/>
+            <column name="ti_privilegio" type="STRING" value="C"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

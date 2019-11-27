@@ -51,6 +51,7 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.BulkList;
@@ -90,7 +91,7 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 	private boolean siope_cup_attivo =false;
 	private Unita_organizzativaBulk uoSrivania;
 	private ContabiliService contabiliService;
-	private boolean isEnteCNR = true;
+	private boolean isReversaleIncassoAbilitata = false;
 	protected boolean attivoSiopeplus;
 
 	public CRUDReversaleBP() {
@@ -507,10 +508,9 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 			contabiliService = SpringUtil.getBean("contabiliService",
 					ContabiliService.class);		
 
-			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(actioncontext.getUserContext());
 			Parametri_cnrBulk parCnr = Utility.createParametriCnrComponentSession().getParametriCnr(actioncontext.getUserContext(),CNRUserContext.getEsercizio(actioncontext.getUserContext()));
 
-			setEnteCNR(parEnte.isEnteCNR());
+			setReversaleIncassoAbilitata(UtenteBulk.isAbilitatoReversaleIncasso(actioncontext.getUserContext()));
 			setCup_attivo(parCnr.getFl_cup().booleanValue());
 			setSiope_cup_attivo(parCnr.getFl_siope_cup().booleanValue());
 		}
@@ -771,11 +771,12 @@ public class CRUDReversaleBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 		super.init(config, actioncontext);
 	}
 
-	public void setEnteCNR(boolean isEnteCNR) {
-		this.isEnteCNR = isEnteCNR;
+	private void setReversaleIncassoAbilitata(boolean reversaleIncassoAbilitata) {
+		isReversaleIncassoAbilitata = reversaleIncassoAbilitata;
 	}
-	public boolean isEnteCNR() {
-		return isEnteCNR;
+
+	public boolean isReversaleIncassoAbilitata() {
+		return isReversaleIncassoAbilitata;
 	}
 
 	public boolean isAttivoSiopeplus() {
