@@ -68,12 +68,13 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
  */
 public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	private it.cnr.contab.config00.sto.bulk.CdrBulk centro_responsabilita_scrivania;
-	private it.cnr.contab.config00.sto.bulk.CdsBulk centro_di_spesa_scrivania;	
+	private it.cnr.contab.config00.sto.bulk.CdsBulk centro_di_spesa_scrivania;
 	private Unita_organizzativaBulk uoSrivania;
 	private Accertamento_modificaBulk acrMod;
     private Integer annoFromPianoEconomico;
 	private Progetto_rimodulazioneBulk mainProgettoRimodulazione;
-	
+	private boolean uoRagioneria;
+
 	private SimpleDetailCRUDController crudAssCDR = new SimpleDetailCRUDController( "AssociazioneCDR", Ass_var_stanz_res_cdrBulk.class, "associazioneCDR", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
 			validaAssociazioneCDRPerCancellazione(context, (Ass_var_stanz_res_cdrBulk)detail);
@@ -269,6 +270,12 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			setCentro_responsabilita_scrivania(Utility.createCdrComponentSession().cdrFromUserContext(context.getUserContext()));
 			setAbilitatoModificaDescVariazioni(UtenteBulk.isAbilitatoModificaDescVariazioni(context.getUserContext()));
 			setAttivaGestioneVariazioniTrasferimento(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext()).getFl_variazioni_trasferimento());
+
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
+			Configurazione_cnrBulk config = configSession.getConfigurazione(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()), null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+			if (config==null)
+				config = configSession.getConfigurazione(context.getUserContext(),  null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+			setUoRagioneria(Optional.ofNullable(config).map(Configurazione_cnrBulk::getVal01).map(uoRagioneria->uoRagioneria.equals(getCentro_responsabilita_scrivania().getCd_unita_organizzativa())).orElse(Boolean.FALSE));
 		} catch (ComponentException e) {
 			throw handleException(e);
 		} catch (RemoteException e) {
@@ -719,5 +726,13 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
         for (int j = 0; j < i; j++)
             tabs[j] = new String[]{pages.get(j)[0], pages.get(j)[1], pages.get(j)[2]};
         return tabs;
-    }    
+    }
+
+    public boolean isUoRagioneria() {
+		return uoRagioneria;
+	}
+
+	private void setUoRagioneria(boolean uoRagioneria) {
+		this.uoRagioneria = uoRagioneria;
+	}
 }

@@ -73,4 +73,23 @@
             <column name="fl_controlli_disabled" type="CHAR(1)" value="Y"/>
         </update>
     </changeSet>
+
+    <changeSet author="marco.spasiano" id="configurazione-cnr-add-uo-ragioneria-profile-cnr">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="2020"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="UO_SPECIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="UO_RAGIONERIA"/>
+            <column name="val01" type="STRING" value="ASR.105"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="000.407"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='UO_SPECIALE' AND CD_CHIAVE_SECONDARIA='UO_RAGIONERIA'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

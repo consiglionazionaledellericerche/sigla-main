@@ -21,6 +21,8 @@
 */
 package it.cnr.contab.pdg00.bulk;
 import java.math.BigDecimal;
+import java.util.Enumeration;
+import java.util.Map;
 import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -35,10 +37,12 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ICancellatoLogicamente;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellatoLogicamente{
@@ -48,6 +52,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	
 	//Elenco completo delle Finalità della Variazioni utilizzato dalle mappe in modalità ricerca
 	public static final java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
+	public java.util.Dictionary baseTiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
 
 	private static final java.util.Dictionary ds_causaleKeys = new it.cnr.jada.util.OrderedHashtable();
 	
@@ -66,6 +71,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	final public static String MOTIVAZIONE_GENERICO = "GEN";
 	final public static String MOTIVAZIONE_BANDO = "BAN";
 	final public static String MOTIVAZIONE_PROROGA = "PRG";
+	final public static String MOTIVAZIONE_COMPENSI_INCENTIVANTI = "INC";
+	final public static String MOTIVAZIONE_VARIAZIONE_IN_DEROGA = "DER";
 	final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
 	final public static String MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO = "TAU";
 	final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
@@ -90,6 +97,8 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando da pubblicare");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_COMPENSI_INCENTIVANTI,"Personale - Compensi Incentivanti");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazione in Deroga");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
 		
@@ -211,7 +220,16 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_GENERICO,"Variazione Generica");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_BANDO,"Personale - Bando in corso");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
+		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_COMPENSI_INCENTIVANTI,"Personale - Compensi Incentivanti");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
+
+		if (!baseTiMotivazioneVariazioneKeys.isEmpty()) {
+			for(Enumeration baseKey = baseTiMotivazioneVariazioneKeys.keys(); baseKey.hasMoreElements();) {
+				String key = String.valueOf(baseKey.nextElement());
+				String value = String.valueOf(baseTiMotivazioneVariazioneKeys.get(key));
+				tiMotivazioneVariazioneKeys.put(key, value);
+			}
+		}
 
 		if (Optional.ofNullable(this.getCentro_responsabilita())
 				.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
@@ -232,9 +250,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 					.map(Unita_organizzativaBulk::isUoEnte)
 					.orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoAutorizzato())
 			tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
-		
+
 		return tiMotivazioneVariazioneKeys;
-	}	
+	}
 
 	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
 		return tiMotivazioneVariazioneForSearchKeys;
@@ -290,10 +308,25 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	 * Inizializza per l'inserimento i flag
 	 */
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
-		if (bp != null && bp instanceof PdGVariazioneBP && ((PdGVariazioneBP)bp).getCentro_responsabilita_scrivania() != null)
-		  setCentro_responsabilita(((PdGVariazioneBP)bp).getCentro_responsabilita_scrivania());
+		if (Optional.ofNullable(bp).filter(PdGVariazioneBP.class::isInstance).isPresent()) {
+			PdGVariazioneBP myBp = (PdGVariazioneBP) bp;
+			setCentro_responsabilita(myBp.getCentro_responsabilita_scrivania());
+			if (myBp.isUoRagioneria())
+				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazioni in Deroga");
+		}
 		setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
 		return super.initializeForInsert(bp,context);
+	}
+
+	@Override
+	public OggettoBulk initializeForEdit(CRUDBP crudbp, ActionContext actioncontext) {
+		OggettoBulk bulk = super.initializeForEdit(crudbp, actioncontext);
+		if (Optional.ofNullable(crudbp).filter(PdGVariazioneBP.class::isInstance).isPresent()) {
+			PdGVariazioneBP myBp = (PdGVariazioneBP)crudbp;
+			if (myBp.isUoRagioneria() || ((Pdg_variazioneBulk)bulk).isMotivazioneVariazioneInDeroga())
+				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazioni in Deroga");
+		}
+		return bulk;
 	}
 
 	/**
@@ -784,7 +817,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	public boolean isMotivazioneVariazionePersonale() {
 		return this.isMotivazioneVariazioneBandoPersonale()||
 			   this.isMotivazioneVariazioneProrogaPersonale()||
-			   this.isMotivazioneVariazioneAltreSpesePersonale();
+			   this.isMotivazioneVariazioneAltreSpesePersonale()||
+			   this.isMotivazioneVariazioneInDeroga()||
+			   this.isMotivazioneCompensiIncentivanti();
 	}
 
 	public boolean isMotivazioneVariazioneBandoPersonale() {
@@ -793,6 +828,14 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 
 	public boolean isMotivazioneVariazioneProrogaPersonale() {
 		return MOTIVAZIONE_PROROGA.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneCompensiIncentivanti() {
+		return MOTIVAZIONE_COMPENSI_INCENTIVANTI.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneVariazioneInDeroga() {
+		return MOTIVAZIONE_VARIAZIONE_IN_DEROGA.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneVariazioneAltreSpesePersonale() {

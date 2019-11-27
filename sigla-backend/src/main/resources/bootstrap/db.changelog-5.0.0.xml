@@ -2645,4 +2645,29 @@ TRASPORTO_AEREO"/>
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="configurazione-cnr-add-uo-ragioneria">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="UO_SPECIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="UO_RAGIONERIA"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="aggiorna-commento-colonna-variazioni">
+        <setColumnRemarks tableName="pdg_variazione"
+                          columnName="ti_motivazione_variazione"
+                          remarks="Motivazione per cui viene effettuata la variazione di trasferimento per il personale - Dominio: BAN = Bando; PRG = Proroga; ALT = Altre Spese; GEN = Generico; INC = Compensi Incentivanti; DER = Variazioni in deroga; TAE = Trasferimento Area; TAU = Trasferimento Autorizzato."
+        />
+        <setColumnRemarks tableName="var_stanz_res"
+                          columnName="ti_motivazione_variazione"
+                          remarks="Motivazione per cui viene effettuata la variazione di trasferimento per il personale - Dominio: BAN = Bando; PRG = Proroga; ALT = Altre Spese; GEN = Generico; INC = Compensi Incentivanti; DER = Variazioni in deroga; TAE = Trasferimento Area; TAU = Trasferimento Autorizzato."
+        />
+    </changeSet>
 </databaseChangeLog>

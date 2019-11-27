@@ -73,7 +73,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
     private Unita_organizzativaBulk uoSrivania;
     private DipartimentoBulk dipartimentoSrivania;
     private Integer annoFromPianoEconomico;
-    
+    private boolean uoRagioneria;
+
     private SimpleDetailCRUDController crudAssCDR = new SimpleDetailCRUDController("AssociazioneCDR", Ass_pdg_variazione_cdrBulk.class, "associazioneCDR", this) {
         public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
             if (!detail.isToBeCreated())
@@ -160,12 +161,10 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
     }
 
     protected void initialize(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
-        super.initialize(context);
         try {
             setParametriCnr(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())));
             setCentro_responsabilita_scrivania(createCdrComponentSession().cdrFromUserContext(context.getUserContext()));
             setAbilitatoModificaDescVariazioni(UtenteBulk.isAbilitatoModificaDescVariazioni(context.getUserContext()));
-            ((Pdg_variazioneBulk) getModel()).setCentro_responsabilita(getCentro_responsabilita_scrivania());
             setUoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context));
             if (it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context) != null)
                 setDipartimentoSrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getDipartimento(context));
@@ -175,12 +174,18 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
             BigDecimal annoFrom = configSession.getIm01(context.getUserContext(), new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO);
             if (Optional.ofNullable(annoFrom).isPresent())
-                setAnnoFromPianoEconomico(annoFrom.intValue());            
+                setAnnoFromPianoEconomico(annoFrom.intValue());
+
+            Configurazione_cnrBulk config = configSession.getConfigurazione(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()), null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+            if (config==null)
+                config = configSession.getConfigurazione(context.getUserContext(),  null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+            setUoRagioneria(Optional.ofNullable(config).map(Configurazione_cnrBulk::getVal01).map(uoRagioneria->uoRagioneria.equals(getCentro_responsabilita_scrivania().getCd_unita_organizzativa())).orElse(Boolean.FALSE));
         } catch (ComponentException e) {
             throw handleException(e);
         } catch (RemoteException e) {
             throw handleException(e);
         }
+        super.initialize(context);
     }
 
     protected void validaAccessoBP(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.comp.ApplicationException, it.cnr.jada.action.BusinessProcessException {
@@ -782,7 +787,15 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
         return annoFromPianoEconomico;
     }
 
-    public void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
+    private void setAnnoFromPianoEconomico(Integer annoFromPianoEconomico) {
         this.annoFromPianoEconomico = annoFromPianoEconomico;
+    }
+
+    public boolean isUoRagioneria() {
+        return uoRagioneria;
+    }
+
+    private void setUoRagioneria(boolean uoRagioneria) {
+        this.uoRagioneria = uoRagioneria;
     }
 }

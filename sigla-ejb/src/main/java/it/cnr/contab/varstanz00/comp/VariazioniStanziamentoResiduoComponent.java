@@ -573,6 +573,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		if (var_stanz_res.getAssociazioneCDR().isEmpty()) 
 			throw new ApplicationException("Associare almeno un Centro di Responsabilità alla Variazione.");
 		
+
+
 		controllaRimodulazioneProgetto(userContext,var_stanz_res);
 
 		try {
@@ -590,14 +592,14 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		try{
 			boolean existDettPersonale = true;
 			String cdrPersonale = null;
-			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent() && 
-					var_stanz_res.isMotivazionePersonale()) { 
+			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent() &&
+					var_stanz_res.isMotivazionePersonale()) {
 				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				existDettPersonale = false;
-			} 
+			}
 
-			for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){			
+			for (java.util.Iterator j=var_stanz_res.getAssociazioneCDR().iterator();j.hasNext();){
 				Ass_var_stanz_res_cdrBulk ass_cdr = (Ass_var_stanz_res_cdrBulk)j.next();
 				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
 	
