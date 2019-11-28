@@ -1515,7 +1515,14 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
     	validaPianoEconomico(userContext,progetto,null);
     }
 
-    public void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+	public void validaPianoEconomico(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		//Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
+		Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+		ProgettoBulk progettoRimodulato = rimodHome.getProgettoRimodulato(rimodulazione);
+		validaPianoEconomico(userContext, progettoRimodulato, rimodulazione);
+    }
+
+	private void validaPianoEconomico(UserContext userContext, ProgettoBulk progetto, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
     	try {
 			validaDatePianoEconomico(userContext, progetto);
 
