@@ -760,6 +760,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
 									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
 									newPpeVoc.setElemento_voce(ppeRimVoc.getElemento_voce());
+									newPpeVoc.initializeSaldo(ppe.getProgetto().getVociBilancioMovimentate());
 									newPpeVoc.setToBeCreated();
 									ppe.addToVociBilancioAssociate(newPpeVoc);
 							   }
@@ -831,6 +832,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
 									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
 									newPpeVoc.setElemento_voce(ppeRimVoc.getElemento_voce());
+									newPpeVoc.initializeSaldo(ppe.getProgetto().getVociBilancioMovimentate());
 									newPpeVoc.setToBeCreated();
 									ppe.addToVociBilancioAssociate(newPpeVoc);
 							   }
@@ -889,6 +891,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 								if (!Optional.ofNullable(ppeVocStorage).isPresent()) {
 									Ass_progetto_piaeco_voceBulk newPpeVoc = new Ass_progetto_piaeco_voceBulk();
 									newPpeVoc.setElemento_voce(ppeRimVoc.getElemento_voce());
+									newPpeVoc.initializeSaldo(ppe.getProgetto().getVociBilancioMovimentate());
 									newPpeVoc.setToBeCreated();
 									ppe.addToVociBilancioAssociate(newPpeVoc);
 							   }
