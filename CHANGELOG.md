@@ -1,5 +1,61 @@
 # sigla-main Changelog
 
+## Release 6.0.19  -- _November 28, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[ff159b96008497c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ff159b96008497c) marco.spasiano *November 28, 2019*
+
+>**Troncata la causale della fattura passiva da SDI a 2000 caratteri**
+>
+>[a69e6e3451f7009](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a69e6e3451f7009) gianfranco.gasparro *November 28, 2019*
+
+>**Fix Rimodulazione: corretto controllo di allineamento variazione con rimodulazione.**
+>
+>[b8e944fe354611a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8e944fe354611a) raffaele.pagano *November 28, 2019*
+
+>**Fix Stampa Rimodulazione: corretta la stampa che presentava sempre le date iniziali e rimodulate con lo stesso valore.**
+>
+>[f641e0ae26264a4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f641e0ae26264a4) raffaele.pagano *November 28, 2019*
+
+>**Fix Rimodulazione: quando si inseriva una data di proroga non caricava correttamente la tab che permette di inserire altri anni.**
+>
+>[055680c1fb5bc97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/055680c1fb5bc97) raffaele.pagano *November 28, 2019*
+
+>**Fix Rimodulazione: corretto controllo di allineamento variazione con rimodulazione.**
+>
+>[4e7cf7c96576247](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4e7cf7c96576247) raffaele.pagano *November 27, 2019*
+
+>**Fix creazione impegni di competenza. Il controllo che verifica la presenza di disponibità residue non teneva conto anche delle somme vincolate ad accertamenti inesigibili - Issue: #23**
+>
+>[7dca132512a6443](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7dca132512a6443) raffaele.pagano *November 27, 2019*
+
+>**Consentita la possibilità di selezionare la tipologia di reversale condizionandola alla presenza del privilegio REVINC associato all'utente - Issue: #25**
+>
+>[8151c23a184a75a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8151c23a184a75a) raffaele.pagano *November 27, 2019*
+
+>**Aggiunto sulle variazioni di bilancio la Finalità 'Personale - Compensi incentivanti' e la finalità 'Personale - Variazioni in deroga' - Issue: #24**
+>
+>[52ace29493bc82b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/52ace29493bc82b) raffaele.pagano *November 27, 2019*
+
+>**Bug Rimodulazione: corretto controllo di allineamento variazione con rimodulazione.**
+>
+>[879c77368f7b63a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/879c77368f7b63a) raffaele.pagano *November 26, 2019*
+
+>**Bug Rimodulazione: non visualizzava nelle variazioni le voci di bilancio che con la rimodulazione erano state scollegate dal progetto ma che, avendo stanziamenti, dovevano essere azzerati tramite la variazione stessa.**
+>
+>[f7052badac2441c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f7052badac2441c) raffaele.pagano *November 26, 2019*
+
+>**Corretta anomalia di mancato salvataggio del nome del file di invio a SDI**
+>
+>[78f81269b5090fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78f81269b5090fa) gianfranco.gasparro *November 25, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[05dc98140366dc8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05dc98140366dc8) marco.spasiano *November 22, 2019*
+
+
 ## Release 6.0.18  -- _November 22, 2019_ 
 ### No issue
 
