@@ -434,7 +434,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		if (existAnnoCorrente)
 			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAnnoCorrente","Anno "+optProgetto.get().getEsercizio(),"/progettiric00/rimodula_progetto_piano_economico_anno_corrente.jsp" });
 			
-		if (!annoInizio.equals(optProgetto.get().getEsercizio()) || !optProgetto.get().getAnnoFineOf().equals(optProgetto.get().getEsercizio()) ||
+		if (!annoInizio.equals(optProgetto.get().getEsercizio()) || !annoFine.equals(optProgetto.get().getEsercizio()) ||
 				optProgettoRimodulazione.get().getDettagliPianoEconomicoAltriAnni().size()>0)
 			hash.put(i++, new String[]{ "tabProgettoPianoEconomicoAltriAnni","Altri Anni","/progettiric00/rimodula_progetto_piano_economico_altri_anni.jsp" });
 

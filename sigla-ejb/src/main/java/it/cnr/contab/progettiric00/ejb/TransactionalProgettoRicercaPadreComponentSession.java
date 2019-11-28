@@ -527,12 +527,11 @@ public it.cnr.contab.progettiric00.core.bulk.ProgettoBulk initializePianoEconomi
 		}
 	}
 }
-public void validaPianoEconomico(it.cnr.jada.UserContext param0, it.cnr.contab.progettiric00.core.bulk.ProgettoBulk param1,it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk param2) throws ComponentException, RemoteException {
+public void validaPianoEconomico(it.cnr.jada.UserContext param0,it.cnr.contab.progettiric00.core.bulk.Progetto_rimodulazioneBulk param1) throws ComponentException, RemoteException {
 	try {
 		invoke("validaPianoEconomico",new Object[] {
 			param0,
-			param1,
-			param2});
+			param1});
 	} catch(java.rmi.RemoteException e) {
 		throw e;
 	} catch(java.lang.reflect.InvocationTargetException e) {
