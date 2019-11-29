@@ -508,7 +508,9 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		if (Optional.ofNullable(crudbp).filter(CRUDVar_stanz_resBP.class::isInstance).isPresent()) {
 			CRUDVar_stanz_resBP myBp = (CRUDVar_stanz_resBP) crudbp;
 			if (myBp.isUoRagioneria())
-				baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazioni in Deroga");
+				baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento dalla Ragioneria");
+			else
+				baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento alla Ragioneria");
 		}
 		setFl_perenzione(Boolean.FALSE);
 		return super.initializeForInsert(crudbp, actioncontext);
@@ -517,10 +519,14 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	@Override
 	public OggettoBulk initializeForEdit(CRUDBP crudbp, ActionContext actioncontext) {
 		OggettoBulk bulk = super.initializeForEdit(crudbp, actioncontext);
-		if (Optional.ofNullable(crudbp).filter(PdGVariazioneBP.class::isInstance).isPresent()) {
-			PdGVariazioneBP myBp = (PdGVariazioneBP)crudbp;
-			if (myBp.isUoRagioneria() || ((Pdg_variazioneBulk)bulk).isMotivazioneVariazioneInDeroga())
-				baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazioni in Deroga");
+		if (Optional.ofNullable(crudbp).filter(CRUDVar_stanz_resBP.class::isInstance).isPresent()) {
+			CRUDVar_stanz_resBP myBp = (CRUDVar_stanz_resBP)crudbp;
+			if (myBp.isUoRagioneria() || ((Var_stanz_resBulk)bulk).isMotivazioneTrasferimentoRagioneria()) {
+				if (myBp.isUoRagioneria())
+					baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento dalla Ragioneria");
+				else
+					baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento alla Ragioneria");
+			}
 		}
 		return bulk;
 	}
@@ -537,16 +543,8 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		return Pdg_variazioneBulk.MOTIVAZIONE_COMPENSI_INCENTIVANTI.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneVariazioneInDeroga() {
-		return Pdg_variazioneBulk.MOTIVAZIONE_VARIAZIONE_IN_DEROGA.equals(this.getTiMotivazioneVariazione());
-	}
-
-	public boolean isMotivazionePersonale() {
-		return this.isMotivazioneVariazioneBandoPersonale()||
-				this.isMotivazioneVariazioneProrogaPersonale()||
-				this.isMotivazioneVariazioneAltreSpesePersonale()||
-				this.isMotivazioneVariazioneInDeroga()||
-				this.isMotivazioneCompensiIncentivanti();
+	public boolean isMotivazioneTrasferimentoRagioneria() {
+		return Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
@@ -617,12 +615,11 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	public final java.util.Dictionary getDs_causaleKeys() {
 		return ds_causaleKeys;
 	}
-	
+
 	public boolean isMotivazioneVariazionePersonale() {
 		return this.isMotivazioneVariazioneBandoPersonale()||
 				this.isMotivazioneVariazioneProrogaPersonale()||
 				this.isMotivazioneVariazioneAltreSpesePersonale()||
-				this.isMotivazioneVariazioneInDeroga()||
 				this.isMotivazioneCompensiIncentivanti();
 	}
 	

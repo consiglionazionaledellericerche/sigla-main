@@ -143,6 +143,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		private String tipoNatura;
 		private boolean isUoArea;
 		private boolean isCdrPersonale;
+		private boolean isUoRagioneria;
 		private boolean isVoceSpeciale;
 		private Elemento_voceBulk elementoVoce;
 		private String tipoDett;
@@ -170,6 +171,8 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		public void setCdrPersonale(boolean isCdrPersonale) {
 			this.isCdrPersonale = isCdrPersonale;
 		}
+		public boolean isUoRagioneria() { return isUoRagioneria; }
+		public void setUoRagioneria(boolean isUoRagioneria) { this.isUoRagioneria = isUoRagioneria; }
 		public boolean isVoceSpeciale() {
 			return isVoceSpeciale;
 		}
@@ -249,17 +252,11 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		public BigDecimal getImpSpesaNegativiAreaNaturaReimpiego() {
 			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaReimpiego));
 		}
-		public BigDecimal getImpSpesaPositiviAreaNaturaFonteEsterna() {
-			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteEsterna));
+		public BigDecimal getImpSpesaPositiviRagioneria() {
+			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoRagioneria));
 		}
-		public BigDecimal getImpSpesaNegativiAreaNaturaFonteEsterna() {
-			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteEsterna));
-		}
-		public BigDecimal getImpSpesaPositiviAreaNaturaFonteInterna() {
-			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteInterna));
-		}
-		public BigDecimal getImpSpesaNegativiAreaNaturaFonteInterna() {
-			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoArea).filter(CtrlPianoEcoDett::isNaturaFonteInterna));
+		public BigDecimal getImpSpesaNegativiRagioneria() {
+			return this.getImpSpesaNegativi(dett.stream().filter(CtrlPianoEcoDett::isUoRagioneria));
 		}
 		public BigDecimal getImpSpesaPositiviCdrPersonale() {
 			return this.getImpSpesaPositivi(dett.stream().filter(CtrlPianoEcoDett::isCdrPersonale));
@@ -2054,12 +2051,19 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				
 				List<CtrlPianoEco> listCtrlPianoEco = new ArrayList<CtrlPianoEco>();
 
-				String cdNaturaReimpiego = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
-				String cdVoceSpeciale = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE, Configurazione_cnrBulk.SK_TEMPO_IND_SU_PROGETTI_FINANZIATI);
+				it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
+
+				String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+				String cdVoceSpeciale = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE, Configurazione_cnrBulk.SK_TEMPO_IND_SU_PROGETTI_FINANZIATI);
 				
 				String cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
+
+				Configurazione_cnrBulk configCdrRagioneria = configSession.getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+				if (configCdrRagioneria==null)
+					configCdrRagioneria = configSession.getConfigurazione(userContext,  null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+				String uoRagioneria = Optional.ofNullable(configCdrRagioneria).map(Configurazione_cnrBulk::getVal01).orElse(null);
 
 				Ass_var_stanz_res_cdrHome ass_cdrHome = (Ass_var_stanz_res_cdrHome)getHome(userContext,Ass_var_stanz_res_cdrBulk.class);
 				java.util.Collection<Var_stanz_res_rigaBulk> dettagliSpesa = ass_cdrHome.findDettagliSpesa(variazione);
@@ -2074,6 +2078,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					Elemento_voceBulk voce = (Elemento_voceBulk)getHome(userContext, Elemento_voceBulk.class).findByPrimaryKey(varStanzResRiga.getElemento_voce());
 					Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(userContext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
 					boolean isDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+
+					boolean isUoRagioneria = uoBulk.getCd_unita_organizzativa().equals(uoRagioneria);
 
 					//recupero la GAE
 					WorkpackageBulk linea = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext,
@@ -2141,6 +2147,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					dett.setImporto(varStanzResRiga.getIm_variazione());
 					dett.setCdrPersonale(isDettPersonale);
 					dett.setUoArea(isUoArea);
+					dett.setUoRagioneria(isUoRagioneria);
 					dett.setElementoVoce(varStanzResRiga.getElemento_voce());
 
 					if (Optional.ofNullable(cdNaturaReimpiego).map(el->el.equals(linea.getNatura().getCd_natura())).orElse(Boolean.FALSE))
@@ -2186,15 +2193,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				sqlLiqVar.addClause(FindClause.AND, "pg_variazione_comp", SQLBuilder.EQUALS, variazione.getPg_variazione_pdg());
 				if (sqlLiqVar.executeCountQuery(getConnection(userContext)) > 0)
 					return;
-				
+
+				it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
+
 				List<CtrlPianoEco> listCtrlPianoEco = new ArrayList<CtrlPianoEco>();
 
-				String cdNaturaReimpiego = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
-				String cdVoceSpeciale = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE, Configurazione_cnrBulk.SK_TEMPO_IND_SU_PROGETTI_FINANZIATI);
+				String cdNaturaReimpiego = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_NATURA_REIMPIEGO);
+				String cdVoceSpeciale = configSession.getVal01(userContext, new Integer(0), null, Configurazione_cnrBulk.PK_ELEMENTO_VOCE_SPECIALE, Configurazione_cnrBulk.SK_TEMPO_IND_SU_PROGETTI_FINANZIATI);
 
 				String cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				CdrBulk cdrPersonaleBulk = (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
+
+				Configurazione_cnrBulk configCdrRagioneria = configSession.getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+				if (configCdrRagioneria==null)
+					configCdrRagioneria = configSession.getConfigurazione(userContext,  null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+				String uoRagioneria = Optional.ofNullable(configCdrRagioneria).map(Configurazione_cnrBulk::getVal01).orElse(null);
 
 				Ass_pdg_variazione_cdrHome ass_cdrHome = (Ass_pdg_variazione_cdrHome)getHome(userContext,Ass_pdg_variazione_cdrBulk.class);
 				java.util.Collection<Pdg_variazione_riga_gestBulk> dettagliVariazione = ass_cdrHome.findDettagli(variazione);
@@ -2209,6 +2223,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					Elemento_voceBulk voce = (Elemento_voceBulk)getHome(userContext, Elemento_voceBulk.class).findByPrimaryKey(varStanzRiga.getElemento_voce());
 					Classificazione_vociBulk classif = (Classificazione_vociBulk)getHome(userContext, Classificazione_vociBulk.class).findByPrimaryKey(new Classificazione_vociBulk(voce.getId_classificazione()));
 					boolean isDettPersonale = classif.getFl_accentrato()&&cdrPersonale.equals(classif.getCdr_accentratore());
+
+					boolean isUoRagioneria = uoBulk.getCd_unita_organizzativa().equals(uoRagioneria);
 
 					//recupero la GAE
 					WorkpackageBulk linea = ((WorkpackageHome)getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext,
@@ -2277,6 +2293,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					dett.setImporto(varStanzRiga.getIm_variazione());
 					dett.setCdrPersonale(isDettPersonale);
 					dett.setUoArea(isUoArea);
+					dett.setUoRagioneria(isUoRagioneria);
+
 					dett.setElementoVoce(varStanzRiga.getElemento_voce());
 					
 					if (Optional.ofNullable(cdNaturaReimpiego).map(el->el.equals(linea.getNatura().getCd_natura())).orElse(Boolean.FALSE)) {
@@ -2333,6 +2351,17 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoArea)
 					.orElse(Boolean.FALSE);
 
+			boolean isVariazioneRagioneria = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::isMotivazioneTrasferimentoRagioneria)
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.map(Var_stanz_resBulk::isMotivazioneTrasferimentoRagioneria)
+					.orElse(Boolean.FALSE);
+
 			boolean isCDRAreaVariazione = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
 					.map(Pdg_variazioneBulk.class::cast)
@@ -2347,6 +2376,28 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.map(CdrBulk::getUnita_padre)
 					.map(Unita_organizzativaBulk::isUoArea)
 					.orElse(Boolean.FALSE);
+
+			it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession configSession = Utility.createConfigurazioneCnrComponentSession();
+			Configurazione_cnrBulk config = configSession.getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+			if (config==null)
+				config = configSession.getConfigurazione(userContext,  null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
+			String uoRagioneria = Optional.ofNullable(config).map(Configurazione_cnrBulk::getVal01).orElse(null);
+			boolean isCDRUoRagioneria = Optional.of(variazione)
+					.filter(Pdg_variazioneBulk.class::isInstance)
+					.map(Pdg_variazioneBulk.class::cast)
+					.map(Pdg_variazioneBulk::getCentro_responsabilita)
+					.map(CdrBulk::getUnita_padre)
+					.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+					.map(uo->uo.equals(uoRagioneria))
+					.orElse(Boolean.FALSE) ||
+					Optional.of(variazione)
+							.filter(Var_stanz_resBulk.class::isInstance)
+							.map(Var_stanz_resBulk.class::cast)
+							.map(Var_stanz_resBulk::getCentroDiResponsabilita)
+							.map(CdrBulk::getUnita_padre)
+							.map(Unita_organizzativaBulk::getCd_unita_organizzativa)
+							.map(uo->uo.equals(uoRagioneria))
+							.orElse(Boolean.FALSE);
 
 			boolean isCDRPersonaleVariazione = Optional.of(variazione)
 					.filter(Pdg_variazioneBulk.class::isInstance)
@@ -2462,8 +2513,70 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										+ "assegnare fondi a CDR non qualificati come Aree di Ricerca.");
 						});
 					}
+				} else if (!isCDRAreaVariazione) {
+					//Il controllo non vale se la variazione viene fatta dal CDR Area
+					listCtrlPianoEco.stream()
+							.filter(el->el.getImpSpesaPositiviArea().compareTo(BigDecimal.ZERO)!=0 ||
+									el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)!=0)
+							.findFirst().ifPresent(el->{
+						throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci su Aree di Ricerca "
+								+ "in una variazione non effettuata per 'Trasferimenti ad Aree di Ricerca'.");
+					});
 				}
-			} 
+
+				if (isVariazioneRagioneria) {
+					if (isCDRUoRagioneria) {
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositiviRagioneria().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti dalla Ragioneria' non è possibile "
+									+ "assegnare fondi alla Ragioneria (UO: "+uoRagioneria+").");
+						});
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaNegativiRagioneria().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().orElseThrow(()->
+								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti dalla Ragioneria' è necessario "
+										+ "sottrarre fondi alla Ragioneria (UO: "+uoRagioneria+")."));
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaNegativi().subtract(el.getImpSpesaNegativiRagioneria()).compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti dalla Ragioneria' non è possibile "
+									+ "sottrarre fondi a CDR non qualificati come Ragioneria.");
+						});
+					} else {
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositiviRagioneria().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().orElseThrow(()->
+								new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti alla Ragioneria' è necessario "
+										+ "assegnare fondi alla Ragioneria (UO: "+uoRagioneria+")."));
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaNegativiRagioneria().compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti alla Ragioneria' non è possibile "
+									+ "sottrarre fondi alla Ragioneria (UO: "+uoRagioneria+").");
+						});
+
+						listCtrlPianoEco.stream()
+								.filter(el->el.getImpSpesaPositivi().subtract(el.getImpSpesaPositiviRagioneria()).compareTo(BigDecimal.ZERO)>0)
+								.findFirst().ifPresent(el->{
+							throw new DetailedRuntimeException("Attenzione! In una variazione di tipo 'Trasferimenti alla Ragioneria' non è possibile "
+									+ "assegnare fondi a CDR non qualificati come Ragioneria.");
+						});
+					}
+				}
+			} else if (!isCDRUoRagioneria) {
+				//Il controllo non vale se la variazione viene fatta dal CDR Ragioneria
+				listCtrlPianoEco.stream()
+						.filter(el->el.getImpSpesaPositiviRagioneria().compareTo(BigDecimal.ZERO)!=0 ||
+								el.getImpSpesaNegativiRagioneria().compareTo(BigDecimal.ZERO)!=0)
+						.findFirst().ifPresent(el->{
+					throw new DetailedRuntimeException("Attenzione! Non è possibile movimentare voci sulla Ragioneria (Uo: "+uoRagioneria+") "
+							+ "in una variazione non effettuata per 'Trasferimenti alla Ragioneria'.");
+				});
+			}
 			
 			//se è una variazione di competenza per maggiori entrate/spese controllo solo che non siano stati sottratti erroneamente fondi a progetti
 			boolean isVariazioneCompetenzaMaggioreEntrateSpese = Optional.of(variazione)
@@ -2492,7 +2605,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					.filter(Var_stanz_resBulk.class::isInstance)
 					.map(Var_stanz_resBulk.class::cast)
 					.map(Var_stanz_resBulk::isVariazioneStorno)
-					.orElse(Boolean.FALSE);;
+					.orElse(Boolean.FALSE);
 			
 			BigDecimal impSpesaPositiviVoceSpeciale = listCtrlPianoEco.stream()
 					.filter(el->el.getImpSpesaPositiviVoceSpeciale().compareTo(BigDecimal.ZERO)>0)
@@ -2623,9 +2736,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		
 				/**
 				 * 30. se un progetto è aperto è possibile attribuire somme su GAE non di natura 6 solo se stornate dallo stesso progetto 
-				 * 	  (regola non valida per progetti di Aree e CdrPersonale)
+				 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
 				 */
-				if (!isVariazioneArea && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
+				if (!isVariazioneArea && !isVariazioneRagioneria && !(isVariazionePersonale && variazione instanceof Var_stanz_resBulk)) {
 					boolean addSpesePersonale = !isAttivaGestioneTrasferimenti||isVariazionePersonale;
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
@@ -2704,7 +2817,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiCdrPersonale()) +
 							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
 							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviCdrPersonale()) + ")");});
-		
+
+				/**
+				 * 50.1 se un progetto è aperto e vengono sottratte somme al CDR Ragioneria queste devono essere riassegnate
+				 *    allo stesso progetto e alla stesso CDR
+				 */
+				listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.filter(el->el.getImpSpesaNegativiRagioneria().compareTo(BigDecimal.ZERO)>0)
+						.filter(el->el.getImpSpesaNegativiRagioneria().compareTo(el.getImpSpesaPositiviRagioneria())>0)
+						.findFirst().ifPresent(el->{
+					throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dal CDR Ragioneria fondi dal progetto "+
+							el.getProgetto().getCd_progetto()+" (" +
+							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiRagioneria()) +
+							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
+							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviRagioneria()) + ")");});
+
 				//CONTROLLI SUL TOTALE PROGETTI
 				BigDecimal impNegativiPrgScaduti = listCtrlPianoEco.stream()
 						.filter(el->el.isScaduto(dataChiusura))

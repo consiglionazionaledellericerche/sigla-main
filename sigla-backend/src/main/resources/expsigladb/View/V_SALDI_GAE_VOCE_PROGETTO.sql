@@ -67,7 +67,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                             END
                      END variameno_fin,
                      CASE
-                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                               THEN CASE 
@@ -85,7 +85,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        ELSE 0
                      END trasfpiu_fin,
                      CASE
-                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                               THEN CASE
@@ -139,7 +139,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                             END
                      END variameno_cofin,
                      CASE
-                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
                               THEN CASE 
@@ -157,7 +157,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        ELSE 0
                      END trasfpiu_cofin,
                      CASE
-                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
                               THEN CASE
@@ -234,7 +234,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                             END
                      END variameno_cofin,
                      CASE
-                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                               THEN CASE 
@@ -252,7 +252,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        ELSE 0
                      END trasfpiu_cofin,
                      CASE
-                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                       WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                               THEN CASE 
@@ -309,13 +309,13 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                      END variameno_fin,
                      CASE
                         WHEN a.tipologia_fin='FES' and NVL(b.im_variazione, 0) > 0 AND
-                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                         THEN NVL(b.im_variazione, 0)
                         ELSE 0
                      END trasfpiu_fin,
                      CASE
                         WHEN a.tipologia_fin='FES' and NVL(b.im_variazione, 0) < 0 AND
-                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END trasfmeno_fin,
@@ -332,13 +332,13 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                      END variameno_cofin,
                      CASE
                         WHEN a.tipologia_fin='FIN' AND NVL(b.im_variazione, 0) > 0 AND
-                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                         THEN NVL(b.im_variazione, 0)
                         ELSE 0
                      END trasfpiu_fin,
                      CASE
                         WHEN a.tipologia_fin='FIN' AND NVL(b.im_variazione, 0) < 0  AND
-                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END trasfmeno_cofin,
@@ -381,13 +381,13 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                      END variameno_cofin,
                      CASE
                         WHEN NVL(b.im_variazione, 0) > 0 AND
-                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                         THEN NVL(b.im_variazione, 0)
                         ELSE 0
                      END trasfpiu_cofin,
                      CASE
                         WHEN NVL(b.im_variazione, 0) < 0 AND
-                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU')
+                             NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END trasfmeno_cofin,

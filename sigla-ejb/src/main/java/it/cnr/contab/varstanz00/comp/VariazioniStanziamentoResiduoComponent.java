@@ -593,7 +593,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			boolean existDettPersonale = true;
 			String cdrPersonale = null;
 			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent() &&
-					var_stanz_res.isMotivazionePersonale()) {
+					var_stanz_res.isMotivazioneVariazionePersonale()) {
 				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				existDettPersonale = false;
