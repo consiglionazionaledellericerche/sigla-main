@@ -20,6 +20,7 @@ package it.cnr.contab.incarichi00.comp;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.incarichi00.bulk.*;
 import it.cnr.contab.incarichi00.bulk.storage.*;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
@@ -37,17 +38,6 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_proceduraHome;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_procedura_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_archivioBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_rappBulk;
-import it.cnr.contab.incarichi00.bulk.Incarichi_richiestaBulk;
 import it.cnr.contab.incarichi00.bulk.storage.StorageFileIncarichi;
 import it.cnr.contab.incarichi00.storage.StorageContrattiAspect;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
@@ -887,8 +877,15 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							alternativePath = storageFile.getStorageAlternativeParentPath();
 						
 						if (allegato.getCms_node_ref()==null) {
-							if (storageFile.getInputStream()==null)
-								throw new ApplicationException("Errore nella registrazione degli allegati - Non è stato possibile recuperare InputStream");
+							if (storageFile.getInputStream()==null) {
+								if (Optional.of(allegato).filter(Incarichi_repertorio_varBulk.class::isInstance)
+										.map(Incarichi_repertorio_varBulk.class::cast)
+										.filter(el -> el.isVariazioneIntegrazioneMaternita() || el.isVariazioneIntegrazioneContributi())
+										.isPresent())
+									continue;
+								else
+									throw new ApplicationException("Errore nella registrazione degli allegati - Non è stato possibile recuperare InputStream");
+							}
 
 							try {
 								StorageObject storageObject =

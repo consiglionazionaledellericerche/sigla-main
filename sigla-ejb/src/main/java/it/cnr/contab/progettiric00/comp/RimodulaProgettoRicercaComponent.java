@@ -777,10 +777,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		    if (Optional.ofNullable(listVariazioni).map(List::isEmpty).orElse(Boolean.TRUE))
 		    	return approvaInt(userContext, rimodulazione);
 		    else {
-			    //Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
-				Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
-				ProgettoBulk progettoRimodulato = rimodHome.getProgettoRimodulato(rimodulazione);
-				Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato, rimodulazione);
+				Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, rimodulazione);
 				
 				rimodulazione.setStato(StatoProgettoRimodulazione.STATO_VALIDATO.value());
 				rimodulazione.setToBeUpdated();
@@ -970,10 +967,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 					.findFirst()
 					.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! E' necessario associare un allegato di tipo proroga!"));
 
-		    //Ricostruisco il progetto sulla base della nuova rimodulazione e rifaccio la validazione
-			Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
-			ProgettoBulk progettoRimodulato = rimodHome.getProgettoRimodulato(rimodulazione);
-			Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, progettoRimodulato, rimodulazione);
+			Utility.createProgettoRicercaComponentSession().validaPianoEconomico(userContext, rimodulazione);
     	} catch (ApplicationRuntimeException e) {
 			throw new ApplicationException(e);
 		} catch (PersistencyException e) {
