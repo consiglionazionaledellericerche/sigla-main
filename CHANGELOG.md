@@ -1,27 +1,23 @@
 # sigla-main Changelog
 
-## Release 6.0.19  -- _November 28, 2019_ 
+## Release 6.0.20  -- _November 29, 2019_ 
 ### No issue
 
 >**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
 >
->[ff159b96008497c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ff159b96008497c) marco.spasiano *November 28, 2019*
+>[6bd8cdb59861ebe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bd8cdb59861ebe) marco.spasiano *November 29, 2019*
 
->**Troncata la causale della fattura passiva da SDI a 2000 caratteri**
+>**Gestione flusso SIOPE+ per Sostituzione Mandato**
 >
->[a69e6e3451f7009](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a69e6e3451f7009) gianfranco.gasparro *November 28, 2019*
+>[7404a9c34104942](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7404a9c34104942) marco.spasiano *November 29, 2019*
 
->**Fix Rimodulazione: corretto controllo di allineamento variazione con rimodulazione.**
+>**Fix Assegni di ricerca: non consentiva di apportare variazioni per maternità e/o adeguamento incremento aliquote - ritornava errore InputStream in assenza di file da allegare.**
 >
->[b8e944fe354611a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8e944fe354611a) raffaele.pagano *November 28, 2019*
+>[4647dd520ce78cd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4647dd520ce78cd) raffaele.pagano *November 28, 2019*
 
->**Fix Stampa Rimodulazione: corretta la stampa che presentava sempre le date iniziali e rimodulate con lo stesso valore.**
+>**Generate CHANGELOG.md [ci skip]**
 >
->[f641e0ae26264a4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f641e0ae26264a4) raffaele.pagano *November 28, 2019*
-
->**Fix Rimodulazione: quando si inseriva una data di proroga non caricava correttamente la tab che permette di inserire altri anni.**
->
->[055680c1fb5bc97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/055680c1fb5bc97) raffaele.pagano *November 28, 2019*
+>[ad5c2ac10b0c5f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ad5c2ac10b0c5f4) marco.spasiano *November 28, 2019*
 
 >**Fix Rimodulazione: corretto controllo di allineamento variazione con rimodulazione.**
 >
@@ -54,6 +50,30 @@
 >**Generate CHANGELOG.md [ci skip]**
 >
 >[05dc98140366dc8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05dc98140366dc8) marco.spasiano *November 22, 2019*
+
+
+## Release 6.0.19  -- _November 28, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[ff159b96008497c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ff159b96008497c) marco.spasiano *November 28, 2019*
+
+>**Troncata la causale della fattura passiva da SDI a 2000 caratteri**
+>
+>[a69e6e3451f7009](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a69e6e3451f7009) gianfranco.gasparro *November 28, 2019*
+
+>**Fix Rimodulazione: corretto controllo di allineamento variazione con rimodulazione.**
+>
+>[b8e944fe354611a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8e944fe354611a) raffaele.pagano *November 28, 2019*
+
+>**Fix Stampa Rimodulazione: corretta la stampa che presentava sempre le date iniziali e rimodulate con lo stesso valore.**
+>
+>[f641e0ae26264a4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f641e0ae26264a4) raffaele.pagano *November 28, 2019*
+
+>**Fix Rimodulazione: quando si inseriva una data di proroga non caricava correttamente la tab che permette di inserire altri anni.**
+>
+>[055680c1fb5bc97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/055680c1fb5bc97) raffaele.pagano *November 28, 2019*
 
 
 ## Release 6.0.18  -- _November 22, 2019_ 
