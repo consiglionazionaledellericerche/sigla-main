@@ -2650,4 +2650,51 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_tipo_movimento_mag_add_column_from_tipo_movimento_mag_az">
+        <addColumn tableName="tipo_movimento_mag">
+            <column name="RIPORTA_LOTTO_FONITORE" type="CHAR(1)" defaultValue="N" remarks="Riporta il lotto fornitore sul lotto movimentato. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AGG_DATA_ULTIMO_CARICO" type="CHAR(1)" defaultValue="N" remarks="Aggiorna data ultimo carico sui lotti. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_QTA_MAGAZZINO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento delle giacenze di magazzino. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_QTA_VAL_MAGAZZINO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento delle giacenze a valore di magazzino. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_VALORE_LOTTO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento del valore dei lotti. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOD_AGG_QTA_INIZIO_ANNO" type="CHAR(1)" defaultValue="N" remarks="Modalità di aggiornamento della quantità di inizio anno. Valori possibili: 0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MOVIMENTA_LOTTI_BLOCCATI" type="CHAR(1)" defaultValue="N" remarks="Indica se è possibile movimentare lotti bloccati. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CD_CDS_RIF" remarks="Cds del movimento di riferimento" type="VARCHAR2(30)"/>
+            <column name="CD_TIPO_MOVIMENTO_RIF" remarks="Tipo movimento di riferimento" type="VARCHAR2(3)"/>
+            <column name="GENERA_BOLLA_SCARICO" type="CHAR(1)" defaultValue="N" remarks="Indica se il movimento deve generare bolle di scarico. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+            <column name="FL_CONSUMO" type="CHAR(1)" defaultValue="N" remarks="Indica se il movimento è un consumo. Valori possibili Y/N">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint
+                baseColumnNames="CD_CDS_RIF,CD_TIPO_MOVIMENTO_RIF"
+                baseTableName="tipo_movimento_mag"
+                constraintName="fk_tipo_movimento_mag03"
+                deferrable="false"
+                initiallyDeferred="false"
+                onDelete="NO ACTION"
+                onUpdate="NO ACTION"
+                referencedColumnNames="cd_cds,CD_TIPO_MOVIMENTO"
+                referencedTableName="tipo_movimento_mag"/>
+        <createIndex indexName="fx_tipo_movimento_mag03" tableName="tipo_movimento_mag">
+            <column name="CD_TIPO_MOVIMENTO_rif"/>
+        </createIndex>
+        <dropTable tableName="tipo_movimento_mag_az"></dropTable>
+    </changeSet>
 </databaseChangeLog>
