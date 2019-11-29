@@ -147,12 +147,6 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
     public Collection findDocContabiliCollegati(V_mandato_reversaleBulk docContabile) throws PersistencyException {
 
         SQLBuilder sql = createSQLBuilder();
-		/*???????
-		if ( docContabile.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_MAN ) )
-			sql.addClause( "AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
-		else if ( docContabile.getCd_tipo_documento_cont().equals( Numerazione_doc_contBulk.TIPO_REV ) )
-			sql.addClause( "AND", "cd_tipo_documento_cont", sql.EQUALS, Numerazione_doc_contBulk.TIPO_MAN);
-		*/
         sql.addClause("AND", "pg_documento_cont_padre", sql.EQUALS, docContabile.getPg_documento_cont());
         sql.addClause("AND", "cd_tipo_documento_cont_padre", sql.EQUALS, docContabile.getCd_tipo_documento_cont());
         sql.openParenthesis("AND");

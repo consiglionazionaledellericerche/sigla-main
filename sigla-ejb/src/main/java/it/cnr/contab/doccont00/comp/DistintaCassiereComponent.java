@@ -117,6 +117,7 @@ public class DistintaCassiereComponent extends
     public static final String REGOLARIZZAZIONE_ACCREDITO_BANCA_D_ITALIA = "REGOLARIZZAZIONE ACCREDITO BANCA D'ITALIA";
     public static final String SCOSTAMENTO = "0.03";
     public static final String VARIAZIONE = "VARIAZIONE";
+    public static final String SOSTITUZIONE = "SOSTITUZIONE";
 
     final String regexBic = "[A-Z|a-z||0-9]{11}|[A-Z|a-z||0-9]{8}";
     final Pattern patternBic = Pattern.compile(regexBic, Pattern.MULTILINE);
@@ -661,12 +662,17 @@ public class DistintaCassiereComponent extends
                 userContext, V_mandato_reversaleBulk.class))
                 .findDocContabiliCollegati(docContabilePadre);
         V_mandato_reversaleBulk docContabile;
-        for (Iterator i = docContabili.iterator(); i.hasNext(); ) {
-            docContabile = (V_mandato_reversaleBulk) i.next();
-            last_pg_dettaglio = inserisciDettaglioDistinta(userContext,
-                    distinta, docContabile, last_pg_dettaglio);
-            inserisciDettaglioDistinteCollegate(userContext, distinta,
-                    docContabile);
+        if (Optional.ofNullable(docContabilePadre.getStatoVarSos())
+                .map(s -> !Arrays.asList(StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value(),
+                        StatoVariazioneSostituzione.SOSTITUZIONE_DEFINITIVA.value()).contains(s))
+                .orElse(Boolean.TRUE)) {
+            for (Iterator i = docContabili.iterator(); i.hasNext(); ) {
+                docContabile = (V_mandato_reversaleBulk) i.next();
+                last_pg_dettaglio = inserisciDettaglioDistinta(userContext,
+                        distinta, docContabile, last_pg_dettaglio);
+                inserisciDettaglioDistinteCollegate(userContext, distinta,
+                        docContabile);
+            }
         }
         return last_pg_dettaglio;
     }
@@ -843,34 +849,6 @@ public class DistintaCassiereComponent extends
             }
             broker.close();
 
-            /*
-             * String schema =
-             * it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema(); String
-             * user =
-             * it.cnr.contab.utenze00.bp.CNRUserContext.getUser(userContext);
-             * java.sql.Timestamp dacr = new
-             * java.sql.Timestamp(System.currentTimeMillis());
-             *
-             * java.sql.PreparedStatement ps =
-             * getConnection(userContext).prepareStatement(
-             * "INSERT INTO "+schema+
-             * "ASS_TIPO_LA_CDR ( CD_CENTRO_RESPONSABILITA, CD_TIPO_LINEA_ATTIVITA, UTCR, DUVA, UTUV, DACR, PG_VER_REC ) SELECT CD_CENTRO_RESPONSABILITA, ?, ?, ?, ?, ?, 1 FROM "
-             * +schema+
-             * "V_CDR_VALIDO WHERE ESERCIZIO = ? AND NOT EXISTS ( SELECT 1 FROM "
-             * +schema+
-             * "ASS_TIPO_LA_CDR WHERE V_CDR_VALIDO.CD_CENTRO_RESPONSABILITA = ASS_TIPO_LA_CDR.CD_CENTRO_RESPONSABILITA AND ASS_TIPO_LA_CDR.CD_TIPO_LINEA_ATTIVITA = ? ) "
-             * );
-             *
-             * ps.setString(1,dsitinta.getCd_tipo_linea_attivita()); //
-             * CD_TIPO_LINEA_ATTIVITA ps.setString(2,user); // UTCR
-             * ps.setTimestamp(3,dacr); // DUVA ps.setString(4,user); // UTUV
-             * ps.setTimestamp(5,dacr); // DACR
-             * ps.setInt(6,it.cnr.contab.utenze00
-             * .bp.CNRUserContext.getEsercizio(userContext).intValue()); //
-             * ESERCIZIO ps.setString(7,tipo_la.getCd_tipo_linea_attivita()); //
-             * CD_TIPO_LINEA_ATTIVITA LoggableStatement.execute(ps);
-             * try{ps.close();}catch( java.sql.SQLException e ){};
-             */
         } catch (Exception e) {
             throw handleException(e);
         }
@@ -3021,34 +2999,6 @@ public class DistintaCassiereComponent extends
                 sql.addOrderBy(" V_MANDATO_REVERSALE_DISTINTA.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE_DISTINTA.PG_DOCUMENTO_CONT_PADRE ");
                 return sql;
             }
-
-            /*
-             * SQLBuilder sql =
-             * getHome(userContext,V_mandato_reversaleBulk.class).createSQLBuilder
-             * (); sql.addTableToHeader("DISTINTA_CASSIERE_DET");
-             * sql.addSQLJoin("V_MANDATO_REVERSALE.ESERCIZIO"
-             * ,"DISTINTA_CASSIERE_DET.ESERCIZIO");
-             * sql.addSQLJoin("V_MANDATO_REVERSALE.CD_CDS"
-             * ,"DISTINTA_CASSIERE_DET.CD_CDS"); sql.openParenthesis( "AND" );
-             * sql.addSQLClause("AND",
-             * "(DISTINTA_CASSIERE_DET.PG_MANDATO is not null AND V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT = 'MAN' AND DISTINTA_CASSIERE_DET.PG_MANDATO = V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT)"
-             * ); sql.addSQLClause("OR",
-             * "(DISTINTA_CASSIERE_DET.PG_REVERSALE is not null AND V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT = 'REV' AND DISTINTA_CASSIERE_DET.PG_REVERSALE = V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT)"
-             * ); sql.closeParenthesis();
-             * sql.addSQLClause("AND","DISTINTA_CASSIERE_DET.ESERCIZIO",sql.EQUALS,
-             * distinta.getEsercizio());
-             * sql.addSQLClause("AND","DISTINTA_CASSIERE_DET.CD_CDS",sql.EQUALS,
-             * distinta.getCd_cds());
-             * sql.addSQLClause("AND","DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA"
-             * ,sql.EQUALS, distinta.getCd_unita_organizzativa()); if (
-             * distinta.getPg_distinta() != null )
-             * sql.addSQLClause("AND","DISTINTA_CASSIERE_DET.PG_DISTINTA"
-             * ,sql.EQUALS, distinta.getPg_distinta()); else
-             * sql.addSQLClause("AND","DISTINTA_CASSIERE_DET.PG_DISTINTA"
-             * ,sql.ISNULL, null); sql.addOrderBy(
-             * " V_MANDATO_REVERSALE.CD_TIPO_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE.TI_DOCUMENTO_CONT_PADRE, V_MANDATO_REVERSALE.PG_DOCUMENTO_CONT_PADRE "
-             * ); return sql;
-             */
         } catch (Throwable e) {
             throw handleException(e);
         }
@@ -4585,6 +4535,11 @@ public class DistintaCassiereComponent extends
         if (isVariazioneDefinitiva) {
             return VARIAZIONE;
         } else {
+            if (Optional.ofNullable(bulk.getStatoVarSos())
+                    .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.SOSTITUZIONE_DEFINITIVA.value()))
+                    .orElse(Boolean.FALSE)) {
+                return SOSTITUZIONE;
+            }
             return stato;
         }
 
@@ -4782,6 +4737,24 @@ public class DistintaCassiereComponent extends
         }
     }
 
+    private MandatoBulk cercaMandatoRiemissione(UserContext userContext, V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException {
+        final BulkHome home = getHome(userContext, MandatoIBulk.class);
+        SQLBuilder sql = home.createSQLBuilder();
+        sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, bulk.getEsercizio());
+        sql.addClause(FindClause.AND, "cd_cds_origine", SQLBuilder.EQUALS, bulk.getCd_cds_origine());
+        sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
+        sql.addSQLClause(FindClause.AND, "pg_mandato_riemissione", SQLBuilder.EQUALS, bulk.getPg_documento_cont());
+        sql.addClause(FindClause.AND, "fl_riemissione", SQLBuilder.EQUALS, true);
+        final Optional<MandatoBulk> any = home.fetchAll(sql).stream()
+                .filter(MandatoBulk.class::isInstance)
+                .map(MandatoBulk.class::cast)
+                .findAny();
+        if (!any.isPresent()) {
+            throw new ApplicationMessageFormatException("Mandato di riemmissione non trovato per {1}/{2}/{3}", bulk.getEsercizio(), bulk.getCd_cds_origine(), bulk.getPg_documento_cont());
+        }
+        return any.get();
+    }
+
     private it.siopeplus.Mandato creaMandatoFlussoSiopeplus(UserContext userContext, V_mandato_reversaleBulk bulk) throws ComponentException, RemoteException {
         try {
             Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
@@ -4833,12 +4806,23 @@ public class DistintaCassiereComponent extends
                                     codiceNazione.get());
                     }
                 }
-
-
-                final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus =
+                final Boolean isSostituzione = Optional.ofNullable(bulk.getStatoVarSos())
+                        .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.SOSTITUZIONE_DEFINITIVA.value()))
+                        .orElse(Boolean.FALSE);
+                final Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus = isSostituzione ?
+                        Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SOSTITUZIONE :
                         Optional.ofNullable(rif_modalita_pagamentoBulk.getTipo_pagamento_siope())
                                 .map(s -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.getValueFrom(s))
                                 .orElseGet(() -> Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE);
+                if (isSostituzione) {
+                    final MandatoBulk mandatoRiemissione = cercaMandatoRiemissione(userContext, bulk);
+                    SostituzioneMandato sostituzioneMandato = objectFactory.createSostituzioneMandato();
+                    sostituzioneMandato.setEsercizioMandatoDaSostituire(mandatoRiemissione.getEsercizio());
+                    sostituzioneMandato.setNumeroMandatoDaSostituire(mandatoRiemissione.getPg_mandato().intValue());
+                    // TODO Valore fisso a 1
+                    sostituzioneMandato.setProgressivoBeneficiarioDaSostituire(BigInteger.ONE);
+                    infoben.setSostituzioneMandato(sostituzioneMandato);
+                }
 
                 // deve esserci IBAN
                 boolean obb_iban = Arrays.asList(
@@ -4886,7 +4870,8 @@ public class DistintaCassiereComponent extends
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ASSEGNOCIRCOLARE,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.CASSA,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
-                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE
+                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE,
+                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SOSTITUZIONE
                         ).contains(tipoPagamentoSiopePlus))
                                 //TODO da sostituire
                                 ||rif_modalita_pagamentoBulk.getCd_modalita_pag().equals(STIPENDI)
