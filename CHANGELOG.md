@@ -1,5 +1,25 @@
 # sigla-main Changelog
 
+## Release 6.0.21  -- _November 29, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[fb54ff04ac9a0e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fb54ff04ac9a0e5) marco.spasiano *November 29, 2019*
+
+>**Fix. Troncata la causale della fattura passiva da SDI a 2000 caratteri**
+>
+>[abcbe321e10509b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/abcbe321e10509b) gianfranco.gasparro *November 29, 2019*
+
+>**Sostituita sulle variazioni di bilancio la Finalità 'Personale - Variazioni in deroga' con 'Trasferimenti alla Ragioneria'- Issue: #24**
+>
+>[dd94d15e5a2aa28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd94d15e5a2aa28) raffaele.pagano *November 29, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[fd2a5f2ac2069c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd2a5f2ac2069c7) marco.spasiano *November 29, 2019*
+
+
 ## Release 6.0.20  -- _November 29, 2019_ 
 ### No issue
 
