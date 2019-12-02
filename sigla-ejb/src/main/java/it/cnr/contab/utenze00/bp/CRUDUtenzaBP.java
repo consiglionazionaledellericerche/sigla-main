@@ -32,6 +32,7 @@ import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.ValidationException;
@@ -49,6 +50,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     private final SimpleDetailCRUDController crudRuoli_disponibili = new SimpleDetailCRUDController("Ruoli_disponibili", RuoloBulk.class, "ruoli_disponibili", this);
     private final SimpleDetailCRUDController crudRuoli = new SimpleDetailCRUDController("Ruoli", RuoloBulk.class, "ruoli", this);
     private final SimpleDetailCRUDController crudUtente_indirizzi_mail = new SimpleDetailCRUDController("Utente_indirizzi_mail", Utente_indirizzi_mailBulk.class, "utente_indirizzi_mail", this);
+    private final SimpleDetailCRUDController crudUtente_abil_ordini = new SimpleDetailCRUDController("Abil_ordine", AbilUtenteUopOperBulk.class, "utente_abil_ordine", this);
     private CompoundFindClause compoundfindclauseAccessiDisponibili = null;
     private final SimpleDetailCRUDController crudAccessi_disponibili = new SimpleDetailCRUDController("Accessi_disponibili", AccessoBulk.class, "accessi_disponibili", this) {
         public void setFilter(ActionContext actioncontext, CompoundFindClause compoundfindclause) {
@@ -301,5 +303,13 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     	} catch(Exception e) {
     		throw handleException(e);
     	}
+    }
+    public SimpleDetailCRUDController getCrudUtente_abil_ordini() {
+        return crudUtente_abil_ordini;
+    }
+
+    
+    protected void setTab() {
+        setTab("tabAbilOrdiniDettaglio","tabAbilOrdiniDettaglio");
     }
 }

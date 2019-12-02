@@ -132,7 +132,8 @@ public class UtenteTemplateBulk extends UtenteBulk
 				utente_unita_accessi,
 				utente_unita_ruoli,
 				getUtente_indirizzi_mail(),
-				utente_firma_dettaglio};
+				utente_firma_dettaglio,
+				getUtente_abil_ordine()};
 	}
 	/**
 	 * @return java.util.List
