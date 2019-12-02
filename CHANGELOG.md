@@ -1,31 +1,27 @@
 # sigla-main Changelog
 
-## Release 6.0.21  -- _November 29, 2019_ 
+## Release 6.0.22  -- _December 02, 2019_ 
 ### No issue
 
 >**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
 >
->[fb54ff04ac9a0e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fb54ff04ac9a0e5) marco.spasiano *November 29, 2019*
+>[0eea92ac905beba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0eea92ac905beba) marco.spasiano *December 02, 2019*
 
->**Fix. Troncata la causale della fattura passiva da SDI a 2000 caratteri**
+>**FIX Aggiunto Selezionatore per Sospesi**
 >
->[abcbe321e10509b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/abcbe321e10509b) gianfranco.gasparro *November 29, 2019*
+>[584551833541ab3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/584551833541ab3) marco.spasiano *December 02, 2019*
 
->**Sostituita sulle variazioni di bilancio la Finalità 'Personale - Variazioni in deroga' con 'Trasferimenti alla Ragioneria'- Issue: #24**
+>**Aggiunto Selezionatore per Sospesi**
 >
->[dd94d15e5a2aa28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd94d15e5a2aa28) raffaele.pagano *November 29, 2019*
+>[71d2fa6a0cdffbd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/71d2fa6a0cdffbd) marco.spasiano *December 02, 2019*
+
+>**FIX giornale di cassa 'Data valuta Ente' non presente**
+>
+>[cbbfa0563a5b099](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cbbfa0563a5b099) marco.spasiano *December 02, 2019*
 
 >**Generate CHANGELOG.md [ci skip]**
 >
->[fd2a5f2ac2069c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd2a5f2ac2069c7) marco.spasiano *November 29, 2019*
-
-
-## Release 6.0.20  -- _November 29, 2019_ 
-### No issue
-
->**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
->
->[6bd8cdb59861ebe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bd8cdb59861ebe) marco.spasiano *November 29, 2019*
+>[ffb0318b2eac609](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ffb0318b2eac609) marco.spasiano *November 29, 2019*
 
 >**Gestione flusso SIOPE+ per Sostituzione Mandato**
 >
@@ -70,6 +66,34 @@
 >**Generate CHANGELOG.md [ci skip]**
 >
 >[05dc98140366dc8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05dc98140366dc8) marco.spasiano *November 22, 2019*
+
+
+## Release 6.0.21  -- _November 29, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[fb54ff04ac9a0e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fb54ff04ac9a0e5) marco.spasiano *November 29, 2019*
+
+>**Fix. Troncata la causale della fattura passiva da SDI a 2000 caratteri**
+>
+>[abcbe321e10509b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/abcbe321e10509b) gianfranco.gasparro *November 29, 2019*
+
+>**Sostituita sulle variazioni di bilancio la Finalità 'Personale - Variazioni in deroga' con 'Trasferimenti alla Ragioneria'- Issue: #24**
+>
+>[dd94d15e5a2aa28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd94d15e5a2aa28) raffaele.pagano *November 29, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[fd2a5f2ac2069c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd2a5f2ac2069c7) marco.spasiano *November 29, 2019*
+
+
+## Release 6.0.20  -- _November 29, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[6bd8cdb59861ebe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bd8cdb59861ebe) marco.spasiano *November 29, 2019*
 
 
 ## Release 6.0.19  -- _November 28, 2019_ 
