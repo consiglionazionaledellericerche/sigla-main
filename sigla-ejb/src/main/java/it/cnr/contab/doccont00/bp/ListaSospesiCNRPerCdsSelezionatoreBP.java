@@ -44,11 +44,14 @@ public class ListaSospesiCNRPerCdsSelezionatoreBP extends SelezionatoreListaBP {
     }
 
     public boolean isSostituisciButtonHidden() {
+        return true;
+        /*
         return !(isAbilitatoReversaleIncasso && Optional.ofNullable(getModel())
                 .filter(SospesoBulk.class::isInstance)
                 .map(SospesoBulk.class::cast)
                 .flatMap(sospesoBulk -> Optional.ofNullable(sospesoBulk.getMandatoRiaccredito()))
                 .isPresent());
+         */
     }
 
     @Override

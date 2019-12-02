@@ -42,6 +42,7 @@ public class ListaSospesiCNRPerCdsSelezionatoreAction extends SelezionatoreLista
      * @return
      */
     public Forward doSostituisciMandato(ActionContext actionContext) throws BusinessProcessException, ApplicationException {
+        /*
         final MandatoBulk mandatoBulk = Optional.ofNullable(actionContext.getBusinessProcess())
                 .filter(SelezionatoreListaBP.class::isInstance)
                 .map(SelezionatoreListaBP.class::cast)
@@ -57,15 +58,17 @@ public class ListaSospesiCNRPerCdsSelezionatoreAction extends SelezionatoreLista
         CRUDMandatoBP mandatoBP = (CRUDMandatoBP) actionContext.createBusinessProcess("CRUDMandatoBP", new Object[]{"MRSW", mandatoBulk});
         actionContext.addHookForward("bringback", this, "doBringBackCreaMandatoRiaccredito");
         return actionContext.addBusinessProcess(mandatoBP);
+         */
+        return actionContext.findDefaultForward();
     }
 
-    public Forward doBringBackCreaMandatoRiaccredito(ActionContext context) throws BusinessProcessException {
+    public Forward doBringBackCreaMandatoRiaccredito(ActionContext actionContext) throws BusinessProcessException {
         try {
-            HookForward hook = (HookForward) context.getCaller();
+            HookForward hook = (HookForward) actionContext.getCaller();
             MandatoBulk mandatoBulk = (MandatoBulk) hook.getParameter("bringback");
-            return context.findDefaultForward();
+            return actionContext.findDefaultForward();
         } catch (Exception e) {
-            return handleException(context, e);
+            return handleException(actionContext, e);
         }
     }
 }
