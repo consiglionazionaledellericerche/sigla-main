@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.utenze00.bulk;
 
 /**
@@ -13,7 +30,6 @@ import javax.ejb.EJBException;
 
 
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
-import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bp.CRUDUtenzaAmministratoreBP;
 import it.cnr.contab.utenze00.bp.CRUDUtenzaBP;
@@ -33,7 +49,7 @@ public class UtenteBulk extends UtenteBase {
 	public static final String UTENTE_SUPERUTENTE_KEY = "S";
 	public static final String DEFAULT_PSWD = "PASSWORD";
 	private it.cnr.jada.bulk.BulkList	utente_indirizzi_mail   = new it.cnr.jada.bulk.BulkList();
-	private it.cnr.jada.bulk.BulkList	utente_abil_ordine   = new it.cnr.jada.bulk.BulkList();
+
 	private UtenteBulk gestore;
 	private DipartimentoBulk dipartimento = new DipartimentoBulk();
 	private RuoloBulk ruolo_supervisore = new RuoloBulk();
@@ -61,22 +77,6 @@ public class UtenteBulk extends UtenteBase {
 	}
 	public Utente_indirizzi_mailBulk removeFromUtente_indirizzi_mail(int index) {
 		Utente_indirizzi_mailBulk dett = (Utente_indirizzi_mailBulk)getUtente_indirizzi_mail().remove(index);
-		return dett;
-	}
-	
-	public it.cnr.jada.bulk.BulkList getUtente_abil_ordine() {
-		return utente_abil_ordine;
-	}
-	public void setUtente_abil_ordine(it.cnr.jada.bulk.BulkList utente_abil_ordine) {
-		this.utente_abil_ordine = utente_abil_ordine;
-	}
-	public int addToUtente_abil_ordine(AbilUtenteUopOperBulk dett) {
-		dett.setUtente(this);
-		getUtente_abil_ordine().add(dett);
-		return getUtente_abil_ordine().size()-1;
-	}
-	public AbilUtenteUopOperBulk removeFromUtente_abil_ordine(int index) {
-		AbilUtenteUopOperBulk dett = (AbilUtenteUopOperBulk)getUtente_abil_ordine().remove(index);
 		return dett;
 	}
 	/**

@@ -1,11 +1,30 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -26,7 +45,16 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
                     (oldValue, newValue) -> oldValue,
                     Hashtable::new
             ));
-    
+
+	public final static Map<String,String> ti_allegato_insertKeys = Arrays.asList(AllegatoProgettoRimodulazioneType.values())
+			.stream()
+			.filter(el->!el.value().equals(AllegatoProgettoRimodulazioneType.AUTOMATICO.value()))
+			.collect(Collectors.toMap(
+					AllegatoProgettoRimodulazioneType::value,
+					AllegatoProgettoRimodulazioneType::label,
+					(oldValue, newValue) -> oldValue,
+					Hashtable::new
+			));
 
     public AllegatoProgettoRimodulazioneBulk() {
 		super();
@@ -84,8 +112,40 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 			name.add("PRG");
 		if (this.isStampaAutomatica())	
 			name.add("AUT");
-		if (this.isGenerico())	
+		if (this.isGenerico()) {
 			name.add("GEN");
+
+			name.add(
+				Optional.ofNullable(this.getNome())
+						.filter(el->!el.isEmpty())
+						.filter(el->el.indexOf("GEN")>=0)
+						.map(el->el.substring(el.length() - 3, el.length()))
+						.orElseGet(()->{
+							return Optional.ofNullable(this.getRimodulazione())
+							    .flatMap(el->Optional.ofNullable(el.getArchivioAllegati()))
+								.map(el->el.stream())
+								.orElse(Stream.empty())
+								.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+								.map(AllegatoProgettoRimodulazioneBulk.class::cast)
+								.filter(AllegatoProgettoRimodulazioneBulk::isGenerico)
+								.filter(el->Optional.ofNullable(el.getNome()).isPresent())
+								.map(AllegatoProgettoRimodulazioneBulk::getNome)
+								.map(el->el.substring(el.length() - 3, el.length()))
+								.filter(el->{
+									try {
+										Integer.valueOf(el);
+										return true;
+									}catch (NumberFormatException e){
+										return false;
+									}
+								})
+								.map(Integer::valueOf)
+								.max(Comparator.comparing(Integer::valueOf))
+								.map(el->el+1)
+								.map(el->StringUtils.leftPad(el.toString(), 3, "0"))
+								.orElse("001");
+						}));
+		}
 		return name.toString();
 	}
 
@@ -94,7 +154,7 @@ public class AllegatoProgettoRimodulazioneBulk extends AllegatoGenericoTypeBulk 
 		super.validate();
 		if (getObjectType() == null)
 			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
-		else if (this.isToBeCreated() || this.getNome().isEmpty())
+		else if (this.isToBeCreated() || this.getNome()==null || this.getNome().isEmpty())
 			this.setNome(this.constructNomeFile());
 	}
 }

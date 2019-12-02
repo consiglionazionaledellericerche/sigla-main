@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.pdg00.bp;
 
 import java.math.BigDecimal;
@@ -270,13 +287,13 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
 
     public boolean isSaveButtonEnabled() {
         Pdg_variazioneBulk pdgVariazione = (Pdg_variazioneBulk) getModel();
-        if (!isAbilitatoModificaDescVariazioni() && pdgVariazione.isApprovata())
-            return false;
-        else if (isUoEnte() && this.abilitatoModificaDescVariazioni && pdgVariazione.isPropostaDefinitiva())
-            return true;
-        else if ((isUoEnte() || isCdrScrivania()) &&
+        if ((isUoEnte() || isCdrScrivania()) &&
                 (pdgVariazione.isApprovata() || pdgVariazione.isApprovazioneFormale()) &&
                 pdgVariazione.isMotivazioneVariazioneBandoPersonale() && pdgVariazione.getStorageMatricola() == null)
+            return true;
+        else if (!isAbilitatoModificaDescVariazioni() && pdgVariazione.isApprovata())
+            return false;
+        else if (isUoEnte() && this.abilitatoModificaDescVariazioni && pdgVariazione.isPropostaDefinitiva())
             return true;
         else
             return super.isSaveButtonEnabled() && (isCdrScrivania() || isUoEnte()) && !(pdgVariazione.getStatoDocumentale() != null);

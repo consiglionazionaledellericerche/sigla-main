@@ -1,0 +1,11 @@
+CD_INCOTERM,CD_GRUPPO,DS_CONDIZIONE_CONSEGNA,UTCR,UTUV,PG_VER_REC
+"CFR","C","Costo e nolo","SYSTEM","SYSTEM","1"
+"CIF","C","Costo, assicurazione e nolo","SYSTEM","SYSTEM","1"
+"CIP","C","Trasporto e assicurazione pagati fino a ...","SYSTEM","SYSTEM","1"
+"CPT","C","Trasporto pagato fino a ...","SYSTEM","SYSTEM","1"
+"DAP","D","Consegnato presso","SYSTEM","SYSTEM","1"
+"DAT","D","Consegnato Al Terminal","SYSTEM","SYSTEM","1"
+"EXW","E","Franco fabbrica","SYSTEM","SYSTEM","1"
+"FAS","F","Franco lungo bordo","SYSTEM","SYSTEM","1"
+"FCA","F","Franco vettore","SYSTEM","SYSTEM","1"
+"FOB","F","Franco a bordo","SYSTEM","SYSTEM","1"

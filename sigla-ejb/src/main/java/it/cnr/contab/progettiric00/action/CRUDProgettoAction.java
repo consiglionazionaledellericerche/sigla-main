@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.action;
 
 import java.math.BigDecimal;
@@ -9,6 +26,7 @@ import java.util.Optional;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.pdg00.bp.PdGVariazioneBP;
+import it.cnr.contab.progettiric00.bp.AmministraTestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.ProgettoAlberoBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
@@ -731,5 +749,48 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
             return handleException(actioncontext, businessprocessexception);
         }
     }
+
+	public Forward doRemovePianoEconomico(ActionContext actioncontext)
+	{
+		try
+		{
+			BulkBP bulkbp = (BulkBP)actioncontext.getBusinessProcess();
+			fillModel(actioncontext);
+			if (bulkbp instanceof AmministraTestataProgettiRicercaBP) {
+				if (bulkbp.isDirty()) {
+					openMessage(actioncontext, "Operazione non consentita! Confermare o annullare le modifiche effettuate prima di procedere ad una nuova operazione!");
+					return actioncontext.findDefaultForward();
+				} else
+					return openConfirm(actioncontext, "L'operazione richiesta comporta l'annullamento del piano economico anche sui bilanci preventivi dove eventualmente inserito. Vuoi continuare?",
+							OptionBP.CONFIRM_YES_NO, "doConfirmRemovePianoEconomico");
+			} else {
+				openMessage(actioncontext, "Operazione non consentita!");
+				return actioncontext.findDefaultForward();
+			}
+		}
+		catch(Throwable throwable)
+		{
+			return handleException(actioncontext, throwable);
+		}
+	}
+
+	public Forward doConfirmRemovePianoEconomico(ActionContext actioncontext, int i)
+	{
+		try
+		{
+			if(i == OptionBP.YES_BUTTON)
+			{
+				TestataProgettiRicercaBP bulkbp = (TestataProgettiRicercaBP)actioncontext.getBusinessProcess();
+				bulkbp.removePianoEconomico(actioncontext);
+				openMessage(actioncontext, "Operazione effettuata! E' stato inserito un tipo di finanziamento che non prevede piano economico. Verificare la correttezza dello stesso ed eventualmente procedere al suo aggiornamento!");
+			}
+			return actioncontext.findDefaultForward();
+		}
+		catch(BusinessProcessException businessprocessexception)
+		{
+			return handleException(actioncontext, businessprocessexception);
+		}
+	}
+
 }
 

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="marco.spasiano" id="configurazione_cnr-update-parametri-siopeplus">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="A2A-69765204"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_A2A'</where>
+        </update>
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="O5WZO8"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_ENTE'</where>
+        </update>
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="A2A-70941793"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_TRAMITE_BT'</where>
+        </update>
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="000713516000000"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_ISTAT_ENTE'</where>
+        </update>
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="false"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='ATTIVO_SIOPEPLUS'</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="marco.spasiano" id="configurazione_cnr-update-parametri-siopeplus-oracle" dbms="oracle">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="0000767"/>
+            <column name="im01" type="NUMERIC" value="77,47"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_ENTE_BT'</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="marco.spasiano" id="configurazione_cnr-update-parametri-siopeplus-postgres" dbms="postgres">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="0000767"/>
+            <column name="im01" type="NUMERIC" value="77.47"/>
+            <where>CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='FLUSSO_ORDINATIVI' AND CD_CHIAVE_SECONDARIA='CODICE_ENTE_BT'</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="configurazione_cnr_update_abi_banca_italia">
+        <update tableName="configurazione_cnr">
+            <column name="val01" type="STRING" value="01000"/>
+            <where>ESERCIZIO=0 AND CD_UNITA_FUNZIONALE='*' AND CD_CHIAVE_PRIMARIA='CONTO_CORRENTE_SPECIALE' AND CD_CHIAVE_SECONDARIA='BANCA_ITALIA'</where>
+        </update>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="progetto_other_field_disabilita_controlli_progetti">
+        <update tableName="progetto_other_field">
+            <column name="fl_controlli_disabled" type="CHAR(1)" value="Y"/>
+        </update>
+    </changeSet>
+</databaseChangeLog>

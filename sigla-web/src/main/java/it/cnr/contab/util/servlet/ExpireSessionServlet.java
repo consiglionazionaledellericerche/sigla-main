@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.util.servlet;
 
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
@@ -59,7 +76,7 @@ public class ExpireSessionServlet extends HttpServlet implements Serializable,Ht
 			resp.setContentType("text/html");			
 			resp.getWriter().println("<body bgcolor=\"#C4CAD4\"><em><font color=\"#6666aa\" size=\"2\" face=\"Arial, Helvetica, sans-serif\">");		
 			resp.getWriter().println("<TABLE border=1>");
-			resp.getWriter().println("<TR><TD align=center>Num.</TD><TD align=center>User</TD><TD align=center>Session Id</TD><TD align=center>Creation Time</TD><TD align=center>Last Access Time</TD></TR>");
+			resp.getWriter().println("<TR><TD align=center>Num.</TD><TD align=center>Users</TD><TD align=center>Session Id</TD><TD align=center>Creation Time</TD><TD align=center>Last Access Time</TD></TR>");
 	    	for (Enumeration sessions = sessionObjects.elements();sessions.hasMoreElements();){
 				try{
 		    		HttpSession session = (HttpSession)sessions.nextElement();

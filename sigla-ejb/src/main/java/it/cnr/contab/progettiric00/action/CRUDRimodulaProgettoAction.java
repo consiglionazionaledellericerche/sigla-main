@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.action;
 
 import java.rmi.RemoteException;
@@ -588,16 +605,5 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		} catch (Exception e) {
 			return handleException(actioncontext, e);
 		}	
-	}
-	
-	@Override
-	public Forward doRiportaSelezione(ActionContext actioncontext, OggettoBulk oggettobulk) throws RemoteException {
-		if (!Optional.ofNullable(oggettobulk).filter(Progetto_rimodulazioneBulk.class::isInstance)
-					.map(Progetto_rimodulazioneBulk.class::cast)
-					.map(el->el.isStatoProvvisorio()||el.isStatoDefinitivo()||el.isStatoValidato())
-					.orElse(Boolean.TRUE))
-			throw new it.cnr.jada.action.MessageToUser("Rimodulazione progetto non selezionabile! E' possibile selezionare solo "
-				+ "rimodulazioni in corso con stato diverso da Approvato/Respinto.");
-		return super.doRiportaSelezione(actioncontext, oggettobulk);
 	}
 }

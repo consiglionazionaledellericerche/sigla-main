@@ -36,8 +36,7 @@ function doVisualizzaMandato() {
 
 <body class="Form">
 	<%
-		// if ( bp.isRicercaDocumentiTabEnabled() )
-		if ( bp.isInserting() )
+		if ( bp.isInserting() || bp.isDaSostituire())
 			JSPUtils.tabbed(
 						pageContext,
 						"tab",

@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBase"
 	keyClassName="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereKey"
@@ -132,6 +149,13 @@
 			propertyName="stato"
 			sqlTypeName="CHAR"
 			columnSize="3" />
+		<columnMapping
+			columnName="FL_INVIA_PEC"
+			propertyName="inviaPEC"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_distinta_def" />
@@ -175,5 +199,7 @@
 		name="identificativoFlussoBT" />
 	<persistentProperty
 		name="stato" />
+	<persistentProperty
+		name="inviaPEC" />
 
 </SQLPersistentInfo>

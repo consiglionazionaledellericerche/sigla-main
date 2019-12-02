@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
@@ -16,6 +33,7 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -96,6 +114,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 				Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
 				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)getParentController().getParentController().getModel();
 				rimodulazione.getDettagliPianoEconomicoAnnoCorrente().stream()
+					.filter(ppe->Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
 					.filter(ppe->!ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
 					.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
 					.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
@@ -150,6 +169,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 				Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
 				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)getParentController().getParentController().getModel();
 				rimodulazione.getDettagliPianoEconomicoAltriAnni().stream()
+					.filter(ppe->Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
 					.filter(ppe->!ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
 					.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
 					.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
@@ -279,14 +299,18 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 	public void basicEdit(ActionContext actioncontext, OggettoBulk oggettobulk, boolean flag)
 			throws BusinessProcessException {
 		super.basicEdit(actioncontext, oggettobulk, flag);
-		//Se la uo collegata non è la coordinatrice del progetto non può fare nulla
-		if (!Optional.ofNullable(this.getModel())
-			 		 .filter(Progetto_rimodulazioneBulk.class::isInstance)
-					 .map(Progetto_rimodulazioneBulk.class::cast)
-					 .flatMap(el->Optional.ofNullable(el.getProgetto()))
-					 .flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
-					 .map(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
-					 .orElse(Boolean.FALSE))
+		Optional<Progetto_rimodulazioneBulk> optPrgRim =
+				Optional.ofNullable(this.getModel())
+						.filter(Progetto_rimodulazioneBulk.class::isInstance)
+						.map(Progetto_rimodulazioneBulk.class::cast);
+		//Se la rimodulazione è approvata/annullata non può fare nulla
+		if (optPrgRim.map(el->el.isStatoApprovato()||el.isStatoRespinto())
+				     .orElse(Boolean.FALSE) ||
+			//Se la uo collegata non è la coordinatrice del progetto non può fare nulla
+			!optPrgRim.flatMap(el->Optional.ofNullable(el.getProgetto()))
+					  .flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa()))
+					  .map(el->el.equals(uoScrivania.getCd_unita_organizzativa()))
+					  .orElse(Boolean.FALSE))
 			this.setStatus(VIEW);
 	}
 
@@ -342,36 +366,42 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 	public String[][] getTabs(HttpSession session) {
 		String uo = CNRUserContext.getCd_unita_organizzativa(HttpActionContext.getUserContext(session));
 		Progetto_rimodulazioneBulk progettoRimodulazione = (Progetto_rimodulazioneBulk)this.getModel();
-		ProgettoBulk progetto = progettoRimodulazione.getProgetto();
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(progettoRimodulazione).flatMap(el->Optional.ofNullable(el.getProgetto()));
 		
 		TreeMap<Integer, String[]> hash = new TreeMap<Integer, String[]>();
 		int i=0;
 
 		hash.put(i++, new String[]{"tabTestata","Testata","/progettiric00/rimodula_progetto_ricerca_testata.jsp" });
 		
-		if (progetto!=null && !this.isSearching()) {
-			if (isUoCdsCollegata || 
-		    	  (progetto.getCd_unita_organizzativa()!=null && progetto.getCd_unita_organizzativa().equals(uo))) {
-		    	if (this.isFlPrgPianoEconomico() && 
-		    		((progetto.isPianoEconomicoRequired() && 
-		    		  Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtInizio())).isPresent() &&
-		    		  Optional.ofNullable(progetto.getOtherField()).flatMap(el->Optional.ofNullable(el.getDtFine())).isPresent()) ||
-		    		 (progetto.isDettagliPianoEconomicoPresenti() && 
-		    		  Optional.ofNullable(this.getAnnoFromPianoEconomico()).map(el->el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session)))<=0)
-		    				 .orElse(Boolean.FALSE))))
-		    		hash.put(i++, new String[]{"tabPianoEconomico","Piano Economico","/progettiric00/rimodula_progetto_piano_economico.jsp" });
-		    } 
-	    } 
+		if (!this.isSearching()) {
+			if (optProgetto.isPresent() && !(progettoRimodulazione.isStatoApprovato() || progettoRimodulazione.isStatoRespinto())) {
+				//Il piano economico non lo faccio vedere per le rimodulazioni approvate/respinte perchè ancora non implementata la procedura
+				//di ricostruzione della rimodulazione
+				if (isUoCdsCollegata ||
+						(optProgetto.flatMap(el->Optional.ofNullable(el.getCd_unita_organizzativa())).filter(el->el.equals(uo))).isPresent()) {
+					if (this.isFlPrgPianoEconomico() &&
+							((optProgetto.get().isPianoEconomicoRequired() &&
+									optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField())).flatMap(el -> Optional.ofNullable(el.getDtInizio())).isPresent() &&
+									optProgetto.flatMap(el->Optional.ofNullable(el.getOtherField())).flatMap(el -> Optional.ofNullable(el.getDtFine())).isPresent()) ||
+									(optProgetto.get().isDettagliPianoEconomicoPresenti() &&
+											Optional.ofNullable(this.getAnnoFromPianoEconomico()).map(el -> el.compareTo(CNRUserContext.getEsercizio(HttpActionContext.getUserContext(session))) <= 0)
+													.orElse(Boolean.FALSE))))
+						hash.put(i++, new String[]{"tabPianoEconomico", "Piano Economico", "/progettiric00/rimodula_progetto_piano_economico.jsp"});
+				}
+			}
 
-		//Se su una rimodulazione definitiva è prevista la creazioni di variazioni visualizzo la tab corrispondente
-		if (Optional.ofNullable(progettoRimodulazione).filter(Progetto_rimodulazioneBulk::isStatoValidato)
-				.flatMap(el->Optional.ofNullable(el.getVariazioniAssociate())).filter(el->!el.isEmpty())
-				.isPresent()) {
-			hash.put(i++, new String[]{ "tabVariazioniAss", "Variazioni Associate", "/progettiric00/tab_ass_progetto_rimod_variazioni.jsp" });
+			//Se su una rimodulazione definitiva è prevista la creazione di variazioni visualizzo la tab corrispondente
+			if (Optional.ofNullable(progettoRimodulazione).filter(el->el.isStatoValidato() || el.isStatoApprovato())
+					.flatMap(el -> Optional.ofNullable(el.getVariazioniAssociate())).filter(el -> !el.isEmpty())
+					.isPresent())
+				hash.put(i++, new String[]{"tabVariazioniAss", "Variazioni Associate", "/progettiric00/tab_ass_progetto_rimod_variazioni.jsp"});
+
+			hash.put(i++, new String[]{"tabAllegati","Allegati","/util00/tab_allegati.jsp" });
+
+			if ((uoScrivania.isUoEnte() && !progettoRimodulazione.isStatoProvvisorio()) || progettoRimodulazione.isStatoRespinto())
+				hash.put(i++, new String[]{"tabAnnotazioni","Annotazioni","/progettiric00/tab_annotazioni_progetto_rimod.jsp" });
 		}
 
-		hash.put(i++, new String[]{"tabAllegati","Allegati","/util00/tab_allegati.jsp" });
-		
 		String[][] tabs = new String[i][3];
 		for (int j = 0; j < i; j++) {
 			tabs[j]=new String[]{hash.get(j)[0],hash.get(j)[1],hash.get(j)[2]};
@@ -417,7 +447,36 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		}
 		return tabs;
 	}
-	
+
+	@Override
+	public void setTab(String tabName, String pageName) {
+		super.setTab(tabName, pageName);
+		if (!isSearching() &&
+				Optional.ofNullable(uoScrivania).map(Unita_organizzativaBulk::isUoEnte).orElse(Boolean.FALSE)) {
+			if (pageName.equalsIgnoreCase("tabAnnotazioni") &&
+					Optional.ofNullable(getModel())
+						.filter(Progetto_rimodulazioneBulk.class::isInstance)
+						.map(Progetto_rimodulazioneBulk.class::cast)
+						.filter(el->el.isStatoDefinitivo()||el.isStatoValidato())
+						.isPresent())
+				setStatus(EDIT);
+			else
+				setStatus(VIEW);
+		}
+	}
+
+	@Override
+	public boolean isSaveButtonEnabled() {
+		return super.isSaveButtonEnabled() ||
+				(Optional.ofNullable(uoScrivania).map(Unita_organizzativaBulk::isUoEnte).orElse(Boolean.FALSE) &&
+						Optional.ofNullable(getModel())
+								.filter(Progetto_rimodulazioneBulk.class::isInstance)
+								.map(Progetto_rimodulazioneBulk.class::cast)
+								.filter(el->el.isStatoDefinitivo()||el.isStatoValidato())
+								.isPresent()
+				);
+	}
+
 	protected void resetTabs(it.cnr.jada.action.ActionContext context) {
 		setTab("tab","tabTestata");
 		setTab("tabProgettoPianoEconomico","tabProgettoPianoEconomicoSummary");
@@ -690,19 +749,26 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 										.map(Voce_piano_economico_prgBulk::getFl_add_vocibil)
 										.orElse(Boolean.FALSE);
 
+		if (!Optional.ofNullable(optPpe.get().getImSpesaFinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo finanziato non può assumere un valore nullo.");
+
+		if (!Optional.ofNullable(optPpe.get().getImSpesaCofinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore nullo.");
+
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
 			throw new ValidationException("Operazione non possibile! Il campo importo finanziato non può assumere un valore negativo.");
 
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0 && 
 				optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0)
-			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono essere entrambi nulli.");
+			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono assumere entrambi valore 0.");
 
 		//Calcolo il valore minimo al di sotto del quale non si può andare
 		BigDecimal totaleUtilizzato = optPpe.get().getVociBilancioAssociate().stream()
 			  		.filter(el->!isAddVoceBilancio||Optional.ofNullable(el.getElemento_voce()).isPresent())
 			  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
+			  		.filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
 			  		.map(Ass_progetto_piaeco_voceBulk::getSaldoSpesa)
-			  		.map(V_saldi_voce_progettoBulk::getUtilizzatoAssestatoFinanziamento)
+			  		.map(el->Optional.ofNullable(el.getUtilizzatoAssestatoFinanziamento()).orElse(BigDecimal.ZERO))
 			  		.reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
 		
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(totaleUtilizzato)<0)
@@ -719,7 +785,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
     	if (Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance).map(Progetto_rimodulazioneBulk.class::cast)
     			.filter(el->el.isStatoProvvisorio())
     			.isPresent()){
-    		if (allegato.isRimodulazione() || allegato.isProroga() || allegato.isStampaAutomatica())
+    		if (allegato.isProroga() || allegato.isStampaAutomatica())
     			allegato.setDaNonEliminare(Boolean.TRUE);
     	} 
 	}
@@ -729,21 +795,28 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 										.map(Voce_piano_economico_prgBulk::getFl_add_vocibil)
 										.orElse(Boolean.FALSE);
 
+		if (!Optional.ofNullable(optPpe.get().getImSpesaFinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo finanziato non può assumere un valore nullo.");
+
+		if (!Optional.ofNullable(optPpe.get().getImSpesaCofinanziatoRimodulato()).isPresent())
+			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore nullo.");
+
 		if (optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)<0)
 			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore negativo.");
 
 		if (optPpe.get().getImSpesaFinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0 && 
 				optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(BigDecimal.ZERO)==0)
-			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono essere entrambi nulli.");
+			throw new ValidationException("Operazione non possibile! I campi importo finanziato e cofinanziato non possono assumere entrambi valore 0.");
 
 		//Calcolo il valore minimo al di sotto del quale non si può andare
 		BigDecimal totaleUtilizzato = optPpe.get().getVociBilancioAssociate().stream()
 			  		.filter(el->!isAddVoceBilancio||Optional.ofNullable(el.getElemento_voce()).isPresent())
 			  		.filter(el->Elemento_voceHome.GESTIONE_SPESE.equals(el.getTi_gestione()))
+			  		.filter(el->Optional.ofNullable(el.getSaldoSpesa()).isPresent())
 			  		.map(Ass_progetto_piaeco_voceBulk::getSaldoSpesa)
-			  		.map(V_saldi_voce_progettoBulk::getUtilizzatoAssestatoCofinanziamento)
+			  		.map(el->Optional.ofNullable(el.getUtilizzatoAssestatoCofinanziamento()).orElse(BigDecimal.ZERO))
 			  		.reduce((x, y)->x.add(y)).orElse(BigDecimal.ZERO);
-		
+  		
 		if (optPpe.get().getImSpesaCofinanziatoRimodulato().compareTo(totaleUtilizzato)<0)
 			throw new ValidationException("Operazione non possibile! Il campo importo cofinanziato non può assumere un valore inferiore"
 					+ " all'importo già utilizzato ("
@@ -753,18 +826,22 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
     
     @Override
     protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
-    	return Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance)
+    	return (Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance)
     			.map(Progetto_rimodulazioneBulk.class::cast)
     			.map(el->!el.isROFieldRimodulazione())
-    			.orElse(Boolean.TRUE) && super.isPossibileCancellazione(allegato);
+    			.orElse(Boolean.TRUE) ||
+				Optional.ofNullable(allegato).map(el->el.isToBeCreated()).orElse(Boolean.TRUE)) &&
+				super.isPossibileCancellazione(allegato);
     }
     
     @Override
     protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
-    	return Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance)
+    	return (Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance)
     			.map(Progetto_rimodulazioneBulk.class::cast)
     			.map(el->!el.isROFieldRimodulazione())
-    			.orElse(Boolean.TRUE) && super.isPossibileModifica(allegato);
+    			.orElse(Boolean.TRUE) ||
+				Optional.ofNullable(allegato).map(el->el.isToBeCreated()).orElse(Boolean.TRUE)) &&
+				super.isPossibileModifica(allegato);
     }
     
     @Override
@@ -774,4 +851,16 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		.map(Progetto_rimodulazioneBulk.class::cast).ifPresent(el->el.setStato(null));
     	return super.find(actioncontext, compoundfindclause, oggettobulk);
     }
+
+	public Unita_organizzativaBulk getUoScrivania() {
+		return uoScrivania;
+	}
+
+	@Override
+	public String getAllegatiFormName() {
+    	String formName = super.getAllegatiFormName();
+    	if ("default".equals(formName) && Optional.ofNullable(this.getArchivioAllegati().getModel()).map(el->el.isNew()).orElse(Boolean.TRUE))
+    		return "insert";
+    	return formName;
+	}
 }

@@ -52,10 +52,11 @@ function doScaricaFirmato() {
 		<tr>
 			<% bp.getController().writeFormField( out, "progFlusso"); %>
 			<% bp.getController().writeFormField( out, "identificativoFlussoBT"); %>
+			<% bp.getController().writeFormField( out, "fl_invia_pec"); %>
 		</tr>
 		<tr>
 			<td><% bp.getController().writeFormLabel( out, "statoLabel"); %></td>
-			<td colspan="3"><% bp.getController().writeFormInput( out, (bp.isSearching() ? "stato":"statoLabel")); %></td>
+			<td colspan="5"><% bp.getController().writeFormInput( out, (bp.isSearching() ? "stato":"statoLabel")); %></td>
 		</tr>
    </table>
    </div>

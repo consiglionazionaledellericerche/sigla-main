@@ -1,4 +1,21 @@
 /*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/*
  * Created on Feb 16, 2006
  *
  * To change the template for this generated file go to
@@ -1451,6 +1468,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
 		if (oggettobulk instanceof Var_stanz_resBulk){
 			Var_stanz_resBulk var = (Var_stanz_resBulk)oggettobulk;
+			Optional.ofNullable(var.getEsercizio_res()).flatMap(el->Optional.ofNullable(el.getEsercizio()))
+				.orElseThrow(()->new ApplicationException("Operazione non possibile! Indicare l'esercizio residuo della variazione!"));	
 			validaOrigineFontiPerAnnoResiduo(usercontext, var.getEsercizio_residuo(), var.getTipologia_fin());
 		}
 		super.validaCreaModificaConBulk(usercontext, oggettobulk);

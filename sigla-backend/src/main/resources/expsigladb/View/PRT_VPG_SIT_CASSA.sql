@@ -2,7 +2,7 @@
 --  DDL for View PRT_VPG_SIT_CASSA
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "PRT_VPG_SIT_CASSA" ("ID", "CHIAVE", "TIPO", "SEQUENZA", "ORDINE", "CDS", "DESCRIZIONE", "IMPORTO_PARZ", "TOTALE", "FL_TOTALE", "SEGNO", "ORDINAMENTO") AS 
+  CREATE OR REPLACE FORCE VIEW "PRT_VPG_SIT_CASSA" ("ID", "CHIAVE", "TIPO", "SEQUENZA", "ORDINE", "CDS", "DESCRIZIONE", "IMPORTO_PARZ", "TOTALE", "FL_TOTALE", "SEGNO") AS 
   select
 -- Date: 06/08/2004
 -- Version: 1.1
@@ -27,8 +27,7 @@ ATTRIBUTO_2,	-- descrizione
 IMPORTO_2,	-- importo PARZIALE
 IMPORTO_3,	-- importo TOTALE
 ATTRIBUTO_3,	-- TOTALE SI/NO
-ATTRIBUTO_4,     -- SEGNO,
-ATTRIBUTO_5     -- ORDINAMENTO_ALFANUMERICO
+ATTRIBUTO_4     -- SEGNO
 from tmp_report_generico
 ;
 

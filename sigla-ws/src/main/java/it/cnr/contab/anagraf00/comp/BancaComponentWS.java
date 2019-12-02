@@ -1,5 +1,23 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.anagraf00.comp;
 
+import it.cnr.contab.WSAttributes;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -17,9 +35,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
+import javax.servlet.annotation.WebServlet;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -55,11 +75,11 @@ import org.w3c.dom.Node;
 @Stateless
 @WebService(endpointInterface = "it.cnr.contab.anagraf00.ejb.BancaComponentSessionWS")
 @XmlSeeAlso({ java.util.ArrayList.class })
-@DeclareRoles({ "WSUserRole", "IITRole" })
-@WebContext(authMethod = "WSSE", contextRoot = "SIGLA-SIGLAEJB")
+@DeclareRoles({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
+@WebContext(authMethod = WSAttributes.AUTHMETHOD)
 public class BancaComponentWS {
 	@EJB FatturaAttivaSingolaComponentSession fatturaAttivaSingolaComponentSession;
-
+	@RolesAllowed({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE })
 	public java.util.ArrayList<Banca> cercaBanche(Integer terzo,
 			String modalita, String query, String dominio, Integer numMax,
 			String user, String ricerca) throws Exception {
@@ -139,7 +159,7 @@ public class BancaComponentWS {
 			throw new SOAPFaultException(faultGenerico());
 		}
 	}
-
+	@RolesAllowed({ WSAttributes.WSUSERROLE, WSAttributes.IITROLE})
 	public String cercaBancheXml(String terzo, String modalita, String query,
 			String dominio, String numMax, String user, String ricerca)
 			throws Exception {

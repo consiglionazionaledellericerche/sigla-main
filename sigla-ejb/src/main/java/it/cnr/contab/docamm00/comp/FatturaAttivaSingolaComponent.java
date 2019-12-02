@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.docamm00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
@@ -5539,7 +5556,7 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                     if (differenzaIva.compareTo(BigDecimal.ZERO) > 0 && differenzaIva.compareTo(tolleranza) > 0){
                         throw new it.cnr.jada.comp.ApplicationException("Il totale documento per aliquota iva è maggiore di "+differenzaIva+" rispetto alla somma dei dettagli del documento. Aggiungere " + differenzaIva+" all'importo IVA(forzandolo) di una delle righe del documento.");
                     }
-                    if (differenzaIva.compareTo(BigDecimal.ZERO) < 0 && differenzaIva.abs().compareTo(tolleranza) < 0){
+                    if (differenzaIva.compareTo(BigDecimal.ZERO) < 0 && differenzaIva.abs().compareTo(tolleranza) > 0){
                         throw new it.cnr.jada.comp.ApplicationException("Il totale documento per aliquota iva è minore di "+differenzaIva+" rispetto alla somma dei dettagli del documento. Sottrarre " + differenzaIva.abs()+" dall'importo IVA(forzandolo) di una delle righe del documento.");
                     }
                 }
@@ -5619,7 +5636,8 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         }
 
         if (fatturaRiga.getFattura_attiva().getTi_causale_emissione().equals(fatturaRiga.getFattura_attiva().TARIFFARIO) &&
-                (fatturaRiga.getTariffario() == null || fatturaRiga.getTariffario().getCrudStatus() == OggettoBulk.UNDEFINED))
+                (fatturaRiga.getTariffario() == null || fatturaRiga.getTariffario().getCd_tariffario() == null || 
+                 fatturaRiga.getTariffario().getCrudStatus() == OggettoBulk.UNDEFINED))
             throw new it.cnr.jada.comp.ApplicationException(
                     "Selezionare un tariffario!");
 

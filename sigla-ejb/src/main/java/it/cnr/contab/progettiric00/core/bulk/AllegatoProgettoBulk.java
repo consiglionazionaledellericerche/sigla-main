@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.util.Arrays;
@@ -82,7 +99,7 @@ public class AllegatoProgettoBulk extends AllegatoGenericoTypeBulk {
 		super.validate();
 		if (getObjectType() == null)
 			throw new ValidationException("Attenzione: selezionare il tipo di File da caricare.");
-		else if (this.isToBeCreated() || this.getNome().isEmpty()) {
+		else if (this.isToBeCreated() || this.getNome()==null || this.getNome().isEmpty()) {
 			StringJoiner name = new StringJoiner("-");
 			Optional.ofNullable(this.getProgetto()).flatMap(el->Optional.ofNullable(el.getPg_progetto()))
 					.ifPresent(el->name.add("PRG" + el));

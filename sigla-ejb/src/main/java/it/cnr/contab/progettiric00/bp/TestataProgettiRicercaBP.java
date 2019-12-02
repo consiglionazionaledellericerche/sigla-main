@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
@@ -572,6 +589,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         if (!this.isFlInformix()) {
             Progetto_other_fieldBulk otherField = new Progetto_other_fieldBulk();
             otherField.setStato(StatoProgetto.STATO_INIZIALE.value());
+            otherField.setFlControlliDisabled(Boolean.FALSE);
             otherField.setToBeCreated();
             progetto.setOtherField(otherField);
         }
@@ -637,12 +655,13 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 
     @Override
     public boolean isSaveButtonEnabled() {
-        return super.isSaveButtonEnabled() &&
+        return (this instanceof AmministraTestataProgettiRicercaBP) ||
+                (super.isSaveButtonEnabled() &&
                 (!this.isFlInformix() || !Optional.ofNullable(this.getModel()).filter(ProgettoBulk.class::isInstance)
                         .map(ProgettoBulk.class::cast)
                         .flatMap(el -> Optional.ofNullable(el.getOtherField()))
                         .filter(el -> el.isStatoAnnullato() || el.isStatoChiuso())
-                        .isPresent());
+                        .isPresent()));
     }
 
     @Override
@@ -1058,5 +1077,18 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     
     public Unita_organizzativaBulk getUoScrivania() {
     	return uoScrivania;
+    }
+
+    public void removePianoEconomico(ActionContext context) throws BusinessProcessException {
+        try {
+            if (this instanceof AmministraTestataProgettiRicercaBP) {
+                ((ProgettoRicercaComponentSession) createComponentSession()).removePianoEconomico(
+                    context.getUserContext(),
+                    (ProgettoBulk) getModel());
+                this.setModel(context, this.initializeModelForEdit(context,this.getModel()));
+            }
+        } catch (ComponentException | RemoteException e) {
+            throw handleException(e);
+        }
     }
 }

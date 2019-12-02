@@ -1,11 +1,28 @@
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses />.
+  -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>sigla-backend</artifactId>
 	<packaging>jar</packaging>
 	<parent>
-		<groupId>it.cnr</groupId>
-		<artifactId>sigla</artifactId>
-		<version>5.3.63-SNAPSHOT</version>
+		<groupId>it.cnr.si.sigla</groupId>
+		<artifactId>sigla-parent</artifactId>
+		<version>6.0.13-SNAPSHOT</version>
 	</parent>
 	<build>
 		<pluginManagement>
@@ -27,8 +44,13 @@
 			<artifactId>liquibase-core</artifactId>
             <version>${liquibase.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.liquibase.ext</groupId>
+			<artifactId>liquibase-javalogger</artifactId>
+			<version>3.0</version>
+		</dependency>
         <dependency>
-            <groupId>it.cnr</groupId>
+            <groupId>it.cnr.si</groupId>
             <artifactId>jada</artifactId>
             <version>${jada.version}</version>
             <type>ejb</type>
@@ -46,6 +68,13 @@
             <version>3.0</version>
             <scope>provided</scope>
         </dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -65,10 +94,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc7</artifactId>
-			<version>12.1.0.2.0</version>
-			<scope>test</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<profiles>

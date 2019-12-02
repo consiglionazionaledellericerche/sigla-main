@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
@@ -185,10 +202,14 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 				newDetail.setVocePianoEconomico(ppe.getVoce_piano_economico());
 				newDetail.setEsercizio_piano(ppe.getEsercizio_piano());
 				newDetail.setImVarEntrata(BigDecimal.ZERO);
-				newDetail.setImVarSpesaFinanziato(ppe.getImSpesaFinanziatoRimodulato().subtract(ppe.getIm_spesa_finanziato()));
-				newDetail.setImVarSpesaCofinanziato(ppe.getImSpesaCofinanziatoRimodulato().subtract(ppe.getIm_spesa_cofinanziato()));
-				newDetail.setImStoassSpesaFinanziato(ppe.getSaldoSpesa().getAssestatoFinanziamento());
-				newDetail.setImStoassSpesaCofinanziato(ppe.getSaldoSpesa().getAssestatoCofinanziamento());
+				newDetail.setImVarSpesaFinanziato(Optional.ofNullable(ppe.getImSpesaFinanziatoRimodulato()).orElse(BigDecimal.ZERO)
+						.subtract(Optional.ofNullable(ppe.getIm_spesa_finanziato()).orElse(BigDecimal.ZERO)));
+				newDetail.setImVarSpesaCofinanziato(Optional.ofNullable(ppe.getImSpesaCofinanziatoRimodulato()).orElse(BigDecimal.ZERO)
+						.subtract(Optional.ofNullable(ppe.getIm_spesa_cofinanziato()).orElse(BigDecimal.ZERO)));
+				newDetail.setImStoassSpesaFinanziato(Optional.ofNullable(ppe.getSaldoSpesa())
+						.map(V_saldi_piano_econom_progettoBulk::getAssestatoFinanziamento).orElse(BigDecimal.ZERO));
+				newDetail.setImStoassSpesaCofinanziato(Optional.ofNullable(ppe.getSaldoSpesa())
+						.map(V_saldi_piano_econom_progettoBulk::getAssestatoCofinanziamento).orElse(BigDecimal.ZERO));
 				return newDetail;
 			}).collect(Collectors.toList());
 	}
@@ -205,6 +226,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 	public List<Progetto_rimodulazione_voceBulk> getDettagliRimodulazioneVoceAggiornato(it.cnr.jada.UserContext userContext,Progetto_rimodulazioneBulk progettoRimodulazione) {
 		return progettoRimodulazione.getAllDetailsProgettoPianoEconomico().stream()
 			.flatMap(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).map(List::stream).orElse(Stream.empty()))
+			.filter(el->Optional.ofNullable(el.getElemento_voce()).flatMap(el1->Optional.ofNullable(el.getCd_elemento_voce())).isPresent())
 			.filter(Ass_progetto_piaeco_voceBulk::isDetailRimodulato)
 			.map(ppeVoce->{
 				Progetto_rimodulazione_voceBulk newRimVoce = new Progetto_rimodulazione_voceBulk();
@@ -434,7 +456,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 								.filter(dettPpe->dettPpe.getCd_voce_piano().equals(rimVoce.getCd_voce_piano()))
 								.filter(dettPpe->dettPpe.getEsercizio_piano().equals(rimVoce.getEsercizio_piano()))
 								.findAny().orElse(null);
-					if (Optional.of(ppe).isPresent()) {
+					if (Optional.ofNullable(ppe).isPresent()) {
 						Ass_progetto_piaeco_voceBulk newPpeVoce = new Ass_progetto_piaeco_voceBulk();
 						newPpeVoce.setElemento_voce(rimVoce.getElementoVoce());
 						newPpeVoce.setDetailRimodulatoAggiunto(Boolean.TRUE);
@@ -658,7 +680,7 @@ public class Progetto_rimodulazioneHome extends BulkHome {
 	 * N.B. Questo metodo deve essere richiamato solo l'oggetto Rimodulazione è stato caricato con tutti i dettagli
 	 * in caso contrario chiamare il metodo precedente.
 	 * 
-	 * @param Oggetto Rimodulazione caricato con tutti i dettagli
+	 * @param rimodulazione Rimodulazione caricato con tutti i dettagli
 	 * @return Progetto Rimodulato
 	 */
 	public ProgettoBulk getProgettoRimodulato(Progetto_rimodulazioneBulk rimodulazione) {

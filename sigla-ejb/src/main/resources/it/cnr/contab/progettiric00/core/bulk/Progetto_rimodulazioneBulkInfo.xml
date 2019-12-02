@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <bulkInfo
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns="https://contab.cnr.it/schema/SIGLA" 
@@ -207,6 +224,29 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />
 	<fieldProperty
+		name="dtStatoDefinitivo"
+		property="dtStatoDefinitivo"
+		inputType="ROTEXT"
+		formatName="date_short"
+		label="Data Stato Definitivo"
+		labelStyle="font-style: italic;font-weight: bold;" />
+	<fieldProperty
+		name="motivoRifiuto"
+		property="motivoRifiuto"
+		label="Motivo Rifiuto"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		nullable="true" />
+	<fieldProperty
+		name="note"
+		property="note"
+		label="Annotazioni"
+		cols="60"
+		rows="4"
+		inputType="TEXTAREA"
+		nullable="true" />
+	<fieldProperty
 		name="imFinanziatoRimodulato"
 		property="imFinanziatoRimodulato"
 		readonlyProperty="ROFieldRimodulazione"
@@ -339,7 +379,7 @@
 	<formFieldProperty name="imCofinanziatoRimodulatoDaRipartire" />
 	<formFieldProperty name="imTotaleRimodulatoDaRipartire" />
 	<formFieldProperty name="flViewCurrent" />
-		
+
 	<formFieldProperty
 		name="statoOf" />
 	<formFieldProperty
@@ -357,12 +397,17 @@
 	<formFieldProperty
 		name="imCofinanziatoOf" />
 
+	<formFieldProperty name="dtStatoDefinitivo" />
+	<formFieldProperty name="motivoRifiuto" />
+	<formFieldProperty name="note" />
+
 	<columnFieldProperty name="cd_unita_organizzativa_progetto" />
 	<columnFieldProperty name="cd_progetto" />
 	<columnFieldProperty name="ds_progetto" />
 	<columnFieldProperty name="pg_rimodulazione" />
 	<columnFieldProperty name="pg_gen_rimodulazione" />
 	<columnFieldProperty name="stato" />
+	<columnFieldProperty name="dtStatoDefinitivo" />
 
 	<findFieldProperty name="cd_unita_organizzativa_progetto" />
 	<findFieldProperty name="cd_progetto" />

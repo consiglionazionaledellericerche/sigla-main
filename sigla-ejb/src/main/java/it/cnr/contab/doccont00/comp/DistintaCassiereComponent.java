@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.doccont00.comp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
@@ -4788,7 +4805,7 @@ public class DistintaCassiereComponent extends
             it.siopeplus.Beneficiario benef = objectFactory.createBeneficiario();
             it.siopeplus.Mandato.InformazioniBeneficiario.Sospeso sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
             it.siopeplus.Ritenute riten = objectFactory.createRitenute();
-            it.siopeplus.InformazioniAggiuntive aggiuntive = objectFactory.createInformazioniAggiuntive();
+            Mandato.InformazioniBeneficiario.InformazioniAggiuntive aggiuntive = objectFactory.createMandatoInformazioniBeneficiarioInformazioniAggiuntive();
             for (Iterator i = list.iterator(); i.hasNext(); ) {
                 final it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk  docContabile = (it.cnr.contab.doccont00.intcass.bulk.VDocumentiFlussoBulk) i.next();
                 final String modalitaPagamento = docContabile.getModalitaPagamento();
@@ -4880,7 +4897,7 @@ public class DistintaCassiereComponent extends
                     benef = objectFactory.createBeneficiario();
                     sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
                     riten = objectFactory.createRitenute();
-                    aggiuntive = objectFactory.createInformazioniAggiuntive();
+                    aggiuntive = objectFactory.createMandatoInformazioniBeneficiarioInformazioniAggiuntive();
 
                     infoben = objectFactory.createMandatoInformazioniBeneficiario();
                     infoben.setProgressivoBeneficiario(1);// Dovrebbe essere sempre
@@ -5135,7 +5152,7 @@ public class DistintaCassiereComponent extends
                     benef = objectFactory.createBeneficiario();
                     sosp = objectFactory.createMandatoInformazioniBeneficiarioSospeso();
                     riten = objectFactory.createRitenute();
-                    aggiuntive = objectFactory.createInformazioniAggiuntive();
+                    aggiuntive = objectFactory.createMandatoInformazioniBeneficiarioInformazioniAggiuntive();
                     infoben = objectFactory.createMandatoInformazioniBeneficiario();
                     totSiope = BigDecimal.ZERO;
                     infoben.setProgressivoBeneficiario(2);
@@ -5652,7 +5669,7 @@ public class DistintaCassiereComponent extends
 
     private void caricaInformazioniAggiuntive(it.siopeplus.Mandato.InformazioniBeneficiario infoben,
                                               V_mandato_reversaleBulk bulk,
-                                              InformazioniAggiuntive aggiuntive,
+                                              Mandato.InformazioniBeneficiario.InformazioniAggiuntive aggiuntive,
                                               Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus tipoPagamentoSiopePlus) {
         if (Arrays.asList(
                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.DISPOSIZIONEDOCUMENTOESTERNO,

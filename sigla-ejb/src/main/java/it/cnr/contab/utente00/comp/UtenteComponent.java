@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.utente00.comp;
 
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -486,8 +503,6 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 				throw  new it.cnr.jada.comp.ApplicationException( "Utente Gestore non definito" );		
 			utente.setGestore( gestore );
 			utente.setUtente_indirizzi_mail(new it.cnr.jada.bulk.BulkList(((UtenteHome)getHome(userContext, UtenteBulk.class )).findUtente_indirizzi_email(utente)));
-			utente.setUtente_abil_ordine(new it.cnr.jada.bulk.BulkList(((UtenteHome)getHome(userContext, UtenteBulk.class )).findUtente_abil_ordine(utente)));
-			getHomeCache(userContext).fetchAll(userContext);
 			if ( utente instanceof UtenteAmministratoreBulk )
 			{ // carico il cds
 				UtenteAmministratoreBulk admin = (UtenteAmministratoreBulk) utente;

@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.logregistry00.comp;
 
 import it.cnr.jada.UserContext;
@@ -33,7 +50,7 @@ public LogRegistryComponent() {
  *			L'operazione di lettura viene effettuata con una FetchPolicy il cui nome è
  *			ottenuto concatenando il nome della component con la stringa ".find"
  *
- * @param	uc	lo UserContext che ha generato la richiesta
+ * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	clausole	Una CompoundFindClause che descrive l'albero di clausole
  * 			da applicare nella ricerca
  * @param	bulk	l'OggettoBulk che è stato usato come prototipo per la generazione

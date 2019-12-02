@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -206,8 +223,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
 
     public boolean isZipDocumentiButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-        return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO) ||
-                oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
+        return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
     }
 
     @SuppressWarnings("unchecked")
@@ -243,8 +259,6 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
             response.setStatus(HttpStatus.SC_NO_CONTENT);
             return;
         }
-        StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
-        if (oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO)) {
             PDFMergerUtility ut = new PDFMergerUtility();
             ut.setDestinationStream(new ByteArrayOutputStream());
             for (StatoTrasmissione cons : selectelElements) {
@@ -266,7 +280,18 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                 is.close();
                 os.flush();
             }
-        } else {
+    }
+
+    @SuppressWarnings("unchecked")
+    public void scaricaZip(ActionContext actioncontext) throws Exception {
+        setSelection(actioncontext);
+        List<StatoTrasmissione> selectelElements = getSelectedElements(actioncontext);
+        final HttpServletResponse response = ((HttpActionContext) actioncontext).getResponse();
+        final DocumentiContabiliService documentiContabiliService = SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class);
+        if (selectelElements == null || selectelElements.isEmpty()) {
+            response.setStatus(HttpStatus.SC_NO_CONTENT);
+            return;
+        }
             final ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
             final ContabiliService contabiliService = SpringUtil.getBean("contabiliService", ContabiliService.class);
             final DocumentiCollegatiDocAmmService documentiCollegatiDocAmmService = SpringUtil.getBean("documentiCollegatiDocAmmService", DocumentiCollegatiDocAmmService.class);
@@ -383,7 +408,6 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                     });
             zos.close();
             response.getOutputStream().flush();
-        }
     }
 
     public abstract StatoTrasmissione getStatoTrasmissione(ActionContext actioncontext, Integer esercizio,

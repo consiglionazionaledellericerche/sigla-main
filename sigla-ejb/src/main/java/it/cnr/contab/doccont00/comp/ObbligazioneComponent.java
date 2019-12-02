@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.doccont00.comp;
 
 import java.io.Serializable;
@@ -6,6 +23,8 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
@@ -109,6 +128,7 @@ import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -225,7 +245,7 @@ private Vector accorpaLineeAttivita (UserContext aUC,Vector lineeAttivita) throw
   *      gli importi degli aggiornamenti da apportare ai saldi  e viene richiamato il metodo sulla Component di Gestione Saldi (SaldoComponent) che
   *      effettua tale aggiornamento
   
-  * @param aUC lo user context 
+  * @param userContext lo user context
   * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per la quale devono essere aggiornati i saldi relativi ai capitoli di spesa
   * @param azione indica l'azione effettuata sull'obbligazione e puo' assumere i valori INSERIMENTO, MODIFICA, CANCELLAZIONE
   *
@@ -317,8 +337,8 @@ public void aggiornaCogeCoanInDifferita(it.cnr.jada.UserContext userContext, it.
  *       obbligazione > 0)
  * Post: I saldi dell'obbligazione sono stati aggiornati nel metodo 'aggiornaSaldiInModifica'
  *
- * @param	uc	lo UserContext che ha generato la richiesta
- * @param	obbligazione	l'ObbligazioneBulk per cui aggiornare i saldi
+ * @param	userContext	lo UserContext che ha generato la richiesta
+ * @param	docContabile	l'ObbligazioneBulk per cui aggiornare i saldi
  * @param	values	la Map che contiene il "pg_ver_rec" iniziale dell'obbligazione e il "checkDisponibilitaCassaEseguito" che indica se
  *          l'utente ha richiesto la forzatura della disponibilità di cassa (parametro impostato dalla Gestione Obbligazione)
  * @param	param il parametro che indica se il controllo della disp. di cassa e' necessario (parametro impostato dalla Gestione dei doc. amm.)
@@ -374,7 +394,7 @@ public void aggiornaSaldiInDifferita( UserContext userContext, IDocumentoContabi
  * Post: Per ogni Voce del piano presente nell'obbligazione viene richiamato il metodo sulla Component di gestione dei Saldi (SaldoComponent) per incrementare
  *       il saldo del capitolo corrispondente richiedendo di effettuare la verifica della disponibilità di cassa.
  *
- * @param	uc	lo UserContext che ha generato la richiesta
+ * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	obbligazione	l'ObbligazioneBulk per cui aggiornare i saldi
  * @param	forzaDispCassa il parametro che indica se l'utente ha confermato di forzare il controllo della disp. di cassa 
  *
@@ -445,7 +465,7 @@ private void aggiornaSaldiInInserimento( UserContext userContext, ObbligazioneBu
  *       e' stato richiamato il metodo sulla Component di gestione dei Saldi (SaldoCompoennt) per aggiornare
  *       il saldo del capitolo corrispondente richiedendo di effettuare la verifica della disponibilità di cassa.
  *
- * @param	uc	lo UserContext che ha generato la richiesta
+ * @param	userContext	lo UserContext che ha generato la richiesta
  * @param	obbligazione	l'ObbligazioneBulk per cui aggiornare i saldi
  * @param	pg_ver_rec	il "pg_ver_rec" iniziale dell'obbligazione 
  * @param	forzaDispCassa il parametro che indica se l'utente ha confermato di forzare il controllo della disp. di cassa e' necessario
@@ -642,7 +662,7 @@ private void checkDispObbligazioniAccertamenti(UserContext userContext, Obbligaz
   *      Il metodo utilizza un Throw Exception per comunicare che la modifica della scadenza non è valida.
   *
   * @param aUC lo user context 
-  * @param os l'istanza di  <code>Obbligazione_scadenzarioBulk</code> della quale deve essere individuata la scadenza successiva per aggiornarne l'importo
+  * @param scadenzario l'istanza di  <code>Obbligazione_scadenzarioBulk</code> della quale deve essere individuata la scadenza successiva per aggiornarne l'importo
   * @return la scadenza successiva con l'importo modificato
  */
 
@@ -749,7 +769,7 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 				voceSel.setCd_voce(osv.getCd_voce());
 				voceSel.setImp_da_assegnare(Utility.nvl(osv.getIm_voce()));
 				hashVociList.put(voceSel, new BigDecimal(0));
-				totaleSelVoci = totaleSelVoci.add(osv.getIm_voce());
+				totaleSelVoci = totaleSelVoci.add(Utility.nvl(osv.getIm_voce()));
 			}
 		}
 	}
@@ -1132,7 +1152,7 @@ public void callRiportaIndietro (UserContext userContext,IDocumentoContabileBulk
   *      Il dettaglio della scadenza dell'obbligazione riferito alla linea di attività non più selezionata
   *      viene cancellato
   *
-  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione la cui imputazione finanziaria e' stata modificata
   * @param scadenzario <code>Obbligazione_scadenzarioBulk</code> la scadenza dell'obbligazione per cui eliminare i dettagli non più validi
   *  
@@ -1201,10 +1221,9 @@ protected void cancellaDettaglioScadenze (UserContext aUC,ObbligazioneBulk obbli
   *      Il metodo utilizza un Throw Exception per comunicare che per cancellare un'obbligazione provvisoria
   *      per la quale e' già stato emesso un ordine e' necessario prima cancellare l'ordine
   *
-  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione da cancellare
  */
-
 public void cancellaObbligazioneProvvisoria (UserContext aUC,ObbligazioneBulk obbligazione) throws ComponentException
 {
     try
@@ -1271,7 +1290,7 @@ private CdrBulk cdrFromUserContext(UserContext userContext) throws ComponentExce
   *      Il metodo utilizza un Throw Exception per comunicare che un'obbligazione con esercizio competenza
   *      maggiore all'esercizio di creazione non può essere resa definitiva
   *
-  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione da confermare
   * @return ObbligazioneBulk l'obbligazione con lo stato modificato
   *  
@@ -1328,7 +1347,7 @@ public ObbligazioneBulk confermaObbligazioneProvvisoria (UserContext aUC,Obbliga
   *      La copertura finanziaria viene controllata per l'obbligazione in elaborazione con il metodo
   *      calcolaLimiteAssunzioneObbligazioni
   *  
-  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui verificare la copertura finanziaria
   *
  */
@@ -1367,12 +1386,11 @@ private void controllaCoperturaFinanziariaObbligazione (UserContext aUC,Obbligaz
   *      Viene richiamato il metodo 'controllaDisponibilitaCassaPerVoceInModifica' che
   *      esegue il controllo della disponibilità di cassa per ogni voce presente nell'obbligazione
   
-  * @param aUC lo user context 
+  * @param userContext lo user context
   * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per i cui capitoli deve essere verificata la disponibilità di cassa
   * @param azione indica l'azione effettuata sull'obbligazione e puo' assumere i valori INSERIMENTO, MODIFICA, CANCELLAZIONE  
   *
  */
-
 private void controllaDisponibilitaCassaPerVoce (UserContext userContext,ObbligazioneBulk obbligazione, int azione) throws ComponentException
 {
 	try
@@ -1457,7 +1475,7 @@ private void controllaDisponibilitaCassaPerVoceInInserimento (UserContext userCo
   *      (controllo bloccante) che all'assunzione di obbligazioni (controllo non bloccante)
   *
   *
-  * @param aUC lo user context 
+  * @param userContext lo user context
   * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> per la quale devono essere aggiornati i saldi relativi ai capitoli di spesa  
   *
  */
@@ -1581,7 +1599,7 @@ public ObbligazioneBulk validaImputazioneFinanziaria(UserContext userContext, Ob
  *
  * @param userContext lo user context 
  * @param obbligazione l'obbligazione di cui sto aggiornando l'imputazione finanziaria 
- * @param PrimaryKeyHashtable la chiave restituita dalla chiamata alla procedura getOldRipartizioneCdrVoceLinea
+ * @param oldRipartizioneCdrVoceLinea la chiave restituita dalla chiamata alla procedura getOldRipartizioneCdrVoceLinea
  * @param cdr il centro di responsabilità
  * @param latt il codice della GAE
  * @param voce l'istanza di <code>Voce_fBulk</code> contenente l'elemento voce da verificare
@@ -1704,12 +1722,11 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 									+ "rispetto alla data di registrazione dell'obbligazione ("
 									+ new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+")."));
 			}
-			
-			GregorianCalendar gcFineProgetto = new GregorianCalendar();
-			gcFineProgetto.setTime(Optional.ofNullable(progetto.getOtherField().getDtProroga())
-							 			   .orElse(Optional.ofNullable(progetto.getOtherField().getDtFine())
-											 	           .orElse(DateUtils.firstDateOfTheYear(3000))));
-			
+
+			LocalDate localDateFineProgetto = Optional.ofNullable(progetto.getOtherField().getDtProroga())
+					.orElse(Optional.ofNullable(progetto.getOtherField().getDtFine())
+							.orElse(DateUtils.firstDateOfTheYear(3000))).toLocalDateTime().toLocalDate();
+
 			int ggProroga = Optional.ofNullable(obbligazione.getElemento_voce())
 										.flatMap(el->{
 											if (obbligazione.isCompetenza())
@@ -1719,16 +1736,17 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 										})
 										.filter(el->el.compareTo(0)>0)
 										.orElse(0);
-			
-			gcFineProgetto.add(Calendar.DAY_OF_YEAR, ggProroga);
-			
-			if (gcFineProgetto.before(obbligazione.getDt_registrazione()))
-				throw new ApplicationException("Attenzione! GAE "+linea.getCd_linea_attivita()+" non selezionabile. "
-							+ "La data fine/proroga del progetto "+progetto.getCd_progetto()
-							+ (ggProroga>0?", aumentata di " + ggProroga +" giorni,":"") + " ("
-						    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(gcFineProgetto.getTime())
-							+ ") è precedente rispetto alla data di registrazione dell'impegno ("
-						    + new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione())+").");
+
+			localDateFineProgetto.plusDays(ggProroga);
+
+			if (localDateFineProgetto.isBefore(obbligazione.getDt_registrazione().toLocalDateTime().toLocalDate()))
+				throw new ApplicationMessageFormatException("Attenzione! GAE {0} non selezionabile. "
+						+ "La data fine/proroga del progetto {1} {2} ({3}) è precedente rispetto alla data di registrazione dell''impegno ({4}).",
+						linea.getCd_linea_attivita(),
+						progetto.getCd_progetto(),
+						(ggProroga>0?", aumentata di " + ggProroga +" giorni,":""),
+						localDateFineProgetto.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+						new java.text.SimpleDateFormat("dd/MM/yyyy").format(obbligazione.getDt_registrazione()));
 		}
 	} catch ( Exception e )
 	{
@@ -1774,7 +1792,7 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
   *      L'obbligazione viene creata, i dettagli di tutte le scadenze vengono creati (metodo generaDettagliScadenzaObbligazione) e i saldi 
   *      dei capitoli dei dettagli delle scadenze vengono aggiornati (metodo aggiornaCapitoloSaldoObbligazione)
   *
-  * @param aUC lo user context 
+  * @param uc lo user context
   * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da creare
   * @return l'istanza di  <code>ObbligazioneBulk</code> creata
   *   
@@ -1856,7 +1874,7 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
   *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
   *      in imputazione finanziaria avente funzione uguale a quello della linea di attività
   *
-  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui creare i dettagli scadenza
   * @param scadenzario <code>Obbligazione_scadenzarioBulk</code> la scadenza dell'obbligazione per cui creare i dettagli
   *  
@@ -1971,12 +1989,11 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
   *      impostata come voce del piano dei conti del dettaglio della scadenza il capitolo selezionato 
   *      in imputazione finanziaria avente funzione uguale a quello della linea di attività
   *
-  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui creare i dettagli scadenza
   * @param scadenzario <code>Obbligazione_scadenzarioBulk</code> la scadenza dell'obbligazione per cui creare i dettagli
   *  
  */
-
 protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,ObbligazioneBulk obbligazione, Obbligazione_scadenzarioBulk scadenzario) throws ComponentException
 {
 	
@@ -2225,7 +2242,7 @@ public it.cnr.contab.doccont00.ordine.bulk.OrdineBulk findOrdineFor(UserContext 
   *    PostCondition:
   *      Il metodo utilizza un Throw Exception per comunicare l'errore all'utente
   *
-  * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+  * @param aUC lo <code>UserContext</code> che ha generato la richiesta
   * @param obbligazione <code>ObbligazioneBulk</code> l'obbligazione per cui creare i dettagli scadenza
   * @param scadenzario <code>Obbligazione_scadenzarioBulk</code> la scadenza dell'obbligazione per cui creare i dettagli oppure
   *        <code>null</code> se e' necessario generare i dettagli per tutte le scadenze
@@ -2575,12 +2592,10 @@ public OggettoBulk inizializzaBulkPerInserimento (UserContext aUC,OggettoBulk bu
   *      Il metodo utilizza un Throw Exception per comunicare che lo scadenzario non è stato trovato. L'attività non è consentita.
   *
   * @param aUC lo user context 
-  * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da inizializzare
+  * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> da inizializzare
   * @return l'istanza di  <code>ObbligazioneBulk</code> inizializzata
   *
  */
-
-
 public OggettoBulk inizializzaBulkPerModifica (UserContext aUC,OggettoBulk obbligazione) throws ComponentException
  {
 	try
@@ -3673,7 +3688,7 @@ public SQLBuilder selectContrattoByClause(UserContext userContext, ObbligazioneB
 /**
  * 
  * @param userContext
- * @param accertamento
+ * @param obbligazione
  * @param contratto
  * @param clauses
  * @return
@@ -3966,7 +3981,7 @@ public OggettoBulk stampaConBulk(UserContext userContext, Stampa_obb_doc_ammBulk
   *      per la quale e' già stato emesso un ordine e' necessario prima cancellare l'ordine
   *
   * @param aUC lo user context 
-  * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da annullare
+  * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> da annullare
   * @return l'istanza di  <code>ObbligazioneBulk</code> annullata
   *  
  */
@@ -4221,7 +4236,7 @@ private void validateBulkForPrint(it.cnr.jada.UserContext userContext, Stampa_sc
   *      dell'obbligazione.
   *
   * @param aUC lo user context 
-  * @param bulk l'istanza di  <code>ObbligazioneBulk</code> da verificare
+  * @param obbligazione l'istanza di  <code>ObbligazioneBulk</code> da verificare
   *
   */ 
   

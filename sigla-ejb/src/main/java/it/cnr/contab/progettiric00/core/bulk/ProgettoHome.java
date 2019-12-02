@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.core.bulk;
 
 import java.math.BigDecimal;
@@ -572,6 +589,7 @@ public class ProgettoHome extends BulkHome {
                     progetto_other_fieldBulk = new Progetto_other_fieldBulk();
                     progetto_other_fieldBulk.setPg_progetto(geco_commessa.getId_comm().intValue());
                     progetto_other_fieldBulk.setStato(StatoProgetto.STATO_INIZIALE.value());
+					progetto_other_fieldBulk.setFlControlliDisabled(Boolean.FALSE);
                     progetto_other_fieldBulk.setUser(CNRUserContext.getUser(userContext));
                     progetto_other_fieldBulk.setToBeCreated();
                     progetto_other_fieldHome.insert(progetto_other_fieldBulk, userContext);
@@ -854,6 +872,15 @@ public class ProgettoHome extends BulkHome {
 						voceAss.setSaldoEntrata(saldo);
 					
 				});
+			});
+			progetto.getDettagliPianoEconomicoAltriAnni().stream().forEach(ppe->{
+				try {
+					ppe.setVociBilancioAssociate(new BulkList<Ass_progetto_piaeco_voceBulk>(((Ass_progetto_piaeco_voceHome)getHomeCache().getHome(Ass_progetto_piaeco_voceBulk.class ))
+						.findAssProgettoPiaecoVoceList(ppe.getPg_progetto(), ppe.getCd_unita_organizzativa(), ppe.getCd_voce_piano(), 
+								ppe.getEsercizio_piano())));
+				} catch (PersistencyException ex){
+					throw new DetailedRuntimeException(ex.getMessage());
+				}
 			});
 			return progetto;
 		} catch(Exception e) {

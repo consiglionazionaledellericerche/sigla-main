@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
@@ -32,7 +49,7 @@ public class ProgettoPianoEconomicoVoceBilancioCRUDController extends SimpleProg
 			            .map(el -> el.isROProgettoForStato())
 			            .orElse(Boolean.FALSE))
 		        	Optional.ofNullable(detail).filter(Ass_progetto_piaeco_voceBulk.class::isInstance).map(Ass_progetto_piaeco_voceBulk.class::cast)
-		        	.filter(el->el.getSaldoSpesa().getAssestato().compareTo(BigDecimal.ZERO)==0)
+		        	.filter(el->Optional.ofNullable(el.getSaldoSpesa()).map(saldo->saldo.getAssestato().compareTo(BigDecimal.ZERO)==0).orElse(Boolean.TRUE))
 		        	.orElseThrow(()->new ValidationException("Non è possibile disassociare voci di bilancio movimentate. E' possibile solo tramite rimodulazione!"));
 
 				Utility.createProgettoRicercaComponentSession().validaCancellazioneVoceAssociataPianoEconomico(

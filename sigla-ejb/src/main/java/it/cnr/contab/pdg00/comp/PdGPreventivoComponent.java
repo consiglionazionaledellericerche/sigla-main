@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.pdg00.comp;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
@@ -44,6 +61,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
+import java.util.Optional;
 import java.util.Vector;
 
 
@@ -2790,6 +2808,7 @@ private boolean isStatoCompatibile (String statoAttuale, int livello, String nuo
 	private SQLBuilder listaCdrPdGPerUtenteIncludeEnte (UserContext userContext) throws it.cnr.jada.comp.ComponentException {
 
 		CdrBulk cdr = cdrFromUserContext(userContext);
+		Optional.ofNullable(cdr).orElseThrow(()->new ApplicationException("Errore: CDR di Scrivania non individuato!"));
 		int livelloResponsabilita = getLivelloResponsabilitaCDR(userContext, cdr);
 
 		//lista dei CDR visibili all'utente

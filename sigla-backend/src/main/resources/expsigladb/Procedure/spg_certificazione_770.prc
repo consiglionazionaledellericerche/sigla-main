@@ -23,7 +23,7 @@ CREATE OR REPLACE PROCEDURE SPG_CERTIFICAZIONE_770
 --
 -- Body:
 --
-(tc in out PCIR009.IBMPRT000.t_cursore,
+(tc in out IBMPRT000.t_cursore,
  aEs number,
  aTiModello varchar2,
  aQuadro  varchar2, -- valorizzato a '%' per stampa di tutti i quadri del Modello (per il momento non gestito)
@@ -52,7 +52,7 @@ aImCoriEnte number(15,2) :=0 ;
 aImNetto number(15,2) := 0;
 aTmpCdTrattamento varchar2(10) := null;
 begin
-	select PCIR009.IBMSEQ00_CR_PACKAGE.nextval into aId from dual;
+	select IBMSEQ00_CR_PACKAGE.nextval into aId from dual;
 
 	for aDett in (select * from
 			 (select  v.cd_anag
@@ -78,9 +78,9 @@ begin
 				 ,cr.ammontare
 				 ,v.cd_trattamento
 				 ,v.cd_anag_pignorato
-			  from   PCIR009.v_compenso_770 v
-				,PCIR009.contributo_ritenuta cr
-				,PCIR009.tipo_contributo_ritenuta tcr
+			  from   v_compenso_770 v
+				,contributo_ritenuta cr
+				,tipo_contributo_ritenuta tcr
 			  where   to_char(v.cd_anag) Like aCdAnag
 				  and v.TI_MODELLO = aTiModello
 				  and ((aQuadro ='SCSY'
@@ -119,7 +119,7 @@ begin
 				 ,0 ammontare
 				 ,v.cd_trattamento
 				 ,v.cd_anag_pignorato
-			  from   PCIR009.v_compenso_770 v
+			  from   v_compenso_770 v
 			  where   to_char(v.cd_anag)  Like aCdAnag
 			  and v.TI_MODELLO = aTiModello
 			  and ((aQuadro ='SCSY'
@@ -127,8 +127,8 @@ begin
   		  or v.CD_QUADRO     like  aQuadro)
   		  and v.esercizio_mandato     = aEs
 			  and not exists (select 1
-			  		  from PCIR009.contributo_ritenuta cr
-			   	  	      ,PCIR009.tipo_contributo_ritenuta tcr
+			  		  from contributo_ritenuta cr
+			   	  	      ,tipo_contributo_ritenuta tcr
 					  where cr.cd_cds = v.cd_cds
 					  And cr.cd_unita_organizzativa = v.cd_unita_organizzativa
 					  And cr.esercizio	= v.esercizio
@@ -249,10 +249,10 @@ begin
 				               	,vat.id_fiscale_estero
                         ,naz.cd_nazione_770
                         ,NULL
-		   		             from PCIR009.v_anagrafico_terzo vat
-		   	                	 ,PCIR009.nazione naz
-			   	                 ,PCIR009.comune com
-			                 	   ,PCIR009.nazione naz2
+		   		             from v_anagrafico_terzo vat
+		   	                	 ,nazione naz
+			   	                 ,comune com
+			                 	   ,nazione naz2
 		   		             where vat.cd_anag	= aDett.cd_anag
 		     	             	and naz.pg_nazione	= vat.pg_nazione_fiscale
 			 	                and com.pg_comune (+) 	= vat.pg_comune_nascita
@@ -314,7 +314,7 @@ begin
 				                         ,aImNonSoggInps
 				                         ,aTmpCdTrattamento
 				                         ,(select nvl(vatp.codice_fiscale,vatp.partita_iva)
-		   	                   From PCIR009.v_anagrafico_terzo vatp
+		   	                   From v_anagrafico_terzo vatp
 		   	                   Where 
 		                       	  vatp.cd_anag (+)	=aTmpCdAnagPignorato));
 
@@ -419,10 +419,10 @@ begin
 				                    ,vat.id_fiscale_estero
                             ,naz.cd_nazione_770
                             ,NULL
-		   	                   From PCIR009.v_anagrafico_terzo vat
-		   	                       ,PCIR009.nazione naz
-			                         ,PCIR009.comune com
-			                         ,PCIR009.nazione naz2
+		   	                   From v_anagrafico_terzo vat
+		   	                       ,nazione naz
+			                         ,comune com
+			                         ,nazione naz2
 		   	                   Where vat.cd_anag 	= aDett.cd_anag
 		                       	 And naz.pg_nazione 	= vat.pg_nazione_fiscale
 			                       And com.pg_comune (+) 	= vat.pg_comune_nascita
@@ -519,7 +519,7 @@ begin
 		                         ,aImNonSoggInps
 		                         ,aTmpCdTrattamento
 		                         ,(select nvl(vatp.codice_fiscale,vatp.partita_iva)
-		   	                   From PCIR009.v_anagrafico_terzo vatp
+		   	                   From v_anagrafico_terzo vatp
 		   	                   Where 
 		                       	  vatp.cd_anag (+)	=aTmpCdAnagPignorato));
 		      -- reset variabili
@@ -620,7 +620,7 @@ begin
 				   ,aImNonSoggInps
 				   ,aTmpCdTrattamento
 				   ,(select nvl(vatp.codice_fiscale,vatp.partita_iva)
-		   	                   From PCIR009.v_anagrafico_terzo vatp
+		   	                   From v_anagrafico_terzo vatp
 		   	                   Where 
 		                       	  vatp.cd_anag (+)	= aTmpCdAnagPignorato));
 	end if;

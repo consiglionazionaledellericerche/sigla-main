@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.utenze00.bulk;
 
 import it.cnr.contab.config00.sto.bulk.*;
@@ -21,9 +38,6 @@ public class UtenteTemplateBulk extends UtenteBulk
 	private it.cnr.jada.bulk.BulkList	utente_unita_accessi = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	utente_unita_ruoli   = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	utente_firma_dettaglio   = new it.cnr.jada.bulk.BulkList();
-	
-	
-	
 
 	private List utente_unita_accessi_disponibili = new Vector();;	
 	private List utente_unita_ruoli_disponibili   = new Vector();;
@@ -33,7 +47,6 @@ public class UtenteTemplateBulk extends UtenteBulk
 	private List accessi_disponibili = new it.cnr.jada.util.Collect(utente_unita_accessi_disponibili,"accesso");
 	private List ruoli_disponibili   = new it.cnr.jada.util.Collect(utente_unita_ruoli_disponibili,"ruolo");		
 
-	
 	public UtenteTemplateBulk() {
 		super();
 		inizializza();	
@@ -119,8 +132,7 @@ public class UtenteTemplateBulk extends UtenteBulk
 				utente_unita_accessi,
 				utente_unita_ruoli,
 				getUtente_indirizzi_mail(),
-				utente_firma_dettaglio,
-				getUtente_abil_ordine()};
+				utente_firma_dettaglio};
 	}
 	/**
 	 * @return java.util.List

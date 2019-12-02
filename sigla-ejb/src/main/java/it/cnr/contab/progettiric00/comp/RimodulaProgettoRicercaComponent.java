@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.progettiric00.comp;
 
 import java.io.IOException;
@@ -59,6 +76,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SimpleFindClause;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.si.spring.storage.StoreService;
 
 public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDComponent {
@@ -291,9 +309,10 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		if (clauses!=null){
 			Enumeration<SimpleFindClause> e = clauses.getClauses();
 			while(e.hasMoreElements()){
-				SimpleFindClause findClause = e.nextElement();
-				if (findClause.getPropertyName().equals("progetto.unita_organizzativa.cd_unita_organizzativa"))
-					optCdUo2 = Optional.of(findClause.getValue().toString());
+				FindClause findClause = e.nextElement();
+				if (findClause instanceof SimpleFindClause)
+					if (((SimpleFindClause)findClause).getPropertyName().equals("progetto.unita_organizzativa.cd_unita_organizzativa"))
+						optCdUo2 = Optional.of(((SimpleFindClause)findClause).getValue().toString());
 			}
 		}
 		
@@ -468,6 +487,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			BulkList<Progetto_rimodulazioneBulk> listRimodulazioni = new BulkList<Progetto_rimodulazioneBulk>(prgHome.findRimodulazioni(progettoRimodulazione.getPg_progetto()));
 			listRimodulazioni.stream()
 				.filter(el->!el.equalsByPrimaryKey(this))
+				.filter(el->!el.isStatoRespinto())
 				.filter(el->!el.isStatoApprovato())
 				.findFirst().ifPresent(el->{
 					throw new ApplicationRuntimeException("Attenzione! La rimodulazione n."+el.getPg_rimodulazione()+" del progetto "
@@ -707,7 +727,10 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 	
 	public Progetto_rimodulazioneBulk respingi(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
 		Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoDefinitivo)
-		.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato respinto può essere assegnato solo a rimodulazioni in stato definitivo!"));
+		.orElseThrow(()->new ApplicationException("Operazione non possibile! Lo stato respinto può essere assegnato solo a rimodulazioni in stato definitivo!"));
+
+		Optional.of(rimodulazione).flatMap(el->Optional.ofNullable(el.getMotivoRifiuto()))
+				.orElseThrow(()->new ApplicationException("Operazione non possibile! Inserire la motivazione per cui la rimodulazione viene respinta!"));
 
 		rimodulazione.setStato(StatoProgettoRimodulazione.STATO_RESPINTO.value());
 		rimodulazione.setToBeUpdated();
@@ -725,6 +748,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			validaStatoDefinitivoRimodulazione(userContext, rimodulazione);
 
 			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
+			rimodulazione.setDtStatoDefinitivo(EJBCommonServices.getServerTimestamp());
 			rimodulazione.setToBeUpdated();
 			rimodulazione = (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 			createReportRimodulazione(userContext, rimodulazione);
