@@ -72,7 +72,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	final public static String MOTIVAZIONE_BANDO = "BAN";
 	final public static String MOTIVAZIONE_PROROGA = "PRG";
 	final public static String MOTIVAZIONE_COMPENSI_INCENTIVANTI = "INC";
-	final public static String MOTIVAZIONE_VARIAZIONE_IN_DEROGA = "DER";
+	final public static String MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA = "RAG";
 	final public static String MOTIVAZIONE_TRASFERIMENTO_AREA = "TAE";
 	final public static String MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO = "TAU";
 	final public static String MOTIVAZIONE_ALTRE_SPESE = "ALT";
@@ -98,7 +98,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_PROROGA,"Personale - Proroga");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altre Spese");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_COMPENSI_INCENTIVANTI,"Personale - Compensi Incentivanti");
-		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazione in Deroga");
+		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento a Ragioneria");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
 		tiMotivazioneVariazioneForSearchKeys.put(MOTIVAZIONE_TRASFERIMENTO_AUTORIZZATO,"Trasferimento In Deroga");
 		
@@ -312,7 +312,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 			PdGVariazioneBP myBp = (PdGVariazioneBP) bp;
 			setCentro_responsabilita(myBp.getCentro_responsabilita_scrivania());
 			if (myBp.isUoRagioneria())
-				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazioni in Deroga");
+				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento dalla Ragioneria");
+			else
+				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento alla Ragioneria");
 		}
 		setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
 		return super.initializeForInsert(bp,context);
@@ -323,8 +325,12 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		OggettoBulk bulk = super.initializeForEdit(crudbp, actioncontext);
 		if (Optional.ofNullable(crudbp).filter(PdGVariazioneBP.class::isInstance).isPresent()) {
 			PdGVariazioneBP myBp = (PdGVariazioneBP)crudbp;
-			if (myBp.isUoRagioneria() || ((Pdg_variazioneBulk)bulk).isMotivazioneVariazioneInDeroga())
-				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_VARIAZIONE_IN_DEROGA,"Personale - Variazioni in Deroga");
+			if (myBp.isUoRagioneria() || ((Pdg_variazioneBulk)bulk).isMotivazioneTrasferimentoRagioneria()) {
+				if (myBp.isUoRagioneria())
+					baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento dalla Ragioneria");
+				else
+					baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento alla Ragioneria");
+			}
 		}
 		return bulk;
 	}
@@ -818,7 +824,6 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		return this.isMotivazioneVariazioneBandoPersonale()||
 			   this.isMotivazioneVariazioneProrogaPersonale()||
 			   this.isMotivazioneVariazioneAltreSpesePersonale()||
-			   this.isMotivazioneVariazioneInDeroga()||
 			   this.isMotivazioneCompensiIncentivanti();
 	}
 
@@ -834,12 +839,12 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		return MOTIVAZIONE_COMPENSI_INCENTIVANTI.equals(this.getTiMotivazioneVariazione());
 	}
 
-	public boolean isMotivazioneVariazioneInDeroga() {
-		return MOTIVAZIONE_VARIAZIONE_IN_DEROGA.equals(this.getTiMotivazioneVariazione());
-	}
-
 	public boolean isMotivazioneVariazioneAltreSpesePersonale() {
 		return MOTIVAZIONE_ALTRE_SPESE.equals(this.getTiMotivazioneVariazione());
+	}
+
+	public boolean isMotivazioneTrasferimentoRagioneria() {
+		return MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA.equals(this.getTiMotivazioneVariazione());
 	}
 
 	public boolean isMotivazioneTrasferimentoArea() {

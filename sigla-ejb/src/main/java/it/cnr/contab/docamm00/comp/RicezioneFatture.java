@@ -478,8 +478,10 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                             getDatiGeneraliDocumento().getImportoTotaleDocumento()));
                     docTestata.setArrotondamento(truncBigDecimal(fatturaElettronicaBody.getDatiGenerali().
                             getDatiGeneraliDocumento().getArrotondamento()));
-                    docTestata.setCausale(StringUtils.join(fatturaElettronicaBody.getDatiGenerali().
-                            getDatiGeneraliDocumento().getCausale().toArray(), ",").substring(0,2000));
+                    String causale = StringUtils.join(fatturaElettronicaBody.getDatiGenerali().
+                            getDatiGeneraliDocumento().getCausale().toArray(), ",");
+
+                    docTestata.setCausale( causale.length() > 2000 ? causale.substring(0,2000) : causale);
                     if (fatturaElettronicaBody.getDatiGenerali().getDatiGeneraliDocumento().getArt73() != null)
                         docTestata.setArt73(fatturaElettronicaBody.getDatiGenerali().
                                 getDatiGeneraliDocumento().getArt73().value());

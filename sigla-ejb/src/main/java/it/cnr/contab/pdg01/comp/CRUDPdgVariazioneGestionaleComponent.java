@@ -697,14 +697,6 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 					!pdg.getCentro_responsabilita().isCdrAC())
 				throw new ApplicationException("Variazione di tipo 'Trasferimento in deroga' consentita solo alla UO Ente.");
 
-			if (Optional.of(pdg).filter(el->el.isMotivazioneVariazioneInDeroga()).isPresent()) {
-				it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = createConfigurazioneCnrComponentSession().getConfigurazione( usercontext, CNRUserContext.getEsercizio(usercontext), null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA );
-				if (config==null)
-					config = createConfigurazioneCnrComponentSession().getConfigurazione( usercontext, null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA );
-				Optional.ofNullable(config).map(Configurazione_cnrBulk::getVal01).map(uoRagioneria->uoRagioneria.equals(pdg.getCentro_responsabilita().getCd_unita_organizzativa()))
-						.orElseThrow(()->new ApplicationRuntimeException("Variazione di tipo 'Personale - Variazione In Deroga' consentita solo alla UO Ente."));
-			}
-
 			boolean existDettPersonale = true;
 			String cdrPersonale = null;
 			if (Optional.of(pdg).filter(el->el.isMotivazioneVariazionePersonale()).isPresent()) { 
@@ -875,9 +867,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			}
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
-		}catch (RemoteException e) {
-			throw new ComponentException(e);
-		}					
+		}
 	}
 
 	public void inizializzaSommeCdR(UserContext userContext, Pdg_variazioneBulk pdg) throws ComponentException{
