@@ -573,7 +573,8 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         if (movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno() != null)
                             movBulk.setNumeroBollettaQuietanzaS(movimentoContoEvidenza.getNumeroBollettaQuietanzaStorno().toString());
                         movBulk.setDataMovimento(new Timestamp(movimentoContoEvidenza.getDataMovimento().toGregorianCalendar().getTime().getTime()));
-                        movBulk.setDataValutaEnte(new Timestamp(movimentoContoEvidenza.getDataValutaEnte().toGregorianCalendar().getTime().getTime()));
+                        if (movimentoContoEvidenza.getDataValutaEnte() != null)
+                            movBulk.setDataValutaEnte(new Timestamp(movimentoContoEvidenza.getDataValutaEnte().toGregorianCalendar().getTime().getTime()));
                         movBulk.setTipoEsecuzione(movimentoContoEvidenza.getTipoEsecuzione());
                         movBulk.setCoordinate(movimentoContoEvidenza.getCoordinate());
                         movBulk.setCodiceRifOperazione(movimentoContoEvidenza.getCodiceRiferimentoOperazione());
