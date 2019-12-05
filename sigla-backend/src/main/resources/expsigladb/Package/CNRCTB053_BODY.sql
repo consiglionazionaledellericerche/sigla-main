@@ -1061,7 +1061,7 @@ begin
 
         -- Leggo il CDR del personale e la sua linea SAUOP
 
-        aCDRPersonale := CNRCTB020.GETCDRPERSONALE;
+        aCDRPersonale := CNRCTB020.GETCDRPERSONALE(aEsercizio);
         aLASAUOP := CNRCTB010.getLASAUOP(aEsercizio, aCDRPersonale.cd_centro_responsabilita);
 
         If nvl(recParametriCnr.fl_nuovo_pdg,'N') = 'Y' Then
@@ -3005,7 +3005,7 @@ procedure aggiornaLimiteSpesaVAR(aEsercizio number,apg_variazione number,tipo VA
                                 Where  id_classificazione = aElemento_voce.ID_CLASSIFICAZIONE;
 
                             -- Leggo il CDR del personale e la sua linea SAUOP
-                              aCDRPersonale := CNRCTB020.GETCDRPERSONALE;
+                              aCDRPersonale := CNRCTB020.GETCDRPERSONALE(aEsercizio);
                               aLASAUOP := CNRCTB010.getLASAUOP(aEsercizio, aCDRPersonale.cd_centro_responsabilita);
 
                               If aCV.CDR_ACCENTRATORE = aCDRPersonale.CD_CENTRO_RESPONSABILITA Then

@@ -337,7 +337,7 @@ if aNum4 > 0 and CNRCTB020.getCDCDSENTE(aMan.esercizio) = aMan.CD_CDS then
 else
 -- tesoreria unica
 -- se la UO ? 000.407 e CD_TIPO_DOCUMENTO_AMM = GEN_CORV_S la modalit? di pagamento deve essere BI
-    uo := CNRCTB015.GETVAL01PERCHIAVE('UO_SPECIALE','UO_VERSAMENTO_IVA');
+    uo := CNRCTB020.getCdUOVersIVA(aEs);
 
 select count(*) into aNum4
 from

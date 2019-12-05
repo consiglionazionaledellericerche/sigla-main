@@ -2763,23 +2763,18 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 //	per la stampa delle variazioni residuo conto terzi
 	public byte[] lanciaStampa(UserContext userContext, Integer esercizio,Integer pgVariazione, String tipo_variazione) 
 			throws PersistencyException, ComponentException, RemoteException, javax.ejb.EJBException {
-		
-		SQLBuilder sqlCDR = getHome(userContext, Configurazione_cnrBulk.class).createSQLBuilder();
-		sqlCDR.resetColumns();
-		sqlCDR.addColumn("VAL01");
-		sqlCDR.addSQLClause("AND", "CD_CHIAVE_PRIMARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.PK_CDR_SPECIALE);
-		sqlCDR.addSQLClause("AND", "CD_CHIAVE_SECONDARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.SK_CDR_PERSONALE);
+
+		String cdrPersonale = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(esercizio))
+				.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale per l'esercizio "+esercizio+"."));
 
 		if (tipo_variazione.equals("R")){
-//			it.cnr.contab.varstanz00.bulk.Var_stanz_resHome home = (it.cnr.contab.varstanz00.bulk.Var_stanz_resHome) getHome(userContext, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.class);
-//			SQLBuilder sql = home.createSQLBuilder();
 			V_var_stanz_resHome home = (V_var_stanz_resHome) getHome(userContext, V_var_stanz_resBulk.class);
 				SQLBuilder sql = home.createSQLBuilder();
 				
-				sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, esercizio);
-				sql.addSQLClause("AND", "PG_VARIAZIONE", sql.EQUALS, pgVariazione);
-				sql.addSQLClause("AND", "CD_CDR_ASSEGNATARIO", sql.EQUALS, sqlCDR);
-				sql.addSQLClause("AND", "STATO", sql.EQUALS, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.STATO_APPROVATA);
+				sql.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.EQUALS, esercizio);
+				sql.addSQLClause(FindClause.AND, "PG_VARIAZIONE", SQLBuilder.EQUALS, pgVariazione);
+				sql.addSQLClause(FindClause.AND, "CD_CDR_ASSEGNATARIO", SQLBuilder.EQUALS, cdrPersonale);
+				sql.addSQLClause(FindClause.AND, "STATO", SQLBuilder.EQUALS, it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk.STATO_APPROVATA);
 								
 				java.util.List list = home.fetchAll(sql);
 				if(list.isEmpty())
@@ -2816,16 +2811,16 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 			
 				Pdg_variazioneHome home = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
 				SQLBuilder sql =  home.createSQLBuilder();
-					sql.addSQLClause("AND", "PDG_VARIAZIONE.ESERCIZIO", SQLBuilder.EQUALS, esercizio);
-					sql.addSQLClause("AND", "PDG_VARIAZIONE.PG_VARIAZIONE_PDG", SQLBuilder.EQUALS, pgVariazione);
+					sql.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.ESERCIZIO", SQLBuilder.EQUALS, esercizio);
+					sql.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.PG_VARIAZIONE_PDG", SQLBuilder.EQUALS, pgVariazione);
 				
 				sql.addTableToHeader("PDG_VARIAZIONE_RIGA_GEST");
-				sql.addSQLClause("AND", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO", SQLBuilder.EQUALS, sqlCDR);
+				sql.addSQLClause(FindClause.AND, "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO", SQLBuilder.EQUALS, cdrPersonale);
 				sql.addSQLJoin("PDG_VARIAZIONE.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
 				sql.addSQLJoin("PDG_VARIAZIONE.PG_VARIAZIONE_PDG", "PDG_VARIAZIONE_RIGA_GEST.PG_VARIAZIONE_PDG");
-				sql.openParenthesis("AND");
-					sql.addSQLClause("AND", "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
-					sql.addSQLClause("OR", "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
+				sql.openParenthesis(FindClause.AND);
+					sql.addSQLClause(FindClause.AND, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVATA);
+					sql.addSQLClause(FindClause.OR, "PDG_VARIAZIONE.STATO", SQLBuilder.EQUALS, Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE);
 				sql.closeParenthesis();
 				
 				java.util.List list = home.fetchAll(sql);

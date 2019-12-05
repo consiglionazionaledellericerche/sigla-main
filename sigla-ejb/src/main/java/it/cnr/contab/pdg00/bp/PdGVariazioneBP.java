@@ -176,10 +176,8 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
             if (Optional.ofNullable(annoFrom).isPresent())
                 setAnnoFromPianoEconomico(annoFrom.intValue());
 
-            Configurazione_cnrBulk config = configSession.getConfigurazione(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()), null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
-            if (config==null)
-                config = configSession.getConfigurazione(context.getUserContext(),  null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_RAGIONERIA);
-            setUoRagioneria(Optional.ofNullable(config).map(Configurazione_cnrBulk::getVal01).map(uoRagioneria->uoRagioneria.equals(getCentro_responsabilita_scrivania().getCd_unita_organizzativa())).orElse(Boolean.FALSE));
+            String uoRagioneria = Utility.createConfigurazioneCnrComponentSession().getUoRagioneria(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext()));
+            setUoRagioneria(Optional.ofNullable(uoRagioneria).map(el->el.equals(getCentro_responsabilita_scrivania().getCd_unita_organizzativa())).orElse(Boolean.FALSE));
         } catch (ComponentException e) {
             throw handleException(e);
         } catch (RemoteException e) {

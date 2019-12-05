@@ -18,6 +18,8 @@
 package it.cnr.contab.doccont00.intcass.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
@@ -26,6 +28,7 @@ import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
+import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.si.spring.storage.StorageService;
@@ -234,12 +237,10 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 		uo = newUo;
 	}
 	public boolean isUoDistintaTuttaSac(ActionContext context) throws ComponentException, RemoteException{
-		Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-		if (sess.getVal01(context.getUserContext(), new Integer(0), null, "UO_SPECIALE", "UO_DISTINTA_TUTTA_SAC").equals(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa()))
-		{
-			return true;
-		}		
-		return false;
+		return Utility.createConfigurazioneCnrComponentSession().isUOSpecialeDistintaTuttaSAC(
+				context.getUserContext(),
+				CNRUserContext.getEsercizio(context.getUserContext()),
+				it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
 	}
 	/* 
 	 * Getter dell'attributo pg_distinta

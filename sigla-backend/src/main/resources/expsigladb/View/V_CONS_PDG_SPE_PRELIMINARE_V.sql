@@ -112,13 +112,7 @@
 --Join tra COMMESSA e PROGETTO
                     comm.esercizio_progetto_padre = prog.esercizio
                 AND comm.pg_progetto_padre = prog.pg_progetto
-                AND NVL (cla.cdr_accentratore, 'xxx') !=
-                       (SELECT val01
-                          FROM configurazione_cnr
-                         WHERE esercizio = 0
-                           AND cd_unita_funzionale = '*'
-                           AND cd_chiave_primaria = 'CDR_SPECIALE'
-                           AND cd_chiave_secondaria = 'CDR_PERSONALE')
+                AND NVL (cla.cdr_accentratore, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
                 AND area.cd_tipo_unita != 'AREA'
                 and voce.id_classificazione=cla.id_classificazione
              UNION ALL                                                 -- AREE
@@ -197,13 +191,7 @@
 --Join tra COMMESSA e PROGETTO
                     comm.esercizio_progetto_padre = prog.esercizio
                 AND comm.pg_progetto_padre = prog.pg_progetto
-                AND NVL (cla.cdr_accentratore, 'xxx') !=
-                       (SELECT val01
-                          FROM configurazione_cnr
-                         WHERE esercizio = 0
-                           AND cd_unita_funzionale = '*'
-                           AND cd_chiave_primaria = 'CDR_SPECIALE'
-                           AND cd_chiave_secondaria = 'CDR_PERSONALE')
+                AND NVL (cla.cdr_accentratore, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
                 AND area.cd_tipo_unita = 'AREA'
                 and voce.id_classificazione=cla.id_classificazione
              UNION ALL                       -- SPESE ACCENTRATE NON PERSONALE
@@ -275,13 +263,7 @@
 --Join tra COMMESSA e PROGETTO
                     comm.esercizio_progetto_padre = prog.esercizio
                 AND comm.pg_progetto_padre = prog.pg_progetto
-                AND NVL (cla.cdr_accentratore, 'xxx') !=
-                       (SELECT val01
-                          FROM configurazione_cnr
-                         WHERE esercizio = 0
-                           AND cd_unita_funzionale = '*'
-                           AND cd_chiave_primaria = 'CDR_SPECIALE'
-                           AND cd_chiave_secondaria = 'CDR_PERSONALE')
+                AND NVL (cla.cdr_accentratore, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
                  and voce.id_classificazione=cla.id_classificazione
              UNION ALL                  -- TRATTAMENTO ECONOMICO DEL PERSONALE
              SELECT pdg_spe.esercizio,
@@ -367,13 +349,7 @@
 --Join tra COMMESSA e PROGETTO
                     comm.esercizio_progetto_padre = prog.esercizio
                 AND comm.pg_progetto_padre = prog.pg_progetto
-                AND NVL (cla.cdr_accentratore, 'xxx') =
-                       (SELECT val01
-                          FROM configurazione_cnr
-                         WHERE esercizio = 0
-                           AND cd_unita_funzionale = '*'
-                           AND cd_chiave_primaria = 'CDR_SPECIALE'
-                           AND cd_chiave_secondaria = 'CDR_PERSONALE')
+                AND NVL (cla.cdr_accentratore, 'xxx') = CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
                 and voce.id_classificazione=cla.id_classificazione
              UNION ALL                                           -- ANNO 2 E 3
              SELECT pdg_spe.esercizio,

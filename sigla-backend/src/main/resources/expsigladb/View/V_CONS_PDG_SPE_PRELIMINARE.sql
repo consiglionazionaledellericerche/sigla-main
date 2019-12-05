@@ -87,12 +87,7 @@ Where
 --Join tra COMMESSA e PROGETTO
        COMM.ESERCIZIO_PROGETTO_PADRE = PROG.ESERCIZIO And
        COMM.PG_PROGETTO_PADRE = PROG.PG_PROGETTO And
-       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != (Select VAL01
-                               From   CONFIGURAZIONE_CNR
-                               Where  ESERCIZIO = 0 And
-                                      CD_UNITA_FUNZIONALE = '*' And
-                                      CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                      CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE') And
+       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO) And
        AREA.CD_TIPO_UNITA != 'AREA'
 Union All  -- AREE
 Select PDG_SPE.ESERCIZIO,
@@ -148,12 +143,7 @@ Where
 --Join tra COMMESSA e PROGETTO
        COMM.ESERCIZIO_PROGETTO_PADRE = PROG.ESERCIZIO And
        COMM.PG_PROGETTO_PADRE = PROG.PG_PROGETTO And
-       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != (Select VAL01
-                               From   CONFIGURAZIONE_CNR
-                               Where  ESERCIZIO = 0 And
-                                      CD_UNITA_FUNZIONALE = '*' And
-                                      CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                      CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE') And
+       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO) And
        AREA.CD_TIPO_UNITA = 'AREA'
 Union All -- SPESE ACCENTRATE NON PERSONALE
 Select PDG_SPE.ESERCIZIO,
@@ -206,12 +196,7 @@ Where
 --Join tra COMMESSA e PROGETTO
        COMM.ESERCIZIO_PROGETTO_PADRE = PROG.ESERCIZIO And
        COMM.PG_PROGETTO_PADRE = PROG.PG_PROGETTO And
-       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != (Select VAL01
-                               From   CONFIGURAZIONE_CNR
-                               Where  ESERCIZIO = 0 And
-                                      CD_UNITA_FUNZIONALE = '*' And
-                                      CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                      CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE')
+       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
 Union All -- TRATTAMENTO ECONOMICO DEL PERSONALE
 Select PDG_SPE.ESERCIZIO,
       Decode(unita_organizzativa.CD_TIPO_UNITA, 'SAC', '13',to_char(nvl(p.peso,1000))) PESO_DIP,
@@ -266,12 +251,7 @@ Where
 --Join tra COMMESSA e PROGETTO
        COMM.ESERCIZIO_PROGETTO_PADRE = PROG.ESERCIZIO And
        COMM.PG_PROGETTO_PADRE = PROG.PG_PROGETTO And
-       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') = (Select VAL01
-                               From   CONFIGURAZIONE_CNR
-                               Where  ESERCIZIO = 0 And
-                                      CD_UNITA_FUNZIONALE = '*' And
-                                      CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                      CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE')
+       Nvl(CLA.CDR_ACCENTRATORE, 'xxx') = CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
 Union All -- ANNO 2 E 3
 Select PDG_SPE.ESERCIZIO,
       Decode(unita_organizzativa.CD_TIPO_UNITA, 'SAC', '13',to_char(nvl(p.peso,1000))) PESO_DIP,

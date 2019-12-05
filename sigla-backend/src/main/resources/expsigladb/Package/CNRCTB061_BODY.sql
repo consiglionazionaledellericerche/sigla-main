@@ -108,7 +108,7 @@
  Begin
    -- Leggo il CDR del personale e lock del PDG
 
-   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE;
+   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE(aASSCDPLA.esercizio);
 
    -- Leggo la linea di attivita per aggiornare gli importi del PDGP in base alla natura
    Select * into aLATmp from linea_attivita
@@ -147,7 +147,7 @@
  Begin
    -- Leggo il CDR del personale e lock del PDG
 
-   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE;
+   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE(aASSCDPLA.esercizio);
 
    -- Leggo la linea di attivita per aggiornare gli importi del PDGP in base alla natura
    Select * into aLATmp from linea_attivita
@@ -319,7 +319,7 @@
 
    -- Leggo il CDR del personale
 
-   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE;
+   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE(aEsercizio);
 
    -- Lock del PDG del CDR in processo
    CNRCTB051.LOCKPDGP(aEsercizio, aCdCdr);
@@ -1374,7 +1374,7 @@
 
    -- Leggo il CDR del personale
 
-   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE;
+   aCDRPersonale:=CNRCTB020.GETCDRPERSONALE(aEsercizio);
 
    Select count(*) into aNum
    From ass_cdp_pdgp

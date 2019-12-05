@@ -62,12 +62,7 @@ From   CDR, CDR CDR_ASS, PROGETTO_GEST MODU, PROGETTO_GEST COMM, PROGETTO_GEST P
        From   PDG_MODULO_SPESE_GEST PDG_SPE, V_CLASSIFICAZIONE_VOCI CLA, UNITA_ORGANIZZATIVA AREA
        Where  PDG_SPE.ID_CLASSIFICAZIONE = CLA.ID_CLASSIFICAZIONE AND
               PDG_SPE.CD_CDS_AREA = AREA.CD_UNITA_ORGANIZZATIVA AND
-              NVL(CLA.CDR_ACCENTRATORE, 'xxx') != (Select VAL01
-                                                   From   CONFIGURAZIONE_CNR
-                                                   Where  ESERCIZIO = 0 And
-                                                          CD_UNITA_FUNZIONALE = '*' And
-                                                          CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                                          CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE') And
+              NVL(CLA.CDR_ACCENTRATORE, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO) And
               AREA.CD_TIPO_UNITA != 'AREA' And
               PDG_SPE.FL_SOLA_LETTURA = 'N'
        Group By PDG_SPE.ESERCIZIO, PDG_SPE.CD_CENTRO_RESPONSABILITA, PDG_SPE.PG_PROGETTO,
@@ -92,18 +87,8 @@ From   CDR, CDR CDR_ASS, PROGETTO_GEST MODU, PROGETTO_GEST COMM, PROGETTO_GEST P
        From   PDG_MODULO_SPESE_GEST PDG_SPE, V_CLASSIFICAZIONE_VOCI CLA, UNITA_ORGANIZZATIVA AREA
        Where  PDG_SPE.ID_CLASSIFICAZIONE = CLA.ID_CLASSIFICAZIONE AND
               PDG_SPE.CD_CDS_AREA = AREA.CD_UNITA_ORGANIZZATIVA AND
-              NVL(CLA.CDR_ACCENTRATORE, 'xxx') = (Select VAL01
-                                                  From   CONFIGURAZIONE_CNR
-                                                  Where  ESERCIZIO = 0 AND
-                                                         CD_UNITA_FUNZIONALE = '*' AND
-                                                         CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' AND
-                                                         CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE') AND
-              PDG_SPE.CD_CDR_ASSEGNATARIO != (Select VAL01
-                                              From   CONFIGURAZIONE_CNR
-                                              Where  ESERCIZIO = 0 AND
-                                                     CD_UNITA_FUNZIONALE = '*' AND
-                                                     CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' AND
-                                                     CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE') AND
+              NVL(CLA.CDR_ACCENTRATORE, 'xxx') = CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO) AND
+              PDG_SPE.CD_CDR_ASSEGNATARIO != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO) AND
               AREA.CD_TIPO_UNITA != 'AREA' AND
               PDG_SPE.FL_SOLA_LETTURA = 'Y'
        Group BY PDG_SPE.ESERCIZIO, PDG_SPE.CD_CENTRO_RESPONSABILITA, PDG_SPE.PG_PROGETTO,
@@ -149,12 +134,7 @@ From   CDR, CDR CDR_ASS, PROGETTO_GEST MODU, PROGETTO_GEST COMM, PROGETTO_GEST P
        From   PDG_MODULO_SPESE_GEST PDG_SPE, V_CLASSIFICAZIONE_VOCI CLA, UNITA_ORGANIZZATIVA AREA
        Where  PDG_SPE.ID_CLASSIFICAZIONE = CLA.ID_CLASSIFICAZIONE AND
               PDG_SPE.CD_CDS_AREA = AREA.CD_UNITA_ORGANIZZATIVA AND
-              NVL(PDG_SPE.CD_CDR_ASSEGNATARIO, 'xxx') = (Select VAL01
-                                                         From   CONFIGURAZIONE_CNR
-                                                         Where  ESERCIZIO = 0 AND
-                                                                CD_UNITA_FUNZIONALE = '*' AND
-                                                                CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' AND
-                                                                CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE')
+              NVL(PDG_SPE.CD_CDR_ASSEGNATARIO, 'xxx') = CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
        Group BY PDG_SPE.ESERCIZIO, PDG_SPE.CD_CENTRO_RESPONSABILITA, PDG_SPE.PG_PROGETTO,
               CD_CLASSIFICAZIONE, DS_CLASSIFICAZIONE, NR_LIVELLO, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7,
               PDG_SPE.CD_CDR_ASSEGNATARIO, PDG_SPE.CD_LINEA_ATTIVITA,

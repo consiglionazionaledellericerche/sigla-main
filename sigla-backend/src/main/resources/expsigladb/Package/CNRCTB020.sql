@@ -200,11 +200,11 @@ TIPO_ENTE CONSTANT VARCHAR2(10) := 'ENTE';
 
 -- Estrae l'UO del personale leggendola da configurazione CNR
 
- function getUOPersonale return unita_organizzativa%rowtype;
+ function getUOPersonale(aEs number) return unita_organizzativa%rowtype;
 
 -- Estrae il CDR del personale leggendolo da configurazione CNR
 
- function getCDRPersonale return cdr%rowtype;
+ function getCDRPersonale(aEs number) return cdr%rowtype;
 
 -- Estrae il cdr responsabile dell'UO
 
@@ -255,4 +255,10 @@ Function GETDESDIPARTIMENTO (aCd_dip VARCHAR2) return VARCHAR2;
  function isUOSAC(aUO varchar2) return boolean;
 
  function getCdCdrEnte return cdr.cd_centro_responsabilita%type;
+
+ function getCdCDRPersonale(aEs number) return cdr.cd_centro_responsabilita%type;
+ function getCdUOVersCori(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type;
+ function getCdUOVersCoriTuttaSAC(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type;
+ function getCdUOVersCoriContoBI(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type;
+ function getCdUOVersIVA(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type;
 end;

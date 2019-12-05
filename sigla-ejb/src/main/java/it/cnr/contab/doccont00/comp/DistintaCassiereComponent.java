@@ -3148,14 +3148,8 @@ public class DistintaCassiereComponent extends
                                       Distinta_cassiereBulk distinta) throws SQLException,
             ComponentException, PersistencyException, EJBException,
             RemoteException {
-        Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
-                .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-        if (sess.getVal01(userContext, new Integer(0), null, "UO_SPECIALE",
-                "UO_DISTINTA_TUTTA_SAC") == null)
-            return false;
-        return sess.getVal01(userContext, new Integer(0), null, "UO_SPECIALE",
-                "UO_DISTINTA_TUTTA_SAC").equals(
-                distinta.getCd_unita_organizzativa());
+        return ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class))
+                    .isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(userContext),distinta.getCd_unita_organizzativa());
     }
 
     /**

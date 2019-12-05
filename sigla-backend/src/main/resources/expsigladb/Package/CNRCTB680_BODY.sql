@@ -532,7 +532,7 @@ end if;
 
   aDateCont:=CNRCTB008.getTimestampContabile(aStip.esercizio,aTSNow);
 
-  aUOPersonale:=CNRCTB020.GETUOPERSONALE;
+  aUOPersonale:=CNRCTB020.GETUOPERSONALE(aStip.esercizio);
   aUOPersonale:=CNRCTB020.GETUOVALIDA(aStip.esercizio,aUOPersonale.cd_unita_organizzativa);
 
   aTerzoDivComp:=CNRCTB080.getTerzo(CNRCTB015.GETIM01PERCHIAVE(TERZO_SPECIALE,DIVERSI_STIPENDI));
@@ -815,7 +815,7 @@ end if;
 
   aDateCont:=CNRCTB008.getTimestampContabile(aEs,aTSNow);
 
-  aUOPersonale:=CNRCTB020.GETUOPERSONALE;
+  aUOPersonale:=CNRCTB020.GETUOPERSONALE((aStip.esercizio);
   aUOPersonale:=CNRCTB020.GETUOVALIDA(aStip.esercizio,aUOPersonale.cd_unita_organizzativa);
 
   aGen:=null;

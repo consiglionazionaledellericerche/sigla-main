@@ -59,12 +59,7 @@ From   PARAMETRI_CNR PAR,
        From   PDG_MODULO_SPESE PDG_SPE, V_CLASSIFICAZIONE_VOCI CLA, UNITA_ORGANIZZATIVA AREA
        Where  PDG_SPE.ID_CLASSIFICAZIONE = CLA.ID_CLASSIFICAZIONE AND
               PDG_SPE.CD_CDS_AREA = AREA.CD_UNITA_ORGANIZZATIVA AND
-              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != (Select VAL01
-                                                   From   CONFIGURAZIONE_CNR
-                                                   Where  ESERCIZIO = 0 And
-                                                          CD_UNITA_FUNZIONALE = '*' And
-                                                          CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                                          CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE') And
+              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO) And
               AREA.CD_TIPO_UNITA != 'AREA'
        Group By PDG_SPE.ESERCIZIO, PDG_SPE.CD_CENTRO_RESPONSABILITA, PDG_SPE.PG_PROGETTO,
                 CD_CLASSIFICAZIONE, DS_CLASSIFICAZIONE, NR_LIVELLO, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7,PDG_SPE.CD_COFOG,PDG_SPE.CD_MISSIONE
@@ -101,12 +96,7 @@ From   PARAMETRI_CNR PAR,
        From   PDG_MODULO_SPESE PDG_SPE, V_CLASSIFICAZIONE_VOCI CLA, UNITA_ORGANIZZATIVA AREA
        Where  PDG_SPE.ID_CLASSIFICAZIONE = CLA.ID_CLASSIFICAZIONE AND
               PDG_SPE.CD_CDS_AREA = AREA.CD_UNITA_ORGANIZZATIVA AND
-              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') = (Select VAL01
-                                      From   CONFIGURAZIONE_CNR
-                                      Where  ESERCIZIO = 0 And
-                                             CD_UNITA_FUNZIONALE = '*' And
-                                             CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                             CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE')
+              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') = CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
        Group By PDG_SPE.ESERCIZIO, PDG_SPE.CD_CENTRO_RESPONSABILITA, PDG_SPE.PG_PROGETTO,
                 CD_CLASSIFICAZIONE, DS_CLASSIFICAZIONE, NR_LIVELLO, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7,PDG_SPE.CD_COFOG,PDG_SPE.CD_MISSIONE
        Union All -- ANNO 2 E 3
@@ -193,12 +183,7 @@ From   PARAMETRI_CNR PAR,
        From   PDG_MODULO_SPESE PDG_SPE, V_CLASSIFICAZIONE_VOCI CLA, UNITA_ORGANIZZATIVA AREA
        Where  PDG_SPE.ID_CLASSIFICAZIONE = CLA.ID_CLASSIFICAZIONE AND
               PDG_SPE.CD_CDS_AREA = AREA.CD_UNITA_ORGANIZZATIVA AND
-              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != (Select VAL01
-                                                   From   CONFIGURAZIONE_CNR
-                                                   Where  ESERCIZIO = 0 And
-                                                          CD_UNITA_FUNZIONALE = '*' And
-                                                          CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                                          CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE') And
+              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') != CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO) And
               AREA.CD_TIPO_UNITA != 'AREA'
        Group By PDG_SPE.ESERCIZIO, PDG_SPE.CD_CENTRO_RESPONSABILITA, PDG_SPE.PG_PROGETTO,
                 CD_CLASSIFICAZIONE, DS_CLASSIFICAZIONE, NR_LIVELLO, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7,PDG_SPE.CD_COFOG,PDG_SPE.CD_MISSIONE
@@ -235,12 +220,7 @@ From   PARAMETRI_CNR PAR,
        From   PDG_MODULO_SPESE PDG_SPE, V_CLASSIFICAZIONE_VOCI CLA, UNITA_ORGANIZZATIVA AREA
        Where  PDG_SPE.ID_CLASSIFICAZIONE = CLA.ID_CLASSIFICAZIONE AND
               PDG_SPE.CD_CDS_AREA = AREA.CD_UNITA_ORGANIZZATIVA AND
-              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') = (Select VAL01
-                                      From   CONFIGURAZIONE_CNR
-                                      Where  ESERCIZIO = 0 And
-                                             CD_UNITA_FUNZIONALE = '*' And
-                                             CD_CHIAVE_PRIMARIA = 'CDR_SPECIALE' And
-                                             CD_CHIAVE_SECONDARIA = 'CDR_PERSONALE')
+              Nvl(CLA.CDR_ACCENTRATORE, 'xxx') = CNRCTB020.getCdCDRPersonale(PDG_SPE.ESERCIZIO)
        Group By PDG_SPE.ESERCIZIO, PDG_SPE.CD_CENTRO_RESPONSABILITA, PDG_SPE.PG_PROGETTO,
                 CD_CLASSIFICAZIONE, DS_CLASSIFICAZIONE, NR_LIVELLO, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7,PDG_SPE.CD_COFOG,PDG_SPE.CD_MISSIONE
        Union All -- ANNO 2 E 3

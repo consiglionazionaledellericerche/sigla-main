@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
@@ -403,19 +404,12 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 
 		if (dett.getPdg_variazione().getTipologia_fin() != null) {
 			sql.openParenthesis(FindClause.AND);
-			sql.addSQLClause(FindClause.OR,"NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());			
+			sql.addSQLClause(FindClause.OR,"NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());
 
-			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-			try {
-				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
-			} catch (RemoteException e) {
-				throw new ComponentException(e);
-			} catch (EJBException e) {
-				throw new ComponentException(e);
-			}
-			if (config != null){
-				sql.addSQLClause( FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, config.getVal01());
-			}
+			Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext))).ifPresent(cdrPersonale->{
+				sql.addSQLClause( FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrPersonale);
+			});
+
 			sql.closeParenthesis();
 		}
 
@@ -491,19 +485,12 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 		 */
 		if (dett.getPdg_variazione().getTipologia_fin() != null) {
 			sql.openParenthesis(FindClause.AND);
-			sql.addSQLClause(FindClause.OR,"NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());			
+			sql.addSQLClause(FindClause.OR,"NATURA.TIPO",SQLBuilder.EQUALS,dett.getPdg_variazione().getTipologia_fin());
 
-			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-			try {
-				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
-			} catch (RemoteException e) {
-				throw new ComponentException(e);
-			} catch (EJBException e) {
-				throw new ComponentException(e);
-			}
-			if (config != null){
-				sql.addSQLClause( FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, config.getVal01());
-			}
+			Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext))).ifPresent(cdrPersonale->{
+				sql.addSQLClause( FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrPersonale);
+			});
+
 			sql.closeParenthesis();
 		}
 

@@ -28,6 +28,7 @@ import it.cnr.contab.compensi00.docs.bulk.ConguaglioBulk;
 import it.cnr.contab.compensi00.docs.bulk.ConguaglioHome;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -2268,19 +2269,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 cd_uo = ((Unita_organizzativaBulk) result.get(0))
                         .getCd_unita_organizzativa();
             } else {
-                Configurazione_cnrBulk config = createConfigurazioneCnrComponentSession()
-                        .getConfigurazione(userContext, null, null,
-                                Configurazione_cnrBulk.PK_UO_SPECIALE,
-                                Configurazione_cnrBulk.SK_UO_ACCREDITAMENTO_SAC);
-                if (config == null)
-                    throw new ApplicationException(
-                            "Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC");
-
-                if (config.getVal01() == null)
-                    throw new ApplicationException(
-                            "Configurazione CNR: manca la valorizzazione dell'UO_SPECIALE per ACCREDITAMENTO SAC");
-                cd_uo = config.getVal01();
-
+                cd_uo = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoAccreditamentoSac(CNRUserContext.getEsercizio(userContext)))
+                        .orElseThrow(()->new ApplicationException("Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC per l'esercizio "+CNRUserContext.getEsercizio(userContext)+"."));
             }
 
             // imposto il terzo
@@ -3908,13 +3898,8 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
                     .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-            if (uo.isUoCds()
-                    || (sess.getVal01(userContext, new Integer(0), null,
-                    "UO_SPECIALE", "UO_DISTINTA_TUTTA_SAC") != null && cd_uo
-                    .equals(sess.getVal01(userContext, new Integer(0),
-                            null, "UO_SPECIALE",
-                            "UO_DISTINTA_TUTTA_SAC")))) {
-
+            if (uo.isUoCds() ||
+                    ((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(userContext),cd_uo)) {
                 stampa.setUoEmittenteForPrint(new Unita_organizzativaBulk());
                 stampa.setFindUOForPrintEnabled(true);
             } else {

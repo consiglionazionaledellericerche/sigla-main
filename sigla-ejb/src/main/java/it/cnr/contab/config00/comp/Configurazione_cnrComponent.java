@@ -18,6 +18,7 @@
 package it.cnr.contab.config00.comp;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrKey;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
@@ -523,6 +524,73 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                 .filter(Configurazione_cnrBulk.class::isInstance)
                 .map(Configurazione_cnrBulk.class::cast)
                 .map(bulk -> Boolean.valueOf(bulk.getVal01()));
+    }
+
+    /**
+     * Ritorna il codice uo della Ragioneria
+     * <p><b>chiave_primaria: UO_SPECIALE</b>
+     * <p><b>chiave_secondaria: UO_RAGIONERIA</b>
+     *
+     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
+     * @return String - il codice uo della Ragioneria
+     * @throws ComponentException, PersistencyException
+     */
+    public String getUoRagioneria(UserContext userContext, Integer esercizio) throws ComponentException {
+        try {
+            return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getUoRagioneria(esercizio);
+        }catch (PersistencyException e){
+            throw handleException(e);
+        }
+    }
+
+    /**
+     * Ritorna il codice cdr del personale
+     * <p><b>chiave_primaria: ELEMENTO_VOCE_SPECIALE</b>
+     * <p><b>chiave_secondaria: TEMPO_IND_SU_PROGETTI_FINANZIATI</b>
+     *
+     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
+     * @return String - il codice cdr del personale
+     * @throws ComponentException
+     */
+    public String getCdrPersonale(UserContext userContext, Integer esercizio) throws ComponentException {
+        try {
+            return ((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getCdrPersonale(esercizio);
+        }catch (PersistencyException e){
+            throw handleException(e);
+        }
+    }
+
+    /**
+     * Ritorna il codice uo distinta tutta sac
+     * <p><b>chiave_primaria: UO_SPECIALE</b>
+     * <p><b>chiave_secondaria: UO_DISTINTA_TUTTA_SAC</b>
+     *
+     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
+     * @return String - il codice codice uo distinta tutta sac
+     * @throws PersistencyException
+     */
+    public String getUoDistintaTuttaSac(UserContext userContext, Integer esercizio) throws ComponentException {
+        try {
+            return ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).getUoDistintaTuttaSac(esercizio);
+        }catch (PersistencyException e){
+            throw handleException(e);
+        }
+    }
+
+    /**
+     * Indica se la uo indicata è proprio quella speciale tutta sac
+     *
+     * @param esercizio l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
+     * @param cdUnitaOrganizzativa l'unità organizzativa di cui si chiede se si tratta della Uo Speciale Tutta SAC
+     * @return Boolean
+     * @throws PersistencyException
+     */
+    public Boolean isUOSpecialeDistintaTuttaSAC(UserContext userContext, Integer esercizio, String cdUnitaOrganizzativa) throws ComponentException {
+        try {
+            return ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).isUOSpecialeDistintaTuttaSAC(esercizio,cdUnitaOrganizzativa);
+        }catch (PersistencyException e){
+            throw handleException(e);
+        }
     }
 
     public void shutdowHook(UserContext userContext) throws ComponentException {
