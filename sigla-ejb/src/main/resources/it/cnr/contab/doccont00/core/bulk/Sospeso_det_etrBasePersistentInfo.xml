@@ -17,74 +17,75 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBase"
-	keyClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrKey"
-	homeClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrHome" >
-	<defaultColumnMap
-		tableName="SOSPESO_DET_ETR" >
-		<columnMapping
-			columnName="PG_VER_REC"
-			propertyName="pg_ver_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="false" />
-		<columnMapping
-			columnName="STATO"
-			propertyName="stato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="UTCR"
-			propertyName="utcr"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="DACR"
-			propertyName="dacr"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="DUVA"
-			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_ASSOCIATO"
-			propertyName="im_associato"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="UTUV"
-			propertyName="utuv"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_CDS_REVERSALE"
-			propertyName="cd_cds_reversale"
-			sqlTypeName="VARCHAR"
-			columnSize="30"/>		
-	</defaultColumnMap>
-	<persistentProperty
-		name="pg_ver_rec" />
-	<persistentProperty
-		name="stato" />
-	<persistentProperty
-		name="utcr" />
-	<persistentProperty
-		name="dacr" />
-	<persistentProperty
-		name="duva" />
-	<persistentProperty
-		name="im_associato" />
-	<persistentProperty
-		name="utuv" />
-	<persistentProperty
-		name="cd_cds_reversale" />		
+        persistentClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBase"
+        keyClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrKey"
+        homeClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrHome">
+    <defaultColumnMap
+            tableName="SOSPESO_DET_ETR">
+        <columnMapping
+                columnName="PG_VER_REC"
+                propertyName="pg_ver_rec"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="false"/>
+        <columnMapping
+                columnName="STATO"
+                propertyName="stato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTCR"
+                propertyName="utcr"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="DACR"
+                propertyName="dacr"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="DUVA"
+                propertyName="duva"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_ASSOCIATO"
+                propertyName="im_associato"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTUV"
+                propertyName="utuv"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_CDS_REVERSALE"
+                propertyName="cd_cds_reversale"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="pg_ver_rec"/>
+    <persistentProperty
+            name="stato"/>
+    <persistentProperty
+            name="utcr"/>
+    <persistentProperty
+            name="dacr"/>
+    <persistentProperty
+            name="duva"/>
+    <persistentProperty
+            name="im_associato"/>
+    <persistentProperty
+            name="utuv"/>
+    <persistentProperty
+            name="cd_cds_reversale"/>
+
 </SQLPersistentInfo>

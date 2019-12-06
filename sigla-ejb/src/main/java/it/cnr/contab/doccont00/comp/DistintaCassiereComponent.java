@@ -77,10 +77,12 @@ import org.apache.commons.io.IOUtils;
 
 import javax.ejb.EJBException;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.namespace.QName;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -89,6 +91,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.CompletionException;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -1395,7 +1398,11 @@ public class DistintaCassiereComponent extends
                 }
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
-
+                sql.openParenthesis(FindClause.AND);
+                    sql.addSQLClause(FindClause.AND, "v_mandato_reversale_dist_ann.stato_var_sos", SQLBuilder.NOT_EQUALS,
+                        StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value());
+                    sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.stato_var_sos", SQLBuilder.ISNULL, null);
+                sql.closeParenthesis();
                 sql.addSQLJoin("v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_ann.CD_TIPO_DOCUMENTO_CONT");
                 sql.addSQLJoin("v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT_PADRE", "v_mandato_reversale_dist_ann.PG_DOCUMENTO_CONT");
                 if (Utility.createParametriCnrComponentSession().getParametriCnr(
@@ -4633,11 +4640,10 @@ public class DistintaCassiereComponent extends
                             it.siopeplus.Reversale.InformazioniVersante.Classificazione clas = objectFactory.createReversaleInformazioniVersanteClassificazione();
                             clas.setCodiceCge(doc.getCdSiope());
                             clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-                            //TODO
                             CtClassificazioneDatiSiopeEntrate ctClassificazioneDatiSiopeEntrate = objectFactory.createCtClassificazioneDatiSiopeEntrate();
-                            ctClassificazioneDatiSiopeEntrate.getContent().add(
-                                    objectFactory.createCtClassificazioneDatiSiopeEntrateTipoDebitoSiopeNc(StTipoDebitoNonCommerciale.NON_COMMERCIALE)
-                            );
+                                ctClassificazioneDatiSiopeEntrate.getContent().add(
+                                        objectFactory.createCtClassificazioneDatiSiopeEntrateTipoDebitoSiopeNc(StTipoDebitoNonCommerciale.NON_COMMERCIALE)
+                                );
                             clas.setClassificazioneDatiSiopeEntrate(ctClassificazioneDatiSiopeEntrate);
                             infover.getClassificazione().add(clas);
                             oldDoc = doc;
@@ -4646,7 +4652,6 @@ public class DistintaCassiereComponent extends
                         it.siopeplus.Reversale.InformazioniVersante.Classificazione clas = objectFactory.createReversaleInformazioniVersanteClassificazione();
                         clas.setCodiceCge(doc.getCdSiope());
                         clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
-                        //TODO
                         CtClassificazioneDatiSiopeEntrate ctClassificazioneDatiSiopeEntrate = objectFactory.createCtClassificazioneDatiSiopeEntrate();
                         ctClassificazioneDatiSiopeEntrate.getContent().add(
                                 objectFactory.createCtClassificazioneDatiSiopeEntrateTipoDebitoSiopeNc(StTipoDebitoNonCommerciale.NON_COMMERCIALE)
@@ -4696,9 +4701,38 @@ public class DistintaCassiereComponent extends
 
                     for (Iterator c = listSosp.iterator(); c.hasNext(); ) {
                         boolean sospesoTrovato = false;
-                        VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c
-                                .next();
+                        VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
                         if (doc.getCdSospeso() != null) {
+                            if (Optional.ofNullable(doc.getCdSospeso()).isPresent() && isSospesoFromAccreditamento(userContext, doc)) {
+                                final V_mandato_reversaleBulk mandatoReversale = findMandatoReversale(userContext, findSospeso(userContext, doc).get().getMandatoRiaccredito());
+                                final CtClassificazioneDatiSiopeUscite classificazioneDatiSiope = getClassificazioneDatiSiope(userContext, objectFactory, mandatoReversale, null);
+                                final Optional<Reversale.InformazioniVersante.Classificazione> any = infover.getClassificazione().stream().findAny();
+                                final Optional<StTipoDebitoCommerciale> stTipoDebitoCommerciale = classificazioneDatiSiope.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().stream()
+                                        .filter(StTipoDebitoCommerciale.class::isInstance)
+                                        .map(StTipoDebitoCommerciale.class::cast)
+                                        .findAny();
+                                final Optional<StTipoDebitoNonCommerciale> stTipoDebitoNonCommerciale = classificazioneDatiSiope.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().stream()
+                                        .filter(StTipoDebitoNonCommerciale.class::isInstance)
+                                        .map(StTipoDebitoNonCommerciale.class::cast)
+                                        .findAny();
+                                final Optional<CtFatturaSiope> ctFatturaSiope = classificazioneDatiSiope.getTipoDebitoSiopeNcAndCodiceCigSiopeOrMotivoEsclusioneCigSiope().stream()
+                                        .filter(CtFatturaSiope.class::isInstance)
+                                        .map(CtFatturaSiope.class::cast)
+                                        .findAny();
+                                if (any.isPresent()) {
+                                    final Reversale.InformazioniVersante.Classificazione classificazione = any.get();
+                                    classificazione.getClassificazioneDatiSiopeEntrate().getContent().clear();
+                                    if (stTipoDebitoCommerciale.isPresent())
+                                        classificazione.getClassificazioneDatiSiopeEntrate().getContent().add(objectFactory.createCtClassificazioneDatiSiopeEntrateTipoDebitoSiopeC(stTipoDebitoCommerciale.get()));
+                                    if (stTipoDebitoNonCommerciale.isPresent())
+                                        classificazione.getClassificazioneDatiSiopeEntrate().getContent().add(objectFactory.createCtClassificazioneDatiSiopeEntrateTipoDebitoSiopeNc(stTipoDebitoNonCommerciale.get()));
+                                    if (ctFatturaSiope.isPresent()) {
+                                        CtFatturaSiope ctFatturaSiope1 = ctFatturaSiope.get();
+                                        ctFatturaSiope1.getDatiFatturaSiope().setImportoSiope(classificazione.getImporto());
+                                        classificazione.getClassificazioneDatiSiopeEntrate().getContent().add(objectFactory.createCtClassificazioneDatiSiopeEntrateFatturaSiope(ctFatturaSiope1));
+                                    }
+                                }
+                            }
                             for (Iterator it = infover.getSospeso().iterator(); it.hasNext(); ) {
                                 it.siopeplus.Reversale.InformazioniVersante.Sospeso presente = (it.siopeplus.Reversale.InformazioniVersante.Sospeso) it.next();
                                 Long l = new Long(doc.getCdSospeso().substring(0, doc.getCdSospeso().indexOf(".")).replace(" ", "")).longValue();
@@ -4735,6 +4769,33 @@ public class DistintaCassiereComponent extends
         } catch (Exception e) {
             throw handleException(e);
         }
+    }
+
+    private V_mandato_reversaleBulk findMandatoReversale(UserContext userContext, MandatoBulk mandatoBulk) throws ComponentException, PersistencyException {
+        final BulkHome home = getHome(userContext, V_mandato_reversaleBulk.class);
+        return Optional.ofNullable(home.findByPrimaryKey(new V_mandato_reversaleBulk(mandatoBulk.getEsercizio(), Numerazione_doc_contBulk.TIPO_MAN, mandatoBulk.getCd_cds(), mandatoBulk.getPg_mandato())))
+                .filter(V_mandato_reversaleBulk.class::isInstance)
+                .map(V_mandato_reversaleBulk.class::cast)
+                .orElseThrow(() -> new ComponentException("Mandato associato al sospeso non trovato!"));
+    }
+
+    private Optional<SospesoBulk> findSospeso(UserContext userContext, VDocumentiFlussoBulk doc) throws ComponentException, PersistencyException {
+        final BulkHome home = getHome(userContext, SospesoBulk.class);
+        final SQLBuilder sqlBuilder = home.createSQLBuilder();
+        sqlBuilder.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, doc.getEsercizio());
+        sqlBuilder.addClause(FindClause.AND, "cd_cds_origine", SQLBuilder.EQUALS, doc.getCdCdsOrigine());
+        sqlBuilder.addClause(FindClause.AND, "ti_entrata_spesa", SQLBuilder.EQUALS, SospesoBulk.TIPO_ENTRATA);
+        sqlBuilder.addClause(FindClause.AND, "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
+        sqlBuilder.addClause(FindClause.AND, "cd_sospeso", SQLBuilder.EQUALS, doc.getCdSospeso());
+        return home.fetchAll(sqlBuilder).stream()
+                .filter(SospesoBulk.class::isInstance)
+                .map(SospesoBulk.class::cast)
+                .findAny();
+    }
+
+    private boolean isSospesoFromAccreditamento(UserContext userContext, VDocumentiFlussoBulk doc) throws ComponentException, PersistencyException {
+        final Optional<SospesoBulk> sospeso = findSospeso(userContext, doc);
+        return sospeso.isPresent() && sospeso.filter(sospesoBulk -> Optional.ofNullable(sospesoBulk.getMandatoRiaccredito()).isPresent()).isPresent();
     }
 
     private MandatoBulk cercaMandatoRiemissione(UserContext userContext, V_mandato_reversaleBulk bulk) throws ComponentException, PersistencyException {
@@ -5673,6 +5734,13 @@ public class DistintaCassiereComponent extends
                                        ObjectFactory objectFactory,
                                        V_mandato_reversaleBulk bulk,
                                        String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException {
+        clas.setClassificazioneDatiSiopeUscite(getClassificazioneDatiSiope(userContext, objectFactory, bulk, codiceSiope));
+    }
+
+    private CtClassificazioneDatiSiopeUscite getClassificazioneDatiSiope(UserContext userContext,
+                                       ObjectFactory objectFactory,
+                                       V_mandato_reversaleBulk bulk,
+                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException {
         CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
         Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
                 .map(s -> TipoDebitoSIOPE.getValueFrom(s));
@@ -5692,7 +5760,7 @@ public class DistintaCassiereComponent extends
                     .stream()
                     .filter(Mandato_siopeBulk.class::isInstance)
                     .map(Mandato_siopeBulk.class::cast)
-                    .filter(o -> o.getCd_siope().equals(codiceSiope))
+                    .filter(o -> o.getCd_siope().equals(Optional.ofNullable(codiceSiope).orElse(o.getCd_siope())))
                     .collect(Collectors.toList());
 
             final Optional<Mandato_siopeBulk> mandatoDaFattura = siopeBulks
@@ -5992,7 +6060,7 @@ public class DistintaCassiereComponent extends
                 }
             }
         }
-        clas.setClassificazioneDatiSiopeUscite(ctClassificazioneDatiSiopeUscite);
+        return ctClassificazioneDatiSiopeUscite;
     }
 
     public Long findMaxMovimentoContoEvidenza(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {

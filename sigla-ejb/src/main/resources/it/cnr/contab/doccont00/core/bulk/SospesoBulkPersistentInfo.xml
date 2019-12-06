@@ -16,21 +16,32 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.core.bulk.SospesoBulk"
-	homeClassName="it.cnr.contab.doccont00.core.bulk.SospesoHome" >
-	<defaultColumnMap
-		tableName="SOSPESO" >
-		<columnMapping
-			columnName="CD_CDS"
-			propertyName="cds.cd_unita_organizzativa"/>
-		<columnMapping
-			columnName="CD_CDS_ORIGINE"
-			propertyName="cds_origine.cd_unita_organizzativa"/>
-	</defaultColumnMap>
+        persistentClassName="it.cnr.contab.doccont00.core.bulk.SospesoBulk"
+        homeClassName="it.cnr.contab.doccont00.core.bulk.SospesoHome">
+    <defaultColumnMap
+            tableName="SOSPESO">
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="cds.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_CDS_ORIGINE"
+                propertyName="cds_origine.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="CD_CDS_MAN_RIACCR"
+                propertyName="mandatoRiaccredito.cds.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="ESERCIZIO_MAN_RIACCR"
+                propertyName="mandatoRiaccredito.esercizio"/>
+        <columnMapping
+                columnName="PG_MANDATO_MAN_RIACCR"
+                propertyName="mandatoRiaccredito.pg_mandato"/>
+    </defaultColumnMap>
 
-	<persistentProperty
-		name="cds"
-		partOfOid= "true"/>
-	<persistentProperty
-		name="cds_origine"/>			
+    <persistentProperty
+            name="cds"
+            partOfOid="true"/>
+    <persistentProperty
+            name="cds_origine"/>
+    <persistentProperty
+            name="mandatoRiaccredito"/>
 </SQLPersistentInfo>

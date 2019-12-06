@@ -37,6 +37,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -265,6 +266,17 @@ public class Mandato_rigaHome extends BulkHome {
                 return Documento_generico_passivoBulk.class;
             }
         }
+    }
+
+    public List<Mandato_rigaIBulk> findRighe(UserContext userContext, IDocumentoAmministrativoSpesaBulk iDocumentoAmministrativoSpesaBulk) throws PersistencyException {
+        PersistentHome home = getHomeCache().getHome(Mandato_rigaIBulk.class);
+        SQLBuilder sql = home.createSQLBuilder();
+        sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, iDocumentoAmministrativoSpesaBulk.getCd_cds());
+        sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, iDocumentoAmministrativoSpesaBulk.getCd_uo());
+        sql.addClause(FindClause.AND, "esercizio_doc_amm", SQLBuilder.EQUALS, iDocumentoAmministrativoSpesaBulk.getEsercizio());
+        sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, iDocumentoAmministrativoSpesaBulk.getCd_tipo_doc_amm());
+        sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, iDocumentoAmministrativoSpesaBulk.getPg_doc_amm());
+        return home.fetchAll(sql);
     }
 
     /**

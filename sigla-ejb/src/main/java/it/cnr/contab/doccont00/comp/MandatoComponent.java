@@ -86,6 +86,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         IMandatoMgr, ICRUDMgr, IPrintMgr, Cloneable, Serializable {
@@ -1199,12 +1200,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                       MandatoBulk mandato, CompensoOptionRequestParameter p,
                                       boolean annullaCollegati, boolean riemissione) throws ComponentException {
         try {
-            /*
-             * if ( param == null ) { // if ( stored procedure.... ) throw new
-             * OptionRequestException( "onCompensoFailed",
-             * "Compenso incluso in un conguaglio. Vuoi continuare?" ); }
-             */
-
             if (mandato.isAnnullato())
                 throw new ApplicationException(
                         "Il mandato e' già stato annullato");
@@ -1217,11 +1212,12 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                             .getEsercizio(), mandato
                             .getCd_tipo_documento_cont(), mandato.getCd_cds(),
                             mandato.getPg_mandato()));
-            if (totdettagli.compareTo(new BigDecimal(0)) > 0)
+            if (totdettagli.compareTo(new BigDecimal(0)) > 0 &&
+                    Optional.ofNullable(mandato.getStatoVarSos())
+                         .map(s -> !s.equalsIgnoreCase(StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value()))
+                        .orElse(Boolean.TRUE))
                 throw new ApplicationException(
                         "Annullamento impossibile! Il mandato e' già stato associato ad un riscontro");
-
-            // verificaMandato( userContext, mandato );
 
             Sospeso_det_uscBulk sdu;
             for (Iterator i = mandato.getSospeso_det_uscColl().iterator(); i
@@ -1258,24 +1254,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
             lockBulk(userContext, mandato);
 
-//			if (DateServices.isAnnoMaggEsScriv(userContext)) {
-//				// Se la data di annullamento NON E' NULLA, e siamo in esercizio
-//				// successivo, metto
-//				// la data di trasmissione = ad istante successivo a quella di
-//				// annullamento
-//				if (mandato.getDt_trasmissione() != null) {
-//					mandato.setDt_annullamento(DateServices.getNextMinTs(
-//							userContext, mandato.getDt_trasmissione()));
-//				} else {
-//					mandato
-//					.setDt_annullamento(DateServices
-//							.getMidDayTs(DateServices
-//									.getTs_valido(userContext)));
-//				}
-//			} else {
-//				mandato.setDt_annullamento(DateServices
-//						.getTs_valido(userContext));
-//			//}
             // modifica 16/01/2017 messa sempre o sysdate o 31/12
             mandato.setDt_annullamento(DateServices
                     .getTs_valido(userContext));
@@ -1324,12 +1302,19 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         ANNULLAMENTO_MANDATO_ACTION);
                 annullaReversaleDiRegolarizzazione(userContext, mandato);
             } else if (mandato.getDoc_contabili_collColl().size() > 0
-                    && ((MandatoIBulk) mandato).hasFattura_passiva())
-                annullaReversaleDiIncassoIVA(userContext,
-                        (MandatoIBulk) mandato);
-
-            else if (annullaCollegati)
+                    && ((MandatoIBulk) mandato).hasFattura_passiva()) {
+                /**
+                 * Nel caso di annullamento per sostituzione non annullo le reversali collegate
+                 */
+                if (Optional.ofNullable(mandato.getStatoVarSos())
+                        .map(s -> !s.equalsIgnoreCase(StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value()))
+                        .orElse(Boolean.TRUE)) {
+                    annullaReversaleDiIncassoIVA(userContext,
+                            (MandatoIBulk) mandato);
+                }
+            } else if (annullaCollegati) {
                 annullaDocContabiliCollegati(userContext, mandato);
+            }
             return mandato;
         } catch (Exception e) {
             throw handleException(mandato, e);
@@ -1579,7 +1564,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
      * Mandato-Reversale da creare
      */
 
-    private Ass_mandato_reversaleBulk creaAss_mandato_reversale(
+    public Ass_mandato_reversaleBulk creaAss_mandato_reversale(
             UserContext userContext, MandatoBulk mandato,
             ReversaleBulk reversale) throws ComponentException {
         try {
@@ -1758,8 +1743,22 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 if (mandato.getTi_mandato().equals(
                         MandatoBulk.TIPO_REGOLARIZZAZIONE))
                     mandato.setIm_pagato(mandato.getIm_mandato());
-
                 mandato = (MandatoBulk) super.creaConBulk(userContext, bulk);
+                final MandatoBulk mandatoAnnPerSostituzione = getMandatoAnnPerSostituzione(userContext, mandato);
+                if (Optional.ofNullable(mandatoAnnPerSostituzione).isPresent()) {
+                    if (Optional.ofNullable(mandatoAnnPerSostituzione.getPg_mandato_riemissione()).isPresent()) {
+                        Optional<MandatoBulk> mandatoBulk = Optional.ofNullable(super.findByPrimaryKey(userContext,
+                                new MandatoIBulk(mandatoAnnPerSostituzione.getCd_cds(), mandatoAnnPerSostituzione.getEsercizio(), mandatoAnnPerSostituzione.getPg_mandato_riemissione())))
+                                .filter(MandatoBulk.class::isInstance)
+                                .map(MandatoBulk.class::cast);
+                        if (mandatoBulk.isPresent()) {
+                            mandatoBulk.get().setFl_riemissione(Boolean.TRUE);
+                            mandatoBulk.get().setPg_mandato_riemissione(mandato.getPg_mandato());
+                            mandatoBulk.get().setToBeUpdated();
+                            super.modificaConBulk(userContext, mandatoBulk.get());
+                        }
+                    }
+                }
                 aggiornaStatoFattura(userContext, mandato,
                         INSERIMENTO_MANDATO_ACTION);
                 /*
@@ -1830,10 +1829,10 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                 }
                             }
                 }
-                if (((MandatoIBulk) mandato).getImReversaleDiIncassoIVA()
-                        .compareTo(new BigDecimal(0)) > 0)
-                    creaReversaleDiIncassoIVA(userContext,
-                            (MandatoIBulk) mandato);
+
+                if (((MandatoIBulk) mandato).getImReversaleDiIncassoIVA().compareTo(new BigDecimal(0)) > 0 && !Optional.ofNullable(mandatoAnnPerSostituzione).isPresent()) {
+                    creaReversaleDiIncassoIVA(userContext, (MandatoIBulk) mandato);
+                }
             }
             /* MANDATO NON DI ACCREDITAMENTO END */
             /**
@@ -1846,6 +1845,43 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         } catch (Exception e) {
             throw handleException(e);
         }
+    }
+
+    private MandatoBulk getMandatoAnnPerSostituzione(UserContext userContext, MandatoBulk mandato) throws ComponentException {
+        final BulkList<Mandato_rigaBulk> mandato_rigaColl = mandato.getMandato_rigaColl();
+        Mandato_rigaHome mandato_rigaHome = (Mandato_rigaHome) getHome(userContext, Mandato_rigaBulk.class);
+        final Stream<?> mandatiAnnullatiPerSostituzione = mandato_rigaColl.stream()
+                .map(mandato_rigaBulk -> {
+                    try {
+                        return getDocumentoAmministrativoSpesaBulk(userContext, mandato_rigaBulk);
+                    } catch (ComponentException e) {
+                        return null;
+                    }
+                })
+                .map(iDocumentoAmministrativoSpesaBulk -> {
+                    if (Optional.ofNullable(iDocumentoAmministrativoSpesaBulk).isPresent()) {
+                        try {
+                            final List<Mandato_rigaIBulk> righe = mandato_rigaHome.findRighe(userContext, iDocumentoAmministrativoSpesaBulk);
+                            getHomeCache(userContext).fetchAll(userContext);
+                            return righe.stream()
+                                    .map(Mandato_rigaBulk::getMandato)
+                                    .filter(mandatoBulk -> Optional.ofNullable(mandatoBulk.getStatoVarSos()).isPresent())
+                                    .filter(mandatoBulk -> mandatoBulk.getStatoVarSos().equals(StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value()))
+                                    .collect(Collectors.toList());
+                        } catch (PersistencyException | ComponentException e) {
+                            return Collections.emptyList();
+                        }
+                    }
+                    return Collections.emptyList();
+                }).flatMap(List::stream);
+        return mandatiAnnullatiPerSostituzione
+                .distinct()
+                .filter(MandatoBulk.class::isInstance)
+                .map(MandatoBulk.class::cast)
+                .distinct()
+                .findAny()
+                .orElse(null);
+
     }
 
     /*
@@ -3569,12 +3605,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         MandatoBulk mandato = (MandatoBulk) super.inizializzaBulkPerModifica(
                 aUC, bulk);
         try {
-            //Eliminato in quanto sono campi valorizzati ma non utilizzati
-//			mandato.setIm_disp_cassa_cds(findDisponibilitaDiCassaPerCDS(aUC,
-//					mandato));
-//			mandato.setIm_disp_cassa_CNR(findDisponibilitaDiCassaPerCNR(aUC,
-//					mandato));
-
             // carico i mandati riga
             mandato.setMandato_rigaColl(new BulkList(((MandatoHome) getHome(
                     aUC, mandato.getClass())).findMandato_riga(aUC, mandato)));
@@ -3594,21 +3624,6 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                                     .findCodiciCollegatiSIOPE(aUC, riga)));
                     setCodiciSIOPECollegabili(aUC, riga);
                 }
-
-                //			if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_cup().booleanValue() &&
-                //					Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_siope_cup().booleanValue()){
-                //				Timestamp dataLimite=Utility.createConfigurazioneCnrComponentSession().getDt01(aUC, "DATA_LIMITE_CUP_SIOPE_CUP");
-                //				if(mandato.getDt_emissione().after(dataLimite)){
-                //					for (Iterator j=riga.getMandato_siopeColl().iterator();j.hasNext();){
-                //						Mandato_siopeIBulk rigaSiope = (Mandato_siopeIBulk)j.next();
-                //						rigaSiope.setMandatoSiopeCupColl(new BulkList(((Mandato_siopeHome) getHome( aUC, Mandato_siopeBulk.class)).findCodiciSiopeCupCollegati(aUC, rigaSiope)));
-                //					}
-                //				}else
-                //				{
-                //					riga.setMandatoCupColl(new BulkList(((Mandato_rigaHome) getHome( aUC, Mandato_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
-                //				}
-                //
-                //			}else{
                 if (Utility.createParametriCnrComponentSession().getParametriCnr(aUC, mandato.getEsercizio()).getFl_cup().booleanValue()) {
                     riga.setMandatoCupColl(new BulkList(((Mandato_rigaHome) getHome(aUC, Mandato_rigaBulk.class)).findCodiciCupCollegati(aUC, riga)));
                 } else {

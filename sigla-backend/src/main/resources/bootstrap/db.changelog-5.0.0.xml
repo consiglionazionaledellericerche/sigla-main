@@ -2683,4 +2683,35 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="marco.spasiano" id="alter_sospeso_add_mandato_riaccr">
+        <addColumn tableName="sospeso">
+            <column name="cd_cds_man_riaccr"
+                    remarks="Codice identificativo del centro di spesa" type="VARCHAR(30)">
+            </column>
+            <column name="esercizio_man_riaccr"
+                    remarks="Esercizio di riferimento" type="SMALLINT">
+            </column>
+            <column name="pg_mandato_man_riaccr"
+                    remarks="Progressivo identificativo del mandato; univoco per CdS ed esercizio" type="BIGINT">
+            </column>
+        </addColumn>
+
+        <createIndex indexName="FX_SOSPESO11" tableName="SOSPESO">
+            <column name="CD_CDS_MAN_RIACCR"/>
+            <column name="ESERCIZIO_MAN_RIACCR"/>
+            <column name="PG_MANDATO_MAN_RIACCR"/>
+        </createIndex>
+
+        <addForeignKeyConstraint
+                baseColumnNames="cd_cds_man_riaccr,esercizio_man_riaccr,pg_mandato_man_riaccr"
+                baseTableName="sospeso"
+                constraintName="fk_sospeso11"
+                deferrable="false"
+                initiallyDeferred="false"
+                onDelete="NO ACTION"
+                onUpdate="NO ACTION"
+                referencedColumnNames="cd_cds,esercizio,pg_mandato"
+                referencedTableName="mandato"/>
+    </changeSet>
 </databaseChangeLog>

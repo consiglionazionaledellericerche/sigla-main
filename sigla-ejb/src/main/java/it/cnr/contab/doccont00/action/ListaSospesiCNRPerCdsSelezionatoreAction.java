@@ -18,23 +18,21 @@
 package it.cnr.contab.doccont00.action;
 
 import it.cnr.contab.doccont00.bp.CRUDMandatoBP;
+import it.cnr.contab.doccont00.bp.ListaSospesiCNRPerCdsSelezionatoreBP;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.SospesoBulk;
-import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
-import it.cnr.jada.action.ActionContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.action.Forward;
-import it.cnr.jada.action.HookForward;
+import it.cnr.jada.action.*;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.action.SelezionatoreListaAction;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
 
 import java.util.Optional;
 
 public class ListaSospesiCNRPerCdsSelezionatoreAction extends SelezionatoreListaAction {
+
+
     /**
      * Crea un nuovo Mandato in sostituzione al Mandato di riaccredito presente sul sospeso
      *
@@ -42,8 +40,43 @@ public class ListaSospesiCNRPerCdsSelezionatoreAction extends SelezionatoreLista
      * @return
      */
     public Forward doSostituisciMandato(ActionContext actionContext) throws BusinessProcessException, ApplicationException {
-        /*
-        final MandatoBulk mandatoBulk = Optional.ofNullable(actionContext.getBusinessProcess())
+        final MandatoBulk mandatoBulk = getCurrentMandato(actionContext);
+        if (Optional.ofNullable(mandatoBulk.getStatoVarSos())
+                .map(m -> m.equalsIgnoreCase(StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value())).orElse(Boolean.FALSE)) {
+            throw new ApplicationException("Il Mandato già risulta Annullato per Sostituzione");
+        }
+        CRUDMandatoBP mandatoBP = (CRUDMandatoBP) actionContext.createBusinessProcess("CRUDMandatoBP", new Object[]{"MRSWTh", mandatoBulk});
+        actionContext.addHookForward("bringback", this, "doBringBackCreaMandatoRiaccredito");
+        return actionContext.addBusinessProcess(mandatoBP);
+    }
+
+    public Forward doBringBackCreaMandatoRiaccredito(ActionContext actionContext) throws BusinessProcessException {
+        try {
+            final ListaSospesiCNRPerCdsSelezionatoreBP listaSospesiCNRPerCdsSelezionatoreBP = Optional.ofNullable(actionContext.getBusinessProcess())
+                    .filter(ListaSospesiCNRPerCdsSelezionatoreBP.class::isInstance)
+                    .map(ListaSospesiCNRPerCdsSelezionatoreBP.class::cast)
+                    .orElseThrow(() -> new ApplicationException("BusinessProcess non corretto!"));
+
+            HookForward hook = (HookForward) actionContext.getCaller();
+            final MandatoBulk mandatoBulk = getCurrentMandato(actionContext);
+            MandatoBulk mandatoNew = (MandatoBulk) hook.getParameter("bringback");
+            if (Optional.ofNullable(mandatoNew).isPresent()) {
+                if (!Optional.ofNullable(mandatoNew.getDs_mandato()).equals(Optional.ofNullable(mandatoBulk.getDs_mandato()))) {
+                    throw new ApplicationException("Causale di Pagamento deve coincidere con quella del Mandato originario!");
+                }
+                listaSospesiCNRPerCdsSelezionatoreBP.confermaMandato(actionContext.getUserContext(), mandatoBulk, mandatoNew);
+                listaSospesiCNRPerCdsSelezionatoreBP.refresh(actionContext);
+                listaSospesiCNRPerCdsSelezionatoreBP.setModel(actionContext, null);
+                setMessage(actionContext, FormBP.INFO_MESSAGE, "Operazione Effettuata");
+            }
+            return actionContext.findDefaultForward();
+        } catch (Exception e) {
+            return handleException(actionContext, e);
+        }
+    }
+
+    private MandatoBulk getCurrentMandato(ActionContext actionContext) throws ApplicationException{
+        return Optional.ofNullable(actionContext.getBusinessProcess())
                 .filter(SelezionatoreListaBP.class::isInstance)
                 .map(SelezionatoreListaBP.class::cast)
                 .flatMap(selezionatoreListaBP -> Optional.ofNullable(selezionatoreListaBP.getModel()))
@@ -51,24 +84,5 @@ public class ListaSospesiCNRPerCdsSelezionatoreAction extends SelezionatoreLista
                 .map(SospesoBulk.class::cast)
                 .flatMap(sospesoBulk -> Optional.ofNullable(sospesoBulk.getMandatoRiaccredito()))
                 .orElseThrow(() -> new ApplicationException("Sul sospeso selezionato non è presente il Mandato!"));
-        if (Optional.ofNullable(mandatoBulk.getStatoVarSos())
-                .map(m -> m.equalsIgnoreCase(StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value())).orElse(Boolean.FALSE)) {
-            throw new ApplicationException("Il Mandato già risulta Annullato per Sostituzione");
-        }
-        CRUDMandatoBP mandatoBP = (CRUDMandatoBP) actionContext.createBusinessProcess("CRUDMandatoBP", new Object[]{"MRSW", mandatoBulk});
-        actionContext.addHookForward("bringback", this, "doBringBackCreaMandatoRiaccredito");
-        return actionContext.addBusinessProcess(mandatoBP);
-         */
-        return actionContext.findDefaultForward();
-    }
-
-    public Forward doBringBackCreaMandatoRiaccredito(ActionContext actionContext) throws BusinessProcessException {
-        try {
-            HookForward hook = (HookForward) actionContext.getCaller();
-            MandatoBulk mandatoBulk = (MandatoBulk) hook.getParameter("bringback");
-            return actionContext.findDefaultForward();
-        } catch (Exception e) {
-            return handleException(actionContext, e);
-        }
     }
 }
