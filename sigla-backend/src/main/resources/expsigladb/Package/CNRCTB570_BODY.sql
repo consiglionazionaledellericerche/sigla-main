@@ -330,9 +330,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
    aCdTerzoVE number(8);
    aCdModPagVE varchar2(10);
    aPgBancaVE number(10);
-   aManP mandato%rowtype;
    aManPRiga mandato_riga%rowtype;
-   aListRigheManP CNRCTB038.righeMandatoList;
    aAnagTst anagrafico%rowtype;
    aAnagVer anagrafico%rowtype;
    aRevPRiga reversale_riga%rowtype;
@@ -809,9 +807,9 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
          aGenVSRiga.PARTITA_IVA:=aAnagVer.PARTITA_IVA;
          aGenVSRiga.STATO_COFI:=aGenVS.STATO_COFI;
          aGenVSRiga.DT_CANCELLAZIONE:=aGenVS.DT_CANCELLAZIONE;
-         aGenVSRiga.CD_CDS_OBBLIGAZIONE:=aObb.CD_CDS_OBBLIGAZIONE;
-         aGenVSRiga.ESERCIZIO_OBBLIGAZIONE:=aObb.ESERCIZIO_OBBLIGAZIONE;
-         aGenVSRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aObb.ESERCIZIO_ORI_OBBLIGAZIONE;
+         aGenVSRiga.CD_CDS_OBBLIGAZIONE:=aObb.CD_CDS;
+         aGenVSRiga.ESERCIZIO_OBBLIGAZIONE:=aObb.ESERCIZIO;
+         aGenVSRiga.ESERCIZIO_ORI_OBBLIGAZIONE:=aObb.ESERCIZIO_ORIginale;
          aGenVSRiga.PG_OBBLIGAZIONE:=aObb.PG_OBBLIGAZIONE;
          aGenVSRiga.PG_OBBLIGAZIONE_SCADENZARIO:=1;
          aGenVSRiga.DACR:=aGenVS.DACR;
