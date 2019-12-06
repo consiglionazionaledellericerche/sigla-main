@@ -1,5 +1,21 @@
 # sigla-main Changelog
 
+## Release 6.0.24  -- _December 06, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[684dffcb86196a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/684dffcb86196a6) marco.spasiano *December 06, 2019*
+
+>**FIX package body**
+>
+>[cce94da1a544b1a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cce94da1a544b1a) marco.spasiano *December 06, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[2d4db1f3dfd7131](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2d4db1f3dfd7131) marco.spasiano *December 06, 2019*
+
+
 ## Release 6.0.23  -- _December 06, 2019_ 
 ### No issue
 
