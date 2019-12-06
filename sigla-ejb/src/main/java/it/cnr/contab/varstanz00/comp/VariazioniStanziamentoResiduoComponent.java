@@ -342,18 +342,12 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		sql.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_NATURA","NATURA.CD_NATURA");
 		if (var_stanz_res_riga.getVar_stanz_res().getTipologia_fin() != null){
 			sql.openParenthesis("AND");
-			sql.addSQLClause("OR","NATURA.TIPO",SQLBuilder.EQUALS,var_stanz_res_riga.getVar_stanz_res().getTipologia_fin());			
-			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-			try {
-				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
-			} catch (RemoteException e) {
-				throw new ComponentException(e);
-			} catch (EJBException e) {
-				throw new ComponentException(e);
-			}
-			if (config != null){
-				sql.addSQLClause( "OR", "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, config.getVal01());
-			}
+			sql.addSQLClause("OR","NATURA.TIPO",SQLBuilder.EQUALS,var_stanz_res_riga.getVar_stanz_res().getTipologia_fin());
+
+			Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext))).ifPresent(cdrPersonale->{
+				sql.addSQLClause( FindClause.OR, "V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", SQLBuilder.EQUALS, cdrPersonale);
+			});
+
 			sql.closeParenthesis();
 		}
 		 // Obbligatorio cofog sulle GAE
@@ -398,18 +392,13 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			if(!parCnrBulk.getFl_nuovo_pdg())
 				if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita() != null)
 					sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_TIPO_UNITA",SQLBuilder.EQUALS,var_stanz_res_riga.getCentroTestata().getUnita_padre().getCd_tipo_unita());
-				
-			it.cnr.contab.config00.bulk.Configurazione_cnrBulk config = null;
-			try {
-				config = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.PK_CDR_SPECIALE, it.cnr.contab.config00.bulk.Configurazione_cnrBulk.SK_CDR_PERSONALE);
-			} catch (RemoteException e) {
-				throw new ComponentException(e);
-			} catch (EJBException e) {
-				throw new ComponentException(e);
-			}
-			if (config != null && var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
-				if( var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita().compareTo(config.getVal01())!=0)
+
+			if (var_stanz_res_riga.getCentroTestata()!=null && var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()!=null){
+				Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext)))
+						.filter(cdrPersonale->!cdrPersonale.equals(var_stanz_res_riga.getCentroTestata().getCd_centro_responsabilita()))
+						.ifPresent(cdrPersonale->{
 					sql.addSQLClause(FindClause.AND, "FL_VOCE_PERSONALE", SQLBuilder.EQUALS, "N");
+				});
 			}
 			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo())) {
@@ -594,7 +583,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			String cdrPersonale = null;
 			if (Optional.ofNullable(var_stanz_res.getTiMotivazioneVariazione()).isPresent() &&
 					var_stanz_res.isMotivazioneVariazionePersonale()) {
-				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(userContext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+				cdrPersonale = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext)))
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				existDettPersonale = false;
 			}

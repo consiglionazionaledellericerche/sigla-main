@@ -21,6 +21,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -1052,7 +1053,7 @@ Attenzione: l'importo della riga non viene mai modificato
      * uo origine uguale all'uo di scrivania, importo disponibile (importo disponibile = importo iniziale del sospeso -
      * importo già associato a reversali) maggiore di zero (metodo findSospesiDiEntrata)
      *
-     * @param aUC       lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
      * @param clausole  le clausole specificate dall'utente
      * @param reversale <code>ReversaleBulk</code> la reversale
      * @return il RemoteIterator della lista dei sospesi
@@ -2587,14 +2588,9 @@ REVERSALE
                 return ((Unita_organizzativaBulk) result.get(0));
             } else {
                 //cerco l'uo in configurazione CNR
-                Configurazione_cnrBulk config = createConfigurazioneCnrComponentSession().getConfigurazione(userContext, null, null, Configurazione_cnrBulk.PK_UO_SPECIALE, Configurazione_cnrBulk.SK_UO_ACCREDITAMENTO_SAC);
-                if (config == null)
-                    throw new ApplicationException("Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC");
-
-                if (config.getVal01() == null)
-                    throw new ApplicationException("Configurazione CNR: manca la valorizzazione dell'UO_SPECIALE per ACCREDITAMENTO SAC");
-                return (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(config.getVal01()));
-
+                String cdUo = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoAccreditamentoSac(CNRUserContext.getEsercizio(userContext)))
+                        .orElseThrow(()->new ApplicationException("Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC per l'esercizio "+CNRUserContext.getEsercizio(userContext)+"."));
+                return (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdUo));
             }
 
         } catch (Exception e) {
@@ -2792,7 +2788,7 @@ REVERSALE
      * PostCondition:
      * Viene inizializzata l'istanza di ReversaleBulk
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la reversale da inizializzare per la ricerca
      * @return reversale la Reversale inizializzata per la ricerca
      */
@@ -2818,7 +2814,7 @@ REVERSALE
      * PostCondition:
      * Viene inizializzata l'istanza di ReversaleBulk
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param bulk <code>OggettoBulk</code> la reversale da inizializzare per la ricerca
      * @return reversale la Reversale inizializzata per la ricerca
      */
@@ -3552,7 +3548,7 @@ REVERSALE
      * Se esiste un unico Codice SIOPE associabile alla riga della reversale viene creata una nuova
      * istanza di Reversale_siopeBulk per l'importo complessivo della riga della reversale
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param riga <code>Reversale_rigaBulk</code> la riga reversale da aggiornare
      * @return riga <code>Reversale_rigaBulk</code> la riga reversale aggiornata
      */
@@ -3586,7 +3582,7 @@ REVERSALE
      * PostCondition:
      * Vengono caricati i codici SIOPE disponibili per l'associazione della riga della reversale
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param riga <code>Reversale_rigaBulk</code> la riga reversale da aggiornare
      * @return riga <code>Reversale_rigaBulk</code> la riga reversale aggiornata
      */
@@ -3631,7 +3627,7 @@ REVERSALE
      * PostCondition:
      * Ritorna TRUE se la riga della reversale è associata completamente a codici SIOPE
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
      * @param riga <code>Reversale_rigaBulk</code> la riga reversale da controllare
      * @return Boolean
      */
@@ -3657,8 +3653,8 @@ REVERSALE
      * Viene verificato che tutte le righe della reversale siano associate a codici SIOPE.
      * Ritorna TRUE se tutte le righe della reversale sono associate completamente a codici SIOPE
      *
-     * @param aUC     lo <code>UserContext</code> che ha generato la richiesta
-     * @param mandato <code>ReversaleBulk</code> la reversale da controllare
+     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
+     * @param reversale <code>ReversaleBulk</code> la reversale da controllare
      * @return Boolean
      */
     public java.lang.Boolean isCollegamentoSiopeCompleto(UserContext userContext, ReversaleBulk reversale) throws ComponentException {
@@ -3686,8 +3682,8 @@ REVERSALE
      * PostCondition:
      * Vengono caricati i codici SIOPE disponibili per l'associazione sulla righe della reversale
      *
-     * @param aUC  lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga <code>ReversaleBulk</code> la reversale da aggiornare
+     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
+     * @param reversale <code>ReversaleBulk</code> la reversale da aggiornare
      * @return riga <code>ReversaleBulk</code> la reversale aggiornata
      */
     public ReversaleBulk setCodiciSIOPECollegabili(UserContext userContext, ReversaleBulk reversale) throws ComponentException {

@@ -2,7 +2,7 @@
 --  DDL for Package Body CNRCTB020
 --------------------------------------------------------
 
-  CREATE OR REPLACE PACKAGE BODY "CNRCTB020" is
+CREATE OR REPLACE PACKAGE BODY "CNRCTB020" is
 
 
  function getCDCDSENTE(aEs number) return unita_organizzativa.CD_unita_organizzativa%Type Is
@@ -352,7 +352,7 @@ end;
   begin
    -- estraggo l'UO di servizio versamento cori (tipo SAC)
    select * into aUOCDS from unita_organizzativa a where
-       a.cd_unita_organizzativa = CNRCTB015.GETVAL01PERCHIAVE('UO_SPECIALE','UO_VERSAMENTO_CORI')
+       a.cd_unita_organizzativa = getCdUOVersCori(aEs)
    and cd_tipo_unita = TIPO_SAC
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
@@ -369,7 +369,7 @@ end;
   begin
    -- estraggo l'UO di servizio versamento cori unificato per tutta la SAC(tipo SAC)
    select * into aUOCDS from unita_organizzativa a where
-       a.cd_unita_organizzativa = CNRCTB015.GETVAL01PERCHIAVE('UO_SPECIALE','UO_VERSAMENTO_CORI_TUTTA_SAC')
+       a.cd_unita_organizzativa = getCdUOVersCoriTuttaSAC(aEs)
    and cd_tipo_unita = TIPO_SAC
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
@@ -386,7 +386,7 @@ end;
   begin
    -- estraggo l'UO di servizio versamento cori su Conto Banca d'Ialia
    select * into aUOCDS from unita_organizzativa a where
-       a.cd_unita_organizzativa = CNRCTB015.GETVAL01PERCHIAVE('UO_SPECIALE','UO_VERSAMENTO_CORI_CONTO_BI')
+       a.cd_unita_organizzativa = getCdUOVersCoriContoBI(aEs)
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
 		 and cd_unita_organizzativa = a.cd_unita_organizzativa);
@@ -402,7 +402,7 @@ end;
   begin
    -- estraggo l'UO di servizio versamneto IVA (deve essere di tipo SAC)
    select * into aUOCDS from unita_organizzativa a where
-       a.cd_unita_organizzativa = CNRCTB015.GETVAL01PERCHIAVE('UO_SPECIALE','UO_VERSAMENTO_IVA')
+       a.cd_unita_organizzativa = getCdUOVersIVA(aEs)
    and cd_tipo_unita = TIPO_SAC
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
@@ -432,12 +432,12 @@ end;
   return false;
  end;
 
- function getUOPersonale return unita_organizzativa%rowtype is
+ function getUOPersonale(aEs number) return unita_organizzativa%rowtype is
   aUO unita_organizzativa%rowtype;
   aCDR cdr%rowtype;
   aCdUo varchar2(30);
  begin
-  aCDR:=getCDRPersonale;
+  aCDR:=getCDRPersonale(aEs);
   aCdUO:=aCDR.cd_unita_organizzativa;
   if aCdUo is null then
    return null;
@@ -448,20 +448,20 @@ end;
   return aUO;
  end;
 
- function getCDRPersonale return cdr%rowtype is
+ function getCDRPersonale(aEs number) return cdr%rowtype is
+  aCdCDR cdr.cd_centro_responsabilita%Type;
   aCDR cdr%rowtype;
-  aCdCDR varchar2(30);
  begin
-  aCdCDR:=CNRCTB015.GETVAL01PERCHIAVE(0,'CDR_SPECIALE','CDR_PERSONALE');
-  if aCdCDR is null then
-   return null;
-  end if;
+   aCdCDR := getCdCDRPersonale(aEs);
+   if aCdCDR is null then
+     return null;
+   end if;
+   select * into aCDR
+   from cdr
+   where cd_centro_responsabilita = aCdCDR;
 
-  select * into aCDR from cdr where
-   cd_centro_responsabilita = aCdCDR;
-  return aCDR;
- end;
-
+   return aCDR;
+ End;
 
  function getCDRResponsabileUO(aUO unita_organizzativa%rowtype) return cdr%rowtype is
   aCdr cdr%rowtype;
@@ -726,5 +726,95 @@ Procedure ins_CDR (aDest CDR%rowtype) is
 	  else
 	  	 return false;
 	  end if;
+ end;
+ function getCdCDRPersonale(aEs number) return cdr.cd_centro_responsabilita%Type Is
+  aCdCDR varchar2(30);
+  noData EXCEPTION;
+  pragma exception_init(noData,-20020);
+ begin
+  Begin
+    aCdCDR:=CNRCTB015.GETVAL01PERCHIAVE(aEs,'CDR_SPECIALE','CDR_PERSONALE');
+  Exception
+    When noData Then
+      if aEs=0 Then
+        IBMERR001.RAISE_ERR_GENERICO('Chiave non trovata in tabella di configurazione cnr: CDR_SPECIALE-CDR_PERSONALE');
+     end if;
+  End;
+  if aCdCDR is null AND aEs!=0 then
+     aCdCDR:=CNRCTB015.GETVAL01PERCHIAVE(0,'CDR_SPECIALE','CDR_PERSONALE');
+  end if;
+  return aCdCDR;
+ end;
+ function getCdUOVersCori(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type Is
+   aCdUO varchar2(30);
+   noData EXCEPTION;
+   pragma exception_init(noData,-20020);
+  begin
+   Begin
+     aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(aEs,'UO_SPECIALE','UO_VERSAMENTO_CORI');
+   Exception
+     When noData Then
+       if aEs=0 Then
+         IBMERR001.RAISE_ERR_GENERICO('Chiave non trovata in tabella di configurazione cnr: UO_SPECIALE-UO_VERSAMENTO_CORI');
+      end if;
+   End;
+   if aCdUO is null AND aEs!=0 then
+      aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(0,'UO_SPECIALE','UO_VERSAMENTO_CORI');
+   end if;
+   return aCdUO;
+ end;
+ function getCdUOVersCoriTuttaSAC(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type Is
+   aCdUO varchar2(30);
+   noData EXCEPTION;
+   pragma exception_init(noData,-20020);
+  begin
+   Begin
+     aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(aEs,'UO_SPECIALE','UO_VERSAMENTO_CORI_TUTTA_SAC');
+   Exception
+     When noData Then
+       if aEs=0 Then
+         IBMERR001.RAISE_ERR_GENERICO('Chiave non trovata in tabella di configurazione cnr: UO_SPECIALE-UO_VERSAMENTO_CORI_TUTTA_SAC');
+      end if;
+   End;
+   if aCdUO is null AND aEs!=0 then
+      aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(0,'UO_SPECIALE','UO_VERSAMENTO_CORI_TUTTA_SAC');
+   end if;
+   return aCdUO;
+ end;
+ function getCdUOVersCoriContoBI(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type Is
+    aCdUO varchar2(30);
+    noData EXCEPTION;
+    pragma exception_init(noData,-20020);
+   begin
+    Begin
+      aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(aEs,'UO_SPECIALE','UO_VERSAMENTO_CORI_CONTO_BI');
+    Exception
+      When noData Then
+        if aEs=0 Then
+          IBMERR001.RAISE_ERR_GENERICO('Chiave non trovata in tabella di configurazione cnr: UO_SPECIALE-UO_VERSAMENTO_CORI_CONTO_BI');
+       end if;
+    End;
+    if aCdUO is null AND aEs!=0 then
+       aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(0,'UO_SPECIALE','UO_VERSAMENTO_CORI_CONTO_BI');
+    end if;
+    return aCdUO;
+ end;
+ function getCdUOVersIVA(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type Is
+    aCdUO varchar2(30);
+    noData EXCEPTION;
+    pragma exception_init(noData,-20020);
+   begin
+    Begin
+      aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(aEs,'UO_SPECIALE','UO_VERSAMENTO_IVA');
+    Exception
+      When noData Then
+        if aEs=0 Then
+          IBMERR001.RAISE_ERR_GENERICO('Chiave non trovata in tabella di configurazione cnr: UO_SPECIALE-UO_VERSAMENTO_IVA');
+       end if;
+    End;
+    if aCdUO is null AND aEs!=0 then
+       aCdUO:=CNRCTB015.GETVAL01PERCHIAVE(0,'UO_SPECIALE','UO_VERSAMENTO_IVA');
+    end if;
+    return aCdUO;
  end;
 end;

@@ -65,12 +65,12 @@ public class V_cons_stato_invio_reversaliHome extends BulkHome {
 				.orElseThrow(() -> new PersistenceException("Home Configurazione_cnrHome non trovata!"));
 
 		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
-		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,CNRUserContext.getEsercizio(usercontext));
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(usercontext));
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
 		//	Se uo 999.000 in scrivania: visualizza tutto l'elenco
 		if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa()) &&
-				!configurazione_cnrHome.isUOSpecialeTuttaSAC(CNRUserContext.getCd_unita_organizzativa(usercontext))){
-			sql.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(usercontext));
+				!configurazione_cnrHome.isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(usercontext),CNRUserContext.getCd_unita_organizzativa(usercontext))){
+			sql.addSQLClause(FindClause.AND,"CD_CDS",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(usercontext));
 		}
 		return sql;
 	}	
@@ -116,8 +116,8 @@ public class V_cons_stato_invio_reversaliHome extends BulkHome {
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
 		//	Se uo 999.000 in scrivania: visualizza tutto l'elenco e se uo speciale
 		if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa()) &&
-				!configurazione_cnrHome.isUOSpecialeTuttaSAC(CNRUserContext.getCd_unita_organizzativa(usercontext))){
-			sqlBuilder.addSQLClause("AND","CD_CDS",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(usercontext));
+				!configurazione_cnrHome.isUOSpecialeDistintaTuttaSAC(CNRUserContext.getEsercizio(usercontext),CNRUserContext.getCd_unita_organizzativa(usercontext))){
+			sqlBuilder.addSQLClause(FindClause.AND,"CD_CDS",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(usercontext));
 		}
 		sqlBuilder.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext));
 		sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.NON_ACQUISITO.value());

@@ -22,15 +22,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
@@ -43,11 +41,13 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.doccont00.ejb.NumTempDocContComponentSession;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_spese_gestBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -476,7 +476,7 @@ public java.util.List findCdrPerSAC( List capitoliList, ObbligazioneBulk obbliga
 			ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
 			ps.setString( 2, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
 			ps.setString( 3, Pdg_modulo_spese_gestBulk.CAT_STIPENDI );
-			ps.setString( 4,this.recupero_cdr_speciale_stipendi());
+			ps.setString( 4, ((Configurazione_cnrHome)getHomeCache().getHome(Configurazione_cnrBulk.class)).getCdrPersonale(capitolo.getEsercizio()));
 			ps.setObject( 5, capitolo.getEsercizio() );
 			ps.setObject( 6, obbligazione.getEsercizio_originale() );
 			ps.setString( 7, Elemento_voceHome.APPARTENENZA_CDS );
@@ -1118,13 +1118,13 @@ public java.util.List findLineeAttivitaSAC(  List cdrList, List capitoliList, Ob
 {
 	try
 	{
-			String statement = 
+			String statement =
 			"SELECT DISTINCT A.* FROM " + 		
 			EJBCommonServices.getDefaultSchema() +
 			"V_PDG_OBBLIGAZIONE_SPE A " +
 			"WHERE " +
 			"(A.CATEGORIA_DETTAGLIO = ? OR " +
-			"(A.CATEGORIA_DETTAGLIO = 'STI' AND A.CD_CENTRO_RESPONSABILITA=CNRCTB015.GETVAL01PERCHIAVE(0,'CDR_SPECIALE','CDR_PERSONALE')) OR " +
+			"(A.CATEGORIA_DETTAGLIO = 'STI' AND A.CD_CENTRO_RESPONSABILITA = ? ) OR " +
 			"A.CATEGORIA_DETTAGLIO = ?) AND " +
 			"A.ESERCIZIO = ? AND " +
 			"A.ESERCIZIO_RES = ? AND " +
@@ -1156,13 +1156,19 @@ public java.util.List findLineeAttivitaSAC(  List cdrList, List capitoliList, Ob
 			{	
 				IVoceBilancioBulk capitolo = (IVoceBilancioBulk) capitoliList.iterator().next();
 
+				Optional<String> optCdrPersonale = Optional.ofNullable(((Configurazione_cnrHome) getHomeCache().getHome(Configurazione_cnrBulk.class))
+						.getCdrPersonale(capitolo.getEsercizio()));
+				if (!optCdrPersonale.isPresent())
+					throw new RuntimeException("Non è possibile individuare il codice CDR del Personale per l'esercizio "+capitolo.getEsercizio()+".");
+
 				ps.setString( 1, Pdg_preventivo_detBulk.CAT_SINGOLO );
-				ps.setString( 2, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
-				ps.setObject( 3, capitolo.getEsercizio() );
-				ps.setObject( 4, obbligazione.getEsercizio_originale() );
-				ps.setString( 5, Elemento_voceHome.APPARTENENZA_CDS );
-				ps.setString( 6, Elemento_voceHome.GESTIONE_SPESE );
-				ps.setString( 7, capitolo.getCd_titolo_capitolo() );
+				ps.setString( 2, optCdrPersonale.get() );
+				ps.setString( 3, Pdg_modulo_spese_gestBulk.CAT_DIRETTA );
+				ps.setObject( 4, capitolo.getEsercizio() );
+				ps.setObject( 5, obbligazione.getEsercizio_originale() );
+				ps.setString( 6, Elemento_voceHome.APPARTENENZA_CDS );
+				ps.setString( 7, Elemento_voceHome.GESTIONE_SPESE );
+				ps.setString( 8, capitolo.getCd_titolo_capitolo() );
 
 				int j = 8;
 				Iterator i = capitoliList.iterator();
@@ -1382,7 +1388,7 @@ private StringBuffer getPersistenColumnNamesReplacingWith(
 	/**
 	 * Imposta il pg_obbligazione di un oggetto <code>ObbligazioneBulk</code>.
 	 *
-	 * @param obbligazione <code>OggettoBulkBulk</code>
+	 * @param bulk <code>OggettoBulk</code>
 	 *
 	 * @exception PersistencyException
 	 */
@@ -1752,21 +1758,6 @@ public SQLBuilder selectElemento_voceByClause( ObbligazioneBulk bulk, Elemento_v
 
 	return sql; 
 		
-}
-public String recupero_cdr_speciale_stipendi() throws PersistencyException {
-	Configurazione_cnrBulk conf_cnr=null;
-	
-	PersistentHome home = getHomeCache().getHome(Configurazione_cnrBulk.class);	
-	SQLBuilder sql = home.createSQLBuilder();
-	sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS,new Integer(0));
-	sql.addSQLClause("AND","CD_CHIAVE_PRIMARIA",sql.EQUALS,Configurazione_cnrBulk.PK_CDR_SPECIALE);
-	sql.addSQLClause("AND","CD_CHIAVE_SECONDARIA",sql.EQUALS,Configurazione_cnrBulk.SK_CDR_PERSONALE);
-	List voci=home.fetchAll(sql);
-	if(voci!=null && !voci.isEmpty())
-		conf_cnr=(Configurazione_cnrBulk)voci.get(0);
-	else
-		return null;
-	return conf_cnr.getVal01();
 }
 /**
  * Ritorna tutti le obbligazioni uguali al bulk indipendentemente dall'esercizio

@@ -17,6 +17,9 @@
 
 package it.cnr.contab.config00.ejb;
 
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+
 import javax.ejb.Remote;
 
 @Remote
@@ -56,4 +59,12 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     java.lang.String getVal04(it.cnr.jada.UserContext param0, java.lang.String param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     java.lang.Boolean isAttivoOrdini(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    java.lang.String getCdrPersonale(it.cnr.jada.UserContext param0, java.lang.Integer param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    java.lang.String getUoRagioneria(it.cnr.jada.UserContext param0, java.lang.Integer param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    java.lang.String getUoDistintaTuttaSac(it.cnr.jada.UserContext param0, java.lang.Integer param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    java.lang.Boolean isUOSpecialeDistintaTuttaSAC(it.cnr.jada.UserContext param0, java.lang.Integer param1, java.lang.String param2) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 }

@@ -16,6 +16,8 @@
  */
 
 package it.cnr.contab.pdg00.comp;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
@@ -1515,14 +1517,12 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 //^^@@
 	private CdrBulk getCDR_PERSONALE (UserContext userContext) throws ComponentException {
 		try {
-			Configurazione_cnrComponentSession configurazione = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession",Configurazione_cnrComponentSession.class);
-            String aCdCdr =  configurazione.getVal01(userContext,null,null,"CDR_SPECIALE","CDR_PERSONALE");
-            if(aCdCdr==null)
-             throw new it.cnr.jada.comp.ApplicationException("Centro di responsabilità del Personale non definito in Configurazione CNR");
+            String aCdCdr =  Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext)))
+					.orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Centro di responsabilità del Personale non definito in Configurazione CNR per l'esercizio "+CNRUserContext.getEsercizio(userContext)+"."));
 			it.cnr.contab.config00.sto.bulk.CdrHome cdrHome = (it.cnr.contab.config00.sto.bulk.CdrHome)getHome(userContext,CdrBulk.class, "V_CDR_VALIDO");
 			SQLBuilder sql = cdrHome.createSQLBuilder();
-			sql.addClause("AND", "esercizio", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
- 			sql.addClause("AND", "cd_centro_responsabilita", sql.EQUALS, aCdCdr);
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+ 			sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.EQUALS, aCdCdr);
 					it.cnr.jada.persistency.Broker broker = cdrHome.createBroker(sql);
 
 			CdrBulk aCdrBulk;
@@ -1549,14 +1549,12 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 //^^@@
 	private CdrBulk getCDR_SERVIZIO_ENTE (UserContext userContext) throws ComponentException {
 		try {
-			Configurazione_cnrComponentSession configurazione = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession",Configurazione_cnrComponentSession.class);
-			String aCdCdr = configurazione.getVal01(userContext,null,null,"CDR_SPECIALE","CDR_SERVIZIO_ENTE");
-			if(aCdCdr==null)
-			 throw new it.cnr.jada.comp.ApplicationException("Cdr di Servizio dell'Ente non trovato in Configurazione CNR");
+			String aCdCdr = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).getCdrServizioEnte(CNRUserContext.getEsercizio(userContext)))
+					.orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Cdr di Servizio dell'Ente non trovato in Configurazione CNR per l'esercizio "+CNRUserContext.getEsercizio(userContext)+"."));
 			it.cnr.contab.config00.sto.bulk.CdrHome cdrHome = (it.cnr.contab.config00.sto.bulk.CdrHome)getHome(userContext,CdrBulk.class, "V_CDR_VALIDO");
 			SQLBuilder sql = cdrHome.createSQLBuilder();
-			sql.addClause("AND", "esercizio", sql.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
- 			sql.addClause("AND", "cd_centro_responsabilita", sql.EQUALS, aCdCdr);
+			sql.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+ 			sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.EQUALS, aCdCdr);
 					it.cnr.jada.persistency.Broker broker = cdrHome.createBroker(sql);
 
 			CdrBulk aCdrBulk;
@@ -1653,7 +1651,7 @@ private Pdg_preventivo_spe_detBulk creaSCRVersoCdR(UserContext userContext,Pdg_p
 	}
 
 /**
- * Metodo per i controlli da effettuare su un oggetto di tipo {@link it.cnr.contab.pdg00.bulk.PdgGestioneDetPrev } .
+ * Metodo per i controlli da effettuare su un oggetto di tipo {@link it.cnr.contab.pdg00.bulk.Pdg_preventivo_detBulk } .
  *
  * Nome: Controlli per inserimento e modifica;
  * Pre:  Implementare tutti i controlli che garantiscano l'integrita del record rappresentato dall oggetto;
@@ -1712,7 +1710,7 @@ private void init(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_preventivo_
 }
 
 /**
- * Metodo per i controlli da effettuare su un oggetto di tipo {@link it.cnr.contab.pdg00.bulk.PdgGestioneDetPrev } .
+ * Metodo per i controlli da effettuare su un oggetto di tipo {@link it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk } .
  *
  * Nome: Controlli per inserimento e modifica;
  * Pre:  Implementare tutti i controlli che garantiscano l'integrita del record rappresentato dall oggetto;
@@ -1757,7 +1755,7 @@ private OggettoBulk initEtr(UserContext userContext,Pdg_preventivoBulk pdg,Pdg_p
 }
 
 	/**
- * Metodo per i controlli da effettuare su un oggetto di tipo {@link it.cnr.contab.pdg00.bulk.PdgGestioneDetPrev } .
+ * Metodo per i controlli da effettuare su un oggetto di tipo {@link it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk } .
  *
  * Nome: Controlli per inserimento e modifica;
  * Pre:  Implementare tutti i controlli che garantiscano l'integrita del record rappresentato dall oggetto;

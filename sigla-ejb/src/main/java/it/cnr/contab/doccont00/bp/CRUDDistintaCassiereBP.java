@@ -566,18 +566,12 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         parametriCnr = bulk;
     }
 
-    public boolean isUoDistintaTuttaSac(ActionContext context)
-            throws ComponentException, RemoteException {
-        Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
-                .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-        if (sess.getVal01(context.getUserContext(), new Integer(0), null,
-                "UO_SPECIALE", "UO_DISTINTA_TUTTA_SAC") == null)
-            throw new ApplicationException(
-                    "Configurazione CNR: non sono stati impostati i valori per UO SPECIALE - UO DISTINTA TUTTA SAC");
-        if (sess.getVal01(context.getUserContext(), new Integer(0), null,
-                "UO_SPECIALE", "UO_DISTINTA_TUTTA_SAC").equals(
-                it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(
-                        context).getCd_unita_organizzativa())) {
+    public boolean isUoDistintaTuttaSac(ActionContext context) throws ComponentException, RemoteException {
+        String uoDistintaTuttaSac =
+                Optional.ofNullable(Utility.createConfigurazioneCnrComponentSession().getUoDistintaTuttaSac(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext())))
+                .orElseThrow(()->new ApplicationException("Configurazione CNR: non sono stati impostati i valori per UO SPECIALE - UO DISTINTA TUTTA SAC per l'esercizio "
+                        +CNRUserContext.getEsercizio(context.getUserContext())+"."));
+        if (uoDistintaTuttaSac.equals(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa())) {
             setElencoConUo(true);
             return true;
         }

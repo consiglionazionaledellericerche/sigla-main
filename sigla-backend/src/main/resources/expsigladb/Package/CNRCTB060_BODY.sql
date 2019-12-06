@@ -153,7 +153,7 @@
 
   -- Leggo il CDR del personale e lock del PDG
 
-  aCDRPersonale:=CNRCTB020.GETCDRPERSONALE;
+  aCDRPersonale:=CNRCTB020.GETCDRPERSONALE(aEsercizio);
   CNRCTB050.LOCKPDG(aEsercizio, aCDRPersonale.cd_centro_responsabilita);
 
   -- Verifico che l'aggregato del CDR del personale NON sia chiuso in stato B
@@ -706,7 +706,7 @@
 
   -- Leggo il CDR del personale
 
-  aCDRPersonale:=CNRCTB020.GETCDRPERSONALE;
+  aCDRPersonale:=CNRCTB020.GETCDRPERSONALE(aEsercizio);
 
   -- Lock PDG del CDR del personale
 
@@ -808,7 +808,7 @@
 
   -- Leggo il CDR del personale e lock del PDG
 
-  aCDRPersonale:=CNRCTB020.GETCDRPERSONALE;
+  aCDRPersonale:=CNRCTB020.GETCDRPERSONALE(aEsercizio);
 
   -- Se il cdr del personale e il CDR in processo devo applicare il controllo a tutti i CDR validi
 

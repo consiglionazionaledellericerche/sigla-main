@@ -19,7 +19,10 @@ package it.cnr.contab.pdg00.comp;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Optional;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.esercizio.bulk.*;
 import it.cnr.contab.config00.ejb.*;
 import it.cnr.contab.config00.latt.bulk.Tipo_linea_attivitaBulk;
@@ -110,11 +113,11 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 
 		BulkHome home = getHome(userContext,Stipendi_cofi_obbBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
-		sql.addClause("AND","esercizio",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-		sql.addClause("AND","esercizio_obbligazione",sql.EQUALS,stipendi_cofiVirtual.getObbligazioni().getEsercizio());
-		sql.addClause("AND","cd_cds_obbligazione",sql.EQUALS,stipendi_cofiVirtual.getObbligazioni().getCd_cds());
-		sql.addClause("AND","esercizio_ori_obbligazione",sql.EQUALS,stipendi_cofiVirtual.getObbligazioni().getEsercizio_originale());
-		sql.addClause("AND","pg_obbligazione",sql.EQUALS,stipendi_cofiVirtual.getObbligazioni().getPg_obbligazione());
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addClause(FindClause.AND,"esercizio_obbligazione",SQLBuilder.EQUALS,stipendi_cofiVirtual.getObbligazioni().getEsercizio());
+		sql.addClause(FindClause.AND,"cd_cds_obbligazione",SQLBuilder.EQUALS,stipendi_cofiVirtual.getObbligazioni().getCd_cds());
+		sql.addClause(FindClause.AND,"esercizio_ori_obbligazione",SQLBuilder.EQUALS,stipendi_cofiVirtual.getObbligazioni().getEsercizio_originale());
+		sql.addClause(FindClause.AND,"pg_obbligazione",SQLBuilder.EQUALS,stipendi_cofiVirtual.getObbligazioni().getPg_obbligazione());
 		try {
 			stipendi_cofiVirtual.setStipendi_obbligazioni(new BulkList(home.fetchAll(sql)));
 			getHomeCache(userContext).fetchAll(userContext);
@@ -129,19 +132,17 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext userContext,OggettoBul
 
 		BulkHome home = getHome(userContext,Costo_del_dipendenteBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
-		sql.addClause("AND","id_matricola",sql.EQUALS,dipendente.getId_matricola());
-		sql.addClause("AND","esercizio",sql.EQUALS,CNRUserContext.getEsercizio(userContext));
-		sql.addClause("AND","mese",sql.EQUALS,dipendente.getMese());
+		sql.addClause(FindClause.AND,"id_matricola",SQLBuilder.EQUALS,dipendente.getId_matricola());
+		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addClause(FindClause.AND,"mese",SQLBuilder.EQUALS,dipendente.getMese());
 		dipendente.setCosti_per_elemento_voce(new BulkList(home.fetchAll(sql)));
 		getHomeCache(userContext).fetchAll(userContext);
 
 		boolean modificabile = isDipendenteModificabile(userContext,dipendente.getId_matricola(),dipendente.getMese());
 
-		if (modificabile) {
-			UtenteBulk utente = (UtenteBulk)getHome(userContext,UtenteBulk.class).findByPrimaryKey(new it.cnr.contab.utenze00.bulk.UtenteBulk(userContext.getUser()));
-			Configurazione_cnrComponentSession config = (Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-			modificabile = config.getVal01(userContext,null,null,"CDR_SPECIALE","CDR_PERSONALE").equals(it.cnr.contab.utenze00.bp.CNRUserContext.getCd_cdr(userContext));
-		}
+		if (modificabile)
+			modificabile = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext)))
+					.filter(cdrPersonale->cdrPersonale.equals(CNRUserContext.getCd_cdr(userContext))).isPresent();
 
 		if (!modificabile)
 			return asRO(dipendente,"Importi non modificabili per questa matricola.");

@@ -37,6 +37,7 @@ import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -700,7 +701,7 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 			boolean existDettPersonale = true;
 			String cdrPersonale = null;
 			if (Optional.of(pdg).filter(el->el.isMotivazioneVariazionePersonale()).isPresent()) { 
-				cdrPersonale = Optional.ofNullable(((ObbligazioneHome)getHome(usercontext, ObbligazioneBulk.class)).recupero_cdr_speciale_stipendi())
+				cdrPersonale = Optional.ofNullable(((Configurazione_cnrHome)getHome(usercontext,Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(usercontext)))
 						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale."));
 				existDettPersonale = false;
 			} 

@@ -21,6 +21,7 @@
  */
 package it.cnr.contab.pdg01.consultazioni.bulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -37,6 +38,7 @@ import it.cnr.jada.persistency.sql.SimpleFindClause;
 
 import java.sql.Connection;
 import java.util.Enumeration;
+import java.util.Optional;
 
 public class VConsVarCompResHome extends BulkHome implements ConsultazioniRestHome {
 	private static final long serialVersionUID = 1L;
@@ -69,7 +71,6 @@ public class VConsVarCompResHome extends BulkHome implements ConsultazioniRestHo
 			Boolean trovataCondizioneCdrPersonale = false;
 			CompoundFindClause newClauses = new CompoundFindClause();
 			Enumeration e = compoundfindclause.getClauses();
-			SQLBuilder sqlCDR = null;
 			while(e.hasMoreElements() ){
 				FindClause findClause = (FindClause) e.nextElement();
 				if (findClause instanceof SimpleFindClause){
@@ -78,19 +79,16 @@ public class VConsVarCompResHome extends BulkHome implements ConsultazioniRestHo
 					if (clause.getPropertyName() != null && clause.getPropertyName().equals("cdrPersonale") &&
 							operator == SQLBuilder.EQUALS && "S".equals((String)clause.getValue())){
 						trovataCondizioneCdrPersonale = true;
-						sqlCDR = getHomeCache().getHome(Configurazione_cnrBulk.class).createSQLBuilder();
-						sqlCDR.resetColumns();
-						sqlCDR.addColumn("VAL01");
-						sqlCDR.addSQLClause("AND", "CD_CHIAVE_PRIMARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.PK_CDR_SPECIALE);
-						sqlCDR.addSQLClause("AND", "CD_CHIAVE_SECONDARIA", SQLBuilder.EQUALS, Configurazione_cnrBulk.SK_CDR_PERSONALE);
 					} else {
 						newClauses.addClause(clause.getLogicalOperator(), clause.getPropertyName(), clause.getOperator(), clause.getValue());
 					}
 				}
 			}
 			if (trovataCondizioneCdrPersonale){
+				String cdrPersonale = Optional.ofNullable(((Configurazione_cnrHome)getHomeCache().getHome(Configurazione_cnrBulk.class)).getCdrPersonale(CNRUserContext.getEsercizio(userContext)))
+						.orElseThrow(() -> new ComponentException("Non è possibile individuare il codice CDR del Personale per l'esercizio "+CNRUserContext.getEsercizio(userContext)+"."));
 				sql =  selectByClause(userContext, newClauses);
-				sql.addSQLClause("AND", "CDR_ASSEGN", sql.EQUALS, sqlCDR);
+				sql.addSQLClause(FindClause.AND, "CDR_ASSEGN", SQLBuilder.EQUALS, cdrPersonale);
 			}
 		}
 		return sql;

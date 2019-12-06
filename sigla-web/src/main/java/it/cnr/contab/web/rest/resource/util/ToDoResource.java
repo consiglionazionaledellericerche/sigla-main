@@ -431,8 +431,7 @@ public class ToDoResource implements ToDoLocal {
                     mandatoReversaleBulk.setEsitoOperazione(EsitoOperazione.NON_ACQUISITO.value());
                     mandatoReversaleBulk.setStato(MandatoBulk.STATO_MANDATO_EMESSO);
                     mandatoReversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
-                    if (!configurazione_cnrComponentSession.getVal01(userContext, new Integer(0), null,
-                            "UO_SPECIALE", "UO_DISTINTA_TUTTA_SAC").equals(
+                    if (!configurazione_cnrComponentSession.isUOSpecialeDistintaTuttaSAC(userContext, CNRUserContext.getEsercizio(userContext),
                             CNRUserContext.getCd_unita_organizzativa(userContext))) {
                         mandatoReversaleBulk.setCd_unita_organizzativa(CNRUserContext.getCd_unita_organizzativa(userContext));
                     }
@@ -474,8 +473,7 @@ public class ToDoResource implements ToDoLocal {
                     mandatoReversaleBulk.setEsitoOperazione(EsitoOperazione.NON_ACQUISITO.value());
                     mandatoReversaleBulk.setStato(MandatoBulk.STATO_MANDATO_EMESSO);
                     mandatoReversaleBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO);
-                    if (!configurazione_cnrComponentSession.getVal01(userContext, new Integer(0), null,
-                            "UO_SPECIALE", "UO_DISTINTA_TUTTA_SAC").equals(
+                    if (!configurazione_cnrComponentSession.isUOSpecialeDistintaTuttaSAC(userContext, CNRUserContext.getEsercizio(userContext),
                             CNRUserContext.getCd_unita_organizzativa(userContext))) {
                         mandatoReversaleBulk.setCd_unita_organizzativa(CNRUserContext.getCd_unita_organizzativa(userContext));
                     }
