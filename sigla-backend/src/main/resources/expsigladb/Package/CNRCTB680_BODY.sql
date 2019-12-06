@@ -815,7 +815,7 @@ end if;
 
   aDateCont:=CNRCTB008.getTimestampContabile(aEs,aTSNow);
 
-  aUOPersonale:=CNRCTB020.GETUOPERSONALE((aStip.esercizio);
+  aUOPersonale:=CNRCTB020.GETUOPERSONALE(aStip.esercizio);
   aUOPersonale:=CNRCTB020.GETUOVALIDA(aStip.esercizio,aUOPersonale.cd_unita_organizzativa);
 
   aGen:=null;
