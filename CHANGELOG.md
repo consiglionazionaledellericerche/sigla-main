@@ -1,5 +1,21 @@
 # sigla-main Changelog
 
+## Release 6.0.25  -- _December 07, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[509ca422191da28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/509ca422191da28) marco.spasiano *December 07, 2019*
+
+>**BUG Missing IN or OUT parameter at index:: 10**
+>
+>[11b192b79b41545](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11b192b79b41545) marco.spasiano *December 07, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[2e61c9a718ed953](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e61c9a718ed953) marco.spasiano *December 06, 2019*
+
+
 ## Release 6.0.24  -- _December 06, 2019_ 
 ### No issue
 
