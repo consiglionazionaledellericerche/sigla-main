@@ -1170,7 +1170,7 @@ public java.util.List findLineeAttivitaSAC(  List cdrList, List capitoliList, Ob
 				ps.setString( 7, Elemento_voceHome.GESTIONE_SPESE );
 				ps.setString( 8, capitolo.getCd_titolo_capitolo() );
 
-				int j = 8;
+				int j = 9;
 				Iterator i = capitoliList.iterator();
 				capitolo = (IVoceBilancioBulk) i.next();
 				if (capitolo instanceof Voce_fBulk) {
