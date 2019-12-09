@@ -748,7 +748,51 @@
 		enabledOnSearch="true"
 		enabledOnEdit="false"
 		keysProperty="decorrenzaTerminiKeys"
-		label="Non registrabile" />							
+		label="Non registrabile" />
+
+	<fieldProperty
+			name="prestatoreCodice"
+			property="documentoEleTrasmissione.prestatoreCodice"
+			inputType="TEXT"
+			inputSize="22"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Identificativo Fiscale Prestatore" />
+	<fieldProperty
+			name="prestatoreCodicefiscale"
+			property="documentoEleTrasmissione.prestatoreCodicefiscale"
+			inputType="TEXT"
+			inputSize="22"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Codice Fiscale Prestatore" />
+	<fieldProperty
+			name="prestatoreDenominazione"
+			property="documentoEleTrasmissione.prestatoreDenominazione"
+			inputType="TEXTAREA"
+			cols="60"
+			rows="5"
+			maxLength="256"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Denominazione Prestatore (Pers. Giuridica)" />
+	<fieldProperty
+			name="prestatoreNome"
+			property="documentoEleTrasmissione.prestatoreNome"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="256"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Nome Prestatore (Persona Fisica)" />
+	<fieldProperty
+			name="prestatoreCognome"
+			property="documentoEleTrasmissione.prestatoreCognome"
+			inputType="TEXT"
+			inputSize="22"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			label="Cognome Prestatore (Persona Fisica)" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -1047,8 +1091,17 @@
 	<formFieldProperty
 		name="dataRicezioneSDI"/>
 	<formFieldProperty
-		name="flIrregistrabile"/>	
-		
+		name="flIrregistrabile"/>
+	<formFieldProperty
+		name="prestatoreCodice" />
+	<formFieldProperty
+		name="prestatoreCodicefiscale" />
+	<formFieldProperty
+		name="prestatoreDenominazione" />
+	<formFieldProperty
+		name="prestatoreNome" />
+	<formFieldProperty
+		name="prestatoreCognome" />
 	<findFieldProperty
 		name="idPaese" />
 	<findFieldProperty
@@ -1205,7 +1258,18 @@
 	<findFieldProperty
 		name="statoNotificaEsito"/>	
 	<findFieldProperty
-		name="flIrregistrabile"/>			
+		name="flIrregistrabile"/>
+	<findFieldProperty
+		name="prestatoreCodice" />
+	<findFieldProperty
+		name="prestatoreCodicefiscale" />
+	<findFieldProperty
+		name="prestatoreDenominazione" />
+	<findFieldProperty
+		name="prestatoreNome" />
+	<findFieldProperty
+		name="prestatoreCognome" />
+
 	<columnFieldProperty
 		name="idCodice" />
 	<columnFieldProperty

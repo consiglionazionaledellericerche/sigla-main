@@ -26,11 +26,11 @@
     <fieldset>
     <legend class="GroupLabel card-header text-primary">Dati del cedente / prestatore</legend>
     <table class="Panel card-block">
-        <tr><% bp.writeFormFieldTrasmissione(out,"prestatoreCodice");%></tr>
-        <tr><% bp.writeFormFieldTrasmissione(out,"prestatoreCodicefiscale");%></tr>
-        <tr><% bp.writeFormFieldTrasmissione(out,"prestatoreDenominazione");%></tr>
-        <tr><% bp.writeFormFieldTrasmissione(out,"prestatoreNome");%></tr>
-        <tr><% bp.writeFormFieldTrasmissione(out,"prestatoreCognome");%></tr>
+        <tr><% bp.writeFormField(out,"prestatoreCodice");%></tr>
+        <tr><% bp.writeFormField(out,"prestatoreCodicefiscale");%></tr>
+        <tr><% bp.writeFormField(out,"prestatoreDenominazione");%></tr>
+        <tr><% bp.writeFormField(out,"prestatoreNome");%></tr>
+        <tr><% bp.writeFormField(out,"prestatoreCognome");%></tr>
         <tr>
             <td><% bp.writeFormLabelTrasmissione(out,"prestatoreIndirizzo");%></td>
             <td>
