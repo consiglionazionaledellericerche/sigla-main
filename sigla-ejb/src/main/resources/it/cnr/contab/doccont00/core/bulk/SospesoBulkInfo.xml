@@ -17,605 +17,650 @@
   -->
 
 <bulkInfo
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns="https://contab.cnr.it/schema/SIGLA" 
-		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
-	<fieldProperty
-		name="cd_cds"
-		property="cds.cd_unita_organizzativa"
-		inputType="ROTEXT"
-		maxLength="30"
-		inputSize="8"
-		label="Centro di Spesa"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ds_cds"
-		property="cds.ds_unita_organizzativa"
-		inputType="ROTEXT"
-		label=""
-		inputSize="50"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="cd_uo_origine"
-		property="cd_uo_origine"
-		maxLength="30"
-		inputSize="30"
-		inputType="TEXT"
-		label="cd_uo_origine"
-		enabledOnFreeSearch="false"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="fl_stornato"
-		property="fl_stornato"
-		inputType="CHECKBOX"
-		enabledOnFreeSearch="false"		
-		label="fl_stornato" />
-	<fieldProperty
-		name="ti_cc_bi"
-		property="ti_cc_bi"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		label="C/C-Banca d'Italia"
-		keysProperty="ti_cc_biKeys"
-		nullable="false"
-		enabledOnSearch="true"
-		enabledOnEdit="false"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="esercizio"
-		property="esercizio"
-		inputType="ROTEXT"
-		label="Esercizio"
-		maxLength="4"
-		inputSize="4"
-		enabledOnSearch="true"
-		enabledOnFreeSearch="false"/>
-	<fieldProperty
-		name="cd_sospeso"
-		property="cd_sospeso"
-		inputType="TEXT"
-		maxLength="20"
-		inputSize="10"
-		label="Codice"
-		nullable="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="cd_sospeso_padre"
-		property="cd_sospeso_padre"
-		inputType="TEXT"
-		maxLength="20"
-		inputSize="10"
-		label="Codice"
-		nullable="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="im_associato"
-		property="im_associato"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"
-		label="Imp.Associato"
-		maxLength="13"
-		inputSize="16"
-		enabledOnInsert="false"
-		enabledOnEdit="false"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="im_associato_figli"
-		property="im_associato_figli"
-		inputType="ROTEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"
-		label="Imp.Associato"
-		maxLength="13"
-		inputSize="16"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="im_sospeso"
-		property="im_sospeso"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Importo"
-		maxLength="16"
-		inputSize="16"
-		nullable="false"
-		enabledOnInsert="true"		
-		enabledOnEdit="false"
-		enabledOnSearch="true"/>		
-	<fieldProperty
-		name="im_sospeso_figlio"
-		property="im_sospeso"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Importo"
-		maxLength="16"
-		inputSize="16"
-		nullable="false"
-		readonlyProperty="ROIm_sospeso_figlio"
-		enabledOnEdit="true"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="im_disponibile"
-		property="im_disponibile"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="Imp.disponibile" />
-	<fieldProperty
-		name="dt_registrazione"
-		property="dt_registrazione"
-		inputType="TEXT"
-		inputSize="10"
-		formatName="date_short"
-		nullable="false"
-		enabledOnEdit="false"
-		label="Data registr."
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="ti_entrata_spesa"
-		property="ti_entrata_spesa"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		label="Entrata/Spesa"
-		keysProperty="ti_entrata_spesaKeys"
-		nullable="false"
-		enabledOnSearch="true"
-		enabledOnEdit="false"
-		caseSensitiveSearch="false"/>
-	<fieldProperty
-		name="causale"
-		property="causale"
-		maxLength="200"
-		inputSize="50"
-		inputType="TEXT"
-		label="Causale"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ds_anagrafico"
-		property="ds_anagrafico"
-		maxLength="200"
-		inputSize="50"
-		inputType="TEXT"
-		label="Descrizione"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ti_sospeso_riscontro"
-		property="ti_sospeso_riscontro"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		label="Tipo"
-		keysProperty="ti_sospeso_riscontroKeys"
-		nullable="false"
-		enabledOnSearch="true"
-		enabledOnEdit="false"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="stato_sospeso"
-		property="stato_sospeso"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		label="Stato"
-		keysProperty="stato_sospesoKeys"
-		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="false"			
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="stato_sospesoCNR"
-		property="stato_sospeso"
-		maxLength="1"
-		inputSize="1"
-		inputType="SELECT"
-		label="Stato"
-		keysProperty="stato_sospesoCNRKeys"
-		readonlyProperty="ROStato_sospesoCNR"		
-		nullable="false"
-		enabledOnInsert="false"
-		enabledOnEdit="true"			
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="find_documento_cont"
-		property="v_man_rev"
-		inputType="SEARCHTOOL"
-		readonlyProperty="ROFindDocumentoCont" 
-		enabledOnSearch="true"
-		label="Doc.Contabile"
-		/>
-	<fieldProperty
-		name="find_documento_cont_for_search"
-		property="v_man_rev_for_search"
-		inputType="SEARCHTOOL" 
-		enabledOnSearch="true"
-		label="Doc.Contabile"
-		/>
-	
-	<fieldProperty
-		name="pg_documento_cont"
-		property="v_man_rev.pg_documento_cont"
-		inputType="TEXT"
-		maxLength="20"
-		inputSize="10"
-		label="Progressivo doc.contabile"
-		readonlyProperty="RODocumentoCont"
-		nullable="false"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="ds_documento_cont"
-		property="v_man_rev.ds_documento_cont"
-		maxLength="200"
-		inputSize="50"
-		inputType="ROTEXT"
-		label=""
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="im_ass_mod_1210"
-		property="im_ass_mod_1210"
-		inputType="TEXT"
-		formatName = "it.cnr.contab.util.EuroFormat"		
-		label="im_ass_mod_1210" />
-	<fieldProperty
-		name="cd_cds_origine"
-		property="cds_origine.cd_unita_organizzativa"
-		maxLength="30"
-		inputSize="3"
-		inputType="TEXT"
-		label="CDS Assegnatario"
-		readonlyProperty="ROCdsOrigine"
-		enabledOnSearch="true"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="ds_cds_origine"
-		property="cds_origine.ds_unita_organizzativa"
-		inputSize="60"
-		inputType="ROTEXT"
-		label="CDS Assegnatario"
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="find_cds_origine"
-		property="cds_origine"
-		inputType="SEARCHTOOL"
-		label="CDS Assegnatario"
-		enabledOnSearch="true"
-		readonlyProperty="ROFind_cds_origine"				
-		caseSensitiveSearch="false" />
-	<fieldProperty
-		name="dt_storno"
-		property="dt_storno"
-		inputType="TEXT"
-		inputSize="8"
-		formatName="date_short"
-		nullable="true"
-		enabledOnEdit="false"
-		label="Data Storno"
-		enabledOnSearch="true"/>	
-	<fieldProperty
-		name="statoText"
-		property="statoText"
-		inputType="RADIOGROUP"
-		layout="HORIZONTAL"
-		keysProperty="tiStatoTextForSearchKeys"
-		label="Stato" />		
-	<fieldProperty
-		name="statoTextForSearch"
-		property="statoTextForSearch"
-		inputType="RADIOGROUP"
-		layout="HORIZONTAL"
-		keysProperty="tiStatoTextForSearchKeys"
-		label="Visualizza sospesi in stato" />		
-	<fieldProperty
-		name="tipo_contabilita"
-		property="tipo_contabilita"
-		inputType="TEXT"
-		maxLength="20"
-		label="Tipo contabilita"
-		enabledOnEdit="false"
-		enabledOnSearch="true"/>
-	<fieldProperty
-		name="destinazione"
-		property="destinazione"
-		inputType="TEXT"
-		maxLength="20"
-		label="Destinazione"
-		enabledOnEdit="false"
-		enabledOnSearch="true"/>
-		
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+    <fieldProperty
+            name="cd_cds"
+            property="cds.cd_unita_organizzativa"
+            inputType="ROTEXT"
+            maxLength="30"
+            inputSize="8"
+            label="Centro di Spesa"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ds_cds"
+            property="cds.ds_unita_organizzativa"
+            inputType="ROTEXT"
+            label=""
+            inputSize="50"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="cd_uo_origine"
+            property="cd_uo_origine"
+            maxLength="30"
+            inputSize="30"
+            inputType="TEXT"
+            label="cd_uo_origine"
+            enabledOnFreeSearch="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="fl_stornato"
+            property="fl_stornato"
+            inputType="CHECKBOX"
+            enabledOnFreeSearch="false"
+            label="fl_stornato"/>
+    <fieldProperty
+            name="ti_cc_bi"
+            property="ti_cc_bi"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            label="C/C-Banca d'Italia"
+            keysProperty="ti_cc_biKeys"
+            nullable="false"
+            enabledOnSearch="true"
+            enabledOnEdit="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="esercizio"
+            property="esercizio"
+            inputType="ROTEXT"
+            label="Esercizio"
+            maxLength="4"
+            inputSize="4"
+            enabledOnSearch="true"
+            enabledOnFreeSearch="false"/>
+    <fieldProperty
+            name="cd_sospeso"
+            property="cd_sospeso"
+            inputType="TEXT"
+            maxLength="20"
+            inputSize="10"
+            inputCssClass=" w-100"
+            label="Codice"
+            nullable="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="cd_sospeso_padre"
+            property="cd_sospeso_padre"
+            inputType="TEXT"
+            maxLength="20"
+            inputSize="10"
+            label="Codice"
+            nullable="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="im_associato"
+            property="im_associato"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Imp.Associato"
+            maxLength="13"
+            inputSize="16"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="im_associato_figli"
+            property="im_associato_figli"
+            inputType="ROTEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Imp.Associato"
+            maxLength="13"
+            inputSize="16"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="im_sospeso"
+            property="im_sospeso"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Importo"
+            maxLength="16"
+            inputSize="16"
+            nullable="false"
+            enabledOnInsert="true"
+            enabledOnEdit="false"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="im_sospeso_figlio"
+            property="im_sospeso"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Importo"
+            maxLength="16"
+            inputSize="16"
+            nullable="false"
+            readonlyProperty="ROIm_sospeso_figlio"
+            enabledOnEdit="true"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="im_disponibile"
+            property="im_disponibile"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="Imp.disponibile"/>
+    <fieldProperty
+            name="dt_registrazione"
+            property="dt_registrazione"
+            inputType="TEXT"
+            inputSize="10"
+            formatName="date_short"
+            nullable="false"
+            enabledOnEdit="false"
+            label="Data registr."
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="ti_entrata_spesa"
+            property="ti_entrata_spesa"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            label="Entrata/Spesa"
+            keysProperty="ti_entrata_spesaKeys"
+            nullable="false"
+            enabledOnSearch="true"
+            enabledOnEdit="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="causale"
+            property="causale"
+            maxLength="200"
+            inputSize="50"
+            inputCssClass=" w-100"
+            inputType="TEXT"
+            label="Causale"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ds_anagrafico"
+            property="ds_anagrafico"
+            maxLength="200"
+            inputSize="50"
+            inputCssClass=" w-100"
+            inputType="TEXT"
+            label="Descrizione"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ti_sospeso_riscontro"
+            property="ti_sospeso_riscontro"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            label="Tipo"
+            keysProperty="ti_sospeso_riscontroKeys"
+            nullable="false"
+            enabledOnSearch="true"
+            enabledOnEdit="false"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="stato_sospeso"
+            property="stato_sospeso"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            label="Stato"
+            keysProperty="stato_sospesoKeys"
+            nullable="false"
+            enabledOnInsert="false"
+            enabledOnEdit="false"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="stato_sospesoCNR"
+            property="stato_sospeso"
+            maxLength="1"
+            inputSize="1"
+            inputType="SELECT"
+            label="Stato"
+            keysProperty="stato_sospesoCNRKeys"
+            readonlyProperty="ROStato_sospesoCNR"
+            nullable="false"
+            enabledOnInsert="false"
+            enabledOnEdit="true"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="find_documento_cont"
+            property="v_man_rev"
+            inputType="SEARCHTOOL"
+            readonlyProperty="ROFindDocumentoCont"
+            enabledOnSearch="true"
+            label="Doc.Contabile"
+    />
+    <fieldProperty
+            name="find_documento_cont_for_search"
+            property="v_man_rev_for_search"
+            inputType="SEARCHTOOL"
+            enabledOnSearch="true"
+            label="Doc.Contabile"
+    />
 
-	<formFieldProperty
-		name="statoText" />	
-	<formFieldProperty
-		name="statoTextForSearch" />
-	<formFieldProperty
-		name="cd_cds" />
-	<formFieldProperty
-		name="ds_cds" />
-	<formFieldProperty
-		name="cd_uo_origine" />
-	<formFieldProperty
-		name="fl_stornato" />
-	<formFieldProperty
-		name="ti_cc_bi" />
-	<formFieldProperty
-		name="esercizio" />
-	<formFieldProperty
-		name="cd_sospeso" />
-	<formFieldProperty
-		name="im_associato" />
-	<formFieldProperty
-		name="im_associato_figli" />
-	<formFieldProperty
-		name="cd_cds_origine" />
-	<formFieldProperty
-		name="ds_cds_origine" />
-	<formFieldProperty
-		name="find_cds_origine" />		
-	<formFieldProperty
-		name="im_sospeso" />
-	<formFieldProperty
-		name="im_sospeso_figlio" />		
-	<formFieldProperty
-		name="dt_registrazione" />
-	<formFieldProperty
-		name="ti_entrata_spesa" />
-	<formFieldProperty
-		name="causale" />
-	<formFieldProperty
-		name="ds_anagrafico" />
-	<formFieldProperty
-		name="ti_sospeso_riscontro" />
-	<formFieldProperty
-		name="stato_sospeso" />
-	<formFieldProperty
-		name="stato_sospesoCNR" />
-	<formFieldProperty
-		name="pg_documento_cont" />
-	<formFieldProperty
-		name="ds_documento_cont" />
-	<formFieldProperty
-		name="find_documento_cont" />
-	<formFieldProperty
-		name="find_documento_cont_for_search" />
-	<formFieldProperty
-		name="tipo_contabilita" />
-	<formFieldProperty
-		name="destinazione" />
+    <fieldProperty
+            name="pg_documento_cont"
+            property="v_man_rev.pg_documento_cont"
+            inputType="TEXT"
+            maxLength="20"
+            inputSize="10"
+            label="Progressivo doc.contabile"
+            readonlyProperty="RODocumentoCont"
+            nullable="false"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="ds_documento_cont"
+            property="v_man_rev.ds_documento_cont"
+            maxLength="200"
+            inputSize="50"
+            inputType="ROTEXT"
+            label=""
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="im_ass_mod_1210"
+            property="im_ass_mod_1210"
+            inputType="TEXT"
+            formatName="it.cnr.contab.util.EuroFormat"
+            label="im_ass_mod_1210"/>
+    <fieldProperty
+            name="cd_cds_origine"
+            property="cds_origine.cd_unita_organizzativa"
+            maxLength="30"
+            inputSize="3"
+            inputType="TEXT"
+            label="CDS Assegnatario"
+            readonlyProperty="ROCdsOrigine"
+            enabledOnSearch="true"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="ds_cds_origine"
+            property="cds_origine.ds_unita_organizzativa"
+            inputSize="60"
+            inputType="ROTEXT"
+            label="CDS Assegnatario"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="find_cds_origine"
+            property="cds_origine"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            label="CDS Assegnatario"
+            enabledOnSearch="true"
+            readonlyProperty="ROFind_cds_origine"
+            caseSensitiveSearch="false"/>
+    <fieldProperty
+            name="dt_storno"
+            property="dt_storno"
+            inputType="TEXT"
+            inputSize="8"
+            formatName="date_short"
+            nullable="true"
+            enabledOnEdit="false"
+            label="Data Storno"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="statoText"
+            property="statoText"
+            inputType="RADIOGROUP"
+            layout="HORIZONTAL"
+            keysProperty="tiStatoTextForSearchKeys"
+            label="Stato"/>
+    <fieldProperty
+            name="statoTextForSearch"
+            property="statoTextForSearch"
+            inputType="RADIOGROUP"
+            layout="HORIZONTAL"
+            keysProperty="tiStatoTextForSearchKeys"
+            label="Visualizza sospesi in stato"/>
+    <fieldProperty
+            name="tipo_contabilita"
+            property="tipo_contabilita"
+            inputType="TEXT"
+            maxLength="20"
+            label="Tipo contabilita"
+            enabledOnEdit="false"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="destinazione"
+            property="destinazione"
+            inputType="TEXT"
+            maxLength="20"
+            label="Destinazione"
+            enabledOnEdit="false"
+            enabledOnSearch="true"/>
+    <fieldProperty
+            name="find_mandato_riaccredito"
+            property="mandatoRiaccredito"
+            inputType="SEARCHTOOL"
+            formName="searchtool"
+            label="Mandato di Riaccredito"
+            enabledOnSearch="true"
+            readonlyProperty="ROFind_mandato_riaccredito"
+            caseSensitiveSearch="false"/>
+    <formFieldProperty
+            name="statoText"/>
+    <formFieldProperty
+            name="statoTextForSearch"/>
+    <formFieldProperty
+            name="cd_cds"/>
+    <formFieldProperty
+            name="ds_cds"/>
+    <formFieldProperty
+            name="cd_uo_origine"/>
+    <formFieldProperty
+            name="fl_stornato"/>
+    <formFieldProperty
+            name="ti_cc_bi"/>
+    <formFieldProperty
+            name="esercizio"/>
+    <formFieldProperty
+            name="cd_sospeso"/>
+    <formFieldProperty
+            name="im_associato"/>
+    <formFieldProperty
+            name="im_associato_figli"/>
+    <formFieldProperty
+            name="cd_cds_origine"/>
+    <formFieldProperty
+            name="ds_cds_origine"/>
+    <formFieldProperty
+            name="find_cds_origine"/>
+    <formFieldProperty
+            name="im_sospeso"/>
+    <formFieldProperty
+            name="im_sospeso_figlio"/>
+    <formFieldProperty
+            name="dt_registrazione"/>
+    <formFieldProperty
+            name="ti_entrata_spesa"/>
+    <formFieldProperty
+            name="causale"/>
+    <formFieldProperty
+            name="ds_anagrafico"/>
+    <formFieldProperty
+            name="ti_sospeso_riscontro"/>
+    <formFieldProperty
+            name="stato_sospeso"/>
+    <formFieldProperty
+            name="stato_sospesoCNR"/>
+    <formFieldProperty
+            name="pg_documento_cont"/>
+    <formFieldProperty
+            name="ds_documento_cont"/>
+    <formFieldProperty
+            name="find_documento_cont"/>
+    <formFieldProperty
+            name="find_documento_cont_for_search"/>
+    <formFieldProperty
+            name="tipo_contabilita"/>
+    <formFieldProperty
+            name="destinazione"/>
+    <formFieldProperty
+            name="find_mandato_riaccredito"/>
 
-	<columnFieldProperty
-		name="ti_sospeso_riscontro" />
-	<columnFieldProperty
-		name="ti_entrata_spesa" />
-	<columnFieldProperty
-		name="cd_sospeso_padre" 
-		label= "Sospeso da Banca"/>		
-	<columnFieldProperty
-		name="cd_sospeso" />		
-	<columnFieldProperty
-		name="im_disponibile" />
-	<columnFieldProperty
-		name="im_sospeso" />
-	<columnFieldProperty
-		name="dt_registrazione" />
-	<columnFieldProperty
-		name="ti_cc_bi" 
-		inputType="ROTEXT"/>		
-	<columnFieldProperty
-		name="causale" />
-	<columnFieldProperty
-		name="ds_anagrafico" />
-	<columnFieldProperty
-		name="statoText"
-		inputType="ROTEXT" />
-	<columnFieldProperty
-			name="tipo_contabilita" />
-		<columnFieldProperty
-			name="destinazione" />	
-	<columnSet
-		name="SospesiPadre">
-	<columnFieldProperty
-		name="ti_sospeso_riscontro" />
-	<columnFieldProperty
-		name="ti_entrata_spesa" />
-	<columnFieldProperty
-		name="cd_sospeso" />		
-	<columnFieldProperty
-		name="im_sospeso" />
-	<columnFieldProperty
-		name="im_associato_figli" />	
-	<columnFieldProperty
-		name="dt_registrazione" />
-	<columnFieldProperty
-		name="ti_cc_bi" 
-		inputType="ROTEXT"/>
-	<columnFieldProperty
-		name="causale" />
-	<columnFieldProperty
-		name="ds_anagrafico" />
-	<columnFieldProperty
-		name="statoText" />	
-	<columnFieldProperty
-			name="tipo_contabilita" />
-	<columnFieldProperty
-			name="destinazione" />	
-	</columnSet>	
-	
-	<columnSet
-		name="SospesiReversale">
-		<columnFieldProperty
-			name="cd_sospeso" />		
-		<columnFieldProperty
-			name="im_disponibile" />
-		<columnFieldProperty
-			name="im_sospeso" />
-		<columnFieldProperty
-			name="dt_registrazione" />
-		<columnFieldProperty
-			name="ti_cc_bi" />		
-		<columnFieldProperty
-			name="causale" />
-		<columnFieldProperty
-			name="ds_anagrafico" />
-		<columnFieldProperty
-			name="stato_sospeso" />
-		<columnFieldProperty
-			name="tipo_contabilita" />
-		<columnFieldProperty
-			name="destinazione" />			
-	</columnSet>
+    <columnFieldProperty
+            name="ti_sospeso_riscontro"/>
+    <columnFieldProperty
+            name="ti_entrata_spesa"/>
+    <columnFieldProperty
+            name="cd_sospeso_padre"
+            label="Sospeso da Banca"/>
+    <columnFieldProperty
+            name="cd_sospeso"/>
+    <columnFieldProperty
+            name="im_disponibile"/>
+    <columnFieldProperty
+            name="im_sospeso"/>
+    <columnFieldProperty
+            name="dt_registrazione"/>
+    <columnFieldProperty
+            name="ti_cc_bi"
+            inputType="ROTEXT"/>
+    <columnFieldProperty
+            name="causale"/>
+    <columnFieldProperty
+            name="ds_anagrafico"/>
+    <columnFieldProperty
+            name="statoText"
+            inputType="ROTEXT"/>
+    <columnFieldProperty
+            name="tipo_contabilita"/>
+    <columnFieldProperty
+            name="destinazione"/>
+    <columnSet
+            name="SospesiPadre">
+        <columnFieldProperty
+                name="ti_sospeso_riscontro"/>
+        <columnFieldProperty
+                name="ti_entrata_spesa"/>
+        <columnFieldProperty
+                name="cd_sospeso"/>
+        <columnFieldProperty
+                name="im_sospeso"/>
+        <columnFieldProperty
+                name="im_associato_figli"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"
+                inputType="ROTEXT"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
+                name="ds_anagrafico"/>
+        <columnFieldProperty
+                name="statoText"/>
+        <columnFieldProperty
+                name="tipo_contabilita"/>
+        <columnFieldProperty
+                name="destinazione"/>
+    </columnSet>
 
-	<columnSet
-		name="SospesiMandato">
-		<columnFieldProperty
-			name="cd_sospeso" />		
-		<columnFieldProperty
-			name="im_disponibile" />
-		<columnFieldProperty
-			name="im_sospeso" />
-		<columnFieldProperty
-			name="dt_registrazione" />
-		<columnFieldProperty
-			name="ti_cc_bi" />	
-		<columnFieldProperty
-			name="causale" />
-		<columnFieldProperty
-			name="ds_anagrafico" />
-		<columnFieldProperty
-			name="stato_sospeso" />
-		<columnFieldProperty
-			name="tipo_contabilita" />
-		<columnFieldProperty
-			name="destinazione" />	
-	</columnSet>
+    <columnSet
+            name="SospesiReversale">
+        <columnFieldProperty
+                name="cd_sospeso"/>
+        <columnFieldProperty
+                name="im_disponibile"/>
+        <columnFieldProperty
+                name="im_sospeso"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
+                name="ds_anagrafico"/>
+        <columnFieldProperty
+                name="stato_sospeso"/>
+        <columnFieldProperty
+                name="tipo_contabilita"/>
+        <columnFieldProperty
+                name="destinazione"/>
+    </columnSet>
 
-	<columnSet
-		name="SospesiCNR">
-		<columnFieldProperty
-			name="cd_sospeso" />
-		<columnFieldProperty
-			name="ti_entrata_spesa" />		
-		<columnFieldProperty
-			name="im_sospeso" />
-		<columnFieldProperty
-			name="im_associato_figli" />	
-		<columnFieldProperty
-			name="dt_registrazione" />
-		<columnFieldProperty
-			name="ti_cc_bi" />		
-		<columnFieldProperty
-			name="causale" />
-		<columnFieldProperty
-			name="ds_anagrafico" />
-		<columnFieldProperty
-			name="statoText" />
-		<columnFieldProperty
-			name="tipo_contabilita" />
-		<columnFieldProperty
-			name="destinazione" />
-	</columnSet>
+    <columnSet
+            name="SospesiMandato">
+        <columnFieldProperty
+                name="cd_sospeso"/>
+        <columnFieldProperty
+                name="im_disponibile"/>
+        <columnFieldProperty
+                name="im_sospeso"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
+                name="ds_anagrafico"/>
+        <columnFieldProperty
+                name="stato_sospeso"/>
+        <columnFieldProperty
+                name="tipo_contabilita"/>
+        <columnFieldProperty
+                name="destinazione"/>
+    </columnSet>
+
+    <columnSet
+            name="SospesiCNR">
+        <columnFieldProperty
+                name="cd_sospeso"/>
+        <columnFieldProperty
+                name="ti_entrata_spesa"/>
+        <columnFieldProperty
+                name="im_sospeso"/>
+        <columnFieldProperty
+                name="im_associato_figli"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
+                name="ds_anagrafico"/>
+        <columnFieldProperty
+                name="statoText"/>
+        <columnFieldProperty
+                name="tipo_contabilita"/>
+        <columnFieldProperty
+                name="destinazione"/>
+    </columnSet>
 
 
-	<columnSet
-		name="SospesiCNR2">
-		<columnFieldProperty
-			name="cd_sospeso" />		
-		<columnFieldProperty
-			name="im_sospeso" />
-		<columnFieldProperty
-			name="im_disponibile" />
-		<columnFieldProperty
-			name="stato_sospeso" />
-		<columnFieldProperty
-			name="cd_cds_origine" />		
-		<columnFieldProperty
-			name="tipo_contabilita" />
-		<columnFieldProperty
-			name="destinazione" />			
-	</columnSet>
+    <columnSet
+            name="SospesiCNR2">
+        <columnFieldProperty
+                name="cd_sospeso"/>
+        <columnFieldProperty
+                name="im_sospeso"/>
+        <columnFieldProperty
+                name="im_disponibile"/>
+        <columnFieldProperty
+                name="stato_sospeso"/>
+        <columnFieldProperty
+                name="cd_cds_origine"/>
+        <columnFieldProperty
+                name="tipo_contabilita"/>
+        <columnFieldProperty
+                name="destinazione"/>
+    </columnSet>
 
-	<columnSet
-		name="SospesiCNRPerCds">
-		<columnFieldProperty
-			name="ti_entrata_spesa" />
-		<columnFieldProperty
-			name="cd_sospeso_padre" 
-			label= "Sospeso da Banca"/>		
-		<columnFieldProperty
-			name="cd_sospeso" />
-		<columnFieldProperty
-			name="stato_sospeso" />		
-		<columnFieldProperty
-			name="im_disponibile" />
-		<columnFieldProperty
-			name="im_sospeso" />
-		<columnFieldProperty
-			name="dt_registrazione" />
-		<columnFieldProperty
-			name="ti_cc_bi" 
-			inputType="ROTEXT"/>		
-		<columnFieldProperty
-			name="causale" />
-		<columnFieldProperty
-			name="ds_anagrafico" />
-		<columnFieldProperty
-			name="tipo_contabilita" />
-		<columnFieldProperty
-			name="destinazione" />	
-	</columnSet>		
+    <columnSet
+            name="SospesiCNRPerCds">
+        <columnFieldProperty
+                name="ti_entrata_spesa"/>
+        <columnFieldProperty
+                name="cd_sospeso_padre"
+                label="Sospeso da Banca"/>
+        <columnFieldProperty
+                name="cd_sospeso"/>
+        <columnFieldProperty
+                name="stato_sospeso"/>
+        <columnFieldProperty
+                name="im_disponibile"/>
+        <columnFieldProperty
+                name="im_sospeso"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"
+                inputType="ROTEXT"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
+                name="ds_anagrafico"/>
+        <columnFieldProperty
+                name="tipo_contabilita"/>
+        <columnFieldProperty
+                name="destinazione"/>
+    </columnSet>
 
-	
-	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
-		name="cd_cds" />
-	<findFieldProperty
-		name="cd_uo_origine" />
-	<findFieldProperty
-		name="ti_cc_bi" />
-	<findFieldProperty
-		name="esercizio" />
-	<findFieldProperty
-		name="cd_sospeso" />
-	<findFieldProperty
-		name="im_sospeso" />
-	<findFieldProperty
-		name="dt_registrazione" />
-	<findFieldProperty
-		name="ti_entrata_spesa" />
-	<findFieldProperty
-		name="causale" />
-	<findFieldProperty
-		name="ds_anagrafico" />
-	<findFieldProperty
-		name="ti_sospeso_riscontro" />
-	<findFieldProperty
-		name="fl_stornato" />
-	<findFieldProperty
-		name="dt_storno" />
-		
+    <columnSet name="SospesiRiaccredito">
+        <columnFieldProperty
+                name="ti_entrata_spesa"/>
+        <columnFieldProperty
+                name="cd_sospeso_padre"
+                label="Sospeso da Banca"/>
+        <columnFieldProperty
+                name="cd_sospeso"/>
+        <columnFieldProperty
+                name="stato_sospeso"/>
+        <columnFieldProperty
+                name="im_disponibile"/>
+        <columnFieldProperty
+                name="im_sospeso"/>
+        <columnFieldProperty
+                name="dt_registrazione"/>
+        <columnFieldProperty
+                name="ti_cc_bi"
+                inputType="ROTEXT"/>
+        <columnFieldProperty
+                name="causale"/>
+        <columnFieldProperty
+                name="ds_anagrafico"/>
+        <columnFieldProperty
+                name="tipo_contabilita"/>
+        <columnFieldProperty
+                name="destinazione"/>
+        <columnFieldProperty
+                name="pg_mandato_man_riaccr"
+                label="Mandato Riaccreditato"
+                property="pg_mandato_man_riaccr"/>
+    </columnSet>
 
-	<freeSearchSet
-		name="SospesiCNR">
-		<findFieldProperty
-			name="cd_sospeso" />
-		<findFieldProperty
-			name="ti_entrata_spesa" />		
-		<findFieldProperty
-			name="im_sospeso" />
-		<findFieldProperty
-			name="dt_registrazione" />
-		<findFieldProperty
-			name="ti_cc_bi" />		
-		<findFieldProperty
-			name="causale" />
-		<findFieldProperty
-			name="ds_anagrafico" />
-	</freeSearchSet>
-	
+    <findFieldProperty
+            name="esercizio"/>
+    <findFieldProperty
+            name="cd_cds"/>
+    <findFieldProperty
+            name="cd_uo_origine"/>
+    <findFieldProperty
+            name="ti_cc_bi"/>
+    <findFieldProperty
+            name="esercizio"/>
+    <findFieldProperty
+            name="cd_sospeso"/>
+    <findFieldProperty
+            name="im_sospeso"/>
+    <findFieldProperty
+            name="dt_registrazione"/>
+    <findFieldProperty
+            name="ti_entrata_spesa"/>
+    <findFieldProperty
+            name="causale"/>
+    <findFieldProperty
+            name="ds_anagrafico"/>
+    <findFieldProperty
+            name="ti_sospeso_riscontro"/>
+    <findFieldProperty
+            name="fl_stornato"/>
+    <findFieldProperty
+            name="dt_storno"/>
+
+
+    <freeSearchSet
+            name="SospesiCNR">
+        <findFieldProperty
+                name="cd_sospeso"/>
+        <findFieldProperty
+                name="ti_entrata_spesa"/>
+        <findFieldProperty
+                name="im_sospeso"/>
+        <findFieldProperty
+                name="dt_registrazione"/>
+        <findFieldProperty
+                name="ti_cc_bi"/>
+        <findFieldProperty
+                name="causale"/>
+        <findFieldProperty
+                name="ds_anagrafico"/>
+    </freeSearchSet>
+
 </bulkInfo>

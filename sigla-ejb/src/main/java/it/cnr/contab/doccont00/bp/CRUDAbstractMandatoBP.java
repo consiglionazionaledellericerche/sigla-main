@@ -387,7 +387,13 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 			return hidden;
 		MandatoBulk mandato = (MandatoBulk)getModel();
 		if (mandato != null && mandato.getPg_mandato() != null && mandato.getStato() != null && 
-				mandato.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_PAGATO) &&
+				(mandato.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_PAGATO) ||
+						(mandato.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO) &&
+								Optional.ofNullable(mandato.getStatoVarSos())
+										.filter(s -> s.equals(StatoVariazioneSostituzione.ANNULLATO_PER_SOSTITUZIONE.value()))
+										.isPresent()
+						)
+				) &&
 				mandato.getStato_trasmissione() != null && 
 				mandato.getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
 			return Optional.ofNullable(contabiliService.getNodeRefContabile(mandato))

@@ -1,5 +1,89 @@
 # sigla-main Changelog
 
+## Release 6.0.26  -- _December 09, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[756c38c47fd4302](https://github.com/consiglionazionaledellericerche/sigla-main/commit/756c38c47fd4302) marco.spasiano *December 09, 2019*
+
+>**BUG ricerca capitolo per uo SAC**
+>
+>[04f1434ab0ef2c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04f1434ab0ef2c9) marco.spasiano *December 09, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[d1e88e77ad16e58](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1e88e77ad16e58) marco.spasiano *December 07, 2019*
+
+
+## Release 6.0.25  -- _December 07, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[509ca422191da28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/509ca422191da28) marco.spasiano *December 07, 2019*
+
+>**BUG Missing IN or OUT parameter at index:: 10**
+>
+>[11b192b79b41545](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11b192b79b41545) marco.spasiano *December 07, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[2e61c9a718ed953](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e61c9a718ed953) marco.spasiano *December 06, 2019*
+
+
+## Release 6.0.24  -- _December 06, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[684dffcb86196a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/684dffcb86196a6) marco.spasiano *December 06, 2019*
+
+>**FIX package body**
+>
+>[cce94da1a544b1a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cce94da1a544b1a) marco.spasiano *December 06, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[2d4db1f3dfd7131](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2d4db1f3dfd7131) marco.spasiano *December 06, 2019*
+
+
+## Release 6.0.23  -- _December 06, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[0407aebbdeb85b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0407aebbdeb85b4) marco.spasiano *December 06, 2019*
+
+>**Aggiornamento della Giornaliera di cassa per i mandati stornati**
+>
+>[e1b76b636ef4748](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1b76b636ef4748) marco.spasiano *December 06, 2019*
+
+>**FIX merge per Nuova Gestione per la Sostituzione dei Mandati**
+>
+>[23eff97851fb1c3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/23eff97851fb1c3) marco.spasiano *December 06, 2019*
+
+>**Nuova Gestione per la Sostituzione dei Mandati**
+>
+>[edfa157420af30c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/edfa157420af30c) marco.spasiano *December 06, 2019*
+
+>**Nuova Gestione per la Sostituzione dei Mandati**
+>
+>[5af788c4503c476](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5af788c4503c476) marco.spasiano *December 06, 2019*
+
+>**Configurazione CNR: gestita, per determinate configurazioni, la contemporanea presenza in tabella sia di record con esercizio 0 che di record con esercizio valido. Gestione aggiornata per variabili: CDR_PERSONALE,CDR_SERVIZIO_ENTE,UO_ACCREDITAMENTO_SAC,UO_DISTINTA_TUTTA_SAC,UO_RAGIONERIA,UO_VERSAMENTO_CORI,UO_VERSAMENTO_CORI_CONTO_BI,UO_VERSAMENTO_CORI_TUTTA_SAC,UO_VERSAMENTO_IVA**
+>
+>[dbc0e6de2753cab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dbc0e6de2753cab) raffaele.pagano *December 05, 2019*
+
+>**FIX slf4j-api exclusion [ci skip]**
+>
+>[5d9a8dd3383775f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d9a8dd3383775f) marco.spasiano *December 04, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[56cec01573d373d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56cec01573d373d) marco.spasiano *December 02, 2019*
+
+
 ## Release 6.0.22  -- _December 02, 2019_ 
 ### No issue
 

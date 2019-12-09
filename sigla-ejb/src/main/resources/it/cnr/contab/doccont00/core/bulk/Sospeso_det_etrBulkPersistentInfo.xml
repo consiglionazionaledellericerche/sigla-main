@@ -17,31 +17,28 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBulk"
-	keyClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrKey"
-	homeClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrHome" >
-	<defaultColumnMap
-		tableName="SOSPESO_DET_ETR" >
-		<columnMapping
-			columnName="CD_SOSPESO"
-			propertyName="sospeso.cd_sospeso"/>
-		<columnMapping
-			columnName="ESERCIZIO"
-			propertyName="sospeso.esercizio"/>
-		<columnMapping
-			columnName="TI_ENTRATA_SPESA"
-			propertyName="sospeso.ti_entrata_spesa" />
-		<columnMapping
-			columnName="CD_CDS"
-			propertyName="sospeso.cds.cd_unita_organizzativa"/>
-		<columnMapping
-			columnName="TI_SOSPESO_RISCONTRO"
-			propertyName="sospeso.ti_sospeso_riscontro" />		
-	</defaultColumnMap>
-	<persistentProperty
-		name="sospeso"
-		partOfOid="true" />	
-		
-		
-		
+        persistentClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrBulk"
+        keyClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrKey"
+        homeClassName="it.cnr.contab.doccont00.core.bulk.Sospeso_det_etrHome">
+    <defaultColumnMap
+            tableName="SOSPESO_DET_ETR">
+        <columnMapping
+                columnName="CD_SOSPESO"
+                propertyName="sospeso.cd_sospeso"/>
+        <columnMapping
+                columnName="ESERCIZIO"
+                propertyName="sospeso.esercizio"/>
+        <columnMapping
+                columnName="TI_ENTRATA_SPESA"
+                propertyName="sospeso.ti_entrata_spesa"/>
+        <columnMapping
+                columnName="CD_CDS"
+                propertyName="sospeso.cds.cd_unita_organizzativa"/>
+        <columnMapping
+                columnName="TI_SOSPESO_RISCONTRO"
+                propertyName="sospeso.ti_sospeso_riscontro"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="sospeso"
+            partOfOid="true"/>
 </SQLPersistentInfo>

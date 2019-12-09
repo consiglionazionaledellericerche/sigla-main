@@ -118,6 +118,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
     private boolean cup_attivo = false;
     private boolean siope_cup_attivo = false;
     private boolean tesoreria_unica = false;
+    private MandatoBulk mandatoRiaccredito;
 
     public CRUDMandatoBP() {
         super();
@@ -127,6 +128,23 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
     public CRUDMandatoBP(String function) {
         super(function);
         setTab("tab", "tabMandato");
+    }
+
+    public CRUDMandatoBP(String function, MandatoBulk mandatoRiaccredito) {
+        super(function);
+        setTab("tab", "tabMandato");
+        this.mandatoRiaccredito = mandatoRiaccredito;
+    }
+
+    @Override
+    public OggettoBulk initializeModelForInsert(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+        final MandatoBulk mandatoBulk = (MandatoBulk) super.initializeModelForInsert(actioncontext, oggettobulk);
+        if (Optional.ofNullable(mandatoRiaccredito).isPresent()) {
+            mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.SOSTITUZIONE_DEFINITIVA.value());
+            mandatoBulk.setIm_mandato(mandatoRiaccredito.getIm_mandato());
+            mandatoBulk.setDs_mandato(mandatoRiaccredito.getDs_mandato());
+        }
+        return mandatoBulk;
     }
 
     @Override

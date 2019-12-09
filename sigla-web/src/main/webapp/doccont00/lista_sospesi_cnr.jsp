@@ -28,22 +28,32 @@
 <body class="Form">
 
 <% bp.openFormWindow(pageContext); %>
-
-	<table class="Panel">
-		<tr> 
-			<td>
+<table class="Panel" width="100%" height="100%">
+	<tr>
+		<td>
+			<fieldset>
 				<% bp.writeFormLabel(out,"statoTextForSearch"); %>
 				<% bp.writeFormInput(out,null,"statoTextForSearch",false,null,"onclick=\"javascript:submitForm('doCambiaVisibilita')\""); %>
-			</td>		
-		</tr>
-		<tr><td>
-		<% bp.writeHTMLTable(pageContext,"100%",null); %>
-		</td></tr>
-		<tr><td>
-		<% bp.writeHTMLNavigator(out); %>
-		</td></tr>
-	</table>
-
-
+			</fieldset>
+		</td>
+	</tr>
+	<%	if (!bp.getParentRoot().isBootstrap()) { %>
+        <tr height="100%">
+            <td colspan="4">
+                <% bp.writeHTMLTable(pageContext,"100%","100%"); %>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <% bp.writeHTMLNavigator(out); %>
+            </td>
+        </tr>
+	<% } %>
+</table>
+<%	if (bp.getParentRoot().isBootstrap()) {
+        bp.writeHTMLTable(pageContext,"100%","65vh");
+        bp.writeHTMLNavigator(out);
+    }
+%>
 <%bp.closeFormWindow(pageContext); %>
 </body>

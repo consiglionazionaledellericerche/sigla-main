@@ -17,174 +17,195 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.doccont00.core.bulk.SospesoBase"
-	keyClassName="it.cnr.contab.doccont00.core.bulk.SospesoKey"
-	homeClassName="it.cnr.contab.doccont00.core.bulk.SospesoHome" >
-	<defaultColumnMap
-		tableName="SOSPESO" >
-		<columnMapping
-			columnName="PG_VER_REC"
-			propertyName="pg_ver_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="false" />
-		<columnMapping
-			columnName="DS_ANAGRAFICO"
-			propertyName="ds_anagrafico"
-			sqlTypeName="VARCHAR"
-			columnSize="200" />
-		<columnMapping
-			columnName="CD_UO_ORIGINE"
-			propertyName="cd_uo_origine"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
-			columnName="CAUSALE"
-			propertyName="causale"
-			sqlTypeName="VARCHAR"
-			columnSize="200" />
-		<columnMapping
-			columnName="CD_CDS_ORIGINE"
-			propertyName="cd_cds_origine"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
-		<columnMapping
-			columnName="UTCR"
-			propertyName="utcr"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="DACR"
-			propertyName="dacr"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="DUVA"
-			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_ASS_MOD_1210"
-			propertyName="im_ass_mod_1210"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_ASSOCIATO"
-			propertyName="im_associato"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="FL_STORNATO"
-			propertyName="fl_stornato"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
-		<columnMapping
-			columnName="STATO_SOSPESO"
-			propertyName="stato_sospeso"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="UTUV"
-			propertyName="utuv"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
-		<columnMapping
-			columnName="TI_CC_BI"
-			propertyName="ti_cc_bi"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			nullable="false" />
-		<columnMapping
-			columnName="IM_SOSPESO"
-			propertyName="im_sospeso"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			columnScale="2"
-			nullable="false" />
-		<columnMapping
-			columnName="DT_REGISTRAZIONE"
-			propertyName="dt_registrazione"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
-		<columnMapping
-			columnName="CD_PROPRIO_SOSPESO"
-			propertyName="cd_proprio_sospeso"
-			sqlTypeName="VARCHAR"
-			columnSize="20"/>
-		<columnMapping
-			columnName="CD_SOSPESO_PADRE"
-			propertyName="cd_sospeso_padre"
-			sqlTypeName="VARCHAR"
-			columnSize="20"/>
-		<columnMapping
-			columnName="DT_STORNO"
-			propertyName="dt_storno"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="true" />
-	<columnMapping
-			columnName="TIPO_CONTABILITA"
-			propertyName="tipo_contabilita"
-			sqlTypeName="VARCHAR"
-			columnSize="20"/>
-	<columnMapping
-			columnName="DESTINAZIONE"
-			propertyName="destinazione"
-			sqlTypeName="VARCHAR"
-			columnSize="20"/>				
-	</defaultColumnMap>
+        persistentClassName="it.cnr.contab.doccont00.core.bulk.SospesoBase"
+        keyClassName="it.cnr.contab.doccont00.core.bulk.SospesoKey"
+        homeClassName="it.cnr.contab.doccont00.core.bulk.SospesoHome">
+    <defaultColumnMap
+            tableName="SOSPESO">
+        <columnMapping
+                columnName="PG_VER_REC"
+                propertyName="pg_ver_rec"
+                sqlTypeName="DECIMAL"
+                columnSize="22"
+                nullable="false"/>
+        <columnMapping
+                columnName="DS_ANAGRAFICO"
+                propertyName="ds_anagrafico"
+                sqlTypeName="VARCHAR"
+                columnSize="200"/>
+        <columnMapping
+                columnName="CD_UO_ORIGINE"
+                propertyName="cd_uo_origine"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="CAUSALE"
+                propertyName="causale"
+                sqlTypeName="VARCHAR"
+                columnSize="200"/>
+        <columnMapping
+                columnName="CD_CDS_ORIGINE"
+                propertyName="cd_cds_origine"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="UTCR"
+                propertyName="utcr"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="DACR"
+                propertyName="dacr"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="DUVA"
+                propertyName="duva"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_ASS_MOD_1210"
+                propertyName="im_ass_mod_1210"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_ASSOCIATO"
+                propertyName="im_associato"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="FL_STORNATO"
+                propertyName="fl_stornato"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"
+                converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"/>
+        <columnMapping
+                columnName="STATO_SOSPESO"
+                propertyName="stato_sospeso"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="UTUV"
+                propertyName="utuv"
+                sqlTypeName="VARCHAR"
+                columnSize="20"
+                nullable="false"/>
+        <columnMapping
+                columnName="TI_CC_BI"
+                propertyName="ti_cc_bi"
+                sqlTypeName="CHAR"
+                columnSize="1"
+                nullable="false"/>
+        <columnMapping
+                columnName="IM_SOSPESO"
+                propertyName="im_sospeso"
+                sqlTypeName="DECIMAL"
+                columnSize="15"
+                columnScale="2"
+                nullable="false"/>
+        <columnMapping
+                columnName="DT_REGISTRAZIONE"
+                propertyName="dt_registrazione"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="false"/>
+        <columnMapping
+                columnName="CD_PROPRIO_SOSPESO"
+                propertyName="cd_proprio_sospeso"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="CD_SOSPESO_PADRE"
+                propertyName="cd_sospeso_padre"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="DT_STORNO"
+                propertyName="dt_storno"
+                sqlTypeName="TIMESTAMP"
+                columnSize="7"
+                nullable="true"/>
+        <columnMapping
+                columnName="TIPO_CONTABILITA"
+                propertyName="tipo_contabilita"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="DESTINAZIONE"
+                propertyName="destinazione"
+                sqlTypeName="VARCHAR"
+                columnSize="20"/>
+        <columnMapping
+                columnName="CD_CDS_MAN_RIACCR"
+                propertyName="cd_cds_man_riaccr"
+                sqlTypeName="VARCHAR"
+                columnSize="30"/>
+        <columnMapping
+                columnName="PG_MANDATO_MAN_RIACCR"
+                propertyName="pg_mandato_man_riaccr"
+                sqlTypeName="DECIMAL"
+                columnSize="10"/>
+        <columnMapping
+                columnName="ESERCIZIO_MAN_RIACCR"
+                propertyName="esercizio_man_riaccr"
+                sqlTypeName="DECIMAL"
+                columnSize="4"/>
+    </defaultColumnMap>
+    <persistentProperty
+            name="pg_ver_rec"/>
+    <persistentProperty
+            name="ds_anagrafico"/>
+    <persistentProperty
+            name="cd_uo_origine"/>
+    <persistentProperty
+            name="causale"/>
+    <persistentProperty
+            name="cd_cds_origine"/>
+    <persistentProperty
+            name="utcr"/>
+    <persistentProperty
+            name="dacr"/>
+    <persistentProperty
+            name="duva"/>
+    <persistentProperty
+            name="im_ass_mod_1210"/>
+    <persistentProperty
+            name="im_associato"/>
+    <persistentProperty
+            name="fl_stornato"/>
+    <persistentProperty
+            name="stato_sospeso"/>
+    <persistentProperty
+            name="ti_cc_bi"/>
+    <persistentProperty
+            name="utuv"/>
+    <persistentProperty
+            name="dt_registrazione"/>
+    <persistentProperty
+            name="im_sospeso"/>
+    <persistentProperty
+            name="cd_proprio_sospeso"/>
+    <persistentProperty
+            name="cd_sospeso_padre"/>
+    <persistentProperty
+            name="dt_storno"/>
+    <persistentProperty
+            name="tipo_contabilita"/>
+    <persistentProperty
+            name="destinazione"/>
 	<persistentProperty
-		name="pg_ver_rec" />
+			name="cd_cds_man_riaccr"/>
 	<persistentProperty
-		name="ds_anagrafico" />
+			name="pg_mandato_man_riaccr"/>
 	<persistentProperty
-		name="cd_uo_origine" />
-	<persistentProperty
-		name="causale" />
-	<persistentProperty
-		name="cd_cds_origine" />
-	<persistentProperty
-		name="utcr" />
-	<persistentProperty
-		name="dacr" />
-	<persistentProperty
-		name="duva" />
-	<persistentProperty
-		name="im_ass_mod_1210" />
-	<persistentProperty
-		name="im_associato" />
-	<persistentProperty
-		name="fl_stornato" />
-	<persistentProperty
-		name="stato_sospeso" />
-	<persistentProperty
-		name="ti_cc_bi" />
-	<persistentProperty
-		name="utuv" />
-	<persistentProperty
-		name="dt_registrazione" />
-	<persistentProperty
-		name="im_sospeso" />
-	<persistentProperty
-		name="cd_proprio_sospeso" />
-	<persistentProperty
-		name="cd_sospeso_padre" />
-	<persistentProperty
-		name="dt_storno" />
-	<persistentProperty
-		name="tipo_contabilita" />		
-	<persistentProperty
-		name="destinazione" />		
+			name="esercizio_man_riaccr"/>
 </SQLPersistentInfo>

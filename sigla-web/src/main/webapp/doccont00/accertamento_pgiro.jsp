@@ -28,7 +28,7 @@
 <body class="Form">
 <%  bp.openFormWindow(pageContext);%>
 
-<div class="Group card">
+<div class="Group card p-2">
 	<table class="Panel">
 
 	<tr>
@@ -71,7 +71,7 @@
 	</table>
 </div>
 
-<div class="Group card">
+<div class="Group card p-2">
 	<table>	
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "find_debitore"); %></td>
@@ -92,7 +92,7 @@
 	</table>	
 </div>
 	
-<div class="Group card">
+<div class="Group card p-2">
 	<table>
 	<tr>
 	<td>	<% bp.getController().writeFormLabel( out, "im_accertamento"); %></td>
@@ -108,59 +108,14 @@
 	<td colspan=2>
 		<% bp.getController().writeFormInput( out, "dt_scadenza"); %></td> 
 	</tr>
-<!--
-	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "cd_riferimento_contratto"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "cd_riferimento_contratto"); %></td>	
-	</tr>
-	
-	<tr>
-	<td>	<% bp.getController().writeFormLabel( out, "dt_scadenza_contratto"); %></td>
-	<td>	<% bp.getController().writeFormInput( out, "dt_scadenza_contratto"); %></td>
-	</tr>
-	-->	
 	<% if (bp.isFlNuovaGestionePg()){ %>
-	<tr>
-		<td colspan="3">
-			<div class="Group">  
-			<table>
-			<tr>
-				<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce_contr"); %></td>
-				<td colspan=2>
-				    <% bp.getController().writeFormInput(out,"default","cd_elemento_voce_contr",!bp.isInserting(),null,null); %>
-				    <% bp.getController().writeFormInput(out,"default","ds_elemento_voce_contr",!bp.isInserting(),null,null); %>
-				    <% bp.getController().writeFormInput(out,"default","find_elemento_voce_contr",!bp.isInserting(),null,null); %>
-				</td>				 
-			</tr>
-			</table>
-			</div>
-		</td>
-	</tr>
+        <tr>
+            <td><% bp.getController().writeFormLabel( out, "cd_elemento_voce_contr"); %></td>
+            <td><% bp.getController().writeFormInput(out,"default","find_elemento_voce_contr",!bp.isInserting(),null,null); %></td>
+        </tr>
     <%}%>
 
 	</table>
 </div>
-<!-- 
-  <div class="Group">		
-  <table border="0" cellspacing="0" cellpadding="2">
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "esercizio_doc_attivo"); %></td>
-	<td colspan=2>
-		<% bp.getController().writeFormInput( out, "esercizio_doc_attivo"); %>
-		<% bp.getController().writeFormLabel( out, "pg_doc_attivo"); %>
-		<% bp.getController().writeFormInput( out, "pg_doc_attivo"); %>
-		<% bp.getController().writeFormLabel( out, "cd_tipo_documento_amm"); %>
-		<% bp.getController().writeFormInput( out, "cd_tipo_documento_amm"); %></td>				 
-	</tr>
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "esercizio_reversale"); %></td>
-	<td colspan=2>
-		<% bp.getController().writeFormInput( out, "esercizio_reversale"); %>
-		<% bp.getController().writeFormLabel( out, "pg_reversale"); %>
-		<% bp.getController().writeFormInput( out, "pg_reversale"); %></td>				 
-	</tr>
-  </table>
-  </div>
--->
 <%	bp.closeFormWindow(pageContext); %>
 </body>

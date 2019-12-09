@@ -27,6 +27,31 @@
 			columnName="CD_UNITA_ORGANIZZATIVA"
 			propertyName="unita_organizzativa.cd_unita_organizzativa"/>
 	</defaultColumnMap>
+	<columnMap
+			tableName="V_MANDATO_NON_ASSOCIABILE_REV"
+			name="V_MANDATO_NON_ASSOCIABILE_REV">
+		<columnMapping
+				columnName="PG_MANDATO"
+				propertyName="pg_mandato"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="false"
+				primary="true" />
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="false"
+				primary="true" />
+		<columnMapping
+				columnName="CD_CDS"
+				propertyName="cd_cds"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false"
+				primary="true" />
+	</columnMap>
 
 	<persistentProperty
 		name="cds"

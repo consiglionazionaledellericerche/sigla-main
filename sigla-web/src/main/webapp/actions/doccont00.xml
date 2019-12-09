@@ -16,532 +16,562 @@
   -->
 
 <action-mappings>
-	<action 
-      path="/CRUDObbligazioneAction" actionClass="it.cnr.contab.doccont00.action.CRUDObbligazioneAction">
-  </action>
-	<action 
-      path="/ListaObbligazioniDefinitiveAction" actionClass="it.cnr.contab.doccont00.action.ListaObbligazioniAction">
-  </action>
-  	<action 
-      path="/ListaObbligazioniProvvisorieAction" actionClass="it.cnr.contab.doccont00.action.ListaObbligazioniAction">
-  </action>
-  <action 
-      path="/CRUDMandatoAction" actionClass="it.cnr.contab.doccont00.action.CRUDMandatoAction">
-  </action>
-  <action 
-      path="/MandatoAutomaticoWizardAction" actionClass="it.cnr.contab.doccont00.action.MandatoAutomaticoWizardAction">
-  </action>
-   <action 
-      path="/CRUDMandatoAccreditamentoAction" actionClass="it.cnr.contab.doccont00.action.CRUDMandatoAccreditamentoAction">
-  </action>
-   <action 
-      path="/CRUDImpegnoPGiroAction" actionClass="it.cnr.contab.doccont00.action.CRUDImpegnoPGiroAction">
-  </action>
-   <action 
-      path="/CRUDAccertamentoPGiroAction" actionClass="it.cnr.contab.doccont00.action.CRUDAccertamentoPGiroAction">
-  </action>
-  <action 
-      path="/CRUDReversaleAction" actionClass="it.cnr.contab.doccont00.action.CRUDReversaleAction">
-  </action>
-  <action 
-      path="/ListaReversaliAction" actionClass="it.cnr.contab.doccont00.action.ListaReversaliAction">
-  </action>
-  <action 
-      path="/ListaSospesiAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiAction">
-  </action>  
-  <action 
-      path="/CRUDDistintaCassiereAction" actionClass="it.cnr.contab.doccont00.action.CRUDDistintaCassiereAction">
-  </action>
-  <action 
-      path="/CRUDDistintaCassiere1210Action" actionClass="it.cnr.contab.doccont00.action.CRUDDistintaCassiere1210Action">
-  </action>  
-  <action 
-      path="/RicercaMandatoReversaleAction" actionClass="it.cnr.contab.doccont00.action.RicercaMandatoReversaleAction">
-  </action>
-    <action 
-      path="/ListaDistinteEmesseAction" actionClass="it.cnr.contab.doccont00.action.ListaDistinteEmesseAction">
-  </action>
-  <action 
-      path="/CRUDSospesoAction" actionClass="it.cnr.contab.doccont00.action.CRUDSospesoAction">
-  </action>
-  <action 
-      path="/CRUDSospesoCNRAction" actionClass="it.cnr.contab.doccont00.action.CRUDSospesoCNRAction">
-  </action>
- <action 
-      path="/ListaSospesiCNRAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiCNRAction">
-  </action>
- <action 
-      path="/ListaSospesiCNRPerCdsAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiCNRPerCdsAction">
-  </action>
-   <action 
-      path="/CRUDImpegnoAction" actionClass="it.cnr.contab.doccont00.action.CRUDImpegnoAction">
-  </action>
-   <action 
-      path="/CRUDImpegnoBilEnteAction" actionClass="it.cnr.contab.doccont00.action.CRUDImpegnoBilEnteAction">
-  </action>
-   <action 
-      path="/CRUDObbligazioneModificaAction" actionClass="it.cnr.contab.doccont00.action.CRUDObbligazioneModificaAction">
-  </action>
-   <action 
-      path="/CRUDAccertamentoModificaAction" actionClass="it.cnr.contab.doccont00.action.CRUDAccertamentoModificaAction">
-  </action>
-   <action 
-      path="/CRUDAccertamentoModificaAction" actionClass="it.cnr.contab.doccont00.action.CRUDAccertamentoModificaAction">
-  </action>
-   <action 
-      path="/CRUDObbligazioneModificaAction" actionClass="it.cnr.contab.doccont00.action.CRUDObbligazioneModificaAction">
-  </action>
-  <action 
-      path="/SelezionatoreAssestatoDocContAction" actionClass="it.cnr.contab.doccont00.action.SelezionatoreAssestatoDocContAction">
-  </action>
-  <action 
-      path="/SelezionatoreMandatiInDistintaAction" actionClass="it.cnr.contab.doccont00.action.SelezionatoreMandatiInDistintaAction">
-  </action>
+    <action
+            path="/CRUDObbligazioneAction" actionClass="it.cnr.contab.doccont00.action.CRUDObbligazioneAction">
+    </action>
+    <action
+            path="/ListaObbligazioniDefinitiveAction"
+            actionClass="it.cnr.contab.doccont00.action.ListaObbligazioniAction">
+    </action>
+    <action
+            path="/ListaObbligazioniProvvisorieAction"
+            actionClass="it.cnr.contab.doccont00.action.ListaObbligazioniAction">
+    </action>
+    <action
+            path="/CRUDMandatoAction" actionClass="it.cnr.contab.doccont00.action.CRUDMandatoAction">
+    </action>
+    <action
+            path="/MandatoAutomaticoWizardAction"
+            actionClass="it.cnr.contab.doccont00.action.MandatoAutomaticoWizardAction">
+    </action>
+    <action
+            path="/CRUDMandatoAccreditamentoAction"
+            actionClass="it.cnr.contab.doccont00.action.CRUDMandatoAccreditamentoAction">
+    </action>
+    <action
+            path="/CRUDImpegnoPGiroAction" actionClass="it.cnr.contab.doccont00.action.CRUDImpegnoPGiroAction">
+    </action>
+    <action
+            path="/CRUDAccertamentoPGiroAction"
+            actionClass="it.cnr.contab.doccont00.action.CRUDAccertamentoPGiroAction">
+    </action>
+    <action
+            path="/CRUDReversaleAction" actionClass="it.cnr.contab.doccont00.action.CRUDReversaleAction">
+    </action>
+    <action
+            path="/ListaReversaliAction" actionClass="it.cnr.contab.doccont00.action.ListaReversaliAction">
+    </action>
+    <action
+            path="/ListaSospesiAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiAction">
+    </action>
+	<action
+			path="/ListaSospesiCNRPerCdsSelezionatoreAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiCNRPerCdsSelezionatoreAction">
+	</action>
+    <action
+            path="/CRUDDistintaCassiereAction" actionClass="it.cnr.contab.doccont00.action.CRUDDistintaCassiereAction">
+    </action>
+    <action
+            path="/CRUDDistintaCassiere1210Action"
+            actionClass="it.cnr.contab.doccont00.action.CRUDDistintaCassiere1210Action">
+    </action>
+    <action
+            path="/RicercaMandatoReversaleAction"
+            actionClass="it.cnr.contab.doccont00.action.RicercaMandatoReversaleAction">
+    </action>
+    <action
+            path="/ListaDistinteEmesseAction" actionClass="it.cnr.contab.doccont00.action.ListaDistinteEmesseAction">
+    </action>
+    <action
+            path="/CRUDSospesoAction" actionClass="it.cnr.contab.doccont00.action.CRUDSospesoAction">
+    </action>
+    <action
+            path="/CRUDSospesoCNRAction" actionClass="it.cnr.contab.doccont00.action.CRUDSospesoCNRAction">
+    </action>
+    <action
+            path="/ListaSospesiCNRAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiCNRAction">
+    </action>
+    <action
+            path="/ListaSospesiCNRPerCdsAction"
+            actionClass="it.cnr.contab.doccont00.action.ListaSospesiCNRPerCdsAction">
+    </action>
+    <action
+            path="/CRUDImpegnoAction" actionClass="it.cnr.contab.doccont00.action.CRUDImpegnoAction">
+    </action>
+    <action
+            path="/CRUDImpegnoBilEnteAction" actionClass="it.cnr.contab.doccont00.action.CRUDImpegnoBilEnteAction">
+    </action>
+    <action
+            path="/CRUDObbligazioneModificaAction"
+            actionClass="it.cnr.contab.doccont00.action.CRUDObbligazioneModificaAction">
+    </action>
+    <action
+            path="/CRUDAccertamentoModificaAction"
+            actionClass="it.cnr.contab.doccont00.action.CRUDAccertamentoModificaAction">
+    </action>
+    <action
+            path="/CRUDAccertamentoModificaAction"
+            actionClass="it.cnr.contab.doccont00.action.CRUDAccertamentoModificaAction">
+    </action>
+    <action
+            path="/CRUDObbligazioneModificaAction"
+            actionClass="it.cnr.contab.doccont00.action.CRUDObbligazioneModificaAction">
+    </action>
+    <action
+            path="/SelezionatoreAssestatoDocContAction"
+            actionClass="it.cnr.contab.doccont00.action.SelezionatoreAssestatoDocContAction">
+    </action>
+    <action
+            path="/SelezionatoreMandatiInDistintaAction"
+            actionClass="it.cnr.contab.doccont00.action.SelezionatoreMandatiInDistintaAction">
+    </action>
 
-  <action 
-      path="/CRUDCupAction" actionClass="it.cnr.contab.doccont00.action.CRUDCupAction">
-  </action>
-   	<businessProcess
-		name="CRUDTipoObbligazioneBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-		<forward name="default" path="/doccont00/tipo_obbligazione.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.tabrif.bulk.Tipo_obbligazioneBulk" />
-			<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAction" />
-	</businessProcess> 
- 
-  
-	<businessProcess
-      name="CRUDObbligazioneBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneBP">
-    <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
-		<init-param name="defaultAction" value="CRUDObbligazioneAction" />
-  </businessProcess>
-  
+    <action
+            path="/CRUDCupAction" actionClass="it.cnr.contab.doccont00.action.CRUDCupAction">
+    </action>
+    <businessProcess
+            name="CRUDTipoObbligazioneBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/doccont00/tipo_obbligazione.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.tabrif.bulk.Tipo_obbligazioneBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
 
-  <businessProcess
-      name="ProspettoSpeseCdrBP" className="it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP">
-    <forward name="default" path="/doccont00/prospetto_spese_cdr.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
-		<init-param name="defaultAction" value="CRUDAction" />
-  </businessProcess>
-
-
-  <businessProcess
-      name="ListaObbligazioniDefinitiveBP" className="it.cnr.contab.doccont00.bp.ListaObbligazioniBP">
-    <forward name="default" path="/doccont00/lista_obbligazioni.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
-		<init-param name="defaultAction" value="ListaObbligazioniDefinitiveAction" />
-		<init-param name="statoObbligazione" value="D" />		
-  </businessProcess>
 
     <businessProcess
-      name="ListaObbligazioniProvvisorieBP" className="it.cnr.contab.doccont00.bp.ListaObbligazioniBP">
-    <forward name="default" path="/doccont00/lista_obbligazioni.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
-		<init-param name="defaultAction" value="ListaObbligazioniProvvisorieAction" />
-		<init-param name="statoObbligazione" value="P" />				
-  </businessProcess>
-
-  <businessProcess
-      name="CRUDMandatoBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoBP">
-    <forward name="default" path="/doccont00/main_mandato.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk" />
-		<init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk" />		
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAction" />
-	   <init-param name="printbp" value="OfflineReportPrintBP" />		
-  </businessProcess>
-
-	<businessProcess
-			name="CRUDMandatoVariazioneBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoVariazioneBP">
-		<forward name="default" path="/doccont00/main_mandato.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk" />
-		<init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAction" />
-		<init-param name="printbp" value="OfflineReportPrintBP" />
-	</businessProcess>
-
-   <businessProcess
-      name="CRUDMandatoRegolarizzazioneBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoBP">
-    <forward name="default" path="/doccont00/main_mandato.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk" />
-		<init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk" />				
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAction" />
-	   <init-param name="printbp" value="OfflineReportPrintBP" />				
-  </businessProcess>
-
-  <businessProcess
-      name="SituazioneCdSBP" className="it.cnr.contab.doccont00.bp.SituazioneCdSBP">
-    <forward name="default" path="/doccont00/mandato_accreditamento_wizard_1.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.RicercaMandatoAccreditamentoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction" />
-  </businessProcess>
-  <businessProcess
-      name="MandatoAutomaticoWizardBP" className="it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP">
-    <forward name="default" path="/doccont00/main_mandato_automatico_wizard.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoAutomaticoWizardBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoAutomaticoComponentSession" />
-		<init-param name="defaultAction" value="MandatoAutomaticoWizardAction" />
-  </businessProcess>
-  <businessProcess
-      name="MandatoAccreditamentoWizardBP" className="it.cnr.contab.doccont00.bp.MandatoAccreditamentoWizardBP">
-    <forward name="default" path="/doccont00/mandato_accreditamento_wizard_2.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamentoWizardBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction" />
-  </businessProcess>
-  <businessProcess
-      name="CRUDMandatoAccreditamentoBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoAccreditamentoBP">
-    <forward name="default" path="/doccont00/main_mandato_accreditamento.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamentoBulk" />
-		<init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandatoAcc_terzoBulk" />						
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction" />
-	   <init-param name="printbp" value="OfflineReportPrintBP" />				
-  </businessProcess>
-    
-  <businessProcess
-      name="ViewFatturaBP" className="it.cnr.contab.doccont00.bp.ViewFatturaBP">
-    <forward name="default" path="/doccont00/view_fattura.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk" />
-		<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaPassivaComponentSession" />
-		<init-param name="defaultAction" value="CRUDAction" />
-  </businessProcess>
-  <businessProcess
-      name="ViewDocGenericoBP" className="it.cnr.contab.doccont00.bp.ViewDocGenericoBP">
-    <forward name="default" path="/doccont00/view_doc_generico.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCAMM00_EJB_DocumentoGenericoComponentSession" />
-		<init-param name="defaultAction" value="CRUDAction" />
-  </businessProcess>
-
-  <businessProcess
-      name="DispCassaCapitoloBP" className="it.cnr.contab.doccont00.bp.DispCassaCapitoloBP">
-    <forward name="default" path="/doccont00/disp_cassa_capitolo.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.DispCassaCapitoloBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDAction" />
-  </businessProcess>
-  
-
-  <businessProcess
-		name="CRUDTipoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-		<forward name="default" path="/doccont00/tipo_bollo.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_Tipo_bolloComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAction" />
-	</businessProcess>
-  <businessProcess
-		name="CRUDImpegnoPGiroBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroBP">
-		<forward name="default" path="/doccont00/impegno_pgiro.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazionePGiroComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDImpegnoPGiroAction" />
-	</businessProcess>
-  <businessProcess
-		name="CRUDImpegnoPGiroTroncoBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroTroncoBP">
-		<forward name="default" path="/doccont00/impegno_pgiro.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazionePGiroComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDImpegnoPGiroAction" />
-	</businessProcess>
-  <businessProcess
-		name="CRUDImpegnoPGiroResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroResiduoBP">
-		<forward name="default" path="/doccont00/impegno_pgiro.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroResiduoBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazionePGiroComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDImpegnoPGiroAction" />
-	</businessProcess>
-  <businessProcess
-		name="CRUDAccertamentoPGiroBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoPGiroBP">
-		<forward name="default" path="/doccont00/accertamento_pgiro.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoPGiroComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAccertamentoPGiroAction" />
-	</businessProcess>
-  <businessProcess
-		name="CRUDAccertamentoPGiroResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoPGiroResiduoBP">
-		<forward name="default" path="/doccont00/accertamento_pgiro.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroResiduoBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoPGiroComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAccertamentoPGiroAction" />
-	</businessProcess>
-  <businessProcess
-		name="CRUDAccertamentoPGiroTroncoBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoPGiroTroncoBP">
-		<forward name="default" path="/doccont00/accertamento_pgiro.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoPGiroComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAccertamentoPGiroAction" />
-	</businessProcess>
-  <businessProcess
-      name="CRUDReversaleBP" className="it.cnr.contab.doccont00.bp.CRUDReversaleBP">
-    <forward name="default" path="/doccont00/main_reversale.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ReversaleIBulk" />
-		<init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_reversale_terzoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ReversaleComponentSession" />
-		<init-param name="defaultAction" value="CRUDReversaleAction" />
-	   <init-param name="printbp" value="OfflineReportPrintBP" />				
-  </businessProcess>
-  <businessProcess
-      name="ListaReversaliBP" className="it.cnr.contab.doccont00.bp.ListaReversaliBP">
-    <forward name="default" path="/doccont00/lista_reversali.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ReversaleIBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ReversaleComponentSession" />
-		<init-param name="defaultAction" value="ListaReversaliAction" />
-		<init-param name="tipoDocumento" value="REV_PROVV" />
-  </businessProcess>
-  <businessProcess
-      name="ViewSpeseCdSBP" className="it.cnr.contab.doccont00.bp.ViewBilancioCdSBP">
-    <forward name="default" path="/doccont00/view_bilancio_cds.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.CdsBilancioBulk" />    
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction" />
-		<init-param name="tipoGestione" value="S" />
-  </businessProcess>
-  <businessProcess
-      name="ViewEntrateCdSBP" className="it.cnr.contab.doccont00.bp.ViewBilancioCdSBP">
-    <forward name="default" path="/doccont00/view_bilancio_cds.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.CdsBilancioBulk" />        
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession" />
-		<init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction" />
-		<init-param name="tipoGestione" value="E" />
-  </businessProcess>
-  
-  <businessProcess
-		name="CRUDDistintaCassiereBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
-		<forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
-			<init-param name="printbp" value="OfflineReportPrintBP" />
-			<init-param name="flusso" value="false" />
-			<init-param name="sepa" value="false" />	
-			<init-param name="annulli" value="false" />	
-	</businessProcess>
-  <businessProcess
-		name="CRUDDistintaCassiere1210BP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiere1210BP">
-		<forward name="default" path="/doccont00/distinta_cassiere_1210.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk" />
-			<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDDistintaCassiere1210Action" />
-			<init-param name="printbp" value="OfflineReportPrintBP" />
-	</businessProcess>  
-  <businessProcess
-		name="RicercaMandatoReversaleBP" className="it.cnr.contab.doccont00.bp.RicercaMandatoReversaleBP">
-		<forward name="default" path="/doccont00/ricerca_v_mandato_reversale.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
-			<init-param name="defaultAction" value="RicercaMandatoReversaleAction" />
-	</businessProcess>
-  <businessProcess
-		name="ListaDistinteEmesseBP" className="it.cnr.contab.doccont00.bp.ListaDistinteEmesseBP">
-		<forward name="default" path="/doccont00/lista_distinte_emesse.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
-			<init-param name="defaultAction" value="ListaDistinteEmesseAction" />
-	</businessProcess>
-
-  <businessProcess
-		name="ViewDettaglioTotaliTrasmessiBP" className="it.cnr.contab.doccont00.bp.ViewDettaglioTotaliBP">
-		<forward name="default" path="/doccont00/view_distinta_totali_trasmessi.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
-	</businessProcess>
-  <businessProcess
-		name="ViewDettaglioTotaliBP" className="it.cnr.contab.doccont00.bp.ViewDettaglioTotaliBP">
-		<forward name="default" path="/doccont00/view_distinta_totali.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
-	</businessProcess>
-
-  <businessProcess
-      name="CRUDSospesoBP" className="it.cnr.contab.doccont00.bp.CRUDSospesoBP">
-    <forward name="default" path="/doccont00/sospeso_riscontro.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
-		<init-param name="defaultAction" value="CRUDSospesoAction" />
-  </businessProcess>
-  <businessProcess
-      name="CRUDSospesoCNRBP" className="it.cnr.contab.doccont00.bp.CRUDSospesoCNRBP">
-    <forward name="default" path="/doccont00/sospeso_cnr.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />
-		<init-param name="defaultAction" value="CRUDSospesoCNRAction" />
-  </businessProcess>
-  <businessProcess
-		name="ListaSospesiCNRBP" className="it.cnr.contab.doccont00.bp.ListaSospesiCNRBP">
-		<forward name="default" path="/doccont00/lista_sospesi_cnr.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.ListaSospesiBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>		
-			<init-param name="defaultAction" value="ListaSospesiCNRAction" />
-	</businessProcess>
-  <businessProcess
-		name="ListaSospesiCNRPerCdsBP" className="it.cnr.contab.doccont00.bp.ListaSospesiCNRPerCdsBP">
-		<forward name="default" path="/doccont00/lista_sospesi_cnr_per_cds.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.SelezionaSospesiCNRBulk" />
-		   <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />					
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>		
-			<init-param name="defaultAction" value="ListaSospesiCNRPerCdsAction" />
-			<init-param name="searchResultColumnSet" value="SospesiCNRPerCds" />			
-	</businessProcess>
-  <businessProcess
-      name="ListaSospesiBP" className="it.cnr.contab.doccont00.bp.ListaSospesiBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-	<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
-	<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />    
-    <init-param name="defaultAction" value="ListaSospesiAction" />
-  </businessProcess>	
- <businessProcess
-		name="CRUDAccertamentoResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoBP">
-		<forward name="default" path="/doccont00/main_accertamento.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoResiduoComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAccertamentoAction" />
-	</businessProcess>
-	<businessProcess
-		name="CRUDAccertamentoResiduoAmministraBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoAmministraBP">
-		<forward name="default" path="/doccont00/main_accertamento.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoResiduoComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAccertamentoAction" />
-	</businessProcess>
- 
- <businessProcess
-		name="CRUDAccertamentoResiduoCreazioneBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoCreazioneBP">
-		<forward name="default" path="/doccont00/main_accertamento.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDAccertamentoAction" />
-	</businessProcess>
- <businessProcess
-		name="CRUDImpegnoResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoResiduoBP">
-		<forward name="default" path="/doccont00/impegno_residuo.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoResiduoBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ImpegnoComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDImpegnoAction" />
-	</businessProcess>
-    <businessProcess
-      name="CRUDObbligazioneResBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP">
-    <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneResComponentSession" />
-		<init-param name="defaultAction" value="CRUDObbligazioneAction" />
+            name="CRUDObbligazioneBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneBP">
+        <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession"/>
+        <init-param name="defaultAction" value="CRUDObbligazioneAction"/>
     </businessProcess>
-	<businessProcess
-		name="CRUDObbligazioneResAmministraBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneResAmministraBP">
-    <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneResComponentSession" />
-		<init-param name="defaultAction" value="CRUDObbligazioneAction" />
+
+
+    <businessProcess
+            name="ProspettoSpeseCdrBP" className="it.cnr.contab.doccont00.bp.ProspettoSpeseCdrBP">
+        <forward name="default" path="/doccont00/prospetto_spese_cdr.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ProspettoSpeseCdrBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
+
+
+    <businessProcess
+            name="ListaObbligazioniDefinitiveBP" className="it.cnr.contab.doccont00.bp.ListaObbligazioniBP">
+        <forward name="default" path="/doccont00/lista_obbligazioni.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession"/>
+        <init-param name="defaultAction" value="ListaObbligazioniDefinitiveAction"/>
+        <init-param name="statoObbligazione" value="D"/>
+    </businessProcess>
+
+    <businessProcess
+            name="ListaObbligazioniProvvisorieBP" className="it.cnr.contab.doccont00.bp.ListaObbligazioniBP">
+        <forward name="default" path="/doccont00/lista_obbligazioni.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession"/>
+        <init-param name="defaultAction" value="ListaObbligazioniProvvisorieAction"/>
+        <init-param name="statoObbligazione" value="P"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDMandatoBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoBP">
+        <forward name="default" path="/doccont00/main_mandato.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk"/>
+        <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDMandatoVariazioneBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoVariazioneBP">
+        <forward name="default" path="/doccont00/main_mandato.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk"/>
+        <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDMandatoRegolarizzazioneBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoBP">
+        <forward name="default" path="/doccont00/main_mandato.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoIBulk"/>
+        <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandato_terzoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
+
+    <businessProcess
+            name="SituazioneCdSBP" className="it.cnr.contab.doccont00.bp.SituazioneCdSBP">
+        <forward name="default" path="/doccont00/mandato_accreditamento_wizard_1.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.RicercaMandatoAccreditamentoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction"/>
     </businessProcess>
     <businessProcess
-      name="CRUDObbligazioneResCreazioneBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneBP">
-    <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
-		<init-param name="defaultAction" value="CRUDObbligazioneAction" />
+            name="MandatoAutomaticoWizardBP" className="it.cnr.contab.doccont00.bp.MandatoAutomaticoWizardBP">
+        <forward name="default" path="/doccont00/main_mandato_automatico_wizard.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoAutomaticoWizardBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoAutomaticoComponentSession"/>
+        <init-param name="defaultAction" value="MandatoAutomaticoWizardAction"/>
     </businessProcess>
     <businessProcess
-      name="CRUDObbligazioneResImpropriaBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneBP">
-    <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession" />
-		<init-param name="defaultAction" value="CRUDObbligazioneAction" />
+            name="MandatoAccreditamentoWizardBP" className="it.cnr.contab.doccont00.bp.MandatoAccreditamentoWizardBP">
+        <forward name="default" path="/doccont00/mandato_accreditamento_wizard_2.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamentoWizardBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction"/>
     </businessProcess>
-	<businessProcess
-		name="SelezionatoreListaImpegniBP" className="it.cnr.contab.doccont00.bp.SelezionatoreListaImpegniBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-    <init-param name="defaultAction" value="SelezionaLista" />
-  </businessProcess>
+    <businessProcess
+            name="CRUDMandatoAccreditamentoBP" className="it.cnr.contab.doccont00.bp.CRUDMandatoAccreditamentoBP">
+        <forward name="default" path="/doccont00/main_mandato_accreditamento.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.MandatoAccreditamentoBulk"/>
+        <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_mandatoAcc_terzoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
 
-  <businessProcess
-		name="CRUDImpegnoBilEnteBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoBilEnteBP">
-		<forward name="default" path="/doccont00/impegno_bilancio_ente.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneBilEnteComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDImpegnoBilEnteAction" />
-	</businessProcess>
-  <businessProcess
-      name="CRUDObbligazioneModificaBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP">
-    <forward name="default" path="/doccont00/obbligazione_modifica.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneModificaComponentSession" />
-		<init-param name="defaultAction" value="CRUDObbligazioneModificaAction" />
-    </businessProcess>
-  <businessProcess
-      name="CRUDAccertamentoModificaBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoModificaBP">
-    <forward name="default" path="/doccont00/accertamento_modifica.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoModificaComponentSession" />
-		<init-param name="defaultAction" value="CRUDAccertamentoModificaAction" />
-    </businessProcess>
-  <businessProcess
-      name="SelezionatoreAssestatoDocContBP" className="it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.prevent00.bulk.V_assestatoBulk" />
-		<init-param name="componentSessionName" value="CNRPDG01_EJB_CRUDPdgVariazioneGestionaleComponentSession" />
-	    <init-param name="defaultAction" value="SelezionatoreAssestatoDocContAction" />
-	    <init-param name="filterEnabled" value="N" />
-  </businessProcess> 
-  <businessProcess
-      name="SelezionatoreMandatiInDistintaBP" className="it.cnr.contab.doccont00.bp.SelezionatoreMandatiInDistintaBP">
-    <forward name="default" path="/doccont00/lista_mandati_reversali.jsp"/>
-	    <init-param name="defaultAction" value="SelezionatoreMandatiInDistintaAction" />
-  </businessProcess> 
     <businessProcess
-      name="CRUDCupBP" className="it.cnr.contab.doccont00.bp.CRUDCupBP">
-    	<forward name="default" path="/util/form.jsp"/>
-		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.tabrif.bulk.CupBulk" />
-		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_CupComponentSession" />
-		<init-param name="defaultAction" value="CRUDCupAction" />
-		<init-param name="printbp" value="OfflineReportPrintBP" />	
+            name="ViewFatturaBP" className="it.cnr.contab.doccont00.bp.ViewFatturaBP">
+        <forward name="default" path="/doccont00/view_fattura.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_FatturaPassivaComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
     </businessProcess>
-     <businessProcess
-		name="CRUDDistintaCassiereFBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
-		<forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
-			<init-param name="printbp" value="OfflineReportPrintBP" />
-			<init-param name="flusso" value="true" />	
-			<init-param name="sepa" value="false" />	
-			<init-param name="annulli" value="false" />	
-	</businessProcess>
-	 <businessProcess
-		name="CRUDDistintaCassiereSBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
-		<forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
-			<init-param name="printbp" value="OfflineReportPrintBP" />
-			<init-param name="flusso" value="false"/>
-			<init-param name="sepa" value="true" />
-			<init-param name="annulli" value="false" />		
-	</businessProcess>
+    <businessProcess
+            name="ViewDocGenericoBP" className="it.cnr.contab.doccont00.bp.ViewDocGenericoBP">
+        <forward name="default" path="/doccont00/view_doc_generico.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCAMM00_EJB_DocumentoGenericoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
+
+    <businessProcess
+            name="DispCassaCapitoloBP" className="it.cnr.contab.doccont00.bp.DispCassaCapitoloBP">
+        <forward name="default" path="/doccont00/disp_cassa_capitolo.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.DispCassaCapitoloBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
+
+
+    <businessProcess
+            name="CRUDTipoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/doccont00/tipo_bollo.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_Tipo_bolloComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDImpegnoPGiroBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroBP">
+        <forward name="default" path="/doccont00/impegno_pgiro.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazionePGiroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDImpegnoPGiroAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDImpegnoPGiroTroncoBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroTroncoBP">
+        <forward name="default" path="/doccont00/impegno_pgiro.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazionePGiroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDImpegnoPGiroAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDImpegnoPGiroResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoPGiroResiduoBP">
+        <forward name="default" path="/doccont00/impegno_pgiro.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroResiduoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazionePGiroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDImpegnoPGiroAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDAccertamentoPGiroBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoPGiroBP">
+        <forward name="default" path="/doccont00/accertamento_pgiro.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoPGiroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAccertamentoPGiroAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDAccertamentoPGiroResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoPGiroResiduoBP">
+        <forward name="default" path="/doccont00/accertamento_pgiro.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroResiduoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoPGiroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAccertamentoPGiroAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDAccertamentoPGiroTroncoBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoPGiroTroncoBP">
+        <forward name="default" path="/doccont00/accertamento_pgiro.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoPGiroBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoPGiroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAccertamentoPGiroAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDReversaleBP" className="it.cnr.contab.doccont00.bp.CRUDReversaleBP">
+        <forward name="default" path="/doccont00/main_reversale.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ReversaleIBulk"/>
+        <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.V_reversale_terzoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ReversaleComponentSession"/>
+        <init-param name="defaultAction" value="CRUDReversaleAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
+    <businessProcess
+            name="ListaReversaliBP" className="it.cnr.contab.doccont00.bp.ListaReversaliBP">
+        <forward name="default" path="/doccont00/lista_reversali.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ReversaleIBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ReversaleComponentSession"/>
+        <init-param name="defaultAction" value="ListaReversaliAction"/>
+        <init-param name="tipoDocumento" value="REV_PROVV"/>
+    </businessProcess>
+    <businessProcess
+            name="ViewSpeseCdSBP" className="it.cnr.contab.doccont00.bp.ViewBilancioCdSBP">
+        <forward name="default" path="/doccont00/view_bilancio_cds.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.CdsBilancioBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction"/>
+        <init-param name="tipoGestione" value="S"/>
+    </businessProcess>
+    <businessProcess
+            name="ViewEntrateCdSBP" className="it.cnr.contab.doccont00.bp.ViewBilancioCdSBP">
+        <forward name="default" path="/doccont00/view_bilancio_cds.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.CdsBilancioBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_MandatoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDMandatoAccreditamentoAction"/>
+        <init-param name="tipoGestione" value="E"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDDistintaCassiereBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
+        <forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>
+        <init-param name="defaultAction" value="CRUDDistintaCassiereAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+        <init-param name="flusso" value="false"/>
+        <init-param name="sepa" value="false"/>
+        <init-param name="annulli" value="false"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDDistintaCassiere1210BP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiere1210BP">
+        <forward name="default" path="/doccont00/distinta_cassiere_1210.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="CRUDDistintaCassiere1210Action"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
+    <businessProcess
+            name="RicercaMandatoReversaleBP" className="it.cnr.contab.doccont00.bp.RicercaMandatoReversaleBP">
+        <forward name="default" path="/doccont00/ricerca_v_mandato_reversale.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>
+        <init-param name="defaultAction" value="RicercaMandatoReversaleAction"/>
+    </businessProcess>
+    <businessProcess
+            name="ListaDistinteEmesseBP" className="it.cnr.contab.doccont00.bp.ListaDistinteEmesseBP">
+        <forward name="default" path="/doccont00/lista_distinte_emesse.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.V_distinta_cass_im_man_revBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>
+        <init-param name="defaultAction" value="ListaDistinteEmesseAction"/>
+    </businessProcess>
+
+    <businessProcess
+            name="ViewDettaglioTotaliTrasmessiBP" className="it.cnr.contab.doccont00.bp.ViewDettaglioTotaliBP">
+        <forward name="default" path="/doccont00/view_distinta_totali_trasmessi.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk"/>
+    </businessProcess>
+    <businessProcess
+            name="ViewDettaglioTotaliBP" className="it.cnr.contab.doccont00.bp.ViewDettaglioTotaliBP">
+        <forward name="default" path="/doccont00/view_distinta_totali.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDSospesoBP" className="it.cnr.contab.doccont00.bp.CRUDSospesoBP">
+        <forward name="default" path="/doccont00/sospeso_riscontro.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDSospesoAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDSospesoCNRBP" className="it.cnr.contab.doccont00.bp.CRUDSospesoCNRBP">
+        <forward name="default" path="/doccont00/sospeso_cnr.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>
+        <init-param name="defaultAction" value="CRUDSospesoCNRAction"/>
+    </businessProcess>
+    <businessProcess
+            name="ListaSospesiCNRBP" className="it.cnr.contab.doccont00.bp.ListaSospesiCNRBP">
+        <forward name="default" path="/doccont00/lista_sospesi_cnr.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.ListaSospesiBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>
+        <init-param name="defaultAction" value="ListaSospesiCNRAction"/>
+    </businessProcess>
+    <businessProcess
+            name="ListaSospesiCNRPerCdsBP" className="it.cnr.contab.doccont00.bp.ListaSospesiCNRPerCdsBP">
+        <forward name="default" path="/doccont00/lista_sospesi_cnr_per_cds.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.SelezionaSospesiCNRBulk"/>
+        <init-param name="searchBulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>
+        <init-param name="defaultAction" value="ListaSospesiCNRPerCdsAction"/>
+        <init-param name="searchResultColumnSet" value="SospesiCNRPerCds"/>
+    </businessProcess>
 	<businessProcess
-		name="CRUDDistintaCassiereABP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
-		<forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
-			<init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk" />
-			<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>		
-			<init-param name="defaultAction" value="CRUDDistintaCassiereAction" />
-			<init-param name="printbp" value="OfflineReportPrintBP" />
-			<init-param name="flusso" value="false"/>
-			<init-param name="sepa" value="false" />
-			<init-param name="annulli" value="true" />		
+			name="ListaSospesiCNRPerCdsSelezionatoreBP" className="it.cnr.contab.doccont00.bp.ListaSospesiCNRPerCdsSelezionatoreBP">
+		<forward name="default" path="/util/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk"/>
+		<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>
+		<init-param name="defaultAction" value="ListaSospesiCNRPerCdsSelezionatoreAction"/>
 	</businessProcess>
-	<action 
-      path="/ListaSospesiSpesaAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiSpesaAction">
-  </action>
-	 <businessProcess
-      name="ListaSospesiSpesaBP" className="it.cnr.contab.doccont00.bp.ListaSospesiSpesaBP">
-    <forward name="default" path="/util/form_lista.jsp"/>
-	<init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk" />
-	<init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession" />    
-    <init-param name="defaultAction" value="ListaSospesiSpesaAction" />
-  </businessProcess>	
+
+    <businessProcess
+            name="ListaSospesiBP" className="it.cnr.contab.doccont00.bp.ListaSospesiBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>
+        <init-param name="defaultAction" value="ListaSospesiAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDAccertamentoResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoBP">
+        <forward name="default" path="/doccont00/main_accertamento.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoResiduoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAccertamentoAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDAccertamentoResiduoAmministraBP"
+            className="it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoAmministraBP">
+        <forward name="default" path="/doccont00/main_accertamento.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoResiduoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAccertamentoAction"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDAccertamentoResiduoCreazioneBP"
+            className="it.cnr.contab.doccont00.bp.CRUDAccertamentoResiduoCreazioneBP">
+        <forward name="default" path="/doccont00/main_accertamento.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.AccertamentoResiduoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAccertamentoAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDImpegnoResiduoBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoResiduoBP">
+        <forward name="default" path="/doccont00/impegno_residuo.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoResiduoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ImpegnoComponentSession"/>
+        <init-param name="defaultAction" value="CRUDImpegnoAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDObbligazioneResBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneResBP">
+        <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneResComponentSession"/>
+        <init-param name="defaultAction" value="CRUDObbligazioneAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDObbligazioneResAmministraBP"
+            className="it.cnr.contab.doccont00.bp.CRUDObbligazioneResAmministraBP">
+        <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneResComponentSession"/>
+        <init-param name="defaultAction" value="CRUDObbligazioneAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDObbligazioneResCreazioneBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneBP">
+        <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession"/>
+        <init-param name="defaultAction" value="CRUDObbligazioneAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDObbligazioneResImpropriaBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneBP">
+        <forward name="default" path="/doccont00/main_obbligazione.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneComponentSession"/>
+        <init-param name="defaultAction" value="CRUDObbligazioneAction"/>
+    </businessProcess>
+    <businessProcess
+            name="SelezionatoreListaImpegniBP" className="it.cnr.contab.doccont00.bp.SelezionatoreListaImpegniBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="defaultAction" value="SelezionaLista"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDImpegnoBilEnteBP" className="it.cnr.contab.doccont00.bp.CRUDImpegnoBilEnteBP">
+        <forward name="default" path="/doccont00/impegno_bilancio_ente.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.ImpegnoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneBilEnteComponentSession"/>
+        <init-param name="defaultAction" value="CRUDImpegnoBilEnteAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDObbligazioneModificaBP" className="it.cnr.contab.doccont00.bp.CRUDObbligazioneModificaBP">
+        <forward name="default" path="/doccont00/obbligazione_modifica.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_ObbligazioneModificaComponentSession"/>
+        <init-param name="defaultAction" value="CRUDObbligazioneModificaAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDAccertamentoModificaBP" className="it.cnr.contab.doccont00.bp.CRUDAccertamentoModificaBP">
+        <forward name="default" path="/doccont00/accertamento_modifica.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_AccertamentoModificaComponentSession"/>
+        <init-param name="defaultAction" value="CRUDAccertamentoModificaAction"/>
+    </businessProcess>
+    <businessProcess
+            name="SelezionatoreAssestatoDocContBP"
+            className="it.cnr.contab.doccont00.bp.SelezionatoreAssestatoDocContBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.prevent00.bulk.V_assestatoBulk"/>
+        <init-param name="componentSessionName" value="CNRPDG01_EJB_CRUDPdgVariazioneGestionaleComponentSession"/>
+        <init-param name="defaultAction" value="SelezionatoreAssestatoDocContAction"/>
+        <init-param name="filterEnabled" value="N"/>
+    </businessProcess>
+    <businessProcess
+            name="SelezionatoreMandatiInDistintaBP"
+            className="it.cnr.contab.doccont00.bp.SelezionatoreMandatiInDistintaBP">
+        <forward name="default" path="/doccont00/lista_mandati_reversali.jsp"/>
+        <init-param name="defaultAction" value="SelezionatoreMandatiInDistintaAction"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDCupBP" className="it.cnr.contab.doccont00.bp.CRUDCupBP">
+        <forward name="default" path="/util/form.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.tabrif.bulk.CupBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_CupComponentSession"/>
+        <init-param name="defaultAction" value="CRUDCupAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDDistintaCassiereFBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
+        <forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>
+        <init-param name="defaultAction" value="CRUDDistintaCassiereAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+        <init-param name="flusso" value="true"/>
+        <init-param name="sepa" value="false"/>
+        <init-param name="annulli" value="false"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDDistintaCassiereSBP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
+        <forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>
+        <init-param name="defaultAction" value="CRUDDistintaCassiereAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+        <init-param name="flusso" value="false"/>
+        <init-param name="sepa" value="true"/>
+        <init-param name="annulli" value="false"/>
+    </businessProcess>
+    <businessProcess
+            name="CRUDDistintaCassiereABP" className="it.cnr.contab.doccont00.bp.CRUDDistintaCassiereBP">
+        <forward name="default" path="/doccont00/main_distinta_cassiere.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.intcass.bulk.Distinta_cassiereBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_DistintaCassiereComponentSession"/>
+        <init-param name="defaultAction" value="CRUDDistintaCassiereAction"/>
+        <init-param name="printbp" value="OfflineReportPrintBP"/>
+        <init-param name="flusso" value="false"/>
+        <init-param name="sepa" value="false"/>
+        <init-param name="annulli" value="true"/>
+    </businessProcess>
+    <action
+            path="/ListaSospesiSpesaAction" actionClass="it.cnr.contab.doccont00.action.ListaSospesiSpesaAction">
+    </action>
+    <businessProcess
+            name="ListaSospesiSpesaBP" className="it.cnr.contab.doccont00.bp.ListaSospesiSpesaBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.doccont00.core.bulk.SospesoBulk"/>
+        <init-param name="componentSessionName" value="CNRDOCCONT00_EJB_SospesoRiscontroComponentSession"/>
+        <init-param name="defaultAction" value="ListaSospesiSpesaAction"/>
+    </businessProcess>
 </action-mappings>

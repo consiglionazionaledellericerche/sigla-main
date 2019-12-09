@@ -207,7 +207,8 @@
 		name="find_elemento_voce_contr"
 		property="elemento_voceContr"
 		inputType="SEARCHTOOL"
-		label="Voce del piano"
+		formName="searchtool"
+		label="Voce del piano Contr."
 		enabledOnSearch="true"
 		completeOnSave="false" />
 	<formFieldProperty
