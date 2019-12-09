@@ -1,5 +1,21 @@
 # sigla-main Changelog
 
+## Release 6.0.26  -- _December 09, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[756c38c47fd4302](https://github.com/consiglionazionaledellericerche/sigla-main/commit/756c38c47fd4302) marco.spasiano *December 09, 2019*
+
+>**BUG ricerca capitolo per uo SAC**
+>
+>[04f1434ab0ef2c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04f1434ab0ef2c9) marco.spasiano *December 09, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[d1e88e77ad16e58](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1e88e77ad16e58) marco.spasiano *December 07, 2019*
+
+
 ## Release 6.0.25  -- _December 07, 2019_ 
 ### No issue
 
