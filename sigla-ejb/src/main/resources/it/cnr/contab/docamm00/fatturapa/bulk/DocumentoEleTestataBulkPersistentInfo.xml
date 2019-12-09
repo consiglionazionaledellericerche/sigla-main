@@ -58,7 +58,7 @@
 			columnName="PRESTATORE_DENOMINAZIONE"
 			sqlTypeName="VARCHAR"
 			columnSize="2000"			 
-			propertyName="documentoEleTrasmissione.denominzionePrestatore"/>
+			propertyName="documentoEleTrasmissione.prestatoreDenominazione"/>
 		<columnMapping
 			columnName="PRESTATORE_NOME"
 			sqlTypeName="VARCHAR"
