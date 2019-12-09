@@ -284,52 +284,6 @@ public class AccertamentoHome extends BulkHome {
     }
 
     /**
-     * <!-- @TODO: da completare -->
-     *
-     * @return
-     * @throws SQLException
-     * @throws PersistencyException
-     */
-    public String findCd_cdsSAC() throws SQLException, PersistencyException {
-        String cd_cds = null;
-
-        LoggableStatement ps = new LoggableStatement(getConnection(),
-                "SELECT CD_UNITA_ORGANIZZATIVA FROM " +
-                        it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema() +
-                        "UNITA_ORGANIZZATIVA " +
-                        "WHERE FL_CDS = ? AND " +
-                        "CD_TIPO_UNITA = ? ", true, this.getClass());
-        try {
-            ps.setString(1, "Y");
-            ps.setString(2, Tipo_unita_organizzativaHome.TIPO_UO_SAC);
-
-            ResultSet rs = ps.executeQuery();
-            try {
-                if (rs.next())
-                    cd_cds = rs.getString(1);
-            } catch (SQLException e) {
-                throw new PersistencyException(e);
-            } finally {
-                try {
-                    rs.close();
-                } catch (java.sql.SQLException e) {
-                }
-                ;
-            }
-        } catch (SQLException e) {
-            throw new PersistencyException(e);
-        } finally {
-            try {
-                ps.close();
-            } catch (java.sql.SQLException e) {
-            }
-            ;
-        }
-        return cd_cds;
-
-    }
-
-    /**
      * Lettura dalla tabella CDR di tutti i Centri di Responsabilita con
      * Unita Organizzativa uguale alla unita organizzativa origine dell'accertamento.
      * (Servira' per la gestione delle Linee di Attivita')
@@ -728,16 +682,15 @@ public java.util.List findLineeAttivita(AccertamentoBulk accertamento) throws In
     public SQLBuilder selectCapitoloByClause(AccertamentoBulk bulk, V_voce_f_partita_giroHome home, V_voce_f_partita_giroBulk voce_f, CompoundFindClause clause) throws IntrospectionException, PersistencyException, ApplicationException, SQLException {
         PersistentHome parCNRHome = getHomeCache().getHome(Parametri_cnrBulk.class);
         Parametri_cnrBulk parCNR = (Parametri_cnrBulk) parCNRHome.findByPrimaryKey(new Parametri_cnrBulk(bulk.getEsercizio()));
-
-	/* simona 7.5.2002 : modificato il filtro da UO-Cds a Uo di scrivania 
-    java.util.List listUoCds = findUoCds(bulk);
-    if(listUoCds.size() == 0)
-	    throw new ApplicationException("Non esiste l' UO/CDS per il cds '" + bulk.getCd_cds_origine() + "'");
-     
-    Unita_organizzativaBulk uo = (Unita_organizzativaBulk) listUoCds.get( 0 );
-    */
-
-        String cd_cdsSAC = findCd_cdsSAC();
+        final boolean isUOSac = Optional.ofNullable(bulk.getCd_cds_origine())
+                .map(s -> new Unita_organizzativaBulk(s))
+                .map(unita_organizzativaBulk -> {
+                    try {
+                        return (Unita_organizzativaBulk) getHomeCache().getHome(unita_organizzativaBulk).findByPrimaryKey(unita_organizzativaBulk);
+                    } catch (PersistencyException e) {
+                        return null;
+                    }
+                }).map(Unita_organizzativaBulk::getCd_tipo_unita).filter(s -> s.equals(Tipo_unita_organizzativaHome.TIPO_UO_SAC)).isPresent();
 
         PersistentHome voceHome = getHomeCache().getHome(V_voce_f_partita_giroBulk.class);
         SQLBuilder sql = voceHome.createSQLBuilder();
@@ -762,7 +715,7 @@ public java.util.List findLineeAttivita(AccertamentoBulk accertamento) throws In
         if (!parCNR.getFl_nuovo_pdg())
             sql.addSQLClause("AND", "ti_voce", sql.EQUALS, Elemento_voceHome.TIPO_ARTICOLO);
         sql.addSQLClause("AND", "fl_partita_giro", sql.EQUALS, "N");
-        if (bulk.getCd_cds_origine() != null && bulk.getCd_cds_origine().equals(cd_cdsSAC))
+        if (isUOSac)
             sql.addSQLClause("AND", "fl_voce_sac", sql.NOT_EQUALS, "X");
         else
 		/* se in scrivania non ho il cds SAC devo escludere le voce_f riseravte SAC - clausola FL_VOCE_SAC != "Y" */
