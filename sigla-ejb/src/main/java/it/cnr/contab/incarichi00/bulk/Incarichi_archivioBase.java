@@ -31,7 +31,7 @@ public class Incarichi_archivioBase extends Incarichi_archivioKey implements Key
 //    URL_FILE VARCHAR(500)
 	private java.lang.String url_file;
 
-//    CMS_NODE_REF  VARCHAR2(100) NULL
+//    CMS_NODE_REF  VARCHAR2(2000) NULL
 	private java.lang.String cms_node_ref;
 
 //    TIPO_ARCHIVIO VARCHAR(1) NOT NULL

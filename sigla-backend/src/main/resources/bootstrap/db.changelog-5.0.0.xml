@@ -2645,4 +2645,19 @@ TRASPORTO_AEREO"/>
             </column>
         </addColumn>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="resize-column-cms-node-ref">
+        <modifyDataType tableName="incarichi_procedura_archivio"
+                        columnName="cms_node_ref"
+                        newDataType="VARCHAR(2000)" />
+        <modifyDataType tableName="incarichi_repertorio_archivio"
+                        columnName="cms_node_ref"
+                        newDataType="VARCHAR(2000)" />
+        <modifyDataType tableName="incarichi_repertorio_rapp"
+                        columnName="cms_node_ref"
+                        newDataType="VARCHAR(2000)" />
+        <modifyDataType tableName="incarichi_repertorio_var"
+                        columnName="cms_node_ref"
+                        newDataType="VARCHAR(2000)" />
+    </changeSet>
 </databaseChangeLog>
