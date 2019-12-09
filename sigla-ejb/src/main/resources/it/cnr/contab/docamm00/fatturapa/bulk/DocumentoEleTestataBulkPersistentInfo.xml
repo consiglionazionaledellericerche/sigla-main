@@ -43,12 +43,32 @@
 	<columnMap 
 		name="V_DOCUMENTO_ELE"
 		tableName="V_DOCUMENTO_ELE"
-		extends="default">		
+		extends="default">
+		<columnMapping
+			columnName="PRESTATORE_CODICE"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			propertyName="documentoEleTrasmissione.prestatoreCodice"/>
+		<columnMapping
+			columnName="PRESTATORE_CODICEFISCALE"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			propertyName="documentoEleTrasmissione.prestatoreCodicefiscale"/>
 		<columnMapping
 			columnName="PRESTATORE_DENOMINAZIONE"
 			sqlTypeName="VARCHAR"
 			columnSize="2000"			 
 			propertyName="documentoEleTrasmissione.denominzionePrestatore"/>
+		<columnMapping
+			columnName="PRESTATORE_NOME"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			propertyName="documentoEleTrasmissione.prestatoreNome"/>
+		<columnMapping
+			columnName="PRESTATORE_COGNOME"
+			sqlTypeName="VARCHAR"
+			columnSize="256"
+			propertyName="documentoEleTrasmissione.prestatoreCognome"/>
 		<columnMapping
 			columnName="CODICE_DESTINATARIO"
 			sqlTypeName="VARCHAR"

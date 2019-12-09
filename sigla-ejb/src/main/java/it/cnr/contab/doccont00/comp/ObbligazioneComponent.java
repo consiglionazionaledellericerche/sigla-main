@@ -1545,7 +1545,7 @@ public ObbligazioneBulk validaImputazioneFinanziaria(UserContext userContext, Ob
 		for ( Iterator lattIterator = obbligazione.getLineeAttivitaSelezionateColl().iterator(); lattIterator.hasNext(); )
 		{
 			ppsd = (V_pdg_obbligazione_speBulk) lattIterator.next();
-			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
+			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
 			{
 				if ( ppsd.getCategoria_dettaglio().equals( it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk.CAT_SINGOLO) ||
 					 ppsd.getCd_centro_responsabilita_clgs()==null)
@@ -1571,7 +1571,7 @@ public ObbligazioneBulk validaImputazioneFinanziaria(UserContext userContext, Ob
 		{
 			la = (Linea_attivitaBulk) lattIterator.next();
 	
-			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
+			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC) )
 				voce = obbligazione.getArticolo( la.getLinea_att().getFunzione().getCd_funzione(), la.getLinea_att().getCentro_responsabilita().getCd_centro_responsabilita());
 			else
 				voce = obbligazione.getCapitolo( la.getLinea_att().getFunzione().getCd_funzione() );
@@ -1917,7 +1917,7 @@ protected void creaDettagliScadenzaPerLineeAttivitaDaPdG(UserContext aUC,Obbliga
 				//creo	nuovo Obbligazione_scad_voceBulk
 				osv = new Obbligazione_scad_voceBulk();
 				osv.setToBeCreated();
-				if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
+				if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
 				{
 					IVoceBilancioBulk articolo;
 					if ( ppsd.getCategoria_dettaglio().equals( it.cnr.contab.pdg00.bulk.Pdg_preventivo_spe_detBulk.CAT_SINGOLO) ||
@@ -2027,7 +2027,7 @@ protected void creaDettagliScadenzaPerNuoveLineeAttivita (UserContext aUC,Obblig
 			//creo	nuovo Obbligazione_scad_voceBulk			
 			osv = new Obbligazione_scad_voceBulk();
 			osv.setToBeCreated();
-			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( "SAC" ) )
+			if ( obbligazione.getCds().getCd_tipo_unita().equalsIgnoreCase( Tipo_unita_organizzativaHome.TIPO_UO_SAC ) )
 			{
 				IVoceBilancioBulk articolo = obbligazione.getArticolo( la.getLinea_att().getFunzione().getCd_funzione(), la.getLinea_att().getCentro_responsabilita().getCd_centro_responsabilita());
 				osv.setTi_appartenenza( articolo.getTi_appartenenza());
