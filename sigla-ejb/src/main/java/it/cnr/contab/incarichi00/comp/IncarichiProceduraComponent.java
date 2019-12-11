@@ -880,7 +880,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							if (storageFile.getInputStream()==null) {
 								if (Optional.of(allegato).filter(Incarichi_repertorio_varBulk.class::isInstance)
 										.map(Incarichi_repertorio_varBulk.class::cast)
-										.filter(el -> el.isVariazioneIntegrazioneMaternita() || el.isVariazioneIntegrazioneContributi())
+										.filter(el -> !el.isVariazioneIntegrazioneIncarico())
 										.isPresent())
 									continue;
 								else
