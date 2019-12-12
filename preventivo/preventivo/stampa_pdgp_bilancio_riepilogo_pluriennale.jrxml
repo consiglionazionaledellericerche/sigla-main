@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdgp_bilancio_riepilogo_pluriennale" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b3228f45-782e-4267-bea5-1ed4c9dd6c3e">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(2016)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TIPO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FONTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_NUM_LIV" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT tipo, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
+cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
+ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
+ds_livello8, ds_livello9,
+SUM(im_previsione_ac) im_previsione_ac1,
+SUM(im_previsione_ac2) im_previsione_ac2,
+SUM(im_previsione_ac3) im_previsione_ac3
+FROM (
+SELECT a.tipo,
+CASE WHEN $P{P_NUM_LIV}>0 THEN a.cd_livello1 ELSE null END cd_livello1,
+CASE WHEN $P{P_NUM_LIV}>1 THEN a.cd_livello2 ELSE null END cd_livello2,
+CASE WHEN $P{P_NUM_LIV}>2 THEN a.cd_livello3 ELSE null END cd_livellO3,
+CASE WHEN $P{P_NUM_LIV}>3 THEN a.cd_livello4 ELSE null END cd_livello4,
+CASE WHEN $P{P_NUM_LIV}>4 THEN a.cd_livello5 ELSE null END cd_livello5,
+CASE WHEN $P{P_NUM_LIV}>5 THEN a.cd_livello6 ELSE null END cd_livello6,
+CASE WHEN $P{P_NUM_LIV}>6 THEN a.cd_livello7 ELSE null END cd_livello7,
+CASE WHEN $P{P_NUM_LIV}>7 THEN a.cd_livello8 ELSE null END cd_livello8,
+CASE WHEN $P{P_NUM_LIV}>8 THEN a.cd_livello9 ELSE null END cd_livello9,
+CASE WHEN $P{P_NUM_LIV}>0 THEN a.ds_livello1 ELSE null END ds_livello1,
+CASE WHEN $P{P_NUM_LIV}>1 THEN a.ds_livello2 ELSE null END ds_livello2,
+CASE WHEN $P{P_NUM_LIV}>2 THEN a.ds_livello3 ELSE null END ds_livellO3,
+CASE WHEN $P{P_NUM_LIV}>3 THEN a.ds_livello4 ELSE null END ds_livello4,
+CASE WHEN $P{P_NUM_LIV}>4 THEN a.ds_livello5 ELSE null END ds_livello5,
+CASE WHEN $P{P_NUM_LIV}>5 THEN a.ds_livello6 ELSE null END ds_livello6,
+CASE WHEN $P{P_NUM_LIV}>6 THEN a.ds_livello7 ELSE null END ds_livello7,
+CASE WHEN $P{P_NUM_LIV}>7 THEN a.ds_livello8 ELSE null END ds_livello8,
+CASE WHEN $P{P_NUM_LIV}>8 THEN a.ds_livello9 ELSE null END ds_livello9,
+a.im_previsione_ac, a.im_previsione_ac2, a.im_previsione_ac3
+FROM V_STAMPA_BILANCIO_PREVDEC a
+WHERE a.ESERCIZIO = $P{P_ESERCIZIO}
+AND a.TIPO = $P{P_TIPO}
+AND a.FONTE = $P{P_FONTE})
+GROUP BY tipo, cd_livello1, cd_livello2, cd_livellO3, cd_livello4,
+cd_livello5, cd_livello6, cd_livello7, cd_livello8, cd_livello9,
+ds_livello1, ds_livello2, ds_livello3, ds_livello4, ds_livello5, ds_livello6, ds_livello7,
+ds_livello8, ds_livello9
+ORDER BY CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD_LIVELLO4, CD_LIVELLO5, CD_LIVELLO6, CD_LIVELLO7, CD_LIVELLO8, CD_LIVELLO9]]>
+	</queryString>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="CD_LIVELLO1" class="java.lang.String"/>
+	<field name="CD_LIVELLO2" class="java.lang.String"/>
+	<field name="CD_LIVELLO3" class="java.lang.String"/>
+	<field name="CD_LIVELLO4" class="java.lang.String"/>
+	<field name="CD_LIVELLO5" class="java.lang.String"/>
+	<field name="CD_LIVELLO6" class="java.lang.String"/>
+	<field name="CD_LIVELLO7" class="java.lang.String"/>
+	<field name="CD_LIVELLO8" class="java.lang.String"/>
+	<field name="CD_LIVELLO9" class="java.lang.String"/>
+	<field name="DS_LIVELLO1" class="java.lang.String"/>
+	<field name="DS_LIVELLO2" class="java.lang.String"/>
+	<field name="DS_LIVELLO3" class="java.lang.String"/>
+	<field name="DS_LIVELLO4" class="java.lang.String"/>
+	<field name="DS_LIVELLO5" class="java.lang.String"/>
+	<field name="DS_LIVELLO6" class="java.lang.String"/>
+	<field name="DS_LIVELLO7" class="java.lang.String"/>
+	<field name="DS_LIVELLO8" class="java.lang.String"/>
+	<field name="DS_LIVELLO9" class="java.lang.String"/>
+	<field name="IM_PREVISIONE_AC1" class="java.math.BigDecimal"/>
+	<field name="IM_PREVISIONE_AC2" class="java.math.BigDecimal"/>
+	<field name="IM_PREVISIONE_AC3" class="java.math.BigDecimal"/>
+	<sortField name="CD_LIVELLO1"/>
+	<sortField name="CD_LIVELLO2"/>
+	<sortField name="CD_LIVELLO3"/>
+	<sortField name="CD_LIVELLO4"/>
+	<sortField name="CD_LIVELLO5"/>
+	<sortField name="CD_LIVELLO6"/>
+	<variable name="SUM_IM_PREVISIONE_AC1_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC1}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC1_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC1}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC1_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC1}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC2_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC2}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC2_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC2}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC2_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC2}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC3_LIV1" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO1" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC3}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC3_LIV2" class="java.math.BigDecimal" resetType="Group" resetGroup="LIVELLO2" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC3}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IM_PREVISIONE_AC3_REPORT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IM_PREVISIONE_AC3}]]></variableExpression>
+	</variable>
+	<group name="LIVELLO1">
+		<groupExpression><![CDATA[$F{CD_LIVELLO1}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-5" style="VERBI6" x="99" y="2" width="527" height="9" uuid="8f908538-7314-4d90-afef-fbb645616899"/>
+					<box>
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="false" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Riepilogo dei titoli "+$F{DS_LIVELLO1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERBI6" x="99" y="1" width="528" height="13" uuid="1b9d3dca-421f-4e1b-9e22-933be1253128"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TOTALE "+$F{DS_LIVELLO1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="e2b591f4-97cf-44db-b19f-1bb2dfe340f6"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC1_LIV1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="baa6b731-8471-4ebf-94de-502d1b45332d"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC2_LIV1}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO1" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="6e38ea86-e5ae-45d9-ad88-98fa0f16f688"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC3_LIV1}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="LIVELLO2">
+		<groupExpression><![CDATA[$F{CD_LIVELLO2}]]></groupExpression>
+		<groupFooter>
+			<band height="13">
+				<printWhenExpression><![CDATA[Boolean.valueOf($F{CD_LIVELLO2} != null)]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement key="textField-36" style="VERB6" x="57" y="0" width="570" height="13" uuid="ad4c0416-3795-4c8a-b294-b6ef4c404e40"/>
+					<box topPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA[$F{DS_LIVELLO2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-64" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="eee5f3df-1b26-4298-89ab-ac8ffab1312e"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC1_LIV2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-65" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="692" y="0" width="65" height="13" uuid="6e162e26-dd72-47e2-b330-231dfd4b1d8c"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC2_LIV2}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="LIVELLO2" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-66" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="9c21fd36-99fb-41d4-b198-010259005dfb"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IM_PREVISIONE_AC3_LIV2}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<summary>
+		<band height="17">
+			<subreport>
+				<reportElement x="0" y="0" width="842" height="17" uuid="735f8dfe-760b-45e3-9247-02e7f1289e0a"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_ESERCIZIO">
+					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO">
+					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_NUM_LIV">
+					<subreportParameterExpression><![CDATA[$P{P_NUM_LIV}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_FONTE">
+					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdgp_bilancio_riepilogo_all_titoli_pluriennale.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>
