@@ -3,8 +3,8 @@
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.5394743546921208"/>
-	<property name="ireport.x" value="434"/>
-	<property name="ireport.y" value="272"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1698,7 +1698,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PREVENTIVO FINANZIARIO " +
-($P{P_FONTE}.indexOf("DEC")>0?"DECISIONALE":"GESTIONALE")]]></textFieldExpression>
+($P{P_FONTE}.startsWith("DEC")?"DECISIONALE":"GESTIONALE")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-184" style="VERB7" x="55" y="55" width="521" height="11" uuid="2d60c71d-837e-46fc-ac0b-9c504cac20aa"/>
