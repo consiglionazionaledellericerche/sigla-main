@@ -1,5 +1,52 @@
 # sigla-main Changelog
 
+## Release 6.0.27  -- _December 12, 2019_ 
+### Jira ORA-01722 
+
+>**FIX ORA-01722: numero non valido**
+>
+>[c9515b2403bbbf3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c9515b2403bbbf3) marco.spasiano *December 12, 2019*
+
+
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[d48a1986cc18d98](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d48a1986cc18d98) marco.spasiano *December 12, 2019*
+
+>**Fix Assegni di ricerca: non consentiva di apportare variazioni - ritornava errore InputStream in assenza di file da allegare.**
+>
+>[8c66852b2390fb4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c66852b2390fb4) raffaele.pagano *December 11, 2019*
+
+>**FIX search for .Denominzione Prestatore**
+>
+>[ea6e7ee3296b2f3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ea6e7ee3296b2f3) marco.spasiano *December 09, 2019*
+
+>**Aggiunta ricerca guidata sulle fatture elettroniche per Identificativo Fiscale Prestatore, Codice Fiscale Prestatore, Denominazione Prestatore (Pers. Giuridica), Nome Prestatore (Persona Fisica), Cognome Prestatore (Persona Fisica)**
+>
+>[e1ecb1ea179940f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1ecb1ea179940f) marco.spasiano *December 09, 2019*
+
+>**Resize column cms-node-ref per integrazione con azure**
+>
+>[707295660e4d11a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/707295660e4d11a) raffaele.pagano *December 09, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[f8338b7ea908d21](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f8338b7ea908d21) marco.spasiano *December 09, 2019*
+
+>**Configurazione CNR: gestita, per determinate configurazioni, la contemporanea presenza in tabella sia di record con esercizio 0 che di record con esercizio valido. Gestione aggiornata per variabili: CDR_PERSONALE,CDR_SERVIZIO_ENTE,UO_ACCREDITAMENTO_SAC,UO_DISTINTA_TUTTA_SAC,UO_RAGIONERIA,UO_VERSAMENTO_CORI,UO_VERSAMENTO_CORI_CONTO_BI,UO_VERSAMENTO_CORI_TUTTA_SAC,UO_VERSAMENTO_IVA**
+>
+>[dbc0e6de2753cab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dbc0e6de2753cab) raffaele.pagano *December 05, 2019*
+
+>**FIX slf4j-api exclusion [ci skip]**
+>
+>[5d9a8dd3383775f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d9a8dd3383775f) marco.spasiano *December 04, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[56cec01573d373d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56cec01573d373d) marco.spasiano *December 02, 2019*
+
+
 ## Release 6.0.26  -- _December 09, 2019_ 
 ### No issue
 
@@ -70,18 +117,6 @@
 >**Nuova Gestione per la Sostituzione dei Mandati**
 >
 >[5af788c4503c476](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5af788c4503c476) marco.spasiano *December 06, 2019*
-
->**Configurazione CNR: gestita, per determinate configurazioni, la contemporanea presenza in tabella sia di record con esercizio 0 che di record con esercizio valido. Gestione aggiornata per variabili: CDR_PERSONALE,CDR_SERVIZIO_ENTE,UO_ACCREDITAMENTO_SAC,UO_DISTINTA_TUTTA_SAC,UO_RAGIONERIA,UO_VERSAMENTO_CORI,UO_VERSAMENTO_CORI_CONTO_BI,UO_VERSAMENTO_CORI_TUTTA_SAC,UO_VERSAMENTO_IVA**
->
->[dbc0e6de2753cab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dbc0e6de2753cab) raffaele.pagano *December 05, 2019*
-
->**FIX slf4j-api exclusion [ci skip]**
->
->[5d9a8dd3383775f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5d9a8dd3383775f) marco.spasiano *December 04, 2019*
-
->**Generate CHANGELOG.md [ci skip]**
->
->[56cec01573d373d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56cec01573d373d) marco.spasiano *December 02, 2019*
 
 
 ## Release 6.0.22  -- _December 02, 2019_ 
