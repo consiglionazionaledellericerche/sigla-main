@@ -64,6 +64,7 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 	
 	public final static String TIPO_DECISIONALE = "DEC";
 	public final static String TIPO_GESTIONALE = "GEST";
+	public final static String TIPO_PLURIENNALE = "PLUR";
 
 	public final static java.util.Dictionary ti_stampaKeys;
 	
@@ -71,6 +72,7 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 		ti_stampaKeys = new it.cnr.jada.util.OrderedHashtable();
 		ti_stampaKeys.put(TIPO_DECISIONALE,"Decisionale");
 		ti_stampaKeys.put(TIPO_GESTIONALE,"Gestionale");
+		ti_stampaKeys.put(TIPO_PLURIENNALE,"Pluriennale");
 	}
 
 	public final static String TIPO_SCIENTIFICO = "SCI";
@@ -170,7 +172,9 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 	}
 
 	public String getTi_fonte() {
-		if (TIPO_REALE.equals(getTi_origine()))
+		if (this.isTipoPluriennale())
+			return TIPO_GESTIONALE.concat(getTi_aggregazione());
+		else if (TIPO_REALE.equals(getTi_origine()))
 			return getTi_stampa().concat(getTi_aggregazione());
 		return TIPO_PROVVISORIO.concat(getTi_aggregazione());
 	}
@@ -223,5 +227,41 @@ public class Stampa_pdgp_bilancioBulk extends OggettoBulk {
 	
 	public void setTi_parte(String ti_parte) {
 		this.ti_parte = ti_parte;
+	}
+
+	public boolean isTipoDecisionale() {
+		return Stampa_pdgp_bilancioBulk.TIPO_DECISIONALE.equals(this.getTi_stampa());
+	}
+
+	public boolean isTipoGestionale() {
+		return Stampa_pdgp_bilancioBulk.TIPO_GESTIONALE.equals(this.getTi_stampa());
+	}
+
+	public boolean isTipoPluriennale() {
+		return Stampa_pdgp_bilancioBulk.TIPO_PLURIENNALE.equals(this.getTi_stampa());
+	}
+
+	public boolean isPartePrima() {
+		return Stampa_pdgp_bilancioBulk.TIPO_PARTE_PRIMA.equals(this.getTi_parte());
+	}
+
+	public boolean isParteSeconda() {
+		return Stampa_pdgp_bilancioBulk.TIPO_PARTE_SECONDA.equals(this.getTi_parte());
+	}
+
+	public boolean isTipoGestioneEntrata() {
+		return Stampa_pdgp_bilancioBulk.TIPO_GESTIONE_ENTRATA.equals(this.getTi_gestione());
+	}
+
+	public boolean isTipoGestioneSpesa() {
+		return Stampa_pdgp_bilancioBulk.TIPO_GESTIONE_SPESA.equals(this.getTi_gestione());
+	}
+
+	public boolean isTipoAggregazioneScientifica() {
+		return Stampa_pdgp_bilancioBulk.TIPO_SCIENTIFICO.equals(this.getTi_aggregazione());
+	}
+
+	public boolean isTipoAggregazioneFinanziaria() {
+		return Stampa_pdgp_bilancioBulk.TIPO_FINANZIARIO.equals(this.getTi_aggregazione());
 	}
 }

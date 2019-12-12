@@ -24,10 +24,13 @@
 package it.cnr.contab.prevent01.action;
 
 import it.cnr.contab.prevent01.bp.StampaPdgpBilancioBP;
+import it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.util.action.OptionBP;
+
+import java.util.Optional;
 
 /**
  * @author mspasiano
@@ -58,7 +61,7 @@ public class StampaPdgpBilancioAction extends it.cnr.contab.reports.action.Param
 			return handleException(context, ex);
 		}
 	}
-	
+
 	public Forward doOnTipoAggregazioneChange(ActionContext context) {
 		try{
 			StampaPdgpBilancioBP  bp = (StampaPdgpBilancioBP)context.getBusinessProcess();
@@ -73,7 +76,22 @@ public class StampaPdgpBilancioAction extends it.cnr.contab.reports.action.Param
 			return handleException(context, ex);
 		}
 	}
-	
+
+	public Forward doOnTipoBilancioChange(ActionContext context) {
+		try{
+			StampaPdgpBilancioBP  bp = (StampaPdgpBilancioBP)context.getBusinessProcess();
+			fillModel(context);
+			Optional<Stampa_pdgp_bilancioBulk> optModel = Optional.ofNullable(bp.getModel()).filter(Stampa_pdgp_bilancioBulk.class::isInstance)
+					.map(Stampa_pdgp_bilancioBulk.class::cast);
+			if (optModel.map(Stampa_pdgp_bilancioBulk::isTipoPluriennale).isPresent())
+				optModel.get().setTi_origine(Stampa_pdgp_bilancioBulk.TIPO_REALE);
+
+			return context.findDefaultForward();
+		}catch(it.cnr.jada.bulk.FillException ex){
+			return handleException(context, ex);
+		}
+	}
+
 	public Forward doAggiornaPrevisioneAC(ActionContext context) 
 	{
 		try {

@@ -18,6 +18,7 @@
 package it.cnr.contab.prevent01.bp;
 
 import java.util.Enumeration;
+import java.util.Optional;
 
 import it.cnr.contab.config00.pdcfin.cla.bulk.Parametri_livelliBulk;
 import it.cnr.contab.prevent01.bulk.Stampa_pdgp_bilancioBulk;
@@ -59,7 +60,7 @@ public class StampaPdgpBilancioBP extends ParametricPrintBP {
 			if (oggettoBulk instanceof Stampa_pdgp_bilancioBulk) {
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_stampa(Stampa_pdgp_bilancioBulk.TIPO_DECISIONALE);				
-				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_aggregazione(Stampa_pdgp_bilancioBulk.TIPO_SCIENTIFICO);				
+				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_aggregazione(Stampa_pdgp_bilancioBulk.TIPO_FINANZIARIO);
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_origine(Stampa_pdgp_bilancioBulk.TIPO_PROVVISORIO);				
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_gestione(Stampa_pdgp_bilancioBulk.TIPO_GESTIONE_ENTRATA);
 				((Stampa_pdgp_bilancioBulk) oggettoBulk).setTi_parte(Stampa_pdgp_bilancioBulk.TIPO_PARTE_ENTRAMBE);
@@ -90,13 +91,20 @@ public class StampaPdgpBilancioBP extends ParametricPrintBP {
 	
 			int index = 1;
 				
-			if (Stampa_pdgp_bilancioBulk.TIPO_GESTIONE_SPESA.equals(stampa.getTi_gestione()) &&
-				Stampa_pdgp_bilancioBulk.TIPO_SCIENTIFICO.equals(stampa.getTi_aggregazione())) {
+			if (Optional.ofNullable(stampa)
+					.filter(Stampa_pdgp_bilancioBulk::isTipoGestioneSpesa)
+					.filter(Stampa_pdgp_bilancioBulk::isTipoAggregazioneScientifica)
+					.isPresent()) {
 				livelliOptions.put(index++, "Programma");
 				livelliOptions.put(index++, "Missione");
 			}
 				
-			if (Stampa_pdgp_bilancioBulk.TIPO_GESTIONE_ENTRATA.equals(stampa.getTi_gestione())) {
+			if (Optional.ofNullable(stampa)
+					.filter(Stampa_pdgp_bilancioBulk::isTipoGestioneEntrata)
+					.isPresent()) {
+
+				stampa.setTi_aggregazione(Stampa_pdgp_bilancioBulk.TIPO_FINANZIARIO);
+
 				if (parliv.getDs_livello1e()!=null)
 					livelliOptions.put(index++, parliv.getDs_livello1e());
 				if (parliv.getDs_livello2e()!=null)
@@ -158,7 +166,8 @@ public class StampaPdgpBilancioBP extends ParametricPrintBP {
 	
 	public boolean isStampaRendicontoGestionale() {
 		return isStampaRendiconto() &&
-				Stampa_pdgp_bilancioBulk.TIPO_GESTIONALE.equals(((Stampa_pdgp_bilancioBulk)this.getModel()).getTi_stampa());
+				Optional.ofNullable(this.getModel()).filter(Stampa_pdgp_bilancioBulk.class::isInstance).map(Stampa_pdgp_bilancioBulk.class::cast)
+					.map(Stampa_pdgp_bilancioBulk::isTipoGestionale).orElse(Boolean.FALSE);
 	}
 
 	@Override
@@ -171,17 +180,20 @@ public class StampaPdgpBilancioBP extends ParametricPrintBP {
 	
 	@Override
 	public String getReportName() {
+		Optional<Stampa_pdgp_bilancioBulk> optOggettoBulk = Optional.ofNullable(this.getModel()).filter(Stampa_pdgp_bilancioBulk.class::isInstance).map(Stampa_pdgp_bilancioBulk.class::cast);
 		if (this.isStampaRendiconto()) {
-			Stampa_pdgp_bilancioBulk oggettoBulk = (Stampa_pdgp_bilancioBulk)this.getModel();
-			if (Stampa_pdgp_bilancioBulk.TIPO_DECISIONALE.equals(oggettoBulk.getTi_stampa()))
+			if (optOggettoBulk.map(Stampa_pdgp_bilancioBulk::isTipoDecisionale).orElse(Boolean.FALSE))
 				return "/preventivo/preventivo/stampa_pdg_renddec.jasper";
-			else if (Stampa_pdgp_bilancioBulk.TIPO_PARTE_PRIMA.equals(oggettoBulk.getTi_parte()))
+			else if (optOggettoBulk.map(Stampa_pdgp_bilancioBulk::isPartePrima).orElse(Boolean.FALSE))
 				return "/preventivo/preventivo/stampa_pdg_rendges_competenza.jasper";
-			else if (Stampa_pdgp_bilancioBulk.TIPO_PARTE_SECONDA.equals(oggettoBulk.getTi_parte()))
+			else if (optOggettoBulk.map(Stampa_pdgp_bilancioBulk::isParteSeconda).orElse(Boolean.FALSE))
 				return "/preventivo/preventivo/stampa_pdg_rendges_residui.jasper";
 			else 
 				return "/preventivo/preventivo/stampa_pdg_rendges_all.jasper";
-		} else
+		}
+		else if (optOggettoBulk.map(Stampa_pdgp_bilancioBulk::isTipoPluriennale).orElse(Boolean.FALSE))
+			return "/preventivo/preventivo/stampa_pdgp_bilancio_pluriennale.jasper";
+		else
 			return "/preventivo/preventivo/stampa_pdgp_bilancio.jasper";
 	}
 }

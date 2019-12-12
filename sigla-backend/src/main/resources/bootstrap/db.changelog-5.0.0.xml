@@ -2729,4 +2729,17 @@ TRASPORTO_AEREO"/>
                         columnName="cms_node_ref"
                         newDataType="VARCHAR(2000)" />
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="nuova_stampa_bilancio_pluriennale">
+        <insert tableName="print_priority">
+            <column name="report_name" type="VARCHAR(1500)" value="/preventivo/preventivo/stampa_pdgp_bilancio_pluriennale.jasper"/>
+            <column name="priority" type="SMALLINT"  value="1" />
+            <column name="ds_report" type="VARCHAR(300)" value="Stampa Bilancio Pluriennale"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

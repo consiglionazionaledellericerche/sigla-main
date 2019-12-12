@@ -44,7 +44,7 @@
         keysProperty="ti_stampaKeys"
         nullable="false"
         enabledOnSearch="true"
-        command="doDefault"
+		command="doOnTipoBilancioChange"
         layout="HORIZONTAL"
         label="Tipo Bilancio" />
 	<fieldProperty
@@ -146,7 +146,45 @@
 			paramNameJR="RIEPILOGO"
 			paramTypeJR="java.lang.String" />	
 	</printForm>
-	
+
+	<printForm
+			name="/preventivo/preventivo/stampa_pdgp_bilancio_pluriennale.jasper">
+		<printFieldProperty
+				name="esercizio"
+				parameterPosition="0"
+				parameterType="STRING"
+				paramNameJR="P_ESERCIZIO"
+				paramTypeJR="java.lang.Integer" />
+		<printFieldProperty
+				name="ti_gestione"
+				property="ti_gestione"
+				parameterPosition="2"
+				parameterType="STRING"
+				paramNameJR="P_TIPO"
+				paramTypeJR="java.lang.String" />
+		<printFieldProperty
+				name="ti_fonte"
+				property="ti_fonte"
+				parameterPosition="3"
+				parameterType="STRING"
+				paramNameJR="P_FONTE"
+				paramTypeJR="java.lang.String" />
+		<printFieldProperty
+				name="nr_livello"
+				property="nr_livello"
+				parameterPosition="4"
+				parameterType="INTEGER"
+				paramNameJR="P_NUM_LIV"
+				paramTypeJR="java.lang.Integer" />
+		<printFieldProperty
+				name="riepilogo"
+				property="riepilogo"
+				parameterPosition="3"
+				parameterType="STRING"
+				paramNameJR="RIEPILOGO"
+				paramTypeJR="java.lang.String" />
+	</printForm>
+
 	<printForm
 		name="/preventivo/preventivo/stampa_pdg_renddec.jasper">
 		<printFieldProperty 

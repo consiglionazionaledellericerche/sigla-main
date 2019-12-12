@@ -2,7 +2,7 @@
 --  DDL for View V_STAMPA_BILANCIO_PREVDEC
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_STAMPA_BILANCIO_PREVDEC" ("FONTE", "ESERCIZIO", "TIPO", "CD_LIVELLO1", "CD_LIVELLO2", "CD_LIVELLO3", "CD_LIVELLO4", "CD_LIVELLO5", "CD_LIVELLO6", "CD_LIVELLO7", "CD_LIVELLO8", "CD_LIVELLO9", "DS_LIVELLO1", "DS_LIVELLO2", "DS_LIVELLO3", "DS_LIVELLO4", "DS_LIVELLO5", "DS_LIVELLO6", "DS_LIVELLO7", "DS_LIVELLO8", "DS_LIVELLO9", "IM_RESIDUI_AC", "IM_PREVISIONE_AC", "IM_CASSA_AC", "IM_RESIDUI_AP", "IM_PREVISIONE_AP", "IM_CASSA_AP") AS 
+  CREATE OR REPLACE FORCE VIEW "V_STAMPA_BILANCIO_PREVDEC" ("FONTE", "ESERCIZIO", "TIPO", "CD_LIVELLO1", "CD_LIVELLO2", "CD_LIVELLO3", "CD_LIVELLO4", "CD_LIVELLO5", "CD_LIVELLO6", "CD_LIVELLO7", "CD_LIVELLO8", "CD_LIVELLO9", "DS_LIVELLO1", "DS_LIVELLO2", "DS_LIVELLO3", "DS_LIVELLO4", "DS_LIVELLO5", "DS_LIVELLO6", "DS_LIVELLO7", "DS_LIVELLO8", "DS_LIVELLO9", "IM_RESIDUI_AC", "IM_PREVISIONE_AC", "IM_CASSA_AC", "IM_RESIDUI_AP", "IM_PREVISIONE_AP", "IM_CASSA_AP", "IM_PREVISIONE_AC2", "IM_PREVISIONE_AC3") AS
   (SELECT   e.fonte, e.esercizio, e.ti_gestione tipo,
              e.cd_missione cd_livello1, e.cd_programma cd_livello2,
              e.cd_livello1 cd_livello3, e.cd_livello2 cd_livello4,
@@ -17,7 +17,9 @@
              e.ds_liv7 ds_livello9, SUM (e.im_residui_ac),
              SUM (e.im_previsione_ac), SUM (e.im_cassa_ac),
              SUM (e.im_residui_ap), SUM (e.im_previsione_ap),
-             SUM (e.im_cassa_ap)
+             SUM (e.im_cassa_ap),
+             SUM (e.im_previsione_ac2),
+             SUM (e.im_previsione_ac3)
         FROM (                           --PARTE SPESE DECISIONALE SCIENTIFICO
               SELECT 'DECSCI' fonte, a.esercizio, c.ti_gestione,
                      NVL (a.cd_missione, 'NDF') cd_missione,
@@ -35,7 +37,9 @@
                      + NVL (a.im_spese_gest_accentrata_est, 0)
                                                              im_previsione_ac,
                      0 im_cassa_ac, 0 im_residui_ap, 
-                     0 im_previsione_ap, 0 im_cassa_ap
+                     0 im_previsione_ap, 0 im_cassa_ap,
+                     NVL (a.im_spese_a2, 0) im_previsione_ac2,
+                     NVL (a.im_spese_a3, 0) im_previsione_ac3
                 FROM pdg_modulo_spese a,
                      v_classificazione_voci_all c,
                      progetto_prev progetto,
@@ -65,7 +69,8 @@
                           then 0
                           else NVL (a.im_pagamenti, 0) 
                      END im_cassa_ac, 0 im_residui_ap, 
-                     0 im_previsione_ap, 0 im_cassa_ap
+                     0 im_previsione_ap, 0 im_cassa_ap,
+                     0 im_previsione_ac2, 0 im_previsione_ac3
                 FROM pdg_modulo_spese_gest a,
                      elemento_voce b,
                      linea_attivita d,
@@ -91,7 +96,8 @@
                      0 im_residui_ac,
                      NVL (stanziamento_iniziale, 0) im_previsione_ac,
                      0 im_cassa_ac, 0 im_residui_ap, 
-                     0 im_previsione_ap, 0 im_cassa_ap
+                     0 im_previsione_ap, 0 im_cassa_ap,
+                     0 im_previsione_ac2, 0 im_previsione_ac3
                 FROM v_assestato a,
                      elemento_voce b,
                      linea_attivita d,
@@ -118,7 +124,8 @@
                      NVL (a.im_cassa_ac, 0) im_cassa_ac,
                      NVL (a.im_residui_ap, 0) im_residui_ap,
                      NVL (a.im_previsione_ap, 0) im_previsione_ap,
-                     NVL (a.im_cassa_ap, 0) im_cassa_ap
+                     NVL (a.im_cassa_ap, 0) im_cassa_ap,
+                     0 im_previsione_ac2, 0 im_previsione_ac3
                 FROM pdg_dati_stampa_bilancio_temp a,
                      elemento_voce b,
                      v_classificazione_voci_all c
@@ -141,7 +148,8 @@
                           then NVL (a.im_cassa_ac, 0)
                           else 0
                      END im_cassa_ac,
-                     0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
+                     0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
+                     0 im_previsione_ac2, 0 im_previsione_ac3
                 FROM pdg_dati_stampa_bilancio a,
                      elemento_voce b,
                      v_classificazione_voci_all c,
@@ -162,7 +170,8 @@
                      c.ds_liv2, c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6,
                      c.ds_liv7, 0 im_residui_ac, 0 im_previsione_ac,
                      0 im_cassa_ac, NVL (a.im_residuo_ap, 0) im_residui_ap,
-                     0 im_previsione_ap, 0 im_cassa_ap
+                     0 im_previsione_ap, 0 im_cassa_ap,
+                     0 im_previsione_ac2, 0 im_previsione_ac3
                 FROM (SELECT saldi.esercizio + 1 esercizio, saldi.ti_gestione,
                              NVL
                                 ((SELECT cd_elemento_voce_new
@@ -227,7 +236,9 @@
              + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_previsione_ac,
-             0 im_cassa_ac, 0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
+             0 im_cassa_ac, 0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
+             NVL (SUM (a.im_spese_a2), 0) im_previsione_ac2,
+             NVL (SUM (a.im_spese_a3), 0) im_previsione_ac3
         FROM pdg_modulo_spese a, v_classificazione_voci_all c
        WHERE a.id_classificazione = c.id_classificazione
     GROUP BY a.esercizio,
@@ -257,7 +268,9 @@
                   0
                  ) im_previsione_ac,
              0 im_cassa_ac, 0 im_residui_ap, 
-             0 im_previsione_ap, 0 im_cassa_ap
+             0 im_previsione_ap, 0 im_cassa_ap,
+             NVL (SUM (a.im_entrata_a2), 0) im_previsione_ac2,
+             NVL (SUM (a.im_entrata_a3), 0) im_previsione_ac3
         FROM pdg_modulo_entrate a, v_classificazione_voci_all c
        WHERE a.id_classificazione = c.id_classificazione
     GROUP BY a.esercizio,
@@ -291,7 +304,8 @@
                             then 0
                             else NVL(a.im_pagamenti, 0)
                        END), 0) im_cassa_ac, 0 im_residui_ap, 
-             0 im_previsione_ap, 0 im_cassa_ap
+             0 im_previsione_ap, 0 im_cassa_ap,
+             0 im_previsione_ac2, 0 im_previsione_ac3
         FROM pdg_modulo_spese_gest a,
              elemento_voce b,
              v_classificazione_voci_all c,
@@ -328,7 +342,8 @@
              NULL, 0 im_residui_ac,
              NVL (SUM (a.im_entrata), 0) im_previsione_ac, 
              NVL (SUM (a.im_incassi), 0) im_cassa_ac,
-             0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
+             0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
+             0 im_previsione_ac2, 0 im_previsione_ac3
         FROM pdg_modulo_entrate_gest a,
              elemento_voce b,
              v_classificazione_voci_all c
@@ -363,7 +378,8 @@
              NULL, 0 im_residui_ac,
              NVL (SUM (stanziamento_iniziale), 0) im_previsione_ac,
              0 im_cassa_ac, 0 im_residui_ap, 
-             0 im_previsione_ap, 0 im_cassa_ap
+             0 im_previsione_ap, 0 im_cassa_ap,
+             0 im_previsione_ac2, 0 im_previsione_ac3
         FROM v_assestato a, elemento_voce b, v_classificazione_voci_all c
        WHERE a.esercizio_res = a.esercizio
          AND a.esercizio = b.esercizio
@@ -398,7 +414,8 @@
              NVL (SUM (a.im_cassa_ac), 0) im_cassa_ac,
              NVL (SUM (a.im_residui_ap), 0) im_residui_ap,
              NVL (SUM (a.im_previsione_ap), 0) im_previsione_ap, 
-             NVL (SUM (a.im_cassa_ap), 0) im_cassa_ap
+             NVL (SUM (a.im_cassa_ap), 0) im_cassa_ap,
+             0 im_previsione_ac2, 0 im_previsione_ac3
         FROM pdg_dati_stampa_bilancio_temp a,
              elemento_voce b,
              v_classificazione_voci_all c
@@ -434,7 +451,8 @@
                             then NVL(a.im_cassa_ac, 0)
                             else 0
                        END), 0) im_cassa_ac,
-             0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap
+             0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
+             0 im_previsione_ac2, 0 im_previsione_ac3
         FROM pdg_dati_stampa_bilancio a,
              elemento_voce b,
              v_classificazione_voci_all c,
@@ -468,7 +486,8 @@
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, 0 im_residui_ac, 0 im_previsione_ac, 0 im_cassa_ac,
              NVL (SUM (im_residuo_ap), 0) im_residui_ap, 
-             0 im_previsione_ap, 0 im_cassa_ap
+             0 im_previsione_ap, 0 im_cassa_ap,
+             0 im_previsione_ac2, 0 im_previsione_ac3
         FROM (SELECT saldi.esercizio + 1 esercizio, saldi.ti_gestione,
                      NVL ((SELECT cd_elemento_voce_new
                              FROM ass_evold_evnew
