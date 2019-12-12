@@ -26,6 +26,7 @@
 		inputType="TEXT"
 		inputSize="5"
 		maxLength="5"
+		enabledOnEdit="false"
 		enabledOnSearch="true"
 		nullable="false"
 		label="Codice" />
@@ -40,12 +41,19 @@
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
-		name="fl_pubblica_contratto"
+		name="fl_pubblica_contrattoRO"
 		property="fl_pubblica_contratto"
 		inputType="CHECKBOX"
 		enabledOnSearch="true"
 		enabledOnInsert="false"
 		enabledOnEdit="false"
+		nullable="false"
+		label="Pubblica contratti stipulati" />
+	<fieldProperty
+		name="fl_pubblica_contratto"
+		property="fl_pubblica_contratto"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
 		nullable="false"
 		label="Pubblica contratti stipulati" />
 	<fieldProperty
@@ -62,7 +70,7 @@
 		property="tipo_associazione"
 		inputType="SELECT"
 		enabledOnInsert = "true"
-		enabledOnEdit = "true"
+		enabledOnEdit = "false"
 		enabledOnSearch = "true"
 		keysProperty="tipiAssociazioneKeys"
 		label="Tipo Associazione" />
@@ -71,21 +79,25 @@
 		property="tipologia"
 		inputType="SELECT"
 		enabledOnInsert = "true"
-		enabledOnEdit = "true"
+		enabledOnEdit = "false"
 		enabledOnSearch = "true"
 		keysProperty="tipologieKeys"
-		label="Tipologie" />
+		label="Tipologia" />
 
 	<formFieldProperty
 		name="cd_tipo_attivita" />
 	<formFieldProperty
 		name="ds_tipo_attivita" />
+	<formFieldProperty
+		name="fl_pubblica_contrattoRO" />
 	<formFieldProperty
 		name="fl_pubblica_contratto" />
 	<formFieldProperty
 		name="fl_cancellato" />
 	<formFieldProperty
 		name="tipo_associazione" />
+	<formFieldProperty
+		name="tipologia" />
 
 	<columnFieldProperty
 		name="cd_tipo_attivita" />
@@ -95,6 +107,8 @@
 		name="fl_pubblica_contratto" />
 	<columnFieldProperty
 		name="fl_cancellato" />
+	<columnFieldProperty
+		name="tipologia" />
 
 	<findFieldProperty
 		name="cd_tipo_attivita" />
@@ -106,6 +120,8 @@
 		name="fl_cancellato" />
 	<findFieldProperty
 		name="tipo_associazione" />
+	<findFieldProperty
+		name="tipologia" />
 
 	<form
 		name="searchtool" >

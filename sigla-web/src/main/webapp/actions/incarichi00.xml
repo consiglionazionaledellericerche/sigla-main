@@ -46,8 +46,8 @@
   </action>
 
   <businessProcess
-      name="CRUDConfigTipoAttivitaBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/util/form.jsp"/>
+      name="CRUDConfigTipoAttivitaBP" className="it.cnr.contab.incarichi00.bp.CRUDConfigTipoAttivitaBP">
+    <forward name="default" path="/incarichi00/tipo_attivita.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
 	<init-param name="defaultAction" value="CRUDAction"/>
