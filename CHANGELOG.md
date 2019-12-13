@@ -1,5 +1,21 @@
 # sigla-main Changelog
 
+## Release 6.0.28  -- _December 13, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[3c20b684adca105](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3c20b684adca105) marco.spasiano *December 13, 2019*
+
+>**Nuova Stampa Bilancio Pluriennale**
+>
+>[74b7739b335ad64](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74b7739b335ad64) raffaele.pagano *December 12, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[2b84ac4f782986a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b84ac4f782986a) marco.spasiano *December 12, 2019*
+
+
 ## Release 6.0.27  -- _December 12, 2019_ 
 ### Jira ORA-01722 
 
