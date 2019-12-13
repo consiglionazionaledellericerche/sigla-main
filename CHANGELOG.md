@@ -1,11 +1,43 @@
 # sigla-main Changelog
 
-## Release 6.0.28  -- _December 13, 2019_ 
+## Release 6.0.30  -- _December 13, 2019_ 
 ### No issue
 
 >**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
 >
->[3c20b684adca105](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3c20b684adca105) marco.spasiano *December 13, 2019*
+>[2dd51e4c3b89348](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2dd51e4c3b89348) marco.spasiano *December 13, 2019*
+
+>**Escluse le missioni annullate dal numero di missioni da confermare presente al login**
+>
+>[d999778fd0b1d79](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d999778fd0b1d79) gianfranco.gasparro *December 13, 2019*
+
+>**Fix Assunzione impegno su progetto terminato: non consentiva di assumere impegni su progetti terminati anche se la voce di bilancio prevedeva giorni di proroga.**
+>
+>[5c62fd63feb08e4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c62fd63feb08e4) raffaele.pagano *December 13, 2019*
+
+>**FIX ricerca fatture elettroniche**
+>
+>[45b3b2e787aa22c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/45b3b2e787aa22c) marco.spasiano *December 13, 2019*
+
+>**Add log config on project stages**
+>
+>[f8babfea2424a0e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f8babfea2424a0e) marco.spasiano *December 13, 2019*
+
+>**Aggiunto lo stato tramissione al mandato stornato**
+>
+>[0f5ee267cc1902d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f5ee267cc1902d) marco.spasiano *December 13, 2019*
+
+>**Fix Mappe Tipo Attività/Incarico/Limite: corrette anomalie che non consentivano aggiornamento dati**
+>
+>[0ad6a585ec97b61](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ad6a585ec97b61) raffaele.pagano *December 13, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[63b9a5384f47035](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63b9a5384f47035) marco.spasiano *December 13, 2019*
+
+>**Fix Mappa Tipo Attività: corrette anomalie varie che non consentivano inserimento/aggiornamento di nuovi dati**
+>
+>[30dff5c8ff13bd1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30dff5c8ff13bd1) raffaele.pagano *December 12, 2019*
 
 >**Nuova Stampa Bilancio Pluriennale**
 >
@@ -14,6 +46,22 @@
 >**Generate CHANGELOG.md [ci skip]**
 >
 >[2b84ac4f782986a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b84ac4f782986a) marco.spasiano *December 12, 2019*
+
+
+## Release 6.0.29  -- _December 13, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[9202a8d9f366e6b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9202a8d9f366e6b) marco.spasiano *December 13, 2019*
+
+
+## Release 6.0.28  -- _December 13, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[3c20b684adca105](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3c20b684adca105) marco.spasiano *December 13, 2019*
 
 
 ## Release 6.0.27  -- _December 12, 2019_ 
