@@ -48,6 +48,8 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.BulkLoaderIterator;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -353,12 +355,15 @@ public class ToDoResource implements ToDoLocal {
                 }
                 case CRUDMissioneBP: {
                     MissioneBulk missioneBulk = new MissioneBulk();
-                    missioneBulk.setEsercizio(CNRUserContext.getEsercizio(userContext));
-                    missioneBulk.setTi_provvisorio_definitivo(MissioneBulk.SALVA_PROVVISORIO);
+                    CompoundFindClause clause = new CompoundFindClause();
+                    clause.addClause(FindClause.AND, "stato_cofi", SQLBuilder.NOT_EQUALS, MissioneBulk.STATO_ANNULLATO);
+                    clause.addClause(FindClause.AND, "ti_provvisorio_definitivo", SQLBuilder.EQUALS, MissioneBulk.SALVA_PROVVISORIO);
+                    clause.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+
                     BulkLoaderIterator remoteIterator =
                             Optional.ofNullable(missioneComponentSession.cerca(
                                     userContext,
-                                    null,
+                                    clause,
                                     missioneBulk))
                                     .filter(BulkLoaderIterator.class::isInstance)
                                     .map(BulkLoaderIterator.class::cast)
