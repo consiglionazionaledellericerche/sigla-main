@@ -27,6 +27,7 @@
 		inputSize="5"
 		maxLength="5"
 		enabledOnSearch="true"
+		enabledOnEdit="false"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
@@ -41,12 +42,19 @@
 		nullable="false"
 		label="Descrizione" />
 	<fieldProperty
-		name="fl_cancellato"
+		name="fl_cancellatoRO"
 		property="fl_cancellato"
 		inputType="CHECKBOX"
 		enabledOnSearch="true"
 		enabledOnInsert="false"
 		enabledOnEdit="false"
+		nullable="false"
+		label="Eliminato" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
 		nullable="false"
 		label="Eliminato" />
 	<fieldProperty
@@ -61,6 +69,8 @@
 		name="cd_tipo_limite" />
 	<formFieldProperty
 		name="ds_tipo_limite" />
+	<formFieldProperty
+		name="fl_cancellatoRO" />
 	<formFieldProperty
 		name="fl_cancellato" />
 	<formFieldProperty

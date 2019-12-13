@@ -66,6 +66,7 @@ public class Tipo_attivitaBulk extends Tipo_attivitaBase {
 	}
 	public OggettoBulk initializeForInsert(CRUDBP bp, ActionContext context) {
 		super.initializeForInsert(bp, context);
+		setFl_pubblica_contratto(Boolean.FALSE);
 		setFl_cancellato(Boolean.FALSE);
 		return this;
 	}

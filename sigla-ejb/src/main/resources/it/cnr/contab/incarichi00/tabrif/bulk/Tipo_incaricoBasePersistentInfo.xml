@@ -95,8 +95,7 @@
 			columnName="DT_FINE_VALIDITA"
 			propertyName="dt_fine_validita"
 			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />	
+			columnSize="7" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="ds_tipo_incarico" />

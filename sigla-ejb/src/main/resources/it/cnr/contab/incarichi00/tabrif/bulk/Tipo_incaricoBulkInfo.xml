@@ -27,6 +27,7 @@
 		inputSize="5"
 		maxLength="5"
 		enabledOnSearch="true"
+		enabledOnEdit="false"
 		nullable="false"
 		label="Codice" />
 	<fieldProperty
@@ -84,12 +85,19 @@
 		nullable="false"
 		label="Descrizione tipo rapporto" />
 	<fieldProperty
-		name="fl_cancellato"
+		name="fl_cancellatoRO"
 		property="fl_cancellato"
 		inputType="CHECKBOX"
 		enabledOnSearch="true"
 		enabledOnInsert="false"
 		enabledOnEdit="false"
+		nullable="false"
+		label="Eliminato" />
+	<fieldProperty
+		name="fl_cancellato"
+		property="fl_cancellato"
+		inputType="CHECKBOX"
+		enabledOnSearch="true"
 		nullable="false"
 		label="Eliminato" />
 	<fieldProperty
@@ -102,15 +110,22 @@
 		keysProperty="tipiAssociazioneKeys"
 		label="Tipo Associazione" />
 	<fieldProperty
-		name="dt_fine_validita"
+		name="dt_fine_validitaRO"
 		property="dt_fine_validita"
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnSearch="true"
 		enabledOnInsert="false"
 		enabledOnEdit="false"
-		nullable="false"
 		label="Data fine validita" />
+	<fieldProperty
+		name="dt_fine_validita"
+		property="dt_fine_validita"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data fine validita" />
+
 	<formFieldProperty
 		name="cd_tipo_incarico" />
 	<formFieldProperty
@@ -120,15 +135,18 @@
 	<formFieldProperty
 		name="prc_incremento_var" />
 	<formFieldProperty
-		name="prc_incremento" />
-	<formFieldProperty
 		name="find_tipo_rapporto" />
+	<formFieldProperty
+		name="fl_cancellatoRO" />
 	<formFieldProperty
 		name="fl_cancellato" />
 	<formFieldProperty
 		name="tipo_associazione" />
 	<formFieldProperty
+		name="dt_fine_validitaRO" />
+	<formFieldProperty
 		name="dt_fine_validita" />
+
 	<columnFieldProperty
 		name="cd_tipo_incarico" />
 	<columnFieldProperty
@@ -147,6 +165,7 @@
 		name="cd_tipo_rapporto" />
 	<columnFieldProperty
 		name="dt_fine_validita" />
+
 	<findFieldProperty
 		name="cd_tipo_incarico" />
 	<findFieldProperty

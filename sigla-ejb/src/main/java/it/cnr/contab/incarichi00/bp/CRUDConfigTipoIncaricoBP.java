@@ -23,12 +23,12 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 
-public class CRUDConfigTipoAttivitaBP extends it.cnr.jada.util.action.SimpleCRUDBP {
-	public CRUDConfigTipoAttivitaBP() {
+public class CRUDConfigTipoIncaricoBP extends it.cnr.jada.util.action.SimpleCRUDBP {
+	public CRUDConfigTipoIncaricoBP() {
 		super();
 	}
 
-	public CRUDConfigTipoAttivitaBP(String function) {
+	public CRUDConfigTipoIncaricoBP(String function) {
 		super(function);
 	}
 

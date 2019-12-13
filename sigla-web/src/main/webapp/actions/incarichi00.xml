@@ -54,16 +54,16 @@
   </businessProcess>    	      	
 
   <businessProcess
-      name="CRUDConfigTipoIncaricoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/util/form.jsp"/>
+      name="CRUDConfigTipoIncaricoBP" className="it.cnr.contab.incarichi00.bp.CRUDConfigTipoIncaricoBP">
+    <forward name="default" path="/incarichi00/tipo_incarico.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
 	<init-param name="defaultAction" value="CRUDAction"/>
   </businessProcess>    	      	
 
   <businessProcess
-      name="CRUDConfigTipoLimiteBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
-    <forward name="default" path="/util/form.jsp"/>
+      name="CRUDConfigTipoLimiteBP" className="it.cnr.contab.incarichi00.bp.CRUDConfigTipoLimiteBP">
+    <forward name="default" path="/incarichi00/tipo_limite.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.tabrif.bulk.Tipo_limiteBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
 	<init-param name="defaultAction" value="CRUDAction"/>
