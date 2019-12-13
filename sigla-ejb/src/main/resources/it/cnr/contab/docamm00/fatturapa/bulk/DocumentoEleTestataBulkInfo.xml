@@ -1102,12 +1102,24 @@
 		name="prestatoreNome" />
 	<formFieldProperty
 		name="prestatoreCognome" />
-	<findFieldProperty
-		name="idPaese" />
-	<findFieldProperty
-		name="idCodice" />
+
 	<findFieldProperty
 		name="identificativoSdi" />
+	<findFieldProperty
+			name="prestatoreCodice" />
+	<findFieldProperty
+			name="prestatoreCodicefiscale" />
+	<findFieldProperty
+			name="prestatoreDenominazione" />
+	<findFieldProperty
+			name="prestatoreNome" />
+	<findFieldProperty
+			name="prestatoreCognome" />
+	<findFieldProperty
+			name="codiceTerzo"
+			inputType="TEXT"
+			property="documentoEleTrasmissione.prestatore.cd_terzo"
+			label="Codice terzo" />
 	<findFieldProperty
 		name="progressivo" />
 	<findFieldProperty
@@ -1236,11 +1248,7 @@
 		name="motivoRifiuto" />
 	<findFieldProperty
 		name="anomalie" />
-	<findFieldProperty
-		name="codiceTerzo"
-		inputType="TEXT"
-		property="documentoEleTrasmissione.prestatore.cd_terzo"
-		label="Codice terzo" />
+
 	<findFieldProperty
 		name="cdUnitaOrganizzativa"
 		inputType="TEXT"
@@ -1259,22 +1267,20 @@
 		name="statoNotificaEsito"/>	
 	<findFieldProperty
 		name="flIrregistrabile"/>
+
+
 	<findFieldProperty
-		name="prestatoreCodice" />
+			name="idPaese" />
 	<findFieldProperty
-		name="prestatoreCodicefiscale" />
-	<findFieldProperty
-		name="prestatoreDenominazione" />
-	<findFieldProperty
-		name="prestatoreNome" />
-	<findFieldProperty
-		name="prestatoreCognome" />
+			name="idCodice" />
+
+
 
 	<columnFieldProperty
 		name="idCodice" />
 	<columnFieldProperty
-		name="denominzionePrestatore" 
-		property="documentoEleTrasmissione.denominzionePrestatore"
+		name="denominazionePrestatore"
+		property="documentoEleTrasmissione.prestatoreDenominazione"
 		label="Denominazione Prestatore"/>
 	<columnFieldProperty
 		name="identificativoSdi" />	
