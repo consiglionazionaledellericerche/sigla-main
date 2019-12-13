@@ -31,6 +31,20 @@ thorntail:
         level: ERROR
       io.undertow.servlet:
         level: ERROR
+    root-logger:
+      handlers:
+        - CONSOLE
+        - FILE
+    pattern-formatters:
+      LOG_FORMATTER:
+        pattern: "%p [%c] %s%e%n"
+    periodic-rotating-file-handlers:
+      FILE:
+        file:
+          path: log/sigla.log
+        suffix: .yyyy-MM-dd
+        named-formatter: LOG_FORMATTER
+        level: INFO
   management:
     http-interface-management-interface:
       security-realm: ManagementRealm
