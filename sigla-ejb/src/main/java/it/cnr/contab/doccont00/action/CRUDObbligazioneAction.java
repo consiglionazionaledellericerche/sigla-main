@@ -1042,7 +1042,7 @@ public Forward handleException(ActionContext context, Throwable ex)
 												.filter(el->el.compareTo(0)>0)
 												.orElse(0);
 
-						localDateFineProgetto.plusDays(ggProroga);
+						localDateFineProgetto = localDateFineProgetto.plusDays(ggProroga);
 
 						if (localDateFineProgetto.isBefore(obbligazione.getDt_registrazione().toLocalDateTime().toLocalDate()))
 							throw new ApplicationMessageFormatException("Attenzione! GAE {0} non selezionabile. "

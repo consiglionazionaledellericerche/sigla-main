@@ -285,7 +285,7 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 											.filter(el->el.compareTo(0)>0)
 											.orElse(0);
 
-					localDateFineProgetto.plusDays(ggProroga);
+					localDateFineProgetto = localDateFineProgetto.plusDays(ggProroga);
 
 					if (localDateFineProgetto.isBefore(EJBCommonServices.getServerDate().toLocalDateTime().toLocalDate()))
 						throw new ApplicationMessageFormatException("Attenzione! Aumento importo GAE {0} non consentito. "
