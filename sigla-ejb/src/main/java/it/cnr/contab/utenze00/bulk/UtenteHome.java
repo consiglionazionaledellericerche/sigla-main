@@ -36,6 +36,7 @@ import it.cnr.jada.persistency.sql.*;
 
 public class UtenteHome extends BulkHome {
 
+
 	final static String TIPO_COMUNE = "U";
 	final static String TIPO_AMMINISTRATORE = "A";
 	final static String TIPO_SUPERUTENTE = "S";		
