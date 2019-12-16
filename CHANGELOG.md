@@ -1,5 +1,37 @@
 # sigla-main Changelog
 
+## Release 6.0.31  -- _December 16, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[42add0e7a55dcda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/42add0e7a55dcda) marco.spasiano *December 16, 2019*
+
+>**FIX NullPointerException on removeDetail**
+>
+>[92bb1a0ee52d9ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/92bb1a0ee52d9ab) marco.spasiano *December 16, 2019*
+
+>**Fix Ribaltamento Numeratori Residui Impropri: inserito automatismo inizializzazione valore allapertura nuovo anno.**
+>
+>[0252640f98c2726](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0252640f98c2726) raffaele.pagano *December 16, 2019*
+
+>**Giornaliera di Cassa non prendeva in considerazione l'importo delle ritenute**
+>
+>[ab67fed68ca6f83](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ab67fed68ca6f83) marco.spasiano *December 16, 2019*
+
+>**FIX modifica importo SIOPE sulla variazione al Mandato**
+>
+>[51818dcf94bd562](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51818dcf94bd562) marco.spasiano *December 16, 2019*
+
+>**Fix Liquidazione: in fase di liquidazione mese di dicembre la UO di versamento utilizzata è quella dellanno di liquidazione e non dellanno di esercizio.**
+>
+>[76d4730469dfbc6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/76d4730469dfbc6) raffaele.pagano *December 16, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[43145f7b85de0d8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/43145f7b85de0d8) marco.spasiano *December 13, 2019*
+
+
 ## Release 6.0.30  -- _December 13, 2019_ 
 ### No issue
 
