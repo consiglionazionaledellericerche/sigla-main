@@ -52,4 +52,9 @@ public class CRUDMandatoVariazioneBP extends CRUDMandatoBP {
             throw handleException(e);
         }
     }
+
+    @Override
+    public boolean isInputReadonly() {
+        return false;
+    }
 }
