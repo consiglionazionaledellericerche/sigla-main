@@ -328,12 +328,39 @@
 	 NULL;
 	end;
 
+    declare
+      pLastResimpro number;
+      pIncremento NUMBER := 10000000;
+      pFirst NUMBER := 9000000001;
+      conta NUMBER := 1;
     begin
+      Select max(primo) into pLastResimpro
+      from NUMERAZIONE_DOC_CONT
+      where ESERCIZIO = aEsercizio-1
+      and   CD_TIPO_DOCUMENTO_CONT = TI_DOC_OBB_RES_IMPRO;
+
+      If pLastResimpro IS null THEN
+        pLastResimpro := pFirst;
+      Else
+        pLastResimpro := pLastResimpro + pIncremento;
+      End If;
+
+      While conta>0 Loop
+        SELECT count(0) INTO conta
+        FROM NUMERAZIONE_DOC_CONT
+        where CD_TIPO_DOCUMENTO_CONT = TI_DOC_OBB_RES_IMPRO
+        AND   primo BETWEEN pLastResimpro AND pLastResimpro+pIncremento-1;
+
+        If CONTA > 0 THEN
+          pLastResimpro := pLastResimpro + pIncremento;
+        End If;
+      End Loop;
+
       aNewNum.ESERCIZIO:=aEsercizio;
       aNewNum.CD_CDS:=aCdCds;
       aNewNum.CD_TIPO_DOCUMENTO_CONT:=TI_DOC_OBB_RES_IMPRO;
-      aNewNum.PRIMO:=FIRST_DOC_CDS_RESIM;
-      aNewNum.CORRENTE:=FIRST_DOC_CDS_RESIM-1;
+      aNewNum.PRIMO:=pLastResimpro;
+      aNewNum.CORRENTE:=pLastResimpro-1;
       aNewNum.ULTIMO:=LAST_DOC_CDS_RESIM;
       aNewNum.UTCR:=aTSNow;
       aNewNum.DACR:=aTSNow;
