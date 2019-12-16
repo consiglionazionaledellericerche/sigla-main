@@ -80,6 +80,7 @@ public class CRUDMandatoRigaController extends it.cnr.jada.util.action.SimpleDet
                 Optional.ofNullable(getParentModel())
                     .filter(MandatoBulk.class::isInstance)
                     .map(MandatoBulk.class::cast)
+                    .filter(mandatoBulk -> Optional.ofNullable(mandatoBulk.getStatoVarSos()).isPresent())
                     .map(mandatoBulk -> mandatoBulk.getStatoVarSos().equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
                     .orElse(Boolean.FALSE)){
             rigaDaCancellare.setToBeDeleted();
