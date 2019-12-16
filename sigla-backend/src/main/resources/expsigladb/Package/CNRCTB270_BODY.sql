@@ -333,6 +333,8 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
  Begin
    Dbms_Output.put_line('generaVariazioneBilancio');
 
+   aEsDefault := to_char(aLiquidIva.dt_inizio, 'YYYY');
+
    -- Estrazione del CDR della UO di versamento iva
    aCDRUO := CNRCTB020.getCDRResponsabileUO(aCdUo);
 
@@ -340,15 +342,13 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
    aLASpecVersIva := getLASPECVERSIVA(aEs, aCDRUO);
 
    -- Estrazione del CDR SAC di versamento iva
-
-   aCDRUOVERSIVA := getCDRUOVERSIVA(aEs);
+   --Viene recuperato sempre la UO dell'anno di liquidazione
+   aCDRUOVERSIVA := getCDRUOVERSIVA(aEsDefault);
 
    -- Estrazione della linea di attività  SAC da utilizzare per la creazione della variazione
    aLASpecVersIvaSac := getLASPECVERSIVASAC(aEs, aCDRUOVERSIVA);
 
    aIvaResiduaDaVersare := abs(aLiquidIva.iva_da_versare);
-
-   aEsDefault := to_char(aLiquidIva.dt_inizio, 'YYYY');
 
    Dbms_Output.put_line('1. aIvaResiduaDaVersare: '||aIvaResiduaDaVersare);
 
