@@ -4,10 +4,10 @@
 
 publiccodeYmlVersion: '0.2'
 name: sigla
-releaseDate: '2019-12-16'
+releaseDate: '2019-12-17'
 url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
 applicationSuite: jada
-softwareVersion: 6.0.31
+softwareVersion: 6.1.0
 developmentStatus: stable
 softwareType: standalone/web
 platforms:
