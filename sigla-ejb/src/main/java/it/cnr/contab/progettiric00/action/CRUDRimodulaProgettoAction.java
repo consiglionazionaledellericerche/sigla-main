@@ -641,4 +641,39 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 			return handleException(context,e);
 		}
 	}
+
+	/**
+	 * Gestione della richiesta di riportare in provvisorio una rimodulazione definitiva
+	 *
+	 * @param context	L'ActionContext della richiesta
+	 * @return Il Forward alla pagina di risposta
+	 */
+	public Forward doRiportaProvvisorio(ActionContext context) {
+		try {
+			fillModel(context);
+			RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
+			bp.completeSearchTools(context, bp);
+			bp.validate(context);
+			return openConfirm(context, "Attenzione! Si vuole procedere a riassegnare lo stato 'Provvisorio' alla rimodulazione?", OptionBP.CONFIRM_YES_NO, "doConfirmRiportaProvvisorio");
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+	}
+
+	public Forward doConfirmRiportaProvvisorio(ActionContext context,int option) {
+		try
+		{
+			if ( option == OptionBP.YES_BUTTON)
+			{
+				RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(context);
+				bp.riportaProvvisorio(context);
+				setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
+			}
+			return context.findDefaultForward();
+		}
+		catch(Throwable e)
+		{
+			return handleException(context,e);
+		}
+	}
 }

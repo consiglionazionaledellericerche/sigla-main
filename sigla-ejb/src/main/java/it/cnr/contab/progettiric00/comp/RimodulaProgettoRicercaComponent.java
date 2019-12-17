@@ -1001,4 +1001,24 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		rimodulazione.setToBeUpdated();
 		return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 	}
+
+	public Progetto_rimodulazioneBulk riportaProvvisorio(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		Optional.of(rimodulazione).filter(el->el.isStatoDefinitivo())
+				.orElseThrow(()->new ApplicationException("Operazione non possibile! Lo stato provvisorio può essere riassegnato solo a rimodulazioni in stato definitivo!"));
+
+		rimodulazione.setStato(StatoProgettoRimodulazione.STATO_PROVVISORIO.value());
+		rimodulazione.setDtStatoDefinitivo(null);
+		rimodulazione.setToBeUpdated();
+		rimodulazione = (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
+
+		rimodulazione.getArchivioAllegati().stream()
+				.filter(AllegatoProgettoRimodulazioneBulk.class::isInstance)
+				.map(AllegatoProgettoRimodulazioneBulk.class::cast)
+				.filter(AllegatoProgettoRimodulazioneBulk::isStampaAutomatica)
+				.forEach(el->{
+					SpringUtil.getBean("storeService", StoreService.class).delete(el.getStorageKey());
+				});
+
+		return rimodulazione;
+	}
 }
