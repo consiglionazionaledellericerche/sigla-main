@@ -744,7 +744,10 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 				rimodulazione = (Progetto_rimodulazioneBulk)this.creaConBulk(userContext, rimodulazione);
 			else
 				rimodulazione = (Progetto_rimodulazioneBulk)this.modificaConBulk(userContext, rimodulazione);
-	
+
+			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio)
+					.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato definitivo può essere assegnato solo a rimodulazioni in stato provvisorio!"));
+
 			validaStatoDefinitivoRimodulazione(userContext, rimodulazione);
 
 			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
@@ -947,9 +950,6 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			   			}
 			   		});
        		
-			Optional.of(rimodulazione).filter(Progetto_rimodulazioneBulk::isStatoProvvisorio)
-			.orElseThrow(()->new ApplicationRuntimeException("Operazione non possibile! Lo stato definitivo può essere assegnato solo a rimodulazioni in stato provvisorio!"));
-
 			if (!rimodulazione.getDettagliRimodulazione().isEmpty() || !rimodulazione.getDettagliVoceRimodulazione().isEmpty() ||
 				rimodulazione.isRimodulatoImportoFinanziato() || rimodulazione.isRimodulatoImportoCofinanziato())
 				rimodulazione.getArchivioAllegati().stream()
@@ -986,5 +986,19 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
+	}
+
+	public Progetto_rimodulazioneBulk riportaDefinitivo(UserContext userContext, Progetto_rimodulazioneBulk rimodulazione) throws ComponentException {
+		Optional.of(rimodulazione).filter(el->el.isStatoRespinto()||el.isStatoValidato())
+				.orElseThrow(()->new ApplicationException("Operazione non possibile! Lo stato definitivo può essere riassegnato solo a rimodulazioni in stato validato o respinto!"));
+
+		Optional.of(rimodulazione).flatMap(el -> Optional.ofNullable(el.getVariazioniAssociate())).filter(el -> el.isEmpty())
+				.orElseThrow(()->new ApplicationException("Operazione non possibile! Lo stato definitivo non può essere riassegnato a rimodulazioni già associate a variazioni di bilancio!"));
+
+		validaStatoDefinitivoRimodulazione(userContext, rimodulazione);
+
+		rimodulazione.setStato(StatoProgettoRimodulazione.STATO_DEFINITIVO.value());
+		rimodulazione.setToBeUpdated();
+		return (Progetto_rimodulazioneBulk)super.modificaConBulk(userContext, rimodulazione);
 	}
 }

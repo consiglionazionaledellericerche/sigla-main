@@ -316,7 +316,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 
     protected it.cnr.jada.util.jsp.Button[] createToolbar() {
 		Button[] toolbar = super.createToolbar();
-		Button[] newToolbar = new Button[ toolbar.length + 3];
+		Button[] newToolbar = new Button[ toolbar.length + 4];
 
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
@@ -324,6 +324,7 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		newToolbar[ i ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.definitiveSave");
 		newToolbar[i+1] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.valida");
 		newToolbar[i+2] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.respingi");
+		newToolbar[i+3] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.riportaDefinitivo");
         return newToolbar;
     }
     
@@ -622,6 +623,25 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
                 ((Progetto_rimodulazioneBulk) getModel()).isStatoProvvisorio();
     }
 
+	/**
+	 * Restituisce il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 * Il bottone di SalvaDefinitivo è disponibile solo se:
+	 * - la proposta è provvisoria
+	 * - il CDR è di 1° Livello
+	 *
+	 * @return Il valore della proprietà 'salvaDefinitivoButtonEnabled'
+	 */
+	public boolean isRiportaDefinitivoButtonHidden() {
+		Optional<Progetto_rimodulazioneBulk> optModel =
+				Optional.ofNullable(this.getModel())
+						.filter(Progetto_rimodulazioneBulk.class::isInstance)
+						.map(Progetto_rimodulazioneBulk.class::cast);
+
+		return optModel.filter(el->!el.isStatoValidato()&&!el.isStatoRespinto()).isPresent() ||
+				optModel.flatMap(el->Optional.ofNullable(el.getVariazioniAssociate())).filter(el->!el.isEmpty()).isPresent() ||
+				!uoScrivania.isUoEnte();
+	}
+
     /**
      * Restituisce il valore della proprietà 'validaButtonHidden'
      * Il bottone di Valida è disponibile solo se:
@@ -715,7 +735,26 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
             throw handleException(ex);
         }
     }
-    
+
+	/**
+	 * Gestione del salvataggio come respinta di una variazione
+	 *
+	 * @param context L'ActionContext della richiesta
+	 * @throws BusinessProcessException
+	 */
+	public void riportaDefinitivo(ActionContext context) throws it.cnr.jada.action.BusinessProcessException, ValidationException {
+		try {
+			this.save(context);
+			RimodulaProgettoRicercaComponentSession comp = (RimodulaProgettoRicercaComponentSession) createComponentSession();
+			Progetto_rimodulazioneBulk bulk = comp.riportaDefinitivo(context.getUserContext(), (Progetto_rimodulazioneBulk) getModel());
+			edit(context, bulk);
+		} catch (it.cnr.jada.comp.ComponentException ex) {
+			throw handleException(ex);
+		} catch (java.rmi.RemoteException ex) {
+			throw handleException(ex);
+		}
+	}
+
     @Override
     public void delete(ActionContext actioncontext) throws BusinessProcessException {
         int crudStatus = getModel().getCrudStatus();
