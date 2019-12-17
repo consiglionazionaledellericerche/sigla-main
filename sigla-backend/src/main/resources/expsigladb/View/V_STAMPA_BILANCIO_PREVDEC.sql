@@ -36,7 +36,7 @@
                      + NVL (a.im_spese_gest_accentrata_int, 0)
                      + NVL (a.im_spese_gest_accentrata_est, 0)
                                                              im_previsione_ac,
-                     0 im_cassa_ac, 0 im_residui_ap, 
+                     0 im_cassa_ac, 0 im_residui_ap,
                      0 im_previsione_ap, 0 im_cassa_ap,
                      NVL (a.im_spese_a2, 0) im_previsione_ac2,
                      NVL (a.im_spese_a3, 0) im_previsione_ac3
@@ -65,10 +65,10 @@
                      + NVL (a.im_spese_gest_accentrata_int, 0)
                      + NVL (a.im_spese_gest_accentrata_est, 0)
                                                              im_previsione_ac,
-                     CASE WHEN e.descrizione='CNR' 
+                     CASE WHEN e.descrizione='CNR'
                           then 0
-                          else NVL (a.im_pagamenti, 0) 
-                     END im_cassa_ac, 0 im_residui_ap, 
+                          else NVL (a.im_pagamenti, 0)
+                     END im_cassa_ac, 0 im_residui_ap,
                      0 im_previsione_ap, 0 im_cassa_ap,
                      0 im_previsione_ac2, 0 im_previsione_ac3
                 FROM pdg_modulo_spese_gest a,
@@ -95,7 +95,7 @@
                      c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7,
                      0 im_residui_ac,
                      NVL (stanziamento_iniziale, 0) im_previsione_ac,
-                     0 im_cassa_ac, 0 im_residui_ap, 
+                     0 im_cassa_ac, 0 im_residui_ap,
                      0 im_previsione_ap, 0 im_cassa_ap,
                      0 im_previsione_ac2, 0 im_previsione_ac3
                 FROM v_assestato a,
@@ -143,8 +143,8 @@
                      c.cd_livello7, c.ds_liv1, c.ds_liv2, c.ds_liv3,
                      c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7,
                      NVL (a.im_residui_ac, 0) im_residui_ac,
-                     0 im_previsione_ac, 
-                     CASE WHEN e.descrizione='CNR' 
+                     0 im_previsione_ac,
+                     CASE WHEN e.descrizione='CNR'
                           then NVL (a.im_cassa_ac, 0)
                           else 0
                      END im_cassa_ac,
@@ -267,7 +267,7 @@
              NVL (SUM (NVL (a.im_entrata_app, a.im_entrata)),
                   0
                  ) im_previsione_ac,
-             0 im_cassa_ac, 0 im_residui_ap, 
+             0 im_cassa_ac, 0 im_residui_ap,
              0 im_previsione_ap, 0 im_cassa_ap,
              NVL (SUM (a.im_entrata_a2), 0) im_previsione_ac2,
              NVL (SUM (a.im_entrata_a3), 0) im_previsione_ac3
@@ -300,17 +300,25 @@
              + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_previsione_ac,
-             NVL (SUM (CASE WHEN e.descrizione='CNR' 
+             NVL (SUM (CASE WHEN e.descrizione='CNR'
                             then 0
                             else NVL(a.im_pagamenti, 0)
-                       END), 0) im_cassa_ac, 0 im_residui_ap, 
+                       END), 0) im_cassa_ac, 0 im_residui_ap,
              0 im_previsione_ap, 0 im_cassa_ap,
-             0 im_previsione_ac2, 0 im_previsione_ac3
+             NVL (SUM (d.im_spese_a2), 0) im_previsione_ac2,
+             NVL (SUM (d.im_spese_a3), 0) im_previsione_ac3
         FROM pdg_modulo_spese_gest a,
+             pdg_modulo_spese d,
              elemento_voce b,
              v_classificazione_voci_all c,
              parametri_ente e
-       WHERE a.esercizio = b.esercizio
+       WHERE a.esercizio = d.esercizio
+         AND a.cd_centro_responsabilita = d.cd_centro_responsabilita
+         AND a.pg_progetto = d.pg_progetto
+         AND a.id_classificazione = d.id_classificazione
+         AND a.cd_cds_area = d.cd_cds_area
+         AND a.pg_dettaglio = d.pg_dettaglio
+         AND a.esercizio = b.esercizio
          AND a.ti_appartenenza = b.ti_appartenenza
          AND a.ti_gestione = b.ti_gestione
          AND a.cd_elemento_voce = b.cd_elemento_voce
@@ -340,14 +348,23 @@
              c.cd_livello6, c.cd_livello7, NULL, NULL, c.ds_liv1, c.ds_liv2,
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, 0 im_residui_ac,
-             NVL (SUM (a.im_entrata), 0) im_previsione_ac, 
+             NVL (SUM (a.im_entrata), 0) im_previsione_ac,
              NVL (SUM (a.im_incassi), 0) im_cassa_ac,
              0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
-             0 im_previsione_ac2, 0 im_previsione_ac3
+             NVL (SUM (d.im_entrata_a2), 0) im_previsione_ac2,
+             NVL (SUM (d.im_entrata_a3), 0) im_previsione_ac3
         FROM pdg_modulo_entrate_gest a,
+             pdg_modulo_entrate d,
              elemento_voce b,
              v_classificazione_voci_all c
-       WHERE a.esercizio = b.esercizio
+       WHERE a.esercizio = d.esercizio
+         AND a.cd_centro_responsabilita = d.cd_centro_responsabilita
+         AND a.pg_progetto = d.pg_progetto
+         AND a.cd_natura = d.cd_natura
+         AND a.id_classificazione = d.id_classificazione
+         AND a.cd_cds_area = d.cd_cds_area
+         AND a.pg_dettaglio = d.pg_dettaglio
+         AND a.esercizio = b.esercizio
          AND a.ti_appartenenza = b.ti_appartenenza
          AND a.ti_gestione = b.ti_gestione
          AND a.cd_elemento_voce = b.cd_elemento_voce
@@ -377,7 +394,7 @@
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, 0 im_residui_ac,
              NVL (SUM (stanziamento_iniziale), 0) im_previsione_ac,
-             0 im_cassa_ac, 0 im_residui_ap, 
+             0 im_cassa_ac, 0 im_residui_ap,
              0 im_previsione_ap, 0 im_cassa_ap,
              0 im_previsione_ac2, 0 im_previsione_ac3
         FROM v_assestato a, elemento_voce b, v_classificazione_voci_all c
@@ -413,7 +430,7 @@
              NVL (SUM (a.im_previsione_ac), 0) im_previsione_ac,
              NVL (SUM (a.im_cassa_ac), 0) im_cassa_ac,
              NVL (SUM (a.im_residui_ap), 0) im_residui_ap,
-             NVL (SUM (a.im_previsione_ap), 0) im_previsione_ap, 
+             NVL (SUM (a.im_previsione_ap), 0) im_previsione_ap,
              NVL (SUM (a.im_cassa_ap), 0) im_cassa_ap,
              0 im_previsione_ac2, 0 im_previsione_ac3
         FROM pdg_dati_stampa_bilancio_temp a,
@@ -446,8 +463,8 @@
              c.cd_livello6, c.cd_livello7, NULL, NULL, c.ds_liv1, c.ds_liv2,
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, NVL (SUM (a.im_residui_ac), 0) im_residui_ac,
-             0 im_previsione_ac, 
-             NVL (SUM (CASE WHEN e.descrizione='CNR' 
+             0 im_previsione_ac,
+             NVL (SUM (CASE WHEN e.descrizione='CNR'
                             then NVL(a.im_cassa_ac, 0)
                             else 0
                        END), 0) im_cassa_ac,
@@ -485,7 +502,7 @@
              c.cd_livello6, c.cd_livello7, NULL, NULL, c.ds_liv1, c.ds_liv2,
              c.ds_liv3, c.ds_liv4, c.ds_liv5, c.ds_liv6, c.ds_liv7, NULL,
              NULL, 0 im_residui_ac, 0 im_previsione_ac, 0 im_cassa_ac,
-             NVL (SUM (im_residuo_ap), 0) im_residui_ap, 
+             NVL (SUM (im_residuo_ap), 0) im_residui_ap,
              0 im_previsione_ap, 0 im_cassa_ap,
              0 im_previsione_ac2, 0 im_previsione_ac3
         FROM (SELECT saldi.esercizio + 1 esercizio, saldi.ti_gestione,
@@ -524,4 +541,4 @@
              c.ds_liv4,
              c.ds_liv5,
              c.ds_liv6,
-             c.ds_liv7) ;
+             c.ds_liv7);
