@@ -16,22 +16,15 @@
 <title>Estrazione documenti amministrativi</title>
 </head>
 <body class="Form">
-
-<% 
+<%
 	BulkBP bp = (BulkBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext);
 %>
-
-	<table>
-	  <tr>
-		<td><% bp.getController().writeFormLabel(out,"findAnagrafico"); %></td>
-		<td>
-			<% bp.getController().writeFormInput(out,"cd_anagrafico"); %>
-			<% bp.getController().writeFormInput(out,"ragione_sociale"); %>
-			<% bp.getController().writeFormInput(out,"findAnagrafico"); %>
-		</td>
-	  </tr>
-     </table>
+    <div class="card p-2">
+	    <table>
+	        <tr><% bp.getController().writeFormField(out,"findAnagrafico"); %></tr>
+        </table>
+    </div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html> 

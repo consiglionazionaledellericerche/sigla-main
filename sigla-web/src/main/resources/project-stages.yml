@@ -37,7 +37,7 @@ thorntail:
         - FILE
     pattern-formatters:
       LOG_FORMATTER:
-        pattern: "%p [%c] %s%e%n"
+        pattern: "%K{level}%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n"
     periodic-rotating-file-handlers:
       FILE:
         file:

@@ -23,11 +23,22 @@ package it.cnr.contab.docamm00.docs.bulk;
  * @author: Roberto Peli
  */
 public interface IDocumentoAmministrativoGenericoBulk {
-/**
- * Insert the method's description here.
- * Creation date: (3/22/2002 2:52:05 PM)
- * @return it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk
- * @param docAmmGen it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoGenericoBulk
- */
-IDocumentoAmministrativoBulk getSpecializedInstance();
+    /**
+     * Insert the method's description here.
+     * Creation date: (3/22/2002 2:52:05 PM)
+     * @return it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk
+     */
+    IDocumentoAmministrativoBulk getSpecializedInstance();
+
+    /**
+     *
+     * @param cd_cds_origine
+     */
+    void setCd_cds_origine(java.lang.String cd_cds_origine);
+
+    /**
+     *
+     * @param cd_uo_origine
+     */
+    void setCd_uo_origine(java.lang.String cd_uo_origine);
 }

@@ -674,7 +674,7 @@
 	<fieldProperty
 		name="prestatore"
 		property="documentoEleTrasmissione.prestatore"
-		inputType="SEARCHTOOL"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		labelStyle="color:blue"
 		formName="searchtool"
 		CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"

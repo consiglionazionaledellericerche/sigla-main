@@ -252,7 +252,8 @@
 	<fieldProperty
 		name="findAnagrafico"
 		property="anagrafico"
-		inputType="SEARCHTOOL"
+		inputType="SEARCHTOOL_WITH_LIKE"
+		formName="searchtool"
 		label="Anagrafico" />
 	
 	<fieldProperty

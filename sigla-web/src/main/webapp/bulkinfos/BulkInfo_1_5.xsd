@@ -273,14 +273,15 @@
             		<xsd:enumeration value="RADIOGROUP" />
             		<xsd:enumeration value="ROTEXT" />
             		<xsd:enumeration value="SEARCHTOOL" />
-            		<xsd:enumeration value="SELECT" />
+					<xsd:enumeration value="SEARCHTOOL_WITH_LIKE" />
+					<xsd:enumeration value="SELECT" />
             		<xsd:enumeration value="CHECKBOX" />
             		<xsd:enumeration value="CRUDTOOL" />
             		<xsd:enumeration value="BUTTON" />
             		<xsd:enumeration value="DESCTOOL" />
             		<xsd:enumeration value="FILE" />
-            		<xsd:enumeration value="FORM">
-            	</xsd:enumeration>
+            		<xsd:enumeration value="FORM"/>
+					<xsd:enumeration value="LABEL"/>
             	</xsd:restriction>
             </xsd:simpleType>
 		</xsd:attribute>

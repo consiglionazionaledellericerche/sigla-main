@@ -22,94 +22,95 @@
 	it.cnr.contab.anagraf00.core.bulk.TerzoBulk soggetto = filtro.getSoggetto();
 	bp.openFormWindow(pageContext); %>
 
-	<div class="Group" style="width:100%">
-		<table width="100%">
+	<div class="Group card p-2" style="width:100%">
+		<table>
 			<tr>
 				<td>
+				    <div class="pull-right">
 					<% bp.getController().writeFormLabel(out,"group");%>
+					</div>
 				</td>
 				<td>
 					<% bp.getController().writeFormInput(out,null,"group",false,null,"onChange=\"submitForm('doOnGroupChange')\"");%>
 				</td>
 			</tr>
 		</table>
-		<br>
-		<div class="Group" style="width:100%">
-			<table width="100%">
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"cd_soggetto");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out,"cd_soggetto");%>
-						<% bp.getController().writeFormInput(out,"soggetto");%>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"cd_precedente");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out, "cd_precedente");%>
-					</td>
-				</tr>
-				<tr>
-					<% bp.getController().writeFormField(out,"codice_fiscale");%>
-					<% bp.getController().writeFormField(out, "partita_iva");%>
-				</tr>	
-				<%	if (soggetto != null && soggetto.getAnagrafico() != null) { %>
-					<tr>
-						<%	if (soggetto.getAnagrafico().isStrutturaCNR()) { %>
-								<td>
-									<b>Nome</b>
-								</td>
-						<%	} else { %>
-								<td>
-									<%bp.getController().writeFormLabel(out,"ragione_sociale");%>
-								</td>
-						<%	} %>
-						<td  colspan="3">
-							<%bp.getController().writeFormInput(out,"ragione_sociale");%>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<% bp.getController().writeFormLabel(out,"denominazione_sede");%>
-						</td>
-						<td colspan="3">
-							<% bp.getController().writeFormInput(out,"denominazione_sede");%>
-						</td>
-					</tr>
-				<% } else { %>
-						<tr>
-							<td>
-								<% bp.getController().writeFormLabel(out,"ragione_sociale");%>
-							</td>
-							<td colspan="3">
-								<% bp.getController().writeFormInput(out,"ragione_sociale");%>
-							</td>
-						</tr>
-				<%	} %>
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"cognome");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out,"cognome");%>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<% bp.getController().writeFormLabel(out,"nome");%>
-					</td>
-					<td colspan="3">
-						<% bp.getController().writeFormInput(out,"nome");%>
-					</td>
-				</tr>
-			</table>	
-		</div>
 	</div>
-	<div class="Group" style="width:100%">
+	<div class="Group card p-2" style="width:100%">
+        <table width="100%">
+            <tr>
+                <td>
+                    <% bp.getController().writeFormLabel(out,"cd_soggetto");%>
+                </td>
+                <td colspan="3">
+                    <% bp.getController().writeFormInput(out,"cd_soggetto");%>
+                    <% bp.getController().writeFormInput(out,"soggetto");%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <% bp.getController().writeFormLabel(out,"cd_precedente");%>
+                </td>
+                <td colspan="3">
+                    <% bp.getController().writeFormInput(out, "cd_precedente");%>
+                </td>
+            </tr>
+            <tr>
+                <% bp.getController().writeFormField(out,"codice_fiscale");%>
+                <% bp.getController().writeFormField(out, "partita_iva");%>
+            </tr>
+            <%	if (soggetto != null && soggetto.getAnagrafico() != null) { %>
+                <tr>
+                    <%	if (soggetto.getAnagrafico().isStrutturaCNR()) { %>
+                            <td>
+                                <b>Nome</b>
+                            </td>
+                    <%	} else { %>
+                            <td>
+                                <%bp.getController().writeFormLabel(out,"ragione_sociale");%>
+                            </td>
+                    <%	} %>
+                    <td  colspan="3">
+                        <%bp.getController().writeFormInput(out,"ragione_sociale");%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <% bp.getController().writeFormLabel(out,"denominazione_sede");%>
+                    </td>
+                    <td colspan="3">
+                        <% bp.getController().writeFormInput(out,"denominazione_sede");%>
+                    </td>
+                </tr>
+            <% } else { %>
+                    <tr>
+                        <td>
+                            <% bp.getController().writeFormLabel(out,"ragione_sociale");%>
+                        </td>
+                        <td colspan="3">
+                            <% bp.getController().writeFormInput(out,"ragione_sociale");%>
+                        </td>
+                    </tr>
+            <%	} %>
+            <tr>
+                <td>
+                    <% bp.getController().writeFormLabel(out,"cognome");%>
+                </td>
+                <td colspan="3">
+                    <% bp.getController().writeFormInput(out,"cognome");%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <% bp.getController().writeFormLabel(out,"nome");%>
+                </td>
+                <td colspan="3">
+                    <% bp.getController().writeFormInput(out,"nome");%>
+                </td>
+            </tr>
+        </table>
+	</div>
+	<div class="Group card p-2" style="width:100%">
 		<table width="100%">
 			<tr>
 				<td>
