@@ -1,5 +1,41 @@
 # sigla-main Changelog
 
+## Release 6.1.0  -- _December 17, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[56a400dc3c690f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56a400dc3c690f4) marco.spasiano *December 17, 2019*
+
+>**Mandati in Distinta eliminato blocco per sostituzione**
+>
+>[57860bc52fb7515](https://github.com/consiglionazionaledellericerche/sigla-main/commit/57860bc52fb7515) marco.spasiano *December 17, 2019*
+
+>**Aggiunto autocompletamento, la lista dei documenti amministrativi non è filtrata per UO ENTE**
+>
+>[298eeb19c6ad272](https://github.com/consiglionazionaledellericerche/sigla-main/commit/298eeb19c6ad272) marco.spasiano *December 17, 2019*
+
+>**Rimodulazione progetti: aggiunta la possibilità di riportare in provvisorio la rimodulazione in stato defintivo. [ci skip]**
+>
+>[04ff723bf8d4ac7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04ff723bf8d4ac7) raffaele.pagano *December 17, 2019*
+
+>**Rimodulazione progetti: aggiunta la possibilità di riportare in definitivo la rimodulazione in stato validato/respinto. [ci skip]**
+>
+>[fc6058196a53362](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc6058196a53362) raffaele.pagano *December 17, 2019*
+
+>**Add MAVEN_RELEASE_VERSION on stage release [ci skip]**
+>
+>[13331b1d90e342c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13331b1d90e342c) marco.spasiano *December 17, 2019*
+
+>**FIX Nuova Stampa Bilancio Pluriennale: anomalia valorizzazione campi pluriennali. [ci skip]**
+>
+>[148ea638d80588b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/148ea638d80588b) raffaele.pagano *December 17, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[cc02f5756e97b6e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cc02f5756e97b6e) marco.spasiano *December 16, 2019*
+
+
 ## Release 6.0.31  -- _December 16, 2019_ 
 ### No issue
 
