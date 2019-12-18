@@ -1659,8 +1659,12 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	public SQLBuilder selectProgettoRimodulatoForSearchByClause(UserContext userContext, Var_stanz_resBulk varStanzRes, ProgettoBulk prg, CompoundFindClause clause) throws ComponentException, PersistencyException {
 		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 
-		SQLBuilder sql = progettoHome.selectProgettiAbilitati(userContext);
-		
+		SQLBuilder sql;
+		if (varStanzRes.getCentroDiResponsabilita().getUnita_padre().isUoEnte())
+			sql = progettoHome.selectProgetti(userContext);
+		else
+			sql = progettoHome.selectProgettiAbilitati(userContext);
+
 		sql.addTableToHeader("PROGETTO_RIMODULAZIONE");
 		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
 		sql.addSQLClause(FindClause.AND,"PROGETTO_RIMODULAZIONE.STATO",SQLBuilder.EQUALS,StatoProgettoRimodulazione.STATO_VALIDATO.value());

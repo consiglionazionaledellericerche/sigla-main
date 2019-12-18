@@ -892,7 +892,7 @@ public class ProgettoHome extends BulkHome {
      * Ritorna la SQLBuilder per la ricerca dei progetti su cui risulta abilitato ad operare la UO collegata 
      * nell'esercizio di scrivania (UO ed esercizio presenti sullo UserContext)
      * 
-     * @param aUC lo UserContext
+     * @param userContext lo UserContext
      * @return
      */
 	public SQLBuilder selectProgettiAbilitati(it.cnr.jada.UserContext userContext) throws PersistencyException {
@@ -914,7 +914,46 @@ public class ProgettoHome extends BulkHome {
 			sql.addSQLExistsClause(FindClause.AND,progettoHome.abilitazioniModuli(userContext));
 		return sql; 
 	}
-	
+
+	/**
+	 * Ritorna la SQLBuilder per la ricerca dei progetti senza filtro per UO di scrivania (UO ed esercizio presenti sullo UserContext)
+	 * Utilizzata per Uo Ente
+	 *
+	 * @param userContext lo UserContext
+	 * @return
+	 */
+	public SQLBuilder selectProgetti(it.cnr.jada.UserContext userContext) throws PersistencyException {
+		ProgettoHome progettoHome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_PROGETTO_PADRE");
+		SQLBuilder sql = progettoHome.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause(FindClause.AND,"tipo_fase",SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
+
+		Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHomeCache().getHome(Parametri_cnrBulk.class);
+		Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext )));
+
+		if (parCnrBulk.getFl_nuovo_pdg())
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_SECONDO);
+		else
+			sql.addClause(FindClause.AND, "livello", SQLBuilder.EQUALS, ProgettoBulk.LIVELLO_PROGETTO_TERZO);
+
+		ProgettoHome abilProgettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_ABIL_PROGETTI");
+		SQLBuilder sqlExists = abilProgettohome.createSQLBuilder();
+		sqlExists.addTableToHeader("UNITA_ORGANIZZATIVA");
+		sqlExists.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", "V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA");
+		if (parCnrBulk.getFl_nuovo_pdg()) {
+			sqlExists.addSQLJoin("V_ABIL_PROGETTI.ESERCIZIO_COMMESSA", "V_PROGETTO_PADRE.ESERCIZIO");
+			sqlExists.addSQLJoin("V_ABIL_PROGETTI.PG_COMMESSA", "V_PROGETTO_PADRE.PG_PROGETTO");
+			sqlExists.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_COMMESSA", "V_PROGETTO_PADRE.TIPO_FASE");
+		} else {
+			sqlExists.addSQLJoin("V_ABIL_PROGETTI.ESERCIZIO_MODULO", "V_PROGETTO_PADRE.ESERCIZIO");
+			sqlExists.addSQLJoin("V_ABIL_PROGETTI.PG_MODULO", "V_PROGETTO_PADRE.PG_PROGETTO");
+			sqlExists.addSQLJoin("V_ABIL_PROGETTI.TIPO_FASE_MODULO", "V_PROGETTO_PADRE.TIPO_FASE");
+		}
+
+		sql.addSQLExistsClause(FindClause.AND,sqlExists);
+		return sql;
+	}
+
 	public java.util.List<Progetto_rimodulazioneBulk> findRimodulazioni(Integer pgProgetto) throws PersistencyException {
 		Progetto_rimodulazioneHome dettHome = (Progetto_rimodulazioneHome)getHomeCache().getHome(Progetto_rimodulazioneBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
