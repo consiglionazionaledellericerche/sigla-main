@@ -461,7 +461,7 @@ FUNCTION Tot_reversali(
  		parametri_esercizio:=CNRUTL001.getRecParametriCnr(P_Anno);
 		CDS_ENTE:=CNRCTB020.GETCDCDSENTE (P_Anno);
     Stringa := 'Select nvl(sum(SOSPESO_DET_ETR.IM_ASSOCIATO), 0) '||
-               'from SOSPESO, SOSPESO_DET_ETR, REVERSALE, DISTINTA_CASSIERE, DISTINTA_CASSIERE_DET '||
+               'from SOSPESO, SOSPESO_DET_ETR, REVERSALE '||
                'WHERE SOSPESO_DET_ETR.TI_SOSPESO_RISCONTRO = ''R'' AND '||
                '      SOSPESO_DET_ETR.STATO         = ''N'' AND '||
                '      SOSPESO_DET_ETR.CD_CDS       = REVERSALE.CD_CDS AND '||
@@ -471,14 +471,7 @@ FUNCTION Tot_reversali(
                '      SOSPESO.ESERCIZIO             = SOSPESO_DET_ETR.ESERCIZIO AND '||
                '      SOSPESO.TI_ENTRATA_SPESA      = SOSPESO_DET_ETR.TI_ENTRATA_SPESA AND '||
                '      SOSPESO.TI_SOSPESO_RISCONTRO  = SOSPESO_DET_ETR.TI_SOSPESO_RISCONTRO AND '||
-               '      SOSPESO.CD_SOSPESO            = SOSPESO_DET_ETR.CD_SOSPESO AND '||
-               '      REVERSALE.CD_CDS              = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE     AND '||
-               '      REVERSALE.ESERCIZIO           = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
-               '      REVERSALE.PG_REVERSALE        = DISTINTA_CASSIERE_DET.PG_REVERSALE AND '||
-               '      DISTINTA_CASSIERE.CD_CDS      = DISTINTA_CASSIERE_DET.CD_CDS       AND '||
-               '      DISTINTA_CASSIERE.ESERCIZIO   = DISTINTA_CASSIERE_DET.ESERCIZIO    AND '||
-               '      DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
-               '      DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA ';
+               '      SOSPESO.CD_SOSPESO            = SOSPESO_DET_ETR.CD_SOSPESO ';
 
 	if (parametri_esercizio.fl_tesoreria_unica='N') then
     		If P_CDS is not null Then
@@ -514,16 +507,23 @@ FUNCTION Tot_reversali(
 
 -- PERIODO DI EMISSIONE DISTINTA
 
-    If P_DA_Data_Eme_dis is not null Then
-          Costruisci_Stringa(Stringa,
-                             'to_char(DISTINTA_CASSIERE.DT_EMISSIONE, ''yyyymmdd'') >= '''||
-                              to_char(P_DA_DATA_eme_dis, 'yyyymmdd')||'''');
-    End If;
+    if (P_DA_Data_Eme_dis is not null or P_A_Data_Eme_dis is not null) THEN
+      Costruisci_Stringa(Stringa, ' exists (select 1 from DISTINTA_CASSIERE, DISTINTA_CASSIERE_DET '||
+                                           'where REVERSALE.CD_CDS = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE AND '||
+                                                 'REVERSALE.ESERCIZIO = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
+                                                 'REVERSALE.PG_REVERSALE = DISTINTA_CASSIERE_DET.PG_REVERSALE AND '||
+                                                 'DISTINTA_CASSIERE.CD_CDS = DISTINTA_CASSIERE_DET.CD_CDS AND '||
+                                                 'DISTINTA_CASSIERE.ESERCIZIO   = DISTINTA_CASSIERE_DET.ESERCIZIO AND '||
+                                                 'DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
+                                                 'DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA ');
+      If P_DA_Data_Eme_dis is not null Then
+        Costruisci_Stringa(Stringa, 'to_char(DISTINTA_CASSIERE.DT_EMISSIONE, ''yyyymmdd'') >= '''||to_char(P_DA_DATA_eme_dis, 'yyyymmdd')||'''');
+      End If;
 
-    If P_A_Data_Eme_dis is not null Then
-          Costruisci_Stringa(Stringa,
-                             'to_char(DISTINTA_CASSIERE.DT_EMISSIONE, ''yyyymmdd'') <= '''||
-                              to_char(P_A_DATA_eme_dis, 'yyyymmdd')||'''');
+      If P_A_Data_Eme_dis is not null Then
+        Costruisci_Stringa(Stringa, 'to_char(DISTINTA_CASSIERE.DT_EMISSIONE, ''yyyymmdd'') <= '''||to_char(P_A_DATA_eme_dis, 'yyyymmdd')||'''');
+      End If;
+      Stringa := Stringa || ') ';
     End If;
 
 -- PERIODO DI RISCONTRI
