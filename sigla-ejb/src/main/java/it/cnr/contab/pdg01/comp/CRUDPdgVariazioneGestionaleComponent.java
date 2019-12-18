@@ -1551,7 +1551,11 @@ private void aggiornaLimiteSpesa(UserContext userContext,Pdg_variazioneBulk pdg)
 	public SQLBuilder selectProgettoRimodulatoForSearchByClause(UserContext userContext, Pdg_variazioneBulk pdgVar, ProgettoBulk prg, CompoundFindClause clause) throws ComponentException, PersistencyException {
 		ProgettoHome progettoHome = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 
-		SQLBuilder sql = progettoHome.selectProgettiAbilitati(userContext);
+		SQLBuilder sql;
+		if (pdgVar.getCentro_responsabilita().getUnita_padre().isUoEnte())
+			sql = progettoHome.selectProgetti(userContext);
+		else
+			sql = progettoHome.selectProgettiAbilitati(userContext);
 		
 		sql.addTableToHeader("PROGETTO_RIMODULAZIONE");
 		sql.addSQLJoin("V_PROGETTO_PADRE.PG_PROGETTO", "PROGETTO_RIMODULAZIONE.PG_PROGETTO");
