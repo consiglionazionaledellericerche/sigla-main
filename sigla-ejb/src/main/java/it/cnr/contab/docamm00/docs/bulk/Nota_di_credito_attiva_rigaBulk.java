@@ -90,6 +90,7 @@ public class Nota_di_credito_attiva_rigaBulk extends Fattura_attiva_rigaBulk {
 
 		setVoce_iva(dettaglio.getVoce_iva());
 		setBene_servizio(dettaglio.getBene_servizio());
+		setTrovato(dettaglio.getTrovato());
 		boolean zeroNotValid = false;
 		if (dettaglio.getIm_diponibile_nc().compareTo(dettaglio.getIm_imponibile().add(dettaglio.getIm_iva())) != 0) {
 			setQuantita(new java.math.BigDecimal(1));
