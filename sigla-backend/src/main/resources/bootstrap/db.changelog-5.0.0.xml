@@ -2742,4 +2742,40 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_ass_pgiro_gruppo_centro_doc_cont_segno_opposto">
+        <addColumn tableName="ASS_PGIRO_GRUPPO_CENTRO">
+            <column name="CD_CDS_ACC_PGIRO_OPP" remarks="Cds dell'accertamento di segno opposto" type="VARCHAR(30)"/>
+            <column name="ES_ACC_PGIRO_OPP" remarks="Esercizio dell'accertamento di segno opposto" type="INT"/>
+            <column name="ES_ORIG_ACC_PGIRO_OPP" remarks="Esercizio Originale dell'accertamento di segno opposto" type="INT"/>
+            <column name="PG_ACC_PGIRO_OPP" remarks="Numero dell'accertamento di segno opposto" type="BIGINT"/>
+            <column name="CD_CDS_OBB_PGIRO_OPP" remarks="Cds dell'obbligazione di segno opposto" type="VARCHAR(30)"/>
+            <column name="ES_OBB_PGIRO_OPP" remarks="Esercizio dell'obbligazione di segno opposto" type="INT"/>
+            <column name="ES_ORIG_OBB_PGIRO_OPP" remarks="Esercizio Originale dell'obbligazione di segno opposto" type="INT"/>
+            <column name="PG_OBB_PGIRO_OPP" remarks="Numero dell'obbligazione di segno opposto" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_liquid_gruppo_cori_doc_cont_segno_opposto">
+        <addColumn tableName="liquid_gruppo_cori">
+            <column name="CD_CDS_ACC_ACCENTR_OPP" remarks="Cds dell'accertamento accentrato di segno opposto" type="VARCHAR(30)"/>
+            <column name="ES_ACC_ACCENTR_OPP" remarks="Esercizio dell'accertamento accentrato di segno opposto" type="INT"/>
+            <column name="ES_ORIG_ACC_ACCENTR_OPP" remarks="Esercizio Originale dell'accertamento accentrato di segno opposto" type="INT"/>
+            <column name="PG_ACC_ACCENTR_OPP" remarks="Numero dell'accertamento accentrato di segno opposto" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_liquid_gruppo_centro_doc_cont_segno_opposto">
+        <addColumn tableName="liquid_gruppo_centro">
+            <column name="CD_CDS_ACC_ACCENTR_OPP" remarks="Cds dell'accertamento accentrato di segno opposto" type="VARCHAR(30)"/>
+            <column name="ES_ACC_ACCENTR_OPP" remarks="Esercizio dell'accertamento accentrato di segno opposto" type="INT"/>
+            <column name="ES_ORIG_ACC_ACCENTR_OPP" remarks="Esercizio Originale dell'accertamento accentrato di segno opposto" type="INT"/>
+            <column name="PG_ACC_ACCENTR_OPP" remarks="Numero dell'accertamento accentrato di segno opposto" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_liquid_gruppo_centro_comp_doc_cont_segno_opposto">
+        <addColumn tableName="liquid_gruppo_centro_Comp">
+            <column name="CD_CDS_OBB_ACCENTR_OPP" remarks="Cds dell'obbligazione accentrata di segno opposto" type="VARCHAR(30)"/>
+            <column name="ES_OBB_ACCENTR_OPP" remarks="Esercizio dell'obbligazione accentrata di segno opposto" type="INT"/>
+            <column name="ES_ORIG_OBB_ACCENTR_OPP" remarks="Esercizio Originale dell'obbligazione accentrata di segno opposto" type="INT"/>
+            <column name="PG_OBB_ACCENTR_OPP" remarks="Numero dell'obbligazione accentrata di segno opposto" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

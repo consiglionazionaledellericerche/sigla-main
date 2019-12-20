@@ -654,7 +654,7 @@
 
  function IsGruppoF24EP (aEs number, aGruppo varchar2) return boolean;
  function GruppoF24EP (aEs number, aGruppo varchar2) return varchar2;
- function GruppoValido (aEs number, aGruppo varchar2, aCdUo varchar2) return varchar2;
+ function GruppoValido (aEs number, ESERCIZIO_UO_SPECIALI number, aGruppo varchar2, aCdUo varchar2) return varchar2;
 
  Procedure CREALIQUIDCORIASSPGIRO(aLiquid liquid_cori%rowtype,aGruppo varchar2, aRegione varchar2, aComune number,aTipo varchar2,aObbNew obbligazione%rowtype,aObbOld obbligazione%rowtype,aAccNew accertamento%rowtype,aAccOld accertamento%rowtype,aUser varchar2,aTSNow date);
 

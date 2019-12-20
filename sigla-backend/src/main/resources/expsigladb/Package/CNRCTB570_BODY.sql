@@ -19,15 +19,11 @@ CREATE OR REPLACE PACKAGE BODY "CNRCTB570" AS
   aObbCScad obbligazione_scadenzario%rowtype;
   aObbCScadVoce obbligazione_scad_voce%rowtype;
   recParametriCNR PARAMETRI_CNR%Rowtype;
+  ESERCIZIO_UO_SPECIALI number;
  Begin
   aTSNow:=sysdate;
-  aUOVERSACC:=CNRCTB020.getUOVersCori(aLGCori.esercizio);
-  aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(aLGCori.esercizio);
   recParametriCNR := CNRUTL001.getRecParametriCnr(aLGCori.esercizio);
   
-  If aLGCori.cd_unita_organizzativa = aUOVERSCONTOBI.cd_unita_organizzativa then
-        IBMERR001.RAISE_ERR_GENERICO('Non è possibile eliminare il versamento dei CORI che rientrano nel Modello F24EP');
-  End If;      
     
   -- Leggo la testata della liquidazione (lock)
   select * into aLC from liquid_cori where
@@ -36,6 +32,14 @@ CREATE OR REPLACE PACKAGE BODY "CNRCTB570" AS
    and cd_unita_organizzativa = aLGCori.cd_unita_organizzativa
    and pg_liquidazione = aLGCori.pg_liquidazione
    for update nowait;
+
+  ESERCIZIO_UO_SPECIALI := to_number(To_Char(aLC.DT_DA,'YYYY'));
+
+  aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
+  aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
+  If aLGCori.cd_unita_organizzativa = aUOVERSCONTOBI.cd_unita_organizzativa then
+        IBMERR001.RAISE_ERR_GENERICO('Non è possibile eliminare il versamento dei CORI che rientrano nel Modello F24EP');
+  End If;      
 
   -- Se il versamento è quello dell'UO di versamento, e il gruppo di cui annullare la liquidazione è composto di SOLI
   -- dati propri dell'UO che versa, posso smontare la liquidazione di quel gruppo
@@ -335,12 +339,15 @@ CREATE OR REPLACE PACKAGE BODY "CNRCTB570" AS
    aCdEV varchar2(20);
    elementoVoce elemento_voce%rowtype;
    recParametriCNR PARAMETRI_CNR%Rowtype;
+  ESERCIZIO_UO_SPECIALI number;
  begin
   recParametriCNR := CNRUTL001.getRecParametriCnr(aLiquid.esercizio);
   aDateCont:=CNRCTB008.getTimestampContabile(aLGC.esercizio,aTSNow);
   aDivisaEuro:=CNRCTB015.GETVAL01PERCHIAVE(CNRCTB100.CCNR_DIVISA,CNRCTB100.CCNR_EURO);
   
-  aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(aLGC.esercizio);
+  ESERCIZIO_UO_SPECIALI := to_number(To_Char(aLiquid.DT_DA,'YYYY'));
+
+  aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
 
   aGenVE:=null;
   -- Creo il documento generico di entrata su partita di giro collegato all'annotazione di spesa su pgiro del contributo ritenuta
@@ -1482,6 +1489,7 @@ end;
    aAccScadNew accertamento_scadenzario%rowtype;
    aAccScadVoceNew accertamento_scad_voce%rowtype;
    recParametriCNR PARAMETRI_CNR%Rowtype;
+   ESERCIZIO_UO_SPECIALI NUMBER;
    ind_pGiro    number := 0;
  begin
   for aPar in (select * from vsx_liquidazione_cori where pg_call = pgCall
@@ -1525,6 +1533,9 @@ end;
      IBMERR001.RAISE_ERR_GENERICO('Liquidazione CORI non trovata n.'||aPgLiq||' es.'||aEs||' cds:'||aCdCds||' uo:'||aCdUo);
   end;
 
+
+  ESERCIZIO_UO_SPECIALI := to_number(To_Char(aLiquidCori.DT_DA,'YYYY'));
+
    -- Elimino il dettaglio minimo della liquidazione di aLGC non selezionati
   delete from liquid_gruppo_cori_det a where
        cd_cds = aCdCds
@@ -1567,8 +1578,8 @@ end;
       lIsCdsInterTot := IsCdsInterfTot(aCdCds,aEs);
 
       aDivisaEuro:=CNRCTB015.GETVAL01PERCHIAVE(CNRCTB100.CCNR_DIVISA,CNRCTB100.CCNR_EURO);
-      aUOVERSACC:=CNRCTB020.getUOVersCori(aEs);
-      aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(aEs);
+      aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
+      aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
 
      -- Controllo che la liq. per locale sia aperta nell'esercizio specificato
      if aUOVERSACC.cd_unita_organizzativa <> aCdUO and aUOVERSCONTOBI.cd_unita_organizzativa <> aCdUO then
@@ -3323,6 +3334,7 @@ end;
   aIsCdsInterTot boolean;
   aObb obbligazione%rowtype;
   UOENTE unita_organizzativa%rowtype;
+  ESERCIZIO_UO_SPECIALI NUMBER;
 
  begin
   
@@ -3337,6 +3349,13 @@ end;
   then
    IBMERR001.RAISE_ERR_GENERICO('Alcuni parametri di liquidazione non sono stati specificati');
   end if;
+  
+  if to_number(to_char(aDtDa,'YYYY')) != to_number(to_char(aDtA,'YYYY')) THEN
+     IBMERR001.RAISE_ERR_GENERICO('La date di inizio e la data di fine devono essere dello stesso anno');
+  else
+    ESERCIZIO_UO_SPECIALI := to_number(To_Char(aDtDa,'YYYY'));
+  END IF;
+
   -- Controllo che la liquidazione al centro sia aperta
   -- Fix errore 729
   CNRCTB575.CHECKLIQUIDCENTROAPERTA(aEs);
@@ -3385,9 +3404,9 @@ end;
 
    -- Estrazione delle UO di versamento CORI accentrato, unificato e 
    -- della UO abilitata al versamento direttamente dal conto presso la Banca d'Italia (999.000)
-   aUOVERSACC:=CNRCTB020.getUOVersCori(aEs);
-   aUOVERSUNIFICATI:=CNRCTB020.getUOVersCoriTuttaSAC(aEs);
-   aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(aEs);
+   aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
+   aUOVERSUNIFICATI:=CNRCTB020.getUOVersCoriTuttaSAC(ESERCIZIO_UO_SPECIALI);
+   aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
    
      -- Controllo che la liq. locale sia aperta nell'esercizio specificato
    if aUOVERSACC.cd_unita_organizzativa <> aCdUO and aUOVERSCONTOBI.cd_unita_organizzativa <> aCdUO then
@@ -3403,7 +3422,7 @@ end;
                          Where esercizio = aEs
                            And da_esercizio_precedente = daEsercizioPrec
                            And stato = CNRCTB575.STATO_GRUPPO_CENTRO_INIZIALE
-                           And cd_gruppo_cr = GruppoValido(esercizio, cd_gruppo_cr, aCdUo)
+                           And cd_gruppo_cr = GruppoValido(esercizio, ESERCIZIO_UO_SPECIALI, cd_gruppo_cr, aCdUo)
                          for update nowait)
         Loop -- loop 1
            Update liquid_gruppo_centro set
@@ -3487,7 +3506,7 @@ end;
         and a.cd_unita_organizzativa = aCdUo
         and decode(isLiquidaSuInviato,'Y',a.dt_trasmissione_mandato,a.dt_emissione_mandato) >= trunc(aDtDa)
         and decode(isLiquidaSuInviato,'Y',a.dt_trasmissione_mandato,a.dt_emissione_mandato) < trunc(aDtA + 1)
-        and a.cd_gruppo_cr = GruppoValido(aEs, a.cd_gruppo_cr, aCdUo)
+        and a.cd_gruppo_cr = GruppoValido(aEs, ESERCIZIO_UO_SPECIALI, a.cd_gruppo_cr, aCdUo)
         and not exists (Select 1 from liquid_gruppo_cori_det a1
                 Where -- Esclude i cori già processati
               --a1.cd_cds = a.cd_cds 
@@ -3546,9 +3565,9 @@ end;
                   select decode(aCori.cd_unita_organizzativa,aUOVERSACC.cd_unita_organizzativa,'N',nvl(d.fl_accentrato,b.fl_accentrato))
                   into aFlAccentrato
                   from gruppo_cr b, gruppo_cr_det c, gruppo_cr_uo d
-                  where b.esercizio = aEs
+                  where b.esercizio = ESERCIZIO_UO_SPECIALI
                   and b.cd_gruppo_cr = aCori.cd_gruppo_cr
-                  and c.esercizio = aEs
+                  and c.esercizio = ESERCIZIO_UO_SPECIALI
                   and c.cd_gruppo_cr = aCori.cd_gruppo_cr
                   and c.cd_regione = aCori.cd_regione
                   and c.pg_comune = aCori.pg_comune
@@ -3622,6 +3641,8 @@ end;
                 And exists (Select 1 from v_unita_organizzativa_valida 
                             Where esercizio = aEs
                               And cd_unita_organizzativa = a.cd_unita_organizzativa)
+                And exists (Select 1 from gruppo_cr_uo WHERE esercizio = ESERCIZIO_UO_SPECIALI
+                              And cd_unita_organizzativa = a.cd_unita_organizzativa)
                               And a.cd_unita_organizzativa <> aCdUo) 
        Loop
           aLiquidGruppoCori:=null;
@@ -3642,7 +3663,7 @@ end;
                           and a.cd_unita_organizzativa = aCdUoSAC.cd_unita_organizzativa
                           and decode(isLiquidaSuInviato,'Y',a.dt_trasmissione_mandato,a.dt_emissione_mandato) >= trunc(aDtDa)
                           and decode(isLiquidaSuInviato,'Y',a.dt_trasmissione_mandato,a.dt_emissione_mandato) < trunc(aDtA + 1)
-                          and a.cd_gruppo_cr = GruppoValido(aEs, a.cd_gruppo_cr, aCdUo)
+                          and a.cd_gruppo_cr = GruppoValido(aEs, ESERCIZIO_UO_SPECIALI, a.cd_gruppo_cr, aCdUo)
                           and not exists (Select 1 from liquid_gruppo_cori_det a1
                                           Where -- Esclude i cori già processati
                                           --    a1.cd_cds = a.cd_cds 
@@ -3701,9 +3722,9 @@ end;
                       select decode(aCori.cd_unita_organizzativa,aUOVERSACC.cd_unita_organizzativa,'N',aUOVERSCONTOBI.cd_unita_organizzativa,'N',nvl(d.fl_accentrato,b.fl_accentrato))
                       into aFlAccentrato
                       from gruppo_cr b, gruppo_cr_det c, gruppo_cr_uo d
-                      where b.esercizio = aEs
+                      where b.esercizio = ESERCIZIO_UO_SPECIALI
                       and b.cd_gruppo_cr = aCori.cd_gruppo_cr
-                      and c.esercizio = aEs
+                      and c.esercizio = ESERCIZIO_UO_SPECIALI
                       and c.cd_gruppo_cr = aCori.cd_gruppo_cr
                       and c.cd_regione = aCori.cd_regione
                       and c.pg_comune = aCori.pg_comune
@@ -4087,13 +4108,13 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
          return gruppo;
  end;
  
-  function GruppoValido (aEs number, aGruppo varchar2, aCdUo varchar2) return varchar2 is
+  function GruppoValido (aEs number, ESERCIZIO_UO_SPECIALI number, aGruppo varchar2, aCdUo varchar2) return varchar2 is
     gruppo varchar2(10);
     aUOVERSACC unita_organizzativa%rowtype;
     aUOVERSCONTOBI unita_organizzativa%rowtype;
  begin
-      aUOVERSACC:=CNRCTB020.getUOVersCori(aEs);
-      aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(aEs);
+      aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
+      aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
       -- Se la UO di versamento accentrato è uguale alla UO dei versamenti su Conto BI tutti i gruppi sono validi
       IF (aUOVERSACC.cd_unita_organizzativa = aUOVERSCONTOBI.cd_unita_organizzativa) THEN
         RETURN aGruppo;
