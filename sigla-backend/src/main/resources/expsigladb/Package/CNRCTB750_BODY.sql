@@ -1314,7 +1314,7 @@ dbms_output.put_line('fine primo loop');
               And TI_SOSPESO_RISCONTRO ='R';
 
               -- Azzero il riscontro del Mandato
-              Update SOSPESO_DET_USC set IM_ASSOCIATO = IM_ASSOCIATO + (aR.IMPORTO + NVL(aR.IMPORTO_RITENUTE, 0)), duva=aTSNow, utuv=aUser, pg_ver_rec=pg_ver_rec+1
+              Update SOSPESO_DET_USC set IM_ASSOCIATO = IM_ASSOCIATO + aR.IMPORTO, duva=aTSNow, utuv=aUser, pg_ver_rec=pg_ver_rec+1
               Where CD_CDS = aMan.cd_cds
               And ESERCIZIO = aMan.esercizio
               And PG_MANDATO = aMan.pg_mandato
@@ -1322,7 +1322,7 @@ dbms_output.put_line('fine primo loop');
               And TI_SOSPESO_RISCONTRO ='R'
               And CD_SOSPESO = aDetUsc.CD_SOSPESO;
 
-              Update SOSPESO set IM_ASSOCIATO = IM_ASSOCIATO + (aR.IMPORTO + NVL(aR.IMPORTO_RITENUTE, 0)), IM_SOSPESO = IM_SOSPESO + (aR.IMPORTO + NVL(aR.IMPORTO_RITENUTE, 0)), FL_STORNATO= 'Y', DT_STORNO=aR.data_movimento , duva=aTSNow, utuv=aUser, pg_ver_rec=pg_ver_rec+1
+              Update SOSPESO set IM_ASSOCIATO = IM_ASSOCIATO + aR.IMPORTO , IM_SOSPESO = IM_SOSPESO + aR.IMPORTO, FL_STORNATO= 'Y', DT_STORNO=aR.data_movimento , duva=aTSNow, utuv=aUser, pg_ver_rec=pg_ver_rec+1
               Where CD_CDS = aMan.cd_cds
               And ESERCIZIO = aMan.esercizio
               And TI_ENTRATA_SPESA ='S'
