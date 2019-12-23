@@ -422,7 +422,7 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     /**
      * @return it.cnr.jada.bulk.BulkList
      */
-    public it.cnr.jada.bulk.BulkList getMandato_rigaColl() {
+    public it.cnr.jada.bulk.BulkList<Mandato_rigaBulk> getMandato_rigaColl() {
         return mandato_rigaColl;
     }
 

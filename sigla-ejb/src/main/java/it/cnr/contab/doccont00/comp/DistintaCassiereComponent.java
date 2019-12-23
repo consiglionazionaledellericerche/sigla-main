@@ -4814,8 +4814,6 @@ public class DistintaCassiereComponent extends
         try {
             Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
                     .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
-            String tagCup = Optional.ofNullable(sess.getVal02(userContext, CNRUserContext.getEsercizio(userContext), null, "COSTANTI", "FORMATO_FLUSSO_BANCA"))
-                    .orElseThrow(() -> new ApplicationException("Configurazione val02 formato flusso banca mancante N - No tag Cup - S -Si tag Cup."));
             DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             final ObjectFactory objectFactory = new ObjectFactory();
@@ -5067,21 +5065,8 @@ public class DistintaCassiereComponent extends
                     VDocumentiFlussoBulk oldDoc = null;
                     for (Iterator c = listClass.iterator(); c.hasNext(); ) {
                         VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
-                        // 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope
                         boolean salta = false;
-                        //nel caso di multibeneficiario non considero il cup comunque
-                        if (tagCup != null && tagCup.compareTo("N") == 0 || multibeneficiario) {
-                            if (doc.getCdCup() != null) {
-                                if (infoben.getCausale() != null) {
-                                    if (!infoben.getCausale().contains(
-                                            doc.getCdCup()))
-                                        infoben.setCausale(infoben.getCausale()
-                                                + "-" + doc.getCdCup());
-                                } else
-                                    infoben.setCausale("CUP " + doc.getCdCup());
-                                doc.setCdCup(null);
-                            }
-
+                        if (multibeneficiario) {
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
@@ -5132,21 +5117,16 @@ public class DistintaCassiereComponent extends
                             .replace('"', ' ').replace('\u00b0', ' '));
                     // benef.setStatoBeneficiario(docContabile.getCdIso());
                     infoben.setBeneficiario(benef);
-                    if (infoben.getCausale() != null
-                            && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
-                        infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE -1));
-                    else if (infoben.getCausale() != null)
-                        infoben.setCausale(infoben.getCausale() + " "
-                                + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
-                        infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, MAX_LENGTH_CAUSALE -1));
-                    else
-                        infoben.setCausale(docContabile.getDsDocumento());
-                    infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
-                            .replace('"', ' ').replace('\u00b0', ' '));
+                    infoben.setCausale(Optional.ofNullable(Optional.ofNullable(docContabile.getDsDocumento())
+                            .filter(s -> s.length() > MAX_LENGTH_CAUSALE)
+                            .map(s -> s.substring(0, MAX_LENGTH_CAUSALE -1))
+                            .orElseGet(() -> docContabile.getDsDocumento()))
+                            .map(s -> RemoveAccent.convert(s).replace('"', ' ').replace('\u00b0', ' '))
+                            .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, causale non presente " +
+                                    "sul Mandato {0}/{1}/{2}",
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()))));
                     // SOSPESO
                     if (docContabile.getTiDocumento().compareTo(
                             MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
@@ -5209,18 +5189,7 @@ public class DistintaCassiereComponent extends
                         // 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope
                         boolean salta = false;
                         //nel caso di multibeneficiario non considero il cup comunque
-                        if (tagCup != null && tagCup.compareTo("N") == 0 || multibeneficiario) {
-                            if (doc.getCdCup() != null) {
-                                if (infoben.getCausale() != null) {
-                                    if (!infoben.getCausale().contains(
-                                            doc.getCdCup()))
-                                        infoben.setCausale(infoben.getCausale()
-                                                + "-" + doc.getCdCup());
-                                } else
-                                    infoben.setCausale("CUP " + doc.getCdCup());
-                                doc.setCdCup(null);
-                            }
-
+                        if (multibeneficiario) {
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
@@ -5271,21 +5240,16 @@ public class DistintaCassiereComponent extends
                             .replace('"', ' ').replace('\u00b0', ' '));
                     // benef.setStatoBeneficiario(docContabile.getCdIso());
                     infoben.setBeneficiario(benef);
-                    if (infoben.getCausale() != null
-                            && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
-                        infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
-                    else if (infoben.getCausale() != null)
-                        infoben.setCausale(infoben.getCausale() + " "
-                                + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
-                        infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, MAX_LENGTH_CAUSALE -1));
-                    else
-                        infoben.setCausale(docContabile.getDsDocumento());
-                    infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
-                            .replace('"', ' ').replace('\u00b0', ' '));
+                    infoben.setCausale(Optional.ofNullable(Optional.ofNullable(docContabile.getDsDocumento())
+                            .filter(s -> s.length() > MAX_LENGTH_CAUSALE)
+                            .map(s -> s.substring(0, MAX_LENGTH_CAUSALE -1))
+                            .orElseGet(() -> docContabile.getDsDocumento()))
+                            .map(s -> RemoveAccent.convert(s).replace('"', ' ').replace('\u00b0', ' '))
+                            .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, causale non presente " +
+                                    "sul Mandato {0}/{1}/{2}",
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()))));
                     if (bulk.getIm_ritenute().compareTo(BigDecimal.ZERO) != 0) {
                         List list_rev = findReversali(userContext, bulk);
                         for (Iterator iRev = list_rev.iterator(); iRev.hasNext(); ) {
@@ -5362,26 +5326,12 @@ public class DistintaCassiereComponent extends
                         VDocumentiFlussoBulk doc = (VDocumentiFlussoBulk) c.next();
                         // 17/01/2018 per non indicare cup nel tag ma solo nella causale e ripartire gli importi solo per siope
                         boolean salta = false;
-
-                        if (tagCup != null && tagCup.compareTo("N") == 0) {
-                            if (doc.getCdCup() != null) {
-                                if (infoben.getCausale() != null) {
-                                    if (!infoben.getCausale().contains(
-                                            doc.getCdCup()))
-                                        infoben.setCausale(infoben.getCausale()
-                                                + "-" + doc.getCdCup());
-                                } else
-                                    infoben.setCausale("CUP " + doc.getCdCup());
-                                doc.setCdCup(null);
-                            }
-
-                            if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
-                                for (Iterator<it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione> it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
-                                    it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
-                                        salta = true;
-                                        break;
-                                    }
+                        if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
+                            for (Iterator<it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione> it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
+                                it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = it.next();
+                                if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                    salta = true;
+                                    break;
                                 }
                             }
                         }
@@ -5610,23 +5560,17 @@ public class DistintaCassiereComponent extends
                                     + "-" + docContabile.getPgDocumento().toString());
                         infoben.setSepaCreditTransfer(sepa);
                     }
-                    if (infoben.getCausale() != null
-                            && (infoben.getCausale() + docContabile
-                            .getDsDocumento()).length() > MAX_LENGTH_CAUSALE)
-                        infoben.setCausale((infoben.getCausale() + " " + docContabile
-                                .getDsDocumento()).substring(0, MAX_LENGTH_CAUSALE - 1));
-                    else if (infoben.getCausale() != null)
-                        infoben.setCausale(infoben.getCausale() + " "
-                                + docContabile.getDsDocumento());
-                    else if (docContabile.getDsDocumento().length() > MAX_LENGTH_CAUSALE)
-                        infoben.setCausale(docContabile.getDsDocumento().substring(
-                                0, MAX_LENGTH_CAUSALE -1));
-                    else
-                        infoben.setCausale(docContabile.getDsDocumento());
-                    infoben.setCausale(RemoveAccent.convert(infoben.getCausale())
-                            .replace('"', ' ').replace('\u00b0', ' '));
+                    infoben.setCausale(Optional.ofNullable(Optional.ofNullable(docContabile.getDsDocumento())
+                            .filter(s -> s.length() > MAX_LENGTH_CAUSALE)
+                            .map(s -> s.substring(0, MAX_LENGTH_CAUSALE -1))
+                            .orElseGet(() -> docContabile.getDsDocumento()))
+                            .map(s -> RemoveAccent.convert(s).replace('"', ' ').replace('\u00b0', ' '))
+                            .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, causale non presente " +
+                                    "sul Mandato {0}/{1}/{2}",
+                                    String.valueOf(bulk.getEsercizio()),
+                                    String.valueOf(bulk.getCd_cds()),
+                                    String.valueOf(bulk.getPg_documento_cont()))));
                     // SOSPESO
-
                     if (docContabile.getTiDocumento().compareTo(
                             MandatoBulk.TIPO_REGOLAM_SOSPESO) == 0) {
 
