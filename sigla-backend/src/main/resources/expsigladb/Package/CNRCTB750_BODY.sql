@@ -1330,13 +1330,13 @@ dbms_output.put_line('fine primo loop');
               And CD_SOSPESO = aDetUsc.CD_SOSPESO;
 
               -- Aggiorno lo stato trasmissione del mandato annullato
-              Update mandato Set stato_trasmissione_annullo = 'T', duva=aRisc.duva, utuv=aRisc.utuv, pg_ver_rec=pg_ver_rec+1
+              Update mandato Set stato_trasmissione_annullo = 'T', duva=aTSNow, utuv=aUser, pg_ver_rec=pg_ver_rec+1
               Where  esercizio = aMan.esercizio
               And cd_cds = aMan.cd_cds
               And pg_mandato = aR.numero_documento;
 
               Update MOVIMENTO_CONTO_EVIDENZA
-              Set STATO = CNRCTB755.STATO_RECORD_PROCESSATO, duva = aRisc.duva, utuv = aRisc.utuv, pg_ver_rec=pg_ver_rec+1
+              Set STATO = CNRCTB755.STATO_RECORD_PROCESSATO, duva = aTSNow, utuv = aUser, pg_ver_rec=pg_ver_rec+1
               Where esercizio = aR.esercizio
               And identificativo_flusso = aR.identificativo_flusso
               And progressivo = aR.progressivo;
