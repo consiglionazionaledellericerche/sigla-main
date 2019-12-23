@@ -1534,7 +1534,7 @@ end;
   end;
 
 
-  ESERCIZIO_UO_SPECIALI := to_number(To_Char(aLiquidCori.DT_DA,'YYYY'));
+  ESERCIZIO_UO_SPECIALI := to_number(To_Char(aLiquid.DT_DA,'YYYY'));
 
    -- Elimino il dettaglio minimo della liquidazione di aLGC non selezionati
   delete from liquid_gruppo_cori_det a where
@@ -2877,7 +2877,7 @@ end;
          End;
       End If;
     End Loop; -- FINE CICLO DI LOOP SU AGGREGATI -- LOOP 1
-  
+
       -- ================================================================================
       -- GESTIONE DEGLI AGGREGATI RACCOLTI DA ALTRE UO DEL TIPO DI QUELLO IN PROCESSO
       -- ================================================================================
@@ -4112,13 +4112,22 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
     gruppo varchar2(10);
     aUOVERSACC unita_organizzativa%rowtype;
     aUOVERSCONTOBI unita_organizzativa%rowtype;
+    CONTA NUMBER;
  begin
       aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
       aUOVERSCONTOBI:=CNRCTB020.getUOVersCoriContoBI(ESERCIZIO_UO_SPECIALI);
       -- Se la UO di versamento accentrato è uguale alla UO dei versamenti su Conto BI tutti i gruppi sono validi
+     select count(1) into conta
+     from unita_organizzativa u, gruppo_cr_uo c
+     where u.cd_unita_organizzativa = aCdUo
+      and u.cd_unita_organizzativa = c.cd_unita_organizzativa
+      and c.esercizio = ESERCIZIO_UO_SPECIALI
+      and fl_cds = 'N'
+      and cd_tipo_unita = CNRCTB020.TIPO_SAC;
+
       IF (aUOVERSACC.cd_unita_organizzativa = aUOVERSCONTOBI.cd_unita_organizzativa) THEN
         RETURN aGruppo;
-      ELSif aUOVERSACC.cd_unita_organizzativa = aCdUo or cnrctb020.isUOSAC(aCdUo) then 
+      ELSif aUOVERSACC.cd_unita_organizzativa = aCdUo or CONTA > 0 then 
         Begin
           Select cd_gruppo_cr
           Into gruppo
