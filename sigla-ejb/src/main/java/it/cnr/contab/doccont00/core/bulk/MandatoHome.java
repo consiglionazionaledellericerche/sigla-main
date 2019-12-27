@@ -20,6 +20,7 @@ package it.cnr.contab.doccont00.core.bulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -27,6 +28,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
@@ -37,6 +39,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class MandatoHome extends BulkHome {
     public MandatoHome(Class clazz, java.sql.Connection conn) {
@@ -241,5 +245,29 @@ public abstract class MandatoHome extends BulkHome {
         Optional.ofNullable(mandato)
                 .ifPresent(mandatoBulk -> sql.addClause(mandatoBulk.buildFindClauses(null)));
         return fetchAll(sql);
+    }
+
+    /**
+     * Recupera tutti i Codici CUP collegati al Mandato.
+     *
+     * @param mandatoBulk Mandato in uso.
+     * @return java.util.Collection Collezione di oggetti <code>CUP</code>
+     */
+    public java.util.Collection<String> findCodiciCupCollegati(UserContext usercontext, MandatoBulk mandatoBulk) throws PersistencyException {
+        PersistentHome mandatoCupHome = getHomeCache().getHome(MandatoCupIBulk.class);
+        SQLBuilder sql = mandatoCupHome.createSQLBuilder();
+        sql.setAutoJoins(true);
+        sql.generateJoin("mandato_rigaI", "MANDATO_RIGA");
+
+        sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.CD_CDS", SQLBuilder.EQUALS, mandatoBulk.getCd_cds());
+        sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.ESERCIZIO", SQLBuilder.EQUALS, mandatoBulk.getEsercizio());
+        sql.addSQLClause(FindClause.AND, "MANDATO_RIGA.PG_MANDATO", SQLBuilder.EQUALS, mandatoBulk.getPg_mandato());
+        final Stream<MandatoCupBulk> stream = mandatoCupHome.fetchAll(sql)
+                .stream()
+                .filter(MandatoCupBulk.class::isInstance)
+                .map(MandatoCupBulk.class::cast);
+        return stream.map(t -> t.getCdCup())
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

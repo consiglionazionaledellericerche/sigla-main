@@ -1,5 +1,65 @@
 # sigla-main Changelog
 
+## Release 6.1.1  -- _December 23, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[28ed07152aef27f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/28ed07152aef27f) marco.spasiano *December 23, 2019*
+
+>**Change label for button Variazione Mandato**
+>
+>[f839f3455ab9a5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f839f3455ab9a5c) marco.spasiano *December 23, 2019*
+
+>**Il CUP viene inserito nella causale quando il Mandato viene creato, non viene modificata la causale all'atto dell'invio a SIOPE+**
+>
+>[da48d7f1afe5554](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da48d7f1afe5554) marco.spasiano *December 23, 2019*
+
+>**Cambiato il filtro sull'oggetto della PEC**
+>
+>[0d60fa38354f93a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d60fa38354f93a) marco.spasiano *December 23, 2019*
+
+>**Cambiato controllo per abilitazione alle Variazioni**
+>
+>[698d848add73d20](https://github.com/consiglionazionaledellericerche/sigla-main/commit/698d848add73d20) marco.spasiano *December 23, 2019*
+
+>**FIX aggiornamento mandato per la giornaliera di cassa**
+>
+>[8627f9ed0a3bbee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8627f9ed0a3bbee) marco.spasiano *December 23, 2019*
+
+>**Fix modifiche liquidazione CORI per doppia SAC**
+>
+>[e82f17c6eee710a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e82f17c6eee710a) gianfranco.gasparro *December 23, 2019*
+
+>**FIX NullPointer in JSP**
+>
+>[8722027917e4bb7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8722027917e4bb7) marco.spasiano *December 20, 2019*
+
+>**FIX importo risocntro del mandato stornato**
+>
+>[0bd4d5f42a2bfc2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bd4d5f42a2bfc2) marco.spasiano *December 20, 2019*
+
+>**FIX trovato su emissione Nota di Credito Attiva**
+>
+>[bdfee2cfdef0f17](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bdfee2cfdef0f17) marco.spasiano *December 20, 2019*
+
+>**Fix: corretta gestione del fine anno per le partite di giro e gestito SAC diverse a cavallo di anno. [ci skip]**
+>
+>[e376b9178cf52b3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e376b9178cf52b3) raffaele.pagano *December 20, 2019*
+
+>**FIX Reversali riscontrate inserite in due distinte diverse [ci skip]**
+>
+>[c3c4f8612e42690](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c3c4f8612e42690) marco.spasiano *December 18, 2019*
+
+>**Rimodulazione progetti: data la possibilità di associare sulle variazioni di competenza della UO Ente le rimodulazioni di qualsiasi UO. [ci skip]**
+>
+>[4739f1b05c07a89](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4739f1b05c07a89) raffaele.pagano *December 18, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[c670d0042defe3a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c670d0042defe3a) marco.spasiano *December 17, 2019*
+
+
 ## Release 6.1.0  -- _December 17, 2019_ 
 ### No issue
 

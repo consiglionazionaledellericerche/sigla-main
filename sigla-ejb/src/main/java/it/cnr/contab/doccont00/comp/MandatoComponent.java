@@ -98,6 +98,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
 
     public final static String VSX_PROC_NAME = "CNRCTB037.vsx_man_acc";
     private transient static final Logger logger = LoggerFactory.getLogger(MandatoComponent.class);
+    public static final int DS_MANDATO_MAX_LENGTH = 300;
 
     // @@<< CONSTRUCTORCST
     public MandatoComponent() {
@@ -1729,7 +1730,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                         .hasNext(); )
                     checkDocAmmCambiato(userContext, (Mandato_rigaBulk) i
                             .next());
-
+                aggiornaCausale(userContext, mandato);
                 verificaMandato(userContext, mandato);
                 aggiornaImportoSospesi(userContext, mandato);
                 Mandato_rigaBulk riga;
@@ -1846,6 +1847,29 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
         } catch (Exception e) {
             throw handleException(e);
         }
+    }
+
+    private void aggiornaCausale(UserContext userContext, MandatoBulk mandato) {
+        final String collect = mandato.getMandato_rigaColl()
+                .stream()
+                .flatMap(mandato_rigaBulk -> mandato_rigaBulk.getMandato_siopeColl().stream())
+                .flatMap(mandato_siopeBulk -> mandato_siopeBulk.getMandatoSiopeCupColl().stream())
+                .map(MandatoSiopeCupBulk::getCdCup)
+                .distinct()
+                .filter(s -> !mandato.getDs_mandato().contains(s))
+                .map(s -> "CUP ".concat(s))
+                .collect(Collectors.joining(" "));
+        mandato.setDs_mandato(
+                Optional.ofNullable(mandato.getDs_mandato())
+                    .map(s -> {
+                        final String concat = collect.concat(" ").concat(s);
+                        return Optional.ofNullable(concat)
+                                .filter(s1 -> s1.length() > DS_MANDATO_MAX_LENGTH)
+                                .map(s1 -> s1.substring(0, DS_MANDATO_MAX_LENGTH))
+                                .orElse(concat);
+                    })
+                    .orElseGet(() -> mandato.getDs_mandato())
+        );
     }
 
     private MandatoBulk getMandatoAnnPerSostituzione(UserContext userContext, MandatoBulk mandato) throws ComponentException {
