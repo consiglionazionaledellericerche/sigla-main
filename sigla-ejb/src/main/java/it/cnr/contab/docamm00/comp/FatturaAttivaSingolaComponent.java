@@ -2554,6 +2554,25 @@ public class FatturaAttivaSingolaComponent
         if (fattura instanceof Nota_di_debito_attivaBulk) {
             Nota_di_debito_attivaBulk ndd = (Nota_di_debito_attivaBulk) fattura;
             aggiornaRigheFatturaAttivaDiOrigine(userContext, ndd);
+
+            for (Iterator i = ndd.getFattura_attiva_dettColl().iterator(); i.hasNext(); ) {
+                Fattura_attiva_rigaIBulk rigaFA = ((Nota_di_debito_attiva_rigaBulk) i.next()).getRiga_fattura_associata();
+                Fattura_attiva_IBulk fatturaOriginaria = rigaFA.getFattura_attivaI();
+                RemoteIterator ri = findNotaDiCreditoFor(userContext, fatturaOriginaria);
+                try {
+                    if (ri != null  && ri.countElements() == 1) {
+                        Nota_di_credito_attivaBulk notaDiCredito = (Nota_di_credito_attivaBulk) ri.nextElement();
+                        notaDiCredito =(Nota_di_credito_attivaBulk) findByPrimaryKey(userContext, notaDiCredito);
+                        if (notaDiCredito.isNotaCreditoDaNonInviareASdi() && notaDiCredito.getIm_totale_fattura().compareTo(ndd.getIm_totale_fattura()) == 0){
+                            impostaDocumentoDaNonInviare(ndd);
+                        }
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                    throw new it.cnr.jada.comp.ApplicationException("Errore nel recupero della nota di credito");
+                }
+            break;
+            }
         }
 
         prepareScarichiInventario(userContext, fattura);
@@ -3786,7 +3805,12 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
                     riga.setTariffario(findTariffario(aUC, riga));
                 }
                 impostaCollegamentoCapitoloPerTrovato(aUC, riga);
-                riga.setTrovato(ricercaDatiTrovato(aUC, riga.getPg_trovato()));
+                TrovatoBulk trovatoBulk = new TrovatoBulk();
+                trovatoBulk.setPg_trovato(riga.getPg_trovato());
+                trovatoBulk.setInventore("1");
+                trovatoBulk.setTitolo("f");
+
+                riga.setTrovato(trovatoBulk);
             }
 
             getHomeCache(aUC).fetchAll(aUC);
@@ -3826,8 +3850,6 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             //fattura.setBanca_uo((coll == null || coll.isEmpty()) ? null : (BancaBulk)new java.util.Vector(coll).firstElement());
 
         } catch (it.cnr.jada.persistency.PersistencyException e) {
-            throw handleException(fattura, e);
-        } catch (RemoteException e) {
             throw handleException(fattura, e);
         } catch (it.cnr.jada.persistency.IntrospectionException e) {
             throw handleException(fattura, e);
@@ -7511,12 +7533,16 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
         notaDiCredito.setFattura_attiva_accertamentiHash(null);
         rebuildAccertamenti(userContext, notaDiCredito);
         if (!isNotaEsterna) {
-            notaDiCredito.setNcAnnulloSdi("S");
+            impostaDocumentoDaNonInviare(notaDiCredito);
         }
         notaDiCredito.setToBeCreated();
 
         Nota_di_credito_attivaBulk notaCredito = (Nota_di_credito_attivaBulk) creaConBulk(userContext, notaDiCredito);
         return notaCredito;
+    }
+
+    private void impostaDocumentoDaNonInviare(Fattura_attivaBulk documento) {
+        documento.setNcAnnulloSdi("S");
     }
 
     private void protocollazione(UserContext userContext, Fattura_attivaBulk fattura) throws ComponentException,
