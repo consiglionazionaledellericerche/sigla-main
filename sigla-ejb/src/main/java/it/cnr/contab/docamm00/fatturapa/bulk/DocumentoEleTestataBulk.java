@@ -88,7 +88,8 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_04.value(),"Nota di credito");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_05.value(),"Nota di debito");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_06.value(),"Parcella");
-		
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_20.value(),"Autofattura");
+
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_01.value(),"contanti");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_02.value(),"assegno");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_03.value(),"assegno circolare");
