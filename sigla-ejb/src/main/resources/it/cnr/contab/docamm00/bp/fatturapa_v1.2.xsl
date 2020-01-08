@@ -1130,6 +1130,9 @@
 																	<xsl:when test="$TD='TD06'">
 																		(parcella)
 																	</xsl:when>
+																	<xsl:when test="$TD='TD20'">
+																		(autofattura)
+																	</xsl:when>
 																	<xsl:when test="$TD=''">
 																	</xsl:when>
 																	<xsl:otherwise>
