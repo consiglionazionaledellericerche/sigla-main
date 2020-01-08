@@ -723,6 +723,12 @@
 		inputType="CHECKBOX"
 		label="fl_stampa" />
 	<fieldProperty
+		name="flFatturaElettronica"
+		property="flFatturaElettronica"
+		inputType="CHECKBOX"
+		label="Fattura Elettronica" />
+
+	<fieldProperty
 		name="ti_fattura"
 		property="ti_fattura"
 		maxLength="1"
@@ -862,6 +868,7 @@
 	<findFieldProperty name="cd_precedente" />
 	<findFieldProperty name="fl_congelata" />
 	<findFieldProperty name="ti_bene_servizioForSearch" />
+	<findFieldProperty name="flFatturaElettronica"/>
 	<findFieldProperty name="statoInvioSdi" />
 	<findFieldProperty name="codiceInvioSdi" />
 	<findFieldProperty name="codiceUnivocoUfficioIpa" />
