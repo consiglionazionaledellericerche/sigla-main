@@ -1,31 +1,55 @@
 # sigla-main Changelog
 
-## Release 6.1.1  -- _December 23, 2019_ 
+## Release 6.1.2  -- _January 09, 2020_ 
 ### No issue
 
 >**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
 >
->[28ed07152aef27f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/28ed07152aef27f) marco.spasiano *December 23, 2019*
+>[02e3746f709ef2a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/02e3746f709ef2a) marco.spasiano *January 09, 2020*
 
->**Change label for button Variazione Mandato**
+>**Fix Contratti: in fase di associazione progetto su un contratto ante 2016 il sistema controllava per le GAE degli accertamenti associati al contratto il progetto ante 2016 anzichè quelli in cui si sono convertiti nel 2016. Cambiato il controllo per cui va a buon fine se la GAE è associata almeno una volta al progetto indicato sul contratto.**
 >
->[f839f3455ab9a5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f839f3455ab9a5c) marco.spasiano *December 23, 2019*
+>[0eb316da3b4b4f2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0eb316da3b4b4f2) raffaele.pagano *January 09, 2020*
 
->**Il CUP viene inserito nella causale quando il Mandato viene creato, non viene modificata la causale all'atto dell'invio a SIOPE+**
+>**Fix Stampa Bilancio Previsione: nella stampa del bilancio decisionale valorizzata anche la colonna cassa se caricata nel bilancio gestionale.**
 >
->[da48d7f1afe5554](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da48d7f1afe5554) marco.spasiano *December 23, 2019*
+>[0122a7fc4257f81](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0122a7fc4257f81) raffaele.pagano *January 09, 2020*
 
->**Cambiato il filtro sull'oggetto della PEC**
+>**Fix Gestione Bollo: corretta errata visualizzazione carattere accentato.**
 >
->[0d60fa38354f93a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d60fa38354f93a) marco.spasiano *December 23, 2019*
+>[ab20fd46aa0aa0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ab20fd46aa0aa0b) raffaele.pagano *January 09, 2020*
 
->**Cambiato controllo per abilitazione alle Variazioni**
+>**Fix Gestione Bollo: non filtrava per esercizio di scrivania.**
 >
->[698d848add73d20](https://github.com/consiglionazionaledellericerche/sigla-main/commit/698d848add73d20) marco.spasiano *December 23, 2019*
+>[0800e280962ec39](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0800e280962ec39) raffaele.pagano *January 09, 2020*
 
->**FIX aggiornamento mandato per la giornaliera di cassa**
+>**Add filter on Lista Documenti Amministrativi**
 >
->[8627f9ed0a3bbee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8627f9ed0a3bbee) marco.spasiano *December 23, 2019*
+>[f0e6e476cd5c78c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f0e6e476cd5c78c) marco.spasiano *January 08, 2020*
+
+>**Fix**
+>
+>[5f7517666d39c22](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5f7517666d39c22) gianfranco.gasparro *January 08, 2020*
+
+>**Aggiunto filtro su codice SDI valorizzato nel caso di fatture elettroniche**
+>
+>[89cbc42e46b5c38](https://github.com/consiglionazionaledellericerche/sigla-main/commit/89cbc42e46b5c38) gianfranco.gasparro *January 07, 2020*
+
+>**Add TD_20 for TipoDocumentoType on Fattura SDI**
+>
+>[da870cd5daeac37](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da870cd5daeac37) marco.spasiano *January 07, 2020*
+
+>**Non inviata nota debito attiva nel caso di esistenza di nota credito da non inviare collegata alla fattura**
+>
+>[c31f386ade98b7d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c31f386ade98b7d) gianfranco.gasparro *December 31, 2019*
+
+>**Ripristinate modifiche per Somma Opposta e recuperato terzo dal gruppo**
+>
+>[3aea5c0ac8a45a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3aea5c0ac8a45a6) gianfranco.gasparro *December 27, 2019*
+
+>**Generate CHANGELOG.md [ci skip]**
+>
+>[0b752c646bbc5eb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0b752c646bbc5eb) marco.spasiano *December 23, 2019*
 
 >**Fix modifiche liquidazione CORI per doppia SAC**
 >
@@ -58,6 +82,34 @@
 >**Generate CHANGELOG.md [ci skip]**
 >
 >[c670d0042defe3a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c670d0042defe3a) marco.spasiano *December 17, 2019*
+
+
+## Release 6.1.1  -- _December 23, 2019_ 
+### No issue
+
+>**changed softwareVersion and releaseDate on publiccode.yml [ci skip]**
+>
+>[28ed07152aef27f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/28ed07152aef27f) marco.spasiano *December 23, 2019*
+
+>**Change label for button Variazione Mandato**
+>
+>[f839f3455ab9a5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f839f3455ab9a5c) marco.spasiano *December 23, 2019*
+
+>**Il CUP viene inserito nella causale quando il Mandato viene creato, non viene modificata la causale all'atto dell'invio a SIOPE+**
+>
+>[da48d7f1afe5554](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da48d7f1afe5554) marco.spasiano *December 23, 2019*
+
+>**Cambiato il filtro sull'oggetto della PEC**
+>
+>[0d60fa38354f93a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d60fa38354f93a) marco.spasiano *December 23, 2019*
+
+>**Cambiato controllo per abilitazione alle Variazioni**
+>
+>[698d848add73d20](https://github.com/consiglionazionaledellericerche/sigla-main/commit/698d848add73d20) marco.spasiano *December 23, 2019*
+
+>**FIX aggiornamento mandato per la giornaliera di cassa**
+>
+>[8627f9ed0a3bbee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8627f9ed0a3bbee) marco.spasiano *December 23, 2019*
 
 
 ## Release 6.1.0  -- _December 17, 2019_ 
