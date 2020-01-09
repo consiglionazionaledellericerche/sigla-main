@@ -112,7 +112,8 @@ public class AttoBolloComponent extends CRUDComponent {
                 .orElseThrow(() -> new ComponentException("Cannot find Atto_bolloHome"));
 
         SQLBuilder sqlBuilder = home.createSQLBuilder();
-        if (!uoScrivania.isUoEnte())			
+		sqlBuilder.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext));
+		if (!uoScrivania.isUoEnte())
         	sqlBuilder.addClause(FindClause.AND, "unitaOrganizzativa.cd_unita_organizzativa", SQLBuilder.EQUALS, uoScrivania.getCd_unita_organizzativa());        
         sqlBuilder.setAutoJoins(true);
         sqlBuilder.generateJoin("tipoAttoBollo", "TIPO_ATTO_BOLLO");
