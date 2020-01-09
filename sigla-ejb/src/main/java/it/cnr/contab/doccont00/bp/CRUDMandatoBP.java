@@ -22,6 +22,7 @@ import it.cnr.contab.config00.bulk.Codici_siopeBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
+import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.IDocumentoAmministrativoSpesaComponentSession;
@@ -62,6 +63,7 @@ import java.util.stream.Stream;
  */
 
 public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAmministrativoBP, IDefferedUpdateSaldiBP {
+    public static final String MANDATO_VARIAZIONE_BP = "CRUDMandatoVariazioneBP";
     private final SimpleDetailCRUDController documentiPassivi = new SimpleDetailCRUDController("DocumentiPassivi", V_doc_passivo_obbligazioneBulk.class, "docPassiviColl", this);
     private final CRUDMandatoRigaController documentiPassiviSelezionati = new CRUDMandatoRigaController("DocumentiPassiviSelezionati", Mandato_rigaIBulk.class, "mandato_rigaColl", this);
     private final SimpleDetailCRUDController documentiAttiviPerRegolarizzazione = new SimpleDetailCRUDController("DocumentiAttiviPerRegolarizzazione", V_doc_attivo_accertamentoBulk.class, "docGenericiPerRegolarizzazione", this);
@@ -315,7 +317,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                 .map(MandatoBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Mandato non trovato!"));
         CRUDMandatoVariazioneBP crudMandatoVariazioneBP =
-                Optional.ofNullable(actionContext.getUserInfo().createBusinessProcess(actionContext, "CRUDMandatoVariazioneBP"))
+                Optional.ofNullable(actionContext.createBusinessProcess("CRUDMandatoVariazioneBP"))
                         .filter(CRUDMandatoVariazioneBP.class::isInstance)
                         .map(CRUDMandatoVariazioneBP.class::cast)
                         .orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione del Manadato"));
@@ -342,7 +344,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                 setMessage(ERROR_MESSAGE, "Mandato in stato 'DA VARIARE', accesso non consentito!");
             } else {
                 CRUDMandatoVariazioneBP crudMandatoVariazioneBP =
-                        Optional.ofNullable(context.getUserInfo().createBusinessProcess(context, "CRUDMandatoVariazioneBP", new Object[]{"M"}))
+                        Optional.ofNullable(context.createBusinessProcess("CRUDMandatoVariazioneBP", new Object[]{"M"}))
                                 .filter(CRUDMandatoVariazioneBP.class::isInstance)
                                 .map(CRUDMandatoVariazioneBP.class::cast)
                                 .orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione del Manadato"));
@@ -511,12 +513,15 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                     .filter(CNRUserInfo.class::isInstance)
                     .map(CNRUserInfo.class::cast)
                     .orElseThrow(() -> new BusinessProcessException("Cannot find UserInfo in context"));
+            final Unita_organizzativa_enteBulk uoEnte = Optional.ofNullable(Utility.createUnita_organizzativaComponentSession().getUoEnte(actioncontext.getUserContext()))
+                                            .filter(Unita_organizzativa_enteBulk.class::isInstance)
+                                            .map(Unita_organizzativa_enteBulk.class::cast)
+                                            .orElseThrow(() -> new BusinessProcessException("Unita ENTE non trovata"));
 
             isAbilitatoCrudMandatoVariazioneBP = Optional.ofNullable(GestioneUtenteAction.getComponentSession()
                     .validaBPPerUtente(actioncontext.getUserContext(),
                             cnrUserInfo.getUtente(),
-                            cnrUserInfo.getUtente().isUtenteComune() ?
-                                    cnrUserInfo.getUnita_organizzativa().getCd_unita_organizzativa() : "*", "CRUDMandatoVariazioneBP")).isPresent();
+                            uoEnte.getCd_unita_organizzativa(), MANDATO_VARIAZIONE_BP)).isPresent();
 
         } catch (Throwable throwable) {
             throw new BusinessProcessException(throwable);

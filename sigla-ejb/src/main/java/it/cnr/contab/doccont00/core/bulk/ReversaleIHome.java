@@ -64,6 +64,8 @@ public Collection findDocAttivi( ReversaleIBulk reversale, it.cnr.contab.utenze0
 	clausesNoFattElett.addClause("OR", "flFatturaElettronica", SQLBuilder.EQUALS, Boolean.FALSE);
 	CompoundFindClause clausesOr = new CompoundFindClause();
 	CompoundFindClause clausesFattElett = new CompoundFindClause();
+	clausesFattElett.addClause("AND", "codiceInvioSdi", SQLBuilder.ISNOTNULL, null);
+	CompoundFindClause clausesFattElettPubbliciAnd = new CompoundFindClause();
 	CompoundFindClause clausesFattElettPubblici = new CompoundFindClause();
 	clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_ACCETTATA_DESTINATARIO);
 	clausesFattElettPubblici.addClause("OR", "statoInvioSdi", SQLBuilder.EQUALS, Fattura_attivaBulk.FATT_ELETT_DECORRENZA_TERMINI);

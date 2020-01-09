@@ -1,7 +1,3 @@
---------------------------------------------------------
---  DDL for Package Body CNRCTB015
---------------------------------------------------------
-
   CREATE OR REPLACE PACKAGE BODY "CNRCTB015" is
 
  function getIm01PerChiave(aEsercizio number, aChiavePrimaria varchar2, aChiaveSecondaria varchar2) return number is

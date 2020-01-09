@@ -302,4 +302,12 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     		throw handleException(e);
     	}
     }
+
+    public boolean isAutenticazioneLdap() {
+        return Optional.ofNullable(getModel())
+                    .filter(UtenteBulk.class::isInstance)
+                    .map(UtenteBulk.class::cast)
+                    .flatMap(utenteBulk -> Optional.ofNullable(utenteBulk.getFl_autenticazione_ldap()))
+                    .orElse(Boolean.FALSE);
+    }
 }

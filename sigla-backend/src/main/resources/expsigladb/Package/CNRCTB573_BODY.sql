@@ -21,6 +21,7 @@
   aTDtA date;
   aPgCall number(15);
   aNR number;
+  ESERCIZIO_UO_SPECIALI number;
  begin
   -- Lancio start esecuzione log
   IBMUTL210.logStartExecutionUpd(pg_exec, LOG_TIPO_LIQCORIMAS, job, 'Richista utente:' || aUser,
@@ -38,7 +39,13 @@
    aTDtDa:=trunc(aDtDa);
    aTDtA:=trunc(aDtA);
 
-   aUOVERSACC:=CNRCTB020.getUOVersCori(aEs);
+  if to_number(to_char(aDtDa,'YYYY')) != to_number(to_char(aDtA,'YYYY')) THEN
+     IBMERR001.RAISE_ERR_GENERICO('La date di inizio e la data di fine devono essere dello stesso anno');
+  else
+    ESERCIZIO_UO_SPECIALI := to_number(To_Char(aDtDa,'YYYY'));
+  END IF;
+
+   aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
 
    for aUO in (select * from v_unita_organizzativa_valida u where 
         esercizio = aEs-1                                         
@@ -161,6 +168,7 @@
    esitoOk VARCHAR2(1):='S';
    errore VARCHAR2(4000);
    codice_errore VARCHAR2(20);
+  ESERCIZIO_UO_SPECIALI number;
  Begin
      pg_exec := pg_ex;
      -- Lancio start esecuzione log
@@ -177,14 +185,22 @@
    	aTDtDa:=trunc(aDtDa);
    	aTDtA:=trunc(aDtA);
 
-   	aUOVERSACC:=CNRCTB020.getUOVersCori(aEs);
+  if to_number(to_char(aDtDa,'YYYY')) != to_number(to_char(aDtA,'YYYY')) THEN
+     IBMERR001.RAISE_ERR_GENERICO('La date di inizio e la data di fine devono essere dello stesso anno');
+  else
+    ESERCIZIO_UO_SPECIALI := to_number(To_Char(aDtDa,'YYYY'));
+  END IF;
+
+   	aUOVERSACC:=CNRCTB020.getUOVersCori(ESERCIZIO_UO_SPECIALI);
 
 	For aUO in 
    	    (Select * from v_unita_organizzativa_valida u 
    	     Where esercizio = Decode(es_prec,'Y',aEs-1,aEs)
 	       And cd_unita_organizzativa != aUOVERSACC.cd_unita_organizzativa
 	       And fl_cds = 'N'
-	       And cd_tipo_unita != CNRCTB020.TIPO_SAC 
+         And NOT exists (Select 1 from gruppo_cr_uo cr 
+                          WHERE cr.esercizio = ESERCIZIO_UO_SPECIALI
+                              And cr.cd_unita_organizzativa = u.cd_unita_organizzativa) 
 	       And Exists (Select 1 from v_unita_organizzativa_valida 
 	      	  	   Where esercizio = aEs
 		 	     And fl_cds = 'N'
