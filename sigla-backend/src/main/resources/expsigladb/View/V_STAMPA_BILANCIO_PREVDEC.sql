@@ -36,19 +36,31 @@
                      + NVL (a.im_spese_gest_accentrata_int, 0)
                      + NVL (a.im_spese_gest_accentrata_est, 0)
                                                              im_previsione_ac,
-                     0 im_cassa_ac, 0 im_residui_ap,
+                     CASE WHEN e.descrizione='CNR'
+                          then 0
+                          else (SELECT NVL(SUM(IM_PAGAMENTI),0) FROM PDG_MODULO_SPESE_GEST SG
+                                WHERE SG.ESERCIZIO = A.ESERCIZIO
+                                AND   SG.CD_CENTRO_RESPONSABILITA = A.CD_CENTRO_RESPONSABILITA
+                                AND   SG.PG_PROGETTO = A.PG_PROGETTO
+                                AND   SG.ID_CLASSIFICAZIONE = A.ID_CLASSIFICAZIONE
+                                AND   SG.CD_CDS_AREA = A.CD_CDS_AREA
+                                AND   SG.PG_DETTAGLIO = A.PG_DETTAGLIO)
+                     END im_cassa_ac,
+                     0 im_residui_ap,
                      0 im_previsione_ap, 0 im_cassa_ap,
                      NVL (a.im_spese_a2, 0) im_previsione_ac2,
                      NVL (a.im_spese_a3, 0) im_previsione_ac3
                 FROM pdg_modulo_spese a,
                      v_classificazione_voci_all c,
                      progetto_prev progetto,
-                     progetto_prev areaprog
+                     progetto_prev areaprog,
+                     parametri_ente e
                WHERE a.id_classificazione = c.id_classificazione
                  AND a.esercizio = progetto.esercizio
                  AND a.pg_progetto = progetto.pg_progetto
                  AND progetto.esercizio_progetto_padre = areaprog.esercizio
                  AND progetto.pg_progetto_padre = areaprog.pg_progetto
+                 AND e.attivo='Y'
               UNION ALL
               --PARTE SPESE GESTIONALE SCIENTIFICO
               SELECT 'GESTSCI' fonte, a.esercizio, a.ti_gestione,
@@ -236,11 +248,22 @@
              + NVL (SUM (a.im_spese_gest_decentrata_est), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_int), 0)
              + NVL (SUM (a.im_spese_gest_accentrata_est), 0) im_previsione_ac,
-             0 im_cassa_ac, 0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
+             NVL(SUM(CASE WHEN e.descrizione='CNR'
+                          then 0
+                          else (SELECT NVL(SUM(IM_PAGAMENTI),0) FROM PDG_MODULO_SPESE_GEST SG
+                                WHERE SG.ESERCIZIO = A.ESERCIZIO
+                                AND   SG.CD_CENTRO_RESPONSABILITA = A.CD_CENTRO_RESPONSABILITA
+                                AND   SG.PG_PROGETTO = A.PG_PROGETTO
+                                AND   SG.ID_CLASSIFICAZIONE = A.ID_CLASSIFICAZIONE
+                                AND   SG.CD_CDS_AREA = A.CD_CDS_AREA
+                                AND   SG.PG_DETTAGLIO = A.PG_DETTAGLIO)
+                     END), 0) im_cassa_ac,
+             0 im_residui_ap, 0 im_previsione_ap, 0 im_cassa_ap,
              NVL (SUM (a.im_spese_a2), 0) im_previsione_ac2,
              NVL (SUM (a.im_spese_a3), 0) im_previsione_ac3
-        FROM pdg_modulo_spese a, v_classificazione_voci_all c
+        FROM pdg_modulo_spese a, v_classificazione_voci_all c, parametri_ente e
        WHERE a.id_classificazione = c.id_classificazione
+       AND e.attivo='Y'
     GROUP BY a.esercizio,
              c.ti_gestione,
              c.cd_livello1,
@@ -267,12 +290,24 @@
              NVL (SUM (NVL (a.im_entrata_app, a.im_entrata)),
                   0
                  ) im_previsione_ac,
-             0 im_cassa_ac, 0 im_residui_ap,
+             NVL(SUM(CASE WHEN e.descrizione='CNR'
+                          then 0
+                          else (SELECT NVL(SUM(IM_INCASSI),0) FROM PDG_MODULO_ENTRATE_GEST EG
+                                WHERE EG.ESERCIZIO = A.ESERCIZIO
+                                AND   EG.CD_CENTRO_RESPONSABILITA = A.CD_CENTRO_RESPONSABILITA
+                                AND   EG.PG_PROGETTO = A.PG_PROGETTO
+                                AND   EG.CD_NATURA = A.CD_NATURA
+                                AND   EG.ID_CLASSIFICAZIONE = A.ID_CLASSIFICAZIONE
+                                AND   EG.PG_DETTAGLIO = A.PG_DETTAGLIO
+                                AND   EG.CD_CDS_AREA = A.CD_CDS_AREA)
+                     END), 0) im_cassa_ac,
+             0 im_residui_ap,
              0 im_previsione_ap, 0 im_cassa_ap,
              NVL (SUM (a.im_entrata_a2), 0) im_previsione_ac2,
              NVL (SUM (a.im_entrata_a3), 0) im_previsione_ac3
-        FROM pdg_modulo_entrate a, v_classificazione_voci_all c
+        FROM pdg_modulo_entrate a, v_classificazione_voci_all c, parametri_ente e
        WHERE a.id_classificazione = c.id_classificazione
+       AND e.attivo='Y'
     GROUP BY a.esercizio,
              c.ti_gestione,
              c.cd_livello1,
