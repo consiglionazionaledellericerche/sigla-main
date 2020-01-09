@@ -19,6 +19,7 @@ package it.cnr.contab.config00.latt.bulk;
 
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.EJBException;
 
@@ -260,6 +261,8 @@ public class WorkpackageHome extends BulkHome implements ConsultazioniRestHome {
 				WorkpackageBulk linea = list.get(0);
 				ProgettoHome home = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class);
 				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
+				if (linea.getProgetto().getEsercizio() == null)
+					linea.getProgetto().setEsercizio(pEsercizio);
 				home.findByPrimaryKey(userContext, linea.getProgetto());
 				getHomeCache().fetchAll(userContext);
 				return linea;

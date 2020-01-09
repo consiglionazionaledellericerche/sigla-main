@@ -49,6 +49,7 @@ import it.cnr.contab.config00.contratto.bulk.Stampa_elenco_contrattiBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_atto_amministrativoBulk;
 import it.cnr.contab.config00.contratto.bulk.Tipo_contrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
+import it.cnr.contab.config00.latt.bulk.Ass_linea_attivita_esercizioBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.service.ContrattoService;
@@ -2374,7 +2375,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					.flatMap(el->Optional.ofNullable(el.getPg_progetto()));
 			
 			if (optPrgContratto.isPresent()) {
-				Map<String, List<VContrattiTotaliDetBulk>> cdrMap = 
+				Map<String, List<VContrattiTotaliDetBulk>> cdrMap =
 						result.stream().collect(Collectors.groupingBy(VContrattiTotaliDetBulk::getCdr));
 			
 				cdrMap.keySet().stream().forEach(cdr->{
@@ -2382,17 +2383,21 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 							cdrMap.get(cdr).stream().collect(Collectors.groupingBy(VContrattiTotaliDetBulk::getLinea));
 					gaeMap.keySet().stream().forEach(gae->{
 						try {
-							//recupero la linea attività passando come esercizio quello del primo accertamento legato al contratto
-							WorkpackageBulk lineaAttivita = gaeHome.searchGAECompleta(userContext, gaeMap.get(gae).get(0).getEsercizioObbAcr(), cdr, gae);
-							if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
-								VContrattiTotaliDetBulk dett = gaeMap.get(gae).get(0);
-								throw new ApplicationRuntimeException("Progetto "+contratto.getProgetto().getCd_progetto()+
-										" non associabile al contratto. L'accertamento "+
-										dett.getEsercizioObbAcr()+"/"+dett.getPgObbligazioneAccertamento()+
-										" collegato al contratto è associato, tramite la Linea di Attività "+gae+" del CDR "+cdr+
-										" ad un'altro progetto "+lineaAttivita.getCd_progetto()+".");
+							//verifico se esiste almeno un'associazione alla GAE del progetto indicato sul contratto
+							it.cnr.jada.bulk.BulkList<Ass_linea_attivita_esercizioBulk> assGaeEsercizioList = new it.cnr.jada.bulk.BulkList(gaeHome.findDettagliEsercizio(new WorkpackageBulk(cdr,gae)));
+							if (!assGaeEsercizioList.stream().filter(el->el.getPg_progetto().equals(optPrgContratto.get())).findAny().isPresent()) {
+								//recupero la linea attività passando come esercizio quello del primo accertamento legato al contratto
+								WorkpackageBulk lineaAttivita = gaeHome.searchGAECompleta(userContext, gaeMap.get(gae).get(0).getEsercizioObbAcr(), cdr, gae);
+								if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
+									VContrattiTotaliDetBulk dett = gaeMap.get(gae).get(0);
+									throw new ApplicationRuntimeException("Progetto "+contratto.getProgetto().getCd_progetto()+
+											" non associabile al contratto. L'accertamento "+
+											dett.getEsercizioObbAcr()+"/"+dett.getPgObbligazioneAccertamento()+
+											" collegato al contratto è associato, tramite la Linea di Attività "+gae+" del CDR "+cdr+
+											" ad un'altro progetto "+lineaAttivita.getCd_progetto()+".");
+								}
 							}
-						} catch (ComponentException e) {
+						} catch (IntrospectionException|PersistencyException|ComponentException e) {
 							throw new ApplicationRuntimeException(e);
 						}
 					});
