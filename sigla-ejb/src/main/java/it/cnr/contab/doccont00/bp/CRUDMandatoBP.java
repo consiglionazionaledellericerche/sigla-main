@@ -49,6 +49,7 @@ import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
 
@@ -335,6 +336,9 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                 .filter(MandatoBulk.class::isInstance)
                 .map(MandatoBulk.class::cast)
                 .orElseThrow(() -> new BusinessProcessException("Mandato non trovato!"));
+
+        mandatoBulk.setCdUoScrivania(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_unita_organizzativa());
+
         if (Optional.ofNullable(mandatoBulk.getStatoVarSos())
                 .map(s -> s.equals(StatoVariazioneSostituzione.DA_VARIARE.value()))
                 .orElse(Boolean.FALSE)) {
@@ -347,7 +351,7 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                         Optional.ofNullable(context.createBusinessProcess("CRUDMandatoVariazioneBP", new Object[]{"M"}))
                                 .filter(CRUDMandatoVariazioneBP.class::isInstance)
                                 .map(CRUDMandatoVariazioneBP.class::cast)
-                                .orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione del Manadato"));
+                                .orElseThrow(() -> new BusinessProcessException("Non è possibile procedere alla variazione del Mandato"));
                 crudMandatoVariazioneBP.setModel(context, mandatoBulk);
                 context.closeBusinessProcess();
                 context.addBusinessProcess(crudMandatoVariazioneBP);
@@ -462,18 +466,25 @@ public class CRUDMandatoBP extends CRUDAbstractMandatoBP implements IDocumentoAm
                 .orElseThrow(() -> new ValidationException("Modello non trovato!"));
         final boolean daVariare = isDaVariare();
         final String statoTrasmissione = mandatoBulk.getStato_trasmissione();
-        if (daVariare) {
+
+        final boolean isProbabileVariataDtPagamentoRich = this.isViewing() && !mandatoBulk.isRODtPagamentoRichiesta();
+
+        if (daVariare || isProbabileVariataDtPagamentoRich) {
             setStatus(EDIT);
-            mandatoBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
-            mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value());
+            if (daVariare) {
+                mandatoBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+                mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value());
+            }
         }
         try {
             super.save(context);
         } catch (Exception _ex) {
-            if (daVariare) {
+            if (daVariare || isProbabileVariataDtPagamentoRich) {
                 setStatus(VIEW);
-                mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.DA_VARIARE.value());
-                mandatoBulk.setStato_trasmissione(statoTrasmissione);
+                if (daVariare) {
+                    mandatoBulk.setStatoVarSos(StatoVariazioneSostituzione.DA_VARIARE.value());
+                    mandatoBulk.setStato_trasmissione(statoTrasmissione);
+                }
             }
             throw handleException(_ex);
         }

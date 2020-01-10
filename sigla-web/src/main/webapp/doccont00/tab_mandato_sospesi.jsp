@@ -17,7 +17,7 @@
 		<tr>
 			<td>
 			      <b class="h3 text-primary">Sospesi associati al mandato</b>
-			      <% bp.getSospesiSelezionati().writeHTMLTable(pageContext,null,bp.isCaricaSospesiButtonEnabled() && bp.isEditable() ,false,bp.isRimuoviSospesiButtonEnabled(),"100%","200px", false); %>
+			      <% bp.getSospesiSelezionati().writeHTMLTable(pageContext,null,bp.isCaricaSospesiButtonEnabled() && bp.isEditable(),false,bp.isRimuoviSospesiButtonEnabled(),"100%","200px"); %>
 			</td>
 		</tr>
 	</table>

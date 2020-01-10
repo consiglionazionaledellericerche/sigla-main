@@ -17,6 +17,7 @@
 
 package it.cnr.contab.doccont00.bp;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import it.cnr.contab.doccont00.core.bulk.CompensoOptionRequestParameter;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
@@ -352,7 +353,13 @@ public abstract class CRUDAbstractMandatoBP extends it.cnr.jada.util.action.Simp
 	 *				= TRUE se il mandato non e' stato pagato o annullato
 	 */
 	public boolean isSaveButtonEnabled() {
-		return super.isSaveButtonEnabled();// && !((MandatoBulk)getModel()).isAnnullato() ;
+		return super.isSaveButtonEnabled() ||
+				(this.isViewing() &&
+						Optional.ofNullable(this.getModel())
+								.filter(MandatoBulk.class::isInstance)
+								.map(MandatoBulk.class::cast)
+								.map(mandato->!mandato.isRODtPagamentoRichiesta())
+								.orElse(Boolean.FALSE));
 	}
 	public void esistonoPiuModalitaPagamento(ActionContext context)throws it.cnr.jada.action.BusinessProcessException {
 		try {

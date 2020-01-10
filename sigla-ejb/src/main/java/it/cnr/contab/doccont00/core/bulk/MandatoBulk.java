@@ -25,8 +25,10 @@ import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.util.OrderedHashtable;
+import it.cnr.jada.util.action.CRUDBP;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -52,7 +54,6 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     public final static String TIPO_RESIDUO = "R";
     public final static Dictionary competenzaResiduoKeys;
 
-    ;
     public final static String TIPO_ACCREDITAMENTO = "A";
     public final static String TIPO_REGOLARIZZAZIONE = "R";
     public final static String TIPO_REGOLAM_SOSPESO = "S";
@@ -65,6 +66,8 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
 
     protected final static java.util.Dictionary classeDiPagamentoKeys = it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk.TI_PAGAMENTO_KEYS;
     private it.cnr.jada.bulk.PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
+
+    private String cdUoScrivania;
 
     static {
         statoKeys = new it.cnr.jada.util.OrderedHashtable();
@@ -1078,5 +1081,27 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
     @Override
     public void resetDefferredSaldi() {
         deferredSaldi = null;
+    }
+
+    private String getCdUoScrivania() {
+        return cdUoScrivania;
+    }
+
+    public void setCdUoScrivania(String cdUoScrivania) {
+        this.cdUoScrivania = cdUoScrivania;
+    }
+
+    public boolean isRODtPagamentoRichiesta() {
+        return this.isAnnullato() || this.isPagato() ||
+                Optional.ofNullable(this.getStato_trasmissione())
+                  .map(stato->stato.equals(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO))
+                  .orElse(Boolean.FALSE) ||
+                Optional.of(this)
+                  .filter(model->Optional.ofNullable(model.getStato_trasmissione()).filter(stato->!stato.equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO)).isPresent())
+                  .map(model->!model.getMandato_rigaColl().stream().map(Mandato_rigaBulk::getCd_modalita_pag).filter(modpag->modpag.equals("F24EP")).findAny().isPresent())
+                  .orElse(Boolean.FALSE) ||
+                Optional.ofNullable(this.getCdUoScrivania())
+                  .map(uo->!uo.equals(this.getCd_uo_origine()))
+                  .orElse(Boolean.FALSE);
     }
 }
