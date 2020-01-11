@@ -1,4 +1,4 @@
-# SIGLA ISS- _Sistema Informativo Gestione Linee di Attività_
+# SIGLA - _Sistema Informativo Gestione Linee di Attività_
 <p align="center">
   <a href="https://github.com/consiglionazionaledellericerche/sigla-parent/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="SIGLA is released under the GNU AGPL v3 license." />
