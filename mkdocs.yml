@@ -18,6 +18,7 @@ nav:
           - Tabelle di Riferimento: configurazione/tabelle_riferimento.md
       - Gruppo di Azioni Elementari: configurazione/gae.md
       - Piano dei Conti Finanziario: configurazione/piano_conti_finanziario.md
+  - Nuovo Layout: nuovo_layout.md
   - Changelog: CHANGELOG.md
 theme:
   name: 'material'
