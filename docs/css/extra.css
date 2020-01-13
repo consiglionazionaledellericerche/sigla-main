@@ -1,3 +1,7 @@
 .md-logo img {
     width: auto!important;
 }
+.md-header-nav__source {
+    width: unset;
+    max-width: unset;
+}
