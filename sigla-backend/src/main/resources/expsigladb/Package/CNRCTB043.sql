@@ -88,7 +88,7 @@
 
 -- SOLO PER DOCUMENTI IN EURO CREATI AUTOMATICAMENTE PER LIQUIDAZIONI CORI/IVA
 
- procedure modificaPraticaObb(aEs number,aCdCds varchar2,aEsOri number,aPgObb number,aImDelta number,aTSNow date,aUser VARCHAR2, aAccConScad CHAR Default 'N');
+ procedure modificaPraticaObb(aEs number,aCdCds varchar2,aEsOri number,aPgObb number,aImDelta number,aTSNow date,aUser VARCHAR2, aAccConScad CHAR Default 'N', aggiornaDocGenerico CHAR Default 'S');
  procedure modificaPraticaAcc(aEs number,aCdCds varchar2,aEsOri number,aPgAcc number,aImDelta number,aTSNow date,aUser varchar2);
 
 -- Tronca una pratica su partita di giro CDS aperta da obbligazione

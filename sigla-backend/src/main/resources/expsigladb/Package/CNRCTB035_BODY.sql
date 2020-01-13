@@ -2608,4 +2608,219 @@ begin
 	end if;
 end;
 
+ procedure sdoppiaScadenzaAccertamento(aAccScad accertamento_scadenzario%rowtype,aNewImp number,aUser varchar2) is
+  aNextScad accertamento_scadenzario%rowtype;
+  aNextPgScad number;
+  aTSNow date;
+  aTotScadVoce number;
+  aLastPg number;
+ begin
+
+  If aNewImp = aAccScad.im_scadenza Then --Scadenza con importo già uguale a quello richiesto
+    return;
+  end if;
+
+  aTSNow:=sysdate;
+  aTotScadVoce:=0;
+
+  -- Leggo la scadenza su cui spostare le somme e se non esiste la creo
+  begin
+    select max(pg_accertamento_scadenzario + 1) into aNextPgScad from accertamento_scadenzario where
+           cd_cds = aAccScad.cd_cds
+       and esercizio = aAccScad.esercizio
+       and esercizio_originale = aAccScad.esercizio_originale
+       and pg_accertamento = aAccScad.pg_accertamento;
+    if aNextPgScad is null then
+     IBMERR001.RAISE_ERR_GENERICO('Scadenze non trovate per l''accertamento:'||aAccScad.cd_cds||'-'||aAccScad.esercizio||'-'||aAccScad.esercizio_originale||'-'||aAccScad.pg_accertamento);
+    end if;
+      aNextScad.CD_CDS := aAccScad.CD_CDS;
+      aNextScad.ESERCIZIO := aAccScad.ESERCIZIO;
+      aNextScad.ESERCIZIO_ORIGINALE := aAccScad.ESERCIZIO_ORIGINALE;
+      aNextScad.PG_ACCERTAMENTO := aAccScad.pg_accertamento;
+      aNextScad.PG_ACCERTAMENTO_SCADENZARIO := aNextPgScad;
+
+      aNextScad.DT_SCADENZA_EMISSIONE_FATTURA:=  aAccScad.DT_SCADENZA_EMISSIONE_FATTURA;
+      aNextScad.DT_SCADENZA_INCASSO:= aAccScad.DT_SCADENZA_INCASSO;
+      aNextScad.DS_SCADENZA:= aAccScad.DS_SCADENZA;
+      aNextScad.PG_ACC_SCAD_ORI_RIPORTO:=  aAccScad.PG_ACC_SCAD_ORI_RIPORTO;
+      aNextScad.IM_SCADENZA := 0;
+      aNextScad.IM_ASSOCIATO_DOC_AMM := 0;
+      aNextScad.IM_ASSOCIATO_DOC_CONTABILE := 0;
+      aNextScad.DACR := aTSNow;
+      aNextScad.UTCR := aUser;
+      aNextScad.DUVA := aTSNow;
+      aNextScad.UTUV := aUser;
+      aNextScad.PG_VER_REC := 0;
+
+      ins_ACCERTAMENTO_SCADENZARIO(aNextScad);
+  end;
+
+  if aNewImp > aAccScad.im_scadenza then
+   IBMERR001.RAISE_ERR_GENERICO('La modifica di importo sulla scadenza è superiore all''importo della scadenza stessa .');
+  end if;
+
+  -- Aggiorno l'utente ultimo aggiornamento sul record principale
+  update accertamento set
+   utuv=aUser,
+   duva=aTSNow,
+   pg_ver_rec=pg_ver_rec+1
+  Where cd_cds = aAccScad.cd_cds
+    and esercizio = aAccScad.esercizio
+    and esercizio_originale = aAccScad.esercizio_originale
+    and pg_accertamento = aAccScad.pg_accertamento;
+
+  -- Aggiorno l'importo sulla scadenza di pagamento
+  update accertamento_scadenzario set
+   im_scadenza = aNewImp,
+   utuv=aUser,
+   duva=aTSNow,
+   pg_ver_rec=pg_ver_rec+1
+  Where cd_cds = aAccScad.cd_cds
+    and esercizio = aAccScad.esercizio
+    and esercizio_originale = aAccScad.esercizio_originale
+    and pg_accertamento = aAccScad.pg_accertamento
+    and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario;
+
+  -- Scarico la diifferenza sulla scadenza successiva
+  update accertamento_scadenzario set
+   im_scadenza = im_scadenza - (aNewImp - aAccScad.im_scadenza),
+   utuv=aUser,
+   duva=aTSNow,
+   pg_ver_rec=pg_ver_rec+1
+  Where cd_cds = aNextScad.cd_cds
+    and esercizio = aNextScad.esercizio
+    and esercizio_originale = aNextScad.esercizio_originale
+    and pg_accertamento = aNextScad.pg_accertamento
+    and pg_accertamento_scadenzario = aNextScad.pg_accertamento_scadenzario;
+
+  --aggiorno i dettagli voce della scadenza di incasso e scarico la differenza su quella della scadenza
+  --successiva creandoli se non esistono
+  Declare
+    totScadVoceOld number := 0;
+    totImportoSpostato number := 0;
+  Begin
+    for aAccScadVoce in (select * from accertamento_scad_voce where
+                         cd_cds = aAccScad.cd_cds
+                         and esercizio = aAccScad.esercizio
+                         and esercizio_originale = aAccScad.esercizio_originale
+                         and pg_accertamento = aAccScad.pg_accertamento
+                         and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario) Loop
+      Declare
+        impDaSpostare number := 0;
+      Begin
+       if(aAccScad.im_scadenza!=0) then
+        impDaSpostare := aAccScadVoce.IM_VOCE - Round(aAccScadVoce.IM_VOCE*aNewImp/aAccScad.im_scadenza,2);
+       else
+          IBMERR001.RAISE_ERR_GENERICO('Errore in fase di aggiornamento scadenza verificare accertamento/scadenza: '||aAccScad.cd_cds||'-'||aAccScad.esercizio||'-'||aAccScad.esercizio_originale||'-'||aAccScad.pg_accertamento);
+       end if;
+
+        if impDaSpostare > 0 Then
+          UPDATE accertamento_scad_voce
+          SET IM_VOCE = aAccScadVoce.IM_VOCE - impDaSpostare,
+              DUVA = aTSNow,
+              UTUV = aUser
+          Where esercizio = aAccScad.esercizio
+          and esercizio_originale = aAccScad.esercizio_originale
+          and pg_accertamento = aAccScad.pg_accertamento
+          and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario
+         and CD_CENTRO_RESPONSABILITA = aAccScadVoce.CD_CENTRO_RESPONSABILITA
+          and CD_LINEA_ATTIVITA = aAccScadVoce.CD_LINEA_ATTIVITA;
+
+          totScadVoceOld := totScadVoceOld + (aAccScadVoce.IM_VOCE - impDaSpostare);
+
+          --Cerco la stessa combinazione sulla scadenza successiva per aggiornarla.
+          --Se non la trovo la creo
+          Declare
+            aNextScadVoce accertamento_scad_voce%rowtype;
+          Begin
+            Update accertamento_scad_voce
+            set IM_VOCE = IM_VOCE + impDaSpostare
+            where cd_cds = aNextScad.cd_cds
+            and esercizio = aNextScad.esercizio
+            and esercizio_originale = aNextScad.esercizio_originale
+            and pg_accertamento = aNextScad.pg_accertamento
+            and pg_accertamento_scadenzario = aNextScad.pg_accertamento_scadenzario
+            and CD_CENTRO_RESPONSABILITA = aAccScadVoce.CD_CENTRO_RESPONSABILITA
+            and CD_LINEA_ATTIVITA = aAccScadVoce.CD_LINEA_ATTIVITA;
+
+            If sql%rowcount=0 Then
+              aNextScadVoce := null;
+              aNextScadVoce.CD_CDS := aNextScad.CD_CDS;
+              aNextScadVoce.ESERCIZIO := aNextScad.ESERCIZIO;
+              aNextScadVoce.ESERCIZIO_ORIGINALE := aNextScad.ESERCIZIO_ORIGINALE;
+              aNextScadVoce.pg_accertamento := aNextScad.pg_accertamento;
+              aNextScadVoce.pg_accertamento_SCADENZARIO := aNextScad.pg_accertamento_SCADENZARIO;
+              aNextScadVoce.CD_CENTRO_RESPONSABILITA := aAccScadVoce.CD_CENTRO_RESPONSABILITA;
+              aNextScadVoce.CD_LINEA_ATTIVITA := aAccScadVoce.CD_LINEA_ATTIVITA;
+              aNextScadVoce.cd_fondo_ricerca := aAccScadVoce.cd_fondo_ricerca;
+              aNextScadVoce.IM_VOCE := impDaSpostare;
+              aNextScadVoce.DACR := aTSNow;
+              aNextScadVoce.UTCR := aUser;
+              aNextScadVoce.DUVA := aTSNow;
+              aNextScadVoce.UTUV := aUser;
+              aNextScadVoce.PG_VER_REC := 0;
+
+              cnrctb035.ins_ACCERTAMENTO_SCAD_VOCE(aNextScadVoce);
+            End if;
+
+            totImportoSpostato := totImportoSpostato + impDaSpostare;
+          End;
+        End If;
+      End;
+    End Loop;
+
+    --Riapro i cursori per spalmare la differenza riprendendola dalla scadenza successiva
+    If totScadVoceOld != aNewImp Then
+      Declare
+        diffDaSpalmare number := aNewImp - totScadVoceOld;
+      Begin
+        for aAccScadVoce in (select * from accertamento_scad_voce
+                             where cd_cds = aAccScad.cd_cds
+                             and esercizio = aAccScad.esercizio
+                             and esercizio_originale = aAccScad.esercizio_originale
+                             and pg_accertamento = aAccScad.pg_accertamento
+                             and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario) Loop
+          Declare
+            diffDett number := aAccScadVoce.im_voce + diffDaSpalmare;
+          Begin
+            If diffDett < 0 Then
+              diffDett := -aAccScadVoce.im_voce;
+            Else
+              diffDett := diffDaSpalmare;
+            End If;
+
+            update accertamento_scad_voce
+            set im_voce = aAccScadVoce.im_voce + diffDett
+            where cd_cds = aAccScadVoce.cd_cds
+            and esercizio = aAccScadVoce.esercizio
+            and esercizio_originale = aAccScadVoce.esercizio_originale
+            and pg_accertamento = aAccScadVoce.pg_accertamento
+            and pg_accertamento_scadenzario = aAccScadVoce.pg_accertamento_scadenzario
+            and CD_CENTRO_RESPONSABILITA = aAccScadVoce.CD_CENTRO_RESPONSABILITA
+            and CD_LINEA_ATTIVITA = aAccScadVoce.CD_LINEA_ATTIVITA;
+
+            update accertamento_scad_voce
+            set im_voce = im_voce - diffDett
+            where cd_cds = aNextScad.cd_cds
+            and esercizio = aNextScad.esercizio
+            and esercizio_originale = aNextScad.esercizio_originale
+            and pg_accertamento = aNextScad.pg_accertamento
+            and pg_accertamento_scadenzario = aNextScad.pg_accertamento_scadenzario
+            and CD_CENTRO_RESPONSABILITA = aAccScadVoce.CD_CENTRO_RESPONSABILITA
+            and CD_LINEA_ATTIVITA = aAccScadVoce.CD_LINEA_ATTIVITA;
+
+            diffDaSpalmare := diffDaSpalmare - diffDett;
+            If diffDaSpalmare = 0 Then
+              exit;
+            End If;
+          End;
+        End loop;
+
+        If diffDaSpalmare!=0 Then
+          IBMERR001.RAISE_ERR_GENERICO('Errore in fase di sdoppiamento scadenza '||aAccScad.cd_cds||'-'||aAccScad.esercizio||'-'||aAccScad.esercizio_originale||'-'||aAccScad.pg_accertamento);
+        End If;
+      End;
+    End if;
+  End;
+ End;
 end;

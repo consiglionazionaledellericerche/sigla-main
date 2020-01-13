@@ -3,7 +3,7 @@
 --------------------------------------------------------
 
   CREATE OR REPLACE PACKAGE BODY "CNRCTB043" is
- procedure modificaPraticaObb(aEs number,aCdCds varchar2,aEsOri number,aPgObb number,aImDelta number,aTSNow date,aUser VARCHAR2,aAccConScad CHAR Default 'N') is
+ procedure modificaPraticaObb(aEs number,aCdCds varchar2,aEsOri number,aPgObb number,aImDelta number,aTSNow date,aUser VARCHAR2,aAccConScad CHAR Default 'N', aggiornaDocGenerico CHAR Default 'S') is
   aObb obbligazione%rowtype;
   aObbScad obbligazione_scadenzario%rowtype;
   aObbScadVoce obbligazione_scad_voce%rowtype;
@@ -180,128 +180,130 @@
 
   End Loop;
   CNRCTB035.aggiornaSaldoDettScad(aAcc,aImDelta,false,aUser, aTSNow);
+  
+  if aggiornaDocGenerico = 'S' Then
 
-  begin
-   select * into aDocGenRiga from documento_generico_riga where
-       	    cd_cds = aAcc.cd_cds
-	   	and esercizio = aAcc.esercizio
-	   	and cd_unita_organizzativa = aAcc.cd_unita_organizzativa
-	   	and cd_cds_accertamento = aAcc.cd_cds
-	   	and esercizio_accertamento = aAcc.esercizio
-	   	and esercizio_ori_accertamento=aAcc.esercizio_originale
-	   	and pg_accertamento = aAcc.pg_accertamento
-	   	and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario
-	   for update nowait;
-   select * into aDocGen from documento_generico where
-       	    cd_cds = aDocGenRiga.cd_cds
-	   	and esercizio = aDocGenRiga.esercizio
-	   	and cd_unita_organizzativa = aDocGenRiga.cd_unita_organizzativa
-	   	and cd_tipo_documento_amm = aDocGenRiga.cd_tipo_documento_amm
-	   	and pg_documento_generico = aDocGenRiga.pg_documento_generico
-	   for update nowait;
-  exception
-   when NO_DATA_FOUND then
-    IBMERR001.RAISE_ERR_GENERICO('Documento generico non trovato');
-   when TOO_MANY_ROWS then
-    IBMERR001.RAISE_ERR_GENERICO('Documento generico con piש di una riga non compatibile');
-  end;
+    begin
+     select * into aDocGenRiga from documento_generico_riga where
+         	    cd_cds = aAcc.cd_cds
+  	   	and esercizio = aAcc.esercizio
+  	   	and cd_unita_organizzativa = aAcc.cd_unita_organizzativa
+  	   	and cd_cds_accertamento = aAcc.cd_cds
+  	   	and esercizio_accertamento = aAcc.esercizio
+  	   	and esercizio_ori_accertamento=aAcc.esercizio_originale
+  	   	and pg_accertamento = aAcc.pg_accertamento
+  	   	and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario
+  	   for update nowait;
+     select * into aDocGen from documento_generico where
+         	    cd_cds = aDocGenRiga.cd_cds
+  	   	and esercizio = aDocGenRiga.esercizio
+  	   	and cd_unita_organizzativa = aDocGenRiga.cd_unita_organizzativa
+  	   	and cd_tipo_documento_amm = aDocGenRiga.cd_tipo_documento_amm
+  	   	and pg_documento_generico = aDocGenRiga.pg_documento_generico
+  	   for update nowait;
+    exception
+     when NO_DATA_FOUND then
+      IBMERR001.RAISE_ERR_GENERICO('Documento generico non trovato');
+     when TOO_MANY_ROWS then
+      IBMERR001.RAISE_ERR_GENERICO('Documento generico con piש di una riga non compatibile');
+    end;
 
-  -- Aggiornamento Generico
+    -- Aggiornamento Generico
 
-  update documento_generico set
-   im_totale = im_totale + aImDelta,
-   utuv = aUser,
-   duva = aTSNow,
-   pg_ver_rec = pg_ver_rec + 1
-  where
-       cd_tipo_documento_amm = aDocGenRiga.cd_tipo_documento_amm
-   and cd_cds = aDocGenRiga.cd_cds
-   and esercizio = aDocGenRiga.esercizio
-   and cd_unita_organizzativa = aDocGenRiga.cd_unita_organizzativa
-   and pg_documento_generico = aDocGenRiga.pg_documento_generico;
+    update documento_generico set
+     im_totale = im_totale + aImDelta,
+     utuv = aUser,
+     duva = aTSNow,
+     pg_ver_rec = pg_ver_rec + 1
+    where
+         cd_tipo_documento_amm = aDocGenRiga.cd_tipo_documento_amm
+     and cd_cds = aDocGenRiga.cd_cds
+     and esercizio = aDocGenRiga.esercizio
+     and cd_unita_organizzativa = aDocGenRiga.cd_unita_organizzativa
+     and pg_documento_generico = aDocGenRiga.pg_documento_generico;
 
-  update documento_generico_riga set
-   im_riga = im_riga + aImDelta,
-   im_riga_divisa = im_riga_divisa + aImDelta,
-   utuv = aUser,
-   duva = aTSNow,
-   pg_ver_rec = pg_ver_rec + 1
-  where
-       cd_tipo_documento_amm = aDocGenRiga.cd_tipo_documento_amm
-   and cd_cds = aDocGenRiga.cd_cds
-   and esercizio = aDocGenRiga.esercizio
-   and cd_unita_organizzativa = aDocGenRiga.cd_unita_organizzativa
-   and pg_documento_generico = aDocGenRiga.pg_documento_generico
-   and progressivo_riga = aDocGenRiga.progressivo_riga;
+    update documento_generico_riga set
+     im_riga = im_riga + aImDelta,
+     im_riga_divisa = im_riga_divisa + aImDelta,
+     utuv = aUser,
+     duva = aTSNow,
+     pg_ver_rec = pg_ver_rec + 1
+    where
+         cd_tipo_documento_amm = aDocGenRiga.cd_tipo_documento_amm
+     and cd_cds = aDocGenRiga.cd_cds
+     and esercizio = aDocGenRiga.esercizio
+     and cd_unita_organizzativa = aDocGenRiga.cd_unita_organizzativa
+     and pg_documento_generico = aDocGenRiga.pg_documento_generico
+     and progressivo_riga = aDocGenRiga.progressivo_riga;
 
-  -- Aggiornamento Reversale provvisoria
+    -- Aggiornamento Reversale provvisoria
 
-  begin
-   select * into aRevRiga from reversale_riga where
-           cd_cds = aAccScad.cd_cds
-	      and esercizio = aAccScad.esercizio
-	      and esercizio_ori_accertamento=aAccScad.esercizio_originale
-	      and pg_accertamento = aAccScad.pg_accertamento
-	      and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario
-   for update nowait;
-   select * into aRev from reversale where
-           esercizio = aRevRiga.esercizio
-	      and cd_cds = aRevRiga.cd_cds
-	      and pg_reversale = aRevRiga.pg_reversale
-	      and cd_tipo_documento_cont=CNRCTB018.TI_DOC_REV_PROVV
-   for update nowait;
-  exception
-   when NO_DATA_FOUND then
+    begin
+     select * into aRevRiga from reversale_riga where
+             cd_cds = aAccScad.cd_cds
+  	      and esercizio = aAccScad.esercizio
+  	      and esercizio_ori_accertamento=aAccScad.esercizio_originale
+  	      and pg_accertamento = aAccScad.pg_accertamento
+  	      and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario
+     for update nowait;
+     select * into aRev from reversale where
+             esercizio = aRevRiga.esercizio
+  	      and cd_cds = aRevRiga.cd_cds
+  	      and pg_reversale = aRevRiga.pg_reversale
+  	      and cd_tipo_documento_cont=CNRCTB018.TI_DOC_REV_PROVV
+     for update nowait;
+    exception
+     when NO_DATA_FOUND then
 
-    Declare
-      count_rev NUMBER;
-      tutta_rev  reversale%Rowtype;
-    Begin
-       Select Count(0) into count_rev
-       from reversale_riga
-       Where cd_cds = aAccScad.cd_cds
-    	   and esercizio = aAccScad.esercizio
-    	   and esercizio_ori_accertamento=aAccScad.esercizio_originale
-    	   and pg_accertamento = aAccScad.pg_accertamento
-    	   and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario;
+      Declare
+        count_rev NUMBER;
+        tutta_rev  reversale%Rowtype;
+      Begin
+         Select Count(0) into count_rev
+         from reversale_riga
+         Where cd_cds = aAccScad.cd_cds
+      	   and esercizio = aAccScad.esercizio
+      	   and esercizio_ori_accertamento=aAccScad.esercizio_originale
+      	   and pg_accertamento = aAccScad.pg_accertamento
+      	   and pg_accertamento_scadenzario = aAccScad.pg_accertamento_scadenzario;
 
-        If count_rev = 0 Then
-           IBMERR001.RAISE_ERR_GENERICO('Non esiste alcuna Reversale sull''accertamento '||
-                                        aAccScad.cd_cds||'/'||
-                                        aAccScad.esercizio||'/'||
-                                        aAccScad.esercizio_originale||'/'||
-                                        aAccScad.pg_accertamento||'/'||
-                                        aAccScad.pg_accertamento_scadenzario);
-        End If;
+          If count_rev = 0 Then
+             IBMERR001.RAISE_ERR_GENERICO('Non esiste alcuna Reversale sull''accertamento '||
+                                          aAccScad.cd_cds||'/'||
+                                          aAccScad.esercizio||'/'||
+                                          aAccScad.esercizio_originale||'/'||
+                                          aAccScad.pg_accertamento||'/'||
+                                          aAccScad.pg_accertamento_scadenzario);
+          End If;
 
-       select * into tutta_rev
-       from reversale
-       Where   esercizio = aRevRiga.esercizio
-    	   and cd_cds = aRevRiga.cd_cds
-    	   and pg_reversale = aRevRiga.pg_reversale;
+         select * into tutta_rev
+         from reversale
+         Where   esercizio = aRevRiga.esercizio
+      	   and cd_cds = aRevRiga.cd_cds
+      	   and pg_reversale = aRevRiga.pg_reversale;
 
-       If tutta_rev.cd_tipo_documento_cont != CNRCTB018.TI_DOC_REV_PROVV Then
-            IBMERR001.RAISE_ERR_GENERICO('La reversale '||CNRCTB038.getDesc(tutta_rev)||
-            ' ('||tutta_rev.DS_REVERSALE||') non risulta Provvisoria');
-       End If;
+         If tutta_rev.cd_tipo_documento_cont != CNRCTB018.TI_DOC_REV_PROVV Then
+              IBMERR001.RAISE_ERR_GENERICO('La reversale '||CNRCTB038.getDesc(tutta_rev)||
+              ' ('||tutta_rev.DS_REVERSALE||') non risulta Provvisoria');
+         End If;
 
--- per eventuali (non dovrebbero essercene) altri casi non gestiti lascio il messaggio
--- vecchio (stani 28.04.2005)
+  -- per eventuali (non dovrebbero essercene) altri casi non gestiti lascio il messaggio
+  -- vecchio (stani 28.04.2005)
 
-      IBMERR001.RAISE_ERR_GENERICO('Reversale Provvisoria '||CNRCTB038.getDesc(tutta_rev)||
-            ' non trovata.');
+        IBMERR001.RAISE_ERR_GENERICO('Reversale Provvisoria '||CNRCTB038.getDesc(tutta_rev)||
+              ' non trovata.');
 
-    End;
+      End;
 
-   when TOO_MANY_ROWS then
-    IBMERR001.RAISE_ERR_GENERICO('Reversale con piש di una riga non compatibile '||CNRCTB038.getDesc(aRev));
-  end;
-  aRev.im_reversale:=aRev.im_reversale+aImDelta;
-  if aRev.im_reversale < 0 then
-    IBMERR001.RAISE_ERR_GENERICO('La modifica richiesta rende negativa la reversale '||CNRCTB038.getDesc(aRev));
-   end if;
-   CNRCTB037.modificaRevProvvPgiro(aRev, aTSNow, aUser);
-
+     when TOO_MANY_ROWS then
+      IBMERR001.RAISE_ERR_GENERICO('Reversale con piש di una riga non compatibile '||CNRCTB038.getDesc(aRev));
+    end;
+    aRev.im_reversale:=aRev.im_reversale+aImDelta;
+    if aRev.im_reversale < 0 then
+      IBMERR001.RAISE_ERR_GENERICO('La modifica richiesta rende negativa la reversale '||CNRCTB038.getDesc(aRev));
+     end if;
+     CNRCTB037.modificaRevProvvPgiro(aRev, aTSNow, aUser);
+   END IF;  
  end;
 
 
