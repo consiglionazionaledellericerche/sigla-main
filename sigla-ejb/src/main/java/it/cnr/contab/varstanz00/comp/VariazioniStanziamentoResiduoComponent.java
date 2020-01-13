@@ -404,7 +404,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo())) {
 				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
-				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(var_stanz_res_riga.getProgetto());
+				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, var_stanz_res_riga.getProgetto());
 				getHomeCache(userContext).fetchAll(userContext);
 				if (progetto.isPianoEconomicoRequired()) {
 					Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
