@@ -13,7 +13,7 @@ nav:
       - Gestione Preferiti: funzionalita_servizio/gestione_preferiti.md
   - Configurazione:
       - Progetti di Ricerca:
-          - Area Proggettuale: configurazione/area_progettuale.md
+          - Area Progettuale: configurazione/area_progettuale.md
           - Progetti: configurazione/progetti.md
           - Tabelle di Riferimento: configurazione/tabelle_riferimento.md
       - Gruppo di Azioni Elementari: configurazione/gae.md
