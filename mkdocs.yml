@@ -8,8 +8,8 @@ extra_css:
 nav:
   - Funzionalità di servizio:
       - Coda di Stampa: funzionalita_servizio/coda_di_stampa.md
-      - Coda file Excel: funzionalita_servizioconfigurazione/coda_file_excel.md
-      - Messaggi: funzionalita_servizioconfigurazione/messaggi.md
+      - Coda file Excel: funzionalita_servizio/coda_file_excel.md
+      - Messaggi: funzionalita_servizio/messaggi.md
       - Gestione Preferiti: funzionalita_servizio/gestione_preferiti.md
   - Configurazione:
       - Progetti di Ricerca:
