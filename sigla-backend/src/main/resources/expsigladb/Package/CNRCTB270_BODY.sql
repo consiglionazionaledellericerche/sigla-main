@@ -1280,6 +1280,7 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
     aAssPgiro ass_partita_giro%rowtype;
     isIvaInterfaccia boolean;
     recParametriCNR      PARAMETRI_CNR%Rowtype;
+    aEsDefault number;
 
     Procedure createObbligazioneEnte(aEs INTEGER, aLiquidIva liquidazione_iva%Rowtype,
                                      aEsRes INTEGER, importoObb NUMBER,
@@ -1433,8 +1434,10 @@ aCDRUOVERSIVA.cd_centro_responsabilita||'/'||codLASpecVersIvaSAC||') per l''eser
         null;
     End;
 
+    aEsDefault := to_char(aLiquidIva.dt_inizio, 'YYYY');
+
     -- Estrazione dell'UO di versamento IVA
-    aUOVERSIVA:=CNRCTB020.getUOVersIVA(aEs);
+    aUOVERSIVA:=CNRCTB020.getUOVersIVA(aEsDefault);
 
     -- Estrazione dell'UO ente
     aUOENTE:=CNRCTB020.GETUOENTE(aEs);
@@ -2161,9 +2164,9 @@ aCDRUO.cd_centro_responsabilita||'/'||CNRCTB015.GETVAL01PERCHIAVE(LINEA_ATTIVITA
               aObbScadVoce obbligazione_scad_voce%rowtype;
             Begin
               -- Estrazione del CDR SAC di versamento iva
-              aCDRUOVERSIVA := getCDRUOVERSIVA(aEs);
+              aCDRUOVERSIVA := getCDRUOVERSIVA(aEsDefault);
               -- Estrazione della linea di attività  SAC da utilizzare per la creazione della variazione
-              aLASpecVersIvaSac := getLASPECVERSIVASAC(aEs, aCDRUOVERSIVA);
+              aLASpecVersIvaSac := getLASPECVERSIVASAC(aEsDefault, aCDRUOVERSIVA);
 
               impLiqResiduo := Abs(aLiquidIva.iva_da_versare);
 
