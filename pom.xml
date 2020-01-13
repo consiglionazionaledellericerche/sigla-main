@@ -78,9 +78,8 @@
 				<artifactId>git-changelog-maven-plugin</artifactId>
 				<version>${git.changelog.maven.plugin.version}</version>
 				<configuration>
-					<dateFormat>MMMM dd, yyyy</dateFormat>
-					<templateFile>changelog.mustache</templateFile>
-					<file>CHANGELOG.md</file>
+					<settingsFile>changelog.json</settingsFile>
+					<file>docs/CHANGELOG.md</file>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -114,7 +113,7 @@
 							<artifactId>maven-scm-plugin</artifactId>
 							<inherited>false</inherited>
 							<configuration>
-								<includes>CHANGELOG.md</includes>
+								<includes>docs/CHANGELOG.md</includes>
 								<message>Generate CHANGELOG.md [ci skip]</message>
 								<pushChanges>true</pushChanges>
 							</configuration>

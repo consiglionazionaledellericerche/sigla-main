@@ -1,0 +1,24 @@
+site_name: Sistema Informativo Linee di Attività
+repo_name: 'consiglionazionaledellericerche/sigla-main'
+repo_url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
+# Copyright
+copyright: 'Copyright &copy; 2004 - 2020 Consiglio Nazionale delle Ricerche'
+extra_css:
+  - css/extra.css
+nav:
+  - Funzionalità di servizio:
+      - Coda di Stampa: funzionalita_servizio/coda_di_stampa.md
+      - Coda file Excel: funzionalita_servizioconfigurazione/coda_file_excel.md
+      - Messaggi: funzionalita_servizioconfigurazione/messaggi.md
+      - Gestione Preferiti: funzionalita_servizio/gestione_preferiti.md
+  - Configurazione:
+      - Progetti di Ricerca:
+          - Area Proggettuale: configurazione/area_progettuale.md
+          - Progetti: configurazione/progetti.md
+          - Tabelle di Riferimento: configurazione/tabelle_riferimento.md
+      - Gruppo di Azioni Elementari: configurazione/gae.md
+      - Piano dei Conti Finanziario: configurazione/piano_conti_finanziario.md
+  - Changelog: CHANGELOG.md
+theme:
+  name: 'material'
+  logo: 'logo.png'
