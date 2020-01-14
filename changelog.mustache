@@ -9,6 +9,9 @@
 ### {{name}} {{issue}} {{title}}
 {{/hasLink}}
 {{/hasIssue}}
+{{^hasIssue}}
+### {{name}}
+{{/hasIssue}}
 
 {{#commits}}
 >**{{{messageTitle}}}**
