@@ -433,4 +433,5 @@ procedure creaVariazioneFormaleImpAU(oldObbScadVoce obbligazione_scad_voce%rowty
 procedure ins_VARIAZIONE_FORMALE_IMP (aDest VARIAZIONE_FORMALE_IMP%rowtype);
 procedure creaVariazioneFormaleImpAD(oldObbScadVoce obbligazione_scad_voce%rowtype);
 procedure creaVariazioneFormaleImpAI(newObbScadVoce obbligazione_scad_voce%rowtype);
+procedure sdoppiaScadenzaAccertamento(aAccScad accertamento_scadenzario%rowtype,aNewImp number,aUser varchar2);
 end;
