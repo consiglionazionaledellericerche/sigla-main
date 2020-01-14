@@ -1,7 +1,18 @@
 .md-logo img {
     width: auto!important;
 }
+
 .md-header-nav__source {
     width: unset;
     max-width: unset;
+}
+.rst-versions {
+  border-color: indingo !important;
+  border-style: solid !important;
+  font-size: large;
+}
+
+.rst-versions .rst-current-version {
+  background-color: #3f51b5 !important;
+  color: white !important;
 }

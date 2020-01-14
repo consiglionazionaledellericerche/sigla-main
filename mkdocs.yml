@@ -5,6 +5,8 @@ repo_url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
 copyright: 'Copyright &copy; 2004 - 2020 Consiglio Nazionale delle Ricerche'
 extra_css:
   - css/extra.css
+extra_javascript:
+  - javascripts/extra.js
 nav:
   - Funzionalità di servizio:
       - Coda di Stampa: funzionalita_servizio/coda_di_stampa.md
