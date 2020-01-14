@@ -1,4 +1,4 @@
-# 1. Introduzione
+## 1. Introduzione
 
 Obiettivo del presente documento è fornire le informazioni necessarie all’utilizzo della nuova
 interfaccia realizzata per la procedura SIGLA. Saranno date indicazioni sulle novità grafiche e di
@@ -7,7 +7,7 @@ utilizzo rispetto a:
 - Nuova presentazione e nuove funzionalità per quanto riguarda il menù;
 - Presentazione della nuova interfaccia SIGLA e utilizzo dei vari componenti;
 
-## 1.1 Premessa
+### 1.1 Premessa
 La modifica delle caratteristiche di presentazione delle funzionalità di SIGLA non cambia in alcun
 modo i processi amministrativi previsti, né influenza dati e utilizzo degli stessi.
 
@@ -15,7 +15,7 @@ L’obiettivo della revisione dell’intero layout della procedura è esclusivam
 più ‘usabile’ le funzionalità. In alcuni casi la revisione ha riguardato l’aggiunta di utilità importanti
 sempre al fine di migliorare la navigazione e la gestione delle mappe.
 
-## 1.2 Accesso all’applicazione SIGLA
+### 1.2 Accesso all’applicazione SIGLA
 Tutto ciò che riguarda le credenziali di accesso, abilitazioni all’accesso da parte
 dell’amministratore delle Utenze e scadenza delle password, non è oggetto di modifica. Di seguito
 vengono indicate le nuove modalità di presentazione della mappa di accesso:
@@ -36,7 +36,7 @@ e si entra nell’applicazione con il menù delle funzionalità abilitate:
 
 ![](screenshot/workspace_2.png)
 
-### 1.2.1 Informazioni all’accesso
+#### 1.2.1 Informazioni all’accesso
 Subito dopo l’accesso all’applicazione vengono evidenziati alcuni processi amministrativi (box informativi) relativi a procedure da portare a termine da parte dell’utente, per la UO di accesso:
   
   - Numero Variazioni di Bilancio da Firmare;
@@ -53,7 +53,7 @@ Le informazioni vengono fornite automaticamente subito dopo l’accesso come nel
 
 ![](screenshot/workspace_3.png)
 
-### 1.2.2 Altre Informazioni generali
+#### 1.2.2 Altre Informazioni generali
 
 Vediamo di seguito altre informazioni importanti e alcune utilità messe a disposizione nella nuova
 interfaccia SIGLA, dopo l’accesso all’applicazione:
@@ -74,7 +74,7 @@ modificate all’interno di una funzionalità di Sigla, viene posta la mappa in 
 anche se ci fossero transazioni in corso, per evitare incongruenze di dati visualizzati o
 gestiti.
 
-### 1.2.3 Gestione dei preferiti
+#### 1.2.3 Gestione dei preferiti
 
 La lista dei preferiti è alimentata liberamente dall’utente durante la navigazione
 all’interno delle funzionalità:
@@ -100,7 +100,7 @@ funzione (Abilitazione da aggiungere da parte del gestore delle utenze).
 L’aggiornamento dei preferiti, invece, serve per applicare le modifiche (aggiunta o
 eliminazione) alla lista dei preferiti.
 
-### 1.2.4 Gestione dei Messaggi
+#### 1.2.4 Gestione dei Messaggi
 
 La ‘Gestione dei Messaggi’ qui trattata si riferisce esclusivamente ad Avvisi, di natura
 tecnica o contabile, che si ritengono importanti per l’utenza, e che quindi vanno
@@ -130,7 +130,7 @@ tratta di un ‘avviso’, può essere selezionato e cancellato dall’utente do
 questo ultimo caso resta a scelta dell’utente se tenere il messaggio come promemoria
 oppure cancellarlo subito dopo la lettura.
 
-## 1.3 Nuova presentazione e nuove funzionalità per il menù
+### 1.3 Nuova presentazione e nuove funzionalità per il menù
 
 Il menù dell’applicazione si presenta nel modo seguente:
 
@@ -146,7 +146,7 @@ Nell’esempio riportato nella figura precedente, è stata indicata, nel campo d
 
 Il tasto ‘Aggiorna menù’, invece, serve per applicare le eventuali modifiche intervenute nella lista degli accessi consentita per l’utente (aggiunta o eliminazione accessi da parte del gestore delle utenze), nel caso ciò avvenga mentre l’utente sta lavorando all’interno della procedura e non ha effettuato un nuovo accesso in Sigla successivo alle modifiche.
 
-## 1.4 Presentazione nuovo layout delle mappe SIGLA
+### 1.4 Presentazione nuovo layout delle mappe SIGLA
 Le funzionalità di Sigla presentano un layout standard che prevede, oltre alle informazioni di accesso sempre visibili e modificabili, una serie di utilità:
 
 1. una riga ‘Informativa’ in cui è sempre indicato il percorso di navigazione che ha portato alla funzione;
@@ -204,7 +204,7 @@ E il riporto nella mappa della coda di stampe:
 
 ![](screenshot/print_5.png)
 
-# Responsive
+## 2. Responsive
 Infine è importante sottolineare che con l’utilizzo del nuovo layout Sigla, è possibile
 accedere all’applicazione anche da qualsiasi dispositivo mobile perché
 automaticamente le mappe si adattano allo schermo che le contiene:
