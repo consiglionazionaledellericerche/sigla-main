@@ -1,4 +1,41 @@
+## Release 6.1.4  -- _January 14, 2020_ 
+### Changes
+
+>**Fix Variazioni Residue: errore di NullPointerException in fase di selezione voce bilancio.**
+>
+>[646f27f31b77bad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/646f27f31b77bad) raffaele.pagano *January 14, 2020*
+
+>**FIX changelog template**
+>
+>[0d82b1d03aee767](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d82b1d03aee767) marco.spasiano *January 14, 2020*
+
+>**Modify docs [ci skip]**
+>
+>[4d9be25ce753acd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4d9be25ce753acd) marco.spasiano *January 14, 2020*
+
+>**Modify docs [ci skip]**
+>
+>[76e3fe24d3b0398](https://github.com/consiglionazionaledellericerche/sigla-main/commit/76e3fe24d3b0398) marco.spasiano *January 14, 2020*
+
+>**Modify docs [ci skip]**
+>
+>[4b441268cef6779](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4b441268cef6779) marco.spasiano *January 14, 2020*
+
+>**Modify docs [ci skip]**
+>
+>[9e92c0c21835e80](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e92c0c21835e80) marco.spasiano *January 14, 2020*
+
+>**Modify docs [ci skip]**
+>
+>[903d6390fffcf19](https://github.com/consiglionazionaledellericerche/sigla-main/commit/903d6390fffcf19) marco.spasiano *January 14, 2020*
+
+>**FIX css [ci skip]**
+>
+>[c7ae75bc910b6c4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7ae75bc910b6c4) marco.spasiano *January 13, 2020*
+
+
 ## Release 6.1.3  -- _January 13, 2020_ 
+### Changes
 
 >**Fix Liquidazione Iva: la liquidazione del mese di dicembre ora crea mandati sulla UO Ragioneria dell'anno della liquidazione.**
 >
@@ -14,6 +51,7 @@
 
 
 ## Release 6.1.2  -- _January 09, 2020_ 
+### Changes
 
 >**Fix Contratti: in fase di associazione progetto su un contratto ante 2016 il sistema controllava per le GAE degli accertamenti associati al contratto il progetto ante 2016 anzichè quelli in cui si sono convertiti nel 2016. Cambiato il controllo per cui va a buon fine se la GAE è associata almeno una volta al progetto indicato sul contratto.**
 >
@@ -69,6 +107,7 @@
 
 
 ## Release 6.1.1  -- _December 23, 2019_ 
+### Changes
 
 >**Il CUP viene inserito nella causale quando il Mandato viene creato, non viene modificata la causale all'atto dell'invio a SIOPE+**
 >
@@ -80,6 +119,7 @@
 
 
 ## Release 6.1.0  -- _December 17, 2019_ 
+### Changes
 
 >**Mandati in Distinta eliminato blocco per sostituzione**
 >
@@ -99,6 +139,7 @@
 
 
 ## Release 6.0.31  -- _December 16, 2019_ 
+### Changes
 
 >**FIX NullPointerException on removeDetail**
 >
@@ -118,6 +159,7 @@
 
 
 ## Release 6.0.30  -- _December 13, 2019_ 
+### Changes
 
 >**Fix Assunzione impegno su progetto terminato: non consentiva di assumere impegni su progetti terminati anche se la voce di bilancio prevedeva giorni di proroga.**
 >
@@ -137,6 +179,7 @@
 
 
 ## Release 6.0.27  -- _December 12, 2019_ 
+### Changes
 
 >**Fix Assegni di ricerca: non consentiva di apportare variazioni - ritornava errore InputStream in assenza di file da allegare.**
 >
@@ -163,6 +206,7 @@
 
 
 ## Release 6.0.26  -- _December 09, 2019_ 
+### Changes
 
 >**BUG ricerca capitolo per uo SAC**
 >
@@ -170,6 +214,7 @@
 
 
 ## Release 6.0.25  -- _December 07, 2019_ 
+### Changes
 
 >**BUG Missing IN or OUT parameter at index:: 10**
 >
@@ -177,6 +222,7 @@
 
 
 ## Release 6.0.24  -- _December 06, 2019_ 
+### Changes
 
 >**FIX package body**
 >
@@ -184,6 +230,7 @@
 
 
 ## Release 6.0.23  -- _December 06, 2019_ 
+### Changes
 
 >**FIX merge per Nuova Gestione per la Sostituzione dei Mandati**
 >
@@ -191,6 +238,7 @@
 
 
 ## Release 6.0.22  -- _December 02, 2019_ 
+### Changes
 
 >**FIX Aggiunto Selezionatore per Sospesi**
 >
@@ -222,6 +270,7 @@
 
 
 ## Release 6.0.21  -- _November 29, 2019_ 
+### Changes
 
 >**Fix. Troncata la causale della fattura passiva da SDI a 2000 caratteri**
 >
@@ -233,6 +282,7 @@
 
 
 ## Release 6.0.19  -- _November 28, 2019_ 
+### Changes
 
 >**Troncata la causale della fattura passiva da SDI a 2000 caratteri**
 >
@@ -252,6 +302,7 @@
 
 
 ## Release 6.0.18  -- _November 22, 2019_ 
+### Changes
 
 >**FIX tab mandato view**
 >
@@ -263,6 +314,7 @@
 
 
 ## Release 6.0.17  -- _November 22, 2019_ 
+### Changes
 
 >**Bug Distinta Cassiere: corretto controllo sullo scostamento SIOPE**
 >
@@ -270,6 +322,7 @@
 
 
 ## Release 6.0.15  -- _November 20, 2019_ 
+### Changes
 
 >**Modify changelog template**
 >
@@ -277,6 +330,7 @@
 
 
 ## Release 6.0.13  -- _November 20, 2019_ 
+### Changes
 
 >**FIX publiccode.yml [ci skip]**
 >
