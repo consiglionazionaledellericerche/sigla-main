@@ -402,6 +402,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			}
 			//controllo aggiunto solo per variazioni su anni successivi a quello di attivazione piano economico e per progetti con Piano Economico
 			if (Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(userContext, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo())) {
+				Optional.ofNullable(var_stanz_res_riga.getProgetto()).flatMap(el->Optional.ofNullable(el.getPg_progetto()))
+						.orElseThrow(()->new ApplicationException("Errore: Progetto non valorizzato sulla riga della variazione!"));
 				ProgettoHome home = (ProgettoHome)getHome(userContext, ProgettoBulk.class);
 				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
 				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, var_stanz_res_riga.getProgetto());
