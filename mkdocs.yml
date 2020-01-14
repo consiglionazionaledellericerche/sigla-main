@@ -23,4 +23,5 @@ nav:
 theme:
   name: 'material'
   logo: 'logo.png'
+  favicon: 'favicon.ico'
   language: 'it'
