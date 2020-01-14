@@ -192,3 +192,21 @@ Per quanto riguarda le griglie, invece, il layout standard è il seguente:
 
 ![](screenshot/map_6.png)
 
+La testata della griglia riporta l’intestazione delle colonne, la possibilità di ordinare i
+dati per la singola colonna in modalità crescente o decrescente e la possibilità di ‘nascondere’ la colonna.
+
+Per quanto riguarda le stampe, infine, la mappa si presenta con le seguenti icone, oltre
+quelle già viste:
+
+![](screenshot/print_4.png)
+
+E il riporto nella mappa della coda di stampe:
+
+![](screenshot/print_5.png)
+
+# Responsive
+Infine è importante sottolineare che con l’utilizzo del nuovo layout Sigla, è possibile
+accedere all’applicazione anche da qualsiasi dispositivo mobile perché
+automaticamente le mappe si adattano allo schermo che le contiene:
+
+![](screenshot/main.png)
