@@ -6,6 +6,9 @@
   <a href="https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-main">
     <img alt="Maven Central" src="https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?style=flat" alt="Current version on maven central.">
   </a>
+  <a href='https://sigla-main.readthedocs.io/it/latest/?badge=latest'>
+      <img src='https://readthedocs.org/projects/sigla-main/badge/?version=latest' alt='Documentation Status' />
+  </a>
 </p>
 
 ## MAVEN dependency
