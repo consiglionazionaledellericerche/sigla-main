@@ -45,17 +45,10 @@
 		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
-<<<<<<< HEAD
-		<defaultValueExpression><![CDATA["042.000.000"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[Integer.valueOf(26910)]]></defaultValueExpression>
-=======
 		<defaultValueExpression><![CDATA["074.000.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
 		<defaultValueExpression><![CDATA[Integer.valueOf(26187)]]></defaultValueExpression>
->>>>>>> master
 	</parameter>
 	<parameter name="P_PRINT_DETAIL" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
@@ -66,20 +59,6 @@
 	<queryString>
 		<![CDATA[SELECT a.CD_PROGETTO, a.DS_PROGETTO, b.DT_INIZIO, b.DT_FINE, b.DT_PROROGA, b.stato,
 c.descrizione desc_finanziamento, c.fl_piano_eco_fin, a.cd_unita_organizzativa, d.ds_unita_organizzativa, b.im_finanziato, b.im_cofinanziato,
-<<<<<<< HEAD
-(SELECT (SELECT SUM(totale_entrate) FROM V_CONTRATTI_TOTALI
-         WHERE ESERCIZIO_CONTRATTO = CONTRATTO.ESERCIZIO
-         AND   STATO_CONTRATTO = CONTRATTO.STATO
-         AND   PG_CONTRATTO = CONTRATTO.PG_CONTRATTO)
- FROM CONTRATTO
- WHERE PG_PROGETTO = $P{P_PG_PROGETTO}) totale_entrate,
-(SELECT (SELECT SUM(totale_reversali) FROM V_CONTRATTI_TOTALI
-         WHERE ESERCIZIO_CONTRATTO = CONTRATTO.ESERCIZIO
-         AND   STATO_CONTRATTO = CONTRATTO.STATO
-         AND   PG_CONTRATTO = CONTRATTO.PG_CONTRATTO)
- FROM CONTRATTO
- WHERE PG_PROGETTO = $P{P_PG_PROGETTO}) totale_reversali
-=======
 (SELECT NVL(SUM(p_totale_entrate),0) FROM
 (SELECT (SELECT SUM(totale_entrate) FROM V_CONTRATTI_TOTALI
          WHERE ESERCIZIO_CONTRATTO = CONTRATTO.ESERCIZIO
@@ -94,7 +73,6 @@ c.descrizione desc_finanziamento, c.fl_piano_eco_fin, a.cd_unita_organizzativa, 
          AND   PG_CONTRATTO = CONTRATTO.PG_CONTRATTO) p_totale_entrate
  FROM CONTRATTO
  WHERE PG_PROGETTO = $P{P_PG_PROGETTO})) totale_reversali
->>>>>>> master
 FROM PROGETTO a, PROGETTO_OTHER_FIELD b, TIPO_FINANZIAMENTO C, UNITA_ORGANIZZATIVA D
 WHERE A.ESERCIZIO = $P{P_ESERCIZIO}
 AND A.PG_PROGETTO = $P{P_PG_PROGETTO}
