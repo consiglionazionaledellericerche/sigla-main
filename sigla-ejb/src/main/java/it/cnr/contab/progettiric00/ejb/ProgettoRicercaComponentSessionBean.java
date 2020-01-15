@@ -22,6 +22,7 @@ import javax.ejb.Stateless;
 
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent;
+
 @Stateless(name="CNRPROGETTIRIC00_EJB_ProgettoRicercaComponentSession")
 public class ProgettoRicercaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean  implements ProgettoRicercaComponentSession{
 @PostConstruct
@@ -322,6 +323,24 @@ public Pdg_esercizioBulk getPdgEsercizio(it.cnr.jada.UserContext param0) throws 
 		try {
 			((ProgettoRicercaComponent)componentObj).removePianoEconomico(param0,param1);
 			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext param0, it.cnr.jada.bulk.OggettoBulk param1, boolean param2) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.jada.bulk.OggettoBulk result = ((ProgettoRicercaComponent)componentObj).modificaConBulk(param0,param1,param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0,componentObj);
 			throw e;

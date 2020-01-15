@@ -33,6 +33,7 @@ import com.google.gson.GsonBuilder;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrHome;
+import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
@@ -713,7 +714,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 			//Nell'aggiornamento viene rifatta la validazione
 			Progetto_rimodulazioneHome rimodHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
 			ProgettoBulk progettoRimodulato = rimodHome.getProgettoRimodulato(rimodulazione);
-			Utility.createProgettoRicercaComponentSession().modificaConBulk(userContext, progettoRimodulato);
+			Utility.createProgettoRicercaComponentSession().modificaConBulk(userContext, progettoRimodulato, true);
 
 			rimodulazione.setStato(StatoProgettoRimodulazione.STATO_APPROVATO.value());
 			rimodulazione.setToBeUpdated();

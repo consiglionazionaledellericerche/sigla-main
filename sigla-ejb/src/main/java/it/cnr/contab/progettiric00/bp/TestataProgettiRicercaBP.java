@@ -666,7 +666,12 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
 
     @Override
     public boolean isDeleteButtonHidden() {
-        return super.isDeleteButtonHidden() || this.isFlInformix();
+        return super.isDeleteButtonHidden() || this.isFlInformix() ||
+                Optional.ofNullable(this.getModel())
+                .filter(ProgettoBulk.class::isInstance)
+                .map(ProgettoBulk.class::cast)
+                .filter(ProgettoBulk::isStatoPrgApprovato)
+                .isPresent();
     }
 
     public void caricaVociPianoEconomicoAssociate(ActionContext context, Progetto_piano_economicoBulk progettoPiaeco) throws BusinessProcessException {

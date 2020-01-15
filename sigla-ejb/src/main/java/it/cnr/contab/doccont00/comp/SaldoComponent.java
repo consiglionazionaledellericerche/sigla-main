@@ -1638,7 +1638,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
         String message = getMessaggioSfondamentoPianoEconomico(userContext, pdgVariazione, true);
     	if (message!=null && message.length()>0)
             throw new ApplicationException(
-                    "Impossibile effettuare l'operazione !<br>"+message);
+                    "Impossibile effettuare l'operazione !\n"+message);
     }
     
     //Controllo che restituisce errore.

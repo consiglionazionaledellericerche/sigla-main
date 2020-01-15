@@ -13,6 +13,7 @@
 	boolean isFlNuovoPdg = bp.isFlNuovoPdg();
 	boolean isFlInformix = bp.isFlInformix();
 	boolean isROFieldInformix = !bp.isSearching()&&isFlInformix;
+	boolean isROField = isROFieldInformix || bp.isROProgettoForStato();
 	boolean isUoEnte = Optional.ofNullable(bp.getUoScrivania()).filter(Unita_organizzativaBulk::isUoEnte).isPresent();
 	ProgettoBulk bulk = (ProgettoBulk)bp.getModel();
 	boolean isROImporti = !(bp instanceof AmministraTestataProgettiRicercaBP) && Optional.ofNullable(bulk).flatMap(el->Optional.ofNullable(el.getOtherField()))
@@ -22,9 +23,9 @@
 <% if (bp.getStatus() == bp.INSERT || bp.getStatus() == bp.EDIT || bp.getStatus() == bp.VIEW) {%>
      <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			   bp.getController().writeFormInput(out,null,"livello_padre2016",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			   bp.getController().writeFormInput(out,null,"livello_padre2016",isROField,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello_padre",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			   bp.getController().writeFormInput(out,null,"livello_padre",isROField,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } 
 		%>
 		<div style="float: right;" class="GroupLabel h3 text-primary ">Ver.<%=bulk.getVersione()%></div>
@@ -34,36 +35,36 @@
 	  <tr>
       	<% if (isFlNuovoPdg) { %>
       		<td><% bp.getController().writeFormLabel(out, "find_nodo_padre_area"); %></td>
-      		<td><% bp.getController().writeFormInput(out, "default", "find_nodo_padre_area", isROFieldInformix,null,null); %></td>
+      		<td><% bp.getController().writeFormInput(out, "default", "find_nodo_padre_area", isROField,null,null); %></td>
  		<% } else { %>      	
 		    <td><% bp.getController().writeFormLabel(out,"cd_progetto_padre"); %></td>
 		    <td colspan="2">
-				<% bp.getController().writeFormInput( out, "default","cd_progetto_padre", isROFieldInformix,null,null); %>
-				<% bp.getController().writeFormInput( out, "default","ds_progetto_padre", isROFieldInformix,null,null); %>
-				<% bp.getController().writeFormInput( out, "default","find_nodo_padre", isROFieldInformix,null,null); %>
+				<% bp.getController().writeFormInput( out, "default","cd_progetto_padre", isROField,null,null); %>
+				<% bp.getController().writeFormInput( out, "default","ds_progetto_padre", isROField,null,null); %>
+				<% bp.getController().writeFormInput( out, "default","find_nodo_padre", isROField,null,null); %>
 		    </td>
 		<% } %>	    
 	  </tr>	  
 
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"dipartimento_padre");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","dipartimento_padre", isROFieldInformix,null,null); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","dipartimento_padre", isROField,null,null); %></td>
 	  </tr>
 
 	  <% if (!isFlNuovoPdg) { %>
 		  <tr>
 		  	<td><% bp.getController().writeFormLabel(out,"stato_padre");%></td>
-		  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","stato_padre", isROFieldInformix,null,null); %></td>
+		  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","stato_padre", isROField,null,null); %></td>
 		  </tr>         
 		  <tr>
 		  	<td><% bp.getController().writeFormLabel(out,"dt_inizio_padre");%></td>
-		  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","dt_inizio_padre", isROFieldInformix,null,null); %></td>
+		  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","dt_inizio_padre", isROField,null,null); %></td>
 		  </tr>
 	  <% } %>
 	  <% if (!isFlInformix) {%>
 		  <tr>
 		  	<td><% bp.getController().writeFormLabel(out,"programma_padre");%></td>
-		  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","programma_padre", isROFieldInformix,null,null); %></td>
+		  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","programma_padre", isROField,null,null); %></td>
 		  </tr>
 	  <% } %>          
 	 </table>
@@ -71,9 +72,9 @@
   	 
   	 <div class="GroupLabel">
       	<% if (isFlNuovoPdg) {
-			 bp.getController().writeFormInput(out,null,"livello2016",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			 bp.getController().writeFormInput(out,null,"livello2016",isROField,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } else {
-			   bp.getController().writeFormInput(out,null,"livello",isROFieldInformix,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
+			   bp.getController().writeFormInput(out,null,"livello",isROField,"GroupLabel h3 text-primary","style=\"border-style : none; cursor:default; background-color:initial;\"");
 		  } 
 		%>
 	 </div>
@@ -88,28 +89,28 @@
 		   	}
       		%>      	
 	  	</td>
-	  	<td><% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %>
+	  	<td><% bp.getController().writeFormInput( out, "default","cd_progetto", isROField,null,null); %>
 	        (<%=bulk.getPg_progetto()%>)</td>
 	  </tr>
 
 	  <% if (!isFlNuovoPdg) {%>
 		  <tr>
 			<td><% bp.getController().writeFormLabel(out,"tipo_fase");%></td>
-			<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipo_fase", isROFieldInformix,null,null); %></td>
+			<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipo_fase", isROField,null,null); %></td>
 		  </tr>
 	  <% } else {%>
 		  <% if (bp.isSearching()) {%>
 			  <tr>
 			  	<td><% bp.getController().writeFormLabel(out,"tipoFaseToSearch");%></td>
-			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipoFaseToSearch", isROFieldInformix,null,null); %></td>
+			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipoFaseToSearch", isROField,null,null); %></td>
 			  </tr>
 		  <% } else { %>
 			  <tr>
 			  	<td><% bp.getController().writeFormLabel(out,"tipo_fase");%></td>
 			  	<td colspan="3">
-					<% bp.getController().writeFormInput( out, "default","fl_previsione", isROFieldInformix,null,null); %>
+					<% bp.getController().writeFormInput( out, "default","fl_previsione", isROField,null,null); %>
 				  	<% bp.getController().writeFormLabel(out,"fl_previsione");%>
-					<% bp.getController().writeFormInput( out, "default","fl_gestione", isROFieldInformix,null,null); %>
+					<% bp.getController().writeFormInput( out, "default","fl_gestione", isROField,null,null); %>
 				  	<% bp.getController().writeFormLabel(out,"fl_gestione");%>
 				</td>
 			 </tr>
@@ -117,34 +118,34 @@
 	  <% } %>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"tipo");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipo", isROFieldInformix,null,null); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipo", isROField,null,null); %></td>
 	  </tr>	  
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"ds_progetto");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","ds_progetto", isROFieldInformix,null,null); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","ds_progetto", isROField,null,null); %></td>
 	  </tr>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
 	  	<td colspan="3">
 	  		<div class="input-group input-group-searchtool w-100 ">
-				<% bp.getController().writeFormInput( out, "default","cd_unita_organizzativa", isROFieldInformix,null,null); %>
-				<% bp.getController().writeFormInput( out, "default","ds_unita_organizzativa", isROFieldInformix,null,null); %>
+				<% bp.getController().writeFormInput( out, "default","cd_unita_organizzativa", isROField,null,null); %>
+				<% bp.getController().writeFormInput( out, "default","ds_unita_organizzativa", isROField,null,null); %>
 		  	</div>
 	  	</td>
 	  </tr>
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","responsabile", isROFieldInformix,null,null); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","responsabile", isROField,null,null); %></td>
 	  </tr>
 	  <% if (!isFlInformix) {%>
 		  <tr>
 		  	<td><% bp.getController().writeFormLabel(out,"find_missione");%></td>
-		  	<td colspan="3"><% bp.getController().writeFormInput( out, "find_missione");%></td>
+    	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","find_missione", isROField,null,null); %></td>
 		  </tr>
 	  <% } %>  
 	  <tr>
 	  	<td><% bp.getController().writeFormLabel(out,"note");%></td>
-	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","note", isROFieldInformix,null,null); %></td>
+	  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","note", isROField,null,null); %></td>
 	  </tr>
      </table>
 	 </div> 
@@ -251,39 +252,39 @@
 			      	%>      	
 				</td>
 				<td colspan="3">
-					<% bp.getController().writeFormInput( out, "default","cd_progetto", isROFieldInformix,null,null); %>
+					<% bp.getController().writeFormInput( out, "default","cd_progetto", isROField,null,null); %>
 			  	</td>
 	  		</tr>
 		    <% if (!(bp instanceof TestataProgettiRicercaNuovoBP)){%>
 	  		<tr>
 		      	<% if (isFlNuovoPdg) { %>
 				  	<td><% bp.getController().writeFormLabel(out,"find_nodo_padre_area");%></td>
-				  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","find_nodo_padre_area", isROFieldInformix,null,null); %></td>
+				  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","find_nodo_padre_area", isROField,null,null); %></td>
 		 		<%  } else { %>      	
 				  	<td><% bp.getController().writeFormLabel(out,"cd_progetto_padre");%></td>
-				  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","find_nodo_padre", isROFieldInformix,null,null); %></td>
+				  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","find_nodo_padre", isROField,null,null); %></td>
 				<% } %>      	
 	  		</tr>
 		  	<% } %>
 			<tr>
 				<td><% bp.getController().writeFormLabel(out,"tipo_fase");%></td>
-			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipo_fase", isROFieldInformix,null,null); %></td>
+			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","tipo_fase", isROField,null,null); %></td>
 			</tr>	  	
 			<tr>
 			  	<td><% bp.getController().writeFormLabel(out,"ds_progetto");%></td>
-			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","ds_progetto", isROFieldInformix,null,null); %></td>
+			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","ds_progetto", isROField,null,null); %></td>
 			</tr>	  	
 			<tr>
 			  	<td><% bp.getController().writeFormLabel(out,"find_dipartimento");%></td>
-			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","find_dipartimento", isROFieldInformix,null,null); %></td>
+			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","find_dipartimento", isROField,null,null); %></td>
 			</tr>	  	
 			<tr>
 			  	<td><% bp.getController().writeFormLabel(out,"unita_organizzativa");%></td>
-			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","unita_organizzativa", isROFieldInformix,null,null); %></td>
+			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","unita_organizzativa", isROField,null,null); %></td>
 			</tr>
 			<tr>
 			  	<td><% bp.getController().writeFormLabel(out,"responsabile");%></td>
-			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","responsabile", isROFieldInformix,null,null); %></td>
+			  	<td colspan="3"><% bp.getController().writeFormInput( out, "default","responsabile", isROField,null,null); %></td>
 			</tr>
 			<% if (!isFlInformix) {%>
 			<tr>

@@ -232,27 +232,31 @@ public ProgettoRicercaComponent() {
 				  if (!progettiFigli.isEmpty() && !flNuovoPdg)
 					  throw new it.cnr.jada.comp.ApplicationException("Esistono livelli di progetti collegati. Eliminazione non possibile.");
 
-				  List dettagliCopy = new BulkList<>();
+				  List<OggettoBulk> dettagliCopy = new BulkList<OggettoBulk>();
 				  dettagliCopy.addAll(((ProgettoBulk)bulk).getDettagli());
 				  dettagliCopy.stream().forEach(e->{
+				  	  e.setToBeDeleted();
 					  ((ProgettoBulk)bulk).removeFromDettagli(((ProgettoBulk)bulk).getDettagli().indexOf(e));
 				  });
 
-				  List dettagliPianoEconomicoTotaleCopy = new BulkList<>();
+				  List<OggettoBulk> dettagliPianoEconomicoTotaleCopy = new BulkList<OggettoBulk>();
 				  dettagliPianoEconomicoTotaleCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
 				  dettagliPianoEconomicoTotaleCopy.stream().forEach(e->{
+					  e.setToBeDeleted();
 					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomicoTotale(((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale().indexOf(e));
 				  });
 				  
-				  List dettagliPianoEconomicoAnnoCorrenteCopy = new BulkList<>();
+				  List<OggettoBulk> dettagliPianoEconomicoAnnoCorrenteCopy = new BulkList<OggettoBulk>();
 				  dettagliPianoEconomicoAnnoCorrenteCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
 				  dettagliPianoEconomicoAnnoCorrenteCopy.stream().forEach(e->{
+					  e.setToBeDeleted();
 					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomicoAnnoCorrente(((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente().indexOf(e));
 				  });
 
-				  List dettagliPianoEconomicoAltriAnniCopy = new BulkList<>();
+				  List<OggettoBulk> dettagliPianoEconomicoAltriAnniCopy = new BulkList<OggettoBulk>();
 				  dettagliPianoEconomicoAltriAnniCopy.addAll(((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
 				  dettagliPianoEconomicoAltriAnniCopy.stream().forEach(e->{
+					  e.setToBeDeleted();
 					  ((ProgettoBulk)bulk).removeFromDettagliPianoEconomicoAltriAnni(((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni().indexOf(e));
 				  });
 
@@ -581,58 +585,73 @@ public ProgettoRicercaComponent() {
  *
  */
 		public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk) throws ComponentException {
-			try{		
+			try{
 				Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(uc);
-				intBulk(uc, (ProgettoBulk)bulk, parEnte.getFl_informix().booleanValue());
-
-				if (!parEnte.getFl_informix().booleanValue()) {
-				   validateBulkForInsert(uc, bulk);
-				   ProgettoBulk progettoPrev = (ProgettoBulk)getHome(uc, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
-				   if (progettoPrev!=null)
-					   getHome(uc, bulk, "PROGETTO_SIP").delete(progettoPrev, uc);
-	
-				   ProgettoBulk progettoGest = (ProgettoBulk)getHome(uc, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
-				   if (progettoGest!=null)
-					   getHome(uc, bulk, "PROGETTO_SIP").delete(progettoGest, uc);
-	
-					if (((ProgettoBulk)bulk).getFl_previsione()) {
-						((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
-						((ProgettoBulk)bulk).setTipo_fase_progetto_padre(ProgettoBulk.TIPO_FASE_PREVISIONE);
-						getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
-					}
-	
-					if (((ProgettoBulk)bulk).getFl_gestione()) {
-						((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_GESTIONE);
-						((ProgettoBulk)bulk).setTipo_fase_progetto_padre(ProgettoBulk.TIPO_FASE_GESTIONE);
-						getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
-					}
-	
-					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
-					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
-					makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
-				}
-
-				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
-				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
-				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
-
-				if (((ProgettoBulk)bulk).getOtherField()!=null) {
-					((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
-					if (((ProgettoBulk)bulk).getOtherField().isToBeCreated())
-						getHome(uc, Progetto_other_fieldBulk.class).insert(((ProgettoBulk)bulk).getOtherField(), uc);
-					else 
-						getHome(uc, Progetto_other_fieldBulk.class).update(((ProgettoBulk)bulk).getOtherField(), uc);
-				}
-
-				if (!parEnte.getFl_informix().booleanValue())
-					allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
-
-				validaPianoEconomico(uc, (ProgettoBulk)bulk);
+				return modificaConBulk(uc, bulk, parEnte.getFl_informix().booleanValue());
 		   }catch(Throwable throwable){
 		       throw handleException(throwable);
 		   }
-			return bulk;
 		}
+
+	/**
+	 * Metodo richiamato in fase di modifica del progetto.
+	 * La variabile isInformix serve per determinare se bisogna aggiornare anche i dati del progetto o
+	 * se gli stessi vengono automaticamente allineati da applicativi esterni.
+	 * Se impostata a false aggiorna i dati presenti sul record del progetto.
+	 * Se impostata a true non aggiorna anche i dati presenti sul record del progetto (viene richiamata in caso di rimodulazione).
+	 */
+		public OggettoBulk modificaConBulk(UserContext uc, OggettoBulk bulk, boolean isInformix) throws ComponentException {
+		try{
+			intBulk(uc, (ProgettoBulk)bulk, isInformix);
+			if (!isInformix) {
+				validateBulkForInsert(uc, bulk);
+				ProgettoBulk progettoPrev = (ProgettoBulk)getHome(uc, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_PREVISIONE));
+				if (progettoPrev!=null)
+					getHome(uc, bulk, "PROGETTO_SIP").delete(progettoPrev, uc);
+
+				ProgettoBulk progettoGest = (ProgettoBulk)getHome(uc, ProgettoBulk.class).findByPrimaryKey(new ProgettoBulk(((ProgettoBulk)bulk).getEsercizio(), ((ProgettoBulk)bulk).getPg_progetto(), ProgettoBulk.TIPO_FASE_GESTIONE));
+				if (progettoGest!=null)
+					getHome(uc, bulk, "PROGETTO_SIP").delete(progettoGest, uc);
+
+				if (((ProgettoBulk)bulk).getFl_previsione()) {
+					((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_PREVISIONE);
+					((ProgettoBulk)bulk).setTipo_fase_progetto_padre(ProgettoBulk.TIPO_FASE_PREVISIONE);
+					getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
+				}
+
+				if (((ProgettoBulk)bulk).getFl_gestione()) {
+					((ProgettoBulk)bulk).setTipo_fase(ProgettoBulk.TIPO_FASE_GESTIONE);
+					((ProgettoBulk)bulk).setTipo_fase_progetto_padre(ProgettoBulk.TIPO_FASE_GESTIONE);
+					getHome(uc, bulk, "PROGETTO_SIP").insert((Persistent)bulk, uc);
+				}
+
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagli());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliFinanziatori());
+				makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPartner_esterni());
+			}
+
+			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoTotale());
+			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAnnoCorrente());
+			makeBulkListPersistent(uc, ((ProgettoBulk)bulk).getDettagliPianoEconomicoAltriAnni());
+
+			if (((ProgettoBulk)bulk).getOtherField()!=null) {
+				((ProgettoBulk)bulk).getOtherField().setUser(bulk.getUser());
+				if (((ProgettoBulk)bulk).getOtherField().isToBeCreated())
+					getHome(uc, Progetto_other_fieldBulk.class).insert(((ProgettoBulk)bulk).getOtherField(), uc);
+				else
+					getHome(uc, Progetto_other_fieldBulk.class).update(((ProgettoBulk)bulk).getOtherField(), uc);
+			}
+
+			if (!isInformix)
+				allineaAbilitazioniTerzoLivello(uc, (ProgettoBulk)bulk);
+
+			validaPianoEconomico(uc, (ProgettoBulk)bulk);
+		}catch(Throwable throwable){
+			throw handleException(throwable);
+		}
+		return bulk;
+	}
+
 	/**
 	 * Pre:  Ricerca progettopadre
 	 * Post: Limitazione ai progetti diversi da quello in oggetto.
@@ -1308,7 +1327,18 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
      */
     protected void validaEliminaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException{
     	try{
-    		Progetto_sipHome moduli_utilizzatiHome = ((Progetto_sipHome)getHome(usercontext,Progetto_sipBulk.class,"V_SIP_MODULI_VALIDI"));
+			Parametri_enteBulk parEnte = Utility.createParametriEnteComponentSession().getParametriEnte(usercontext);
+			if (parEnte.getFl_informix().booleanValue())
+				throw new ApplicationException("Eliminazione progetto non possibile in presenza del sistema Informix!");
+
+			if (Optional.ofNullable(oggettobulk)
+					.filter(ProgettoBulk.class::isInstance)
+					.map(ProgettoBulk.class::cast)
+					.filter(ProgettoBulk::isStatoPrgApprovato)
+					.isPresent())
+				throw new ApplicationException("Operazione non possibile! Non è possibile eliminare un progetto approvato!");
+
+			Progetto_sipHome moduli_utilizzatiHome = ((Progetto_sipHome)getHome(usercontext,Progetto_sipBulk.class,"V_SIP_MODULI_VALIDI"));
 
 			SQLBuilder sqlModuli = moduli_utilizzatiHome.createSQLBuilderAll();
 			sqlModuli.addClause(FindClause.AND, "pg_progetto", SQLBuilder.EQUALS, ((ProgettoBulk)oggettobulk).getPg_progetto());
