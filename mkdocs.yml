@@ -30,3 +30,7 @@ theme:
   logo: 'logo.png'
   favicon: 'favicon.ico'
   language: 'it'
+
+markdown_extensions:
+  - toc:
+      permalink: true
