@@ -18,6 +18,7 @@
 package it.cnr.contab.web.rest.resource.util;
 
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.web.rest.local.util.VersionLocal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,10 +41,7 @@ import java.util.jar.Manifest;
 import java.util.stream.Collectors;
 
 @WebListener
-@Path("/version")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-public class VersionResource implements ServletContextListener {
+public class VersionResource implements ServletContextListener, VersionLocal {
     public static final String IMPLEMENTATION_VERSION = "Implementation-Version";
     public static final String SPECIFICATION_VERSION = "Specification-Version";
     private static Map<Object, Object> ATTRIBUTES;
