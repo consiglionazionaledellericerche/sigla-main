@@ -3,14 +3,14 @@
 {{#issues}}
 {{#hasIssue}}
 {{#hasLink}}
-### {{name}} [{{issue}}]({{link}}) {{title}}
+###{{name}} [{{issue}}]({{link}}) {{title}}
 {{/hasLink}}
 {{^hasLink}}
-### {{name}} {{issue}} {{title}}
+###{{name}} {{issue}} {{title}}
 {{/hasLink}}
 {{/hasIssue}}
 {{^hasIssue}}
-*{{name}}*
+**{{name}}**
 {{/hasIssue}}
 
 {{#commits}}
