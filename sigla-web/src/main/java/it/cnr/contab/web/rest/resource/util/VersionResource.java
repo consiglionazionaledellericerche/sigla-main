@@ -27,13 +27,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
 import java.util.jar.Attributes;
@@ -47,7 +43,6 @@ public class VersionResource implements ServletContextListener, VersionLocal {
     private static Map<Object, Object> ATTRIBUTES;
     private final Logger logger = LoggerFactory.getLogger(VersionResource.class);
 
-    @GET
     public Response get(HttpServletRequest request) throws Exception {
         if (Optional.ofNullable(ATTRIBUTES).isPresent())
             return Response.ok(ATTRIBUTES).build();
@@ -58,18 +53,21 @@ public class VersionResource implements ServletContextListener, VersionLocal {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext ctx = servletContextEvent.getServletContext();
         try {
-            Manifest manifest = new Manifest(ctx.getResourceAsStream(Utility.MANIFEST_PATH));
-            ATTRIBUTES = manifest.getMainAttributes().entrySet()
-                    .stream()
-                    .filter(objectObjectEntry -> {
-                        return Optional.ofNullable(objectObjectEntry.getKey())
-                                .filter(Attributes.Name.class::isInstance)
-                                .map(Attributes.Name.class::cast)
-                                .map(attribute -> attribute.equals(new Attributes.Name(IMPLEMENTATION_VERSION))
-                                        || attribute.equals(new Attributes.Name(SPECIFICATION_VERSION)))
-                                .orElse(Boolean.FALSE);
-                    })
-                    .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+            final Optional<InputStream> resourceAsStream = Optional.ofNullable(ctx.getResourceAsStream(Utility.MANIFEST_PATH));
+            if (resourceAsStream.isPresent()) {
+                Manifest manifest = new Manifest(resourceAsStream.get());
+                ATTRIBUTES = manifest.getMainAttributes().entrySet()
+                        .stream()
+                        .filter(objectObjectEntry -> {
+                            return Optional.ofNullable(objectObjectEntry.getKey())
+                                    .filter(Attributes.Name.class::isInstance)
+                                    .map(Attributes.Name.class::cast)
+                                    .map(attribute -> attribute.equals(new Attributes.Name(IMPLEMENTATION_VERSION))
+                                            || attribute.equals(new Attributes.Name(SPECIFICATION_VERSION)))
+                                    .orElse(Boolean.FALSE);
+                        })
+                        .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+            }
         } catch (IOException e) {
             logger.warn("IOException", e);
         }

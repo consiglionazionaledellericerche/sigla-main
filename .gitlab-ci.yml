@@ -25,7 +25,7 @@ cache:
 maven-deploy:
   stage: deploy
   image: maven:alpine
-  script: "mvn clean deploy $MAVEN_CLI_OPTS -DskipTests"
+  script: "mvn clean deploy $MAVEN_CLI_OPTS"
   artifacts:
     paths:
       - sigla-web/target/sigla-thorntail.jar
