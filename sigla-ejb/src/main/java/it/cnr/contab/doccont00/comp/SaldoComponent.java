@@ -21,13 +21,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringJoiner;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1658,13 +1652,12 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
    	   		    Progetto_piano_economicoHome ppeHome = (Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class);
 
 	            ProgettoBulk progettoRimodulato =  null;
-	            Progetto_rimodulazioneBulk rimodulazione = null;
 	            if (Optional.ofNullable(pdgVariazione.getProgettoRimodulazione()).isPresent()) {
 	            	Progetto_rimodulazioneHome prgHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
-	        		rimodulazione = prgHome.rebuildRimodulazione(userContext, pdgVariazione.getProgettoRimodulazione());
+					Progetto_rimodulazioneBulk rimodulazione = prgHome.rebuildRimodulazione(userContext, pdgVariazione.getProgettoRimodulazione());
 	            	progettoRimodulato = (ProgettoBulk)prgHome.getProgettoRimodulato(rimodulazione).clone();
 	            }
-	
+
 	            for (java.util.Iterator dett = detHome.findDettagliEntrataVariazioneGestionale(pdgVariazione).iterator();dett.hasNext();){
 	            	Pdg_variazione_riga_gestBulk rigaVar = (Pdg_variazione_riga_gestBulk)dett.next();
 
@@ -1694,7 +1687,17 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 	            for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEcoEtr) {
 					ProgettoBulk progetto = ctrlDispPianoEco.getProgetto();
 					BigDecimal totFinanziato;
-					boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() && !progetto.isProgettoScaduto();
+
+					//Il controllo puntuale sul piano economico deve partire se sul progetto esiste un piano economico per l'anno della variazione.
+					//Pertanto viene controllato se esiste piano economico e se esercizio variazione compreso tra data inizio e fine progetto.
+					//In caso contrario viene controllato solo l'importo complessivo del progetto
+					boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() &&
+							Optional.ofNullable(progetto)
+									.flatMap(prg->Optional.ofNullable(prg.getOtherField()))
+									.filter(of->of.getAnnoInizio()<=pdgVariazione.getEsercizio())
+									.filter(of->of.getAnnoFine()>=pdgVariazione.getEsercizio())
+									.isPresent();
+
 					if (ctrlFinanziamentoAnnuale) {
 						List<Progetto_piano_economicoBulk> pianoEconomicoList = null;
 						if (Optional.ofNullable(progettoRimodulato).isPresent())
@@ -1775,7 +1778,15 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
                     else
                         imVariazioneFin = imSpeseEsterne;
 
-					boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() && !progetto.isProgettoScaduto();
+                    //Il controllo puntuale sul piano economico deve partire se sul progetto esiste un piano economico per l'anno della variazione.
+					//Pertanto viene controllato se esiste piano economico e se esercizio variazione compreso tra data inizio e fine progetto.
+					//In caso contrario viene controllato solo l'importo complessivo del progetto
+					boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() &&
+														Optional.ofNullable(progetto)
+																.flatMap(prg->Optional.ofNullable(prg.getOtherField()))
+																.filter(of->of.getAnnoInizio()<=pdgVariazione.getEsercizio())
+																.filter(of->of.getAnnoFine()>=pdgVariazione.getEsercizio())
+																.isPresent();
 
                     if (ctrlFinanziamentoAnnuale) {
 						List<Progetto_piano_economicoBulk> pianoEconomicoList = null;
