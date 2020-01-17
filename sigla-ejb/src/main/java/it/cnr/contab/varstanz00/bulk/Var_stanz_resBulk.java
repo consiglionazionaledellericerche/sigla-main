@@ -125,7 +125,6 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	// variabile utilizzata per gestire consentire l'inserimento di valori null in tiMotivazioneVariazione
 	// ma rendere allo stesso tempo obbligatorio l'indicazione del campo da parte dell'utente
 	private java.lang.String mapMotivazioneVariazione;
-	public java.util.Dictionary baseTiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
 
 	public Var_stanz_resBulk() {
 		super();
@@ -505,30 +504,8 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 	}
 	@Override
 	public OggettoBulk initializeForInsert(CRUDBP crudbp, ActionContext actioncontext) {
-		if (Optional.ofNullable(crudbp).filter(CRUDVar_stanz_resBP.class::isInstance).isPresent()) {
-			CRUDVar_stanz_resBP myBp = (CRUDVar_stanz_resBP) crudbp;
-			if (myBp.isUoRagioneria())
-				baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento dalla Ragioneria");
-			else
-				baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento alla Ragioneria");
-		}
 		setFl_perenzione(Boolean.FALSE);
 		return super.initializeForInsert(crudbp, actioncontext);
-	}
-
-	@Override
-	public OggettoBulk initializeForEdit(CRUDBP crudbp, ActionContext actioncontext) {
-		OggettoBulk bulk = super.initializeForEdit(crudbp, actioncontext);
-		if (Optional.ofNullable(crudbp).filter(CRUDVar_stanz_resBP.class::isInstance).isPresent()) {
-			CRUDVar_stanz_resBP myBp = (CRUDVar_stanz_resBP)crudbp;
-			if (myBp.isUoRagioneria() || ((Var_stanz_resBulk)bulk).isMotivazioneTrasferimentoRagioneria()) {
-				if (myBp.isUoRagioneria())
-					baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento dalla Ragioneria");
-				else
-					baseTiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento alla Ragioneria");
-			}
-		}
-		return bulk;
 	}
 
 	public boolean isMotivazioneVariazioneBandoPersonale() {
@@ -581,13 +558,7 @@ public class Var_stanz_resBulk extends Var_stanz_resBase implements ICancellatoL
 		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_COMPENSI_INCENTIVANTI,"Personale - Compensi Incentivanti");
 		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
 
-		if (!baseTiMotivazioneVariazioneKeys.isEmpty()) {
-			for(Enumeration baseKey = baseTiMotivazioneVariazioneKeys.keys(); baseKey.hasMoreElements();) {
-				String key = String.valueOf(baseKey.nextElement());
-				String value = String.valueOf(baseTiMotivazioneVariazioneKeys.get(key));
-				tiMotivazioneVariazioneKeys.put(key, value);
-			}
-		}
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento Ragioneria");
 
 		if (!Optional.ofNullable(this.isVariazioneInternaIstituto()).orElse(Boolean.FALSE) || this.isMotivazioneTrasferimentoArea())
 			tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_AREA,"Trasferimento ad Aree di Ricerca");
