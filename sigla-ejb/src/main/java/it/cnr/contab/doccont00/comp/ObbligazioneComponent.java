@@ -4421,6 +4421,12 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		     throw new it.cnr.jada.comp.ApplicationException( "Il Creditore (Codice Terzo:"+obbligazione.getCreditore().getCd_terzo()+") \n"+"non è congruente con quello dell'incarico (Codice Terzo:"+obbligazione.getIncarico_repertorio().getTerzo().getCd_terzo()+")");
  
 	verificaFl_spese_costi_altrui( aUC, obbligazione );
+
+	if (obbligazione.getFl_gara_in_corso().booleanValue() &&
+			obbligazione.isObbligazioneResiduo()
+			&& obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
+		throw new ApplicationException("Non e' possibile modificare un'impegno residuo con gara di appalto in corso di espletamento, si prega di riportarlo indietro all'esercizio precedente e di renderlo definitivo");
+
 	/*
 	 * Controllo l'eventuale obbligatorietà del Contratto
 	 */
@@ -4453,12 +4459,7 @@ public void verificaObbligazione (UserContext aUC,ObbligazioneBulk obbligazione)
 		if (obbligazione.getFl_gara_in_corso().booleanValue() &&
 			obbligazione.getDs_gara_in_corso() == null)
 		  throw new it.cnr.jada.comp.ApplicationException("La gara di appalto risulta essere in corso di espletamento. Campo \"Descrizione gara di appalto\" obbligatorio!");
-		if (obbligazione.getFl_gara_in_corso().booleanValue() &&
-				obbligazione.isObbligazioneResiduo()
-				&& obbligazione.getStato_obbligazione().equals( obbligazione.STATO_OBB_PROVVISORIO ))
-			throw new ApplicationException("Non e' possibile modificare un'impegno residuo con gara di appalto in corso di espletamento, si prega di riportarlo indietro dall'esercizio precedente e di renderlo definitivo");
-		
-		
+
 		if (obbligazione.getFl_gara_in_corso().booleanValue() && 
 			(obbligazione.getPg_contratto() != null || obbligazione.getPg_repertorio() != null))
 		  throw new it.cnr.jada.comp.ApplicationException("La gara di appalto risulta essere in corso di espletamento. Non è possibile valorizzare il campo contratto e/o incarico. Disattivare il flag \"Gara in corso di espletamento\" e ripetere l'operazione!");		
