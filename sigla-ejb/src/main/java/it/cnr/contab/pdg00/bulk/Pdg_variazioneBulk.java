@@ -52,7 +52,6 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 	
 	//Elenco completo delle Finalità della Variazioni utilizzato dalle mappe in modalità ricerca
 	public static final java.util.Dictionary tiMotivazioneVariazioneForSearchKeys = new it.cnr.jada.util.OrderedHashtable();
-	public java.util.Dictionary baseTiMotivazioneVariazioneKeys = new it.cnr.jada.util.OrderedHashtable();
 
 	private static final java.util.Dictionary ds_causaleKeys = new it.cnr.jada.util.OrderedHashtable();
 	
@@ -223,13 +222,7 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_COMPENSI_INCENTIVANTI,"Personale - Compensi Incentivanti");
 		tiMotivazioneVariazioneKeys.put(MOTIVAZIONE_ALTRE_SPESE,"Personale - Altri Trasferimenti");
 
-		if (!baseTiMotivazioneVariazioneKeys.isEmpty()) {
-			for(Enumeration baseKey = baseTiMotivazioneVariazioneKeys.keys(); baseKey.hasMoreElements();) {
-				String key = String.valueOf(baseKey.nextElement());
-				String value = String.valueOf(baseTiMotivazioneVariazioneKeys.get(key));
-				tiMotivazioneVariazioneKeys.put(key, value);
-			}
-		}
+		tiMotivazioneVariazioneKeys.put(Pdg_variazioneBulk.MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento Ragioneria");
 
 		if (Optional.ofNullable(this.getCentro_responsabilita())
 				.flatMap(el->Optional.ofNullable(el.getUnita_padre()))
@@ -311,28 +304,9 @@ public class Pdg_variazioneBulk extends Pdg_variazioneBase implements ICancellat
 		if (Optional.ofNullable(bp).filter(PdGVariazioneBP.class::isInstance).isPresent()) {
 			PdGVariazioneBP myBp = (PdGVariazioneBP) bp;
 			setCentro_responsabilita(myBp.getCentro_responsabilita_scrivania());
-			if (myBp.isUoRagioneria())
-				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento dalla Ragioneria");
-			else
-				baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA,"Trasferimento alla Ragioneria");
 		}
 		setEsercizio(CNRUserContext.getEsercizio(context.getUserContext()));
 		return super.initializeForInsert(bp,context);
-	}
-
-	@Override
-	public OggettoBulk initializeForEdit(CRUDBP crudbp, ActionContext actioncontext) {
-		OggettoBulk bulk = super.initializeForEdit(crudbp, actioncontext);
-		if (Optional.ofNullable(crudbp).filter(PdGVariazioneBP.class::isInstance).isPresent()) {
-			PdGVariazioneBP myBp = (PdGVariazioneBP)crudbp;
-			if (myBp.isUoRagioneria() || ((Pdg_variazioneBulk)bulk).isMotivazioneTrasferimentoRagioneria()) {
-				if (myBp.isUoRagioneria())
-					baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento dalla Ragioneria");
-				else
-					baseTiMotivazioneVariazioneKeys.put(MOTIVAZIONE_TRASFERIMENTO_RAGIONERIA, "Trasferimento alla Ragioneria");
-			}
-		}
-		return bulk;
 	}
 
 	/**

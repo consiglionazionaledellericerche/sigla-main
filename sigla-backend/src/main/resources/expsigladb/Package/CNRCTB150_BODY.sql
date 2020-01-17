@@ -15,6 +15,8 @@ PROCEDURE vsx_protocollazione_doc
    aCdUoOrigine VARCHAR2(30);
    aDataStampa DATE;
    aEsercizio NUMBER(4);
+   aEsercizioFattura NUMBER(4);
+   aPgFattura NUMBER;
    aDataInizio DATE;
    aDataFine DATE;
    aUtente VARCHAR2(20);
@@ -58,6 +60,8 @@ BEGIN
    getDatiBaseProtocolla(aPgCall,
                          aCdCdsOrigine,
                          aCdUoOrigine,
+                         aEsercizioFattura,
+                         aPgFattura,
                          aDataStampa,
                          aUtente);
 
@@ -67,6 +71,10 @@ BEGIN
    eseguiLock:='Y';
    data_operazione:=sysdate;
    aEsercizio:=TO_NUMBER(TO_CHAR(aDataStampa,'YYYY'));
+   if aEsercizio != aEsercizioFattura THEN
+            IBMERR001.RAISE_ERR_GENERICO
+      ('L''anno di protocollazione ' || aEsercizio || ' risulta diverso dall''anno della fattura ' ||aEsercizioFattura||' per il progressivo '||aPgFattura);
+   end if;
    aDataInizio:=IBMUTL001.getFirstDayOfMonth(aDataStampa);
    aDataFine:=IBMUTL001.getLastDayOfMonth(aDataStampa);
    aTipoReportStato:=CNRCTB255.TI_REGISTRO_ACQUISTI;
@@ -335,14 +343,16 @@ PROCEDURE getDatiBaseProtocolla
     aPgCall VSX_RIF_PROTOCOLLO_IVA.pg_call%TYPE,
     aCdCdsOrigine IN OUT VARCHAR2,
     aCdUoOrigine IN OUT VARCHAR2,
+    aEsercizio IN OUT NUMBER,
+    aPgFattura IN OUT NUMBER,
     aDataStampa IN OUT DATE,
     aUtente IN OUT VARCHAR2
    ) IS
 
 BEGIN
 
-   SELECT DISTINCT B.cd_cds_origine, B.cd_uo_origine, TRUNC(A.dt_stampa), A.utcr
-          INTO aCdCdsOrigine, aCdUoOrigine, aDataStampa, aUtente
+   SELECT DISTINCT B.cd_cds_origine, B.cd_uo_origine, B.ESERCIZIO, B.pg_fattura_attiva, TRUNC(A.dt_stampa), A.utcr
+          INTO aCdCdsOrigine, aCdUoOrigine, aEsercizio, aPgFattura, aDataStampa, aUtente
    FROM   VSX_RIF_PROTOCOLLO_IVA A,
           FATTURA_ATTIVA B
    WHERE  A.pg_call = aPgCall AND

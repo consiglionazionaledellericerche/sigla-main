@@ -155,6 +155,8 @@
        aPgCall VSX_RIF_PROTOCOLLO_IVA.PG_CALL%TYPE,
        aCdCdsOrigine IN OUT VARCHAR2,
        aCdUoOrigine IN OUT VARCHAR2,
+       aEsercizio IN OUT NUMBER,
+       aPgFattura IN OUT NUMBER,
        aDataStampa IN OUT DATE,
        aUtente IN OUT VARCHAR2
       );
