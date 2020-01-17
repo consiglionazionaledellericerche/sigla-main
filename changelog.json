@@ -1,6 +1,6 @@
 {
-  ignoreCommitsIfMessageMatches: "^\\[maven-release-plugin\\].*|^[Generate CHANGELOG.md].*|^Merge.*|^[publiccode.yml].*|^[prepare release].*",
-  ignoreCommitsWithoutIssue: "false",
-  noIssueName: "Changes",
-  dateFormat: "MMMM dd, yyyy"
+  "ignoreCommitsIfMessageMatches": "^\\[maven-release-plugin\\].*|^Generate CHANGELOG.*|^Merge.*|^changed softwareVersion and releaseDate on publiccode.yml.*|^\\[prepare release\\].*",
+  "ignoreCommitsWithoutIssue": "false",
+  "noIssueName": "Changes",
+  "dateFormat": "MMMM dd, yyyy"
 }
