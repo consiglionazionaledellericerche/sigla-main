@@ -1,2 +1,1 @@
-mkdocs-material
-mkdocs-mk2pdf-plugin
+mkdocs-theme-topdf
