@@ -5,6 +5,7 @@ repo_url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
 copyright: 'Copyright &copy; 2004 - 2020 Consiglio Nazionale delle Ricerche'
 plugins:
   - search
+  - pdf-export
 
 extra_css:
   - css/extra.css
@@ -26,7 +27,7 @@ nav:
   - Nuovo Layout: nuovo_layout.md
   - Changelog: CHANGELOG.md
 theme:
-  name: 'topdf'
+  name: 'material'
   logo: 'logo.png'
   favicon: 'favicon.ico'
   language: 'it'
