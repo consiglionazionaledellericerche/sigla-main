@@ -1,2 +1,2 @@
 mkdocs-material
-mkdocs-pdf-export-plugin
+mkdocs-mk2pdf-plugin
