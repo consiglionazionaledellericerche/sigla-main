@@ -1,3 +1,5 @@
+# Progetti
+
 La gestione dell'Anagrafica Progetti consente di gestire tutte le informazioni generali di un progetto, sia esso di ricerca o di funzionamento,e tutte le informazioni contabili di cui tener conto nelle funzionalità di previsione e gestione.
 
 Un Progetto si riferisce sempre ad un'[[Anagrafica Area Progettuale|Area Progettuale]], ad un [[Anagrafica Programma|Programma]] e ad una [[Anagrafica Missione|Missione]].

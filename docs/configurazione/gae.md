@@ -1,1 +1,1 @@
-# TODO
+# Gruppo di Azioni Elemnetari

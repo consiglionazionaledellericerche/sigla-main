@@ -1,7 +1,5 @@
 # Sistema Informativo Gestione Linee di Attività
 
-## Introduzione
-
 Al fine di fornire elementi generali della Soluzione applicativa, evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di proprietà del CNR, che si occupa di processi amministrativi e contabili, di previsione, gestione e di rendicontazione. Il Sistema si rivolge ad Enti pubblici, in particolare Enti di ricerca, che operano in regime di Contabilità Finanziaria, con obbligo di adozione, in aggiunta, del sistema di contabilità basato su rilevazione dei fatti di gestione in termini economici, patrimoniali ed analitici.
 
 ## Premessa
