@@ -17,6 +17,7 @@
 
 package it.cnr.contab.util;
 
+import org.eclipse.aether.repository.RemoteRepository;
 import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuiteDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ArchivePath;
@@ -28,6 +29,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,7 +45,10 @@ public class Deployments {
     }
 
     private static WebArchive createDeployment(String yml) throws Exception {
-        final PomEquippedResolveStage pom =  Maven.configureResolver().workOffline()
+        final PomEquippedResolveStage pom =  Maven.configureResolver()
+                .withClassPathResolution(true)
+                .withMavenCentralRepo(false)
+                .withRemoteRepo("central", new URL("https://repo.maven.org/maven2"), "default")
                 .loadPomFromFile("pom.xml");
 
         WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
