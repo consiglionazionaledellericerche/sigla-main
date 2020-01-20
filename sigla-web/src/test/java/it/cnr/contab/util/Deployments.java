@@ -33,6 +33,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @ArquillianSuiteDeployment
 public class Deployments {
@@ -48,7 +49,11 @@ public class Deployments {
         final PomEquippedResolveStage pom =  Maven.configureResolver()
                 .withClassPathResolution(true)
                 .withMavenCentralRepo(false)
-                .withRemoteRepo("central", new URL("https://repo1.maven.org/maven2"), "default")
+                .withRemoteRepo("central", new URL(
+                        Optional.ofNullable(System.getProperty("nexus.url"))
+                                .map(s -> s.concat("/content/groups/public"))
+                                .orElse("https://repo1.maven.org/maven2")
+                ), "default")
                 .loadPomFromFile("pom.xml");
 
         WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
