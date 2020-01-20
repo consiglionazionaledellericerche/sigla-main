@@ -48,7 +48,7 @@ public class Deployments {
         final PomEquippedResolveStage pom =  Maven.configureResolver()
                 .withClassPathResolution(true)
                 .withMavenCentralRepo(false)
-                .withRemoteRepo("central", new URL("https://repo.maven.org/maven2"), "default")
+                .withRemoteRepo("central", new URL("https://repo1.maven.org/maven2"), "default")
                 .loadPomFromFile("pom.xml");
 
         WebArchive webArchive = ShrinkWrap.create(WebArchive.class)
