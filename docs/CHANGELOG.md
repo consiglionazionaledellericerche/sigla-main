@@ -1,3 +1,59 @@
+## Release 6.1.11  -- _gennaio 20, 2020_ 
+**Changes**
+
+>**FIX test**
+>
+>[5b27eb5bff8d28e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b27eb5bff8d28e) marco.spasiano *gennaio 20, 2020*
+
+>**FIX test**
+>
+>[6c067f8a634ce35](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c067f8a634ce35) marco.spasiano *gennaio 20, 2020*
+
+>**FIX test**
+>
+>[474a262960da9f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/474a262960da9f9) marco.spasiano *gennaio 20, 2020*
+
+>**FIX test**
+>
+>[8b697d5d120ebda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b697d5d120ebda) marco.spasiano *gennaio 20, 2020*
+
+>**FIX test**
+>
+>[26e87aba85863a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26e87aba85863a9) marco.spasiano *gennaio 20, 2020*
+
+>**FIX gitlabci m2 cache**
+>
+>[24605d07a7b3393](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24605d07a7b3393) marco.spasiano *gennaio 20, 2020*
+
+>**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
+>
+>[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *gennaio 20, 2020*
+
+
+## Release 6.1.10  -- _gennaio 18, 2020_ 
+**Changes**
+
+>**FIX docs [ci skip]**
+>
+>[8d52d269026f820](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d52d269026f820) marco.spasiano *gennaio 18, 2020*
+
+>**FIX docs [ci skip]**
+>
+>[840bb87fb689831](https://github.com/consiglionazionaledellericerche/sigla-main/commit/840bb87fb689831) marco.spasiano *gennaio 18, 2020*
+
+>**FIX docs [ci skip]**
+>
+>[0b521338fe300b6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0b521338fe300b6) marco.spasiano *gennaio 18, 2020*
+
+>**FIX docs [ci skip]**
+>
+>[d237e8fd8fecb31](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d237e8fd8fecb31) marco.spasiano *gennaio 18, 2020*
+
+>**Limited the generation of changelo to the tag 6.0.2**
+>
+>[c45a4ad26900e34](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c45a4ad26900e34) marco.spasiano *gennaio 18, 2020*
+
+
 ## Release 6.1.9  -- _gennaio 17, 2020_ 
 **Changes**
 
