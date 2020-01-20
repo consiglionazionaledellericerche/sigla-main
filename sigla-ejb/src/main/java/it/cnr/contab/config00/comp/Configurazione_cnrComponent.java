@@ -523,7 +523,7 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         return Optional.ofNullable(home.findByPrimaryKey(configurazioneCnrKey))
                 .filter(Configurazione_cnrBulk.class::isInstance)
                 .map(Configurazione_cnrBulk.class::cast)
-                .map(bulk -> Boolean.valueOf(bulk.getVal01()));
+                .map(bulk -> Optional.ofNullable(bulk.getVal01()).filter(val->val.equals("Y")).isPresent());
     }
 
     /**

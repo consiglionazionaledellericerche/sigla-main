@@ -23,19 +23,27 @@
 <title>Gestione utenza</title>
 <body class="Form">
 
-<% CRUDBP bp = (CRUDBP)BusinessProcess.getBusinessProcess(request);
+<% CRUDUtenzaBP bp = (CRUDUtenzaBP)BusinessProcess.getBusinessProcess(request);
 	 bp.openFormWindow(pageContext); %>
 
 	<div class="Panel">
-		<%	JSPUtils.tabbed(
+		<%	String[][] pages = null;
+            if (bp.isAttivoOrdini()) {
+	    	    pages = new String[][] {{ "tabUtenza","Utenza","/utenze00/tab_utenza.jsp" },
+                    				{ "tabAccessi","Accessi","/utenze00/tab_accessi.jsp" },
+                    				{ "tabRuoli","Ruoli","/utenze00/tab_ruoli.jsp" },
+                                    { "tabMail","Indirizzi E-Mail","/utenze00/tab_mail.jsp" },
+                                    { "tabAbilOrdMag","Abilitazione Ordini","/utenze00/tab_abil_ordini.jsp" }};
+            } else {
+                pages = new String[][] {{ "tabUtenza","Utenza","/utenze00/tab_utenza.jsp" },
+                                	    { "tabAccessi","Accessi","/utenze00/tab_accessi.jsp" },
+                                		{ "tabRuoli","Ruoli","/utenze00/tab_ruoli.jsp" },
+                                        { "tabMail","Indirizzi E-Mail","/utenze00/tab_mail.jsp" }};
+            }
+		    JSPUtils.tabbed(
 					pageContext,
 					"tab",
-					new String[][] {
-							{ "tabUtenza","Utenza","/utenze00/tab_utenza.jsp" },
-							{ "tabAccessi","Accessi","/utenze00/tab_accessi.jsp" },
-							{ "tabRuoli","Ruoli","/utenze00/tab_ruoli.jsp" },
-                            { "tabMail","Indirizzi E-Mail","/utenze00/tab_mail.jsp" },
-                            { "tabAbilOrdMag","Abilitazione Ordini","/utenze00/tab_abil_ordini.jsp" }},
+					pages,
 					bp.getTab("tab"),
 					"center",
 					"100%",

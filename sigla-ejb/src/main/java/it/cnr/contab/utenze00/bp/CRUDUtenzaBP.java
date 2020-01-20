@@ -33,10 +33,12 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bulk.*;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.Config;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
@@ -61,6 +63,9 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     public SimpleDetailCRUDController getCrudUtente_abil_ordini_mag() {
         return crudUtente_abil_ordini_mag;
     }
+
+    private boolean attivoOrdini = false;
+
 
     private CompoundFindClause compoundfindclauseAccessiDisponibili = null;
     private final SimpleDetailCRUDController crudAccessi_disponibili = new SimpleDetailCRUDController("Accessi_disponibili", AccessoBulk.class, "accessi_disponibili", this) {
@@ -97,6 +102,23 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
         setTab("tab", "tabUtenza");
         setTab("tabAbilOrdineUtenze", "tabAbilOrdiniDettaglio");
     }
+
+    public boolean isAttivoOrdini() {
+        return attivoOrdini;
+    }
+
+    @Override
+    protected void init(Config config, ActionContext actioncontext) throws BusinessProcessException {
+        try {
+            attivoOrdini = Utility.createConfigurazioneCnrComponentSession().isAttivoOrdini(actioncontext.getUserContext());
+        } catch (ComponentException e) {
+            throw handleException(e);
+        } catch (RemoteException e) {
+            throw handleException(e);
+        }
+        super.init(config, actioncontext);
+    }
+
 
     public CRUDUtenzaBP(String function) throws BusinessProcessException {
         super(function);
