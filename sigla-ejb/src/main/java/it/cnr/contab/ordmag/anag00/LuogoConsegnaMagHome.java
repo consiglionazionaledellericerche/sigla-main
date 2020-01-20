@@ -27,6 +27,8 @@ import javax.ejb.EJBException;
 
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneHome;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistentCache;
@@ -39,9 +41,23 @@ public class LuogoConsegnaMagHome extends BulkHome {
 	public LuogoConsegnaMagHome(Connection conn, PersistentCache persistentCache) {
 		super(LuogoConsegnaMagBulk.class, conn, persistentCache);
 	}
+
 	public SQLBuilder selectComuneItalianoByClause(it.cnr.jada.UserContext userContext, LuogoConsegnaMagBulk luogoConsegnaMagBulk, ComuneHome comuneHome,ComuneBulk comune,CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
 		SQLBuilder sql = comuneHome.createSQLBuilder();
-		sql.addSQLClause("AND","PG_NAZIONE",SQLBuilder.EQUALS, new Long(1));
+		Long pg_nazione=new Long(1);
+		if (luogoConsegnaMagBulk.getNazione()!=null && luogoConsegnaMagBulk.getNazione().getPg_nazione()!=null && luogoConsegnaMagBulk.getNazione().getPg_nazione()>0)
+			pg_nazione=luogoConsegnaMagBulk.getNazione().getPg_nazione();
+
+		if( luogoConsegnaMagBulk.getCap()!=null && (!luogoConsegnaMagBulk.getCap().trim().isEmpty()))
+			sql.addSQLClause("AND","CD_CAP",SQLBuilder.EQUALS, luogoConsegnaMagBulk.getCap());
+
+		sql.addSQLClause("AND","PG_NAZIONE",SQLBuilder.EQUALS, pg_nazione);
+		return sql;
+	}
+
+	public SQLBuilder selectNazioneByClause(it.cnr.jada.UserContext userContext, LuogoConsegnaMagBulk luogoConsegnaMagBulk, NazioneHome nazioneHome, NazioneBulk nazione, CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
+		SQLBuilder sql = nazioneHome.createSQLBuilder();
+		sql.addSQLClause("AND","TI_NAZIONE",SQLBuilder.EQUALS, "I");
 		return sql;
 	}
 }

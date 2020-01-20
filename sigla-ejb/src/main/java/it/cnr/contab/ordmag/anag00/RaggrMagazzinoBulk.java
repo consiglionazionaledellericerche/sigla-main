@@ -22,7 +22,55 @@
 package it.cnr.contab.ordmag.anag00;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.OrderedHashtable;
+
+import java.util.Dictionary;
+
 public class RaggrMagazzinoBulk extends RaggrMagazzinoBase {
+
+	public static final String METODO_COSTO_MEDIO_PONDERATO = "2";
+
+	public static final String TIPO_SCA = "SCA";
+	public static final String TIPO_RIM = "RIM";
+
+
+	public final static Dictionary METODO;
+	static{
+		METODO = new OrderedHashtable();
+		METODO.put(METODO_COSTO_MEDIO_PONDERATO,"Costo Medio Pontederato");
+
+	}
+
+	public Dictionary getMetodoKeys() {
+		return METODO;
+	}
+
+	public Dictionary getMetodoKeysForSearch() {
+		OrderedHashtable d = (OrderedHashtable)getMetodoKeys();
+		if (d == null) return null;
+		OrderedHashtable clone = (OrderedHashtable)d.clone();
+		return clone;
+	}
+
+	public final static Dictionary TIPO;
+	static{
+		TIPO = new OrderedHashtable();
+		TIPO.put(TIPO_SCA,"Scarichi");
+		TIPO.put(TIPO_RIM,"Rimanenze");
+
+	}
+
+	public Dictionary getTipoKeys() {
+		return TIPO;
+	}
+
+	public Dictionary getTipoKeysForSearch() {
+		OrderedHashtable d = (OrderedHashtable)getTipoKeys();
+		if (d == null) return null;
+		OrderedHashtable clone = (OrderedHashtable)d.clone();
+		return clone;
+	}
+
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
 	 **/

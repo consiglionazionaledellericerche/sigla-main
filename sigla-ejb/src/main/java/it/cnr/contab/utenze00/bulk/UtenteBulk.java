@@ -30,6 +30,7 @@ import javax.ejb.EJBException;
 
 
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.utente00.ejb.RuoloComponentSession;
 import it.cnr.contab.utenze00.bp.CRUDUtenzaAmministratoreBP;
 import it.cnr.contab.utenze00.bp.CRUDUtenzaBP;
@@ -48,6 +49,7 @@ public class UtenteBulk extends UtenteBase {
 	public static final String UTENTE_AMMINISTRATORE_KEY = "A";
 	public static final String UTENTE_SUPERUTENTE_KEY = "S";
 	public static final String DEFAULT_PSWD = "PASSWORD";
+	private it.cnr.jada.bulk.BulkList	utente_abil_ordine   = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList	utente_indirizzi_mail   = new it.cnr.jada.bulk.BulkList();
 
 	private UtenteBulk gestore;
@@ -70,6 +72,14 @@ public class UtenteBulk extends UtenteBase {
 	 * Aggiunge una nuova associazione utente-indirizzi-mail (Utente_indirizzi_mailBulk) alla lista definita per l'utente
 	 */
 
+	public BulkList getUtente_abil_ordine() {
+		return utente_abil_ordine;
+	}
+
+	public void setUtente_abil_ordine(BulkList utente_abil_ordine) {
+		this.utente_abil_ordine = utente_abil_ordine;
+	}
+
 	public int addToUtente_indirizzi_mail(Utente_indirizzi_mailBulk dett) {
 		dett.setUtente(this);
 		getUtente_indirizzi_mail().add(dett);
@@ -79,6 +89,17 @@ public class UtenteBulk extends UtenteBase {
 		Utente_indirizzi_mailBulk dett = (Utente_indirizzi_mailBulk)getUtente_indirizzi_mail().remove(index);
 		return dett;
 	}
+
+	public int addToUtente_abil_ordine(AbilUtenteUopOperBulk dett) {
+		dett.setUtente(this);
+		getUtente_abil_ordine().add(dett);
+		return getUtente_abil_ordine().size()-1;
+	}
+	public AbilUtenteUopOperBulk removeFromUtente_abil_ordine(int index) {
+		AbilUtenteUopOperBulk dett = (AbilUtenteUopOperBulk)getUtente_abil_ordine().remove(index);
+		return dett;
+	}
+
 	/**
 	 * <!-- @TODO: da completare -->
 	 * Restituisce il valore della proprietà 'passwordInChiaro'

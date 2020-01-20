@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
-  ~
-  ~     This program is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU Affero General Public License as
-  ~     published by the Free Software Foundation, either version 3 of the
-  ~     License, or (at your option) any later version.
-  ~
-  ~     This program is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU Affero General Public License for more details.
-  ~
-  ~     You should have received a copy of the GNU Affero General Public License
-  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -43,6 +26,7 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
+        formatName="it.cnr.jada.util.UppercaseStringFormat"
 		label="Codice" />
 	<fieldProperty
 		name="dsTipoMovimento"
@@ -55,19 +39,22 @@
 	<fieldProperty
 		name="tipo"
 		property="tipo"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="2"
 		maxLength="2"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
+		command="doOnChangeTipo"
 		nullable="false"
+		keysProperty="tipoKeys"
 		label="Tipo" />
 	<fieldProperty
 		name="segno"
 		property="segno"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="1"
 		maxLength="1"
-		enabledOnEdit="false"
+		enabledOnEdit="true"
+		keysProperty="segnoKeys"
 		label="Segno" />
 	<fieldProperty
 		name="cdCdsStorno"
@@ -75,14 +62,24 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		label="Cds Storno" />
+		readonlyProperty="EnableMovStorno"
+		label="Cds Storno" />		
+	<fieldProperty
+		name="findTipoMovimentoStorno"
+		property="tipoMovimentoMagStorno"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Movimento Storno" />
 	<fieldProperty
 		name="cdTipoMovimentoStorno"
-		property="cdTipoMovimentoStorno"
+		property="tipoMovimentoMagStorno.cdTipoMovimentoStorno"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
+		readonlyProperty="EnableMovStorno"
 		label="Codice Movimento di Storno" />
+		
 	<fieldProperty
 		name="cdCdsAlt"
 		property="cdCdsAlt"
@@ -90,34 +87,201 @@
 		inputSize="30"
 		maxLength="30"
 		label="Cds Alternativo" />
+		
+	<fieldProperty
+		name="findTipoMovimentoAlt"
+		property="tipoMovimentoMagAlt"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Tipo Movimento Alt" />
+		
 	<fieldProperty
 		name="cdTipoMovimentoAlt"
-		property="cdTipoMovimentoAlt"
+		property="tipoMovimentoMagAlt.cdTipoMovimentoAlt"
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
 		label="Codice Movimento Alternativo" />
+		
 	<fieldProperty
 		name="dtCancellazione"
 		property="dtCancellazione"
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data Cancellazione" />
+
+	<fieldProperty
+			name="riportaLottoFornitore"
+			property="riportaLottoFornitore"
+			inputType="CHECKBOX"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			nullable="false"
+			label="Riporta Lotto Fornitore" />
+	<fieldProperty
+			name="aggDataUltimoCarico"
+			property="aggDataUltimoCarico"
+			inputType="CHECKBOX"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			nullable="false"
+			label="Aggiorna Data Ultimo Carico" />
+	<fieldProperty
+			name="modAggQtaMagazzino"
+			property="modAggQtaMagazzino"
+			inputType="SELECT"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			keysProperty="aggQuantitaKeys"
+			nullable="false"
+			label="Modalità Aggiornamento Quantità a Magazzino"/>
+	<fieldProperty
+			name="modAggQtaValMagazzino"
+			property="modAggQtaValMagazzino"
+			inputType="SELECT"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			keysProperty="aggQuantitaKeys"
+			nullable="false"
+			label="Modalità Aggiornamento Quantità a Valore Magazzino"/>
+	<fieldProperty
+			name="modAggValoreLotto"
+			property="modAggValoreLotto"
+			inputType="SELECT"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			keysProperty="aggQuantitaKeys"
+			nullable="false"
+			label="Modalità Aggiornamento Valore Lotto"
+			 />
+	<fieldProperty
+			name="modAggQtaInizioAnno"
+			property="modAggQtaInizioAnno"
+			inputType="SELECT"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			keysProperty="aggQuantitaKeys"
+			nullable="false"
+			label="Modalità Aggiornamento Quantità di Inizio Anno"/>
+
+	<fieldProperty
+			name="flMovimentaLottiBloccati"
+			property="flMovimentaLottiBloccati"
+			inputType="CHECKBOX"
+			enabledOnEdit="true"
+			nullable="false"
+			label="Movimenta Lotti Bloccati" />
+
+	<fieldProperty
+			name="findTipoMovimentoRif"
+			property="tipoMovimentoMagRif"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+
+			label="Tipo Movimento Rif." />
+	<fieldProperty
+			name="cdCdsRif"
+			property="tipoMovimentoMagRif.cdCds"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			readonlyPropertyOnEdit="EnableMovRif"
+			readonlyPropertyOnInsert="EnableMovRif"
+			readonlyPropertyOnSearch="EnableMovRif"
+			enabledOnSearch="true"
+			label="Cds Rif" />
+
+	<fieldProperty
+			name="cdTipoMovimentoRif"
+			property="tipoMovimentoMagRif.cdTipoMovimento"
+			inputType="TEXT"
+			inputSize="3"
+			maxLength="3"
+			readonlyPropertyOnEdit="EnableMovRif"
+			readonlyPropertyOnInsert="EnableMovRif"
+			readonlyPropertyOnSearch="EnableMovRif"
+			enabledOnSearch="true"
+			label="Tipo Movimento Riferimento" />
+	<fieldProperty
+			name="generaBollaScarico"
+			property="generaBollaScarico"
+			inputType="CHECKBOX"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			nullable="false"
+			label="Genera Bolla di Scarico" />
+	<fieldProperty
+			name="fl_consumo"
+			property="fl_consumo"
+			inputType="CHECKBOX"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			nullable="false"
+			label="Flag Consumo" />
+
+	<fieldProperty
+			name="qtaCaricoLotto"
+			property="qtaCaricoLotto"
+			inputType="SELECT"
+			inputSize="1"
+			maxLength="1"
+			enabledOnEdit="true"
+			nullable="false"
+			keysProperty="aggQuantitaKeys"
+			label="Quantità di Carico Lotto" />
 	<form
-		name="searchtool">
-		<formFieldProperty
-			name="cdCds" />
+		name="searchtool">		
 		<formFieldProperty
 			name="cdTipoMovimento" />
+		<formFieldProperty
+			name="dsTipoMovimento"   
+			inputSize="35"/>
 	</form>
 	<formFieldProperty
-		name="cdTipoMovimento" />
+			name="cdTipoMovimento" />
 	<formFieldProperty
-		name="dsTipoMovimento" />
+			name="dsTipoMovimento" />
 	<formFieldProperty
-		name="tipo" />
+			name="tipo" />
+	<formFieldProperty
+		name="findTipoMovimentoStorno" />
+	<!--<formFieldProperty
+		name="findTipoMovimentoAlt" />-->
+	<formFieldProperty
+			name="findTipoMovimentoRif" />
+
 	<formFieldProperty
 		name="segno" />
+	<formFieldProperty
+			name="riportaLottoFornitore"/>
+	<formFieldProperty
+			name="aggDataUltimoCarico"/>
+	<formFieldProperty
+			name="modAggQtaMagazzino"/>
+	<formFieldProperty
+			name="modAggQtaValMagazzino"/>
+	<formFieldProperty
+			name="modAggValoreLotto"/>
+	<formFieldProperty
+			name="modAggQtaInizioAnno"/>
+	<formFieldProperty
+			name="qtaCaricoLotto" />
+	<formFieldProperty
+			name="flMovimentaLottiBloccati"/>
+	<formFieldProperty
+			name="generaBollaScarico"/>
+	<formFieldProperty
+			name="fl_consumo"/>
 	<formFieldProperty
 		name="dtCancellazione" />
 	<findFieldProperty
@@ -141,23 +305,11 @@
 	<findFieldProperty
 		name="dtCancellazione" />
 	<columnFieldProperty
-		name="cdCds" />
-	<columnFieldProperty
 		name="cdTipoMovimento" />
 	<columnFieldProperty
 		name="dsTipoMovimento" />
 	<columnFieldProperty
 		name="tipo" />
 	<columnFieldProperty
-		name="segno" />
-	<columnFieldProperty
-		name="cdCdsStorno" />
-	<columnFieldProperty
 		name="cdTipoMovimentoStorno" />
-	<columnFieldProperty
-		name="cdCdsAlt" />
-	<columnFieldProperty
-		name="cdTipoMovimentoAlt" />
-	<columnFieldProperty
-		name="dtCancellazione" />
 </bulkInfo>

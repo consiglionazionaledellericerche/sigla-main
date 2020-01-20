@@ -1,21 +1,4 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 26/04/2017
  */
@@ -43,7 +26,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: BENE_SERVIZIO_TIPO_GEST
 	 **/
-	public BeneServizioTipoGestBulk(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.String cdBeneServizio, java.sql.Timestamp dtIniValidita) {
+	public BeneServizioTipoGestBulk(String cdCds, String cdMagazzino, String cdBeneServizio, java.sql.Timestamp dtIniValidita) {
 		super(cdCds, cdMagazzino, cdBeneServizio, dtIniValidita);
 		setMagazzino( new MagazzinoBulk(cdCds,cdMagazzino) );
 		setBeneServizio( new Bene_servizioBulk(cdBeneServizio) );
@@ -84,7 +67,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCds]
 	 **/
-	public java.lang.String getCdCds() {
+	public String getCdCds() {
 		MagazzinoBulk magazzino = this.getMagazzino();
 		if (magazzino == null)
 			return null;
@@ -94,14 +77,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCds]
 	 **/
-	public void setCdCds(java.lang.String cdCds)  {
+	public void setCdCds(String cdCds)  {
 		this.getMagazzino().setCdCds(cdCds);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdMagazzino]
 	 **/
-	public java.lang.String getCdMagazzino() {
+	public String getCdMagazzino() {
 		MagazzinoBulk magazzino = this.getMagazzino();
 		if (magazzino == null)
 			return null;
@@ -111,14 +94,14 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzino]
 	 **/
-	public void setCdMagazzino(java.lang.String cdMagazzino)  {
+	public void setCdMagazzino(String cdMagazzino)  {
 		this.getMagazzino().setCdMagazzino(cdMagazzino);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdBeneServizio]
 	 **/
-	public java.lang.String getCdBeneServizio() {
+	public String getCdBeneServizio() {
 		Bene_servizioBulk beneServizio = this.getBeneServizio();
 		if (beneServizio == null)
 			return null;
@@ -128,7 +111,7 @@ Da questa gestione sono ricavati gli elementi per la gestione di magazziono e di
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdBeneServizio]
 	 **/
-	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
+	public void setCdBeneServizio(String cdBeneServizio)  {
 		this.getBeneServizio().setCd_bene_servizio(cdBeneServizio);
 	}
 }

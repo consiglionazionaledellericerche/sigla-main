@@ -2778,4 +2778,13 @@ TRASPORTO_AEREO"/>
             <column name="PG_OBB_ACCENTR_OPP" remarks="Numero dell'obbligazione accentrata di segno opposto" type="BIGINT"/>
         </addColumn>
     </changeSet>
+    <changeSet author="ciro.salvio" id="addColumn-qta_carico_lotto-tipo_movimento_mag">
+        <addColumn tableName="tipo_movimento_mag">
+            <column name="qta_carico_lotto" remarks="LOTTI.VALORI:0=Azzera;S=Sostituisci;+=Incrementa;-Decrementa;N=Nessuna variazione." type="VARCHAR(1)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="ciro.salvio" id="addNotNullQta_carico_lotto-tipo_movimento_mag">
+        <addNotNullConstraint columnName="qta_carico_lotto" tableName="tipo_movimento_mag" columnDataType="VARCHAR(1)"/>
+    </changeSet>
 </databaseChangeLog>

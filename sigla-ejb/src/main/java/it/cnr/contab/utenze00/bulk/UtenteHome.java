@@ -18,12 +18,15 @@
 package it.cnr.contab.utenze00.bulk;
 
 import java.sql.PreparedStatement;
+import java.util.List;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -34,6 +37,7 @@ import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
 public class UtenteHome extends BulkHome {
+
 
 	final static String TIPO_COMUNE = "U";
 	final static String TIPO_AMMINISTRATORE = "A";
@@ -83,7 +87,7 @@ public void initializePrimaryKeyForInsert(UserContext usercontext,OggettoBulk og
  * @return List lista di AccessoBulk
  */
 
-public java.util.List findAccessi_disponibili(UtenteTemplateBulk utente, CompoundFindClause compoundfindclause) throws IntrospectionException, PersistencyException 
+public List findAccessi_disponibili(UtenteTemplateBulk utente, CompoundFindClause compoundfindclause) throws IntrospectionException, PersistencyException
 {
 	PersistentHome accessoHome = getHomeCache().getHome( AccessoBulk.class);
 	SQLBuilder sql = accessoHome.createSQLBuilder();
@@ -102,7 +106,7 @@ public java.util.List findAccessi_disponibili(UtenteTemplateBulk utente, Compoun
  * @return List lista di RuoloBulk
  */
 
-public java.util.List findRuoli_disponibili(UtenteTemplateBulk utente) throws IntrospectionException, PersistencyException 
+public List findRuoli_disponibili(UtenteTemplateBulk utente) throws IntrospectionException, PersistencyException
 {
 	PersistentHome ruoloHome = getHomeCache().getHome( RuoloBulk.class);
 	SQLBuilder sql = ruoloHome.createSQLBuilder();
@@ -177,12 +181,12 @@ public java.util.Collection findUO_ruoli_propri(UtenteTemplateBulk utente) throw
  * @return List lista di Utente_unita_accessoBulk
  */
 
-public java.util.Collection findUtente_unita_accessi(UtenteTemplateBulk utente) throws it.cnr.jada.comp.ApplicationException, IntrospectionException, PersistencyException 
+public java.util.Collection findUtente_unita_accessi(UtenteTemplateBulk utente) throws ApplicationException, IntrospectionException, PersistencyException
 {
 	PersistentHome uuaHome = getHomeCache().getHome( Utente_unita_accessoBulk.class);
 
 	if(utente.getUnita_org_per_accesso() == null)
-	 throw new it.cnr.jada.comp.ApplicationException("Nessuna unità organizzativa selezionata!");
+	 throw new ApplicationException("Nessuna unità organizzativa selezionata!");
 	
 	SQLBuilder sql = uuaHome.createSQLBuilder();
 	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
@@ -199,7 +203,7 @@ public java.util.Collection findUtente_unita_accessi(UtenteTemplateBulk utente) 
 public java.util.Collection findUtente_unita_ruoli(UtenteTemplateBulk utente) throws IntrospectionException, PersistencyException, ApplicationException 
 {
 	if(utente.getUnita_org_per_ruolo() == null)
-	 throw new it.cnr.jada.comp.ApplicationException("Nessuna unità organizzativa selezionata!");
+	 throw new ApplicationException("Nessuna unità organizzativa selezionata!");
 
 	PersistentHome uurHome = getHomeCache().getHome( Utente_unita_ruoloBulk.class);
 	SQLBuilder sql = uurHome.createSQLBuilder();
@@ -250,5 +254,32 @@ public java.util.Collection findUtente_indirizzi_email(UtenteBulk utente) throws
 	sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
 	return uurHome.fetchAll(sql);
 }
+
+	public java.util.Collection findUtente_abil_ordine(UtenteBulk utente) throws IntrospectionException, PersistencyException, ApplicationException {
+		PersistentHome uurHome = getHomeCache().getHome( AbilUtenteUopOperBulk.class);
+		SQLBuilder sql = uurHome.createSQLBuilder();
+		sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,utente.getCd_utente());
+
+		List<AbilUtenteUopOperBulk> lista = uurHome.fetchAll(sql);
+		if ( lista!=null && lista.size()>0) {
+			for (AbilUtenteUopOperBulk abilUtenteUopOperBulk : lista) {
+				abilUtenteUopOperBulk.setUtente_abil_magazzini(findAbilMagazzini(abilUtenteUopOperBulk));
+			}
+		}
+		return lista;
+	}
+
+	private BulkList<AbilUtenteUopOperMagBulk> findAbilMagazzini(AbilUtenteUopOperBulk abilUtenteUopOperBulk) throws PersistencyException{
+		PersistentHome abilOrdMagazzHome = getHomeCache().getHome( AbilUtenteUopOperMagBulk.class);
+		SQLBuilder sql = abilOrdMagazzHome.createSQLBuilder();
+		sql.addSQLClause("AND","CD_UTENTE",sql.EQUALS,abilUtenteUopOperBulk.getCdUtente());
+		sql.addSQLClause("AND","CD_UNITA_OPERATIVA",sql.EQUALS,abilUtenteUopOperBulk.getCdUnitaOperativa());
+		sql.addSQLClause("AND","CD_TIPO_OPERAZIONE",sql.EQUALS,abilUtenteUopOperBulk.getCdTipoOperazione());
+
+
+		BulkList bulkList = new BulkList(abilOrdMagazzHome.fetchAll(sql));
+		return bulkList;
+	}
+
 
 }

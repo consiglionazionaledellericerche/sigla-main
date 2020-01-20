@@ -1,73 +1,56 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 03/10/2017
  */
 package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.jada.persistency.Keyed;
 public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
-	private java.lang.Long pgMovimentoRif;
-	private java.lang.Long pgMovimentoAnn;
+	private Long pgMovimentoRif;
+	private Long pgMovimentoAnn;
 //    DT_MOVIMENTO TIMESTAMP(7) NOT NULL
 	private java.sql.Timestamp dtMovimento;
  
 //    CD_CDS_TIPO_MOVIMENTO VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsTipoMovimento;
+	private String cdCdsTipoMovimento;
  
 //    CD_TIPO_MOVIMENTO VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimento;
+	private String cdTipoMovimento;
  
 //    DATA_BOLLA TIMESTAMP(7)
 	private java.sql.Timestamp dataBolla;
  
 //    NUMERO_BOLLA VARCHAR(30)
-	private java.lang.String numeroBolla;
+	private String numeroBolla;
  
 //    DT_RIFERIMENTO TIMESTAMP(7)
 	private java.sql.Timestamp dtRiferimento;
  
 //    CD_CDS_ORDINE VARCHAR(30)
-	private java.lang.String cdCdsOrdine;
+	private String cdCdsOrdine;
  
 //    CD_UNITA_OPERATIVA_ORDINE VARCHAR(30)
-	private java.lang.String cdUnitaOperativaOrdine;
+	private String cdUnitaOperativaOrdine;
  
 //    ESERCIZIO_ORDINE DECIMAL(4,0)
-	private java.lang.Integer esercizioOrdine;
+	private Integer esercizioOrdine;
  
 //    CD_NUMERATORE_ORDINE VARCHAR(3)
-	private java.lang.String cdNumeratoreOrdine;
+	private String cdNumeratoreOrdine;
  
 //    NUMERO_ORDINE DECIMAL(6,0)
-	private java.lang.Integer numeroOrdine;
+	private Integer numeroOrdine;
  
 //    RIGA_ORDINE DECIMAL(6,0)
-	private java.lang.Integer rigaOrdine;
+	private Integer rigaOrdine;
  
 //    CONSEGNA DECIMAL(6,0)
-	private java.lang.Integer consegna;
+	private Integer consegna;
  
 //    CD_TERZO DECIMAL(10,0)
-	private java.lang.Integer cdTerzo;
+	private Integer cdTerzo;
  
 //    CD_UNITA_MISURA VARCHAR(3)
-	private java.lang.String cdUnitaMisura;
+	private String cdUnitaMisura;
  
 //    QUANTITA DECIMAL(12,5)
 	private java.math.BigDecimal quantita;
@@ -76,46 +59,46 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	private java.math.BigDecimal coeffConv;
  
 //    CD_UOP VARCHAR(30)
-	private java.lang.String cdUop;
+	private String cdUop;
  
 //    DT_SCADENZA TIMESTAMP(7)
 	private java.sql.Timestamp dtScadenza;
  
 //    LOTTO_FORNITORE VARCHAR(30)
-	private java.lang.String lottoFornitore;
+	private String lottoFornitore;
  
 //    CD_CDS_LOTTO VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsLotto;
+	private String cdCdsLotto;
  
 //    CD_MAGAZZINO_LOTTO VARCHAR(10) NOT NULL
-	private java.lang.String cdMagazzinoLotto;
+	private String cdMagazzinoLotto;
  
 //    ESERCIZIO_LOTTO DECIMAL(4,0) NOT NULL
-	private java.lang.Integer esercizioLotto;
+	private Integer esercizioLotto;
  
 //    CD_NUMERATORE_LOTTO VARCHAR(3) NOT NULL
-	private java.lang.String cdNumeratoreLotto;
+	private String cdNumeratoreLotto;
  
 //    PG_LOTTO DECIMAL(6,0) NOT NULL
-	private java.lang.Integer pgLotto;
+	private Integer pgLotto;
  
 //    CD_CDS_MAG VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsMag;
+	private String cdCdsMag;
  
 //    CD_MAGAZZINO VARCHAR(10) NOT NULL
-	private java.lang.String cdMagazzino;
+	private String cdMagazzino;
  
 //    CD_BENE_SERVIZIO VARCHAR(15) NOT NULL
-	private java.lang.String cdBeneServizio;
+	private String cdBeneServizio;
  
 //    CD_CDS_TIPO_MOVIMENTO_RIF VARCHAR(30)
-	private java.lang.String cdCdsTipoMovimentoRif;
+	private String cdCdsTipoMovimentoRif;
  
 //    CD_TIPO_MOVIMENTO_RIF VARCHAR(3)
-	private java.lang.String cdTipoMovimentoRif;
+	private String cdTipoMovimentoRif;
  
 //    CD_VOCE_IVA VARCHAR(10)
-	private java.lang.String cdVoceIva;
+	private String cdVoceIva;
  
 //    SCONTO1 DECIMAL(5,2)
 	private java.math.BigDecimal sconto1;
@@ -127,19 +110,19 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	private java.math.BigDecimal sconto3;
  
 //    CD_CDS_BOLLA_SCA VARCHAR(30)
-	private java.lang.String cdCdsBollaSca;
+	private String cdCdsBollaSca;
  
 //    CD_MAGAZZINO_BOLLA_SCA VARCHAR(10)
-	private java.lang.String cdMagazzinoBollaSca;
+	private String cdMagazzinoBollaSca;
  
 //    ESERCIZIO_BOLLA_SCA DECIMAL(22,0)
-	private java.lang.Integer esercizioBollaSca;
+	private Integer esercizioBollaSca;
  
 //    CD_NUMERATORE_BOLLA_SCA VARCHAR(3)
-	private java.lang.String cdNumeratoreBollaSca;
+	private String cdNumeratoreBollaSca;
  
 //    PG_BOLLA_SCA DECIMAL(6,0)
-	private java.lang.Integer pgBollaSca;
+	private Integer pgBollaSca;
  
 //    IMPORTO DECIMAL(21,6)
 	private java.math.BigDecimal importo;
@@ -163,7 +146,7 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	private java.math.BigDecimal importoCmpist;
  
 //    CD_DIVISA VARCHAR(10) NOT NULL
-	private java.lang.String cdDivisa;
+	private String cdDivisa;
  
 //    CAMBIO DECIMAL(15,4) NOT NULL
 	private java.math.BigDecimal cambio;
@@ -172,7 +155,7 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	private java.math.BigDecimal prezzoUnitario;
  
 //    STATO VARCHAR(3) NOT NULL
-	private java.lang.String stato;
+	private String stato;
  
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
@@ -184,7 +167,7 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	public MovimentiMagBase() {
 		super();
 	}
-	public MovimentiMagBase(java.lang.Long pgMovimento) {
+	public MovimentiMagBase(Long pgMovimento) {
 		super(pgMovimento);
 	}
 	/**
@@ -205,28 +188,28 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsTipoMovimento]
 	 **/
-	public java.lang.String getCdCdsTipoMovimento() {
+	public String getCdCdsTipoMovimento() {
 		return cdCdsTipoMovimento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsTipoMovimento]
 	 **/
-	public void setCdCdsTipoMovimento(java.lang.String cdCdsTipoMovimento)  {
+	public void setCdCdsTipoMovimento(String cdCdsTipoMovimento)  {
 		this.cdCdsTipoMovimento=cdCdsTipoMovimento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimento]
 	 **/
-	public java.lang.String getCdTipoMovimento() {
+	public String getCdTipoMovimento() {
 		return cdTipoMovimento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimento]
 	 **/
-	public void setCdTipoMovimento(java.lang.String cdTipoMovimento)  {
+	public void setCdTipoMovimento(String cdTipoMovimento)  {
 		this.cdTipoMovimento=cdTipoMovimento;
 	}
 	/**
@@ -247,14 +230,14 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [numeroBolla]
 	 **/
-	public java.lang.String getNumeroBolla() {
+	public String getNumeroBolla() {
 		return numeroBolla;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [numeroBolla]
 	 **/
-	public void setNumeroBolla(java.lang.String numeroBolla)  {
+	public void setNumeroBolla(String numeroBolla)  {
 		this.numeroBolla=numeroBolla;
 	}
 	/**
@@ -275,126 +258,126 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsOrdine]
 	 **/
-	public java.lang.String getCdCdsOrdine() {
+	public String getCdCdsOrdine() {
 		return cdCdsOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsOrdine]
 	 **/
-	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
+	public void setCdCdsOrdine(String cdCdsOrdine)  {
 		this.cdCdsOrdine=cdCdsOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdUnitaOperativaOrdine]
 	 **/
-	public java.lang.String getCdUnitaOperativaOrdine() {
+	public String getCdUnitaOperativaOrdine() {
 		return cdUnitaOperativaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativaOrdine]
 	 **/
-	public void setCdUnitaOperativaOrdine(java.lang.String cdUnitaOperativaOrdine)  {
+	public void setCdUnitaOperativaOrdine(String cdUnitaOperativaOrdine)  {
 		this.cdUnitaOperativaOrdine=cdUnitaOperativaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizioOrdine]
 	 **/
-	public java.lang.Integer getEsercizioOrdine() {
+	public Integer getEsercizioOrdine() {
 		return esercizioOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizioOrdine]
 	 **/
-	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
+	public void setEsercizioOrdine(Integer esercizioOrdine)  {
 		this.esercizioOrdine=esercizioOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdNumeratoreOrdine]
 	 **/
-	public java.lang.String getCdNumeratoreOrdine() {
+	public String getCdNumeratoreOrdine() {
 		return cdNumeratoreOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreOrdine]
 	 **/
-	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
+	public void setCdNumeratoreOrdine(String cdNumeratoreOrdine)  {
 		this.cdNumeratoreOrdine=cdNumeratoreOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [numeroOrdine]
 	 **/
-	public java.lang.Integer getNumeroOrdine() {
+	public Integer getNumeroOrdine() {
 		return numeroOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [numeroOrdine]
 	 **/
-	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
+	public void setNumeroOrdine(Integer numeroOrdine)  {
 		this.numeroOrdine=numeroOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [rigaOrdine]
 	 **/
-	public java.lang.Integer getRigaOrdine() {
+	public Integer getRigaOrdine() {
 		return rigaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [rigaOrdine]
 	 **/
-	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
+	public void setRigaOrdine(Integer rigaOrdine)  {
 		this.rigaOrdine=rigaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [consegna]
 	 **/
-	public java.lang.Integer getConsegna() {
+	public Integer getConsegna() {
 		return consegna;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [consegna]
 	 **/
-	public void setConsegna(java.lang.Integer consegna)  {
+	public void setConsegna(Integer consegna)  {
 		this.consegna=consegna;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTerzo]
 	 **/
-	public java.lang.Integer getCdTerzo() {
+	public Integer getCdTerzo() {
 		return cdTerzo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTerzo]
 	 **/
-	public void setCdTerzo(java.lang.Integer cdTerzo)  {
+	public void setCdTerzo(Integer cdTerzo)  {
 		this.cdTerzo=cdTerzo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdUnitaMisura]
 	 **/
-	public java.lang.String getCdUnitaMisura() {
+	public String getCdUnitaMisura() {
 		return cdUnitaMisura;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaMisura]
 	 **/
-	public void setCdUnitaMisura(java.lang.String cdUnitaMisura)  {
+	public void setCdUnitaMisura(String cdUnitaMisura)  {
 		this.cdUnitaMisura=cdUnitaMisura;
 	}
 	/**
@@ -429,14 +412,14 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdUop]
 	 **/
-	public java.lang.String getCdUop() {
+	public String getCdUop() {
 		return cdUop;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUop]
 	 **/
-	public void setCdUop(java.lang.String cdUop)  {
+	public void setCdUop(String cdUop)  {
 		this.cdUop=cdUop;
 	}
 	/**
@@ -457,168 +440,168 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [lottoFornitore]
 	 **/
-	public java.lang.String getLottoFornitore() {
+	public String getLottoFornitore() {
 		return lottoFornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [lottoFornitore]
 	 **/
-	public void setLottoFornitore(java.lang.String lottoFornitore)  {
+	public void setLottoFornitore(String lottoFornitore)  {
 		this.lottoFornitore=lottoFornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsLotto]
 	 **/
-	public java.lang.String getCdCdsLotto() {
+	public String getCdCdsLotto() {
 		return cdCdsLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsLotto]
 	 **/
-	public void setCdCdsLotto(java.lang.String cdCdsLotto)  {
+	public void setCdCdsLotto(String cdCdsLotto)  {
 		this.cdCdsLotto=cdCdsLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdMagazzinoLotto]
 	 **/
-	public java.lang.String getCdMagazzinoLotto() {
+	public String getCdMagazzinoLotto() {
 		return cdMagazzinoLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzinoLotto]
 	 **/
-	public void setCdMagazzinoLotto(java.lang.String cdMagazzinoLotto)  {
+	public void setCdMagazzinoLotto(String cdMagazzinoLotto)  {
 		this.cdMagazzinoLotto=cdMagazzinoLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizioLotto]
 	 **/
-	public java.lang.Integer getEsercizioLotto() {
+	public Integer getEsercizioLotto() {
 		return esercizioLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizioLotto]
 	 **/
-	public void setEsercizioLotto(java.lang.Integer esercizioLotto)  {
+	public void setEsercizioLotto(Integer esercizioLotto)  {
 		this.esercizioLotto=esercizioLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdNumeratoreLotto]
 	 **/
-	public java.lang.String getCdNumeratoreLotto() {
+	public String getCdNumeratoreLotto() {
 		return cdNumeratoreLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreLotto]
 	 **/
-	public void setCdNumeratoreLotto(java.lang.String cdNumeratoreLotto)  {
+	public void setCdNumeratoreLotto(String cdNumeratoreLotto)  {
 		this.cdNumeratoreLotto=cdNumeratoreLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [pgLotto]
 	 **/
-	public java.lang.Integer getPgLotto() {
+	public Integer getPgLotto() {
 		return pgLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [pgLotto]
 	 **/
-	public void setPgLotto(java.lang.Integer pgLotto)  {
+	public void setPgLotto(Integer pgLotto)  {
 		this.pgLotto=pgLotto;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsMag]
 	 **/
-	public java.lang.String getCdCdsMag() {
+	public String getCdCdsMag() {
 		return cdCdsMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsMag]
 	 **/
-	public void setCdCdsMag(java.lang.String cdCdsMag)  {
+	public void setCdCdsMag(String cdCdsMag)  {
 		this.cdCdsMag=cdCdsMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdMagazzino]
 	 **/
-	public java.lang.String getCdMagazzino() {
+	public String getCdMagazzino() {
 		return cdMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzino]
 	 **/
-	public void setCdMagazzino(java.lang.String cdMagazzino)  {
+	public void setCdMagazzino(String cdMagazzino)  {
 		this.cdMagazzino=cdMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdBeneServizio]
 	 **/
-	public java.lang.String getCdBeneServizio() {
+	public String getCdBeneServizio() {
 		return cdBeneServizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdBeneServizio]
 	 **/
-	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
+	public void setCdBeneServizio(String cdBeneServizio)  {
 		this.cdBeneServizio=cdBeneServizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsTipoMovimentoRif]
 	 **/
-	public java.lang.String getCdCdsTipoMovimentoRif() {
+	public String getCdCdsTipoMovimentoRif() {
 		return cdCdsTipoMovimentoRif;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsTipoMovimentoRif]
 	 **/
-	public void setCdCdsTipoMovimentoRif(java.lang.String cdCdsTipoMovimentoRif)  {
+	public void setCdCdsTipoMovimentoRif(String cdCdsTipoMovimentoRif)  {
 		this.cdCdsTipoMovimentoRif=cdCdsTipoMovimentoRif;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoRif]
 	 **/
-	public java.lang.String getCdTipoMovimentoRif() {
+	public String getCdTipoMovimentoRif() {
 		return cdTipoMovimentoRif;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoRif]
 	 **/
-	public void setCdTipoMovimentoRif(java.lang.String cdTipoMovimentoRif)  {
+	public void setCdTipoMovimentoRif(String cdTipoMovimentoRif)  {
 		this.cdTipoMovimentoRif=cdTipoMovimentoRif;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdVoceIva]
 	 **/
-	public java.lang.String getCdVoceIva() {
+	public String getCdVoceIva() {
 		return cdVoceIva;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdVoceIva]
 	 **/
-	public void setCdVoceIva(java.lang.String cdVoceIva)  {
+	public void setCdVoceIva(String cdVoceIva)  {
 		this.cdVoceIva=cdVoceIva;
 	}
 	/**
@@ -667,70 +650,70 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsBollaSca]
 	 **/
-	public java.lang.String getCdCdsBollaSca() {
+	public String getCdCdsBollaSca() {
 		return cdCdsBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsBollaSca]
 	 **/
-	public void setCdCdsBollaSca(java.lang.String cdCdsBollaSca)  {
+	public void setCdCdsBollaSca(String cdCdsBollaSca)  {
 		this.cdCdsBollaSca=cdCdsBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdMagazzinoBollaSca]
 	 **/
-	public java.lang.String getCdMagazzinoBollaSca() {
+	public String getCdMagazzinoBollaSca() {
 		return cdMagazzinoBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzinoBollaSca]
 	 **/
-	public void setCdMagazzinoBollaSca(java.lang.String cdMagazzinoBollaSca)  {
+	public void setCdMagazzinoBollaSca(String cdMagazzinoBollaSca)  {
 		this.cdMagazzinoBollaSca=cdMagazzinoBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizioBollaSca]
 	 **/
-	public java.lang.Integer getEsercizioBollaSca() {
+	public Integer getEsercizioBollaSca() {
 		return esercizioBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizioBollaSca]
 	 **/
-	public void setEsercizioBollaSca(java.lang.Integer esercizioBollaSca)  {
+	public void setEsercizioBollaSca(Integer esercizioBollaSca)  {
 		this.esercizioBollaSca=esercizioBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdNumeratoreBollaSca]
 	 **/
-	public java.lang.String getCdNumeratoreBollaSca() {
+	public String getCdNumeratoreBollaSca() {
 		return cdNumeratoreBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreBollaSca]
 	 **/
-	public void setCdNumeratoreBollaSca(java.lang.String cdNumeratoreBollaSca)  {
+	public void setCdNumeratoreBollaSca(String cdNumeratoreBollaSca)  {
 		this.cdNumeratoreBollaSca=cdNumeratoreBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [pgBollaSca]
 	 **/
-	public java.lang.Integer getPgBollaSca() {
+	public Integer getPgBollaSca() {
 		return pgBollaSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [pgBollaSca]
 	 **/
-	public void setPgBollaSca(java.lang.Integer pgBollaSca)  {
+	public void setPgBollaSca(Integer pgBollaSca)  {
 		this.pgBollaSca=pgBollaSca;
 	}
 	/**
@@ -835,14 +818,14 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdDivisa]
 	 **/
-	public java.lang.String getCdDivisa() {
+	public String getCdDivisa() {
 		return cdDivisa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdDivisa]
 	 **/
-	public void setCdDivisa(java.lang.String cdDivisa)  {
+	public void setCdDivisa(String cdDivisa)  {
 		this.cdDivisa=cdDivisa;
 	}
 	/**
@@ -877,14 +860,14 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [stato]
 	 **/
-	public java.lang.String getStato() {
+	public String getStato() {
 		return stato;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [stato]
 	 **/
-	public void setStato(java.lang.String stato)  {
+	public void setStato(String stato)  {
 		this.stato=stato;
 	}
 	/**
@@ -901,16 +884,16 @@ public class MovimentiMagBase extends MovimentiMagKey implements Keyed {
 	public void setDtCancellazione(java.sql.Timestamp dtCancellazione)  {
 		this.dtCancellazione=dtCancellazione;
 	}
-	public java.lang.Long getPgMovimentoRif() {
+	public Long getPgMovimentoRif() {
 		return pgMovimentoRif;
 	}
-	public void setPgMovimentoRif(java.lang.Long pgMovimentoRif) {
+	public void setPgMovimentoRif(Long pgMovimentoRif) {
 		this.pgMovimentoRif = pgMovimentoRif;
 	}
-	public java.lang.Long getPgMovimentoAnn() {
+	public Long getPgMovimentoAnn() {
 		return pgMovimentoAnn;
 	}
-	public void setPgMovimentoAnn(java.lang.Long pgMovimentoAnn) {
+	public void setPgMovimentoAnn(Long pgMovimentoAnn) {
 		this.pgMovimentoAnn = pgMovimentoAnn;
 	}
 }

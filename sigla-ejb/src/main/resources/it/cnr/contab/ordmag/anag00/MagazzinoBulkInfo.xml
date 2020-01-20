@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
-  ~
-  ~     This program is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU Affero General Public License as
-  ~     published by the Free Software Foundation, either version 3 of the
-  ~     License, or (at your option) any later version.
-  ~
-  ~     This program is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU Affero General Public License for more details.
-  ~
-  ~     You should have received a copy of the GNU Affero General Public License
-  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -43,7 +26,8 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
-		label="Codice" />
+		label="Codice" 
+		caseSensitiveSearch="false"/>
 	<fieldProperty
 		name="dsMagazzino"
 		property="dsMagazzino"
@@ -122,7 +106,7 @@
 		inputType="searchtool"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Tipo Movimento" />
+		label="Tipo Movimento Carico a Magazzino"  />
 	<fieldProperty
 		name="cdCdsCarMag"
 		property="tipoMovimentoMagCarMag.cdCds"
@@ -139,6 +123,14 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento Carico a Magazzino" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagCarTra"
+			property="tipoMovimentoMagCarTra"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento Carico in transito"  />
 	<fieldProperty
 		name="cdCdsCarTra"
 		property="tipoMovimentoMagCarTra.cdCds"
@@ -155,6 +147,15 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento Carico in transito" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagCarFma"
+			property="tipoMovimentoMagCarFma"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento Carico fuori Magazzino"  />
+
 	<fieldProperty
 		name="cdCdsCarFma"
 		property="tipoMovimentoMagCarFma.cdCds"
@@ -171,6 +172,15 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento Carico fuori Magazzino" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagScaUo"
+			property="tipoMovimentoMagScaUo"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento Scarico a UO"  />
+
 	<fieldProperty
 		name="cdCdsScaUo"
 		property="tipoMovimentoMagScaUo.cdCds"
@@ -187,6 +197,14 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento Scarico a UO" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagTraSca"
+			property="tipoMovimentoMagTraSca"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento Scarico per trasferimento"  />
 	<fieldProperty
 		name="cdCdsTraSca"
 		property="tipoMovimentoMagTraSca.cdCds"
@@ -203,6 +221,15 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento scarico per trasferimento" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagTraCar"
+			property="tipoMovimentoMagTraCar"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento Carico per trasferimento"  />
+
 	<fieldProperty
 		name="cdCdsTraCar"
 		property="tipoMovimentoMagTraCar.cdCds"
@@ -219,6 +246,14 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento carico per trasferimento" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagRvPos"
+			property="tipoMovimentoMagRvPos"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento variazione valore Positiva"  />
 	<fieldProperty
 		name="cdCdsRvPos"
 		property="tipoMovimentoMagRvPos.cdCds"
@@ -235,6 +270,15 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento variazione valore positiva" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagRvNeg"
+			property="tipoMovimentoMagRvNeg"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento variazione valore Negativa"  />
+
 	<fieldProperty
 		name="cdCdsRvNeg"
 		property="tipoMovimentoMagRvNeg.cdCds"
@@ -251,6 +295,15 @@
 		maxLength="3"
 		nullable="false"
 		label="Movimento variazione valore negativa" />
+
+	<fieldProperty
+			name="findTipoMovimentoMagChi"
+			property="tipoMovimentoMagChi"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Tipo Movimento Chiusura"  />
+
 	<fieldProperty
 		name="cdCdsChi"
 		property="tipoMovimentoMagChi.cdCds"
@@ -280,13 +333,15 @@
 		inputSize="4"
 		maxLength="4"
 		label="Esercizio Val Sca" />
+
 	<fieldProperty
-		name="findRaggrMagazzinoRim"
-		property="raggrMagazzinoRim"
-		inputType="searchtool"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="Raggruppamento di Magazzino" />
+			name="findRaggrMagazzinoSca"
+			property="raggrMagazzinoSca"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Raggruppamento di Magazzino degli Scarichi" />
+
 	<fieldProperty
 		name="cdCdsRaggrSca"
 		property="raggrMagazzinoSca.cdCds"
@@ -304,9 +359,10 @@
 	<fieldProperty
 		name="metodoValSca"
 		property="metodoValSca"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="1"
 		maxLength="1"
+		keysProperty="metodoValKeys"
 		label="Ultimo metodo Valorizzazione Scarichi" />
 	<fieldProperty
 		name="dtUltValRim"
@@ -320,7 +376,14 @@
 		inputType="TEXT"
 		inputSize="4"
 		maxLength="4"
-		label="EsercizioValRim" />
+		label="Esercizio Val Rim" />
+	<fieldProperty
+			name="findRaggrMagazzinoRim"
+			property="raggrMagazzinoRim"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Raggruppamento di Magazzino Rimanente" />
 	<fieldProperty
 		name="cdCdsRaggrRim"
 		property="raggrMagazzinoRim.cdCds"
@@ -338,14 +401,15 @@
 	<fieldProperty
 		name="metodoValRim"
 		property="metodoValRim"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="1"
 		maxLength="1"
+		keysProperty="metodoValKeys"
 		label="Ultimo metodo Valorizzazione Rimanenze" />
 	<fieldProperty
 		name="abilTuttiBeniServ"
 		property="abilTuttiBeniServ"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
 		maxLength="1"
 		nullable="false"
@@ -384,12 +448,31 @@
 		name="findLuogoConsegnaMag" />
 	<formFieldProperty
 		name="findTipoMovimentoMagCarMag" />
+
+	<formFieldProperty
+			name="findTipoMovimentoMagCarTra" />
+	<formFieldProperty
+		name="findTipoMovimentoMagCarFma" />
+	<formFieldProperty
+			name="findTipoMovimentoMagScaUo" />
+	<formFieldProperty
+		name="findTipoMovimentoMagTraSca" />
+	<formFieldProperty
+			name="findTipoMovimentoMagTraCar" />
+	<formFieldProperty
+		name="findTipoMovimentoMagRvPos" />
+	<formFieldProperty
+			name="findTipoMovimentoMagRvNeg" />
+	<formFieldProperty
+		name="findTipoMovimentoMagChi" />
 	<formFieldProperty
 		name="dtUltValSca" />
 	<formFieldProperty
 		name="esercizioValSca" />
 	<formFieldProperty
 		name="findRaggrMagazzinoRim" />
+	<formFieldProperty
+			name="findRaggrMagazzinoSca" />
 	<formFieldProperty
 		name="metodoValSca" />
 	<formFieldProperty

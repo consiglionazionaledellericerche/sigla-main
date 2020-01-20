@@ -55,20 +55,24 @@
 	<fieldProperty
 		name="tipo"
 		property="tipo"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="3"
 		maxLength="3"
+		enabledOnEdit="true"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
+		keysProperty="tipoKeys"
 		label="Tipo" />
 	<fieldProperty
 		name="metodo"
 		property="metodo"
-		inputType="TEXT"
+		inputType="SELECT"
 		inputSize="1"
 		maxLength="1"
+		enabledOnEdit="true"
 		nullable="false"
+		keysProperty="metodoKeys"
 		label="Metodo" />
 	<fieldProperty
 		name="dtCancellazione"

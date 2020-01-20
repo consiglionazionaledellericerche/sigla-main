@@ -31,7 +31,7 @@ import java.io.Serializable;
  * Classe che ridefinisce alcune operazioni di CRUD su RuoloBulk
  */
 
-public class TipoRuoloComponent extends it.cnr.jada.comp.CRUDComponent implements ICRUDMgr, it.cnr.contab.utenze00.comp.IRuoloMgr, Cloneable,Serializable
+public class TipoRuoloComponent extends CRUDComponent implements ICRUDMgr, it.cnr.contab.utenze00.comp.IRuoloMgr, Cloneable,Serializable
 
 {
 
@@ -63,7 +63,7 @@ public  TipoRuoloComponent()
 
 
 
-public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException
+public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,OggettoBulk bulk) throws ComponentException
 {
 	try
 	{
@@ -72,7 +72,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 
 		UtenteBulk gestore = (UtenteBulk) getHomeCache(userContext).getHome( UtenteBulk.class ).findByPrimaryKey( new UtenteKey( bulk.getUser()));
 		if ( gestore == null )
-			throw  new it.cnr.jada.comp.ApplicationException( "Utente Gestore non definito" );
+			throw  new ApplicationException( "Utente Gestore non definito" );
 		tipo_ruolo.setGestore( gestore );		
 
 		// carica privilegi disponibili
@@ -109,7 +109,7 @@ public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext,Oggetto
 
 
 
-public OggettoBulk inizializzaBulkPerModifica (UserContext userContext,OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException
+public OggettoBulk inizializzaBulkPerModifica (UserContext userContext,OggettoBulk bulk) throws ComponentException
 {
 	try
 	{
@@ -118,11 +118,11 @@ public OggettoBulk inizializzaBulkPerModifica (UserContext userContext,OggettoBu
 		
 		UtenteBulk gestore = (UtenteBulk) getHomeCache(userContext).getHome( UtenteBulk.class ).findByPrimaryKey( new UtenteKey( bulk.getUser()));
 		if ( gestore == null )
-			throw  new it.cnr.jada.comp.ApplicationException( "Utente Gestore non definito" );
+			throw  new ApplicationException( "Utente Gestore non definito" );
 		tipo_ruolo.setGestore( gestore );		
     //		carica TIPO_RUOLO_PRIVILEGI
 		Collection result = tipo_ruoloHome.findTipo_ruolo_privilegi(tipo_ruolo);
-		for (java.util.Iterator i = result.iterator();i.hasNext();) 
+		for (Iterator i = result.iterator(); i.hasNext();)
 		{
 			Ass_tipo_ruolo_privilegioBulk ra = (Ass_tipo_ruolo_privilegioBulk)i.next();
 			tipo_ruolo.addToTipo_ruolo_privilegi( ra );

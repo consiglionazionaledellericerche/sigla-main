@@ -1,21 +1,4 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 03/10/2017
  */
@@ -23,13 +6,13 @@ package it.cnr.contab.ordmag.magazzino.bulk;
 import it.cnr.jada.persistency.Keyed;
 public class LottoMagBase extends LottoMagKey implements Keyed {
 //    CD_BENE_SERVIZIO VARCHAR(15) NOT NULL
-	private java.lang.String cdBeneServizio;
+	private String cdBeneServizio;
  
 //    CD_CDS_MAG VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsMag;
+	private String cdCdsMag;
  
 //    CD_MAGAZZINO_MAG VARCHAR(10) NOT NULL
-	private java.lang.String cdMagazzinoMag;
+	private String cdMagazzinoMag;
  
 //    DT_SCADENZA TIMESTAMP(7)
 	private java.sql.Timestamp dtScadenza;
@@ -41,7 +24,7 @@ public class LottoMagBase extends LottoMagKey implements Keyed {
 	private java.math.BigDecimal quantitaValore;
  
 //    LOTTO_FORNITORE VARCHAR(30)
-	private java.lang.String lottoFornitore;
+	private String lottoFornitore;
  
 //    DT_CARICO TIMESTAMP(7)
 	private java.sql.Timestamp dtCarico;
@@ -59,34 +42,34 @@ public class LottoMagBase extends LottoMagKey implements Keyed {
 	private java.math.BigDecimal quantitaInizioAnno;
  
 //    CD_CDS_ORDINE VARCHAR(30)
-	private java.lang.String cdCdsOrdine;
+	private String cdCdsOrdine;
  
 //    CD_UNITA_OPERATIVA VARCHAR(30)
-	private java.lang.String cdUnitaOperativa;
+	private String cdUnitaOperativa;
  
 //    ESERCIZIO_ORDINE DECIMAL(4,0)
-	private java.lang.Integer esercizioOrdine;
+	private Integer esercizioOrdine;
  
 //    CD_NUMERATORE_ORDINE VARCHAR(3)
-	private java.lang.String cdNumeratoreOrdine;
+	private String cdNumeratoreOrdine;
  
 //    NUMERO_ORDINE DECIMAL(6,0)
-	private java.lang.Integer numeroOrdine;
+	private Integer numeroOrdine;
  
 //    RIGA_ORDINE DECIMAL(6,0)
-	private java.lang.Integer rigaOrdine;
+	private Integer rigaOrdine;
  
 //    CONSEGNA DECIMAL(6,0)
-	private java.lang.Integer consegna;
+	private Integer consegna;
  
 //    STATO VARCHAR(3)
-	private java.lang.String stato;
+	private String stato;
  
 //    CD_TERZO DECIMAL(10,0)
-	private java.lang.Integer cdTerzo;
+	private Integer cdTerzo;
  
 //    CD_DIVISA VARCHAR(10) NOT NULL
-	private java.lang.String cdDivisa;
+	private String cdDivisa;
  
 //    CAMBIO DECIMAL(15,4) NOT NULL
 	private java.math.BigDecimal cambio;
@@ -101,49 +84,49 @@ public class LottoMagBase extends LottoMagKey implements Keyed {
 	public LottoMagBase() {
 		super();
 	}
-	public LottoMagBase(java.lang.String cdCds, java.lang.String cdMagazzino, java.lang.Integer esercizio, java.lang.String cdNumeratoreMag, java.lang.Integer pgLotto) {
+	public LottoMagBase(String cdCds, String cdMagazzino, Integer esercizio, String cdNumeratoreMag, Integer pgLotto) {
 		super(cdCds, cdMagazzino, esercizio, cdNumeratoreMag, pgLotto);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdBeneServizio]
 	 **/
-	public java.lang.String getCdBeneServizio() {
+	public String getCdBeneServizio() {
 		return cdBeneServizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdBeneServizio]
 	 **/
-	public void setCdBeneServizio(java.lang.String cdBeneServizio)  {
+	public void setCdBeneServizio(String cdBeneServizio)  {
 		this.cdBeneServizio=cdBeneServizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsMag]
 	 **/
-	public java.lang.String getCdCdsMag() {
+	public String getCdCdsMag() {
 		return cdCdsMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsMag]
 	 **/
-	public void setCdCdsMag(java.lang.String cdCdsMag)  {
+	public void setCdCdsMag(String cdCdsMag)  {
 		this.cdCdsMag=cdCdsMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdMagazzinoMag]
 	 **/
-	public java.lang.String getCdMagazzinoMag() {
+	public String getCdMagazzinoMag() {
 		return cdMagazzinoMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdMagazzinoMag]
 	 **/
-	public void setCdMagazzinoMag(java.lang.String cdMagazzinoMag)  {
+	public void setCdMagazzinoMag(String cdMagazzinoMag)  {
 		this.cdMagazzinoMag=cdMagazzinoMag;
 	}
 	/**
@@ -192,14 +175,14 @@ public class LottoMagBase extends LottoMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [lottoFornitore]
 	 **/
-	public java.lang.String getLottoFornitore() {
+	public String getLottoFornitore() {
 		return lottoFornitore;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [lottoFornitore]
 	 **/
-	public void setLottoFornitore(java.lang.String lottoFornitore)  {
+	public void setLottoFornitore(String lottoFornitore)  {
 		this.lottoFornitore=lottoFornitore;
 	}
 	/**
@@ -276,140 +259,140 @@ public class LottoMagBase extends LottoMagKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsOrdine]
 	 **/
-	public java.lang.String getCdCdsOrdine() {
+	public String getCdCdsOrdine() {
 		return cdCdsOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsOrdine]
 	 **/
-	public void setCdCdsOrdine(java.lang.String cdCdsOrdine)  {
+	public void setCdCdsOrdine(String cdCdsOrdine)  {
 		this.cdCdsOrdine=cdCdsOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdUnitaOperativa]
 	 **/
-	public java.lang.String getCdUnitaOperativa() {
+	public String getCdUnitaOperativa() {
 		return cdUnitaOperativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
-	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+	public void setCdUnitaOperativa(String cdUnitaOperativa)  {
 		this.cdUnitaOperativa=cdUnitaOperativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizioOrdine]
 	 **/
-	public java.lang.Integer getEsercizioOrdine() {
+	public Integer getEsercizioOrdine() {
 		return esercizioOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizioOrdine]
 	 **/
-	public void setEsercizioOrdine(java.lang.Integer esercizioOrdine)  {
+	public void setEsercizioOrdine(Integer esercizioOrdine)  {
 		this.esercizioOrdine=esercizioOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdNumeratoreOrdine]
 	 **/
-	public java.lang.String getCdNumeratoreOrdine() {
+	public String getCdNumeratoreOrdine() {
 		return cdNumeratoreOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdNumeratoreOrdine]
 	 **/
-	public void setCdNumeratoreOrdine(java.lang.String cdNumeratoreOrdine)  {
+	public void setCdNumeratoreOrdine(String cdNumeratoreOrdine)  {
 		this.cdNumeratoreOrdine=cdNumeratoreOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [numeroOrdine]
 	 **/
-	public java.lang.Integer getNumeroOrdine() {
+	public Integer getNumeroOrdine() {
 		return numeroOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [numeroOrdine]
 	 **/
-	public void setNumeroOrdine(java.lang.Integer numeroOrdine)  {
+	public void setNumeroOrdine(Integer numeroOrdine)  {
 		this.numeroOrdine=numeroOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [rigaOrdine]
 	 **/
-	public java.lang.Integer getRigaOrdine() {
+	public Integer getRigaOrdine() {
 		return rigaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [rigaOrdine]
 	 **/
-	public void setRigaOrdine(java.lang.Integer rigaOrdine)  {
+	public void setRigaOrdine(Integer rigaOrdine)  {
 		this.rigaOrdine=rigaOrdine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [consegna]
 	 **/
-	public java.lang.Integer getConsegna() {
+	public Integer getConsegna() {
 		return consegna;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [consegna]
 	 **/
-	public void setConsegna(java.lang.Integer consegna)  {
+	public void setConsegna(Integer consegna)  {
 		this.consegna=consegna;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [stato]
 	 **/
-	public java.lang.String getStato() {
+	public String getStato() {
 		return stato;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [stato]
 	 **/
-	public void setStato(java.lang.String stato)  {
+	public void setStato(String stato)  {
 		this.stato=stato;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTerzo]
 	 **/
-	public java.lang.Integer getCdTerzo() {
+	public Integer getCdTerzo() {
 		return cdTerzo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTerzo]
 	 **/
-	public void setCdTerzo(java.lang.Integer cdTerzo)  {
+	public void setCdTerzo(Integer cdTerzo)  {
 		this.cdTerzo=cdTerzo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdDivisa]
 	 **/
-	public java.lang.String getCdDivisa() {
+	public String getCdDivisa() {
 		return cdDivisa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdDivisa]
 	 **/
-	public void setCdDivisa(java.lang.String cdDivisa)  {
+	public void setCdDivisa(String cdDivisa)  {
 		this.cdDivisa=cdDivisa;
 	}
 	/**

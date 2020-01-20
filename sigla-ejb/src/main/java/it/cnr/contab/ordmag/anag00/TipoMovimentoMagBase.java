@@ -1,21 +1,4 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 26/04/2017
  */
@@ -23,29 +6,65 @@ package it.cnr.contab.ordmag.anag00;
 import it.cnr.jada.persistency.Keyed;
 public class TipoMovimentoMagBase extends TipoMovimentoMagKey implements Keyed {
 //    DS_TIPO_MOVIMENTO VARCHAR(100) NOT NULL
-	private java.lang.String dsTipoMovimento;
+	private String dsTipoMovimento;
  
 //    TIPO VARCHAR(2) NOT NULL
-	private java.lang.String tipo;
+	private String tipo;
  
 //    SEGNO CHAR(1)
-	private java.lang.String segno;
+	private String segno;
  
 //    CD_CDS_STORNO VARCHAR(30)
-	private java.lang.String cdCdsStorno;
+	private String cdCdsStorno;
  
 //    CD_TIPO_MOVIMENTO_STORNO VARCHAR(3)
-	private java.lang.String cdTipoMovimentoStorno;
+	private String cdTipoMovimentoStorno;
  
 //    CD_CDS_ALT VARCHAR(30)
-	private java.lang.String cdCdsAlt;
+	private String cdCdsAlt;
  
 //    CD_TIPO_MOVIMENTO_ALT VARCHAR(3)
-	private java.lang.String cdTipoMovimentoAlt;
+	private String cdTipoMovimentoAlt;
  
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
- 
+
+//    RIPORTA_LOTTO_FORNITORE VARCHAR(1)
+	private Boolean riportaLottoFornitore;
+
+//    AGG_DATA_ULTIMO_CARICO VARCHAR(1)
+	private Boolean aggDataUltimoCarico;
+
+//    MOD_AGG_QTA_MAGAZZINO VARCHAR(1)
+	private String modAggQtaMagazzino;
+
+//    MOD_AGG_QTA_VAL_MAGAZZINO VARCHAR(1)
+	private String modAggQtaValMagazzino;
+
+//    MOD_AGG_VALORE_LOTTO VARCHAR(1)
+	private String  modAggValoreLotto;
+
+//    MOD_AGG_QTA_INIZIO_ANNO VARCHAR(1)
+	private String modAggQtaInizioAnno;
+
+//    FL_MOVIMENTA_LOTTI_BLOCCATI VARCHAR(1)
+	private Boolean flMovimentaLottiBloccati;
+
+//    CD_CDS_RIF VARCHAR(30) NOT NULL
+	private String cdCdsRif;
+
+//    CD_TIPO_MOVIMENTO_RIF VARCHAR(3)
+	private String cdTipoMovimentoRif;
+
+//    GENERA_BOLLA_SCARICO VARCHAR(1)
+	private Boolean generaBollaScarico;
+
+//    GENERA_BOLLA_SCARICO VARCHAR(1)
+	private Boolean fl_consumo;
+
+	//    QTA_CARICO_LOTTO VARCHAR(1)
+	private java.lang.String qtaCaricoLotto;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: TIPO_MOVIMENTO_MAG
@@ -53,105 +72,105 @@ public class TipoMovimentoMagBase extends TipoMovimentoMagKey implements Keyed {
 	public TipoMovimentoMagBase() {
 		super();
 	}
-	public TipoMovimentoMagBase(java.lang.String cdCds, java.lang.String cdTipoMovimento) {
+	public TipoMovimentoMagBase(String cdCds, String cdTipoMovimento) {
 		super(cdCds, cdTipoMovimento);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [dsTipoMovimento]
 	 **/
-	public java.lang.String getDsTipoMovimento() {
+	public String getDsTipoMovimento() {
 		return dsTipoMovimento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [dsTipoMovimento]
 	 **/
-	public void setDsTipoMovimento(java.lang.String dsTipoMovimento)  {
+	public void setDsTipoMovimento(String dsTipoMovimento)  {
 		this.dsTipoMovimento=dsTipoMovimento;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [tipo]
 	 **/
-	public java.lang.String getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [tipo]
 	 **/
-	public void setTipo(java.lang.String tipo)  {
+	public void setTipo(String tipo)  {
 		this.tipo=tipo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [segno]
 	 **/
-	public java.lang.String getSegno() {
+	public String getSegno() {
 		return segno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [segno]
 	 **/
-	public void setSegno(java.lang.String segno)  {
+	public void setSegno(String segno)  {
 		this.segno=segno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsStorno]
 	 **/
-	public java.lang.String getCdCdsStorno() {
+	public String getCdCdsStorno() {
 		return cdCdsStorno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsStorno]
 	 **/
-	public void setCdCdsStorno(java.lang.String cdCdsStorno)  {
+	public void setCdCdsStorno(String cdCdsStorno)  {
 		this.cdCdsStorno=cdCdsStorno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoStorno]
 	 **/
-	public java.lang.String getCdTipoMovimentoStorno() {
+	public String getCdTipoMovimentoStorno() {
 		return cdTipoMovimentoStorno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoStorno]
 	 **/
-	public void setCdTipoMovimentoStorno(java.lang.String cdTipoMovimentoStorno)  {
+	public void setCdTipoMovimentoStorno(String cdTipoMovimentoStorno)  {
 		this.cdTipoMovimentoStorno=cdTipoMovimentoStorno;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsAlt]
 	 **/
-	public java.lang.String getCdCdsAlt() {
+	public String getCdCdsAlt() {
 		return cdCdsAlt;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsAlt]
 	 **/
-	public void setCdCdsAlt(java.lang.String cdCdsAlt)  {
+	public void setCdCdsAlt(String cdCdsAlt)  {
 		this.cdCdsAlt=cdCdsAlt;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoAlt]
 	 **/
-	public java.lang.String getCdTipoMovimentoAlt() {
+	public String getCdTipoMovimentoAlt() {
 		return cdTipoMovimentoAlt;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoAlt]
 	 **/
-	public void setCdTipoMovimentoAlt(java.lang.String cdTipoMovimentoAlt)  {
+	public void setCdTipoMovimentoAlt(String cdTipoMovimentoAlt)  {
 		this.cdTipoMovimentoAlt=cdTipoMovimentoAlt;
 	}
 	/**
@@ -167,5 +186,101 @@ public class TipoMovimentoMagBase extends TipoMovimentoMagKey implements Keyed {
 	 **/
 	public void setDtCancellazione(java.sql.Timestamp dtCancellazione)  {
 		this.dtCancellazione=dtCancellazione;
+	}
+
+	public Boolean getRiportaLottoFornitore() {
+		return riportaLottoFornitore;
+	}
+
+	public void setRiportaLottoFornitore(Boolean riportaLottoFornitore) {
+		this.riportaLottoFornitore = riportaLottoFornitore;
+	}
+
+	public void setAggDataUltimoCarico(Boolean aggDataUltimoCarico) {
+		this.aggDataUltimoCarico = aggDataUltimoCarico;
+	}
+
+	public Boolean getAggDataUltimoCarico() {
+		return aggDataUltimoCarico;
+	}
+
+	public String getModAggQtaMagazzino() {
+		return modAggQtaMagazzino;
+	}
+
+	public void setModAggQtaMagazzino(String modAggQtaMagazzino) {
+		this.modAggQtaMagazzino = modAggQtaMagazzino;
+	}
+
+	public String getModAggQtaValMagazzino() {
+		return modAggQtaValMagazzino;
+	}
+
+	public void setModAggQtaValMagazzino(String modAggQtaValMagazzino) {
+		this.modAggQtaValMagazzino = modAggQtaValMagazzino;
+	}
+
+	public String getModAggValoreLotto() {
+		return modAggValoreLotto;
+	}
+
+	public void setModAggValoreLotto(String modAggValoreLotto) {
+		this.modAggValoreLotto = modAggValoreLotto;
+	}
+
+	public String getModAggQtaInizioAnno() {
+		return modAggQtaInizioAnno;
+	}
+
+	public void setModAggQtaInizioAnno(String modAggQtaInizioAnno) {
+		this.modAggQtaInizioAnno = modAggQtaInizioAnno;
+	}
+
+	public Boolean getFlMovimentaLottiBloccati() {
+		return flMovimentaLottiBloccati;
+	}
+
+	public void setFlMovimentaLottiBloccati(Boolean flMovimentaLottiBloccati) {
+		this.flMovimentaLottiBloccati = flMovimentaLottiBloccati;
+	}
+
+	public String getCdCdsRif() {
+		return cdCdsRif;
+	}
+
+	public void setCdCdsRif(String cdCdsRif) {
+		this.cdCdsRif = cdCdsRif;
+	}
+
+	public String getCdTipoMovimentoRif() {
+		return cdTipoMovimentoRif;
+	}
+
+	public void setCdTipoMovimentoRif(String cdTipoMovimentoRif) {
+		this.cdTipoMovimentoRif = cdTipoMovimentoRif;
+	}
+
+	public Boolean getGeneraBollaScarico() {
+		return generaBollaScarico;
+	}
+
+	public void setGeneraBollaScarico(Boolean generaBollaScarico) {
+		this.generaBollaScarico = generaBollaScarico;
+	}
+
+	public Boolean getFl_consumo() {
+		return fl_consumo;
+	}
+
+	public void setFl_consumo(Boolean fl_consumo) {
+		this.fl_consumo = fl_consumo;
+	}
+
+	public String getQtaCaricoLotto() {
+		return qtaCaricoLotto;
+	}
+
+	public void setQtaCaricoLotto(String qtaCaricoLotto) {
+		this.qtaCaricoLotto = qtaCaricoLotto;
 	}
 }

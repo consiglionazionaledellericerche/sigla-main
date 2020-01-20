@@ -26,12 +26,16 @@ package it.cnr.contab.utenze00.bp;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.ejb.Parametri_enteComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagBulk;
+import it.cnr.contab.ordmag.ordini.bp.OrdineAcqRigaCRUDController;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utente00.ejb.UtenteComponentSession;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.ValidationException;
@@ -49,6 +53,15 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     private final SimpleDetailCRUDController crudRuoli_disponibili = new SimpleDetailCRUDController("Ruoli_disponibili", RuoloBulk.class, "ruoli_disponibili", this);
     private final SimpleDetailCRUDController crudRuoli = new SimpleDetailCRUDController("Ruoli", RuoloBulk.class, "ruoli", this);
     private final SimpleDetailCRUDController crudUtente_indirizzi_mail = new SimpleDetailCRUDController("Utente_indirizzi_mail", Utente_indirizzi_mailBulk.class, "utente_indirizzi_mail", this);
+    private final SimpleDetailCRUDController crudUtente_abil_ordini = new SimpleDetailCRUDController("Abil_ordine", AbilUtenteUopOperBulk.class, "utente_abil_ordine", this);
+
+
+    private final SimpleDetailCRUDController crudUtente_abil_ordini_mag = new SimpleDetailCRUDController("Abil_ordine", AbilUtenteUopOperMagBulk.class, "utente_abil_magazzini", crudUtente_abil_ordini);
+
+    public SimpleDetailCRUDController getCrudUtente_abil_ordini_mag() {
+        return crudUtente_abil_ordini_mag;
+    }
+
     private CompoundFindClause compoundfindclauseAccessiDisponibili = null;
     private final SimpleDetailCRUDController crudAccessi_disponibili = new SimpleDetailCRUDController("Accessi_disponibili", AccessoBulk.class, "accessi_disponibili", this) {
         public void setFilter(ActionContext actioncontext, CompoundFindClause compoundfindclause) {
@@ -82,11 +95,14 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     public CRUDUtenzaBP() throws BusinessProcessException {
         super();
         setTab("tab", "tabUtenza");
+        setTab("tabAbilOrdineUtenze", "tabAbilOrdiniDettaglio");
     }
 
     public CRUDUtenzaBP(String function) throws BusinessProcessException {
         super(function);
         setTab("tab", "tabUtenza");
+        setTab("tabAbilOrdineUtenze", "tabAbilOrdiniDettaglio");
+
     }
 
     /**
@@ -95,7 +111,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * @param context contesto dell'azione
      */
 
-    public void cercaAccessi(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public void cercaAccessi(ActionContext context) throws BusinessProcessException {
         try {
 
             UtenteTemplateBulk utente = (UtenteTemplateBulk) getModel();
@@ -112,7 +128,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * @param context contesto dell'azione
      */
 
-    public void cercaRuoli(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public void cercaRuoli(ActionContext context) throws BusinessProcessException {
         try {
             UtenteTemplateBulk utente = (UtenteTemplateBulk) getModel();
             utente.resetRuoli();
@@ -126,7 +142,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * Restituisce il Controller che gestisce il dettaglio degli Accessi gia' assegnati un Utente
      * @return it.cnr.jada.util.action.SimpleDetailCRUDController controller
      */
-    public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudAccessi() {
+    public final SimpleDetailCRUDController getCrudAccessi() {
         return crudAccessi;
     }
 
@@ -134,7 +150,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * Restituisce il Controller che gestisce il dettaglio degli Accessi ancora disponibili per un Utente
      * @return it.cnr.jada.util.action.SimpleDetailCRUDController controller
      */
-    public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudAccessi_disponibili() {
+    public final SimpleDetailCRUDController getCrudAccessi_disponibili() {
         return crudAccessi_disponibili;
     }
 
@@ -142,7 +158,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * Restituisce il Controller che gestisce il dettaglio dei Ruoli gia' assegnati ad un Utente
      * @return it.cnr.jada.util.action.SimpleDetailCRUDController controller
      */
-    public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudRuoli() {
+    public final SimpleDetailCRUDController getCrudRuoli() {
         return crudRuoli;
     }
 
@@ -150,7 +166,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * Restituisce il Controller che gestisce il dettaglio dei Ruoli ancora disponibili per un Utente
      * @return it.cnr.jada.util.action.SimpleDetailCRUDController controller
      */
-    public final it.cnr.jada.util.action.SimpleDetailCRUDController getCrudRuoli_disponibili() {
+    public final SimpleDetailCRUDController getCrudRuoli_disponibili() {
         return crudRuoli_disponibili;
     }
 
@@ -178,7 +194,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * Esegue il reset degli accessi visualizzati
      */
 
-    public void resetAccessi(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public void resetAccessi(ActionContext context) throws BusinessProcessException {
         try {
             UtenteTemplateBulk utente = (UtenteTemplateBulk) getModel();
             utente.setUnita_org_per_accesso(new Unita_organizzativaBulk());
@@ -193,7 +209,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * Esegue il reset della password
      */
 
-    public void resetPassword(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public void resetPassword(ActionContext context) throws BusinessProcessException {
         try {
             UtenteBulk utente = (UtenteTemplateBulk) getModel();
             setModel(context, ((UtenteComponentSession) createComponentSession()).resetPassword(context.getUserContext(), utente));
@@ -206,7 +222,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
      * Esegue il reset dei ruoli visualizzati
      */
 
-    public void resetRuoli(ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public void resetRuoli(ActionContext context) throws BusinessProcessException {
         try {
             UtenteTemplateBulk utente = (UtenteTemplateBulk) getModel();
             utente.setUnita_org_per_ruolo(new Unita_organizzativaBulk());
@@ -226,7 +242,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
         return crudUtente_indirizzi_mail;
     }
 
-    public boolean isCdrConfiguratoreAll(UserContext context) throws it.cnr.jada.action.BusinessProcessException {
+    public boolean isCdrConfiguratoreAll(UserContext context) throws BusinessProcessException {
         try {
             return ((UtenteComponentSession) createComponentSession()).isCdrConfiguratoreAll(context).booleanValue();
         } catch (ComponentException e) {
@@ -248,7 +264,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
         return null;
     }
 
-    public boolean isUtenteAbilitatoLdap(UserContext uc) throws it.cnr.jada.action.BusinessProcessException {
+    public boolean isUtenteAbilitatoLdap(UserContext uc) throws BusinessProcessException {
         UtenteBulk utente = (UtenteBulk) getModel();
         if (utente.getCd_utente_uid() == null)
             throw new MessageToUser("Codice utente ufficiale non valorizzato!");
@@ -262,7 +278,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
         }
     }
 
-    public void cambiaAbilitazioneUtente(UserContext uc, boolean abilita) throws it.cnr.jada.action.BusinessProcessException {
+    public void cambiaAbilitazioneUtente(UserContext uc, boolean abilita) throws BusinessProcessException {
         UtenteBulk utente = (UtenteBulk) getModel();
         if (utente.getCd_utente_uid() == null)
             throw new MessageToUser("Codice utente ufficiale non valorizzato!");
@@ -291,7 +307,7 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
                 });
         super.save(actioncontext);
     }
-    public void resetInutilizzo( ActionContext context ) throws it.cnr.jada.action.BusinessProcessException {
+    public void resetInutilizzo( ActionContext context ) throws BusinessProcessException {
     	try 
     	{
     		UtenteBulk utente = (UtenteBulk)getModel();
@@ -302,12 +318,10 @@ public class CRUDUtenzaBP extends SimpleCRUDBP {
     		throw handleException(e);
     	}
     }
-
-    public boolean isAutenticazioneLdap() {
-        return Optional.ofNullable(getModel())
-                    .filter(UtenteBulk.class::isInstance)
-                    .map(UtenteBulk.class::cast)
-                    .flatMap(utenteBulk -> Optional.ofNullable(utenteBulk.getFl_autenticazione_ldap()))
-                    .orElse(Boolean.FALSE);
+    public SimpleDetailCRUDController getCrudUtente_abil_ordini() {
+        return crudUtente_abil_ordini;
     }
+
+    
+
 }

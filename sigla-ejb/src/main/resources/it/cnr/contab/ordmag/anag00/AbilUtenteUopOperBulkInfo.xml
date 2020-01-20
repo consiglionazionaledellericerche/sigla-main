@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
-  ~
-  ~     This program is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU Affero General Public License as
-  ~     published by the Free Software Foundation, either version 3 of the
-  ~     License, or (at your option) any later version.
-  ~
-  ~     This program is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU Affero General Public License for more details.
-  ~
-  ~     You should have received a copy of the GNU Affero General Public License
-  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -51,6 +34,17 @@
 		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Codice Unità Operativa" />
+
+<fieldProperty
+		name="dsUnitaOperativa"
+		property="unitaOperativaOrd.dsUnitaOperativa"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="100"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		label="Descrizione Unità Operativa" />
 	<fieldProperty
 		name="findTipoOperazioneOrd"
 		property="tipoOperazioneOrd"
@@ -69,13 +63,25 @@
 		enabledOnFreeSearch="true"
 		nullable="false"
 		label="Tipo Operazione" />
+	
+	<fieldProperty
+		name="dsTipoOperazione"
+		property="tipoOperazioneOrd.dsTipoOperazione"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"		
+		label="Descrizione Tipo Operazione" />
 	<fieldProperty
 		name="tuttiMagazzini"
 		property="tuttiMagazzini"
-		inputType="TEXT"
+		inputType="CHECKBOX"
 		inputSize="1"
 		maxLength="1"
 		nullable="false"
+		command="doDefault"
 		label="Tutti Magazzini" />
 	<fieldProperty
 		name="dtCancellazione"
@@ -103,7 +109,7 @@
 	<findFieldProperty
 		name="cdUtente" />
 	<findFieldProperty
-		name="cdUnitaOperativa" />
+		name="cdUnitaOperativa" />	
 	<findFieldProperty
 		name="cdTipoOperazione" />
 	<findFieldProperty
@@ -120,4 +126,16 @@
 		name="tuttiMagazzini" />
 	<columnFieldProperty
 		name="dtCancellazione" />
+	<columnSet
+            name="ColumnsAbilOrdini">        
+        <columnFieldProperty
+			name="cdUnitaOperativa" />
+		<columnFieldProperty
+			name="dsUnitaOperativa">		
+			</columnFieldProperty>		
+		<columnFieldProperty
+			name="dsTipoOperazione" />		
+		<columnFieldProperty
+			name="tuttiMagazzini" />
+    </columnSet>
 </bulkInfo>

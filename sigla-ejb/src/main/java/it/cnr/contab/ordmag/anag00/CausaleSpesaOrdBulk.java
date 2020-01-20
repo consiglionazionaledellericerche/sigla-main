@@ -1,21 +1,4 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 26/04/2017
  */
@@ -43,7 +26,7 @@ public class CausaleSpesaOrdBulk extends CausaleSpesaOrdBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: CAUSALE_SPESA_ORD
 	 **/
-	public CausaleSpesaOrdBulk(java.lang.String cdCds, java.lang.Integer esercizio, java.lang.String cdCausaleSpesa) {
+	public CausaleSpesaOrdBulk(String cdCds, Integer esercizio, String cdCausaleSpesa) {
 		super(cdCds, esercizio, cdCausaleSpesa);
 		setUnitaOrganizzativa( new Unita_organizzativaBulk(cdCds) );
 	}
@@ -79,7 +62,7 @@ public class CausaleSpesaOrdBulk extends CausaleSpesaOrdBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCds]
 	 **/
-	public java.lang.String getCdCds() {
+	public String getCdCds() {
 		Unita_organizzativaBulk unitaOrganizzativa = this.getUnitaOrganizzativa();
 		if (unitaOrganizzativa == null)
 			return null;
@@ -89,14 +72,14 @@ public class CausaleSpesaOrdBulk extends CausaleSpesaOrdBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCds]
 	 **/
-	public void setCdCds(java.lang.String cdCds)  {
+	public void setCdCds(String cdCds)  {
 		this.getUnitaOrganizzativa().setCd_unita_organizzativa(cdCds);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdVoceIva]
 	 **/
-	public java.lang.String getCdVoceIva() {
+	public String getCdVoceIva() {
 		Voce_ivaBulk voceIva = this.getVoceIva();
 		if (voceIva == null)
 			return null;
@@ -106,7 +89,7 @@ public class CausaleSpesaOrdBulk extends CausaleSpesaOrdBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdVoceIva]
 	 **/
-	public void setCdVoceIva(java.lang.String cdVoceIva)  {
+	public void setCdVoceIva(String cdVoceIva)  {
 		this.getVoceIva().setCd_voce_iva(cdVoceIva);
 	}
 	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {

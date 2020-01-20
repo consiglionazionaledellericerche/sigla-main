@@ -1,20 +1,3 @@
-/*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package it.cnr.contab.ordmag.magazzino.bp;
 
 import java.math.BigDecimal;
@@ -28,6 +11,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoRigaBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoRigaBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoRigaLottoBulk;
@@ -68,7 +52,7 @@ public class ScaricoManualeMagazzinoBP extends SimpleCRUDBP {
 				throw new ValidationException("Valorizzare l'Unità di Misura.");
 			if (Optional.ofNullable(riga.getCoefConv()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<=0)
 				throw new ValidationException("Il Coefficiente di Conversione deve avere un valore positivo.");
-			if (Optional.ofNullable(riga.getQtScarico()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<=0 &&
+			if (Optional.ofNullable(riga.getQuantita()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<=0 &&
 				Optional.ofNullable(riga.getTotQtScaricoLotti()).orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO)<=0)
 				throw new ValidationException("Valorizzare la quantità da scaricare.");
 			if (riga.getUnitaOperativaRicevente()==null || riga.getUnitaOperativaRicevente().getCdUnitaOperativa()==null)
@@ -150,7 +134,7 @@ public class ScaricoManualeMagazzinoBP extends SimpleCRUDBP {
 			throws BusinessProcessException {
 		try {
 			oggettobulk = super.initializeModelForInsert(actioncontext, oggettobulk);
-			return ((MovimentiMagComponentSession)createComponentSession()).initializeScaricoMagazzino(actioncontext.getUserContext(), (ScaricoMagazzinoBulk)oggettobulk);
+			return ((MovimentiMagComponentSession)createComponentSession()).initializeMovimentiMagazzino(actioncontext.getUserContext(), (ScaricoMagazzinoBulk)oggettobulk);
 		} catch (ComponentException | PersistencyException | RemoteException | BusinessProcessException e) {
 			throw new BusinessProcessException(e);
 		}
@@ -161,7 +145,7 @@ public class ScaricoManualeMagazzinoBP extends SimpleCRUDBP {
 			scaricoRiga.setBeneServizio(beneServizio);
 			scaricoRiga.setUnitaMisura(beneServizio.getUnitaMisura());
 			scaricoRiga.setCoefConv(BigDecimal.ONE);
-			scaricoRiga.setQtScarico(BigDecimal.ZERO);
+			scaricoRiga.setQuantita(BigDecimal.ZERO);
 			List<LottoMagBulk> lottiList = ((MovimentiMagComponentSession)this.createComponentSession()).find(actioncontext.getUserContext(), LottoMagBulk.class, "findLottiMagazzinoByClause", scaricoRiga);
 			scaricoRiga.setScaricoMagazzinoRigaLottoColl(
 				new BulkList(

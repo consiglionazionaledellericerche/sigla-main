@@ -55,7 +55,7 @@
         <td><% bp.getController().writeFormInput( out, "dt_fine_validita"); %></td>
         </tr>
         <tr>
-         <% if (bp.isAutenticazioneLdap()) {%>
+         <% if (bulk != null && bulk.getFl_autenticazione_ldap()) {%>
         		<td><% JSPUtils.button(out,
            			bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
    					bp.getParentRoot().isBootstrap() ? "fa fa-fw fa-2x fa-scissors" : bp.encodePath("img/cut24.gif"),
@@ -97,7 +97,7 @@
                 <td><% bp.getController().writeFormInput( out, "ruolo_supervisore"); %></td>
             </tr>
         <%} %>
-        <% if (bp.isAutenticazioneLdap()) {%>
+        <% if (bulk != null && bulk.getFl_autenticazione_ldap()) {%>
             <tr>
                 <td colspan="2" align="center">
                     <% JSPUtils.button(out,

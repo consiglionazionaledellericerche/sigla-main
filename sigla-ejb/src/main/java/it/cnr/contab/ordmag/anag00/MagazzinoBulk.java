@@ -1,21 +1,4 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 26/04/2017
  */
@@ -24,7 +7,11 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.CRUDBP;
+
+import java.util.Dictionary;
+
 public class MagazzinoBulk extends MagazzinoBase {
 	/**
 	 * [UNITA_ORGANIZZATIVA Rappresentazione dei Centri di Spesa e delle Unità Organizzative in una struttura ad albero organizzata su più livelli]
@@ -58,6 +45,23 @@ public class MagazzinoBulk extends MagazzinoBase {
 	private BulkList categoriaGruppoColl = new BulkList();
 	private BulkList numeratoreColl = new BulkList();
 	private boolean isInQuery = false;
+
+	public final static Dictionary METODO_VAL;
+	static{
+		METODO_VAL = new OrderedHashtable();
+	}
+	public Dictionary getMetodoValKeys() {
+		return METODO_VAL;
+	}
+
+	public Dictionary getMetodoValKeysForSearch() {
+
+		OrderedHashtable d = (OrderedHashtable)getMetodoValKeys();
+		if (d == null) return null;
+		OrderedHashtable clone = (OrderedHashtable)d.clone();
+		return clone;
+	}
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: MAGAZZINO
@@ -69,7 +73,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: MAGAZZINO
 	 **/
-	public MagazzinoBulk(java.lang.String cdCds, java.lang.String cdMagazzino) {
+	public MagazzinoBulk(String cdCds, String cdMagazzino) {
 		super(cdCds, cdMagazzino);
 		setUnitaOrganizzativa( new Unita_organizzativaBulk(cdCds) );
 	}
@@ -144,7 +148,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCds]
 	 **/
-	public java.lang.String getCdCds() {
+	public String getCdCds() {
 		Unita_organizzativaBulk unitaOrganizzativa = this.getUnitaOrganizzativa();
 		if (unitaOrganizzativa == null)
 			return null;
@@ -154,14 +158,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCds]
 	 **/
-	public void setCdCds(java.lang.String cdCds)  {
+	public void setCdCds(String cdCds)  {
 		this.getUnitaOrganizzativa().setCd_unita_organizzativa(cdCds);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdUnitaOperativa]
 	 **/
-	public java.lang.String getCdUnitaOperativa() {
+	public String getCdUnitaOperativa() {
 		UnitaOperativaOrdBulk unitaOperativaOrd = this.getUnitaOperativaOrd();
 		if (unitaOperativaOrd == null)
 			return null;
@@ -171,14 +175,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
-	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+	public void setCdUnitaOperativa(String cdUnitaOperativa)  {
 		this.getUnitaOperativaOrd().setCdUnitaOperativa(cdUnitaOperativa);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsLuogo]
 	 **/
-	public java.lang.String getCdCdsLuogo() {
+	public String getCdCdsLuogo() {
 		LuogoConsegnaMagBulk luogoConsegnaMag = this.getLuogoConsegnaMag();
 		if (luogoConsegnaMag == null)
 			return null;
@@ -188,14 +192,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsLuogo]
 	 **/
-	public void setCdCdsLuogo(java.lang.String cdCdsLuogo)  {
+	public void setCdCdsLuogo(String cdCdsLuogo)  {
 		this.getLuogoConsegnaMag().setCdCds(cdCdsLuogo);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdLuogoConsegna]
 	 **/
-	public java.lang.String getCdLuogoConsegna() {
+	public String getCdLuogoConsegna() {
 		LuogoConsegnaMagBulk luogoConsegnaMag = this.getLuogoConsegnaMag();
 		if (luogoConsegnaMag == null)
 			return null;
@@ -205,14 +209,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdLuogoConsegna]
 	 **/
-	public void setCdLuogoConsegna(java.lang.String cdLuogoConsegna)  {
+	public void setCdLuogoConsegna(String cdLuogoConsegna)  {
 		this.getLuogoConsegnaMag().setCdLuogoConsegna(cdLuogoConsegna);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsCarMag]
 	 **/
-	public java.lang.String getCdCdsCarMag() {
+	public String getCdCdsCarMag() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagCarMag();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -222,14 +226,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsCarMag]
 	 **/
-	public void setCdCdsCarMag(java.lang.String cdCdsCarMag)  {
+	public void setCdCdsCarMag(String cdCdsCarMag)  {
 		this.getTipoMovimentoMagCarMag().setCdCds(cdCdsCarMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoCarMag]
 	 **/
-	public java.lang.String getCdTipoMovimentoCarMag() {
+	public String getCdTipoMovimentoCarMag() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagCarMag();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -239,14 +243,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoCarMag]
 	 **/
-	public void setCdTipoMovimentoCarMag(java.lang.String cdTipoMovimentoCarMag)  {
+	public void setCdTipoMovimentoCarMag(String cdTipoMovimentoCarMag)  {
 		this.getTipoMovimentoMagCarMag().setCdTipoMovimento(cdTipoMovimentoCarMag);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsCarTra]
 	 **/
-	public java.lang.String getCdCdsCarTra() {
+	public String getCdCdsCarTra() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagCarTra();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -256,14 +260,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsCarTra]
 	 **/
-	public void setCdCdsCarTra(java.lang.String cdCdsCarTra)  {
+	public void setCdCdsCarTra(String cdCdsCarTra)  {
 		this.getTipoMovimentoMagCarTra().setCdCds(cdCdsCarTra);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoCarTra]
 	 **/
-	public java.lang.String getCdTipoMovimentoCarTra() {
+	public String getCdTipoMovimentoCarTra() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagCarTra();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -273,14 +277,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoCarTra]
 	 **/
-	public void setCdTipoMovimentoCarTra(java.lang.String cdTipoMovimentoCarTra)  {
+	public void setCdTipoMovimentoCarTra(String cdTipoMovimentoCarTra)  {
 		this.getTipoMovimentoMagCarTra().setCdTipoMovimento(cdTipoMovimentoCarTra);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsCarFma]
 	 **/
-	public java.lang.String getCdCdsCarFma() {
+	public String getCdCdsCarFma() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagCarFma();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -290,14 +294,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsCarFma]
 	 **/
-	public void setCdCdsCarFma(java.lang.String cdCdsCarFma)  {
+	public void setCdCdsCarFma(String cdCdsCarFma)  {
 		this.getTipoMovimentoMagCarFma().setCdCds(cdCdsCarFma);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoCarFma]
 	 **/
-	public java.lang.String getCdTipoMovimentoCarFma() {
+	public String getCdTipoMovimentoCarFma() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagCarFma();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -307,14 +311,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoCarFma]
 	 **/
-	public void setCdTipoMovimentoCarFma(java.lang.String cdTipoMovimentoCarFma)  {
+	public void setCdTipoMovimentoCarFma(String cdTipoMovimentoCarFma)  {
 		this.getTipoMovimentoMagCarFma().setCdTipoMovimento(cdTipoMovimentoCarFma);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsScaUo]
 	 **/
-	public java.lang.String getCdCdsScaUo() {
+	public String getCdCdsScaUo() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagScaUo();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -324,14 +328,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsScaUo]
 	 **/
-	public void setCdCdsScaUo(java.lang.String cdCdsScaUo)  {
+	public void setCdCdsScaUo(String cdCdsScaUo)  {
 		this.getTipoMovimentoMagScaUo().setCdCds(cdCdsScaUo);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoScaUo]
 	 **/
-	public java.lang.String getCdTipoMovimentoScaUo() {
+	public String getCdTipoMovimentoScaUo() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagScaUo();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -341,14 +345,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoScaUo]
 	 **/
-	public void setCdTipoMovimentoScaUo(java.lang.String cdTipoMovimentoScaUo)  {
+	public void setCdTipoMovimentoScaUo(String cdTipoMovimentoScaUo)  {
 		this.getTipoMovimentoMagScaUo().setCdTipoMovimento(cdTipoMovimentoScaUo);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsTraSca]
 	 **/
-	public java.lang.String getCdCdsTraSca() {
+	public String getCdCdsTraSca() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagTraSca();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -358,14 +362,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsTraSca]
 	 **/
-	public void setCdCdsTraSca(java.lang.String cdCdsTraSca)  {
+	public void setCdCdsTraSca(String cdCdsTraSca)  {
 		this.getTipoMovimentoMagTraSca().setCdCds(cdCdsTraSca);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoTraSca]
 	 **/
-	public java.lang.String getCdTipoMovimentoTraSca() {
+	public String getCdTipoMovimentoTraSca() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagTraSca();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -375,14 +379,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoTraSca]
 	 **/
-	public void setCdTipoMovimentoTraSca(java.lang.String cdTipoMovimentoTraSca)  {
+	public void setCdTipoMovimentoTraSca(String cdTipoMovimentoTraSca)  {
 		this.getTipoMovimentoMagTraSca().setCdTipoMovimento(cdTipoMovimentoTraSca);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsTraCar]
 	 **/
-	public java.lang.String getCdCdsTraCar() {
+	public String getCdCdsTraCar() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagTraCar();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -392,14 +396,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsTraCar]
 	 **/
-	public void setCdCdsTraCar(java.lang.String cdCdsTraCar)  {
+	public void setCdCdsTraCar(String cdCdsTraCar)  {
 		this.getTipoMovimentoMagTraCar().setCdCds(cdCdsTraCar);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoTraCar]
 	 **/
-	public java.lang.String getCdTipoMovimentoTraCar() {
+	public String getCdTipoMovimentoTraCar() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagTraCar();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -409,14 +413,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoTraCar]
 	 **/
-	public void setCdTipoMovimentoTraCar(java.lang.String cdTipoMovimentoTraCar)  {
+	public void setCdTipoMovimentoTraCar(String cdTipoMovimentoTraCar)  {
 		this.getTipoMovimentoMagTraCar().setCdTipoMovimento(cdTipoMovimentoTraCar);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRvPos]
 	 **/
-	public java.lang.String getCdCdsRvPos() {
+	public String getCdCdsRvPos() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagRvPos();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -426,14 +430,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRvPos]
 	 **/
-	public void setCdCdsRvPos(java.lang.String cdCdsRvPos)  {
+	public void setCdCdsRvPos(String cdCdsRvPos)  {
 		this.getTipoMovimentoMagRvPos().setCdCds(cdCdsRvPos);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoRvPos]
 	 **/
-	public java.lang.String getCdTipoMovimentoRvPos() {
+	public String getCdTipoMovimentoRvPos() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagRvPos();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -443,14 +447,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoRvPos]
 	 **/
-	public void setCdTipoMovimentoRvPos(java.lang.String cdTipoMovimentoRvPos)  {
+	public void setCdTipoMovimentoRvPos(String cdTipoMovimentoRvPos)  {
 		this.getTipoMovimentoMagRvPos().setCdTipoMovimento(cdTipoMovimentoRvPos);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRvNeg]
 	 **/
-	public java.lang.String getCdCdsRvNeg() {
+	public String getCdCdsRvNeg() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagRvNeg();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -460,14 +464,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRvNeg]
 	 **/
-	public void setCdCdsRvNeg(java.lang.String cdCdsRvNeg)  {
+	public void setCdCdsRvNeg(String cdCdsRvNeg)  {
 		this.getTipoMovimentoMagRvNeg().setCdCds(cdCdsRvNeg);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoRvNeg]
 	 **/
-	public java.lang.String getCdTipoMovimentoRvNeg() {
+	public String getCdTipoMovimentoRvNeg() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagRvNeg();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -477,14 +481,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoRvNeg]
 	 **/
-	public void setCdTipoMovimentoRvNeg(java.lang.String cdTipoMovimentoRvNeg)  {
+	public void setCdTipoMovimentoRvNeg(String cdTipoMovimentoRvNeg)  {
 		this.getTipoMovimentoMagRvNeg().setCdTipoMovimento(cdTipoMovimentoRvNeg);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsChi]
 	 **/
-	public java.lang.String getCdCdsChi() {
+	public String getCdCdsChi() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagChi();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -494,14 +498,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsChi]
 	 **/
-	public void setCdCdsChi(java.lang.String cdCdsChi)  {
+	public void setCdCdsChi(String cdCdsChi)  {
 		this.getTipoMovimentoMagChi().setCdCds(cdCdsChi);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoChi]
 	 **/
-	public java.lang.String getCdTipoMovimentoChi() {
+	public String getCdTipoMovimentoChi() {
 		TipoMovimentoMagBulk tipoMovimentoMag = this.getTipoMovimentoMagChi();
 		if (tipoMovimentoMag == null)
 			return null;
@@ -511,14 +515,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoChi]
 	 **/
-	public void setCdTipoMovimentoChi(java.lang.String cdTipoMovimentoChi)  {
+	public void setCdTipoMovimentoChi(String cdTipoMovimentoChi)  {
 		this.getTipoMovimentoMagChi().setCdTipoMovimento(cdTipoMovimentoChi);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRaggrSca]
 	 **/
-	public java.lang.String getCdCdsRaggrSca() {
+	public String getCdCdsRaggrSca() {
 		RaggrMagazzinoBulk raggrMagazzino = this.getRaggrMagazzinoSca();
 		if (raggrMagazzino == null)
 			return null;
@@ -528,14 +532,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRaggrSca]
 	 **/
-	public void setCdCdsRaggrSca(java.lang.String cdCdsRaggrSca)  {
+	public void setCdCdsRaggrSca(String cdCdsRaggrSca)  {
 		this.getRaggrMagazzinoSca().setCdCds(cdCdsRaggrSca);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdRaggrMagazzinoSca]
 	 **/
-	public java.lang.String getCdRaggrMagazzinoSca() {
+	public String getCdRaggrMagazzinoSca() {
 		RaggrMagazzinoBulk raggrMagazzino = this.getRaggrMagazzinoSca();
 		if (raggrMagazzino == null)
 			return null;
@@ -545,14 +549,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdRaggrMagazzinoSca]
 	 **/
-	public void setCdRaggrMagazzinoSca(java.lang.String cdRaggrMagazzinoSca)  {
+	public void setCdRaggrMagazzinoSca(String cdRaggrMagazzinoSca)  {
 		this.getRaggrMagazzinoSca().setCdRaggrMagazzino(cdRaggrMagazzinoSca);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRaggrRim]
 	 **/
-	public java.lang.String getCdCdsRaggrRim() {
+	public String getCdCdsRaggrRim() {
 		RaggrMagazzinoBulk raggrMagazzino = this.getRaggrMagazzinoRim();
 		if (raggrMagazzino == null)
 			return null;
@@ -562,14 +566,14 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRaggrRim]
 	 **/
-	public void setCdCdsRaggrRim(java.lang.String cdCdsRaggrRim)  {
+	public void setCdCdsRaggrRim(String cdCdsRaggrRim)  {
 		this.getRaggrMagazzinoRim().setCdCds(cdCdsRaggrRim);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdRaggrMagazzinoRim]
 	 **/
-	public java.lang.String getCdRaggrMagazzinoRim() {
+	public String getCdRaggrMagazzinoRim() {
 		RaggrMagazzinoBulk raggrMagazzino = this.getRaggrMagazzinoRim();
 		if (raggrMagazzino == null)
 			return null;
@@ -579,7 +583,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdRaggrMagazzinoRim]
 	 **/
-	public void setCdRaggrMagazzinoRim(java.lang.String cdRaggrMagazzinoRim)  {
+	public void setCdRaggrMagazzinoRim(String cdRaggrMagazzinoRim)  {
 		this.getRaggrMagazzinoRim().setCdRaggrMagazzino(cdRaggrMagazzinoRim);
 	}
 	public TipoMovimentoMagBulk getTipoMovimentoMagCarMag() {
@@ -636,7 +640,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 	public void setTipoMovimentoMagChi(TipoMovimentoMagBulk tipoMovimentoMagChi) {
 		this.tipoMovimentoMagChi = tipoMovimentoMagChi;
 	}
-	protected OggettoBulk initialize(it.cnr.jada.util.action.CRUDBP bp,it.cnr.jada.action.ActionContext context) {
+	protected OggettoBulk initialize(CRUDBP bp, it.cnr.jada.action.ActionContext context) {
 		impostaCds(context);
 		return super.initialize(bp,context);
 	}
@@ -655,7 +659,7 @@ public class MagazzinoBulk extends MagazzinoBase {
 		this.categoriaGruppoColl = categoriaGruppoColl;
 	}
 	public BulkCollection[] getBulkLists() {
-		 return new it.cnr.jada.bulk.BulkCollection[] { 
+		 return new BulkCollection[] {
 				 categoriaGruppoColl, numeratoreColl};
 	}
 	public int addToCategoriaGruppoColl( AbilitBeneServMagBulk abilit) 

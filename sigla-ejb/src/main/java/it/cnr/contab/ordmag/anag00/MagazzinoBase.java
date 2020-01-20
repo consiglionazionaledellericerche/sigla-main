@@ -1,21 +1,4 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 26/04/2017
  */
@@ -23,103 +6,103 @@ package it.cnr.contab.ordmag.anag00;
 import it.cnr.jada.persistency.Keyed;
 public class MagazzinoBase extends MagazzinoKey implements Keyed {
 //    DS_MAGAZZINO VARCHAR(100) NOT NULL
-	private java.lang.String dsMagazzino;
+	private String dsMagazzino;
  
 //    CD_UNITA_OPERATIVA VARCHAR(12)
-	private java.lang.String cdUnitaOperativa;
+	private String cdUnitaOperativa;
  
 //    CD_CDS_LUOGO VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsLuogo;
+	private String cdCdsLuogo;
  
 //    CD_LUOGO_CONSEGNA VARCHAR(10) NOT NULL
-	private java.lang.String cdLuogoConsegna;
+	private String cdLuogoConsegna;
  
 //    CD_CDS_CAR_MAG VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsCarMag;
+	private String cdCdsCarMag;
  
 //    CD_TIPO_MOVIMENTO_CAR_MAG VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoCarMag;
+	private String cdTipoMovimentoCarMag;
  
 //    CD_CDS_CAR_TRA VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsCarTra;
+	private String cdCdsCarTra;
  
 //    CD_TIPO_MOVIMENTO_CAR_TRA VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoCarTra;
+	private String cdTipoMovimentoCarTra;
  
 //    CD_CDS_CAR_FMA VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsCarFma;
+	private String cdCdsCarFma;
  
 //    CD_TIPO_MOVIMENTO_CAR_FMA VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoCarFma;
+	private String cdTipoMovimentoCarFma;
  
 //    CD_CDS_SCA_UO VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsScaUo;
+	private String cdCdsScaUo;
  
 //    CD_TIPO_MOVIMENTO_SCA_UO VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoScaUo;
+	private String cdTipoMovimentoScaUo;
  
 //    CD_CDS_TRA_SCA VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsTraSca;
+	private String cdCdsTraSca;
  
 //    CD_TIPO_MOVIMENTO_TRA_SCA VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoTraSca;
+	private String cdTipoMovimentoTraSca;
  
 //    CD_CDS_TRA_CAR VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsTraCar;
+	private String cdCdsTraCar;
  
 //    CD_TIPO_MOVIMENTO_TRA_CAR VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoTraCar;
+	private String cdTipoMovimentoTraCar;
  
 //    CD_CDS_RV_POS VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsRvPos;
+	private String cdCdsRvPos;
  
 //    CD_TIPO_MOVIMENTO_RV_POS VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoRvPos;
+	private String cdTipoMovimentoRvPos;
  
 //    CD_CDS_RV_NEG VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsRvNeg;
+	private String cdCdsRvNeg;
  
 //    CD_TIPO_MOVIMENTO_RV_NEG VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoRvNeg;
+	private String cdTipoMovimentoRvNeg;
  
 //    CD_CDS_CHI VARCHAR(30) NOT NULL
-	private java.lang.String cdCdsChi;
+	private String cdCdsChi;
  
 //    CD_TIPO_MOVIMENTO_CHI VARCHAR(3) NOT NULL
-	private java.lang.String cdTipoMovimentoChi;
+	private String cdTipoMovimentoChi;
  
 //    DT_ULT_VAL_SCA TIMESTAMP(7)
 	private java.sql.Timestamp dtUltValSca;
  
 //    ESERCIZIO_VAL_SCA DECIMAL(4,0)
-	private java.lang.Integer esercizioValSca;
+	private Integer esercizioValSca;
  
 //    CD_CDS_RAGGR_SCA VARCHAR(30)
-	private java.lang.String cdCdsRaggrSca;
+	private String cdCdsRaggrSca;
  
 //    CD_RAGGR_MAGAZZINO_SCA VARCHAR(3)
-	private java.lang.String cdRaggrMagazzinoSca;
+	private String cdRaggrMagazzinoSca;
  
 //    METODO_VAL_SCA VARCHAR(1)
-	private java.lang.String metodoValSca;
+	private String metodoValSca;
  
 //    DT_ULT_VAL_RIM TIMESTAMP(7)
 	private java.sql.Timestamp dtUltValRim;
  
 //    ESERCIZIO_VAL_RIM DECIMAL(4,0)
-	private java.lang.Integer esercizioValRim;
+	private Integer esercizioValRim;
  
 //    CD_CDS_RAGGR_RIM VARCHAR(30)
-	private java.lang.String cdCdsRaggrRim;
+	private String cdCdsRaggrRim;
  
 //    CD_RAGGR_MAGAZZINO_RIM VARCHAR(3)
-	private java.lang.String cdRaggrMagazzinoRim;
+	private String cdRaggrMagazzinoRim;
  
 //    METODO_VAL_RIM VARCHAR(1)
-	private java.lang.String metodoValRim;
+	private String metodoValRim;
  
 //    ABIL_TUTTI_BENI_SERV VARCHAR(1) NOT NULL
-	private java.lang.String abilTuttiBeniServ;
+	private Boolean abilTuttiBeniServ;
  
 //    DT_CANCELLAZIONE TIMESTAMP(7)
 	private java.sql.Timestamp dtCancellazione;
@@ -131,315 +114,315 @@ public class MagazzinoBase extends MagazzinoKey implements Keyed {
 	public MagazzinoBase() {
 		super();
 	}
-	public MagazzinoBase(java.lang.String cdCds, java.lang.String cdMagazzino) {
+	public MagazzinoBase(String cdCds, String cdMagazzino) {
 		super(cdCds, cdMagazzino);
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [dsMagazzino]
 	 **/
-	public java.lang.String getDsMagazzino() {
+	public String getDsMagazzino() {
 		return dsMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [dsMagazzino]
 	 **/
-	public void setDsMagazzino(java.lang.String dsMagazzino)  {
+	public void setDsMagazzino(String dsMagazzino)  {
 		this.dsMagazzino=dsMagazzino;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdUnitaOperativa]
 	 **/
-	public java.lang.String getCdUnitaOperativa() {
+	public String getCdUnitaOperativa() {
 		return cdUnitaOperativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdUnitaOperativa]
 	 **/
-	public void setCdUnitaOperativa(java.lang.String cdUnitaOperativa)  {
+	public void setCdUnitaOperativa(String cdUnitaOperativa)  {
 		this.cdUnitaOperativa=cdUnitaOperativa;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsLuogo]
 	 **/
-	public java.lang.String getCdCdsLuogo() {
+	public String getCdCdsLuogo() {
 		return cdCdsLuogo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsLuogo]
 	 **/
-	public void setCdCdsLuogo(java.lang.String cdCdsLuogo)  {
+	public void setCdCdsLuogo(String cdCdsLuogo)  {
 		this.cdCdsLuogo=cdCdsLuogo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdLuogoConsegna]
 	 **/
-	public java.lang.String getCdLuogoConsegna() {
+	public String getCdLuogoConsegna() {
 		return cdLuogoConsegna;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdLuogoConsegna]
 	 **/
-	public void setCdLuogoConsegna(java.lang.String cdLuogoConsegna)  {
+	public void setCdLuogoConsegna(String cdLuogoConsegna)  {
 		this.cdLuogoConsegna=cdLuogoConsegna;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsCarMag]
 	 **/
-	public java.lang.String getCdCdsCarMag() {
+	public String getCdCdsCarMag() {
 		return cdCdsCarMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsCarMag]
 	 **/
-	public void setCdCdsCarMag(java.lang.String cdCdsCarMag)  {
+	public void setCdCdsCarMag(String cdCdsCarMag)  {
 		this.cdCdsCarMag=cdCdsCarMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoCarMag]
 	 **/
-	public java.lang.String getCdTipoMovimentoCarMag() {
+	public String getCdTipoMovimentoCarMag() {
 		return cdTipoMovimentoCarMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoCarMag]
 	 **/
-	public void setCdTipoMovimentoCarMag(java.lang.String cdTipoMovimentoCarMag)  {
+	public void setCdTipoMovimentoCarMag(String cdTipoMovimentoCarMag)  {
 		this.cdTipoMovimentoCarMag=cdTipoMovimentoCarMag;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsCarTra]
 	 **/
-	public java.lang.String getCdCdsCarTra() {
+	public String getCdCdsCarTra() {
 		return cdCdsCarTra;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsCarTra]
 	 **/
-	public void setCdCdsCarTra(java.lang.String cdCdsCarTra)  {
+	public void setCdCdsCarTra(String cdCdsCarTra)  {
 		this.cdCdsCarTra=cdCdsCarTra;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoCarTra]
 	 **/
-	public java.lang.String getCdTipoMovimentoCarTra() {
+	public String getCdTipoMovimentoCarTra() {
 		return cdTipoMovimentoCarTra;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoCarTra]
 	 **/
-	public void setCdTipoMovimentoCarTra(java.lang.String cdTipoMovimentoCarTra)  {
+	public void setCdTipoMovimentoCarTra(String cdTipoMovimentoCarTra)  {
 		this.cdTipoMovimentoCarTra=cdTipoMovimentoCarTra;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsCarFma]
 	 **/
-	public java.lang.String getCdCdsCarFma() {
+	public String getCdCdsCarFma() {
 		return cdCdsCarFma;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsCarFma]
 	 **/
-	public void setCdCdsCarFma(java.lang.String cdCdsCarFma)  {
+	public void setCdCdsCarFma(String cdCdsCarFma)  {
 		this.cdCdsCarFma=cdCdsCarFma;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoCarFma]
 	 **/
-	public java.lang.String getCdTipoMovimentoCarFma() {
+	public String getCdTipoMovimentoCarFma() {
 		return cdTipoMovimentoCarFma;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoCarFma]
 	 **/
-	public void setCdTipoMovimentoCarFma(java.lang.String cdTipoMovimentoCarFma)  {
+	public void setCdTipoMovimentoCarFma(String cdTipoMovimentoCarFma)  {
 		this.cdTipoMovimentoCarFma=cdTipoMovimentoCarFma;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsScaUo]
 	 **/
-	public java.lang.String getCdCdsScaUo() {
+	public String getCdCdsScaUo() {
 		return cdCdsScaUo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsScaUo]
 	 **/
-	public void setCdCdsScaUo(java.lang.String cdCdsScaUo)  {
+	public void setCdCdsScaUo(String cdCdsScaUo)  {
 		this.cdCdsScaUo=cdCdsScaUo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoScaUo]
 	 **/
-	public java.lang.String getCdTipoMovimentoScaUo() {
+	public String getCdTipoMovimentoScaUo() {
 		return cdTipoMovimentoScaUo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoScaUo]
 	 **/
-	public void setCdTipoMovimentoScaUo(java.lang.String cdTipoMovimentoScaUo)  {
+	public void setCdTipoMovimentoScaUo(String cdTipoMovimentoScaUo)  {
 		this.cdTipoMovimentoScaUo=cdTipoMovimentoScaUo;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsTraSca]
 	 **/
-	public java.lang.String getCdCdsTraSca() {
+	public String getCdCdsTraSca() {
 		return cdCdsTraSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsTraSca]
 	 **/
-	public void setCdCdsTraSca(java.lang.String cdCdsTraSca)  {
+	public void setCdCdsTraSca(String cdCdsTraSca)  {
 		this.cdCdsTraSca=cdCdsTraSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoTraSca]
 	 **/
-	public java.lang.String getCdTipoMovimentoTraSca() {
+	public String getCdTipoMovimentoTraSca() {
 		return cdTipoMovimentoTraSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoTraSca]
 	 **/
-	public void setCdTipoMovimentoTraSca(java.lang.String cdTipoMovimentoTraSca)  {
+	public void setCdTipoMovimentoTraSca(String cdTipoMovimentoTraSca)  {
 		this.cdTipoMovimentoTraSca=cdTipoMovimentoTraSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsTraCar]
 	 **/
-	public java.lang.String getCdCdsTraCar() {
+	public String getCdCdsTraCar() {
 		return cdCdsTraCar;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsTraCar]
 	 **/
-	public void setCdCdsTraCar(java.lang.String cdCdsTraCar)  {
+	public void setCdCdsTraCar(String cdCdsTraCar)  {
 		this.cdCdsTraCar=cdCdsTraCar;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoTraCar]
 	 **/
-	public java.lang.String getCdTipoMovimentoTraCar() {
+	public String getCdTipoMovimentoTraCar() {
 		return cdTipoMovimentoTraCar;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoTraCar]
 	 **/
-	public void setCdTipoMovimentoTraCar(java.lang.String cdTipoMovimentoTraCar)  {
+	public void setCdTipoMovimentoTraCar(String cdTipoMovimentoTraCar)  {
 		this.cdTipoMovimentoTraCar=cdTipoMovimentoTraCar;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRvPos]
 	 **/
-	public java.lang.String getCdCdsRvPos() {
+	public String getCdCdsRvPos() {
 		return cdCdsRvPos;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRvPos]
 	 **/
-	public void setCdCdsRvPos(java.lang.String cdCdsRvPos)  {
+	public void setCdCdsRvPos(String cdCdsRvPos)  {
 		this.cdCdsRvPos=cdCdsRvPos;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoRvPos]
 	 **/
-	public java.lang.String getCdTipoMovimentoRvPos() {
+	public String getCdTipoMovimentoRvPos() {
 		return cdTipoMovimentoRvPos;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoRvPos]
 	 **/
-	public void setCdTipoMovimentoRvPos(java.lang.String cdTipoMovimentoRvPos)  {
+	public void setCdTipoMovimentoRvPos(String cdTipoMovimentoRvPos)  {
 		this.cdTipoMovimentoRvPos=cdTipoMovimentoRvPos;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRvNeg]
 	 **/
-	public java.lang.String getCdCdsRvNeg() {
+	public String getCdCdsRvNeg() {
 		return cdCdsRvNeg;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRvNeg]
 	 **/
-	public void setCdCdsRvNeg(java.lang.String cdCdsRvNeg)  {
+	public void setCdCdsRvNeg(String cdCdsRvNeg)  {
 		this.cdCdsRvNeg=cdCdsRvNeg;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoRvNeg]
 	 **/
-	public java.lang.String getCdTipoMovimentoRvNeg() {
+	public String getCdTipoMovimentoRvNeg() {
 		return cdTipoMovimentoRvNeg;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoRvNeg]
 	 **/
-	public void setCdTipoMovimentoRvNeg(java.lang.String cdTipoMovimentoRvNeg)  {
+	public void setCdTipoMovimentoRvNeg(String cdTipoMovimentoRvNeg)  {
 		this.cdTipoMovimentoRvNeg=cdTipoMovimentoRvNeg;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsChi]
 	 **/
-	public java.lang.String getCdCdsChi() {
+	public String getCdCdsChi() {
 		return cdCdsChi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsChi]
 	 **/
-	public void setCdCdsChi(java.lang.String cdCdsChi)  {
+	public void setCdCdsChi(String cdCdsChi)  {
 		this.cdCdsChi=cdCdsChi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdTipoMovimentoChi]
 	 **/
-	public java.lang.String getCdTipoMovimentoChi() {
+	public String getCdTipoMovimentoChi() {
 		return cdTipoMovimentoChi;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdTipoMovimentoChi]
 	 **/
-	public void setCdTipoMovimentoChi(java.lang.String cdTipoMovimentoChi)  {
+	public void setCdTipoMovimentoChi(String cdTipoMovimentoChi)  {
 		this.cdTipoMovimentoChi=cdTipoMovimentoChi;
 	}
 	/**
@@ -460,56 +443,56 @@ public class MagazzinoBase extends MagazzinoKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizioValSca]
 	 **/
-	public java.lang.Integer getEsercizioValSca() {
+	public Integer getEsercizioValSca() {
 		return esercizioValSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizioValSca]
 	 **/
-	public void setEsercizioValSca(java.lang.Integer esercizioValSca)  {
+	public void setEsercizioValSca(Integer esercizioValSca)  {
 		this.esercizioValSca=esercizioValSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRaggrSca]
 	 **/
-	public java.lang.String getCdCdsRaggrSca() {
+	public String getCdCdsRaggrSca() {
 		return cdCdsRaggrSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRaggrSca]
 	 **/
-	public void setCdCdsRaggrSca(java.lang.String cdCdsRaggrSca)  {
+	public void setCdCdsRaggrSca(String cdCdsRaggrSca)  {
 		this.cdCdsRaggrSca=cdCdsRaggrSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdRaggrMagazzinoSca]
 	 **/
-	public java.lang.String getCdRaggrMagazzinoSca() {
+	public String getCdRaggrMagazzinoSca() {
 		return cdRaggrMagazzinoSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdRaggrMagazzinoSca]
 	 **/
-	public void setCdRaggrMagazzinoSca(java.lang.String cdRaggrMagazzinoSca)  {
+	public void setCdRaggrMagazzinoSca(String cdRaggrMagazzinoSca)  {
 		this.cdRaggrMagazzinoSca=cdRaggrMagazzinoSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [metodoValSca]
 	 **/
-	public java.lang.String getMetodoValSca() {
+	public String getMetodoValSca() {
 		return metodoValSca;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [metodoValSca]
 	 **/
-	public void setMetodoValSca(java.lang.String metodoValSca)  {
+	public void setMetodoValSca(String metodoValSca)  {
 		this.metodoValSca=metodoValSca;
 	}
 	/**
@@ -530,70 +513,70 @@ public class MagazzinoBase extends MagazzinoKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [esercizioValRim]
 	 **/
-	public java.lang.Integer getEsercizioValRim() {
+	public Integer getEsercizioValRim() {
 		return esercizioValRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [esercizioValRim]
 	 **/
-	public void setEsercizioValRim(java.lang.Integer esercizioValRim)  {
+	public void setEsercizioValRim(Integer esercizioValRim)  {
 		this.esercizioValRim=esercizioValRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdCdsRaggrRim]
 	 **/
-	public java.lang.String getCdCdsRaggrRim() {
+	public String getCdCdsRaggrRim() {
 		return cdCdsRaggrRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdCdsRaggrRim]
 	 **/
-	public void setCdCdsRaggrRim(java.lang.String cdCdsRaggrRim)  {
+	public void setCdCdsRaggrRim(String cdCdsRaggrRim)  {
 		this.cdCdsRaggrRim=cdCdsRaggrRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [cdRaggrMagazzinoRim]
 	 **/
-	public java.lang.String getCdRaggrMagazzinoRim() {
+	public String getCdRaggrMagazzinoRim() {
 		return cdRaggrMagazzinoRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [cdRaggrMagazzinoRim]
 	 **/
-	public void setCdRaggrMagazzinoRim(java.lang.String cdRaggrMagazzinoRim)  {
+	public void setCdRaggrMagazzinoRim(String cdRaggrMagazzinoRim)  {
 		this.cdRaggrMagazzinoRim=cdRaggrMagazzinoRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [metodoValRim]
 	 **/
-	public java.lang.String getMetodoValRim() {
+	public String getMetodoValRim() {
 		return metodoValRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [metodoValRim]
 	 **/
-	public void setMetodoValRim(java.lang.String metodoValRim)  {
+	public void setMetodoValRim(String metodoValRim)  {
 		this.metodoValRim=metodoValRim;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [abilTuttiBeniServ]
 	 **/
-	public java.lang.String getAbilTuttiBeniServ() {
+	public Boolean getAbilTuttiBeniServ() {
 		return abilTuttiBeniServ;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [abilTuttiBeniServ]
 	 **/
-	public void setAbilTuttiBeniServ(java.lang.String abilTuttiBeniServ)  {
+	public void setAbilTuttiBeniServ(Boolean abilTuttiBeniServ)  {
 		this.abilTuttiBeniServ=abilTuttiBeniServ;
 	}
 	/**

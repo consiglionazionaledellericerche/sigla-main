@@ -1,20 +1,3 @@
-/*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
 package it.cnr.contab.ordmag.magazzino.comp;
 
 import java.io.Serializable;
@@ -22,6 +5,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,21 +20,25 @@ import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
 import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.MagazzinoHome;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzBulk;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagAzHome;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
 import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
+import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoHome;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagHome;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoRigaMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.CaricoMagazzinoBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.CaricoMagazzinoRigaBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.LottoMagHome;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoRigaBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoHome;
 import it.cnr.contab.ordmag.magazzino.bulk.ScaricoMagazzinoRigaLottoBulk;
 import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -65,13 +53,16 @@ import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.OutdatedResourceException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
@@ -84,7 +75,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 
     private MovimentiMagBulk createMovimentoMagazzino(UserContext userContext, 
     		UnitaOperativaOrdBulk unitaOperativa, MagazzinoBulk magazzino, TipoMovimentoMagBulk tipoMovimento, 
-    		Bene_servizioBulk beneServizio, java.math.BigDecimal quantitaBeneServizio, java.sql.Timestamp dataRiferimento,
+    		Bene_servizioBulk beneServizio, BigDecimal quantitaBeneServizio, Timestamp dataRiferimento,
     		DivisaBulk divisa, BigDecimal cambio, UnitaMisuraBulk unitaMisura, BigDecimal coeffConv) throws PersistencyException,ComponentException {
 		MovimentiMagHome homeMag = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
 		
@@ -107,6 +98,32 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     	return movimentoMag;
     }
 
+    private MovimentiMagBulk createMovimentoMagazzino(UserContext userContext, CaricoMagazzinoRigaBulk movimento, Bene_servizioBulk bene, DivisaBulk divisaDefault) throws PersistencyException,ComponentException {
+    	MagazzinoBulk magazzino = (MagazzinoBulk)findByPrimaryKey(userContext, movimento.getMovimentiMagazzinoBulk().getMagazzinoAbilitato());
+		MovimentiMagBulk movimentoMag = createMovimentoMagazzino(userContext, 
+							null, 
+							magazzino,
+							movimento.getMovimentiMagazzinoBulk().getTipoMovimentoMag(),
+							bene,
+							movimento.getQuantita(),
+							movimento.getMovimentiMagazzinoBulk().getDataCompetenza(),
+							divisaDefault,
+							BigDecimal.ONE,
+							movimento.getUnitaMisura(),
+							movimento.getCoefConv());
+
+		movimentoMag.setDataBolla(movimento.getDataBolla());
+		movimentoMag.setNumeroBolla(movimento.getNumeroBolla());
+
+		movimentoMag.setPrezzoUnitario(movimento.getPrezzoUnitario());
+		
+		movimentoMag.setLottoFornitore(movimento.getLottoFornitore());
+		movimentoMag.setDtScadenza(movimento.getDtScadenza());
+		movimentoMag.setTerzo(movimento.getTerzo());
+
+    	return movimentoMag;
+    }
+
     private MovimentiMagBulk createMovimentoMagazzino(UserContext userContext, OrdineAcqConsegnaBulk consegna, 
     		EvasioneOrdineRigaBulk evasioneOrdineRiga, Bene_servizioBulk bene) throws PersistencyException,ComponentException {
     	MagazzinoBulk magazzino = (MagazzinoBulk)findByPrimaryKey(userContext, evasioneOrdineRiga.getEvasioneOrdine().getNumerazioneMag().getMagazzino());
@@ -123,6 +140,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 							consegna.getOrdineAcqRiga().getCoefConv());
 
 		movimentoMag.setDataBolla(evasioneOrdineRiga.getEvasioneOrdine().getDataBolla());
+		movimentoMag.setNumeroBolla(evasioneOrdineRiga.getEvasioneOrdine().getNumeroBolla());
 		movimentoMag.setOrdineAcqConsegnaUt(consegna);
 
 		try {
@@ -174,7 +192,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     public MovimentiMagBulk caricoDaOrdine(UserContext userContext, OrdineAcqConsegnaBulk consegna, EvasioneOrdineRigaBulk evasioneOrdineRiga) throws ComponentException, PersistencyException, ApplicationException {
     	MovimentiMagBulk movimentoScaricoMag = null; 
 
-    	Bene_servizioHome beneHome = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+		Bene_servizioHome beneHome = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
     	Bene_servizioBulk bene = (Bene_servizioBulk)beneHome.findByPrimaryKey(consegna.getOrdineAcqRiga().getBeneServizio());
 
     	if (bene.getFlScadenza() != null && bene.getFlScadenza() && consegna.getDtScadenza() == null)
@@ -186,37 +204,32 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 		//creo il movimento di scarico di magazzino
 		if (!consegna.isConsegnaMagazzino()){
 			//creo il movimento di scarico
-			TipoMovimentoMagAzBulk tipoMovimentoAz = new TipoMovimentoMagAzBulk(movimentoCaricoMag.getTipoMovimentoMag().getCdCds(), movimentoCaricoMag.getTipoMovimentoMag().getCdTipoMovimento());
-			TipoMovimentoMagAzHome home = (TipoMovimentoMagAzHome)getHome(userContext,TipoMovimentoMagAzBulk.class);
-			tipoMovimentoAz = (TipoMovimentoMagAzBulk)home.findByPrimaryKey(tipoMovimentoAz);
+//			TipoMovimentoMagAzBulk tipoMovimentoAz = new TipoMovimentoMagAzBulk(movimentoCaricoMag.getTipoMovimentoMag().getCdCds(), movimentoCaricoMag.getTipoMovimentoMag().getCdTipoMovimento());
+//			TipoMovimentoMagAzHome home = (TipoMovimentoMagAzHome)getHome(userContext,TipoMovimentoMagAzBulk.class);
+//			tipoMovimentoAz = (TipoMovimentoMagAzBulk)home.findByPrimaryKey(tipoMovimentoAz);
 			
-			Optional.ofNullable(tipoMovimentoAz)
-				.map(TipoMovimentoMagAzBulk::getTipoMovimentoMagRif)
-				.orElseThrow(()->new ApplicationException("Attenzione! Errore nell'individuazione del magazzino di riferimento per l'operazione di scarico."));
+			Optional.ofNullable(movimentoCaricoMag.getTipoMovimentoMag())
+				.map(TipoMovimentoMagBulk::getTipoMovimentoMagRif)
+				.orElseThrow(()->new ApplicationException("Attenzione! Errore nell'individuazione del tipo movimento di riferimento per l'operazione di scarico."));
 				
 			movimentoScaricoMag = createMovimentoMagazzino(userContext, consegna, evasioneOrdineRiga, bene);
-			movimentoScaricoMag.setTipoMovimentoMag(tipoMovimentoAz.getTipoMovimentoMagRif());
+			movimentoScaricoMag.setTipoMovimentoMag(movimentoCaricoMag.getTipoMovimentoMag().getTipoMovimentoMagRif());
 		}
 
-    	//creo il lotto di magazzino a partire dal movimento di carico
-		LottoMagBulk lotto = (LottoMagBulk)super.creaConBulk(userContext, createLottoMagazzino(userContext, movimentoCaricoMag));
-
-		//associo il lotto di magazzino al movimento di carico
-		movimentoCaricoMag.setLottoMag(lotto);
-		super.creaConBulk(userContext, movimentoCaricoMag);
+    	LottoMagBulk lotto = creaCarico(userContext, movimentoCaricoMag);
 
 		if (movimentoScaricoMag != null) {
 			//associo il lotto di magazzino al movimento di scarico
 			movimentoScaricoMag.setLottoMag(lotto);
 			//creo il legame del movimento di scarico con il movimento di carico
-			movimentoScaricoMag.setPgMovimentoRif(movimentoCaricoMag.getPgMovimento());
+			movimentoScaricoMag.setMovimentoRif(movimentoCaricoMag);
 			movimentoScaricoMag.setToBeCreated();
 			movimentoScaricoMag = (MovimentiMagBulk)super.creaConBulk(userContext, movimentoScaricoMag);
 
 			//creo il legame del movimento di carico con il movimento di scarico
-			movimentoCaricoMag.setPgMovimentoRif(movimentoScaricoMag.getPgMovimento());
+			movimentoCaricoMag.setMovimentoRif(movimentoScaricoMag);
 			movimentoCaricoMag.setToBeUpdated();
-			super.modificaConBulk(userContext, movimentoCaricoMag);
+			modificaConBulk(userContext, movimentoCaricoMag);
 			
 			//codice di controllo: il lotto creato deve avere le movimentazioni a zero essendo carico/scarico contestuale
 	    	LottoMagHome lottoHome = (LottoMagHome)getHome(userContext,LottoMagBulk.class);
@@ -231,6 +244,185 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 		
 		return movimentoScaricoMag;
 	}
+
+	private LottoMagBulk creaCarico(UserContext userContext, MovimentiMagBulk movimentoCaricoMag)
+			throws ComponentException, PersistencyException {
+		//creo il lotto di magazzino a partire dal movimento di carico
+		LottoMagBulk lotto = (LottoMagBulk)super.creaConBulk(userContext, createLottoMagazzino(userContext, movimentoCaricoMag));
+
+		//associo il lotto di magazzino al movimento di carico
+		movimentoCaricoMag.setLottoMag(lotto);
+		super.creaConBulk(userContext, movimentoCaricoMag);
+		return lotto;
+	}
+
+    public CaricoMagazzinoBulk caricaMagazzino(UserContext userContext, CaricoMagazzinoBulk caricoMagazzino) throws ComponentException, PersistencyException {
+		DivisaBulk divisaDefault = ((DivisaHome)getHome(userContext, DivisaBulk.class)).getDivisaDefault(userContext);
+
+		controlloDatiObbligatoriMovimentiMagazzino(userContext, caricoMagazzino, divisaDefault);
+		if (caricoMagazzino.getCaricoMagazzinoRigaColl()==null||caricoMagazzino.getCaricoMagazzinoRigaColl().isEmpty())
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione dei beni/servizi da movimentare.");
+
+		LottoMagHome lottoHome = (LottoMagHome)getHome(userContext, LottoMagBulk.class);
+		
+		List<MovimentiMagBulk> listaMovimenti = new ArrayList<>();
+		try {
+			caricoMagazzino.getCaricoMagazzinoRigaColl().stream()
+			.forEach(caricoMagazzinoRiga->{
+				caricoMagazzinoRiga.setAnomalia(null);
+				try {
+					controlloDatiObbligatoriCaricoManualeRiga(userContext, caricoMagazzinoRiga);
+				} catch (ApplicationException e) {
+					// TODO Auto-generated catch block
+					throw new DetailedRuntimeException(e);
+				}
+
+				try {
+					
+					Bene_servizioHome beneHome = (Bene_servizioHome)getHome(userContext, Bene_servizioBulk.class);
+			    	Bene_servizioBulk bene = (Bene_servizioBulk)beneHome.findByPrimaryKey(caricoMagazzinoRiga.getBeneServizio());
+					
+					//creo il movimento di carico di magazzino
+					MovimentiMagBulk movimentoCaricoMag = createMovimentoMagazzino(userContext, caricoMagazzinoRiga, bene, divisaDefault);
+					listaMovimenti.add(movimentoCaricoMag);
+			    	creaCarico(userContext, movimentoCaricoMag);
+				} catch (PersistencyException | ComponentException ex ) {
+					throw new DetailedRuntimeException(ex);
+				}
+			});
+		} catch (DetailedRuntimeException ex) {
+			throw handleException(ex.getDetail());
+		}
+		
+		return caricoMagazzino;
+    }
+
+    public void annullaMovimento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare) throws ComponentException, PersistencyException {
+    	controlliAnnullamento(userContext, movimentoDaAnnullare);
+    	MovimentiMagBulk movimentoDiStorno = preparaMovimentoDiAnnullamento(userContext, movimentoDaAnnullare);
+    	movimentoDaAnnullare = (MovimentiMagBulk)findByPrimaryKey(userContext, movimentoDaAnnullare);
+    	if (movimentoDaAnnullare.getPgMovimentoRif() != null){
+    		MovimentiMagBulk movimentoRifDaAnnullare = (MovimentiMagBulk)findByPrimaryKey(userContext, new MovimentiMagBulk(movimentoDaAnnullare.getPgMovimentoRif()));
+    		MovimentiMagBulk movimentoRifDiStorno = preparaMovimentoDiAnnullamento(userContext, movimentoRifDaAnnullare);
+    		if (movimentoDaAnnullare.getTipoMovimentoMag().isMovimentoDiCarico()){
+    			movimentoRifDiStorno = effettuaAnnullamento(userContext, movimentoRifDaAnnullare, movimentoRifDiStorno);
+    			movimentoDiStorno = effettuaAnnullamento(userContext, movimentoDaAnnullare, movimentoDiStorno);
+    		} else {
+    			movimentoDiStorno = effettuaAnnullamento(userContext, movimentoDaAnnullare, movimentoDiStorno);
+    			movimentoRifDiStorno = effettuaAnnullamento(userContext, movimentoRifDaAnnullare, movimentoRifDiStorno);
+    		}
+    		movimentoDiStorno.setMovimentoRif(movimentoRifDiStorno);
+    		movimentoRifDiStorno.setMovimentoRif(movimentoDiStorno);
+    		modificaConBulk(userContext, movimentoDiStorno);
+    		modificaConBulk(userContext, movimentoRifDiStorno);
+    	} else {
+    		effettuaAnnullamento(userContext, movimentoDaAnnullare, movimentoDiStorno);
+    	}
+    }
+
+	private MovimentiMagBulk effettuaAnnullamento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare,
+			MovimentiMagBulk movimentoDiStorno) throws ComponentException, PersistencyException, ApplicationException {
+		movimentoDiStorno = (MovimentiMagBulk)super.creaConBulk(userContext, movimentoDiStorno);
+		movimentoDaAnnullare.setStato(MovimentiMagBulk.STATO_ANNULLATO);
+		movimentoDaAnnullare.setDtCancellazione(movimentoDiStorno.getDtMovimento());
+		movimentoDaAnnullare.setPgMovimentoAnn(movimentoDiStorno.getPgMovimento());
+		movimentoDaAnnullare.setToBeUpdated();
+		modificaConBulk(userContext, movimentoDaAnnullare);
+		if (movimentoDaAnnullare.getBollaScaricoMag() != null && movimentoDaAnnullare.getBollaScaricoMag().getPgBollaSca() != null ){
+			annullaRigaBollaDiScarico(userContext, movimentoDaAnnullare);
+		}
+		return movimentoDiStorno;
+	}
+
+	private void annullaRigaBollaDiScarico(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare)
+			throws ComponentException, PersistencyException, ApplicationException {
+		MovimentiMagHome movimentiHome = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
+		try {
+			List listaRigaBolle = movimentiHome.findRigheBollaDiScarico(movimentoDaAnnullare);
+			if (listaRigaBolle != null){
+				for (Object obj : listaRigaBolle){
+					BollaScaricoRigaMagBulk riga = (BollaScaricoRigaMagBulk)obj;
+					riga.setStato(MovimentiMagBulk.STATO_ANNULLATO);
+					riga.setToBeUpdated();
+					super.modificaConBulk(userContext, movimentoDaAnnullare);
+				}
+			}
+		} catch (IntrospectionException e) {
+			throw new ComponentException(e);
+		}
+		
+	}
+	
+	private void controlliAnnullamento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare)
+			throws ComponentException, PersistencyException, ApplicationException {
+		if (movimentoDaAnnullare.getTipoMovimentoMag().isMovimentoDiCarico()){
+			MovimentiMagHome movimentiHome = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
+	    	try {
+				List lista = movimentiHome.recuperoMovimentiDaLotto(movimentoDaAnnullare);
+				if (lista != null && !lista.isEmpty()){
+					for (Object obj : lista){
+						MovimentiMagBulk mag = (MovimentiMagBulk)obj;
+						if (mag.getPgMovimento().compareTo(movimentoDaAnnullare.getPgMovimento()) != 0 && mag.getPgMovimento().compareTo(movimentoDaAnnullare.getPgMovimentoRif()) != 0){
+							throw new ApplicationException("Impossibile annullare il movimento. Esiste un altro movimento con progressivo "+mag.getPgMovimento() + " per il lotto del movimento per cui si sta chiedendo l'annullamento");
+						}
+					}
+				}
+	    	} catch (IntrospectionException e) {
+				throw new ComponentException(e);
+			}
+		}
+	}
+
+	private MovimentiMagBulk preparaMovimentoDiAnnullamento(UserContext userContext, MovimentiMagBulk movimentoDaAnnullare) throws ComponentException {
+		TipoMovimentoMagBulk tipoMovimento = (TipoMovimentoMagBulk)findByPrimaryKey(userContext, movimentoDaAnnullare.getTipoMovimentoMag());
+		if (tipoMovimento.getTipoMovimentoMagStorno() != null && tipoMovimento.getTipoMovimentoMagStorno().getCdTipoMovimento() != null){
+
+			MovimentiMagBulk movimentoDiStorno = (MovimentiMagBulk)movimentoDaAnnullare.clone();
+
+			movimentoDiStorno.setDtMovimento(new Timestamp(System.currentTimeMillis()));
+			movimentoDiStorno.setPgMovimento(null);
+			movimentoDiStorno.setMovimentoRif(new MovimentiMagBulk());
+			movimentoDiStorno.setTipoMovimentoMag(tipoMovimento.getTipoMovimentoMagStorno());
+			movimentoDiStorno.setStato(MovimentiMagBulk.STATO_ANNULLATO);
+			movimentoDiStorno.setCrudStatus(OggettoBulk.TO_BE_CREATED);
+			return movimentoDiStorno;
+		} else {
+			throw new ApplicationException("Il tipo movimento "+movimentoDaAnnullare.getCdTipoMovimento() + " non ha impostato il tipo movimento di annullamento");
+		}
+
+	}
+
+	private void controlloDatiObbligatoriMovimentiMagazzino(UserContext userContext, MovimentiMagazzinoBulk movimentiMagazzino, DivisaBulk divisaDefault) throws ApplicationException{
+		if (divisaDefault==null || divisaDefault.getCd_divisa()==null)
+			throw new ApplicationException("Impossibile caricare la valuta di default! Prima di poter effettuare lo scarico, immettere tale valore.");
+		if (movimentiMagazzino.getUnitaOperativaAbilitata()==null || movimentiMagazzino.getUnitaOperativaAbilitata().getCdUnitaOperativa()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione della Unità Operativa.");
+		if (movimentiMagazzino.getMagazzinoAbilitato()==null || movimentiMagazzino.getMagazzinoAbilitato().getCdMagazzino()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione del Magazzino.");
+		if (movimentiMagazzino.getTipoMovimentoMag()==null || movimentiMagazzino.getTipoMovimentoMag().getCdTipoMovimento()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione del Tipo Movimento.");
+		if (movimentiMagazzino.getDataCompetenza()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione della Data Competenza.");
+	}
+
+	private void controlloDatiObbligatoriCaricoManualeRiga(UserContext userContext, CaricoMagazzinoRigaBulk riga) throws ApplicationException {
+		controlloDatiObbligatoriMovimentiMagazzinoRiga(userContext, riga);
+		if (riga.getVoceIva()==null || riga.getVoceIva().getCd_voce_iva()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione dell'iva.");
+		if (riga.getPrezzoUnitario()==null )
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione del prezzo unitario.");
+	}
+	private void controlloDatiObbligatoriMovimentiMagazzinoRiga(UserContext userContext, MovimentiMagazzinoRigaBulk riga) throws ApplicationException {
+		if (riga.getBeneServizio()==null || riga.getBeneServizio().getCd_bene_servizio()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione del bene/servizio.");
+		if (riga.getQuantita()==null )
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione della quantita.");
+		if (riga.getUnitaMisura()==null || riga.getUnitaMisura().getCdUnitaMisura()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione dell'unità di misura.");
+		if (riga.getCoefConv()==null)
+			throw new ApplicationException("Errore nel movimento di magazzino! Manca l'indicazione del coefficiente di conversione.");
+	}
+
 
     public List<BollaScaricoMagBulk> generaBolleScarico(UserContext userContext, List<MovimentiMagBulk> listaMovimenti)
     				throws ComponentException, PersistencyException, ApplicationException {
@@ -266,6 +458,13 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 	   						});
 	   					});
 					});
+				listaBolleScarico.stream().forEach(bollaScarico->{
+					try {
+						this.aggiornaMovimentiConBollaScarico(userContext, bollaScarico);	
+					} catch (ComponentException ex) {
+						throw new DetailedRuntimeException(ex);
+					}
+				});
 				
 				return listaBolleScarico;
 	    	}
@@ -301,7 +500,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     		DivisaBulk divisaDefault = ((DivisaHome)getHome(userContext, DivisaBulk.class)).getDivisaDefault(userContext);
     		Optional.ofNullable(divisaDefault)
     				.map(DivisaBulk::getCd_divisa)
-    				.orElseThrow(()->new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore."));
+    				.orElseThrow(()->new ApplicationException("Impossibile caricare la valuta di default! Prima di poter inserire un ordine, immettere tale valore."));
     		return divisaDefault;
     	} catch (javax.ejb.EJBException|PersistencyException e) {
     		handleException(e);
@@ -309,22 +508,17 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     	return null;
     }
 
+    public java.util.Collection<LottoMagBulk> findLottiMagazzino(UserContext userContext, MovimentiMagazzinoRigaBulk movimentiMagazzinoRigaBulk) throws ComponentException, PersistencyException {
+		LottoMagHome lottoHome = (LottoMagHome)getHome(userContext, LottoMagBulk.class);
+		return lottoHome.findLottiMagazzinoByClause(movimentiMagazzinoRigaBulk);
+    }
+
     public ScaricoMagazzinoBulk scaricaMagazzino(UserContext userContext, ScaricoMagazzinoBulk scaricoMagazzino) throws ComponentException, PersistencyException {
     	List<BollaScaricoMagBulk> bolleList = new ArrayList<>();
-		if (scaricoMagazzino.getUnitaOperativaAbilitata()==null || scaricoMagazzino.getUnitaOperativaAbilitata().getCdUnitaOperativa()==null)
-			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione della Unità Operativa.");
-		if (scaricoMagazzino.getMagazzinoAbilitato()==null || scaricoMagazzino.getMagazzinoAbilitato().getCdMagazzino()==null)
-			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione del Magazzino.");
-		if (scaricoMagazzino.getTipoMovimentoMag()==null || scaricoMagazzino.getTipoMovimentoMag().getCdTipoMovimento()==null)
-			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione del Tipo Movimento.");
-		if (scaricoMagazzino.getDataCompetenza()==null)
-			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione della Data Competenza.");
+		DivisaBulk divisaDefault = ((DivisaHome)getHome(userContext, DivisaBulk.class)).getDivisaDefault(userContext);
+		controlloDatiObbligatoriMovimentiMagazzino(userContext, scaricoMagazzino, divisaDefault);
 		if (scaricoMagazzino.getScaricoMagazzinoRigaColl()==null||scaricoMagazzino.getScaricoMagazzinoRigaColl().isEmpty())
 			throw new ApplicationException("Errore nello scarico magazzino! Manca l'indicazione dei beni/servizi da movimentare.");
-
-		DivisaBulk divisaDefault = ((DivisaHome)getHome(userContext, DivisaBulk.class)).getDivisaDefault(userContext);
-		if (divisaDefault==null || divisaDefault.getCd_divisa()==null)
-			throw new it.cnr.jada.comp.ApplicationException("Impossibile caricare la valuta di default! Prima di poter effettuare lo scarico, immettere tale valore.");
 
 		LottoMagHome lottoHome = (LottoMagHome)getHome(userContext, LottoMagBulk.class);
 		
@@ -335,12 +529,17 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 			.forEach(scaricoMagazzinoRiga->{
 				scaricoMagazzinoRiga.setAnomalia(null);
 				List<String> errorList = new ArrayList<>();
+				try {
+					controlloDatiObbligatoriMovimentiMagazzinoRiga(userContext, scaricoMagazzinoRiga);
+				} catch (ApplicationException e) {
+					throw new DetailedRuntimeException(e);
+				}
 
 				try {
 					//richiamo per ogni riga i lotti e faccio i lock 
 					Map<LottoMagBulk, BigDecimal> mapLotti = new HashMap<LottoMagBulk, BigDecimal>();
 					if (scaricoMagazzinoRiga.isImputazioneScaricoSuBeneEnable()) {
-						java.util.Collection<LottoMagBulk> lottiList = lottoHome.findLottiMagazzinoByClause(scaricoMagazzinoRiga);
+						java.util.Collection<LottoMagBulk> lottiList = findLottiMagazzino(userContext, scaricoMagazzinoRiga);
 						BigDecimal qtResidua = scaricoMagazzinoRiga.getQtScaricoConvertita();
 						scaricoMagazzinoRiga.setScaricoMagazzinoRigaLottoColl(new BulkList<ScaricoMagazzinoRigaLottoBulk>());
 						for (Iterator<LottoMagBulk> iterator = lottiList.iterator(); iterator.hasNext();) {
@@ -428,11 +627,11 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 					} else
 						scaricoMagazzinoRiga.setAnomalia(
 								errorList.stream().collect(Collectors.joining(", ")));
-				} catch (OutdatedResourceException|BusyResourceException|PersistencyException|DetailedRuntimeException ex) {
+				} catch (OutdatedResourceException|BusyResourceException|PersistencyException|DetailedRuntimeException|ComponentException ex) {
 					throw new DetailedRuntimeException(ex);
 				}
 			});
-		} catch (DetailedRuntimeException ex) {
+		} catch (DetailedRuntimeException ex ) {
 			throw handleException(ex.getDetail());
 		}
 		
@@ -443,14 +642,21 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 		return scaricoMagazzino;
     }
 
-	public ScaricoMagazzinoBulk initializeScaricoMagazzino(UserContext usercontext, ScaricoMagazzinoBulk scaricoMagazzinoBulk) throws PersistencyException, ComponentException {
-		ScaricoMagazzinoHome scaricoMagazzinoHome = (ScaricoMagazzinoHome)getHome(usercontext, ScaricoMagazzinoBulk.class);
+	public MovimentiMagazzinoBulk initializeMovimentiMagazzino(UserContext usercontext, MovimentiMagazzinoBulk movimentoMagazzinoBulk) throws PersistencyException, ComponentException {
+		movimentoMagazzinoBulk = (MovimentiMagazzinoBulk)initializeAbilitazioneMovimentiMagazzino(usercontext, movimentoMagazzinoBulk);		
+		movimentoMagazzinoBulk.setDataMovimento(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp()));
+		movimentoMagazzinoBulk.setDataCompetenza(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp()));
+		return movimentoMagazzinoBulk;
+	}
+
+	public AbilitazioneMagazzinoBulk initializeAbilitazioneMovimentiMagazzino(UserContext usercontext, AbilitazioneMagazzinoBulk abilitazioneMagazzinoBulk) throws PersistencyException, ComponentException {
+		AbilitazioneMagazzinoHome abilitazioneMagazzinoHome = (AbilitazioneMagazzinoHome)getHome(usercontext, abilitazioneMagazzinoBulk.getClass());
 		UnitaOperativaOrdHome unitaOperativaHome = (UnitaOperativaOrdHome)getHome(usercontext, UnitaOperativaOrdBulk.class);
 		
-		SQLBuilder sqlUop = scaricoMagazzinoHome.selectUnitaOperativaAbilitataByClause(usercontext, scaricoMagazzinoBulk, 
+		SQLBuilder sqlUop = abilitazioneMagazzinoHome.selectUnitaOperativaAbilitataByClause(usercontext, abilitazioneMagazzinoBulk, 
 				unitaOperativaHome, new UnitaOperativaOrdBulk(), new CompoundFindClause());
 		List<UnitaOperativaOrdBulk> listUop=unitaOperativaHome.fetchAll(sqlUop);
-		scaricoMagazzinoBulk.setUnitaOperativaAbilitata(Optional.ofNullable(listUop)
+		abilitazioneMagazzinoBulk.setUnitaOperativaAbilitata(Optional.ofNullable(listUop)
 														.map(e->{
 															if (e.stream().count()>1) {
 																return null;
@@ -460,10 +666,10 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 					
 
 		MagazzinoHome magazzinoHome = (MagazzinoHome)getHome(usercontext, MagazzinoBulk.class);
-		SQLBuilder sqlMagazzino = scaricoMagazzinoHome.selectMagazzinoAbilitatoByClause(usercontext, scaricoMagazzinoBulk, 
+		SQLBuilder sqlMagazzino = abilitazioneMagazzinoHome.selectMagazzinoAbilitatoByClause(usercontext, abilitazioneMagazzinoBulk, 
 				magazzinoHome, new MagazzinoBulk(), new CompoundFindClause());
 		List<MagazzinoBulk> listMagazzino=magazzinoHome.fetchAll(sqlMagazzino);
-		scaricoMagazzinoBulk.setMagazzinoAbilitato(Optional.ofNullable(listMagazzino)
+		abilitazioneMagazzinoBulk.setMagazzinoAbilitato(Optional.ofNullable(listMagazzino)
 				.map(e->{
 					if (e.stream().count()>1) {
 						return null;
@@ -471,9 +677,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 					return e.stream().findFirst().orElse(null);
 				}).orElse(null));
 		
-		scaricoMagazzinoBulk.setDataMovimento(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp()));
-		scaricoMagazzinoBulk.setDataCompetenza(DateUtils.truncate(it.cnr.jada.util.ejb.EJBCommonServices.getServerTimestamp()));
-		return scaricoMagazzinoBulk;
+		return abilitazioneMagazzinoBulk;
 	}
 
     public RemoteIterator preparaQueryBolleScaricoDaVisualizzare(UserContext userContext, List<BollaScaricoMagBulk> bolle) throws ComponentException{
@@ -484,4 +688,125 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 				"default");
     }
     
+    public RemoteIterator ricercaMovimenti(UserContext userContext, ParametriSelezioneMovimentiBulk parametri) throws ComponentException
+    {
+    	MovimentiMagHome movimentiHome = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
+    	SQLBuilder sql = movimentiHome.createSQLBuilder();
+    	sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
+    	sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, MovimentiMagBulk.STATO_ANNULLATO);
+    	sql.addClause(FindClause.AND, "cdMagazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+    	if (parametri.getDaDataMovimento() != null ){
+    		sql.addSQLClause("AND","DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataMovimento());
+    	} 
+    	if (parametri.getaDataMovimento() != null ){
+    		Calendar cal = Calendar.getInstance();
+    		cal.setTime(parametri.getaDataMovimento());
+    		cal.add(Calendar.DAY_OF_WEEK, 1);
+    		Timestamp aDataMovimento= new Timestamp(cal.getTime().getTime());
+    		sql.addSQLClause("AND","DT_MOVIMENTO",SQLBuilder.LESS,aDataMovimento);
+    	} 
+    	if (parametri.getDaDataCompetenza() != null ){
+    		sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataCompetenza());
+    	} 
+    	if (parametri.getaDataCompetenza() != null ){
+    		sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.LESS_EQUALS,parametri.getaDataCompetenza());
+    	} 
+    	if (parametri.getTerzo() != null && parametri.getTerzo().getCd_terzo() != null){
+    		sql.addSQLClause("AND","CD_TERZO",SQLBuilder.EQUALS,parametri.getTerzo().getCd_terzo());
+    	} 
+    	if (parametri.getTipoMovimentoMag() != null && parametri.getTipoMovimentoMag().getCdTipoMovimento() != null){
+    		sql.addSQLClause("AND","CD_TIPO_MOVIMENTO",SQLBuilder.EQUALS,parametri.getTipoMovimentoMag().getCdTipoMovimento());
+    	} 
+        sql.generateJoin("lottoMag", "LOTTO_MAG");
+        sql.generateJoin(LottoMagBulk.class, Bene_servizioBulk.class, "beneServizio", "BENE_SERVIZIO");
+    	
+    	if (parametri.getDaBeneServizio() != null && parametri.getDaBeneServizio().getCd_bene_servizio() != null){
+    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.GREATER_EQUALS,parametri.getDaBeneServizio().getCd_bene_servizio());
+    	} 
+    	if (parametri.getaBeneServizio() != null && parametri.getaBeneServizio().getCd_bene_servizio() != null){
+    		sql.addSQLClause("AND","LOTTO_MAG.CD_BENE_SERVIZIO",SQLBuilder.LESS_EQUALS,parametri.getaBeneServizio().getCd_bene_servizio());
+    	} 
+    	if (parametri.getDaUnitaOperativaRicevente() != null && parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa() != null){
+    		sql.addSQLClause("AND","CD_UOP",SQLBuilder.GREATER_EQUALS,parametri.getDaUnitaOperativaRicevente().getCdUnitaOperativa());
+    	} 
+    	if (parametri.getaUnitaOperativaRicevente() != null && parametri.getaUnitaOperativaRicevente().getCdUnitaOperativa() != null){
+    		sql.addSQLClause("AND","CD_UOP",SQLBuilder.LESS_EQUALS,parametri.getaUnitaOperativaRicevente().getCdUnitaOperativa());
+    	} 
+    	if (parametri.getDataBolla() != null ){
+    		sql.addSQLClause("AND","DATA_BOLLA",SQLBuilder.GREATER_EQUALS,parametri.getDataBolla());
+    	} 
+    	if (parametri.getNumeroBolla() != null ){
+    		sql.addSQLClause("AND","NUMERO_BOLLA",SQLBuilder.GREATER_EQUALS,parametri.getNumeroBolla());
+    	} 
+    	if (parametri.getLottoFornitore() != null ){
+    		sql.addSQLClause("AND","LOTTO_FORNITORE",SQLBuilder.GREATER_EQUALS,parametri.getLottoFornitore());
+    	} 
+    	if (parametri.getUnitaOperativaOrdine() != null && parametri.getUnitaOperativaOrdine().getCdUnitaOperativa() != null){
+    		sql.addSQLClause("AND","LOTTO_MAG.CD_UNITA_OPERATIVA",SQLBuilder.EQUALS,parametri.getUnitaOperativaOrdine().getCdUnitaOperativa());
+    	} 
+    	if (parametri.getNumerazioneOrd() != null && parametri.getNumerazioneOrd().getCdNumeratore() != null){
+    		sql.addSQLClause("AND","LOTTO_MAG.CD_NUMERATORE_ORDINE",SQLBuilder.EQUALS,parametri.getNumerazioneOrd().getCdNumeratore());
+    	} 
+    	if (parametri.getDaNumeroOrdine() != null){
+    		sql.addSQLClause("AND","LOTTO_MAG.NUMERO_ORDINE",SQLBuilder.GREATER_EQUALS,parametri.getDaNumeroOrdine());
+    	} 
+    	if (parametri.getaNumeroOrdine() != null){
+    		sql.addSQLClause("AND","LOTTO_MAG.NUMERO_ORDINE",SQLBuilder.LESS_EQUALS,parametri.getaNumeroOrdine());
+    	} 
+    	if (parametri.getDaDataOrdine() != null || parametri.getaDataOrdine() != null || parametri.getDaDataOrdineDef() != null || parametri.getaDataOrdineDef() != null){
+            sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
+            sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+            sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+            if (parametri.getDaDataOrdine() != null){
+        		sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.GREATER_EQUALS,parametri.getDaDataOrdine());
+            }
+            if (parametri.getaDataOrdine() != null){
+        		sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdine());
+            }
+            if (parametri.getDaDataOrdineDef() != null){
+        		sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.GREATER_EQUALS,parametri.getDaDataOrdineDef());
+            }
+            if (parametri.getaDataOrdineDef() != null){
+        		sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdineDef());
+            }
+    	} 
+
+    	SQLBuilder sqlCdsExists = getHome(userContext, TipoMovimentoMagBulk.class).createSQLBuilder();
+    	sqlCdsExists.resetColumns();
+    	sqlCdsExists.addColumn("1");
+    	sqlCdsExists.addSQLJoin("TIPO_MOVIMENTO_MAG.CD_CDS", "MOVIMENTO_MAG.CD_CDS_TIPO_MOVIMENTO");
+    	sqlCdsExists.addSQLJoin("TIPO_MOVIMENTO_MAG.CD_TIPO_MOVIMENTO", "MOVIMENTO_MAG.CD_TIPO_MOVIMENTO");
+    	sqlCdsExists.addSQLClause("AND","TIPO_MOVIMENTO_MAG.TIPO", SQLBuilder.EQUALS, parametri.getTipoMovimento());
+
+    	sql.addOrderBy("DT_MOVIMENTO");
+    	sql.addOrderBy("DT_RIFERIMENTO");
+    	
+    	return  iterator(userContext,sql,MovimentiMagBulk.class,null);
+    }
+
+    private void aggiornaMovimentiConBollaScarico(UserContext userContext, BollaScaricoMagBulk bollaScaricoMag) throws ComponentException{
+    	try {
+	    	BollaScaricoMagHome bollaHome = (BollaScaricoMagHome)getHome(userContext, BollaScaricoMagBulk.class);
+	    	MovimentiMagHome movHome = (MovimentiMagHome)getHome(userContext, BollaScaricoMagBulk.class);
+	    	Optional.ofNullable(bollaHome.findBollaScaricoRigaMagList(bollaScaricoMag))
+	    	.filter(list->!list.isEmpty())
+	    	.ifPresent(list->{
+	    		list.stream()
+	    		.forEach(bollaRiga->{
+	    			try{
+	    				MovimentiMagBulk movimentoMag = (MovimentiMagBulk)movHome.findByPrimaryKey(bollaRiga.getMovimentiMag());
+	    				movimentoMag.setBollaScaricoMag(bollaRiga.getBollaScaricoMag());
+	    				movimentoMag.setToBeUpdated();
+	    				modificaConBulk(userContext, movimentoMag);
+	    			} catch (ComponentException|PersistencyException ex) {
+	    				throw new DetailedRuntimeException(ex);
+	    			}
+			    });
+		    });
+		} catch (DetailedRuntimeException ex) {
+			throw handleException(ex.getDetail());
+    	} catch(PersistencyException|IntrospectionException e) {
+    		throw new ComponentException(e);
+    	}
+    }
 }

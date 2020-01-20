@@ -65,6 +65,10 @@
 		inputType="TEXT"
 		inputSize="5"
 		maxLength="5"
+		enabledOnFreeSearch="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
 		label="Cap" />
 	<fieldProperty
 		name="pgComune"
@@ -72,7 +76,7 @@
 		inputType="TEXT"
 		inputSize="10"
 		maxLength="10"
-		label="Comune" />
+		label="Comune"/>
 	<fieldProperty
 		name="pgNazione"
 		property="pgNazione"
@@ -116,12 +120,13 @@
 		name="indirizzo" />
 	<formFieldProperty
 		name="cap" />
-	<formFieldProperty
-		name="dtCancellazione" />
+
 	<formFieldProperty
 		name="findComune" />
 	<formFieldProperty
 		name="findNazione" />
+	<formFieldProperty
+			name="dtCancellazione" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
@@ -133,7 +138,7 @@
 	<findFieldProperty
 		name="cap" />
 	<findFieldProperty
-		name="pgComune" />
+		name="pgComune"/>
 	<findFieldProperty
 		name="pgNazione" />
 	<findFieldProperty
