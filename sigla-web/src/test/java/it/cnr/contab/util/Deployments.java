@@ -51,6 +51,7 @@ public class Deployments {
                 .withMavenCentralRepo(false)
                 .withRemoteRepo("central", new URL(
                         Optional.ofNullable(System.getProperty("nexus.url"))
+                                .map(s -> s.concat("/content/groups/public"))
                                 .orElse("https://repo1.maven.org/maven2")
                 ), "default")
                 .loadPomFromFile("pom.xml");
