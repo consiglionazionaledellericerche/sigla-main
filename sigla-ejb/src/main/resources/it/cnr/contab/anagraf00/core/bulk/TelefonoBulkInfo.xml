@@ -44,7 +44,7 @@
 		label="Riferimento"
 		inputType="TEXT"
 		nullable="false"
-		maxLength="50" />
+		maxLength="100" />
 		
 	<formFieldProperty
 		name="ds_riferimento"

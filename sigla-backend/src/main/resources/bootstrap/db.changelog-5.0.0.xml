@@ -2787,4 +2787,11 @@ TRASPORTO_AEREO"/>
     <changeSet author="ciro.salvio" id="addNotNullQta_carico_lotto-tipo_movimento_mag">
         <addNotNullConstraint columnName="qta_carico_lotto" tableName="tipo_movimento_mag" columnDataType="VARCHAR(1)"/>
     </changeSet>
+
+    <changeSet author="gianfranco.gasparro" id="resize-column-telefono-riferimento">
+        <modifyDataType tableName="telefono"
+                        columnName="riferimento"
+                        newDataType="VARCHAR(100)" />
+    </changeSet>
+
 </databaseChangeLog>

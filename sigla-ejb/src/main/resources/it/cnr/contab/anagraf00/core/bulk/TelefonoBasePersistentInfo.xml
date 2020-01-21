@@ -67,7 +67,7 @@
 			columnName="RIFERIMENTO"
 			propertyName="riferimento"
 			sqlTypeName="VARCHAR"
-			columnSize="50" />
+			columnSize="100" />
 		<columnMapping
 			columnName="DS_RIFERIMENTO"
 			propertyName="ds_riferimento"
