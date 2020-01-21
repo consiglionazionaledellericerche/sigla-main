@@ -302,8 +302,8 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
  end;
 
  procedure restituzioneCrediti(aLiquid liquid_cori%rowtype,Cds In Out VARCHAR2,Uo In Out VARCHAR2,terzo_versamento In Out VARCHAR2, aLGC liquid_gruppo_centro%rowtype, 
- 		aTotReversale IN OUT number, aRevP IN OUT reversale%rowtype, aListRigheRevP IN OUT CNRCTB038.righeReversaleList, 
- 		aTotMandato IN OUT number, aManP IN OUT mandato%rowtype, aListRigheManP IN OUT CNRCTB038.righeMandatoList, aUser varchar2, aTSNow date) is
+    aTotReversale IN OUT number, aRevP IN OUT reversale%rowtype, aListRigheRevP IN OUT CNRCTB038.righeReversaleList, 
+    aTotMandato IN OUT number, aManP IN OUT mandato%rowtype, aListRigheManP IN OUT CNRCTB038.righeMandatoList, aUser varchar2, aTSNow date) is
    aGen documento_generico%rowtype;
    aGenRiga documento_generico_riga%rowtype;
    aGenOpp documento_generico%rowtype;
@@ -753,7 +753,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
        aTotReversale:=aTotReversale+aRevPRiga.im_reversale_riga;
        aListRigheRevP(aListRigheRevP.count+1):=aRevPRiga;
 
-			 if aLGCC.CD_CDS_OBB_ACCENTR_OPP is not null and recParametriCNR.FL_TESORERIA_UNICA = 'Y' then
+       if aLGCC.CD_CDS_OBB_ACCENTR_OPP is not null and recParametriCNR.FL_TESORERIA_UNICA = 'Y' then
          
          Select * into aObbScad
          From     obbligazione_scadenzario
@@ -1021,7 +1021,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
 
          -- Aggiorna il campo IM_PAGAMENTI_INCASSI su VOCE_F_SALDI_CMP
            CNRCTB037.RISCONTROREVERSALE (aRevRegolarizzazione.esercizio, aRevRegolarizzazione.cd_cds, aRevRegolarizzazione.pg_reversale, 'I', aManRegolarizzazione.utcr);
-			 end if;
+       end if;
    end loop;
    if aListGenVERighe.count > 0 then
     CNRCTB110.CREAGENERICOAGGOBBACC(aGenVE,aListGenVERighe);
@@ -1223,26 +1223,25 @@ l.cd_gruppo_cr = '1004'
       aObbPG:=null;
       aObbPGScad:=null;
 
-
-			select NVL(sum(ammontare),0) 
-			INTO SOMMA_OPPOSTA
-			from
-			contributo_ritenuta c, liquid_gruppo_Cori_Det l
-			where c.esercizio = l.esercizio_contributo_ritenuta and
-			c.pg_compenso = l.pg_compenso and
-			C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
-			c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
-			l.CD_CDS = aAggregato.CD_CDS and
-			l.ESERCIZIO = aAggregato.esercizio and
-			l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
-			l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
-			l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
-			l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
-			l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
-			l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
-			l.CD_REGIONE = aAggregato.CD_REGIONE and
-			l.PG_COMUNE = aAggregato.PG_COMUNE and
-			C.AMMONTARE > 0;
+      select NVL(sum(ammontare),0) 
+      INTO SOMMA_OPPOSTA
+      from
+      contributo_ritenuta c, liquid_gruppo_Cori_Det l
+      where c.esercizio = l.esercizio_contributo_ritenuta and
+      c.pg_compenso = l.pg_compenso and
+      C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
+      c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+      l.CD_CDS = aAggregato.CD_CDS and
+      l.ESERCIZIO = aAggregato.esercizio and
+      l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
+      l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
+      l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
+      l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
+      l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
+      l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
+      l.CD_REGIONE = aAggregato.CD_REGIONE and
+      l.PG_COMUNE = aAggregato.PG_COMUNE and
+      C.AMMONTARE > 0;
 
       begin
        select distinct a.cd_elemento_voce
@@ -1312,7 +1311,7 @@ l.cd_gruppo_cr = '1004'
 
 
 -- GG MODIFICA PER RIBALTARE ANCHE GLI IMPEGNI E NON CREARE SOLO GLI ACCERTAMENTI...IN QUESTO MODO IL FINE ANNO DEGLI IMPEGNI QUADRA CON L'INIZIO ANNO SUCCESSIVO
-			IF SOMMA_OPPOSTA > 0 THEN
+      IF SOMMA_OPPOSTA > 0 THEN
         begin
          select distinct a.cd_elemento_voce
          into aCdEV
@@ -1380,7 +1379,7 @@ l.cd_gruppo_cr = '1004'
         CNRCTB030.CREAOBBLIGAZIONEPGIROTRONC(false,aObb,aObbScad,aAcc,aAccScad,trunc(aTSNow));
         aObbPG:=aObb;
         aObbPGScad:=aObbScad;
-			END IF;
+      END IF;
       TROVATO_DETTAGLIO_P_GIRO := 'N';
 begin
       For i in 1..Nvl(tb_ass_pgiro.Count,0) Loop
@@ -1397,13 +1396,13 @@ begin
       
             TROVATO_DETTAGLIO_P_GIRO := 'S';
       
-						IF SOMMA_OPPOSTA > 0 THEN
+            IF SOMMA_OPPOSTA > 0 THEN
               tb_ass_pgiro(i).CD_CDS_OBB_PGIRO_OPP  := aObbPG.cd_cds;
               tb_ass_pgiro(i).ES_OBB_PGIRO_OPP      := aObbPG.esercizio;
               tb_ass_pgiro(i).ES_ORIG_OBB_PGIRO_OPP := aObbPG.esercizio_originale;
               tb_ass_pgiro(i).PG_OBB_PGIRO_OPP      := aObbPG.PG_OBBLIGAZIONE;
-						END IF;
-						
+            END IF;
+            
             tb_ass_pgiro(i).cd_cds_acc_pgiro  := aAccPG.cd_cds;
             tb_ass_pgiro(i).es_acc_pgiro      := aAccPG.esercizio;
             tb_ass_pgiro(i).es_orig_acc_pgiro := aAccPG.esercizio_originale;
@@ -1488,7 +1487,7 @@ end;
           ,esercizio_acc_accentr = aAccPG.esercizio
           ,esercizio_ori_acc_accentr = aAccPG.esercizio_originale
           ,pg_acc_accentr = aAccPG.pg_accertamento
-					,cd_cds_OBB_accentr_OPP = aObbPG.cd_cds
+          ,cd_cds_OBB_accentr_OPP = aObbPG.cd_cds
           ,ES_OBB_ACCENTR_OPP = aObbPG.esercizio
           ,ES_ORIG_OBB_ACCENTR_OPP = aObbPG.esercizio_originale
           ,PG_OBB_ACCENTR_OPP = aObbPG.pg_obbligazione
@@ -1500,25 +1499,25 @@ end;
         and cd_unita_organizzativa = aAggregato.cd_unita_organizzativa;
   else  -- aAggregato.im_liquidato > 0
 
-		select abs(NVL(sum(ammontare),0) )
-		INTO SOMMA_OPPOSTA
-		from
-		contributo_ritenuta c, liquid_gruppo_Cori_Det l
-		where c.esercizio = l.esercizio_contributo_ritenuta and
-		c.pg_compenso = l.pg_compenso and
-		C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
-		c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
-		l.CD_CDS = aAggregato.CD_CDS and
-		l.ESERCIZIO = aAggregato.esercizio and
-		l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
-		l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
-		l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
-		l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
-		l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
-		l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
-		l.CD_REGIONE = aAggregato.CD_REGIONE and
-		l.PG_COMUNE = aAggregato.PG_COMUNE and
-		C.AMMONTARE < 0;
+    select abs(NVL(sum(ammontare),0) )
+    INTO SOMMA_OPPOSTA
+    from
+    contributo_ritenuta c, liquid_gruppo_Cori_Det l
+    where c.esercizio = l.esercizio_contributo_ritenuta and
+    c.pg_compenso = l.pg_compenso and
+    C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
+    c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+    l.CD_CDS = aAggregato.CD_CDS and
+    l.ESERCIZIO = aAggregato.esercizio and
+    l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
+    l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
+    l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
+    l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
+    l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
+    l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
+    l.CD_REGIONE = aAggregato.CD_REGIONE and
+    l.PG_COMUNE = aAggregato.PG_COMUNE and
+    C.AMMONTARE < 0;
       
    if aLGC.pg_obb_accentr is not null then
     --CNRCTB043.modificaPraticaObb(aLGC.esercizio_obb_accentr,aLGC.cd_cds_obb_accentr,aLGC.esercizio_ori_obb_accentr,aLGC.pg_obb_accentr,aAggregato.im_liquidato,aTSNow,aUser);
@@ -1647,7 +1646,7 @@ end;
       aAcc:=aAccNew;
       aAccScad:=aAccScadNew;
 
- 			
+      
  
       TROVATO_DETTAGLIO_P_GIRO := 'N';
       
@@ -2136,6 +2135,9 @@ end;
    aCdTerzoUO number(8);
    aCdModPagUO varchar2(10);
    aPgBancaUO number(10);
+   aCdTerzoUORev number(8);
+   aCdModPagUORev varchar2(10);
+   aPgBancaUORev number(10);
    lIsCdsInterDet boolean;
    lIsCdsInterTot boolean;
    aAccTmp accertamento%rowtype;
@@ -2161,9 +2163,16 @@ end;
    aAccNew accertamento%rowtype;
    aAccScadNew accertamento_scadenzario%rowtype;
    aAccScadVoceNew accertamento_scad_voce%rowtype;
+   aAccGiroOpp accertamento%rowtype;
+   aAccScadGiroOpp accertamento_scadenzario%rowtype;
+   aAccScadVoceGiroOpp accertamento_scad_voce%rowtype;
+   aObbGiroOpp obbligazione%rowtype;
+   aObbScadGiroOpp obbligazione_scadenzario%rowtype;
+   aObbScadVoceGiroOpp obbligazione_scad_voce%rowtype;
    recParametriCNR PARAMETRI_CNR%Rowtype;
    ind_pGiro    number := 0;
    ESERCIZIO_UO_SPECIALI NUMBER;
+   somma_compensazioni NUMBER;
  begin
   for aPar in (select * from vsx_liquidazione_cori where pg_call = pgCall
   ) loop
@@ -3819,6 +3828,31 @@ end;
                 aListRigheManP(aListRigheManP.count+1):=aManPRiga;
                 
                 if aGruppoCentro.PG_ACC_ACCENTR_OPP is not null then
+                    select sum(im_obbligazione) 
+                    into   somma_compensazioni
+                    FROM   liquid_gruppo_centro_comp l, obbligazione o
+                    where  cd_cds_OBB_accentr_OPP = o.cd_cds and
+                           ES_OBB_ACCENTR_OPP = o.esercizio and
+                           ES_ORIG_OBB_ACCENTR_OPP = o.esercizio_originale and
+                           PG_OBB_ACCENTR_OPP = o.pg_obbligazione and
+                           l.ESERCIZIO = aGruppoCentro.esercizio and
+                           l.CD_GRUPPO_CR = aGruppoCentro.cd_gruppo_cr and
+                           l.CD_REGIONE = aGruppoCentro.cd_regione and
+                           l.PG_COMUNE = aGruppoCentro.pg_comune and
+                           l.PG_GRUPPO_CENTRO = aGruppoCentro.pg_gruppo_centro and
+                           PG_OBB_ACCENTR_OPP is not null;
+
+                    if somma_compensazioni > 0 then 
+                      aAccGiroOpp.esercizio:=aGruppoCentro.ES_ACC_ACCENTR_OPP;
+                      aAccGiroOpp.cd_cds:=aGruppoCentro.CD_CDS_ACC_ACCENTR_OPP;
+                      aAccGiroOpp.esercizio_originale:=aGruppoCentro.ES_ORIG_ACC_ACCENTR_OPP;
+                      aAccGiroOpp.pg_ACCERTAMENTO:=aGruppoCentro.PG_ACC_ACCENTR_OPP;
+
+                      CNRCTB035.GETPGIROCDS(aAccGiroOpp,aAccScadGiroOpp,aAccScadVoceGiroOpp,aObbGiroOpp,aObbScadGiroOpp,aObbScadVoceGiroOpp);
+
+                      CNRCTB043.modificaPraticaAcc(aAccGiroOpp.esercizio,aAccGiroOpp.cd_cds,aAccGiroOpp.esercizio_originale,aAccGiroOpp.pg_accertamento,-somma_compensazioni,aTSNow,aUser);
+                    end if;  
+
                   begin
                     select * into aAccVC
                     from accertamento
@@ -3872,8 +3906,13 @@ end;
                   aGenRiga.IM_RIGA_DIVISA:=aGen.IM_TOTALE;
                   aGenRiga.IM_RIGA:=aGen.IM_TOTALE;
                   aGenRiga.CD_TERZO:=aGruppi.cd_terzo_versamento;
-                  aGenRiga.CD_MODALITA_PAG:=aGruppi.CD_MODALITA_PAGAMENTO;
-                  aGenRiga.PG_BANCA:=aGruppi.PG_BANCA;
+
+                  CNRCTB080.getTerzoPerUO(aGen.CD_UNITA_ORGANIZZATIVA, aCdTerzoUORev, aCdModPagUORev, aPgBancaUORev,aGruppi.esercizio);
+
+                  aGenRiga.CD_TERZO_UO_CDS:= aCdTerzoUORev;
+                  aGenRiga.CD_MODALITA_PAG:= aCdModPagUORev;
+                  aGenRiga.PG_BANCA:= aPgBancaUORev;
+
                   aGenRiga.RAGIONE_SOCIALE:=aAnagTst.RAGIONE_SOCIALE;
                   aGenRiga.NOME:=aAnagTst.NOME;
                   aGenRiga.COGNOME:=aAnagTst.COGNOME;
@@ -3911,6 +3950,7 @@ end;
                   aRevPRiga.DS_REVERSALE_RIGA:=aRevP.ds_REVERSALE;
                   aRevPRiga.STATO:=aRevP.stato;
                   aRevPRiga.CD_TERZO:=aGenRiga.CD_TERZO;
+                  aRevPRiga.CD_TERZO_UO:=aGenRiga.CD_TERZO_UO_CDS;
                   aRevPRiga.PG_BANCA:=aGenRiga.pg_banca;
                   aRevPRiga.CD_MODALITA_PAG:=aGenRiga.cd_modalita_pag;
                   aRevPRiga.IM_REVERSALE_RIGA:=aGen.IM_TOTALE;
@@ -3924,7 +3964,7 @@ end;
                   aTotReversale:=aTotReversale+aRevPRiga.im_Reversale_riga;
                   aListRigheRevP(aListRigheRevP.count+1):=aRevPRiga;
 
-              	end if;
+                end if;
             end if;    --fine if aGruppoCentro.pg_obb_accentr is not null then
             For aAggregatoOrig in (Select * From liquid_gruppo_cori
                                    Where esercizio = aGruppoCentro.esercizio
@@ -5079,7 +5119,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
         ti_origine_pgiro  ,
         uo_obb_pgiro      ,
         voce_obb_pgiro    ,
-				CD_CDS_ACC_PGIRO_OPP,
+        CD_CDS_ACC_PGIRO_OPP,
         ES_ACC_PGIRO_OPP,
         ES_ORIG_ACC_PGIRO_OPP,
         PG_ACC_PGIRO_OPP,
@@ -5131,7 +5171,7 @@ Procedure calcolaLiquidInterfTot (aCdCds varchar2, aEs number,daEsercizioPrec ch
         tb_ass_pgiro(i).ti_origine_pgiro ,
         tb_ass_pgiro(i).uo_obb_pgiro,
         tb_ass_pgiro(i).voce_obb_pgiro  ,
-				tb_ass_pgiro(i).CD_CDS_ACC_PGIRO_OPP,
+        tb_ass_pgiro(i).CD_CDS_ACC_PGIRO_OPP,
         tb_ass_pgiro(i).ES_ACC_PGIRO_OPP,
         tb_ass_pgiro(i).ES_ORIG_ACC_PGIRO_OPP,
         tb_ass_pgiro(i).PG_ACC_PGIRO_OPP,
