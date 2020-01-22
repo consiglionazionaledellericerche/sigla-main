@@ -22,8 +22,11 @@
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 package it.cnr.contab.progettiric00.core.bulk;
+import java.math.BigDecimal;
 import java.util.List;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
@@ -64,12 +67,16 @@ public class V_saldi_voce_progettoHome extends BulkHome {
 		return null;
 	}
 	
-	public List<V_saldi_voce_progettoBulk> cercaSaldoVoce(Integer pgProgetto, Integer esercizio) throws PersistencyException
+	public List<V_saldi_voce_progettoBulk> cercaSaldoVoce(Integer pgProgetto) throws PersistencyException
 	{
-		SQLBuilder sql = this.createSQLBuilder();	
-		
+		SQLBuilder sql = this.createSQLBuilder();
+
+		BigDecimal annoFrom = ((Configurazione_cnrHome)getHomeCache().getHome(Configurazione_cnrBulk.class))
+				.getConfigurazione(new Integer(0), null, Configurazione_cnrBulk.PK_GESTIONE_PROGETTI, Configurazione_cnrBulk.SK_PROGETTO_PIANO_ECONOMICO)
+				.getIm01();
+
 		sql.addSQLClause(FindClause.AND,"PG_PROGETTO",SQLBuilder.EQUALS,pgProgetto);
-		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,esercizio);
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.GREATER_EQUALS,annoFrom);
 
 		return fetchAll(sql);
 	}	

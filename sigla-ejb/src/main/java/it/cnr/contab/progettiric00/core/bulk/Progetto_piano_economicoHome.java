@@ -78,9 +78,8 @@ public class Progetto_piano_economicoHome extends BulkHome {
         sqlExists.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_UNITA_ORGANIZZATIVA", "PROGETTO_PIANO_ECONOMICO.CD_UNITA_ORGANIZZATIVA");
         sqlExists.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_VOCE_PIANO", "PROGETTO_PIANO_ECONOMICO.CD_VOCE_PIANO");
         sqlExists.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO", "PROGETTO_PIANO_ECONOMICO.ESERCIZIO_PIANO");
-    	sqlExists.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", SQLBuilder.EQUALS, esercizio);
     	sqlExists.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", SQLBuilder.EQUALS, pgProgetto);
-    	sqlExists.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", SQLBuilder.EQUALS, elementoVoce.getEsercizio());
+		sqlExists.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", SQLBuilder.EQUALS, esercizio);
     	sqlExists.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", SQLBuilder.EQUALS, elementoVoce.getTi_appartenenza());
     	sqlExists.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", SQLBuilder.EQUALS, elementoVoce.getTi_gestione());
     	sqlExists.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, elementoVoce.getCd_elemento_voce());

@@ -67,7 +67,7 @@ public class Var_stanz_resHome extends BulkHome {
 	 * @return java.util.Collection Collezione di oggetti <code>Ass_pdg_variazione_cdrBulk</code>
 	 */
 
-	public java.util.Collection findAssociazioneCDR(Var_stanz_resBulk testata) throws IntrospectionException, PersistencyException {
+	public java.util.Collection findAssociazioneCDR(Var_stanz_resBulk testata) throws PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Ass_var_stanz_res_cdrBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause("AND","esercizio",sql.EQUALS,testata.getEsercizio());
@@ -76,7 +76,7 @@ public class Var_stanz_resHome extends BulkHome {
 		return dettHome.fetchAll(sql);
 	}	
 
-	public java.util.Collection findVariazioniRiga(Var_stanz_resBulk testata) throws IntrospectionException, PersistencyException {
+	public java.util.Collection findVariazioniRiga(Var_stanz_resBulk testata) throws PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Var_stanz_res_rigaBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause("AND","esercizio",sql.EQUALS,testata.getEsercizio());
@@ -84,7 +84,7 @@ public class Var_stanz_resHome extends BulkHome {
 		sql.addClause("AND","cd_cdr",sql.EQUALS,testata.getCdr()!=null?testata.getCdr().getCd_centro_responsabilita():null);
 		return dettHome.fetchAll(sql);
 	}	
-	public java.util.Collection findAllVariazioniRiga(Var_stanz_resBulk testata) throws IntrospectionException, PersistencyException {
+	public java.util.Collection findAllVariazioniRiga(Var_stanz_resBulk testata) throws PersistencyException {
 		PersistentHome dettHome = getHomeCache().getHome(Var_stanz_res_rigaBulk.class);
 		SQLBuilder sql = dettHome.createSQLBuilder();
 		sql.addClause("AND","esercizio",sql.EQUALS,testata.getEsercizio());

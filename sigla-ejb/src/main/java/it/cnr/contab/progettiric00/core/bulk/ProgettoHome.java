@@ -816,7 +816,7 @@ public class ProgettoHome extends BulkHome {
     public ProgettoBulk loadSaldiPianoEconomico(UserContext userContext, ProgettoBulk progetto) throws PersistencyException {
     	try {
     		List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHomeCache().getHome(V_saldi_voce_progettoBulk.class))
-					.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio());
+					.cercaSaldoVoce(progetto.getPg_progetto());
 
     		progetto.setVociBilancioMovimentate(
 					new BulkList<V_saldi_voce_progettoBulk>(
@@ -881,6 +881,45 @@ public class ProgettoHome extends BulkHome {
 				} catch (PersistencyException ex){
 					throw new DetailedRuntimeException(ex.getMessage());
 				}
+				ppe.getVociBilancioAssociate().stream().forEach(voceAss->{
+					V_saldi_voce_progettoBulk saldo =
+							progetto.getVociBilancioMovimentate().stream()
+									.filter(el->el.getEsercizio_voce().equals(voceAss.getEsercizio_voce()))
+									.filter(el->el.getTi_appartenenza().equals(voceAss.getTi_appartenenza()))
+									.filter(el->el.getTi_gestione().equals(voceAss.getTi_gestione()))
+									.filter(el->el.getCd_elemento_voce().equals(voceAss.getCd_elemento_voce()))
+									.findFirst()
+									.orElseGet(()->{
+										V_saldi_voce_progettoBulk saldoNew = new V_saldi_voce_progettoBulk();
+										saldoNew.setEsercizio_voce(voceAss.getEsercizio_voce());
+										saldoNew.setTi_appartenenza(voceAss.getTi_appartenenza());
+										saldoNew.setTi_gestione(voceAss.getTi_gestione());
+										saldoNew.setCd_elemento_voce(voceAss.getCd_elemento_voce());
+
+										saldoNew.setStanziamentoFin(BigDecimal.ZERO);
+										saldoNew.setVariapiuFin(BigDecimal.ZERO);
+										saldoNew.setVariamenoFin(BigDecimal.ZERO);
+										saldoNew.setTrasfpiuFin(BigDecimal.ZERO);
+										saldoNew.setTrasfmenoFin(BigDecimal.ZERO);
+
+										saldoNew.setStanziamentoCofin(BigDecimal.ZERO);
+										saldoNew.setVariapiuCofin(BigDecimal.ZERO);
+										saldoNew.setVariamenoCofin(BigDecimal.ZERO);
+										saldoNew.setTrasfpiuCofin(BigDecimal.ZERO);
+										saldoNew.setTrasfmenoCofin(BigDecimal.ZERO);
+
+										saldoNew.setImpaccFin(BigDecimal.ZERO);
+										saldoNew.setImpaccCofin(BigDecimal.ZERO);
+										saldoNew.setManrisFin(BigDecimal.ZERO);
+										saldoNew.setManrisCofin(BigDecimal.ZERO);
+										return saldoNew;
+									});
+					if (Elemento_voceHome.GESTIONE_SPESE.equals(voceAss.getTi_gestione()))
+						voceAss.setSaldoSpesa(saldo);
+					else
+						voceAss.setSaldoEntrata(saldo);
+
+				});
 			});
 			return progetto;
 		} catch(Exception e) {

@@ -72,6 +72,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_modificaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
+import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
@@ -429,7 +430,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 						//all'utente di effettuare una variazione negativa
 						List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHome(userContext, V_saldi_voce_progettoBulk.class))
-								.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio()).stream()
+								.cercaSaldoVoce(progetto.getPg_progetto()).stream()
 								.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
 										el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
 								.collect(Collectors.toList());
@@ -563,13 +564,15 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		var_stanz_res.setToBeUpdated();
 		if (var_stanz_res.getAssociazioneCDR().isEmpty()) 
 			throw new ApplicationException("Associare almeno un Centro di Responsabilità alla Variazione.");
-		
-
 
 		controllaRimodulazioneProgetto(userContext,var_stanz_res);
 
 		try {
-			Utility.createSaldoComponentSession().checkPdgPianoEconomico(userContext, var_stanz_res);
+			SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
+			//Verifico che il tipo di variazione sia consentita
+			saldoComponent.checkPdgPianoEconomico(userContext, var_stanz_res);
+			//Verifico che piano economico non si sfondi
+			saldoComponent.checkDispPianoEconomicoProgetto(userContext, var_stanz_res);
 		} catch (RemoteException e) {
 			throw new ComponentException(e);
 		}		
@@ -794,8 +797,6 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 												   " diventerebbe negativo ("+new it.cnr.contab.util.EuroFormat().format(saldi.getDispAdImpResiduoImproprio().abs())+")");					
 				}
 			}
-		} catch (IntrospectionException e) {
-			throw new ComponentException(e);
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
@@ -1346,11 +1347,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 
 			var_stanz_res_riga.setIm_variazione(saldo.getImp_da_assegnare());
 			Var_stanz_resHome testataHome = (Var_stanz_resHome)getHome(usercontext, Var_stanz_resBulk.class);
-			try {
-				var_stanz_res.setRigaVariazione(new it.cnr.jada.bulk.BulkList(testataHome.findVariazioniRiga(var_stanz_res)));
-			} catch (IntrospectionException e1) {
-				throw new ComponentException(e1);
-			}
+			var_stanz_res.setRigaVariazione(new it.cnr.jada.bulk.BulkList(testataHome.findVariazioniRiga(var_stanz_res)));
 			try {
 				var_stanz_res_riga.validate(var_stanz_res_riga);
 			} catch (ValidationException e) {
@@ -1534,8 +1531,6 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 						return spe_det;
 					}
 				}
-			} catch (IntrospectionException e) {
-				throw new ComponentException(e);
 			} catch (RemoteException e) {
 				throw new ComponentException(e);
 			} catch (PersistencyException e) {

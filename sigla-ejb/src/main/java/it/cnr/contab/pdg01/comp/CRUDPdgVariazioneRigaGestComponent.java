@@ -635,7 +635,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 						//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 						//all'utente di effettuare una variazione negativa
 						List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHome(userContext, V_saldi_voce_progettoBulk.class))
-								.cercaSaldoVoce(progetto.getPg_progetto(),progetto.getEsercizio()).stream()
+								.cercaSaldoVoce(progetto.getPg_progetto()).stream()
 												.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
 														el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
 												.collect(Collectors.toList());
