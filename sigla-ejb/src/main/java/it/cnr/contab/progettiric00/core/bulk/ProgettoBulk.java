@@ -1128,7 +1128,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 		return new BulkList<V_saldi_voce_progettoBulk>(
 				getVociBilancioMovimentate().stream()
 					.filter(voceMov->{
-						return !this.getDettagliPianoEconomicoAnnoCorrente().stream()
+						return !this.getAllDetailsProgettoPianoEconomico().stream()
 								.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
 								.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
 								.filter(voceAss->voceAss.getElemento_voce()!=null)

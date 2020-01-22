@@ -76,6 +76,7 @@ import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
 import it.cnr.contab.prevent00.bulk.V_assestato_residuoBulk;
@@ -84,6 +85,7 @@ import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_linea_resHome;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
 import it.cnr.contab.preventvar00.bulk.Var_bilancioHome;
+import it.cnr.contab.progettiric00.comp.RimodulazioneNonApprovataException;
 import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.enumeration.StatoProgettoRimodulazione;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -91,6 +93,7 @@ import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.varstanz00.bulk.Ass_var_stanz_res_cdrBulk;
@@ -121,6 +124,8 @@ import it.cnr.jada.util.Config;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author mspasiano
@@ -129,6 +134,8 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implements Cloneable, Serializable{
+	private static final Logger log = LoggerFactory.getLogger(CRUDPdgVariazioneGestionaleComponent.class);
+
 	private class CtrlVarPianoEco {
 		public CtrlVarPianoEco(ProgettoBulk progetto) {
 			super();
@@ -677,6 +684,24 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				super.modificaConBulk(userContext,saldi);
 			}
 			generaVariazioneBilancio(userContext, var_stanz_res);
+
+			if (var_stanz_res.isVariazioneRimodulazioneProgetto()) {
+				try {
+					Progetto_rimodulazioneHome prgHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+					Progetto_rimodulazioneBulk rimodulazione = prgHome.rebuildRimodulazione(userContext, var_stanz_res.getProgettoRimodulazione());
+					prgHome.validaPassaggioStatoApprovato(userContext, rimodulazione, var_stanz_res);
+					Utility.createRimodulaProgettoRicercaComponentSession().approva(userContext, rimodulazione, var_stanz_res);
+				} catch (RimodulazioneNonApprovataException e) {
+					log.info("Approvazione Variazione di Rimodulazione "+var_stanz_res.getEsercizio()+"\\"+var_stanz_res.getPg_variazione()+" che non genera "
+							+"approvazione della rimodulazione associata.");
+				} catch (ComponentException e) {
+					throw new ApplicationMessageFormatException("Anomalia in fase di approvazione Rimodulazione Progetto.<br>{0}",
+							Optional.ofNullable(e.getDetail())
+									.map(el->el.getMessage())
+									.orElse(e.getMessage()));
+				}
+			}
+
 			if (var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_STO)||
 				var_stanz_res.getTipologia().equalsIgnoreCase(Var_stanz_resBulk.TIPOLOGIA_ECO)){
 				String soggetto = "E' stata approvata la Variazione allo stanziamento residuo n° "+var_stanz_res.getPg_variazione();

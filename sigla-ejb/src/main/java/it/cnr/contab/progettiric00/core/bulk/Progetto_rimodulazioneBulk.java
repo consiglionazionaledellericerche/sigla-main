@@ -397,7 +397,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 				.flatMap(el->Optional.ofNullable(el.getVociBilancioMovimentate()))
 				.map(List::stream).orElse(Stream.empty())
 					.filter(voceMov->{
-						return !this.getDettagliPianoEconomicoAnnoCorrente().stream()
+						return !this.getAllDetailsProgettoPianoEconomico().stream()
 								.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
 								.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
 								.filter(voceAss->!voceAss.isDetailRimodulatoEliminato())
