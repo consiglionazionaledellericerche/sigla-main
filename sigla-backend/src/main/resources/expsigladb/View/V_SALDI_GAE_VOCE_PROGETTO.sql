@@ -2,10 +2,10 @@
 --  DDL for View V_SALDI_GAE_VOCE_PROGETTO
 --------------------------------------------------------
 
-CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "CD_CENTRO_RESPONSABILITA", "CD_LINEA_ATTIVITA", "ESERCIZIO_VOCE", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "TRASFPIU_FIN", "TRASFMENO_FIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "TRASFPIU_COFIN", "TRASFMENO_COFIN", "IMPACC_FIN", "IMPACC_COFIN", "MANRIS_FIN", "MANRIS_COFIN") AS 
-  (SELECT    x.pg_progetto, x.esercizio, 
+CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCIZIO", "CD_CENTRO_RESPONSABILITA", "CD_LINEA_ATTIVITA", "ESERCIZIO_VOCE", "TI_APPARTENENZA", "TI_GESTIONE", "CD_ELEMENTO_VOCE", "STANZIAMENTO_FIN", "VARIAPIU_FIN", "VARIAMENO_FIN", "TRASFPIU_FIN", "TRASFMENO_FIN", "STANZIAMENTO_COFIN", "VARIAPIU_COFIN", "VARIAMENO_COFIN", "TRASFPIU_COFIN", "TRASFMENO_COFIN", "IMPACC_FIN", "IMPACC_COFIN", "MANRIS_FIN", "MANRIS_COFIN") AS
+  (SELECT    x.pg_progetto, x.esercizio,
              x.cd_centro_responsabilita, x.cd_linea_attivita,
-             x.esercizio_voce, x.ti_appartenenza, x.ti_gestione, x.cd_elemento_voce,
+             x.esercizio, x.ti_appartenenza, x.ti_gestione, x.cd_elemento_voce,
              SUM (x.stanziamento_fin) stanziamento_fin,
              SUM (x.variapiu_fin) variapiu_fin,
              SUM (x.variameno_fin) variameno_fin,
@@ -20,27 +20,27 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
              SUM (x.impacc_cofin) impacc_cofin,
              SUM (x.manris_fin) manris_fin,
              SUM (x.manris_cofin) manris_cofin
-        FROM (SELECT a.pg_progetto, a.esercizio, 
+        FROM (SELECT a.pg_progetto, a.esercizio,
                      a.cd_cdr_assegnatario cd_centro_responsabilita, a.cd_linea_attivita,
-                     a.esercizio esercizio_voce, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce, 
-                     NVL(a.im_spese_gest_decentrata_est, 0) stanziamento_fin, 
+                     a.esercizio esercizio_voce, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce,
+                     NVL(a.im_spese_gest_decentrata_est, 0) stanziamento_fin,
                      0 variapiu_fin, 0 variameno_fin,
                      0 trasfpiu_fin, 0 trasfmeno_fin,
-                     NVL (a.im_spese_gest_decentrata_int, 0) stanziamento_cofin, 
-                     0 variapiu_cofin, 0 variameno_cofin, 
+                     NVL (a.im_spese_gest_decentrata_int, 0) stanziamento_cofin,
+                     0 variapiu_cofin, 0 variameno_cofin,
                      0 trasfpiu_cofin, 0 trasfmeno_cofin,
                      0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
                 FROM pdg_modulo_spese_gest a
               WHERE NVL (a.im_spese_gest_decentrata_est, 0) != 0
               OR    NVL (a.im_spese_gest_decentrata_int, 0) != 0
               UNION ALL
-              SELECT c.pg_progetto, b.esercizio,  
+              SELECT c.pg_progetto, b.esercizio,
                      b.cd_cdr_assegnatario, b.cd_linea_attivita,
-                     b.esercizio, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce, 
-                     0 stanziamento_fin, 
+                     b.esercizio, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce,
+                     0 stanziamento_fin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                       THEN CASE 
+                       THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0)>0
                               THEN NVL(b.im_spese_gest_decentrata_est, 0)
                               ELSE 0
@@ -55,7 +55,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
                        THEN CASE
-                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0 
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
                               THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
                               ELSE 0
                             END
@@ -70,7 +70,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                              THEN CASE 
+                              THEN CASE
                                      WHEN NVL(b.im_spese_gest_decentrata_est, 0)>0
                                      THEN NVL(b.im_spese_gest_decentrata_est, 0)
                                      ELSE 0
@@ -103,16 +103,16 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        ELSE CASE --INDICO COME TRASFERIMENTO NEGATIVO LE SOMME ASSEGNATE A VOCI ACCENTRATE CHE VENGONO GIRATE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) = 0 AND
                                    NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
-                                   a.ti_motivazione_variazione is null AND 
+                                   a.ti_motivazione_variazione is null AND
                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
                               THEN NVL(b.im_spese_gest_accentrata_est, 0)
                               ELSE 0
                             END
                      END trasfmeno_fin,
-                     0 stanziamento_cofin, 
+                     0 stanziamento_cofin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
-                       THEN CASE 
+                       THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_int, 0)>0
                               THEN NVL(b.im_spese_gest_decentrata_int, 0)
                               ELSE 0
@@ -142,7 +142,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_int, 0) != 0
-                              THEN CASE 
+                              THEN CASE
                                      WHEN NVL(b.im_spese_gest_decentrata_int, 0)>0
                                      THEN NVL(b.im_spese_gest_decentrata_int, 0)
                                      ELSE 0
@@ -175,7 +175,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        ELSE CASE --INDICO COME TRASFERIMENTO NEGATIVO LE SOMME ASSEGNATE A VOCI ACCENTRATE CHE VENGONO GIRATE
                               WHEN NVL(b.im_spese_gest_decentrata_int, 0) = 0 AND
                                    NVL (b.im_spese_gest_accentrata_int, 0) > 0 AND
-                                   a.ti_motivazione_variazione is null AND 
+                                   a.ti_motivazione_variazione is null AND
                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
                               THEN NVL(b.im_spese_gest_accentrata_int, 0)
                               ELSE 0
@@ -198,16 +198,16 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                                          and   e.cd_chiave_primaria = 'PROGETTI'
                                          and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
               UNION ALL
-              SELECT c.pg_progetto, b.esercizio,  
+              SELECT c.pg_progetto, b.esercizio,
                      b.cd_cdr_assegnatario, b.cd_linea_attivita,
-                     b.esercizio, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce, 
-                     0 stanziamento_fin, 
+                     b.esercizio, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce,
+                     0 stanziamento_fin,
                      0 variapiu_fin, 0 variameno_fin,
                      0 trasfpiu_fin, 0 trasfmeno_fin,
-                     0 stanziamento_cofin, 
+                     0 stanziamento_cofin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                       THEN CASE 
+                       THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0)>0
                               THEN NVL(b.im_spese_gest_decentrata_est, 0)
                               ELSE 0
@@ -221,8 +221,8 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                      END variapiu_cofin,
                      CASE
                        WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                       THEN CASE 
-                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0 
+                       THEN CASE
+                              WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
                               THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
                               ELSE 0
                             END
@@ -237,7 +237,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                              THEN CASE 
+                              THEN CASE
                                      WHEN NVL(b.im_spese_gest_decentrata_est, 0)>0
                                      THEN NVL(b.im_spese_gest_decentrata_est, 0)
                                      ELSE 0
@@ -255,8 +255,8 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        WHEN NVL(a.ti_motivazione_variazione,'X') in ('BAN','PRG','ALT','TAE','TAU','INC','RAG')
                        THEN CASE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) != 0
-                              THEN CASE 
-                                     WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0 
+                              THEN CASE
+                                     WHEN NVL(b.im_spese_gest_decentrata_est, 0)<0
                                      THEN ABS(NVL(b.im_spese_gest_decentrata_est, 0))
                                      ELSE 0
                                    END
@@ -270,7 +270,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                        ELSE CASE --INDICO COME TRASFERIMENTO NEGATIVO LE SOMME ASSEGNATE A VOCI ACCENTRATE CHE VENGONO GIRATE
                               WHEN NVL(b.im_spese_gest_decentrata_est, 0) = 0 AND
                                    NVL (b.im_spese_gest_accentrata_est, 0) > 0 AND
-                                   a.ti_motivazione_variazione is null AND 
+                                   a.ti_motivazione_variazione is null AND
                                    (b.cd_cdr_assegnatario_clgs is null OR b.categoria_dettaglio='SCR')
                               THEN NVL(b.im_spese_gest_accentrata_est, 0)
                               ELSE 0
@@ -293,10 +293,10 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                                      and   e.cd_chiave_primaria = 'PROGETTI'
                                      and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
               UNION ALL
-              SELECT c.pg_progetto, b.esercizio_res, 
+              SELECT c.pg_progetto, b.esercizio_res,
                      b.cd_cdr, b.cd_linea_attivita,
-                     b.esercizio_voce, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce, 
-                     0 stanziamento_fin, 
+                     b.esercizio_voce, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce,
+                     0 stanziamento_fin,
                      CASE
                         WHEN a.tipologia_fin='FES' AND NVL(b.im_variazione, 0) > 0
                         THEN NVL(b.im_variazione, 0)
@@ -319,7 +319,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END trasfmeno_fin,
-                     0 stanziamento_cofin, 
+                     0 stanziamento_cofin,
                      CASE
                         WHEN a.tipologia_fin='FIN' AND NVL(b.im_variazione, 0) > 0
                         THEN NVL(b.im_variazione, 0)
@@ -357,24 +357,24 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                                          where e.esercizio = 0
                                          and   e.cd_unita_funzionale = '*'
                                          and   e.cd_chiave_primaria = 'PROGETTI'
-                                         and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')                
+                                         and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
               UNION ALL
-              SELECT c.pg_progetto, b.esercizio_res, 
+              SELECT c.pg_progetto, b.esercizio_res,
                      b.cd_cdr, b.cd_linea_attivita,
-                     b.esercizio_voce, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce, 
-                     0 stanziamento_fin, 
+                     b.esercizio_voce, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce,
+                     0 stanziamento_fin,
                      0 variapiu_fin,
                      0 variameno_fin,
                      0 trasfpiu_fin,
                      0 trasfmeno_fin,
-                     0 stanziamento_cofin, 
+                     0 stanziamento_cofin,
                      CASE
                         WHEN NVL(b.im_variazione, 0) > 0
                         THEN NVL(b.im_variazione, 0)
                         ELSE 0
                      END variapiu_cofin,
                      CASE
-                        WHEN NVL(b.im_variazione, 0) < 0 AND 
+                        WHEN NVL(b.im_variazione, 0) < 0 AND
                              NVL(a.ti_motivazione_variazione,'X')!='TAE'
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
@@ -408,13 +408,13 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                                      and   e.cd_chiave_primaria = 'PROGETTI'
                                      and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
               UNION ALL
-              SELECT b.pg_progetto, a.esercizio_res, 
+              SELECT b.pg_progetto, a.esercizio_res,
                      a.cd_centro_responsabilita, a.cd_linea_attivita,
-                     a.esercizio_res, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce, 
-                     0 stanziamento_fin, 
+                     a.esercizio_res, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce,
+                     0 stanziamento_fin,
                      0 variapiu_fin, 0 variameno_fin,
                      0 trasfpiu_fin, 0 trasfmeno_fin,
-                     0 stanziamento_cofin, 
+                     0 stanziamento_cofin,
                      0 variapiu_cofin, 0 variameno_cofin,
                      0 trasfpiu_cofin, 0 trasfmeno_cofin,
                      CASE
@@ -441,12 +441,12 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                      END impacc_cofin,
                      CASE
                         WHEN c.tipo ='FES'
-                        THEN NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0) 
+                        THEN NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0)
                         ELSE 0
                      END manris_fin,
                      CASE
                         WHEN c.tipo ='FIN'
-                        THEN NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0) 
+                        THEN NVL(a.IM_MANDATI_REVERSALI_PRO, 0) + NVL(a.IM_MANDATI_REVERSALI_IMP, 0)
                         ELSE 0
                      END manris_cofin
                 FROM voce_f_saldi_cdr_linea a,
@@ -461,7 +461,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                                          where e.esercizio = 0
                                          and   e.cd_unita_funzionale = '*'
                                          and   e.cd_chiave_primaria = 'PROGETTI'
-                                         and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')   
+                                         and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
                  AND (NVL(a.IM_OBBL_ACC_COMP, 0)!=0 OR
                       NVL(a.IM_OBBL_RES_IMP, 0)!=0 OR
                       NVL(a.VAR_PIU_OBBL_RES_IMP, 0)!=0 OR
@@ -471,13 +471,13 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                       NVL(a.IM_MANDATI_REVERSALI_PRO, 0)!=0 OR
                       NVL(a.IM_MANDATI_REVERSALI_IMP, 0)!=0)
               UNION ALL
-              SELECT b.pg_progetto, a.esercizio_res, 
+              SELECT b.pg_progetto, a.esercizio_res,
                      a.cd_centro_responsabilita, a.cd_linea_attivita,
-                     a.esercizio_res, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce, 
-                     0 stanziamento_fin, 
+                     a.esercizio_res, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce,
+                     0 stanziamento_fin,
                      0 variapiu_fin, 0 variameno_fin,
                      0 trasfpiu_fin, 0 trasfmeno_fin,
-                     0 stanziamento_cofin, 
+                     0 stanziamento_cofin,
                      0 variapiu_cofin, 0 variameno_cofin,
                      0 trasfpiu_cofin, 0 trasfmeno_cofin,
                      0 impacc_fin,
@@ -502,7 +502,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                                      where e.esercizio = 0
                                      and   e.cd_unita_funzionale = '*'
                                      and   e.cd_chiave_primaria = 'PROGETTI'
-                                     and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')   
+                                     and   e.cd_chiave_secondaria = 'NATURA_REIMPIEGO')
                  AND (NVL(a.IM_OBBL_ACC_COMP, 0)!=0 OR
                       NVL(a.IM_OBBL_RES_IMP, 0)!=0 OR
                       NVL(a.VAR_PIU_OBBL_RES_IMP, 0)!=0 OR
@@ -513,9 +513,9 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                       NVL(a.IM_MANDATI_REVERSALI_IMP, 0)!=0)) x
     GROUP BY x.pg_progetto,
              x.esercizio,
-             x.cd_centro_responsabilita, 
+             x.cd_centro_responsabilita,
              x.cd_linea_attivita,
-             x.esercizio_voce, 
-             x.ti_appartenenza, 
-             x.ti_gestione, 
+             x.esercizio,
+             x.ti_appartenenza,
+             x.ti_gestione,
              x.cd_elemento_voce);
