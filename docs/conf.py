@@ -61,9 +61,9 @@ extensions = [
     "sphinx_markdown_tables",
 ]
 html_theme_options = {
-    'base_url': 'https://sigla-mspasiano.readthedocs.io',
-    'repo_url': 'https://github.com/mspasiano/sigla-main/',
-    'repo_name': 'mspasiano/sigla-main',
+    'base_url': 'https://sigla-main.readthedocs.io',
+    'repo_url': 'https://github.com/consiglionazionaledellericerche/sigla-main/',
+    'repo_name': 'consiglionazionaledellericerche/sigla-main',
     'nav_title': 'Sistema Informativo Gestione Linee di Attività',
     'html_minify': True,
     'css_minify': True,
