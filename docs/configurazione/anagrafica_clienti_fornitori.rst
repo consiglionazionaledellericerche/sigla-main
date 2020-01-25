@@ -50,7 +50,7 @@ qualora sia necessario, valorizzare solo il tab `Rapporto`_.
 Studio Associato
 ================
 Lo Studio Associato è una persona guiridica e come tale deve essere registrata. L'attributo "Studio associato" consente di inserire nel tab Lista Associati,
-qualora sia necessario, i soggetti che fanno parte dello studio, inoltre consente la gestione di un particolare caso nella funzione dei `Compensi<compensi>`
+qualora sia necessario, i soggetti che fanno parte dello studio, inoltre consente la gestione di un particolare caso nella funzione dei `Compensi<compensi>`_
 
 Ente Pubblico
 ================
