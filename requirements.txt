@@ -1,2 +1,5 @@
-mkdocs-material
-mkdocs-pdf-export-plugin
+git+https://github.com/bashtage/sphinx-material.git
+recommonmark
+numpydoc
+nbsphinx
+sphinx_markdown_tables

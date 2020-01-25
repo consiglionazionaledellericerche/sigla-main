@@ -1,1 +1,1 @@
-# Gestione dei Preferiti
+# Gestione Preferiti

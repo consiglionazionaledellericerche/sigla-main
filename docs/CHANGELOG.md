@@ -1,4 +1,4 @@
-## Release 6.1.11  -- _gennaio 20, 2020_ 
+### Release 6.1.11  -- _gennaio 20, 2020_ 
 **Changes**
 
 >**FIX test**
@@ -30,7 +30,7 @@
 >[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *gennaio 20, 2020*
 
 
-## Release 6.1.10  -- _gennaio 18, 2020_ 
+### Release 6.1.10  -- _gennaio 18, 2020_ 
 **Changes**
 
 >**FIX docs [ci skip]**
@@ -54,7 +54,7 @@
 >[c45a4ad26900e34](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c45a4ad26900e34) marco.spasiano *gennaio 18, 2020*
 
 
-## Release 6.1.9  -- _gennaio 17, 2020_ 
+### Release 6.1.9  -- _gennaio 17, 2020_ 
 **Changes**
 
 >**Update .gitlab-ci.yml**
@@ -70,7 +70,7 @@
 >[5e07dc12ed9d718](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e07dc12ed9d718) raffaele.pagano *gennaio 17, 2020*
 
 
-## Release 6.1.8  -- _gennaio 17, 2020_ 
+### Release 6.1.8  -- _gennaio 17, 2020_ 
 **Changes**
 
 >**Enable maven test on deploy stage**
@@ -94,7 +94,7 @@
 >[2f0861350b67ee6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2f0861350b67ee6) raffaele.pagano *gennaio 17, 2020*
 
 
-## Release 6.1.7  -- _gennaio 16, 2020_ 
+### Release 6.1.7  -- _gennaio 16, 2020_ 
 **Changes**
 
 >**Add version REST service**
@@ -102,7 +102,7 @@
 >[c4c3f62432944df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c4c3f62432944df) marco.spasiano *gennaio 16, 2020*
 
 
-## Release 6.1.6  -- _gennaio 16, 2020_ 
+### Release 6.1.6  -- _gennaio 16, 2020_ 
 **Changes**
 
 >**add skip tests on maven deploy**
@@ -114,7 +114,7 @@
 >[5319495cdce7944](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5319495cdce7944) marco.spasiano *gennaio 16, 2020*
 
 
-## Release 6.1.5  -- _gennaio 16, 2020_ 
+### Release 6.1.5  -- _gennaio 16, 2020_ 
 **Changes**
 
 >**Fix Gestione Progetti in assenza di Informix**
@@ -130,7 +130,7 @@
 >[485229bbefbee10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/485229bbefbee10) marco.spasiano *gennaio 14, 2020*
 
 
-## Release 6.1.4  -- _gennaio 14, 2020_ 
+### Release 6.1.4  -- _gennaio 14, 2020_ 
 **Changes**
 
 >**Fix Variazioni Residue: errore di NullPointerException in fase di selezione voce bilancio.**
@@ -182,7 +182,7 @@
 >[a81aec040dbde18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a81aec040dbde18) marco.spasiano *gennaio 13, 2020*
 
 
-## Release 6.1.3  -- _gennaio 13, 2020_ 
+### Release 6.1.3  -- _gennaio 13, 2020_ 
 **Changes**
 
 >**Add requirements [ci skip]**
@@ -238,7 +238,7 @@
 >[b16487593c89b0f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b16487593c89b0f) marco.spasiano *gennaio 10, 2020*
 
 
-## Release 6.1.2  -- _gennaio 09, 2020_ 
+### Release 6.1.2  -- _gennaio 09, 2020_ 
 **Changes**
 
 >**Fix Contratti: in fase di associazione progetto su un contratto ante 2016 il sistema controllava per le GAE degli accertamenti associati al contratto il progetto ante 2016 anzichè quelli in cui si sono convertiti nel 2016. Cambiato il controllo per cui va a buon fine se la GAE è associata almeno una volta al progetto indicato sul contratto.**
@@ -310,7 +310,7 @@
 >[4739f1b05c07a89](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4739f1b05c07a89) raffaele.pagano *dicembre 18, 2019*
 
 
-## Release 6.1.1  -- _dicembre 23, 2019_ 
+### Release 6.1.1  -- _dicembre 23, 2019_ 
 **Changes**
 
 >**Change label for button Variazione Mandato**
@@ -334,7 +334,7 @@
 >[8627f9ed0a3bbee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8627f9ed0a3bbee) marco.spasiano *dicembre 23, 2019*
 
 
-## Release 6.1.0  -- _dicembre 17, 2019_ 
+### Release 6.1.0  -- _dicembre 17, 2019_ 
 **Changes**
 
 >**Mandati in Distinta eliminato blocco per sostituzione**
@@ -353,7 +353,7 @@
 >
 >[fc6058196a53362](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc6058196a53362) raffaele.pagano *dicembre 17, 2019*
 
->**Add MAVEN_RELEASE_VERSION on stage release [ci skip]**
+>**Add MAVEN_Release_VERSION on stage Release [ci skip]**
 >
 >[13331b1d90e342c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13331b1d90e342c) marco.spasiano *dicembre 17, 2019*
 
@@ -362,7 +362,7 @@
 >[148ea638d80588b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/148ea638d80588b) raffaele.pagano *dicembre 17, 2019*
 
 
-## Release 6.0.31  -- _dicembre 16, 2019_ 
+### Release 6.0.31  -- _dicembre 16, 2019_ 
 **Changes**
 
 >**FIX NullPointerException on removeDetail**
@@ -386,7 +386,7 @@
 >[76d4730469dfbc6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/76d4730469dfbc6) raffaele.pagano *dicembre 16, 2019*
 
 
-## Release 6.0.30  -- _dicembre 13, 2019_ 
+### Release 6.0.30  -- _dicembre 13, 2019_ 
 **Changes**
 
 >**Escluse le missioni annullate dal numero di missioni da confermare presente al login**
@@ -422,7 +422,7 @@
 >[74b7739b335ad64](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74b7739b335ad64) raffaele.pagano *dicembre 12, 2019*
 
 
-## Release 6.0.27  -- _dicembre 12, 2019_ 
+### Release 6.0.27  -- _dicembre 12, 2019_ 
 **Changes**
 
 >**Fix Assegni di ricerca: non consentiva di apportare variazioni - ritornava errore InputStream in assenza di file da allegare.**
@@ -457,7 +457,7 @@
 >[c9515b2403bbbf3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c9515b2403bbbf3) marco.spasiano *dicembre 12, 2019*
 
 
-## Release 6.0.26  -- _dicembre 09, 2019_ 
+### Release 6.0.26  -- _dicembre 09, 2019_ 
 **Changes**
 
 >**BUG ricerca capitolo per uo SAC**
@@ -465,7 +465,7 @@
 >[04f1434ab0ef2c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04f1434ab0ef2c9) marco.spasiano *dicembre 09, 2019*
 
 
-## Release 6.0.25  -- _dicembre 07, 2019_ 
+### Release 6.0.25  -- _dicembre 07, 2019_ 
 **Changes**
 
 >**BUG Missing IN or OUT parameter at index:: 10**
@@ -473,7 +473,7 @@
 >[11b192b79b41545](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11b192b79b41545) marco.spasiano *dicembre 07, 2019*
 
 
-## Release 6.0.24  -- _dicembre 06, 2019_ 
+### Release 6.0.24  -- _dicembre 06, 2019_ 
 **Changes**
 
 >**FIX package body**
@@ -481,7 +481,7 @@
 >[cce94da1a544b1a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cce94da1a544b1a) marco.spasiano *dicembre 06, 2019*
 
 
-## Release 6.0.23  -- _dicembre 06, 2019_ 
+### Release 6.0.23  -- _dicembre 06, 2019_ 
 **Changes**
 
 >**Aggiornamento della Giornaliera di cassa per i mandati stornati**
@@ -501,7 +501,7 @@
 >[5af788c4503c476](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5af788c4503c476) marco.spasiano *dicembre 06, 2019*
 
 
-## Release 6.0.22  -- _dicembre 02, 2019_ 
+### Release 6.0.22  -- _dicembre 02, 2019_ 
 **Changes**
 
 >**FIX Aggiunto Selezionatore per Sospesi**
@@ -553,7 +553,7 @@
 >[78f81269b5090fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78f81269b5090fa) gianfranco.gasparro *novembre 25, 2019*
 
 
-## Release 6.0.21  -- _novembre 29, 2019_ 
+### Release 6.0.21  -- _novembre 29, 2019_ 
 **Changes**
 
 >**Fix. Troncata la causale della fattura passiva da SDI a 2000 caratteri**
@@ -565,7 +565,7 @@
 >[dd94d15e5a2aa28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd94d15e5a2aa28) raffaele.pagano *novembre 29, 2019*
 
 
-## Release 6.0.19  -- _novembre 28, 2019_ 
+### Release 6.0.19  -- _novembre 28, 2019_ 
 **Changes**
 
 >**Troncata la causale della fattura passiva da SDI a 2000 caratteri**
@@ -585,7 +585,7 @@
 >[055680c1fb5bc97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/055680c1fb5bc97) raffaele.pagano *novembre 28, 2019*
 
 
-## Release 6.0.18  -- _novembre 22, 2019_ 
+### Release 6.0.18  -- _novembre 22, 2019_ 
 **Changes**
 
 >**FIX tab mandato view**
@@ -601,7 +601,7 @@
 >[e56fd7a1754e688](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e56fd7a1754e688) raffaele.pagano *novembre 21, 2019*
 
 
-## Release 6.0.17  -- _novembre 22, 2019_ 
+### Release 6.0.17  -- _novembre 22, 2019_ 
 **Changes**
 
 >**Bug Distinta Cassiere: corretto controllo sullo scostamento SIOPE**
@@ -609,7 +609,7 @@
 >[b223701bddd5ccb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b223701bddd5ccb) raffaele.pagano *novembre 22, 2019*
 
 
-## Release 6.0.15  -- _novembre 20, 2019_ 
+### Release 6.0.15  -- _novembre 20, 2019_ 
 **Changes**
 
 >**Modify changelog template**
@@ -617,7 +617,7 @@
 >[163873d77f6a965](https://github.com/consiglionazionaledellericerche/sigla-main/commit/163873d77f6a965) marco.spasiano *novembre 20, 2019*
 
 
-## Release 6.0.14  -- _novembre 20, 2019_ 
+### Release 6.0.14  -- _novembre 20, 2019_ 
 **Changes**
 
 >**Add profile publiccode on gitlab-ci**
@@ -625,7 +625,7 @@
 >[960b1bb59226547](https://github.com/consiglionazionaledellericerche/sigla-main/commit/960b1bb59226547) marco.spasiano *novembre 20, 2019*
 
 
-## Release 6.0.13  -- _novembre 20, 2019_ 
+### Release 6.0.13  -- _novembre 20, 2019_ 
 **Changes**
 
 >**Add CHANGELOG.md**
@@ -801,7 +801,7 @@
 >[a585bd63830b6da](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a585bd63830b6da) raffaele.pagano *ottobre 17, 2019*
 
 
-## Release 6.0.11  -- _ottobre 30, 2019_ 
+### Release 6.0.11  -- _ottobre 30, 2019_ 
 **Changes**
 
 >**FIX gitlab-ci**
@@ -809,7 +809,7 @@
 >[9e9539b9f1c1d48](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e9539b9f1c1d48) marco.spasiano *ottobre 30, 2019*
 
 
-## Release 6.0.10  -- _ottobre 24, 2019_ 
+### Release 6.0.10  -- _ottobre 24, 2019_ 
 **Changes**
 
 >**FIX pom [ci skip]**
@@ -817,7 +817,7 @@
 >[72753b23e19de53](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72753b23e19de53) marco.spasiano *ottobre 24, 2019*
 
 
-## Release 6.0.6  -- _ottobre 16, 2019_ 
+### Release 6.0.6  -- _ottobre 16, 2019_ 
 **Changes**
 
 >**Added control on sending the PEC for SIOPE+**
@@ -841,7 +841,7 @@
 >[60a15bfbfe8a0ae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/60a15bfbfe8a0ae) marco.spasiano *ottobre 10, 2019*
 
 
-## Release 6.0.5  -- _ottobre 10, 2019_ 
+### Release 6.0.5  -- _ottobre 10, 2019_ 
 **Changes**
 
 >**Aggiornamenti su rimodulazione piano economico:**
@@ -909,7 +909,7 @@
 >[c8bccdf8c7a57fd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c8bccdf8c7a57fd) marco.spasiano *ottobre 01, 2019*
 
 
-## Release 6.0.3  -- _ottobre 01, 2019_ 
+### Release 6.0.3  -- _ottobre 01, 2019_ 
 **Changes**
 
 >**FIX dockerfile & add project stage**
