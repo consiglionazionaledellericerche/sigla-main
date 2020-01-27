@@ -1,21 +1,4 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
- *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
- *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
- *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-
-/*
  * Created by BulkGenerator 2.0 [07/12/2009]
  * Date 28/06/2017
  */
@@ -48,6 +31,7 @@ import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NotaPrecodificataBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
@@ -77,7 +61,7 @@ implements	IDocumentoAmministrativoBulk,
 	private java.util.Vector documentiContabiliCancellati = new Vector();
 	private Map ordineAss_totaliMap = null;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-	private Boolean isAbilitatoTuttiMagazzini = false;
+	private MagazzinoBulk unicoMagazzinoAbilitato = null;
 	protected BulkList listaRichiesteTrasformateInOrdine= new BulkList();
 	protected BulkList richiesteSelezionate= new BulkList();
 	protected BulkList richiesteDaTrasformareInOrdineColl= new BulkList();
@@ -1030,12 +1014,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public boolean isROFirmatario() {
 		return getFirmatarioPers() == null || getFirmatarioPers().getCrudStatus() == NORMAL;
 	}
-	public Boolean getIsAbilitatoTuttiMagazzini() {
-		return isAbilitatoTuttiMagazzini;
-	}
-	public void setIsAbilitatoTuttiMagazzini(Boolean isAbilitatoTuttiMagazzini) {
-		this.isAbilitatoTuttiMagazzini = isAbilitatoTuttiMagazzini;
-	}	
 	public Dictionary getTiAttivitaKeys() {
 		OrderedHashtable d = (OrderedHashtable)getTiAttivitaKeysForSearch();
 		if (d == null) return null;
@@ -1344,5 +1322,11 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 				.concat(this.getCdNumeratore())
 				.concat("/")
 				.concat(String.valueOf(this.getNumero()));
+	}
+	public MagazzinoBulk getUnicoMagazzinoAbilitato() {
+		return unicoMagazzinoAbilitato;
+	}
+	public void setUnicoMagazzinoAbilitato(MagazzinoBulk unicoMagazzinoAbilitato) {
+		this.unicoMagazzinoAbilitato = unicoMagazzinoAbilitato;
 	}
 }

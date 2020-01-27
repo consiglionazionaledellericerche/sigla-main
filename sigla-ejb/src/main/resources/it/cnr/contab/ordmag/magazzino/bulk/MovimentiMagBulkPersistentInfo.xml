@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
-  ~
-  ~     This program is free software: you can redistribute it and/or modify
-  ~     it under the terms of the GNU Affero General Public License as
-  ~     published by the Free Software Foundation, either version 3 of the
-  ~     License, or (at your option) any later version.
-  ~
-  ~     This program is distributed in the hope that it will be useful,
-  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  ~     GNU Affero General Public License for more details.
-  ~
-  ~     You should have received a copy of the GNU Affero General Public License
-  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-  -->
-
 <SQLPersistentInfo
 	persistentClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk"
 	homeClassName="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome">
@@ -54,6 +37,27 @@
 		<columnMapping
 			columnName="CD_DIVISA"
 			propertyName="divisa.cd_divisa" />
+  		<columnMapping
+			columnName="PG_MOVIMENTO_RIF"
+			propertyName="movimentoRif.pgMovimento" />
+		<columnMapping
+			columnName="PG_MOVIMENTO_ANN"
+			propertyName="movimentoAnn.pgMovimento" />
+		<columnMapping
+			columnName="CD_CDS_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.magazzino.unitaOrganizzativa.cd_unita_organizzativa" />
+		<columnMapping
+			columnName="CD_MAGAZZINO_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.magazzino.cdMagazzino" />
+		<columnMapping
+			columnName="ESERCIZIO_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.esercizio" />
+		<columnMapping
+			columnName="CD_NUMERATORE_BOLLA_SCA"
+			propertyName="bollaScaricoMag.numerazioneMag.cdNumeratoreMag" />
+		<columnMapping
+			columnName="PG_BOLLA_SCA"
+			propertyName="bollaScaricoMag.pgBollaSca" />
 	</defaultColumnMap>
   	<persistentProperty
 		name="tipoMovimentoMag" />
@@ -67,4 +71,10 @@
 		name="lottoMag" />
 	<persistentProperty
 		name="divisa" />
+  	<persistentProperty
+		name="movimentoRif" />
+	<persistentProperty
+		name="movimentoAnn" />
+	<persistentProperty
+		name="bollaScaricoMag" />
 </SQLPersistentInfo>

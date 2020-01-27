@@ -43,7 +43,8 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
-		label="Codice" />
+		label="Codice" 
+		caseSensitiveSearch="false"/>
 	<fieldProperty
 		name="dsLuogoConsegna"
 		property="dsLuogoConsegna"

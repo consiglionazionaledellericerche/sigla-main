@@ -9,6 +9,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.OrderedHashtable;
+import org.springframework.util.StringUtils;
+
 public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 
 	public final static String AZIONE_AZZERA = "0";
@@ -49,6 +51,23 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 		TIPO.put(RESI,"Resi");
 		TIPO.put(DOTAZIONI,"Dotazioni");
 		TIPO.put(STORNI,"Storni");
+	}
+
+
+	public boolean isEnableMovStorno(){
+		if (StringUtils.isEmpty(getTipo()))
+			return true;
+		return (!(getTipo().equals(STORNI)));
+
+	}
+	public boolean isEnableMovRif(){
+		if (StringUtils.isEmpty(getTipo()))
+			return true;
+
+		return getTipo().equals(CARICO_AUTOMATICO)||
+				getTipo().equals(CARICO_TRASFERIMENTO)||
+				getTipo().equals(SCARICO_AUTOMATICO)||
+				getTipo().equals(SCARICO_TRASFERIMENTO);
 	}
 
 	public Dictionary getTipoKeys() {
@@ -360,15 +379,17 @@ public class TipoMovimentoMagBulk extends TipoMovimentoMagBase {
 		setCdCds(it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context).getCd_cds());
 		return super.initialize(bp,context);
 	}
+
+
 	public Boolean isMovimentoDiCarico(){
 		return getTipo() != null && (getTipo().equals(CARICO_MANUALE) || getTipo().equals(CARICO_AUTOMATICO) || getTipo().equals(CARICO_TRASFERIMENTO));
 	}
 
-	public boolean isEnableMovRif(){
-		return getTipo() != null && (getTipo().equals(CARICO_MANUALE) || getTipo().equals(CARICO_AUTOMATICO) || getTipo().equals(CARICO_TRASFERIMENTO));
+	public boolean isROTipoMovimentoMagRifSearchTool(){
+		return ( !isEnableMovRif());
 	}
-	public boolean isEnableMovStorno(){
-		return getTipo() != null && (getTipo().equals(CARICO_MANUALE) || getTipo().equals(CARICO_AUTOMATICO) || getTipo().equals(CARICO_TRASFERIMENTO));
+	public boolean isROTipoMovimentoMagStornoSearchTool(){
+		return (!isEnableMovStorno());
 	}
 
 

@@ -58,7 +58,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="esercizio" />
+		label="Esercizio" />
 	<fieldProperty
 		name="cdNumeratoreMag"
 		property="numerazioneMag.cdNumeratoreMag"
@@ -68,7 +68,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="cdNumeratoreMag" />
+		label="Codice" />
 	<fieldProperty
 		name="pgLotto"
 		property="pgLotto"
@@ -78,7 +78,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="pgLotto" />
+		label="Numero" />
 	<fieldProperty
 		name="cdBeneServizio"
 		property="cdBeneServizio"
@@ -119,7 +119,7 @@
 		inputType="TEXT"
 		formatName="date_short"
 		enabledOnEdit="false"
-		label="dtScadenza" />
+		label="Data Scadenza" />
 	<fieldProperty
 		name="giacenza"
 		property="giacenza"
@@ -145,7 +145,7 @@
 		inputSize="30"
 		maxLength="30"
 		enabledOnEdit="false"
-		label="lottoFornitore" />
+		label="Lotto Fornitore" />
 	<fieldProperty
 		name="dtCarico"
 		property="dtCarico"
@@ -160,7 +160,8 @@
 		inputSize="21"
 		maxLength="21"
 		enabledOnEdit="false"
-		label="valoreUnitario" />
+		style="text-align: right"
+		label="Valore Unitario" />
 	<fieldProperty
 		name="costoUnitario"
 		property="costoUnitario"
@@ -263,7 +264,7 @@
 		inputSize="10"
 		maxLength="10"
 		enabledOnEdit="false"
-		label="cdTerzo" />
+		label="Codice Terzo" />
 	<fieldProperty
 		name="cdDivisa"
 		property="cdDivisa"
@@ -453,4 +454,23 @@
 		name="cambio" />
 	<columnFieldProperty
 		name="dtCancellazione" />
+	<columnSet
+		name="datiLottoMovimentiMagazzino" >
+		<columnFieldProperty
+			name="esercizio" />
+		<columnFieldProperty
+			name="pgLotto"  />
+		<columnFieldProperty
+			name="dtScadenza" />
+		<columnFieldProperty
+			name="dtCarico" />
+		<columnFieldProperty
+			name="valoreUnitario"  />
+		<columnFieldProperty
+			name="cdTerzo"  />
+		<columnFieldProperty
+			name="lottoFornitore" />
+		<columnFieldProperty
+			name="giacenza" />
+	</columnSet>
 </bulkInfo>

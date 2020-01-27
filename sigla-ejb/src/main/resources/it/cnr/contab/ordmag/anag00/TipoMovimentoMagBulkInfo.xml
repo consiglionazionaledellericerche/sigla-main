@@ -43,6 +43,7 @@
 		inputSize="2"
 		maxLength="2"
 		enabledOnEdit="true"
+		enabledOnInsert="true"
 		command="doOnChangeTipo"
 		nullable="false"
 		keysProperty="tipoKeys"
@@ -62,13 +63,13 @@
 		inputType="TEXT"
 		inputSize="30"
 		maxLength="30"
-		readonlyProperty="EnableMovStorno"
 		label="Cds Storno" />		
 	<fieldProperty
 		name="findTipoMovimentoStorno"
 		property="tipoMovimentoMagStorno"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
+		readonlyProperty="ROTipoMovimentoMagStornoSearchTool"
 		enabledOnSearch="true"
 		label="Tipo Movimento Storno" />
 	<fieldProperty
@@ -77,7 +78,6 @@
 		inputType="TEXT"
 		inputSize="3"
 		maxLength="3"
-		readonlyProperty="EnableMovStorno"
 		label="Codice Movimento di Storno" />
 		
 	<fieldProperty
@@ -91,7 +91,7 @@
 	<fieldProperty
 		name="findTipoMovimentoAlt"
 		property="tipoMovimentoMagAlt"
-		inputType="searchtool"
+		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Tipo Movimento Alt" />
@@ -110,7 +110,6 @@
 		inputType="TEXT"
 		formatName="date_short"
 		label="Data Cancellazione" />
-
 	<fieldProperty
 			name="riportaLottoFornitore"
 			property="riportaLottoFornitore"
@@ -182,10 +181,10 @@
 	<fieldProperty
 			name="findTipoMovimentoRif"
 			property="tipoMovimentoMagRif"
-			inputType="searchtool"
+			inputType="SEARCHTOOL"
 			formName="searchtool"
 			enabledOnSearch="true"
-
+			readonlyProperty="ROTipoMovimentoMagRifSearchTool"
 			label="Tipo Movimento Rif." />
 	<fieldProperty
 			name="cdCdsRif"
@@ -193,9 +192,6 @@
 			inputType="TEXT"
 			inputSize="30"
 			maxLength="30"
-			readonlyPropertyOnEdit="EnableMovRif"
-			readonlyPropertyOnInsert="EnableMovRif"
-			readonlyPropertyOnSearch="EnableMovRif"
 			enabledOnSearch="true"
 			label="Cds Rif" />
 
@@ -205,9 +201,6 @@
 			inputType="TEXT"
 			inputSize="3"
 			maxLength="3"
-			readonlyPropertyOnEdit="EnableMovRif"
-			readonlyPropertyOnInsert="EnableMovRif"
-			readonlyPropertyOnSearch="EnableMovRif"
 			enabledOnSearch="true"
 			label="Tipo Movimento Riferimento" />
 	<fieldProperty

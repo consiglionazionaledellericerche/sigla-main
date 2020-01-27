@@ -38,7 +38,7 @@
 	<tr>
 		<td>
 		<% if (modelRiga!=null && modelRiga.isImputazioneScaricoSuBeneEnable())
-			  bp.getBeniServiziColl().writeFormLabel(out, "qtScarico");
+			  bp.getBeniServiziColl().writeFormLabel(out, "quantita");
   		   else
 		      bp.getBeniServiziColl().writeFormLabel(out, "totQtScaricoLotti");
         %>
@@ -48,7 +48,7 @@
 				<tr>
 					<td>
 						<% if (modelRiga!=null && modelRiga.isImputazioneScaricoSuBeneEnable())
-							  bp.getBeniServiziColl().writeFormInput(out, "qtScarico");
+							  bp.getBeniServiziColl().writeFormInput(out, "quantita");
 				  		   else
 						      bp.getBeniServiziColl().writeFormInput(out, "totQtScaricoLotti");
 				        %>
