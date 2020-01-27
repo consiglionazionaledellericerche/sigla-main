@@ -651,8 +651,12 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 .filter(Distinta_cassiereBulk.class::isInstance)
                 .map(Distinta_cassiereBulk.class::cast)
                 .map(distinta_cassiereBulk -> {
-                    return !(!Optional.ofNullable(distinta_cassiereBulk.getDt_invio()).isPresent() &&
-                            Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()).isPresent());
+                    return !(
+                            !(Optional.ofNullable(distinta_cassiereBulk.getDt_invio()).isPresent() &&
+                                    !Optional.ofNullable(distinta_cassiereBulk.getStato())
+                                            .filter(s -> s.equals(Distinta_cassiereBulk.Stato.RIFIUTATO_SIOPEPLUS.value())).isPresent()) &&
+                            Optional.ofNullable(distinta_cassiereBulk.getPg_distinta_def()).isPresent()
+                    );
                 })
                 .orElse(Boolean.TRUE) || isViewing();
     }
@@ -2279,6 +2283,18 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         return attivoSiopeplus;
     }
 
+    public void generaFlussoSeRifiutato(ActionContext actionContext) throws BusinessProcessException {
+        Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
+        try {
+            if (Optional.ofNullable(distinta.getStato())
+                    .filter(s -> s.equals(Distinta_cassiereBulk.Stato.RIFIUTATO_SIOPEPLUS.value())).isPresent()) {
+                ((it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession) createComponentSession()).
+                        generaFlussoSiopeplus(actionContext.getUserContext(), distinta);
+            }
+        } catch (ComponentException|RemoteException e) {
+            throw handleException(e);
+        }
+    }
 
     public void inviaSiopeplus(ActionContext context, FirmaOTPBulk firmaOTPBulk)
             throws Exception {

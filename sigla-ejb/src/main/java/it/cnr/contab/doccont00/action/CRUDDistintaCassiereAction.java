@@ -272,8 +272,9 @@ public class CRUDDistintaCassiereAction extends it.cnr.jada.util.action.CRUDActi
 
     public Forward doInviaSiopeplus(ActionContext context) {
         try {
-            CRUDBP bp = getBusinessProcess(context);
+            CRUDDistintaCassiereBP bp = (CRUDDistintaCassiereBP) getBusinessProcess(context);
             fillModel(context);
+            bp.generaFlussoSeRifiutato(context);
             if (bp.isDirty())
                 return openContinuePrompt(context, "doConfermaSign");
             return doConfermaInviaSiopeplus(context, OptionBP.YES_BUTTON);

@@ -4373,7 +4373,7 @@ public class DistintaCassiereComponent extends
     }
 
     public StorageObject generaFlussoSiopeplus(UserContext userContext, Distinta_cassiereBulk distinta) throws ComponentException,
-            RemoteException, BusinessProcessException {
+            RemoteException {
         try {
             final DocumentiContabiliService documentiContabiliService = SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class);
             DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");

@@ -595,10 +595,11 @@ public class DistintaCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDDe
     }
 
     @Override
-    public void creaMandatoFlussoSiopeplus(UserContext param0, V_mandato_reversaleBulk param1) throws ComponentException, RemoteException {
+    public it.siopeplus.Mandato creaMandatoFlussoSiopeplus(UserContext param0, V_mandato_reversaleBulk param1) throws ComponentException, RemoteException {
         try {
-            ((DistintaCassiereComponent) componentObj).creaMandatoFlussoSiopeplus(param0, param1);
+            Mandato result = ((DistintaCassiereComponent) componentObj).creaMandatoFlussoSiopeplus(param0, param1);
             component_invocation_succes(param0, componentObj);
+            return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {
             component_invocation_succes(param0, componentObj);
             throw e;
@@ -611,4 +612,24 @@ public class DistintaCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDDe
             throw uncaughtError(param0, componentObj, e);
         }
     }
+
+    @Override
+    public it.cnr.si.spring.storage.StorageObject generaFlussoSiopeplus(UserContext param0, Distinta_cassiereBulk param1) throws ComponentException, RemoteException {
+        try {
+            it.cnr.si.spring.storage.StorageObject result = ((DistintaCassiereComponent) componentObj).generaFlussoSiopeplus(param0, param1);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
 }
