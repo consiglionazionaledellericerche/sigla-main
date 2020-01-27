@@ -1,7 +1,7 @@
 # Progetto
 
 La gestione dell'Anagrafica Progetti consente di gestire tutte le informazioni generali di un progetto, sia esso di ricerca che di funzionamento, e tutte le informazioni contabili di cui tener conto nelle funzionalità successive di previsione e gestione.
-Un Progetto si riferisce sempre ad un'[Area Progettuale](area_progettuale.md), ed è inserito, attraverso le linee di attività o GAE, in una Missione/Programma specifici, come da riepilogo Missioni Programma definiti in fase di Previsione di Bilancio.
+Un Progetto si riferisce sempre ad un'[Area Progettuale](area_progettuale), ed è inserito, attraverso le linee di attività o GAE, in una Missione/Programma specifici, come da riepilogo Missioni Programma definiti in fase di Previsione di Bilancio.
 
 Le informazioni fondamentali che caratterizzano un Progetto sono:
 
@@ -12,12 +12,12 @@ I dati anagrafici si possono sintetizzare in:
 - Fase di utilizzo: Previsione, Gestione o entrambi;
 - Descrizione del Progetto;
 - Dipartimento (coincidente con la struttura organizzativa referente del Progetto);
-- [UO Coordinatrice](tabelle_riferimento.html#uo-coordinatrice);
-- [Responsabile del Progetto](tabelle_riferimento.html#responsabile-del-progetto);
+- [UO Coordinatrice](tabelle_riferimento);
+- [Responsabile del Progetto](tabelle_riferimento);
 
 ## Dati Contabili 
 I dati cotabili rappresentano l'insieme delle informazioni che determinano l'uso del progetto nelle gestioni Sigla:
-- [Tipo Finanziamento](tabelle_riferimento.html#tipo-finanziamento) (dalla lista valori disponibile);
+- [Tipo Finanziamento](tabelle_riferimento) (dalla lista valori disponibile);
 - Data inizio, Data Fine, Data Proroga (data inizio e fine del Progetto guidano la compilazione del piano economico, ove richiesto);
 - Importo Finanziato (proveniente da Fonti esterne);
 - Importo Cofinanziato (proveniente da Fonti interne).

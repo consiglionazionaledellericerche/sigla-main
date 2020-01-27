@@ -102,7 +102,7 @@ SIGLA è concesso in licenza GNU AFFERO GENERAL PUBLIC LICENSE, come si trova ne
 docker run -p 8080:8080  -e THORNTAIL_PROJECT_STAGE="demo-h2" -ti consiglionazionalericerche/sigla-main:latest
 ```
 
-[![Startup](docs/videos/startup_h2.png)](docs/videos/startup_h2.mp4)
+![Startup](docs/screenshot/startup_h2.png)
 
 #### _Per avviare una istanza di SIGLA con oracle locale_ 
 ```

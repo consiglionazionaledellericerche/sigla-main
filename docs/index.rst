@@ -48,5 +48,4 @@ Organizzato in questo modo il sistema prevede gestisce e controlla l’aspetto a
 .. toctree::
    :hidden:
 
-   nuovo_layout
    appendix
