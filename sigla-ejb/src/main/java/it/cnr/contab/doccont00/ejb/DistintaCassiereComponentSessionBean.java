@@ -31,6 +31,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.RemoteIterator;
+import it.siopeplus.Mandato;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -580,6 +581,24 @@ public class DistintaCassiereComponentSessionBean extends it.cnr.jada.ejb.CRUDDe
             Long result = ((DistintaCassiereComponent) componentObj).findMaxMovimentoContoEvidenza(param0, param1);
             component_invocation_succes(param0, componentObj);
             return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
+    @Override
+    public void creaMandatoFlussoSiopeplus(UserContext param0, V_mandato_reversaleBulk param1) throws ComponentException, RemoteException {
+        try {
+            ((DistintaCassiereComponent) componentObj).creaMandatoFlussoSiopeplus(param0, param1);
+            component_invocation_succes(param0, componentObj);
         } catch (it.cnr.jada.comp.NoRollbackException e) {
             component_invocation_succes(param0, componentObj);
             throw e;

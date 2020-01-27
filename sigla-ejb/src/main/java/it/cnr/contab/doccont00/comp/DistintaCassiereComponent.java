@@ -4810,7 +4810,7 @@ public class DistintaCassiereComponent extends
         return any.get();
     }
 
-    private it.siopeplus.Mandato creaMandatoFlussoSiopeplus(UserContext userContext, V_mandato_reversaleBulk bulk) throws ComponentException, RemoteException {
+    public it.siopeplus.Mandato creaMandatoFlussoSiopeplus(UserContext userContext, V_mandato_reversaleBulk bulk) throws ComponentException, RemoteException {
         try {
             Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices
                     .createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
@@ -5070,7 +5070,10 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
+                                            Optional.ofNullable(doc.getCdCup())
+                                                    .map(s -> s.compareTo(presente.getCodiceCup()) == 0)
+                                                    .orElse(Boolean.TRUE)) {
                                         salta = true;
                                         break;
                                     }
@@ -5193,7 +5196,10 @@ public class DistintaCassiereComponent extends
                             if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
-                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                    if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
+                                            Optional.ofNullable(doc.getCdCup())
+                                                    .map(s -> s.compareTo(presente.getCodiceCup()) == 0)
+                                                    .orElse(Boolean.TRUE)) {
                                         salta = true;
                                         break;
                                     }
@@ -5329,7 +5335,10 @@ public class DistintaCassiereComponent extends
                         if (infoben.getClassificazione() != null && infoben.getClassificazione().size() != 0) {
                             for (Iterator<it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione> it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                 it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = it.next();
-                                if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0) {
+                                if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
+                                        Optional.ofNullable(doc.getCdCup())
+                                            .map(s -> s.compareTo(presente.getCodiceCup()) == 0)
+                                            .orElse(Boolean.TRUE)) {
                                     salta = true;
                                     break;
                                 }

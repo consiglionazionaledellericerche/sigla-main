@@ -97,4 +97,6 @@ public interface DistintaCassiereComponentSession extends it.cnr.jada.ejb.CRUDDe
     public Rif_modalita_pagamentoBulk findModPag(UserContext userContext, V_mandato_reversaleBulk mandato_reversaleBulk) throws ComponentException, RemoteException;
 
     public Long findMaxMovimentoContoEvidenza(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException, RemoteException;
+
+    void creaMandatoFlussoSiopeplus(UserContext userContext, V_mandato_reversaleBulk bulk) throws ComponentException, RemoteException;
 }
