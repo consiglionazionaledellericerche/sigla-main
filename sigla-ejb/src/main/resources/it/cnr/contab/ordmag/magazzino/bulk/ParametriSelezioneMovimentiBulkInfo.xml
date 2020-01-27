@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Parametri Selezione Magazzino"
+	longDescription="Parametri Selezione Magazzino">
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaAbilitata"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzinoAbilitato"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="findTipoMovimentoMag"
+		property="tipoMovimentoMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Tipo Movimento" />
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Terzo" />
+	<fieldProperty
+		name="daDataCompetenza"
+		property="daDataCompetenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataCompetenzaChange"
+		label="Da Data Competenza" />
+	<fieldProperty
+		name="aDataCompetenza"
+		property="aDataCompetenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Data Competenza" />
+	<fieldProperty
+		name="daDataMovimento"
+		property="daDataMovimento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataMovimentoChange"
+		label="Da Data Movimento" />
+	<fieldProperty
+		name="aDataMovimento"
+		property="aDataMovimento"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Data Movimento" />
+	<fieldProperty
+		name="daDataOrdine"
+		property="daDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineChange"
+		label="Da Data Ordine" />
+	<fieldProperty
+		name="aDataOrdine"
+		property="aDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Data Ordine" />
+	<fieldProperty
+		name="daDataOrdineDef"
+		property="daDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineChange"
+		label="Da Dt Conferma Ord." />
+	<fieldProperty
+		name="aDataOrdineDef"
+		property="aDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Dt Conferma Ord." />
+	<fieldProperty
+		name="daNumeroOrdine"
+		property="daNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Da Numero Ordine" />
+	<fieldProperty
+		name="aNumeroOrdine"
+		property="aNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Numero Ordine" />
+	<fieldProperty
+		name="findUnitaOperativaOrdine"
+		property="unitaOperativaOrdine"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UOp Ordine" />
+	<fieldProperty
+		name="findNumerazioneOrd"
+		property="numerazioneOrd"
+		inputType="searchtool"
+		formName="searchtool_ridotto"
+		enabledOnSearch="true"
+		label="Numerat. Ordine" />
+	<fieldProperty
+		name="findDaUnitaOperativaOrd"
+		property="daUnitaOperativaRicevente"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Da UOp Ricevente" />
+	<fieldProperty
+		name="findAUnitaOperativaOrd"
+		property="aUnitaOperativaRicevente"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="A UOp Ricevente" />
+	<fieldProperty
+		name="dataBolla"
+		property="dataBolla"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Bolla" />
+	<fieldProperty
+		name="numeroBolla"
+		property="numeroBolla"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Numero Bolla" />
+	<fieldProperty
+		name="daProgressivo"
+		property="daProgressivo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Da Progressvo" />
+	<fieldProperty
+		name="aProgressivo"
+		property="aProgressivo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="20"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Progressivo" />
+	<fieldProperty
+		name="lottoFornitore"
+		property="lottoFornitore"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="true"
+		label="Lotto Fornitore" />
+	<fieldProperty
+		name="tipoMovimento"
+		property="tipoMovimento"
+		keysProperty="tipoMovimentoKeys"
+		inputType="SELECT"
+		label="Tipo"/>
+	<fieldProperty
+		name="findDaBeneServizio"
+		property="daBeneServizio"
+		inputType="searchtool"
+		formName="searchtool_codice"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Da Articolo" />
+	<fieldProperty
+		name="findABeneServizio"
+		property="aBeneServizio"
+		inputType="searchtool"
+		formName="searchtool_codice"
+		enabledOnSearch="true"
+		nullable="false"
+		label="A Articolo" />
+
+	<formFieldProperty
+		name="findTerzo" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findTipoMovimentoMag" />
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="daDataCompetenza" />
+	<formFieldProperty
+		name="aDataCompetenza" />
+	<formFieldProperty
+		name="daDataMovimento" />
+	<formFieldProperty
+		name="aDataMovimento" />
+	<formFieldProperty
+		name="findDaUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findAUnitaOperativaOrd" />
+	<formFieldProperty
+		name="dataBolla" />
+	<formFieldProperty
+		name="numeroBolla" />
+	<formFieldProperty
+		name="lottoFornitore" />
+	<formFieldProperty
+		name="tipoMovimento" />
+	<formFieldProperty
+		name="findABeneServizio" />
+	<formFieldProperty
+		name="findDaBeneServizio" />
+	<formFieldProperty
+		name="daProgressivo" />
+	<formFieldProperty
+		name="aProgressivo" />
+	<formFieldProperty
+		name="findNumerazioneOrd" />
+	<formFieldProperty
+		name="findUnitaOperativaOrdine" />
+	<formFieldProperty
+		name="daDataOrdine" />
+	<formFieldProperty
+		name="daDataOrdineDef" />
+	<formFieldProperty
+		name="daNumeroOrdine" />
+	<formFieldProperty
+		name="aDataOrdine" />
+	<formFieldProperty
+		name="aDataOrdineDef" />
+	<formFieldProperty
+		name="aNumeroOrdine" />
+</bulkInfo>
