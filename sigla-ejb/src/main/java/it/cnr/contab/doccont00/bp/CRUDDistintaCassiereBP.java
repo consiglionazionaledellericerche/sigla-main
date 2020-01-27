@@ -2288,8 +2288,19 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
         try {
             if (Optional.ofNullable(distinta.getStato())
                     .filter(s -> s.equals(Distinta_cassiereBulk.Stato.RIFIUTATO_SIOPEPLUS.value())).isPresent()) {
-                ((it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession) createComponentSession()).
+                final StorageObject storageObject = ((DistintaCassiereComponentSession) createComponentSession()).
                         generaFlussoSiopeplus(actionContext.getUserContext(), distinta);
+                documentiContabiliService.updateProperties(
+                        Collections.singletonMap(
+                                StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value(),
+                                Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+                                        .map(strings -> {
+                                            strings.remove(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value());
+                                            return strings;
+                                        })
+                                        .orElse(Collections.emptyList())
+                        ),
+                        storageObject);
             }
         } catch (ComponentException|RemoteException e) {
             throw handleException(e);

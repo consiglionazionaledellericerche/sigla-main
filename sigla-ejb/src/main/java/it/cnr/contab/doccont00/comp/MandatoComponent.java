@@ -1856,7 +1856,7 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 .flatMap(mandato_siopeBulk -> mandato_siopeBulk.getMandatoSiopeCupColl().stream())
                 .map(MandatoSiopeCupBulk::getCdCup)
                 .distinct()
-                .filter(s -> !mandato.getDs_mandato().contains(s))
+                .filter(s -> !Optional.ofNullable(mandato.getDs_mandato()).orElse(" ").contains(s))
                 .map(s -> "CUP ".concat(s))
                 .collect(Collectors.joining(" "));
         mandato.setDs_mandato(
