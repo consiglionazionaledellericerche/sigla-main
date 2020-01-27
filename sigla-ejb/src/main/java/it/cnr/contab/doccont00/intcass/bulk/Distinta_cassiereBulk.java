@@ -681,7 +681,10 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 				Optional.ofNullable(getPg_distinta_def())
 						.map(pgDistintaDef -> String.valueOf(pgDistintaDef))
 						.orElse("0"),
-				"I"
+				Optional.ofNullable(getStato())
+						.filter(s -> s.equals(Stato.RIFIUTATO_SIOPEPLUS.value()))
+						.map(s -> "R")
+						.orElse("I")
 		).stream().collect(
 				Collectors.joining("-")
 		);
