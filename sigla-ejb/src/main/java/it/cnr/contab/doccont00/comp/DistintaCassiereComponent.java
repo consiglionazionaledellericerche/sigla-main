@@ -5071,9 +5071,7 @@ public class DistintaCassiereComponent extends
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
                                     if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup())
-                                                    .map(s -> s.compareTo(presente.getCodiceCup()) == 0)
-                                                    .orElse(Boolean.TRUE)) {
+                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
                                         salta = true;
                                         break;
                                     }
@@ -5197,9 +5195,7 @@ public class DistintaCassiereComponent extends
                                 for (Iterator it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                     it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = (it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione) it.next();
                                     if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                            Optional.ofNullable(doc.getCdCup())
-                                                    .map(s -> s.compareTo(presente.getCodiceCup()) == 0)
-                                                    .orElse(Boolean.TRUE)) {
+                                            Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
                                         salta = true;
                                         break;
                                     }
@@ -5336,9 +5332,7 @@ public class DistintaCassiereComponent extends
                             for (Iterator<it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione> it = infoben.getClassificazione().iterator(); it.hasNext(); ) {
                                 it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione presente = it.next();
                                 if (doc.getCdSiope().compareTo(presente.getCodiceCgu()) == 0 &&
-                                        Optional.ofNullable(doc.getCdCup())
-                                            .map(s -> s.compareTo(presente.getCodiceCup()) == 0)
-                                            .orElse(Boolean.TRUE)) {
+                                        Optional.ofNullable(doc.getCdCup()).equals(Optional.ofNullable(presente.getCodiceCup()))) {
                                     salta = true;
                                     break;
                                 }
