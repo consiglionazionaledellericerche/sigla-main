@@ -2962,13 +2962,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				
 				{
 				/**
-				 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale
+				 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale o alla Uo Ragioneria
 				 */
 					BigDecimal impPositiviCashFund = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
 							.map(CtrlPianoEco::getDett)
 							.flatMap(List::stream)
-							.filter(el->el.isNaturaReimpiego()||el.isCdrPersonale())
+							.filter(el->el.isNaturaReimpiego()||el.isCdrPersonale()||el.isUoRagioneria())
 							.filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
 							.map(CtrlPianoEcoDett::getImporto)
 							.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
@@ -2977,7 +2977,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						throw new ApplicationException("Attenzione! Risultano prelievi da progetti scaduti"
 								+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impNegativiPrgScaduti)
 								+ " che non risultano totalmente coperti da variazioni a favore"
-								+ " di GAE di natura 6 - 'Reimpiego di risorse' o del CDR Personale ("
+								+ " di GAE di natura 6 - 'Reimpiego di risorse' o del CDR Personale o del CDR Ragioneria ("
 								+ new it.cnr.contab.util.EuroFormat().format(impPositiviCashFund)+").");
 				}
 				{
