@@ -74,6 +74,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
     private Integer annoFromPianoEconomico;
 	private Progetto_rimodulazioneBulk mainProgettoRimodulazione;
 	private boolean uoRagioneria;
+	private boolean supervisore=false;
 
 	private SimpleDetailCRUDController crudAssCDR = new SimpleDetailCRUDController( "AssociazioneCDR", Ass_var_stanz_res_cdrBulk.class, "associazioneCDR", this) {
 		public void validateForDelete(ActionContext context, OggettoBulk detail) throws ValidationException {
@@ -270,6 +271,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			setCentro_responsabilita_scrivania(Utility.createCdrComponentSession().cdrFromUserContext(context.getUserContext()));
 			setAbilitatoModificaDescVariazioni(UtenteBulk.isAbilitatoModificaDescVariazioni(context.getUserContext()));
 			setAttivaGestioneVariazioniTrasferimento(Utility.createParametriEnteComponentSession().getParametriEnte(context.getUserContext()).getFl_variazioni_trasferimento());
+			setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
 
 			String uoRagioneria = Utility.createConfigurazioneCnrComponentSession().getUoRagioneria(context.getUserContext(),CNRUserContext.getEsercizio(context.getUserContext()));
 			setUoRagioneria(Optional.ofNullable(uoRagioneria).map(el->el.equals(getCentro_responsabilita_scrivania().getCd_unita_organizzativa())).orElse(Boolean.FALSE));
@@ -524,7 +526,7 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 	 * @return toolbar Toolbar in uso
 	 */
 	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
-		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[14];
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[15];
 		int i = 0;
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.search");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
@@ -539,7 +541,8 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.statoPrecedente");	
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.approva");
 		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.nonApprova");
-		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.assestatoResiduo");		
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.assestatoResiduo");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.annullaApprovazione");
 		return toolbar;
 	}
 
@@ -618,6 +621,26 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 			return true;
 		return false;
 	}
+
+	public boolean isAnnullaApprovazioneButtonHidden() {
+		return !isSupervisore() || isDaAccertamentoModifica() ||
+				Optional.ofNullable(this.getModel())
+						.filter(Var_stanz_resBulk.class::isInstance)
+						.map(Var_stanz_resBulk.class::cast)
+						.map(el->!el.isApprovata())
+						.orElse(Boolean.TRUE) ||
+				(isUoEnte() && !((Var_stanz_resBulk)getModel()).isEnteAbilitatoAdApprovare()) ||
+				(!isUoEnte() && !getCentro_responsabilita_scrivania().getLivello().equals(1)) ||
+				(!isUoEnte() && Optional.ofNullable(this.getModel())
+					.filter(Var_stanz_resBulk.class::isInstance)
+					.map(Var_stanz_resBulk.class::cast)
+					.filter(el->el.getCentroDiResponsabilita()!=null)
+					.filter(el->el.getCentroDiResponsabilita().getCd_cds()!=null)
+					.filter(el->el.getCentroDiResponsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds()))
+					.map(el->!el.isCdsAbilitatoAdApprovare())
+					.orElse(Boolean.TRUE));
+	}
+
 	public boolean isROTipologia(){
     	return isDaAccertamentoModifica();
 	}    
@@ -731,5 +754,26 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 
 	private void setUoRagioneria(boolean uoRagioneria) {
 		this.uoRagioneria = uoRagioneria;
+	}
+
+	public boolean isSupervisore() {
+		return supervisore;
+	}
+
+	public void setSupervisore(boolean supervisore) {
+		this.supervisore = supervisore;
+	}
+
+	public void annullaApprovazione(ActionContext context) throws it.cnr.jada.action.BusinessProcessException{
+		try {
+			if (!isSupervisore())
+				throw new ApplicationException("Operazione consentita solo ad utente di tipo Supervisore. Aggiornamento non possibile!");
+			VariazioniStanziamentoResiduoComponentSession comp = (VariazioniStanziamentoResiduoComponentSession)createComponentSession();
+			edit(context,comp.annullaApprovazione(context.getUserContext(), getModel()));
+		}catch(it.cnr.jada.comp.ComponentException ex){
+			throw handleException(ex);
+		}catch(java.rmi.RemoteException ex){
+			throw handleException(ex);
+		}
 	}
 }

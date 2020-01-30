@@ -44,4 +44,5 @@ public interface VariazioniStanziamentoResiduoComponentSession extends it.cnr.ja
 	it.cnr.contab.progettiric00.core.bulk.ProgettoBulk getProgettoLineaAttivita(it.cnr.jada.UserContext usercontext, it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk varRiga) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 	boolean isVariazioneFromLiquidazioneIvaDaModificare(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,java.rmi.RemoteException;
 	Var_stanz_res_rigaBulk recuperoRigaLiquidazioneIva(UserContext userContext, Var_stanz_resBulk bulk) throws ComponentException,java.rmi.RemoteException;
+	it.cnr.jada.bulk.OggettoBulk annullaApprovazione(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

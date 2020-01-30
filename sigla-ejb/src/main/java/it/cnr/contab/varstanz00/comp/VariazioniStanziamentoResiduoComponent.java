@@ -720,10 +720,10 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	private Voce_f_saldi_cdr_lineaBulk allineaSaldi(UserContext userContext,
 			Var_stanz_res_rigaBulk varRiga) throws PersistencyException,
 			ComponentException, ApplicationException, RemoteException {
-		return allineaSaldi(userContext, varRiga, false);
+		return allineaSaldi(userContext, varRiga, false, false);
 	}
 	private Voce_f_saldi_cdr_lineaBulk allineaSaldi(UserContext userContext,
-			Var_stanz_res_rigaBulk varRiga, Boolean sottraiImportoDaVariazioneEsistente) throws PersistencyException,
+			Var_stanz_res_rigaBulk varRiga, Boolean sottraiImportoDaVariazioneEsistente, boolean isByAnnullaApprovazione) throws PersistencyException,
 			ComponentException, ApplicationException, RemoteException {
 		Voce_f_saldi_cdr_lineaBulk saldo = new Voce_f_saldi_cdr_lineaBulk(varRiga.getEsercizio(), 
 		                                                                  varRiga.getEsercizio_res(), 
@@ -734,16 +734,25 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 																		  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
 		Voce_f_saldi_cdr_lineaBulk saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldo);
 		if (saldi == null){
+			if (isByAnnullaApprovazione)
+				throw new ApplicationRuntimeException("Attenzione! Esiste un disallineamento tra la variazione e la registrazione dei saldi. Non è possibile procedere riportarla allo stato precedente.");
 			saldo.setToBeCreated();
 			saldo.inizializzaSommeAZero();
 			saldo.setCd_elemento_voce(varRiga.getElemento_voce().getCd_elemento_voce());
 			saldi = (Voce_f_saldi_cdr_lineaBulk)super.creaConBulk(userContext,saldo);
 		}
 		if (sottraiImportoDaVariazioneEsistente){
+			if (isByAnnullaApprovazione)
+				throw new ApplicationRuntimeException("Attenzione! Errore di chiamata del metodo. Contattare il supporto sitemi informativi. Non è possibile procedere riportarla allo stato precedente.");
 			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
 				saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
 			else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
 				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
+		} else if (isByAnnullaApprovazione) {
+			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
+				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
+			else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
+				saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
 		} else {
 			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
 				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().add(varRiga.getIm_variazione().abs()));
@@ -780,7 +789,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				                                                          saldi.getCd_linea_attivita(),
 				                                                          new Voce_fBulk( saldi.getCd_voce(), saldi.getEsercizio(), saldi.getTi_appartenenza(), saldi.getTi_gestione()),
 				                                                          saldi.getEsercizio_res(),
-				                                                          varRiga.getIm_variazione().negate(),
+				                                                          isByAnnullaApprovazione?varRiga.getIm_variazione():varRiga.getIm_variazione().negate(),
 				                                                          saldi);
 		return saldi;
 	}
@@ -1229,7 +1238,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					rigaCloned.setCd_voce(riga.getCd_voce());
 					rigaCloned.setLinea_di_attivita(wp);
 					rigaCloned.setIm_variazione(totaleImporto.multiply(new BigDecimal(-1)));
-					saldi = allineaSaldi(userContext, rigaCloned, true);
+					saldi = allineaSaldi(userContext, rigaCloned, true, false);
 					super.modificaConBulk(userContext,saldi);
 					primoGiro = false;
 				}
@@ -1694,5 +1703,38 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		if (clause != null) 
 			sql.addClause(clause);
 		return sql; 
-	}	
+	}
+
+	public it.cnr.jada.bulk.OggettoBulk annullaApprovazione(UserContext userContext, it.cnr.jada.bulk.OggettoBulk oggettoBulk) throws ComponentException{
+		try {
+			Var_stanz_resBulk varStanzRes = (Var_stanz_resBulk)oggettoBulk;
+
+			if (varStanzRes.isVariazioneRimodulazioneProgetto())
+				throw new ApplicationRuntimeException("La variazione è collegata ad una rimodulazione di progetto. Non è possibile riportarla allo stato precedente.");
+
+			//Verifico se esiste una variazione generata
+			Var_bilancioHome varHome =  (Var_bilancioHome)getHome(userContext, Var_bilancioBulk.class);
+			SQLBuilder sql = varHome.createSQLBuilder();
+			sql.addClause(FindClause.AND, "esercizio_var_stanz_res", SQLBuilder.EQUALS, varStanzRes.getEsercizio());
+			sql.addClause(FindClause.AND, "pg_var_stanz_res", SQLBuilder.EQUALS, varStanzRes.getPg_variazione());
+
+			if (sql.executeExistsQuery(getConnection(userContext)))
+				throw new ApplicationRuntimeException("La variazione è collegata ad una variazione di bilancio. Non è possibile riportarla allo stato precedente.");
+
+			varStanzRes.setStato(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+			varStanzRes.setDt_approvazione(null);
+			varStanzRes.setToBeUpdated();
+			varStanzRes = (Var_stanz_resBulk)super.modificaConBulk(userContext, varStanzRes);
+
+			Var_stanz_resHome testataHome = (Var_stanz_resHome)getHome(userContext, Var_stanz_resBulk.class);
+			for (Iterator righe = testataHome.findAllVariazioniRiga(varStanzRes).iterator();righe.hasNext();){
+				Var_stanz_res_rigaBulk varRiga = (Var_stanz_res_rigaBulk)righe.next();
+				Voce_f_saldi_cdr_lineaBulk saldi = allineaSaldi(userContext, varRiga, false, true);
+				super.modificaConBulk(userContext,saldi);
+			}
+			return varStanzRes;
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
 }
