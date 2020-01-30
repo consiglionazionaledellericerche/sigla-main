@@ -39,7 +39,7 @@
 		<defaultValueExpression><![CDATA["2018/12/31"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_inizio_da" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["1970/01/01"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["1980/01/01"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="data_inizio_a" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["2018/12/31"]]></defaultValueExpression>
