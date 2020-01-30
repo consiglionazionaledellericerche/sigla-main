@@ -46,6 +46,11 @@ Organizzato in questo modo il sistema prevede gestisce e controlla l’aspetto a
    configurazione/index
 
 .. toctree::
+   :maxdepth: -1
+
+   documenti_contabili/index
+   
+.. toctree::
    :hidden:
 
    appendix
