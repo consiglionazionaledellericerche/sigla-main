@@ -20,6 +20,8 @@ package it.cnr.contab.ordmag.magazzino.action;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
+import org.springframework.beans.BeanUtils;
+import org.springframework.util.StringUtils;
 
 
 /**
@@ -39,10 +41,36 @@ public class TipoMovimentoAction extends it.cnr.jada.util.action.CRUDAction {
 		super();
 	}
 
+	private void blankMovimentoRif(TipoMovimentoMagBulk tipoMovimento){
+		if (tipoMovimento==null)
+			return;
+		tipoMovimento.setTipoMovimentoMagRif(null);
+		tipoMovimento.setCdCdsRif(null);
+		tipoMovimento.setCdTipoMovimentoRif(null);
+
+	}
+	private void blankMovimentoStorno(TipoMovimentoMagBulk tipoMovimento){
+		if (tipoMovimento==null)
+			return;
+		tipoMovimento.setTipoMovimentoMagStorno(null);
+		tipoMovimento.setCdCdsStorno(null);
+		tipoMovimento.setCdTipoMovimentoStorno(null);
+
+	}
+	//UN tipo movimento Rif è associabile solo a movimenti di tipo
+	// CA,CT,SA,ST
+	// e può essere valorizzato solo con  un tipo movimento >CA,CT,SA,ST
 	public Forward doOnChangeTipo(ActionContext context) {
 		try {
 			fillModel(context);
 			TipoMovimentoMagBulk tipoMovimento = (TipoMovimentoMagBulk)getBusinessProcess(context).getModel();
+			if ( tipoMovimento!=null){
+				if ( !tipoMovimento.isEnableMovStorno())
+					blankMovimentoStorno( tipoMovimento);
+				if ( !tipoMovimento.isEnableMovRif())
+					blankMovimentoRif( tipoMovimento);
+			}
+
 		}catch(java.lang.ClassCastException ex){
 			return context.findDefaultForward();
 		}catch(Throwable ex){

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -514,8 +514,7 @@ public OggettoBulk inizializzaBulkPerModifica(UserContext usercontext, OggettoBu
 		throws ComponentException {
 	OrdineAcqBulk ordine = (OrdineAcqBulk)super.inizializzaBulkPerModifica(usercontext, oggettobulk);
 
-	ordine.setIsAbilitatoTuttiMagazzini(isAbilitatoTuttiMagazzini(usercontext, ordine));
-	
+	ordine.setUnicoMagazzinoAbilitato(unicoMagazzinoAbilitato(usercontext, ordine));
 	it.cnr.jada.bulk.BulkHome homeRiga= getHome(usercontext, OrdineAcqRigaBulk.class);
     it.cnr.jada.persistency.sql.SQLBuilder sql= homeRiga.createSQLBuilder();
     sql.addClause("AND", "numero", sql.EQUALS, ordine.getNumero());
@@ -911,7 +910,7 @@ public SQLBuilder selectDspMagazzinoByClause(UserContext userContext, OrdineAcqR
 		MagazzinoBulk mag, 
 		CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 	MagazzinoHome magHome = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
-	SQLBuilder sql = recuperoMagazziniAbilitati(userContext, riga.getOrdineAcq(), magHome, compoundfindclause);
+	SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, riga.getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause);
 	
 	return sql;
 }
@@ -920,22 +919,8 @@ public SQLBuilder selectMagazzinoByClause(UserContext userContext, OrdineAcqCons
 		MagazzinoBulk mag, 
 		CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 	MagazzinoHome magHome = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
-	SQLBuilder sql = recuperoMagazziniAbilitati(userContext, cons.getOrdineAcqRiga().getOrdineAcq(), magHome, compoundfindclause);
+	SQLBuilder sql = magHome.selectMagazziniAbilitatiByClause(userContext, cons.getOrdineAcqRiga().getOrdineAcq().getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause);
 	
-	return sql;
-}
-
-private SQLBuilder recuperoMagazziniAbilitati(UserContext userContext, OrdineAcqBulk ord,
-		MagazzinoHome magHome, CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
-	SQLBuilder sql = magHome.selectByClause(userContext, compoundfindclause);
-	if (!isAbilitatoTuttiMagazzini(userContext, ord)){
-		sql.addTableToHeader("ABIL_UTENTE_UOP_OPER_MAG", "B");		
-		sql.addSQLJoin("MAGAZZINO.CD_CDS", "B.CD_CDS");
-		sql.addSQLJoin("MAGAZZINO.CD_MAGAZZINO", "B.CD_MAGAZZINO");
-		sql.addSQLClause("AND", "B.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
-		sql.addSQLClause("AND", "B.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, ord.getCdUnitaOperativa());
-		sql.addSQLClause("AND", "B.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
-	}
 	return sql;
 }
 
@@ -1044,7 +1029,7 @@ private OggettoBulk inizializzaOrdine(UserContext usercontext, OggettoBulk ogget
 			if (listUop != null && (listUop.size() == 1 || isPresenteUnaUop(listUop))){
 				ordine.setUnitaOperativaOrd((UnitaOperativaOrdBulk)listUop.get(0));
 				
-				ordine.setIsAbilitatoTuttiMagazzini(isAbilitatoTuttiMagazzini(usercontext, ordine));
+				ordine.setUnicoMagazzinoAbilitato(unicoMagazzinoAbilitato(usercontext, ordine));
 //				assegnaUnitaOperativaDest(usercontext, ordine, home, uopHome);
 			}
 		}
@@ -1089,12 +1074,29 @@ private void impostaDatiDivisaCambioDefault(UserContext usercontext, OrdineAcqBu
 //	}
 //}
 //
-private Boolean isAbilitatoTuttiMagazzini(UserContext userContext, OrdineAcqBulk ordine) throws ComponentException {
+private MagazzinoBulk unicoMagazzinoAbilitato(UserContext userContext, OrdineAcqBulk ordine) throws ComponentException {
 	
-	AbilUtenteUopOperBulk abil = recuperoAbilUtenteUo(userContext, ordine, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
-	if (abil != null && abil.getTuttiMagazzini())
-		return true;
-	return false;
+	MagazzinoHome home = (MagazzinoHome)getHome(userContext, MagazzinoBulk.class);
+
+	try {
+		SQLBuilder sql = home.selectMagazziniAbilitatiByClause(userContext, ordine.getUnitaOperativaOrd(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, new CompoundFindClause());
+		List listMag=home.fetchAll(sql);
+		if (listMag != null && listMag.size() == 1){
+			MagazzinoBulk mag = (MagazzinoBulk)listMag.get(0);
+			if (mag.getLuogoConsegnaMag() != null){
+				LuogoConsegnaMagHome luogoHome = (LuogoConsegnaMagHome)getHome(userContext, LuogoConsegnaMagBulk.class);
+				LuogoConsegnaMagBulk luogo = (LuogoConsegnaMagBulk)luogoHome.findByPrimaryKey(userContext, mag.getLuogoConsegnaMag());
+				if (luogo != null){
+					mag.setLuogoConsegnaMag(luogo);
+				}
+				
+			}
+			return mag;
+		}
+	} catch (PersistencyException e) {
+		throw new ComponentException(e);
+	}
+	return null;
 }
 private void assegnaNumeratoreOrd(UserContext usercontext, OrdineAcqBulk ordine, OrdineAcqHome home)
 		throws PersistencyException, ComponentException {
@@ -1134,9 +1136,9 @@ private Boolean isUtenteAbilitato(UserContext usercontext, OrdineAcqBulk ordine,
 }
 
 private AbilUtenteUopOperBulk recuperoAbilUtenteUo(UserContext userContext, OrdineAcqBulk ordine, String tipoOperazione) throws ComponentException {
-	if (ordine.getCdUnitaOperativa() != null){
+	if (ordine.getCdUopOrdine() != null){
 		AbilUtenteUopOperHome abilHome = (AbilUtenteUopOperHome)getHome(userContext, AbilUtenteUopOperBulk.class);
-		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(userContext.getUser(), ordine.getCdUnitaOperativa(), tipoOperazione);
+		AbilUtenteUopOperBulk abil = new AbilUtenteUopOperBulk(userContext.getUser(), ordine.getCdUopOrdine(), tipoOperazione);
 		try {
 			return (AbilUtenteUopOperBulk)abilHome.findByPrimaryKey(userContext, abil);
 		} catch (PersistencyException e) {

@@ -17,6 +17,6 @@
 	ScaricoMagazzinoBulk model = (ScaricoMagazzinoBulk)bp.getModel();
 	ScaricoMagazzinoRigaBulk modelRiga = (ScaricoMagazzinoRigaBulk)bp.getBeniServiziColl().getModel();
 	bp.getLottiMagazzinoColl().writeHTMLTable(pageContext,
-		modelRiga!=null && modelRiga.isImputazioneScaricoSuLottiEnable()?"scaricoMagazzinoEditable":"scaricoMagazzino",
+		modelRiga!=null && modelRiga.isImputazioneScaricoSuLottiEnable()?"scaricoMagazzinoEditable":"datiLottoMovimentiMagazzino",
 		false,false,false,"100%","100px", false);
 %>

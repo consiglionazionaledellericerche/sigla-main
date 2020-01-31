@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Carico Manuale Magazzino"
+	longDescription="Carico Manuale Magazzino">
+	<fieldProperty
+		name="findBeneServizio"
+		property="beneServizio"
+		inputType="searchtool"
+		formName="searchtool_codice"
+		enabledOnSearch="true"
+		nullable="false"
+		label="Articolo" />
+	<fieldProperty
+		name="cdBeneServizio"
+		property="beneServizio.cd_bene_servizio"
+		maxLength="30"
+		inputSize="20"
+		inputType="ROTEXT"
+		nullable="false"
+		label="Cod.Articolo"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="dsBeneServizio"
+		property="beneServizio.ds_bene_servizio"
+		maxLength="300"
+		inputSize="40"
+		inputType="ROTEXT"
+		label="Descrizione"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="cdUnitaMisuraMinima"
+		property="beneServizio.unitaMisura.cdUnitaMisura"
+		maxLength="30"
+		inputSize="3"
+		inputType="ROTEXT"
+		label="UM Minima"
+		caseSensitiveSearch="false" />
+
+	<fieldProperty
+		name="findUnitaMisura"
+		property="unitaMisura"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		nullable="false"
+		label="UM Carico" />
+	<fieldProperty
+		name="cdUnitaMisura"
+		property="unitaMisura.cdUnitaMisura"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="10"
+		nullable="false"
+		enabledOnEdit="false"
+		label="UM Carico" />
+
+	<fieldProperty
+		name="coefConv"
+		property="coefConv"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.Importo5CifrePositivoFormat"
+		inputSize="8"
+		maxLength="12"
+		nullable="false"
+		enabledOnEdit="true"
+		command="doDefault"
+		style="text-align: right"
+		readonlyProperty="ROCoefConv"
+		label="Coeff. Conversione" />
+ 	<fieldProperty
+		name="quantita"
+		property="quantita"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
+		command="doDefault"
+		style="text-align: right"
+		label="Quantità" />
+ 	<fieldProperty
+		name="qtCaricoConvertita"
+		property="qtCaricoConvertita"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		enabledOnEdit="true"
+		style="text-align: right"
+		label="Qt. da Caricare" />
+ 
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Terzo" />
+	<fieldProperty
+		name="cdTerzo"
+		property="terzo.cd_terzo"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="30"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false"
+		label="Terzo" />
+
+ 	<fieldProperty
+		name="totGiacenzaLotti"
+		property="totGiacenzaLotti"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="it.cnr.contab.util.PositiveDecimalFormat"
+		style="text-align: right"
+		label="Giacenza" />
+	<fieldProperty
+		name="anomalia"
+		property="anomalia"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		inputCssClass="w-100 "
+		label="Anomalia Scarico" />
+	<fieldProperty
+		name="voce_iva"
+		property="voceIva"
+		inputType="SEARCHTOOL" 		
+		enabledOnSearch="false"
+		formName="searchtool_large"
+		nullable="false"
+		label="I.V.A."
+		enabledOnEdit="true" />	
+	<fieldProperty
+		name="cd_voce_iva"
+		property="voceIva.cd_voce_iva"
+		maxLength="30"
+		inputSize="6"
+		inputType="TEXT"
+		nullable="false"
+		label="I.V.A."
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="ds_voce_iva"
+		property="voceIva.ds_voce_iva"
+		inputSize="30"
+		inputType="ROTEXT"
+		label=""
+		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="percentuale_voce_iva"
+		property="voceIva.percentuale"
+		maxLength="6"
+		inputSize="6"
+		inputType="ROTEXT"
+		formatName="it.cnr.contab.util.PercentFormat"
+		label="%" />
+	<fieldProperty
+		name="dataBolla"
+		property="dataBolla"
+		inputType="TEXT"
+		formatName="date_short"
+		label="Data Bolla" />
+	<fieldProperty
+		name="numeroBolla"
+		property="numeroBolla"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Numero Bolla" />
+	<fieldProperty
+		name="dtScadenza"
+		property="dtScadenza"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Data Scadenza" />
+	<fieldProperty
+		name="lottoFornitore"
+		property="lottoFornitore"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="true"
+		label="Lotto Fornitore" />
+	<fieldProperty
+		name="prezzoUnitario"
+		property="prezzoUnitario"
+		inputType="TEXT"
+		inputSize="15"
+		maxLength="15"
+		enabledOnEdit="true"
+		nullable="false"
+		formatName="it.cnr.contab.util.Importo6CifreFormat"
+		style="text-align: right"
+		command="doDefault"
+		label="Prezzo Unit." />
+	<formFieldProperty
+		name="lottoFornitore" />
+	<formFieldProperty
+		name="prezzoUnitario" />
+
+	<formFieldProperty
+		name="findBeneServizio" />
+	<formFieldProperty
+		name="cdBeneServizio" />
+	<formFieldProperty
+		name="dsBeneServizio" />
+	<formFieldProperty
+		name="cdUnitaMisuraMinima" />
+
+	<formFieldProperty
+		name="findUnitaMisura" />
+	<formFieldProperty
+		name="cdUnitaMisura" />
+	<formFieldProperty
+		name="coefConv" />
+	<formFieldProperty
+		name="quantita" />
+ 	<formFieldProperty
+		name="qtCaricoConvertita" />
+	
+	<formFieldProperty
+		name="findTerzo" />
+	<formFieldProperty
+		name="terzo" />
+	<formFieldProperty
+		name="cdTerzo" />
+	<formFieldProperty
+		name="anomalia" />
+
+	<formFieldProperty
+		name="totGiacenzaLotti" />
+	<formFieldProperty
+		name="dataBolla" />
+	<formFieldProperty
+		name="dtScadenza" />
+	<formFieldProperty
+		name="numeroBolla" />
+	<formFieldProperty
+		name="voce_iva" />
+	<formFieldProperty
+		name="cd_voce_iva" />
+	<formFieldProperty
+		name="ds_voce_iva" />
+	<formFieldProperty
+		name="percentuale_voce_iva" />
+
+
+	<columnFieldProperty
+		name="cdBeneServizio" />	
+	<columnFieldProperty
+		name="dsBeneServizio" />	
+	<columnFieldProperty
+		name="quantita" 
+		inputType="ROTEXT"
+		label="Q.tà" />
+
+	<columnFieldProperty
+		name="cdUnitaMisuraMinima"
+		label="UM Minima" />
+	<columnFieldProperty
+		name="cdUnitaMisura"
+		label="UM Carico" />
+	<columnFieldProperty
+		name="coefConv"
+		inputType="ROTEXT" 
+		label="Coeff." />
+	<columnFieldProperty
+		name="prezzoUnitario"
+		inputType="ROTEXT"
+		label="Prezzo Unit." />
+		
+	<columnFieldProperty
+		name="cdTerzo" 
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="dataBolla" 
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="numeroBolla" 
+		inputType="ROTEXT"/>
+	<columnFieldProperty
+		name="lottoFornitore" 
+		inputType="ROTEXT"/>
+		
+</bulkInfo>

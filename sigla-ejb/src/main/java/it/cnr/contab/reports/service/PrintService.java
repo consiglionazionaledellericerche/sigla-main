@@ -25,11 +25,13 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Optional;
 
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -43,6 +45,17 @@ import org.springframework.beans.factory.InitializingBean;
 
 public class PrintService implements InitializingBean {
 	private Gson gson;
+
+	private String serverPrint;
+
+	public String getServerPrint() {
+		return serverPrint;
+	}
+
+	public void setServerPrint(String serverPrint) {
+		this.serverPrint = serverPrint;
+	}
+
 	private OfflineReportComponentSession offlineReportComponent;
 
 	public void setGson(Gson gson) {
@@ -57,8 +70,17 @@ public class PrintService implements InitializingBean {
 	public Report executeReport(UserContext userContext, Print_spoolerBulk printSpooler) throws IOException, ComponentException{
 		HttpClient httpclient = HttpClientBuilder.create().build();
 		HttpPost method = null;
-		try{
-			method = new HttpPost(offlineReportComponent.getLastServerActive(userContext));
+		try {
+			method = new HttpPost(
+					Optional.ofNullable(getServerPrint())
+						.orElseGet(() -> {
+							try {
+								return offlineReportComponent.getLastServerActive(userContext);
+							} catch (ComponentException|RemoteException e) {
+								throw new DetailedRuntimeException(e);
+							}
+						})
+			);
 	        method.addHeader("Accept-Language", Locale.getDefault().toString());
 	        method.setHeader("Content-Type", "application/json;charset=UTF-8");
 	        HttpEntity requestEntity = new ByteArrayEntity(gson.toJson(printSpooler).getBytes());
