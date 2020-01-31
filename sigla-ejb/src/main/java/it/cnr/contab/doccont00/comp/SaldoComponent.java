@@ -207,6 +207,7 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 			this.progetto = progetto;
 		}
 		private ProgettoBulk progetto;
+		private Progetto_rimodulazioneBulk rimodulazione;
 
 		private List<CtrlPianoEcoDett> dett = new ArrayList<CtrlPianoEcoDett>();
 		
@@ -215,6 +216,12 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 		}
 		public void setProgetto(ProgettoBulk progetto) {
 			this.progetto = progetto;
+		}
+		public Progetto_rimodulazioneBulk getRimodulazione() {
+			return rimodulazione;
+		}
+		public void setRimodulazione(Progetto_rimodulazioneBulk rimodulazione) {
+			this.rimodulazione = rimodulazione;
 		}
 		public List<CtrlPianoEcoDett> getDett() {
 			return dett;
@@ -277,8 +284,14 @@ public class SaldoComponent extends it.cnr.jada.comp.GenericComponent implements
 					Optional.ofNullable(progetto.getOtherField().getDtProroga()).orElse(progetto.getOtherField().getDtFine()))
 					.orElse(null);
 		}
+		public Timestamp getDtScadenzaRimodulata() {
+			return Optional.ofNullable(this.getRimodulazione())
+					.flatMap(el->Optional.ofNullable(Optional.ofNullable(el.getDtProroga()).orElse(el.getDtFine())))
+					.orElse(null);
+		}
 		public boolean isScaduto(Timestamp dataRiferimento) {
-			return Optional.ofNullable(this.getDtScadenza()).map(dt->dt.before(dataRiferimento)).orElse(Boolean.FALSE);
+			return Optional.ofNullable(Optional.ofNullable(this.getDtScadenzaRimodulata()).orElse(this.getDtScadenza()))
+					.map(dt->dt.before(dataRiferimento)).orElse(Boolean.FALSE);
 		}
 		private BigDecimal getImpSpesaPositivi(Stream<CtrlPianoEcoDett> stream){
 			return stream.filter(CtrlPianoEcoDett::isTipoSpesa).filter(el->el.getImporto().compareTo(BigDecimal.ZERO)>0)
@@ -2267,6 +2280,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							.findFirst()
 							.orElse(new CtrlPianoEco(progetto));
 
+					if (variazione.isVariazioneRimodulazioneProgetto()) {
+						if (variazione.getProgettoRimodulazione().getPg_progetto().compareTo(progetto.getPg_progetto()) != 0)
+							throw new ApplicationException("Attenzione! Nella variazione residua " + variazione.getEsercizio() + "/" + variazione.getPg_variazione() + " risulta movimentato un progetto differente rispetto a quello della " +
+									"rimodulazione associata. Operazione non possibile!");
+						pianoEco.setRimodulazione(variazione.getProgettoRimodulazione());
+					}
+
 					//creo il dettaglio
 					CtrlPianoEcoDett dett = new CtrlPianoEcoDett();
 					dett.setTipoDett(varStanzResRiga.getTi_gestione());
@@ -2409,6 +2429,13 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							.filter(el->el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
 							.findFirst()
 							.orElse(new CtrlPianoEco(progetto));
+
+					if (variazione.isVariazioneRimodulazioneProgetto()) {
+						if (variazione.getProgettoRimodulazione().getPg_progetto().compareTo(progetto.getPg_progetto()) != 0)
+							throw new ApplicationException("Attenzione! Nella variazione " + variazione.getEsercizio() + "/" + variazione.getPg_variazione_pdg() + " risulta movimentato un progetto differente rispetto a quello della " +
+									"rimodulazione associata. Operazione non possibile!");
+						pianoEco.setRimodulazione(variazione.getProgettoRimodulazione());
+					}
 
 					//creo il dettaglio
 					CtrlPianoEcoDett dett = new CtrlPianoEcoDett();
