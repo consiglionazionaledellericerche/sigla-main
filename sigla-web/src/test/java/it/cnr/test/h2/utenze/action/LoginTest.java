@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -15,17 +15,14 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.utenze.action;
+package it.cnr.test.h2.utenze.action;
 
-import it.cnr.contab.util.ActionDeployments;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.graphene.GrapheneElement;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -35,11 +32,10 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(Arquillian.class)
 public class LoginTest extends ActionDeployments {
-    private transient final static Logger LOGGER = LoggerFactory.getLogger(LoginTest.class);
     public static final String USERNAME = "TEST";
     public static final String PASSWORD = "TESTTEST";
+    private transient final static Logger LOGGER = LoggerFactory.getLogger(LoginTest.class);
 
     @Test
     @RunAsClient

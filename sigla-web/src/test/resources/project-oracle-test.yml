@@ -2,23 +2,33 @@ logger:
   level: DEBUG
 
 thorntail:
+  network:
+    socket-binding-groups:
+      standard-sockets:
+        port-offset: 10
+        default-interface: public
   arquillian:
     daemon:
-      port: 12347
+      port: 12346
   datasources:
     jdbc-drivers:
-      h2:
-        driver-class-name: org.h2.Driver
-        xa-datasource-class-name: org.h2.jdbcx.JdbcDataSource
-        driver-module-name: com.h2database.h2
+      oracle:
+        driver-class-name: oracle.jdbc.OracleDriver
+        driver-module-name: com.oracle.jdbc
     data-sources:
       SIGLA:
-        driver-name: h2
-        connection-url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-        user-name: sa
-        password: sa
+        driver-name: oracle
+        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
+        user-name: PCIR009
+        password: dbform
+        initial-pool-size: 1
+        min-pool-size: 10
+        max-pool-size: 250
         use-java-context: true
         jndi-name: java:/jdbc/CIR
+        timeout:
+          idle-timeout-minutes: 1
+          query-timeout: 600
   transactions:
     default-timeout: 3600
   bind:
@@ -118,7 +128,3 @@ siopeplus:
     a2a: A2A-00000000
     uni:
       uo: 000000
-
-liquibase:
-  bootstrap:
-    esercizio: 2019

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -15,8 +15,9 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.util;
+package it.cnr.test.h2.utenze.action;
 
+import it.cnr.test.h2.DeploymentsH2;
 import org.apache.http.HttpStatus;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -36,7 +37,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class ActionDeployments extends Deployments {
+public class ActionDeployments extends DeploymentsH2 {
     private transient final static Logger LOGGER = LoggerFactory.getLogger(ActionDeployments.class);
 
     @Drone
