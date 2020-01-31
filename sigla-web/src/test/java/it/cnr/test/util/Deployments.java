@@ -68,7 +68,6 @@ public abstract class Deployments {
         LOGGER.info("Start create archive {} at {}", name, LocalDateTime.now());
         final PomEquippedResolveStage pom = Maven.configureResolver()
                 .withClassPathResolution(true)
-                .workOffline(true)
                 .withMavenCentralRepo(false)
                 .withRemoteRepo("central", new URL(
                         Optional.ofNullable(System.getProperty("nexus.url"))
