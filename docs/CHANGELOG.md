@@ -1,13 +1,133 @@
-## Release 6.1.11  -- _gennaio 20, 2020_ 
+## Release 6.1.19  -- _gennaio 31, 2020_ 
 **Changes**
 
->**FIX test**
+>**Add emote.maven.repo on arquillian configuration**
 >
->[5b27eb5bff8d28e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b27eb5bff8d28e) marco.spasiano *gennaio 20, 2020*
+>[ae7501ea9903979](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae7501ea9903979) marco.spasiano *gennaio 31, 2020*
 
->**FIX test**
+>**Add log on test**
 >
->[6c067f8a634ce35](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c067f8a634ce35) marco.spasiano *gennaio 20, 2020*
+>[ef4a8e94b0b0a1c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef4a8e94b0b0a1c) marco.spasiano *gennaio 31, 2020*
+
+>**Add log on test**
+>
+>[d8c3de35fff0fa5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d8c3de35fff0fa5) marco.spasiano *gennaio 31, 2020*
+
+>**Aggiunti TEST per ORACLE**
+>
+>[0d9dad197368ffc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d9dad197368ffc) marco.spasiano *gennaio 31, 2020*
+
+>**Fix Variazioni Bilancio: in fase di salvataggio definitivo di una variazione oggetto di rimodulazione di progetto controllava la data di scadenza del progetto e non quella della rimodulazione.**
+>
+>[1611b2f417ac443](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1611b2f417ac443) raffaele.pagano *gennaio 31, 2020*
+
+
+## Release 6.1.18  -- _gennaio 30, 2020_ 
+**Changes**
+
+>**Fix Variazioni Bilancio Residuo: ampliata la possibilità di trasferire fondi di progetti scaduti oltre che a GAE Natura 6 e CDR Personale anche al CDR Ragioneria.**
+>
+>[7448493da93d92b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7448493da93d92b) raffaele.pagano *gennaio 30, 2020*
+
+>**Fix Rimodulazione Progetti: limitato il controllo di chiusura del bilancio, necessario per proporre rimodulazioni anche su voci economiche presenti in bilancio, ai soli CDS partecipanti al progetto oggetto di modifica.**
+>
+>[8c97430cd21542f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c97430cd21542f) raffaele.pagano *gennaio 30, 2020*
+
+>**Variazioni Bilancio Residuo: aggiunto tasto che consente di riportare una variazione residua dallo stato Approvato allo stato Definitivo. Il tasto è visibile solo per cds abilitati ad approvare ed utenti di tipo Supervisore.**
+>
+>[f9f2141d16226fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9f2141d16226fb) raffaele.pagano *gennaio 30, 2020*
+
+
+## Release 6.1.17  -- _gennaio 28, 2020_ 
+**Changes**
+
+>**BUG nella generazione del flusso SIOPE+, quando per lo stesso codice SIOPE ci sono due CUP diversi**
+>
+>[0bfbdcec1722bd2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bfbdcec1722bd2) marco.spasiano *gennaio 28, 2020*
+
+
+## Release 6.1.16  -- _gennaio 27, 2020_ 
+**Changes**
+
+>**FIX Identificativo flusso per Rifiutato SIOPE+**
+>
+>[e8f499b20f369f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e8f499b20f369f4) marco.spasiano *gennaio 27, 2020*
+
+>**FIX Identificativo flusso per Rifiutato SIOPE+**
+>
+>[286c583a54e9e7b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/286c583a54e9e7b) marco.spasiano *gennaio 27, 2020*
+
+>**FIX nel caso di Flusso SIOPE+ rifiutato, aggiunta la possibilità di reinviarlo generando nuovamente il flusso**
+>
+>[1e19a2872db4624](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e19a2872db4624) marco.spasiano *gennaio 27, 2020*
+
+>**FIX nel caso di Flusso SIOPE+ rifiutato, aggiunta la possibilità di reinviarlo generando nuovamente il flusso**
+>
+>[50a1defb6001be8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/50a1defb6001be8) marco.spasiano *gennaio 27, 2020*
+
+
+## Release 6.1.14  -- _gennaio 27, 2020_ 
+**Changes**
+
+>**BUG nella generazione del flusso SIOPE+, quando per lo stesso codice SIOPE ci sono due CUP diversi**
+>
+>[ac2dc8dd79abf7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac2dc8dd79abf7c) marco.spasiano *gennaio 27, 2020*
+
+>**Add docs for Sphinx**
+>
+>[7076399a6e4050a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7076399a6e4050a) marco.spasiano *gennaio 27, 2020*
+
+>**Add docs for Sphinx**
+>
+>[fa81e934353da3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa81e934353da3d) marco.spasiano *gennaio 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[1e52fe949fa39f6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e52fe949fa39f6) marco.spasiano *gennaio 25, 2020*
+
+>**Modify Changelog**
+>
+>[e0aa2e8f4d84cef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e0aa2e8f4d84cef) marco.spasiano *gennaio 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[a8ade95e9c7cc62](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8ade95e9c7cc62) marco.spasiano *gennaio 25, 2020*
+
+>**Modify Changelog**
+>
+>[0bfa62040d78a67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bfa62040d78a67) marco.spasiano *gennaio 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[8efd88161db60df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8efd88161db60df) marco.spasiano *gennaio 25, 2020*
+
+>**Ripristinate Modifiche per Gestione Ordini**
+>
+>[8440e12bcff5c96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8440e12bcff5c96) gianfranco.gasparro *gennaio 24, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto e visualizzazione voci movimentate non associate in caso di accesso da anno successivo a quello del piano economico.**
+>
+>[ac9722860ec6952](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac9722860ec6952) raffaele.pagano *gennaio 22, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
+>
+>[e79f3b9c133ad6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e79f3b9c133ad6d) raffaele.pagano *gennaio 22, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
+>
+>[d227d80037e17a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d227d80037e17a0) raffaele.pagano *gennaio 22, 2020*
+
+>**Ingrandito campo a 100 caratteri per inserimento email per fatturazione elettronica**
+>
+>[e3af1ed5393b4db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3af1ed5393b4db) gianfranco.gasparro *gennaio 21, 2020*
+
+>**Corretta valorizzazione dati incasso su generico e reversale. Ricalcolato importo accertamento per compensazioni**
+>
+>[0f6a16ee4631e9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f6a16ee4631e9a) gianfranco.gasparro *gennaio 21, 2020*
+
+>**Nascosta TAB di abilitazione Ordini nel caso di Gestione Ordini non Attiva**
+>
+>[9d40e70503dbadd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d40e70503dbadd) gianfranco.gasparro *gennaio 20, 2020*
 
 >**FIX test**
 >
@@ -28,6 +148,18 @@
 >**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
 >
 >[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *gennaio 20, 2020*
+
+
+## Release 6.1.11  -- _gennaio 20, 2020_ 
+**Changes**
+
+>**FIX test**
+>
+>[5b27eb5bff8d28e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b27eb5bff8d28e) marco.spasiano *gennaio 20, 2020*
+
+>**FIX test**
+>
+>[6c067f8a634ce35](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c067f8a634ce35) marco.spasiano *gennaio 20, 2020*
 
 
 ## Release 6.1.10  -- _gennaio 18, 2020_ 
