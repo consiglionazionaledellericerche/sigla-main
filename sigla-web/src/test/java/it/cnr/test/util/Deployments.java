@@ -31,19 +31,24 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @ArquillianSuiteDeployment
 @RunWith(Arquillian.class)
 public abstract class Deployments {
-    public static final String TEST_H2 = "test-h2", TEST_ORACLE = "test-oracle";
+    private transient final static Logger LOGGER = LoggerFactory.getLogger(Deployments.class);
 
+    public static final String TEST_H2 = "test-h2",
+            TEST_ORACLE = "test-oracle";
     @ArquillianResource
     protected ContainerController controller;
     @ArquillianResource
@@ -60,8 +65,10 @@ public abstract class Deployments {
     }
 
     private static WebArchive createDeployment(String yml, String name, String testPackage) throws Exception {
+        LOGGER.info("Start create archive {} at {}", name, LocalDateTime.now());
         final PomEquippedResolveStage pom = Maven.configureResolver()
                 .withClassPathResolution(true)
+                .workOffline(true)
                 .withMavenCentralRepo(false)
                 .withRemoteRepo("central", new URL(
                         Optional.ofNullable(System.getProperty("nexus.url"))
@@ -174,7 +181,7 @@ public abstract class Deployments {
                 .forEach((p) -> webArchive.addAsWebResource(
                         new FileAsset(p.toFile()),
                         p.toString().substring(webappPath.toString().length() + 1).replace("\\", "/")));
-
+        LOGGER.info("End create archive {} at {}", name, LocalDateTime.now());
         return webArchive;
     }
 }

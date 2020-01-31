@@ -974,7 +974,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		} catch (RuntimeException e) {
-            throw handleException(  e.getCause() );
+            throw handleException(e);
 		} catch(Exception e) {
 			throw handleException(e);
 		}
