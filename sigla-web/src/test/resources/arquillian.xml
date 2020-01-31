@@ -22,5 +22,8 @@
     </extension>
     <container qualifier="thorntail" default="true" mode="custom">
         <protocol type="Servlet 3.0"/>
+        <configuration>
+            <property name="javaVmArguments">-Dremote.maven.repo=http://maven.si.cnr.it/content/groups/public/</property>
+        </configuration>
     </container>
 </arquillian>
