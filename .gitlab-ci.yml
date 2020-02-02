@@ -20,7 +20,7 @@ cache:
   paths:
     - ~/.m2/repository
   # keep cache across branch
-  key: "$CI_PROJECT_PATH_SLUG"
+  key: "$CI_COMMIT_REF_SLUG"
 
 maven-deploy:
   stage: deploy
