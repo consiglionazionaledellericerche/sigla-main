@@ -10,3 +10,5 @@ build/
 /sigla-web/src/main/webapp/tmp/*.*
 log
 /docs/_build/
+/Makefile
+/_build/

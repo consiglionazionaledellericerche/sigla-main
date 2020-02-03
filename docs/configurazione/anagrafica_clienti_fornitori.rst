@@ -50,7 +50,7 @@ qualora sia necessario, valorizzare solo il tab `Rapporto`_.
 Studio Associato
 ================
 Lo Studio Associato è una persona guiridica e come tale deve essere registrata. L'attributo "Studio associato" consente di inserire nel tab Lista Associati,
-qualora sia necessario, i soggetti che fanno parte dello studio, inoltre consente la gestione di un particolare caso nella funzione dei `Compensi<compensi>`_
+qualora sia necessario, i soggetti che fanno parte dello studio, inoltre consente la gestione di un particolare caso nella funzione dei :doc:`Compensi<compensi>`
 
 Ente Pubblico
 ================
@@ -80,7 +80,7 @@ Esistono, infatti, una serie di controlli che consentono o meno l’utilizzo del
 |            |            |               |               |di IVA)         |                  |Extra UE   |Non esiste alcun controllo sul codice inserito              |
 |            |            |               |     X         |                |                  |           |                                                            |
 |            |            |               |               |                |                  |           |                                                            |
-+------------+------------+---------------+---------------+----------------+--------+---------+-----------+------------------------------------------------------------+
++------------+------------+---------------+---------------+----------------+------------------+-----------+------------------------------------------------------------+
 
 
 Per verificare l’esattezza della P.I. accedere al sito http://ec.europa.eu/taxation_customs/vies/?locale=it
@@ -141,7 +141,7 @@ L'inserimento dell'inquadramento è necessario solo per le tipologie di rapporto
 Carichi Familiari
 =================
 
-Le informazioni di questo pannello vengono utilizzate nel calcolo dei `Compensi<compensi>` e riguardano l’individuazione dei familiari a carico (coniuge, figlio, altro),
+Le informazioni di questo pannello vengono utilizzate nel calcolo dei :doc:`Compensi<compensi>` e riguardano l’individuazione dei familiari a carico (coniuge, figlio, altro),
 della validità di inizio e di fine, e della percentuale di abbattimento per ognuno.
 Le detrazioni derivanti da familiari a carico, secondo quanto previsto dalla `Circolare <http://www.ittig.cnr.it/BancheDatiGuide/circolari/c08-02a1Direttiva%20RagioneriaSAC%20su%20buste%20paga%20e%20fisco%20-%2017-01-2008.pdf>`_ direttiva della Ragioneria della SAC
 N.Reg RagSac 21/2008 del 17 gennaio 2008], sono dovute se il richiedente dichiara, :red:`'annualmente'`, di averne diritto.
