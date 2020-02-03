@@ -10,9 +10,9 @@ Gestione Utenze
   
  La gestione delle Utenze si distingue in diversi macroprocessi:
 
-- :ref: 'Gestione Amministratore delle Utenze';
-- :ref: 'Gestione Utenza Comune';
-- :ref: 'Gestione Profili'.
+- :ref:`Gestione Amministratore delle Utenze`;
+- :ref:`Gestione Utenza Comune`;
+- :ref:`Gestione Profili`.
   
-  Amministratore Utenze
-  =====================
+  :doc:`Utenza Amministratore<utenza_amministratore>`
+ 
