@@ -10,7 +10,7 @@ stages:
   - release
 
 variables:
-  M2_REPO: "~/.m2/repository"
+  M2_REPO: "/root/.m2/repository"
   MAVEN_OPTS: "-Djava.awt.headless=true -Dsonar.host.url=$SONAR_HOST_URL"
   MAVEN_CLI_OPTS: "-s .m2/settings.xml -Dnexus.url=$NEXUS_URL -Dnexus.login=$NEXUS_USERNAME -Dnexus.pwd=$NEXUS_PASSWORD --batch-mode --errors --fail-at-end --show-version"
   MAVEN_CLI_CENTRAL_OPTS: "-s .m2/settings.xml -Pprod,maven-central,publiccode -Dnexus.url=$NEXUS_URL -Dsonatype.login=$SONATYPE_USERNAME -Dsonatype.pwd=$SONATYPE_PASSWORD -DskipTests --batch-mode --errors --fail-at-end --show-version"
@@ -19,7 +19,7 @@ variables:
 
 cache:
   paths:
-    - ~/.m2/repository
+    - /root/.m2/repository
   # keep cache across branch
   key: "$CI_COMMIT_REF_SLUG"
 
