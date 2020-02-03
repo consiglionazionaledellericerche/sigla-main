@@ -18,7 +18,7 @@ Ai fini della creazione/modifica di un profilo di accesso a SIGLA:
 - l'utente deve essere in possesso dell'account ufficiale (nome.cognome) 
 - l'Amministratore delle Utenze di Sigla deve effettuare le necessarie operazioni di configurazione del sistema. 
 
-Consultare Funzionalità :doc:`Amministratore delle utenze del Sistema Contabile<utenza_amministratore>`
+Consultare Funzionalità :doc:`Amministratore delle utenze del Sistema Contabile<utenza_amministratore>` 
   
 Nomina Amministratore delle Utenze di SIGLA per le strutture della Rete Scientifica
 -----------------------------------------------------------------------------------
