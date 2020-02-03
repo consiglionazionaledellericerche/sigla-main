@@ -27,7 +27,7 @@ doc:`Modulo nomina Amministratore<nomina_amministratore>`
 
 Gestione utenze della SAC (Struttura Amministrativa Centrale)
 -------------------------------------------------------------
-Le richieste di creazione, modifica e disabilitazione di account SIGLA per utenti afferenti alla SAC devono essere inviate sempre tramite helpdesk SIGLA (https://helpdesk.amministrazione.cnr.it/sigla/Home.do), ma in questo caso la categoria da utilizzare è “Utenze” --> “Utenze Amministrazione Centrale”. In questo caso deve essere allegata una nota a firma del responsabile della struttura di afferenza dell’utente, nella quale è specificato il profilo di accesso che si chiede di abilitare. 
+Le richieste di creazione, modifica e disabilitazione di account SIGLA per utenti afferenti alla SAC devono essere inviate sempre tramite `helpdesk SIGLA <https://helpdesk.amministrazione.cnr.it/sigla/Home.do>`_, ma in questo caso la categoria da utilizzare è “Utenze” --> “Utenze Amministrazione Centrale”. In questo caso deve essere allegata una nota a firma del responsabile della struttura di afferenza dell’utente, nella quale è specificato il profilo di accesso che si chiede di abilitare. 
 
 - :ref:`Gestione Amministratore delle Utenze`;
 - :ref:`Gestione Utenza Comune`;
