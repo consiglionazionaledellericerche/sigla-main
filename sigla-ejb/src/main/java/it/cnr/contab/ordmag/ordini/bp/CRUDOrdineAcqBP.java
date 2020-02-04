@@ -459,7 +459,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			UserContext userContext,
 			OrdineAcqBulk ordine) throws ComponentException {
 		try {
-			String jasperOrdineName = "ordini_acq2.jasper";
+			String jasperOrdineName = "ordini_acq.jasper";
 			String nomeFileOrdineOut = getOutputFileNameOrdine(jasperOrdineName, ordine);
 			File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + nomeFileOrdineOut);
 			Print_spoolerBulk print = new Print_spoolerBulk();

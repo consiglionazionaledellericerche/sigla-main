@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Parametri Selezione Ordini Acquisto"
+	longDescription="Parametri Selezione Ordini Acquisto">
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaAbilitata"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzinoAbilitato"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Terzo" />
+	<fieldProperty
+		name="daDataOrdine"
+		property="daDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineChange"
+		label="Da Data Ordine" />
+	<fieldProperty
+		name="aDataOrdine"
+		property="aDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Data Ordine" />
+	<fieldProperty
+		name="daDataOrdineDef"
+		property="daDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineChange"
+		label="Da Dt Conferma Ord." />
+	<fieldProperty
+		name="aDataOrdineDef"
+		property="aDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Dt Conferma Ord." />
+	<fieldProperty
+		name="daNumeroOrdine"
+		property="daNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Da Numero Ordine" />
+	<fieldProperty
+		name="aNumeroOrdine"
+		property="aNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Numero Ordine" />
+	<fieldProperty
+		name="findNumerazioneOrd"
+		property="numerazioneOrd"
+		inputType="SEARCHTOOL"
+		formName="searchtool_ridotto"
+		enabledOnSearch="true"
+		label="Numerat. Ordine" />
+	<fieldProperty
+		name="findDaUnitaOperativaOrd"
+		property="daUnitaOperativaRicevente"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Da UOp Ricevente" />
+	<fieldProperty
+		name="findAUnitaOperativaOrd"
+		property="aUnitaOperativaRicevente"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="A UOp Ricevente" />
+
+	<formFieldProperty
+		name="findTerzo" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findDaUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findAUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findNumerazioneOrd" />
+	<formFieldProperty
+		name="daDataOrdine" />
+	<formFieldProperty
+			name="aDataOrdine" />
+	<formFieldProperty
+		name="daDataOrdineDef" />
+	<formFieldProperty
+			name="aDataOrdineDef" />
+	<formFieldProperty
+		name="daNumeroOrdine" />
+	<formFieldProperty
+			name="aNumeroOrdine" />
+</bulkInfo>
