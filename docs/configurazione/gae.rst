@@ -1,4 +1,6 @@
-# Gruppo di Azioni Elementari - GAE
+=================================
+Gruppo di Azioni Elementari - GAE
+=================================
 
 La scheda illustra la modalità di creazione di una linea di attività. La linea di attività creata in questo modo è sempre di tipo proprio, 
 cioè assegnabile a un solo cdr. Si veda la scheda apposita per le linee di [[#Attivita Comuni|attivita comuni]].

@@ -1,4 +1,6 @@
-# Struttura Organizzativa
+=======================
+Struttura Organizzativa
+=======================
 
 La struttura organizzative dell'Ente è strutturata in tre livelli: - Centro di Spesa; - Unità Organizzativa; - Centro di Responsabilità.
 
