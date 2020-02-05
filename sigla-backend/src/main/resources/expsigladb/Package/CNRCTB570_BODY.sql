@@ -1126,7 +1126,7 @@ CREATE OR REPLACE PACKAGE BODY PCIR009."CNRCTB570" AS
   aAccConScad varchar2(1):='Y';
   recParametriCNR PARAMETRI_CNR%Rowtype;
   TROVATO_DETTAGLIO_P_GIRO VARCHAR2(1);
-  SOMMA_OPPOSTA NUMBER;
+  SOMMA_OPPOSTA NUMBER := 0;
   aObbGiroOpp obbligazione%rowtype;
   aObbScadGiroOpp  obbligazione_scadenzario%rowtype;
   aObbScadVoceGiroOpp  obbligazione_scad_voce%rowtype;
@@ -1223,26 +1223,27 @@ l.cd_gruppo_cr = '1004'
       aObbPG:=null;
       aObbPGScad:=null;
 
-      select NVL(sum(ammontare),0) 
-      INTO SOMMA_OPPOSTA
-      from
-      contributo_ritenuta c, liquid_gruppo_Cori_Det l
-      where c.esercizio = l.esercizio_contributo_ritenuta and
-      c.pg_compenso = l.pg_compenso and
-      C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
-      c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
-      l.CD_CDS = aAggregato.CD_CDS and
-      l.ESERCIZIO = aAggregato.esercizio and
-      l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
-      l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
-      l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
-      l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
-      l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
-      l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
-      l.CD_REGIONE = aAggregato.CD_REGIONE and
-      l.PG_COMUNE = aAggregato.PG_COMUNE and
-      C.AMMONTARE > 0;
-
+      if aL.da_esercizio_precedente = 'Y' then
+        select NVL(sum(ammontare),0) 
+        INTO SOMMA_OPPOSTA
+        from
+        contributo_ritenuta c, liquid_gruppo_Cori_Det l
+        where c.esercizio = l.esercizio_contributo_ritenuta and
+        c.pg_compenso = l.pg_compenso and
+        C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
+        c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+        l.CD_CDS = aAggregato.CD_CDS and
+        l.ESERCIZIO = aAggregato.esercizio and
+        l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
+        l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
+        l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
+        l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
+        l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
+        l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
+        l.CD_REGIONE = aAggregato.CD_REGIONE and
+        l.PG_COMUNE = aAggregato.PG_COMUNE and
+        C.AMMONTARE > 0;
+      END IF;  
       begin
        select distinct a.cd_elemento_voce
        into aCdEV
@@ -1499,26 +1500,27 @@ end;
         and cd_unita_organizzativa = aAggregato.cd_unita_organizzativa;
   else  -- aAggregato.im_liquidato > 0
 
-    select abs(NVL(sum(ammontare),0) )
-    INTO SOMMA_OPPOSTA
-    from
-    contributo_ritenuta c, liquid_gruppo_Cori_Det l
-    where c.esercizio = l.esercizio_contributo_ritenuta and
-    c.pg_compenso = l.pg_compenso and
-    C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
-    c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
-    l.CD_CDS = aAggregato.CD_CDS and
-    l.ESERCIZIO = aAggregato.esercizio and
-    l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
-    l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
-    l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
-    l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
-    l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
-    l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
-    l.CD_REGIONE = aAggregato.CD_REGIONE and
-    l.PG_COMUNE = aAggregato.PG_COMUNE and
-    C.AMMONTARE < 0;
-      
+    if aL.da_esercizio_precedente = 'Y' then
+      select abs(NVL(sum(ammontare),0) )
+      INTO SOMMA_OPPOSTA
+      from
+      contributo_ritenuta c, liquid_gruppo_Cori_Det l
+      where c.esercizio = l.esercizio_contributo_ritenuta and
+      c.pg_compenso = l.pg_compenso and
+      C.CD_UNITA_ORGANIZZATIVA = l.cd_uo_origine and
+      c.cd_contributo_ritenuta = l.cd_contributo_ritenuta and 
+      l.CD_CDS = aAggregato.CD_CDS and
+      l.ESERCIZIO = aAggregato.esercizio and
+      l.CD_UNITA_ORGANIZZATIVA = aAggregato.CD_UNITA_ORGANIZZATIVA and
+      l.PG_LIQUIDAZIONE = aAggregato.PG_LIQUIDAZIONE and
+      l.CD_CDS_ORIGINE = aAggregato.CD_CDS_ORIGINE and
+      l.CD_UO_ORIGINE = aAggregato.CD_UO_ORIGINE and
+      l.PG_LIQUIDAZIONE_ORIGINE = aAggregato.PG_LIQUIDAZIONE_ORIGINE and
+      l.CD_GRUPPO_CR = aAggregato.CD_GRUPPO_CR and
+      l.CD_REGIONE = aAggregato.CD_REGIONE and
+      l.PG_COMUNE = aAggregato.PG_COMUNE and
+      C.AMMONTARE < 0;
+    END IF;      
    if aLGC.pg_obb_accentr is not null then
     --CNRCTB043.modificaPraticaObb(aLGC.esercizio_obb_accentr,aLGC.cd_cds_obb_accentr,aLGC.esercizio_ori_obb_accentr,aLGC.pg_obb_accentr,aAggregato.im_liquidato,aTSNow,aUser);
     --aggiunto l'ultimo parametro aAccConScad = 'Y' per indicare che sono gestite le scadenze per le pgiro di entrata
@@ -2772,7 +2774,7 @@ end;
                -- CNRCTB046.ripPgiroCds (aAccTmp, aObb, aTSNow, aUser);
                
                -- 09.01.2008 SF PARTITE DI GIRO DA ESERCIZIO PRECEDENTE
-               CNRCTB046.ripPgiroCdsEntrambe(aObbTmp, aObbScadTmp, aObbScadVoceTmp, aAccTmp, aAccScadTmp, aAccScadVoceTmp, Null, Null, CNRCTB001.GESTIONE_SPESE,
+               CNRCTB046.ripPgiroCdsEntrambe( aObbTmp, aObbScadTmp, aObbScadVoceTmp, aAccTmp, aAccScadTmp, aAccScadVoceTmp, Null, Null, CNRCTB001.GESTIONE_SPESE,
                                              aTSNow, aUser, aObb, aAcc);
                     
                CNRCTB035.getPgiroCds (aObb, aObbScad, aObbScadVoce, aAcc, aAccScad, aAccScadVoce);
