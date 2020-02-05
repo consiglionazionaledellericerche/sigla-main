@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
+import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
 
@@ -78,43 +79,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.doccont00.core.DatiFinanziariScadenzeDTO;
-import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-import it.cnr.contab.doccont00.core.bulk.Linea_attivitaBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoIBulk;
-import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
-import it.cnr.contab.doccont00.core.bulk.ObbligazioneRes_impropriaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceKey;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaHome;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaKey;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
-import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
-import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_obb_doc_ammBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_obbligazioni_LAVBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_obbligazioni_riportabiliVBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_registro_annotazione_spese_pgiroBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_registro_obbligazioniBulk;
-import it.cnr.contab.doccont00.core.bulk.Stampa_scadenzario_obbligazioniBulk;
-import it.cnr.contab.doccont00.core.bulk.V_doc_passivo_obbligazioneBulk;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obbligBulk;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obbligHome;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obblig_scad_voceBulk;
-import it.cnr.contab.doccont00.core.bulk.V_mod_saldi_obblig_scad_voceHome;
-import it.cnr.contab.doccont00.core.bulk.V_obblig_pdg_saldo_laBulk;
-import it.cnr.contab.doccont00.core.bulk.V_obbligazione_im_mandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.V_pdg_obbligazione_speBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.incarichi00.bulk.Ass_incarico_uoBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
@@ -1822,8 +1787,9 @@ public OggettoBulk creaConBulk (UserContext uc,OggettoBulk bulk) throws Componen
 	//esegue il check di disponibilita di cassa 
 	controllaDisponibilitaCassaPerVoce( uc, obbligazione, INSERIMENTO );
 	verificaCoperturaContratto( uc, obbligazione);
+	verificaCoerenzaGaeContratto(uc, obbligazione);
 	verificaCoperturaIncaricoRepertorio(uc, obbligazione);
-	
+
 	if ( !uc.isTransactional() )
 		//aggiorna il capitolo saldo
 		aggiornaCapitoloSaldoObbligazione( uc, obbligazione, INSERIMENTO );	
@@ -3252,6 +3218,7 @@ public OggettoBulk modificaConBulk (UserContext aUC,OggettoBulk bulk) throws Com
 		controllaDisponibilitaCassaPerVoce( aUC, obbligazione, MODIFICA );
 
 		verificaCoperturaContratto( aUC, obbligazione );
+		verificaCoerenzaGaeContratto(aUC, obbligazione);
 		verificaCoperturaIncaricoRepertorio(aUC, obbligazione);
 		
 		if ( !aUC.isTransactional() )
@@ -4624,6 +4591,38 @@ public void verificaCoperturaContratto (UserContext aUC,ObbligazioneBulk obbliga
 {
 	verificaCoperturaContratto (aUC,obbligazione, MODIFICA);
 }
+
+	public void verificaCoerenzaGaeContratto(UserContext aUC, ObbligazioneBulk obbligazione) throws ComponentException {
+		try {
+			Optional<Integer> optPrgContratto = Optional.ofNullable(obbligazione)
+					.flatMap(el->Optional.ofNullable(el.getContratto()))
+					.flatMap(el->Optional.ofNullable(el.getPg_progetto()));
+
+			if (optPrgContratto.isPresent()) {
+				ProgettoHome progettoHome = (ProgettoHome)getHome(aUC, ProgettoBulk.class);
+				WorkpackageHome home = (WorkpackageHome)getHome(aUC, WorkpackageBulk.class);
+				obbligazione.getObbligazione_scadenzarioColl().stream()
+						.flatMap(el->Optional.ofNullable(el.getObbligazione_scad_voceColl()).map(List::stream).orElse(Stream.empty()))
+						.map(el->el.getLinea_attivita())
+						.distinct()
+						.forEach(el->{
+							try {
+								WorkpackageBulk lineaAttivita = home.searchGAECompleta(aUC, obbligazione.getEsercizio(), el.getCd_centro_responsabilita(), el.getCd_linea_attivita());
+								if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
+									ProgettoBulk prgContratto = (ProgettoBulk)progettoHome.findByPrimaryKey(new ProgettoBulk(obbligazione.getEsercizio(), optPrgContratto.get(), ProgettoBulk.TIPO_FASE_NON_DEFINITA));
+									throw new ApplicationRuntimeException("Linea di Attività "+el.getCd_linea_attivita()+" del CDR "+el.getCd_centro_responsabilita()+
+											" non selezionabile in quanto appartenente al progetto "+lineaAttivita.getCd_progetto()+" diverso dal progetto " +
+											prgContratto.getCd_progetto()+" del contratto associato all'impegno.");
+								}
+							} catch (ComponentException|PersistencyException e) {
+								throw new ApplicationRuntimeException(e);
+							}
+						});
+			}
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
 /** 
   *  Tutti controlli superati - creazione
   *    PreCondition:
