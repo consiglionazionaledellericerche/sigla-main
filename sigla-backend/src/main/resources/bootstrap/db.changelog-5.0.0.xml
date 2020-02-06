@@ -2793,5 +2793,17 @@ TRASPORTO_AEREO"/>
                         columnName="riferimento"
                         newDataType="VARCHAR(100)" />
     </changeSet>
-
+    <changeSet author="gianfranco.gasparro" id="configurazione-cnr-add-cds-sac">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="CDS_SPECIALE"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="CDS_SAC"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
