@@ -18,7 +18,7 @@
 |[Spring.io](https://spring.io/)| ![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.springframework/spring-context/5.1.8.RELEASE.svg) |
 |[Liquibase](https://www.liquibase.org/) | ![Maven Central](https://img.shields.io/maven-central/v/org.liquibase/liquibase-core/3.5.3.svg)|
 |[SIOPE+](https://github.com/consiglionazionaledellericerche/siopeplus) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/siopeplus.svg)|
-|[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud.svg)|
+|[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud/1.0.5.svg)|
 |[JADA JEE Framework](https://github.com/consiglionazionaledellericerche/jada) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/jada.svg)|
  
 ## Introduzione
