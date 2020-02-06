@@ -1,3 +1,11 @@
+## Release 6.1.24  -- _February 06, 2020_ 
+**Changes**
+
+>**FIX changelog**
+>
+>[fd2452c3871cca8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd2452c3871cca8) marco.spasiano *February 06, 2020*
+
+
 ## Release 6.1.23  -- _February 06, 2020_ 
 **Changes**
 
