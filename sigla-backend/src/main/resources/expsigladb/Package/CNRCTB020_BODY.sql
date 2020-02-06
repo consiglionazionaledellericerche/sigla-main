@@ -10,10 +10,10 @@ CREATE OR REPLACE PACKAGE BODY "CNRCTB020" is
  begin
    select CD_unita_organizzativa
    into aUO from unita_organizzativa where
-	    fl_cds = 'Y'
+      fl_cds = 'Y'
     and cd_tipo_unita = TIPO_ENTE
-	and esercizio_inizio <= aEs
-	and esercizio_fine >= aEs;
+  and esercizio_inizio <= aEs
+  and esercizio_fine >= aEs;
   return aUO;
  exception when NO_DATA_FOUND then
   IBMERR001.RAISE_ERR_GENERICO('CDS ente valido non trovato in esercizio:'||aEs);
@@ -30,11 +30,11 @@ end;
   aUO unita_organizzativa%rowtype;
  begin
    select * into aUO from unita_organizzativa where
-	    fl_cds = 'N'
-	and to_number(cd_proprio_unita)=0
+      fl_cds = 'N'
+  and to_number(cd_proprio_unita)=0
     and cd_tipo_unita = TIPO_ENTE
-	and esercizio_inizio <= aEs
-	and esercizio_fine >= aEs;
+  and esercizio_inizio <= aEs
+  and esercizio_fine >= aEs;
   return aUO;
  exception when NO_DATA_FOUND then
   IBMERR001.RAISE_ERR_GENERICO('UO ente valida non trovata in esercizio:'||aEs);
@@ -45,31 +45,53 @@ end;
  begin
   begin
    select * into aCDS from unita_organizzativa a where
-	    a.fl_cds = 'Y'
+      a.fl_cds = 'Y'
     and a.cd_unita_organizzativa = aCdCds
     and exists (select 1 from v_unita_organizzativa_valida where
-	     esercizio = aEs
-	 and cd_unita_organizzativa = a.cd_unita_organizzativa);
+       esercizio = aEs
+   and cd_unita_organizzativa = a.cd_unita_organizzativa);
    return aCDS;
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('CDS non valido o non definito in esercizio '||aEs);
   end;
  end;
 
+ function getCdsSac(aEs number) return unita_organizzativa.cd_unita_organizzativa%Type Is
+   aCDS varchar2(30);
+   noData EXCEPTION;
+   pragma exception_init(noData,-20020);
+  begin
+   Begin
+     aCDS:=CNRCTB015.GETVAL01PERCHIAVE(aEs,'CDS_SPECIALE','CDS_SAC');
+   Exception
+     When noData Then
+       if aEs=0 Then
+         IBMERR001.RAISE_ERR_GENERICO('Chiave non trovata in tabella di configurazione cnr: CDS_SPECIALE-CDS_SAC');
+      end if;
+   End;
+   if aCDS is null AND aEs!=0 then
+      aCDS:=CNRCTB015.GETVAL01PERCHIAVE(0,'CDS_SPECIALE','CDS_SAC');
+   end if;
+   return aCDS;
+ end;
+
  function getCDSSACValido(aEs number) return unita_organizzativa%rowtype is
   aCDS unita_organizzativa%rowtype;
+  cdCdsSac  unita_organizzativa.cd_unita_organizzativa%type;
  begin
   if (gEsercizioCDSSACValido Is Null Or gEsercizioCDSSACValido != aEs) Then
     gEsercizioCDSSACValido := aEs;
+    cdCdsSac := getCdsSac(aEs);
     begin
          select * into aCDS from unita_organizzativa where
               aEs >= esercizio_inizio
           and (
               esercizio_fine is null
-         	 or aEs <= esercizio_fine
+           or aEs <= esercizio_fine
           )
-      	and cd_tipo_unita = TIPO_SAC
-      	and fl_cds = 'Y';
+        and cd_tipo_unita = TIPO_SAC
+        and fl_cds = 'Y' 
+        and cd_unita_organizzativa = cdCdsSac;
      gCDSSACValido := aCDS;
      return gCDSSACValido;
     exception when NO_DATA_FOUND then
@@ -80,20 +102,24 @@ end;
   End If;
  end;
 
+
  Function getcdCDSSACValido(aEs number) Return VARCHAR2 is
   aCDS unita_organizzativa%rowtype;
+  cdCdsSac  unita_organizzativa.cd_unita_organizzativa%type;
  begin
   if (gEsercizioCDCDSSACValido Is Null Or gEsercizioCDCDSSACValido != aEs) Then
     gEsercizioCDCDSSACValido := aEs;
+    cdCdsSac := getCdsSac(aEs);
     begin
      select * into aCDS from unita_organizzativa where
           aEs >= esercizio_inizio
       and (
           esercizio_fine is null
-     	 or aEs <= esercizio_fine
+       or aEs <= esercizio_fine
       )
-	  and cd_tipo_unita = TIPO_SAC
-	  and fl_cds = 'Y';
+    and cd_tipo_unita = TIPO_SAC
+    and fl_cds = 'Y' 
+    and cd_unita_organizzativa = cdCdsSac;
      gCDCDSSACValido := aCDS.cd_unita_organizzativa;
      return gCDCDSSACValido;
     exception when NO_DATA_FOUND then
@@ -112,9 +138,9 @@ end;
         aEs >= esercizio_inizio
     and (
         esercizio_fine is null
-   	 or aEs <= esercizio_fine
+     or aEs <= esercizio_fine
     )
-	and cd_unita_organizzativa = aCdUO;
+  and cd_unita_organizzativa = aCdUO;
    return aUO;
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('Unita organizzativa '||aCdUO||'non valida o non definita in esercizio '||aEs);
@@ -130,9 +156,9 @@ end;
         aEs >= esercizio_inizio
     and (
         esercizio_fine is null
-   	 or aEs <= esercizio_fine
+     or aEs <= esercizio_fine
     )
-	and cd_centro_responsabilita = aCdCDR;
+  and cd_centro_responsabilita = aCdCDR;
    return aCDR;
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('CDR '||aCdCDR||'non valido o non definito in esercizio '||aEs);
@@ -161,14 +187,14 @@ end;
   begin
    select d.* into aCDRArea from
     unita_organizzativa a, -- unita organizzativa di aCDR
-	unita_organizzativa b, -- cds AREA
-	unita_organizzativa c, -- uo cds AREA
-	cdr d -- cdr responsabile del CDS AREA
+  unita_organizzativa b, -- cds AREA
+  unita_organizzativa c, -- uo cds AREA
+  cdr d -- cdr responsabile del CDS AREA
    where
         a.cd_unita_organizzativa = aCDR.cd_unita_organizzativa
     and b.cd_unita_organizzativa = a.cd_area_ricerca
     and c.cd_unita_padre = b.cd_unita_organizzativa
-	and c.fl_uo_cds = 'Y'
+  and c.fl_uo_cds = 'Y'
     and d.cd_unita_organizzativa = c.cd_unita_organizzativa;
   exception when NO_DATA_FOUND then
    null;
@@ -182,10 +208,10 @@ end;
   begin
    select b.* into aCDREnte from
     unita_organizzativa a, -- unita organizzativa ENTE
-	cdr b                  -- cdr responsabile ENTE
+  cdr b                  -- cdr responsabile ENTE
    where
         a.cd_unita_organizzativa = b.cd_unita_organizzativa
-	and a.cd_tipo_unita = CNRCTB020.TIPO_ENTE;
+  and a.cd_tipo_unita = CNRCTB020.TIPO_ENTE;
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('CDR Ente non trovato!');
   end;
@@ -221,7 +247,7 @@ end;
      unita_organizzativa
     where
          cd_unita_organizzativa = aUOPresArea.cd_unita_padre
- 	 and fl_cds = 'Y';
+   and fl_cds = 'Y';
    exception when NO_DATA_FOUND then
     null;
    end;
@@ -234,8 +260,8 @@ end;
  begin
   begin
    select c.* into aUOPresArea from
-	unita_organizzativa a, -- uo dell'area
-	ass_uo_area b, -- aree associate alla uo
+  unita_organizzativa a, -- uo dell'area
+  ass_uo_area b, -- aree associate alla uo
     unita_organizzativa c  -- uo presidente dell'area
    Where a.cd_unita_organizzativa = aCDRArea.cd_unita_organizzativa
    And   b.esercizio = aEs
@@ -259,7 +285,7 @@ end;
      unita_organizzativa
     where
          cd_unita_organizzativa = aUOPresArea.cd_unita_padre
- 	 and fl_cds = 'Y';
+   and fl_cds = 'Y';
    exception when NO_DATA_FOUND then
     null;
    end;
@@ -339,7 +365,7 @@ end;
    and a.fl_uo_cds = 'Y'
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
-				 and cd_unita_organizzativa = a.cd_unita_organizzativa);
+         and cd_unita_organizzativa = a.cd_unita_organizzativa);
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('UO CDS del CDS '||aCdCds||' non trovata!');
   end;
@@ -356,7 +382,7 @@ end;
    and cd_tipo_unita = TIPO_SAC
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
-				 and cd_unita_organizzativa = a.cd_unita_organizzativa);
+         and cd_unita_organizzativa = a.cd_unita_organizzativa);
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('UO SAC responsabile del versamento CORI accentrato non trovata');
   end;
@@ -373,7 +399,7 @@ end;
    and cd_tipo_unita = TIPO_SAC
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
-		 and cd_unita_organizzativa = a.cd_unita_organizzativa);
+     and cd_unita_organizzativa = a.cd_unita_organizzativa);
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('UO SAC responsabile del versamento CORI unificato non trovata');
   end;
@@ -389,7 +415,7 @@ end;
        a.cd_unita_organizzativa = getCdUOVersCoriContoBI(aEs)
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
-		 and cd_unita_organizzativa = a.cd_unita_organizzativa);
+     and cd_unita_organizzativa = a.cd_unita_organizzativa);
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('UO responsabile del versamento CORI su Conto BI non trovata');
   end;
@@ -406,7 +432,7 @@ end;
    and cd_tipo_unita = TIPO_SAC
    and exists (select 1 from v_unita_organizzativa_valida where
                      esercizio = aEs
-				 and cd_unita_organizzativa = a.cd_unita_organizzativa);
+         and cd_unita_organizzativa = a.cd_unita_organizzativa);
   exception when NO_DATA_FOUND then
    IBMERR001.RAISE_ERR_GENERICO('UO SAC responsabile del versamento IVA non trovata');
   end;
@@ -528,7 +554,7 @@ end;
     ,CD_TIPO_UNITA
     ,FL_CDS
     ,FL_UO_CDS
-	,CD_AREA_SCIENTIFICA
+  ,CD_AREA_SCIENTIFICA
    ) values (
      aDest.FL_RUBRICA
     ,aDest.LIVELLO
@@ -552,7 +578,7 @@ end;
     ,aDest.CD_TIPO_UNITA
     ,aDest.FL_CDS
     ,aDest.FL_UO_CDS
-	,aDest.CD_AREA_SCIENTIFICA
+  ,aDest.CD_AREA_SCIENTIFICA
     );
  end;
 
@@ -722,10 +748,10 @@ Procedure ins_CDR (aDest CDR%rowtype) is
     and cd_tipo_unita = TIPO_SAC;
 
     if conta > 0 then
-	  	 return true;
-	  else
-	  	 return false;
-	  end if;
+       return true;
+    else
+       return false;
+    end if;
  end;
  function getCdCDRPersonale(aEs number) return cdr.cd_centro_responsabilita%Type Is
   aCdCDR varchar2(30);
