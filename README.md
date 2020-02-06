@@ -3,7 +3,7 @@
   <a href="https://github.com/consiglionazionaledellericerche/sigla-parent/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="SIGLA is released under the GNU AGPL v3 license." />
   </a>
-  <a href="https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-main">
+  <a href="https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-parent">
     <img alt="Maven Central" src="https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?style=flat" alt="Current version on maven central.">
   </a>
   <a href='https://sigla-main.readthedocs.io/it/latest/?badge=latest'>
