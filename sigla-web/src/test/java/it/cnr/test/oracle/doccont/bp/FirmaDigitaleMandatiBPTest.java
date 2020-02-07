@@ -18,6 +18,8 @@
 package it.cnr.test.oracle.doccont.bp;
 
 import it.cnr.contab.doccont00.bp.FirmaDigitaleMandatiBP;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
+import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.ejb.CRUDComponentSession;
@@ -34,6 +36,7 @@ import javax.ejb.EJB;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class FirmaDigitaleMandatiBPTest extends DeploymentsOracle {
@@ -60,5 +63,11 @@ public class FirmaDigitaleMandatiBPTest extends DeploymentsOracle {
                 v_mandato_reversaleBulk.getStorePath().concat(StorageDriver.SUFFIX).concat(v_mandato_reversaleBulk.getCMISName())
         );
         assertNotNull(storageObjectByPath);
+        assertEquals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO, Optional.ofNullable(
+                        crudComponentSession.findByPrimaryKey(testUserContext,v_mandato_reversaleBulk))
+                        .filter(V_mandato_reversaleBulk.class::isInstance)
+                        .map(V_mandato_reversaleBulk.class::cast)
+                        .orElse(null).getStato_trasmissione());
+
     }
 }
