@@ -55,6 +55,18 @@
 		enabledOnSearch="false"
 		nullable="false"
 		label="Numero" />
+
+	<fieldProperty
+			name="dataOrdine"
+			property="ordineAcqRiga.ordineAcq.dataOrdine"
+			inputType="TEXT"
+			inputSize="10"
+			formatName="date_short"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			label="Data Ordine" />
 	<fieldProperty
 		name="riga"
 		property="ordineAcqRiga.riga"
@@ -432,14 +444,7 @@
 		inputType="searchtool"
 		formName="searchtool_codice"
 		label="Bene/Servizio" />
-	<fieldProperty
-		name="cdUnitaMisuraMinima"
-		property="ordineAcqRiga.beneServizio.unitaMisura.cdUnitaMisura"
-		maxLength="30"
-		inputSize="3"
-		inputType="ROTEXT"
-		label="UM Minima"
-		caseSensitiveSearch="false" />
+
 	<fieldProperty
 		name="cdUnitaMisura"
 		property="ordineAcqRiga.unitaMisura.cdUnitaMisura"
@@ -499,7 +504,33 @@
 		inputSize="20"
 		inputType="ROTEXT"
 		label="Ordine" />
-		
+
+	<fieldProperty
+			name="denominazioneSede"
+			property="ordineAcqRiga.ordineAcq.fornitore.denominazione_sede"
+			inputSize="100"
+			inputType="TEXT"
+			label="Denom./Sede"
+	 />
+
+	<fieldProperty
+			name="cdUnitaMisuraMinima"
+			property="beneServizio.unitaMisura.cdUnitaMisura"
+			maxLength="30"
+			inputSize="3"
+			inputType="ROTEXT"
+			label="Unità Misura Minima"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="percentuale_voce_iva"
+			property="ordineAcqRiga.voceIva.percentuale"
+			maxLength="6"
+			inputSize="6"
+			inputType="ROTEXT"
+			formatName="it.cnr.contab.util.PercentFormat"
+			label="%" />
+
+
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -515,7 +546,8 @@
 		<formFieldProperty
 			name="riga" />
 		<formFieldProperty
-			name="consegna" />
+			name="consegna"
+		label="Fornitore"/>
 	</form>
 	<columnSet
 		name="consegneSetOrdine">
@@ -642,7 +674,90 @@
 		name="findBeneServizio" />
 	<formFieldProperty 
 		name="cdUnitaMisuraMinima" />
-		
+
+	<columnSet
+			name="evasioneOrdineForzata">
+		<columnFieldProperty
+				name="dataOrdine"/>
+		<columnFieldProperty
+				name="cdNumeratore"
+				label="Numeratore"/>
+		<columnFieldProperty
+				name="numero"
+				label="Numero Ordine"/>
+		<columnFieldProperty
+				name="riga"
+				label="Riga Ordine"/>
+		<columnFieldProperty
+				name="consegna"
+				label="Fornitore"/>
+		<columnFieldProperty
+				name="denominazioneSede"/>
+		<columnFieldProperty
+				name="cdBeneServizio"/>
+		<columnFieldProperty
+				name="dsBeneServizio"/>
+		<columnFieldProperty
+				name="percentuale_voce_iva"/>
+		<columnFieldProperty
+				name="cdUnitaMisura"/>
+		<columnFieldProperty
+				name="quantita"/>
+		<columnFieldProperty
+				name="prezzoUnitario"
+				label="Prezzo"/>
+		<columnFieldProperty
+				name="imTotaleConsegna"
+				label="Totale"/>
+		<columnFieldProperty
+				name="tipoConsegna"/>
+		<columnFieldProperty
+				name="dtPrevConsegna"/>
+	</columnSet>
+
+	<columnSet
+			name="visualOrdinAcqCons">
+		<columnFieldProperty
+				name="dataOrdine"/>
+		<columnFieldProperty
+				name="cdNumeratore"
+				label="Numeratore"/>
+		<columnFieldProperty
+				name="numero"
+				label="Numero Ordine"/>
+		<columnFieldProperty
+				name="riga"
+				label="Riga Ordine"/>
+		<columnFieldProperty
+				name="consegna"
+			label="Fornitore"/>
+		<columnFieldProperty
+				name="denominazioneSede"/>
+		<columnFieldProperty
+				name="cdBeneServizio"/>
+		<columnFieldProperty
+				name="dsBeneServizio"/>
+		<columnFieldProperty
+				name="percentuale_voce_iva"/>
+		<columnFieldProperty
+				name="cdUnitaMisura"/>
+		<columnFieldProperty
+				name="quantita"/>
+		<columnFieldProperty
+				name="prezzoUnitario"
+				label="Prezzo"/>
+		<columnFieldProperty
+				name="imTotaleConsegna"
+				label="Totale"/>
+
+		<columnFieldProperty
+				name="stato"/>
+		<columnFieldProperty
+				name="tipoConsegna"/>
+		<columnFieldProperty
+				name="dtPrevConsegna"/>
+	</columnSet>
+
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

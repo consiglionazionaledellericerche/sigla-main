@@ -266,9 +266,9 @@
 			}
 		}
 
-		public RemoteIterator ricercaOrdiniAcq(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException{
+		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException{
 			try {
-				return (RemoteIterator)invoke("ricercaOrdiniAcq",new Object[] {
+				return (RemoteIterator)invoke("ricercaOrdiniAcqCons",new Object[] {
 						userContext,
 						parametri});
 			} catch(RemoteException e) {

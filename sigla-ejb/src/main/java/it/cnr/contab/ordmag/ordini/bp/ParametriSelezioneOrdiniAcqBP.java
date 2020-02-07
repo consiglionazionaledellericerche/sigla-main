@@ -1,9 +1,6 @@
 package it.cnr.contab.ordmag.ordini.bp;
 
-import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
-import it.cnr.contab.ordmag.magazzino.ejb.MovimentiMagComponentSession;
 import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
-import it.cnr.contab.ordmag.ordini.comp.OrdineAcqComponent;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -14,6 +11,19 @@ import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
 
 public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
+
+    public static final String VIS_ORDINI_RIGA_CONS = "visOrdiniConsegna";
+    public static final String EVA_FORZATA_ORDINI = "evaForzataOrdini";
+
+    private String tipoSelezione;
+
+    public String getTipoSelezione() {
+        return tipoSelezione;
+    }
+
+    public void setTipoSelezione(String tipoSelezione) {
+        this.tipoSelezione = tipoSelezione;
+    }
 
     public ParametriSelezioneOrdiniAcqBP() {
             this("");
@@ -72,7 +82,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
             if (cs == null) return null;
             ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk = (ParametriSelezioneOrdiniAcqBulk)getModel();
             if (parametriSelezioneOrdiniAcqBulk.isIndicatoAlmenoUnCriterioDiSelezione()){
-                return cs.ricercaOrdiniAcq(actioncontext.getUserContext(), parametriSelezioneOrdiniAcqBulk);
+                return cs.ricercaOrdiniAcqCons(actioncontext.getUserContext(), parametriSelezioneOrdiniAcqBulk);
             }
             throw new ApplicationException("E' necessario indicare almeno un criterio di selezione");
         } catch (it.cnr.jada.comp.ComponentException e) {

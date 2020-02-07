@@ -30,25 +30,10 @@ public class ParametriSelezioneOrdiniAcqHome extends AbilitazioneOrdiniAcqHome {
 		super(ParametriSelezioneMovimentiBulk.class, conn, persistentCache);
 	}
 
-	public SQLBuilder selectTipoMovimentoMagByClause(UserContext userContext, ParametriSelezioneMovimentiBulk bulk, TipoMovimentoMagHome tipoMovimentoMagHome, TipoMovimentoMagBulk tipoMovimentoMagBulk,  
-			CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
-		CompoundFindClause clause = new CompoundFindClause();
-		Optional.ofNullable(compoundfindclause).ifPresent(cfc->clause.addChild(cfc)); 
-		clause.addClause(FindClause.AND, "tipo", SQLBuilder.NOT_EQUALS, TipoMovimentoMagBulk.STORNI);
-		SQLBuilder sqlBuilder = tipoMovimentoMagHome.selectByClause(clause);
-		
-//		TipoMovimentoMagAzHome tipoAzhome = (TipoMovimentoMagAzHome)getHomeCache().getHome(TipoMovimentoMagAzBulk.class);
-//		SQLBuilder sqlExists = tipoAzhome.createSQLBuilder();
-//		sqlExists.addSQLJoin("TIPO_MOVIMENTO_MAG_AZ.CD_CDS", SQLBuilder.EQUALS, "TIPO_MOVIMENTO_MAG.CD_CDS");
-//		sqlExists.addSQLJoin("TIPO_MOVIMENTO_MAG_AZ.CD_TIPO_MOVIMENTO", SQLBuilder.EQUALS, "TIPO_MOVIMENTO_MAG.CD_TIPO_MOVIMENTO");
-//
-//		sqlBuilder.addSQLExistsClause(FindClause.AND, sqlExists);
-		return sqlBuilder;
-	}
 
-	public SQLBuilder selectUnitaOperativaOrdineByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri, 
-			UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk, 
-			CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+	public SQLBuilder selectUnitaOperativaOrdineByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri,
+														 UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
+														 CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		if (parametri == null || parametri.getMagazzinoAbilitato() == null || parametri.getMagazzinoAbilitato().getCdMagazzino() == null){
 			throw new PersistencyException("Selezionare prima il codice del magazzino");
 		}
@@ -68,15 +53,15 @@ public class ParametriSelezioneOrdiniAcqHome extends AbilitazioneOrdiniAcqHome {
 		sqlExistsMag.addSQLClause("AND", "ABIL_UTENTE_UOP_OPER_MAG.CD_MAGAZZINO", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
 		sqlExists.addSQLExistsClause("OR", sqlExistsMag);
 		sqlExists.closeParenthesis();
-		
+
 		sql.addSQLExistsClause("AND", sqlExists);
 
 		return sql;
 	}
-	
-	public SQLBuilder selectNumerazioneOrdByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri, 
-			NumerazioneOrdHome numerazioneHome, NumerazioneOrdBulk numerazioneBulk, 
-			CompoundFindClause compoundfindclause) throws PersistencyException{
+
+	public SQLBuilder selectNumerazioneOrdByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri,
+												   NumerazioneOrdHome numerazioneHome, NumerazioneOrdBulk numerazioneBulk,
+												   CompoundFindClause compoundfindclause) throws PersistencyException{
 		if (parametri == null || parametri.getUnitaOperativaOrdine() == null || parametri.getUnitaOperativaOrdine().getCdUnitaOperativa() == null ){
 			throw new PersistencyException("Selezionare prima l'unità operativa");
 		}

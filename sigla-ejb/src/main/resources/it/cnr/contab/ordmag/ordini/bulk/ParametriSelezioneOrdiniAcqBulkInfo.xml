@@ -101,6 +101,14 @@
 		enabledOnSearch="true"
 		label="A UOp Ricevente" />
 
+	<columnSet
+			name="visualOrdinAcpCons">
+		<columnFieldProperty
+				name="daDataOrdine"/>
+		<columnFieldProperty
+				name="cdNumeratore"
+				label="Numeratore"/>
+	</columnSet>
 	<formFieldProperty
 		name="findTerzo" />
 	<formFieldProperty

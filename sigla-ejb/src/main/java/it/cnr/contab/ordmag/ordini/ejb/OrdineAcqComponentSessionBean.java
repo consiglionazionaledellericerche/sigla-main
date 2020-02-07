@@ -270,10 +270,10 @@ public class OrdineAcqComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 		}
 	}
 
-    public RemoteIterator ricercaOrdiniAcq(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException{
+    public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException{
         pre_component_invocation(userContext,componentObj);
         try {
-            RemoteIterator result = ((OrdineAcqComponent)componentObj).ricercaOrdiniAcq(userContext, parametri);
+            RemoteIterator result = ((OrdineAcqComponent)componentObj).ricercaOrdiniAcqCons(userContext, parametri);
             component_invocation_succes(userContext,componentObj);
             return result;
         } catch(it.cnr.jada.comp.NoRollbackException e) {

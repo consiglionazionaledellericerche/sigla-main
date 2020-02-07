@@ -39,5 +39,5 @@ public interface OrdineAcqComponentSession extends it.cnr.jada.ejb.CRUDComponent
 	public ImportoOrdine calcoloImportoOrdine(UserContext userContext,ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException;
 	public ImportoOrdine calcoloImportoOrdinePerMagazzino(UserContext userContext,ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException;
 	AbilitazioneOrdiniAcqBulk initializeAbilitazioneOrdiniAcq(UserContext usercontext, AbilitazioneOrdiniAcqBulk abilitazioneOrdiniAcqBulk) throws PersistencyException, ComponentException , RemoteException, ApplicationException;
-	public RemoteIterator ricercaOrdiniAcq(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException;
+	public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException;
 }

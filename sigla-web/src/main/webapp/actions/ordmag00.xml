@@ -238,6 +238,7 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk"/>
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
     <init-param name="defaultAction" value="ParametriSelezioneOrdiniAcqAction"/>
+    <init-param name="tipoSelezione" value="visOrdiniConsegna"/>
   </businessProcess>
 
   <businessProcess
@@ -246,6 +247,7 @@
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk"/>
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
     <init-param name="defaultAction" value="ParametriSelezioneOrdiniAcqAction"/>
+    <init-param name="tipoSelezione" value="evaForzataOrdini"/>
   </businessProcess>
 
 

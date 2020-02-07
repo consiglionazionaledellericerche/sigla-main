@@ -2242,46 +2242,48 @@
 			return abilitazioneOrdiniAcqBulk;
 		}
 
-		public RemoteIterator ricercaOrdiniAcq(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException
+		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException
 		{
-			OrdineAcqHome ordineAcqHome = (OrdineAcqHome)getHome(userContext, OrdineAcqBulk.class);
-			SQLBuilder sql = ordineAcqHome.createSQLBuilder();
-			//sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
-			sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, MovimentiMagBulk.STATO_ANNULLATO);
+			OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
+			SQLBuilder sql = ordineAcqConsegnaHome.createSQLBuilder();
+			sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_ANNULLATA);
 			sql.addClause(FindClause.AND, "cdMagazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
-
-			if (parametri.getDaDataCompetenza() != null ){
-				sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataCompetenza());
-			}
-			if (parametri.getaDataCompetenza() != null ){
-				sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.LESS_EQUALS,parametri.getaDataCompetenza());
-			}
-			if (parametri.getTerzo() != null && parametri.getTerzo().getCd_terzo() != null){
-				sql.addSQLClause("AND","CD_TERZO",SQLBuilder.EQUALS,parametri.getTerzo().getCd_terzo());
-			}
-
-
-
-			if (parametri.getDaDataOrdine() != null || parametri.getaDataOrdine() != null || parametri.getDaDataOrdineDef() != null || parametri.getaDataOrdineDef() != null){
-				sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
-				sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
-				sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
-				if (parametri.getDaDataOrdine() != null){
-					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.GREATER_EQUALS,parametri.getDaDataOrdine());
-				}
-				if (parametri.getaDataOrdine() != null){
-					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdine());
-				}
-				if (parametri.getDaDataOrdineDef() != null){
-					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.GREATER_EQUALS,parametri.getDaDataOrdineDef());
-				}
-				if (parametri.getaDataOrdineDef() != null){
-					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdineDef());
-				}
-			}
+			sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+			sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+			sql.generateJoin(OrdineAcqRigaBulk.class, Voce_ivaBulk.class, "voceIva", "VOCE_IVA");
+			sql.generateJoin(OrdineAcqBulk.class, TerzoBulk.class, "fornitore", "fornitore");
+//			if (parametri.getDaDataCompetenza() != null ){
+//				sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataCompetenza());
+//			}
+//			if (parametri.getaDataCompetenza() != null ){
+//				sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.LESS_EQUALS,parametri.getaDataCompetenza());
+//			}
+//			if (parametri.getTerzo() != null && parametri.getTerzo().getCd_terzo() != null){
+//				sql.addSQLClause("AND","CD_TERZO",SQLBuilder.EQUALS,parametri.getTerzo().getCd_terzo());
+//			}
 
 
-			return  iterator(userContext,sql,OrdineAcqBulk.class,null);
+
+//			if (parametri.getDaDataOrdine() != null || parametri.getaDataOrdine() != null || parametri.getDaDataOrdineDef() != null || parametri.getaDataOrdineDef() != null){
+//				sql.generateJoin(LottoMagBulk.class, OrdineAcqConsegnaBulk.class, "ordineAcqConsegna", "ORDINE_ACQ_CONSEGNA");
+//				sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+//				sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+//				if (parametri.getDaDataOrdine() != null){
+//					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.GREATER_EQUALS,parametri.getDaDataOrdine());
+//				}
+//				if (parametri.getaDataOrdine() != null){
+//					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdine());
+//				}
+//				if (parametri.getDaDataOrdineDef() != null){
+//					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.GREATER_EQUALS,parametri.getDaDataOrdineDef());
+//				}
+//				if (parametri.getaDataOrdineDef() != null){
+//					sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdineDef());
+//				}
+//			}
+
+
+			return  iterator(userContext,sql,OrdineAcqConsegnaBulk.class,null);
 		}
 
 }

@@ -2,6 +2,7 @@ package it.cnr.contab.ordmag.ordini.action;
 
 import it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -145,11 +146,16 @@ public class ParametriSelezioneOrdiniAcqAction extends BulkAction {
     			it.cnr.jada.util.ejb.EJBCommonServices.closeRemoteIterator(context,ri);
     			throw new it.cnr.jada.comp.ApplicationException("Attenzione: Nessun dato disponibile.");
     		}
+
+
     		//if (bp.getFunction() != null && bp.getFunction().compareTo(new Character('V')) == 0){
     			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
+				nbp.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(OrdineAcqConsegnaBulk.class));
+				nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("visualOrdinAcqCons"));
     			nbp.setIterator(context,ri);
-    			nbp.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(OrdineAcqBulk.class));
-    			HookForward hook = (HookForward)context.findForward("seleziona"); 
+
+
+    			HookForward hook = (HookForward)context.findForward("seleziona");
     			return context.addBusinessProcess(nbp); 
 
     		//}
