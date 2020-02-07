@@ -1,3 +1,27 @@
+## Release 6.1.25  -- _February 07, 2020_ 
+**Changes**
+
+>**Gestito inserimento uo SAC distinto per anno. Gestite SAC diverse per gruppi CORI non accentrati**
+>
+>[fd57c8ac5551ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd57c8ac5551ed0) gianfranco.gasparro *February 07, 2020*
+
+>**Add test for stato predisposizione**
+>
+>[571ae759908e993](https://github.com/consiglionazionaledellericerche/sigla-main/commit/571ae759908e993) marco.spasiano *February 07, 2020*
+
+>**Upgrade version of storage cloud to 2.0.2, add test for Predisponi Mandato**
+>
+>[e89d6347ba10ae5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e89d6347ba10ae5) marco.spasiano *February 07, 2020*
+
+>**Specify version of storage-cloud [ci skip]**
+>
+>[454750ae0090660](https://github.com/consiglionazionaledellericerche/sigla-main/commit/454750ae0090660) marco.spasiano *February 06, 2020*
+
+>**Update README.md**
+>
+>[ae760e2d646aec6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae760e2d646aec6) mspasiano *February 06, 2020*
+
+
 ## Release 6.1.24  -- _February 06, 2020_ 
 **Changes**
 
