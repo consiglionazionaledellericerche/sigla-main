@@ -67,4 +67,7 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
     java.lang.String getUoDistintaTuttaSac(it.cnr.jada.UserContext param0, java.lang.Integer param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
     java.lang.Boolean isUOSpecialeDistintaTuttaSAC(it.cnr.jada.UserContext param0, java.lang.Integer param1, java.lang.String param2) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
+    String getCdsSAC(UserContext userContext, Integer esercizio) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+
 }

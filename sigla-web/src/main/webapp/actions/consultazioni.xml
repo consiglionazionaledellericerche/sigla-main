@@ -269,7 +269,7 @@
 		<init-param name="defaultAction" value="ConsWorkpackageAction" />
 	</businessProcess>
 
-	<businessProcess name="ConsElencoinventariobeniBP"
+	<businessProcess name=" pr"
 		className="it.cnr.contab.consultazioni.bp.ConsElencoinventariobeniBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
 		<init-param name="bulkClassName"
