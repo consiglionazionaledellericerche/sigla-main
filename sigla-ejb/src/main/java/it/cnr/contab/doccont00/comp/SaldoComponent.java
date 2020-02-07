@@ -2863,10 +2863,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								el.getProgetto().getCd_progetto()+
 								" in quanto scaduto ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(el.getDtScadenza()) +
 								") rispetto alla data di chiusura della variazione ("+new java.text.SimpleDateFormat("dd/MM/yyyy").format(dataChiusura)+").");});
-		
+
 				/**
-				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo prelevandoli dallo stesso progetto 
-				 *    da GAE di natura 6 (regola non valida per progetti di Aree)
+				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
+				 *    dello stesso progetto (regola non valida per progetti di Aree)
 				 */
 				if (!isVariazioneArea)
 					listCtrlPianoEco.stream()
@@ -2877,7 +2877,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							throw new DetailedRuntimeException("Attenzione! Sono stati sottratti fondi dal progetto "+
 									el.getProgetto().getCd_progetto()+"(" +
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
+									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
 									"assegnazione nell'ambito dello stesso progetto e della stessa natura ("+
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");});
 		
@@ -3083,7 +3083,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						/**
 						 * 90. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
 						 * 		a. un progetto scaduto
-						 * 		b. dalla voce speciale (11048)
+						 * 		b. dalla voce speciale (11048) sullo stesso progetto
 						 * 		c. da una GAE di natura 6 sullo stesso progetto
 						 * 	(regola non valida per trasferimenti ad Aree)
 						 */
@@ -3093,11 +3093,24 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
 								.findFirst().ifPresent(el -> {
 							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
-									el.getProgetto().getCd_progetto() + "(" +
+									el.getProgetto().getCd_progetto() + " (" +
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un'equivalente " +
+									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
 									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
+						});
+
+						listCtrlPianoEco.stream()
+								.filter(el -> !el.isScaduto(dataChiusura))
+								.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
+								.filter(el -> el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego()).compareTo(el.getImpSpesaNegativiVoceSpeciale()) != 0)
+								.findFirst().ifPresent(el -> {
+							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dalla voce speciale " + cdVoceSpeciale +" del progetto " +
+									el.getProgetto().getCd_progetto() + " (" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiVoceSpeciale()) +
+									") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto " +
+									"su GAE di natura 6 - 'Reimpiego di risorse' ("+
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego())) + ")");
 						});
 
 						BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
