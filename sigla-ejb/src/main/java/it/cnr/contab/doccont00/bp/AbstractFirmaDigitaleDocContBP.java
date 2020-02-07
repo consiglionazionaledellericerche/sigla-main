@@ -55,7 +55,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
@@ -305,7 +305,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                                 .forEach(storageObject -> {
                                     try {
                                         ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
-                                                .concat(StorageService.SUFFIX)
+                                                .concat(StorageDriver.SUFFIX)
                                                 .concat(storageObject.getPropertyValue(StoragePropertyNames.NAME.value())));
                                         zos.putNextEntry(zipEntryChild);
                                         IOUtils.copyLarge(documentiContabiliService.getResource(storageObject), zos);
@@ -343,7 +343,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                                             try {
                                                 final StorageObject storageObject = contabiliService.getStorageObjectBykey(key);
                                                 ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
-                                                        .concat(StorageService.SUFFIX)
+                                                        .concat(StorageDriver.SUFFIX)
                                                         .concat(storageObject.getPropertyValue(StoragePropertyNames.NAME.value())));
                                                 zos.putNextEntry(zipEntryChild);
                                                 IOUtils.copyLarge(contabiliService.getResource(key), zos);
@@ -384,13 +384,13 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                                                     .forEach(allegatoGenericoBulk -> {
                                                         try {
                                                             ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
-                                                                    .concat(StorageService.SUFFIX)
+                                                                    .concat(StorageDriver.SUFFIX)
                                                                     .concat(mandato_rigaBulk.getDs_tipo_documento_amm())
                                                                     .concat(" ")
                                                                     .concat(String.valueOf(mandato_rigaBulk.getEsercizio_doc_amm()))
                                                                     .concat("-")
                                                                     .concat(String.valueOf(mandato_rigaBulk.getPg_doc_amm()))
-                                                                    .concat(StorageService.SUFFIX)
+                                                                    .concat(StorageDriver.SUFFIX)
                                                                     .concat(allegatoGenericoBulk.getNome()));
                                                             zos.putNextEntry(zipEntryChild);
                                                             IOUtils.copyLarge(documentiContabiliService.getResource(allegatoGenericoBulk.getStorageKey()), zos);

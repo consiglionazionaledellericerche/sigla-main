@@ -25,23 +25,23 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StorePath {
-    @Value("${store.path.comunicazioni.dal}")
+    @Value("${cnr.storage.path.comunicazioni.dal}")
     private String pathComunicazioniDal;
-    @Value("${store.path.comunicazioni.al}")
+    @Value("${cnr.storage.path.comunicazioni.al}")
     private String pathComunicazioniAl;
-    @Value("${store.path.fatture.passive}")
+    @Value("${cnr.storage.path.fatture.passive}")
     private String pathFatturePassive;
-    @Value("${store.path.variazioni.piano.gestione}")
+    @Value("${cnr.storage.path.variazioni.piano.gestione}")
     private String pathVariazioniPianoDiGestione;
-    @Value("${store.path.concorrenti.formazione.reddito}")
+    @Value("${cnr.storage.path.concorrenti.formazione.reddito}")
     private String pathConcorrentiFormazioneReddito;
-    @Value("${store.path.non.concorrenti.formazione.reddito}")
+    @Value("${cnr.storage.path.non.concorrenti.formazione.reddito}")
     private String pathNonConcorrentiFormazioneReddito;
-    @Value("${store.path.missioni}")
+    @Value("${cnr.storage.path.missioni}")
     private String pathMissioni;
-    @Value("${store.path.richieste.ordini}")
+    @Value("${cnr.storage.path.richieste.ordini}")
     private String pathRichiesteOrdini;
-    @Value("${store.path.ordini}")
+    @Value("${cnr.storage.path.ordini}")
     private String pathOrdini;
 
     public String getPathComunicazioniDal() {

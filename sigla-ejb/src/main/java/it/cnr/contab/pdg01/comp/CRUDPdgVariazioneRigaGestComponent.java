@@ -86,7 +86,7 @@ import it.cnr.jada.persistency.sql.PersistentHome;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 
 public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDComponent {
@@ -344,7 +344,7 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
                 "CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
                         " Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
 	}
 	

@@ -31,7 +31,7 @@ import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.si.spring.storage.annotation.StorageType;
@@ -276,7 +276,7 @@ public class V_mandato_reversaleBulk extends V_mandato_reversaleBase implements 
 						.orElse("0"),
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 
