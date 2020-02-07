@@ -17,7 +17,7 @@
 
 package it.cnr.contab.incarichi00.bulk.storage;
 
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
@@ -144,7 +144,7 @@ public class StorageFolderProcedura extends OggettoBulk {
                 this.getIncaricoProcedura().getCd_unita_organizzativa(),
                 path
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
 	}
 
@@ -157,7 +157,7 @@ public class StorageFolderProcedura extends OggettoBulk {
                                         .map(esercizio -> String.valueOf(esercizio))
                                         .orElse("0")
                         ).stream().collect(
-                                Collectors.joining(StorageService.SUFFIX)
+                                Collectors.joining(StorageDriver.SUFFIX)
                         ),
 						"Procedura "+this.getEsercizio().toString()+Utility.lpad(this.getPg_procedura().toString(),10,'0'),
 						null, null, this);

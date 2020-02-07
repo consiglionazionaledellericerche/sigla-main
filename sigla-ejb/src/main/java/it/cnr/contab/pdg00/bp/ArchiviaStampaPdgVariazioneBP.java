@@ -28,7 +28,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util.SIGLAStoragePropertyNames;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -288,7 +288,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 					print);
 			String path = getPath(archiviaStampaPdgVariazioneBulk);
 			if (Optional.ofNullable(pdgVariazioniService.getStorageObjectByPath(
-						path.concat(StorageService.SUFFIX).concat(pdgVariazioniService.sanitizeFilename(report.getName()))))
+						path.concat(StorageDriver.SUFFIX).concat(pdgVariazioniService.sanitizeFilename(report.getName()))))
 					.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
 					.filter(aspects -> aspects.contains(SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())).isPresent()){
 				throw new ApplicationException("La variazione risulta già firmata, Operazione non possibile!");
@@ -322,7 +322,7 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 				"CdR "+archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita()+
 						" Variazione "+ Utility.lpad(archiviaStampaPdgVariazioneBulk.getPg_variazione_pdg(),5,'0')
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 	

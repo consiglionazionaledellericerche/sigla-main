@@ -28,7 +28,7 @@ import it.cnr.contab.dp.DigitalPreservationProperties;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.util.Utility;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
@@ -319,7 +319,7 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
                 this.getFattura_attivaBulk().getCd_uo_origine(),
                 "Fatture Attive"
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
 	}
 
@@ -332,7 +332,7 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
 	}
 
 	public String getPathFolderFatturaAttiva() {
-		return getCMISPrincipalPath().concat(StorageService.SUFFIX).concat(
+		return getCMISPrincipalPath().concat(StorageDriver.SUFFIX).concat(
 				Optional.ofNullable(getEsercizioFattura())
 						.map(esercizio -> String.valueOf(esercizio))
 						.orElse("0")
@@ -356,7 +356,7 @@ public class StorageFolderFatturaAttiva extends StorageFolderFattura {
         		getPathFolderFatturaAttiva(),
         		getLastFolderFatturaAttiva()
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
 	}
 

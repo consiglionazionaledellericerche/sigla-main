@@ -42,7 +42,7 @@ import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.LoggableStatement;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 
 import java.sql.Timestamp;
@@ -468,8 +468,8 @@ public class MissioneHome extends BulkHome implements
                             report.getContentType(),
                             report.getName(),
                             cmisPath,
-                            StorageService.Permission.construct(uidMail[0], StorageService.ACLType.Consumer),
-                            StorageService.Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), StorageService.ACLType.Coordinator)
+                            StorageDriver.Permission.construct(uidMail[0], StorageDriver.ACLType.Consumer),
+                            StorageDriver.Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), StorageDriver.ACLType.Coordinator)
                     );
                 } catch (Exception e) {
                     throw new PersistencyException(e);

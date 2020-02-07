@@ -21,6 +21,7 @@ import org.eu.ingwar.tools.arquillian.extension.suite.annotations.ArquillianSuit
 import org.jboss.arquillian.container.test.api.ContainerController;
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.TargetsContainer;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ArchivePath;
@@ -48,7 +49,8 @@ public abstract class Deployments {
     private transient final static Logger LOGGER = LoggerFactory.getLogger(Deployments.class);
 
     public static final String TEST_H2 = "test-h2",
-            TEST_ORACLE = "test-oracle";
+            TEST_ORACLE = "test-oracle", CONTAINER_NAME="thorntail";
+
     @ArquillianResource
     protected ContainerController controller;
     @ArquillianResource
@@ -64,7 +66,7 @@ public abstract class Deployments {
         return createDeployment("project-oracle-test.yml", TEST_ORACLE, "it.cnr.test.oracle");
     }
 
-    private static WebArchive createDeployment(String yml, String name, String testPackage) throws Exception {
+    protected static WebArchive createDeployment(String yml, String name, String testPackage) throws Exception {
         LOGGER.info("Start create archive {} at {}", name, LocalDateTime.now());
         final PomEquippedResolveStage pom = Maven.configureResolver()
                 .withClassPathResolution(true)
@@ -90,7 +92,8 @@ public abstract class Deployments {
                 .addPackages(true, "com.google")
                 .addAsResource("org/springframework/web/context/ContextLoader.properties")
                 .addAsResource("org/springframework/ws/client/core/WebServiceTemplate.properties")
-                .addAsResource("META-INF/spring/cmis.properties")
+                .addAsResource("META-INF/spring/filesystem.properties")
+                .addAsResource("META-INF/spring/storage.properties")
                 .addAsResource("META-INF/spring.schemas")
                 .addAsResource("META-INF/spring.handlers")
                 .addAsResource(yml, "/project-defaults.yml")
@@ -153,6 +156,7 @@ public abstract class Deployments {
         Path resourceTestPath = Paths.get("src", "test", "resources");
         Files.walk(resourceTestPath)
                 .filter(p -> !p.toString().equals(resourceTestPath.toString()))
+                .filter(p -> !p.toString().contains("META-INF"))
                 .forEach((p) -> {
                     webArchive.addAsResource(
                             p.toString().substring(resourceTestPath.toString().length() + 1).replace("\\", "/"));

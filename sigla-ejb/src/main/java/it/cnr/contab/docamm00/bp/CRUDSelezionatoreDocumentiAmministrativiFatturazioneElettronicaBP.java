@@ -53,7 +53,7 @@ import it.cnr.si.firmadigitale.firma.arss.ArubaSignServiceException;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaType;
@@ -412,7 +412,7 @@ public class CRUDSelezionatoreDocumentiAmministrativiFatturazioneElettronicaBP e
                             final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
                                     documentiCollegatiDocAmmService.getStorageObjectByPath(
                                             documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
-                                                    .concat(StorageService.SUFFIX).concat(nomeFileP7m)));
+                                                    .concat(StorageDriver.SUFFIX).concat(nomeFileP7m)));
                             if (storageObjectByPath.isPresent()) {
                                 /**
                                  * Se trovo il p7m caricato manualmente allora non aggiorno il contenuto

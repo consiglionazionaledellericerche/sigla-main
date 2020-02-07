@@ -77,7 +77,7 @@ import it.cnr.si.siopeplus.service.OrdinativiSiopePlusService;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
@@ -1940,7 +1940,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             // spostato nel salva definitivo anche in questo caso
             StorageObject distintaStorageObject = Optional.ofNullable(distintaProvvisoria.getPg_distinta_def())
                     .map(paDistintaDef -> documentiContabiliService.getStorageObjectByPath(
-                            distintaProvvisoria.getStorePath().concat(StorageService.SUFFIX).concat(distintaProvvisoria.getCMISName())
+                            distintaProvvisoria.getStorePath().concat(StorageDriver.SUFFIX).concat(distintaProvvisoria.getCMISName())
                     )).orElse(inviaDistinta(context, distintaProvvisoria));
             Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
             List<String> nodes = new ArrayList<String>();
@@ -2032,7 +2032,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 if (storageFile.getStorageObject().<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue() > 0) {
                     Optional.ofNullable(documentiContabiliService
                             .getStorageObjectByPath(distinta
-                                    .getStorePath().concat(StorageService.SUFFIX)
+                                    .getStorePath().concat(StorageDriver.SUFFIX)
                                     .concat(String.valueOf(distinta.getEsercizio()))
                                     .concat("-").concat(distinta.getCd_unita_organizzativa())
                                     .concat("-").concat(String.valueOf(distinta.getPg_distinta_def()))
@@ -2104,7 +2104,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                 .ifPresent(tesoreriaUnica -> {
                     Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
                             distinta.getStorePath()
-                                    .concat(StorageService.SUFFIX)
+                                    .concat(StorageDriver.SUFFIX)
                                     .concat(String.valueOf(distinta.getEsercizio()))
                                     .concat("-")
                                     .concat(distinta.getCd_unita_organizzativa())
@@ -2137,7 +2137,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             String path;
             if (isFlusso()) {
                 path = distinta.getStorePath()
-                        .concat(StorageService.SUFFIX)
+                        .concat(StorageDriver.SUFFIX)
                         .concat(String.valueOf(distinta.getEsercizio()))
                         .concat("-")
                         .concat(distinta.getCd_unita_organizzativa())
@@ -2147,7 +2147,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         .concat("-I.").concat(formatoflusso).concat(".p7m");
             } else {
                 path = distinta.getStorePath()
-                        .concat(StorageService.SUFFIX)
+                        .concat(StorageDriver.SUFFIX)
                         .concat("Distinta n. ")
                         .concat(String.valueOf(distinta
                                 .getPg_distinta_def())).concat(".pdf");
@@ -2184,7 +2184,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             if (firmata) {
                 if (isFlusso()) {
                     path = distinta.getStorePath()
-                            .concat(StorageService.SUFFIX)
+                            .concat(StorageDriver.SUFFIX)
                             .concat(String.valueOf(distinta
                                     .getEsercizio()))
                             .concat("-")
@@ -2194,14 +2194,14 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                             .concat("-I.").concat(formatoflusso).concat(".p7m");
                 } else {
                     path = distinta.getStorePath()
-                            .concat(StorageService.SUFFIX)
+                            .concat(StorageDriver.SUFFIX)
                             .concat("Distinta n. ")
                             .concat(String.valueOf(distinta.getPg_distinta_def()))
                             .concat(".pdf");
                 }
             } else {
                 path = distinta.getStorePath()
-                        .concat(StorageService.SUFFIX)
+                        .concat(StorageDriver.SUFFIX)
                         .concat(String.valueOf(distinta
                                 .getEsercizio()))
                         .concat("-")
@@ -2324,7 +2324,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         distinta.getStorePath(),
                         distinta.getFileNameXML()
                 ).stream().collect(
-                        Collectors.joining(StorageService.SUFFIX)
+                        Collectors.joining(StorageDriver.SUFFIX)
                 )
         )).orElseThrow(() -> new ApplicationException("Flusso ordinativi siope+ non trovato!"));
 
