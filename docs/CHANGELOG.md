@@ -1,9 +1,13 @@
-## Release 6.1.25  -- _February 07, 2020_ 
+## Release 6.1.26  -- _February 09, 2020_ 
 **Changes**
 
->**Gestito inserimento uo SAC distinto per anno. Gestite SAC diverse per gruppi CORI non accentrati**
+>**Add property cnr.storage.driver**
 >
->[fd57c8ac5551ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd57c8ac5551ed0) gianfranco.gasparro *February 07, 2020*
+>[96d360338dcc86a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/96d360338dcc86a) marco.spasiano *February 09, 2020*
+
+>**Update README.md**
+>
+>[9a49d570a723a99](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a49d570a723a99) Marco Spasiano *February 09, 2020*
 
 >**Add test for stato predisposizione**
 >
@@ -20,6 +24,14 @@
 >**Update README.md**
 >
 >[ae760e2d646aec6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae760e2d646aec6) mspasiano *February 06, 2020*
+
+
+## Release 6.1.25  -- _February 07, 2020_ 
+**Changes**
+
+>**Gestito inserimento uo SAC distinto per anno. Gestite SAC diverse per gruppi CORI non accentrati**
+>
+>[fd57c8ac5551ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd57c8ac5551ed0) gianfranco.gasparro *February 07, 2020*
 
 
 ## Release 6.1.24  -- _February 06, 2020_ 
