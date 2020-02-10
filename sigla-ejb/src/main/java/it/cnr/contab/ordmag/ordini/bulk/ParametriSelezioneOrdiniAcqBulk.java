@@ -5,155 +5,96 @@
 package it.cnr.contab.ordmag.ordini.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP;
 import it.cnr.jada.persistency.KeyedPersistent;
+import it.cnr.jada.util.OrderedHashtable;
+
+import java.sql.Timestamp;
+import java.util.Dictionary;
+import java.util.Enumeration;
 
 public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk implements KeyedPersistent{
 	private static final long serialVersionUID = 1L;
 
-	private java.sql.Timestamp daDataCompetenza;
-	private java.sql.Timestamp aDataCompetenza;
-	private java.sql.Timestamp daDataMovimento;
-	private java.sql.Timestamp aDataMovimento;
 	private NumerazioneOrdBulk numerazioneOrd = new NumerazioneOrdBulk();
 	private UnitaOperativaOrdBulk unitaOperativaOrdine = new UnitaOperativaOrdBulk();
 	private UnitaOperativaOrdBulk daUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
 	private UnitaOperativaOrdBulk aUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
 	private TerzoBulk terzo = new TerzoBulk();
-	private TipoMovimentoMagBulk tipoMovimentoMag =  new TipoMovimentoMagBulk();
-	private java.sql.Timestamp dataBolla;
-	private String numeroBolla;
-	private String lottoFornitore;
+
 	private Bene_servizioBulk daBeneServizio = new Bene_servizioBulk();
 	private Bene_servizioBulk aBeneServizio = new Bene_servizioBulk();
-	private String tipoMovimento;
-	private Integer annoLotto;
+
 	private java.sql.Timestamp daDataOrdine;
 	private java.sql.Timestamp aDataOrdine;
 	private Integer daNumeroOrdine;
 	private Integer aNumeroOrdine;
 	private java.sql.Timestamp daDataOrdineDef;
 	private java.sql.Timestamp aDataOrdineDef;
-	private Long daProgressivo;
-	private Long aProgressivo;
+	private java.sql.Timestamp daDataPrevConsegna;
+	private java.sql.Timestamp aDataPrevConsegna;
+	private String tipoConsegna;
+	private String statoOrdine;
+	private String statoConsegna;
+
+	private Obbligazione_scadenzarioBulk impegno =  new Obbligazione_scadenzarioBulk();
+	private ContrattoBulk contratto= new ContrattoBulk();;
+	private CigBulk cig= new CigBulk();;
+	private CupBulk cup= new CupBulk();;
+	private V_persona_fisicaBulk rup = new V_persona_fisicaBulk();
+	private Procedure_amministrativeBulk proceduraAmministrativa= new Procedure_amministrativeBulk();;
+	private TipoOrdineBulk tipoOrdine= new TipoOrdineBulk();;
+
+	public final static Dictionary STATO_ORDINE;
+
+	static{
+		STATO_ORDINE =( OrderedHashtable) ((OrderedHashtable )OrdineAcqBulk.STATO).clone();
+		STATO_ORDINE.remove(OrdineAcqBulk.STATO_ANNULLATO);
+	}
 
 
+	public final static Dictionary STATO_CONSEGNA;
+	static{
+		STATO_CONSEGNA =( OrderedHashtable) ((OrderedHashtable )OrdineAcqConsegnaBulk.STATO).clone();
+		STATO_CONSEGNA.remove(OrdineAcqConsegnaBulk.STATO_ANNULLATA);
+	}
 
 	public ParametriSelezioneOrdiniAcqBulk() {
 		super();
 	}
 
-	public java.sql.Timestamp getDaDataCompetenza() {
-		return daDataCompetenza;
-	}
-
-
-	public void setDaDataCompetenza(java.sql.Timestamp daDataCompetenza) {
-		this.daDataCompetenza = daDataCompetenza;
-	}
-
-
-	public java.sql.Timestamp getaDataCompetenza() {
-		return aDataCompetenza;
-	}
-
-
-	public void setaDataCompetenza(java.sql.Timestamp aDataCompetenza) {
-		this.aDataCompetenza = aDataCompetenza;
-	}
-
-
-	public java.sql.Timestamp getDaDataMovimento() {
-		return daDataMovimento;
-	}
-
-
-	public void setDaDataMovimento(java.sql.Timestamp daDataMovimento) {
-		this.daDataMovimento = daDataMovimento;
-	}
-
-
-	public java.sql.Timestamp getaDataMovimento() {
-		return aDataMovimento;
-	}
-
-
-	public void setaDataMovimento(java.sql.Timestamp aDataMovimento) {
-		this.aDataMovimento = aDataMovimento;
-	}
-
-
 	public UnitaOperativaOrdBulk getDaUnitaOperativaRicevente() {
 		return daUnitaOperativaRicevente;
 	}
-
 
 	public void setDaUnitaOperativaRicevente(UnitaOperativaOrdBulk daUnitaOperativaRicevente) {
 		this.daUnitaOperativaRicevente = daUnitaOperativaRicevente;
 	}
 
-
 	public UnitaOperativaOrdBulk getaUnitaOperativaRicevente() {
 		return aUnitaOperativaRicevente;
 	}
-
 
 	public void setaUnitaOperativaRicevente(UnitaOperativaOrdBulk aUnitaOperativaRicevente) {
 		this.aUnitaOperativaRicevente = aUnitaOperativaRicevente;
 	}
 
-
 	public TerzoBulk getTerzo() {
 		return terzo;
 	}
 
-
 	public void setTerzo(TerzoBulk terzo) {
 		this.terzo = terzo;
-	}
-
-
-	public TipoMovimentoMagBulk getTipoMovimentoMag() {
-		return tipoMovimentoMag;
-	}
-
-
-	public void setTipoMovimentoMag(TipoMovimentoMagBulk tipoMovimentoMag) {
-		this.tipoMovimentoMag = tipoMovimentoMag;
-	}
-
-
-	public java.sql.Timestamp getDataBolla() {
-		return dataBolla;
-	}
-
-
-	public void setDataBolla(java.sql.Timestamp dataBolla) {
-		this.dataBolla = dataBolla;
-	}
-
-
-	public String getNumeroBolla() {
-		return numeroBolla;
-	}
-
-
-	public void setNumeroBolla(String numeroBolla) {
-		this.numeroBolla = numeroBolla;
-	}
-
-
-	public String getLottoFornitore() {
-		return lottoFornitore;
-	}
-
-
-	public void setLottoFornitore(String lottoFornitore) {
-		this.lottoFornitore = lottoFornitore;
 	}
 
 	public Bene_servizioBulk getDaBeneServizio() {
@@ -170,22 +111,6 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 
 	public void setaBeneServizio(Bene_servizioBulk aBeneServizio) {
 		this.aBeneServizio = aBeneServizio;
-	}
-
-	public String getTipoMovimento() {
-		return tipoMovimento;
-	}
-
-	public void setTipoMovimento(String tipoMovimento) {
-		this.tipoMovimento = tipoMovimento;
-	}
-
-	public Integer getAnnoLotto() {
-		return annoLotto;
-	}
-
-	public void setAnnoLotto(Integer annoLotto) {
-		this.annoLotto = annoLotto;
 	}
 
 	public java.sql.Timestamp getDaDataOrdine() {
@@ -242,34 +167,6 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 		return this;
 	}
 
-	public Long getDaProgressivo() {
-		return daProgressivo;
-	}
-
-	public void setDaProgressivo(Long daProgressivo) {
-		this.daProgressivo = daProgressivo;
-	}
-
-	public Long getaProgressivo() {
-		return aProgressivo;
-	}
-
-	public void setaProgressivo(Long aProgressivo) {
-		this.aProgressivo = aProgressivo;
-	}
-
-	public boolean isIndicatoAlmenoUnCriterioDiSelezione() {
-//		if ((aBeneServizio == null || aBeneServizio.getCd_bene_servizio() == null) && (daBeneServizio == null || daBeneServizio.getCd_bene_servizio() == null) &&
-//		aDataCompetenza == null && aDataMovimento == null && aDataOrdine == null && aDataOrdineDef == null && aNumeroOrdine == null && aProgressivo == null &&
-//		(aUnitaOperativaRicevente == null || aUnitaOperativaRicevente.getCdUnitaOperativa() == null)  && (daUnitaOperativaRicevente == null || daUnitaOperativaRicevente.getCdUnitaOperativa() == null) &&
-//		annoLotto == null && (numerazioneOrd == null || numerazioneOrd.getCdNumeratore() == null) && (unitaOperativaOrdine == null || unitaOperativaOrdine.getCdUnitaOperativa() == null) &&
-//		daDataCompetenza == null && daDataMovimento == null && daDataOrdine == null &&
-//	  daDataOrdineDef == null && daNumeroOrdine == null && daProgressivo == null && dataBolla == null && lottoFornitore == null && numeroBolla == null &&
-//	  (terzo == null || terzo.getCd_terzo() == null) && tipoMovimento == null && (tipoMovimentoMag == null || tipoMovimentoMag.getCdTipoMovimento() == null))
-//			return false;
-		return true;
-	}
-
 	public NumerazioneOrdBulk getNumerazioneOrd() {
 		return numerazioneOrd;
 	}
@@ -286,4 +183,109 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 		this.unitaOperativaOrdine = unitaOperativaOrdine;
 	}
 
+	public Timestamp getDaDataPrevConsegna() {
+		return daDataPrevConsegna;
+	}
+
+	public void setDaDataPrevConsegna(Timestamp daDataPrevConsegna) {
+		this.daDataPrevConsegna = daDataPrevConsegna;
+	}
+
+	public Timestamp getaDataPrevConsegna() {
+		return aDataPrevConsegna;
+	}
+
+	public void setaDataPrevConsegna(Timestamp aDataPrevConsegna) {
+		this.aDataPrevConsegna = aDataPrevConsegna;
+	}
+
+	public String getStatoOrdine() {
+		return statoOrdine;
+	}
+
+	public void setStatoOrdine(String statoOrdine) {
+		this.statoOrdine = statoOrdine;
+	}
+
+	public Dictionary getStatoOrdineKeys() {
+		return STATO_ORDINE;
+	}
+
+	public String getTipoConsegna() {
+		return tipoConsegna;
+	}
+
+	public void setTipoConsegna(String tipoConsegna) {
+		this.tipoConsegna = tipoConsegna;
+	}
+
+	public Dictionary getTipoConsegnaKeys(){ return OrdineAcqConsegnaBulk.TIPO_CONSEGNA;}
+
+	public String getStatoConsegna() {
+		return statoConsegna;
+	}
+
+	public void setStatoConsegna(String statoConsegna) {
+		this.statoConsegna = statoConsegna;
+	}
+
+	public Dictionary getStatoConsegnaKeys() {
+		return STATO_CONSEGNA;
+	}
+
+	public Obbligazione_scadenzarioBulk getImpegno() {
+		return impegno;
+	}
+
+	public void setImpegno(Obbligazione_scadenzarioBulk impegno) {
+		this.impegno = impegno;
+	}
+
+	public ContrattoBulk getContratto() {
+		return contratto;
+	}
+
+	public void setContratto(ContrattoBulk contratto) {
+		this.contratto = contratto;
+	}
+
+	public CigBulk getCig() {
+		return cig;
+	}
+
+	public void setCig(CigBulk cig) {
+		this.cig = cig;
+	}
+
+	public CupBulk getCup() {
+		return cup;
+	}
+
+	public void setCup(CupBulk cup) {
+		this.cup = cup;
+	}
+
+	public V_persona_fisicaBulk getRup() {
+		return rup;
+	}
+
+	public void setRup(V_persona_fisicaBulk rup) {
+		this.rup = rup;
+	}
+
+	public Procedure_amministrativeBulk getProceduraAmministrativa() {
+		return proceduraAmministrativa;
+	}
+
+	public void setProceduraAmministrativa(Procedure_amministrativeBulk proceduraAmministrativa) {
+		this.proceduraAmministrativa = proceduraAmministrativa;
+	}
+
+	public TipoOrdineBulk getTipoOrdine() {
+		return tipoOrdine;
+	}
+
+	public void setTipoOrdine(TipoOrdineBulk tipoOrdine) {
+		this.tipoOrdine = tipoOrdine;
+	}
 }

@@ -51,7 +51,7 @@
 		formatName="date_short"
 		enabledOnEdit="true"
 		enabledOnInsert="true"
-		command="doOnDaDataOrdineChange"
+		command="doOnDaDataOrdineDefChange"
 		label="Da Dt Conferma Ord." />
 	<fieldProperty
 		name="aDataOrdineDef"
@@ -79,6 +79,52 @@
 		enabledOnEdit="true"
 		enabledOnInsert="true"
 		label="A Numero Ordine" />
+
+	<fieldProperty
+			name="daDataPrevConsegna"
+			property="daDataPrevConsegna"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			command="doOnDaDataPrevConsegnaChange"
+			label="Da Dt Prev. Consegna Ord." />
+
+	<fieldProperty
+			name="aDataPrevConsegna"
+			property="aDataPrevConsegna"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			label="A Dt Prev Consegna Ord." />
+
+	<fieldProperty
+			name="findDaBeneServizio"
+			property="daBeneServizio"
+			inputType="searchtool"
+			formName="searchtool_codice"
+			enabledOnSearch="true"
+			nullable="false"
+			label="Da Articolo" />
+	<fieldProperty
+			name="findABeneServizio"
+			property="aBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnSearch="true"
+			nullable="false"
+			label="A Articolo" />
+
+	<fieldProperty
+			name="statoOrdine"
+			property="statoOrdine"
+			inputType="SELECT"
+			label="Stato Ordine"
+			nullable="false"
+			enabledOnSearch="true"
+			keysProperty="statoOrdineKeys" />
+
 	<fieldProperty
 		name="findNumerazioneOrd"
 		property="numerazioneOrd"
@@ -101,6 +147,74 @@
 		enabledOnSearch="true"
 		label="A UOp Ricevente" />
 
+	<fieldProperty
+			name="statoConsegna"
+			property="statoConsegna"
+			inputType="SELECT"
+			label="Stato Consegna"
+			nullable="true"
+			enabledOnSearch="true"
+			keysProperty="statoConsegnaKeys" />
+
+	<fieldProperty
+			name="tipoConsegna"
+			property="tipoConsegna"
+			inputType="SELECT"
+			nullable="true"
+			keysProperty="tipoConsegnaKeys"
+			enabledOnSearch="true"
+			label="Tipo Consegna"/>
+
+	<fieldProperty
+			name="findResponsabile"
+			property="rup"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="Responsabile procedimento/RUP" />
+
+	<fieldProperty
+			name="findCup"
+			property="cup"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="CUP" />
+
+	<fieldProperty
+			name="findCig"
+			property="cig"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="CIG" />
+
+	<fieldProperty
+			name="findContratto"
+			property="contratto"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
+			label="Contratto"
+			enabledOnSearch="true"	/>
+	<fieldProperty
+			name="findTipoOrdine"
+			property="tipoOrdine"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			label="Tipo Ordine" />
+
+	<fieldProperty
+			name="findProceduraAmministrativa"
+			property="proceduraAmministrativa"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="Procedura Amministrativa" />
+
+	<fieldProperty
+			name="findImpegno"
+			property="impegno"
+			inputType="SEARCHTOOL"
+			formName="searchtool_ridotto"
+			label="Scadenza Impegno" />
+
 	<columnSet
 			name="visualOrdinAcpCons">
 		<columnFieldProperty
@@ -122,6 +236,11 @@
 	<formFieldProperty
 		name="findNumerazioneOrd" />
 	<formFieldProperty
+			name="findDaBeneServizio" />
+	<formFieldProperty
+			name="findABeneServizio" />
+
+	<formFieldProperty
 		name="daDataOrdine" />
 	<formFieldProperty
 			name="aDataOrdine" />
@@ -130,7 +249,37 @@
 	<formFieldProperty
 			name="aDataOrdineDef" />
 	<formFieldProperty
+			name="daDataPrevConsegna" />
+	<formFieldProperty
+			name="aDataPrevConsegna" />
+
+	<formFieldProperty
+			name="statoOrdine"/>
+
+	<formFieldProperty
+			name="statoConsegna"/>
+
+	<formFieldProperty
+			name="tipoConsegna"/>
+
+	<formFieldProperty
 		name="daNumeroOrdine" />
 	<formFieldProperty
 			name="aNumeroOrdine" />
+	<formFieldProperty
+			name="findResponsabile" />
+	<formFieldProperty
+			name="findCup" />
+	<formFieldProperty
+			name="findCig" />
+	<formFieldProperty
+			name="findContratto" />
+	<formFieldProperty
+			name="findTipoOrdine" />
+
+	<formFieldProperty
+			name="findProceduraAmministrativa" />
+	<formFieldProperty
+			name="findImpegno" />
+
 </bulkInfo>

@@ -9,6 +9,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
 public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
 
@@ -45,6 +46,8 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     protected void init(it.cnr.jada.action.Config config, ActionContext context) throws BusinessProcessException {
         super.init(config,context);
         try {
+
+            this.setTipoSelezione(config.getInitParameter("tipoSelezione"));
             ParametriSelezioneOrdiniAcqBulk bulk = createEmptyModelForSearch(context);
             bulk = (ParametriSelezioneOrdiniAcqBulk)((OrdineAcqComponentSession)createComponentSession(context)).initializeAbilitazioneOrdiniAcq(context.getUserContext(), bulk);
             setModel(context,bulk);
@@ -76,12 +79,26 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
 
     }
 
+    public boolean isIndicatoAlmenoUnCriterioDiSelezione(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
+
+//		if ((aBeneServizio == null || aBeneServizio.getCd_bene_servizio() == null) && (daBeneServizio == null || daBeneServizio.getCd_bene_servizio() == null) &&
+//		aDataCompetenza == null && aDataMovimento == null && aDataOrdine == null && aDataOrdineDef == null && aNumeroOrdine == null && aProgressivo == null &&
+//		(aUnitaOperativaRicevente == null || aUnitaOperativaRicevente.getCdUnitaOperativa() == null)  && (daUnitaOperativaRicevente == null || daUnitaOperativaRicevente.getCdUnitaOperativa() == null) &&
+//		annoLotto == null && (numerazioneOrd == null || numerazioneOrd.getCdNumeratore() == null) && (unitaOperativaOrdine == null || unitaOperativaOrdine.getCdUnitaOperativa() == null) &&
+//		daDataCompetenza == null && daDataMovimento == null && daDataOrdine == null &&
+//	  daDataOrdineDef == null && daNumeroOrdine == null && daProgressivo == null && dataBolla == null && lottoFornitore == null && numeroBolla == null &&
+//	  (terzo == null || terzo.getCd_terzo() == null) && tipoMovimento == null && (tipoMovimentoMag == null || tipoMovimentoMag.getCdTipoMovimento() == null))
+//			return false;
+        return true;
+    }
+
     public RemoteIterator ricercaOrdiniAcq(ActionContext actioncontext) throws BusinessProcessException {
         try {
             OrdineAcqComponentSession cs = (OrdineAcqComponentSession)createComponentSession(actioncontext);
             if (cs == null) return null;
             ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk = (ParametriSelezioneOrdiniAcqBulk)getModel();
-            if (parametriSelezioneOrdiniAcqBulk.isIndicatoAlmenoUnCriterioDiSelezione()){
+            //if (parametriSelezioneOrdiniAcqBulk.isIndicatoAlmenoUnCriterioDiSelezione()){
+            if (isIndicatoAlmenoUnCriterioDiSelezione(parametriSelezioneOrdiniAcqBulk)){
                 return cs.ricercaOrdiniAcqCons(actioncontext.getUserContext(), parametriSelezioneOrdiniAcqBulk);
             }
             throw new ApplicationException("E' necessario indicare almeno un criterio di selezione");
@@ -101,7 +118,24 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     }
 
     @Override
-    public RemoteIterator find(ActionContext actioncontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk, OggettoBulk oggettobulk1, String s) throws BusinessProcessException {
-        return null;
+    public RemoteIterator find(ActionContext actioncontext, CompoundFindClause clauses, OggettoBulk bulk,
+                               OggettoBulk oggettobulk1, String property) throws BusinessProcessException {
+        try {
+            it.cnr.jada.ejb.CRUDComponentSession cs = createComponentSession(actioncontext);
+            if (cs == null) return null;
+            return EJBCommonServices.openRemoteIterator(
+                    actioncontext,
+                    cs.cerca(
+                            actioncontext.getUserContext(),
+                            clauses,
+                            bulk,
+                            getModel(),
+                            property));
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            throw handleException(e);
+        } catch (java.rmi.RemoteException e) {
+            throw handleException(e);
+        }
+
     }
 }

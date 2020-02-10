@@ -1,8 +1,11 @@
 package it.cnr.contab.ordmag.ordini.action;
 
+import it.cnr.contab.ordmag.magazzino.bp.ParametriSelezioneMovimentiMagBP;
+import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
@@ -21,95 +24,69 @@ public class ParametriSelezioneOrdiniAcqAction extends BulkAction {
      * visualizzare.
      */
 
-	
-//	public Forward doOnDaDataCompetenzaChange(ActionContext context) {
-//		ParametriSelezioneMovimentiMagBP bp = (ParametriSelezioneMovimentiMagBP)context.getBusinessProcess();
-//		ParametriSelezioneMovimentiBulk parametri = (ParametriSelezioneMovimentiBulk)bp.getModel();
-//
-//
-//		try {
-//			fillModel(context);
-//			if (parametri.getaDataCompetenza() == null && parametri.getDaDataCompetenza() != null)
-//				parametri.setaDataCompetenza(parametri.getDaDataCompetenza());
-//			return context.findDefaultForward();
-//		} catch (Exception ex) {
-//			try
-//			{
-//				return handleException(context, ex);
-//			}
-//			catch (Exception e)
-//			{
-//				return handleException(context, e);
-//			}
-//		}
-//	}
-//
-//	public Forward doOnDaDataMovimentoChange(ActionContext context) {
-//		ParametriSelezioneMovimentiMagBP bp = (ParametriSelezioneMovimentiMagBP)context.getBusinessProcess();
-//		ParametriSelezioneMovimentiBulk parametri = (ParametriSelezioneMovimentiBulk)bp.getModel();
-//
-//
-//		try {
-//			fillModel(context);
-//			if (parametri.getaDataMovimento() == null && parametri.getDaDataMovimento() != null)
-//				parametri.setaDataMovimento(parametri.getDaDataMovimento());
-//			return context.findDefaultForward();
-//		} catch (Exception ex) {
-//			try
-//			{
-//				return handleException(context, ex);
-//			}
-//			catch (Exception e)
-//			{
-//				return handleException(context, e);
-//			}
-//		}
-//	}
-//
-//	public Forward doOnDaDataOrdineChange(ActionContext context) {
-//		ParametriSelezioneMovimentiMagBP bp = (ParametriSelezioneMovimentiMagBP)context.getBusinessProcess();
-//		ParametriSelezioneMovimentiBulk parametri = (ParametriSelezioneMovimentiBulk)bp.getModel();
-//
-//
-//		try {
-//			fillModel(context);
-//			if (parametri.getaDataOrdine() == null && parametri.getDaDataOrdine() != null)
-//				parametri.setaDataOrdine(parametri.getDaDataOrdine());
-//			return context.findDefaultForward();
-//		} catch (Exception ex) {
-//			try
-//			{
-//				return handleException(context, ex);
-//			}
-//			catch (Exception e)
-//			{
-//				return handleException(context, e);
-//			}
-//		}
-//	}
-//
-//	public Forward doOnDaDataOrdineDefChange(ActionContext context) {
-//		ParametriSelezioneMovimentiMagBP bp = (ParametriSelezioneMovimentiMagBP)context.getBusinessProcess();
-//		ParametriSelezioneMovimentiBulk parametri = (ParametriSelezioneMovimentiBulk)bp.getModel();
-//
-//
-//		try {
-//			fillModel(context);
-//			if (parametri.getaDataOrdineDef() == null && parametri.getDaDataOrdineDef() != null)
-//				parametri.setaDataOrdineDef(parametri.getDaDataOrdineDef());
-//			return context.findDefaultForward();
-//		} catch (Exception ex) {
-//			try
-//			{
-//				return handleException(context, ex);
-//			}
-//			catch (Exception e)
-//			{
-//				return handleException(context, e);
-//			}
-//		}
-//	}
-//
+	public Forward doOnDaDataPrevConsegnaChange(ActionContext context) {
+		ParametriSelezioneOrdiniAcqBP bp = (ParametriSelezioneOrdiniAcqBP)context.getBusinessProcess();
+		ParametriSelezioneOrdiniAcqBulk parametri = (ParametriSelezioneOrdiniAcqBulk)bp.getModel();
+
+
+		try {
+			fillModel(context);
+			if (parametri.getaDataPrevConsegna() == null && parametri.getDaDataPrevConsegna() != null)
+				parametri.setaDataPrevConsegna(parametri.getDaDataPrevConsegna());
+			return context.findDefaultForward();
+		} catch (Exception ex) {
+			try
+			{
+				return handleException(context, ex);
+			}
+			catch (Exception e)
+			{
+				return handleException(context, e);
+			}
+		}
+	}
+	public Forward doOnDaDataOrdineDefChange(ActionContext context) {
+		ParametriSelezioneOrdiniAcqBP bp = (ParametriSelezioneOrdiniAcqBP)context.getBusinessProcess();
+		ParametriSelezioneOrdiniAcqBulk parametri = (ParametriSelezioneOrdiniAcqBulk)bp.getModel();
+
+
+		try {
+			fillModel(context);
+			if (parametri.getaDataOrdineDef() == null && parametri.getDaDataOrdineDef() != null)
+				parametri.setaDataOrdineDef(parametri.getDaDataOrdineDef());
+			return context.findDefaultForward();
+		} catch (Exception ex) {
+			try
+			{
+				return handleException(context, ex);
+			}
+			catch (Exception e)
+			{
+				return handleException(context, e);
+			}
+		}
+	}
+	public Forward doOnDaDataOrdineChange(ActionContext context) {
+		ParametriSelezioneOrdiniAcqBP bp = (ParametriSelezioneOrdiniAcqBP)context.getBusinessProcess();
+		ParametriSelezioneOrdiniAcqBulk parametri = (ParametriSelezioneOrdiniAcqBulk)bp.getModel();
+
+
+		try {
+			fillModel(context);
+			if (parametri.getaDataOrdine() == null && parametri.getDaDataOrdine() != null)
+				parametri.setaDataOrdine(parametri.getDaDataOrdine());
+			return context.findDefaultForward();
+		} catch (Exception ex) {
+			try
+			{
+				return handleException(context, ex);
+			}
+			catch (Exception e)
+			{
+				return handleException(context, e);
+			}
+		}
+	}
 //	public Forward doBringBackSearchFindDaBeneServizio(ActionContext context,
 //			ParametriSelezioneMovimentiBulk parametri,
 //			Bene_servizioBulk bene)

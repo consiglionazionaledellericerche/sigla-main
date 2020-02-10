@@ -98,28 +98,7 @@
 					%>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<%
-						bp.getController().writeFormLabel(out, "daProgressivo");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "daProgressivo");
-					%>
-				</td>
-				<td class="pl-5">
-					<%
-						bp.getController().writeFormLabel(out, "aProgressivo");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "aProgressivo");
-					%>
-				</td>
-			</tr>
+
 
 			<tr>
 				<td>
@@ -188,6 +167,50 @@
 				</td>
 			</tr>
 			<tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "daDataPrevConsegna");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "daDataPrevConsegna");
+                    %>
+                </td>
+                <td class="pl-5">
+                    <%
+                        bp.getController().writeFormLabel(out, "aDataPrevConsegna");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "aDataPrevConsegna");
+                    %>
+                </td>
+            </tr>
+            <tr>
+                    <td>
+                        <%
+                            bp.getController().writeFormLabel(out, "findDaBeneServizio");
+                        %>
+                    </td>
+                    <td>
+                        <%
+                            bp.getController().writeFormInput(out, "findDaBeneServizio");
+                        %>
+                    </td>
+                    <td class="pl-5">
+                        <%
+                            bp.getController().writeFormLabel(out, "findABeneServizio");
+                        %>
+                    </td>
+                    <td>
+                        <%
+                            bp.getController().writeFormInput(out, "findABeneServizio");
+                        %>
+                    </td>
+                </tr>
+			<tr>
 				<td>
 					<%
 						bp.getController().writeFormLabel(out, "daNumeroOrdine");
@@ -221,9 +244,118 @@
 						bp.getController().writeFormInput(out, "findTerzo");
 					%>
 				</td>
+				<td>
+                    <%
+                        bp.getController().writeFormLabel(out, "statoOrdine");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "statoOrdine");
+                    %>
+                </td>
+			</tr>
+			<tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "tipoConsegna");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "tipoConsegna");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "statoConsegna");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "statoConsegna");
+                    %>
+                </td>
+            </tr>
+			<tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "findResponsabile");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findResponsabile");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "findCup");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "findCup");
+                    %>
+                </td>
+            </tr>
+ 			<tr>
+                 <td>
+                     <%
+                         bp.getController().writeFormLabel(out, "findCig");
+                     %>
+                 </td>
+                 <td>
+                     <%
+                         bp.getController().writeFormInput(out, "findCig");
+                     %>
+                 </td>
+                 <td>
+                     <%
+                         bp.getController().writeFormLabel(out, "findContratto");
+                     %>
+                 </td>
+                 <td>
+                     <%
+                         bp.getController().writeFormInput(out, "findContratto");
+                     %>
+                 </td>
+             </tr>
+  			<tr>
+                  <td>
+                      <%
+                          bp.getController().writeFormLabel(out, "findTipoOrdine");
+                      %>
+                  </td>
+                  <td>
+                      <%
+                          bp.getController().writeFormInput(out, "findTipoOrdine");
+                      %>
+                  </td>
+                  <td>
+                      <%
+                          bp.getController().writeFormLabel(out, "findProceduraAmministrativa");
+                      %>
+                  </td>
+                  <td>
+                      <%
+                          bp.getController().writeFormInput(out, "findProceduraAmministrativa");
+                      %>
+                  </td>
+              </tr>
+  			<tr>
+                  <td>
+                      <%
+                          bp.getController().writeFormLabel(out, "findImpegno");
+                      %>
+                  </td>
+                  <td>
+                      <%
+                          bp.getController().writeFormInput(out, "findImpegno");
+                      %>
+                  </td>
 
-			</tr>
-			</tr>
+             </tr>
 		</table>
 	</div>
 	<% bp.closeFormWindow(pageContext); %>
