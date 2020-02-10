@@ -26,6 +26,9 @@ import it.cnr.contab.util.ICancellatoLogicamente;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.CRUDBP;
+
+import java.util.Optional;
+
 public class CigBulk extends CigBase implements ICancellatoLogicamente{
 	/**
 	 * 
@@ -136,7 +139,7 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	}
 	
 	public boolean isCancellatoLogicamente() {
-		return !getFlValido();
+		return Optional.ofNullable(!getFlValido()).orElse(Boolean.FALSE);
 	}
 	public void cancellaLogicamente() {
 		setFlValido(Boolean.FALSE);
