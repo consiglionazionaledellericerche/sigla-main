@@ -1,3 +1,19 @@
+## Release 6.1.28  -- _February 10, 2020_ 
+**Changes**
+
+>**FIX NullPointerException on validaAllegatoNomeFile**
+>
+>[16b75bb4fe1f489](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16b75bb4fe1f489) marco.spasiano *February 10, 2020*
+
+>**Add cnr.storage.driver on stage default**
+>
+>[be9dd74a9627650](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be9dd74a9627650) marco.spasiano *February 10, 2020*
+
+>**Add cnr.storage.driver on stage production-cnr**
+>
+>[5ed31428fc1f3ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5ed31428fc1f3ca) marco.spasiano *February 10, 2020*
+
+
 ## Release 6.1.27  -- _February 10, 2020_ 
 **Changes**
 
