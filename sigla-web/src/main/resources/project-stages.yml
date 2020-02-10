@@ -134,7 +134,7 @@ liquibase:
 
 cnr:
   storage:
-    driver: filesystem
+    driver: cmis
 ---
 project:
   stage: demo-h2
@@ -269,9 +269,6 @@ repository:
 spring:
   profiles:
     active: no-liquibase
-cnr:
-  storage:
-    driver: cmis
 ---
 project:
   stage: development-isin
