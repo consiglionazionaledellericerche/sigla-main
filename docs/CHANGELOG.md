@@ -1,3 +1,11 @@
+## Release 6.1.27  -- _February 10, 2020_ 
+**Changes**
+
+>**workaround for env property with wildfly 10**
+>
+>[e877d27fc5fe852](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e877d27fc5fe852) marco.spasiano *February 10, 2020*
+
+
 ## Release 6.1.26  -- _February 09, 2020_ 
 **Changes**
 
