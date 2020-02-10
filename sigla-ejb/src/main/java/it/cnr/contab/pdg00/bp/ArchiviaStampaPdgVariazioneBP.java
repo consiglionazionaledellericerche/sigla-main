@@ -105,7 +105,10 @@ public class ArchiviaStampaPdgVariazioneBP extends SimpleCRUDBP{
 	protected void validaAllegatoNomeFile(ActionContext actioncontext, AllegatoPdGVariazioneDocumentBulk allegato) throws ValidationException{
 		ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk = (ArchiviaStampaPdgVariazioneBulk)getModel();
 		for (AllegatoPdGVariazioneDocumentBulk result : archiviaStampaPdgVariazioneBulk.getArchivioAllegati()) {
-			if (!result.equals(allegato) && result.getNome().equals(allegato.getNome()))
+			if (Optional.ofNullable(result)
+					.filter(allegatoPdGVariazioneDocumentBulk -> !allegatoPdGVariazioneDocumentBulk.equals(allegato))
+					.filter(allegatoPdGVariazioneDocumentBulk -> Optional.ofNullable(allegatoPdGVariazioneDocumentBulk.getNome())
+							.equals(Optional.ofNullable(allegato.getNome()))).isPresent())
 				throw new ValidationException("Attenzione file già presente!");
 		}
 	}
