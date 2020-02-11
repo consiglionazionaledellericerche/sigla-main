@@ -1,6 +1,19 @@
 package it.cnr.contab.ordmag.ordini.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
+import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
+import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineBulk;
+import it.cnr.contab.ordmag.ordini.bulk.TipoOrdineKey;
 import it.cnr.contab.ordmag.ordini.ejb.OrdineAcqComponentSession;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -10,6 +23,8 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+
+import java.util.Optional;
 
 public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
 
@@ -27,7 +42,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     }
 
     public ParametriSelezioneOrdiniAcqBP() {
-            this("");
+        this("");
     }
 
     public ParametriSelezioneOrdiniAcqBP(String s) {
@@ -37,23 +52,23 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     public ParametriSelezioneOrdiniAcqBulk createEmptyModelForSearch(ActionContext context) throws BusinessProcessException {
 
         try {
-            return createNewBulk(context).initializeForSearch(this,context);
-        } catch(Exception e) {
+            return createNewBulk(context).initializeForSearch(this, context);
+        } catch (Exception e) {
             throw handleException(e);
         }
     }
 
     protected void init(it.cnr.jada.action.Config config, ActionContext context) throws BusinessProcessException {
-        super.init(config,context);
+        super.init(config, context);
         try {
 
             this.setTipoSelezione(config.getInitParameter("tipoSelezione"));
             ParametriSelezioneOrdiniAcqBulk bulk = createEmptyModelForSearch(context);
-            bulk = (ParametriSelezioneOrdiniAcqBulk)((OrdineAcqComponentSession)createComponentSession(context)).initializeAbilitazioneOrdiniAcq(context.getUserContext(), bulk);
-            setModel(context,bulk);
+            bulk = (ParametriSelezioneOrdiniAcqBulk) ((OrdineAcqComponentSession) createComponentSession(context)).initializeAbilitazioneOrdiniAcq(context.getUserContext(), bulk);
+            setModel(context, bulk);
             setDirty(false);
             resetChildren(context);
-        } catch(Throwable e) {
+        } catch (Throwable e) {
             throw new BusinessProcessException(e);
         }
     }
@@ -66,7 +81,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
             ParametriSelezioneOrdiniAcqBulk bulk = new ParametriSelezioneOrdiniAcqBulk();
             bulk.setUser(context.getUserInfo().getUserid());
             return bulk;
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw handleException(e);
         }
     }
@@ -79,26 +94,88 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
 
     }
 
-    public boolean isIndicatoAlmenoUnCriterioDiSelezione(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
-
-//		if ((aBeneServizio == null || aBeneServizio.getCd_bene_servizio() == null) && (daBeneServizio == null || daBeneServizio.getCd_bene_servizio() == null) &&
-//		aDataCompetenza == null && aDataMovimento == null && aDataOrdine == null && aDataOrdineDef == null && aNumeroOrdine == null && aProgressivo == null &&
-//		(aUnitaOperativaRicevente == null || aUnitaOperativaRicevente.getCdUnitaOperativa() == null)  && (daUnitaOperativaRicevente == null || daUnitaOperativaRicevente.getCdUnitaOperativa() == null) &&
-//		annoLotto == null && (numerazioneOrd == null || numerazioneOrd.getCdNumeratore() == null) && (unitaOperativaOrdine == null || unitaOperativaOrdine.getCdUnitaOperativa() == null) &&
-//		daDataCompetenza == null && daDataMovimento == null && daDataOrdine == null &&
-//	  daDataOrdineDef == null && daNumeroOrdine == null && daProgressivo == null && dataBolla == null && lottoFornitore == null && numeroBolla == null &&
-//	  (terzo == null || terzo.getCd_terzo() == null) && tipoMovimento == null && (tipoMovimentoMag == null || tipoMovimentoMag.getCdTipoMovimento() == null))
-//			return false;
+    public boolean checkUnitaOperAndMagazzino(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
+        if (EVA_FORZATA_ORDINI.equalsIgnoreCase(getTipoSelezione())) {
+            if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent()) {
+                if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaOrdine()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+                    return true;
+            }
+            return false;
+        }
         return true;
+
+    }
+
+    public boolean isIndicatoAlmenoUnCriterioDiSelezione(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaOrdine()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdUnitaOperativa).isPresent())
+
+            if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdUnitaOperativa).isPresent())
+                return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaOrdine()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getDaUnitaOperativaRicevente()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getaUnitaOperativaRicevente()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getTerzo()).map(TerzoBulk::getCd_anag).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getDaBeneServizio()).map(Bene_servizioBulk::getCd_bene_servizio).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getaBeneServizio()).map(Bene_servizioBulk::getCd_bene_servizio).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getDaDataOrdine()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getaDataOrdine()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getDaNumeroOrdine()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getaNumeroOrdine()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getDaDataOrdineDef()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getaDataOrdineDef()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getDaDataPrevConsegna()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getaDataPrevConsegna()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getTipoConsegna()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getStatoOrdine()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getStatoConsegna()).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getImpegno()).map(Obbligazione_scadenzarioBulk::getPg_obbligazione).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getContratto()).map(ContrattoBulk::getPg_contratto).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getCig()).map(CigBulk::getCdCig).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getCup()).map(CupBulk::getCdCup).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getRup()).map(V_persona_fisicaBulk::getCd_terzo).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getProceduraAmministrativa()).map(Procedure_amministrativeBulk::getCd_proc_amm).isPresent())
+            return true;
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getTipoOrdine()).map(TipoOrdineKey::getCdTipoOrdine).isPresent())
+            return true;
+        return false;
+
     }
 
     public RemoteIterator ricercaOrdiniAcq(ActionContext actioncontext) throws BusinessProcessException {
         try {
-            OrdineAcqComponentSession cs = (OrdineAcqComponentSession)createComponentSession(actioncontext);
+            OrdineAcqComponentSession cs = (OrdineAcqComponentSession) createComponentSession(actioncontext);
             if (cs == null) return null;
-            ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk = (ParametriSelezioneOrdiniAcqBulk)getModel();
+            ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk = (ParametriSelezioneOrdiniAcqBulk) getModel();
             //if (parametriSelezioneOrdiniAcqBulk.isIndicatoAlmenoUnCriterioDiSelezione()){
-            if (isIndicatoAlmenoUnCriterioDiSelezione(parametriSelezioneOrdiniAcqBulk)){
+            if (!checkUnitaOperAndMagazzino(parametriSelezioneOrdiniAcqBulk))
+                throw new ApplicationException("E' necessario indicare Unità Operativa e Magazzino");
+            if (isIndicatoAlmenoUnCriterioDiSelezione(parametriSelezioneOrdiniAcqBulk)) {
                 return cs.ricercaOrdiniAcqCons(actioncontext.getUserContext(), parametriSelezioneOrdiniAcqBulk);
             }
             throw new ApplicationException("E' necessario indicare almeno un criterio di selezione");
@@ -113,7 +190,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     protected it.cnr.jada.util.jsp.Button[] createToolbar() {
         it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[1];
         int i = 0;
-        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.startSearch");
+        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()), "CRUDToolbar.startSearch");
         return toolbar;
     }
 

@@ -2247,11 +2247,30 @@
 			OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
 			SQLBuilder sql = ordineAcqConsegnaHome.createSQLBuilder();
 			sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_ANNULLATA);
-			sql.addClause(FindClause.AND, "cdMagazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
-			sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+			sql.generateJoin("ordineAcqRiga", "ORDINE_ACQ_RIGA");
 			sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 			sql.generateJoin(OrdineAcqRigaBulk.class, Voce_ivaBulk.class, "voceIva", "VOCE_IVA");
 			sql.generateJoin(OrdineAcqBulk.class, TerzoBulk.class, "fornitore", "fornitore");
+
+			if (Optional.ofNullable(parametri.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent())
+				sql.addClause(FindClause.AND, "cdMagazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+			if (Optional.ofNullable(parametri.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+				sql.addSQLClause("AND","ORDINE_ACQ.CD_UNITA_OPERATIVA",SQLBuilder.EQUALS,parametri.getUnitaOperativaAbilitata().getCdUnitaOrganizzativa());
+			if (Optional.ofNullable(parametri.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+				sql.addSQLClause("AND","ORDINE_ACQ.CD_UNITA_OPERATIVA",SQLBuilder.EQUALS,parametri.getUnitaOperativaAbilitata().getCdUnitaOrganizzativa());
+			if (Optional.ofNullable(parametri.getTerzo()).map(TerzoBulk::getCd_terzo).isPresent()){
+
+			}
+				sql.addSQLClause("AND","ORDINE_ACQ.CD_TERZO",SQLBuilder.EQUALS,parametri.getTerzo().getCd_terzo());
+//
+//			if (Optional.ofNullable(parametri.getDaDataOrdine()).isPresent())
+//				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.GREATER_EQUALS,parametri.getDaDataOrdine());
+//			if (Optional.ofNullable(parametri.getaDataOrdine()).isPresent())
+//				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdine());
+//
+//			if (Optional.ofNullable(parametri.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdNumeratore).isPresent())
+//				sql.addClause("AND","cdNumeratore",SQLBuilder.LESS_EQUALS,parametri.getNumerazioneOrd().getCdNumeratore());
+
 //			if (parametri.getDaDataCompetenza() != null ){
 //				sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataCompetenza());
 //			}
