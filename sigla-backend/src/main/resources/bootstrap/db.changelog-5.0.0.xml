@@ -89,7 +89,7 @@
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert>                
+        </insert>
     </changeSet>
 
     <changeSet author="raffaele.pagano" id="create-table-gestione-bollo">
@@ -728,7 +728,7 @@
             </column>
         </addColumn>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="addColumn_fattura-attiva_elettr-privati-2">
         <addColumn tableName="FATTURA_ATTIVA">
             <column name="FL_FATTURA_ELETTRONICA" type="VARCHAR(1)" defaultValue="N" remarks="Fattura Elettronica Y=Si N=No">
@@ -740,7 +740,7 @@
             <where>CODICE_UNIVOCO_UFFICIO_IPA IS NOT NULL</where>
         </update>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="addColumn-terzo-sblocco_fatt_elettronica">
         <addColumn tableName="TERZO">
             <column name="FL_SBLOCCO_FATTURA_ELETTRONICA" type="VARCHAR(1)" defaultValue="N" remarks="Permette di creare la Fattura Elettronica anche in assenza di Codice Destinatario e PEC">
@@ -748,7 +748,7 @@
             </column>
         </addColumn>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="configurazione_cnr-add-data_inizio_fatt_ele_privati">
         <insert tableName="configurazione_cnr">
             <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
@@ -1458,7 +1458,7 @@
             <column name="esercizio"/>
             <column name="identificativo_flusso"/>
         </createIndex>
-        
+
         <createTable remarks="Tabella contenente il dettaglio dei movimenti dei conti presenti nel flusso della giornaliera." tableName="movimento_conto_evidenza">
             <column name="esercizio" type="INT">
                 <constraints nullable="false"/>
@@ -1616,7 +1616,7 @@
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert>        
+        </insert>
         <insert tableName="configurazione_cnr">
             <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
             <column name="cd_unita_funzionale" type="STRING" value="*"/>
@@ -1627,7 +1627,7 @@
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert> 
+        </insert>
     </changeSet>
 
     <changeSet author="marco.spasiano" id="alter_distinta_cassiere_add_prog_flusso">
@@ -1742,14 +1742,14 @@ C: COMMERCIALE
 N: NON COMMERCIALE
 I: IVA"/>
         </addColumn>
-    </changeSet>    
-    
+    </changeSet>
+
     <changeSet author="gianfranco.gasparro" id="alter_tipo_trattamento_add_tipo_debito_siope">
         <addColumn tableName="tipo_trattamento">
             <column name="tipo_debito_siope" type="varchar2(1)" remarks="Tipo Debito per Siope+. I valori possibili sono: C = Commerciale o N = Non Commerciale"/>
         </addColumn>
     </changeSet>
-    
+
     <changeSet author="marco.spasiano" id="alter_siope_plus_risultato_add_risultato">
         <addColumn tableName="siope_plus_risultato">
             <column name="prog_flusso" type="number(30)" remarks="Progressivo flusso siope+"/>
@@ -1758,15 +1758,15 @@ I: IVA"/>
             <column name="data_upload" type="${date.type}" remarks="Data Upload"/>
         </addColumn>
     </changeSet>
-    
+
     <changeSet author="marco.spasiano" id="alter_fattura_passiva_add_cig">
         <addColumn tableName="fattura_passiva">
             <column name="cd_cig" type="VARCHAR(10)" remarks="Codice cig"/>
             <column name="motivo_assenza_cig" type="VARCHAR(250)" remarks="Motivo assenza CIG  Può assumere i valori:
-ACCORDO_AMM_AGGIUDICATRICI 
+ACCORDO_AMM_AGGIUDICATRICI
 ACQUISTO_LOCAZIONE
-AFFIDAMENTI_IN_HOUSE 
-AMMINISTRAZIONE DIRETTA 
+AFFIDAMENTI_IN_HOUSE
+AMMINISTRAZIONE DIRETTA
 APPALTI_ENERGIA_ACQUA
 ARBITRATO
 ATTIVITA_CONCORRENZA
@@ -1792,36 +1792,36 @@ TRASFERIMENTO_FONDI
 TRASPORTO_AEREO"/>
         </addColumn>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="add_fk_fattura_passiva_cig">
-       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="fattura_passiva" constraintName="fk_fattura_passiva14" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
-       <createIndex indexName="FX_FATTURA_PASSIVA14" tableName="FATTURA_PASSIVA">
-          <column name="CD_CIG"/>
-       </createIndex>
+        <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="fattura_passiva" constraintName="fk_fattura_passiva14" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
+        <createIndex indexName="FX_FATTURA_PASSIVA14" tableName="FATTURA_PASSIVA">
+            <column name="CD_CIG"/>
+        </createIndex>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="add_fk_fattura_passiva_cig">
-       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="fattura_passiva" constraintName="fk_fattura_passiva14" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
-       <createIndex indexName="FX_FATTURA_PASSIVA14" tableName="FATTURA_PASSIVA">
-          <column name="CD_CIG"/>
-       </createIndex>
+        <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="fattura_passiva" constraintName="fk_fattura_passiva14" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
+        <createIndex indexName="FX_FATTURA_PASSIVA14" tableName="FATTURA_PASSIVA">
+            <column name="CD_CIG"/>
+        </createIndex>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="drop_column_cig_fattura_passiva">
-	    <dropColumn columnName="cd_cig"
-            tableName="fattura_passiva"/>
-	    <dropColumn columnName="motivo_assenza_cig"
-            tableName="fattura_passiva"/>
+        <dropColumn columnName="cd_cig"
+                    tableName="fattura_passiva"/>
+        <dropColumn columnName="motivo_assenza_cig"
+                    tableName="fattura_passiva"/>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="alter_fattura_passiva_riga_add_cig">
         <addColumn tableName="fattura_passiva_riga">
             <column name="cd_cig" type="VARCHAR(10)" remarks="Codice cig"/>
             <column name="motivo_assenza_cig" type="VARCHAR(250)" remarks="Motivo assenza CIG  Può assumere i valori:
-ACCORDO_AMM_AGGIUDICATRICI 
+ACCORDO_AMM_AGGIUDICATRICI
 ACQUISTO_LOCAZIONE
-AFFIDAMENTI_IN_HOUSE 
-AMMINISTRAZIONE DIRETTA 
+AFFIDAMENTI_IN_HOUSE
+AMMINISTRAZIONE DIRETTA
 APPALTI_ENERGIA_ACQUA
 ARBITRATO
 ATTIVITA_CONCORRENZA
@@ -1846,12 +1846,12 @@ SPONSORIZZAZIONE_PURA
 TRASFERIMENTO_FONDI
 TRASPORTO_AEREO"/>
         </addColumn>
-       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="fattura_passiva_riga" constraintName="fk_fattura_passiva_riga11" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
-       <createIndex indexName="FX_FATTURA_PASSIVA_RIGA11" tableName="FATTURA_PASSIVA_RIGA">
-          <column name="CD_CIG"/>
-       </createIndex>
+        <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="fattura_passiva_riga" constraintName="fk_fattura_passiva_riga11" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
+        <createIndex indexName="FX_FATTURA_PASSIVA_RIGA11" tableName="FATTURA_PASSIVA_RIGA">
+            <column name="CD_CIG"/>
+        </createIndex>
     </changeSet>
-    
+
     <changeSet author="raffaele.pagano" id="configurazione_cnr_piano_economico">
         <insert tableName="configurazione_cnr">
             <column name="esercizio" type="NUMERIC" value="0"/>
@@ -1864,7 +1864,7 @@ TRASPORTO_AEREO"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert> 
+        </insert>
         <insert tableName="configurazione_cnr">
             <column name="esercizio" type="NUMERIC" value="0"/>
             <column name="cd_unita_funzionale" type="STRING" value="*"/>
@@ -1876,7 +1876,7 @@ TRASPORTO_AEREO"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert> 
+        </insert>
     </changeSet>
 
     <changeSet author="raffaele.pagano" id="configurazione_cnr_abi_banca_italia">
@@ -1890,7 +1890,7 @@ TRASPORTO_AEREO"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="STRING" value="SYSTEM"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert> 
+        </insert>
     </changeSet>
 
     <changeSet author="marco.spasiano" id="alter_banca_add_tipo_pagamento_siope_plus">
@@ -1919,10 +1919,10 @@ BONIFICO ESTERO EURO"/>
         <addColumn tableName="compenso">
             <column name="cd_cig" type="VARCHAR(10)" remarks="Codice cig"/>
             <column name="motivo_assenza_cig" type="VARCHAR(250)" remarks="Motivo assenza CIG  Può assumere i valori:
-ACCORDO_AMM_AGGIUDICATRICI 
+ACCORDO_AMM_AGGIUDICATRICI
 ACQUISTO_LOCAZIONE
-AFFIDAMENTI_IN_HOUSE 
-AMMINISTRAZIONE DIRETTA 
+AFFIDAMENTI_IN_HOUSE
+AMMINISTRAZIONE DIRETTA
 APPALTI_ENERGIA_ACQUA
 ARBITRATO
 ATTIVITA_CONCORRENZA
@@ -1950,10 +1950,10 @@ TRASPORTO_AEREO"/>
     </changeSet>
 
     <changeSet author="gianfranco.gasparro" id="add_fk_compenso_cig">
-       <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="compenso" constraintName="fk_compenso34" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
-       <createIndex indexName="FX_COMPENSO34" tableName="COMPENSO">
-          <column name="CD_CIG"/>
-       </createIndex>
+        <addForeignKeyConstraint baseColumnNames="cd_cig" baseTableName="compenso" constraintName="fk_compenso34" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_cig" referencedTableName="cig"/>
+        <createIndex indexName="FX_COMPENSO34" tableName="COMPENSO">
+            <column name="CD_CIG"/>
+        </createIndex>
     </changeSet>
 
     <changeSet author="marco.spasiano" id="alter-table-movimento-conto-evidenza-anagrafica-cliente">
@@ -2467,10 +2467,10 @@ TRASPORTO_AEREO"/>
     </changeSet>
 
     <changeSet author="gianfranco.gasparro" id="remove-table-contratto-not-null-fig-giur-est">
-	    <dropNotNullConstraint 
-            columnName="fig_giur_est"
-            tableName="contratto"
-            columnDataType="INT"/>
+        <dropNotNullConstraint
+                columnName="fig_giur_est"
+                tableName="contratto"
+                columnDataType="INT"/>
     </changeSet>
 
     <changeSet author="marco.spasiano" id="add-accesso-variazione-mandati">
@@ -2525,7 +2525,7 @@ TRASPORTO_AEREO"/>
         <dropColumn columnName="CD_NUMERATORE_BOLLA_SCA" tableName="movimenti_mag"/>
         <dropColumn columnName="PG_BOLLA_SCA" tableName="movimenti_mag"/>
     </changeSet>
-    
+
     <changeSet author="gianfranco.gasparro" id="alter_bolla_scarico_riga_mag_drop_dup_columns">
         <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK00"/>
         <dropForeignKeyConstraint baseTableName="bolla_scarico_riga_mag" constraintName="BOLLA_SCARICO_RIGA_MAG_FK01"/>
@@ -2553,7 +2553,7 @@ TRASPORTO_AEREO"/>
         <dropColumn columnName="CD_NUMERATORE_LOTTO" tableName="bolla_scarico_riga_mag"/>
         <dropColumn columnName="PG_LOTTO" tableName="bolla_scarico_riga_mag"/>
     </changeSet>
-    
+
     <changeSet author="raffaele.pagano" id="alter-table-elemento-voce-add-column-rimodulazione">
         <addColumn tableName="elemento_voce">
             <column name="gg_deroga_obbl_comp_prg_scad" type="BIGINT" remarks="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di competenza."/>
@@ -2573,7 +2573,7 @@ TRASPORTO_AEREO"/>
                 <constraints nullable="false"/>
             </column>
         </addColumn>
-    </changeSet>    
+    </changeSet>
 
     <changeSet author="raffaele.pagano" id="alter_progetto_other_field_modify_column2">
         <addColumn tableName="progetto_other_field">
@@ -2582,7 +2582,7 @@ TRASPORTO_AEREO"/>
             <column name="dt_fine_fideiussione" remarks="Data fine della fideiussione." type="${date.type}"/>
         </addColumn>
     </changeSet>
-    
+
     <changeSet author="raffaele.pagano" id="alter_progetto_other_field_modify_column3">
         <addColumn tableName="progetto_other_field">
             <column name="dt_rilascio_fideiussione" remarks="Data rilascio della fideiussione." type="${date.type}"/>
@@ -2591,7 +2591,7 @@ TRASPORTO_AEREO"/>
             <column name="id_esterno_fideiussione" remarks="Identificativo esterno della fideiussione" type="VARCHAR(30)"/>
         </addColumn>
     </changeSet>
-    
+
     <changeSet author="raffaele.pagano" id="alter_tipo_finanziamento_add_column">
         <addColumn tableName="tipo_finanziamento">
             <column name="fl_associa_contratto" type="CHAR(1)" defaultValue="N" remarks="Indica che i progetti aventi i tipi di finanziamento possono essere collegati a contratto - Dominio: S = Sì; N = No;"/>
@@ -2862,14 +2862,14 @@ TRASPORTO_AEREO"/>
         </insert>
     </changeSet>
     <changeSet id="change_voce_menu_consultazioni_ordini_acq" author="ciro.salvio">
-            <delete tableName="albero_main">
-                <where>cd_nodo='0.ORD.CON.CONSEGNA_ORDDINI'</where>
-            </delete>
-            <update tableName="albero_main">
-                <column name="cd_nodo" value='0.ORD.CON.VISORDCONSEGNA' type="VARCHAR(100)"/>
-                <where>cd_nodo = '0.ORD.CON.CONSEGNA_ORDDINI.V'</where>
-            </update>
-        </changeSet>
+        <delete tableName="albero_main">
+            <where>cd_nodo='0.ORD.CON.CONSEGNA_ORDDINI'</where>
+        </delete>
+        <update tableName="albero_main">
+            <column name="cd_nodo" value='0.ORD.CON.VISORDCONSEGNA' type="VARCHAR(100)"/>
+            <where>cd_nodo = '0.ORD.CON.CONSEGNA_ORDDINI.V'</where>
+        </update>
+    </changeSet>
     <changeSet id="add_voce_menu_consultazioni_ordini_acq" author="ciro.salvio">
         <insert tableName="albero_main">
             <column name="cd_nodo" type="VARCHAR(100)" value="0.ORD.CON.VISORDCONSEGNA"/>
@@ -2965,6 +2965,60 @@ TRASPORTO_AEREO"/>
             <column name="pg_ordinamento" type="BIGINT" value="6"/>
             <where>cd_nodo = '0.ORD.EVAFORORDACQ'</where>
         </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create-table-ass-catgrp-invent-voce-ep">
+        <createTable remarks="Tabella di associazione tra Conti Economici e Categorie" tableName="ass_catgrp_invent_voce_ep">
+            <column name="cd_categoria_gruppo" remarks="Codice Categoria" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_voce_ep" remarks="Codice Identificativo completo del conto del piano." type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_default" type="CHAR(1)"/>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_categoria_gruppo, esercizio, cd_voce_ep" constraintName="ass_catgrp_invent_voce_ep_pk" tableName="ass_catgrp_invent_voce_ep"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_categoria_gruppo" baseTableName="ass_catgrp_invent_voce_ep" constraintName="fk_ass_catgrp_invent_voce_ep01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_categoria_gruppo" referencedTableName="categoria_gruppo_invent"/>
+
+        <addForeignKeyConstraint baseColumnNames="esercizio, cd_voce_ep" baseTableName="ass_catgrp_invent_voce_ep" constraintName="fk_ass_catgrp_invent_voce_ep02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,cd_voce_ep" referencedTableName="voce_ep"/>
+
+        <createIndex indexName="fx_ass_catgrp_invent_voce_ep00" tableName="ass_catgrp_invent_voce_ep">
+            <column name="CD_CATEGORIA_GRUPPO"/>
+        </createIndex>
+        <createIndex indexName="fx_ass_catgrp_invent_voce_ep01" tableName="ass_catgrp_invent_voce_ep">
+            <column name="ESERCIZIO"/>
+            <column name="CD_VOCE_EP"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_ordine_acq_consegna_voce_ep">
+        <addColumn tableName="ordine_acq_consegna">
+            <column name="ESERCIZIO_EP" remarks="Esercizio Conto EP" type="SMALLINT"/>
+            <column name="CD_VOCE_EP" remarks="Codice Conto EP" type="VARCHAR(45)"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="esercizio_ep, cd_voce_ep" baseTableName="ordine_acq_consegna" constraintName="fk_ordine_acq_consegna05" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,cd_voce_ep" referencedTableName="voce_ep"/>
+        <createIndex indexName="fx_ordine_acq_consegna05" tableName="ordine_acq_consegna">
+            <column name="ESERCIZIO_EP"/>
+            <column name="CD_VOCE_EP"/>
+        </createIndex>
     </changeSet>
 
 

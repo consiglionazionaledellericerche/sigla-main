@@ -204,6 +204,8 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             if (bene.getVoce_iva() != null) {
                 riga.setVoceIva(bene.getVoce_iva());
             }
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
+
         }
         return context.findDefaultForward();
     }
