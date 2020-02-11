@@ -2793,5 +2793,58 @@ TRASPORTO_AEREO"/>
                         columnName="riferimento"
                         newDataType="VARCHAR(100)" />
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create-table-ass-catgrp-invent-voce-ep">
+        <createTable remarks="Tabella di associazione tra Conti Economici e Categorie" tableName="ass_catgrp_invent_voce_ep">
+            <column name="cd_categoria_gruppo" remarks="Codice Categoria" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_voce_ep" remarks="Codice Identificativo completo del conto del piano." type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_default" type="CHAR(1)"/>
+        </createTable>
 
+        <addPrimaryKey columnNames="cd_categoria_gruppo, esercizio, cd_voce_ep" constraintName="ass_catgrp_invent_voce_ep_pk" tableName="ass_catgrp_invent_voce_ep"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_categoria_gruppo" baseTableName="ass_catgrp_invent_voce_ep" constraintName="fk_ass_catgrp_invent_voce_ep01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_categoria_gruppo" referencedTableName="categoria_gruppo_invent"/>
+
+        <addForeignKeyConstraint baseColumnNames="esercizio, cd_voce_ep" baseTableName="ass_catgrp_invent_voce_ep" constraintName="fk_ass_catgrp_invent_voce_ep02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,cd_voce_ep" referencedTableName="voce_ep"/>
+
+        <createIndex indexName="fx_ass_catgrp_invent_voce_ep00" tableName="ass_catgrp_invent_voce_ep">
+            <column name="CD_CATEGORIA_GRUPPO"/>
+        </createIndex>
+        <createIndex indexName="fx_ass_catgrp_invent_voce_ep01" tableName="ass_catgrp_invent_voce_ep">
+            <column name="ESERCIZIO"/>
+            <column name="CD_VOCE_EP"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_ordine_acq_consegna_voce_ep">
+        <addColumn tableName="ordine_acq_consegna">
+            <column name="ESERCIZIO_EP" remarks="Esercizio Conto EP" type="SMALLINT"/>
+            <column name="CD_VOCE_EP" remarks="Codice Conto EP" type="VARCHAR(45)"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="esercizio_ep, cd_voce_ep" baseTableName="ordine_acq_consegna" constraintName="fk_ordine_acq_consegna05" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,cd_voce_ep" referencedTableName="voce_ep"/>
+        <createIndex indexName="fx_ordine_acq_consegna05" tableName="ordine_acq_consegna">
+            <column name="ESERCIZIO_EP"/>
+            <column name="CD_VOCE_EP"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

@@ -487,7 +487,7 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
-		label="Esercizio Bolla Scarico" />
+		label="Es. Bolla Sc." />
 	<fieldProperty
 		name="cdNumeratoreBollaSca"
 		property="bollaScaricoMag.cdNumeratoreMag"
@@ -495,7 +495,7 @@
 		inputSize="3"
 		maxLength="3"
 		enabledOnEdit="false"
-		label="Numerat. Bolla Scarico" />
+		label="Numerat. Bolla Sc." />
 	<fieldProperty
 		name="pgBollaSca"
 		property="bollaScaricoMag.pgBollaSca"
@@ -503,7 +503,7 @@
 		inputSize="6"
 		maxLength="6"
 		enabledOnEdit="false"
-		label="Numero Bolla Scarico" />
+		label="Numero Bolla Sc." />
 	<form
 		name="searchtool">
 		<formFieldProperty

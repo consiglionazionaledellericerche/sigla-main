@@ -9,11 +9,13 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.ObbligazioniCRUDController;
 import it.cnr.contab.docamm00.bp.VoidableBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;

@@ -9,6 +9,7 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Optional;
 
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
@@ -36,6 +37,7 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	private MagazzinoBulk magazzino =  new MagazzinoBulk();
 	private LuogoConsegnaMagBulk luogoConsegnaMag =  new LuogoConsegnaMagBulk();
 	private UnitaOperativaOrdBulk unitaOperativaOrd =  new UnitaOperativaOrdBulk();
+	private ContoBulk contoBulk =  new ContoBulk();
 
 	protected BulkList righeRichiestaCollegate= new BulkList();
 	
@@ -195,9 +197,28 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 			return null;
 		return getMagazzino().getCdCds();
 	}
-	
+
+	public ContoBulk getContoBulk() {
+		return contoBulk;
+	}
+
+	public void setContoBulk(ContoBulk voceEp) {
+		this.contoBulk = voceEp;
+	}
+
 	public void setCdCdsMag(java.lang.String cdCdsMag)  {
 		this.getMagazzino().setCdCds(cdCdsMag);
+	}
+
+	public void setCdVoceEp(java.lang.String cdVoceEp)  {
+		this.getContoBulk().setCd_voce_ep(cdVoceEp);
+	}
+
+	public java.lang.String getCdVoceEp() {
+		ContoBulk contoBulk = this.getContoBulk();
+		if (contoBulk == null)
+			return null;
+		return getContoBulk().getCd_voce_ep();
 	}
 
 	public java.lang.String getCdCdsLuogo() {
@@ -253,6 +274,17 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 
 	public void setCdCdsObbl(java.lang.String cdCdsObbl)  {
 		this.getObbligazioneScadenzario().setCd_cds(cdCdsObbl);
+	}
+
+	public java.lang.Integer getEsercizioEp() {
+		ContoBulk contoBulk = this.getContoBulk();
+		if (contoBulk == null)
+			return null;
+		return getContoBulk().getEsercizio();
+	}
+
+	public void setEsercizioEp(java.lang.Integer esercizioEp)  {
+		this.getContoBulk().setEsercizio(esercizioEp);
 	}
 
 	public java.lang.Integer getEsercizioObbl() {

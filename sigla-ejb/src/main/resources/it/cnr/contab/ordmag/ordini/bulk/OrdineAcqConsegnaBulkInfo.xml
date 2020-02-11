@@ -499,7 +499,34 @@
 		inputSize="20"
 		inputType="ROTEXT"
 		label="Ordine" />
-		
+	<fieldProperty
+			name="cdVoceEp"
+			property="contoBulk.cd_voce_ep"
+			maxLength="45"
+			inputSize="8"
+			inputType="TEXT"
+			label="Conto"
+			enabledOnSearch="true"
+			formatName="it.cnr.jada.util.UppercaseStringFormat"
+			caseSensitiveSearch="false"/>
+	<fieldProperty
+			name="dsVoceEp"
+			property="contoBulk.ds_voce_ep"
+			maxLength="45"
+			inputSize="40"
+			inputType="ROTEXT"
+			label="Descrizione"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="cercaConto"
+			property="contoBulk"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			completeOnSave="true"
+			label="Conto"
+	/>
+
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -642,7 +669,12 @@
 		name="findBeneServizio" />
 	<formFieldProperty 
 		name="cdUnitaMisuraMinima" />
-		
+	<formFieldProperty
+			name="cdVoceEp" />
+	<formFieldProperty
+			name="dsVoceEp" />
+	<formFieldProperty
+			name="cercaConto" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty
@@ -695,6 +727,10 @@
 		name="pgObbligazioneScad" />
 	<findFieldProperty
 		name="dtCancellazione" />
+	<findFieldProperty
+			name="cdVoceEp" />
+	<findFieldProperty
+			name="dsVoceEp" />
 	<columnFieldProperty
 		name="cdCds" />
 	<columnFieldProperty
@@ -745,4 +781,8 @@
 		name="pgObbligazioneScad" />
 	<columnFieldProperty
 		name="dtCancellazione" />
+	<columnFieldProperty
+			name="cdVoceEp" />
+	<columnFieldProperty
+			name="dsVoceEp" />
 </bulkInfo>

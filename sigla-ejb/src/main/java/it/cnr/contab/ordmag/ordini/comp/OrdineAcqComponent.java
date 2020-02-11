@@ -1,6 +1,7 @@
 package it.cnr.contab.ordmag.ordini.comp;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
+import it.cnr.contab.config00.pdcep.bulk.ContoHome;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
@@ -30,13 +33,7 @@ import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
-import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
-import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
+import it.cnr.contab.docamm00.tabrif.bulk.*;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
 import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
@@ -437,6 +434,9 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 			if (riga.getDspLuogoConsegna() == null || riga.getDspLuogoConsegna().getCdLuogoConsegna() == null){
 				throw new ApplicationException ("E' necessario indicare il luogo di consegna.");
 			}
+			if (riga.getDspConto() == null || riga.getDspConto().getCd_voce_ep() == null){
+				throw new ApplicationException ("E' necessario indicare il conto.");
+			}
 			OrdineAcqConsegnaBulk consegna = null;
 			if (riga.isToBeCreated()){
 				consegna = new OrdineAcqConsegnaBulk();
@@ -462,6 +462,7 @@ public OggettoBulk creaConBulk(UserContext userContext,OggettoBulk bulk) throws 
 
 			consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
 			consegna.setMagazzino(riga.getDspMagazzino());
+			consegna.setContoBulk(riga.getDspConto());
 			consegna.setDtPrevConsegna(riga.getDspDtPrevConsegna());
 			consegna.setQuantita(riga.getDspQuantita());
 			consegna.setTipoConsegna(riga.getDspTipoConsegna());
@@ -599,6 +600,7 @@ protected void impostaCampiDspRiga(OrdineAcqRigaBulk riga) {
 		riga.setDspDtPrevConsegna(cons.getDtPrevConsegna());
 		riga.setDspLuogoConsegna(cons.getLuogoConsegnaMag());
 		riga.setDspMagazzino(cons.getMagazzino());
+		riga.setDspConto(cons.getContoBulk());
 		riga.setDspQuantita(cons.getQuantita());
 		riga.setDspTipoConsegna(cons.getTipoConsegna());
 		riga.setDspUopDest(cons.getUnitaOperativaOrd());
@@ -2229,4 +2231,29 @@ private Unita_organizzativaBulk recuperoUoOrdinante(UserContext aUC, OrdineAcqCo
 	}
 	throw new ApplicationException("Non è stato possibile recuperare l'unita' organizzativa ordinante");
 }
+	public SQLBuilder selectContoBulkByClause(UserContext userContext, OrdineAcqConsegnaBulk cons,
+											  ContoBulk contoBulk,
+											  CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+		ContoHome contoHome = (ContoHome)getHome(userContext, ContoBulk.class);
+		SQLBuilder sql = null;
+		try {
+			sql = contoHome.selectContiAssociatiACategoria(compoundfindclause, cons.getOrdineAcqRiga().getBeneServizio().getCategoria_gruppo());
+		} catch (InvocationTargetException | IllegalAccessException e) {
+			throw new PersistencyException(e);
+		}
+
+		return sql;
+	}
+
+	public ContoBulk recuperoConto(UserContext userContext, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk) throws PersistencyException, ComponentException{
+		ContoHome contoHome = (ContoHome)getHome(userContext, ContoBulk.class);
+		SQLBuilder sql = null;
+		try {
+			sql = contoHome.selectContiAssociatiACategoria(new CompoundFindClause(), categoria_gruppo_inventBulk);
+		} catch (InvocationTargetException | IllegalAccessException e) {
+			throw new PersistencyException(e);
+		}
+		return null;
+	}
+
 }
