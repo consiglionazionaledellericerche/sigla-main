@@ -32,7 +32,8 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
+import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -272,7 +273,8 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 			throw handleException(e);
 		}
 	}
-	private void predisponi(ActionContext actioncontext, V_mandato_reversaleBulk v_mandato_reversaleBulk, Format dateFormat) throws ComponentException, IOException {
+
+	public void predisponi(ActionContext actioncontext, V_mandato_reversaleBulk v_mandato_reversaleBulk, Format dateFormat) throws ComponentException, IOException {
 		Print_spoolerBulk print = new Print_spoolerBulk();
 		print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
 		print.setFlEmail(false);
@@ -290,7 +292,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 		Report report = SpringUtil.getBean("printService",
 				PrintService.class).executeReport(actioncontext.getUserContext(),
 				print);
-		SpringUtil.getBean("storeService", StoreService.class).restoreSimpleDocument(
+		final StorageObject storageObject = SpringUtil.getBean("storeService", StoreService.class).restoreSimpleDocument(
 				v_mandato_reversaleBulk,
 				report.getInputStream(),
 				report.getContentType(),
@@ -355,7 +357,7 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						ut.setDestinationStream(out);
 						ut.addSource(SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getResource(
 								SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getStorageObjectByPath(
-										statoTrasmissione.getStorePath().concat(StorageService.SUFFIX).concat(statoTrasmissione.getCMISName())
+										statoTrasmissione.getStorePath().concat(StorageDriver.SUFFIX).concat(statoTrasmissione.getCMISName())
 								).getKey(), true));
 						for (String documentId : childs) {
 							ut.addSource(SpringUtil.getBean("documentiContabiliService", DocumentiContabiliService.class).getResource(documentId));

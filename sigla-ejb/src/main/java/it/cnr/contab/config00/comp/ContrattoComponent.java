@@ -2391,8 +2391,9 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 								if (!lineaAttivita.getPg_progetto().equals(optPrgContratto.get())) {
 									VContrattiTotaliDetBulk dett = gaeMap.get(gae).get(0);
 									throw new ApplicationRuntimeException("Progetto "+contratto.getProgetto().getCd_progetto()+
-											" non associabile al contratto. L'accertamento "+
-											dett.getEsercizioObbAcr()+"/"+dett.getPgObbligazioneAccertamento()+
+											" non associabile al contratto. " +
+											("ETR".equals(dett.getTipo())?"L'accertamento ":"L'impegno") +
+											dett.getEsercizioObbAcr()+"/"+dett.getPgObbligazioneAccertamento() +
 											" collegato al contratto è associato, tramite la Linea di Attività "+gae+" del CDR "+cdr+
 											" ad un'altro progetto "+lineaAttivita.getCd_progetto()+".");
 								}

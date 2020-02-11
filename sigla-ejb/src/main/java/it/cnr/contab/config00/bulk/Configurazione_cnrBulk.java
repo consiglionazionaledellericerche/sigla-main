@@ -48,6 +48,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_CD_DIVISA = "CD_DIVISA";
 	public final static String SK_EURO = "EURO";
 
+	public final static String PK_CDS_SPECIALE = "CDS_SPECIALE";
+	public final static String SK_CDS_SAC = "CDS_SAC";
 	public final static String PK_ELEMENTO_VOCE_SPECIALE = "ELEMENTO_VOCE_SPECIALE";
 	public final static String SK_VOCE_IVA_FATTURA_ESTERA = "VOCE_IVA_FATTURA_ESTERA";
 	public final static String SK_TEMPO_IND_SU_PROGETTI_FINANZIATI = "TEMPO_IND_SU_PROGETTI_FINANZIATI";

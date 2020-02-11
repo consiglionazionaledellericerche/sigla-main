@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
@@ -89,13 +89,13 @@ public class ContrattoService extends StoreService {
 
 	public String getCMISPath(ContrattoBulk contrattoBulk) {
 		return getBasePath(contrattoBulk).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 
 	public String getCMISPathFolderContratto(ContrattoBulk contrattoBulk) {
 		return Stream.concat(getBasePath(contrattoBulk).stream(), Stream.of(contrattoBulk.getCMISFolderName())).collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 
@@ -206,7 +206,7 @@ public class ContrattoService extends StoreService {
 				(String)allegato.getContrattoBulk().getTi_natura_contabileKeys().get(allegato.getContrattoBulk().getNatura_contabile()),
 				(String)allegato.getTi_allegatoKeys().get(allegato.getType())
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 
@@ -222,7 +222,7 @@ public class ContrattoService extends StoreService {
 							.orElse("0"),
 					allegato.getContrattoBulk().getCMISFolderName()
 			).stream().collect(
-					Collectors.joining(StorageService.SUFFIX)
+					Collectors.joining(StorageDriver.SUFFIX)
 			);
 		}
 		return Arrays.asList(
@@ -234,7 +234,7 @@ public class ContrattoService extends StoreService {
 						.orElse("0"),
 				allegato.getContrattoBulk().getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 
 	}

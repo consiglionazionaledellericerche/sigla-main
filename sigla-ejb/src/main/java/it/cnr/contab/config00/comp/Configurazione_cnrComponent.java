@@ -593,6 +593,20 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         }
     }
 
+    /**
+     * Indica il cds sac
+     *
+     * @param esercizio l'esercizio di ricerca - Lasciare vuoto per ricercare il parametro generale (esercizio=0).
+     * @throws PersistencyException
+     */
+    public String getCdsSAC(UserContext userContext, Integer esercizio) throws ComponentException {
+        try {
+            return ((Configurazione_cnrHome)getHome(userContext, Configurazione_cnrBulk.class)).getCdsSAC(esercizio);
+        }catch (PersistencyException e){
+            throw handleException(e);
+        }
+    }
+
     public void shutdowHook(UserContext userContext) throws ComponentException {
         logger.info("shutdow hook");
         final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);

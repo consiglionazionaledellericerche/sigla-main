@@ -238,4 +238,19 @@ public class Configurazione_cnrHome extends BulkHome {
                 .map(Configurazione_cnrBulk::getVal01)
                 .orElse(null);
     }
+    /**
+     * Ritorna il codice cds della SAC
+     * <p><b>chiave_primaria: CDS_SPECIALE</b>
+     * <p><b>chiave_secondaria: CDS_SAC</b>
+     *
+     * @param esercizio l'esercizio di ricerca - se non esistono configurazioni per l'esercizio indicato viene cercata la configurazione con esercizio=0
+     * @throws PersistencyException
+     */
+    public String getCdsSAC(Integer esercizio) throws PersistencyException {
+        return Optional.ofNullable(
+                this.getConfigurazione(esercizio,null,Configurazione_cnrBulk.PK_CDS_SPECIALE, Configurazione_cnrBulk.SK_CDS_SAC))
+                .map(Configurazione_cnrBulk::getVal01)
+                .orElse(null);
+    }
+
 }

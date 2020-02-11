@@ -1,15 +1,10 @@
 # SIGLA - _Sistema Informativo Gestione Linee di Attività_
-<p align="center">
-  <a href="https://github.com/consiglionazionaledellericerche/sigla-parent/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg" alt="SIGLA is released under the GNU AGPL v3 license." />
-  </a>
-  <a href="https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-main">
-    <img alt="Maven Central" src="https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?style=flat" alt="Current version on maven central.">
-  </a>
-  <a href='https://sigla-main.readthedocs.io/it/latest/?badge=latest'>
-      <img src='https://readthedocs.org/projects/sigla-main/badge/?version=latest' alt='Documentation Status' />
-  </a>
-</p>
+
+[![license](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://github.com/consiglionazionaledellericerche/sigla-parent/blob/master/LICENSE)
+[![maven central](https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?style=flat)](https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-parent)
+[![docs](https://readthedocs.org/projects/sigla-main/badge/?version=latest)](https://sigla-main.readthedocs.io/it/latest/?badge=latest)
+[![Docker Stars](https://img.shields.io/docker/stars/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
 
 ## MAVEN dependency
 |Artifact| Version |
@@ -18,7 +13,7 @@
 |[Spring.io](https://spring.io/)| ![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.springframework/spring-context/5.1.8.RELEASE.svg) |
 |[Liquibase](https://www.liquibase.org/) | ![Maven Central](https://img.shields.io/maven-central/v/org.liquibase/liquibase-core/3.5.3.svg)|
 |[SIOPE+](https://github.com/consiglionazionaledellericerche/siopeplus) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/siopeplus.svg)|
-|[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud.svg)|
+|[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud/2.0.2.svg)|
 |[JADA JEE Framework](https://github.com/consiglionazionaledellericerche/jada) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/jada.svg)|
  
 ## Introduzione

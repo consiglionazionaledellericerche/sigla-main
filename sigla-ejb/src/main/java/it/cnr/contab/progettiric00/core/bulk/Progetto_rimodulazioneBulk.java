@@ -41,7 +41,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.util.DateUtils;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 
 public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase implements AllegatoParentBulk {
 	private static final long serialVersionUID = 1L;
@@ -636,7 +636,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 	
 	public String getStorePath() {
 		return getProgetto().getStorePath()
-				.concat(StorageService.SUFFIX)
+				.concat(StorageDriver.SUFFIX)
 				.concat(getCMISFolderName());
 	}
 	

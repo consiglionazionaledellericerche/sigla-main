@@ -24,7 +24,7 @@ import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.util.OrderedHashtable;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
@@ -722,7 +722,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 						.orElse("0"),
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 

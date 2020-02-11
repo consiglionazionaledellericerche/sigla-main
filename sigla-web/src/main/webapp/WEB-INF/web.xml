@@ -32,6 +32,10 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:it/cnr/contab/service/sigla-service-context.xml</param-value>
 	</context-param>
+	<context-param>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>it.cnr.contab.service.SpringInitializerEnvProperty</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>

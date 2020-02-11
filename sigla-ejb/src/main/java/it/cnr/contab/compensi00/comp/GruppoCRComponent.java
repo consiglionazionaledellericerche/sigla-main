@@ -17,6 +17,7 @@
 
 package it.cnr.contab.compensi00.comp;
 
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
@@ -26,6 +27,7 @@ import it.cnr.contab.anagraf00.core.bulk.BancaHome;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneHome;
@@ -36,6 +38,7 @@ import it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_detBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_detHome;
 import it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_uoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.Gruppo_cr_uoHome;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
@@ -122,7 +125,17 @@ public void CreaperTutteUOSAC(UserContext userContext, Gruppo_crBulk ass)  throw
 	sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 	sql.addSQLClause("AND", "FL_CDS", SQLBuilder.EQUALS,"N");
 	sql.addSQLClause("AND", "CD_TIPO_UNITA", SQLBuilder.EQUALS,Tipo_unita_organizzativaHome.TIPO_UO_SAC);
-	
+	Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession", AnagraficoComponentSession.class);
+	try {
+		String cdsSAC = sess.getCdsSAC(userContext, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+		if (cdsSAC != null){
+			sql.addSQLClause("AND", "CD_UNITA_PADRE", SQLBuilder.EQUALS,cdsSAC);
+		} else {
+			throw new it.cnr.jada.comp.ApplicationException("CDS SAC non presente nei parametri.");
+		}
+	} catch (RemoteException e) {
+		throw  new ComponentException(e);
+	}
 	 try {
 			List canc = home.fetchAll(sql);
 			for (Iterator i=canc.iterator();i.hasNext();){
