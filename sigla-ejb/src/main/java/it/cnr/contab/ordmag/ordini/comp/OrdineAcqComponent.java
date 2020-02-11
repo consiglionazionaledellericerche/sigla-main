@@ -73,6 +73,8 @@
 	import it.cnr.jada.util.RemoteIterator;
 	import it.cnr.jada.util.ejb.EJBCommonServices;
 
+	import static java.lang.System.out;
+
 	public class OrdineAcqComponent
 		extends it.cnr.jada.comp.CRUDComponent
 		implements ICRUDMgr,Cloneable,Serializable {
@@ -2242,6 +2244,7 @@
 			return abilitazioneOrdiniAcqBulk;
 		}
 
+
 		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException
 		{
 			OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
@@ -2252,6 +2255,19 @@
 			sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 			sql.generateJoin(OrdineAcqRigaBulk.class, Voce_ivaBulk.class, "voceIva", "VOCE_IVA");
 			sql.generateJoin(OrdineAcqBulk.class, TerzoBulk.class, "fornitore", "fornitore");
+			Optional<?> o = null;
+			o = Optional.ofNullable(parametri.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdNumeratore);
+			if (o.isPresent())
+				sql.addClause("AND","cdNumeratore",SQLBuilder.EQUALS,o.get());
+			o = Optional.ofNullable(parametri.getDaDataOrdine());
+			if (o.isPresent())
+				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.GREATER_EQUALS,o.get());
+			o = Optional.ofNullable(parametri.getaDataOrdine());
+			if (o.isPresent())
+				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.LESS_EQUALS,o.get());
+
+
+
 //			if (parametri.getDaDataCompetenza() != null ){
 //				sql.addSQLClause("AND","DT_RIFERIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataCompetenza());
 //			}

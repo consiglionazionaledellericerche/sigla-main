@@ -111,10 +111,9 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
             return true;
         if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent())
             return true;
-        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdUnitaOperativa).isPresent())
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdNumeratore).isPresent())
+            return true;
 
-            if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdUnitaOperativa).isPresent())
-                return true;
         if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaOrdine()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
             return true;
         if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getDaUnitaOperativaRicevente()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
