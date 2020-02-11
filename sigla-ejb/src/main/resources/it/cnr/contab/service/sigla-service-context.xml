@@ -75,6 +75,7 @@
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
 		<property name="gson" ref="gson"/>
+		<property name="serverPrint" value="${print.server.name}"/>
 	</bean>
 
 	<bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService"/>

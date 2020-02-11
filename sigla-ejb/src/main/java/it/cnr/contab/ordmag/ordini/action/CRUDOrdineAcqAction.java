@@ -61,7 +61,7 @@ import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 
 public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
-	private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
     public CRUDOrdineAcqAction() {
         super();
     }
@@ -2016,46 +2016,6 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
         return context.findDefaultForward();
     }
 
-	private String preparaFileNamePerStampa(String reportName) {
-		String fileName = reportName;
-		fileName = fileName.replace('/', '_');
-		fileName = fileName.replace('\\', '_');
-		if (fileName.startsWith("_"))
-			fileName = fileName.substring(1);
-		if (fileName.endsWith(".jasper"))
-			fileName = fileName.substring(0, fileName.length() - 7);
-		fileName = fileName + ".pdf";
-		return fileName;
-	}
-	private String getOutputFileNameOrdine(String reportName, Fattura_attivaBulk fattura) {
-		String fileName = preparaFileNamePerStampa(reportName);
-		fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + fattura.recuperoIdFatturaAsString() + '_' + fileName;
-		return fileName;
-	}
-    public File lanciaStampaOrdine(
-            UserContext userContext,
-            Fattura_attivaBulk fattura) throws ComponentException {
-        try {
-            String jasperOrdineName = "fattura_attiva_provvisoria.jasper";
-            String nomeFileOrdineOut = getOutputFileNameOrdine(jasperOrdineName, fattura);
-            File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + nomeFileOrdineOut);
-            Print_spoolerBulk print = new Print_spoolerBulk();
-            print.setFlEmail(false);
-            print.setReport("/docamm/docamm/" + jasperOrdineName);
-            print.setNomeFile(nomeFileOrdineOut);
-            print.setUtcr(userContext.getUser());
-            print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-            print.addParam("esercizio", fattura.getEsercizio(), Integer.class);
-            print.addParam("cd_uo_origine", fattura.getCd_uo_origine(), String.class);
-            print.addParam("pg_fattura", fattura.getPg_fattura_attiva(), Long.class);
-            Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
 
-            FileOutputStream f = new FileOutputStream(output);
-            f.write(report.getBytes());
-            return output;
-        } catch (IOException e) {
-            throw new GenerazioneReportException("Generazione Stampa non riuscita", e);
-        }
-    }
 }
 
