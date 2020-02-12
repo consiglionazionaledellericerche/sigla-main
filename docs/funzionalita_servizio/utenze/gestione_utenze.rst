@@ -25,24 +25,24 @@ Ai fini della creazione/modifica di un profilo di accesso a SIGLA:
 - l'utente deve essere in possesso dell'account ufficiale (nome.cognome) 
 - l'Amministratore delle Utenze di Sigla deve effettuare le necessarie operazioni di configurazione del sistema. 
 
-Consultare Funzionalità:doc:`Gestione delle utenze del Sistema Contabile<gestione_utenze_sigla>` 
+Una persona può avere più utenze di accesso all'applicazione e, in particolare, se è utenze utilizzatore e contemporaneamente amministratore delle utenze, deve avere due accessi diversi perchè il profilo previsto per l'amministratore è sicuramente diverso da quello operativo.   
   
 Nomina Amministratore delle Utenze
-
 Tutte le richieste di assegnazione o revoca del profilo 'Amministratore delle Utenze' devono essere inviate tramite i canali ufficiali (helpdesk SIGLA), aprendo una segnalazione nella categoria 'Utenze' --> 'Amministratori Utenze', alla quale deve essere allegato l’apposito modulo, debitamente compilato e firmato dal Responsabile del Centro di Spesa (CDS).
 
 Nomina utenze SAC (Struttura Amministrativa Centrale)
-
 Le richieste di creazione, modifica e disabilitazione di account SIGLA per utenti afferenti alla SAC devono essere inviate sempre tramite i canali ufficiali (helpdesk Sigla), aprendo una segnalazione sempre nella categoria 'Utenze' `helpdesk SIGLA <https://helpdesk.amministrazione.cnr.it/sigla/Home.do>`_, ma in questo caso la categoria da utilizzare è “Utenze” --> “Utenze Amministrazione Centrale”. Deve essere allegata una nota a firma del responsabile della struttura di afferenza dell’utente, nella quale è specificato il profilo di accesso che si chiede di abilitare. 
 
 Utenza Amministratore
 ---------------------
-aaaa
+L'utenza di Amministratore viene creata allo stesso modo di un'utenza comune solo che viene specificato il CDS per cui si devono gestire le utenze nel campo 'CDS Gestore'. In questo modo accedendo con questa utenza sarà possibile creare utenze comuni che lavoreranno esclusivamente su Unità Organizzative di questo CDS qualunque sia il profilo che viene assegnato.
 
 Utenza Comune
 -------------
-bbbbb
-
+L'utenza comune definisce le credenziali di accesso all'applicazione, il profilo con cui l'utente potrà operare in Sigla, la/le UO su cui potrà operare per tutti gli anni contabili previsti dalla procedura. Solitamente in fase di creazione di una utenza non viene indicata pa passord che sarà scelta dall'utente al primo accesso a Sigla.
+Il Codice Utente é l'identificativo interno dell'utente e può essere liberamente definito. Si consiglia di utilizzare una codifica parlante per i casi in cui vengano assegnate alla stessa persona più utenze.
+Il Codice Utente Ufficiale (nome.cognome) deve essere già stato attivato secondo le procedure interne dell'Ente. Sono poi obbligatori Nome, Cognome e data inizio e fine validità. Fare attenzione alla data di fine validità, che quando è superata non consente più l'accesso. Anche il bottone in alto Elimina, che serve per la "cancellazione logica" dell'utenza, altro non fa che impostare la data di fine validità a quella del giorno. L'ultimo campo obbligatorio è quello Codice CDR (terzo livello della struttura organizzativa dell'Ente). Viene proposta la lista dei CDR relativi al CDS su cui si sta lavorando. Bisogna scegliere quello su cui opererà l'utente. Tutti i restanti campi Dipartimento, Template, Utente Supervisore, Ruolo Supervisore NON VANNO UTILIZZATI perchè si applicano solo a particolari utenze di amministrazione.
+Il pulsante "Abilitazione Accesso in Sigla" va utilizzato se si vuole disabilitare temporaneamente un utente. Al momento della creazione l'utenza è abilitata automaticamente. Se si dovesse procedere alla disabilitazione, la stessa potrà poi essere revocata sempre mediante il medesimo pulsante. DOPO AVERE INSERITO I DATI DELL'UTENTE SALVARE PRIMA DI PROCEDERE ALL’ASSEGNAZIONE DEGLI ACCESSI O DEI RUOLI. 
   
   doc:`Modulo nomina Amministratore<nomina_amministratore>`
  
