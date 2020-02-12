@@ -31,7 +31,7 @@ Organizzato in questo modo il sistema prevede gestisce e controlla l’aspetto a
 
     **Componenti Funzionali SIGLA**
 
-    Le componenti funzionali del Sistema coprono aspetti contabili e aspetti amministrativo-contabili che forniscono automaticamente risultati contabili. Gli argomenti possono essere raggruppati come di seguito indicato e si articolano, chiaramente, in gestioni e funzionalità di dettaglio:
+    Le componenti funzionali del Sistema coprono aspetti contabili e aspetti amministrativo-contabili che forniscono automaticamente ulteriori risultati contabili. Gli argomenti possono essere raggruppati come di seguito indicato e si articolano, chiaramente, in gestioni e funzionalità di dettaglio:
 
 ------------------------------------------------
 
