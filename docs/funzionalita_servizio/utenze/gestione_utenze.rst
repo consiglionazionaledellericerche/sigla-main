@@ -15,6 +15,7 @@ La gestione delle Utenze in Sigla si divide fondamentalmente in due tipologie, o
 - Utenza Comune.
 
 La prima si riferisce all'utenza affidata a colui che deve gestire gli accessi per uno specifico CDS (ovvero primo livello della struttura organizzativa dell'Ente). L'amministratore di un CDS può creare l'Utenza Comune con un determinato profilo (elenco di funzionalità) e per una determinata Unità Organizzativa (ovvero secondo livello della struttura organizzativa dell'Ente).
+La seconda si riferisce ad utenze operative, definite dagli amministratori, per l'ccesso da parte dell'utente SIGLA alle funzionalità a cui risulta abilitato nel quotidiano svolgimento della sua attività.
 
 I Direttori/Responsabili dei Centri di Spesa (CDS), quindi, nominano un 'Amministratore delle Utenze SIGLA' per le rispettive strutture, utilizzando un "Modulo Nomina Amministratore", che deve essere compilato, firmato e trasmesso all’Amministrazione Centrale dell'Ente, tramite i canali ufficiali previsti, per i seguiti di competenza dei diversi uffici interessati (vd paragrafo 'Nomina Amministratore delle Utenze SIGLA').
 
