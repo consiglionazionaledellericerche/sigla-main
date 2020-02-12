@@ -8,7 +8,7 @@ In conformità al suddetto dgls è stato predisposto un identificativo personale
 Per la gestione dell'account ufficiale utilizzare le procedure interne all'Ente per la sua definizione.
   
 Gestione delle utenze SIGLA
-----------------------------
+
 La gestione delle Utenze in Sigla si divide fondamentalmente in due tipologie, oltre all'amministratore generale che può operare su entrambe le tipologie di utenze:
 
 - Utenza Amministratore;
@@ -28,13 +28,12 @@ Ai fini della creazione/modifica di un profilo di accesso a SIGLA:
 Consultare Funzionalità:doc:`Gestione delle utenze del Sistema Contabile<gestione_utenze_sigla>` 
   
 Nomina Amministratore delle Utenze
-----------------------------------
-Tutte le richieste di assegnazione o revoca del profilo 'Amministratore delle Utenze' devono essere inviate tramite i canali ufficiali (helpdesk SIGLA), aprendo una segnalazione nella categoria 'Utenze' --> 'Amministratori Utenze', alla quale deve essere allegato l’apposito modulo, debitamente compilato e firmato dal Responsabile del Centro di Spesa (CDS).
 
+Tutte le richieste di assegnazione o revoca del profilo 'Amministratore delle Utenze' devono essere inviate tramite i canali ufficiali (helpdesk SIGLA), aprendo una segnalazione nella categoria 'Utenze' --> 'Amministratori Utenze', alla quale deve essere allegato l’apposito modulo, debitamente compilato e firmato dal Responsabile del Centro di Spesa (CDS).
 Consultare Funzionalità  doc:`Utenza Amministratore<utenza_amministratore>`
 
 Nomina utenze SAC (Struttura Amministrativa Centrale)
------------------------------------------------------
+
 Le richieste di creazione, modifica e disabilitazione di account SIGLA per utenti afferenti alla SAC devono essere inviate sempre tramite i canali ufficiali (helpdesk Sigla), aprendo una segnalazione sempre nella categoria 'Utenze' `helpdesk SIGLA <https://helpdesk.amministrazione.cnr.it/sigla/Home.do>`_, ma in questo caso la categoria da utilizzare è “Utenze” --> “Utenze Amministrazione Centrale”. Deve essere allegata una nota a firma del responsabile della struttura di afferenza dell’utente, nella quale è specificato il profilo di accesso che si chiede di abilitare. 
 
 - :ref:`Gestione Utenza Comune<utenza_comune>`
