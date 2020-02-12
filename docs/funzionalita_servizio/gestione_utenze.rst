@@ -25,12 +25,14 @@ Ai fini della creazione/modifica di un profilo di accesso a SIGLA:
 - l'utente deve essere in possesso dell'account ufficiale (nome.cognome) 
 - l'Amministratore delle Utenze di Sigla deve effettuare le necessarie operazioni di configurazione del sistema. 
 
-Consultare Funzionalità :doc:`Amministratore delle utenze del Sistema Contabile<utenza_amministratore>` 
+Consultare Funzionalità:doc:`Gestione delle utenze del Sistema Contabile<gestione_utenze_sigla>` 
   
 Nomina Amministratore delle Utenze
 ----------------------------------
 Tutte le richieste di assegnazione o revoca del profilo 'Amministratore delle Utenze' devono essere inviate tramite i canali ufficiali (helpdesk SIGLA), aprendo una segnalazione nella categoria 'Utenze' --> 'Amministratori Utenze', alla quale deve essere allegato l’apposito modulo, debitamente compilato e firmato dal Responsabile del Centro di Spesa (CDS).
 doc:`Modulo nomina Amministratore<nomina_amministratore>`
+
+Consultare Funzionalità :ref:`Gestione Amministratore delle Utenze`;
 
 Nomina utenze SAC (Struttura Amministrativa Centrale)
 -----------------------------------------------------
