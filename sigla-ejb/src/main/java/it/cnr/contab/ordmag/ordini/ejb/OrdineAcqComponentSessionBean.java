@@ -270,12 +270,31 @@ public class OrdineAcqComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 		}
 	}
 
-    public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException{
+    public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,String tipoSelezione) throws ComponentException, RemoteException{
         pre_component_invocation(userContext,componentObj);
         try {
-            RemoteIterator result = ((OrdineAcqComponent)componentObj).ricercaOrdiniAcqCons(userContext, parametri);
+            RemoteIterator result = ((OrdineAcqComponent)componentObj).ricercaOrdiniAcqCons(userContext, parametri,tipoSelezione);
             component_invocation_succes(userContext,componentObj);
             return result;
+        } catch(it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext,componentObj);
+            throw e;
+        } catch(ComponentException e) {
+            component_invocation_failure(userContext,componentObj);
+            throw e;
+        } catch(RuntimeException e) {
+            throw uncaughtRuntimeException(userContext,componentObj,e);
+        } catch(Error e) {
+            throw uncaughtError(userContext,componentObj,e);
+        }
+    }
+
+    @Override
+    public void chiusuraForzataOrdini(UserContext userContext, OrdineAcqConsegnaBulk ordineAcqConsegnaBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException {
+        pre_component_invocation(userContext,componentObj);
+        try {
+            ((OrdineAcqComponent)componentObj).chiusuraForzataOrdini(userContext, ordineAcqConsegnaBulk);
+            component_invocation_succes(userContext,componentObj);
         } catch(it.cnr.jada.comp.NoRollbackException e) {
             component_invocation_succes(userContext,componentObj);
             throw e;

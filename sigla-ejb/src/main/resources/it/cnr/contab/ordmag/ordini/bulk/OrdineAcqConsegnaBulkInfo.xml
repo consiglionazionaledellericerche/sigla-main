@@ -791,6 +791,47 @@
 				name="dtPrevConsegna"/>
 	</columnSet>
 
+	<columnSet
+			name="evasioneForzataOrdini">
+		<columnFieldProperty
+				name="dataOrdine"/>
+		<columnFieldProperty
+				name="cdNumeratore"
+				label="Numeratore"/>
+		<columnFieldProperty
+				name="numero"
+				label="Numero Ordine"/>
+		<columnFieldProperty
+				name="riga"
+				label="Riga Ordine"/>
+		<columnFieldProperty
+				name="consegna"
+				label="Fornitore"/>
+		<columnFieldProperty
+				name="denominazioneSede"/>
+		<columnFieldProperty
+				name="cdBeneServizio"/>
+		<columnFieldProperty
+				name="dsBeneServizio"/>
+		<columnFieldProperty
+				name="percentuale_voce_iva"/>
+		<columnFieldProperty
+				name="cdUnitaMisura"/>
+		<columnFieldProperty
+				name="quantita"/>
+		<columnFieldProperty
+				name="prezzoUnitario"
+				label="Prezzo"/>
+		<columnFieldProperty
+				name="imTotaleConsegna"
+				label="Totale"/>
+		<columnFieldProperty
+				name="tipoConsegna"/>
+		<columnFieldProperty
+				name="dtPrevConsegna"/>
+	</columnSet>
+
+
 	<findFieldProperty
 			name="cdCds" />
 	<findFieldProperty

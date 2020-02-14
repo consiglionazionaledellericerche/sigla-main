@@ -42,7 +42,11 @@
   <action
           path="/ParametriSelezioneOrdiniAcqAction" actionClass="it.cnr.contab.ordmag.ordini.action.ParametriSelezioneOrdiniAcqAction">
   </action>
-  ParametriSelezioneOrdiniAcqAction
+
+  <action
+          path="/SelezionaListaOrdiniEvasioneForzataAction" actionClass="it.cnr.contab.ordmag.ordini.action.SelezionaListaOrdiniEvasioneForzataAction">
+  </action>
+  SelezionaListaOrdiniEvasioneForzataAction
 
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
@@ -248,6 +252,13 @@
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
     <init-param name="defaultAction" value="ParametriSelezioneOrdiniAcqAction"/>
     <init-param name="tipoSelezione" value="evaForzataOrdini"/>
+  </businessProcess>
+
+  <businessProcess name="SelezionatoreEvasioneForzataBP" className="it.cnr.contab.ordmag.ordini.bp.SelezionatoreEvasioneForzataBP">
+    <forward name="default" path="/util/form_lista.jsp" />
+    <init-param name="defaultAction" value="SelezionaListaOrdiniEvasioneForzataAction" />
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.OrdiniAcqConsegnaBulk"/>
   </businessProcess>
 
 

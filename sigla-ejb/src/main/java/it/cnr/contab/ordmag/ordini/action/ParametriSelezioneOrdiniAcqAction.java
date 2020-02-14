@@ -124,8 +124,7 @@ public class ParametriSelezioneOrdiniAcqAction extends BulkAction {
     			throw new it.cnr.jada.comp.ApplicationException("Attenzione: Nessun dato disponibile.");
     		}
 
-
-    		//if (bp.getFunction() != null && bp.getFunction().compareTo(new Character('V')) == 0){
+			if (bp.VIS_ORDINI_RIGA_CONS.equalsIgnoreCase(bp.getTipoSelezione())) {
     			SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("Selezionatore");
 				nbp.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(OrdineAcqConsegnaBulk.class));
 				nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("visualOrdinAcqCons"));
@@ -135,14 +134,16 @@ public class ParametriSelezioneOrdiniAcqAction extends BulkAction {
     			HookForward hook = (HookForward)context.findForward("seleziona");
     			return context.addBusinessProcess(nbp); 
 
-    		//}
-//    		SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("SelezionatoreMovimentiDaAnnullareBP");
-//            nbp.setMultiSelection(true);
-//    		nbp.setIterator(context,ri);
-//    		nbp.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(MovimentiMagBulk.class));
-//    		context.findForward("seleziona");
-//			context.addHookForward("close",this,"doDefault");
-//    		return context.addBusinessProcess(nbp);
+    		}
+    		SelezionatoreListaBP nbp = (SelezionatoreListaBP)context.createBusinessProcess("SelezionatoreEvasioneForzataBP");
+            nbp.setMultiSelection(true);
+    		nbp.setIterator(context,ri);
+    		nbp.setBulkInfo(it.cnr.jada.bulk.BulkInfo.getBulkInfo(OrdineAcqConsegnaBulk.class));
+			nbp.setColumns(nbp.getBulkInfo().getColumnFieldPropertyDictionary("evasioneForzataOrdini"));
+    		context.findForward("seleziona");
+
+			context.addHookForward("close",this,"doDefault");
+    		return context.addBusinessProcess(nbp);
     				    		
     	} catch (Exception e) {
     			return handleException(context,e); 

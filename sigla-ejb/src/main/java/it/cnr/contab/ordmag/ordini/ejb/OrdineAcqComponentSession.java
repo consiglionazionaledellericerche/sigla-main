@@ -9,6 +9,7 @@ import javax.ejb.Remote;
 
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.ordini.bulk.AbilitazioneOrdiniAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -39,5 +40,7 @@ public interface OrdineAcqComponentSession extends it.cnr.jada.ejb.CRUDComponent
 	public ImportoOrdine calcoloImportoOrdine(UserContext userContext,ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException;
 	public ImportoOrdine calcoloImportoOrdinePerMagazzino(UserContext userContext,ParametriCalcoloImportoOrdine parametri) throws RemoteException,ComponentException;
 	AbilitazioneOrdiniAcqBulk initializeAbilitazioneOrdiniAcq(UserContext usercontext, AbilitazioneOrdiniAcqBulk abilitazioneOrdiniAcqBulk) throws PersistencyException, ComponentException , RemoteException, ApplicationException;
-	public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException;
+	public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,String tipoSelezione) throws ComponentException, RemoteException;
+	void chiusuraForzataOrdini(UserContext userContext, OrdineAcqConsegnaBulk ordineAcqConsegnaBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException;
+
 }

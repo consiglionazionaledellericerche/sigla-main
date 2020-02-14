@@ -48,6 +48,7 @@
 	import it.cnr.contab.ordmag.anag00.*;
 	import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
 	import it.cnr.contab.ordmag.magazzino.bulk.*;
+	import it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP;
 	import it.cnr.contab.ordmag.ordini.bulk.*;
 	import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 	import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
@@ -2242,21 +2243,22 @@
 		}
 
 
-		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException
+		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,String tipoSelesione) throws ComponentException
 		{
-
-
-
 			OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
 			SQLBuilder sql = ordineAcqConsegnaHome.createSQLBuilder();
 			sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_ANNULLATA);
+			if (ParametriSelezioneOrdiniAcqBP.EVA_FORZATA_ORDINI.equalsIgnoreCase(tipoSelesione)){
+				sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_INSERITA);
+				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_DEFINITIVO);
+			}
 
 			sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
 			sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 			sql.generateJoin(OrdineAcqRigaBulk.class, Voce_ivaBulk.class, "voceIva", "VOCE_IVA");
 			sql.generateJoin(OrdineAcqBulk.class, TerzoBulk.class, "fornitore", "fornitore");
-			Optional<?> o = null;
 
+			Optional<?> o = null;
 			o = Optional.ofNullable(parametri.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOperativa);
 			if (o.isPresent())
 				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, o.get());
@@ -2363,6 +2365,40 @@
 				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TIPO_ORDINE", SQLBuilder.EQUALS, o.get());
 
 			return  iterator(userContext,sql,OrdineAcqConsegnaBulk.class,null);
+		}
+
+		public void chiusuraForzataOrdini(UserContext userContext, OrdineAcqConsegnaBulk ordineEvasioneForzata) throws ComponentException, PersistencyException {
+
+			OrdineAcqRigaBulk riga = ordineEvasioneForzata.getOrdineAcqRiga();
+			riga.setImTotaleRiga(riga.getImTotaleRiga().add(ordineEvasioneForzata.getImTotaleConsegna().negate()));
+			riga.setImImponibile(riga.getImImponibile().add(ordineEvasioneForzata.getImImponibile().negate()));
+			riga.setImImponibileDivisa(riga.getImImponibileDivisa().add(ordineEvasioneForzata.getImImponibileDivisa().negate()));
+			riga.setImIva(riga.getImIva().add(ordineEvasioneForzata.getImIva().negate()));
+			riga.setImIvaDivisa(riga.getImIva().add(ordineEvasioneForzata.getImIvaDivisa().negate()));
+			riga.setToBeUpdated();
+
+			OrdineAcqBulk ordine = riga.getOrdineAcq();
+			ordine.setImTotaleOrdine(ordine.getImTotaleOrdine().add(ordineEvasioneForzata.getImTotaleConsegna().negate()));
+			ordine.setImImponibile(ordine.getImImponibile().add(ordineEvasioneForzata.getImImponibile().negate()));
+//			ordine.setImIvaD(ordine.getImIvaD().add(ordineEvasioneForzata.getImImponibileDivisa().negate()));
+			ordine.setImIva(ordine.getImIva().add(ordineEvasioneForzata.getImIva().negate()));
+//			riga.setImIvaDivisa(ordine.getImIva().add(ordineEvasioneForzata.getImIvaDivisa().negate()));
+			ordine.setToBeUpdated();
+
+			ordineEvasioneForzata.setStato(OrdineAcqConsegnaBulk.STATO_EVASA_FORZATAMENTE);
+			ordineEvasioneForzata.setImTotaleConsegna(BigDecimal.ZERO);
+			ordineEvasioneForzata.setImImponibile(BigDecimal.ZERO);
+			ordineEvasioneForzata.setImImponibileDivisa(BigDecimal.ZERO);
+			ordineEvasioneForzata.setImIva(BigDecimal.ZERO);
+			ordineEvasioneForzata.setImIvaDivisa(BigDecimal.ZERO);
+			ordineEvasioneForzata.setToBeUpdated();
+
+			super.modificaConBulk(userContext, ordineEvasioneForzata);
+			super.modificaConBulk(userContext, riga);
+			// è utillizabile
+			super.modificaConBulk(userContext, riga);
+
+
 		}
 
 }

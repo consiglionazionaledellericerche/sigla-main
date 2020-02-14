@@ -266,11 +266,12 @@
 			}
 		}
 
-		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri) throws ComponentException, RemoteException{
+		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,String tipoSelezione) throws ComponentException, RemoteException{
 			try {
 				return (RemoteIterator)invoke("ricercaOrdiniAcqCons",new Object[] {
 						userContext,
-						parametri});
+						parametri,
+						tipoSelezione});
 			} catch(RemoteException e) {
 				throw e;
 			} catch(java.lang.reflect.InvocationTargetException e) {
@@ -283,4 +284,22 @@
 				}
 			}
 		}
-}
+
+		@Override
+		public void chiusuraForzataOrdini(UserContext userContext, OrdineAcqConsegnaBulk ordineAcqConsegnaBulk) throws ComponentException, PersistencyException, RemoteException, ApplicationException {
+			try {
+				invoke("chiusuraForzataOrdini",new Object[] {
+						userContext, ordineAcqConsegnaBulk});
+			} catch(RemoteException e) {
+				throw e;
+			} catch(java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch(ComponentException ex) {
+					throw ex;
+				} catch(Throwable ex) {
+					throw new RemoteException("Uncaugth exception",ex);
+				}
+			}
+		}
+	}

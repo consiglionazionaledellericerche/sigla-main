@@ -97,7 +97,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     public boolean checkUnitaOperAndMagazzino(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
         if (EVA_FORZATA_ORDINI.equalsIgnoreCase(getTipoSelezione())) {
             if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent()) {
-                if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaOrdine()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+                if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
                     return true;
             }
             return false;
@@ -107,7 +107,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
     }
 
     public boolean isIndicatoAlmenoUnCriterioDiSelezione(ParametriSelezioneOrdiniAcqBulk parametriSelezioneOrdiniAcqBulk) {
-        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaOrdine()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
+        if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa).isPresent())
             return true;
         if (Optional.ofNullable(parametriSelezioneOrdiniAcqBulk.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino).isPresent())
             return true;
@@ -174,7 +174,7 @@ public class ParametriSelezioneOrdiniAcqBP extends BulkBP {
             if (!checkUnitaOperAndMagazzino(parametriSelezioneOrdiniAcqBulk))
                 throw new ApplicationException("E' necessario indicare Unità Operativa e Magazzino");
             if (isIndicatoAlmenoUnCriterioDiSelezione(parametriSelezioneOrdiniAcqBulk)) {
-                return cs.ricercaOrdiniAcqCons(actioncontext.getUserContext(), parametriSelezioneOrdiniAcqBulk);
+                return cs.ricercaOrdiniAcqCons(actioncontext.getUserContext(), parametriSelezioneOrdiniAcqBulk,this.tipoSelezione);
             }
             throw new ApplicationException("E' necessario indicare almeno un criterio di selezione");
         } catch (it.cnr.jada.comp.ComponentException e) {
