@@ -16,12 +16,6 @@
 import sphinx_material
 
 # Register the theme as an extension to generate a sitemap.xml
-# extensions.append('sphinx_material')
-from recommonmark.parser import CommonMarkParser
-
-source_parsers = {
-    '.md': CommonMarkParser,
-}
 project = 'Sistema Informativo Gestione Linee di Attività'
 release = '0.1'
 author = u'Consiglio Nazionale delle Ricerche'
@@ -72,8 +66,7 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
-    "nbsphinx",
-    "sphinx_markdown_tables",
+    "nbsphinx"
 ]
 html_theme_options = {
     'base_url': 'https://sigla-main.readthedocs.io',
