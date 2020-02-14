@@ -47,7 +47,7 @@ sudo apt-get install -y biber
 sudo tlmgr init-usertree
 
 # Define repository for obtaining LaTeX packages (using TexLive 2015)
-sudo tlmgr option repository ftp://tug.org/historic/systems/texlive/2015/tlnet-final
+# sudo tlmgr option repository ftp://tug.org/historic/systems/texlive/2015/tlnet-final
 
 # ----------------------------------------------------------------------------
 #   INSTALL ADDITIONAL PACKAGES HERE
