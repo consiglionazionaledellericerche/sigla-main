@@ -77,7 +77,7 @@ extensions = [
     'sphinx.ext.githubpages'
 ]
 html_theme_options = {
-    'base_url': 'https://sigla-main.readthedocs.io',
+    'base_url': 'https://consiglionazionaledellericerche.github.io/sigla-main',
     'repo_url': 'https://github.com/consiglionazionaledellericerche/sigla-main/',
     'repo_name': 'consiglionazionaledellericerche/sigla-main',
     'nav_title': 'Sistema Informativo Gestione Linee di Attività',
@@ -90,7 +90,7 @@ html_theme_options = {
     'color_accent': 'light-blue',
     'nav_links': [
         {'href': 'CHANGELOG', 'internal': True, 'title': 'Changelog'},
-        {'href': 'Manuale-SIGLA.pdf', 'internal': True, 'title': 'PDF <i class="md-icon">cloud_download</i>'},
+        {'href': '/Manuale-SIGLA.pdf', 'internal': False, 'title': 'PDF <i class="md-icon">cloud_download</i>'},
         {
             'href': 'https://contab.cnr.it/SIGLANG',
             'internal': False,
