@@ -3,9 +3,6 @@ language: python
 before_install:
 - sudo apt-get update -qq
 - sudo apt-get install texlive-latex-base texlive-latex-extra latexmk
-- sudo tlmgr init-usertree
-- sudo tlmgr update --self
-- sudo tlmgr install framed
 
 install:
   - pip install -r requirements.txt
