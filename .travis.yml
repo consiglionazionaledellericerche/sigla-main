@@ -16,11 +16,9 @@ addons:
     - texinfo
     - texlive-science
     - latexmk
-    
-install:
-  - pip install -r requirements.txt
 
 script:
+  - pip install -r requirements.txt
   # Use Sphinx to make the html docs
   - make html
   - travis-sphinx build -s source
