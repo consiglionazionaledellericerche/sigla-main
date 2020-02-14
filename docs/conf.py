@@ -16,6 +16,12 @@
 import sphinx_material
 
 # Register the theme as an extension to generate a sitemap.xml
+# extensions.append('sphinx_material')
+from recommonmark.parser import CommonMarkParser
+
+source_parsers = {
+    '.md': CommonMarkParser,
+}
 project = 'Sistema Informativo Gestione Linee di Attività'
 release = '0.1'
 author = u'Consiglio Nazionale delle Ricerche'
@@ -27,7 +33,7 @@ latex_documents = [
     ('index', 'resume.tex', project, author, 'manual'),
 ]
 latex_elements = {
-  'extraclassoptions': 'openany,oneside'
+    'extraclassoptions': 'openany,oneside'
 }
 # Choose the material theme
 html_theme = 'sphinx_material'
@@ -41,13 +47,13 @@ html_show_sourcelink = False
 html_favicon = "favicon.ico"
 html_logo = "logo.png"
 latex_logo = 'logo.png'
-html_title = "Home" 
+html_title = "Home"
 language = "it"
 # The master toctree document.
 master_doc = 'index'
 source_suffix = ['.rst','.md']
 html_sidebars = {
-   '**': ['localtoc.html', 'globaltoc.html', 'sourcelink.html', 'searchbox.html']
+    '**': ['localtoc.html', 'globaltoc.html', 'sourcelink.html', 'searchbox.html']
 }
 # These folders are copied to the documentation's HTML output
 html_static_path = ['_static']
@@ -66,7 +72,8 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.mathjax",
     "sphinx.ext.viewcode",
-    "nbsphinx"
+    "nbsphinx",
+    "sphinx_markdown_tables",
 ]
 html_theme_options = {
     'base_url': 'https://sigla-main.readthedocs.io',
