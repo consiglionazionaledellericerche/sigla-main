@@ -30,7 +30,7 @@ show_authors = True
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ('index', 'resume.tex', project, author, 'manual'),
+    ('index', 'Manuale-SIGLA.tex', project, author, 'manual'),
 ]
 latex_elements = {
     'extraclassoptions': 'openany,oneside'
@@ -74,6 +74,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "nbsphinx",
     "sphinx_markdown_tables",
+    'sphinx.ext.githubpages'
 ]
 html_theme_options = {
     'base_url': 'https://sigla-main.readthedocs.io',
