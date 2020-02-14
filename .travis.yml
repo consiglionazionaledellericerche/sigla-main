@@ -22,7 +22,8 @@ script:
   - pip install -r requirements.txt
   # Use Sphinx to make the html docs
   - make html
-  - make latexpdf & cp *.pdf ../html/
+  - make latexpdf
+  - cp *.pdf ../html/
   # Tell GitHub not to use jekyll to compile the docs
   - touch _build/html/.nojekyll
 
