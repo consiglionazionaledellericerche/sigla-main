@@ -90,7 +90,7 @@ html_theme_options = {
     'color_accent': 'light-blue',
     'nav_links': [
         {'href': 'CHANGELOG', 'internal': True, 'title': 'Changelog'},
-        {'href': '/_/downloads/it/latest/pdf/', 'internal': False, 'title': 'PDF <i class="md-icon">cloud_download</i>'},
+        {'href': 'Manuale-SIGLA.pdf', 'internal': True, 'title': 'PDF <i class="md-icon">cloud_download</i>'},
         {
             'href': 'https://contab.cnr.it/SIGLANG',
             'internal': False,
