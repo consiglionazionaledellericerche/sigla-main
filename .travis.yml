@@ -23,7 +23,7 @@ script:
   # Use Sphinx to make the html docs
   - make html
   - make latexpdf
-  - cp *.pdf ../html/
+  - cp _build/latex/*.pdf _build/html/
   # Tell GitHub not to use jekyll to compile the docs
   - touch _build/html/.nojekyll
 
