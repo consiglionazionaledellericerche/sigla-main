@@ -29,11 +29,11 @@ public class AbilitazioneOrdiniAcqHome extends BulkHome {
 
 	public SQLBuilder selectUnitaOperativaAbilitataByClause(UserContext userContext, AbilitazioneOrdiniAcqBulk bulk, UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
 			CompoundFindClause compoundfindclause) throws PersistencyException{
-		return unitaOperativaHome.selectUnitaOperativeAbilitateByClause(userContext, compoundfindclause, TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO);
+		return unitaOperativaHome.selectUnitaOperativeAbilitateByClause(userContext, compoundfindclause, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
 	}
 
 	public SQLBuilder selectMagazzinoAbilitatoByClause(UserContext userContext, AbilitazioneOrdiniAcqBulk bulk, MagazzinoHome magazzinoHome, MagazzinoBulk magazzinoBulk,
 			CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException {
-		return magazzinoHome.selectMagazziniAbilitatiByClause(userContext, bulk.getUnitaOperativaAbilitata(), TipoOperazioneOrdBulk.OPERAZIONE_MAGAZZINO, compoundfindclause);
+		return magazzinoHome.selectMagazziniAbilitatiByClause(userContext, bulk.getUnitaOperativaAbilitata(), TipoOperazioneOrdBulk.OPERAZIONE_ORDINE, compoundfindclause);
 	}
 }

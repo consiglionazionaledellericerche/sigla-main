@@ -79,24 +79,15 @@
 			<tr>
 				<td>
 					<%
-						bp.getController().writeFormLabel(out, "findDaUnitaOperativaOrd");
+						bp.getController().writeFormLabel(out, "findUnitaOperativaRicevente");
 					%>
 				</td>
 				<td>
 					<%
-						bp.getController().writeFormInput(out, "findDaUnitaOperativaOrd");
+						bp.getController().writeFormInput(out, "findUnitaOperativaRicevente");
 					%>
 				</td>
-				<td class="pl-5">
-					<%
-						bp.getController().writeFormLabel(out, "findAUnitaOperativaOrd");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "findAUnitaOperativaOrd");
-					%>
-				</td>
+
 			</tr>
 
 

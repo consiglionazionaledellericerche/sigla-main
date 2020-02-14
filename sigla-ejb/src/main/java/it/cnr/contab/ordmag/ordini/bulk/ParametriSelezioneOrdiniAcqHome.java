@@ -31,7 +31,7 @@ public class ParametriSelezioneOrdiniAcqHome extends AbilitazioneOrdiniAcqHome {
 	}
 
 
-	public SQLBuilder selectUnitaOperativaOrdineByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri,
+	public SQLBuilder selectUnitaOperativaRiceventeByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri,
 														 UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
 														 CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		if (parametri == null || parametri.getMagazzinoAbilitato() == null || parametri.getMagazzinoAbilitato().getCdMagazzino() == null){

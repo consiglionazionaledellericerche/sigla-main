@@ -102,7 +102,7 @@
 	<fieldProperty
 			name="findDaBeneServizio"
 			property="daBeneServizio"
-			inputType="searchtool"
+			inputType="SEARCHTOOL"
 			formName="searchtool_codice"
 			enabledOnSearch="true"
 			nullable="false"
@@ -133,19 +133,13 @@
 		enabledOnSearch="true"
 		label="Numerat. Ordine" />
 	<fieldProperty
-		name="findDaUnitaOperativaOrd"
-		property="daUnitaOperativaRicevente"
+		name="findUnitaOperativaRicevente"
+		property="unitaOperativaRicevente"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
 		enabledOnSearch="true"
-		label="Da UOp Ricevente" />
-	<fieldProperty
-		name="findAUnitaOperativaOrd"
-		property="aUnitaOperativaRicevente"
-		inputType="SEARCHTOOL"
-		formName="searchtool"
-		enabledOnSearch="true"
-		label="A UOp Ricevente" />
+		label="UOp Ricevente" />
+
 
 	<fieldProperty
 			name="statoConsegna"
@@ -230,9 +224,8 @@
 	<formFieldProperty
 		name="findUnitaOperativaOrd" />
 	<formFieldProperty
-		name="findDaUnitaOperativaOrd" />
-	<formFieldProperty
-		name="findAUnitaOperativaOrd" />
+		name="findUnitaOperativaRicevente" />
+
 	<formFieldProperty
 		name="findNumerazioneOrd" />
 	<formFieldProperty

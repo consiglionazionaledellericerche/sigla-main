@@ -28,8 +28,8 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 
 	private NumerazioneOrdBulk numerazioneOrd = new NumerazioneOrdBulk();
 	private UnitaOperativaOrdBulk unitaOperativaOrdine = new UnitaOperativaOrdBulk();
-	private UnitaOperativaOrdBulk daUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
-	private UnitaOperativaOrdBulk aUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
+	private UnitaOperativaOrdBulk unitaOperativaRicevente = new UnitaOperativaOrdBulk();
+
 	private TerzoBulk terzo = new TerzoBulk();
 
 	private Bene_servizioBulk daBeneServizio = new Bene_servizioBulk();
@@ -73,20 +73,12 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 		super();
 	}
 
-	public UnitaOperativaOrdBulk getDaUnitaOperativaRicevente() {
-		return daUnitaOperativaRicevente;
+	public UnitaOperativaOrdBulk getUnitaOperativaRicevente() {
+		return unitaOperativaRicevente;
 	}
 
-	public void setDaUnitaOperativaRicevente(UnitaOperativaOrdBulk daUnitaOperativaRicevente) {
-		this.daUnitaOperativaRicevente = daUnitaOperativaRicevente;
-	}
-
-	public UnitaOperativaOrdBulk getaUnitaOperativaRicevente() {
-		return aUnitaOperativaRicevente;
-	}
-
-	public void setaUnitaOperativaRicevente(UnitaOperativaOrdBulk aUnitaOperativaRicevente) {
-		this.aUnitaOperativaRicevente = aUnitaOperativaRicevente;
+	public void setUnitaOperativaRicevente(UnitaOperativaOrdBulk unitaOperativaRicevente) {
+		this.unitaOperativaRicevente = unitaOperativaRicevente;
 	}
 
 	public TerzoBulk getTerzo() {
