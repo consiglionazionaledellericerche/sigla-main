@@ -23,6 +23,7 @@ install:
 script:
   # Use Sphinx to make the html docs
   - make html
+  - travis-sphinx build -s source
   - make latexpdf LATEXMKOPTS="-silent -f"
   # Tell GitHub not to use jekyll to compile the docs
   - touch _build/html/.nojekyll
