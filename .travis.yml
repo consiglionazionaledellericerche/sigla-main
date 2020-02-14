@@ -13,6 +13,7 @@ addons:
     - texlive-formats-extra
     - texlive-bibtex-extra
     - texlive-humanities
+    - texlive-lang-italian
     - texinfo
     - texlive-science
     - latexmk
