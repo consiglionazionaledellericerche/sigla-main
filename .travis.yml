@@ -7,12 +7,7 @@ before_install:
   # Install TexLive 2015 Distribution 
   # This includes the recommended fonts, LaTeX packages, and the XeLaTeX
   # compiler
-  - sudo apt-get install -y --no-install-recommends texlive-fonts-recommended \
-    texlive-latex-extra \
-    texlive-fonts-extra \
-    dvipng \
-    texlive-latex-recommended \
-    texlive-xetex
+  - sudo apt-get install -y --no-install-recommends texlive-fonts-recommended  texlive-latex-extra  texlive-fonts-extra  dvipng  texlive-latex-recommended texlive-xetex
 
   # Install decompression tool to extract LaTex packages later on
   - sudo apt-get install -y xzdec
@@ -30,13 +25,7 @@ before_install:
   #   INSTALL ADDITIONAL PACKAGES HERE
   # ----------------------------------------------------------------------------
 
-  - sudo tlmgr install \
-    hyperref       \
-    parskip        \
-    babel          \
-    tools          \
-    graphics       \
-    xcolor
+  - sudo tlmgr install  hyperref parskip babel tools graphics xcolor
     
 install:
   - pip install -r requirements.txt
