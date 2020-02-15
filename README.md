@@ -1,10 +1,12 @@
 # SIGLA - _Sistema Informativo Gestione Linee di Attività_
 
-[![license](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://github.com/consiglionazionaledellericerche/sigla-parent/blob/master/LICENSE)
+[![license](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://github.com/consiglionazionaledellericerche/sigla-main/blob/master/LICENSE)
 [![maven central](https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?style=flat)](https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-parent)
-[![docs](https://readthedocs.org/projects/sigla-main/badge/?version=latest)](https://sigla-main.readthedocs.io/it/latest/?badge=latest)
 [![Docker Stars](https://img.shields.io/docker/stars/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
+[![Build doc Status](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=travis)](https://travis-ci.com/consiglionazionaledellericerche/sigla-main)
+[![docs](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=docs)](https://consiglionazionaledellericerche.github.io/sigla-main)
+
 
 ## MAVEN dependency
 |Artifact| Version |
