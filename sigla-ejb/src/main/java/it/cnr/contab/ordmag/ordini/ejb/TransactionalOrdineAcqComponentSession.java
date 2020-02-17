@@ -2,7 +2,9 @@
 	import java.rmi.RemoteException;
 	import java.util.List;
 
+	import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 	import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+	import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 	import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 	import it.cnr.contab.ordmag.ordini.bulk.AbilitazioneOrdiniAcqBulk;
 	import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -283,4 +285,22 @@
 				}
 			}
 		}
-}
+		public ContoBulk recuperoContoDefault(UserContext userContext, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk) throws ComponentException, PersistencyException, RemoteException{
+			try {
+				return (ContoBulk) invoke("recuperoContoDefault",new Object[] {
+						userContext,
+						categoria_gruppo_inventBulk});
+			} catch(RemoteException e) {
+				throw e;
+			} catch(java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch(ComponentException ex) {
+					throw ex;
+				} catch(Throwable ex) {
+					throw new RemoteException("Uncaugth exception",ex);
+				}
+			}
+		}
+
+	}

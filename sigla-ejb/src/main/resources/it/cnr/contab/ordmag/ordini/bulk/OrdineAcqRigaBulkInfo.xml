@@ -398,7 +398,16 @@
 		enabledOnEdit="false"				
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"										
-		/>		
+		/>
+	<fieldProperty
+			name="cercaDspConto"
+			property="dspConto"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			completeOnSave="true"
+			label="Conto"
+	/>
 	<columnSet
 		name="righeSet">
 		<columnFieldProperty
@@ -516,6 +525,8 @@
 	<formFieldProperty name="esercizio_obbligazione" />
 	<formFieldProperty
 		name="dtCancellazione" />
+	<formFieldProperty
+			name="cercaDspConto" />
 	<findFieldProperty
 		name="cdCds" />
 	<findFieldProperty

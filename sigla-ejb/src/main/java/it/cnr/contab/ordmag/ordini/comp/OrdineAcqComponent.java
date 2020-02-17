@@ -244,6 +244,7 @@ public class OrdineAcqComponent
 					if (cons.getObbligazioneScadenzario() == null || cons.getObbligazioneScadenzario().getPg_obbligazione() == null){
 						cons.setObbligazioneScadenzario(riga.getDspObbligazioneScadenzario());
 					}
+
 					controlliValiditaConsegna(userContext, cons);
 				}
 			}
@@ -271,6 +272,11 @@ public class OrdineAcqComponent
 	}
 
 	private void controlliValiditaConsegna(UserContext userContext, OrdineAcqConsegnaBulk consegna)throws it.cnr.jada.comp.ComponentException{
+		try {
+			getHomeCache(userContext).fetchAll(userContext);
+		} catch (PersistencyException e) {
+			throw  new ComponentException(e);
+		}
 		if (consegna.getMagazzino() == null || consegna.getMagazzino().getCdMagazzino() == null){
 			throw new ApplicationException ("E' necessario indicare il magazzino.");
 		}
@@ -299,7 +305,13 @@ public class OrdineAcqComponent
 		if (consegna.getDtPrevConsegna() != null && consegna.getDtPrevConsegna().before(consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
 			throw new ApplicationException("La data di prevista consegna non può essere precedente alla data dell'ordine per la riga "+consegna.getRiga()+".");
 		}
-
+		try {
+			if (Utility.createConfigurazioneCnrComponentSession().isEconomicaPatrimonialeAttivaImputazioneManuale(userContext) && (consegna.getContoBulk() == null || consegna.getContoBulk().getCd_voce_ep() == null)){
+				throw new ApplicationException ("E' necessario indicare il conto di Economico Patrimoniale.");
+			}
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
 	}
 
 	private void controlloCongruenzaFornitoreContratto(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine)
@@ -581,6 +593,7 @@ public class OrdineAcqComponent
 			riga.setDspQuantita(cons.getQuantita());
 			riga.setDspTipoConsegna(cons.getTipoConsegna());
 			riga.setDspUopDest(cons.getUnitaOperativaOrd());
+			riga.setDspConto(cons.getContoBulk());
 		}
 	}
 
@@ -2113,7 +2126,7 @@ public class OrdineAcqComponent
 				}
 				if (totale != null ){
 					if (totale.compareTo(ordine.getContratto().getIm_contratto_passivo()) > 0){
-						throw handleException( new ApplicationException("La somma degli ordini associati supera l'importo definito nel contratto."));
+						throw handleException( new ApplicationException("La somma degli ordini associati "+ totale+"supera l'importo definito nel contratto "+ordine.getContratto().getIm_contratto_passivo()));
 					}
 				}
 			} catch (IntrospectionException e1) {
@@ -2296,11 +2309,29 @@ public class OrdineAcqComponent
 		return sql;
 	}
 
-	public ContoBulk recuperoConto(UserContext userContext, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk) throws PersistencyException, ComponentException{
+	public SQLBuilder selectDspContoByClause(UserContext userContext, OrdineAcqRigaBulk riga,
+											  ContoBulk contoBulk,
+											  CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		ContoHome contoHome = (ContoHome)getHome(userContext, ContoBulk.class);
 		SQLBuilder sql = null;
 		try {
-			sql = contoHome.selectContiAssociatiACategoria(new CompoundFindClause(), categoria_gruppo_inventBulk);
+			sql = contoHome.selectContiAssociatiACategoria(compoundfindclause, riga.getBeneServizio().getCategoria_gruppo());
+		} catch (InvocationTargetException | IllegalAccessException e) {
+			throw new PersistencyException(e);
+		}
+
+		return sql;
+	}
+
+	public ContoBulk recuperoContoDefault(UserContext userContext, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk) throws PersistencyException, ComponentException{
+		ContoHome contoHome = (ContoHome)getHome(userContext, ContoBulk.class);
+		SQLBuilder sql = null;
+		try {
+			sql = contoHome.selectContoDefaultAssociatoACategoria(new CompoundFindClause(), categoria_gruppo_inventBulk);
+			List conti = contoHome.fetchAll(sql);
+			if (conti != null && !conti.isEmpty()){
+				return (ContoBulk)conti.get(0);
+			}
 		} catch (InvocationTargetException | IllegalAccessException e) {
 			throw new PersistencyException(e);
 		}
