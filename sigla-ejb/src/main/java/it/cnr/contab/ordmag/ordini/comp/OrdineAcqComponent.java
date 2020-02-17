@@ -2384,7 +2384,7 @@
 			super.modificaConBulk(userContext, ordineEvasioneForzata);
 			super.modificaConBulk(userContext, riga);
 			// è utillizabile
-			super.modificaConBulk(userContext, riga);
+			super.modificaConBulk(userContext, ordine);
 
 		}
 
