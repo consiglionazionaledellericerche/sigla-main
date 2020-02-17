@@ -4,6 +4,9 @@
  */
 package it.cnr.contab.ordmag.ordini.bulk;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.client.docamm.Terzo;
 import it.cnr.contab.ordmag.anag00.*;
 import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoHome;
 import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
@@ -31,7 +34,16 @@ public class ParametriSelezioneOrdiniAcqHome extends AbilitazioneOrdiniAcqHome {
 	}
 
 
-	public SQLBuilder selectUnitaOperativaOrdineByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri,
+
+	public SQLBuilder selectTerzoByClause(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,
+															TerzoHome terzoHome, TerzoBulk terzoBulk,
+															CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+		SQLBuilder sql = terzoHome.createSQLBuilder();
+		if (Optional.ofNullable(terzoBulk).map(TerzoBulk::getDenominazione_sede).isPresent())
+			sql.addClause( "AND", "denominazione_sede", sql.LIKE, Optional.ofNullable(terzoBulk.getDenominazione_sede()).get().concat("%"));
+		return sql;
+	}
+	public SQLBuilder selectUnitaOperativaRiceventeByClause(UserContext userContext, ParametriSelezioneMovimentiBulk parametri,
 														 UnitaOperativaOrdHome unitaOperativaHome, UnitaOperativaOrdBulk unitaOperativaBulk,
 														 CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
 		if (parametri == null || parametri.getMagazzinoAbilitato() == null || parametri.getMagazzinoAbilitato().getCdMagazzino() == null){

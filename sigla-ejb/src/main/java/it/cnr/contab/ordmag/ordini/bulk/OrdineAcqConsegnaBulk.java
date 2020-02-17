@@ -26,6 +26,7 @@ import it.cnr.jada.util.action.CRUDBP;
 public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 	public final static String STATO_INSERITA = "INS";
 	public final static String STATO_EVASA = "EVA";
+	public final static String STATO_EVASA_FORZATAMENTE = "EVF";
 	public final static String STATO_ANNULLATA = "ANN";
 	public final static String STATO_FATT_NON_ASSOCIATA = "INS";
 	public final static String STATO_FATT_ASSOCIATA_PARZIALMENTE = "ASP";
@@ -74,6 +75,7 @@ public class OrdineAcqConsegnaBulk extends OrdineAcqConsegnaBase {
 		STATO.put(STATO_INSERITA,"Inserita");
 		STATO.put(STATO_EVASA,"Evasa");
 		STATO.put(STATO_ANNULLATA,"Annullata");
+		STATO.put(STATO_EVASA_FORZATAMENTE,"Evasa Forzatamente");
 	}
 	
 	public final static Dictionary STATO_FATT;

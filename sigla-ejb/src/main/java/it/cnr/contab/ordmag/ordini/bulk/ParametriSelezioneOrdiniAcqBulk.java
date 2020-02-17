@@ -28,8 +28,8 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 
 	private NumerazioneOrdBulk numerazioneOrd = new NumerazioneOrdBulk();
 	private UnitaOperativaOrdBulk unitaOperativaOrdine = new UnitaOperativaOrdBulk();
-	private UnitaOperativaOrdBulk daUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
-	private UnitaOperativaOrdBulk aUnitaOperativaRicevente = new UnitaOperativaOrdBulk();
+	private UnitaOperativaOrdBulk unitaOperativaRicevente = new UnitaOperativaOrdBulk();
+
 	private TerzoBulk terzo = new TerzoBulk();
 
 	private Bene_servizioBulk daBeneServizio = new Bene_servizioBulk();
@@ -48,12 +48,12 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 	private String statoConsegna;
 
 	private Obbligazione_scadenzarioBulk impegno =  new Obbligazione_scadenzarioBulk();
-	private ContrattoBulk contratto= new ContrattoBulk();;
-	private CigBulk cig= new CigBulk();;
-	private CupBulk cup= new CupBulk();;
+	private ContrattoBulk contratto= new ContrattoBulk();
+	private CigBulk cig= new CigBulk();
+	private CupBulk cup= new CupBulk();
 	private V_persona_fisicaBulk rup = new V_persona_fisicaBulk();
-	private Procedure_amministrativeBulk proceduraAmministrativa= new Procedure_amministrativeBulk();;
-	private TipoOrdineBulk tipoOrdine= new TipoOrdineBulk();;
+	private Procedure_amministrativeBulk proceduraAmministrativa= new Procedure_amministrativeBulk();
+	private TipoOrdineBulk tipoOrdine= new TipoOrdineBulk();
 
 	public final static Dictionary STATO_ORDINE;
 
@@ -73,20 +73,12 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 		super();
 	}
 
-	public UnitaOperativaOrdBulk getDaUnitaOperativaRicevente() {
-		return daUnitaOperativaRicevente;
+	public UnitaOperativaOrdBulk getUnitaOperativaRicevente() {
+		return unitaOperativaRicevente;
 	}
 
-	public void setDaUnitaOperativaRicevente(UnitaOperativaOrdBulk daUnitaOperativaRicevente) {
-		this.daUnitaOperativaRicevente = daUnitaOperativaRicevente;
-	}
-
-	public UnitaOperativaOrdBulk getaUnitaOperativaRicevente() {
-		return aUnitaOperativaRicevente;
-	}
-
-	public void setaUnitaOperativaRicevente(UnitaOperativaOrdBulk aUnitaOperativaRicevente) {
-		this.aUnitaOperativaRicevente = aUnitaOperativaRicevente;
+	public void setUnitaOperativaRicevente(UnitaOperativaOrdBulk unitaOperativaRicevente) {
+		this.unitaOperativaRicevente = unitaOperativaRicevente;
 	}
 
 	public TerzoBulk getTerzo() {
@@ -288,4 +280,6 @@ public class ParametriSelezioneOrdiniAcqBulk extends AbilitazioneOrdiniAcqBulk i
 	public void setTipoOrdine(TipoOrdineBulk tipoOrdine) {
 		this.tipoOrdine = tipoOrdine;
 	}
+
+
 }
