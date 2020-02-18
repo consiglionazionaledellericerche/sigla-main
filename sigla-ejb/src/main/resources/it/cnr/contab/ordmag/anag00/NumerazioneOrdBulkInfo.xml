@@ -59,7 +59,7 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false"
-		label="Codice Numeratore" 
+		label="Codice Numeratore"
 		caseSensitiveSearch="false"/>
 	<fieldProperty
 		name="dsNumeratore"
@@ -170,7 +170,7 @@
 		<formFieldProperty
 			name="cdNumeratore"/>
 		<formFieldProperty
-			name="dsNumeratore" 
+			name="dsNumeratore"
 			inputSize="35"/>
 	</form>
 	<formFieldProperty

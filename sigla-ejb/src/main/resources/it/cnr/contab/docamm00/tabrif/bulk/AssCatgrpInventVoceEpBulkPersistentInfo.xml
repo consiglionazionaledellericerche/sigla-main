@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.docamm00.tabrif.bulk.AssCatgrpInventVoceEpBulk"
+	homeClassName="it.cnr.contab.docamm00.tabrif.bulk.AssCatgrpInventVoceEpHome" >
+	<defaultColumnMap
+		tableName="ASS_CATGRP_INVENT_VOCE_EP" >
+		<columnMapping
+			columnName="CD_CATEGORIA_GRUPPO"
+			propertyName="categoria_gruppo_invent.cd_categoria_gruppo" />
+		<columnMapping
+			columnName="CD_VOCE_EP"
+			propertyName="conto.cd_voce_ep"/>
+		<columnMapping
+			columnName="ESERCIZIO"
+			propertyName="conto.esercizio"
+			fetchOnly="true"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="conto" />
+	<persistentProperty
+			name="categoria_gruppo_invent" />
+</SQLPersistentInfo>

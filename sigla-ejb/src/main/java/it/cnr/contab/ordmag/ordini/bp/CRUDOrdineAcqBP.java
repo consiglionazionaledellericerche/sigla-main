@@ -28,11 +28,13 @@ import java.util.UUID;
 
 import javax.servlet.ServletException;
 
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.ObbligazioniCRUDController;
 import it.cnr.contab.docamm00.bp.VoidableBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
@@ -53,6 +55,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
@@ -80,7 +83,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 	protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager = null;
 	private boolean isDeleting = false;
 
-	public boolean isInputReadonly() 
+	public boolean isInputReadonly()
 	{
 		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
 		if(ordine == null)
@@ -476,7 +479,7 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			UserContext userContext,
 			OrdineAcqBulk ordine) throws ComponentException {
 		try {
-			String jasperOrdineName = "ordini_acq2.jasper";
+			String jasperOrdineName = "ordini_acq.jasper";
 			String nomeFileOrdineOut = getOutputFileNameOrdine(jasperOrdineName, ordine);
 			File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + nomeFileOrdineOut);
 			Print_spoolerBulk print = new Print_spoolerBulk();
@@ -679,4 +682,19 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		}
 	}
 
+	public ContoBulk recuperoContoDefault(
+			ActionContext context,
+			Categoria_gruppo_inventBulk categoria_gruppo_inventBulk)
+			throws it.cnr.jada.action.BusinessProcessException {
+
+		try {
+
+			return ((OrdineAcqComponentSession)createComponentSession()).recuperoContoDefault(context.getUserContext(), categoria_gruppo_inventBulk);
+
+		} catch (it.cnr.jada.comp.ComponentException| PersistencyException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+	}
 }
