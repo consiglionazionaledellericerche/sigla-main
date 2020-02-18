@@ -2253,11 +2253,12 @@
 			sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 
 			if (ParametriSelezioneOrdiniAcqBP.VIS_ORDINI_RIGA_CONS.equalsIgnoreCase(tipoSelesione)){
-				Unita_organizzativa_enteHome home = ( Unita_organizzativa_enteHome )getHome(userContext,UnitaOperativaOrdBulk.class);
+				Unita_organizzativa_enteHome home = ( Unita_organizzativa_enteHome )getHome(userContext,Unita_organizzativa_enteBulk.class);
 				Boolean isUoEnte = home.isUoEnte(userContext);
 				if ( !isUoEnte){
 					boolean uteAbilOrdine = (( AbilUtenteUopOperHome)getHome(userContext, AbilUtenteUopOperBulk.class)).isUtenteAbilitatoTipoOperazione(userContext, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
 					if ( uteAbilOrdine){
+						sql.addTableToHeader("ABIL_UTENTE_UOP_OPER", "ABIL_UTENTE_UOP_OPER");
 						sql.addSQLJoin("ORDINE_ACQ.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
 						sql.addSQLClause(FindClause.AND, "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
 					}
