@@ -1,0 +1,40 @@
+<!--
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<a href="{{ theme_repo_url }}" title="Go to repository" class="md-source" data-md-source="github">
+    {% if theme_repo_type %}
+    <div class="md-source__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+            <use xlink:href="#__{{ theme_repo_type }}" width="24" height="24"></use>
+        </svg>
+    </div>
+    {% endif %}
+    <div class="md-source__repository">
+        {{ theme_repo_name }}
+    </div>
+</a>
+<!-- Right aligned menu below button -->
+<h1 class="md-source__repository">Scarica</h1>
+<button id="demo-menu-lower-right"
+        class="mdl-button mdl-js-button mdl-button--icon button-download">
+    <i class="material-icons">more_vert</i>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+    for="demo-menu-lower-right">
+    <a class="mdl-menu__item" href="Manuale-SIGLA.pdf">pdf</a>
+    <a class="mdl-menu__item" href="Manuale-SIGLA.epub">epub</a>
+</ul>

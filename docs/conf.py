@@ -35,6 +35,7 @@ latex_documents = [
 latex_elements = {
     'extraclassoptions': 'openany,oneside'
 }
+epub_basename = u'Manuale-SIGLA'
 # Choose the material theme
 html_theme = 'sphinx_material'
 #html_theme = 'sphinx_materialdesign_theme'
@@ -57,11 +58,13 @@ html_sidebars = {
 }
 # These folders are copied to the documentation's HTML output
 html_static_path = ['_static']
+templates_path = ['_templates']
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
 html_css_files = [
     'css/extra.css',
-    'css/hacks.css'
+    'css/hacks.css',
+    'css/material.css'
 ]
 extensions = [
     "sphinx.ext.autodoc",
@@ -90,7 +93,6 @@ html_theme_options = {
     'color_accent': 'light-blue',
     'nav_links': [
         {'href': 'CHANGELOG', 'internal': True, 'title': 'Changelog'},
-        {'href': 'Manuale-SIGLA.pdf', 'internal': False, 'title': 'PDF <i class="md-icon">cloud_download</i>'},
         {
             'href': 'https://contab.cnr.it/SIGLANG',
             'internal': False,

@@ -5,6 +5,7 @@
 .md-header-nav__source {
     width: unset;
     max-width: unset;
+    display: inline-flex;
 }
 .rst-versions {
   border-color: indingo !important;
@@ -15,6 +16,10 @@
 .rst-versions .rst-current-version {
   background-color: #3f51b5 !important;
   color: white !important;
+}
+
+.button-download {
+    margin-top: 0.5rem!important;
 }
 
 .underline {
