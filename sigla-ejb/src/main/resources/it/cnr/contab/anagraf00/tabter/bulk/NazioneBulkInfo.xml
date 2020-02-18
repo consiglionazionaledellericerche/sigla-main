@@ -210,7 +210,12 @@
 		enabledOnEdit="true"
 		enabledOnSearch="true"
 		label="Divisa per missione" />
-/**********************************************/
+	<fieldProperty
+		name="fl_sepa"
+		property="fl_sepa"
+		label="Area SEPA"
+		inputType="CHECKBOX" />
+	/**********************************************/
 /*********** STRUTTURA IBAN *******************/
 /**********************************************/
 	
@@ -258,7 +263,9 @@
 		readonlyProperty="RODivisaPerMissione"/>
 	<formFieldProperty name="ds_divisa_per_missione" />
 	<formFieldProperty name="find_divisa_per_missione" />
-		<columnFieldProperty name="pg_nazione" />
+	<formFieldProperty name="fl_sepa" />
+
+	<columnFieldProperty name="pg_nazione" />
 	<columnFieldProperty name="ds_nazione" />
 	<columnFieldProperty name="ti_nazione" />
 	<columnFieldProperty name="cd_catastale" />
@@ -267,6 +274,7 @@
 	<columnFieldProperty name="cd_nazione_770" />
 	<columnFieldProperty name="cd_iso" />
 	<columnFieldProperty name="cd_area_estera" />
+	<columnFieldProperty name="fl_sepa" />
 	<columnFieldProperty
 		name="ds_divisa"
 		label="Divisa" />
@@ -292,5 +300,6 @@
 	<findFieldProperty name="cd_area_estera" />
 	<findFieldProperty name="cd_divisa" />
 	<findFieldProperty name="cd_divisa_per_missione" />
+	<findFieldProperty name="fl_sepa" />
 
 </bulkInfo>

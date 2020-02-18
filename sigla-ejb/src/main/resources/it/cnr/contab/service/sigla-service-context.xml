@@ -129,6 +129,8 @@
 		<task:scheduled ref="fatturaPassivaElettronicaService" method="execute" cron="${pec.cron.expression}" />
 		<task:scheduled ref="documentiContabiliService" method="executeMessaggiSiopeplus" cron="${siopeplus.cron.expression}" />
 		<task:scheduled ref="pdgVariazioniService" method="executeDeletePECMessage" cron="${pec.cron.expression}" />
+		<task:scheduled ref="utilService" method="executeAggiornaGECO" cron="${aggiorna.geco.cron.expression}" />
+		<task:scheduled ref="utilService" method="executeDeleteMessaggi" cron="${delete.messaggi.cron.expression}" />
 	</task:scheduled-tasks>
 
 	<task:scheduler id="siglaScheduler"  pool-size="10"/>

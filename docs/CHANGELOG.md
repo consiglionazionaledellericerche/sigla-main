@@ -1,9 +1,153 @@
-## Release 6.1.28  -- _February 10, 2020_ 
+## Release 6.1.30  -- _February 14, 2020_ 
 **Changes**
 
->**FIX NullPointerException on validaAllegatoNomeFile**
+>**Add Util service for delete Messaggi and Aggiorna GECO**
 >
->[16b75bb4fe1f489](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16b75bb4fe1f489) marco.spasiano *February 10, 2020*
+>[699d67bca552f31](https://github.com/consiglionazionaledellericerche/sigla-main/commit/699d67bca552f31) marco.spasiano *February 14, 2020*
+
+>**Delete tlsetup.sh**
+>
+>[6b651ae962464fc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6b651ae962464fc) Marco Spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[886e54aed459a01](https://github.com/consiglionazionaledellericerche/sigla-main/commit/886e54aed459a01) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[5fd0d7a2c24ad6a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5fd0d7a2c24ad6a) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[2bb532a53695e25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bb532a53695e25) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[a0d7593db2bae97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a0d7593db2bae97) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[11fc0679fa533c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11fc0679fa533c9) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[7e081ce12fcb157](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7e081ce12fcb157) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[e1849bcee5d8c33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1849bcee5d8c33) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[bc3eb77c47f878a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc3eb77c47f878a) marco.spasiano *February 14, 2020*
+
+>**FIX**
+>
+>[e21f24bff49f2b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e21f24bff49f2b8) marco.spasiano *February 14, 2020*
+
+>**Delete CHANGELOG.md**
+>
+>[787dc6c47530431](https://github.com/consiglionazionaledellericerche/sigla-main/commit/787dc6c47530431) marco.spasiano *February 14, 2020*
+
+>**Delete CHANGELOG.md**
+>
+>[d92b825ca9ea966](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d92b825ca9ea966) marco.spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[69bf0a7740b16ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69bf0a7740b16ba) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[657821b1fcea1e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/657821b1fcea1e1) Marco Spasiano *February 14, 2020*
+
+>**Update requirements.txt**
+>
+>[7f04ceed551c332](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7f04ceed551c332) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[ef30338a3029f7a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef30338a3029f7a) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[605129117392f36](https://github.com/consiglionazionaledellericerche/sigla-main/commit/605129117392f36) Marco Spasiano *February 14, 2020*
+
+>**Update tlsetup.sh**
+>
+>[aefefdac1307f24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aefefdac1307f24) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[7bee9e8c6dcd18b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bee9e8c6dcd18b) Marco Spasiano *February 14, 2020*
+
+>**Update Makefile**
+>
+>[65ecc1bed01694f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65ecc1bed01694f) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[eeb5ee80bb4e9c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eeb5ee80bb4e9c6) Marco Spasiano *February 14, 2020*
+
+>**Create tlsetup.sh**
+>
+>[6fc64ef15119272](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fc64ef15119272) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[7bdd8172a4cd161](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bdd8172a4cd161) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[0dde7a68dde5fe9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0dde7a68dde5fe9) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[46b81f91cbf8b11](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46b81f91cbf8b11) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[6697bd971921dc5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6697bd971921dc5) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[4095b84612e916c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4095b84612e916c) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[88eb8ca6cbd3d60](https://github.com/consiglionazionaledellericerche/sigla-main/commit/88eb8ca6cbd3d60) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[d174f590076a2ec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d174f590076a2ec) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[80a51646810c75b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80a51646810c75b) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[e06d3d32f934098](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e06d3d32f934098) Marco Spasiano *February 14, 2020*
+
+>**Update .travis.yml**
+>
+>[4be74bd9289d601](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4be74bd9289d601) Marco Spasiano *February 14, 2020*
+
+>**Create Makefile**
+>
+>[84a4a1a1c6956db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/84a4a1a1c6956db) Marco Spasiano *February 14, 2020*
+
+>**Create .travis.yml**
+>
+>[b2e6d3ae5f65255](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b2e6d3ae5f65255) Marco Spasiano *February 14, 2020*
+
+>**Fix Ricerca Impegni su Documento Generico Passivo: in alcuni casi non visualizzava la lista degli impegni se non dopo aver attivato e poi disattivato il flag Ente.**
+>
+>[a6e8da46995e5e1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6e8da46995e5e1) raffaele.pagano *February 13, 2020*
+
+>**Fix anomalia bene servizio non valido: sulla fattura era possibile associare un bene e servizio non valido. Ripristinato codice eliminato erroneamente a seguito di una precedente operazione di merge**
+>
+>[22ea279bd93eae0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22ea279bd93eae0) raffaele.pagano *February 13, 2020*
 
 >**Add cnr.storage.driver on stage default**
 >
@@ -12,6 +156,54 @@
 >**Add cnr.storage.driver on stage production-cnr**
 >
 >[5ed31428fc1f3ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5ed31428fc1f3ca) marco.spasiano *February 10, 2020*
+
+>**Servizio Rest: utility per lancio controllo correttezza variazione di bilancio, dal punto di vista dei progetti, anche dopo approvazione della stessa che la rende immodificabile.**
+>
+>[0e86c5d6cc17cb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0e86c5d6cc17cb5) raffaele.pagano *February 07, 2020*
+
+>**Fix Rimodulazione Progetti: corretto controllo nelle variazioni di bilancio in caso di spostamento somme dalla voce speciale di un progetto attivo.**
+>
+>[d9bcaef4b7d865c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9bcaef4b7d865c) raffaele.pagano *February 07, 2020*
+
+>**Gestito inserimento uo SAC distinto per anno. Gestite SAC diverse per gruppi CORI non accentrati**
+>
+>[fd57c8ac5551ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd57c8ac5551ed0) gianfranco.gasparro *February 07, 2020*
+
+>**Add test for stato predisposizione**
+>
+>[571ae759908e993](https://github.com/consiglionazionaledellericerche/sigla-main/commit/571ae759908e993) marco.spasiano *February 07, 2020*
+
+>**Upgrade version of storage cloud to 2.0.2, add test for Predisponi Mandato**
+>
+>[e89d6347ba10ae5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e89d6347ba10ae5) marco.spasiano *February 07, 2020*
+
+>**Specify version of storage-cloud [ci skip]**
+>
+>[454750ae0090660](https://github.com/consiglionazionaledellericerche/sigla-main/commit/454750ae0090660) marco.spasiano *February 06, 2020*
+
+>**Update README.md**
+>
+>[ae760e2d646aec6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae760e2d646aec6) mspasiano *February 06, 2020*
+
+
+## Release 6.1.29  -- _February 14, 2020_ 
+**Changes**
+
+>**Fix Rimodulazione Progetti: consentito su un progetto scaduto di effettuare storni di bilancio su voci di bilancio con disponibilità anche se non associate al piano economico.**
+>
+>[7a9d59bfadf39b3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a9d59bfadf39b3) raffaele.pagano *February 14, 2020*
+
+>**Fix Rimodulazione Progetti: consentito su un progetto scaduto di effettuare variazioni per maggiori entrate/spese senza controllare piano economico.**
+>
+>[fd5794a064092de](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd5794a064092de) raffaele.pagano *February 14, 2020*
+
+
+## Release 6.1.28  -- _February 10, 2020_ 
+**Changes**
+
+>**FIX NullPointerException on validaAllegatoNomeFile**
+>
+>[16b75bb4fe1f489](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16b75bb4fe1f489) marco.spasiano *February 10, 2020*
 
 
 ## Release 6.1.27  -- _February 10, 2020_ 
@@ -32,30 +224,6 @@
 >**Update README.md**
 >
 >[9a49d570a723a99](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a49d570a723a99) Marco Spasiano *February 09, 2020*
-
->**Add test for stato predisposizione**
->
->[571ae759908e993](https://github.com/consiglionazionaledellericerche/sigla-main/commit/571ae759908e993) marco.spasiano *February 07, 2020*
-
->**Upgrade version of storage cloud to 2.0.2, add test for Predisponi Mandato**
->
->[e89d6347ba10ae5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e89d6347ba10ae5) marco.spasiano *February 07, 2020*
-
->**Specify version of storage-cloud [ci skip]**
->
->[454750ae0090660](https://github.com/consiglionazionaledellericerche/sigla-main/commit/454750ae0090660) marco.spasiano *February 06, 2020*
-
->**Update README.md**
->
->[ae760e2d646aec6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae760e2d646aec6) mspasiano *February 06, 2020*
-
-
-## Release 6.1.25  -- _February 07, 2020_ 
-**Changes**
-
->**Gestito inserimento uo SAC distinto per anno. Gestite SAC diverse per gruppi CORI non accentrati**
->
->[fd57c8ac5551ed0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd57c8ac5551ed0) gianfranco.gasparro *February 07, 2020*
 
 
 ## Release 6.1.24  -- _February 06, 2020_ 

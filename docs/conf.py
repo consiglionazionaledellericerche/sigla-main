@@ -30,10 +30,10 @@ show_authors = True
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ('index', 'resume.tex', project, author, 'manual'),
+    ('index', 'Manuale-SIGLA.tex', project, author, 'manual'),
 ]
 latex_elements = {
-  'extraclassoptions': 'openany,oneside'
+    'extraclassoptions': 'openany,oneside'
 }
 # Choose the material theme
 html_theme = 'sphinx_material'
@@ -47,13 +47,13 @@ html_show_sourcelink = False
 html_favicon = "favicon.ico"
 html_logo = "logo.png"
 latex_logo = 'logo.png'
-html_title = "Home" 
+html_title = "Home"
 language = "it"
 # The master toctree document.
 master_doc = 'index'
 source_suffix = ['.rst','.md']
 html_sidebars = {
-   '**': ['localtoc.html', 'globaltoc.html', 'sourcelink.html', 'searchbox.html']
+    '**': ['localtoc.html', 'globaltoc.html', 'sourcelink.html', 'searchbox.html']
 }
 # These folders are copied to the documentation's HTML output
 html_static_path = ['_static']
@@ -74,9 +74,10 @@ extensions = [
     "sphinx.ext.viewcode",
     "nbsphinx",
     "sphinx_markdown_tables",
+    'sphinx.ext.githubpages'
 ]
 html_theme_options = {
-    'base_url': 'https://sigla-main.readthedocs.io',
+    'base_url': 'https://consiglionazionaledellericerche.github.io/sigla-main',
     'repo_url': 'https://github.com/consiglionazionaledellericerche/sigla-main/',
     'repo_name': 'consiglionazionaledellericerche/sigla-main',
     'nav_title': 'Sistema Informativo Gestione Linee di Attività',
@@ -89,7 +90,7 @@ html_theme_options = {
     'color_accent': 'light-blue',
     'nav_links': [
         {'href': 'CHANGELOG', 'internal': True, 'title': 'Changelog'},
-        {'href': '/_/downloads/it/latest/pdf/', 'internal': False, 'title': 'PDF <i class="md-icon">cloud_download</i>'},
+        {'href': 'Manuale-SIGLA.pdf', 'internal': False, 'title': 'PDF <i class="md-icon">cloud_download</i>'},
         {
             'href': 'https://contab.cnr.it/SIGLANG',
             'internal': False,

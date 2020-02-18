@@ -99,29 +99,6 @@ public class ContrattoService extends StoreService {
 		);
 	}
 
-	public List<StorageObject> findContrattiDefinitivi() {
-		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
-		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
-		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:stato = 'D'");
-		return super.search(query.toString());
-	}
-
-//	public void findContrattiDefinitiviWithoutFile() {
-//		List<StorageObject> nodes = findContrattiDefinitivi();
-//		for (StorageObject storageObject : nodes) {
-//			boolean exist = false;
-//			List<StorageObject> childs = getChildren(storageObject.getKey());
-//			for (StorageObject child : childs) {
-//				if (child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(AllegatoContrattoDocumentBulk.CONTRATTO))
-//					exist = true;
-//			}
-//			if (!exist)
-//				logger.error(
-//						(String)storageObject.getPropertyValue("strorguo:codice")+" "+
-//								storageObject.getPropertyValue("sigla_contratti_aspect_appalti:progressivo"));
-//		}
-//	}
-
 	public List<StorageObject> findNodeAllegatiContratto(ContrattoBulk contratto) throws ApplicationException{
 		StorageObject folderContratto = getFolderContratto(contratto);
 		if (folderContratto != null)
