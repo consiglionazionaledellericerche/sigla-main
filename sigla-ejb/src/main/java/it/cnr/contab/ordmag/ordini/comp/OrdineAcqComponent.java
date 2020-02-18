@@ -16,10 +16,7 @@
 	import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 	import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
 	import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-	import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-	import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
-	import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
-	import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
+	import it.cnr.contab.config00.sto.bulk.*;
 	import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 	import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 	import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
@@ -2242,19 +2239,41 @@
 			return abilitazioneOrdiniAcqBulk;
 		}
 
+		private SQLBuilder builderRicercaOrdineFromUserLogged(UserContext userContext,String tipoSelesione) throws ComponentException {
 
-		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,String tipoSelesione) throws ComponentException
-		{
 			OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
 			SQLBuilder sql = ordineAcqConsegnaHome.createSQLBuilder();
+			sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_ANNULLATA);
+			sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+			sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+
+			if (ParametriSelezioneOrdiniAcqBP.VIS_ORDINI_RIGA_CONS.equalsIgnoreCase(tipoSelesione)){
+				Unita_organizzativa_enteHome home = ( Unita_organizzativa_enteHome )getHome(userContext,UnitaOperativaOrdBulk.class);
+				Boolean isUoEnte = home.isUoEnte(userContext);
+				if ( !isUoEnte){
+					boolean uteAbilOrdine = (( AbilUtenteUopOperHome)getHome(userContext, AbilUtenteUopOperBulk.class)).isUtenteAbilitatoTipoOperazione(userContext, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
+					if ( uteAbilOrdine){
+						sql.addSQLJoin("ORDINE_ACQ.CD_UNITA_OPERATIVA", "ABIL_UTENTE_UOP_OPER.CD_UNITA_OPERATIVA");
+						sql.addSQLClause(FindClause.AND, "ABIL_UTENTE_UOP_OPER.CD_UTENTE", SQLBuilder.EQUALS, userContext.getUser());
+					}
+				}
+			}
+
+			return sql;
+		}
+		public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,String tipoSelesione) throws ComponentException
+		{
+			//OrdineAcqConsegnaHome ordineAcqConsegnaHome = (OrdineAcqConsegnaHome)getHome(userContext, OrdineAcqConsegnaBulk.class);
+			//SQLBuilder sql = ordineAcqConsegnaHome.createSQLBuilder();
+			SQLBuilder sql = builderRicercaOrdineFromUserLogged( userContext,tipoSelesione);
 			sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, OrdineAcqConsegnaBulk.STATO_ANNULLATA);
 			if (ParametriSelezioneOrdiniAcqBP.EVA_FORZATA_ORDINI.equalsIgnoreCase(tipoSelesione)){
 				sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, OrdineAcqConsegnaBulk.STATO_INSERITA);
 				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, OrdineAcqBulk.STATO_DEFINITIVO);
 			}
 
-			sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
-			sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
+			//sql.generateJoin(OrdineAcqConsegnaBulk.class, OrdineAcqRigaBulk.class, "ordineAcqRiga", "ORDINE_ACQ_RIGA");
+			//sql.generateJoin(OrdineAcqRigaBulk.class, OrdineAcqBulk.class, "ordineAcq", "ORDINE_ACQ");
 			sql.generateJoin(OrdineAcqRigaBulk.class, Voce_ivaBulk.class, "voceIva", "VOCE_IVA");
 			sql.generateJoin(OrdineAcqBulk.class, TerzoBulk.class, "fornitore", "fornitore");
 
