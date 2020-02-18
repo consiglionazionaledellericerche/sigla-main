@@ -131,7 +131,6 @@ siopeplus:
 liquibase:
   bootstrap:
     esercizio: 2020
-    esercizio: 2019
 
 cnr:
   storage:
