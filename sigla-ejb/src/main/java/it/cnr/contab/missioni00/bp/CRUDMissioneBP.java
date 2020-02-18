@@ -38,7 +38,7 @@ import it.cnr.contab.missioni00.service.MissioniCMISService;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -2543,7 +2543,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                                 .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                                 .orElse("0")
                 ).stream().collect(
-                        Collectors.joining(StorageService.SUFFIX)
+                        Collectors.joining(StorageDriver.SUFFIX)
                 );
                 return missioniCMISService.createFolderMissioneSiglaIfNotPresent(primaryPath, missioneBulk);
             }
@@ -2564,7 +2564,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                                 .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                                 .orElse("0")
                 ).stream().collect(
-                        Collectors.joining(StorageService.SUFFIX)
+                        Collectors.joining(StorageDriver.SUFFIX)
                 );
                 try {
                     String path = null;

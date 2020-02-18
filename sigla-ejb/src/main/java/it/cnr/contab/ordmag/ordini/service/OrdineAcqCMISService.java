@@ -1,10 +1,27 @@
+/*
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package it.cnr.contab.ordmag.ordini.service;
 
 import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
@@ -67,7 +84,7 @@ public class OrdineAcqCMISService extends StoreService {
                             .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                             .orElse("0")
             ).stream().collect(
-                    Collectors.joining(StorageService.SUFFIX)
+                    Collectors.joining(StorageDriver.SUFFIX)
             );
             return createFolderRichiestaIfNotPresent(path, allegatoParentBulk);
 		} catch (ComponentException e) {

@@ -69,7 +69,7 @@ import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -1218,7 +1218,7 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 						.orElse("0"),
 				"Fattura " + allegatoParentBulk.getEsercizio().toString() + Utility.lpad(allegatoParentBulk.getPg_fattura_attiva().toString(), 10, '0')
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 

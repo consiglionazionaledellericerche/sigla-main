@@ -1,13 +1,27 @@
-# Tab. Riferimento Progetti
+============================
+Tab. Riferimento Progetti
+============================
 
-## UO Coordinatrice
-Indica la UO responsabile del progetto, che può rendere disponibile il progetto ad altre UO e può gestire e consultare le informazioni contabili del Progetto nella sua totalità. La UO Coordinatrice inserisce i dati dell'anagrafica del Progetto (compreso il Piano Economico se richiesto) e utilizza il Progetto in fase di Previsione. 
+.. _uo-coordinatrice:
+
+UO Coordinatrice
+================
+
+Indica la UO responsabile del progetto, che può rendere disponibile il progetto ad altre UO e può gestire e consultare le informazioni contabili del Progetto nella sua totalità. La UO Coordinatrice inserisce i dati dell'anagrafica del Progetto (compreso il Piano Economico se richiesto) e utilizza il Progetto in fase di Previsione.
 Le UO partecipanti vedranno solo i dati del Progetto relativi alla loro movimentazione (effettuata in fase di gestione).
 
-## Responsabile del Progetto
+.. _responsabile-progetto:
+
+Responsabile del Progetto
+=========================
+
 Il Responsabile indicato sul Progetto deve essere censito tra i Terzi di Sigla.
 
-## Tipo Finanziamento
+.. _tipo-finanziamento:
+
+Tipo Finanziamento
+==================
+
 Il tipo finanziamento qualifica le anagrafiche dei progetti in categorie omogenee e ne determinano l'utilizzo in fase di gestione. I tipi sono gestiti in un'anagrafica specifica e vengono censiti indicando, per ognuno di essi, alcune regole comportamentali che guideranno la gestione dei Progetti stessi.
 I tipi Finanziamento attualmente predefiniti sono:
 -	FOE;

@@ -20,10 +20,7 @@
     <extension qualifier="selenium2">
         <property name="browserCapabilities">chrome</property>
     </extension>
-    <container qualifier="thorntail" default="true">
+    <container qualifier="thorntail" default="true" mode="custom">
         <protocol type="Servlet 3.0"/>
-        <configuration>
-            <property name="javaVmArguments">-Dthorntail.http.port=8090</property>
-        </configuration>
     </container>
 </arquillian>

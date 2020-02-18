@@ -376,5 +376,18 @@ public class CRUDVar_stanz_resAction extends CRUDAction {
 		}catch(Throwable ex){
 			return handleException(context, ex);
 		}			
-	}	
+	}
+
+	public Forward doAnnullaApprovazione(ActionContext context) {
+		try {
+			fillModel(context);
+			CRUDVar_stanz_resBP bp = (CRUDVar_stanz_resBP)getBusinessProcess(context);
+			bp.annullaApprovazione(context);
+			setMessage(context,  it.cnr.jada.util.action.FormBP.WARNING_MESSAGE, "Operazione eseguita con successo");
+			return context.findDefaultForward();
+		}catch(Throwable ex){
+			return handleException(context, ex);
+		}
+
+	}
 }

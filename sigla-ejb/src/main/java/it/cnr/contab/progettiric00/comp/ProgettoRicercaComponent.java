@@ -1593,14 +1593,8 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			pdgModuloList.stream().collect(Collectors.groupingBy(Pdg_modulo_speseBulk::getEsercizio))
 			.entrySet().forEach(entryEse->{
 				try {
-					//Verifico se il PDG è chiuso. Per essere tale non deve esserci nemmeno un CDR nell'esercizio controllato
-					//con PDG_ESERCIZIO.STATO!='CG'
 			    	Pdg_esercizioHome pdgEsercizioHome = (Pdg_esercizioHome)getHome(userContext, Pdg_esercizioBulk.class);
-					SQLBuilder sqlPdgEsercizio = pdgEsercizioHome.createSQLBuilder();
-					sqlPdgEsercizio.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,entryEse.getKey());
-					sqlPdgEsercizio.addClause(FindClause.AND,"stato",SQLBuilder.NOT_EQUALS,Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR);
-			
-					if (sqlPdgEsercizio.executeExistsQuery(getConnection(userContext))) {
+					if (!pdgEsercizioHome.isAllPdgpProgettoChiusi(entryEse.getKey(), progetto.getPg_progetto())) {
 						Parametri_cnrHome parCnrhome = (Parametri_cnrHome)getHome(userContext, Parametri_cnrBulk.class);
 						Parametri_cnrBulk parCnrBulk = (Parametri_cnrBulk)parCnrhome.findByPrimaryKey(new Parametri_cnrBulk(entryEse.getKey()));
 
@@ -1722,14 +1716,8 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			pdgModuloGestList.stream().collect(Collectors.groupingBy(Pdg_modulo_spese_gestBulk::getEsercizio))
 			.entrySet().forEach(entryEse->{
 				try{
-					//Verifico se il PDG è chiuso. Per essere tale non deve esserci nemmeno un CDR nell'esercizio controllato
-					//con PDG_ESERCIZIO.STATO!='CG'
 			    	Pdg_esercizioHome pdgEsercizioHome = (Pdg_esercizioHome)getHome(userContext, Pdg_esercizioBulk.class);
-					SQLBuilder sqlPdgEsercizio = pdgEsercizioHome.createSQLBuilder();
-					sqlPdgEsercizio.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS,entryEse.getKey());
-					sqlPdgEsercizio.addClause(FindClause.AND,"stato",SQLBuilder.NOT_EQUALS,Pdg_esercizioBulk.STATO_CHIUSURA_GESTIONALE_CDR);
-				
-					if (sqlPdgEsercizio.executeExistsQuery(getConnection(userContext))) {
+					if (!pdgEsercizioHome.isAllPdgpProgettoChiusi(entryEse.getKey(), progetto.getPg_progetto())) {
 						entryEse.getValue().stream().collect(Collectors.groupingBy(el->el.getPdg_modulo_spese().getVoce_piano_economico()))
 							.entrySet().forEach(entryVpe->{
 								if (!progetto.getAllDetailsProgettoPianoEconomico().stream()

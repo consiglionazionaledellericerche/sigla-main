@@ -24,7 +24,7 @@ import java.util.stream.Stream;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.AllegatoFatturaBulk;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.spring.service.StorePath;
@@ -89,38 +89,15 @@ public class ContrattoService extends StoreService {
 
 	public String getCMISPath(ContrattoBulk contrattoBulk) {
 		return getBasePath(contrattoBulk).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 
 	public String getCMISPathFolderContratto(ContrattoBulk contrattoBulk) {
 		return Stream.concat(getBasePath(contrattoBulk).stream(), Stream.of(contrattoBulk.getCMISFolderName())).collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
-
-	public List<StorageObject> findContrattiDefinitivi() {
-		StringBuffer query = new StringBuffer("select appalti.cmis:objectId from sigla_contratti:appalti as appalti");
-		query.append(" join sigla_contratti_aspect:appalti as aspect on appalti.cmis:objectId = aspect.cmis:objectId");
-		query.append(" where ").append("aspect.sigla_contratti_aspect_appalti:stato = 'D'");
-		return super.search(query.toString());
-	}
-
-//	public void findContrattiDefinitiviWithoutFile() {
-//		List<StorageObject> nodes = findContrattiDefinitivi();
-//		for (StorageObject storageObject : nodes) {
-//			boolean exist = false;
-//			List<StorageObject> childs = getChildren(storageObject.getKey());
-//			for (StorageObject child : childs) {
-//				if (child.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(AllegatoContrattoDocumentBulk.CONTRATTO))
-//					exist = true;
-//			}
-//			if (!exist)
-//				logger.error(
-//						(String)storageObject.getPropertyValue("strorguo:codice")+" "+
-//								storageObject.getPropertyValue("sigla_contratti_aspect_appalti:progressivo"));
-//		}
-//	}
 
 	public List<StorageObject> findNodeAllegatiContratto(ContrattoBulk contratto) throws ApplicationException{
 		StorageObject folderContratto = getFolderContratto(contratto);
@@ -206,7 +183,7 @@ public class ContrattoService extends StoreService {
 				(String)allegato.getContrattoBulk().getTi_natura_contabileKeys().get(allegato.getContrattoBulk().getNatura_contabile()),
 				(String)allegato.getTi_allegatoKeys().get(allegato.getType())
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 
@@ -222,7 +199,7 @@ public class ContrattoService extends StoreService {
 							.orElse("0"),
 					allegato.getContrattoBulk().getCMISFolderName()
 			).stream().collect(
-					Collectors.joining(StorageService.SUFFIX)
+					Collectors.joining(StorageDriver.SUFFIX)
 			);
 		}
 		return Arrays.asList(
@@ -234,7 +211,7 @@ public class ContrattoService extends StoreService {
 						.orElse("0"),
 				allegato.getContrattoBulk().getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 
 	}

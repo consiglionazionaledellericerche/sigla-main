@@ -28,7 +28,7 @@ import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.slf4j.Logger;
@@ -80,7 +80,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                         + " CdR proponente "
                         + archiviaStampaPdgVariazioneBulk.getCd_centro_responsabilita() + ".pdf"
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
     }
 
@@ -88,10 +88,10 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         String basePath = Arrays.asList(
                 SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(), String.valueOf(esercizio)
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
         if (Optional.ofNullable(cds).isPresent()) {
-            basePath = basePath.concat(StorageService.SUFFIX)
+            basePath = basePath.concat(StorageDriver.SUFFIX)
                     .concat(cds.getCd_unita_organizzativa());
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
@@ -152,10 +152,10 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         String basePath = Arrays.asList(
                 SpringUtil.getBean(StorePath.class).getPathVariazioniPianoDiGestione(), String.valueOf(esercizio)
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
         if (Optional.ofNullable(cds).isPresent()) {
-            basePath = basePath.concat(StorageService.SUFFIX)
+            basePath = basePath.concat(StorageDriver.SUFFIX)
                     .concat(cds.getCd_unita_organizzativa());
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));

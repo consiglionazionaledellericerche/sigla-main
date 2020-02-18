@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
 <bulkInfo
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://contab.cnr.it/schema/SIGLA"
@@ -504,6 +521,53 @@
 		maxLength="6"
 		enabledOnEdit="false"
 		label="Numero Bolla Sc." />
+	<fieldProperty
+		name="findBollaScaricoMag"
+		property="bollaScaricoMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="BollaScaricoMag" />
+	<fieldProperty
+		name="cdCdsBollaSca"
+		property="bollaScaricoMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCdsBollaSca" />
+	<fieldProperty
+		name="cdMagazzinoBollaSca"
+		property="bollaScaricoMag.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdMagazzinoBollaSca" />
+	<fieldProperty
+		name="esercizioBollaSca"
+		property="bollaScaricoMag.esercizio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
+		label="Esercizio Bolla Scarico" />
+	<fieldProperty
+		name="cdNumeratoreBollaSca"
+		property="bollaScaricoMag.cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Numerat. Bolla Scarico" />
+	<fieldProperty
+		name="pgBollaSca"
+		property="bollaScaricoMag.pgBollaSca"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="Numero Bolla Scarico" />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -692,10 +756,10 @@
 		<columnFieldProperty
 			name="cdUnitaMisura" />
 		<columnFieldProperty
-			name="quantita" 
+			name="quantita"
 			columnStyle="text-align: right"/>
 		<columnFieldProperty
-			name="prezzoUnitario"  
+			name="prezzoUnitario"
 			columnStyle="text-align: right"/>
 		<columnFieldProperty
 			name="cdUop" />

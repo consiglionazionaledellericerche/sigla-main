@@ -29,4 +29,10 @@ public class Bene_servizioHome extends BulkHome {
 	public Bene_servizioHome(java.sql.Connection conn,PersistentCache persistentCache) {
 		super(Bene_servizioBulk.class,conn,persistentCache);
 	}
+	@Override
+	public SQLBuilder createSQLBuilder() {
+		SQLBuilder sql=super.createSQLBuilder();
+		sql.addClause(FindClause.AND, "fl_valido", SQLBuilder.EQUALS,"Y");
+		return sql;
+	}
 }

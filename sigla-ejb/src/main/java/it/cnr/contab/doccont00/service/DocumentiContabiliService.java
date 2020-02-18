@@ -103,7 +103,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     final String pattern = "dd MMMM YYYY' alle 'HH:mm:ss";
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
     @Autowired
-    private StorageService storageService;
+    private StorageDriver storageDriver;
     @Autowired
     private OrdinativiSiopePlusService ordinativiSiopePlusService;
     @Autowired
@@ -218,7 +218,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     public String getDocumentKey(StatoTrasmissione bulk, boolean fullNodeRef) {
         return Optional.ofNullable(bulk)
                 .map(statoTrasmissione -> Optional.ofNullable(getStorageObjectByPath(statoTrasmissione.getStorePath()
-                        .concat(StorageService.SUFFIX)
+                        .concat(storageDriver.SUFFIX)
                         .concat(statoTrasmissione.getCMISName())))
                         .map(storageObject ->
                                 fullNodeRef ? Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()))
@@ -228,7 +228,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public InputStream getStreamDocumento(StatoTrasmissione bulk) {
-        return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(StorageService.SUFFIX).concat(bulk.getCMISName())))
+        return Optional.ofNullable(getStorageObjectByPath(bulk.getStorePath().concat(storageDriver.SUFFIX).concat(bulk.getCMISName())))
                 .map(StorageObject::getKey)
                 .map(key -> getResource(key))
                 .orElse(null);
@@ -360,14 +360,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public String signDocuments(PdfSignApparence pdfSignApparence, String url) throws StorageException {
-        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS) && signDocumentsFromRepository) {
+        if (storageDriver.getStoreType().equals(StorageDriver.StoreType.CMIS) && signDocumentsFromRepository) {
             return signDocuments(new GsonBuilder().create().toJson(pdfSignApparence), url);
         } else {
             List<byte[]> bytes = Optional.ofNullable(pdfSignApparence)
                     .map(pdfSignApparence1 -> pdfSignApparence1.getNodes())
                     .map(list ->
                             list.stream()
-                                    .map(s -> storageService.getInputStream(s))
+                                    .map(s -> storageDriver.getInputStream(s))
                                     .map(inputStream -> {
                                         try {
                                             return IOUtils.toByteArray(inputStream);
@@ -397,7 +397,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                         apparence
                 );
                 for (int i = 0; i < pdfSignApparence.getNodes().size(); i++) {
-                    storageService.updateStream(
+                    storageDriver.updateStream(
                             pdfSignApparence.getNodes().get(i),
                             new ByteArrayInputStream(bytesSigned.get(i)),
                             MimeTypes.PDF.mimetype()
@@ -412,16 +412,16 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     public String signDocuments(SignP7M signP7M, String url, String path) throws StorageException {
-        if (storageService.getStoreType().equals(StorageService.StoreType.CMIS) && signDocumentsFromRepository) {
+        if (storageDriver.getStoreType().equals(StorageDriver.StoreType.CMIS) && signDocumentsFromRepository) {
             return signDocuments(new GsonBuilder().create().toJson(signP7M), url);
         } else {
-            StorageObject storageObject = storageService.getObject(signP7M.getNodeRefSource());
+            StorageObject storageObject = storageDriver.getObject(signP7M.getNodeRefSource());
             try {
                 final byte[] bytes = arubaSignServiceClient.pkcs7SignV2(
                         signP7M.getUsername(),
                         signP7M.getPassword(),
                         signP7M.getOtp(),
-                        IOUtils.toByteArray(storageService.getInputStream(signP7M.getNodeRefSource())));
+                        IOUtils.toByteArray(storageDriver.getInputStream(signP7M.getNodeRefSource())));
                 Map<String, Object> metadataProperties = new HashMap<>();
                 metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
                 metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
@@ -445,7 +445,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
     }
 
     private String signDocuments(String json, String url) throws StorageException {
-        return storageService.signDocuments(json, url);
+        return storageDriver.signDocuments(json, url);
     }
 
     private Distinta_cassiereBulk fetchDistinta_cassiereBulk(String identificativoFlusso) throws RemoteException, ComponentException {
@@ -770,7 +770,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         try {
             List<String> nodes = new ArrayList<String>();
             StorageObject distintaStorageObject = getStorageObjectByPath(
-                    distinta.getStorePath().concat(StorageService.SUFFIX).concat(distinta.getCMISName()));
+                    distinta.getStorePath().concat(storageDriver.SUFFIX).concat(distinta.getCMISName()));
 
             nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
 

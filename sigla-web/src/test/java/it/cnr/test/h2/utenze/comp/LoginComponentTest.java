@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -15,18 +15,16 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.utenze.comp;
+package it.cnr.test.h2.utenze.comp;
 
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
-import it.cnr.contab.util.Deployments;
-import it.cnr.contab.util.TestUserContext;
 import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.test.h2.DeploymentsH2;
+import it.cnr.test.util.TestUserContext;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
-import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import javax.ejb.EJB;
 import java.util.Optional;
@@ -34,8 +32,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-@RunWith(Arquillian.class)
-public class LoginComponentTest extends Deployments {
+public class LoginComponentTest extends DeploymentsH2 {
     @EJB
     private CRUDComponentSession crudComponentSession;
     @EJB

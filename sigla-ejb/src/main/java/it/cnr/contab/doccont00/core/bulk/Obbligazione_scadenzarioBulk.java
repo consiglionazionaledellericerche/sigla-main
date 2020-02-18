@@ -193,7 +193,7 @@ public ObbligazioneBulk getObbligazione() {
 /**
  * @return it.cnr.jada.bulk.BulkCollection
  */
-public it.cnr.jada.bulk.BulkList getObbligazione_scad_voceColl() {
+public it.cnr.jada.bulk.BulkList<Obbligazione_scad_voceBulk> getObbligazione_scad_voceColl() {
 	return obbligazione_scad_voceColl;
 }
 public java.lang.Long getPg_doc_passivo() {

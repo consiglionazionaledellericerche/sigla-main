@@ -18,7 +18,7 @@
 package it.cnr.contab.incarichi00.bulk.storage;
 
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;

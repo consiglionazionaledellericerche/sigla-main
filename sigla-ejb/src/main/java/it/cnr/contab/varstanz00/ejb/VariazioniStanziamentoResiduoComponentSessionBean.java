@@ -80,7 +80,7 @@ public class VariazioniStanziamentoResiduoComponentSessionBean extends CRUDCompo
 		} catch(Error e) {
 			throw uncaughtError(param0,componentObj,e);
 		}
-	}	
+	}
 	public it.cnr.jada.bulk.OggettoBulk statoPrecedente(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
@@ -304,6 +304,24 @@ public class VariazioniStanziamentoResiduoComponentSessionBean extends CRUDCompo
 		pre_component_invocation(param0,componentObj);
 		try {
 			it.cnr.contab.progettiric00.core.bulk.ProgettoBulk result = ((VariazioniStanziamentoResiduoComponent)componentObj).getProgettoLineaAttivita(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public it.cnr.jada.bulk.OggettoBulk annullaApprovazione(it.cnr.jada.UserContext param0,it.cnr.jada.bulk.OggettoBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			it.cnr.jada.bulk.OggettoBulk result = ((VariazioniStanziamentoResiduoComponent)componentObj).annullaApprovazione(param0,param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

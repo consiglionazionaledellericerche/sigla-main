@@ -25,6 +25,7 @@ import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -69,11 +70,17 @@ public class PrintService implements InitializingBean {
 	public Report executeReport(UserContext userContext, Print_spoolerBulk printSpooler) throws IOException, ComponentException{
 		HttpClient httpclient = HttpClientBuilder.create().build();
 		HttpPost method = null;
-		try{
-			if (StringUtils.isNotEmpty( getServerPrint()))
-				method = new HttpPost(getServerPrint());
-			else
-				method = new HttpPost(offlineReportComponent.getLastServerActive(userContext));
+		try {
+			method = new HttpPost(
+					Optional.ofNullable(getServerPrint())
+						.orElseGet(() -> {
+							try {
+								return offlineReportComponent.getLastServerActive(userContext);
+							} catch (ComponentException|RemoteException e) {
+								throw new DetailedRuntimeException(e);
+							}
+						})
+			);
 	        method.addHeader("Accept-Language", Locale.getDefault().toString());
 	        method.setHeader("Content-Type", "application/json;charset=UTF-8");
 	        HttpEntity requestEntity = new ByteArrayEntity(gson.toJson(printSpooler).getBytes());

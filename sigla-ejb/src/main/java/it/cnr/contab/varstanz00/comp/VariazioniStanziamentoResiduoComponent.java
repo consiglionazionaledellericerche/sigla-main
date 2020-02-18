@@ -76,6 +76,7 @@ import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
+import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.comp.CRUDPdgVariazioneGestionaleComponent;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
@@ -417,67 +418,101 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(userContext, var_stanz_res_riga.getProgetto());
 				getHomeCache(userContext).fetchAll(userContext);
 				if (progetto.isPianoEconomicoRequired()) {
-					Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
-			    	SQLBuilder assSql = assHome.createSQLBuilder();
-			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,var_stanz_res_riga.getProgetto().getPg_progetto());
-			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
-	
-					List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
-					List<Progetto_rimodulazione_voceBulk> listRim = new BulkList<Progetto_rimodulazione_voceBulk>();
-					if (Optional.ofNullable(var_stanz_res_riga.getVar_stanz_res().getProgettoRimodulazione())
-							.filter(rim->rim.getPg_progetto().equals(var_stanz_res_riga.getProgetto().getPg_progetto()))
+					/*
+						se il progetto è attivo (anno fine del progetto maggiore o uguale all'anno di esercizio) occorre sempre controllare le voci associate al piano economico del progetto
+					 */
+					if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+							.filter(annoFine -> annoFine.compareTo(CNRUserContext.getEsercizio(userContext)) >= 0)
 							.isPresent()) {
-						Progetto_rimodulazioneHome rimHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
-						listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(var_stanz_res_riga.getVar_stanz_res().getProgettoRimodulazione()));
-					}
+						Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome) getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+						SQLBuilder assSql = assHome.createSQLBuilder();
+						assSql.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", SQLBuilder.EQUALS, var_stanz_res_riga.getProgetto().getPg_progetto());
+						assSql.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO", SQLBuilder.EQUALS, var_stanz_res_riga.getVar_stanz_res().getEsercizio_residuo());
 
-					if (list.isEmpty() && listRim.isEmpty())
-						sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
-					else {
+						List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
+						List<Progetto_rimodulazione_voceBulk> listRim = new BulkList<Progetto_rimodulazione_voceBulk>();
+						if (Optional.ofNullable(var_stanz_res_riga.getVar_stanz_res().getProgettoRimodulazione())
+								.filter(rim -> rim.getPg_progetto().equals(var_stanz_res_riga.getProgetto().getPg_progetto()))
+								.isPresent()) {
+							Progetto_rimodulazioneHome rimHome = (Progetto_rimodulazioneHome) getHome(userContext, Progetto_rimodulazioneBulk.class);
+							listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(var_stanz_res_riga.getVar_stanz_res().getProgettoRimodulazione()));
+						}
+
+						if (list.isEmpty() && listRim.isEmpty())
+							sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, -100);
+						else {
+							//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
+							//all'utente di effettuare una variazione negativa
+							List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
+									.cercaSaldoVoce(progetto.getPg_progetto()).stream()
+									.filter(el -> el.getAssestato().compareTo(BigDecimal.ZERO) > 0 ||
+											el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0)
+									.collect(Collectors.toList());
+
+							sql.openParenthesis(FindClause.AND);
+							for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+								//Se la voce è stata eliminata nella rimodulazione la stessa non viene proposta
+								if (listRim.stream().filter(voceRim -> voceRim.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
+										.filter(Progetto_rimodulazione_voceBulk::isTiOperazioneEliminato)
+										.filter(voceRim -> !vociMovimentate.stream()
+												.filter(voceMov -> voceMov.getEsercizio_voce().equals(voceRim.getElementoVoce().getEsercizio()))
+												.filter(voceMov -> voceMov.getTi_appartenenza().equals(voceRim.getElementoVoce().getTi_appartenenza()))
+												.filter(voceMov -> voceMov.getTi_gestione().equals(voceRim.getElementoVoce().getTi_gestione()))
+												.filter(voceMov -> voceMov.getCd_elemento_voce().equals(voceRim.getElementoVoce().getCd_elemento_voce()))
+												.findFirst().isPresent())
+										.findFirst().isPresent())
+									continue;
+								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+								if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
+									sql.openParenthesis(FindClause.OR);
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+									sql.closeParenthesis();
+								}
+							}
+							//Aggiungo le voci di bilancio inserite nella rimodulazione
+							for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+								if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
+									sql.openParenthesis(FindClause.OR);
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+									sql.closeParenthesis();
+								}
+							}
+							sql.closeParenthesis();
+						}
+					} else {
+						/*
+							Progetto scaduto.
+							1) devo poter movimentare solo le voci di bilancio movimentate e non associate che hanno un assestato da spostare
+						*/
 						//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 						//all'utente di effettuare una variazione negativa
-						List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHome(userContext, V_saldi_voce_progettoBulk.class))
+						List<V_saldi_voce_progettoBulk> vociConDisponibilita = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
 								.cercaSaldoVoce(progetto.getPg_progetto()).stream()
-								.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
-										el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
+								.filter(el -> el.getDispAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0 ||
+										el.getDispAssestatoCofinanziamento().compareTo(BigDecimal.ZERO) > 0)
 								.collect(Collectors.toList());
 
-						sql.openParenthesis(FindClause.AND);
-						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
-							//Se la voce è stata eliminata nella rimodulazione la stessa non viene proposta
-							if (listRim.stream().filter(voceRim->voceRim.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
-									.filter(Progetto_rimodulazione_voceBulk::isTiOperazioneEliminato)
-									.filter(voceRim->!vociMovimentate.stream()
-											.filter(voceMov->voceMov.getEsercizio_voce().equals(voceRim.getElementoVoce().getEsercizio()))
-											.filter(voceMov->voceMov.getTi_appartenenza().equals(voceRim.getElementoVoce().getTi_appartenenza()))
-											.filter(voceMov->voceMov.getTi_gestione().equals(voceRim.getElementoVoce().getTi_gestione()))
-											.filter(voceMov->voceMov.getCd_elemento_voce().equals(voceRim.getElementoVoce().getCd_elemento_voce()))
-											.findFirst().isPresent())
-									.findFirst().isPresent())
-								continue;
-							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
-							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
+						if (vociConDisponibilita.isEmpty())
+							sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, -100);
+						else {
+							sql.openParenthesis(FindClause.AND);
+							vociConDisponibilita.stream().forEach(voceNew->{
 								sql.openParenthesis(FindClause.OR);
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
+								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, var_stanz_res_riga.getEsercizio());
+								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 								sql.closeParenthesis();
-							}
+							});
+							sql.closeParenthesis();
 						}
-						//Aggiungo le voci di bilancio inserite nella rimodulazione
-						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
-							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
-							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
-								sql.openParenthesis(FindClause.OR);
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
-								sql.closeParenthesis();
-							}
-						}
-						sql.closeParenthesis();
 					}
 				}
 			}
@@ -486,6 +521,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 			throw new ComponentException(e);
 		}
 	}
+
 	public SQLBuilder selectAssestatoResiduoByClause (UserContext userContext,Var_stanz_resBulk var_stanz_res, V_assestato_residuoBulk assestato_residuo, CompoundFindClause clause) throws ComponentException, PersistencyException{	
 		SQLBuilder sql = getHome(userContext, V_assestato_residuoBulk.class).createSQLBuilder();
 		sql.addClause( clause );
@@ -720,10 +756,10 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 	private Voce_f_saldi_cdr_lineaBulk allineaSaldi(UserContext userContext,
 			Var_stanz_res_rigaBulk varRiga) throws PersistencyException,
 			ComponentException, ApplicationException, RemoteException {
-		return allineaSaldi(userContext, varRiga, false);
+		return allineaSaldi(userContext, varRiga, false, false);
 	}
 	private Voce_f_saldi_cdr_lineaBulk allineaSaldi(UserContext userContext,
-			Var_stanz_res_rigaBulk varRiga, Boolean sottraiImportoDaVariazioneEsistente) throws PersistencyException,
+			Var_stanz_res_rigaBulk varRiga, Boolean sottraiImportoDaVariazioneEsistente, boolean isByAnnullaApprovazione) throws PersistencyException,
 			ComponentException, ApplicationException, RemoteException {
 		Voce_f_saldi_cdr_lineaBulk saldo = new Voce_f_saldi_cdr_lineaBulk(varRiga.getEsercizio(), 
 		                                                                  varRiga.getEsercizio_res(), 
@@ -734,16 +770,25 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 																		  varRiga.getCd_voce()!=null?varRiga.getCd_voce():varRiga.getCd_elemento_voce());
 		Voce_f_saldi_cdr_lineaBulk saldi = (Voce_f_saldi_cdr_lineaBulk) getHome(userContext, Voce_f_saldi_cdr_lineaBulk.class).findByPrimaryKey(saldo);
 		if (saldi == null){
+			if (isByAnnullaApprovazione)
+				throw new ApplicationRuntimeException("Attenzione! Esiste un disallineamento tra la variazione e la registrazione dei saldi. Non è possibile procedere riportarla allo stato precedente.");
 			saldo.setToBeCreated();
 			saldo.inizializzaSommeAZero();
 			saldo.setCd_elemento_voce(varRiga.getElemento_voce().getCd_elemento_voce());
 			saldi = (Voce_f_saldi_cdr_lineaBulk)super.creaConBulk(userContext,saldo);
 		}
 		if (sottraiImportoDaVariazioneEsistente){
+			if (isByAnnullaApprovazione)
+				throw new ApplicationRuntimeException("Attenzione! Errore di chiamata del metodo. Contattare il supporto sitemi informativi. Non è possibile procedere riportarla allo stato precedente.");
 			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
 				saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
 			else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
 				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
+		} else if (isByAnnullaApprovazione) {
+			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
+				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
+			else if (varRiga.getIm_variazione().compareTo(Utility.ZERO) > 0)
+				saldi.setVar_piu_stanz_res_imp(saldi.getVar_piu_stanz_res_imp().subtract(varRiga.getIm_variazione().abs()));
 		} else {
 			if (varRiga.getIm_variazione().compareTo(Utility.ZERO) < 0)
 				saldi.setVar_meno_stanz_res_imp(saldi.getVar_meno_stanz_res_imp().add(varRiga.getIm_variazione().abs()));
@@ -780,7 +825,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 				                                                          saldi.getCd_linea_attivita(),
 				                                                          new Voce_fBulk( saldi.getCd_voce(), saldi.getEsercizio(), saldi.getTi_appartenenza(), saldi.getTi_gestione()),
 				                                                          saldi.getEsercizio_res(),
-				                                                          varRiga.getIm_variazione().negate(),
+				                                                          isByAnnullaApprovazione?varRiga.getIm_variazione():varRiga.getIm_variazione().negate(),
 				                                                          saldi);
 		return saldi;
 	}
@@ -1229,7 +1274,7 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					rigaCloned.setCd_voce(riga.getCd_voce());
 					rigaCloned.setLinea_di_attivita(wp);
 					rigaCloned.setIm_variazione(totaleImporto.multiply(new BigDecimal(-1)));
-					saldi = allineaSaldi(userContext, rigaCloned, true);
+					saldi = allineaSaldi(userContext, rigaCloned, true, false);
 					super.modificaConBulk(userContext,saldi);
 					primoGiro = false;
 				}
@@ -1694,5 +1739,38 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 		if (clause != null) 
 			sql.addClause(clause);
 		return sql; 
-	}	
+	}
+
+	public it.cnr.jada.bulk.OggettoBulk annullaApprovazione(UserContext userContext, it.cnr.jada.bulk.OggettoBulk oggettoBulk) throws ComponentException{
+		try {
+			Var_stanz_resBulk varStanzRes = (Var_stanz_resBulk)oggettoBulk;
+
+			if (varStanzRes.isVariazioneRimodulazioneProgetto())
+				throw new ApplicationRuntimeException("La variazione è collegata ad una rimodulazione di progetto. Non è possibile riportarla allo stato precedente.");
+
+			//Verifico se esiste una variazione generata
+			Var_bilancioHome varHome =  (Var_bilancioHome)getHome(userContext, Var_bilancioBulk.class);
+			SQLBuilder sql = varHome.createSQLBuilder();
+			sql.addClause(FindClause.AND, "esercizio_var_stanz_res", SQLBuilder.EQUALS, varStanzRes.getEsercizio());
+			sql.addClause(FindClause.AND, "pg_var_stanz_res", SQLBuilder.EQUALS, varStanzRes.getPg_variazione());
+
+			if (sql.executeExistsQuery(getConnection(userContext)))
+				throw new ApplicationRuntimeException("La variazione è collegata ad una variazione di bilancio. Non è possibile riportarla allo stato precedente.");
+
+			varStanzRes.setStato(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA);
+			varStanzRes.setDt_approvazione(null);
+			varStanzRes.setToBeUpdated();
+			varStanzRes = (Var_stanz_resBulk)super.modificaConBulk(userContext, varStanzRes);
+
+			Var_stanz_resHome testataHome = (Var_stanz_resHome)getHome(userContext, Var_stanz_resBulk.class);
+			for (Iterator righe = testataHome.findAllVariazioniRiga(varStanzRes).iterator();righe.hasNext();){
+				Var_stanz_res_rigaBulk varRiga = (Var_stanz_res_rigaBulk)righe.next();
+				Voce_f_saldi_cdr_lineaBulk saldi = allineaSaldi(userContext, varRiga, false, true);
+				super.modificaConBulk(userContext,saldi);
+			}
+			return varStanzRes;
+		} catch (Throwable e) {
+			throw handleException(e);
+		}
+	}
 }
