@@ -28,13 +28,13 @@
     </div>
 </a>
 <!-- Right aligned menu below button -->
-<h1 class="md-source__repository">Scarica</h1>
-<button id="demo-menu-lower-right"
-        class="mdl-button mdl-js-button mdl-button--icon button-download">
+<button id="menu-download"
+        class="mdl-button mdl-js-button mdl-button--icon">
     <i class="material-icons">more_vert</i>
 </button>
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-    for="demo-menu-lower-right">
-    <a class="mdl-menu__item" href="Manuale-SIGLA.pdf">pdf</a>
-    <a class="mdl-menu__item" href="Manuale-SIGLA.epub">epub</a>
+    for="menu-download">
+    <a target="_blank" class="mdl-menu__item" href="{{pathto( 'Manuale-SIGLA.pdf', 1 )}}">pdf</a>
+    <a target="_blank" class="mdl-menu__item mdl-menu__item--full-bleed-divider" href="{{pathto( 'Manuale-SIGLA.epub', 1 )}}">epub</a>
+    <a class="mdl-menu__item" href="{{pathto( 'CHANGELOG')}}">Changelog</a>
 </ul>
