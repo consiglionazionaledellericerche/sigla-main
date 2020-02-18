@@ -70,4 +70,5 @@ public interface Configurazione_cnrComponentSession extends it.cnr.jada.ejb.Gene
 
     String getCdsSAC(UserContext userContext, Integer esercizio) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 
+    Boolean isEconomicaPatrimonialeAttivaImputazioneManuale(UserContext userContext) throws ComponentException, java.rmi.RemoteException;
 }

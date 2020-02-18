@@ -504,6 +504,53 @@
 		inputSize="22"
 		maxLength="22"
 		enabledOnEdit="false"
+		label="Es. Bolla Sc." />
+	<fieldProperty
+		name="cdNumeratoreBollaSca"
+		property="bollaScaricoMag.cdNumeratoreMag"
+		inputType="TEXT"
+		inputSize="3"
+		maxLength="3"
+		enabledOnEdit="false"
+		label="Numerat. Bolla Sc." />
+	<fieldProperty
+		name="pgBollaSca"
+		property="bollaScaricoMag.pgBollaSca"
+		inputType="TEXT"
+		inputSize="6"
+		maxLength="6"
+		enabledOnEdit="false"
+		label="Numero Bolla Sc." />
+	<fieldProperty
+		name="findBollaScaricoMag"
+		property="bollaScaricoMag"
+		inputType="searchtool"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="BollaScaricoMag" />
+	<fieldProperty
+		name="cdCdsBollaSca"
+		property="bollaScaricoMag.cdCds"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		enabledOnEdit="false"
+		label="cdCdsBollaSca" />
+	<fieldProperty
+		name="cdMagazzinoBollaSca"
+		property="bollaScaricoMag.cdMagazzino"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnEdit="false"
+		label="cdMagazzinoBollaSca" />
+	<fieldProperty
+		name="esercizioBollaSca"
+		property="bollaScaricoMag.esercizio"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		enabledOnEdit="false"
 		label="Esercizio Bolla Scarico" />
 	<fieldProperty
 		name="cdNumeratoreBollaSca"
@@ -709,10 +756,10 @@
 		<columnFieldProperty
 			name="cdUnitaMisura" />
 		<columnFieldProperty
-			name="quantita" 
+			name="quantita"
 			columnStyle="text-align: right"/>
 		<columnFieldProperty
-			name="prezzoUnitario"  
+			name="prezzoUnitario"
 			columnStyle="text-align: right"/>
 		<columnFieldProperty
 			name="cdUop" />

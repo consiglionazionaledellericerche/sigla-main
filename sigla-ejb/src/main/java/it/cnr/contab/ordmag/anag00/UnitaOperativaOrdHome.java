@@ -99,7 +99,7 @@ public class UnitaOperativaOrdHome extends BulkHome {
 		return sql;
 	}
 	
-	@SuppressWarnings("unchecked")
+
 	public List<UnitaOperativaOrdBulk> findUnitaOperativeAbilitate(UserContext userContext, String tipoOperazione) throws PersistencyException {
 		return this.fetchAll(selectUnitaOperativeAbilitateByClause(userContext, new CompoundFindClause(), tipoOperazione));
 	}	

@@ -201,7 +201,7 @@
 	<columnFieldProperty
 		name="dsBeneServizio" />	
 	<columnFieldProperty
-		name="quantita" 
+		name="quantita"
 		inputType="ROTEXT"
 		label="Q.tà" />
 

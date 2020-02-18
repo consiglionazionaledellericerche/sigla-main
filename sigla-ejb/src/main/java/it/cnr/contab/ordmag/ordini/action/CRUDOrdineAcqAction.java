@@ -35,6 +35,7 @@ import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bp.CRUDConfigAnagContrattoBP;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
@@ -191,6 +192,7 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             riga.setUnitaMisura(null);
             riga.setCoefConv(null);
             riga.setDspTipoConsegna(null);
+            riga.setDspConto(null);
             riga.setTipoConsegnaDefault(null);
             riga.setVoceIva(null);
             return context.findDefaultForward();
@@ -220,6 +222,15 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             }
             if (bene.getVoce_iva() != null) {
                 riga.setVoceIva(bene.getVoce_iva());
+            }
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
+            if (bene.getCategoria_gruppo() != null) {
+                try {
+                    ContoBulk conto = bp.recuperoContoDefault(context, bene.getCategoria_gruppo());
+                    riga.setDspConto(conto);
+                } catch (BusinessProcessException e) {
+                    handleException(context, e);
+                }
             }
         }
         return context.findDefaultForward();
@@ -323,6 +334,7 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
         }
     }
 
+
     public Forward doBlankSearchFindMagazzino(ActionContext context, OrdineAcqConsegnaBulk cons) throws java.rmi.RemoteException {
 
         try {
@@ -341,6 +353,73 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             return handleException(context, e);
         }
     }
+
+    public Forward doBlankSearchCercaConto(ActionContext context, OrdineAcqConsegnaBulk cons) throws java.rmi.RemoteException {
+
+        try {
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
+            cons.setContoBulk(new ContoBulk());
+            OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) bp.getRighe().getModel();
+            if (riga.getRigheConsegnaColl().size() == 1) {
+                riga.setDspConto(cons.getContoBulk());
+            }
+            return context.findDefaultForward();
+
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+
+    public Forward doBringBackSearchCercaConto(ActionContext context, OrdineAcqConsegnaBulk cons, ContoBulk contoBulk) throws java.rmi.RemoteException {
+
+        try {
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
+            cons.setContoBulk(contoBulk);
+            OrdineAcqRigaBulk riga = (OrdineAcqRigaBulk) bp.getRighe().getModel();
+            if (riga.getRigheConsegnaColl().size() == 1) {
+                riga.setDspConto(cons.getContoBulk());
+            }
+            return context.findDefaultForward();
+
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+
+    public Forward doBlankSearchCercaDspConto(ActionContext context, OrdineAcqRigaBulk riga) throws java.rmi.RemoteException {
+
+        try {
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
+            riga.setDspConto(new ContoBulk());
+            for (java.util.Iterator j = riga.getRigheConsegnaColl().iterator(); j.hasNext(); ) {
+                OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk) j.next();
+                consegna.setContoBulk(riga.getDspConto());
+                consegna.setToBeUpdated();
+            }
+            return context.findDefaultForward();
+
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+
+    public Forward doBringBackSearchCercaDspConto(ActionContext context, OrdineAcqRigaBulk rigaBulk, ContoBulk contoBulk) throws java.rmi.RemoteException {
+
+        try {
+            CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP) context.getBusinessProcess();
+            rigaBulk.setDspConto(contoBulk);
+            for (java.util.Iterator j = rigaBulk.getRigheConsegnaColl().iterator(); j.hasNext(); ) {
+                OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk) j.next();
+                consegna.setContoBulk(rigaBulk.getDspConto());
+                consegna.setToBeUpdated();
+            }
+            return context.findDefaultForward();
+
+        } catch (Exception e) {
+            return handleException(context, e);
+        }
+    }
+
 
     public Forward doBringBackSearchFindUnitaOperativaOrdDest(ActionContext context,
                                                               OrdineAcqRigaBulk riga,
@@ -1859,6 +1938,9 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             consegna.setRiga(riga.getRiga());
             consegna.setTipoConsegna(riga.getDspTipoConsegna());
             consegna.setDtPrevConsegna(riga.getDspDtPrevConsegna());
+            consegna.setContoBulk(riga.getDspConto());
+            consegna.setMagazzino(riga.getDspMagazzino());
+            consegna.setLuogoConsegnaMag(riga.getDspLuogoConsegna());
             riga.addToRigheConsegnaColl(consegna);
         }
         return riga;

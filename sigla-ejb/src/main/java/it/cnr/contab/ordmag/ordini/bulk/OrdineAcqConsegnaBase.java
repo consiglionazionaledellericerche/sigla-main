@@ -66,14 +66,33 @@ public class OrdineAcqConsegnaBase extends OrdineAcqConsegnaKey implements Keyed
 
 //    CD_MAGAZZINO VARCHAR(10)
 	private java.lang.String cdMagazzino;
- 
-//    CD_UOP_DEST VARCHAR(30)
+
+	public String getCdVoceEp() {
+		return cdVoceEp;
+	}
+
+	public void setCdVoceEp(String cdVoceEp) {
+		this.cdVoceEp = cdVoceEp;
+	}
+
+	public Integer getEsercizioEp() {
+		return esercizioEp;
+	}
+
+	public void setEsercizioEp(Integer esercizioEp) {
+		this.esercizioEp = esercizioEp;
+	}
+
+	//    CD_UOP_DEST VARCHAR(30)
 	private java.lang.String cdUopDest;
  
 //    CD_CDS_OBBL VARCHAR(30)
 	private java.lang.String cdCdsObbl;
- 
-//    ESERCIZIO_OBBL DECIMAL(4,0)
+
+	private java.lang.String cdVoceEp;
+
+	private java.lang.Integer esercizioEp;
+
 	private java.lang.Integer esercizioObbl;
  
 //    ESERCIZIO_ORIG_OBBL DECIMAL(4,0)

@@ -32,7 +32,6 @@ import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
-import org.apache.poi.hssf.record.formula.functions.Find;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -163,6 +162,7 @@ public class RuoloComponent extends it.cnr.jada.comp.CRUDComponent implements IC
             Collection result = ruoloHome.findRuolo_accessi(ruolo);
             for (java.util.Iterator i = result.iterator(); i.hasNext(); ) {
                 Ruolo_accessoBulk ra = (Ruolo_accessoBulk) i.next();
+                ra.setAccesso((AccessoBulk)  getHomeCache(userContext).getHome(AccessoBulk.class).findByPrimaryKey(new AccessoKey(ra.getAccesso().getCd_accesso())));
                 ruolo.addToRuolo_accessi(ra);
             }
 
