@@ -88,4 +88,9 @@ public SQLBuilder selectRiapre_a_contoByClause( Voce_epBulk bulk,it.cnr.jada.bul
 		sql.addSQLClause("AND", "ASS_CATGRP_INVENT_VOCE_EP.CD_CATEGORIA_GRUPPO", SQLBuilder.EQUALS, cat.getCd_categoria_gruppo());
 		return sql;
 	}
+	public SQLBuilder selectContoDefaultAssociatoACategoria(CompoundFindClause clause, Categoria_gruppo_inventBulk cat) throws java.lang.reflect.InvocationTargetException,IllegalAccessException, it.cnr.jada.persistency.PersistencyException {
+		SQLBuilder sql = selectContiAssociatiACategoria(clause, cat);
+		sql.addSQLClause("AND", "ASS_CATGRP_INVENT_VOCE_EP.FL_DEFAULT", SQLBuilder.EQUALS, "Y");
+		return sql;
+	}
 }

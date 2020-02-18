@@ -1,11 +1,5 @@
 	package it.cnr.contab.ordmag.ordini.comp;
 
-	import java.io.Serializable;
-	import java.math.BigDecimal;
-	import java.rmi.RemoteException;
-	import java.sql.Timestamp;
-	import java.util.*;
-
 	import it.cnr.contab.anagraf00.core.bulk.*;
 	import it.cnr.contab.config00.bulk.CigBulk;
 	import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -15,36 +9,21 @@
 	import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 	import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 	import it.cnr.contab.config00.contratto.bulk.Procedure_amministrativeBulk;
+	import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
+	import it.cnr.contab.config00.pdcep.bulk.ContoHome;
 	import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 	import it.cnr.contab.config00.sto.bulk.*;
 	import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 	import it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable;
 	import it.cnr.contab.docamm00.ejb.CategoriaGruppoInventComponentSession;
-	import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
-	import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
-	import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_voceBulk;
-	import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
-	import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
-	import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
-	import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaHome;
+	import it.cnr.contab.docamm00.tabrif.bulk.*;
 	import it.cnr.contab.doccont00.comp.DateServices;
 	import it.cnr.contab.doccont00.comp.DocumentoContabileComponentSession;
-	import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
-	import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
-	import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileHome;
-	import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
-	import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contHome;
-	import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
-	import it.cnr.contab.doccont00.core.bulk.ObbligazioneHome;
-	import it.cnr.contab.doccont00.core.bulk.ObbligazioneResBulk;
-	import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
-	import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioHome;
-	import it.cnr.contab.doccont00.core.bulk.OptionRequestParameter;
+	import it.cnr.contab.doccont00.core.bulk.*;
 	import it.cnr.contab.doccont00.ejb.ObbligazioneAbstractComponentSession;
 	import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 	import it.cnr.contab.ordmag.anag00.*;
 	import it.cnr.contab.ordmag.ejb.NumeratoriOrdMagComponentSession;
-	import it.cnr.contab.ordmag.magazzino.bulk.*;
 	import it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP;
 	import it.cnr.contab.ordmag.ordini.bulk.*;
 	import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
@@ -60,15 +39,15 @@
 	import it.cnr.jada.comp.ICRUDMgr;
 	import it.cnr.jada.persistency.IntrospectionException;
 	import it.cnr.jada.persistency.PersistencyException;
-	import it.cnr.jada.persistency.sql.CompoundFindClause;
-	import it.cnr.jada.persistency.sql.FindClause;
-	import it.cnr.jada.persistency.sql.LoggableStatement;
-	import it.cnr.jada.persistency.sql.Query;
-	import it.cnr.jada.persistency.sql.SQLBuilder;
+	import it.cnr.jada.persistency.sql.*;
 	import it.cnr.jada.util.RemoteIterator;
 	import it.cnr.jada.util.ejb.EJBCommonServices;
 
-	import static java.lang.System.out;
+	import java.io.Serializable;
+	import java.lang.reflect.InvocationTargetException;
+	import java.math.BigDecimal;
+	import java.rmi.RemoteException;
+	import java.util.*;
 
 	public class OrdineAcqComponent
 		extends it.cnr.jada.comp.CRUDComponent
@@ -232,6 +211,7 @@
 		}
 
 
+
 		private void validaOrdine(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine) throws it.cnr.jada.comp.ComponentException{
 			controlloEsistenzaRigheOrdine(ordine);
 			for (java.util.Iterator i= ordine.getRigheOrdineColl().iterator(); i.hasNext();) {
@@ -277,6 +257,7 @@
 			if (consegna.getLuogoConsegnaMag() == null || consegna.getLuogoConsegnaMag().getCdLuogoConsegna() == null){
 				throw new ApplicationException ("E' necessario indicare il luogo di consegna.");
 			}
+
 			if (!consegna.isConsegnaMagazzino()){
 				if (consegna.getCdUopDest() == null){
 					throw new ApplicationException("E' necessario indicare l'unità operativa di destinazione per la riga "+consegna.getRiga()+".");
@@ -299,7 +280,13 @@
 			if (consegna.getDtPrevConsegna() != null && consegna.getDtPrevConsegna().before(consegna.getOrdineAcqRiga().getOrdineAcq().getDataOrdine())){
 				throw new ApplicationException("La data di prevista consegna non può essere precedente alla data dell'ordine per la riga "+consegna.getRiga()+".");
 			}
-
+			try {
+				if (Utility.createConfigurazioneCnrComponentSession().isEconomicaPatrimonialeAttivaImputazioneManuale(userContext) && (consegna.getContoBulk() == null || consegna.getContoBulk().getCd_voce_ep() == null)){
+					throw new ApplicationException ("E' necessario indicare il conto di Economico Patrimoniale.");
+				}
+			} catch (RemoteException e) {
+				throw new ComponentException(e);
+			}
 		}
 
 		private void controlloCongruenzaFornitoreContratto(it.cnr.jada.UserContext userContext, OrdineAcqBulk ordine)
@@ -581,6 +568,7 @@
 			riga.setDspQuantita(cons.getQuantita());
 			riga.setDspTipoConsegna(cons.getTipoConsegna());
 			riga.setDspUopDest(cons.getUnitaOperativaOrd());
+			riga.setDspConto(cons.getContoBulk());
 		}
 	}
 
@@ -2065,65 +2053,65 @@
 		*/
 		return sql;
 	}
-	public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine, int flag) throws ComponentException
-	{
-		if (ordine.getContratto() != null && ordine.getContratto().getPg_contratto() != null){
-		  try {
-			  ContrattoHome contrattoHome = (ContrattoHome)getHome(aUC, ContrattoBulk.class);
-			  SQLBuilder sql = contrattoHome.calcolaTotOrdini(aUC,ordine.getContratto());
-			  BigDecimal totale = BigDecimal.ZERO;
+		public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine, int flag) throws ComponentException
+		{
+			if (ordine.getContratto() != null && ordine.getContratto().getPg_contratto() != null){
 				try {
-					java.sql.ResultSet rs = null;
-					LoggableStatement ps = null;
+					ContrattoHome contrattoHome = (ContrattoHome)getHome(aUC, ContrattoBulk.class);
+					SQLBuilder sql = contrattoHome.calcolaTotOrdini(aUC,ordine.getContratto());
+					BigDecimal totale = BigDecimal.ZERO;
 					try {
-						ps = sql.prepareStatement(getConnection(aUC));
+						java.sql.ResultSet rs = null;
+						LoggableStatement ps = null;
 						try {
-							rs = ps.executeQuery();
-							if (rs.next())
-							totale = rs.getBigDecimal(1);
-						} catch (java.sql.SQLException e) {
-							throw handleSQLException(e);
+							ps = sql.prepareStatement(getConnection(aUC));
+							try {
+								rs = ps.executeQuery();
+								if (rs.next())
+									totale = rs.getBigDecimal(1);
+							} catch (java.sql.SQLException e) {
+								throw handleSQLException(e);
+							} finally {
+								if (rs != null) try{rs.close();}catch( java.sql.SQLException e ){};
+							}
 						} finally {
-							if (rs != null) try{rs.close();}catch( java.sql.SQLException e ){};
+							if (ps != null) try{ps.close();}catch( java.sql.SQLException e ){};
 						}
-					} finally {
-						if (ps != null) try{ps.close();}catch( java.sql.SQLException e ){};
+					} catch (java.sql.SQLException ex) {
+						throw handleException(ex);
 					}
-				} catch (java.sql.SQLException ex) {
-					throw handleException(ex);
+					if (flag == INSERIMENTO){
+						totale = Utility.nvl(totale).add(ordine.getImTotaleOrdine());
+					} else if (flag == MODIFICA){
+						OrdineAcqBulk ordineDB;
+						try {
+							ordineDB = (OrdineAcqBulk)getTempHome(aUC, OrdineAcqBulk.class).findByPrimaryKey(
+									new OrdineAcqBulk(
+											ordine.getCdCds(),
+											ordine.getCdUnitaOperativa(),
+											ordine.getEsercizio(),
+											ordine.getCdNumeratore(),
+											ordine.getNumero()
+									));
+						} catch (PersistencyException e) {
+							throw new ComponentException(e);
+						}
+
+						totale = totale.subtract(Utility.nvl(ordineDB.getImTotaleOrdine())).add(Utility.nvl(ordine.getImTotaleOrdine()));
+					}
+					if (totale != null ){
+						if (totale.compareTo(ordine.getContratto().getIm_contratto_passivo()) > 0){
+							throw handleException( new ApplicationException("La somma degli ordini associati "+ totale+"supera l'importo definito nel contratto "+ordine.getContratto().getIm_contratto_passivo()));
+						}
+					}
+				} catch (IntrospectionException e1) {
+					throw new it.cnr.jada.comp.ComponentException(e1);
+				} catch (PersistencyException e1) {
+					throw new it.cnr.jada.comp.ComponentException(e1);
 				}
-			  if (flag == INSERIMENTO){
-					totale = Utility.nvl(totale).add(ordine.getImTotaleOrdine());
-			  } else if (flag == MODIFICA){
-					OrdineAcqBulk ordineDB;
-					try {
-						ordineDB = (OrdineAcqBulk)getTempHome(aUC, OrdineAcqBulk.class).findByPrimaryKey(
-								new OrdineAcqBulk(
-										ordine.getCdCds(),
-										ordine.getCdUnitaOperativa(),
-										ordine.getEsercizio(),
-										ordine.getCdNumeratore(),
-										ordine.getNumero()
-										));
-					} catch (PersistencyException e) {
-						throw new ComponentException(e);
-					}
+			}
 
-				  totale = totale.subtract(Utility.nvl(ordineDB.getImTotaleOrdine())).add(Utility.nvl(ordine.getImTotaleOrdine()));
-			  }
-			  if (totale != null ){
-				  if (totale.compareTo(ordine.getContratto().getIm_contratto_passivo()) > 0){
-					  throw handleException( new ApplicationException("La somma degli ordini associati supera l'importo definito nel contratto."));
-				  }
-			  }
-		  } catch (IntrospectionException e1) {
-			  throw new it.cnr.jada.comp.ComponentException(e1);
-		  } catch (PersistencyException e1) {
-			  throw new it.cnr.jada.comp.ComponentException(e1);
-		  }
-	  }
-
-	}
+		}
 	public void verificaCoperturaContratto (UserContext aUC,OrdineAcqBulk ordine) throws ComponentException
 	{
 		verificaCoperturaContratto (aUC,ordine, MODIFICA);
@@ -2415,9 +2403,36 @@
 			super.modificaConBulk(userContext, ordineEvasioneForzata);
 			super.modificaConBulk(userContext, riga);
 			// è utillizabile
-			super.modificaConBulk(userContext, riga);
-
+			super.modificaConBulk(userContext, ordine);
 
 		}
 
+	public SQLBuilder selectDspContoByClause(UserContext userContext, OrdineAcqRigaBulk riga,
+											  ContoBulk contoBulk,
+											  CompoundFindClause compoundfindclause) throws PersistencyException, ComponentException{
+		ContoHome contoHome = (ContoHome)getHome(userContext, ContoBulk.class);
+		SQLBuilder sql = null;
+		try {
+			sql = contoHome.selectContiAssociatiACategoria(compoundfindclause, riga.getBeneServizio().getCategoria_gruppo());
+		} catch (InvocationTargetException | IllegalAccessException e) {
+			throw new PersistencyException(e);
+		}
+
+		return sql;
+	}
+
+	public ContoBulk recuperoContoDefault(UserContext userContext, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk) throws PersistencyException, ComponentException{
+		ContoHome contoHome = (ContoHome)getHome(userContext, ContoBulk.class);
+		SQLBuilder sql = null;
+		try {
+			sql = contoHome.selectContoDefaultAssociatoACategoria(new CompoundFindClause(), categoria_gruppo_inventBulk);
+			List conti = contoHome.fetchAll(sql);
+			if (conti != null && !conti.isEmpty()){
+				return (ContoBulk)conti.get(0);
+			}
+		} catch (InvocationTargetException | IllegalAccessException e) {
+			throw new PersistencyException(e);
+		}
+		return null;
+	}
 }

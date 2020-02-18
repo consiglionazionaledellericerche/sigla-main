@@ -38,6 +38,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.GenerazioneReportException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
@@ -664,4 +665,19 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		}
 	}
 
+	public ContoBulk recuperoContoDefault(
+			ActionContext context,
+			Categoria_gruppo_inventBulk categoria_gruppo_inventBulk)
+			throws it.cnr.jada.action.BusinessProcessException {
+
+		try {
+
+			return ((OrdineAcqComponentSession)createComponentSession()).recuperoContoDefault(context.getUserContext(), categoria_gruppo_inventBulk);
+
+		} catch (it.cnr.jada.comp.ComponentException| PersistencyException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+	}
 }

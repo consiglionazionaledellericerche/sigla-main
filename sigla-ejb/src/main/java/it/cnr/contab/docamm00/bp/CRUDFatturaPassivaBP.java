@@ -1222,7 +1222,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                         .sdoppiaScadenzaInAutomatico(
                                 context.getUserContext(),
                                 scadenzaVecchia,
-                                scadenzaVecchia
+                                    scadenzaVecchia
                                         .getIm_scadenza()
                                         .subtract(
                                                 dettaglioSelezionato

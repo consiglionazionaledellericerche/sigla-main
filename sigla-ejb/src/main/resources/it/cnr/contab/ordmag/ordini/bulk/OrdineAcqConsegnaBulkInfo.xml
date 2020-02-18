@@ -515,7 +515,7 @@
 
 	<fieldProperty
 			name="cdUnitaMisuraMinima"
-			property="beneServizio.unitaMisura.cdUnitaMisura"
+			property="ordineAcqRiga.beneServizio.unitaMisura.cdUnitaMisura"
 			maxLength="30"
 			inputSize="3"
 			inputType="ROTEXT"

@@ -1,21 +1,21 @@
 	package it.cnr.contab.ordmag.ordini.ejb;
-	import java.rmi.RemoteException;
-	import java.util.List;
 
+	import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 	import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-	import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
+	import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 	import it.cnr.contab.ordmag.ordini.bulk.AbilitazioneOrdiniAcqBulk;
 	import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 	import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 	import it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk;
 	import it.cnr.contab.ordmag.ordini.dto.ImportoOrdine;
 	import it.cnr.contab.ordmag.ordini.dto.ParametriCalcoloImportoOrdine;
-	import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 	import it.cnr.jada.UserContext;
 	import it.cnr.jada.comp.ApplicationException;
 	import it.cnr.jada.comp.ComponentException;
 	import it.cnr.jada.persistency.PersistencyException;
 	import it.cnr.jada.util.RemoteIterator;
+
+	import java.rmi.RemoteException;
 
 	public class TransactionalOrdineAcqComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements OrdineAcqComponentSession {
 	public void gestioneStampaOrdine(UserContext userContext, OrdineAcqBulk ordine) throws RemoteException,it.cnr.jada.comp.ComponentException{
@@ -281,6 +281,22 @@
 					throw ex;
 				} catch(Throwable ex) {
 					throw new RemoteException("Uncaugth exception",ex);
+				}
+			}
+		}
+		public ContoBulk recuperoContoDefault(UserContext userContext, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk) throws ComponentException, PersistencyException, RemoteException {
+			try {
+				return (ContoBulk) invoke("recuperoContoDefault", new Object[]{
+						userContext, categoria_gruppo_inventBulk});
+			} catch (RemoteException e) {
+				throw e;
+			} catch (java.lang.reflect.InvocationTargetException e) {
+				try {
+					throw e.getTargetException();
+				} catch (ComponentException ex) {
+					throw ex;
+				} catch (Throwable ex) {
+					throw new RemoteException("Uncaugth exception", ex);
 				}
 			}
 		}

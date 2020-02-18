@@ -1,12 +1,8 @@
 package it.cnr.contab.ordmag.ordini.ejb;
 
-import java.rmi.RemoteException;
-
-import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
-
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.ordmag.magazzino.comp.MovimentiMagComponent;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.ordmag.ordini.bulk.AbilitazioneOrdiniAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
@@ -19,6 +15,10 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.RemoteIterator;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
+import java.rmi.RemoteException;
 
 @Stateless(name = "CNRORDMAG00_EJB_OrdineAcqComponentSession")
 public class OrdineAcqComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements OrdineAcqComponentSession {
@@ -269,11 +269,31 @@ public class OrdineAcqComponentSessionBean extends it.cnr.jada.ejb.CRUDComponent
 			throw uncaughtError(userContext,componentObj,e);
 		}
 	}
-
     public RemoteIterator ricercaOrdiniAcqCons(UserContext userContext, ParametriSelezioneOrdiniAcqBulk parametri,String tipoSelezione) throws ComponentException, RemoteException{
         pre_component_invocation(userContext,componentObj);
         try {
             RemoteIterator result = ((OrdineAcqComponent)componentObj).ricercaOrdiniAcqCons(userContext, parametri,tipoSelezione);
+            component_invocation_succes(userContext,componentObj);
+            return result;
+        } catch(it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(userContext,componentObj);
+            throw e;
+        } catch(ComponentException e) {
+            component_invocation_failure(userContext,componentObj);
+            throw e;
+        } catch(RuntimeException e) {
+            throw uncaughtRuntimeException(userContext,componentObj,e);
+        } catch(Error e) {
+            throw uncaughtError(userContext,componentObj,e);
+        }
+    }
+
+
+    public ContoBulk recuperoContoDefault(UserContext userContext, Categoria_gruppo_inventBulk categoria_gruppo_inventBulk)
+            throws ComponentException, PersistencyException, RemoteException{
+        pre_component_invocation(userContext,componentObj);
+        try {
+            ContoBulk result = ((OrdineAcqComponent)componentObj).recuperoContoDefault(userContext, categoria_gruppo_inventBulk);
             component_invocation_succes(userContext,componentObj);
             return result;
         } catch(it.cnr.jada.comp.NoRollbackException e) {
