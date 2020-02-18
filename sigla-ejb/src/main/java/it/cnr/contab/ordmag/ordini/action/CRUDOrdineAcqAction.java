@@ -334,6 +334,7 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
         }
     }
 
+
     public Forward doBlankSearchFindMagazzino(ActionContext context, OrdineAcqConsegnaBulk cons) throws java.rmi.RemoteException {
 
         try {
@@ -348,15 +349,6 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             }
             return context.findDefaultForward();
 
-        } catch (Exception e) {
-            return handleException(context, e);
-        }
-    }
-
-    public Forward doBringBackSearchFindUnitaOperativaOrdDest(ActionContext context,
-                                                              OrdineAcqRigaBulk riga,
-                                                              UnitaOperativaOrdBulk uop)
-            throws java.rmi.RemoteException {
         } catch (Exception e) {
             return handleException(context, e);
         }
@@ -427,7 +419,6 @@ public class CRUDOrdineAcqAction extends it.cnr.jada.util.action.CRUDAction {
             return handleException(context, e);
         }
     }
-
 
 
     public Forward doBringBackSearchFindUnitaOperativaOrdDest(ActionContext context,
