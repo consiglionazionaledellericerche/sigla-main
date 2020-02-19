@@ -1,3 +1,311 @@
+## Release 6.1.31  -- _February 19, 2020_ 
+**Changes**
+
+>**FIX loadPersistentInfos at startup**
+>
+>[1fcd1ec2146efbf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1fcd1ec2146efbf) marco.spasiano *February 19, 2020*
+
+>**Fix Rimodulazione Progetti: gestito il caso che le quote assegnate al CDR Personale provengano contemporaneamente sia da progetti scaduti che da progetti attivi su GAE Fonte Esterna.**
+>
+>[b098258d0d09077](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b098258d0d09077) raffaele.pagano *February 19, 2020*
+
+>**Remove changeset voce menu ordini acq**
+>
+>[bd278290e9e0dff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bd278290e9e0dff) marco.spasiano *February 19, 2020*
+
+>**Rimodulazione Progetti: consentito all'utente di inserire piani economici per anni fino a 14 anni prima dell'anno di inizio del progetto. In questo caso è però consentito solo caricare importi cofinanziati.**
+>
+>[eb53f0b155d12ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eb53f0b155d12ca) raffaele.pagano *February 19, 2020*
+
+>**Add changeset voce menu ordini acq**
+>
+>[d69da7d9d846fc2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d69da7d9d846fc2) marco.spasiano *February 19, 2020*
+
+>**Fix Rimodulazione Progetti: corretto controllo di associazione voci movimentate. Restituiva errore su voci che in anni precedenti avevano un assestato positivo senza verificare che negli anni successivi lo stesso era stato annullato da variazioni residue improprie successive.**
+>
+>[47a65fe93cad266](https://github.com/consiglionazionaledellericerche/sigla-main/commit/47a65fe93cad266) raffaele.pagano *February 19, 2020*
+
+>**Fix Rimodulazione Progetti: ritornava errore di associazione doppia voce in quanto non controllava che una delle voci era stata eliminata.**
+>
+>[da2a3b7373be9d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da2a3b7373be9d3) raffaele.pagano *February 19, 2020*
+
+>**Fix Rimodulazione Progetti: nei controlli non teneva conto della proroga inserita nella rimodulazione.**
+>
+>[d937902983742b5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d937902983742b5) raffaele.pagano *February 19, 2020*
+
+>**FIX liquibase.bootstrap.esercizio to 2019**
+>
+>[f6ed19b63993846](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f6ed19b63993846) marco.spasiano *February 19, 2020*
+
+>**FIX test for start with IntelliJ IDEA**
+>
+>[eb39cdbcb366a50](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eb39cdbcb366a50) marco.spasiano *February 19, 2020*
+
+>**FIX link to github docs**
+>
+>[0003f078e6cb9e9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0003f078e6cb9e9) marco.spasiano *February 19, 2020*
+
+>**Add epub doc generate**
+>
+>[c7668acf9ae4c18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7668acf9ae4c18) marco.spasiano *February 18, 2020*
+
+>**Fix errore compilazione**
+>
+>[fcaf82f52859c58](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fcaf82f52859c58) gianfranco.gasparro *February 18, 2020*
+
+>**Fix errore compilazione**
+>
+>[6bf8b7600abcc27](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bf8b7600abcc27) gianfranco.gasparro *February 18, 2020*
+
+>**Add epub doc generate**
+>
+>[d210057b967563d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d210057b967563d) marco.spasiano *February 18, 2020*
+
+>**Add epub doc generate**
+>
+>[1ea38256836df94](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ea38256836df94) marco.spasiano *February 18, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[1ceb1316b1070b1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1ceb1316b1070b1) ciro.salvio *February 18, 2020*
+
+>**Fix Visualizzazione obbligazioni da ordini**
+>
+>[dd5bd53fb125790](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd5bd53fb125790) gianfranco.gasparro *February 17, 2020*
+
+>**Controllo IBAN per modalità di pagamento Terzi closed Issue #6**
+>
+>[7a09e5b2c962a68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a09e5b2c962a68) marco.spasiano *February 17, 2020*
+
+>**Gestione Conti su Ordini**
+>
+>[2a4a393411ea741](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2a4a393411ea741) gianfranco.gasparro *February 17, 2020*
+
+>**Gestione Conti su Ordini**
+>
+>[6f6edde7f145559](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6f6edde7f145559) gianfranco.gasparro *February 17, 2020*
+
+>**Add badge to Readme.md**
+>
+>[b5f89d7f915e2a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b5f89d7f915e2a6) marco.spasiano *February 15, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[8b03cf2b51f8347](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b03cf2b51f8347) ciro.salvio *February 14, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[de48ba54ac7b413](https://github.com/consiglionazionaledellericerche/sigla-main/commit/de48ba54ac7b413) ciro.salvio *February 14, 2020*
+
+>**commit and Push Fix Descrption for Assigned Access and reafactor cercaAccessi e CercaRuoli for UtenteComponent**
+>
+>[f84bdece997087f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f84bdece997087f) ciro.salvio *February 13, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[3ecaa924daeda8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3ecaa924daeda8b) ciro.salvio *February 11, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[db317611ef50772](https://github.com/consiglionazionaledellericerche/sigla-main/commit/db317611ef50772) ciro.salvio *February 11, 2020*
+
+>**Aggiunto conto**
+>
+>[4fa1d456950b42c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4fa1d456950b42c) gianfranco.gasparro *February 11, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[d6735186dea3e6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d6735186dea3e6f) ciro.salvio *February 10, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[70cd2f41f3a58ee](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70cd2f41f3a58ee) ciro.salvio *February 07, 2020*
+
+>**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
+>
+>[3be4470825e7e07](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3be4470825e7e07) ciro.salvio *February 04, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[8fc646cb0d4b4d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8fc646cb0d4b4d3) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[0d2863f348b2761](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d2863f348b2761) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[16fb9e49040cb1d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16fb9e49040cb1d) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[1c9dafcc1452bc4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1c9dafcc1452bc4) mspasiano *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[d2eae93713abdef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2eae93713abdef) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[eabe86df350424a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eabe86df350424a) patriziavillani *February 03, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[d69dab77684928c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d69dab77684928c) patriziavillani *February 03, 2020*
+
+>**Create gestione_utenze.rst**
+>
+>[e20978ce68b4be4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e20978ce68b4be4) patriziavillani *February 03, 2020*
+
+>**Update index.rst**
+>
+>[a4a0b4c82bda021](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4a0b4c82bda021) patriziavillani *February 03, 2020*
+
+>**Added jasper print Ordine**
+>
+>[38edca8627c44e5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/38edca8627c44e5) ciro.salvio *January 30, 2020*
+
+>**Added print server parameter**
+>
+>[4e85d849ca854fa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4e85d849ca854fa) ciro.salvio *January 30, 2020*
+
+>**Update and rename gae.md to gae.rst**
+>
+>[0ea3028bed80d09](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ea3028bed80d09) patriziavillani *January 30, 2020*
+
+>**Update competenza.rst**
+>
+>[54b3d41aebb7cd8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54b3d41aebb7cd8) patriziavillani *January 30, 2020*
+
+>**Update competenza.rst**
+>
+>[79ddf1ef2b5ec4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/79ddf1ef2b5ec4c) patriziavillani *January 30, 2020*
+
+>**Create index.rst**
+>
+>[2fdade100c32ad5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fdade100c32ad5) patriziavillani *January 30, 2020*
+
+>**Update index.rst**
+>
+>[b1ffbe17c8ca46d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1ffbe17c8ca46d) patriziavillani *January 30, 2020*
+
+>**Update and rename competenza.md to competenza.rst**
+>
+>[19f44eff0bcdd03](https://github.com/consiglionazionaledellericerche/sigla-main/commit/19f44eff0bcdd03) patriziavillani *January 30, 2020*
+
+>**Update index.rst**
+>
+>[cf72cea21f04deb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf72cea21f04deb) patriziavillani *January 30, 2020*
+
+>**Create index.rst**
+>
+>[ace03ce491e8a9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ace03ce491e8a9c) patriziavillani *January 30, 2020*
+
+>**Update and rename struttura_organizzativa.md to struttura_organizzativa.rst**
+>
+>[09b45ee512dca6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09b45ee512dca6f) patriziavillani *January 30, 2020*
+
+>**Fix Rimodulazione Progetti: limitato il controllo di chiusura del bilancio, necessario per proporre rimodulazioni anche su voci economiche presenti in bilancio, ai soli CDS partecipanti al progetto oggetto di modifica.**
+>
+>[8c97430cd21542f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c97430cd21542f) raffaele.pagano *January 30, 2020*
+
+>**Variazioni Bilancio Residuo: aggiunto tasto che consente di riportare una variazione residua dallo stato Approvato allo stato Definitivo. Il tasto è visibile solo per cds abilitati ad approvare ed utenti di tipo Supervisore.**
+>
+>[f9f2141d16226fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9f2141d16226fb) raffaele.pagano *January 30, 2020*
+
+>**Commit and Push Ordmag ISS functionality**
+>
+>[610ae883002cbbd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/610ae883002cbbd) ciro.salvio *January 27, 2020*
+
+>**Commit and Push Ordmag ISS functionality**
+>
+>[a795556a789dbfc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a795556a789dbfc) ciro.salvio *January 27, 2020*
+
+>**Commit and Push Ordmag ISS functionality**
+>
+>[614bfa1d5d62d93](https://github.com/consiglionazionaledellericerche/sigla-main/commit/614bfa1d5d62d93) ciro.salvio *January 27, 2020*
+
+>**BUG nella generazione del flusso SIOPE+, quando per lo stesso codice SIOPE ci sono due CUP diversi**
+>
+>[ac2dc8dd79abf7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac2dc8dd79abf7c) marco.spasiano *January 27, 2020*
+
+>**Add docs for Sphinx**
+>
+>[7076399a6e4050a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7076399a6e4050a) marco.spasiano *January 27, 2020*
+
+>**Add docs for Sphinx**
+>
+>[fa81e934353da3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa81e934353da3d) marco.spasiano *January 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[1e52fe949fa39f6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e52fe949fa39f6) marco.spasiano *January 25, 2020*
+
+>**Modify Changelog**
+>
+>[e0aa2e8f4d84cef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e0aa2e8f4d84cef) marco.spasiano *January 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[a8ade95e9c7cc62](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8ade95e9c7cc62) marco.spasiano *January 25, 2020*
+
+>**Modify Changelog**
+>
+>[0bfa62040d78a67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bfa62040d78a67) marco.spasiano *January 25, 2020*
+
+>**Add docs for Sphinx**
+>
+>[8efd88161db60df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8efd88161db60df) marco.spasiano *January 25, 2020*
+
+>**Ripristinate Modifiche per Gestione Ordini**
+>
+>[8440e12bcff5c96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8440e12bcff5c96) gianfranco.gasparro *January 24, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto e visualizzazione voci movimentate non associate in caso di accesso da anno successivo a quello del piano economico.**
+>
+>[ac9722860ec6952](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac9722860ec6952) raffaele.pagano *January 22, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
+>
+>[e79f3b9c133ad6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e79f3b9c133ad6d) raffaele.pagano *January 22, 2020*
+
+>**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
+>
+>[d227d80037e17a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d227d80037e17a0) raffaele.pagano *January 22, 2020*
+
+>**Ingrandito campo a 100 caratteri per inserimento email per fatturazione elettronica**
+>
+>[e3af1ed5393b4db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3af1ed5393b4db) gianfranco.gasparro *January 21, 2020*
+
+>**Corretta valorizzazione dati incasso su generico e reversale. Ricalcolato importo accertamento per compensazioni**
+>
+>[0f6a16ee4631e9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f6a16ee4631e9a) gianfranco.gasparro *January 21, 2020*
+
+>**Nascosta TAB di abilitazione Ordini nel caso di Gestione Ordini non Attiva**
+>
+>[9d40e70503dbadd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d40e70503dbadd) gianfranco.gasparro *January 20, 2020*
+
+>**FIX test**
+>
+>[474a262960da9f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/474a262960da9f9) marco.spasiano *January 20, 2020*
+
+>**FIX test**
+>
+>[8b697d5d120ebda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b697d5d120ebda) marco.spasiano *January 20, 2020*
+
+>**FIX test**
+>
+>[26e87aba85863a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26e87aba85863a9) marco.spasiano *January 20, 2020*
+
+>**FIX gitlabci m2 cache**
+>
+>[24605d07a7b3393](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24605d07a7b3393) marco.spasiano *January 20, 2020*
+
+>**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
+>
+>[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
+
+
 ## Release 6.1.30  -- _February 14, 2020_ 
 **Changes**
 
@@ -149,14 +457,6 @@
 >
 >[22ea279bd93eae0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22ea279bd93eae0) raffaele.pagano *February 13, 2020*
 
->**Add cnr.storage.driver on stage default**
->
->[be9dd74a9627650](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be9dd74a9627650) marco.spasiano *February 10, 2020*
-
->**Add cnr.storage.driver on stage production-cnr**
->
->[5ed31428fc1f3ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5ed31428fc1f3ca) marco.spasiano *February 10, 2020*
-
 >**Servizio Rest: utility per lancio controllo correttezza variazione di bilancio, dal punto di vista dei progetti, anche dopo approvazione della stessa che la rende immodificabile.**
 >
 >[0e86c5d6cc17cb5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0e86c5d6cc17cb5) raffaele.pagano *February 07, 2020*
@@ -204,6 +504,14 @@
 >**FIX NullPointerException on validaAllegatoNomeFile**
 >
 >[16b75bb4fe1f489](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16b75bb4fe1f489) marco.spasiano *February 10, 2020*
+
+>**Add cnr.storage.driver on stage default**
+>
+>[be9dd74a9627650](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be9dd74a9627650) marco.spasiano *February 10, 2020*
+
+>**Add cnr.storage.driver on stage production-cnr**
+>
+>[5ed31428fc1f3ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5ed31428fc1f3ca) marco.spasiano *February 10, 2020*
 
 
 ## Release 6.1.27  -- _February 10, 2020_ 
@@ -260,86 +568,6 @@
 >**Gestione Progetti: attivato controllo di coerenza tra Gae e contratto associato all'impegno (controllo già presente su accertamento)**
 >
 >[1948935503fe352](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1948935503fe352) raffaele.pagano *February 05, 2020*
-
->**Update gestione_utenze.rst**
->
->[8fc646cb0d4b4d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8fc646cb0d4b4d3) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[0d2863f348b2761](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d2863f348b2761) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[16fb9e49040cb1d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16fb9e49040cb1d) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[1c9dafcc1452bc4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1c9dafcc1452bc4) mspasiano *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[d2eae93713abdef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2eae93713abdef) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[eabe86df350424a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eabe86df350424a) patriziavillani *February 03, 2020*
-
->**Update gestione_utenze.rst**
->
->[d69dab77684928c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d69dab77684928c) patriziavillani *February 03, 2020*
-
->**Create gestione_utenze.rst**
->
->[e20978ce68b4be4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e20978ce68b4be4) patriziavillani *February 03, 2020*
-
->**Update index.rst**
->
->[a4a0b4c82bda021](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a4a0b4c82bda021) patriziavillani *February 03, 2020*
-
->**Update and rename gae.md to gae.rst**
->
->[0ea3028bed80d09](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ea3028bed80d09) patriziavillani *January 30, 2020*
-
->**Update competenza.rst**
->
->[54b3d41aebb7cd8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54b3d41aebb7cd8) patriziavillani *January 30, 2020*
-
->**Update competenza.rst**
->
->[79ddf1ef2b5ec4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/79ddf1ef2b5ec4c) patriziavillani *January 30, 2020*
-
->**Create index.rst**
->
->[2fdade100c32ad5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fdade100c32ad5) patriziavillani *January 30, 2020*
-
->**Update index.rst**
->
->[b1ffbe17c8ca46d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b1ffbe17c8ca46d) patriziavillani *January 30, 2020*
-
->**Update and rename competenza.md to competenza.rst**
->
->[19f44eff0bcdd03](https://github.com/consiglionazionaledellericerche/sigla-main/commit/19f44eff0bcdd03) patriziavillani *January 30, 2020*
-
->**Update index.rst**
->
->[cf72cea21f04deb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf72cea21f04deb) patriziavillani *January 30, 2020*
-
->**Create index.rst**
->
->[ace03ce491e8a9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ace03ce491e8a9c) patriziavillani *January 30, 2020*
-
->**Update and rename struttura_organizzativa.md to struttura_organizzativa.rst**
->
->[09b45ee512dca6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/09b45ee512dca6f) patriziavillani *January 30, 2020*
-
->**Fix Rimodulazione Progetti: limitato il controllo di chiusura del bilancio, necessario per proporre rimodulazioni anche su voci economiche presenti in bilancio, ai soli CDS partecipanti al progetto oggetto di modifica.**
->
->[8c97430cd21542f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c97430cd21542f) raffaele.pagano *January 30, 2020*
-
->**Variazioni Bilancio Residuo: aggiunto tasto che consente di riportare una variazione residua dallo stato Approvato allo stato Definitivo. Il tasto è visibile solo per cds abilitati ad approvare ed utenti di tipo Supervisore.**
->
->[f9f2141d16226fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9f2141d16226fb) raffaele.pagano *January 30, 2020*
 
 
 ## Release 6.1.21  -- _February 03, 2020_ 
@@ -456,90 +684,6 @@
 >**FIX nel caso di Flusso SIOPE+ rifiutato, aggiunta la possibilità di reinviarlo generando nuovamente il flusso**
 >
 >[50a1defb6001be8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/50a1defb6001be8) marco.spasiano *January 27, 2020*
-
-
-## Release 6.1.14  -- _January 27, 2020_ 
-**Changes**
-
->**BUG nella generazione del flusso SIOPE+, quando per lo stesso codice SIOPE ci sono due CUP diversi**
->
->[ac2dc8dd79abf7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac2dc8dd79abf7c) marco.spasiano *January 27, 2020*
-
->**Add docs for Sphinx**
->
->[7076399a6e4050a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7076399a6e4050a) marco.spasiano *January 27, 2020*
-
->**Add docs for Sphinx**
->
->[fa81e934353da3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa81e934353da3d) marco.spasiano *January 25, 2020*
-
->**Add docs for Sphinx**
->
->[1e52fe949fa39f6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e52fe949fa39f6) marco.spasiano *January 25, 2020*
-
->**Modify Changelog**
->
->[e0aa2e8f4d84cef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e0aa2e8f4d84cef) marco.spasiano *January 25, 2020*
-
->**Add docs for Sphinx**
->
->[a8ade95e9c7cc62](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a8ade95e9c7cc62) marco.spasiano *January 25, 2020*
-
->**Modify Changelog**
->
->[0bfa62040d78a67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0bfa62040d78a67) marco.spasiano *January 25, 2020*
-
->**Add docs for Sphinx**
->
->[8efd88161db60df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8efd88161db60df) marco.spasiano *January 25, 2020*
-
->**Ripristinate Modifiche per Gestione Ordini**
->
->[8440e12bcff5c96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8440e12bcff5c96) gianfranco.gasparro *January 24, 2020*
-
->**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto e visualizzazione voci movimentate non associate in caso di accesso da anno successivo a quello del piano economico.**
->
->[ac9722860ec6952](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac9722860ec6952) raffaele.pagano *January 22, 2020*
-
->**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
->
->[e79f3b9c133ad6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e79f3b9c133ad6d) raffaele.pagano *January 22, 2020*
-
->**Fix Variazioni Bilancio Residuo: corretta controllo su disponibilità Piano Economico Progetto.**
->
->[d227d80037e17a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d227d80037e17a0) raffaele.pagano *January 22, 2020*
-
->**Ingrandito campo a 100 caratteri per inserimento email per fatturazione elettronica**
->
->[e3af1ed5393b4db](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e3af1ed5393b4db) gianfranco.gasparro *January 21, 2020*
-
->**Corretta valorizzazione dati incasso su generico e reversale. Ricalcolato importo accertamento per compensazioni**
->
->[0f6a16ee4631e9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f6a16ee4631e9a) gianfranco.gasparro *January 21, 2020*
-
->**Nascosta TAB di abilitazione Ordini nel caso di Gestione Ordini non Attiva**
->
->[9d40e70503dbadd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d40e70503dbadd) gianfranco.gasparro *January 20, 2020*
-
->**FIX test**
->
->[474a262960da9f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/474a262960da9f9) marco.spasiano *January 20, 2020*
-
->**FIX test**
->
->[8b697d5d120ebda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b697d5d120ebda) marco.spasiano *January 20, 2020*
-
->**FIX test**
->
->[26e87aba85863a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26e87aba85863a9) marco.spasiano *January 20, 2020*
-
->**FIX gitlabci m2 cache**
->
->[24605d07a7b3393](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24605d07a7b3393) marco.spasiano *January 20, 2020*
-
->**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
->
->[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
 
 
 ## Release 6.1.11  -- _January 20, 2020_ 
