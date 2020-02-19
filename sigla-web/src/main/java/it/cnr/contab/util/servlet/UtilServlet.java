@@ -37,7 +37,7 @@ public class UtilServlet extends HttpServlet {
 
     public void init()
             throws ServletException {
-
+        Utility.loadPersistentInfos();
         String version = "01.001.000";
         InputStream is = getServletContext().getResourceAsStream(Utility.MANIFEST_PATH);
         if (is != null) {

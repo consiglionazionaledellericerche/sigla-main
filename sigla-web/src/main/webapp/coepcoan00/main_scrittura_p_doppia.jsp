@@ -29,31 +29,25 @@
 		bp.openFormWindow(pageContext); 
 %>
 
-<table class="Panel">
-<tr>
-	<td><% bp.getController().writeFormLabel(out,"cd_cds"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cd_cds"); %></td>
-	<td colspan=2>	    
-		<% bp.getController().writeFormInput(out,"ds_cds"); %></td>	
-</tr>
-<tr>
-	<td><% bp.getController().writeFormLabel(out,"cd_unita_organizzativa"); %></td>
-	<td><% bp.getController().writeFormInput(out,"cd_unita_organizzativa"); %></td>
-	<td colspan=2>	    
-		<% bp.getController().writeFormInput(out,"ds_unita_organizzativa"); %></td>	
-</tr>
-<tr>
-	<td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
-	<td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
-	<td><% bp.getController().writeFormLabel(out,"pg_scrittura"); %></td>
-	<td><% bp.getController().writeFormInput(out,"pg_scrittura"); %></td>	
-</tr>
-<tr>
-	<td><% bp.getController().writeFormLabel(out,"imTotaleDare"); %></td>
-	<td><% bp.getController().writeFormInput(out,"imTotaleDare"); %></td>
-	<td><% bp.getController().writeFormLabel(out,"imTotaleAvere"); %></td>
-	<td><% bp.getController().writeFormInput(out,"imTotaleAvere"); %></td>	
-</tr>
+<table class="Panel card p-2">
+    <tr>
+        <% bp.getController().writeFormField(out,"cds"); %>
+    </tr>
+    <tr>
+        <% bp.getController().writeFormField(out,"unita_organizzativa"); %>
+    </tr>
+    <tr>
+        <td><% bp.getController().writeFormLabel(out,"esercizio"); %></td>
+        <td><% bp.getController().writeFormInput(out,"esercizio"); %></td>
+        <td><% bp.getController().writeFormLabel(out,"pg_scrittura"); %></td>
+        <td><% bp.getController().writeFormInput(out,"pg_scrittura"); %></td>
+    </tr>
+    <tr>
+        <td><% bp.getController().writeFormLabel(out,"imTotaleDare"); %></td>
+        <td><% bp.getController().writeFormInput(out,"imTotaleDare"); %></td>
+        <td><% bp.getController().writeFormLabel(out,"imTotaleAvere"); %></td>
+        <td><% bp.getController().writeFormInput(out,"imTotaleAvere"); %></td>
+    </tr>
 </table>
 <%
 	if (bp.isViewing()){
