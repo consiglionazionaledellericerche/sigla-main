@@ -53,7 +53,7 @@
 		property="esercizio_piano"
 		optionsProperty="anniList"
 		readonlyPropertyOnEdit="ROEsercizio_piano"
-		command="doDefault"
+		command="doOnEsercizioPianoChange"
 		inputType="SELECT"
 		inputSize="4"
 		maxLength="4"
@@ -74,7 +74,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
-		readonlyPropertyOnEdit="ROProgettoPianoEconomico"
+		readonlyPropertyOnEdit="ROImSpesaFinanziato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata" />
 	<fieldProperty
@@ -107,7 +107,7 @@
 	<fieldProperty
 		name="imSpesaFinanziatoRimodulatoAA"
 		property="imSpesaFinanziatoRimodulato"
-		readonlyProperty="ROFieldRimodulazione"
+		readonlyProperty="ROImSpesaFinanziatoRimodulatoAA"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"

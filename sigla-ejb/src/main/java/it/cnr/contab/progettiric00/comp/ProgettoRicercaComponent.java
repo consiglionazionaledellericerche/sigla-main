@@ -437,7 +437,7 @@ public ProgettoRicercaComponent() {
 				for (Iterator iterator = allPiano.iterator(); iterator.hasNext();) {
 					Progetto_piano_economicoBulk pianoeco = (Progetto_piano_economicoBulk) iterator.next();
 					if (pianoeco.getEsercizio_piano()!=null && !pianoeco.getEsercizio_piano().equals(0))
-						if (pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoInizioOf())<0 ||
+						if (pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoInizioForPianoEconomico())<0 ||
 							pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoFineOf())>0)
 							throw new it.cnr.jada.comp.ApplicationException("Attenzione: E' stato inserito nel piano economico un anno non compatibile con la durata del progetto!");	                	
 				}
