@@ -2811,6 +2811,23 @@ TRASPORTO_AEREO"/>
         </insert>
     </changeSet>
 
+    <changeSet id="voce_menu_ordini_acq" author="marco.spasiano">
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.ORD"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Ordini"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="2"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="ORD"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
     <changeSet id="voce_menu_consultazioni_ordini_acq" author="ciro.salvio">
         <insert tableName="accesso">
             <column name="cd_accesso" type="VARCHAR(20)" value="ORDCONCONSEGNAV"/>
