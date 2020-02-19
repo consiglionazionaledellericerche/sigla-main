@@ -437,7 +437,7 @@ public ProgettoRicercaComponent() {
 				for (Iterator iterator = allPiano.iterator(); iterator.hasNext();) {
 					Progetto_piano_economicoBulk pianoeco = (Progetto_piano_economicoBulk) iterator.next();
 					if (pianoeco.getEsercizio_piano()!=null && !pianoeco.getEsercizio_piano().equals(0))
-						if (pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoInizioOf())<0 || 
+						if (pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoInizioOf())<0 ||
 							pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoFineOf())>0)
 							throw new it.cnr.jada.comp.ApplicationException("Attenzione: E' stato inserito nel piano economico un anno non compatibile con la durata del progetto!");	                	
 				}
@@ -1887,15 +1887,25 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 	
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
 				
-				if (!Optional.ofNullable(rimodulazione).isPresent())
+				if (!Optional.ofNullable(rimodulazione).isPresent()) {
+					//Recupero l'ultimo anno di gestione in corso
+					Integer currentAnno = saldiList.stream().mapToInt(el->el.getEsercizio()).max().orElse(999);
 					saldiList.stream()
-						.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 || 
-								el.getAssestatoResiduoImproprio().compareTo(BigDecimal.ZERO)>0).findFirst().ifPresent(el->{
-		               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
-		               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
-		               			" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " + 
-		               			"Operazione non consentita!");
+							.filter(el->{
+								if (el.getEsercizio().equals(currentAnno)) { //record dell'anno in corso
+									if (el.getEsercizio_res().equals(el.getEsercizio())) //record di competenza
+										return el.getAssestato().compareTo(BigDecimal.ZERO) > 0;
+									else //record residuo
+										return el.getAssestatoResiduoImproprio().compareTo(BigDecimal.ZERO) > 0;
+								} else //record degli anni precedenti già ribaltati (controllo solo se impegnato)
+									return el.getTotImpCompetenza().compareTo(BigDecimal.ZERO) > 0 || el.getTotImpResiduoImproprio().compareTo(BigDecimal.ZERO)>0;
+							}).findFirst().ifPresent(el->{
+						throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto "+progetto.getCd_progetto()
+								+" e per l'anno contabile "+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
+								" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " +
+								"Operazione non consentita!");
 					});
+				}
 				else
 					saldiList.stream()
 					.filter(el-> 
