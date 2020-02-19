@@ -35,7 +35,7 @@ public class DeploymentsOracle extends Deployments {
     @Test
     @InSequence(-1)
     @OperateOnDeployment(TEST_ORACLE)
-    public void beforeOracle() {
+    public void startupOracle() {
         controller.start(CONTAINER_NAME,
                 Stream.of(
                         new AbstractMap.SimpleEntry<>("port", "12346"),
