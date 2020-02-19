@@ -563,8 +563,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         if (existAnnoCorrente)
             hash.put(i++, new String[]{"tabProgettoPianoEconomicoAnnoCorrente", "Anno " + progetto.getEsercizio(), "/progettiric00/progetto_piano_economico_anno_corrente.jsp"});
 
-        if (!progetto.getAnnoInizioOf().equals(progetto.getEsercizio()) || !progetto.getAnnoFineOf().equals(progetto.getEsercizio()))
-            hash.put(i++, new String[]{"tabProgettoPianoEconomicoAltriAnni", "Altri Anni", "/progettiric00/progetto_piano_economico_altri_anni.jsp"});
+        hash.put(i++, new String[]{"tabProgettoPianoEconomicoAltriAnni", "Altri Anni", "/progettiric00/progetto_piano_economico_altri_anni.jsp"});
 
         if (!progetto.getVociMovimentateNonAssociate().isEmpty())
             hash.put(i++, new String[]{"tabProgettoVociMovimentateNonAssociate", "Voci Movimentate da Associare", "/progettiric00/progetto_piano_economico_voci_da_associare.jsp"});

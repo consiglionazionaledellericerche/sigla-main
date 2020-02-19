@@ -29,12 +29,7 @@ import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.ejb.EJBException;
@@ -421,7 +416,18 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 					/*
 						se il progetto è attivo (anno fine del progetto maggiore o uguale all'anno di esercizio) occorre sempre controllare le voci associate al piano economico del progetto
 					 */
-					if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+					Optional<Integer> optAnnoFineProgetto =
+							Optional.ofNullable(var_stanz_res_riga.getVar_stanz_res().getProgettoRimodulazione())
+									.filter(rim -> rim.getPg_progetto().equals(var_stanz_res_riga.getProgetto().getPg_progetto()))
+									.map(rim->Optional.ofNullable(rim.getDtProroga()).orElse(rim.getDtFine()))
+									.map(dtFine->{
+										GregorianCalendar calendar = new GregorianCalendar();
+										calendar.setTime(dtFine);
+										return Optional.of(calendar.get(Calendar.YEAR));
+									})
+									.orElse(Optional.ofNullable(progetto.getOtherField().getAnnoFine()));
+
+					if (optAnnoFineProgetto
 							.filter(annoFine -> annoFine.compareTo(CNRUserContext.getEsercizio(userContext)) >= 0)
 							.isPresent()) {
 						Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome) getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
@@ -473,8 +479,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 								}
 							}
 							//Aggiungo le voci di bilancio inserite nella rimodulazione
-							for (Ass_progetto_piaeco_voceBulk assVoce : list) {
-								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+							for (Progetto_rimodulazione_voceBulk assVoce : listRim.stream().filter(el->!el.isTiOperazioneEliminato()).collect(Collectors.toList())) {
+								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElementoVoce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 								if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
 									sql.openParenthesis(FindClause.OR);
 									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
