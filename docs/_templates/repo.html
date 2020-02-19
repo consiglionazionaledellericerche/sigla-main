@@ -14,8 +14,11 @@
   ~     You should have received a copy of the GNU Affero General Public License
   ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
-<a href="{{ theme_repo_url }}" title="Go to repository" class="md-source" data-md-source="github">
+{% if theme_repo_url %}
+    {% set github_edit_url = theme_repo_url + "edit/master/docs/" + pagename %}
+    {% set github_view_url = theme_repo_url + "blob/master/docs/" + pagename %}
+{% endif %}
+<a href="{{ github_view_url }}{{ page_source_suffix }}" title="Visualizza la pagina" class="md-source" data-md-source="github">
     {% if theme_repo_type %}
     <div class="md-source__icon">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
@@ -34,7 +37,8 @@
 </button>
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
     for="menu-download">
-    <a target="_blank" class="mdl-menu__item" href="{{pathto( 'Manuale-SIGLA.pdf', 1 )}}">pdf</a>
-    <a target="_blank" class="mdl-menu__item mdl-menu__item--full-bleed-divider" href="{{pathto( 'Manuale-SIGLA.epub', 1 )}}">epub</a>
+    <a target="_blank" class="mdl-menu__item" href="{{pathto( 'Manuale-SIGLA.pdf', 1 )}}">Scarica <b>pdf</b></a>
+    <a target="_blank" class="mdl-menu__item mdl-menu__item--full-bleed-divider" href="{{pathto( 'Manuale-SIGLA.epub', 1 )}}">Scarica <b>epub</b></a>
     <a class="mdl-menu__item" href="{{pathto( 'CHANGELOG')}}">Changelog</a>
+    <a class="mdl-menu__item" href="{{ github_edit_url }}{{ page_source_suffix }}">Modifica</a>
 </ul>

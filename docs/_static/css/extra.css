@@ -39,6 +39,9 @@
         color:inherit;
         content: none;
     }
+    #menu-download {
+        display: none;
+    }
 }
 @media only screen and (min-width:60em){
     .md-header-nav__source {
