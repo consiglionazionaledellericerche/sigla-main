@@ -130,7 +130,7 @@ siopeplus:
       uo: 000000
 liquibase:
   bootstrap:
-    esercizio: 2020
+    esercizio: 2019
 
 cnr:
   storage:
