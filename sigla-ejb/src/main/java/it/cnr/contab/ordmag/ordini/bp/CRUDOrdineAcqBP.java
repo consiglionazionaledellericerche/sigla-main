@@ -115,7 +115,9 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			int index = super.addDetail(oggettobulk);
 			OrdineAcqRigaBulk dettaglio =(OrdineAcqRigaBulk)oggettobulk;
 			dettaglio.setDspMagazzino(dettaglio.getOrdineAcq().getUnicoMagazzinoAbilitato());
-			dettaglio.setDspLuogoConsegna(dettaglio.getDspMagazzino().getLuogoConsegnaMag());
+			if (dettaglio.getDspMagazzino() != null){
+				dettaglio.setDspLuogoConsegna(dettaglio.getDspMagazzino().getLuogoConsegnaMag());
+			}
 			return index;
 		}
 
