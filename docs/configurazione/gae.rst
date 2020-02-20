@@ -37,9 +37,11 @@ A questo punto è possibile, per ogni obiettivo:
 - Descrizione: inserire la descrizione dell’obiettivo (si possono utilizzare i comandi copia-incolla per utilizzare un file esterno).
 - Quantità: utilizzare nel caso che sia un elemento determinante.
 
-## Programmi
+Programmi
+---------
 La gestione dell'anagrafica Programmi consente di censire tutte le informazioni necessrie a definire un Programma di ricerca. Un Programma rappresenta un aggregato omogeneo di attività volte a perseguire le finalità individuate nell’ambitodella singola missione, cui il programma si riferisce.
 
-## Missioni
-La gestione dell'anagrafica Missioni consente di censire tutte le informazioni necessrie a definire una Missione che l'Ente deve perseguire. Le  missioni  esprimono  le  funzioni  principali  e  gli  obiettivi  strategici perseguiti dalle amministrazioni, utilizzando risorse finanziarie, umane e strumentali ad esse destinate. 
+Missioni
+--------
+La gestione dell'anagrafica Missioni consente di censire tutte le informazioni necessrie a definire una Missione che l'Ente deve perseguire. Le  missioni  esprimono  le  funzioni  principali  e  gli  obiettivi  strategici perseguiti dalle amministrazioni, utilizzando risorse finanziarie, umane e strumentali ad esse destinate.
 
