@@ -105,7 +105,7 @@ public class BollaScaricoMagHome extends BulkHome {
 		sql.addClause(FindClause.AND,"esercizio",SQLBuilder.EQUALS, bollaScaricoMag.getEsercizio());
 		sql.addClause(FindClause.AND,"cdNumeratoreMag",SQLBuilder.EQUALS, bollaScaricoMag.getCdNumeratoreMag());
 		sql.addClause(FindClause.AND,"pgBollaSca",SQLBuilder.EQUALS, bollaScaricoMag.getPgBollaSca());
-		sql.addOrderBy("rigaBollaSca");
+		sql.addOrderBy("riga_Bolla_Sca");
 		return rigaHome.fetchAll(sql);
 	}	
 }
