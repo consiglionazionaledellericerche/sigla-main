@@ -25,7 +25,7 @@
 	<fieldProperty
 		name="findBeneServizio"
 		property="beneServizio"
-		inputType="searchtool"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		formName="searchtool_codice"
 		enabledOnSearch="true"
 		nullable="false"
