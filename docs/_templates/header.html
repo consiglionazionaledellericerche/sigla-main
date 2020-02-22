@@ -14,6 +14,9 @@
   ~     You should have received a copy of the GNU Affero General Public License
   ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
+{% if theme_repo_url %}
+    {% set github_view_url = theme_repo_url + "blob/master/docs/" + pagename %}
+{% endif %}
 <header class="md-header" data-md-component="header">
     <nav class="md-header-nav md-grid">
         <div class="md-flex navheader">
