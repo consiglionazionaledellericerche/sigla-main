@@ -35,17 +35,12 @@
    display: none;
 }
 
+.icon-middle {
+    vertical-align: middle;
+}
 @media only screen and (max-width: 59.9375em){
     html .md-nav__link[for=__toc]:after{
         color:inherit;
         content: none;
-    }
-    #menu-download {
-        display: none;
-    }
-}
-@media only screen and (min-width:60em){
-    .md-header-nav__source {
-        display: inline-flex;
     }
 }
