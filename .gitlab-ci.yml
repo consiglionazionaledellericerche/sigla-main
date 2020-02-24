@@ -146,7 +146,6 @@ perform-maven-release-maven-central:
     - gpg --batch --import <(echo "$GPG_PRIVATE_KEY")
     - mvn release:clean release:prepare -DreleaseVersion=$MAVEN_RELEASE_VERSION -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
     - mvn release:perform -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
-    - mvn -Pdocs scm:checkin
     - mvn se.bjurr.gitchangelog:git-changelog-maven-plugin:git-changelog
     - mvn -Pchangelog scm:checkin
   only:
