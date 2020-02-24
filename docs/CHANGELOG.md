@@ -1,3 +1,11 @@
+## Release 6.1.33  -- _February 24, 2020_ 
+**Changes**
+
+>**FIX maven plugin**
+>
+>[9ba91cc0284fa63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ba91cc0284fa63) marco.spasiano *February 24, 2020*
+
+
 ## Release 6.1.32  -- _February 24, 2020_ 
 **Changes**
 
