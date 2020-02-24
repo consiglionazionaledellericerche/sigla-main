@@ -1,5 +1,61 @@
-## Release 6.1.31  -- _February 19, 2020_ 
+## Release 6.1.32  -- _February 24, 2020_ 
 **Changes**
+
+>**FIX businessProcess name closed issue #13**
+>
+>[afd4579129e98e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/afd4579129e98e8) marco.spasiano *February 24, 2020*
+
+>**Add release version on docs conf.py**
+>
+>[edd80c7723b9bac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/edd80c7723b9bac) marco.spasiano *February 24, 2020*
+
+>**Lista anni su impegni residui impropri issue #11**
+>
+>[992bcacb71ff93f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/992bcacb71ff93f) marco.spasiano *February 24, 2020*
+
+>**Permesso inserimento di missioni di 2 anni precedenti**
+>
+>[f746e70ef6374c2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f746e70ef6374c2) gianfranco.gasparro *February 24, 2020*
+
+>**Add icon to menu docs**
+>
+>[afda0854df1affa](https://github.com/consiglionazionaledellericerche/sigla-main/commit/afda0854df1affa) marco.spasiano *February 22, 2020*
+
+>**Add icon to menu docs**
+>
+>[1be0c2c62eb09d5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1be0c2c62eb09d5) marco.spasiano *February 22, 2020*
+
+>**Add icon to menu docs**
+>
+>[b0c42d6f27c58d1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b0c42d6f27c58d1) marco.spasiano *February 22, 2020*
+
+>**Add Modulo nomina Amministratore to docs**
+>
+>[84a67313c8194b0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/84a67313c8194b0) marco.spasiano *February 21, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[dcc6e12f9a3a53b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dcc6e12f9a3a53b) Marco Spasiano *February 21, 2020*
+
+>**Add docs for Sphinx documentation**
+>
+>[c2ae163ddb23a89](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c2ae163ddb23a89) marco.spasiano *February 20, 2020*
+
+>**FIX css for docs**
+>
+>[5e799c6d5538348](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e799c6d5538348) marco.spasiano *February 20, 2020*
+
+>**Update index.rst**
+>
+>[266f1214663cace](https://github.com/consiglionazionaledellericerche/sigla-main/commit/266f1214663cace) Marco Spasiano *February 19, 2020*
+
+>**Update index.rst**
+>
+>[0740432570e580d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0740432570e580d) Marco Spasiano *February 19, 2020*
+
+>**Update index.rst**
+>
+>[b30d88f21dced78](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b30d88f21dced78) Marco Spasiano *February 19, 2020*
 
 >**FIX loadPersistentInfos at startup**
 >
@@ -73,6 +129,22 @@
 >
 >[dd5bd53fb125790](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd5bd53fb125790) gianfranco.gasparro *February 17, 2020*
 
+>**Create accesso_ruolo.rst**
+>
+>[523202c0508a45e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/523202c0508a45e) patriziavillani *February 17, 2020*
+
+>**Create gestione_utenze.rst**
+>
+>[06c27d97820ea0f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/06c27d97820ea0f) patriziavillani *February 17, 2020*
+
+>**Create accesso_ruolo.rst**
+>
+>[b53e4076378843c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b53e4076378843c) patriziavillani *February 17, 2020*
+
+>**Create gestione_utenze.rst**
+>
+>[cf5fe463fa7e248](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cf5fe463fa7e248) patriziavillani *February 17, 2020*
+
 >**Controllo IBAN per modalità di pagamento Terzi closed Issue #6**
 >
 >[7a09e5b2c962a68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a09e5b2c962a68) marco.spasiano *February 17, 2020*
@@ -100,6 +172,122 @@
 >**commit and Push Fix Descrption for Assigned Access and reafactor cercaAccessi e CercaRuoli for UtenteComponent**
 >
 >[f84bdece997087f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f84bdece997087f) ciro.salvio *February 13, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[3ebc4be538f3dec](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3ebc4be538f3dec) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[7c32783f30c0c6c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c32783f30c0c6c) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[ae82f7f7df149ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae82f7f7df149ba) patriziavillani *February 12, 2020*
+
+>**Delete utenza_comune.rst**
+>
+>[58e890f877b8cda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/58e890f877b8cda) patriziavillani *February 12, 2020*
+
+>**Delete utenza_amministratore.rst**
+>
+>[4fb68eae7f9dabc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4fb68eae7f9dabc) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[32bf621b1fdf53e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/32bf621b1fdf53e) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[ee9ac6e0225ff49](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee9ac6e0225ff49) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[7443ea921447461](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7443ea921447461) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[60efe6940e6c925](https://github.com/consiglionazionaledellericerche/sigla-main/commit/60efe6940e6c925) patriziavillani *February 12, 2020*
+
+>**Create accesso_ruolo.rst**
+>
+>[877aa762f1968f9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/877aa762f1968f9) patriziavillani *February 12, 2020*
+
+>**Create utenza_comune.rst**
+>
+>[6acd5e412f39bef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6acd5e412f39bef) patriziavillani *February 12, 2020*
+
+>**Update and rename gestione_utenze_sigla.rst to utenza_amministratore.rst**
+>
+>[03dd52000031219](https://github.com/consiglionazionaledellericerche/sigla-main/commit/03dd52000031219) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[a9175975149bff1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9175975149bff1) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[d475d6c7d6ef999](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d475d6c7d6ef999) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[10996e67fd60688](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10996e67fd60688) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[a52f4340530ebbf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a52f4340530ebbf) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[74c47bab28c455b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74c47bab28c455b) patriziavillani *February 12, 2020*
+
+>**Create gestione_utenze_sigla.rst**
+>
+>[93cb7487bdde563](https://github.com/consiglionazionaledellericerche/sigla-main/commit/93cb7487bdde563) patriziavillani *February 12, 2020*
+
+>**Delete gestione_utenze.rst**
+>
+>[05eeaef7ea8c617](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05eeaef7ea8c617) patriziavillani *February 12, 2020*
+
+>**Delete gestione_utenze_sigla.rst**
+>
+>[50b291211471d97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/50b291211471d97) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[bdbb7dfa99c54cf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bdbb7dfa99c54cf) patriziavillani *February 12, 2020*
+
+>**Create gestione_utenze.rst**
+>
+>[42c8b6c0de186bb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/42c8b6c0de186bb) patriziavillani *February 12, 2020*
+
+>**Create index.rst**
+>
+>[cfcfa470c74a8e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cfcfa470c74a8e2) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[105d5bdff7164c7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/105d5bdff7164c7) patriziavillani *February 12, 2020*
+
+>**Create gestione_utenze_sigla.rst**
+>
+>[10c90b7b441b66a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10c90b7b441b66a) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[4c2430af7da81b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c2430af7da81b9) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[cdbe1ce8f0d41dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cdbe1ce8f0d41dd) patriziavillani *February 12, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[46aff9e76835186](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46aff9e76835186) patriziavillani *February 12, 2020*
+
+>**Update index.rst**
+>
+>[6c48e6a1ac9af56](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c48e6a1ac9af56) patriziavillani *February 12, 2020*
 
 >**Commit and push funzionalita Visualizzazione Consegne Ordini e Evasione Forzata Ordini d’acquisto**
 >
