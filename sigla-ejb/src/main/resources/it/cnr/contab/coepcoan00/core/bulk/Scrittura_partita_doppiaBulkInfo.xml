@@ -207,7 +207,8 @@
 	<fieldProperty
 		name="find_terzo"
 		property="terzo"
-		inputType="SEARCHTOOL" 
+		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty

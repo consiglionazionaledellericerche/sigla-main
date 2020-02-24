@@ -165,8 +165,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<filesToInclude>*publiccode.yml</filesToInclude>
-
+							<filesToInclude>docs/conf.py</filesToInclude>
 							<replacements>
 								<replacement>
 									<token>release.*</token>
