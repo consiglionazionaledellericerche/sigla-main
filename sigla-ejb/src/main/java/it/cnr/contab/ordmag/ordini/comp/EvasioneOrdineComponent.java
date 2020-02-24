@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -188,7 +188,7 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
 					throw new DetailedRuntimeException("Per la consegna "+obj.getConsegnaOrdineString()+" è necessario indicare se sdoppiare la riga o evaderla forzatamente");
 			});
 	
-	        final Map<OrdineAcqBulk, Map<OrdineAcqRigaBulk, List<OrdineAcqConsegnaBulk>>> mapOrdine =null;
+	        final Map<OrdineAcqBulk, Map<OrdineAcqRigaBulk, List<OrdineAcqConsegnaBulk>>> mapOrdine =
 	       		selectedElements.get().collect(Collectors.groupingBy(o -> o.getOrdineAcqRiga().getOrdineAcq(),
 		        					Collectors.groupingBy(o -> o.getOrdineAcqRiga())));
 	

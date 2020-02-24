@@ -315,6 +315,9 @@ public class CRUDVar_stanz_resBP extends SimpleCRUDBP {
 					el.setMapMotivazioneVariazione(Optional.ofNullable(el.getTiMotivazioneVariazione()).orElse(Pdg_variazioneBulk.MOTIVAZIONE_GENERICO));	
 					el.setStorageMatricola(el.getIdMatricola());
 					el.setAnnoFromPianoEconomico(this.getAnnoFromPianoEconomico());
+					el.setProgettoRimodulatoForSearch(
+							Optional.ofNullable(el.getProgettoRimodulazione()).flatMap(rim->Optional.ofNullable(rim.getProgetto()))
+									.orElse(null));
 				});
 		return var;
 	}

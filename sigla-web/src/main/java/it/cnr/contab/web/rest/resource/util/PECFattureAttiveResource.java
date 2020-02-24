@@ -32,7 +32,7 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,7 +93,7 @@ public class PECFattureAttiveResource implements PECFattureAttiveLocal {
             final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
                     documentiCollegatiDocAmmService.getStorageObjectByPath(
                             documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
-                                    .concat(StorageService.SUFFIX).concat(nomeFileP7m)));
+                                    .concat(StorageDriver.SUFFIX).concat(nomeFileP7m)));
             if (storageObjectByPath.isPresent()) {
                 fatturaService.inviaFatturaElettronica(
                         config.getVal01(),
@@ -125,7 +125,7 @@ public class PECFattureAttiveResource implements PECFattureAttiveLocal {
             final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(
                     documentiCollegatiDocAmmService.getStorageObjectByPath(
                             documentiCollegatiDocAmmService.recuperoFolderFatturaByPath(fattura_attivaBulk).getPath()
-                                    .concat(StorageService.SUFFIX).concat(nomeFileP7m)));
+                                    .concat(StorageDriver.SUFFIX).concat(nomeFileP7m)));
             if (storageObjectByPath.isPresent()) {
                 fattura_attivaBulk.setNomeFileInvioSdi(docAmmFatturazioneElettronicaComponentSession.recuperoNomeFileXml(userContext, fattura_attivaBulk).concat(".p7m"));
                 fattura_attivaBulk.setToBeUpdated();

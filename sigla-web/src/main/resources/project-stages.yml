@@ -131,6 +131,10 @@ siopeplus:
 liquibase:
   bootstrap:
     esercizio: 2019
+
+cnr:
+  storage:
+    driver: cmis
 ---
 project:
   stage: demo-h2
@@ -155,6 +159,9 @@ thorntail:
 spring:
   profiles:
     active: liquibase
+cnr:
+  storage:
+    driver: filesystem
 ---
 project:
   stage: demo-postgres
@@ -176,6 +183,9 @@ thorntail:
 spring:
   profiles:
     active: liquibase
+cnr:
+  storage:
+    driver: filesystem
 ---
 project:
   stage: demo-oracle
@@ -192,6 +202,9 @@ thorntail:
 spring:
   profiles:
     active: liquibase
+cnr:
+  storage:
+    driver: filesystem
 ---
 project:
   stage: production-cnr

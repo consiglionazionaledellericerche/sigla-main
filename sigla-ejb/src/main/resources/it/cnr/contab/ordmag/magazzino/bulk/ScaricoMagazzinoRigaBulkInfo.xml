@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
   ~
   ~     This program is free software: you can redistribute it and/or modify
   ~     it under the terms of the GNU Affero General Public License as
@@ -81,11 +81,12 @@
 		nullable="false"
 		enabledOnEdit="true"
 		command="doDefault"
+		style="text-align: right"
 		readonlyProperty="ROCoefConv"
 		label="Coeff. Conversione" />
  	<fieldProperty
-		name="qtScarico"
-		property="qtScarico"
+		name="quantita"
+		property="quantita"
 		inputType="TEXT"
 		inputSize="10"
 		nullable="false"
@@ -177,7 +178,7 @@
 	<formFieldProperty
 		name="coefConv" />
 	<formFieldProperty
-		name="qtScarico" />
+		name="quantita" />
  	<formFieldProperty
 		name="qtScaricoConvertita" />
 	
@@ -200,7 +201,7 @@
 	<columnFieldProperty
 		name="dsBeneServizio" />	
 	<columnFieldProperty
-		name="qtScarico" 
+		name="quantita"
 		inputType="ROTEXT"
 		label="Q.tà" />
 

@@ -40,7 +40,7 @@ import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
-import it.cnr.contab.pdg00.bulk.Var_stanz_resHome;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resHome;
 import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -935,9 +935,9 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 				       		sqlVarRes.closeParenthesis();
 				       		
 				       		sqlVarRes.addTableToHeader("V_LINEA_ATTIVITA_VALIDA");
-				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "PDG_VARIAZIONE_RIGA_GEST.ESERCIZIO");
-				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "PDG_VARIAZIONE_RIGA_GEST.CD_CDR_ASSEGNATARIO");
-				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "PDG_VARIAZIONE_RIGA_GEST.CD_LINEA_ATTIVITA");
+				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.ESERCIZIO", "VAR_STANZ_RES_RIGA.ESERCIZIO");
+				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_CENTRO_RESPONSABILITA", "VAR_STANZ_RES_RIGA.CD_CDR");
+				       		sqlVarRes.addSQLJoin("V_LINEA_ATTIVITA_VALIDA.CD_LINEA_ATTIVITA", "VAR_STANZ_RES_RIGA.CD_LINEA_ATTIVITA");
 				       		sqlVarRes.addSQLClause(FindClause.AND,"V_LINEA_ATTIVITA_VALIDA.PG_PROGETTO",SQLBuilder.EQUALS,rimodulazione.getPg_progetto());    		
 	
 				       		List<Var_stanz_resBulk> resultVarRes = homeVarRes.fetchAll(sqlVarRes);
@@ -974,7 +974,7 @@ public class RimodulaProgettoRicercaComponent extends it.cnr.jada.comp.CRUDCompo
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		} catch (RuntimeException e) {
-            throw handleException(  e.getCause() );
+            throw handleException(e);
 		} catch(Exception e) {
 			throw handleException(e);
 		}

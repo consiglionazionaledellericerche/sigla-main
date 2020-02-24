@@ -112,25 +112,27 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 			try {
 				Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
-				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)getParentController().getParentController().getModel();
-				rimodulazione.getDettagliPianoEconomicoAnnoCorrente().stream()
-					.filter(ppe->Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
-					.filter(ppe->!ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
-					.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
-					.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
-					.filter(ppe->!ppe.isDetailRimodulatoEliminato())
-					.filter(ppe->Optional.ofNullable(ppe.getEsercizio_voce()).isPresent())
-					.filter(ppe->Optional.ofNullable(ppe.getTi_appartenenza()).isPresent())
-					.filter(ppe->Optional.ofNullable(ppe.getTi_gestione()).isPresent())
-					.filter(ppe->Optional.ofNullable(ppe.getCd_elemento_voce()).isPresent())
-					.filter(ppe->ppe.getEsercizio_voce().equals(assVoce.getEsercizio_voce()))
-					.filter(ppe->ppe.getTi_appartenenza().equals(assVoce.getTi_appartenenza()))
-					.filter(ppe->ppe.getTi_gestione().equals(assVoce.getTi_gestione()))
-					.filter(ppe->ppe.getCd_elemento_voce().equals(assVoce.getCd_elemento_voce()))
-					.findFirst().ifPresent(ppe->{
-						throw new DetailedRuntimeException("Associazione non possibile! La voce di bilancio "+ppe.getCd_elemento_voce()+
-								" risulta già essere stata associata alla voce economica "+ppe.getCd_voce_piano()+"!");
+				if (!assVoce.isDetailRimodulatoEliminato()) {
+					Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk) getParentController().getParentController().getModel();
+					rimodulazione.getDettagliPianoEconomicoAnnoCorrente().stream()
+							.filter(ppe -> Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
+							.filter(ppe -> !ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
+							.filter(ppe -> Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
+							.flatMap(ppe -> ppe.getVociBilancioAssociate().stream())
+							.filter(ppe -> !ppe.isDetailRimodulatoEliminato())
+							.filter(ppe -> Optional.ofNullable(ppe.getEsercizio_voce()).isPresent())
+							.filter(ppe -> Optional.ofNullable(ppe.getTi_appartenenza()).isPresent())
+							.filter(ppe -> Optional.ofNullable(ppe.getTi_gestione()).isPresent())
+							.filter(ppe -> Optional.ofNullable(ppe.getCd_elemento_voce()).isPresent())
+							.filter(ppe -> ppe.getEsercizio_voce().equals(assVoce.getEsercizio_voce()))
+							.filter(ppe -> ppe.getTi_appartenenza().equals(assVoce.getTi_appartenenza()))
+							.filter(ppe -> ppe.getTi_gestione().equals(assVoce.getTi_gestione()))
+							.filter(ppe -> ppe.getCd_elemento_voce().equals(assVoce.getCd_elemento_voce()))
+							.findFirst().ifPresent(ppe -> {
+						throw new DetailedRuntimeException("Associazione non possibile! La voce di bilancio " + ppe.getCd_elemento_voce() +
+								" risulta già essere stata associata alla voce economica " + ppe.getCd_voce_piano() + "!");
 					});
+				}
 	        } catch (DetailedRuntimeException _ex) {
 	            throw new ValidationException(_ex.getMessage());
 	        }
@@ -167,25 +169,27 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
 		protected void validate(ActionContext actioncontext, OggettoBulk oggettobulk) throws ValidationException {
 			try {
 				Ass_progetto_piaeco_voceBulk assVoce = (Ass_progetto_piaeco_voceBulk)oggettobulk;
-				Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)getParentController().getParentController().getModel();
-				rimodulazione.getDettagliPianoEconomicoAltriAnni().stream()
-					.filter(ppe->Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
-					.filter(ppe->!ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
-					.filter(ppe->Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
-					.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
-					.filter(ppe->!ppe.isDetailRimodulatoEliminato())
-					.filter(ppe->Optional.ofNullable(ppe.getEsercizio_voce()).isPresent())
-					.filter(ppe->Optional.ofNullable(ppe.getTi_appartenenza()).isPresent())
-					.filter(ppe->Optional.ofNullable(ppe.getTi_gestione()).isPresent())
-					.filter(ppe->Optional.ofNullable(ppe.getCd_elemento_voce()).isPresent())
-					.filter(ppe->ppe.getEsercizio_voce().equals(assVoce.getEsercizio_voce()))
-					.filter(ppe->ppe.getTi_appartenenza().equals(assVoce.getTi_appartenenza()))
-					.filter(ppe->ppe.getTi_gestione().equals(assVoce.getTi_gestione()))
-					.filter(ppe->ppe.getCd_elemento_voce().equals(assVoce.getCd_elemento_voce()))
-					.findFirst().ifPresent(ppe->{
-						throw new DetailedRuntimeException("Associazione non possibile! La voce di bilancio "+ppe.getCd_elemento_voce()+
-								" risulta già essere stata associata alla voce economica "+ppe.getCd_voce_piano()+"!");
+				if (!assVoce.isDetailRimodulatoEliminato()) {
+					Progetto_rimodulazioneBulk rimodulazione = (Progetto_rimodulazioneBulk)getParentController().getParentController().getModel();
+					rimodulazione.getDettagliPianoEconomicoAltriAnni().stream()
+							.filter(ppe -> Optional.ofNullable(ppe.getVoce_piano_economico()).isPresent())
+							.filter(ppe -> !ppe.getVoce_piano_economico().equalsByPrimaryKey(assVoce.getProgetto_piano_economico().getVoce_piano_economico()))
+							.filter(ppe -> Optional.ofNullable(ppe.getVociBilancioAssociate()).isPresent())
+							.flatMap(ppe -> ppe.getVociBilancioAssociate().stream())
+							.filter(ppe -> !ppe.isDetailRimodulatoEliminato())
+							.filter(ppe -> Optional.ofNullable(ppe.getEsercizio_voce()).isPresent())
+							.filter(ppe -> Optional.ofNullable(ppe.getTi_appartenenza()).isPresent())
+							.filter(ppe -> Optional.ofNullable(ppe.getTi_gestione()).isPresent())
+							.filter(ppe -> Optional.ofNullable(ppe.getCd_elemento_voce()).isPresent())
+							.filter(ppe -> ppe.getEsercizio_voce().equals(assVoce.getEsercizio_voce()))
+							.filter(ppe -> ppe.getTi_appartenenza().equals(assVoce.getTi_appartenenza()))
+							.filter(ppe -> ppe.getTi_gestione().equals(assVoce.getTi_gestione()))
+							.filter(ppe -> ppe.getCd_elemento_voce().equals(assVoce.getCd_elemento_voce()))
+							.findFirst().ifPresent(ppe -> {
+						throw new DetailedRuntimeException("Associazione non possibile! La voce di bilancio " + ppe.getCd_elemento_voce() +
+								" risulta già essere stata associata alla voce economica " + ppe.getCd_voce_piano() + "!");
 					});
+				}
 	        } catch (DetailedRuntimeException _ex) {
 	            throw new ValidationException(_ex.getMessage());
 	        }

@@ -22,7 +22,7 @@
     <parent>
         <groupId>it.cnr.si.sigla</groupId>
         <artifactId>sigla-parent</artifactId>
-        <version>6.1.18-SNAPSHOT</version>
+        <version>6.1.33-SNAPSHOT</version>
     </parent>
     <dependencyManagement>
         <dependencies>
@@ -248,6 +248,11 @@
             <version>${siopeplus.version}</version>
         </dependency>
         <dependency>
+            <groupId>it.cnr.si.storage</groupId>
+            <artifactId>storage-cloud-filesystem</artifactId>
+            <version>${storage.cloud.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>${liquibase.version}</version>
@@ -318,12 +323,6 @@
                     <groupId>commons-logging</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jvnet.jaxb2_commons</groupId>

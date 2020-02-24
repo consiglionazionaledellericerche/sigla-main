@@ -360,6 +360,14 @@
 		/>
 	<findFieldProperty
 		name="id_classificazione"
-		/>	
+		/>
+	<form name="searchtool">
+		<formFieldProperty
+				name="cd_voce_ep"
+				inputSize="15" />
+		<formFieldProperty
+				name="ds_voce_ep"
+				inputSize="80"  />
+	</form>
 
 </bulkInfo>

@@ -3057,9 +3057,6 @@ public class DocumentoGenericoComponent
         return documentiContabiliTemporanei;
     }
 
-    /**
-     * Gestisce un cambiamento di pagina su un controllo tabbed {@link it.cnr.jada.util.jsp.JSPUtils.tabbed}
-     */
     private it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk getEuro(UserContext userContext) throws ComponentException {
 
         String cd_euro = null;
@@ -3308,12 +3305,10 @@ public class DocumentoGenericoComponent
         //documento.setCd_unita_organizzativa(documento.getCd_uo_origine());
         try {
             if (!documento.isGenericoAttivo()) {
-                it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome uoHome =
-                        (it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome) getHome(userContext, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class);
-                if (documento
-                        .getCd_uo_origine()
-                        .equals(
-                                ((it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk) (getHome(userContext, it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk.class).fetchAll(uoHome.createSQLBuilderEsteso())).get(0))
+
+                Unita_organizzativa_enteHome uoEnteHome = (Unita_organizzativa_enteHome) getHome(userContext, Unita_organizzativa_enteBulk.class);
+                if (documento.getCd_uo_origine().equals(
+                                ((Unita_organizzativa_enteBulk) uoEnteHome.fetchAll(uoEnteHome.createSQLBuilder()).get(0))
                                         .getCd_unita_organizzativa()))
                     setEnte(userContext, documento);
             }
@@ -4199,7 +4194,7 @@ public class DocumentoGenericoComponent
      * Post: Tutte le modifiche effettuate sul compenso vengono annullate, mentre rimangono valide le
      * modifiche apportate al doc. amministrativo che ha aperto il compenso
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param userContext lo UserContext che ha generato la richiesta
      */
     public void rollbackToSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 
@@ -4494,7 +4489,7 @@ public class DocumentoGenericoComponent
      *
      * @param userContext lo userContext che ha generato la richiesta
      * @param stampa      l'OggettoBulk che rappresenta il contesto della ricerca.
-     * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
+     * @param terzo       l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
@@ -4849,7 +4844,7 @@ public class DocumentoGenericoComponent
      * Pre:  Una richiesta di impostare un savepoint e' stata generata
      * Post: Un savepoint e' stato impostato in modo che le modifiche apportate al doc. amministrativo vengono consolidate
      *
-     * @param    uc    lo UserContext che ha generato la richiesta
+     * @param    userContext lo UserContext che ha generato la richiesta
      */
     public void setSavePoint(UserContext userContext, String savePointName) throws ComponentException {
 

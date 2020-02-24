@@ -33,7 +33,7 @@ import it.cnr.contab.doccont00.intcass.bulk.DistintaCassiere1210Bulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.si.spring.storage.annotation.StorageType;
 import it.cnr.contab.util.Utility;
@@ -295,7 +295,7 @@ public class Lettera_pagam_esteroBulk extends Lettera_pagam_esteroBase implement
 						.orElse("0"),
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 

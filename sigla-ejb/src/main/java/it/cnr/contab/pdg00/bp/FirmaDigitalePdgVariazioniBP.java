@@ -56,7 +56,7 @@ import it.cnr.si.firmadigitale.firma.NotSignedEnvelopeException;
 import it.cnr.si.firmadigitale.firma.Verifica;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.commons.io.IOUtils;
 import org.bouncycastle.cms.CMSException;
@@ -880,7 +880,7 @@ public class FirmaDigitalePdgVariazioniBP extends
                         + lpad(archiviaStampaPdgVariazioneBulk
                         .getPg_variazione_pdg(), 5, '0')
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
     }
 

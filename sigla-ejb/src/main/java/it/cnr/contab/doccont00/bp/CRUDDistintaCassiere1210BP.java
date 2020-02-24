@@ -51,7 +51,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -249,7 +249,7 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
         InputStream is = documentiContabiliService.getResource(
                 documentiContabiliService.getStorageObjectByPath(
                         distintaCassiere1210Bulk.getStorePath()
-                                .concat(StorageService.SUFFIX)
+                                .concat(StorageDriver.SUFFIX)
                                 .concat("Distinta 1210 n. "
                                         + distintaCassiere1210Bulk.getPgDistinta() + ".pdf")
                 )

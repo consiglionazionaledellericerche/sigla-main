@@ -2,6 +2,9 @@ logger:
   level: DEBUG
 
 thorntail:
+  arquillian:
+    daemon:
+      port: 12347
   datasources:
     jdbc-drivers:
       h2:
@@ -77,36 +80,6 @@ thorntail:
     default-security-domain: other
     default-missing-method-permissions-deny-access: true
 
-repository:
-  base:
-    url: http://as1dock.si.cnr.it:8080/alfresco/
-org:
-  apache:
-    chemistry:
-      opencmis:
-        user: admin
-        password: admin
-        session:
-          repository:
-            id: -default-
-        binding:
-          browser:
-            url: ${repository.base.url}api/${org.apache.chemistry.opencmis.session.repository.id}/public/cmis/versions/1.1/browser
-          spi:
-            type: browser
-          connecttimeout: 50000
-          readtimeout: 3000000
-          httpinvoker:
-            classname: org.apache.chemistry.opencmis.client.bindings.spi.http.DefaultHttpInvoker
-          auth:
-            http:
-              basic: true
-            soap:
-              usernametoken: false
-        cache:
-          path:
-            omit: true
-
 siopeplus:
   certificate:
     path: file:${user.home}/cert/siope+/cert.p12
@@ -119,3 +92,7 @@ siopeplus:
 liquibase:
   bootstrap:
     esercizio: 2019
+
+cnr:
+  storage:
+    driver: filesystem

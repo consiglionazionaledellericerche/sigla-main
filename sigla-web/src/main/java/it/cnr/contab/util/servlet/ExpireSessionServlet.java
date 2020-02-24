@@ -59,57 +59,7 @@ public class ExpireSessionServlet extends HttpServlet implements Serializable,Ht
 		super.init();
 		new Thread(new ExpireThread()).start();	
 	}
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		processRequest(req, resp);
-	}
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		processRequest(req, resp);
-	}
-	protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String invalidateSession = req.getParameter("sessionID");
-		if (invalidateSession != null && sessionObjects.get(invalidateSession) != null){
-			sessionObjects.get(invalidateSession).invalidate();
-		}else{
-			int indice = 0;
-			resp.setContentType("text/html");			
-			resp.getWriter().println("<body bgcolor=\"#C4CAD4\"><em><font color=\"#6666aa\" size=\"2\" face=\"Arial, Helvetica, sans-serif\">");		
-			resp.getWriter().println("<TABLE border=1>");
-			resp.getWriter().println("<TR><TD align=center>Num.</TD><TD align=center>Users</TD><TD align=center>Session Id</TD><TD align=center>Creation Time</TD><TD align=center>Last Access Time</TD></TR>");
-	    	for (Enumeration sessions = sessionObjects.elements();sessions.hasMoreElements();){
-				try{
-		    		HttpSession session = (HttpSession)sessions.nextElement();
-					String id = session.getId();
-					Date creationDate = new Date(session.getCreationTime());
-					Date lastAccessedTime = new Date(session.getLastAccessedTime());
-					UserContext userContext = (UserContext) session.getAttribute("UserContext");
-		    		indice++;
-		    		resp.getWriter().println("<TR>");
-		    		resp.getWriter().println("<TD>");
-		    		resp.getWriter().println(indice);
-		    		resp.getWriter().println("</TD>");	    		
-		    		resp.getWriter().println("<TD>");
-		    		resp.getWriter().println(userContext==null?"nbsp;":userContext.getUser());
-		    		resp.getWriter().println("</TD>");	    		
-		    		resp.getWriter().println("<TD>");
-		    		resp.getWriter().println(id);
-		    		resp.getWriter().println("</TD>");
-		    		resp.getWriter().println("<TD>");
-		    		resp.getWriter().println(creationDate);
-		    		resp.getWriter().println("</TD>");
-		    		resp.getWriter().println("<TD>");
-		    		resp.getWriter().println(lastAccessedTime);
-		    		resp.getWriter().println("</TD>");
-		    		resp.getWriter().println("</TR>");
-				}catch(IllegalStateException e){
-				}
-	    	}		
-			resp.getWriter().println("</TABLE>");
-			resp.getWriter().println("</font></em></body>");
-		}
-	}
-		
+
 	class ExpireThread implements Runnable {
 		public void run()
 		{

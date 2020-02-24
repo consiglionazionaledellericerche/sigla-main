@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaDettaglioBulk;
@@ -75,7 +75,7 @@ public class RichiesteCMISService extends StoreService {
                             .map(esercizio -> "Anno ".concat(String.valueOf(esercizio)))
                             .orElse("0")
             ).stream().collect(
-                    Collectors.joining(StorageService.SUFFIX)
+                    Collectors.joining(StorageDriver.SUFFIX)
             );
             path = createFolderRichiestaIfNotPresent(path, richiestaUop);
             return path;

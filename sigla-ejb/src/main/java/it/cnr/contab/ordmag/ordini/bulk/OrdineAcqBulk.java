@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -48,6 +48,7 @@ import it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
 import it.cnr.contab.ordmag.anag00.NotaPrecodificataBulk;
 import it.cnr.contab.ordmag.anag00.NumerazioneOrdBulk;
 import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
@@ -77,7 +78,7 @@ implements	IDocumentoAmministrativoBulk,
 	private java.util.Vector documentiContabiliCancellati = new Vector();
 	private Map ordineAss_totaliMap = null;
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
-	private Boolean isAbilitatoTuttiMagazzini = false;
+	private MagazzinoBulk unicoMagazzinoAbilitato = null;
 	protected BulkList listaRichiesteTrasformateInOrdine= new BulkList();
 	protected BulkList richiesteSelezionate= new BulkList();
 	protected BulkList richiesteDaTrasformareInOrdineColl= new BulkList();
@@ -1030,12 +1031,6 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 	public boolean isROFirmatario() {
 		return getFirmatarioPers() == null || getFirmatarioPers().getCrudStatus() == NORMAL;
 	}
-	public Boolean getIsAbilitatoTuttiMagazzini() {
-		return isAbilitatoTuttiMagazzini;
-	}
-	public void setIsAbilitatoTuttiMagazzini(Boolean isAbilitatoTuttiMagazzini) {
-		this.isAbilitatoTuttiMagazzini = isAbilitatoTuttiMagazzini;
-	}	
 	public Dictionary getTiAttivitaKeys() {
 		OrderedHashtable d = (OrderedHashtable)getTiAttivitaKeysForSearch();
 		if (d == null) return null;
@@ -1344,5 +1339,11 @@ Rappresenta le sedi, reali o per gestione, in cui si articola un soggetto anagra
 				.concat(this.getCdNumeratore())
 				.concat("/")
 				.concat(String.valueOf(this.getNumero()));
+	}
+	public MagazzinoBulk getUnicoMagazzinoAbilitato() {
+		return unicoMagazzinoAbilitato;
+	}
+	public void setUnicoMagazzinoAbilitato(MagazzinoBulk unicoMagazzinoAbilitato) {
+		this.unicoMagazzinoAbilitato = unicoMagazzinoAbilitato;
 	}
 }

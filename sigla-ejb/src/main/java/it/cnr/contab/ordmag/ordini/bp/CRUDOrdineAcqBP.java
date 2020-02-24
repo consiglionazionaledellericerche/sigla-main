@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -17,20 +17,24 @@
 
 package it.cnr.contab.ordmag.ordini.bp;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.ObbligazioniCRUDController;
 import it.cnr.contab.docamm00.bp.VoidableBP;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
+import it.cnr.contab.docamm00.tabrif.bulk.Categoria_gruppo_inventBulk;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.core.bulk.Accertamento_scadenzarioBulk;
 import it.cnr.contab.doccont00.core.bulk.IDefferUpdateSaldi;
@@ -44,7 +48,14 @@ import it.cnr.contab.ordmag.ordini.service.OrdineAcqCMISService;
 import it.cnr.contab.ordmag.richieste.bulk.AllegatoRichiestaBulk;
 import it.cnr.contab.ordmag.richieste.bulk.RichiestaUopBulk;
 import it.cnr.contab.ordmag.richieste.service.RichiesteCMISService;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.GenerazioneReportException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
@@ -57,18 +68,22 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Gestisce le catene di elementi correlate con il documento in uso.
  */
 public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, OrdineAcqBulk> implements IDocumentoAmministrativoBP, VoidableBP, IDefferedUpdateSaldiBP  {
 
+	private static final DateFormat PDF_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
 	private final SimpleDetailCRUDController dettaglioObbligazioneController;
 	private it.cnr.contab.doccont00.core.bulk.OptionRequestParameter userConfirm = null;
 	private boolean carryingThrough = false;
 	protected it.cnr.contab.docamm00.docs.bulk.Risultato_eliminazioneVBulk deleteManager = null;
 	private boolean isDeleting = false;
-	public boolean isInputReadonly() 
+
+	public boolean isInputReadonly()
 	{
 		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
 		if(ordine == null)
@@ -98,6 +113,9 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		@Override
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			int index = super.addDetail(oggettobulk);
+			OrdineAcqRigaBulk dettaglio =(OrdineAcqRigaBulk)oggettobulk;
+			dettaglio.setDspMagazzino(dettaglio.getOrdineAcq().getUnicoMagazzinoAbilitato());
+			dettaglio.setDspLuogoConsegna(dettaglio.getDspMagazzino().getLuogoConsegnaMag());
 			return index;
 		}
 
@@ -108,7 +126,11 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		@Override
 		public int addDetail(OggettoBulk oggettobulk) throws BusinessProcessException {
 			OrdineAcqConsegnaBulk consegna = (OrdineAcqConsegnaBulk)oggettobulk;
-			consegna.setTipoConsegna(consegna.getOrdineAcqRiga().getTipoConsegnaDefault());
+			OrdineAcqRigaBulk dettaglio =consegna.getOrdineAcqRiga();
+			consegna.setTipoConsegna(dettaglio.getTipoConsegnaDefault());
+			consegna.setMagazzino(dettaglio.getOrdineAcq().getUnicoMagazzinoAbilitato());
+			consegna.setLuogoConsegnaMag(consegna.getMagazzino().getLuogoConsegnaMag());
+
 			int index = super.addDetail(oggettobulk);
 			return index;
 		}
@@ -419,6 +441,67 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		return (ordine == null || ordine.getNumero() == null);
 	}
 
+	private String preparaFileNamePerStampa(String reportName) {
+		String fileName = reportName;
+		fileName = fileName.replace('/', '_');
+		fileName = fileName.replace('\\', '_');
+		if (fileName.startsWith("_"))
+			fileName = fileName.substring(1);
+		if (fileName.endsWith(".jasper"))
+			fileName = fileName.substring(0, fileName.length() - 7);
+		fileName = fileName + ".pdf";
+		return fileName;
+	}
+	private String getOutputFileNameOrdine(String reportName, OrdineAcqBulk ordine) {
+		String fileName = preparaFileNamePerStampa(reportName);
+		fileName = PDF_DATE_FORMAT.format(new java.util.Date()) + '_' + ordine.recuperoIdOrdineAsString() + '_' + fileName;
+		return fileName;
+	}
+	public void stampaOrdine(ActionContext actioncontext) throws Exception {
+		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
+		UserContext userContext = actioncontext.getUserContext();
+		File f = stampaOrdine(userContext,ordine);
+
+		((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+		OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+		((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+		IOUtils.copy(new FileInputStream(f), os);
+//		byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+//		int buflength;
+//		while ((buflength = fo.read(buffer)) > 0) {
+//			os.write(buffer,0,buflength);
+//		}
+//		is.close();
+		os.flush();
+
+	}
+	public File stampaOrdine(
+			UserContext userContext,
+			OrdineAcqBulk ordine) throws ComponentException {
+		try {
+			String jasperOrdineName = "ordini_acq.jasper";
+			String nomeFileOrdineOut = getOutputFileNameOrdine(jasperOrdineName, ordine);
+			File output = new File(System.getProperty("tmp.dir.SIGLAWeb") + "/tmp/", File.separator + nomeFileOrdineOut);
+			Print_spoolerBulk print = new Print_spoolerBulk();
+			print.setFlEmail(false);
+			print.setReport("/ordmag/ordini/iss/" + jasperOrdineName);
+			print.setNomeFile(nomeFileOrdineOut);
+			print.setUtcr(userContext.getUser());
+			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			print.addParam("cd_cds", ordine.getCdCds(), String.class);
+			print.addParam("cd_unita_operativa", ordine.getCdUnitaOperativa(), String.class);
+			print.addParam("esercizio", ordine.getEsercizio(), Integer.class);
+			print.addParam("cd_numeratore", ordine.getCdNumeratore(), String.class);
+			print.addParam("numero", ordine.getNumero(), Integer.class);
+			Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
+
+			FileOutputStream f = new FileOutputStream(output);
+			f.write(report.getBytes());
+			return output;
+		} catch (IOException e) {
+			throw new GenerazioneReportException("Generazione Stampa non riuscita", e);
+		}
+	}
 	public boolean isSalvaDefinitivoButtonHidden() {
 
 		OrdineAcqBulk ordine = (OrdineAcqBulk)getModel();
@@ -599,4 +682,19 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		}
 	}
 
+	public ContoBulk recuperoContoDefault(
+			ActionContext context,
+			Categoria_gruppo_inventBulk categoria_gruppo_inventBulk)
+			throws it.cnr.jada.action.BusinessProcessException {
+
+		try {
+
+			return ((OrdineAcqComponentSession)createComponentSession()).recuperoContoDefault(context.getUserContext(), categoria_gruppo_inventBulk);
+
+		} catch (it.cnr.jada.comp.ComponentException| PersistencyException e) {
+			throw handleException(e);
+		} catch (java.rmi.RemoteException e) {
+			throw handleException(e);
+		}
+	}
 }

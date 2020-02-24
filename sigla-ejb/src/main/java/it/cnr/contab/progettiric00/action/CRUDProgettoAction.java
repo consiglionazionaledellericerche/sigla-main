@@ -792,5 +792,23 @@ public class CRUDProgettoAction extends CRUDAbstractProgettoAction {
 		}
 	}
 
+	public Forward doOnEsercizioPianoChange(ActionContext actioncontext) {
+		try {
+			fillModel(actioncontext);
+			TestataProgettiRicercaBP bp = (TestataProgettiRicercaBP)getBusinessProcess(actioncontext);
+			Optional<Progetto_piano_economicoBulk> optPpe = Optional.ofNullable(bp.getCrudPianoEconomicoAltriAnni())
+					.flatMap(el->Optional.ofNullable(el.getModel()))
+					.filter(Progetto_piano_economicoBulk.class::isInstance)
+					.map(Progetto_piano_economicoBulk.class::cast);
+
+			if (optPpe.isPresent() && optPpe.map(Progetto_piano_economicoBulk::isAnnoPianoEconomicoMinoreAnnoInizio).orElse(Boolean.FALSE))
+				optPpe.get().setIm_spesa_finanziato(BigDecimal.ZERO);
+			return actioncontext.findDefaultForward();
+		}
+		catch(Throwable throwable)
+		{
+			return handleException(actioncontext, throwable);
+		}
+	}
 }
 

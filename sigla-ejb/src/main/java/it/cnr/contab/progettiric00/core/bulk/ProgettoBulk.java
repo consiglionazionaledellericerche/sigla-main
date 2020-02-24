@@ -50,7 +50,7 @@ import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 
 public class ProgettoBulk extends ProgettoBase implements AllegatoParentBulk {
 
@@ -1034,6 +1034,17 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 	}
 
 	/*
+    	Ritorna l'anno di inizio utile per il caricamento del piano economico
+    	E' sempre pari a 14 anni precedenti all'anno inizio.
+ 	*/
+	public Integer getAnnoInizioForPianoEconomico() {
+		return Optional.ofNullable(this.getAnnoInizioOf())
+				.map(el->el-Progetto_piano_economicoBulk.ANNIPRE_PIANOECONOMICO)
+				.filter(el->el.compareTo(0)>0)
+				.orElse(0);
+	}
+
+	/*
 	 * Indica che è obbligatorio indicare le date del progetto
 	 */
 	public boolean isDatePianoEconomicoRequired() {
@@ -1208,12 +1219,14 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 
 		this.getAllDetailsProgettoPianoEconomico().stream()
 			.filter(progetto_piano_economicoBulk -> Optional.ofNullable(progetto_piano_economicoBulk.getEsercizio_piano()).isPresent())
-			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioOf())<0)
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioForPianoEconomico())<0)
 			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
 			.min(Comparator.comparing(Integer::valueOf))
 			.ifPresent(annoMin->{
-				throw new ApplicationRuntimeException("Non è possibile indicare una data di inizio con anno maggiore del "+annoMin+
-						" per il quale risulta già caricato un piano economico.");
+				throw new ApplicationRuntimeException("Non è possibile indicare una data di inizio con anno maggiore del "+
+						(annoMin+Progetto_piano_economicoBulk.ANNIPRE_PIANOECONOMICO)+" essendo già caricato un piano economico "+
+						"per l'anno "+annoMin+" (è possibile associare piani economici di massimo "+Progetto_piano_economicoBulk.ANNIPRE_PIANOECONOMICO+
+						" anni precedenti rispetto alla data di inizio del progetto).");
 			});
 
 		this.getAllDetailsProgettoPianoEconomico().stream()
@@ -1310,7 +1323,7 @@ public void setUnita_organizzativa(it.cnr.contab.config00.sto.bulk.Unita_organiz
 				"Progetti",
 				getCMISFolderName()
 		).stream().collect(
-				Collectors.joining(StorageService.SUFFIX)
+				Collectors.joining(StorageDriver.SUFFIX)
 		);
 	}
 	

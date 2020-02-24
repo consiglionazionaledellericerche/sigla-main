@@ -22,6 +22,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String SK_SDI = "SDI";
 	public final static String PK_EMAIL_PEC = "EMAIL_PEC";
 	public final static String PK_TERZO_SPECIALE = "TERZO_SPECIALE";
+	public final static String PK_ECONOMICO_PATRIMONIALE = "ECONOMICO_PATRIMONIALE";
+	public final static String SK_IMPUTAZIONE_MANUALE = "IMPUTAZIONE_MANUALE";
 	public final static String SK_CODICE_DIVERSI_PGIRO = "CODICE_DIVERSI_PGIRO";
 	public final static String SK_CODICE_DIVERSI_IMPEGNI = "CODICE_DIVERSI_IMPEGNI";
 	public final static String PK_OBBLIGATORIETA_ORDINI = "OBBLIGATORIETA_ORDINI";
@@ -48,6 +50,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_CD_DIVISA = "CD_DIVISA";
 	public final static String SK_EURO = "EURO";
 
+	public final static String PK_CDS_SPECIALE = "CDS_SPECIALE";
+	public final static String SK_CDS_SAC = "CDS_SAC";
 	public final static String PK_ELEMENTO_VOCE_SPECIALE = "ELEMENTO_VOCE_SPECIALE";
 	public final static String SK_VOCE_IVA_FATTURA_ESTERA = "VOCE_IVA_FATTURA_ESTERA";
 	public final static String SK_TEMPO_IND_SU_PROGETTI_FINANZIATI = "TEMPO_IND_SU_PROGETTI_FINANZIATI";

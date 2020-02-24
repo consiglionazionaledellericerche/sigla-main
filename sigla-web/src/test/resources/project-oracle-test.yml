@@ -1,0 +1,103 @@
+logger:
+  level: DEBUG
+
+thorntail:
+  network:
+    socket-binding-groups:
+      standard-sockets:
+        port-offset: 10
+        default-interface: public
+  arquillian:
+    daemon:
+      port: 12346
+  datasources:
+    jdbc-drivers:
+      oracle:
+        driver-class-name: oracle.jdbc.OracleDriver
+        driver-module-name: com.oracle.jdbc
+    data-sources:
+      SIGLA:
+        driver-name: oracle
+        connection-url: jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF
+        user-name: PCIR009
+        password: dbform
+        initial-pool-size: 1
+        min-pool-size: 10
+        max-pool-size: 250
+        use-java-context: true
+        jndi-name: java:/jdbc/CIR
+        timeout:
+          idle-timeout-minutes: 1
+          query-timeout: 600
+  transactions:
+    default-timeout: 3600
+  bind:
+    address: 0.0.0.0
+  context:
+    path: SIGLA
+  logging:
+    loggers:
+      org.jboss.as.ejb3:
+        level: ERROR
+      org.jboss.as.dependency.private:
+        level: ERROR
+      org.jboss.as.server.deployment:
+        level: ERROR
+      io.undertow.servlet:
+        level: ERROR
+  management:
+    http-interface-management-interface:
+      security-realm: ManagementRealm
+    security-realms:
+      ManagementRealm:
+        local-authentication:
+          default-user: '$local'
+          skip-group-loading: true
+        in-memory-authentication:
+          users:
+            admin:
+              password: changeit!
+        in-memory-authorization:
+          users:
+            admin:
+              roles:
+                - admin
+      ApplicationRealm:
+        local-authentication:
+          default-user: '$local'
+          allowed-users: '*'
+          skip-group-loading: true
+        in-memory-authentication:
+          users:
+            iit:
+              password: changeit!
+            brevetti:
+              password: changeit!
+        in-memory-authorization:
+          users:
+            iit:
+              roles:
+                - IITRole
+            brevetti:
+              roles:
+                - BrevettiRole
+  remoting:
+    http-connectors:
+      http-remoting-connector:
+        connector-ref: default
+        security-realm: ApplicationRealm
+  ejb3:
+    default-security-domain: other
+    default-missing-method-permissions-deny-access: true
+
+siopeplus:
+  certificate:
+    path: file:${user.home}/cert/siope+/cert.p12
+    password: changeit
+  codice:
+    a2a: A2A-00000000
+    uni:
+      uo: 000000
+cnr:
+  storage:
+    driver: filesystem

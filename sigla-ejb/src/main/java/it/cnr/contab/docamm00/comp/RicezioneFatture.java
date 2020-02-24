@@ -94,7 +94,7 @@ import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StorageService;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
@@ -221,7 +221,7 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                 month,
                 day
         ).stream().collect(
-                Collectors.joining(StorageService.SUFFIX)
+                Collectors.joining(StorageDriver.SUFFIX)
         );
         final StorageObject storageObjectByPath = storeService.getStorageObjectByPath(path, true);
         path = storeService.createFolderIfNotPresent(
