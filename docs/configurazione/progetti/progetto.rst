@@ -16,7 +16,7 @@ I dati anagrafici si possono sintetizzare in:
 - Area Progettuale di riferimento (tra quelle predefinite nella relativa anagrafica);
 - Fase di utilizzo: Previsione, Gestione o entrambi;
 - Descrizione del Progetto;
-- Dipartimento (coincidente con la struttura organizzativa referente del Progetto);
+- Dipartimento (coincidente con la struttura organizzativa referente del Progetto e con la definizione del Programma indicato nel riepilogo ufficiale per Programmi/Missioni degli allegati alla previsione );
 - :ref:`uo-coordinatrice`;
 - :ref:`responsabile-progetto`;
 
@@ -26,7 +26,7 @@ Dati Contabili
 I dati cotabili rappresentano l'insieme delle informazioni che determinano l'uso del progetto nelle gestioni Sigla:
 
 - :ref:`tipo-finanziamento` (dalla lista valori disponibile);
-- Data inizio, Data Fine, Data Proroga (data inizio e fine del Progetto guidano la compilazione del piano economico, ove richiesto);
+- Data inizio, Data Fine, Data Proroga (data inizio e fine del Progetto guidano la compilazione del piano economico, ove richiesto, e rappresentano la durata scientifica del Progetto stesso);
 - Importo Finanziato (proveniente da Fonti esterne);
 - Importo Cofinanziato (proveniente da Fonti interne).
 
@@ -34,7 +34,7 @@ Piano economico di un Progetto
 ==============================
 
 Il Piano economico di un progetto deve essere obbligatoriamente indicato quando la Tipologia di Finanziamento lo richiede. 
-Successivamente alla sua definizione esso può essere utilizzato per consultare la 'Scheda Progetto' con tutta la situazione contabile consuntiva alla data
+Successivamente alla sua definizione esso può essere utilizzato per consultare la 'Scheda Progetto' con tutta la situazione contabile consuntiva alla data, e può essere modificato, dopo l'approvazione della scheda Progetto, attraverso le rimodulazioni.
 
 Rimodulazione di un Progetto
 ============================
