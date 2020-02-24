@@ -125,6 +125,10 @@
 		</profile>
 		<profile>
 			<id>docs</id>
+			<properties>
+                <timestamp>${maven.build.timestamp}</timestamp>
+                <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+            </properties>
 			<build>
 				<plugins>
 					<plugin>
