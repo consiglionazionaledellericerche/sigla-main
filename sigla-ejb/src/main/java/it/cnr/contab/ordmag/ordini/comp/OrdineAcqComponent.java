@@ -2283,115 +2283,163 @@
 			sql.generateJoin(OrdineAcqRigaBulk.class, Voce_ivaBulk.class, "voceIva", "VOCE_IVA");
 			sql.generateJoin(OrdineAcqBulk.class, TerzoBulk.class, "fornitore", "fornitore");
 
-			Optional<?> o = null;
-			o = Optional.ofNullable(parametri.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOperativa);
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, o.get());
 
-			o = Optional.ofNullable(parametri.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino);
-			if (o.isPresent()) {
-				sql.addClause(FindClause.AND, "cdMagazzino", SQLBuilder.EQUALS, o.get());
-				sql.addClause(FindClause.AND, "cdCdsMag", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getMagazzinoAbilitato().getCdCds()).get());
-			}
-			o = Optional.ofNullable(parametri.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdNumeratore);
-			if (o.isPresent())
-				sql.addClause("AND","cdNumeratore",SQLBuilder.EQUALS,o.get());
-
-			o = Optional.ofNullable(parametri.getDaDataOrdine());
-			if (o.isPresent())
-				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.GREATER_EQUALS,o.get());
-
-			o = Optional.ofNullable(parametri.getaDataOrdine());
-			if (o.isPresent())
-				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.LESS_EQUALS,o.get());
-
-			o = Optional.ofNullable(parametri.getDaNumeroOrdine());
-			if (o.isPresent())
-				sql.addClause("AND","numero" ,SQLBuilder.GREATER_EQUALS,o.get());
-
-			o = Optional.ofNullable(parametri.getaNumeroOrdine());
-			if (o.isPresent())
-				sql.addClause("AND","numero",SQLBuilder.LESS_EQUALS,o.get());
-
-			o = Optional.ofNullable(parametri.getTerzo()).map(TerzoBulk::getCd_terzo);
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TERZO", SQLBuilder.EQUALS, o.get());
-
-			o = Optional.ofNullable(parametri.getDaDataOrdineDef());
-			if (o.isPresent())
-				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.GREATER_EQUALS,o.get());
-
-			o = Optional.ofNullable(parametri.getaDataOrdineDef());
-			if (o.isPresent())
-				sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.LESS_EQUALS,o.get());
+			Optional.ofNullable(parametri.getUnitaOperativaAbilitata()).map(UnitaOperativaOrdBulk::getCdUnitaOperativa)
+					.ifPresent(e->{
+						sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, e);
+					});
 
 
-			o = Optional.ofNullable(parametri.getDaBeneServizio()).map(Bene_servizioBulk::getCd_bene_servizio);
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO", SQLBuilder.GREATER_EQUALS, o.get());
 
-			o = Optional.ofNullable(parametri.getaBeneServizio()).map(Bene_servizioBulk::getCd_bene_servizio);
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO", SQLBuilder.LESS_EQUALS, o.get());
+			Optional.ofNullable(parametri.getMagazzinoAbilitato()).map(MagazzinoBulk::getCdMagazzino)
+					.ifPresent(e->{
+						sql.addClause(FindClause.AND, "cdMagazzino", SQLBuilder.EQUALS, e);
+						sql.addClause(FindClause.AND, "cdCdsMag", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getMagazzinoAbilitato().getCdCds()).get());
+					});
 
-			o = Optional.ofNullable(parametri.getaDataPrevConsegna());
-			if (o.isPresent())
-				sql.addClause("AND","dtPrevConsegna",SQLBuilder.GREATER_EQUALS,o.get());
+			Optional.ofNullable(parametri.getNumerazioneOrd()).map(NumerazioneOrdBulk::getCdNumeratore)
+					.ifPresent(e->{
+						sql.addClause("AND","cdNumeratore",SQLBuilder.EQUALS,e);
+					});
 
-			o = Optional.ofNullable(parametri.getaDataPrevConsegna());
-			if (o.isPresent())
-				sql.addClause("AND","dtPrevConsegna",SQLBuilder.LESS_EQUALS,o.get());
 
-			o = Optional.ofNullable(parametri.getUnitaOperativaRicevente()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa);
-			if (o.isPresent())
-				sql.addClause(FindClause.AND, "cdUopDest", SQLBuilder.EQUALS, o.get());
 
-			o = Optional.ofNullable(parametri.getTipoConsegna());
-			if (o.isPresent())
-				sql.addClause(FindClause.AND, "tipoConsegna", SQLBuilder.EQUALS, o.get());
+			Optional.ofNullable(parametri.getDaDataOrdine())
+					.ifPresent(e->{
+						sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.GREATER_EQUALS,e);
+					});
 
-			o = Optional.ofNullable(parametri.getStatoConsegna());
-			if (o.isPresent())
-				sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, o.get());
+			Optional.ofNullable(parametri.getaDataOrdine())
+					.ifPresent(e->{
+						sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE",SQLBuilder.LESS_EQUALS,e);
+					});
 
-			o = Optional.ofNullable(parametri.getStatoOrdine());
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, o.get());
+			Optional.ofNullable(parametri.getDaNumeroOrdine())
+					.ifPresent(e->{
+						sql.addClause("AND","numero" ,SQLBuilder.GREATER_EQUALS,e);
+					});
 
-			o = Optional.ofNullable(parametri.getImpegno()).map(Obbligazione_scadenzarioBulk::getPg_obbligazione);
-			if (o.isPresent()){
-				sql.addClause(FindClause.AND, "pgObbligazione", SQLBuilder.EQUALS, o.get());
-				sql.addClause(FindClause.AND, "cdCdsObbl", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getCd_cds()));
-				sql.addClause(FindClause.AND, "esercizioObbl", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getEsercizio()).get());
-				sql.addClause(FindClause.AND, "esercizioOrigObbl", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getEsercizio_originale()).get());
-				sql.addClause(FindClause.AND, "pgObbligazioneScad", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getPg_obbligazione_scadenzario()).get());
-			}
+			Optional.ofNullable(parametri.getaNumeroOrdine())
+					.ifPresent(e->{
+						sql.addClause("AND","numero",SQLBuilder.LESS_EQUALS,e);
+					});
 
-			o = Optional.ofNullable(parametri.getContratto()).map(ContrattoBulk::getPg_contratto);
-			if (o.isPresent()) {
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.PG_CONTRATTO", SQLBuilder.EQUALS, o.get());
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.ESERCIZIO_CONTRATTO", SQLBuilder.EQUALS,Optional.ofNullable(parametri.getContratto().getEsercizio()).get());
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.STATO_CONTRATTO", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getContratto().getStato()).get());
-			}
-			o = Optional.ofNullable(parametri.getCig()).map(CigBulk::getCdCig);
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_CIG", SQLBuilder.EQUALS, o.get());
+			Optional.ofNullable(parametri.getTerzo()).map(TerzoBulk::getCd_terzo)
+					.ifPresent(e->{
+						sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TERZO", SQLBuilder.EQUALS, e);
+					});
 
-			o = Optional.ofNullable(parametri.getCup()).map(CupBulk::getCdCup);
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_CUP", SQLBuilder.EQUALS, o.get());
+			Optional.ofNullable(parametri.getDaDataOrdineDef())
+					.ifPresent(e->{
+						sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.GREATER_EQUALS,e);
+					});
 
-			o = Optional.ofNullable(parametri.getRup()).map(V_persona_fisicaBulk::getCd_terzo);
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.RESPONSABILE_PROC", SQLBuilder.EQUALS, o.get());
+			Optional.ofNullable(parametri.getaDataOrdineDef())
+					.ifPresent(e->{
+						sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.LESS_EQUALS,e);
+					});
 
-			o = Optional.ofNullable(parametri.getTipoOrdine()).map(TipoOrdineBulk::getCdTipoOrdine);;
-			if (o.isPresent())
-				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TIPO_ORDINE", SQLBuilder.EQUALS, o.get());
+			Optional.ofNullable(parametri.getDaBeneServizio()).map(Bene_servizioBulk::getCd_bene_servizio)
+					.ifPresent(e->{
+						sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO", SQLBuilder.GREATER_EQUALS, e);
+					});
+
+			Optional.ofNullable(parametri.getaBeneServizio()).map(Bene_servizioBulk::getCd_bene_servizio)
+					.ifPresent(e->{
+						sql.addSQLClause(FindClause.AND, "ORDINE_ACQ_RIGA.CD_BENE_SERVIZIO", SQLBuilder.LESS_EQUALS, e);
+					});
+
+			Optional.ofNullable(parametri.getaDataPrevConsegna())
+					.ifPresent(e->{
+						sql.addClause("AND","dtPrevConsegna",SQLBuilder.GREATER_EQUALS,e);
+					});
+
+			Optional.ofNullable(parametri.getaDataPrevConsegna())
+					.ifPresent(e->{
+						sql.addClause("AND","dtPrevConsegna",SQLBuilder.LESS_EQUALS,e);
+					});
+
+			Optional.ofNullable(parametri.getUnitaOperativaRicevente()).map(UnitaOperativaOrdBulk::getCdUnitaOrganizzativa)
+					.ifPresent(e->{
+						sql.addClause(FindClause.AND, "cdUopDest", SQLBuilder.EQUALS, e);
+					});
+
+			Optional.ofNullable(parametri.getTipoConsegna())
+					.ifPresent(e->{
+						sql.addClause(FindClause.AND, "tipoConsegna", SQLBuilder.EQUALS, e);
+					});
+
+			Optional.ofNullable(parametri.getStatoConsegna())
+					.ifPresent(e->{
+						sql.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, e);
+					});
+
+			Optional.ofNullable(parametri.getStatoOrdine())
+					.ifPresent(e->{
+						sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.STATO", SQLBuilder.EQUALS, e);
+					});
+
+
+			Optional.ofNullable(parametri.getImpegno()).map(Obbligazione_scadenzarioBulk::getPg_obbligazione)
+					.ifPresent(e->{
+						sql.addClause(FindClause.AND, "pgObbligazione", SQLBuilder.EQUALS, e);
+						sql.addClause(FindClause.AND, "cdCdsObbl", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getCd_cds()));
+						sql.addClause(FindClause.AND, "esercizioObbl", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getEsercizio()).get());
+						sql.addClause(FindClause.AND, "esercizioOrigObbl", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getEsercizio_originale()).get());
+						sql.addClause(FindClause.AND, "pgObbligazioneScad", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getImpegno().getPg_obbligazione_scadenzario()).get());
+					});
+
+
+			Optional.ofNullable(parametri.getContratto()).map(ContrattoBulk::getPg_contratto)
+				.ifPresent(e-> {
+					sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.PG_CONTRATTO", SQLBuilder.EQUALS, e);
+					sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.ESERCIZIO_CONTRATTO", SQLBuilder.EQUALS,Optional.ofNullable(parametri.getContratto().getEsercizio()).get());
+					sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.STATO_CONTRATTO", SQLBuilder.EQUALS, Optional.ofNullable(parametri.getContratto().getStato()).get());
+				});
+
+			Optional.ofNullable(parametri.getCig()).map(CigBulk::getCdCig).
+					ifPresent(e-> {
+				sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_CIG", SQLBuilder.EQUALS, e);
+			});
+
+			Optional.ofNullable(parametri.getCup()).map(CupBulk::getCdCup)
+					.ifPresent(e-> {
+								sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_CUP", SQLBuilder.EQUALS, e);
+							});
+
+			Optional.ofNullable(parametri.getRup()).map(V_persona_fisicaBulk::getCd_terzo)
+					.ifPresent(e->{
+						sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.RESPONSABILE_PROC", SQLBuilder.EQUALS, e);
+					});
+
+			Optional.ofNullable(parametri.getTipoOrdine()).map(TipoOrdineBulk::getCdTipoOrdine)
+					.ifPresent(e->{
+						sql.addSQLClause(FindClause.AND, "ORDINE_ACQ.CD_TIPO_ORDINE", SQLBuilder.EQUALS, e);
+					});
 
 			return  iterator(userContext,sql,OrdineAcqConsegnaBulk.class,null);
 		}
+		private void chiusuraForzataObbligazioni(UserContext userContext, OrdineAcqConsegnaBulk ordineEvasioneForzata) throws ComponentException, PersistencyException {
 
+
+				if ( ordineEvasioneForzata.getCdCdsObbl()!=null
+					&& ordineEvasioneForzata.getEsercizio()!=null
+					&& ordineEvasioneForzata.getEsercizioOrigObbl()!=null
+					&& ordineEvasioneForzata.getPgObbligazione()!=null
+					&& ordineEvasioneForzata.getPgObbligazione()!=null) {
+					Obbligazione_scadenzarioHome scadenzarioHome = (Obbligazione_scadenzarioHome) getHome(userContext, Obbligazione_scad_voceBulk.class);
+
+					Obbligazione_scadenzarioBulk scadenzarioBulk = ( Obbligazione_scadenzarioBulk ) scadenzarioHome.findByPrimaryKey(userContext,
+							new Obbligazione_scadenzarioBulk(ordineEvasioneForzata.getCdCdsObbl(),
+									ordineEvasioneForzata.getEsercizio(),
+									ordineEvasioneForzata.getEsercizioOrigObbl(),
+									ordineEvasioneForzata.getPgObbligazione(),
+									ordineEvasioneForzata.getPgObbligazioneScad()));
+					//scadenzarioBulk.set
+
+					ObbligazioneBulk obbligazione = scadenzarioBulk.getObbligazione();
+				}
+		}
 		public void chiusuraForzataOrdini(UserContext userContext, OrdineAcqConsegnaBulk ordineEvasioneForzata) throws ComponentException, PersistencyException {
 
 			OrdineAcqRigaBulk riga = ordineEvasioneForzata.getOrdineAcqRiga();
@@ -2405,9 +2453,7 @@
 			OrdineAcqBulk ordine = riga.getOrdineAcq();
 			ordine.setImTotaleOrdine(ordine.getImTotaleOrdine().add(ordineEvasioneForzata.getImTotaleConsegna().negate()));
 			ordine.setImImponibile(ordine.getImImponibile().add(ordineEvasioneForzata.getImImponibile().negate()));
-//			ordine.setImIvaD(ordine.getImIvaD().add(ordineEvasioneForzata.getImImponibileDivisa().negate()));
 			ordine.setImIva(ordine.getImIva().add(ordineEvasioneForzata.getImIva().negate()));
-//			riga.setImIvaDivisa(ordine.getImIva().add(ordineEvasioneForzata.getImIvaDivisa().negate()));
 			ordine.setToBeUpdated();
 
 			ordineEvasioneForzata.setStato(OrdineAcqConsegnaBulk.STATO_EVASA_FORZATAMENTE);
