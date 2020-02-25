@@ -1,3 +1,19 @@
+## Release 6.1.39  -- _February 25, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[a9970c7144fdb56](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9970c7144fdb56) marco.spasiano *February 25, 2020*
+
+>**Add release version on docs conf.py**
+>
+>[6d3f543ba3c88d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d3f543ba3c88d4) marco.spasiano *February 25, 2020*
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[0f19acfc4e03878](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f19acfc4e03878) marco.spasiano *February 25, 2020*
+
+
 ## Release 6.1.38  -- _February 25, 2020_ 
 **Changes**
 
