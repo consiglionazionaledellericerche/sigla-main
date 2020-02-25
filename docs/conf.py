@@ -23,7 +23,7 @@ source_parsers = {
     '.md': CommonMarkParser,
 }
 project = 'Sistema Informativo Gestione Linee di Attività'
-release = '0.1'
+release = '6.1.39-SNAPSHOT'
 author = u'Consiglio Nazionale delle Ricerche'
 
 show_authors = True
