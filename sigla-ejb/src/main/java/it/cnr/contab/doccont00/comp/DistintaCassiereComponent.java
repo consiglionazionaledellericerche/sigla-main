@@ -4924,7 +4924,8 @@ public class DistintaCassiereComponent extends
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.CASSA,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER,
                                 Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.COMPENSAZIONE,
-                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SOSTITUZIONE
+                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SOSTITUZIONE,
+                                Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE
                         ).contains(tipoPagamentoSiopePlus))
                                 //TODO da sostituire
                                 ||rif_modalita_pagamentoBulk.getCd_modalita_pag().equals(STIPENDI)
