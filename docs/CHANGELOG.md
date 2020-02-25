@@ -1,3 +1,15 @@
+## Release 6.1.40  -- _February 25, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[9d2a687f8d218ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d2a687f8d218ca) marco.spasiano *February 25, 2020*
+
+>**FIX Multi Beneficiario per Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE**
+>
+>[ab2ddcc3a72ef55](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ab2ddcc3a72ef55) marco.spasiano *February 25, 2020*
+
+
 ## Release 6.1.39  -- _February 25, 2020_ 
 **Changes**
 
