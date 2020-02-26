@@ -3001,9 +3001,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 				
 				{
-				/**
-				 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale o alla Uo Ragioneria
-				 */
+					/**
+					 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale o alla Uo Ragioneria
+					 */
 					BigDecimal impPositiviCashFund = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
 							.map(CtrlPianoEco::getDett)
@@ -3021,9 +3021,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								+ new it.cnr.contab.util.EuroFormat().format(impPositiviCashFund)+").");
 				}
 				{
-				/**
-				 * 70. se un progetto è attivo se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
-				 */
+					/**
+					 * 70. se un progetto è attivo se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
+					 */
 					BigDecimal impSaldoPrgAttiviNaturaReimpiego = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
 							.map(CtrlPianoEco::getDett)
@@ -3054,22 +3054,23 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviAreeNaturaReimpiego.abs())+").");						
 					}
 				}
+
+				BigDecimal impSaldoPrgAttiviFonteEsterna = listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.map(CtrlPianoEco::getDett)
+						.flatMap(List::stream)
+						.filter(el->!el.isUoArea())
+						.filter(el->!el.isCdrPersonale())
+						.filter(el->!el.isVoceSpeciale())
+						.filter(el->el.isNaturaFonteEsterna())
+						.map(CtrlPianoEcoDett::getImporto)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
 				{
-				/**
-				 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o 
-				 *    al CDR Personale
-				 */
-					BigDecimal impSaldoPrgAttiviFonteEsterna = listCtrlPianoEco.stream()
-							.filter(el->!el.isScaduto(dataChiusura))
-							.map(CtrlPianoEco::getDett)
-							.flatMap(List::stream)
-							.filter(el->!el.isUoArea())
-							.filter(el->!el.isCdrPersonale())
-							.filter(el->!el.isVoceSpeciale())
-							.filter(el->el.isNaturaFonteEsterna())
-							.map(CtrlPianoEcoDett::getImporto)
-							.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-		
+					/**
+					 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o
+					 *    al CDR Personale
+					 */
 					if (impSaldoPrgAttiviFonteEsterna.compareTo(BigDecimal.ZERO)<0) {
 						//Vuol dire che ho ridotto progetti attivi sulle fonti esterne per cui deve essere bilanciato solo con Aree di uguale natura o
 						// con CDR Personale
@@ -3083,7 +3084,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 		
 						if (impSaldoPrgAttiviCashFund.compareTo(BigDecimal.ZERO)<0 ||
-								impSaldoPrgAttiviCashFund.abs().compareTo(impSaldoPrgAttiviFonteEsterna.abs())!=0)
+								impSaldoPrgAttiviCashFund.abs().compareTo(impSaldoPrgAttiviFonteEsterna.abs())<0)
 							throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
 									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviFonteEsterna.abs())
 									+ " su GAE Fonte Esterna che non risultano totalmente coperti da variazioni a favore"
@@ -3189,6 +3190,29 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								+ " che non risultano totalmente coperti da variazioni a favore"
 								+ " di GAE di natura 6 - 'Reimpiego di risorse' ("
 								+ new it.cnr.contab.util.EuroFormat().format(impSpesaPositiviNaturaReimpiego)+").");
+				}
+				{
+					if (isVariazionePersonale) {
+						/**
+						 * 110. se vengono assegnate somme al CDR Personale devono essere prelevate da progetti scaduti e/o da progetti attivi su GAE Fonte Esterna
+						 */
+						BigDecimal impSaldoPrgAttiviPersonale = listCtrlPianoEco.stream()
+								.filter(el->!el.isScaduto(dataChiusura))
+								.map(CtrlPianoEco::getDett)
+								.flatMap(List::stream)
+								.filter(el->el.isCdrPersonale())
+								.map(CtrlPianoEcoDett::getImporto)
+								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+						if (impSaldoPrgAttiviPersonale.compareTo(BigDecimal.ZERO)>0) {
+							BigDecimal saldoCashFund = impSaldoPrgAttiviFonteEsterna.add(impNegativiPrgScaduti.negate());
+							if (saldoCashFund.compareTo(BigDecimal.ZERO) > 0 || impSaldoPrgAttiviPersonale.compareTo(saldoCashFund.abs()) != 0)
+								throw new ApplicationException("Attenzione! Risultano assegnazioni al CDR Personale "
+										+ " per un importo di " + new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviPersonale)
+										+ " che non risultano totalmente coperti da prelievi da progetti scaduti e/o progetti attivi su GAE Fonte Esterna' ("
+										+ new it.cnr.contab.util.EuroFormat().format(saldoCashFund.abs()) + ").");
+						}
+					}
 				}
 			}
 		} catch (RemoteException|PersistencyException e) {

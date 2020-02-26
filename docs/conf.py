@@ -23,7 +23,7 @@ source_parsers = {
     '.md': CommonMarkParser,
 }
 project = 'Sistema Informativo Gestione Linee di Attività'
-release = '0.1'
+release = '6.1.40'
 author = u'Consiglio Nazionale delle Ricerche'
 
 show_authors = True
@@ -90,13 +90,5 @@ html_theme_options = {
     'globaltoc_depth': 5,
     # Set the color and the accent color
     'color_primary': 'indingo',
-    'color_accent': 'light-blue',
-    'nav_links': [
-        {'href': 'CHANGELOG', 'internal': True, 'title': 'Changelog'},
-        {
-            'href': 'https://contab.cnr.it/SIGLANG',
-            'internal': False,
-            'title': 'SIGLA <i class="md-icon">launch</i>'
-        }
-    ]
+    'color_accent': 'light-blue'
 }

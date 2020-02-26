@@ -17,6 +17,7 @@
 
 package it.cnr.contab.progettiric00.action;
 
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.Optional;
@@ -29,6 +30,7 @@ import it.cnr.contab.pdg01.bp.CRUDPdgVariazioneGestionaleBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettiRicercaBP;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettoPianoEconomicoCRUDController;
 import it.cnr.contab.progettiric00.bp.RimodulaProgettoPianoEconomicoVoceBilancioCRUDController;
+import it.cnr.contab.progettiric00.bp.TestataProgettiRicercaBP;
 import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
@@ -674,6 +676,25 @@ public class CRUDRimodulaProgettoAction extends CRUDAbstractProgettoAction {
 		catch(Throwable e)
 		{
 			return handleException(context,e);
+		}
+	}
+
+	public Forward doOnEsercizioPianoChange(ActionContext actioncontext) {
+		try {
+			fillModel(actioncontext);
+			RimodulaProgettiRicercaBP bp = (RimodulaProgettiRicercaBP)getBusinessProcess(actioncontext);
+			Optional<Progetto_piano_economicoBulk> optPpe = Optional.ofNullable(bp.getCrudPianoEconomicoAltriAnni())
+					.flatMap(el->Optional.ofNullable(el.getModel()))
+					.filter(Progetto_piano_economicoBulk.class::isInstance)
+					.map(Progetto_piano_economicoBulk.class::cast);
+
+			if (optPpe.isPresent() && optPpe.map(Progetto_piano_economicoBulk::isAnnoPianoEconomicoMinoreAnnoInizio).orElse(Boolean.FALSE))
+				optPpe.get().setImSpesaFinanziatoRimodulato(BigDecimal.ZERO);
+			return actioncontext.findDefaultForward();
+		}
+		catch(Throwable throwable)
+		{
+			return handleException(actioncontext, throwable);
 		}
 	}
 }

@@ -26,6 +26,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -37,6 +38,9 @@ public class UtilService implements InitializingBean {
     private transient final static Logger LOGGER = LoggerFactory.getLogger(UtilService.class);
     private CRUDMessaggioComponentSession crudMessaggioComponentSession;
     private ProgettoRicercaPadreComponentSession progettoRicercaPadreComponentSession;
+
+    @Value("${doccont.max.anni.residui}")
+    private Integer anniResidui;
 
     public void executeAggiornaGECO() {
         UserContext userContext = new CNRUserContext(GECO, null, LocalDate.now().getYear(), null, null, null);
@@ -68,5 +72,9 @@ public class UtilService implements InitializingBean {
                 .orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRPROGETTIRIC00_EJB_ProgettoRicercaPadreComponentSession"));
 
 
+    }
+
+    public Integer getAnniResidui() {
+        return anniResidui;
     }
 }

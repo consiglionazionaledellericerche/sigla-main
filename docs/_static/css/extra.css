@@ -5,8 +5,8 @@
 .md-header-nav__source {
     width: unset;
     max-width: unset;
-    display: inline-flex;
 }
+
 .rst-versions {
   border-color: indingo !important;
   border-style: solid !important;
@@ -18,7 +18,7 @@
   color: white !important;
 }
 
-.button-download {
+#menu-download {
     margin-top: 0.5rem!important;
 }
 
@@ -31,8 +31,12 @@
    text-align: center !important;
 }
 
-.md-sidebar--primary a[href^="#"]:not(.md-nav__link--active), a[title!="Home"]{
+.md-sidebar--primary a[href^='#']:not(.md-nav__link--active), a[title!='Home']{
    display: none;
+}
+
+.icon-middle {
+    vertical-align: middle;
 }
 @media only screen and (max-width: 59.9375em){
     html .md-nav__link[for=__toc]:after{

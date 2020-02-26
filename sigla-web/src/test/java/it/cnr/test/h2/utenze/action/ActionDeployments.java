@@ -32,6 +32,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Optional;
@@ -66,7 +67,7 @@ public class ActionDeployments extends DeploymentsH2 {
                     TimeUnit.SECONDS.sleep(5);
                 LOGGER.warn("Try to connect to url: {} iterate: {}", url.toString(), iterate);
                 iterate++;
-            } catch (IllegalStateException _ex) {
+            } catch (IllegalStateException | ConnectException _ex) {
                 iterate++;
             }
         }

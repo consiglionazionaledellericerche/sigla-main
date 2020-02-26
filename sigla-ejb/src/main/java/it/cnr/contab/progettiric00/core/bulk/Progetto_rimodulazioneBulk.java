@@ -501,7 +501,18 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 				})
 				.orElse(0);
 	}
-	
+
+	/*
+		Ritorna l'anno di inizio utile per il caricamento del piano economico rimodulato
+		E' sempre pari a 14 anni precedenti all'anno inizio rimodulato.
+	 */
+	public Integer getAnnoInizioForPianoEconomico() {
+		return Optional.ofNullable(this.getAnnoInizioRimodulato())
+				.map(el->el-Progetto_piano_economicoBulk.ANNIPRE_PIANOECONOMICO)
+				.filter(el->el.compareTo(0)>0)
+				.orElse(0);
+	}
+
 	public Integer getAnnoFineRimodulato() {
 		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getDtProrogaRimodulato());
 		Optional<Integer> anno = Optional.empty();

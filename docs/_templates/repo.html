@@ -14,8 +14,10 @@
   ~     You should have received a copy of the GNU Affero General Public License
   ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
-<a href="{{ theme_repo_url }}" title="Go to repository" class="md-source" data-md-source="github">
+{% if theme_repo_url %}
+    {% set github_view_url = theme_repo_url + "blob/master/docs/" + pagename %}
+{% endif %}
+<a href="{{ github_view_url }}{{ page_source_suffix }}" title="Visualizza la pagina" class="md-source" data-md-source="github">
     {% if theme_repo_type %}
     <div class="md-source__icon">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
@@ -27,14 +29,3 @@
         {{ theme_repo_name }}
     </div>
 </a>
-<!-- Right aligned menu below button -->
-<h1 class="md-source__repository">Scarica</h1>
-<button id="demo-menu-lower-right"
-        class="mdl-button mdl-js-button mdl-button--icon button-download">
-    <i class="material-icons">more_vert</i>
-</button>
-<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-    for="demo-menu-lower-right">
-    <a class="mdl-menu__item" href="Manuale-SIGLA.pdf">pdf</a>
-    <a class="mdl-menu__item" href="Manuale-SIGLA.epub">epub</a>
-</ul>
