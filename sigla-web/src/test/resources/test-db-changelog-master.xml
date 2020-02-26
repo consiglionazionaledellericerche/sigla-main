@@ -33,6 +33,7 @@
         <addDefaultValue tableName="utente_unita_ruolo" columnName="duva" defaultValueDate="${now}"/>
 
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="liquibase/csv/utente.csv" quotchar="&quot;" separator="," tableName="utente">
+            <column name="dt_ultima_var_password" type="${date.type}"/>
             <column name="dt_inizio_validita" type="${date.type}"/>
             <column name="dt_fine_validita" type="${date.type}"/>
         </loadData>

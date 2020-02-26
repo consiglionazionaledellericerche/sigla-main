@@ -38,6 +38,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertEquals;
+
 public class ActionDeployments extends DeploymentsH2 {
     private transient final static Logger LOGGER = LoggerFactory.getLogger(ActionDeployments.class);
 
@@ -79,22 +81,45 @@ public class ActionDeployments extends DeploymentsH2 {
         final WebElement comandoEntra = browser.findElement(By.name("comando.doEntra"));
         Assert.assertTrue(Optional.ofNullable(comandoEntra).isPresent());
 
-        final GrapheneElement elementUserId =
-                Optional.ofNullable(browser.findElement(By.name("main.userid")))
+        getGrapheneElement("main.userid").writeIntoElement(user);
+        getGrapheneElement("main.password").writeIntoElement(password);
+
+        comandoEntra.click();
+    }
+
+    protected void doLoginUO(String uo, String cdr) throws Exception {
+        browser.switchTo().frame("workspace");
+
+        getGrapheneElement("main.find_uo.cd_unita_organizzativa").writeIntoElement("999.000");
+        doClickButton("doSearch(main.find_uo)");
+
+        getGrapheneElement("main.find_cdr.searchtool_cd_centro_responsabilita").writeIntoElement("999.000.000");
+        doClickButton("submitForm('doSelezionaCds')");
+    }
+
+    protected WebElement getWebElement(String element) {
+        return Optional.ofNullable(browser.findElement(By.name(element)))
+                .orElseThrow(() -> new RuntimeException("Cannot find WebElement with name "+element));
+    }
+
+    protected GrapheneElement getGrapheneElement(String element) {
+        return Optional.ofNullable(getWebElement(element))
                         .filter(GrapheneElement.class::isInstance)
                         .map(GrapheneElement.class::cast)
-                        .orElseThrow(() -> new RuntimeException("Cannot find element with name main.userid"));
-        final GrapheneElement elementPassword = Optional.ofNullable(browser.findElement(By.name("main.password")))
-                .filter(GrapheneElement.class::isInstance)
-                .map(GrapheneElement.class::cast)
-                .orElseThrow(() -> new RuntimeException("Cannot find element with name main.password"));
-        elementUserId.writeIntoElement(user);
-        elementPassword.writeIntoElement(password);
-        comandoEntra.click();
+                        .orElseThrow(() -> new RuntimeException("Cannot find GrapheneElement with name "+element));
     }
 
     protected void doClickTree(String onclick) {
         browser.findElements(By.tagName("span"))
+                .stream()
+                .filter(webElement -> Optional.ofNullable(webElement.getAttribute("onclick")).filter(s -> s.length() > 0).isPresent())
+                .filter(webElement -> webElement.getAttribute("onclick").contains(onclick))
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("Cannot find element " + onclick)).click();
+    }
+
+    protected void doClickButton(String onclick) {
+        browser.findElements(By.tagName("button"))
                 .stream()
                 .filter(webElement -> Optional.ofNullable(webElement.getAttribute("onclick")).filter(s -> s.length() > 0).isPresent())
                 .filter(webElement -> webElement.getAttribute("onclick").contains(onclick))

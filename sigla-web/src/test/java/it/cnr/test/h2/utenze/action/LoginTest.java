@@ -35,6 +35,9 @@ import static org.junit.Assert.assertEquals;
 public class LoginTest extends ActionDeployments {
     public static final String USERNAME = "TEST";
     public static final String PASSWORD = "TESTTEST";
+    public static final String UO = "999.000";
+    public static final String CDR = "999.000.000";
+
     private transient final static Logger LOGGER = LoggerFactory.getLogger(LoginTest.class);
 
     @Test
@@ -54,19 +57,8 @@ public class LoginTest extends ActionDeployments {
         final WebElement comandoAssegnapassword = browser.findElement(By.name("comando.doAssegnaPassword"));
         Assert.assertTrue(Optional.ofNullable(comandoAssegnapassword).isPresent());
 
-        final GrapheneElement elementNuovaPassword =
-                Optional.ofNullable(browser.findElement(By.name("main.nuovaPassword")))
-                        .filter(GrapheneElement.class::isInstance)
-                        .map(GrapheneElement.class::cast)
-                        .orElseThrow(() -> new RuntimeException("Cannot find element with name main.nuovaPassword"));
-
-        final GrapheneElement elementConfermaPassword = Optional.ofNullable(browser.findElement(By.name("main.confermaPassword")))
-                .filter(GrapheneElement.class::isInstance)
-                .map(GrapheneElement.class::cast)
-                .orElseThrow(() -> new RuntimeException("Cannot find element with name main.confermaPassword"));
-
-        elementNuovaPassword.writeIntoElement(PASSWORD);
-        elementConfermaPassword.writeIntoElement(PASSWORD);
+        getGrapheneElement("main.nuovaPassword").writeIntoElement(PASSWORD);
+        getGrapheneElement("main.confermaPassword").writeIntoElement(PASSWORD);
 
         comandoAssegnapassword.click();
     }
@@ -76,30 +68,8 @@ public class LoginTest extends ActionDeployments {
     @OperateOnDeployment(TEST_H2)
     @InSequence(3)
     public void testListUO() throws Exception {
-        browser.switchTo().frame("workspace");
-        final WebElement searchUO = browser.findElements(By.tagName("button"))
-                .stream()
-                .filter(webElement -> webElement.getAttribute("onclick").contains("doSearch(main.find_uo)"))
-                .findAny()
-                .orElseThrow(() -> new RuntimeException("Cannot find element doSearch(main.find_uo)"));
-        final GrapheneElement inputUO = Optional.ofNullable(browser.findElement(By.name("main.find_uo.cd_unita_organizzativa")))
-                .filter(GrapheneElement.class::isInstance)
-                .map(GrapheneElement.class::cast)
-                .orElseThrow(() -> new RuntimeException("main.find_uo.cd_unita_organizzativa"));
-
-        inputUO.writeIntoElement("999.000");
-        searchUO.click();
-        final WebElement selezionaCDS = browser.findElements(By.tagName("button"))
-                .stream()
-                .filter(webElement -> webElement.getAttribute("onclick").contains("submitForm('doSelezionaCds')"))
-                .findAny()
-                .orElseThrow(() -> new RuntimeException("Cannot find element doSelezionaCds"));
-        final GrapheneElement inputCDR = Optional.ofNullable(browser.findElement(By.name("main.find_cdr.searchtool_cd_centro_responsabilita")))
-                .filter(GrapheneElement.class::isInstance)
-                .map(GrapheneElement.class::cast)
-                .orElseThrow(() -> new RuntimeException("main.find_cdr.searchtool_cd_centro_responsabilita"));
-        inputCDR.writeIntoElement("999.000.000");
-        selezionaCDS.click();
+        LOGGER.info("try to connect to UO {} and CDR {}", UO, CDR);
+        doLoginUO(UO, CDR);
     }
 
     @Test
