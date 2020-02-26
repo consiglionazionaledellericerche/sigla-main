@@ -36,17 +36,17 @@ I tipi Finanziamento attualmente predefiniti sono:
 
 I Parametri (impostabili a Si oppure a No) che possono essere gestiti per ogni tipologia di Finanziamento sono:
 
-- Piano economico-finanziario - Richiesta la compilazione del Piano Economico
-- Associazione categoria-voci per il personale tempo indeterminato consentita - E' possibile utilizzare voci di personale T.I.	
-- Associazione categoria-voci per il personale tempo determinato consentita - E' possibile utilizzare voci di personale T.D.	
-- Associazione categoria-voci per altre spese del personale - E' possibile utilizzare voci di tipo personale	
+- Piano economico-finanziario - Obbligatoria la compilazione del Piano Economico
+- Associazione categoria-voci del piano per il personale tempo indeterminato - E' possibile associare al progetto voci economiche di tipo personale T.I.	
+- Associazione categoria-voci del piano per il personale tempo determinato - E' possibile associare al progetto voci economiche di tipo personale T.D.	
+- Associazione categoria-voci del piano per altre spese del personale - E' possibile associare al progetto voci economiche di tipo personale	
 - Previsione Entrata/Spesa consentita - Consentita la compilazione della previsione sia di entrata che di spesa
-- Ripartizione costi del personale 	
-- Quadratura pdgp con quota annuale del piano economico 	
-- Controllo validità del Progetto 	
-- Piano delle rendicontazioni 	
-- Variazioni consentite 	
-- Incassi consentiti 	
-- Previsione totale quota finanziata 	
-- Quadra Associazione Progetto/Contratti 	
-- Consenti Associazione Progetto/Contratti
+- Ripartizione costi del personale 	- Consentita la ripartizione delle matricole in fase di previsione
+- Quadratura pdgp con quota annuale del piano economico - Non utilizzato. In previsione il controllo fisso è: importo di previsione deve essere minore o uguale dell'importo specificato per l'anno sul piano economico del progetto
+- Controllo validità del Progetto - Non utilizzato	
+- Piano delle rendicontazioni 	- Non utilizzato	
+- Variazioni consentite 	- Non utilizzato	
+- Incassi consentiti 	- Non utilizzato	
+- Previsione totale quota finanziata - Richiede la quadratura tra l'importo totale indicato in previsione per le fonti decentrate esterne e l'importo finanziato indicato sul piano economico del progetto 
+- Quadra Associazione Progetto/Contratti 	- Richiede la quadratura tra importo Finanziato del Progetto e la somma dei contratti attivi	
+- Consenti Associazione Progetto/Contratti - Consente l'associazione dei contratti al progetto, 
