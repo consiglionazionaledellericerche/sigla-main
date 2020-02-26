@@ -49,4 +49,11 @@ I Parametri (impostabili a Si oppure a No) che possono essere gestiti per ogni t
 - Incassi consentiti 	- Non utilizzato	
 - Previsione totale quota finanziata - Richiede la quadratura tra l'importo totale indicato in previsione per le fonti decentrate esterne e l'importo finanziato indicato sul piano economico del progetto 
 - Quadra Associazione Progetto/Contratti 	- Richiede la quadratura tra importo Finanziato del Progetto e la somma dei contratti attivi	
-- Consenti Associazione Progetto/Contratti - Consente l'associazione dei contratti al progetto, 
+- Consenti Associazione Progetto/Contratti - Consente l'associazione dei contratti al progetto.
+
+.. _voce-del-piano-economico:
+
+Voci del Piano Economico Progetti
+=================================
+Le Voci del Piano 
+
