@@ -3,7 +3,7 @@ Progetto
 ========
 
 La gestione dell'Anagrafica Progetti consente di gestire tutte le informazioni generali di un progetto, sia esso di ricerca che di funzionamento, e tutte le informazioni contabili di cui tener conto nelle funzionalità successive di previsione e gestione.
-Un Progetto si riferisce sempre ad una :doc:`Area Progettuale<area_progettuale>`, ed è inserito, attraverso le linee di attività o GAE, in una Missione/Programma specifici. Il riepilogo in :doc:`Missioni<missione>` e :doc:`Programmi<programma>`, rappresenta un allegato obbligatorio del Bilancio di Previsione.
+Un Progetto si riferisce sempre ad una :doc:`Area Progettuale<area_progettuale>`, ed è inserito, attraverso le linee di attività o GAE, in una Missione/Programma specifici. Il riepilogo in :ref:`Missioni` e :ref:`Programmi`, rappresenta un allegato obbligatorio del Bilancio di Previsione.
 
 Le informazioni fondamentali che caratterizzano un Progetto sono:
 
