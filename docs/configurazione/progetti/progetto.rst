@@ -3,7 +3,8 @@ Progetto
 ========
 
 La gestione dell'Anagrafica Progetti consente di gestire tutte le informazioni generali di un progetto, sia esso di ricerca che di funzionamento, e tutte le informazioni contabili di cui tener conto nelle funzionalità successive di previsione e gestione.
-Un Progetto si riferisce sempre ad una :doc:`Area Progettuale<area_progettuale>`, ed è inserito, attraverso le linee di attività o GAE, in una Missione/Programma specifici. Il riepilogo in :ref:`Missioni` e :ref:`Programmi`, rappresenta un allegato obbligatorio del Bilancio di Previsione.
+Un Progetto si riferisce sempre ad una :doc:`Area Progettuale<area_progettuale>`, ed è inserito, attraverso le linee di attività o GAE, in una Missione/Programma specifici. Il riepilogo per :ref:`Missioni` e :ref:`Programmi`, rappresenta un allegato obbligatorio del Bilancio di Previsione dell'Ente.
+L'anagrafica Progetti gestita da Sigla rappresenta l'anagrafica 'contabile' contenente tutte le informazioni utili alle successive gestioni contaili. In alcuni casi, come per il CNR, questa rappresenta un completamento all'anagrafica 'scientifica' dei Progetti gestita in altre procedure per aspetti che non riguardano i dati contabili. A questo scopo parametricamente si definisce se questa anagrafica è gestita interamente in Sigla oppure è inibita la creazione di un progetto perchè proveniente da altra applicazione.
 
 Le informazioni fondamentali che caratterizzano un Progetto sono:
 
@@ -16,17 +17,17 @@ I dati anagrafici si possono sintetizzare in:
 - Area Progettuale di riferimento (tra quelle predefinite nella relativa anagrafica);
 - Fase di utilizzo: Previsione, Gestione o entrambi;
 - Descrizione del Progetto;
-- Dipartimento (coincidente con la struttura organizzativa referente del Progetto e con la definizione del Programma indicato nel riepilogo ufficiale per Programmi/Missioni degli allegati alla previsione );
+- Dipartimento (coincidente con la struttura organizzativa referente del Progetto e con la definizione del Programma di riferimento);
 - :ref:`uo-coordinatrice`;
 - :ref:`responsabile-progetto`;
 
 Dati Contabili
 ================
 
-I dati cotabili rappresentano l'insieme delle informazioni che determinano l'uso del progetto nelle gestioni Sigla:
+I dati cotabili rappresentano l'insieme delle informazioni che determinano l'uso del progetto nelle gestioni successive in Sigla:
 
 - :ref:`tipo-finanziamento` (dalla lista valori disponibile);
-- Data inizio, Data Fine, Data Proroga (data inizio e fine del Progetto guidano la compilazione del piano economico, ove richiesto, e rappresentano la durata scientifica del Progetto stesso);
+- Data inizio, Data Fine, Data Proroga (data inizio e fine del Progetto rappresentano la durata scientifica del Progetto);
 - Importo Finanziato (proveniente da Fonti esterne);
 - Importo Cofinanziato (proveniente da Fonti interne).
 
