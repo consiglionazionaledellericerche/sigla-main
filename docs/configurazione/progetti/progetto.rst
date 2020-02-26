@@ -5,7 +5,7 @@ Progetto
 La gestione dell'Anagrafica Progetti consente di gestire tutte le informazioni generali di un progetto, sia esso di ricerca che di funzionamento, e tutte le informazioni contabili di cui tener conto nelle funzionalità successive di previsione e gestione.
 Un Progetto si riferisce sempre ad una :doc:`Area Progettuale<area_progettuale>`, ed è inserito, attraverso le linee di attività o GAE, in una Missione/Programma specifici. Il riepilogo per :ref:`Missioni` e :ref:`Programmi`, rappresenta un allegato obbligatorio del Bilancio di Previsione dell'Ente.
 L'anagrafica Progetti gestita da Sigla rappresenta l'anagrafica 'contabile' contenente tutte le informazioni utili alle successive gestioni contaili. In alcuni casi, come per il CNR, questa rappresenta un completamento all'anagrafica 'scientifica' dei Progetti gestita in altre procedure per aspetti che non riguardano i dati contabili. A questo scopo parametricamente si definisce se questa anagrafica è gestita interamente in Sigla oppure è inibita la creazione di un progetto perchè proveniente da altra applicazione.
-I progetti devono essere obbligatoriamente censiti e in stato 'APPROVATO', vedi :ref:`Stati del Progetto`, per poter gestire il Bilancio di Previsione dell'ente. Naturalmente nel corso dell'anno contabile possono essere creati nuovi Progetti e utilizzati creando i necessari presupposti. 
+I progetti devono essere obbligatoriamente censiti e in stato 'APPROVATO', vedi :ref:`stati-del-progetto`, per poter gestire il Bilancio di Previsione dell'ente. Naturalmente nel corso dell'anno contabile possono essere creati nuovi Progetti e utilizzati creando i necessari presupposti. 
 
 Le informazioni fondamentali che caratterizzano un Progetto sono:
 
@@ -32,6 +32,8 @@ I dati cotabili rappresentano l'insieme delle informazioni che determinano l'uso
 - Importo Finanziato (proveniente da Fonti esterne);
 - Importo Cofinanziato (proveniente da Fonti interne).
 
+.. _stati-del-progetto:
+
 Stati del Progetto
 ==================
 A seconda della Tipologia di Finanziamento un Progetto può essere utilizzato in Previsione, in Gestione o entrambi, solo se ha un determinato Stato. I valori che può assumere lo Stato sono: 
@@ -54,6 +56,11 @@ Il Piano economico del Progetto è compilabile tramite l’apposita tab direttam
 - Totali Riepilogativi del Progetto. E' una sezione di sola consultazione che riporta due tipi di riepilogo dell'intero progetto: **Totali per Voce Piano Economico** (al di là della ripartizione pruriennale degli importi, i totali rappresentano gli importi per Voce del Piano o categoria economica utilizzate nella ripartizione) e **Totali per Esercizio** (al di là della ripartizione per voci economiche in questo caso i totali rappresentano la somma degli importi del progetto ripartiti per esercizio contabile).
 - Ripartizione importi per Voce economica riferita all’anno di gestione, o anno di scrivania; 
 - Ripartizione importi per Voce economica riferita agli altri anni del progetto (precedenti e successivi all’anno di gestione, o anno di scrivania). 
+
+Ripartizione per voce economica - Anno di gestione
+--------------------------------------------------
+La ripartizione degli importi per l’anno di gestione (o anno di scrivania, o anno di accesso) richiede l'indicazione delle voci economiche del Progetto (o categorie economiche) e per ogni Voce economica, l’elenco (nella sezione sottostante) delle voci finanziarie associate.
+Nella prima sezione si indicano le voci del piano economico selezionandole da una lista precaricata: :ref:`voci-del-piano-economico` Nella seconda sezione si indicano le voci finanziarie che si prevede di utilizzare in fase di previsione e variazioni/storni (praticamente le voci finanziarie su cui potranno essere posti gli stanziamenti di bilancio). 
 
 
 
