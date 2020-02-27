@@ -28,8 +28,6 @@ import org.openqa.selenium.Alert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
-
 import static org.junit.Assert.assertEquals;
 
 public class TestataProgettiRicercaBPTest extends ActionDeployments {

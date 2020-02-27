@@ -88,7 +88,7 @@ public abstract class Deployments {
                 .addPackages(true, "org.bouncycastle")
                 .addPackages(true, "org.springframework")
                 .addPackages(true, "org.reactivestreams")
-                .addPackages(true, "org.openqa.selenium")
+                .addPackages(true, "org.openqa.selenium", "org.jboss.arquillian")
                 .addPackages(true, "com.google")
                 .addAsResource("org/springframework/web/context/ContextLoader.properties")
                 .addAsResource("org/springframework/ws/client/core/WebServiceTemplate.properties")
