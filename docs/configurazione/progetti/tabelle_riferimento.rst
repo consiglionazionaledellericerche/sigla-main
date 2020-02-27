@@ -55,7 +55,7 @@ I Parametri (impostabili a Si oppure a No) che possono essere gestiti per ogni t
 
 Voci del Piano Economico Progetti
 =================================
-Le Voci del Piano Econoico rappresentano le categorie di spesa in cui si suddivide un progetto. Solitamente sono le stesse definite dal finanziatore e per e quali occorrerà produrre la rendicontazione. In Sigla sono inserite in un'apposita anagrafica gestibile dall'utente. A titolo di esempio possiamo citare le seguenti voci di spesa solitamente utilizzate:
+Le Voci del Piano Economico rappresentano le categorie di spesa in cui si suddivide un progetto. Solitamente sono le stesse definite dal finanziatore e per e quali occorrerà produrre la rendicontazione. In Sigla sono inserite in un'apposita anagrafica gestibile dall'utente. A titolo di esempio possiamo citare le seguenti voci di spesa solitamente utilizzate:
 
 - Spese di Trasferta
 - Personale a Tempo Determinato
