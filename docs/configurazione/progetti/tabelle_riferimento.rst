@@ -55,7 +55,7 @@ I Parametri (impostabili a Si oppure a No) che possono essere gestiti per ogni t
 
 Voci del Piano Economico Progetti
 =================================
-Le Voci del Piano Economico rappresentano le categorie di spesa in cui si suddivide un progetto. Solitamente sono le stesse definite dal finanziatore e per e quali occorrerà produrre la rendicontazione. In Sigla sono inserite in un'apposita anagrafica gestibile dall'utente. A titolo di esempio possiamo citare le seguenti voci di spesa solitamente utilizzate:
+Le Voci del Piano Economico rappresentano le categorie di spesa in cui si suddivide un progetto. Solitamente sono le stesse definite dal finanziatore e per e quali occorrerà produrre la rendicontazione. In Sigla sono inserite in un'apposita anagrafica configurabile dall'amministratore del sistema. A titolo di esempio possiamo citare le seguenti voci di spesa solitamente utilizzate:
 
 - Spese di Trasferta
 - Personale a Tempo Determinato
@@ -67,11 +67,12 @@ Le Voci del Piano Economico rappresentano le categorie di spesa in cui si suddiv
 - Altro
 
 Ci sono delle Voci economiche del Piano che automaticamente proporranno delle voci finanziarie per mezzo di un’associazione obbligatoria creata da chi amministra queste informazioni (ad esempio le voci del personale). Per queste casistiche le voci del piano economico  sono vincolate alle voci finanziare da usare e, viceversa, queste voci finanziarie non potranno essere usate per altre voci economiche. 
-Per queste configurazioni le Voci Economiche sono caratterizzate da:
+Per queste configurazioni le Voci Economiche sono caratterizzate da alcune impostazioni:
 
-- Tipologa (Personale Tempo Indeterinato, Personale TempoDeterminato, Altro Personale ...)
-- Da una Validità (S/N)
-- Voci Associate (S/N)
-- Possibilità di aggiungere altre voci finanziarie (S/N)
+- Tipologa predefinita (Personale Tempo Indeterinato, Personale TempoDeterminato, Altro Personale ...)
+- Associazione Automatica Voci finanziarie (S/N)
+- Associazione Manuale voci finanziarie (S/N)
+- Obbligo quadratura tra importo di previsione e quota finanziata
+- Validità (S/N)
 
 
