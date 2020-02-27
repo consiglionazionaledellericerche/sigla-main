@@ -67,14 +67,17 @@ Il Piano economico del Progetto è compilabile, tramite l’apposita tab, dirett
 - Ripartizione importi per Voce economica riferita all’anno di gestione; 
 - Ripartizione importi per Voce economica riferita agli altri anni del progetto (precedenti e successivi all’anno di gestione). 
 
-Ripartizione per voce economica - Anno di gestione
---------------------------------------------------
+**Ripartizione per voce economica - Anno di gestione**
+
 La ripartizione degli importi per l’anno di gestione (o anno di scrivania, o anno di accesso) richiede l'indicazione delle voci economiche del Progetto (o categorie economiche) e per ogni Voce economica, l’elenco (nella sezione sottostante) delle voci finanziarie associate.
 Nella prima sezione si indicano le voci del piano economico selezionandole da una lista precaricata: :ref:`voci-del-piano-economico` Nella seconda sezione si indicano le voci finanziarie che si prevede di utilizzare in fase di previsione e variazioni/storni (praticamente le voci finanziarie su cui potranno essere posti gli stanziamenti di bilancio). 
 Per alcune categorie le voci finanziarie da utilizzare sono obbligatorie, peraltre categorie vanno selezionate dall'elenco voci del Piano Finanziario per l'anno di riferimento. 
 Il vincolo funzionale più importante, da tener presente nella compilazione del Piano economico del Progetto, è che una voce finanziaria può essere associata una sola volta al progetto (quindi associata ad una sola voce economica indicata sul progetto). 
 L'associazione di ulteriori voci finanziarie può essere fatta anche successivamente alla creazione del piano economico, la cosa importante è che durante la compilazione del bilancio di previsione tutte le voci per le quali indicare gli importi di previsione per il progetto specifico, siano presenti sul piano economico del progetto stesso. L'aggiunta di voci finanziarie al piano economico, durante l'anno finanziario, può avvenire senza effettuare la :ref:`rimodulazione-progetto` eccetto i casi in cui si vadano a modificare contemporaneamente gli importi di stanziamento per il Progetto e quindi per le voci rconomiche/finanziarie collegate.
 Dopo aver completato la ripartizione totale degli importi per le voci del piano e per gli anni del progetto, sarà possibile rendere il progetto APPROVATO e sarà possibile utilizzarlo nelle successive gestioni contabili.
+
+**Ripartizione per voce economica - Anni precedenti e successivi**
+......
 
 Ci sono diverse modalità per modificare nelcorso dell'anno di gestione gli importi indicati sul piano economico di un progetto (che vedremo in dettaglio sulle rimodulazioni e sulle variazioni/storni). In sintesi:
 
