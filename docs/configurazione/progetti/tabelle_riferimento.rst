@@ -51,8 +51,9 @@ I Parametri (impostabili a Si oppure a No) che possono essere gestiti per ogni t
 - Quadra Associazione Progetto/Contratti 	- Richiede la quadratura tra importo Finanziato del Progetto e la somma dei contratti attivi	
 - Consenti Associazione Progetto/Contratti - Consente l'associazione dei contratti al progetto.
 
-**Riepilogo Tipologie di Finanziamento**
+Di seguito si riporta un ripilogo dei Tipi Finanziamento e le loro regole operative.
 
+**Riepilogo Tipologie di Finanziamento**
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | Tipologie                         | Obbligo | Obbligo        | Consentita                           | Consentito Scarico |
 | Finanziamento                     | Durata  | Piano Economico| Previsione                           | Costi del Personale|
