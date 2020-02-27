@@ -52,19 +52,45 @@ Piano economico di un Progetto
 Il Piano economico di un progetto deve essere obbligatoriamente indicato quando la Tipologia di Finanziamento lo richiede. 
 Successivamente alla sua definizione esso può essere utilizzato per consultare la 'Scheda Progetto' con tutta la situazione contabile consuntiva alla data, e può essere modificato, dopo l'approvazione della scheda Progetto, attraverso le rimodulazioni.
 
-Il Piano economico del Progetto è compilabile tramite l’apposita tab direttamente sull'anagrafica progetto, ed è strutturato nel modo seguente: 
+Gli importi che si vanno a definire sul Piano Economico rappresentano gli importi che si potranno stanziare sul progetto (attraverso previsioni di bilancio che diventano stanziamenti e attraverso variazioni e storni di bilancio), ripartiti per voci economiche (che raggruppano voci finanziarie di spesa). Gli importi Totali del piano economico si distinguono in Importo Finanziato (Fonti esterne) e Importo Cofinanziato (Fonti interne). Gli importi Finanziato e Cofinanziato rappresentano naturalmente anche le entrate che ci si aspetta di avere per il Progetto dai finanziatori esterni o da risorse provenienti da altri Progetti, girocontate solo dopo la chiusura di qusti ultimi.
+Se il progetto viene creato in fase previsione di bilancio gli importi indicati in previsione per il Progetto devono rispettare quanto definito sul piano economico del progetto:
+
+- Le voci finanziarie indicate nel piano economico per l'anno di previsione sono le uniche utilizzabili sul bilancio di previsione;
+- Gli importi di previsione devono essere inferiori o uguali agli importi indicati nel piano economico.
+
+Se il Progetto nasce nel corso dell'anno finanziario dovranno essere operate variazioni di bilancio per alimentare gli stanziamenti necessari, se le attività contabili iniziano nello stesso anno di gestione.
+
+Il Piano economico del Progetto è compilabile, tramite l’apposita tab, direttamente sull'anagrafica progetto, ed è strutturato nel modo seguente: 
  
-- Riepilogo Importi del Progetto Totale, Ripartito e Da Ripartire (consultazione posta in alto e sempre visibile in fase di gestione del piano economico);
+- Riepilogo Importi del Progetto: Totale, Ripartito e Da Ripartire (consultazione posta in alto e sempre visibile in fase di gestione del piano economico);
 - Totali Riepilogativi del Progetto. E' una sezione di sola consultazione che riporta due tipi di riepilogo dell'intero progetto: **Totali per Voce Piano Economico** (al di là della ripartizione pruriennale degli importi, i totali rappresentano gli importi per Voce del Piano o categoria economica utilizzate nella ripartizione) e **Totali per Esercizio** (al di là della ripartizione per voci economiche in questo caso i totali rappresentano la somma degli importi del progetto ripartiti per esercizio contabile).
-- Ripartizione importi per Voce economica riferita all’anno di gestione, o anno di scrivania; 
-- Ripartizione importi per Voce economica riferita agli altri anni del progetto (precedenti e successivi all’anno di gestione, o anno di scrivania). 
+- Ripartizione importi per Voce economica riferita all’anno di gestione; 
+- Ripartizione importi per Voce economica riferita agli altri anni del progetto (precedenti e successivi all’anno di gestione). 
 
 Ripartizione per voce economica - Anno di gestione
 --------------------------------------------------
 La ripartizione degli importi per l’anno di gestione (o anno di scrivania, o anno di accesso) richiede l'indicazione delle voci economiche del Progetto (o categorie economiche) e per ogni Voce economica, l’elenco (nella sezione sottostante) delle voci finanziarie associate.
 Nella prima sezione si indicano le voci del piano economico selezionandole da una lista precaricata: :ref:`voci-del-piano-economico` Nella seconda sezione si indicano le voci finanziarie che si prevede di utilizzare in fase di previsione e variazioni/storni (praticamente le voci finanziarie su cui potranno essere posti gli stanziamenti di bilancio). 
+Per alcune categorie le voci finanziarie da utilizzare sono obbligatorie, peraltre categorie vanno selezionate dall'elenco voci del Piano Finanziario per l'anno di riferimento. 
+Il vincolo funzionale più importante, da tener presente nella compilazione del Piano economico del Progetto, è che una voce finanziaria può essere associata una sola volta al progetto (quindi associata ad una sola voce economica indicata sul progetto). 
+L'associazione di ulteriori voci finanziarie può essere fatta anche successivamente alla creazione del piano economico, la cosa importante è che durante la compilazione del bilancio di previsione tutte le voci per le quali indicare gli importi di previsione per il progetto specifico, siano presenti sul piano economico del progetto stesso. L'aggiunta di voci finanziarie al piano economico, durante l'anno finanziario, può avvenire senza effettuare la :ref:`rimodulazione-progetto` eccetto i casi in cui si vadano a modificare contemporaneamente gli importi di stanziamento per il Progetto e quindi per le voci rconomiche/finanziarie collegate.
+Dopo aver completato la ripartizione totale degli importi per le voci del piano e per gli anni del progetto, sarà possibile rendere il progetto APPROVATO e sarà possibile utilizzarlo nelle successive gestioni contabili.
 
 
 
-Rimodulazione di un Progetto
-============================
+
+
+Abbiamo diverse casistiche per movimentare gli stanziamenti sul progetto (che vedremo in dettaglio sulle rimodulazioni e sulle variazioni/storni di un progetto). In sintesi:
+
+- Spostamento stanziamennti all'interno del Progetto:
+  - Tra voci finanziarie della stessa categoria economica del Progetto (no rimodulzione, no variazioni);
+  - Tra voci finanziarie di categorie economiche diverse del Progetto (nel rispetto del limite previsto per le categorie economiche: no rimodulazione, si variazioni. Oltre i limiti delle ctegorie economiche: si rimodulazioni, si variazioni);
+  - Aumento importi per il progetto (si rimodulazione se oltre limiti delle voci economiche, si variazioni di maggiori entrate e maggiori spese);
+  - Diminuzione importi per il progetto (si rimodulazione, si variazioni di minori entrate e minori spese);
+- Spostamento importi oltre i limiti dell'utilizzato (impegni e trasferimenti): non consentito;
+- Spostamento importi da un progetto ad un altro (solo se il primo è chiuso, tramite la gae specifica di natura 6, si rimodulazione se oltre limiti delle voci economiche, si variazioni) 
+
+
+
+Rimodulazione Progetto
+======================
