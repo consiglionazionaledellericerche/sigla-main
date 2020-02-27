@@ -54,6 +54,7 @@ I Parametri (impostabili a Si oppure a No) che possono essere gestiti per ogni t
 Di seguito si riporta un ripilogo dei Tipi Finanziamento e le loro regole operative.
 
 **Riepilogo Tipologie di Finanziamento**
+
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | Tipologie                         | Obbligo | Obbligo        | Consentita                           | Consentito Scarico |
 | Finanziamento                     | Durata  | Piano Economico| Previsione                           | Costi del Personale|
@@ -61,12 +62,19 @@ Di seguito si riporta un ripilogo dei Tipi Finanziamento e le loro regole operat
 | FOE                               | NO      | NO             |  SI - STATO APPROVATO                | SI                 |
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | FOE PROGETTI                      | SI      | SI             |  NON CONSENTITA                      | SI                 |
++-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | AUTOFINANZIAMENTO                 | SI      | SI             |  NON CONSENTITA                      | SI                 |
++-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | AUTOFINNZIAMENTO AREE             | NO      | NO             |  SI - STATO APPROVATO                | SI                 |
++-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | RIMBORSO DA SOGGETTI TERZI        | NO      | NO             |  SI - STATO APPROVATO                | SI                 |
++-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | COFINANZIAMENTO                   | SI      | SI             |  SI - STATO APPROVATO E NEGOZIAZIONE | SI                 |
++-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | FINANZIAMENTO                     | SI      | SI             |  SI - STATO APPROVATO E NEGOZIAZIONE | SI                 |
++-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | ATTIVITA' COMMERCIALE PURA        | SI      | SI             |  SI - STATO APPROVATO                | SI                 |
++-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | ATTIVITA' COMMERCIALE A TARIFFARIO| NO      | NO             |  NON CONSENTITA                      | SI                 |
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 
