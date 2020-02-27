@@ -76,11 +76,7 @@ Il vincolo funzionale più importante, da tener presente nella compilazione del 
 L'associazione di ulteriori voci finanziarie può essere fatta anche successivamente alla creazione del piano economico, la cosa importante è che durante la compilazione del bilancio di previsione tutte le voci per le quali indicare gli importi di previsione per il progetto specifico, siano presenti sul piano economico del progetto stesso. L'aggiunta di voci finanziarie al piano economico, durante l'anno finanziario, può avvenire senza effettuare la :ref:`rimodulazione-progetto` eccetto i casi in cui si vadano a modificare contemporaneamente gli importi di stanziamento per il Progetto e quindi per le voci rconomiche/finanziarie collegate.
 Dopo aver completato la ripartizione totale degli importi per le voci del piano e per gli anni del progetto, sarà possibile rendere il progetto APPROVATO e sarà possibile utilizzarlo nelle successive gestioni contabili.
 
-
-
-
-
-Abbiamo diverse casistiche per movimentare gli stanziamenti sul progetto (che vedremo in dettaglio sulle rimodulazioni e sulle variazioni/storni di un progetto). In sintesi:
+Ci sono diverse modalità per modificare nelcorso dell'anno di gestione gli importi indicati sul piano economico di un progetto (che vedremo in dettaglio sulle rimodulazioni e sulle variazioni/storni). In sintesi:
 
 - Spostamento stanziamennti all'interno del Progetto:
   - Tra voci finanziarie della stessa categoria economica del Progetto (no rimodulzione, no variazioni);
