@@ -51,6 +51,9 @@ I Parametri (impostabili a Si oppure a No) che possono essere gestiti per ogni t
 - Quadra Associazione Progetto/Contratti 	- Richiede la quadratura tra importo Finanziato del Progetto e la somma dei contratti attivi	
 - Consenti Associazione Progetto/Contratti - Consente l'associazione dei contratti al progetto.
 
+**Riepilogo Tipologie di Finanziamento**
+
+
 .. _voce-del-piano-economico:
 
 Voci del Piano Economico Progetti
