@@ -19,12 +19,16 @@ package it.cnr.test.h2.progettiric00.bp;
 
 import it.cnr.test.h2.utenze.action.ActionDeployments;
 import it.cnr.test.h2.utenze.action.LoginTest;
+import it.cnr.test.util.AlertMessage;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.InSequence;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -77,21 +81,25 @@ public class TestataProgettiRicercaBPTest extends ActionDeployments {
         doClickButton("doSearch(main.find_programma)");
 
         doClickButton("doSalva()");
+        final Alert alert = browser.switchTo().alert();
+        assertEquals(AlertMessage.CREAZIONE_ESEGUITA.value(), alert.getText());
+        alert.accept();
+
     }
 
+    @Test
     @RunAsClient
     @OperateOnDeployment(TEST_H2)
     @InSequence(3)
     public void testCreaProgetto() throws Exception {
+        browser.switchTo().parentFrame();
         switchToFrameMenu();
 
-        doApriMenu(CFG);
-        doApriMenu(CFG_PROGETTI);
         doApriMenu(CFG_PROGETTI_LIV_2);
         doSelezionaMenu(CFG_PROGETTI_LIV_2_M);
 
         browser.switchTo().parentFrame();
-        switchToFrameDesktop();
+        switchToFrameWorkspace();
 
         getGrapheneElement("main.find_nodo_padre_area.cd_progetto").writeIntoElement(CD_AREAPROG);
         doClickButton("doSearch(main.find_nodo_padre_area)");
@@ -102,11 +110,25 @@ public class TestataProgettiRicercaBPTest extends ActionDeployments {
         getGrapheneElement("main.tipo.cd_tipo_progetto").writeIntoElement("001");
         doClickButton("doSearch(main.tipo)");
 
-        assertEquals(UO, getWebElement("main.cd_unita_organizzativa").getText());
+        assertEquals(UO, getGrapheneElement("main.cd_unita_organizzativa").getAttribute("value"));
 
+        doClickButton("doBlankSearch(main.responsabile)");
         getGrapheneElement("main.responsabile.cd_terzo").writeIntoElement("1");
         doClickButton("doSearch(main.responsabile)");
 
         doClickButton("doSalva()");
+
+        Alert alert = browser.switchTo().alert();
+        assertEquals(AlertMessage.MESSAGE_INDICARE_FASE_PROGETTO.value(), alert.getText());
+        alert.accept();
+
+        getGrapheneElement("main.fl_previsione").click();
+
+        doClickButton("doSalva()");
+
+        alert = browser.switchTo().alert();
+        assertEquals(AlertMessage.CREAZIONE_ESEGUITA.value(), alert.getText());
+
+        alert.accept();
     }
 }
