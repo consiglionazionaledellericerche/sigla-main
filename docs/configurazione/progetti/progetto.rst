@@ -77,7 +77,7 @@ L'associazione di ulteriori voci finanziarie può essere fatta anche successivam
 Dopo aver completato la ripartizione totale degli importi per le voci del piano e per gli anni del progetto, sarà possibile rendere il progetto APPROVATO e sarà possibile utilizzarlo nelle successive gestioni contabili.
 
 **Ripartizione per voce economica - Anni precedenti e successivi**
-......
+
 
 Ci sono diverse modalità per modificare nelcorso dell'anno di gestione gli importi indicati sul piano economico di un progetto (che vedremo in dettaglio sulle rimodulazioni e sulle variazioni/storni). In sintesi:
 
