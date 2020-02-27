@@ -73,9 +73,9 @@ Di seguito si riporta un ripilogo dei Tipi Finanziamento e le loro regole operat
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 | FINANZIAMENTO                     | SI      | SI             |  SI - STATO APPROVATO E NEGOZIAZIONE | SI                 |
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
-| ATTIVITA' COMMERCIALE PURA        | SI      | SI             |  SI - STATO APPROVATO                | SI                 |
+| ATTIVITA\' COMMERCIALE PURA       | SI      | SI             |  SI - STATO APPROVATO                | SI                 |
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
-| ATTIVITA' COMMERCIALE A TARIFFARIO| NO      | NO             |  NON CONSENTITA                      | SI                 |
+|ATTIVITA\' COMMERCIALE A TARIFFARIO| NO      | NO             |  NON CONSENTITA                      | SI                 |
 +-----------------------------------+---------+----------------+--------------------------------------+--------------------+
 
 
