@@ -42,6 +42,8 @@ import static org.junit.Assert.assertEquals;
 
 public class ActionDeployments extends DeploymentsH2 {
     private transient final static Logger LOGGER = LoggerFactory.getLogger(ActionDeployments.class);
+    public static final int ITERATE_MAX = 50;
+    public static final String FRAME_DESKTOP = "desktop", FRAME_WORKSPACE = "workspace", FRAME_MENU = "menu_tree";
 
     @Drone
     protected WebDriver browser;
@@ -59,7 +61,7 @@ public class ActionDeployments extends DeploymentsH2 {
         Boolean pageSourceNotFound = true;
         Integer iterate = 0;
         URL url = new URL(deploymentURL.toString().concat("/Login.do"));
-        while (pageSourceNotFound && iterate < 12) {
+        while (pageSourceNotFound && iterate < ITERATE_MAX) {
             try {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
@@ -75,9 +77,13 @@ public class ActionDeployments extends DeploymentsH2 {
         }
     }
 
+    protected void logPageSource() {
+        LOGGER.info(browser.getPageSource());
+    }
+
     protected void doLogin(String user, String password) throws Exception {
         browser.navigate().to(deploymentURL.toString().concat("/Login.do"));
-        browser.switchTo().frame("desktop");
+        switchToFrameDesktop();
         final WebElement comandoEntra = browser.findElement(By.name("comando.doEntra"));
         Assert.assertTrue(Optional.ofNullable(comandoEntra).isPresent());
 
@@ -88,12 +94,12 @@ public class ActionDeployments extends DeploymentsH2 {
     }
 
     protected void doLoginUO(String uo, String cdr) throws Exception {
-        browser.switchTo().frame("workspace");
+        switchToFrameWorkspace();
 
-        getGrapheneElement("main.find_uo.cd_unita_organizzativa").writeIntoElement("999.000");
+        getGrapheneElement("main.find_uo.cd_unita_organizzativa").writeIntoElement(uo);
         doClickButton("doSearch(main.find_uo)");
 
-        getGrapheneElement("main.find_cdr.searchtool_cd_centro_responsabilita").writeIntoElement("999.000.000");
+        getGrapheneElement("main.find_cdr.searchtool_cd_centro_responsabilita").writeIntoElement(cdr);
         doClickButton("submitForm('doSelezionaCds')");
     }
 
@@ -107,6 +113,30 @@ public class ActionDeployments extends DeploymentsH2 {
                         .filter(GrapheneElement.class::isInstance)
                         .map(GrapheneElement.class::cast)
                         .orElseThrow(() -> new RuntimeException("Cannot find GrapheneElement with name "+element));
+    }
+
+    protected void switchToFrameMenu() {
+        switchToFrame(FRAME_MENU);
+    }
+
+    protected void switchToFrameWorkspace() {
+        switchToFrame(FRAME_WORKSPACE);
+    }
+
+    protected void switchToFrameDesktop() {
+        switchToFrame(FRAME_DESKTOP);
+    }
+
+    protected void  switchToFrame(String frameId) {
+        browser.switchTo().frame(frameId);
+    }
+
+    protected void doSelezionaMenu(String menuId) {
+        doClickTree("selezionaMenu('".concat(menuId).concat("')"));
+    }
+
+    protected void doApriMenu(String menuId) {
+        doClickTree("apriMenu('".concat(menuId).concat("')"));
     }
 
     protected void doClickTree(String onclick) {

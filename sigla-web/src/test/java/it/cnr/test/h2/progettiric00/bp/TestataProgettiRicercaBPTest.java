@@ -21,17 +21,10 @@ import it.cnr.test.h2.utenze.action.ActionDeployments;
 import it.cnr.test.h2.utenze.action.LoginTest;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.arquillian.graphene.GrapheneElement;
 import org.jboss.arquillian.junit.InSequence;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,9 +33,14 @@ public class TestataProgettiRicercaBPTest extends ActionDeployments {
     public static final String PASSWORD = "PASSTEST";
     public static final String CD_AREAPROG = "AREA001";
     public static final String CD_PROGETTO = "PRG001";
-
     public static final String UO = "000.000";
     public static final String CDR = "000.000.000";
+    public static final String CFG = "0.CFG";
+    public static final String CFG_PROGETTI = "0.CFG.PROGETTI";
+    public static final String CFG_PROGETTI_LIV_2 = "0.CFG.PROGETTI.LIV2";
+    public static final String CFG_PROGETTI_LIV_1 = "0.CFG.PROGETTI.LIV1";
+    public static final String CFG_PROGETTI_LIV_2_M = "0.CFG.PROGETTI.LIV2.M";
+    public static final String CFG_PROGETTI_LIV_1_G = "0.CFG.PROGETTI.LIV1.G";
     private transient final static Logger LOGGER = LoggerFactory.getLogger(LoginTest.class);
 
     @Test
@@ -59,16 +57,15 @@ public class TestataProgettiRicercaBPTest extends ActionDeployments {
     @OperateOnDeployment(TEST_H2)
     @InSequence(2)
     public void testCreaAreaProgettuale() throws Exception {
-        browser.switchTo().frame("desktop");
-        browser.switchTo().frame("menu_tree");
-
-        doClickTree("apriMenu('0.CFG')");
-        doClickTree("apriMenu('0.CFG.PROGETTI')");
-        doClickTree("apriMenu('0.CFG.PROGETTI.LIV1')");
-        doClickTree("selezionaMenu('0.CFG.PROGETTI.LIV1.G')");
+        switchToFrameDesktop();
+        switchToFrameMenu();
+        doApriMenu(CFG);
+        doApriMenu(CFG_PROGETTI);
+        doApriMenu(CFG_PROGETTI_LIV_1);
+        doSelezionaMenu(CFG_PROGETTI_LIV_1_G);
 
         browser.switchTo().parentFrame();
-        browser.switchTo().frame("workspace");
+        switchToFrameWorkspace();
 
         getGrapheneElement("main.cd_progetto").writeIntoElement(CD_AREAPROG);
         getGrapheneElement("main.ds_progetto").writeIntoElement("Area Progettuale Generale");
@@ -86,15 +83,15 @@ public class TestataProgettiRicercaBPTest extends ActionDeployments {
     @OperateOnDeployment(TEST_H2)
     @InSequence(3)
     public void testCreaProgetto() throws Exception {
-        browser.switchTo().frame("menu_tree");
+        switchToFrameMenu();
 
-        doClickTree("apriMenu('0.CFG')");
-        doClickTree("apriMenu('0.CFG.PROGETTI')");
-        doClickTree("apriMenu('0.CFG.PROGETTI.LIV2')");
-        doClickTree("selezionaMenu('0.CFG.PROGETTI.LIV2.M')");
+        doApriMenu(CFG);
+        doApriMenu(CFG_PROGETTI);
+        doApriMenu(CFG_PROGETTI_LIV_2);
+        doSelezionaMenu(CFG_PROGETTI_LIV_2_M);
 
         browser.switchTo().parentFrame();
-        browser.switchTo().frame("workspace");
+        switchToFrameDesktop();
 
         getGrapheneElement("main.find_nodo_padre_area.cd_progetto").writeIntoElement(CD_AREAPROG);
         doClickButton("doSearch(main.find_nodo_padre_area)");
