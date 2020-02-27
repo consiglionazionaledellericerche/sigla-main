@@ -44,6 +44,8 @@ A seconda della Tipologia di Finanziamento un Progetto può essere utilizzato in
 - **Annullato** (solo per Progetti precedentemente in Negoziazione, e poi non più usati)
 - **Chiuso** (solo per Progetti che non hanno date inizio/fine). Per la chiusura di un progetto sarà utilizzata la data fine per poter memorizzare la data in cui viene chiuso. 
 
+.. _piano-economico:
+
 Piano economico di un Progetto
 ==============================
 
