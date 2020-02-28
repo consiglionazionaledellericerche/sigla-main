@@ -49,6 +49,7 @@ html_favicon = "favicon.ico"
 html_logo = "logo.png"
 latex_logo = 'logo.png'
 html_title = "Home"
+smartquotes = False
 language = "it"
 # The master toctree document.
 master_doc = 'index'

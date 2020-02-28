@@ -2879,9 +2879,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
 				/**
 				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
-				 *    dello stesso progetto (regola non valida per progetti di Aree)
+				 *    dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria)
 				 */
-				if (!isVariazioneArea)
+				if (!isVariazioneArea && !isVariazioneRagioneria)
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)

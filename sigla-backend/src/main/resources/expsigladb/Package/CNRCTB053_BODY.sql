@@ -1062,7 +1062,6 @@ begin
         -- Leggo il CDR del personale e la sua linea SAUOP
 
         aCDRPersonale := CNRCTB020.GETCDRPERSONALE(aEsercizio);
-        aLASAUOP := CNRCTB010.getLASAUOP(aEsercizio, aCDRPersonale.cd_centro_responsabilita);
 
         If nvl(recParametriCnr.fl_nuovo_pdg,'N') = 'Y' Then
           If aLa_origine.cd_programma is null or aLa_origine.cd_missione is null Then
@@ -1109,6 +1108,7 @@ begin
                                            ', Programma '||aLa_origine.cd_programma||' e Missione '||aLa_origine.cd_missione||'! Operazione non possibile!');
           End;
         ElsIf aCV.CDR_ACCENTRATORE = aCDRPersonale.CD_CENTRO_RESPONSABILITA Then
+          aLASAUOP := CNRCTB010.getLASAUOP(aEsercizio, aCDRPersonale.cd_centro_responsabilita);
           ACDRLINEA_DETT := aLASAUOP.CD_CENTRO_RESPONSABILITA;
           ALINEA_DETT    := aLASAUOP.CD_LINEA_ATTIVITA;
         Else

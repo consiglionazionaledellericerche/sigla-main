@@ -293,7 +293,7 @@ public final class Utility {
 		provider.addIncludeFilter(new AssignableTypeFilter(OggettoBulk.class));
 		AdminSession adminSession = (AdminSession) EJBCommonServices.createEJB("JADAEJB_AdminSession");
 		Set<BeanDefinition> components = provider.findCandidateComponents("it/cnr");
-		logger.info("Load PersistentInfo start");
+		logger.info("Load PersistentInfo start, total number of classes is {}", components.size());
 		for (BeanDefinition component : components){
 			try {
 			    Class<?> clazz = Class.forName(component.getBeanClassName());
