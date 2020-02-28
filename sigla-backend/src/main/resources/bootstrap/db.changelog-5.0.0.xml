@@ -3051,13 +3051,13 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
-    <changeSet id="help-add-colulumn-bpname" author="marco.spasiano">
+    <changeSet id="help-add-column-bpname" author="marco.spasiano">
         <addColumn tableName="help_lkt">
             <column name="bp_name" remarks="Nome del Business process" type="VARCHAR(50)"/>
         </addColumn>
         <dropNotNullConstraint tableName="help_lkt" columnName="page" columnDataType="VARCHAR(2000)"></dropNotNullConstraint>
     </changeSet>
-    <changeSet author="marco.spasiano" id="help-modify-data-type">
+    <changeSet id="help-modify-data-type" author="marco.spasiano">
         <createSequence sequenceName="pg_help"/>
         <dropPrimaryKey tableName="help_lkt"></dropPrimaryKey>
         <dropColumn tableName="help_lkt" columnName="cd_help"></dropColumn>
