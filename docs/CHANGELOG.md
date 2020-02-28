@@ -1,3 +1,99 @@
+## Release 6.1.40  -- _February 25, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[9d2a687f8d218ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d2a687f8d218ca) marco.spasiano *February 25, 2020*
+
+>**FIX Multi Beneficiario per Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOCONTOCORRENTEPOSTALE**
+>
+>[ab2ddcc3a72ef55](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ab2ddcc3a72ef55) marco.spasiano *February 25, 2020*
+
+
+## Release 6.1.39  -- _February 25, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[a9970c7144fdb56](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a9970c7144fdb56) marco.spasiano *February 25, 2020*
+
+>**Add release version on docs conf.py**
+>
+>[6d3f543ba3c88d4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d3f543ba3c88d4) marco.spasiano *February 25, 2020*
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[0f19acfc4e03878](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f19acfc4e03878) marco.spasiano *February 25, 2020*
+
+
+## Release 6.1.38  -- _February 25, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[8e8162cd1bc3df7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8e8162cd1bc3df7) marco.spasiano *February 25, 2020*
+
+>**FIX menu position on docs header**
+>
+>[4892ea46f8188c5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4892ea46f8188c5) marco.spasiano *February 25, 2020*
+
+>**Add release version on docs conf.py**
+>
+>[a76ee86572785d9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a76ee86572785d9) marco.spasiano *February 25, 2020*
+
+
+## Release 6.1.37  -- _February 24, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[3b8997fab50228a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b8997fab50228a) marco.spasiano *February 24, 2020*
+
+>**FIX maven plugin for release version**
+>
+>[e5b8ab899aba900](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e5b8ab899aba900) marco.spasiano *February 24, 2020*
+
+
+## Release 6.1.36  -- _February 24, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[33f62e0525349f6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/33f62e0525349f6) marco.spasiano *February 24, 2020*
+
+>**Update pom.xml**
+>
+>[0502965aa4d4d09](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0502965aa4d4d09) SPASIANO MARCO *February 24, 2020*
+
+
+## Release 6.1.35  -- _February 24, 2020_ 
+**Changes**
+
+>**changed softwareVersion and releaseDate [ci skip]**
+>
+>[d9a3634a24d3db1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9a3634a24d3db1) marco.spasiano *February 24, 2020*
+
+>**FIX maven plugin for release version**
+>
+>[10539b2f8594834](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10539b2f8594834) marco.spasiano *February 24, 2020*
+
+
+## Release 6.1.34  -- _February 24, 2020_ 
+**Changes**
+
+>**FIX maven plugin for release version**
+>
+>[67d6cf49cbc0a7b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/67d6cf49cbc0a7b) marco.spasiano *February 24, 2020*
+
+
+## Release 6.1.33  -- _February 24, 2020_ 
+**Changes**
+
+>**FIX maven plugin**
+>
+>[9ba91cc0284fa63](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9ba91cc0284fa63) marco.spasiano *February 24, 2020*
+
+
 ## Release 6.1.32  -- _February 24, 2020_ 
 **Changes**
 
