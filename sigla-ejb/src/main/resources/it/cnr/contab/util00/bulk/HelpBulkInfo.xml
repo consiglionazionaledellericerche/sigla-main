@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Codice" />
+	<fieldProperty
+		name="page"
+		property="page"
+		inputType="TEXT"
+		maxLength="2000"
+		inputCssClass="w-100"
+		label="Posizione fisica relativa della pagina jsp" />
+	<fieldProperty
+		name="bpName"
+		property="bpName"
+		keysProperty="bpKeys"
+		inputType="SELECT"
+		maxLength="50"
+		inputCssClass="w-100"
+		label="Nome del Business Process" />
+	<fieldProperty
+		name="helpUrl"
+		property="helpUrl"
+		inputType="TEXT"
+		maxLength="2000"
+		inputCssClass="w-100"
+		label="URL della pagina di help" />
+	<fieldProperty
+		name="dsPage"
+		property="dsPage"
+		inputType="TEXTAREA"
+		inputCssClass="w-100"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		label="Descrizione" />
+	<fieldProperty
+		name="flagMan"
+		property="flagMan"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Flag per leggere l'Help dal manuale on line" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+		<formFieldProperty
+			name="helpUrl" />
+		<formFieldProperty
+			name="dsPage" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="page" />
+	<formFieldProperty
+		name="bpName" />
+	<formFieldProperty
+		name="helpUrl" />
+	<formFieldProperty
+		name="dsPage" />
+
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="page" />
+	<findFieldProperty
+		name="helpUrl" />
+	<findFieldProperty
+		name="dsPage" />
+	<findFieldProperty
+		name="flagMan" />
+	<findFieldProperty
+		name="bpName" />
+
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="page" />
+	<columnFieldProperty
+		name="bpName" />
+	<columnFieldProperty
+		name="helpUrl" />
+
+</bulkInfo>

@@ -1,4 +1,7 @@
-# Piano dei Conti Finanziario
+===========================
+Piano dei Conti Finanziario
+===========================
+
 Il piano dei conti Finanziario consente di gestire l'anagrafica delle voci di bilancio sia di [Voci di Entrata](#voci-di-entrata) che di [Voci di Spesa](#voci-di-spesa). 
 Le Voci costituiscono il livello elementare di gestione per la movimentazione finanziaria e sono a loro volte associate alla classificazione ufficiale del Bilancio preventivo e consuntivo dell'Ente.
 L'anagrafica Voci di Bilancio si completa con le [Associazioni Voci](#associazioni-voci) necessarie all'utilizzo in gestione.
@@ -7,7 +10,9 @@ Premessa
 Di seguito è indicata la modalità di gestione delle voci di entrata e spesa. Ricordiamo che la voce di bilancio si può suddividere ulteriormente in articoli a seconda delle esigenze dell'Ente.
 
 
-## Voci di Entrata
+Voci di Entrata
+---------------
+
 La struttura del piano dei conti parte entrate, viene definita nella 'Classificazione Ufficiale' (Vedi funzionalità specifica), 
 a cui la voce di entrata fa riferimento.
  
@@ -45,7 +50,8 @@ Sono facoltative le seguenti informazioni:
 
 In fase di modifica è permesso variare solo la descrizione.
 
-## Voci di Spesa
+Voci di Spesa
+-------------
 
 La struttura del piano dei conti parte spese, viene definita nella 'Classificazione Ufficiale' (Vedi funzionalità specifica) a cui la voce di bilancio fa riferimento.
 
@@ -89,7 +95,8 @@ Il sistema assegna automaticamente un codice progressivo se l’utente non valor
 
 -  Utilizzabile per Missioni: indica se la voce è utilizzabile per la gestione Missioni.
 
-## Associazioni Voci
+Associazioni Voci
+-----------------
 
 Le voci di bilancio, sia di entrata che di spesa, per poter essere utilizzate correttamente nelle movimentazioni finanziaarie, hanno bisogno di essere completate con le seguenti associazioni:
 

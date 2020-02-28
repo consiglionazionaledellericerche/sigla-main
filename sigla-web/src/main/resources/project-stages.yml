@@ -135,6 +135,10 @@ liquibase:
 cnr:
   storage:
     driver: cmis
+
+help:
+  base:
+    url: https://consiglionazionaledellericerche.github.io/sigla-main
 ---
 project:
   stage: demo-h2

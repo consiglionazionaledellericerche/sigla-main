@@ -25,6 +25,7 @@ import it.cnr.contab.generator.artifacts.ForeignKey;
 import it.cnr.contab.generator.artifacts.Tags;
 import it.cnr.contab.generator.properties.Preferences;
 import it.cnr.contab.generator.util.DatabaseUtil;
+import oracle.jdbc.OracleConnection;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -56,6 +57,12 @@ public class TableMetaData {
         }
         // senza questo setting il commento alle colonne è null
         Connection oc = (Connection) dbUtil.getConnection();
+        Optional.ofNullable(oc)
+                .filter(OracleConnection.class::isInstance)
+                .map(OracleConnection.class::cast)
+                .ifPresent(oracleConnection -> {
+                    oracleConnection.setRemarksReporting(true);
+                });
 
         String schema = bean.getSchema();
         String table = bean.getTable();

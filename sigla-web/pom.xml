@@ -89,6 +89,16 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+                <configuration>
+                    <excludes>
+                        <exclude>${test.exclude.package}</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -565,6 +575,12 @@
         </dependency>
     </dependencies>
     <profiles>
+        <profile>
+            <id>all-test</id>
+            <properties>
+                <test.exclude.package></test.exclude.package>
+            </properties>
+        </profile>
         <profile>
             <id>CMIS</id>
             <dependencies>
