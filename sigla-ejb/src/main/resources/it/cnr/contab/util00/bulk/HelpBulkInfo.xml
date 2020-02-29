@@ -9,12 +9,14 @@
 		nullable="false"
 		enabledOnEdit="false"
 		enabledOnInsert="false"
-		label="Codice" />
+		enabledOnSearch="true"
+		label="Progressivo" />
 	<fieldProperty
 		name="page"
 		property="page"
 		inputType="TEXT"
 		maxLength="2000"
+		enabledOnSearch="true"
 		inputCssClass="w-100"
 		label="Posizione fisica relativa della pagina jsp" />
 	<fieldProperty
@@ -24,6 +26,7 @@
 		inputType="SELECT"
 		maxLength="50"
 		inputCssClass="w-100"
+		enabledOnSearch="true"
 		label="Nome del Business Process" />
 	<fieldProperty
 		name="helpUrl"
@@ -31,6 +34,7 @@
 		inputType="TEXT"
 		maxLength="2000"
 		inputCssClass="w-100"
+		enabledOnSearch="true"
 		label="URL della pagina di help" />
 	<fieldProperty
 		name="dsPage"
@@ -40,6 +44,7 @@
 		cols="60"
 		rows="5"
 		maxLength="200"
+		enabledOnSearch="true"
 		label="Descrizione" />
 	<fieldProperty
 		name="flagMan"

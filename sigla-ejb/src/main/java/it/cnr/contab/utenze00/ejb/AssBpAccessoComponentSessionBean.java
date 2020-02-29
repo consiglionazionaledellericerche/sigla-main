@@ -18,9 +18,13 @@
 package it.cnr.contab.utenze00.ejb;
 
 import it.cnr.contab.utenze00.comp.AssBpAccessoComponent;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import java.rmi.RemoteException;
+import java.util.Map;
 
 @Stateless(name = "CNRUTENZE00_EJB_AssBpAccessoComponentSession")
 public class AssBpAccessoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements AssBpAccessoComponentSession {
@@ -56,6 +60,26 @@ public class AssBpAccessoComponentSessionBean extends it.cnr.jada.ejb.CRUDCompon
         pre_component_invocation(param0, componentObj);
         try {
             it.cnr.contab.utenze00.bulk.AssBpAccessoBulk result = ((AssBpAccessoComponent) componentObj).finAssBpAccesso(param0, param1, param2);
+            component_invocation_succes(param0, componentObj);
+            return result;
+        } catch (it.cnr.jada.comp.NoRollbackException e) {
+            component_invocation_succes(param0, componentObj);
+            throw e;
+        } catch (it.cnr.jada.comp.ComponentException e) {
+            component_invocation_failure(param0, componentObj);
+            throw e;
+        } catch (RuntimeException e) {
+            throw uncaughtRuntimeException(param0, componentObj, e);
+        } catch (Error e) {
+            throw uncaughtError(param0, componentObj, e);
+        }
+    }
+
+    @Override
+    public Map<String, String> findDescrizioneBP(UserContext param0) throws ComponentException, javax.ejb.EJBException {
+        pre_component_invocation(param0, componentObj);
+        try {
+            Map<String, String> result = ((AssBpAccessoComponent) componentObj).findDescrizioneBP(param0);
             component_invocation_succes(param0, componentObj);
             return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {

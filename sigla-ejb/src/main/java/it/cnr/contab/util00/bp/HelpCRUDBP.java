@@ -17,10 +17,18 @@
 
 package it.cnr.contab.util00.bp;
 
+import it.cnr.contab.utenze00.ejb.AssBpAccessoComponentSession;
 import it.cnr.contab.util00.bulk.HelpBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
+
+import java.rmi.RemoteException;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
 
 public class HelpCRUDBP extends SimpleCRUDBP {
     public HelpCRUDBP() {
@@ -34,15 +42,31 @@ public class HelpCRUDBP extends SimpleCRUDBP {
     protected void initialize(ActionContext actioncontext) throws BusinessProcessException {
         super.initialize(actioncontext);
         if (HelpBulk.bpKeys.isEmpty()) {
+            final Map<String, String> map = Optional.ofNullable(createComponentSession("CNRUTENZE00_EJB_AssBpAccessoComponentSession", AssBpAccessoComponentSession.class))
+                    .filter(AssBpAccessoComponentSession.class::isInstance)
+                    .map(AssBpAccessoComponentSession.class::cast)
+                    .map(assBpAccessoComponentSession -> {
+                        try {
+                            return assBpAccessoComponentSession.findDescrizioneBP(actioncontext.getUserContext());
+                        } catch (ComponentException | RemoteException e) {
+                            throw new DetailedRuntimeException(e);
+                        }
+                    })
+                    .orElse(Collections.emptyMap());
+
             actioncontext
                     .getActionMapping()
                     .getMappings()
                     .getBusinessProcesses()
                     .keySet()
                     .stream()
-                    .sorted()
+                    .sorted((o1, o2) -> {
+                        return Optional.ofNullable(map.get(o1)).orElse(o1).toUpperCase().compareTo(
+                                Optional.ofNullable(map.get(o2)).orElse(o2).toUpperCase()
+                        );
+                    })
                     .forEach(s -> {
-                        HelpBulk.bpKeys.put(s,s);
+                        HelpBulk.bpKeys.put(s,Optional.ofNullable(map.get(s)).map(s1 -> s1.concat(" - ").concat(s)).orElse(s));
                     });
         }
     }
