@@ -1,5 +1,6 @@
-# Messaggi Applicativi
-
+====================
+Messaggi Applicativi
+====================
 
 La ‘Gestione dei Messaggi’ qui trattata si riferisce esclusivamente ad Avvisi, di natura
 tecnica o contabile, che si ritengono importanti per l’utenza, e che quindi vanno

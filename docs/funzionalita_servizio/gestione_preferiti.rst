@@ -1,4 +1,6 @@
-# Gestione Preferiti
+==================
+Gestione Preferiti
+==================
 
 La lista dei preferiti è alimentata liberamente dall’utente durante la navigazione all’interno delle funzionalità:
 
