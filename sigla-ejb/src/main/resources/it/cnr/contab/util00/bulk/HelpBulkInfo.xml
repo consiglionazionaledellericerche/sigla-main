@@ -35,6 +35,7 @@
 		maxLength="2000"
 		inputCssClass="w-100"
 		enabledOnSearch="true"
+		nullable="false"
 		label="URL della pagina di help" />
 	<fieldProperty
 		name="dsPage"

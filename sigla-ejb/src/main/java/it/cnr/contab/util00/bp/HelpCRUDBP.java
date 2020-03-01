@@ -22,6 +22,8 @@ import it.cnr.contab.util00.bulk.HelpBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 
@@ -36,6 +38,21 @@ public class HelpCRUDBP extends SimpleCRUDBP {
 
     public HelpCRUDBP(String s) {
         super(s);
+    }
+
+    @Override
+    public void validate(ActionContext actioncontext) throws ValidationException {
+        super.validate(actioncontext);
+        Optional.ofNullable(getModel())
+                .filter(HelpBulk.class::isInstance)
+                .map(HelpBulk.class::cast)
+                .filter(helpBulk -> !(!Optional.ofNullable(helpBulk.getBpName()).isPresent() && !Optional.ofNullable(helpBulk.getPage()).isPresent()))
+                .orElseThrow(() -> {
+                    return new ValidationException(
+                                    "Valorizzare almeno uno tra '".concat(getBulkInfo().getFieldProperty("bpName").getLabel()).concat(
+                                            "' e '").concat(getBulkInfo().getFieldProperty("page").getLabel()).concat("'!"));
+                    }
+                );
     }
 
     @Override

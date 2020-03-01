@@ -16,7 +16,7 @@
 			propertyName="helpUrl"
 			sqlTypeName="VARCHAR"
 			columnSize="2000"
-			nullable="true" />
+			nullable="false" />
 		<columnMapping
 			columnName="DUVA"
 			propertyName="duva"
