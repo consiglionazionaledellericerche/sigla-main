@@ -4,7 +4,7 @@ Coda di Stampa
 
 Le mappe di lancio stampa si presentano con le seguenti icone:
 
-![](../screenshot/print_4.png)
+.. thumbnail:: ../screenshot/print_4.png
 
 Successivamente al lancio della stampa è possibile inserire una descrizione e cambiare la visibilità della stampa eseguita:
 
@@ -15,12 +15,12 @@ Successivamente al lancio della stampa è possibile inserire una descrizione e c
 - Ente
 - Pubblico 
 
-![](../screenshot/print_6.png)
+.. thumbnail:: ../screenshot/print_6.png
 
 Inoltre attivando la spunta su **Invia E-Mail con la stampa allegata** è possibile ricevere via E-mail il contenuto della stampa,
 inoltre è possibile schedulare la produzione della stampa stessa secondo i parametri presenti nella maschera.
 
-![](../screenshot/print_7.png)
+.. thumbnail:: ../screenshot/print_7.png
 
 Indicando nell'ultimo box una data/ora, una unità di intervallo (giorni/
 settimane/mesi) ed un **valore per l’unità di intervallo** (1 giorno, 5 giorni, 2 settimane, ecc.) si
@@ -43,5 +43,4 @@ cancellare la coda di stampa eliminando di fatto la schedulazione della stessa.
 
 Ed infine il riporto nella mappa della coda di stampe:
 
-![](../screenshot/print_5.png)
-
+.. thumbnail:: ../screenshot/print_5.png
