@@ -68,6 +68,7 @@ html_css_files = [
     'css/material.css'
 ]
 extensions = [
+    'sphinxcontrib.images',
     "sphinx.ext.autodoc",
     "numpydoc",
     "sphinx.ext.doctest",
