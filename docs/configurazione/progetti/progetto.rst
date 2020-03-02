@@ -39,10 +39,10 @@ Stati del Progetto
 A seconda della Tipologia di Finanziamento un Progetto può essere utilizzato in Previsione, in Gestione o entrambi, solo se ha un determinato Stato. I valori che può assumere lo Stato sono: 
 
 - **Iniziale** (assegnato automaticamente ai Progetti nuovi). Su questi progetti non è possibile operare nè in Previsione nè in Gestione
-- **Negoziazione** (consentito solo per Tipologie Progetto ‘Finanziamento’ e ‘Cofinanziamento’ e utile per effettuare la previsione)
-- **Approvato** (necessario per poter effettuare previsione e/o gestione)
-- **Annullato** (solo per Progetti precedentemente in Negoziazione, e poi non più usati)
-- **Chiuso** (solo per Progetti che non hanno date inizio/fine). Per la chiusura di un progetto sarà utilizzata la data fine per poter memorizzare la data in cui viene chiuso. 
+- **Negoziazione** (consentito solo per Tipologie Progetto ‘Finanziamento’ e ‘Cofinanziamento’ e utile esclusivamente per effettuare la previsione)
+- **Approvato** (un progetto completo delle informazioni indispensabili viene 'Approvato' per poter essere utilizzato sia in previsione che in gestione)
+- **Annullato** (solo per Progetti precedentemente in Negoziazione, per i quali la negoziazione non va a buon fine)
+- **Chiuso** (solo per Progetti che non hanno date inizio/fine). Tali progetti vengono 'chiusi' quando terminal'attività. 
 
 .. _piano-economico:
 
