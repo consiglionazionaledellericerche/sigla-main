@@ -22,21 +22,24 @@ import it.cnr.contab.util00.bulk.HelpBulk;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.BulkInfo;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.util.Config;
 import it.cnr.jada.util.action.SimpleCRUDBP;
+import it.cnr.jada.util.jsp.Button;
 
+import javax.servlet.ServletException;
+import javax.servlet.jsp.JspWriter;
+import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class HelpCRUDBP extends SimpleCRUDBP {
-    public HelpCRUDBP() {
+public class CRUDHelpBP extends SimpleCRUDBP {
+    public CRUDHelpBP() {
     }
 
-    public HelpCRUDBP(String s) {
+    public CRUDHelpBP(String s) {
         super(s);
     }
 
@@ -48,10 +51,10 @@ public class HelpCRUDBP extends SimpleCRUDBP {
                 .map(HelpBulk.class::cast)
                 .filter(helpBulk -> !(!Optional.ofNullable(helpBulk.getBpName()).isPresent() && !Optional.ofNullable(helpBulk.getPage()).isPresent()))
                 .orElseThrow(() -> {
-                    return new ValidationException(
+                            return new ValidationException(
                                     "Valorizzare almeno uno tra '".concat(getBulkInfo().getFieldProperty("bpName").getLabel()).concat(
                                             "' e '").concat(getBulkInfo().getFieldProperty("page").getLabel()).concat("'!"));
-                    }
+                        }
                 );
     }
 
@@ -83,8 +86,32 @@ public class HelpCRUDBP extends SimpleCRUDBP {
                         );
                     })
                     .forEach(s -> {
-                        HelpBulk.bpKeys.put(s,Optional.ofNullable(map.get(s)).map(s1 -> s1.concat(" - ").concat(s)).orElse(s));
+                        HelpBulk.bpKeys.put(s, Optional.ofNullable(map.get(s)).map(s1 -> s1.concat(" - ").concat(s)).orElse(s));
                     });
         }
+    }
+
+    @Override
+    protected Button[] createToolbar() {
+        final List<Button> buttons = Arrays.stream(super.createToolbar()).collect(Collectors.toList());
+        Button button = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.accessi");
+        button.setSeparator(true);
+        buttons.add(button);
+        return buttons.toArray(new Button[buttons.size()]);
+    }
+
+    @Override
+    protected void writeToolbar(JspWriter jspwriter, Button[] abutton) throws IOException, ServletException {
+        final List<Button> buttons = Arrays.stream(createToolbar()).collect(Collectors.toList());
+        final Optional<String> helpURL = Optional.ofNullable(getModel())
+                .filter(HelpBulk.class::isInstance)
+                .map(HelpBulk.class::cast)
+                .flatMap(helpBulk -> Optional.ofNullable(helpBulk.getHelpUrl()));
+        if (helpURL.isPresent()) {
+            Button buttonHelp = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.help");
+            buttonHelp.setHref("javascript:doHelp('".concat(System.getProperty("help.base.url")).concat(helpURL.get()).concat("')"));
+            buttons.add(buttonHelp);
+        }
+        super.writeToolbar(jspwriter, buttons.toArray(new Button[buttons.size()]));
     }
 }

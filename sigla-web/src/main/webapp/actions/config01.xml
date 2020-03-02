@@ -214,13 +214,26 @@
     </businessProcess>
 
     <action
-            path="/CRUDHelpAction" actionClass="it.cnr.jada.util.action.CRUDAction">
+            path="/CRUDHelpAction" actionClass="it.cnr.contab.util00.action.CRUDHelpAction">
     </action>
     <businessProcess
-            name="CRUDHelpBP" className="it.cnr.contab.util00.bp.HelpCRUDBP">
+            name="CRUDHelpBP" className="it.cnr.contab.util00.bp.CRUDHelpBP">
         <forward name="default" path="/util/form.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.util00.bulk.HelpBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
         <init-param name="defaultAction" value="CRUDHelpAction"/>
+    </businessProcess>
+
+    <action
+            path="/SelezionatoreAssBpAccessoAction" actionClass="it.cnr.jada.util.action.SelezionatoreListaAction">
+    </action>
+    <businessProcess
+            name="SelezionatoreAssBpAccessoBP" className="it.cnr.jada.util.action.SelezionatoreSearchBP">
+        <forward name="default" path="/util/form_lista.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.utenze00.bulk.AssBpAccessoBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="SelezionatoreAssBpAccessoAction"/>
+        <init-param name="searchResultColumnSet" value="consultazione" />
+        <init-param name="openIterator" value="true" />
     </businessProcess>
 </action-mappings>
