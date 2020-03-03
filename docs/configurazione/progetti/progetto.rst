@@ -1,3 +1,5 @@
+.. _progetto:
+
 ========
 Progetto
 ========
@@ -78,7 +80,6 @@ Dopo aver completato la ripartizione totale degli importi per le voci del piano 
 
 **Ripartizione per voce economica - Anni precedenti e successivi**
 
-
 Ci sono diverse modalità per modificare nelcorso dell'anno di gestione gli importi indicati sul piano economico di un progetto (che vedremo in dettaglio sulle rimodulazioni e sulle variazioni/storni). In sintesi:
 
 - Spostamento stanziamennti all'interno del Progetto:
@@ -93,3 +94,45 @@ Ci sono diverse modalità per modificare nelcorso dell'anno di gestione gli impo
 
 Rimodulazione Progetto
 ======================
+
+La rimodulazione di un Progetto riguarda esclusivamente Progetti già esistenti (creati in fase di Pdgp oppure creati nel corso dell'anno contabile di riferimento). Il nuovo progetto viene creato come indicato  al paragrafo :ref:`Progetto`e solo dopo la sua Approvazione segue le regole di Rimodulazione uguali per tutti i Progetti.
+Con l’utilizzo della funzionalità di rimodulazione dei Progetti, sono inibite tutte le modifiche direttamente sulla scheda progetto normalmente consentite. Tutte le rimodulazioni devono essere operate tramite l’apposita funzione per storicizzare tutte le informazioni e guidare l’utente per il controllo degli importi definiti sul piano economico del progetto.
+E’ presente, nella mappa di gestione Progetti, per i Progetti Approvati e con Piano Economico, il pulsante ‘Rimodulazione’. 
+Digitando questo pulsante l’utente entra in una nuova funzionalità dove vede proposti tutti i dati della scheda progetto in linea, con la possibilità di apportare modifiche. 
+
+Solo la UO coordinatrice del progetto può effettuare le rimodulazioni, nel rispetto delle attività finanziarie già svolte sul Progetto stesso.
+Solo i Progetti Approvati, che hanno Piano Economico specificato, possono essere rimodulati. 
+Le operazioni possibili in fase di rimodulazione sono dettagliate di seguito. Gli stati della rimodulazione seguono le attività dell'utente e le relative validazioni da parte degli utenti abilitati a tale funzione.
+
+**Gestione Data Proroga**
+In fase di rimodulazione un progetto può essere prorogato operando appunto sulla ‘Data Proroga’. Specificando questa data viene obbligatoriamente richiesto un allegato di tipo ‘Proroga’ e se non si operano ulteriori rimodulazioni di importi, al salvataggio definitivo da parte dell’utente la Rimodulazione in oggetto diviene immediatamente Approvata.
+
+Per la gestione della rimodulazione del piano economico di un progetto, le modifiche possono riguardare:
+-	Aumento/Diminuzione importi Finanziati/Cofinanziati di un progetto (Totali e di conseguenza per categoria economica);
+-	Modifica della ripartizione degli importi Finanziati/Cofinanziati, precedentemente effettuata, tra categorie economiche ed anni di gestione del progetto;
+-	Associazione di nuove categorie economiche al progetto
+-	Eliminazione di categorie precedentemente associate al progetto
+
+Alcune delle modifiche elencate richiedono obbligatoriamente l’associazione di una Variazione di Bilancio affinchè la rimodulazione stessa possa essere approvata, come vedremo meglio in seguito.
+L’eliminazione di categorie economiche potrebbe richiedere, sul piano economico del progetto rimodulato, la modifica dell’associazione di voci di bilancio (utilizzate) in modo da spostarle da una categoria economica eliminata ad una categoria aggiunta sul progetto.
+Chiaramente le rimodulazioni, quando vengono salvate in definitivo e poi approvate, devono rispettare quanto già ‘utilizzato’ dal Progetto e devono garantire la congruenza tra l’importo Finanziato/Cofinanziato Rimodulato e l’importo ‘assestato’ del Progetto, che tiene conto delle eventuali variazioni associate alla rimodulazione stessa.
+Il salvataggio definitivo della rimodulazione, richiede obbligatoriamente un allegato di tipo ‘Rimodulazione’. Questo per ogni Rimodulazione operata sul progetto (il nome del file riporterà automaticamente il tipo allegato e il numero rimodulazione del progetto).
+
+Alla scheda progetto è consentito allegare altri file, oltre quelli specifici per la rimodulazione, di tipologie predefinite e presenti direttamente sulla scheda progetto:
+
+-	Provvedimento di costituzione;
+-	Proroga (Allegato alla rimodulazione);
+-	Richiesta di anticipo;
+-	Rimodulazione (Allegato alla Rimodulazione);
+-	Rendicontazione;
+-	Stralci;
+-	Controdeduzioni;
+- Final Statement payment
+-	Generico.
+
+Viene inoltre prodotto automaticamente un pdf per la singola rimodulazione, in fase di salvataggio definitivo, e viene allegato come storico delle operazioni effettuate.
+Tutti i file, prodotti o allegati dall’utente, legati alla Rimodulazione o alla Scheda Pogetto, vengono resi disponibili direttamente sulla scheda progetto.
+
+
+
+
