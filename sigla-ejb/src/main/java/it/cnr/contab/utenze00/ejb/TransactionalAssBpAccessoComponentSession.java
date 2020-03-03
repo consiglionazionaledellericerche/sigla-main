@@ -17,8 +17,12 @@
 
 package it.cnr.contab.utenze00.ejb;
 
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 public class TransactionalAssBpAccessoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements AssBpAccessoComponentSession {
     public java.util.List findAccessoByBP(it.cnr.jada.UserContext param0, String param1) throws RemoteException, it.cnr.jada.comp.ComponentException {
@@ -45,6 +49,25 @@ public class TransactionalAssBpAccessoComponentSession extends it.cnr.jada.ejb.T
                     param0,
                     param1,
                     param2
+            });
+        } catch (java.rmi.RemoteException e) {
+            throw e;
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            try {
+                throw e.getTargetException();
+            } catch (it.cnr.jada.comp.ComponentException ex) {
+                throw ex;
+            } catch (Throwable ex) {
+                throw new java.rmi.RemoteException("Uncaugth exception", ex);
+            }
+        }
+    }
+
+    @Override
+    public Map<String, String> findDescrizioneBP(UserContext param0) throws ComponentException, RemoteException {
+        try {
+            return (Map<String, String>) invoke("findDescrizioneBP", new Object[]{
+                    param0
             });
         } catch (java.rmi.RemoteException e) {
             throw e;
