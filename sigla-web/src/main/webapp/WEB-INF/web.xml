@@ -53,11 +53,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>HelpServlet</servlet-name>
-		<servlet-class>it.cnr.jada.action.HelpServlet</servlet-class>
-		<load-on-startup>-1</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>MessageCheckServlet</servlet-name>
 		<servlet-class>it.cnr.contab.messaggio01.servlet.MessageCheckServlet</servlet-class>
 		<load-on-startup>6</load-on-startup>
@@ -102,14 +97,6 @@
 	<servlet-mapping>
 		<servlet-name>RestServlet</servlet-name>
 		<url-pattern>*.json</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>HelpServlet</servlet-name>
-		<url-pattern>/help/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>HelpServlet</servlet-name>
-		<url-pattern>/help/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>OfflineReportServlet</servlet-name>

@@ -3051,8 +3051,65 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet id="help-add-column-bpname" author="marco.spasiano">
+        <addColumn tableName="help_lkt">
+            <column name="bp_name" remarks="Nome del Business process" type="VARCHAR(50)"/>
+        </addColumn>
+        <dropNotNullConstraint tableName="help_lkt" columnName="page" columnDataType="VARCHAR(2000)"></dropNotNullConstraint>
+    </changeSet>
+    <changeSet id="help-modify-data-type" author="marco.spasiano">
+        <createSequence sequenceName="pg_help"/>
+        <dropPrimaryKey tableName="help_lkt"></dropPrimaryKey>
+        <dropColumn tableName="help_lkt" columnName="cd_help"></dropColumn>
+        <addColumn tableName="help_lkt">
+            <column name="id" remarks="Chiave" type="SMALLINT"/>
+        </addColumn>
+        <update tableName="help_lkt">
+            <column name="id" valueSequenceNext="pg_help"></column>
+        </update>
+        <addNotNullConstraint tableName="help_lkt" columnName="id" columnDataType="SMALLINT"></addNotNullConstraint>
+        <addPrimaryKey tableName="help_lkt" columnNames="id"></addPrimaryKey>
+        <dropSequence sequenceName="pg_help"></dropSequence>
+    </changeSet>
 
+    <changeSet id="voce_menu_configurazione_help" author="marco.spasiano">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="SERVHELPM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Configurazione help online"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="SERVHELPM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDHelpBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
 
-
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.SERV.HELP"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Configurazione Help online"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="SERVHELPM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDHelpBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="100"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="2"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="HELP"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.SERV"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>

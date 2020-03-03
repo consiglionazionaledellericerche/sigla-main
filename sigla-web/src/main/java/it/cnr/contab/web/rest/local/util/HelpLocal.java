@@ -15,17 +15,21 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.utenze00.ejb;
+package it.cnr.contab.web.rest.local.util;
 
-import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
+import javax.ejb.Local;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-import javax.ejb.Remote;
-import java.util.Map;
+@Local
+@Path("/help")
+@Produces(MediaType.MEDIA_TYPE_WILDCARD)
+public interface HelpLocal {
 
-@Remote
-public interface AssBpAccessoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
-    java.util.List findAccessoByBP(it.cnr.jada.UserContext param0, String param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
-    it.cnr.contab.utenze00.bulk.AssBpAccessoBulk finAssBpAccesso(it.cnr.jada.UserContext userContext, String businessProcess, String tiFunzione) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
-    Map<String, String> findDescrizioneBP(UserContext userContext) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+    @GET
+    Response get(@Context HttpServletRequest request, @QueryParam("jspName") String jspName, @QueryParam("bpName") String bpName) throws Exception;
+
 }
