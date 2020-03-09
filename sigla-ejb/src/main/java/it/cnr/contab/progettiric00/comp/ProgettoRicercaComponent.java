@@ -1886,19 +1886,19 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				}
 	
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
-				
+				Integer currentAnno = saldiList.stream().mapToInt(el->el.getEsercizio()).max().orElse(999);
+
 				if (!Optional.ofNullable(rimodulazione).isPresent()) {
 					//Recupero l'ultimo anno di gestione in corso
-					Integer currentAnno = saldiList.stream().mapToInt(el->el.getEsercizio()).max().orElse(999);
 					saldiList.stream()
 							.filter(el->{
 								if (el.getEsercizio().equals(currentAnno)) { //record dell'anno in corso
 									if (el.getEsercizio_res().equals(el.getEsercizio())) //record di competenza
 										return el.getAssestato().compareTo(BigDecimal.ZERO) > 0;
 									else //record residuo
-										return el.getAssestatoResiduoImproprio().compareTo(BigDecimal.ZERO) > 0;
-								} else //record degli anni precedenti già ribaltati (controllo solo se impegnato)
-									return el.getTotImpCompetenza().compareTo(BigDecimal.ZERO) > 0 || el.getTotImpResiduoImproprio().compareTo(BigDecimal.ZERO)>0;
+										return el.getAssestatoResiduoImproprio().compareTo(BigDecimal.ZERO) > 0 || el.getTotImpResiduoProprio().compareTo(BigDecimal.ZERO) > 0;
+								} else //record degli anni precedenti già ribaltati (controllo solo se pagati)
+									return el.getTotMandati().compareTo(BigDecimal.ZERO) > 0;
 							}).findFirst().ifPresent(el->{
 						throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto "+progetto.getCd_progetto()
 								+" e per l'anno contabile "+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
@@ -1908,12 +1908,17 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				}
 				else
 					saldiList.stream()
-					.filter(el-> 
-						//Nella rimodulazione risulta impegnata e quindi non scollegabile. 
+					.filter(el-> {
+						//Nella rimodulazione risulta impegnata e quindi non scollegabile.
 						//Se solo assestato l'incongruenza può essere eliminata tramite variazione
-						el.getTotImpCompetenza().compareTo(BigDecimal.ZERO)>0 ||
-						el.getTotImpResiduoImproprio().compareTo(BigDecimal.ZERO)>0
-					).filter(el-> //Non è associata al piano economico
+						if (el.getEsercizio().equals(currentAnno)) { //record dell'anno in corso
+							if (el.getEsercizio_res().equals(el.getEsercizio())) //record di competenza
+								return el.getTotImpCompetenza().compareTo(BigDecimal.ZERO) > 0;
+							else //record residuo
+								return el.getTotImpResiduoImproprio().compareTo(BigDecimal.ZERO) > 0 || el.getTotImpResiduoProprio().compareTo(BigDecimal.ZERO) > 0;
+						} else //record degli anni precedenti già ribaltati (controllo solo se pagati)
+							return el.getTotMandati().compareTo(BigDecimal.ZERO) > 0;
+					}).filter(el-> //Non è associata mico
 						!progetto.getAllDetailsProgettoPianoEconomico().stream()
 							.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
 							.filter(vocePpe->vocePpe.getEsercizio_piano().equals(el.getEsercizio_res()))
