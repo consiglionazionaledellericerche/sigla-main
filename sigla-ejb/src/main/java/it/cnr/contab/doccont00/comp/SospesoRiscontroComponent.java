@@ -1438,7 +1438,9 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             sql.addSQLClause("AND", "cd_cds", SQLBuilder.EQUALS, ente.getCd_unita_organizzativa());
             sql.addSQLClause("AND", "fl_stornato", SQLBuilder.EQUALS, "N");
             sql.addSQLClause("AND", "ti_sospeso_riscontro", SQLBuilder.EQUALS, SospesoBulk.TI_SOSPESO);
-            sql.addSQLClause("AND", "IM_SOSPESO - IM_ASSOCIATO", SQLBuilder.GREATER, new java.math.BigDecimal(0));
+            if (!seleziona.getRicercaSospesiRiaccredito()) {
+                sql.addSQLClause("AND", "IM_SOSPESO - IM_ASSOCIATO", SQLBuilder.GREATER, new java.math.BigDecimal(0));
+            }
             sql.addSQLClause("AND", "IM_ASS_MOD_1210", SQLBuilder.EQUALS, new java.math.BigDecimal(0));
 
             if (seleziona.getTi_entrata_spesa().equals(SelezionaSospesiCNRBulk.TIPO_ENTRATA))
@@ -1475,6 +1477,16 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
                     sql.openParenthesis("OR");
                 sql.addClause("AND", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_IN_SOSPESO);
                 sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, ((CNRUserContext) userContext).getCd_cds());
+                sql.closeParenthesis();
+            }
+            if (seleziona.getRicercaSospesiRiaccredito()) {
+                if (nrClausoleStato == 0)
+                    sql.openParenthesis("AND");
+                else
+                    sql.openParenthesis("OR");
+                sql.addClause("AND", "esercizio_man_riaccr", SQLBuilder.ISNOTNULL, null);
+                sql.addClause("AND", "cd_cds_man_riaccr", SQLBuilder.ISNOTNULL,null);
+                sql.addClause("AND", "pg_mandato_man_riaccr", SQLBuilder.ISNOTNULL,null);
                 sql.closeParenthesis();
             }
 
