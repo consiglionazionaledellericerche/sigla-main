@@ -1,3 +1,11 @@
+## Release 6.1.42  -- _March 09, 2020_ 
+**Changes**
+
+>**FIX Api REST for Help**
+>
+>[963f4a71c877fe5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/963f4a71c877fe5) marco.spasiano *March 09, 2020*
+
+
 ## Release 6.1.41  -- _March 09, 2020_ 
 **Changes**
 
