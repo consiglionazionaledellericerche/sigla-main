@@ -42,6 +42,9 @@ public class UtilService implements InitializingBean {
     @Value("${doccont.max.anni.residui}")
     private Integer anniResidui;
 
+    @Value("${help.base.url}")
+    private String helpBaseURL;
+
     public void executeAggiornaGECO() {
         UserContext userContext = new CNRUserContext(GECO, null, LocalDate.now().getYear(), null, null, null);
         try {
@@ -76,5 +79,9 @@ public class UtilService implements InitializingBean {
 
     public Integer getAnniResidui() {
         return anniResidui;
+    }
+
+    public String getHelpBaseURL() {
+        return helpBaseURL;
     }
 }
