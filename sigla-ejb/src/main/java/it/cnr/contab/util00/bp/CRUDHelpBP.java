@@ -17,6 +17,8 @@
 
 package it.cnr.contab.util00.bp;
 
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.utenze00.ejb.AssBpAccessoComponentSession;
 import it.cnr.contab.util00.bulk.HelpBulk;
 import it.cnr.jada.DetailedRuntimeException;
@@ -102,6 +104,10 @@ public class CRUDHelpBP extends SimpleCRUDBP {
 
     @Override
     protected void writeToolbar(JspWriter jspwriter, Button[] abutton) throws IOException, ServletException {
+        String helpBaseURL = Optional.ofNullable(System.getProperty("help.base.url"))
+                .orElseGet(() -> {
+                    return SpringUtil.getBean(UtilService.class).getHelpBaseURL();
+                });
         final List<Button> buttons = Arrays.stream(createToolbar()).collect(Collectors.toList());
         final Optional<String> helpURL = Optional.ofNullable(getModel())
                 .filter(HelpBulk.class::isInstance)
@@ -109,7 +115,7 @@ public class CRUDHelpBP extends SimpleCRUDBP {
                 .flatMap(helpBulk -> Optional.ofNullable(helpBulk.getHelpUrl()));
         if (helpURL.isPresent()) {
             Button buttonHelp = new Button(Config.getHandler().getProperties(getClass()), "CRUDToolbar.help");
-            buttonHelp.setHref("javascript:doHelp('".concat(System.getProperty("help.base.url")).concat(helpURL.get()).concat("')"));
+            buttonHelp.setHref("javascript:doHelp('".concat(helpBaseURL).concat(helpURL.get()).concat("')"));
             buttons.add(buttonHelp);
         }
         super.writeToolbar(jspwriter, buttons.toArray(new Button[buttons.size()]));
