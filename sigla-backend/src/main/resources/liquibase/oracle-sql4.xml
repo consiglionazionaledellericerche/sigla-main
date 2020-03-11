@@ -21,7 +21,6 @@
         xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-<!--
   <changeSet author="sigla" runOnChange="true" id="create-package-ACCONTO">
     <sqlFile dbms="oracle" path="../expsigladb/Package/ACCONTO.sql" relativeToChangelogFile="true" splitStatements="false" stripComments="false"/>
   </changeSet>
@@ -1434,5 +1433,5 @@
   </changeSet>
   <changeSet author="sigla" runOnChange="true" id="sigla-sql-1032">
     <sqlFile dbms="oracle" path="../expsigladb/Trigger/bu_obbligazione.trg" relativeToChangelogFile="true" splitStatements="false" stripComments="true"/>
-  </changeSet>-->
+  </changeSet>
 </databaseChangeLog>
