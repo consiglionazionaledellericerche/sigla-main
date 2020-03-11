@@ -136,7 +136,13 @@ Il menù dell’applicazione si presenta nel modo seguente:
 
 ![](screenshot/tree.png)
 
-In alto, posizionata come prima riga del menù, c’è il campo di ricerca in cui è possibile scrivere la descrizione della funzione cercata, o parte di essa (rispettando maiuscole e minuscole). 
+In alto, posizionata come prima riga del menù, c’è il campo di ricerca in cui è possibile scrivere la descrizione della funzione cercata, o parte di essa (rispettando maiuscole e minuscole).
+
+### Albero delle funzioni
+
+Inoltre quando viene assegnata una nuova funzionalità è necessario rigenerare il menù, tramite il bottone posto il alto a destra come mostrato in figura:
+
+![](screenshot/tree_restore.png)
 
 E’ inoltre possibile chiudere l’area della mappa riservata al menù così da avere più spazio per la funzionalità aperta:
 
