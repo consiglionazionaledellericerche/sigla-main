@@ -1481,6 +1481,8 @@ public class SospesoRiscontroComponent extends it.cnr.jada.comp.CRUDComponent im
             }
             if (seleziona.getRicercaSospesiRiaccredito()) {
                 sql.openParenthesis("AND");
+                    sql.addClause("AND", "stato_sospeso", SQLBuilder.EQUALS, SospesoBulk.STATO_SOSP_ASS_A_CDS);
+                    sql.addClause("AND", "cd_cds_origine", SQLBuilder.EQUALS, ((CNRUserContext) userContext).getCd_cds());
                     sql.addClause("AND", "esercizio_man_riaccr", SQLBuilder.ISNOTNULL, null);
                     sql.addClause("AND", "cd_cds_man_riaccr", SQLBuilder.ISNOTNULL,null);
                     sql.addClause("AND", "pg_mandato_man_riaccr", SQLBuilder.ISNOTNULL,null);
