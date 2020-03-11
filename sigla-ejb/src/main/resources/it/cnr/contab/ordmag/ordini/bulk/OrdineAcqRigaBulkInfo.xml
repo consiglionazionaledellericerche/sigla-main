@@ -110,7 +110,7 @@
 	<fieldProperty
 		name="findBeneServizio"
 		property="beneServizio"
-		inputType="SEARCHTOOL"
+		inputType="SEARCHTOOL_WITH_LIKE"
         formName="searchtool"
 		enabledOnSearch="true"
         enabledOnEdit="true" 

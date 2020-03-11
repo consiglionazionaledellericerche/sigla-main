@@ -216,7 +216,7 @@
 	<fieldProperty
 		name="findDaBeneServizio"
 		property="daBeneServizio"
-		inputType="searchtool"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		formName="searchtool_codice"
 		enabledOnSearch="true"
 		nullable="false"
@@ -224,7 +224,7 @@
 	<fieldProperty
 		name="findABeneServizio"
 		property="aBeneServizio"
-		inputType="searchtool"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		formName="searchtool_codice"
 		enabledOnSearch="true"
 		nullable="false"
