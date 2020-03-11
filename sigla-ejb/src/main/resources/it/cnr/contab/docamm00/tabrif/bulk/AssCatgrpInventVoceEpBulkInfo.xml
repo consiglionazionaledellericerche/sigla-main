@@ -115,8 +115,6 @@
 
 	<formFieldProperty
 		name="flDefault" />
-	<formFieldProperty
-		name="esercizio" />
 
 
 	<columnFieldProperty
