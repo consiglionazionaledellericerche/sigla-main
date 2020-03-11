@@ -65,7 +65,7 @@
 	/>
 	<fieldProperty
 			name="findVoceEp"
-
+			property="conto"
 			inputType="SEARCHTOOL"
 			formName="searchtool"
 			enabledOnSearch="true"
