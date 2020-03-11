@@ -76,4 +76,6 @@ public AssCatgrpInventVoceEpBulk(String cd_voce_ep, Integer esercizio, java.lang
 		this.getConto().setCd_voce_ep(cd_voce_ep);
 	}
 
+
+
 }
