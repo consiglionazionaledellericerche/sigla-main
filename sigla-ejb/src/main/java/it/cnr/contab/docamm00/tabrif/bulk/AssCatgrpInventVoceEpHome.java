@@ -57,6 +57,6 @@ public AssCatgrpInventVoceEpHome(Connection conn) {
  * @param persistentCache
  */
 public AssCatgrpInventVoceEpHome(Connection conn, PersistentCache persistentCache) {
-	super(Voce_epBulk.class,conn,persistentCache);
+	super(AssCatgrpInventVoceEpBulk.class,conn,persistentCache);
 }
 }

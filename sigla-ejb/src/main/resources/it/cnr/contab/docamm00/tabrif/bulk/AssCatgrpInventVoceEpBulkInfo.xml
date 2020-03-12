@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	
+	/**********************************************************/
+
+	<fieldProperty
+			name="flDefault"
+			property="flDefault"
+			inputType="CHECKBOX"
+			enabledOnEdit="true"
+			nullable="false"
+			label="Default"/>
+
+	/**********************************************************
+	**	Search tool utilizzato per la ricerca di Voce EP **
+	**********************************************************/
+	<fieldProperty
+			name="esercizio"
+			property="esercizio"
+			inputType="TEXT"
+			inputSize="8"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
+			label="Esercizio" />
+
+	<fieldProperty
+			name="cd_voce_ep"
+			property="conto.cd_voce_ep"
+			maxLength="45"
+			inputSize="8"
+			inputType="TEXT"
+			label="Conto"
+			enabledOnSearch="true"
+			formatName="it.cnr.jada.util.UppercaseStringFormat"
+			caseSensitiveSearch="false"
+			nullable="false"/>
+	<fieldProperty
+			name="ds_voce_ep"
+			property="conto.ds_voce_ep"
+			label=""
+			inputSize="30"
+			inputType="ROTEXT"
+	/>
+	<fieldProperty
+			name="findVoceEp"
+			property="conto"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Conto"
+	/>
+
+	/*********************************************************/
+	/**********************************************************
+	**	Search tool utilizzato per la ricerca di Categoria Gruppo **
+	**********************************************************/
+	<fieldProperty
+			name="findCategoriaGruppo"
+			property="categoria_gruppo_invent"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Categoria Gruppo"
+			enabledOnEdit="true" />
+
+	<fieldProperty
+		name="cd_categoria_gruppo"
+		property="categoria_gruppo_invent.cd_categoria_gruppo"
+		label="Codice Categoria-gruppo"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"/>
+
+
+	<fieldProperty
+		name="ds_categoria_gruppo"
+		property="categoria_gruppo_invent.ds_categoria_gruppo"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione"
+		nullable="false"
+		caseSensitiveSearch="false" />
+
+
+	<formFieldProperty
+			name="esercizio" />
+
+	<formFieldProperty
+		name="findVoceEp" />
+	<formFieldProperty
+		name="findCategoriaGruppo" />
+
+	<formFieldProperty
+		name="flDefault" />
+
+
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+			name="cd_voce_ep" />
+	<columnFieldProperty
+			name="ds_voce_ep" />
+
+	<columnFieldProperty
+			name="cd_categoria_gruppo" />
+	<columnFieldProperty
+		name="ds_categoria_gruppo" />
+
+
+	<findFieldProperty
+		name="cd_categoria_gruppo" />
+	<findFieldProperty
+		name="ds_categoria_gruppo" />
+	<findFieldProperty
+			name="esercizio" />
+	<findFieldProperty
+			name="cd_voce_ep" />
+
+    <form name="searchtool">
+		<formFieldProperty
+			name="cd_categoria_gruppo"/>
+		<formFieldProperty
+			name="ds_categoria_gruppo"/>
+		<formFieldProperty
+				name="esercizio"/>
+		<formFieldProperty
+				name="cd_voce_ep"/>
+		<formFieldProperty
+				name="ds_voce_ep"/>
+    </form>    	
+</bulkInfo>

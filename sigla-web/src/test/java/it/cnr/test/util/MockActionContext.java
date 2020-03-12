@@ -236,4 +236,9 @@ public class MockActionContext implements ActionContext {
     public void saveFocusedElement() {
 
     }
+
+    @Override
+    public ActionMapping getActionMapping() {
+        return null;
+    }
 }

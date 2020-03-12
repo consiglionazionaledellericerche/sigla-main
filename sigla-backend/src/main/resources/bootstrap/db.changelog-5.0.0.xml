@@ -3051,7 +3051,121 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet id="help-add-column-bpname" author="marco.spasiano">
+        <addColumn tableName="help_lkt">
+            <column name="bp_name" remarks="Nome del Business process" type="VARCHAR(50)"/>
+        </addColumn>
+        <dropNotNullConstraint tableName="help_lkt" columnName="page" columnDataType="VARCHAR(2000)"></dropNotNullConstraint>
+    </changeSet>
+    <changeSet id="help-modify-data-type" author="marco.spasiano">
+        <createSequence sequenceName="pg_help"/>
+        <dropPrimaryKey tableName="help_lkt"></dropPrimaryKey>
+        <dropColumn tableName="help_lkt" columnName="cd_help"></dropColumn>
+        <addColumn tableName="help_lkt">
+            <column name="id" remarks="Chiave" type="SMALLINT"/>
+        </addColumn>
+        <update tableName="help_lkt">
+            <column name="id" valueSequenceNext="pg_help"></column>
+        </update>
+        <addNotNullConstraint tableName="help_lkt" columnName="id" columnDataType="SMALLINT"></addNotNullConstraint>
+        <addPrimaryKey tableName="help_lkt" columnNames="id"></addPrimaryKey>
+        <dropSequence sequenceName="pg_help"></dropSequence>
+    </changeSet>
+    <changeSet author="ciro.salvio" id="associazione_categoria_gruppo_voce_economica">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURTABRCTGRVOC"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Categoria Gruppo Voce Economica"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
 
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURTABRCTGRVOM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Categoria Gruppo Voce Economica"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURTABRCTGRVOC"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDCatGrupVoceBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="AMMFATTURTABRCTGRVOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDCatGrupVoceBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.FATTUR.TABR.CTGRVC"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Cat. Gruppo Voce Economica"/>
+            <column name="pg_ordinamento" type="BIGINT" value="18"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CTGRVC"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.FATTUR.TABR"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.FATTUR.TABR.CTGRVC.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Gestione"/>
+            <column name="cd_accesso" type="VARCHAR(200)" value="AMMFATTURTABRCTGRVOC"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDCatGrupVoceBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="2"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.FATTUR.TABR.CTGRVC"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.FATTUR.TABR.CTGRVC.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(200)" value="AMMFATTURTABRCTGRVOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDCatGrupVoceBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="2"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.FATTUR.TABR.CTGRVC"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 
 
 

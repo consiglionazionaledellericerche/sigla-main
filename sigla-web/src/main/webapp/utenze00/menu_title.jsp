@@ -83,12 +83,7 @@ if (window.top.MessageCheckFrame) {
 <table>
 
  <tr>
-     <td width="100%" colspan=3><img src="<%=fLogo%>">
-     <% if(bp.getUserInfo().getTipo_db() != null && !(bp.getUserInfo().getTipo_db().equals(it.cnr.contab.config00.bulk.Parametri_enteBulk.DB_PRODUZIONE)) &&
-                                                    !(bp.getUserInfo().getTipo_db().equals(it.cnr.contab.config00.bulk.Parametri_enteBulk.DB_ALTRO))) {%>
-       <span class="FormLabel"><%=" al "+new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(it.cnr.jada.util.ejb.EJBCommonServices.getDateRefreshDB())%></span>
-     <%}%>  
-     </td>
+     <td width="100%" colspan=3><img src="<%=fLogo%>"></td>
  </tr>
 
 <tr>

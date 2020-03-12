@@ -54,54 +54,39 @@
 	<div class="Group card p-2" style="width:100%">
 		<table width="100%">
 			<tr>
-				<td>
-					<%
-						bp.getController().writeFormLabel(out, "daDataCompetenza");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "daDataCompetenza");
-					%>
-				</td>
-				<td class="pl-5">
-					<%
-						bp.getController().writeFormLabel(out, "aDataCompetenza");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "aDataCompetenza");
-					%>
-				</td>
-			</tr>
+                <td>
+                    <%
+                        bp.getController().writeFormLabel(out, "daDataOrdine");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "daDataOrdine");
+                    %>
+                </td>
+                <td class="pl-5">
+                    <%
+                        bp.getController().writeFormLabel(out, "aDataOrdine");
+                    %>
+                </td>
+                <td>
+                    <%
+                        bp.getController().writeFormInput(out, "aDataOrdine");
+                    %>
+                </td>
+            </tr>
 
 			<tr>
 				<td>
-					<%
-						bp.getController().writeFormLabel(out, "findUnitaOperativaRicevente");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "findUnitaOperativaRicevente");
-					%>
-				</td>
-
-			</tr>
-
-
-			<tr>
-				<td>
-					<%
-						bp.getController().writeFormLabel(out, "findUnitaOperativaOrdine");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "findUnitaOperativaOrdine");
-					%>
-				</td>
+                            <%
+                                bp.getController().writeFormLabel(out, "findUnitaOperativaRicevente");
+                            %>
+                        </td>
+                        <td>
+                            <%
+                                bp.getController().writeFormInput(out, "findUnitaOperativaRicevente");
+                            %>
+                        </td>
 				<td class="pl-5">
 					<%
 						bp.getController().writeFormLabel(out, "findNumerazioneOrd");
@@ -113,28 +98,7 @@
 					%>
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<%
-						bp.getController().writeFormLabel(out, "daDataOrdine");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "daDataOrdine");
-					%>
-				</td>
-				<td class="pl-5">
-					<%
-						bp.getController().writeFormLabel(out, "aDataOrdine");
-					%>
-				</td>
-				<td>
-					<%
-						bp.getController().writeFormInput(out, "aDataOrdine");
-					%>
-				</td>
-			</tr>
+
 			<tr>
 				<td>
 					<%

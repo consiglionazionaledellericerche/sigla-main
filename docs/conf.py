@@ -23,7 +23,7 @@ source_parsers = {
     '.md': CommonMarkParser,
 }
 project = 'Sistema Informativo Gestione Linee di Attività'
-release = '0.1'
+release = '6.1.44'
 author = u'Consiglio Nazionale delle Ricerche'
 
 show_authors = True
@@ -49,6 +49,7 @@ html_favicon = "favicon.ico"
 html_logo = "logo.png"
 latex_logo = 'logo.png'
 html_title = "Home"
+smartquotes = False
 language = "it"
 # The master toctree document.
 master_doc = 'index'
@@ -67,6 +68,7 @@ html_css_files = [
     'css/material.css'
 ]
 extensions = [
+    'sphinxcontrib.images',
     "sphinx.ext.autodoc",
     "numpydoc",
     "sphinx.ext.doctest",

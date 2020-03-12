@@ -4,3 +4,4 @@ recommonmark
 numpydoc
 nbsphinx
 sphinx_markdown_tables
+sphinxcontrib-images

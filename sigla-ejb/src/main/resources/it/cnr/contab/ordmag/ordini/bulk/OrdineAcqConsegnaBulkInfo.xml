@@ -605,7 +605,9 @@
 		<columnFieldProperty
 				name="cdMagazzino" />
 		<columnFieldProperty
-				name="cdluogoConsegna" />
+				name="stato" />
+		<columnFieldProperty
+				name="statoFatt" />
 		<columnFieldProperty
 				name="cdUopDest"
 				label="UOp Ricevente"/>

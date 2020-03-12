@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.util00.bulk.HelpKey">
+	<defaultColumnMap
+		tableName="HELP_LKT">
+		<columnMapping
+			columnName="id"
+			propertyName="id"
+			sqlTypeName="DECIMAL"
+			columnSize="5"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="id"
+		partOfOid="true" />
+</SQLPersistentInfo>

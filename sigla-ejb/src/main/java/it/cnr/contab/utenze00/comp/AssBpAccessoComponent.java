@@ -17,18 +17,15 @@
 
 package it.cnr.contab.utenze00.comp;
 
-import it.cnr.contab.utenze00.bulk.AccessoBulk;
-import it.cnr.contab.utenze00.bulk.AccessoHome;
-import it.cnr.contab.utenze00.bulk.AssBpAccessoBulk;
-import it.cnr.contab.utenze00.bulk.AssBpAccessoHome;
+import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.siopeplus.StMotivoEsclusioneCigSiope;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Classe che ridefinisce alcune operazioni di CRUD su CdsBulk e Unita_organizzativaBulk
@@ -74,6 +71,28 @@ public class AssBpAccessoComponent extends it.cnr.jada.comp.CRUDComponent {
                     .map(s -> s.stream())
                     .map(assBpAccessoBulkStream -> assBpAccessoBulkStream.findFirst())
                     .orElse(Optional.empty()).orElse(null);
+        } catch (it.cnr.jada.persistency.PersistencyException e) {
+            throw new ComponentException(e);
+        }
+    }
+
+    public Map<String, String> findDescrizioneBP(UserContext userContext) throws ComponentException {
+        try {
+            AssBpAccessoHome home = (AssBpAccessoHome) getHome(userContext, AssBpAccessoBulk.class, "default");
+            SQLBuilder sql = home.createSQLBuilder();
+            sql.openParenthesis(FindClause.AND);
+                sql.addClause(FindClause.AND, "tiFunzione", SQLBuilder.NOT_EQUALS, "V");
+                sql.addClause(FindClause.OR, "tiFunzione", SQLBuilder.ISNULL, null);
+            sql.closeParenthesis();
+            List<AssBpAccessoBulk> result = home.fetchAll(sql);
+            getHomeCache(userContext).fetchAll(userContext);
+            return result.stream()
+                    .collect(Collectors.toMap(
+                            assBpAccessoBulk -> assBpAccessoBulk.getBusinessProcess(),
+                            assBpAccessoBulk -> Optional.ofNullable(assBpAccessoBulk.getAccesso()).map(AccessoBase::getDs_accesso).orElse(assBpAccessoBulk.getBusinessProcess()),
+                            (oldValue, newValue) -> oldValue,
+                            Hashtable::new
+                    ));
         } catch (it.cnr.jada.persistency.PersistencyException e) {
             throw new ComponentException(e);
         }
