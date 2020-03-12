@@ -17,11 +17,22 @@
 
 package it.cnr.contab.docamm00.tabrif.bulk;
 
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneHome;
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
+import it.cnr.contab.config00.pdcep.bulk.ContoHome;
 import it.cnr.contab.config00.pdcep.bulk.Voce_epBulk;
+import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
+import javax.ejb.EJBException;
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,4 +70,10 @@ public AssCatgrpInventVoceEpHome(Connection conn) {
 public AssCatgrpInventVoceEpHome(Connection conn, PersistentCache persistentCache) {
 	super(AssCatgrpInventVoceEpBulk.class,conn,persistentCache);
 }
+
+public SQLBuilder selectContoByClause(it.cnr.jada.UserContext userContext, AssCatgrpInventVoceEpBulk assCatgrpInventVoceEpBulk, ContoHome contoHome, ContoBulk conto, CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
+		SQLBuilder sql = contoHome.createSQLBuilder();
+		sql.addSQLClause("AND","esercizio",SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+		return sql;
+	}
 }
