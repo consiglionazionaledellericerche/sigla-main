@@ -1,3 +1,11 @@
+## Release 6.1.46  -- _March 13, 2020_ 
+**Changes**
+
+>**FIX Transaction Attribute**
+>
+>[553f76a6083da25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/553f76a6083da25) marco.spasiano *March 13, 2020*
+
+
 ## Release 6.1.45  -- _March 12, 2020_ 
 **Changes**
 
