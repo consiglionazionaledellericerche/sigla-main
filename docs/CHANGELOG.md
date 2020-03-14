@@ -1,5 +1,9 @@
-## Release 6.1.46  -- _March 13, 2020_ 
+## Release 6.2.0  -- _March 14, 2020_ 
 **Changes**
+
+>**FIX help URL**
+>
+>[1f623244854cbc9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1f623244854cbc9) marco.spasiano *March 14, 2020*
 
 >**FIX Transaction Attribute**
 >
