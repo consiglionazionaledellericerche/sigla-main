@@ -2,18 +2,16 @@
 Gruppo di Azioni Elementari - GAE (o Linea di Attività) 
 =======================================================
 
+Le Linee di Attività o Gruppo di Azioni Elementari (di seguito chiamatate GAE), individuano la ripartizione di un Progetto in Sottoprogetti. Queste rappresentano l'unità di dettaglio utilizzata nella gestione contabile e possono suddividere il progetto secondo vari criteri di ripartizione (possono rigurdare le risorse del progetto divise tra più rcercatori, oppure raggruppare risorse per reali sottoprogetti di cui si vuole tener traccia). Le GAE vengono gestite, in pratica, secondo le informazioni di dettaglio che si vogliono ricavare in fase di rendicontazione o consuntivazione del Progetto in senso lato e rappreentano una suddivisione obbligatoria del Progetto (per ogni progetto è necessario creare almeno una GAE di Entrata/Spesa/Entrambi).
+
 Linea di attività Propria
 -------------------------
 
-Le Linee di Attività o Gruppo di Azioni Elementari (di seguito chiamatate GAE), individuano la ripartizione di un Progetto in Sottoprogetti. Queste rappresentano l'unità di dettaglio utilizzata nella gestione contabile e possono suddividere il progetto secondo vari criteri di ripartizione (possono rigurdare le risorse del progetto divise tra più rcercatori, oppure raggruppare risorse per reali sottoprogetti di cui si vuole tener traccia). Le GAE vengono gestite, in pratica, secondo le informazioni di dettaglio che si vogliono ricavare in fase di rendicontazione o consuntivazione del Progetto in senso lato e rappreentano una suddivisione obbligatoria del Progetto (per ogni progetto è necessario creare almeno una GAE di Entrata/Spesa/Entrambi).
-
 La GAE si definisce 'propria' quando è assegnabile ad un solo cdr. L'altra modalità di creazione di una GAE è indicata al paragrafo :ref:`Linea-di-attività-comune`.
 
-La linea di attività (elemento determinante nella motivazione di un cdr) presenta elementi di testata e di dettaglio.
+La GAE presenta elementi di testata e di dettaglio. I dati da specificare sono i seguenti:
 
-Nell’inserimento i dati sono i seguenti:
-
-- Codice: accoglie valori numerici. Il sistema, automaticamente, pone un prefisso e tanti zeri in modo da formare un codice del tipo ‘P0000001’ (in questo caso l’utente aveva messo 1 nel campo codice della l.a.). L’utente può non inserire alcun valore nel codice che viene, in questo caso, derivato in automatico.
+- Codice: accoglie valori numerici. Il sistema, automaticamente, pone un prefisso e tanti zeri in modo da formare un codice del tipo ‘P0000001’ (in questo caso l’utente aveva messo 1 nel campo codice). L’utente può non inserire alcun valore nel codice che viene, in questo caso, derivato in automatico.
 -  Tipo linea di attività (solo mostrato al salvataggio se propria): da una tabella esiste il tipo linea, una codificazione di sistema che indica, sostanzialmente, se sia di tipo comune oppure no. Siccome il tipo comune è assegnabile da una diversa funzione è probabile che questa scelta si riconduca ad un unico valore (linea di attività propria).
 -  Una linea di attività si riferisce sempre ad un Progetto.
 -  Cdr: indicare il cdr del quale la l.a. diventerà dipendente. E’ possibile ricercare il cdr utilizzando le iconcine apposite (ricerca e ricerca guidata). I cdr visualizzabili dipendono dal livello del cdr configurato all’utenza: vengono mostrati il cdr di appartenenza più tutti quelli, se ci sono, a lui afferenti.
