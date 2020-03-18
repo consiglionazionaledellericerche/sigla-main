@@ -11,9 +11,9 @@ La GAE si definisce 'propria' quando è assegnabile ad un solo cdr. L'altra moda
 
 La GAE presenta elementi di testata e di dettaglio. I dati da specificare sono i seguenti:
 
-- Codice: accoglie valori numerici. Il sistema, automaticamente, pone un prefisso e tanti zeri in modo da formare un codice del tipo ‘P0000001’ (in questo caso l’utente aveva messo 1 nel campo codice). L’utente può non inserire alcun valore nel codice che viene, in questo caso, derivato in automatico.
--  Tipo linea di attività (solo mostrato al salvataggio se propria): da una tabella esiste il tipo linea, una codificazione di sistema che indica, sostanzialmente, se sia di tipo comune oppure no. Siccome il tipo comune è assegnabile da una diversa funzione è probabile che questa scelta si riconduca ad un unico valore (linea di attività propria).
--  Una linea di attività si riferisce sempre ad un Progetto.
+- Codice: accoglie valori numerici. Il sistema, automaticamente, pone un prefisso e tanti zeri in modo da formare un codice del tipo ‘P0000001’ (in questo caso l’utente aveva messo 1 nel campo codice). L’utente può non inserire alcun valore nel codice che viene, in questo caso, derivato in automatico. Una volta specificato il codice la creazione di successive GAE non propone più il codice in automatico ma bisogna sempre specificarlo.
+-  Tipo linea di attività (solo mostrato al salvataggio se propria). Il tipo linea è una codificazione di sistema che indica, sostanzialmente, se sia di tipo propria oppure comune. Siccome le due tipologie vengono create da funzionalità diverse, la tipologia della GAE viene assegnata automaticamente dal sistema (in questo caso la linea di attività è sempre propria).
+-  Progetto di riferimento per la GAE. Chiaramente in questo campo va indicato un Progetto
 -  Cdr: indicare il cdr del quale la l.a. diventerà dipendente. E’ possibile ricercare il cdr utilizzando le iconcine apposite (ricerca e ricerca guidata). I cdr visualizzabili dipendono dal livello del cdr configurato all’utenza: vengono mostrati il cdr di appartenenza più tutti quelli, se ci sono, a lui afferenti.
 -  Insieme: determinare se la linea di attività fa parte di un insieme. L’insieme è un elemento che raccorda una linea di attività di entrata a una o più linee di attività di spesa. L’insieme, ovviamente, è valido solo all’interno di un cdr. L’inserimento di un insieme è possibile attraverso l’apposita funzione ‘insieme linee di attività – modifica’:
 
