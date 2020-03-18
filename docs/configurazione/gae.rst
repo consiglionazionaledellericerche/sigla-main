@@ -12,26 +12,25 @@ La GAE si definisce 'propria' quando è assegnabile ad un solo cdr. L'altra moda
 La GAE presenta elementi di testata e di dettaglio. I dati da specificare sono i seguenti:
 
 - Codice: accoglie valori numerici. Il sistema, automaticamente, pone un prefisso e tanti zeri in modo da formare un codice del tipo ‘P0000001’ (in questo caso l’utente aveva messo 1 nel campo codice). L’utente può non inserire alcun valore nel codice che viene, in questo caso, derivato in automatico. Una volta specificato il codice la creazione di successive GAE non propone più il codice in automatico ma bisogna sempre specificarlo.
--  Tipo linea di attività (solo mostrato al salvataggio se propria). Il tipo linea è una codificazione di sistema che indica, sostanzialmente, se sia di tipo propria oppure comune. Siccome le due tipologie vengono create da funzionalità diverse, la tipologia della GAE viene assegnata automaticamente dal sistema (in questo caso la linea di attività è sempre propria).
--  Progetto di riferimento per la GAE. Chiaramente in questo campo va indicato un Progetto
--  Cdr: indicare il cdr del quale la l.a. diventerà dipendente. E’ possibile ricercare il cdr utilizzando le iconcine apposite (ricerca e ricerca guidata). I cdr visualizzabili dipendono dal livello del cdr configurato all’utenza: vengono mostrati il cdr di appartenenza più tutti quelli, se ci sono, a lui afferenti.
--  Insieme: determinare se la linea di attività fa parte di un insieme. L’insieme è un elemento che raccorda una linea di attività di entrata a una o più linee di attività di spesa. L’insieme, ovviamente, è valido solo all’interno di un cdr. L’inserimento di un insieme è possibile attraverso l’apposita funzione ‘insieme linee di attività – modifica’:
+-  Tipo linea di attività (solo mostrato al salvataggio se propria). Il tipo linea è una codifica di sistema che indica, sostanzialmente, se sia di tipo propria oppure comune. Siccome le due tipologie vengono create da funzionalità diverse, questa viene assegnata automaticamente dal sistema (in questo caso la GAE è sempre propria).
+-  Progetto di riferimento per la GAE.
+-  Cdr: indica il cdr del quale la GAE diventerà dipendente. E’ possibile ricercare il cdr secondo le solite modalità di ricerca (ricerca e ricerca guidata). I cdr visualizzabili dipendono dal livello del cdr configurato all’utenza: vengono mostrati il cdr di appartenenza più tutti quelli, se ci sono, a lui afferenti.
+-  Insieme: indica il codice dell'insieme cui la GAE entra a far parte. L’insieme è un elemento che raccorda una linea di attività di entrata a una o più linee di attività di spesa. L’insieme è valido solo all’interno di un cdr. L’inserimento di un insieme è possibile attraverso l’apposita funzione :ref:`insieme`
 
-Uno stesso insieme non può essere assegnato a due linee di attività parte entrate. Se l’insieme è assegnato a una linea di attività parte entrate, le linee di attività parte spese ereditano obbligatoriamente la natura della linea di attività parte entrate.
 
-- Gestione: indicare se la linea è di entrata o di spesa
-- Funzione: solo per le linee di attività di spesa indicare, scegliendo dall’apposita tendina, su quale funzione è possibile usare questa l.a.
-- Natura: indicare su quale natura è possibile utilizzare questa linea di attività. Anche le nature sono tabellizzate.
-- Gruppo: è facoltativo scegliere se raggruppare la linea di attività attraverso questo attributo utile a una eventuale visualizzazione cumulata per gruppi di linee di attività.
-- Denominazione: indicare il nome della linea di attività.
-- Descrizione: indicare un eventuale descrizione che specifica meglio la linea.
-- Esercizio di terminazione: valorizzare l’esercizio dal quale la linea non è più attiva.
-- Controllo limite di spesa: è possibile scegliere se la l.a. in questione è soggetta al controllo dei limiti di spesa indicati sulla voce di bilancio/Fonte utilizzati durante le movimentazioni finanziarie.
-- Una linea di attività si riferisce sempre ad una Anagrafica Programma e ad una Anagrafica Missione
 
-Attraverso il segnalibro in alto a sinistra è possibile andare nel pannello dei risultati.
+- Gestione: indica se la linea è di entrata o di spesa
+- Funzione: solo per le linee di attività di spesa indica su quale funzione è possibile usare questa Gae.
+- Natura: indica su quale natura è possibile utilizzare questa linea di attività. Anche le nature sono tabellizzate.
+- Gruppo: è facoltativo scegliere se raggruppare la linea di attività attraverso questo attributo utile a una eventuale visualizzazione per gruppi di linee di attività.
+- Denominazione: indicare il nome Gae.
+- Descrizione: indicare un eventuale descrizione che specifica meglio la Gae.
+- Esercizio di terminazione: valorizzare l’esercizio dal quale la Gae non è più attiva.
+- Controllo limite di spesa: è possibile scegliere se la Gae in questione è soggetta al controllo dei limiti di spesa indicati sulla voce di bilancio/Fonte utilizzati durante le movimentazioni finanziarie.
+- Una Gae si riferisce sempre ad una Anagrafica Programma e ad una Anagrafica Missione
 
-E’ possibile inserire più di un risultato. Per inserire un risultato cliccare sull’iconcina del foglio bianco posta in basso a sinistra dell’area ‘risultati’. Se si inserisce un risultati tutti i campi seguenti diventano obbligatori per quel risultato.
+Attraverso la seconda tab, prevista dalla funzione di creazione Gae, è possibile accedere al pannello dei risultati.
+Qui è possibile inserire più di un risultato. Per inserire un risultato cliccare sull’iconcina 'nuovo' posta in basso a sinistra dell’area ‘risultati’. Se si inserisce un risultato tutti i campi seguenti diventano obbligatori per quel risultato.
 
 A questo punto è possibile, per ogni obiettivo:
 
@@ -96,6 +95,14 @@ Al salvataggio, il sistema crea automaticamente una linea di attività sui cdr i
 Ogni responsabile della configurazione dei cdr dovrà, se vuole, a quel punto, entrando in normale modifica delle linee di attività valorizzare gli obiettivi e l’insieme. Non è possibile modificare altri valori ereditati (ad esempio linea di attività e funzione).
 
 Se si creano nuovi cdr essi devono essere associati alle linee di attività comuni entrando in modifica delle stesse. 
+
+.. _insieme:
+
+Insieme
+-------
+
+L'insieme di GAE  è un codice di raggruppamento di GAE secondo logiche varie, utili al solo fine della consultazione. L'insieme lega una Gae di entrata a una o più Gae di spesa, oppure lega più Gae di spesa.
+Uno stesso insieme non può essere assegnato, quindi, a due linee di attività parte entrate. Se l’insieme è assegnato a una linea di attività parte entrate, le linee di attività parte spese ereditano obbligatoriamente la natura della linea di attività parte entrate.
 
 .. _programmi:
 
