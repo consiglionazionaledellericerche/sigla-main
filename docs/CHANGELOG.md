@@ -1,3 +1,11 @@
+## Release 6.2.1  -- _March 19, 2020_ 
+**Changes**
+
+>**Dalla UO Ente non si vedranno più tutte le variazioni ma solo quelle della stessa UO**
+>
+>[5e0e0c976f51dce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e0e0c976f51dce) marco.spasiano *March 19, 2020*
+
+
 ## Release 6.2.0  -- _March 14, 2020_ 
 **Changes**
 
