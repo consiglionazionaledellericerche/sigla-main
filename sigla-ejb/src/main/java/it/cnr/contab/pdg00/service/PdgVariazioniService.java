@@ -51,7 +51,8 @@ public class PdgVariazioniService extends DocumentiContabiliService {
     private String pecVariazioniUsername;
     @Value("${pec.variazioni.password}")
     private String pecVariazioniPassword;
-
+    @Value("${variazioni.ente.show.all}")
+    private Boolean showAll;
 
     public PdgVariazioneDocument getPdgVariazioneDocument(ArchiviaStampaPdgVariazioneBulk archiviaStampaPdgVariazioneBulk) {
         return PdgVariazioneDocument.construct((Optional.ofNullable(getStorageObjectByPath(getCMISPath(archiviaStampaPdgVariazioneBulk)))
@@ -95,7 +96,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                     .concat(cds.getCd_unita_organizzativa());
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
-        if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent()) {
+        if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent() && !showAll) {
             return getChildren(storageObjectByPath.get().getKey(), -1).stream()
                     .filter(storageObject -> storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(SIGLAStoragePropertyNames.VARPIANOGEST_DOCUMENT.value()))
                     .filter(storageObject -> hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value()))
@@ -124,7 +125,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
             query.append(" join strorg:uo as uo on var.cmis:objectId = uo.cmis:objectId");
             query.append(" join cnr:signedDocument as sig on var.cmis:objectId = sig.cmis:objectId");
             query.append(" where var.").append(SIGLAStoragePropertyNames.VARPIANOGEST_ESERCIZIO.value()).append(" = ").append(esercizio);
-            if (cds != null)
+            if (cds != null && !cds.isUoEnte())
                 query.append(" and cds.").append(SIGLAStoragePropertyNames.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds.getCd_unita_organizzativa()).append("'");
             if (uo != null)
                 query.append(" and uo.").append(SIGLAStoragePropertyNames.STRORGUO_CODICE.value()).append(" = ").append("'").append(uo).append("'");
@@ -159,7 +160,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                     .concat(cds.getCd_unita_organizzativa());
         }
         final Optional<StorageObject> storageObjectByPath = Optional.ofNullable(getStorageObjectByPath(basePath));
-        if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent()) {
+        if (storageObjectByPath.isPresent() && Optional.ofNullable(cds).isPresent() && !showAll) {
             return getChildren(storageObjectByPath.get().getKey(), -1).stream()
                     .filter(storageObject -> storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()).equals(SIGLAStoragePropertyNames.VARPIANOGEST_DOCUMENT.value()))
                     .filter(storageObject -> {
@@ -201,7 +202,7 @@ public class PdgVariazioniService extends DocumentiContabiliService {
             query.append(" where var.").append(SIGLAStoragePropertyNames.VARPIANOGEST_ESERCIZIO.value()).append(" = ").append(esercizio);
             if (variazionePdg != null)
                 query.append(" and var.").append(SIGLAStoragePropertyNames.VARPIANOGEST_NUMEROVARIAZIONE.value()).append(" = ").append(variazionePdg);
-            if (cds != null)
+            if (cds != null && !cds.isUoEnte())
                 query.append(" and cds.").append(SIGLAStoragePropertyNames.STRORGCDS_CODICE.value()).append(" = ").append("'").append(cds.getCd_unita_organizzativa()).append("'");
             if (uo != null)
                 query.append(" and uo.").append(SIGLAStoragePropertyNames.STRORGUO_CODICE.value()).append(" = ").append("'").append(uo).append("'");
