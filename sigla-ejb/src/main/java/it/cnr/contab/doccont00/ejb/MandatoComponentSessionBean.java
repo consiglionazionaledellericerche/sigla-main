@@ -25,10 +25,7 @@ import javax.ejb.Stateless;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoSpesaBulk;
 import it.cnr.contab.doccont00.comp.MandatoComponent;
-import it.cnr.contab.doccont00.core.bulk.Ass_mandato_reversaleBulk;
-import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
-import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
-import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
+import it.cnr.contab.doccont00.core.bulk.*;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.jada.UserContext;
@@ -609,6 +606,24 @@ public class MandatoComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSe
 		pre_component_invocation(param0,componentObj);
 		try {
 			Ass_mandato_reversaleBulk  result = ((MandatoComponent)componentObj).creaAss_mandato_reversale(param0,param1, param2);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public List<MandatoComunicaDatiBulk> recuperoDatiPagamenti (it.cnr.jada.UserContext param0, MandatoComunicaDatiBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			List<MandatoComunicaDatiBulk> result = ((MandatoComponent)componentObj).recuperoDatiPagamenti(param0,param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

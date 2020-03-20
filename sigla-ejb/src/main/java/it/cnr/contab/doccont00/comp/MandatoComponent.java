@@ -6598,4 +6598,57 @@ public class MandatoComponent extends it.cnr.jada.comp.CRUDComponent implements
                 .map(mandatoRigaHome -> mandatoRigaHome.getDocumentoAmministrativoSpesaBulk(userContext, mandatoRiga))
                 .orElse(null);
     }
+    public List<MandatoComunicaDatiBulk> recuperoDatiPagamenti(UserContext userContext, MandatoComunicaDatiBulk mandatoComunicaDati) throws ComponentException {
+        MandatoComunicaDatiHome home = (MandatoComunicaDatiHome)getHome(userContext, MandatoComunicaDatiBulk.class, "COMUNICA_DATI_MANDATO");
+        SQLBuilder sql = home.createSQLBuilder();
+        sql.resetColumns();
+        sql.addColumn("mandato_terzo.cd_cds","cd_cds_2");
+        sql.addColumn("mandato.cd_cds");
+        sql.addColumn("mandato.ESERCIZIO");
+        sql.addColumn("mandato.pg_mandato");
+        sql.addColumn("decode(to_char(dt_pagamento,'yyyy'),mandato.esercizio,dt_pagamento,to_date('31/12/'||mandato.esercizio,'dd/mm/yyyy'))", "dt_pagamento");
+        sql.addColumn("terzo.denominazione_sede","denominazioneSede");
+        sql.addColumn("mandato.im_mandato");
+        sql.addColumn("mandato.im_mandato-mandato.im_ritenute","IM_RITENUTE");
+        sql.addColumn("NVL(SUM(v_mandato_reversale_voce.IM_CAPITOLO_PESATO),0)","importoCapitolo");
+        sql.addColumn("'U.'||substr(cd_liv4,2)","cdLiv4");
+        sql.addColumn("ds_liv4","dsLiv4");
+        sql.addSQLGroupBy("mandato_terzo.cd_cds");
+        sql.addSQLGroupBy("mandato.cd_cds");
+        sql.addSQLGroupBy("mandato.ESERCIZIO");
+        sql.addSQLGroupBy("mandato.pg_mandato");
+        sql.addSQLGroupBy("decode(to_char(dt_pagamento,'yyyy'),mandato.esercizio,dt_pagamento,to_date('31/12/'||mandato.esercizio,'dd/mm/yyyy'))");
+        sql.addSQLGroupBy("terzo.denominazione_sede");
+        sql.addSQLGroupBy("mandato.im_mandato");
+        sql.addSQLGroupBy("mandato.im_mandato-mandato.im_ritenute");
+        sql.addSQLGroupBy("'U.'||substr(cd_liv4,2)");
+        sql.addSQLGroupBy("ds_liv4");
+
+        sql.addTableToHeader("mandato_terzo");
+        sql.addSQLJoin("mandato.cd_cds","mandato_terzo.cd_cds");
+        sql.addSQLJoin("mandato.esercizio","mandato_terzo.esercizio");
+        sql.addSQLJoin("mandato.pg_mandato","mandato_terzo.pg_mandato");
+        sql.addTableToHeader("terzo");
+        sql.addSQLJoin("terzo.cd_terzo","mandato_terzo.cd_terzo");
+        sql.addTableToHeader("v_mandato_reversale_voce");
+        sql.addSQLJoin("mandato.cd_cds","v_mandato_reversale_voce.cd_cds");
+        sql.addSQLJoin("mandato.esercizio","v_mandato_reversale_voce.esercizio");
+        sql.addSQLJoin("mandato.pg_mandato","v_mandato_reversale_voce.pg_documento");
+        sql.addTableToHeader("V_CLASSIFICAZIONE_VOCI_ALL");
+        sql.addSQLJoin("v_mandato_reversale_voce.esercizio","V_CLASSIFICAZIONE_VOCI_ALL.esercizio");
+        sql.addSQLJoin("v_mandato_reversale_voce.ti_gestione","V_CLASSIFICAZIONE_VOCI_ALL.ti_gestione");
+        sql.addSQLJoin("v_mandato_reversale_voce.cd_voce","V_CLASSIFICAZIONE_VOCI_ALL.cd_livello6");
+// TODO Da togliere
+        sql.addSQLClause("AND","mandato.ESERCIZIO",SQLBuilder.EQUALS,new Integer("2016"));
+        sql.addSQLClause("AND","mandato.pg_mandato",SQLBuilder.LESS_EQUALS,new Long("10"));
+        sql.addSQLClause("AND","mandato.CD_CDS",SQLBuilder.EQUALS,"099");
+// TODO Fine Da togliere
+
+        try {
+                List lista = home.fetchAll(sql);
+            return lista;
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
 }

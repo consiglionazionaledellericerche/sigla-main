@@ -59,4 +59,5 @@ Mandato_rigaBulk inizializzaTi_fattura(UserContext userContext, Mandato_rigaBulk
 IDocumentoAmministrativoSpesaBulk getDocumentoAmministrativoSpesaBulk(UserContext userContext, Mandato_rigaBulk mandatoRiga) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 Mandato_rigaBulk setCodiciSIOPECollegabili(UserContext userContext, Mandato_rigaBulk riga) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 Ass_mandato_reversaleBulk creaAss_mandato_reversale(UserContext userContext, MandatoBulk mandato, ReversaleBulk reversale) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+List<MandatoComunicaDatiBulk> recuperoDatiPagamenti(UserContext userContext, MandatoComunicaDatiBulk mandatoComunicaDatiBulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
