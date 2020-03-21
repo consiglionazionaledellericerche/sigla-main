@@ -19,17 +19,10 @@
 	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk"
 	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiHome" >
 
-	<columnMap
-			tableName="MANDATO"
-			name="COMUNICA_DATI_MANDATO">
+	<defaultColumnMap
+			tableName="MANDATO">
 		<columnMapping
 				columnName="CD_CDS"
-				propertyName="cds.cd_unita_organizzativa"
-				sqlTypeName="VARCHAR"
-				columnSize="30"
-				nullable="false" />
-		<columnMapping
-				columnName="CD_CDS_2"
 				propertyName="cd_cds"
 				sqlTypeName="VARCHAR"
 				columnSize="30"
@@ -48,13 +41,13 @@
 				nullable="false" />
 		<columnMapping
 				columnName="IM_MANDATO"
-				propertyName="IM_MANDATO"
+				propertyName="im_mandato"
 				sqlTypeName="DECIMAL"
 				columnSize="22"
 				nullable="false" />
 		<columnMapping
 				columnName="IM_RITENUTE"
-				propertyName="IM_RITENUTE"
+				propertyName="im_ritenute"
 				sqlTypeName="DECIMAL"
 				columnSize="22"
 				nullable="false" />
@@ -64,6 +57,51 @@
 				sqlTypeName="TIMESTAMP"
 				columnSize="7"
 				nullable="false" />
-	</columnMap>
+		<columnMapping
+				columnName="V_MANDATO_REVERSALE_VOCE.IM_CAPITOLO_PESATO"
+				propertyName="importoCapitolo"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="false" />
+		<columnMapping
+				columnName="TERZO.DENOMINAZIONE_SEDE"
+				propertyName="denominazioneSede"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="false" />
+		<columnMapping
+				columnName="V_CLASSIFICAZIONE_VOCI_ALL.CD_LIV4"
+				propertyName="cdLiv4"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="false" />
+		<columnMapping
+				columnName="V_CLASSIFICAZIONE_VOCI_ALL.DS_LIV4"
+				propertyName="dsLiv4"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="false" />
+	</defaultColumnMap>
+
+	<persistentProperty
+			name="cd_cds"/>
+	<persistentProperty
+			name="esercizio"/>
+	<persistentProperty
+			name="pg_mandato"/>
+	<persistentProperty
+			name="im_mandato"/>
+	<persistentProperty
+			name="im_ritenute"/>
+	<persistentProperty
+			name="dt_pagamento"/>
+	<persistentProperty
+			name="importoCapitolo"/>
+	<persistentProperty
+			name="denominazioneSede"/>
+	<persistentProperty
+			name="cdLiv4"/>
+	<persistentProperty
+			name="dsLiv4"/>
 
 </SQLPersistentInfo>

@@ -17,56 +17,106 @@
 
 package it.cnr.contab.doccont00.core.bulk;
 
-import it.cnr.contab.preventvar00.bulk.Var_bilancioBulk;
-import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.persistency.Persistent;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.*;
+import java.sql.Timestamp;
 
-public class MandatoComunicaDatiBulk extends MandatoBulk {
-	private String cdLiv4;
-	private String dsdLiv4;
-	private String denominazioneSede;
+public class MandatoComunicaDatiBulk extends OggettoBulk implements Persistent {
+    private java.lang.String cd_cds;
+    private java.lang.Integer esercizio;
+    private java.lang.Long pg_mandato;
+    private java.sql.Timestamp dt_pagamento;
+    private java.math.BigDecimal im_mandato;
+    private java.math.BigDecimal im_ritenute;
+    private java.math.BigDecimal importoCapitolo;
+    private String cdLiv4;
+    private String dsLiv4;
+    private String denominazioneSede;
 
-	public String getCdLiv4() {
-		return cdLiv4;
-	}
+    public MandatoComunicaDatiBulk() {
+        super();
+    }
 
-	public void setCdLiv4(String cdLiv4) {
-		this.cdLiv4 = cdLiv4;
-	}
+    public String getCdLiv4() {
+        return cdLiv4;
+    }
 
-	public String getDsdLiv4() {
-		return dsdLiv4;
-	}
+    public void setCdLiv4(String cdLiv4) {
+        this.cdLiv4 = cdLiv4;
+    }
 
-	public void setDsdLiv4(String dsdLiv4) {
-		this.dsdLiv4 = dsdLiv4;
-	}
+    public String getDsLiv4() {
+        return dsLiv4;
+    }
 
-	public String getDenominazioneSede() {
-		return denominazioneSede;
-	}
+    public void setDsLiv4(String dsLiv4) {
+        this.dsLiv4 = dsLiv4;
+    }
 
-	public void setDenominazioneSede(String denominazioneSede) {
-		this.denominazioneSede = denominazioneSede;
-	}
+    public String getDenominazioneSede() {
+        return denominazioneSede;
+    }
 
-	public BigDecimal getImportoCapitolo() {
-		return importoCapitolo;
-	}
+    public void setDenominazioneSede(String denominazioneSede) {
+        this.denominazioneSede = denominazioneSede;
+    }
 
-	public void setImportoCapitolo(BigDecimal importoCapitolo) {
-		this.importoCapitolo = importoCapitolo;
-	}
+    public BigDecimal getImportoCapitolo() {
+        return importoCapitolo;
+    }
 
-	private BigDecimal importoCapitolo;
+    public void setImportoCapitolo(BigDecimal importoCapitolo) {
+        this.importoCapitolo = importoCapitolo;
+    }
 
-	public MandatoComunicaDatiBulk() {
-	super();
-}
-public MandatoComunicaDatiBulk(String cd_cds, Integer esercizio, Long pg_mandato) {
-	super(cd_cds, esercizio, pg_mandato);
-}
+    public String getCd_cds() {
+        return cd_cds;
+    }
+
+    public void setCd_cds(String cd_cds) {
+        this.cd_cds = cd_cds;
+    }
+
+    public Integer getEsercizio() {
+        return esercizio;
+    }
+
+    public void setEsercizio(Integer esercizio) {
+        this.esercizio = esercizio;
+    }
+
+    public Long getPg_mandato() {
+        return pg_mandato;
+    }
+
+    public void setPg_mandato(Long pg_mandato) {
+        this.pg_mandato = pg_mandato;
+    }
+
+    public Timestamp getDt_pagamento() {
+        return dt_pagamento;
+    }
+
+    public void setDt_pagamento(Timestamp dt_pagamento) {
+        this.dt_pagamento = dt_pagamento;
+    }
+
+    public BigDecimal getIm_mandato() {
+        return im_mandato;
+    }
+
+    public void setIm_mandato(BigDecimal im_mandato) {
+        this.im_mandato = im_mandato;
+    }
+
+    public BigDecimal getIm_ritenute() {
+        return im_ritenute;
+    }
+
+    public void setIm_ritenute(BigDecimal im_ritenute) {
+        this.im_ritenute = im_ritenute;
+    }
 }

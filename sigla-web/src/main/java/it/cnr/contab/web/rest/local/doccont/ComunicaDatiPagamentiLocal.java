@@ -17,9 +17,6 @@
 
 package it.cnr.contab.web.rest.local.doccont;
 
-import it.cnr.contab.client.docamm.FatturaAttiva;
-import it.cnr.contab.web.rest.config.AccessoAllowed;
-import it.cnr.contab.web.rest.config.AccessoEnum;
 import it.cnr.contab.web.rest.config.SIGLARoles;
 
 import javax.annotation.security.RolesAllowed;
@@ -29,7 +26,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Local
 @Path("/datiPagamenti")
@@ -37,10 +33,11 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @RolesAllowed(SIGLARoles.PORTALE)
 public interface ComunicaDatiPagamentiLocal {
-	/**
-     * GET  /restapi/datiPagamenti/ricerca -> return Fattura attiva
-     */
+
     @GET
-    public Response recuperoDatiPagamenti(@Context HttpServletRequest request) throws Exception;
+    Response recuperoDatiPagamenti(@Context HttpServletRequest request,
+                                   @QueryParam("esercizio") Integer esercizio,
+                                   @QueryParam("cdCds") String cdCds,
+                                   @QueryParam("pgMandato") Long pgMandato) throws Exception;
 
 }
