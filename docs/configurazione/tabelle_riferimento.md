@@ -1,1 +1,0 @@
-# Tabelle di Riferimento

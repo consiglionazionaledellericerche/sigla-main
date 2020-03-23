@@ -2,9 +2,9 @@
 Piano dei Conti Finanziario
 ===========================
 
-Il piano dei conti Finanziario consente di gestire l'anagrafica delle voci di bilancio sia di [Voci di Entrata](#voci-di-entrata) che di [Voci di Spesa](#voci-di-spesa). 
+Il piano dei conti Finanziario consente di gestire l'anagrafica delle voci di bilancio sia di `Voci di Entrata`_ che di `Voci di Spesa`_.
 Le Voci costituiscono il livello elementare di gestione per la movimentazione finanziaria e sono a loro volte associate alla classificazione ufficiale del Bilancio preventivo e consuntivo dell'Ente.
-L'anagrafica Voci di Bilancio si completa con le [Associazioni Voci](#associazioni-voci) necessarie all'utilizzo in gestione.
+L'anagrafica Voci di Bilancio si completa con le `Associazioni Voci`_ necessarie all'utilizzo in gestione.
 
 Premessa
 Di seguito è indicata la modalità di gestione delle voci di entrata e spesa. Ricordiamo che la voce di bilancio si può suddividere ulteriormente in articoli a seconda delle esigenze dell'Ente.
@@ -60,10 +60,8 @@ Gestione
 La gestione di un capitolo di spesa comprende le seguenti informazioni:
 
 -  Esercizio. Viene automaticamente proposto e non è modificabile;
- 
 
--  Codice proprio: E' il codice Voce (di libera imputazione) che solitamente non iclude la classificazione ed è sempre della stessa lunghezza. Potrebbe anche coincidere con l'ultimo livello della classificazione ufficiale.
-Il sistema assegna automaticamente un codice progressivo se l’utente non valorizza questo campo.
+-  Codice proprio: E' il codice Voce (di libera imputazione) che solitamente non iclude la classificazione ed è sempre della stessa lunghezza. Potrebbe anche coincidere con l'ultimo livello della classificazione ufficiale. Il sistema assegna automaticamente un codice progressivo se l’utente non valorizza questo campo.
 
 -  Categoria Economico/Finanziaria: l’utente deve selezionare dalla lista presentata dal sistema (non direttamente aggiornabile) la categoria di appartenenza della voce in esame. 
 

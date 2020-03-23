@@ -10,6 +10,5 @@ Configurazione
    struttura_organizzativa
    anagrafica_clienti_fornitori
    terzi
-   tabelle_riferimento
    
    

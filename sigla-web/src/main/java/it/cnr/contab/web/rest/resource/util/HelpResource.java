@@ -17,6 +17,8 @@
 
 package it.cnr.contab.web.rest.resource.util;
 
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.utenze00.bp.WSUserContext;
 import it.cnr.contab.util00.bulk.HelpBulk;
 import it.cnr.contab.web.rest.local.util.HelpLocal;
@@ -44,7 +46,10 @@ public class HelpResource implements HelpLocal {
 
     @Override
     public Response get(HttpServletRequest request, String jspName, String bpName) throws Exception {
-        String helpBaseURL = System.getProperty("help.base.url");
+        String helpBaseURL = Optional.ofNullable(System.getProperty("help.base.url"))
+                                    .orElseGet(() -> {
+                                        return SpringUtil.getBean(UtilService.class).getHelpBaseURL();
+                                    });
         UserContext userContext = new WSUserContext("HELP", null,
                 new Integer(Calendar.getInstance().get(Calendar.YEAR)),
                 null, null, null);

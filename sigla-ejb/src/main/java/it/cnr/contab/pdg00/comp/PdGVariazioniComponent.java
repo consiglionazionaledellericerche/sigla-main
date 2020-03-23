@@ -2709,13 +2709,14 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome(
 				userContext, Unita_organizzativa_enteBulk.class).findAll()
 				.get(0);
+		String cds = CNRUserContext.getCd_cds(userContext);
+		cdsBulk = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).
+				findByPrimaryKey(new Unita_organizzativaBulk(cds));
+
 		if (!((CNRUserContext) userContext).getCd_unita_organizzativa()
 				.equals(ente.getCd_unita_organizzativa())) {
-			String cds = CNRUserContext.getCd_cds(userContext);
 			sql.addClause(FindClause.AND, "cd_centro_responsabilita", SQLBuilder.STARTSWITH, cds);
-			cdsBulk = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).
-				findByPrimaryKey(new Unita_organizzativaBulk(cds));
-			 if(Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita()) && 
+			 if(Tipo_unita_organizzativaHome.TIPO_UO_SAC.equalsIgnoreCase(cdsBulk.getCd_tipo_unita()) &&
 					 bulk !=null && bulk instanceof Pdg_variazioneBulk  && ((Pdg_variazioneBulk)bulk).getPg_variazione_pdg()!=null){
 				 Pdg_variazioneHome Pdg_variazioneHome = (Pdg_variazioneHome) getHome(userContext, Pdg_variazioneBulk.class);
 				 Pdg_variazioneBulk pdg = (Pdg_variazioneBulk) Pdg_variazioneHome.findByPrimaryKey((Pdg_variazioneBulk)bulk);

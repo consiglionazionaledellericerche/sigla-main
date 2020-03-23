@@ -1807,6 +1807,9 @@ public class Documento_genericoBulk extends Documento_genericoBase implements ID
 
 		validaDateCompetenza();
 
+		if (isGenericoAttivo() && (getTipoDocumentoGenerico()== null|| getTipoDocumentoGenerico().getId() == null)){
+			throw new ValidationException("Inserire il tipo documento generico.");
+		}
 		super.validate();
 	}
 	public boolean isDetailDoubled() {

@@ -115,7 +115,9 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			int index = super.addDetail(oggettobulk);
 			OrdineAcqRigaBulk dettaglio =(OrdineAcqRigaBulk)oggettobulk;
 			dettaglio.setDspMagazzino(dettaglio.getOrdineAcq().getUnicoMagazzinoAbilitato());
-			dettaglio.setDspLuogoConsegna(dettaglio.getDspMagazzino().getLuogoConsegnaMag());
+			if (dettaglio.getDspMagazzino() != null){
+				dettaglio.setDspLuogoConsegna(dettaglio.getDspMagazzino().getLuogoConsegnaMag());
+			}
 			return index;
 		}
 
@@ -129,7 +131,9 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			OrdineAcqRigaBulk dettaglio =consegna.getOrdineAcqRiga();
 			consegna.setTipoConsegna(dettaglio.getTipoConsegnaDefault());
 			consegna.setMagazzino(dettaglio.getOrdineAcq().getUnicoMagazzinoAbilitato());
-			consegna.setLuogoConsegnaMag(consegna.getMagazzino().getLuogoConsegnaMag());
+			if (consegna.getMagazzino() != null){
+				consegna.setLuogoConsegnaMag(consegna.getMagazzino().getLuogoConsegnaMag());
+			}
 
 			int index = super.addDetail(oggettobulk);
 			return index;
@@ -488,11 +492,11 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 			print.setNomeFile(nomeFileOrdineOut);
 			print.setUtcr(userContext.getUser());
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
-			print.addParam("cd_cds", ordine.getCdCds(), String.class);
-			print.addParam("cd_unita_operativa", ordine.getCdUnitaOperativa(), String.class);
-			print.addParam("esercizio", ordine.getEsercizio(), Integer.class);
-			print.addParam("cd_numeratore", ordine.getCdNumeratore(), String.class);
-			print.addParam("numero", ordine.getNumero(), Integer.class);
+			print.addParam("CD_CDS", ordine.getCdCds(), String.class);
+			print.addParam("CD_UNITA_OPERATIVA", ordine.getCdUnitaOperativa(), String.class);
+			print.addParam("ESERCIZIO", ordine.getEsercizio(), Integer.class);
+			print.addParam("CD_NUMERATORE", ordine.getCdNumeratore(), String.class);
+			print.addParam("NUMERO", ordine.getNumero(), Integer.class);
 			Report report = SpringUtil.getBean("printService", PrintService.class).executeReport(userContext, print);
 
 			FileOutputStream f = new FileOutputStream(output);
