@@ -2,17 +2,20 @@
 Struttura Organizzativa
 =======================
 
-La struttura organizzative dell'Ente è strutturata in tre livelli: - Centro di Spesa; - Unità Organizzativa; - Centro di Responsabilità.
+La struttura organizzative dell'Ente è definita in tre livelli: 
+- Centro di Spesa; 
+- Unità Organizzativa; 
+- Centro di Responsabilità.
 
 **Centro di Spesa**
 
 La funzione consente di ricercare un cds già esistente per la modifica oppure, cliccando sull’icona nuovo, crearne uno nuovo.
 
-Le informazioni obblitatori) alla creazione di un cds sono:
+Le informazioni obblitatorie alla creazione di un cds sono:
 
 - Codice: deve essere valorizzato un codice numerico lungo 3. Non può essere assegnato il codice 999. Nel caso non si voglia valorizzare un codice il sistema procede automaticamente.
 - Descrizione: Occorre inserire il nome del centro di spesa che si sta creando.
-- Responsabile: occorre inserire il responsabile del centro di spesa, che appartiene all’anagrafica dei terzi. Per scegliere il responsabile utilizzare i pulsanti di ricerca e assegnazione presenti vicino al campo. E’ possibile creare un nuovo terzo contestualmente a questa funzione.
+- Responsabile: occorre inserire il responsabile del centro di spesa, che è presente in anagrafica dei terzi. E’ possibile creare un nuovo terzo contestualmente alla sua assegnazione al cds, utilizzando l'apposita funzionalità prevista in questa mappa che porta direttmente alla funzione di creazione anagrafica e ritorna alla creazione del cds.
 - Tipologia: è possibile una scelta tra quattro tipologie, ognuna delle quali ha degli effetti nel proseguo:
   - **AREA**: il cds inquadrato è un’area di ricerca, un’organizzazione di risorse atta a garantire l’attività degli istituti.
   - **IST**: il cds inquadrato è un istituto, cioè un centro periferico che gestisce l’attività propria dell'Ente;
