@@ -95,7 +95,7 @@ Il primo messaggio è stato configurato in modo da restare in ‘cassetta postal
 Il secondo messaggio, invece, non avendo nessuna scadenza programmata perché si tratta di un ‘avviso’, può essere selezionato e cancellato dall’utente dopo la lettura. In questo ultimo caso resta a scelta dell’utente se tenere il messaggio come promemoria
 oppure cancellarlo subito dopo la lettura.
 
-## Presentazione e Funzionalità per il menù
+## Presentazione e Funzionalità
 
 Il menù dell’applicazione si presenta nel modo seguente:
 
@@ -115,7 +115,7 @@ E’ inoltre possibile chiudere l’area della mappa riservata al menù così da
 
 Nell’esempio riportato nella figura precedente, è stata indicata, nel campo di ricerca voci di menù, la scritta ‘elettron’ ed è stata restituita la lista di funzioni di menù in cui compare questo testo. Cliccando su una delle voci dell’elenco si accede alla funzionalità in maniera rapida, evitando di navigare tra le voci del menù.
 
-## Presentazione layout delle mappe SIGLA
+### Presentazione layout delle mappe SIGLA
 Le funzionalità di Sigla presentano un layout standard che prevede, oltre alle informazioni di accesso sempre visibili e modificabili, una serie di utilità:
 
 1. una riga ‘Informativa’ in cui è sempre indicato il percorso di navigazione che ha portato alla funzione;
