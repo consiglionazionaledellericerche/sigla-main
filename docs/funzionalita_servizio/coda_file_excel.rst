@@ -12,4 +12,4 @@ E' possibile quindi produrre le stampe:
 
 ![](screenshot/print_4.png)
 
-Che saranno poi riportate nella coda di stampe.
+Che saranno poi riportate nella  :ref:`coda-di-stampa`
