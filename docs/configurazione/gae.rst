@@ -43,58 +43,30 @@ A questo punto è possibile, per ogni obiettivo:
 Linea attività comune
 ---------------------
 
-Obiettivo
+La modalità di creazione di una Gae comune si articola in due passi: il primo per creare l'anagrafica 'generale' della Gae ed il secondo per specificare i cdr che la utilizzeranno.
 
-La scheda illustra la modalità di creazione di una linea di attività comune. Per questa creazione sono necessari due steps: il primo per creare l’oggetto l.a. comune ancora virtuale; il secondo per trasformare l’oggetto in una reale linea di attività appartenente ai cdr.
+Per creare un'anagrafica Gae comune bisogna specificare i seguenti dati:
 
-Sviluppo
+- codice: è assegnato in modo automatico dal sistema.
 
-Step 1: configurare una linea di attività di tipo comune virtuale.
+- Descrizione: nome Gae.
 
-Posizionarsi nella funzione: configurazione – linea di attività - tipologia linee di attività. Entrare in modifica.
+- Gestione: indica se la Gae sarà di entrata o di spesa (o entrambe).
 
-Si apre il seguente pannello.
- 
+- Funzione (solo per le spese) e la natura. 
 
-Occorre a questo punto indicare:
+Al salvataggio è possibile agire sul secondo tab e aggiungere i cdr che utilizzeranno la Gae. 
 
--         codice: è assegnato in modo automatico dal sistema.
+Se alcuni cdr sono già associati (modifica) il pannello presenta i soli cdr associati.
+In caso contrario occorre dapprima cercare i cdr che possono essere associati alla Gae. Dalla lista di tutti i cdr associabili bisogna selezionare il cdr (o utilizzare la funzione 'seleziona tutti') per associarli alla Gae.
 
--         Descrizione: inserire quello che poi sarà il nome di queste linee di attività comuni, una volta che sarà compiuto il secondo step. Non sarà ereditata la descrizione, ma solo la denominazione.
+Il pannello è ordinabile per tutti gli elementi identificativi dei cdr. E’ possibile anche fare una ricerca guidata all’interno dei cdr associati. E’ altresì possibile disassociare i cdr selezionandoli oppure selezionare tutti i cdr ed 'eliminare' l'associzione.
 
--         Gestione: indicare se la l.a. sarà di entrata o di spesa.
+Al salvataggio, il sistema crea automaticamente l'anagrafica Gae per tutti i cdr indicati e vengono ereditate tutte le informazioni dell'anagrafica Gae 'comune' specificata prima. Come codice viene creato il numero Gae con una C di prefisso. Ad esempio C000034.
 
--         Occorre quindi valorizzare la funzione (solo per le spese) e la natura. Queste indicazioni saranno ereditate quando queste linee di attività si trasformeranno in vere linee di attività appartenenti ai cdr.
+Ogni responsabile della configurazione dei cdr potrà, se vuole, entrare in normale modifica delle Gae e valorizzare gli obiettivi e l’insieme. Non è possibile modificare altri valori ereditati.
 
-Step 2: associazione delle linee di attività comuni ai cdr
-
-Al salvataggio è possibile agire sul secondo tab e aggiungere i cdr collegati alla linea di attività. Il sistema mostra il seguente pannello:
-
-Se alcuni cdr sono già associati (siamo in modifica di una l.a. comune già esistente) il pannello presenta i soli cdr associati.
-
-Altrimenti occorre dapprima cercare i cdr che possono associarsi a questa linea di attività comune. Per farlo cliccare sull’icona del binocolo in basso (la prima da sinistra).
-
-Esce la lista di tutti i cdr associabili.
-
-Selezionare i cdr ponendo un flag sul quadratino a sinistra. E’ possibile cliccare sul simbolo del flag nella testata per fare in modo che il sistema ponga i flag su tutti i cdr presenti nella finestra. 
-
-E’ possibile cliccare sull’icona ‘seleziona tutti’ se si vuole immediatamente associare tutti i cdr presenti, e non solo quelli presenti nella finestra visualizzata.
-
-Altrimenti cliccare sull’icona seleziona per associare solo i cdr con un flag sul quadratino.
-
-Il pannello è ordinabile per tutti gli elementi identificativi dei cdr. Per ordinare il pannello cliccare sulle iconcine piccole poste nell’angolo in alto a sinistra dell’intestazione delle colonne.
-
-E’ possibile fare una ricerca guidata all’interno dei cdr associati. Per farlo occorre cliccare sull’iconcina a imbuto posta nella parte bassa del pannello. Impostare la ricerca e saranno visualizzati solo i cdr che rispondono ai requisiti impostati.
-
-Attenzione: se è attiva la ricerca l’iconcina a imbuto appare sotto una barra rossa.
-
-E’ altresì possibile disassociare i cdr flaggati (iconcina del bidone piccolo) o tutti i cdr associati (iconcina del bidone).
-
-Al salvataggio, il sistema crea automaticamente una linea di attività sui cdr indicati che eredita tutte le informazioni della linea di attività virtuale e come codice eredita il numero con una C di prefisso. Ad esempio C000034.
-
-Ogni responsabile della configurazione dei cdr dovrà, se vuole, a quel punto, entrando in normale modifica delle linee di attività valorizzare gli obiettivi e l’insieme. Non è possibile modificare altri valori ereditati (ad esempio linea di attività e funzione).
-
-Se si creano nuovi cdr essi devono essere associati alle linee di attività comuni entrando in modifica delle stesse. 
+Se si creano nuovi cdr essi devono essere associati alle Gae comuni entrando in modifica delle stesse. 
 
 .. _insieme:
 
