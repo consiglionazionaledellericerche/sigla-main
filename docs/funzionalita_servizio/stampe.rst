@@ -4,6 +4,20 @@
 Gestione Stampe
 ===============
 
+In tutte le funzioni di consultazione (o quelle di gestione in cui è prevista la ricerca con risultati in griglia) è possibile effettuare stampe (creazione di un file pdf) oppure estrazione dei dati in file excel. 
+Si tratta di stampe che riportano i risultati della ricerca in griglia, dpo l'applicazione di filtri di ricerca previsti dalle funzioni.
+
+Da non confondere con tutte le stampe previste dalla procedura Sigla, preimpostate per quanto riguarda gli schemi di stampa e i contenuti. Queste sono prodotte sempre in formato pdf e si presentano a menù sotto la voce 'Stampe'.
+
+Le stampe, che chiameremo 'utomatiche', si riferiscono sempre a griglie di dati popolati dopo l'applicazione dei filtri desiderati e l'esecuzione delle ricerche. Le griglie da cui produrre stampe ed estrazioni excel si presentano nel modo seguente:
+
+![](screenshot/map_6.png)
+
+E' possibile quindi richiedere le stampe:
+
+![](screenshot/print_4.png)
+
+Che saranno poi riportate nella  :ref:`coda-di-stampa`
 Le mappe di lancio stampa si presentano con le seguenti icone:
 
 .. thumbnail:: ../screenshot/print_4.png
@@ -19,8 +33,8 @@ Successivamente al lancio della stampa è possibile inserire una descrizione e c
 
 .. thumbnail:: ../screenshot/print_6.png
 
-Inoltre attivando la spunta su **Invia E-Mail con la stampa allegata** è possibile ricevere via E-mail il contenuto della stampa,
-inoltre è possibile schedulare la produzione della stampa stessa secondo i parametri presenti nella maschera.
+Attivando la spunta su **Invia E-Mail con la stampa allegata** è possibile ricevere via E-mail il prodotto della stampa.
+Inoltre è possibile schedulare la produzione della stampa stessa secondo i parametri presenti nella maschera.
 
 .. thumbnail:: ../screenshot/print_7.png
 
