@@ -111,7 +111,7 @@ Presentazione e Funzionalità
 
 Il menù dell’applicazione si presenta nel modo seguente:
 
-.. thumbnail:: screenshot/tree.png
+.. image:: screenshot/tree.png
 
 In alto, posizionata come prima riga del menù, c’è il campo di ricerca in cui è possibile scrivere la descrizione della funzione cercata, o parte di essa (rispettando maiuscole e minuscole).
 
@@ -120,7 +120,7 @@ Albero delle funzioni
 
 Il tasto ‘Aggiorna menù’, invece, serve per applicare le eventuali modifiche intervenute nella lista degli accessi consentita per l’utente (aggiunta o eliminazione accessi da parte del gestore delle utenze), nel caso ciò avvenga mentre l’utente sta lavorando all’interno della procedura e non ha effettuato un nuovo accesso in Sigla successivo alle modifiche, come mostrato in figura:
 
-.. thumbnail:: screenshot/tree_restore.png
+.. image:: screenshot/tree_restore.png
 
 E’ inoltre possibile chiudere l’area della mappa riservata al menù così da avere più spazio per la funzionalità aperta:
 
