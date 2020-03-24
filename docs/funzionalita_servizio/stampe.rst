@@ -15,16 +15,7 @@ Le stampe **automatiche** sono quelle che possono essere prodotte a partire da t
 Queste stampe rappresentano una utility importante perchè rendono possibile la produzione immedita di un file pdf che riporta i contenuti della ricerca in griglia dopo l'applicazione di filtri di ricerca previsti dalle funzioni, oppure la produzione di un file excel (attraverso l'utilizzo della coda di stampa), utilizzabile dall'utente in maniera autonoma rispetto alle funzionalità di Sigla.
 
 Sia le stampe predefinite che le estrazioni di file excel, utilizzano la coda di stampa per avviare l'elaborazione richiesta lasciando libero l'utente di operare su altre funzionalità di Sigla mentre viene prodotto l'elaborato.
-
-La mappa di lancio stampa si presenta nel modo seguente:
-
-![](screenshot/map_6.png)
-
-E' possibile quindi richiedere le stampe:
-
-![](screenshot/print_4.png)
-
-Che saranno poi riportate nella  :ref:`coda-di-stampa`
+Dopo aver richiesto le stampe, queste vengono inviate nella  :ref:`coda-di-stampa`, dandone messaggio all'utente.
 
 Le mappe di lancio stampa si presentano con le seguenti icone:
 
