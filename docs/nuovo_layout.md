@@ -115,7 +115,7 @@ E’ inoltre possibile chiudere l’area della mappa riservata al menù così da
 
 Nell’esempio riportato nella figura precedente, è stata indicata, nel campo di ricerca voci di menù, la scritta ‘elettron’ ed è stata restituita la lista di funzioni di menù in cui compare questo testo. Cliccando su una delle voci dell’elenco si accede alla funzionalità in maniera rapida, evitando di navigare tra le voci del menù.
 
-### Presentazione layout delle mappe SIGLA
+### Presentazione layout 
 Le funzionalità di Sigla presentano un layout standard che prevede, oltre alle informazioni di accesso sempre visibili e modificabili, una serie di utilità:
 
 1. una riga ‘Informativa’ in cui è sempre indicato il percorso di navigazione che ha portato alla funzione;
