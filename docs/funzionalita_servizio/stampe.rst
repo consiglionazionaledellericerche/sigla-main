@@ -4,12 +4,19 @@
 Gestione Stampe
 ===============
 
-In tutte le funzioni di consultazione (o quelle di gestione in cui è prevista la ricerca con risultati in griglia) è possibile effettuare stampe (creazione di un file pdf) oppure estrazione dei dati in file excel. 
-Si tratta di stampe che riportano i risultati della ricerca in griglia, dpo l'applicazione di filtri di ricerca previsti dalle funzioni.
+In Sigla ci sono fondamentalmente due tipologie di stampe:
 
-Da non confondere con tutte le stampe previste dalla procedura Sigla, preimpostate per quanto riguarda gli schemi di stampa e i contenuti. Queste sono prodotte sempre in formato pdf e si presentano a menù sotto la voce 'Stampe'.
+- Stampe predefinite
+- Stampe automatiche
 
-Le stampe, che chiameremo 'utomatiche', si riferiscono sempre a griglie di dati popolati dopo l'applicazione dei filtri desiderati e l'esecuzione delle ricerche. Le griglie da cui produrre stampe ed estrazioni excel si presentano nel modo seguente:
+Le stampe **predefinite** sono quelle previste dalla procedura Sigla, preimpostate per quanto riguarda gli schemi di stampa e i contenuti. Queste sono prodotte sempre in formato pdf e si presentano a menù sotto la voce 'Stampe'.
+
+Le stampe **automatiche** sono quelle che possono essere prodotte a partire da tutte le funzioni di consultazione (o di gestione in cui è prevista la ricerca con risultati in griglia) per le quali è possibile effettuare stampe in formato pdf oppure estrazione dei dati in file excel. 
+Queste stampe rappresentano una utility importante perchè rendono possibile la produzione immedita di un file pdf che riporta i contenuti della ricerca in griglia dopo l'applicazione di filtri di ricerca previsti dalle funzioni, oppure la produzione di un file excel (attraverso l'utilizzo della coda di stampa), utilizzabile dall'utente in maniera autonoma rispetto alle funzionalità di Sigla.
+
+Sia le stampe predefinite che le estrazioni di file excel, utilizzano la coda di stampa per avviare l'elaborazione richiesta lasciando libero l'utente di operare su altre funzionalità di Sigla mentre viene prodotto l'elaborato.
+
+La mappa di lancio stampa si presenta nel modo seguente:
 
 ![](screenshot/map_6.png)
 
@@ -18,6 +25,7 @@ E' possibile quindi richiedere le stampe:
 ![](screenshot/print_4.png)
 
 Che saranno poi riportate nella  :ref:`coda-di-stampa`
+
 Le mappe di lancio stampa si presentano con le seguenti icone:
 
 .. thumbnail:: ../screenshot/print_4.png
