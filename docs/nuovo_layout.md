@@ -1,34 +1,26 @@
-# Nuovo Layout
+# Indicazioni generali Layout
 
-Obiettivo del presente documento è fornire le informazioni necessarie all’utilizzo della nuova
-interfaccia realizzata per la procedura SIGLA. Saranno date indicazioni sulle novità grafiche e di
-utilizzo rispetto a:
+Obiettivo del presente documento è fornire le informazioni necessarie all’utilizzo dell'interfaccia per la procedura SIGLA. 
+Saranno date indicazioni sulle modalità grafiche e di utilizzo rispetto a:
 - Accesso all’applicazione e modifica dati di accesso all’interno dell’applicazione;
-- Nuova presentazione e nuove funzionalità per quanto riguarda il menù;
-- Presentazione della nuova interfaccia SIGLA e utilizzo dei vari componenti;
+- Presentazione e Funzionalità per quanto riguarda il menù;
+- Presentazione dell'interfaccia SIGLA e utilizzo dei vari componenti;
 
 ## Premessa
-La modifica delle caratteristiche di presentazione delle funzionalità di SIGLA non cambia in alcun
-modo i processi amministrativi previsti, né influenza dati e utilizzo degli stessi.
+La modifica delle caratteristiche di presentazione delle funzionalità di SIGLA non cambia in alcun modo i processi amministrativi previsti, né influenza dati e utilizzo degli stessi.
 
-L’obiettivo della revisione dell’intero layout della procedura è esclusivamente quello di rendere
-più ‘usabile’ le funzionalità. In alcuni casi la revisione ha riguardato l’aggiunta di utilità importanti
-sempre al fine di migliorare la navigazione e la gestione delle mappe.
+L’obiettivo della revisione dell’intero layout della procedura è esclusivamente quello di rendere più ‘usabile’ le funzionalità. In alcuni casi la revisione ha riguardato l’aggiunta di utilità importanti sempre al fine di migliorare la navigazione e la gestione delle mappe.
 
 ## Accesso all’applicazione SIGLA
-Tutto ciò che riguarda le credenziali di accesso, abilitazioni all’accesso da parte
-dell’amministratore delle Utenze e scadenza delle password, non è oggetto di modifica. Di seguito
-vengono indicate le nuove modalità di presentazione della mappa di accesso:
+Tutto ciò che riguarda le credenziali di accesso, abilitazioni all’accesso da parte dell’amministratore delle Utenze e scadenza delle password, non è oggetto di modifica. Di seguito vengono indicate le nuove modalità di presentazione della mappa di accesso:
 
 ![](screenshot/home.png)
 
-Nel caso l’utente avesse, per le proprie credenziali, più utenze di accesso Sigla, viene mostrato
-l’elenco delle utenze disponibili e valide:
+Nel caso l’utente avesse, per le proprie credenziali, più utenze di accesso Sigla, viene mostrato l’elenco delle utenze disponibili e valide:
 
 ![](screenshot/home_2.png)
 
-Dopo la scelta dell’utenza di accesso, viene selezionato come al solito il CDS/UO/CDR di accesso
-tra quelli abilitati:
+Dopo la scelta dell’utenza di accesso, viene selezionato come al solito il CDS/UO/CDR di accesso tra quelli abilitati:
 
 ![](screenshot/workspace.png)
 
@@ -55,82 +47,55 @@ Le informazioni vengono fornite automaticamente subito dopo l’accesso come nel
 
 ### Altre Informazioni generali
 
-Vediamo di seguito altre informazioni importanti e alcune utilità messe a disposizione nella nuova
-interfaccia SIGLA, dopo l’accesso all’applicazione:
+Vediamo di seguito altre informazioni importanti e alcune utilità messe a disposizione nella nuova interfaccia SIGLA, dopo l’accesso all’applicazione:
 
 ![](screenshot/navbar.png)
 
-Le informazioni relative al CDS/UO, all’esercizio contabile, e all’utenza di accesso,
-vengono indicate dall’utente al primo utilizzo della nuova interfaccia SIGLA e riportate
-in automatico per gli accessi successivi senza necessità di doverle indicare di nuovo.
+Le informazioni relative al CDS/UO, all’esercizio contabile, e all’utenza di accesso, vengono indicate dall’utente al primo utilizzo della nuova interfaccia SIGLA e riportate in automatico per gli accessi successivi senza necessità di doverle indicare di nuovo.
 
-In qualsiasi momento l’utente può decidere, attraverso la barra di applicazione
-riportata nella figura precedente, di modificare una delle informazioni indicate.
+In qualsiasi momento l’utente può decidere, attraverso la barra di applicazione riportata nella figura precedente, di modificare una delle informazioni indicate.
 Chiaramente la modifica avviene sempre all’interno delle abilitazioni consentite.
 
-La barra delle applicazioni è sempre visualizzata e accessibile anche dall’interno delle
-singole funzionalità di Sigla. Nel momento in cui le informazioni di accesso venissero
-modificate all’interno di una funzionalità di Sigla, viene posta la mappa in stato iniziale,
-anche se ci fossero transazioni in corso, per evitare incongruenze di dati visualizzati o
-gestiti.
+La barra delle applicazioni è sempre visualizzata e accessibile anche dall’interno delle singole funzionalità di Sigla. Nel momento in cui le informazioni di accesso venissero modificate all’interno di una funzionalità di Sigla, viene posta la mappa in stato iniziale,
+anche se ci fossero transazioni in corso, per evitare incongruenze di dati visualizzati o gestiti.
 
 ### Gestione dei preferiti
 
-La lista dei preferiti è alimentata liberamente dall’utente durante la navigazione
-all’interno delle funzionalità:
+La lista dei preferiti è alimentata liberamente dall’utente durante la navigazione all’interno delle funzionalità:
 
 ![](screenshot/navbar_2.png)
 
-La lista dei preferiti è sempre disponibile nella barra delle applicazioni. L’utente può
-spostarsi in qualsiasi momento in una delle funzionalità della lista.
+La lista dei preferiti è sempre disponibile nella barra delle applicazioni. L’utente può spostarsi in qualsiasi momento in una delle funzionalità della lista.
 
-E’ possibile inoltre gestire i preferiti, accedendo alla lista, ed entrando nella relativa
-gestione:
+E’ possibile inoltre gestire i preferiti, accedendo alla lista, ed entrando nella relativa gestione:
 
 ![](screenshot/navbar_3.png)
 
-La gestione dei preferiti consente di eliminare e/o aggiungere funzioni alla lista ed
-eventualmente modificare le informazioni inserite in fase di aggiunta della funzione tra
-i preferiti:
+La gestione dei preferiti consente di eliminare e/o aggiungere funzioni alla lista ed eventualmente modificare le informazioni inserite in fase di aggiunta della funzione tra i preferiti:
 
 ![](screenshot/bookmark.png)
 
-Per poter accedere alla ‘Gestione Preferiti’ occorre che l’utente abbia l’abilitazione alla
-funzione (Abilitazione da aggiungere da parte del gestore delle utenze).
-L’aggiornamento dei preferiti, invece, serve per applicare le modifiche (aggiunta o
-eliminazione) alla lista dei preferiti.
+Per poter accedere alla ‘Gestione Preferiti’ occorre che l’utente abbia l’abilitazione alla funzione (Abilitazione da aggiungere da parte del gestore delle utenze).
+L’aggiornamento dei preferiti, invece, serve per applicare le modifiche (aggiunta o eliminazione) alla lista dei preferiti.
 
 ### Gestione dei Messaggi
 
-La ‘Gestione dei Messaggi’ qui trattata si riferisce esclusivamente ad Avvisi, di natura
-tecnica o contabile, che si ritengono importanti per l’utenza, e che quindi vanno
-proposti durante l’accesso all’applicazione, senza riferimento a funzionalità o errori
-specifici dell’applicazione. Non vanno confusi, quindi, con i messaggi di errore o alert
-applicativi gestiti all’interno delle singole funzionalità.
+La ‘Gestione dei Messaggi’ qui trattata si riferisce esclusivamente ad Avvisi, di natura tecnica o contabile, che si ritengono importanti per l’utenza, e che quindi vanno proposti durante l’accesso all’applicazione, senza riferimento a funzionalità o errori
+specifici dell’applicazione. Non vanno confusi, quindi, con i messaggi di errore o alert applicativi gestiti all’interno delle singole funzionalità.
 
-La messaggistica di cui si sta parlando, di tipo ‘Avviso’, si riferisce a due tipi di
-messaggio:
-- Messaggi dell’applicazione che informano l’utente su fatti contabili di loro
-competenza;
-- Messaggi di avviso per attività tecniche da operare su Sigla (da parte
-dell’helpdesk Sigla).
+La messaggistica di cui si sta parlando, di tipo ‘Avviso’, si riferisce a due tipi di messaggio:
+- Messaggi dell’applicazione che informano l’utente su fatti contabili di loro competenza;
+- Messaggi di avviso per attività tecniche da operare su Sigla (da parte dell’helpdesk Sigla).
 
-In entrambi i casi, nel momento in cui ci fossero messaggi di interesse per l’utente,
-all’accesso in SIGLA viene evidenziato sulla barra delle applicazioni l’icona della
-‘letterina’ con il numero di messaggi da leggere. Cliccando sull’icona vengono mostrati
-i messaggi:
+In entrambi i casi, nel momento in cui ci fossero messaggi di interesse per l’utente, all’accesso in SIGLA viene evidenziato sulla barra delle applicazioni l’icona della ‘letterina’ con il numero di messaggi da leggere. Cliccando sull’icona vengono mostrati i messaggi:
 
 ![](screenshot/message.png)
 
-Il primo messaggio è stato configurato in modo da restare in ‘cassetta postale’ fino ad
-una certa scadenza e quindi non sarà possibile per l’utente eliminarlo fino alla scadenza
-programmata.
-Il secondo messaggio, invece, non avendo nessuna scadenza programmata perché si
-tratta di un ‘avviso’, può essere selezionato e cancellato dall’utente dopo la lettura. In
-questo ultimo caso resta a scelta dell’utente se tenere il messaggio come promemoria
+Il primo messaggio è stato configurato in modo da restare in ‘cassetta postale’ fino ad una certa scadenza e quindi non sarà possibile per l’utente eliminarlo fino alla scadenza programmata.
+Il secondo messaggio, invece, non avendo nessuna scadenza programmata perché si tratta di un ‘avviso’, può essere selezionato e cancellato dall’utente dopo la lettura. In questo ultimo caso resta a scelta dell’utente se tenere il messaggio come promemoria
 oppure cancellarlo subito dopo la lettura.
 
-## Nuova presentazione e nuove funzionalità per il menù
+## Presentazione e Funzionalità per il menù
 
 Il menù dell’applicazione si presenta nel modo seguente:
 
@@ -140,8 +105,7 @@ In alto, posizionata come prima riga del menù, c’è il campo di ricerca in cu
 
 ### Albero delle funzioni
 
-Il tasto ‘Aggiorna menù’, invece, serve per applicare le eventuali modifiche intervenute nella lista degli accessi consentita per l’utente (aggiunta o eliminazione accessi da parte del gestore delle utenze), nel caso ciò avvenga mentre l’utente sta lavorando all’interno della procedura e non ha effettuato un nuovo accesso in Sigla successivo alle modifiche,
-come mostrato in figura:
+Il tasto ‘Aggiorna menù’, invece, serve per applicare le eventuali modifiche intervenute nella lista degli accessi consentita per l’utente (aggiunta o eliminazione accessi da parte del gestore delle utenze), nel caso ciò avvenga mentre l’utente sta lavorando all’interno della procedura e non ha effettuato un nuovo accesso in Sigla successivo alle modifiche, come mostrato in figura:
 
 ![](screenshot/tree_restore.png)
 
@@ -151,7 +115,7 @@ E’ inoltre possibile chiudere l’area della mappa riservata al menù così da
 
 Nell’esempio riportato nella figura precedente, è stata indicata, nel campo di ricerca voci di menù, la scritta ‘elettron’ ed è stata restituita la lista di funzioni di menù in cui compare questo testo. Cliccando su una delle voci dell’elenco si accede alla funzionalità in maniera rapida, evitando di navigare tra le voci del menù.
 
-## Presentazione nuovo layout delle mappe SIGLA
+## Presentazione layout delle mappe SIGLA
 Le funzionalità di Sigla presentano un layout standard che prevede, oltre alle informazioni di accesso sempre visibili e modificabili, una serie di utilità:
 
 1. una riga ‘Informativa’ in cui è sempre indicato il percorso di navigazione che ha portato alla funzione;
@@ -160,8 +124,7 @@ Le funzionalità di Sigla presentano un layout standard che prevede, oltre alle 
 4. Icone standard per la gestione dei campi inseribili (cancella campo, ricerca, ricerca guidata);
 5. Altre icone ricorrenti.
 
-Nella figura riportata di seguito sono riportate le icone e le utilità di cui abbiamo
-appena parlato:
+Nella figura riportata di seguito sono riportate le icone e le utilità di cui abbiamo appena parlato:
 
 ![](screenshot/toolbar_2.png)
 
@@ -185,23 +148,19 @@ Nella sezione dello scadenzario impegno (esempio di inserimento dettagli) abbiam
 
 ![](screenshot/map_4.png)
 
-Per quanto riguarda i campi di tipo ‘data’ è disponibile il calendario da cui può essere selezionata la data (selezionando anno, mese e giorno) ed eventualmente l’ora, ove
-fosse richiesto dalla funzionalità:
+Per quanto riguarda i campi di tipo ‘data’ è disponibile il calendario da cui può essere selezionata la data (selezionando anno, mese e giorno) ed eventualmente l’ora, ove fosse richiesto dalla funzionalità:
 
 ![](screenshot/map_5.png)
 
-Resta comunque sempre la possibilità di indicare manualmente la data anche se vanno
-indicati manualmente tutti i caratteri (anche il separatore ‘/’ tra giorno, mese e anno).
+Resta comunque sempre la possibilità di indicare manualmente la data anche se vanno indicati manualmente tutti i caratteri (anche il separatore ‘/’ tra giorno, mese e anno).
 
 Per quanto riguarda le griglie, invece, il layout standard è il seguente:
 
 ![](screenshot/map_6.png)
 
-La testata della griglia riporta l’intestazione delle colonne, la possibilità di ordinare i
-dati per la singola colonna in modalità crescente o decrescente e la possibilità di ‘nascondere’ la colonna.
+La testata della griglia riporta l’intestazione delle colonne, la possibilità di ordinare i dati per la singola colonna in modalità crescente o decrescente e la possibilità di ‘nascondere’ la colonna.
 
-Per quanto riguarda le stampe, infine, la mappa si presenta con le seguenti icone, oltre
-quelle già viste:
+Per quanto riguarda le stampe, infine, la mappa si presenta con le seguenti icone, oltre quelle già viste:
 
 ![](screenshot/print_4.png)
 
@@ -210,8 +169,6 @@ E il riporto nella mappa della coda di stampe:
 ![](screenshot/print_5.png)
 
 ## Responsive
-Infine è importante sottolineare che con l’utilizzo del nuovo layout Sigla, è possibile
-accedere all’applicazione anche da qualsiasi dispositivo mobile perché
-automaticamente le mappe si adattano allo schermo che le contiene:
+Infine è importante sottolineare che con l’utilizzo del nuovo layout Sigla, è possibile accedere all’applicazione anche da qualsiasi dispositivo mobile perché automaticamente le mappe si adattano allo schermo che le contiene:
 
 ![](screenshot/main.png)
