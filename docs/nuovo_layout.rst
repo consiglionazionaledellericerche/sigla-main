@@ -39,15 +39,15 @@ Informazioni all’accesso
 
 Subito dopo l’accesso all’applicazione vengono evidenziati alcuni processi amministrativi (box informativi) relativi a procedure da portare a termine da parte dell’utente, per la UO di accesso:
   
-  - Numero Variazioni di Bilancio da Firmare;
-  - Numero Fatture elettroniche in stato REGISTRATO (da completare);
-  - Numero Fatture elettroniche in stato COMPLETO (da registrare);
-  - Numero Fatture elettroniche attive da firmare;
-  - Numero Missioni (rimborsi) il cui flusso di approvazione è stato completato e la Missione è stata resa disponibile in SIGLA, in stato provvisorio;
-  - Mandati e Reversali da predisporre alla firma (in stato EMESSO);
-  - Mandati e Reversali da firmare (predisposti alla firma);
-  - Lettere di pagamento estero da predisporre alla firma;
-  - Lettere di pagamento estero da firmare.
+- Numero Variazioni di Bilancio da Firmare;
+- Numero Fatture elettroniche in stato REGISTRATO (da completare);
+- Numero Fatture elettroniche in stato COMPLETO (da registrare);
+- Numero Fatture elettroniche attive da firmare;
+- Numero Missioni (rimborsi) il cui flusso di approvazione è stato completato e la Missione è stata resa disponibile in SIGLA, in stato provvisorio;
+- Mandati e Reversali da predisporre alla firma (in stato EMESSO);
+- Mandati e Reversali da firmare (predisposti alla firma);
+- Lettere di pagamento estero da predisporre alla firma;
+- Lettere di pagamento estero da firmare.
 
 Le informazioni vengono fornite automaticamente subito dopo l’accesso come nell’esempio che segue e solo in relazione alle abilitazioni dell’utente e della UO di accesso. Cliccando sui link evidenziati in ogni box, si accede direttamente alle funzionalità in cui è possibile completare le operazioni oggetto dei messaggi.
 
