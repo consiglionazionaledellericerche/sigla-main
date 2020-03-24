@@ -7,6 +7,7 @@ Funzionalità di Servizio
 
    stampe
    coda_di_stampa
+   coda_file_excel
    gestione_preferiti
    messaggi
    utenze/index
