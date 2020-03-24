@@ -165,6 +165,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 		setFl_voce_personale(Boolean.FALSE);
 		setFl_missioni(Boolean.FALSE);
 		setFl_partita_giro(Boolean.FALSE);
+		setFlComunicaPagamenti(Boolean.FALSE);
 		return this;
 	}
 	/**

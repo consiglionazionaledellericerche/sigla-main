@@ -55,6 +55,8 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// FL_MISSIONI CHAR(1)
 	private java.lang.Boolean fl_missioni;
 
+	private java.lang.Boolean flComunicaPagamenti;
+
 	// FL_VOCE_NON_SOGG_IMP_AUT CHAR(1) NOT NULL
 	private java.lang.Boolean fl_voce_non_sogg_imp_aut;
 
@@ -493,4 +495,12 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	public void setGg_deroga_obbl_res_prg_scad(java.lang.Integer gg_deroga_obbl_res_prg_scad) {
 		this.gg_deroga_obbl_res_prg_scad = gg_deroga_obbl_res_prg_scad;
 	}
+	public Boolean getFlComunicaPagamenti() {
+		return flComunicaPagamenti;
+	}
+
+	public void setFlComunicaPagamenti(Boolean flComunicaPagamenti) {
+		this.flComunicaPagamenti = flComunicaPagamenti;
+	}
+
 }

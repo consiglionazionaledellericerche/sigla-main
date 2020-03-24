@@ -58,25 +58,25 @@
 				columnSize="7"
 				nullable="false" />
 		<columnMapping
-				columnName="V_MANDATO_REVERSALE_VOCE.IM_CAPITOLO_PESATO"
+				columnName="IM_CAPITOLO_PESATO"
 				propertyName="importoCapitolo"
 				sqlTypeName="DECIMAL"
 				columnSize="22"
 				nullable="false" />
 		<columnMapping
-				columnName="TERZO.DENOMINAZIONE_SEDE"
+				columnName="denominazioneSede"
 				propertyName="denominazioneSede"
 				sqlTypeName="VARCHAR"
 				columnSize="250"
 				nullable="false" />
 		<columnMapping
-				columnName="V_CLASSIFICAZIONE_VOCI_ALL.CD_LIV4"
+				columnName="cdLiv4"
 				propertyName="cdLiv4"
 				sqlTypeName="VARCHAR"
 				columnSize="250"
 				nullable="false" />
 		<columnMapping
-				columnName="V_CLASSIFICAZIONE_VOCI_ALL.DS_LIV4"
+				columnName="dsLiv4"
 				propertyName="dsLiv4"
 				sqlTypeName="VARCHAR"
 				columnSize="250"

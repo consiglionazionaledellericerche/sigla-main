@@ -3166,7 +3166,13 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
-
-
-
+    <changeSet author="gianfranco.gasparro" id="alter-table-comunica-pagamenti-elemento-voce">
+        <addColumn tableName="elemento_voce">
+            <column name="fl_comunica_pagamenti" remarks="Indica se i mandati della voce di bilancio devono essere pubblicati" type="CHAR(1)" />
+        </addColumn>
+        <update tableName="elemento_voce">
+            <column name="fl_comunica_pagamenti" value='N' type="CHAR(1)" />
+        </update>
+        <addNotNullConstraint columnName="fl_comunica_pagamenti" tableName="elemento_voce" columnDataType="CHAR(1)"/>
+    </changeSet>
 </databaseChangeLog>

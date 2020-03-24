@@ -128,7 +128,10 @@
 	<tr>
 	  <% bp.getController().writeFormField(out,"gg_deroga_obbl_res_prg_scad");%>
 	</tr>	
-	</table>		
+	<tr>
+	  <% bp.getController().writeFormField(out,"flComunicaPagamenti");%>
+	</tr>
+	</table>
 	<% if (!bp.isFlNuovoPdg()) ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>
 
 <%	bp.closeFormWindow(pageContext); %>

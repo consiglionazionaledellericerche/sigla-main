@@ -51,6 +51,27 @@ public class MandatoComunicaDatiHome extends BulkHome {
         Optional.ofNullable(mandatoComunicaDatiBulk)
                 .ifPresent(mandatoComunicaDatiBulk1 -> sql.addClause(mandatoComunicaDatiBulk1.buildFindClauses(true)));
 
+        sql.resetColumns();
+        sql.addColumn("mandato.cd_cds");
+        sql.addColumn("mandato.ESERCIZIO");
+        sql.addColumn("mandato.pg_mandato");
+        sql.addColumn("decode(to_char(dt_pagamento,'yyyy'),mandato.esercizio,dt_pagamento,to_date('31/12/'||mandato.esercizio,'dd/mm/yyyy'))", "dt_pagamento");
+        sql.addColumn("terzo.denominazione_sede","denominazioneSede");
+        sql.addColumn("mandato.im_mandato");
+        sql.addColumn("mandato.im_mandato-mandato.im_ritenute","IM_RITENUTE");
+        sql.addColumn("NVL(SUM(v_mandato_reversale_voce.IM_CAPITOLO_PESATO),0)","im_capitolo_pesato");
+        sql.addColumn("'U.'||substr(cd_liv4,2)","cdLiv4");
+        sql.addColumn("ds_liv4","dsLiv4");
+        sql.addSQLGroupBy("mandato.cd_cds");
+        sql.addSQLGroupBy("mandato.ESERCIZIO");
+        sql.addSQLGroupBy("mandato.pg_mandato");
+        sql.addSQLGroupBy("decode(to_char(dt_pagamento,'yyyy'),mandato.esercizio,dt_pagamento,to_date('31/12/'||mandato.esercizio,'dd/mm/yyyy'))");
+        sql.addSQLGroupBy("terzo.denominazione_sede");
+        sql.addSQLGroupBy("mandato.im_mandato");
+        sql.addSQLGroupBy("mandato.im_mandato-mandato.im_ritenute");
+        sql.addSQLGroupBy("'U.'||substr(cd_liv4,2)");
+        sql.addSQLGroupBy("ds_liv4");
+
         sql.addTableToHeader("MANDATO_TERZO");
         sql.addSQLJoin("mandato.cd_cds","mandato_terzo.cd_cds");
         sql.addSQLJoin("mandato.esercizio","mandato_terzo.esercizio");

@@ -170,7 +170,7 @@
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
 		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />			
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="find_capoconto_fin"
 		property="capoconto_fin"
@@ -408,7 +408,15 @@
 		label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di residuo"
 		inputType="TEXT"
 		maxLength="10" />
-				
+	<fieldProperty
+			name="flComunicaPagamenti"
+			property="flComunicaPagamenti"
+			label="Pubblica Pagamenti"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			inputType="CHECKBOX"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -465,6 +473,9 @@
 	<columnFieldProperty
 		name="fl_missioni"
 		/>
+	<columnFieldProperty
+			name="flComunicaPagamenti"
+	/>
 	<columnFieldProperty
 		name="cd_capoconto_fin"
 		/>
@@ -607,7 +618,10 @@
    <formFieldProperty
 		name="fl_missioni"
     />
-   <formFieldProperty
+	<formFieldProperty
+			name="flComunicaPagamenti"
+	/>
+	<formFieldProperty
 		name="find_capoconto_fin"
     />
    <formFieldProperty
