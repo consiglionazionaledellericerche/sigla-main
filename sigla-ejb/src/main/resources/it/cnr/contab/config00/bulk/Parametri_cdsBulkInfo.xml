@@ -248,7 +248,12 @@
 		property="fl_riobbligazione"
 		label="Riobbligazione obbligatoria per ribaltamento" 
 		inputType="CHECKBOX" 
-		/>		
+		/>
+	<fieldProperty
+		name="fl_limite_residui_impropri"
+		property="fl_limite_residui_impropri"
+		label="Applicazione Limite Spesa Residui Impropri"
+		inputType="CHECKBOX" />
 
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="centro_spesa" />
@@ -280,8 +285,9 @@
 	<formFieldProperty name="fl_kit_firma_digitale" />
 
 	<formFieldProperty name="fl_riaccertamento" />		
-	<formFieldProperty name="fl_riobbligazione" />		
-		
+	<formFieldProperty name="fl_riobbligazione" />
+	<formFieldProperty name="fl_limite_residui_impropri" />
+
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
 	<columnFieldProperty name="ds_unita_organizzativa" />
@@ -315,8 +321,9 @@
 	<columnFieldProperty name="fl_blocco_iban" />
 	<columnFieldProperty name="fl_kit_firma_digitale" />
 	<columnFieldProperty name="fl_riaccertamento" />		
-	<columnFieldProperty name="fl_riobbligazione" />		
-	
+	<columnFieldProperty name="fl_riobbligazione" />
+	<columnFieldProperty name="fl_limite_residui_impropri" />
+
 	<findFieldProperty name="cd_unita_organizzativa" />
 	<findFieldProperty name="cd_dipartimento" />
 	<findFieldProperty name="fl_commessa_obbligatoria" />
@@ -346,4 +353,5 @@
 	<findFieldProperty name="cd_linea_pgiro_s" />  
 	<findFieldProperty name="fl_blocco_iban" />
 	<findFieldProperty name="fl_kit_firma_digitale" />
+	<findFieldProperty name="fl_limite_residui_impropri" />
 </bulkInfo>

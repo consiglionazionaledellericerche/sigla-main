@@ -166,6 +166,8 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 		setFl_missioni(Boolean.FALSE);
 		setFl_partita_giro(Boolean.FALSE);
 		setFlComunicaPagamenti(Boolean.FALSE);
+		setFl_limite_competenza(Boolean.FALSE);
+		setFl_limite_residui_impropri(Boolean.FALSE);
 		return this;
 	}
 	/**
@@ -281,7 +283,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	}
 
 	/**
-	 * @param bulk
+	 * @param v_classificazione_entrate
 	 */
 	public void setClassificazione_entrate(Classificazione_entrateBulk v_classificazione_entrate) {
 		classificazione_entrate = v_classificazione_entrate;
@@ -317,7 +319,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	}
 
 	/**
-	 * @param bulk
+	 * @param newClassificazione_spese
 	 */
 	public void setClassificazione_spese(Classificazione_speseBulk newClassificazione_spese) {
 		classificazione_spese = newClassificazione_spese;

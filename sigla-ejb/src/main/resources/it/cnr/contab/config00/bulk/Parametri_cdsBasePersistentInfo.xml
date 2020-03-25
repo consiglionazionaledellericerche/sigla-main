@@ -220,7 +220,13 @@
 			propertyName="fl_riobbligazione"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />						
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LIMITE_RESIDUI_IMPROPRI"
+			propertyName="fl_limite_residui_impropri"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="blocco_impegni_cdr_gae" />	
@@ -286,4 +292,6 @@
 		name="fl_riaccertamento" />
 	<persistentProperty
 		name="fl_riobbligazione" />
+	<persistentProperty
+		name="fl_limite_residui_impropri" />
 </SQLPersistentInfo>

@@ -3320,4 +3320,12 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="parametri-cds-add-column-limiti-residui-impropri">
+        <addColumn tableName="parametri_cds">
+            <column name="fl_limite_residui_impropri" type="CHAR(1)" defaultValue="N" remarks="Applicazione limiti spesa - Limite Residui Impropri - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
