@@ -278,12 +278,24 @@
 			columnSize="10"
 			nullable="true"/>
 		<columnMapping
-				columnName="FL_COMUNICA_PAGAMENTI"
-				propertyName="flComunicaPagamenti"
-				sqlTypeName="CHAR"
-				columnSize="1"
-				nullable="false"
-				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			columnName="FL_COMUNICA_PAGAMENTI"
+			propertyName="flComunicaPagamenti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LIMITE_COMPETENZA"
+			propertyName="fl_limite_competenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LIMITE_RESIDUI_IMPROPRI"
+			propertyName="fl_limite_residui_impropri"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -371,5 +383,9 @@
 	<persistentProperty
 		name="gg_deroga_obbl_res_prg_scad" />
 	<persistentProperty
-			name="flComunicaPagamenti" />
+		name="flComunicaPagamenti" />
+	<persistentProperty
+		name="fl_limite_competenza" />
+	<persistentProperty
+		name="fl_limite_residui_impropri" />
 </SQLPersistentInfo>

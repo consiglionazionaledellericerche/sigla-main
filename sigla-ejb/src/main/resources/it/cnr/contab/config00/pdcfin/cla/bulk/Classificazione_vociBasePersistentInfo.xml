@@ -150,6 +150,13 @@
 			columnSize="3"
 			nullable="true" />
 		<columnMapping
+			columnName="IM_LIMITE_ASSESTATO"
+			propertyName="im_limite_assestato"
+			sqlTypeName="DECIMAL"
+			columnSize="15"
+			columnScale="2"
+			nullable="true" />
+		<columnMapping
 			columnName="DUVA"
 			propertyName="duva"
 			sqlTypeName="TIMESTAMP"
@@ -229,6 +236,8 @@
 		name="cdr_accentratore" />
 	<persistentProperty
 		name="ti_classificazione" />
+	<persistentProperty
+		name="im_limite_assestato" />
 	<persistentProperty
 		name="duva" />
 	<persistentProperty

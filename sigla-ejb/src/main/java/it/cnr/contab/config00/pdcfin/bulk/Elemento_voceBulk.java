@@ -441,4 +441,12 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	public void setCd_voce_piano(String cd_voce_piano) {
 		this.getVoce_piano_economico().setCd_voce_piano(cd_voce_piano);
 	}
+
+	public boolean isVoceEntrata(){
+		return Elemento_voceHome.GESTIONE_ENTRATE.equals(this.getTi_gestione());
+	}
+
+	public boolean isVoceSpesa(){
+		return Elemento_voceHome.GESTIONE_SPESE.equals(this.getTi_gestione());
+	}
 }

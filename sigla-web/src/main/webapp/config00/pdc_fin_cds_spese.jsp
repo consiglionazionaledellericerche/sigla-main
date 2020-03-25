@@ -131,6 +131,14 @@
 	<tr>
 	  <% bp.getController().writeFormField(out,"flComunicaPagamenti");%>
 	</tr>
+    <% if (voce.isVoceSpesa()) { %>
+        <tr>
+            <% bp.getController().writeFormField(out,"fl_limite_competenza");%>
+        </tr>
+        <tr>
+            <% bp.getController().writeFormField(out,"fl_limite_residui_impropri");%>
+        </tr>
+    <% } %>
 	</table>
 	<% if (!bp.isFlNuovoPdg()) ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>
 

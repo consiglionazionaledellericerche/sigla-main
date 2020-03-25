@@ -123,7 +123,11 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// GG_DEROGA_OBBL_RES_PRG_SCAD INTEGER
 	private java.lang.Integer gg_deroga_obbl_res_prg_scad;
 
-public Elemento_voceBase() {
+	private java.lang.Boolean fl_limite_competenza;
+
+	private java.lang.Boolean fl_limite_residui_impropri;
+
+	public Elemento_voceBase() {
 	super();
 }
 public Elemento_voceBase(java.lang.String cd_elemento_voce,java.lang.Integer esercizio,java.lang.String ti_appartenenza,java.lang.String ti_gestione) {
@@ -503,4 +507,19 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 		this.flComunicaPagamenti = flComunicaPagamenti;
 	}
 
+	public Boolean getFl_limite_competenza() {
+		return fl_limite_competenza;
+	}
+
+	public void setFl_limite_competenza(Boolean fl_limite_competenza) {
+		this.fl_limite_competenza = fl_limite_competenza;
+	}
+
+	public Boolean getFl_limite_residui_impropri() {
+		return fl_limite_residui_impropri;
+	}
+
+	public void setFl_limite_residui_impropri(Boolean fl_limite_residui_impropri) {
+		this.fl_limite_residui_impropri = fl_limite_residui_impropri;
+	}
 }
