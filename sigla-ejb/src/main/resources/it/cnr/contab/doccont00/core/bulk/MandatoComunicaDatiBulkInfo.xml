@@ -56,8 +56,8 @@
             inputType="TEXT"
             label="Denominazione"/>
     <fieldProperty
-            name="importoCapitolo"
-            property="importoCapitolo"
+            name="importo"
+            property="importo"
             inputType="TEXT"
             label="Importo per Capitolo"/>
     <fieldProperty
@@ -74,7 +74,7 @@
     <formFieldProperty
             name="denominazioneSede"/>
     <formFieldProperty
-            name="importoCapitolo"/>
+            name="importo"/>
     <formFieldProperty
             name="cdLiv4"/>
     <formFieldProperty
