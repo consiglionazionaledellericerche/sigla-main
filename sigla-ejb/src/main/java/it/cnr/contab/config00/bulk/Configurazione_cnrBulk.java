@@ -139,6 +139,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String IMPEGNO_CHIUSURA_FORZATA_A_RESIDUO = "IMPEGNO CHIUSURA FORZATA A RESIDUO";
 	public final static String IMPEGNO_CHIUSURA_FORZATA_A_COMPETENZA = "IMPEGNO CHIUSURA FORZATA A COMPETENZA";
 
+	public final static String PK_BLOCCO_RESIDUI = "BLOCCO_RESIDUI";
+	public final static String SK_NATURA_FINANZIAMENTO = "NATURA_FINANZIAMENTO";
 
 	public Configurazione_cnrBulk() {
 	super();

@@ -618,6 +618,8 @@ public class VariazioniStanziamentoResiduoComponent extends CRUDComponent implem
 
 		try {
 			SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
+			//Verifico che non movimentino residui bloccati
+			saldoComponent.checkBloccoDisponibilitaResidue(userContext, var_stanz_res);
 			//Verifico che il tipo di variazione sia consentita
 			saldoComponent.checkPdgPianoEconomico(userContext, var_stanz_res);
 			//Verifico che piano economico non si sfondi

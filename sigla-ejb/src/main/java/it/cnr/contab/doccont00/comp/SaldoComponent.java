@@ -3497,4 +3497,64 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			throw handleException(e);
 		}
 	}
+
+	//Controllo che restituisce errore.
+	//Se la variazione passa a definitivo controllo che non siano modificate combinazioni contabili per le quali sia attivo un blocco residui
+	public void checkBloccoDisponibilitaResidue(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException {
+		try	{
+			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
+					findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
+			/*
+			 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+			 */
+			if (uoScrivania.isUoEnte() && variazione.getCentroDiResponsabilita().getUnita_padre().isUoEnte())
+				return;
+
+			Var_stanz_resHome varResHome = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
+			for (java.util.Iterator dett = varResHome.findAllVariazioniRiga(variazione).iterator(); dett.hasNext(); ) {
+				Var_stanz_res_rigaBulk rigaVar = (Var_stanz_res_rigaBulk) dett.next();
+				checkBloccoDisponibilitaResidue(userContext, rigaVar.getLinea_di_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_di_attivita().getCd_linea_attivita(),
+						rigaVar.getElemento_voce());
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public void checkBloccoDisponibilitaResidue(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk) throws ComponentException {
+		WorkpackageBulk workpackageBulk = ((WorkpackageHome) getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext, CNRUserContext.getEsercizio(userContext),
+					cdr, cdLineaAttivita);
+		checkBloccoDisponibilitaResidue(userContext, workpackageBulk, elementoVoceBulk);
+	}
+
+	public void checkBloccoDisponibilitaResidue(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk) throws ComponentException {
+    	try {
+			if (elementoVoceBulk.getFl_limite_residui_impropri().equals(Boolean.TRUE)) {
+				Parametri_cdsBulk param_cds = (Parametri_cdsBulk)(getHome(userContext, Parametri_cdsBulk.class)).findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext)));
+				if (param_cds.getFl_limite_residui_impropri().equals(Boolean.TRUE)) {
+					Configurazione_cnrBulk configBulk = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_BLOCCO_RESIDUI, Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO);
+					if (Optional.ofNullable(configBulk).isPresent()) {
+						Optional<String> optNatura = Optional.ofNullable(configBulk).map(Configurazione_cnrBulk::getVal01);
+						Optional<String> optCodFinanziamento = Optional.ofNullable(configBulk).map(Configurazione_cnrBulk::getVal02);
+						if (optNatura.isPresent() || optCodFinanziamento.isPresent()) {
+							if (optNatura.map(el -> el.equals(workpackageBulk.getNatura().getTipo())).orElse(Boolean.TRUE) &&
+									optCodFinanziamento.map(el -> el.equals(workpackageBulk.getProgetto().getOtherField().getTipoFinanziamento().getCodice())).orElse(Boolean.TRUE))
+								throw new ApplicationException("Non è possibile effettuare movimentazioni per il CDR/GAE/Voce (" +
+										workpackageBulk.getCd_centro_responsabilita() + "/" + workpackageBulk.getCd_linea_attivita() + "/" + elementoVoceBulk.getCd_voce() +
+										"), in quanto " +
+										optNatura.map(el -> "GAE di natura " + el).orElse("") +
+										(optNatura.isPresent() && optCodFinanziamento.isPresent() ? " e " : "") +
+										optCodFinanziamento.map(el -> "Progetto di tipo " + el + " ").orElse("") + ".");
+						}
+					}
+				}
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
+	}
 }
