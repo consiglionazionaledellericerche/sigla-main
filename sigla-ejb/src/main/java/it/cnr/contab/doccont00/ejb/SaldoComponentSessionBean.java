@@ -26,6 +26,7 @@ import javax.ejb.Stateless;
 
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
@@ -549,6 +550,24 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		pre_component_invocation(userContext,componentObj);
 		try {
 			componentObj.checkBloccoDisponibilitaResidue(userContext,variazione);
+			component_invocation_succes(userContext,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public void checkBloccoLimiteClassificazione(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			componentObj.checkBloccoLimiteClassificazione(userContext,variazione);
 			component_invocation_succes(userContext,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(userContext,componentObj);

@@ -63,4 +63,5 @@ java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext pa
 void checkBloccoDisponibilitaResidue(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void checkBloccoDisponibilitaResidue(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void checkBloccoDisponibilitaResidue(UserContext userContext, Var_stanz_resBulk variazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void checkBloccoLimiteClassificazione(UserContext userContext, Pdg_variazioneBulk variazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }
