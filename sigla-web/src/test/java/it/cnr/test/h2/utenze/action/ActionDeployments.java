@@ -87,8 +87,8 @@ public class ActionDeployments extends DeploymentsH2 {
         final WebElement comandoEntra = browser.findElement(By.name("comando.doEntra"));
         Assert.assertTrue(Optional.ofNullable(comandoEntra).isPresent());
 
-        getGrapheneElement("main.userid").writeIntoElement(user);
-        getGrapheneElement("main.password").writeIntoElement(password);
+        getGrapheneElement("j_username").writeIntoElement(user);
+        getGrapheneElement("j_password").writeIntoElement(password);
 
         comandoEntra.click();
     }

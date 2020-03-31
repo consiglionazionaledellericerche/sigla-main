@@ -5,6 +5,25 @@ thorntail:
   arquillian:
     daemon:
       port: 12347
+  security:
+    security-domains:
+      sigla-auth:
+        cache-type: default
+        classic-authentication:
+          login-modules:
+            Database:
+              code: 'it.cnr.contab.security.auth.DatabaseServerLoginModule'
+              flag: sufficient
+              module-options:
+                dsJndiName: java:/jdbc/CIR
+                principalsQuery: SELECT PASSWORD FROM UTENTE WHERE UPPER(cd_utente)=UPPER(?)
+                rolesQuery: SELECT DISTINCT CD_RUOLO, 'Roles' FROM UTENTE_UNITA_RUOLO WHERE UPPER(cd_utente)=UPPER(?)
+                hashAlgorithm: MD5
+                hashEncoding: BASE64
+                ignorePasswordCase: true
+                password-stacking: useFirstPass
+                hashStorePassword: false
+
   datasources:
     jdbc-drivers:
       h2:

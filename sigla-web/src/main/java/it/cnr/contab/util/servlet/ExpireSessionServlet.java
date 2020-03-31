@@ -21,6 +21,7 @@ import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.SessionTraceBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.CRUDException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.ejb.HttpEJBCleaner;
@@ -129,8 +130,9 @@ public class ExpireSessionServlet extends HttpServlet implements Serializable,Ht
 			SessionTraceBulk sessionTrace = (SessionTraceBulk)createCRUDComponentSession().inizializzaBulkPerModifica(new CNRUserContext("SESSIONTRACE",se.getSession().getId(),null,null,null,null), new SessionTraceBulk(se.getSession().getId()));
 			sessionTrace.setToBeDeleted();
 			createCRUDComponentSession().eliminaConBulk(new CNRUserContext("SESSIONTRACE",se.getSession().getId(),null,null,null,null), sessionTrace);
+		} catch (CRUDException e) {
 		} catch (Exception e) {
-			log.error("", e);
+			log.error("Delete SESSIONTRACE failed", e);
 		}
 		HttpEJBCleaner httpejbcleaner = (HttpEJBCleaner)se.getSession().getAttribute("it.cnr.jada.util.ejb.HttpEJBCleaner");
 		if (httpejbcleaner != null)
