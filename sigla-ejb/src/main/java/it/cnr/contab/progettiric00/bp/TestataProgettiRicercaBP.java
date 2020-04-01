@@ -57,6 +57,7 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
@@ -967,24 +968,26 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     @Override
     public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk)
     		throws BusinessProcessException {
-        ProgettoBulk progetto = (ProgettoBulk)oggettobulk;
-        try {
-            List<ProgettoBulk> progettifigli = ((ProgettoRicercaComponentSession) createComponentSession()).getAllChildren(actioncontext.getUserContext(), progetto);
-            List<String> cdUoList = Optional.ofNullable(progettifigli)
-                                            .map(List::stream)
-                                            .orElse(Stream.empty())
-                                            .map(ProgettoBulk::getCd_unita_organizzativa)
-                                            .distinct()
-                                            .collect(Collectors.toList());
+        ProgettoBulk progetto = this.innerInitializeModelForEditAllegati(actioncontext,(ProgettoBulk)oggettobulk,((ProgettoBulk)oggettobulk).getCd_unita_organizzativa());
+        CRUDComponentSession session = createComponentSession();
+        if (session instanceof ProgettoRicercaComponentSession) {
+            try {
+                List<ProgettoBulk> progettifigli = ((ProgettoRicercaComponentSession) session).getAllChildren(actioncontext.getUserContext(), progetto);
+                List<String> cdUoList = Optional.ofNullable(progettifigli)
+                                                .map(List::stream)
+                                                .orElse(Stream.empty())
+                                                .map(ProgettoBulk::getCd_unita_organizzativa)
+                                                .distinct()
+                                                .collect(Collectors.toList());
 
-            progetto = this.innerInitializeModelForEditAllegati(actioncontext,progetto,progetto.getCd_unita_organizzativa());
-            for (Iterator i = cdUoList.iterator(); i.hasNext();) {
-                String cdUnitaOrganizzativa = (String)i.next();
-                if (!cdUnitaOrganizzativa.equals(progetto.getCd_unita_organizzativa()))
-                    progetto = (ProgettoBulk)this.innerInitializeModelForEditAllegati(actioncontext, progetto, cdUnitaOrganizzativa);
+                for (Iterator i = cdUoList.iterator(); i.hasNext();) {
+                    String cdUnitaOrganizzativa = (String)i.next();
+                    if (!cdUnitaOrganizzativa.equals(progetto.getCd_unita_organizzativa()))
+                        progetto = (ProgettoBulk)this.innerInitializeModelForEditAllegati(actioncontext, progetto, cdUnitaOrganizzativa);
+                }
+            } catch (ComponentException | RemoteException e) {
+                throw handleException(e);
             }
-        } catch (ComponentException | RemoteException e) {
-            throw handleException(e);
         }
         return progetto;
     }
