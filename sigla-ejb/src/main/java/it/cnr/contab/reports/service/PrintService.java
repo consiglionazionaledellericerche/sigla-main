@@ -53,8 +53,6 @@ public class PrintService implements InitializingBean {
 
 	private final static Logger logger = LoggerFactory.getLogger(PrintService.class);
 
-	//private Gson gson;
-
 	private String serverPrint;
 
 	public String getServerPrint() {
@@ -74,10 +72,7 @@ public class PrintService implements InitializingBean {
 				registerTypeAdapter(Timestamp.class,new JsonTimestampSeraializer()).create();
 
 	}
-//	public void setGson(Gson gson) {
-//		this.gson = gson;
-//	}
-	
+
 	public void setOfflineReportComponent(
 			OfflineReportComponentSession offlineReportComponent) {
 		this.offlineReportComponent = offlineReportComponent;
@@ -104,10 +99,6 @@ public class PrintService implements InitializingBean {
 		return url;
 	}
 
-//	private Gson getJson(){
-//		return new GsonBuilder().
-//				setExclusionStrategies(new PrintSpoolerExclusionProperty()).create();
-//	}
 	private HttpPost getHttPostExecute(UserContext userContext, Print_spoolerBulk printSpooler) {
 		HttpPost method = null;
 		method = new HttpPost(getExecuteHttpUrl(userContext, printSpooler));
@@ -121,8 +112,6 @@ public class PrintService implements InitializingBean {
 		method.setEntity(requestEntity);
 		return method;
 	}
-
-
 
 	public Report executeReport(UserContext userContext, Print_spoolerBulk printSpooler) throws IOException, ComponentException{
 		HttpClient httpclient = HttpClientBuilder.create().build();
