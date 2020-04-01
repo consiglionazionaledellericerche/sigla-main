@@ -74,6 +74,9 @@ public class ParametriSelezioneMovimentiBulk extends AbilitazioneMagazzinoBulk i
 		tipoMovimentoKeys.put(TipoMovimentoMagBulk.SCARICO_TRASFERIMENTO,"Scrico per trasferimento");	
 		tipoMovimentoKeys.put(TipoMovimentoMagBulk.RESI,"Resi");	
     };
+	public static java.util.Dictionary getTipoMovimentoKeys() {
+		return tipoMovimentoKeys;
+	}
 
 	public ParametriSelezioneMovimentiBulk() {
 		super();
