@@ -37,6 +37,7 @@ import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -970,7 +971,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     		throws BusinessProcessException {
         ProgettoBulk progetto = this.innerInitializeModelForEditAllegati(actioncontext,(ProgettoBulk)oggettobulk,((ProgettoBulk)oggettobulk).getCd_unita_organizzativa());
         CRUDComponentSession session = createComponentSession();
-        if (session instanceof ProgettoRicercaComponentSession) {
+        if (!(session instanceof ProgettoRicercaPadreComponentSession)) {
             try {
                 List<ProgettoBulk> progettifigli = ((ProgettoRicercaComponentSession) session).getAllChildren(actioncontext.getUserContext(), progetto);
                 List<String> cdUoList = Optional.ofNullable(progettifigli)
