@@ -2453,4 +2453,13 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 			throw new ComponentException(e);
 		}
 	}
+
+	public List<ProgettoBulk> getAllChildren(UserContext userContext, ProgettoBulk bulk) throws ComponentException{
+		try {
+			ProgettoHome ubiHome = (ProgettoHome)getHome(userContext,ProgettoBulk.class,"V_PROGETTO_PADRE");
+			return ubiHome.fetchAll(ubiHome.selectAllChildrenFor(userContext,bulk));
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
 }
