@@ -76,6 +76,7 @@ public class OfflineReportComponent extends GenericComponent implements
                             + "PRINT_PRIORITY WHERE REPORT_NAME = ?", true,
                     this.getClass());
             try {
+                print_spooler.setPriorita(new Integer(0));
                 stm.setString(1, print_spooler.getReport());
                 java.sql.ResultSet rs = stm.executeQuery();
                 try {
@@ -91,9 +92,10 @@ public class OfflineReportComponent extends GenericComponent implements
                         print_spooler.setPrioritaServer(new Integer(rs.getInt(1)));
                     }
                     print_spooler.setUser(userContext.getUser());
-                    print_spooler.setPriorita(new Integer(0));
+
                     print_spooler.setDsStampa(rs.getString(2));
-                    print_spooler.setStato(print_spooler.STATO_IN_CODA);
+                    if ( !Optional.ofNullable(print_spooler.getStato()).isPresent())
+                        print_spooler.setStato(print_spooler.STATO_IN_CODA);
                     print_spooler.setDtProssimaEsecuzione(print_spooler
                             .getDtPartenza());
 

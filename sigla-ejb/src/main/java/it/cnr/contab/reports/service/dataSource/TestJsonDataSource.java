@@ -1,12 +1,16 @@
 package it.cnr.contab.reports.service.dataSource;
 
+import com.google.gson.GsonBuilder;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.jada.comp.ComponentException;
 
-public class TestJsonDataSource extends AbstractJsonDataSource{
+public class TestJsonDataSource extends AbstractDataSourceOffline {
 
-    @Override
-    public String getJsonDataSource(Print_spoolerBulk print_spoolerBulk) throws ComponentException {
+    protected  String getJson( Object o){
+        return new GsonBuilder().create().toJson(o );
+    }
+
+    public String getDataSourceOffline(Print_spoolerBulk print_spoolerBulk) throws ComponentException {
         String text ="JsonDataSource";
         String json="{\n" +
                 "  \"anno\": 2018,\n" +

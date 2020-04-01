@@ -23,7 +23,8 @@ import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramKey;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.ejb.OfflineReportComponentSession;
-import it.cnr.contab.reports.service.dataSource.JsonDataSource;
+
+import it.cnr.contab.reports.service.dataSource.PrintDataSourceOffline;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
@@ -117,11 +118,6 @@ public class PrintService implements InitializingBean {
 		HttpClient httpclient = HttpClientBuilder.create().build();
 		HttpPost method = null;
 		try {
-//			method = new HttpPost( getExecuteHttpUrl(userContext,printSpooler));
-//	        method.addHeader("Accept-Language", Locale.getDefault().toString());
-//	        method.setHeader("Content-Type", "application/json;charset=UTF-8");
-	        //HttpEntity requestEntity = new ByteArrayEntity(gson.toJson(printSpooler).getBytes());
-	        //method.setEntity(requestEntity);
 			method = getHttPostExecute(userContext,printSpooler);
 	        HttpResponse httpResponse = httpclient.execute(method);				
 			int status = httpResponse.getStatusLine().getStatusCode();
@@ -141,11 +137,6 @@ public class PrintService implements InitializingBean {
 		HttpClient httpclient = HttpClientBuilder.create().build();
 		HttpPost method = null;
 		try {
-//			method = new HttpPost( getExecuteHttpUrl(userContext,printSpooler));
-//	        method.addHeader("Accept-Language", Locale.getDefault().toString());
-//	        method.setHeader("Content-Type", "application/json;charset=UTF-8");
-			//HttpEntity requestEntity = new ByteArrayEntity(gson.toJson(printSpooler).getBytes());
-			//method.setEntity(requestEntity);
 			method = getHttPostExecute(userContext,printSpooler);
 			HttpResponse httpResponse = httpclient.execute(method);
 			int status = httpResponse.getStatusLine().getStatusCode();
@@ -157,14 +148,14 @@ public class PrintService implements InitializingBean {
 				method.releaseConnection();
 		}
 	}
-	public Map<String, JsonDataSource> jsonMapImplemented= new HashMap<>();
+	public Map<String, PrintDataSourceOffline> printDsOfflineImplemented= new HashMap<>();
 
-	public Map<String, JsonDataSource> getJsonMapImplemented() {
-		return jsonMapImplemented;
+	public Map<String, PrintDataSourceOffline> getPrintDsOfflineImplemented() {
+		return printDsOfflineImplemented;
 	}
 
-	public void setJsonMapImplemented(Map<String, JsonDataSource> jsonMapImplemented) {
-		this.jsonMapImplemented = jsonMapImplemented;
+	public void setPrintDsOfflineImplemented(Map<String, PrintDataSourceOffline> printDsOfflineImplemented) {
+		this.printDsOfflineImplemented = printDsOfflineImplemented;
 	}
 
 	public void executeReportWithJsonDataSource() throws Exception {
@@ -176,7 +167,7 @@ public class PrintService implements InitializingBean {
 			printSpooler = offlineReportComponent.getJobWaitToJsoDS(userContextCal);
 
 			if (Optional.ofNullable(printSpooler).isPresent()) {
-				JsonDataSource jsonDataSource = this.getJsonMapImplemented().get(printSpooler.getReport());
+				PrintDataSourceOffline jsonDataSource = this.getPrintDsOfflineImplemented().get(printSpooler.getReport());
 				printSpooler = jsonDataSource.getPrintSpooler(printSpooler);
 				executeReportDs(userContextCal, printSpooler);
 			}

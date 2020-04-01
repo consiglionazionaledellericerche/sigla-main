@@ -17,15 +17,17 @@
 
 package it.cnr.contab.reports.bp;
 
-import java.util.StringTokenizer;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.BulkInfo;
+import it.cnr.jada.bulk.FillException;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.jsp.Button;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-
-import it.cnr.contab.reports.bulk.*;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
-import it.cnr.jada.util.jsp.*;
+import java.util.StringTokenizer;
 /**
  * Insert the type's description here.
  * Creation date: (11/04/2002 14:37:49)
@@ -34,6 +36,7 @@ import it.cnr.jada.util.jsp.*;
 public class OfflineReportPrintBP extends ReportPrintBP {
 	private it.cnr.contab.reports.bulk.Print_spoolerBulk model;
 	private int serverPriority;
+
 	/**
 	 * OfflineReportPrintBP constructor comment.
 	 */
@@ -61,6 +64,8 @@ public class OfflineReportPrintBP extends ReportPrintBP {
 	}
 	public boolean fillModel(ActionContext context) throws FillException {
 		getModel().setUser(context.getUserInfo().getUserid());
+		if (this.getRepotWhithDsOffLine())
+			getModel().setStato( Print_spoolerBulk.STATO_IN_CODA_WAITDS);
 		return getModel().fillFromActionContext(context,"main",it.cnr.jada.util.action.FormController.EDIT,getFieldValidationMap());
 	}
 	public BulkInfo getBulkInfo() {

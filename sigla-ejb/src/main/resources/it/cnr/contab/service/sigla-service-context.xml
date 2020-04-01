@@ -82,14 +82,14 @@
 		  class="it.cnr.contab.reports.service.dataSource.TestJsonDataSource" >
 	</bean>
 
-	<util:map id="jsonDataSource" map-class="java.util.HashMap">
+	<util:map id="mapPrintDsOfflineImplemented" map-class="java.util.HashMap">
 		<entry key="/ordmag/iss/TestJsonDs.jasper" value-ref="testJsonDataSource" />
 	</util:map>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
 		<!--<property name="gson" ref="gson"/>-->
 		<property name="serverPrint" value="${print.server.name}"/>
-		<property name="jsonMapImplemented" ref="jsonDataSource"/>
+		<property name="printDsOfflineImplemented" ref="mapPrintDsOfflineImplemented"/>
 	</bean>
 
 	<bean id="ldapService" class="it.cnr.contab.utenze00.service.LDAPService"/>
