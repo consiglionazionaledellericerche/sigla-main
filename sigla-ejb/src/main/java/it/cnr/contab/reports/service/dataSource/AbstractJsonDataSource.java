@@ -1,18 +1,11 @@
 package it.cnr.contab.reports.service.dataSource;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
-import it.cnr.contab.reports.bulk.Print_spooler_paramKey;
-import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.comp.ComponentException;
-import org.apache.commons.lang.StringUtils;
 
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public abstract class AbstractJsonDataSource implements JsonDataSource{
 
@@ -38,9 +31,6 @@ public abstract class AbstractJsonDataSource implements JsonDataSource{
                 printSpooler.addParam( pDs );
             }
         }
-
-        printSpooler.setDacr(null);
-        printSpooler.setDuva(null);
         return printSpooler;
     }
 }

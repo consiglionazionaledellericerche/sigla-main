@@ -19,7 +19,6 @@ package it.cnr.contab.reports.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.cnr.contab.config00.comp.IConfigurazione_cnrMgr;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramKey;
 import it.cnr.contab.reports.bulk.Report;
@@ -41,11 +40,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.http.ResponseEntity;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -72,7 +70,9 @@ public class PrintService implements InitializingBean {
 	private static Gson gson=null;
 	static {
 		gson = new GsonBuilder().
-				registerTypeAdapter(Print_spooler_paramKey.class,new PrintSpoolerParamKeySerializer()).create();
+				registerTypeAdapter(Print_spooler_paramKey.class,new PrintSpoolerParamKeySerializer()).
+				registerTypeAdapter(Timestamp.class,new JsonTimestampSeraializer()).create();
+
 	}
 //	public void setGson(Gson gson) {
 //		this.gson = gson;
