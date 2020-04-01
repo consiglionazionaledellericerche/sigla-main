@@ -33,7 +33,6 @@ import java.net.URISyntaxException;
 @PermitAll
 public class Login {
 
-
     @POST
     public Response postLogin(@Context HttpServletRequest request, @FormParam("j_username") String username, @FormParam("j_password") String password) {
         try {

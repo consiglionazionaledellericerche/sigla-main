@@ -15,7 +15,7 @@ thorntail:
                 java.naming.provider.url: ldap://virtest1.si.cnr.it:389
                 java.naming.security.authentication: simple
                 bindDN: cn=mastercnrapp1,ou=account,o=cnr,c=it
-                bindCredential: changeit!
+                bindCredential: ${cnr.ldap.master.credentials}
                 baseCtxDN: o=cnr, c=it
                 baseFilter: uid={0}
                 rolesCtxDN: ou=groups,o=cnr,c=it
