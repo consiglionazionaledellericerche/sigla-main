@@ -783,14 +783,18 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
             if (parametri.getaDataOrdineDef() != null){
         		sql.addSQLClause("AND","ORDINE_ACQ.DATA_ORDINE_DEF",SQLBuilder.LESS_EQUALS,parametri.getaDataOrdineDef());
             }
-    	} 
+    	}
 
-    	SQLBuilder sqlCdsExists = getHome(userContext, TipoMovimentoMagBulk.class).createSQLBuilder();
-    	sqlCdsExists.resetColumns();
-    	sqlCdsExists.addColumn("1");
-    	sqlCdsExists.addSQLJoin("TIPO_MOVIMENTO_MAG.CD_CDS", "MOVIMENTO_MAG.CD_CDS_TIPO_MOVIMENTO");
-    	sqlCdsExists.addSQLJoin("TIPO_MOVIMENTO_MAG.CD_TIPO_MOVIMENTO", "MOVIMENTO_MAG.CD_TIPO_MOVIMENTO");
-    	sqlCdsExists.addSQLClause("AND","TIPO_MOVIMENTO_MAG.TIPO", SQLBuilder.EQUALS, parametri.getTipoMovimento());
+    	if (parametri.getTipoMovimento() != null){
+			SQLBuilder sqlCdsExists = getHome(userContext, TipoMovimentoMagBulk.class).createSQLBuilder();
+			sqlCdsExists.resetColumns();
+			sqlCdsExists.addColumn("1");
+			sqlCdsExists.addSQLJoin("TIPO_MOVIMENTO_MAG.CD_CDS", "MOVIMENTI_MAG.CD_CDS_TIPO_MOVIMENTO");
+			sqlCdsExists.addSQLJoin("TIPO_MOVIMENTO_MAG.CD_TIPO_MOVIMENTO", "MOVIMENTI_MAG.CD_TIPO_MOVIMENTO");
+			sqlCdsExists.addSQLClause("AND","TIPO_MOVIMENTO_MAG.TIPO", SQLBuilder.EQUALS, parametri.getTipoMovimento());
+			sql.addSQLExistsClause("AND", sqlCdsExists);
+		}
+
 
     	sql.addOrderBy("DT_MOVIMENTO");
     	sql.addOrderBy("DT_RIFERIMENTO");
