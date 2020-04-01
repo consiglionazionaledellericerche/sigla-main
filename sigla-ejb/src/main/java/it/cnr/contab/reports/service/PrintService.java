@@ -97,26 +97,25 @@ public class PrintService implements InitializingBean {
 	private static String dsOnBody="/dsOnBody";
 	private String getExecuteHttpUrl( UserContext userContext,Print_spoolerBulk printSpooler){
 		String url = resolveServerPrint(userContext);
-		//if (Optional.of( printSpooler).
-		//		filter( p->Print_spoolerBulk.STATO_IN_CODA_WAITDS.equals(p.getStato())).isPresent())
+		if (Optional.of( printSpooler).
+				filter( p->Print_spoolerBulk.STATO_IN_CODA_WAITDS.equals(p.getStato())).isPresent())
 			url = url.concat( dsOnBody);
 
 		return url;
 	}
 
-	private Gson getJson(){
-		return new GsonBuilder().
-				setExclusionStrategies(new PrintSpoolerExclusionProperty()).create();
-	}
+//	private Gson getJson(){
+//		return new GsonBuilder().
+//				setExclusionStrategies(new PrintSpoolerExclusionProperty()).create();
+//	}
 	private HttpPost getHttPostExecute(UserContext userContext, Print_spoolerBulk printSpooler) {
 		HttpPost method = null;
 		method = new HttpPost(getExecuteHttpUrl(userContext, printSpooler));
 		method.addHeader("Accept-Language", Locale.getDefault().toString());
 		method.setHeader("Content-Type", "application/json;charset=UTF-8");
-		//if (Optional.of( printSpooler).
-		//		filter( p->Print_spoolerBulk.STATO_IN_CODA_WAITDS.equals(p.getStato())).isPresent())
-		//	method.setHeader("ds-utente", userContext.getUser());
-		method.setHeader("ds-utente", userContext.getUser());
+		if (Optional.of( printSpooler).
+				filter( p->Print_spoolerBulk.STATO_IN_CODA_WAITDS.equals(p.getStato())).isPresent())
+			method.setHeader("ds-utente", userContext.getUser());
 		String json = gson.toJson(printSpooler);
 		HttpEntity requestEntity = new ByteArrayEntity(json.getBytes());
 		method.setEntity(requestEntity);
