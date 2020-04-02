@@ -164,9 +164,12 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     }
 
     public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk) throws BusinessProcessException {
+        return initializeModelForEditAllegati(actioncontext, oggettobulk, getStorePath((K) oggettobulk, false));
+    }
+
+    protected OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk, String path) throws BusinessProcessException {
         AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk) oggettobulk;
         try {
-            String path = getStorePath((K) oggettobulk, false);
             if (path == null)
                 return oggettobulk;
             if (storeService.getStorageObjectByPath(path) == null)

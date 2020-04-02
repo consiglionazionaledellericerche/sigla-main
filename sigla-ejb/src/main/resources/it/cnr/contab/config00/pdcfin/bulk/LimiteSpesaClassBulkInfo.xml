@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="https://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Tabella di dettaglio dei limite di spesa per elemento voce - fonte ed importo limite suddivisa per CDS"
+	longDescription="Tabella di dettaglio dei limite di spesa per elemento voce - fonte ed importo limite suddivisa per CDS">
+	<fieldProperty
+		name="id_classificazione"
+		property="v_classificazione_voci.id_classificazione"
+		maxLength="7"
+		inputSize="7"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		label="Identificativo Classificazione Ufficiale" />
+	<fieldProperty
+		name="cd_classificazione"
+		property="v_classificazione_voci.cd_classificazione"
+		maxLength="34"
+		inputSize="34"
+		inputType="TEXT"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		label="Codice Classificazione Ufficiale" />
+	<fieldProperty
+		name="findClassificazioneVoci"
+		property="v_classificazione_voci"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		columnSet="searchtool"
+		freeSearchSet="searchtool"
+		enabledOnSearch="true"
+		label="Classificazione Ufficiale" />
+
+	<fieldProperty
+		name="cd_cds"
+		property="cds.cd_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="30"
+		enabledOnEdit="true"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Centro di Spesa" />
+	<fieldProperty
+		name="ds_cds"
+		property="cds.ds_unita_organizzativa"
+		inputType="TEXT"
+		inputSize="40"
+		maxLength="250"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"/>	
+	<fieldProperty
+		name="findCds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnInsert="true"
+		label="Centro di Spesa" />
+
+	<fieldProperty
+		name="im_limite_assestato"
+		property="im_limite_assestato"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		command="doOnImLimiteAssestatoChange"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Importo Limite" />
+
+	<formFieldProperty
+			name="id_classificazione" />
+	<formFieldProperty
+			name="cd_classificazione" />
+	<formFieldProperty
+			name="findClassificazioneVoci" />
+	<formFieldProperty
+			name="cd_cds" />
+	<formFieldProperty
+			name="ds_cds" />	
+	<formFieldProperty
+			name="findCds" />		
+	<formFieldProperty
+			name="im_limite_assestato" />
+
+	<columnFieldProperty
+			name="id_classificazione" />
+	<columnFieldProperty
+			name="cd_cds" />
+	<columnFieldProperty
+			name="ds_cds"/>
+	<columnFieldProperty
+			name="im_limite_assestato" />
+
+	<columnSet name="dettagli">
+		<columnFieldProperty
+			name="cd_cds"/>
+		<columnFieldProperty
+			name="ds_cds"/>
+		<columnFieldProperty
+			name="im_limite_assestato" />
+	</columnSet>
+	
+	<findFieldProperty
+		name="id_classificazione" />
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+		name="im_limite_assestato" />
+
+</bulkInfo>

@@ -3166,7 +3166,173 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter-table-comunica-pagamenti-elemento-voce">
+        <addColumn tableName="elemento_voce">
+            <column name="fl_comunica_pagamenti" remarks="Indica se i mandati della voce di bilancio devono essere pubblicati" type="CHAR(1)" />
+        </addColumn>
+        <update tableName="elemento_voce">
+            <column name="fl_comunica_pagamenti" value='N' type="CHAR(1)" />
+        </update>
+        <addNotNullConstraint columnName="fl_comunica_pagamenti" tableName="elemento_voce" columnDataType="CHAR(1)"/>
+    </changeSet>
 
+    <changeSet author="raffaele.pagano" id="addColumn-importo-limite-classificazione">
+        <addColumn tableName="classificazione_voci">
+            <column name="im_limite_assestato" remarks="Importo limite assestato da assumere. Tale importo viene suddiviso tra CDS tramite valorizzazione tabella limite_spesa_class" type="numeric(15, 2)"/>
+        </addColumn>
+    </changeSet>
 
+    <changeSet author="raffaele.pagano" id="create-table-limite-spesa-class">
+        <createTable remarks="Tabella di dettaglio dei limite di spesa per classificazione - importo limite suddivisa per CDS" tableName="limite_spesa_class">
+            <column name="id_classificazione" remarks="Identificativo univoco della classificazione ufficiale" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_cds" remarks="Codice Cds" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_limite_assestato" remarks="Importo del limite di spesa" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" remarks="Utenza di creazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" remarks="Data di creazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" remarks="Utenza di ultima variazione del record" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" remarks="Data di ultima variazione del record" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" remarks="Progressivo di versione del record: viene incrementato di 1 ad ogni variazione" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id_classificazione, cd_cds" constraintName="limite_spesa_class_pkey" tableName="limite_spesa_class"/>
+        <addForeignKeyConstraint baseColumnNames="id_classificazione" baseTableName="limite_spesa_class" constraintName="limite_spesa_class_fk01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id_classificazione" referencedTableName="classificazione_voci"/>
+        <addForeignKeyConstraint baseColumnNames="cd_cds" baseTableName="limite_spesa_class" constraintName="limite_spesa_class_fk02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_organizzativa" referencedTableName="unita_organizzativa"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="elemento-voce-add-column-limiti-spesa">
+        <addColumn tableName="elemento_voce">
+            <column name="fl_limite_competenza" type="CHAR(1)" defaultValue="N" remarks="Applicazione limiti spesa - Limite Competenza - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_limite_residui_impropri" type="CHAR(1)" defaultValue="N" remarks="Applicazione limiti spesa - Limite Residui Impropri - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="Gestione limiti spesa per classificazione voce">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDCFINLIMSPECLASM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Limite Spesa Classificazione"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDCFINLIMSPECLASV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Limite Spesa Classificazione"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDCFINLIMSPECLASM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDLimiteSpesaClassBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDCFINLIMSPECLASV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDLimiteSpesaClassBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PDCFIN.LIMSPECLASS"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Limite Spesa Classificazione"/>
+            <column name="pg_ordinamento" type="BIGINT" value="240"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="LIMSPECLASS"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PDCFIN"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PDCFIN.LIMSPECLASS.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(200)" value="CFGPDCFINLIMSPECLASM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDLimiteSpesaClassBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PDCFIN.LIMSPECLASS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PDCFIN.LIMSPECLASS.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(200)" value="CFGPDCFINLIMSPECLASV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDLimiteSpesaClassBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PDCFIN.LIMSPECLASS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="parametri-cds-add-column-limiti-residui-impropri">
+        <addColumn tableName="parametri_cds">
+            <column name="fl_limite_residui_impropri" type="CHAR(1)" defaultValue="N" remarks="Applicazione limiti spesa - Limite Residui Impropri - Dominio: S = Sì; N = No;.">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="utente-change-column-size-password">
+        <modifyDataType tableName="UTENTE" columnName="PASSWORD" newDataType="VARCHAR(50)"></modifyDataType>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="ldap-server-drop">
+        <dropTable tableName="LDAP_SERVER"></dropTable>
+    </changeSet>
 
 </databaseChangeLog>

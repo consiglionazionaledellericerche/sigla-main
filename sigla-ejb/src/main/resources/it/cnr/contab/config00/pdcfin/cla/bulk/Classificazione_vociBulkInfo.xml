@@ -289,6 +289,24 @@
 		label="Tipologia"
 		inputType="SELECT"
 		/>
+	<fieldProperty
+		name="im_limite_assestato"
+		property="im_limite_assestato"
+		label="Importo Limite Assestato"
+		inputType="TEXT"
+		formatName = "it.cnr.contab.util.EuroFormat"
+		maxLength="16"
+		inputSize="16"
+		enabledOnSearch="true"
+		nullable="false" />
+	<fieldProperty
+		name="imLimiteAssestatoRipartito"
+		property="imLimiteAssestatoRipartito"
+		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Importo Ripartito" />
 
 	<formFieldProperty
 		name="id_classificazione" />
@@ -354,6 +372,10 @@
 		name="tot_imp_piano_riparto_spese" />
 	<formFieldProperty
 		name="ti_classificazione" />
+	<formFieldProperty
+		name="im_limite_assestato" />
+	<formFieldProperty
+		name="imLimiteAssestatoRipartito" />
 
 	<findFieldProperty
 		name="esercizio" />
@@ -429,6 +451,4 @@
 		name="cdr_accentratore" />
 	<columnFieldProperty
 		name="ds_cdr" />
-		
-	
 </bulkInfo>

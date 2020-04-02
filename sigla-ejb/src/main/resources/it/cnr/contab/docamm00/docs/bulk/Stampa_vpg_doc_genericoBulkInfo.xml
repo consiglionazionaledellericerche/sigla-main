@@ -107,6 +107,14 @@
 	<formFieldProperty name="findTerzo" />
 	<formFieldProperty name="tipo_doc_for_search" />
 	<formFieldProperty name="tipo_doc_gen_for_search" />
+	<fieldProperty
+			name="findTipoDocumentoGenerico"
+			property="tipoDocumentoGenerico"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			label="Tipo Documento Generico"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="false"/>
 
 	<form
 		name="/docamm/docamm/vpg_doc_generico.rpt">

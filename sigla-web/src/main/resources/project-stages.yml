@@ -2,6 +2,41 @@ logger:
   level: DEBUG
 
 thorntail:
+  security:
+    security-domains:
+      sigla-auth:
+        cache-type: default
+        classic-authentication:
+          login-modules:
+            Ldap:
+              code: LdapExtended
+              flag: sufficient
+              module-options:
+                java.naming.provider.url: ldap://virtest1.si.cnr.it:389
+                java.naming.security.authentication: simple
+                bindDN: cn=mastercnrapp1,ou=account,o=cnr,c=it
+                bindCredential: ${cnr.ldap.master.credentials}
+                baseCtxDN: o=cnr, c=it
+                baseFilter: uid={0}
+                rolesCtxDN: ou=groups,o=cnr,c=it
+                roleFilter: member={1}
+                roleAttributeID: cn
+                defaultRole: USER
+                password-stacking: useFirstPass
+                storePass: true
+            Database:
+              code: 'it.cnr.contab.security.auth.DatabaseServerLoginModule'
+              flag: sufficient
+              module-options:
+                dsJndiName: java:/jdbc/CIR
+                principalsQuery: SELECT PASSWORD FROM UTENTE WHERE UPPER(cd_utente)=UPPER(?)
+                rolesQuery: SELECT DISTINCT CD_RUOLO, 'Roles' FROM UTENTE_UNITA_RUOLO WHERE UPPER(cd_utente)=UPPER(?)
+                hashAlgorithm: MD5
+                hashEncoding: BASE64
+                ignorePasswordCase: true
+                password-stacking: useFirstPass
+                hashStorePassword: false
+
   datasources:
     jdbc-drivers:
       oracle:
@@ -23,13 +58,15 @@ thorntail:
     path: SIGLA
   logging:
     loggers:
+      org.jboss.security:
+        level: ERROR
       org.jboss.as.ejb3:
         level: ERROR
       org.jboss.as.dependency.private:
         level: ERROR
       org.jboss.as.server.deployment:
         level: ERROR
-      io.undertow.servlet:
+      io.undertow:
         level: ERROR
     root-logger:
       handlers:
@@ -135,10 +172,15 @@ liquibase:
 cnr:
   storage:
     driver: cmis
-
+  ldap:
+    master:
+      url: ldap://virtest1.si.cnr.it:389
+      principal: cn=mastercnrapp1,ou=account,o=cnr,c=it
+      credentials: changeit!
 help:
   base:
     url: https://consiglionazionaledellericerche.github.io/sigla-main
+
 ---
 project:
   stage: demo-h2

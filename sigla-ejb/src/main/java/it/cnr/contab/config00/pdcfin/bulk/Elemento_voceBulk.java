@@ -165,6 +165,9 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 		setFl_voce_personale(Boolean.FALSE);
 		setFl_missioni(Boolean.FALSE);
 		setFl_partita_giro(Boolean.FALSE);
+		setFlComunicaPagamenti(Boolean.FALSE);
+		setFl_limite_competenza(Boolean.FALSE);
+		setFl_limite_residui_impropri(Boolean.FALSE);
 		return this;
 	}
 	/**
@@ -280,7 +283,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	}
 
 	/**
-	 * @param bulk
+	 * @param v_classificazione_entrate
 	 */
 	public void setClassificazione_entrate(Classificazione_entrateBulk v_classificazione_entrate) {
 		classificazione_entrate = v_classificazione_entrate;
@@ -316,7 +319,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	}
 
 	/**
-	 * @param bulk
+	 * @param newClassificazione_spese
 	 */
 	public void setClassificazione_spese(Classificazione_speseBulk newClassificazione_spese) {
 		classificazione_spese = newClassificazione_spese;
@@ -439,5 +442,13 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	@Override
 	public void setCd_voce_piano(String cd_voce_piano) {
 		this.getVoce_piano_economico().setCd_voce_piano(cd_voce_piano);
+	}
+
+	public boolean isVoceEntrata(){
+		return Elemento_voceHome.GESTIONE_ENTRATE.equals(this.getTi_gestione());
+	}
+
+	public boolean isVoceSpesa(){
+		return Elemento_voceHome.GESTIONE_SPESE.equals(this.getTi_gestione());
 	}
 }

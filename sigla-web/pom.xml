@@ -22,7 +22,7 @@
     <parent>
         <groupId>it.cnr.si.sigla</groupId>
         <artifactId>sigla-parent</artifactId>
-        <version>6.1.47-SNAPSHOT</version>
+        <version>6.2.3-SNAPSHOT</version>
     </parent>
     <dependencyManagement>
         <dependencies>
@@ -213,6 +213,11 @@
             <groupId>io.thorntail</groupId>
             <artifactId>management</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.picketbox</groupId>
+            <artifactId>picketbox</artifactId>
+        </dependency>
+
         <!-- SIGLA  dependency-->
         <dependency>
             <groupId>it.cnr.si.sigla</groupId>

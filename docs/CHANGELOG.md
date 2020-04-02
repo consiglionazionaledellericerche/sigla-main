@@ -1,5 +1,41 @@
-## Release 6.1.46  -- _March 13, 2020_ 
+## Release 6.2.2  -- _March 25, 2020_ 
 **Changes**
+
+>**Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri**
+>
+>[dbaff12f183d768](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dbaff12f183d768) raffaele.pagano *March 25, 2020*
+
+>**Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri**
+>
+>[d4a519b4ae5ce97](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4a519b4ae5ce97) raffaele.pagano *March 25, 2020*
+
+>**Aggiunto parametro sulla voce di bilancio per l'indicazione della pubblicazione dei pagamenti**
+>
+>[11ae322bb5afdea](https://github.com/consiglionazionaledellericerche/sigla-main/commit/11ae322bb5afdea) gianfranco.gasparro *March 24, 2020*
+
+>**FIX Recupero Dati Pagamenti**
+>
+>[661f080c7795527](https://github.com/consiglionazionaledellericerche/sigla-main/commit/661f080c7795527) marco.spasiano *March 21, 2020*
+
+>**Aggiunto controllo obbligatorietà tipo documento generico attivo**
+>
+>[80872972ce728f2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80872972ce728f2) gianfranco.gasparro *March 20, 2020*
+
+
+## Release 6.2.1  -- _March 19, 2020_ 
+**Changes**
+
+>**Dalla UO Ente non si vedranno più tutte le variazioni ma solo quelle della stessa UO**
+>
+>[5e0e0c976f51dce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e0e0c976f51dce) marco.spasiano *March 19, 2020*
+
+
+## Release 6.2.0  -- _March 14, 2020_ 
+**Changes**
+
+>**FIX help URL**
+>
+>[1f623244854cbc9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1f623244854cbc9) marco.spasiano *March 14, 2020*
 
 >**FIX Transaction Attribute**
 >

@@ -65,6 +65,8 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 
 	private Boolean fl_riobbligazione;
 
+	private java.lang.Boolean fl_limite_residui_impropri;
+
 	public Parametri_cdsBase() {
 		super();
 	}
@@ -309,5 +311,13 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 	}
 	public void setFl_riobbligazione(Boolean fl_riobbligazione) {
 		this.fl_riobbligazione = fl_riobbligazione;
+	}
+
+	public Boolean getFl_limite_residui_impropri() {
+		return fl_limite_residui_impropri;
+	}
+
+	public void setFl_limite_residui_impropri(Boolean fl_limite_residui_impropri) {
+		this.fl_limite_residui_impropri = fl_limite_residui_impropri;
 	}
 }

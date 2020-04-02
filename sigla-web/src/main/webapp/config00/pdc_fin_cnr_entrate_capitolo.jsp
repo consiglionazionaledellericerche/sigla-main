@@ -118,9 +118,6 @@
 	<tr>
 	  <% bp.getController().writeFormField( out, "fl_trovato"); %>	
 	</tr>	
-	<tr>
-	  <% bp.getController().writeFormField( out, "fl_missioni"); %>	
-	</tr>	
 	</table>
 <%	bp.closeFormWindow(pageContext); %>
 </body>

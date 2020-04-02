@@ -21,6 +21,9 @@
 */
 package it.cnr.contab.config00.pdcfin.cla.bulk;
 import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
+
 public class Classificazione_vociBase extends Classificazione_vociKey implements Keyed {
 //    ESERCIZIO DECIMAL(4,0) NOT NULL
 	private java.lang.Integer esercizio;
@@ -84,7 +87,10 @@ public class Classificazione_vociBase extends Classificazione_vociKey implements
     
     private java.lang.Boolean fl_prev_obb_anno_suc;
 
-  public Classificazione_vociBase() {
+	// IM_LIMITE_ASSESTATO DECIMAL(15,2) NULL
+	private java.math.BigDecimal im_limite_assestato;
+
+	public Classificazione_vociBase() {
 		super();
 	}
 	public Classificazione_vociBase(java.lang.Integer id_classificazione) {
@@ -215,5 +221,11 @@ public class Classificazione_vociBase extends Classificazione_vociKey implements
 	}
 	public void setFl_prev_obb_anno_suc(java.lang.Boolean fl_prev_obb_anno_suc) {
 		this.fl_prev_obb_anno_suc = fl_prev_obb_anno_suc;
+	}
+	public BigDecimal getIm_limite_assestato() {
+		return im_limite_assestato;
+	}
+	public void setIm_limite_assestato(BigDecimal im_limite_assestato) {
+		this.im_limite_assestato = im_limite_assestato;
 	}
 }

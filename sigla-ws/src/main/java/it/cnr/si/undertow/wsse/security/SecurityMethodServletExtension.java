@@ -27,6 +27,7 @@ import io.undertow.security.idm.IdentityManager;
 import io.undertow.server.handlers.form.FormParserFactory;
 import io.undertow.servlet.ServletExtension;
 import io.undertow.servlet.api.DeploymentInfo;
+import io.undertow.servlet.api.LoginConfig;
 import it.cnr.contab.WSAttributes;
 
 public class SecurityMethodServletExtension implements ServletExtension {
@@ -34,6 +35,11 @@ public class SecurityMethodServletExtension implements ServletExtension {
 	public void handleDeployment(DeploymentInfo deploymentInfo,
 			ServletContext servletContext) {
 		deploymentInfo.addAuthenticationMechanism(WSAttributes.AUTHMETHOD, new Factory(deploymentInfo.getIdentityManager()));
+        final LoginConfig loginConfig = deploymentInfo.getLoginConfig();
+        loginConfig.addFirstAuthMethod("FORM");
+        deploymentInfo.setLoginConfig(
+                loginConfig
+        );
 	}
 	public static class Factory implements AuthenticationMechanismFactory {
 

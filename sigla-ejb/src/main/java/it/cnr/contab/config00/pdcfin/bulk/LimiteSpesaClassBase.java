@@ -16,22 +16,30 @@
  */
 
 /*
- * Created by Aurelio's BulkGenerator 1.0
- * Date 08/02/2007
+ * Created by BulkGenerator 2.0 [07/12/2009]
+ * Date 15/12/2010
  */
-package it.cnr.contab.utenze00.bulk;
-public class Ldap_serverBulk extends Ldap_serverBase {
-	public Ldap_serverBulk() {
+package it.cnr.contab.config00.pdcfin.bulk;
+import it.cnr.jada.persistency.Keyed;
+
+import java.math.BigDecimal;
+
+public class LimiteSpesaClassBase extends LimiteSpesaClassKey implements Keyed {
+	private java.math.BigDecimal im_limite_assestato;
+
+	public LimiteSpesaClassBase() {
 		super();
 	}
-	public Ldap_serverBulk(java.lang.String hostname, java.lang.Integer port) {
-		super(hostname, port);
+
+	public LimiteSpesaClassBase(Integer id_classificazione, String cdCds) {
+		super(id_classificazione, cdCds);
 	}
 
-	public boolean isAttivo() {
-		return getFl_attivo() != null && getFl_attivo().booleanValue();
+	public BigDecimal getIm_limite_assestato() {
+		return im_limite_assestato;
 	}
-	public boolean isMaster() {
-		return getFl_master() != null && getFl_master().booleanValue();
+
+	public void setIm_limite_assestato(BigDecimal im_limite_assestato) {
+		this.im_limite_assestato = im_limite_assestato;
 	}
 }

@@ -17,28 +17,21 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.utenze00.bulk.Ldap_serverKey">
+	persistentClassName="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaClassBulk"
+	homeClassName="it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaClassHome">
 	<defaultColumnMap
-		tableName="LDAP_SERVER">
+		tableName="LIMITE_SPESA_CLASS">
 		<columnMapping
-			columnName="HOSTNAME"
-			propertyName="hostname"
-			sqlTypeName="VARCHAR"
-			columnSize="2000"
-			nullable="false"
-			primary="true" />
+			columnName="ID_CLASSIFICAZIONE"
+			propertyName="v_classificazione_voci.id_classificazione" />
 		<columnMapping
-			columnName="PORT"
-			propertyName="port"
-			sqlTypeName="DECIMAL"
-			columnSize="4"
-			nullable="false"
-			primary="true" />
+			columnName="CD_CDS"
+			propertyName="cds.cd_unita_organizzativa" />
 	</defaultColumnMap>
 	<persistentProperty
-		name="hostname"
+		name="v_classificazione_voci"
 		partOfOid="true" />
 	<persistentProperty
-		name="port"
+		name="cds"
 		partOfOid="true" />
 </SQLPersistentInfo>

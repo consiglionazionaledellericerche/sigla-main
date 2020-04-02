@@ -330,40 +330,7 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
 			}
 		}
 	}
-	public it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerLogin(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
-		try {
-			return (it.cnr.contab.config00.bulk.ApplicationServerBulk)invoke("validaServerLogin",new Object[] {
-				param0,
-				param1 });
-		} catch(java.rmi.RemoteException e) {
-			throw e;
-		} catch(java.lang.reflect.InvocationTargetException e) {
-			try {
-				throw e.getTargetException();
-			} catch(it.cnr.jada.comp.ComponentException ex) {
-				throw ex;
-			} catch(Throwable ex) {
-				throw new java.rmi.RemoteException("Uncaugth exception",ex);
-			}
-		}
-	}
-	public it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerAttivo(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
-		try {
-			return (it.cnr.contab.config00.bulk.ApplicationServerBulk)invoke("validaServerAttivo",new Object[] {
-				param0,
-				param1 });
-		} catch(java.rmi.RemoteException e) {
-			throw e;
-		} catch(java.lang.reflect.InvocationTargetException e) {
-			try {
-				throw e.getTargetException();
-			} catch(it.cnr.jada.comp.ComponentException ex) {
-				throw ex;
-			} catch(Throwable ex) {
-				throw new java.rmi.RemoteException("Uncaugth exception",ex);
-			}
-		}
-	}
+
 	public java.util.List utentiMultipli(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
 			return (java.util.List)invoke("utentiMultipli",new Object[] {
@@ -468,22 +435,6 @@ public class TransactionalGestioneLoginComponentSession extends it.cnr.jada.ejb.
 		}
 	}
 
-	public String[] getLdapUserFromMatricola(UserContext param0, Integer param1) throws ComponentException, RemoteException {
-		try {
-			return (String[])invoke("getLdapUserFromMatricola",new Object[] {
-				param0, param1});
-		} catch(java.rmi.RemoteException e) {
-			throw e;
-		} catch(java.lang.reflect.InvocationTargetException e) {
-			try {
-				throw e.getTargetException();
-			} catch(it.cnr.jada.comp.ComponentException ex) {
-				throw ex;
-			} catch(Throwable ex) {
-				throw new java.rmi.RemoteException("Uncaugth exception",ex);
-			}
-		}
-	}
 	public List getUnitaRuolo(UserContext param0, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException, RemoteException{
 		try {
 			return (java.util.List)invoke("getUnitaRuolo",new Object[] {
