@@ -1,3 +1,11 @@
+## Release 6.2.4  -- _April 05, 2020_ 
+**Changes**
+
+>**FIX Ldap cheange atrribute on master**
+>
+>[5166c2c0bfa50be](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5166c2c0bfa50be) marco.spasiano *April 05, 2020*
+
+
 ## Release 6.2.3  -- _April 03, 2020_ 
 **Changes**
 
