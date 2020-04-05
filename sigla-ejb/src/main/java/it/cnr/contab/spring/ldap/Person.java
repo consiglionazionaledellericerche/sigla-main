@@ -26,17 +26,19 @@ import org.springframework.ldap.odm.annotations.Id;
 
 @Entry(base = "ou=account,o=cnr,c=it", objectClasses = "inetOrgPerson")
 public class Person {
-    private @Id Name id;
-    private @DnAttribute(value = "uid", index = 3) String uid;
+    private @Id Name dn;
+    private @Attribute(name = "uid") String uid;
+    private @Attribute(name = "sn") String sn;
+    private @Attribute(name = "cn") String cn;
     private @Attribute(name = "cnrapp1") String cnrapp1;
     private @Attribute(name = "matricola") String matricola;
 
-    public Name getId() {
-        return id;
+    public Name getDn() {
+        return dn;
     }
 
-    public void setId(Name id) {
-        this.id = id;
+    public void setDn(Name dn) {
+        this.dn = dn;
     }
 
     public String getUid() {
@@ -55,11 +57,27 @@ public class Person {
         this.cnrapp1 = cnrapp1;
     }
 
+    public String getSn() {
+        return sn;
+    }
+
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
+
     public String getMatricola() {
         return matricola;
     }
 
     public void setMatricola(String matricola) {
         this.matricola = matricola;
+    }
+
+    public String getCn() {
+        return cn;
+    }
+
+    public void setCn(String cn) {
+        this.cn = cn;
     }
 }
