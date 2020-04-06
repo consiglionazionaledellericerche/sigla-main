@@ -201,6 +201,15 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>HtmlAuth</web-resource-name>
+			<description>public url</description>
+			<url-pattern>/RicercaIncarichiRichiesta.do</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>HtmlAuth</web-resource-name>
 			<description>application security constraints</description>
 			<url-pattern>*.do</url-pattern>
 			<http-method>POST</http-method>
