@@ -1,3 +1,11 @@
+## Release 6.2.6  -- _April 06, 2020_ 
+**Changes**
+
+>**Rimossa l'autenticazione per la ricerca dei Terzi**
+>
+>[05adddb8e8531f2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/05adddb8e8531f2) marco.spasiano *April 06, 2020*
+
+
 ## Release 6.2.5  -- _April 06, 2020_ 
 **Changes**
 
