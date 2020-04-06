@@ -1,3 +1,11 @@
+## Release 6.2.5  -- _April 06, 2020_ 
+**Changes**
+
+>**Rimossa l'autenticazione per la ricerca degli incarichi RicercaIncarichiRichiesta.do**
+>
+>[693332fcc6f41d7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/693332fcc6f41d7) marco.spasiano *April 06, 2020*
+
+
 ## Release 6.2.4  -- _April 05, 2020_ 
 **Changes**
 
