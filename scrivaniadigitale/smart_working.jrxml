@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Smart Working" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../img/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="matricola" class="java.lang.String"/>
+	<field name="cds" class="java.lang.String"/>
+	<field name="direttore" class="java.lang.String"/>
+	<field name="mese" class="java.lang.String"/>
+	<field name="attivita_svolta" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="134" splitType="Stretch">
+			<image onErrorType="Blank">
+				<reportElement key="image-1" x="0" y="0" width="553" height="41" uuid="fc584efd-e1bd-4b99-b160-de23e440a320"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement key="staticText-1" style="TNRGC14" x="1" y="51" width="552" height="23" uuid="d9c47e28-d293-4ee9-a87b-d1566364cc08"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Scheda di monitoraggio dell’attività individuale in modalità di lavoro agile"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-1" style="TNRG12" x="1" y="80" width="281" height="13" uuid="685d6aa4-c4b2-4439-8611-7f530734f4a8"/>
+				<textElement markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MATRICOLA: " + $F{matricola} ]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-1" style="TNRG12" x="296" y="80" width="257" height="13" uuid="e1a8fc7a-94fb-4c3d-bc2c-5d1ec8b8052a"/>
+				<textElement markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CDS: " + $F{cds} ]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-1" style="TNRG12" x="1" y="97" width="552" height="13" uuid="b9fd8816-7925-4b98-956b-23cbde2318ba"/>
+				<textElement markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DIRETTORE/DIRIGENTE/RESPONSABILE: " + $F{direttore} ]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="staticText-1" style="TNRG12" x="1" y="115" width="552" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
+				<textElement markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese} ]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement key="staticText-1" style="TNRGC14" x="0" y="4" width="552" height="17" uuid="60c7777e-8df1-42b8-aab1-896d5a56f0e4"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relazione sulle attività svolte"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="23" width="553" height="1" uuid="216673d5-1bf0-4959-8abb-9150d940e03d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="50">
+			<textField isStretchWithOverflow="true">
+				<reportElement key="staticText-1" style="TNRG12" x="1" y="3" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="433" y="0" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="0" width="40" height="20" uuid="581306bb-5afb-4ca2-ab69-25b1e76d90fc"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="0" width="197" height="20" uuid="c8b2c202-b6e3-428a-b7ea-e58e4eb3e7f8"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="553" height="1" uuid="198750be-9ef7-4204-9d4a-437c10f0a4b4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
