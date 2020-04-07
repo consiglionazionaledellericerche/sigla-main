@@ -112,7 +112,7 @@ public class WSSEAuthenticationMechanism implements AuthenticationMechanism {
     @Override
     public AuthenticationMechanismOutcome authenticate(HttpServerExchange exchange, SecurityContext securityContext) {
         try {
-            if (!securityContext.isAuthenticationRequired())
+            if (!securityContext.isAuthenticationRequired() || !exchange.getRequestURI().endsWith("WS"))
                 return AuthenticationMechanismOutcome.NOT_ATTEMPTED;
 
             final ServletRequestContext servletRequestContext = exchange.getAttachment(ServletRequestContext.ATTACHMENT_KEY);

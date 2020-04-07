@@ -237,11 +237,10 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 		//	Deciso con Angelini di spostare i controlli in fase di salvataggio definitivo
 		validaDettagliEntrataSpesa(userContext, pdg);
 
+		SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
 		try {
 			controllaRimodulazioneProgetto(userContext,pdg);
 
-			SaldoComponentSession saldoComponent = Utility.createSaldoComponentSession();
-	
 			//Verifico che il tipo di variazione sia consentita
 			saldoComponent.checkPdgPianoEconomico(userContext, pdg);
 			//Verifico che piano economico non si sfondi
@@ -280,12 +279,14 @@ public class CRUDPdgVariazioneGestionaleComponent extends PdGVariazioniComponent
 				controllaQuadraturaImportiAree(userContext, pdg);
 			
 			aggiornaLimiteSpesa(userContext, pdg);
+			saldoComponent.checkBloccoLimiteClassificazione(userContext, pdg);
+
 			/*
 			 * Verifico che l'assestato di tutte le combinazioni scelte sia positivo in modo da avvertire
 			 * l'utente del problema di approvazione che avrebbe  
 			 */
 			checkDispAssestatoCdrGAEVoce(userContext, pdg, "onSalvaDefinitivoDispAssestatoCdrGAEVoceFailed");
-		} catch (PersistencyException e) {
+		} catch (PersistencyException|RemoteException e) {
 			throw new ComponentException(e);
 		}	
 		return pdg;

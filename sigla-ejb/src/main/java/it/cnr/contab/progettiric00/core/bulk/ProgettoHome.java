@@ -254,7 +254,21 @@ public class ProgettoHome extends BulkHome {
 		  }            				
 		}catch (PersistencyException ex){}
 		return sql;
-	}    
+	}
+
+	public SQLBuilder selectAllChildrenFor(it.cnr.jada.UserContext aUC, ProgettoBulk ubi){
+		ProgettoHome progettohome = (ProgettoHome)getHomeCache().getHome(ProgettoBulk.class,"V_PROGETTO_PADRE");
+		SQLBuilder sql = progettohome.createSQLBuilder();
+		sql.addSQLClause(FindClause.AND,"ESERCIZIO",SQLBuilder.EQUALS,CNRUserContext.getEsercizio(aUC));
+		if (ubi == null)
+			sql.addSQLClause(FindClause.AND, "1!=1"); //Condizione inserita per far fallire la query
+		else {
+			sql.addSQLClause(FindClause.AND,"ESERCIZIO_PROGETTO_PADRE",SQLBuilder.EQUALS,ubi.getEsercizio());
+			sql.addSQLClause(FindClause.AND,"PG_PROGETTO_PADRE",SQLBuilder.EQUALS,ubi.getPg_progetto());
+			sql.addSQLClause(FindClause.AND,"TIPO_FASE_PROGETTO_PADRE",SQLBuilder.EQUALS,ubi.getTipo_fase());
+		}
+		return sql;
+	}
 
 	public java.util.List findWorkpackage_disponibili(it.cnr.jada.UserContext userContext,ProgettoBulk commessa) throws IntrospectionException, PersistencyException 
 	{

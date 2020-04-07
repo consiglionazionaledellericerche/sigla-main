@@ -30,7 +30,7 @@ import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.spring.service.StorePath;
-import it.cnr.contab.utenze00.service.LDAPService;
+import it.cnr.contab.spring.service.LDAPService;
 import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -456,7 +456,7 @@ public class MissioneHome extends BulkHome implements
 
                     LDAPService ldapService = SpringUtil.getBean("ldapService",
                             LDAPService.class);
-                    String[] uidMail = ldapService.getLdapUserFromMatricola(
+                    String uid = ldapService.getLdapUserFromMatricola(
                             userContext, matricola);
 
                     Report report = SpringUtil.getBean("printService",
@@ -468,7 +468,7 @@ public class MissioneHome extends BulkHome implements
                             report.getContentType(),
                             report.getName(),
                             cmisPath,
-                            StorageDriver.Permission.construct(uidMail[0], StorageDriver.ACLType.Consumer),
+                            StorageDriver.Permission.construct(uid, StorageDriver.ACLType.Consumer),
                             StorageDriver.Permission.construct(SIGLAGroups.GROUP_EMPPAY_GROUP.name(), StorageDriver.ACLType.Coordinator)
                     );
                 } catch (Exception e) {

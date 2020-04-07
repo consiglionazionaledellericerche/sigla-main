@@ -48,15 +48,12 @@ java.lang.Boolean isBPEnableForUser(it.cnr.jada.UserContext param0,it.cnr.contab
 it.cnr.contab.utenze00.bulk.Albero_mainBulk validaNodoPerUtente(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1,java.lang.String param2,java.lang.String param3) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.utenze00.bulk.UtenteBulk validaUtente(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 it.cnr.contab.utenze00.bulk.UtenteBulk validaUtente(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1, int faseValidazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerLogin(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerAttivo(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.util.List utentiMultipli(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 boolean isUtenteAbilitatoLdap(it.cnr.jada.UserContext param0, String param1, boolean param2)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void cambiaAbilitazioneUtente(it.cnr.jada.UserContext param0, String param1, boolean param2)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 List<SessionTraceBulk> sessionList(it.cnr.jada.UserContext param0, String param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 CdrBulk cdrDaUo(it.cnr.jada.UserContext param0,Unita_organizzativaBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 List<PreferitiBulk> preferitiList(it.cnr.jada.UserContext param0) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-public String[] getLdapUserFromMatricola(UserContext param0, Integer param1)  throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 public List getUnitaRuolo(UserContext param0, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException, RemoteException;
 public List getRuoli(UserContext param0, UtenteBulk utente) throws it.cnr.jada.comp.ComponentException, RemoteException;
 java.lang.Boolean isUserAccessoAllowed(UserContext userContext, String...accessi) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;

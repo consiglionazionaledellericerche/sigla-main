@@ -26,7 +26,7 @@
 			columnName="PASSWORD"
 			propertyName="password"
 			sqlTypeName="VARCHAR"
-			columnSize="20" />
+			columnSize="50" />
 		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"

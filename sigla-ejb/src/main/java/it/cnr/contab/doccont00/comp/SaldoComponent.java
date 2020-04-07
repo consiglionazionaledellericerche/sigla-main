@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 import javax.ejb.EJBException;
 
 import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -35,14 +36,11 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
-import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
-import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociHome;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
@@ -56,11 +54,7 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
+import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
@@ -77,6 +71,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
@@ -3495,6 +3490,193 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			return (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
 		} catch(Throwable e) {
 			throw handleException(e);
+		}
+	}
+
+	//Controllo che restituisce errore.
+	//Se la variazione passa a definitivo controllo che non siano modificate combinazioni contabili per le quali sia attivo un blocco residui
+	public void checkBloccoDisponibilitaResidue(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException {
+		try	{
+			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
+					findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
+			/*
+			 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+			 */
+			if (uoScrivania.isUoEnte() && variazione.getCentroDiResponsabilita().getUnita_padre().isUoEnte())
+				return;
+
+			Var_stanz_resHome varResHome = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
+			for (java.util.Iterator dett = varResHome.findAllVariazioniRiga(variazione).iterator(); dett.hasNext(); ) {
+				Var_stanz_res_rigaBulk rigaVar = (Var_stanz_res_rigaBulk) dett.next();
+				checkBloccoDisponibilitaResidue(userContext, rigaVar.getLinea_di_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_di_attivita().getCd_linea_attivita(),
+						rigaVar.getElemento_voce());
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public void checkBloccoDisponibilitaResidue(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk) throws ComponentException {
+		WorkpackageBulk workpackageBulk = ((WorkpackageHome) getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext, CNRUserContext.getEsercizio(userContext),
+					cdr, cdLineaAttivita);
+		checkBloccoDisponibilitaResidue(userContext, workpackageBulk, elementoVoceBulk);
+	}
+
+	public void checkBloccoDisponibilitaResidue(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk) throws ComponentException {
+    	try {
+			if (elementoVoceBulk.getFl_limite_residui_impropri().equals(Boolean.TRUE)) {
+				Parametri_cdsBulk param_cds = (Parametri_cdsBulk)(getHome(userContext, Parametri_cdsBulk.class)).findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext)));
+				if (param_cds.getFl_limite_residui_impropri().equals(Boolean.TRUE)) {
+					Configurazione_cnrBulk configBulk = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_BLOCCO_RESIDUI, Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO);
+					if (Optional.ofNullable(configBulk).isPresent()) {
+						Optional<String> optNatura = Optional.ofNullable(configBulk).map(Configurazione_cnrBulk::getVal01);
+						Optional<String> optCodFinanziamento = Optional.ofNullable(configBulk).map(Configurazione_cnrBulk::getVal02);
+						if (optNatura.isPresent() || optCodFinanziamento.isPresent()) {
+							if (optNatura.map(el -> el.equals(workpackageBulk.getNatura().getTipo())).orElse(Boolean.TRUE) &&
+									optCodFinanziamento.map(el -> el.equals(workpackageBulk.getProgetto().getOtherField().getTipoFinanziamento().getCodice())).orElse(Boolean.TRUE))
+								throw new ApplicationException("Non è possibile effettuare movimentazioni per il CDR/GAE/Voce (" +
+										workpackageBulk.getCd_centro_responsabilita() + "/" + workpackageBulk.getCd_linea_attivita() + "/" + elementoVoceBulk.getCd_voce() +
+										"), in quanto " +
+										optNatura.map(el -> "GAE di natura " + el).orElse("") +
+										(optNatura.isPresent() && optCodFinanziamento.isPresent() ? " e " : "") +
+										optCodFinanziamento.map(el -> "Progetto di tipo " + el + " ").orElse("") + ".");
+						}
+					}
+				}
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public void checkBloccoLimiteClassificazione(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException {
+		try {
+			Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
+			V_classificazione_vociHome vClassVociHome = (V_classificazione_vociHome)getHome(userContext, V_classificazione_vociBulk.class);
+			Elemento_voceHome elementoVoceHome = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
+			V_assestatoHome assHome = (V_assestatoHome)getHome(userContext,V_assestatoBulk.class);
+			LimiteSpesaClassHome dettHome = (LimiteSpesaClassHome)getHome(userContext,LimiteSpesaClassBulk.class);
+
+			//CERCO TUTTE LE CLASSIFICAZIONI CON LIMITE
+			SQLBuilder sqlClassLimite = vClassVociHome.createSQLBuilder();
+			sqlClassLimite.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sqlClassLimite.addClause(FindClause.AND, "im_limite_assestato", SQLBuilder.ISNOTNULL, null);
+			sqlClassLimite.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+			List<V_classificazione_vociBulk> listClass = vClassVociHome.fetchAll(sqlClassLimite);
+
+			//CREO UNA MAPPA CHE PER OGNI CLASSIFICAZIONE CON LIMITE ABBIA I DATI DEI CDS E DELLE VOCI ASSOCIATE
+			Map<V_classificazione_vociBulk, List<Elemento_voceBulk>> mapClassificazioni = new HashMap<V_classificazione_vociBulk, List<Elemento_voceBulk>>();
+			Optional.ofNullable(listClass)
+					.map(List::stream)
+					.orElse(Stream.empty())
+					.forEach(classLimite->{
+						//verifico se la classificazione con limite appartiene a
+						try {
+							classLimite.setLimitiSpesaClassColl(new BulkList(dettHome.getDetailsFor(classLimite)));
+
+							//recupero tutte le voci della classificazione con limite
+							SQLBuilder sqlElementoVoce = elementoVoceHome.selectElementoVociAssociate(classLimite.getEsercizio(), classLimite.getNr_livello(), classLimite.getId_classificazione());
+							sqlElementoVoce.addClause(FindClause.AND, "fl_limite_competenza", SQLBuilder.EQUALS, Boolean.TRUE);
+							List<Elemento_voceBulk> listVociClass = elementoVoceHome.fetchAll(sqlElementoVoce);
+
+							mapClassificazioni.put(classLimite,listVociClass);
+						} catch (PersistencyException e) {
+							throw new RuntimeException(e);
+						}
+					});
+
+
+			//RAGGRUPPO PER CDS TUTTE LE RIGHE DI VARIAZIONE CON VOCE DI BILANCIO CON GESTIONE LIMITE ATTIVO
+			Collection<Pdg_variazione_riga_gestBulk> righeVar = detHome.findDettagliSpesaVariazioneGestionale(variazione);
+			getHomeCache(userContext).fetchAll(userContext);
+			Map<String, List<Pdg_variazione_riga_gestBulk>> cdsMap =
+					Optional.ofNullable(righeVar)
+							.map(el->el.stream())
+							.orElse(Stream.empty())
+							.filter(riga->riga.getElemento_voce().getFl_limite_competenza().equals(Boolean.TRUE))
+							.collect(Collectors.groupingBy(o->o.getCdr_assegnatario().getCd_cds()));
+
+			cdsMap.keySet().stream().forEach(cds-> {
+				mapClassificazioni.keySet().forEach(classificazione->{
+					List<Elemento_voceBulk> listVociClass = mapClassificazioni.get(classificazione);
+					//trovo l'importo della variazione provvisoria delle voci associate alla classificazione
+					BigDecimal impCurrentVariazioneClass =
+							cdsMap.get(cds).stream()
+								  .filter(rigavar->{
+										return listVociClass.stream()
+												.filter(voceClass->voceClass.getEsercizio().equals(rigavar.getElemento_voce().getEsercizio()))
+												.filter(voceClass->voceClass.getTi_gestione().equals(rigavar.getElemento_voce().getTi_gestione()))
+												.filter(voceClass->voceClass.getTi_appartenenza().equals(rigavar.getElemento_voce().getTi_appartenenza()))
+												.filter(voceClass->voceClass.getCd_elemento_voce().equals(rigavar.getElemento_voce().getCd_elemento_voce()))
+												.findFirst().isPresent();
+								  })
+								  .map(Pdg_variazione_riga_gestBulk::getIm_variazione)
+								  .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+					if (impCurrentVariazioneClass.compareTo(BigDecimal.ZERO)>0) {
+						List<V_assestatoBulk> listAssestatoClass =
+								listVociClass.stream()
+										.filter(voceClass->voceClass.getFl_limite_competenza().equals(Boolean.TRUE))
+										.flatMap(voceClass->{
+											try {
+												SQLBuilder sqlAssestato = assHome.createSQLBuilder();
+												sqlAssestato.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, voceClass.getEsercizio());
+												sqlAssestato.addClause(FindClause.AND, "esercizio_res", SQLBuilder.EQUALS, voceClass.getEsercizio());
+												sqlAssestato.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, voceClass.getTi_gestione());
+												sqlAssestato.addClause(FindClause.AND, "ti_appartenenza", SQLBuilder.EQUALS, voceClass.getTi_appartenenza());
+												sqlAssestato.addClause(FindClause.AND, "cd_elemento_voce", SQLBuilder.EQUALS, voceClass.getCd_elemento_voce());
+
+												sqlAssestato.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA", "A");
+												sqlAssestato.addSQLJoin("V_ASSESTATO.ESERCIZIO","A.ESERCIZIO");
+												sqlAssestato.addSQLJoin("V_ASSESTATO.CD_CENTRO_RESPONSABILITA","A.CD_ROOT");
+												sqlAssestato.addSQLClause(FindClause.AND,"A.CD_CDS", SQLBuilder.EQUALS, cds);
+
+												List<V_assestatoBulk> listAssestati = assHome.fetchAll(sqlAssestato);
+												//ritorna l'assestato della singola voce
+												return listAssestati.stream();
+											} catch (PersistencyException e) {
+												throw new RuntimeException(e);
+											}
+										})
+								.collect(Collectors.toList());
+
+						BigDecimal impApprovatoClass = listAssestatoClass.stream().map(V_assestatoBulk::getAssestato_iniziale).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+						BigDecimal impVariazioniDefinitiveClass = listAssestatoClass.stream().map(V_assestatoBulk::getVariazioni_definitive).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+						//recupero il limite per il cds
+						BigDecimal impLimiteClass = Optional.ofNullable(classificazione.getLimitiSpesaClassColl())
+								.map(List::stream)
+								.orElse(Stream.empty())
+								.filter(el->el.getCd_cds().equals(cds))
+								.map(LimiteSpesaClassBulk::getIm_limite_assestato)
+								.findFirst()
+								.orElse(BigDecimal.ZERO);
+
+						/*
+							Il controllo viene effettuato su:
+								assestato (dato dagli stanziamenti e le variazioni approvate)
+								+variazioni definitive
+								+variazione provvisoria corrente che sta diventando definitiva
+						 */
+						if (impApprovatoClass.add(impVariazioniDefinitiveClass).add(impCurrentVariazioneClass).compareTo(impLimiteClass)>0)
+							throw new ApplicationRuntimeException("Operazione non possibile!\nLa qta stanziata dal CDS "+cds+
+									" per la classificazione '"+classificazione.getCd_classificazione()+" - "+classificazione.getDs_classificazione()+
+									"',  di euro "+ new it.cnr.contab.util.EuroFormat().format(impApprovatoClass.add(impVariazioniDefinitiveClass).add(impCurrentVariazioneClass))+
+									"\n(ottenuta sommando alla quota approvata di euro "+new it.cnr.contab.util.EuroFormat().format(impApprovatoClass)+" la quota di altre variazioni definitive " +
+									"in attesa di approvazione di euro "+new it.cnr.contab.util.EuroFormat().format(impVariazioniDefinitiveClass.subtract(impCurrentVariazioneClass))+ " e la quota " +
+									"della corrente variazione di euro "+new it.cnr.contab.util.EuroFormat().format(impCurrentVariazioneClass)+")\nsupererebbe l'importo " +
+									"limite stabilito di euro "+new it.cnr.contab.util.EuroFormat().format(impLimiteClass)+".");
+					}
+				});
+			});
+		} catch (DetailedRuntimeException _ex) {
+			throw new ApplicationException(_ex.getMessage());
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
 		}
 	}
 }

@@ -2143,15 +2143,16 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		List<ObbligazioneBulk> listObb = (List<ObbligazioneBulk>)prgHome.findObbligazioniAssociate(progetto.getPg_progetto(), annoFrom.intValue());
 
 		    		if (ctrlStato) {
-		    			listObb.stream().findFirst().ifPresent(el->{
-						throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto "
-		    				   	+ "(Obb: "+el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione() + "). "
-								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+		    			listObb.stream().filter(obb->obb.getIm_obbligazione().compareTo(BigDecimal.ZERO)>0).findFirst().ifPresent(el->{
+							throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto "
+									+ "(Obb: "+el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione() + "). "
+									+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
 		    			});
 		    		}
 		    		
 		    		if (ctrlDtInizio)
 			    		listObb.stream()
+							   .filter(obb->obb.getIm_obbligazione().compareTo(BigDecimal.ZERO)>0)
 			    			   .min((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
 			    			   .filter(el->el.getDt_registrazione().before(progetto.getOtherField().getDtInizio()))
 			    			   .ifPresent(el->{
@@ -2166,6 +2167,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 		    		if (ctrlDtFine && Optional.ofNullable(progetto.getOtherField().getDtFineEffettiva()).isPresent()) {
 			    		listObb.stream()
+							   .filter(obb->obb.getIm_obbligazione().compareTo(BigDecimal.ZERO)>0)
 			    			   .filter(el->!el.isObbligazioneResiduo())
 				 			   .max((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
 				 			   .filter(el->el.getDt_registrazione().after(progetto.getOtherField().getDtFineEffettiva()))
@@ -2450,6 +2452,15 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				getHome(userContext, Progetto_other_fieldBulk.class).update(otherField,userContext);
 			}
 		} catch (PersistencyException| RemoteException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public List<ProgettoBulk> getAllChildren(UserContext userContext, ProgettoBulk bulk) throws ComponentException{
+		try {
+			ProgettoHome ubiHome = (ProgettoHome)getHome(userContext,ProgettoBulk.class,"V_PROGETTO_PADRE");
+			return ubiHome.fetchAll(ubiHome.selectAllChildrenFor(userContext,bulk));
+		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
 	}

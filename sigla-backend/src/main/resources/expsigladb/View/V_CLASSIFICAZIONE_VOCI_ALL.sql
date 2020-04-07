@@ -2,7 +2,7 @@
 --  DDL for View V_CLASSIFICAZIONE_VOCI_ALL
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_CLASSIFICAZIONE_VOCI_ALL" ("ID_CLASSIFICAZIONE", "ESERCIZIO", "TI_GESTIONE", "DS_CLASSIFICAZIONE", "CD_LIVELLO1", "CD_LIVELLO2", "CD_LIVELLO3", "CD_LIVELLO4", "CD_LIVELLO5", "CD_LIVELLO6", "CD_LIVELLO7", "ID_CLASS_PADRE", "NR_LIVELLO", "FL_MASTRINO", "FL_CLASS_SAC", "FL_SOLO_GESTIONE", "FL_PIANO_RIPARTO", "FL_ACCENTRATO", "FL_DECENTRATO", "FL_ESTERNA_DA_QUADRARE_SAC", "CDR_ACCENTRATORE", "TI_CLASSIFICAZIONE", "FL_PREV_OBB_ANNO_SUC", "DUVA", "UTUV", "DACR", "UTCR", "PG_VER_REC", "CD_CLASSIFICAZIONE", "CD_LIV1", "CD_LIV2", "CD_LIV3", "CD_LIV4", "CD_LIV5", "CD_LIV6", "CD_LIV7", "ID_LIV1", "ID_LIV2", "ID_LIV3", "ID_LIV4", "ID_LIV5", "ID_LIV6", "ID_LIV7", "DS_LIV1", "DS_LIV2", "DS_LIV3", "DS_LIV4", "DS_LIV5", "DS_LIV6", "DS_LIV7") AS 
+  CREATE OR REPLACE FORCE VIEW "V_CLASSIFICAZIONE_VOCI_ALL" ("ID_CLASSIFICAZIONE", "ESERCIZIO", "TI_GESTIONE", "DS_CLASSIFICAZIONE", "CD_LIVELLO1", "CD_LIVELLO2", "CD_LIVELLO3", "CD_LIVELLO4", "CD_LIVELLO5", "CD_LIVELLO6", "CD_LIVELLO7", "ID_CLASS_PADRE", "NR_LIVELLO", "FL_MASTRINO", "FL_CLASS_SAC", "FL_SOLO_GESTIONE", "FL_PIANO_RIPARTO", "FL_ACCENTRATO", "FL_DECENTRATO", "FL_ESTERNA_DA_QUADRARE_SAC", "CDR_ACCENTRATORE", "TI_CLASSIFICAZIONE", "FL_PREV_OBB_ANNO_SUC", "IM_LIMITE_ASSESTATO", "DUVA", "UTUV", "DACR", "UTCR", "PG_VER_REC", "CD_CLASSIFICAZIONE", "CD_LIV1", "CD_LIV2", "CD_LIV3", "CD_LIV4", "CD_LIV5", "CD_LIV6", "CD_LIV7", "ID_LIV1", "ID_LIV2", "ID_LIV3", "ID_LIV4", "ID_LIV5", "ID_LIV6", "ID_LIV7", "DS_LIV1", "DS_LIV2", "DS_LIV3", "DS_LIV4", "DS_LIV5", "DS_LIV6", "DS_LIV7") AS
   SELECT
 --
 -- Date: 08/09/2005
@@ -22,8 +22,8 @@
           a.id_class_padre, a.nr_livello, a.fl_mastrino, a.fl_class_sac,
           a.fl_solo_gestione, a.fl_piano_riparto, a.fl_accentrato,
           a.fl_decentrato, a.fl_esterna_da_quadrare_sac, a.cdr_accentratore,
-          a.ti_classificazione, a.fl_prev_obb_anno_suc, a.duva, a.utuv,
-          a.dacr, a.utcr, a.pg_ver_rec, a.cd_classificazione,
+          a.ti_classificazione, a.fl_prev_obb_anno_suc, a.im_limite_assestato,
+          a.duva, a.utuv, a.dacr, a.utcr, a.pg_ver_rec, a.cd_classificazione,
           DECODE (a.nr_livello,
                   1, a.cd_classificazione,
                   2, b.cd_classificazione,

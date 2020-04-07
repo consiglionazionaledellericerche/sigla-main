@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+ * Copyright (C) 2020  Consiglio Nazionale delle Ricerche
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU Affero General Public License as
@@ -15,23 +15,16 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/*
- * Created by Aurelio's BulkGenerator 1.0
- * Date 08/02/2007
- */
-package it.cnr.contab.utenze00.bulk;
-public class Ldap_serverBulk extends Ldap_serverBase {
-	public Ldap_serverBulk() {
-		super();
-	}
-	public Ldap_serverBulk(java.lang.String hostname, java.lang.Integer port) {
-		super(hostname, port);
-	}
+package it.cnr.contab.spring.ldap;
+import java.util.List;
 
-	public boolean isAttivo() {
-		return getFl_attivo() != null && getFl_attivo().booleanValue();
-	}
-	public boolean isMaster() {
-		return getFl_master() != null && getFl_master().booleanValue();
-	}
+import javax.naming.Name;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface PersonRepository extends CrudRepository<Person, Name> {
+
+    List<Person> findByUid(String uid);
+
+    List<Person> findByMatricola(String matricola);
 }

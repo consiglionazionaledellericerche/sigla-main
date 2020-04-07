@@ -3328,4 +3328,11 @@ TRASPORTO_AEREO"/>
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="marco.spasiano" id="utente-change-column-size-password">
+        <modifyDataType tableName="UTENTE" columnName="PASSWORD" newDataType="VARCHAR(50)"></modifyDataType>
+    </changeSet>
+    <changeSet author="marco.spasiano" id="ldap-server-drop">
+        <dropTable tableName="LDAP_SERVER"></dropTable>
+    </changeSet>
+
 </databaseChangeLog>

@@ -17,6 +17,7 @@
 
 package it.cnr.contab.progettiric00.ejb;
 import java.rmi.*;
+import java.util.List;
 
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
@@ -595,4 +596,21 @@ public it.cnr.jada.bulk.OggettoBulk modificaConBulk(it.cnr.jada.UserContext para
 		}
 	}
 }
+	public List<ProgettoBulk> getAllChildren(it.cnr.jada.UserContext param0, ProgettoBulk param1) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			return (List<ProgettoBulk>)invoke("getAllChildren",new Object[] {
+					param0,
+					param1 });
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }
