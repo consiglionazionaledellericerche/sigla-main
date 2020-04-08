@@ -54,28 +54,28 @@
 				<textElement markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["MATRICOLA: " + $F{matricola} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["MATRICOLA: " + $F{matricola}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement key="staticText-1" style="TNRG12" x="296" y="80" width="257" height="13" uuid="e1a8fc7a-94fb-4c3d-bc2c-5d1ec8b8052a"/>
 				<textElement markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["CDS: " + $F{cds} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["CDS: " + $F{cds}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement key="staticText-1" style="TNRG12" x="1" y="97" width="552" height="13" uuid="b9fd8816-7925-4b98-956b-23cbde2318ba"/>
 				<textElement markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["DIRETTORE/DIRIGENTE/RESPONSABILE: " + $F{direttore} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["DIRETTORE/DIRIGENTE/RESPONSABILE: " + $F{direttore}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement key="staticText-1" style="TNRG12" x="1" y="115" width="552" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
 				<textElement markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese} ]]></textFieldExpression>
+				<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -101,7 +101,7 @@
 		<band height="50">
 			<textField isStretchWithOverflow="true">
 				<reportElement key="staticText-1" style="TNRG12" x="1" y="3" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
-				<textElement textAlignment="Justified" markup="html">
+				<textElement textAlignment="Justified" markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
