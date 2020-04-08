@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RimodulaPpe" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="ed4c3ee2-64bb-4905-8efa-d1579b9f05c9">
+	<property name="ireport.zoom" value="1.0000000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="NORMAL" isDefault="true" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="VER8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["G:/Sorgenti/Sigla/sigla-reports/img/"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="cdProgetto" class="java.lang.String">
+		<fieldDescription><![CDATA[cdProgetto]]></fieldDescription>
+	</field>
+	<field name="dsProgetto" class="java.lang.String">
+		<fieldDescription><![CDATA[dsProgetto]]></fieldDescription>
+	</field>
+	<field name="pgRimodulazione" class="java.lang.String">
+		<fieldDescription><![CDATA[pgRimodulazione]]></fieldDescription>
+	</field>
+	<field name="pgGenRimodulazione" class="java.lang.String">
+		<fieldDescription><![CDATA[pgGenRimodulazione]]></fieldDescription>
+	</field>
+	<field name="uoCoordinatrice" class="java.lang.String">
+		<fieldDescription><![CDATA[uoCoordinatrice]]></fieldDescription>
+	</field>
+	<field name="tipoFinanziamento" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoFinanziamento]]></fieldDescription>
+	</field>
+	<field name="dataInizio" class="java.lang.String">
+		<fieldDescription><![CDATA[dataInizio]]></fieldDescription>
+	</field>
+	<field name="dataFine" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[dataFine]]></fieldDescription>
+	</field>
+	<field name="dataProroga" class="java.lang.String">
+		<fieldDescription><![CDATA[dataProroga]]></fieldDescription>
+	</field>
+	<field name="importoFinanziato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoFinanziato]]></fieldDescription>
+	</field>
+	<field name="importoCofinanziato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoCofinanziato]]></fieldDescription>
+	</field>
+	<field name="importoFinanziatoRimodulato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoFinanziatoRimodulato]]></fieldDescription>
+	</field>
+	<field name="importoCofinanziatoRimodulato" class="java.lang.String">
+		<fieldDescription><![CDATA[importoCofinanziatoRimodulato]]></fieldDescription>
+	</field>
+	<field name="dataProrogaRimodulata" class="java.lang.String">
+		<fieldDescription><![CDATA[dataProrogaRimodulata]]></fieldDescription>
+	</field>
+	<field name="anniPianoEconomico" class="java.lang.Object">
+		<fieldDescription><![CDATA[anniPianoEconomico]]></fieldDescription>
+	</field>
+	<variable name="varImportoFinanziato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoFinanziato})]]></variableExpression>
+	</variable>
+	<variable name="varImportoCofinanziato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoCofinanziato})]]></variableExpression>
+	</variable>
+	<variable name="varImportoFinanziatoRimodulato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoFinanziatoRimodulato})]]></variableExpression>
+	</variable>
+	<variable name="varImportoCofinanziatoRimodulato" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{importoCofinanziatoRimodulato})]]></variableExpression>
+	</variable>
+	<title>
+		<band height="156">
+			<staticText>
+				<reportElement style="VERBI14" mode="Opaque" x="5" y="42" width="817" height="24" forecolor="#000000" backcolor="#FFFFFF" uuid="1a1e9ed9-da88-4067-91f4-e4da24d968dd"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rimodulazione Piano Economico di Progetto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="5" y="70" width="50" height="20" uuid="71f4d904-aaac-4675-95b0-204d4b3ac9dd"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Progetto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="VER8" x="55" y="70" width="100" height="20" uuid="c1430968-3563-424e-a655-91d6f06ba73d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cdProgetto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="VERB8" x="429" y="90" width="90" height="20" uuid="73d6d0e6-9fdc-4a55-a579-7a77a4c79348"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Rimodulazione:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="5" y="90" width="90" height="20" uuid="11fab2ea-7f90-4d30-b01a-8875b57e28a8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Uo Coordinatrice:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="VER8" x="95" y="90" width="295" height="20" uuid="0ac242b3-6ff5-4cd3-aa0b-bef4971c1982"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{uoCoordinatrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="VER8" x="155" y="70" width="664" height="20" uuid="53a69b9d-803f-4f91-aafe-e085ed07b25b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dsProgetto}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="535" y="90" width="260" height="20" uuid="e8c0aebb-a8ec-4456-a227-e0a5d1398a0a"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="VERB8" x="546" y="90" width="50" height="20" uuid="cb40ea31-fd17-4004-a856-bb8f34761709"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Versione:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="VER8" x="596" y="90" width="61" height="20" uuid="fe70e847-b823-45f5-9523-c003b2610d9d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pgRimodulazione}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="VERB8" x="672" y="90" width="23" height="20" uuid="43fc111f-b182-4493-88f3-b80885e72ec3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nr.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="VER8" x="695" y="90" width="100" height="20" uuid="62576744-3040-46cc-a217-fb31d9fccc59"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pgGenRimodulazione}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="106" y="110" width="284" height="20" uuid="07dce4b9-4a32-4aa6-8647-3eeddf246e27"/>
+			</rectangle>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="167" y="110" width="80" height="20" uuid="19d00ba9-d382-4639-86a3-4ed43520de4b"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{varImportoFinanziato}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="310" y="111" width="80" height="20" uuid="28925ca4-42f0-4ee1-9193-32c2cba42939"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{varImportoFinanziatoRimodulato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="VERB8" x="5" y="110" width="100" height="20" uuid="da018597-6b0e-470d-a6e7-4a1885d839f8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Importo Finanziato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="117" y="110" width="50" height="20" uuid="2146c21d-a2cc-41ed-a735-231dc9aec5fb"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Iniziale:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="247" y="110" width="63" height="20" uuid="bbe3c805-88d3-4d81-ae95-70b1dd5a8d76"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Rimodulato:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="535" y="111" width="284" height="20" uuid="2a6930d2-c147-4b0b-a3b8-ac5fe673d1ac"/>
+			</rectangle>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="596" y="111" width="80" height="20" uuid="53cf34e4-d329-4242-b0fa-4c8d31ecc9a9"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{varImportoCofinanziato}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="739" y="111" width="80" height="20" uuid="dc0f6724-bee5-479c-8c0e-c65514d9fba7"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{varImportoCofinanziatoRimodulato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="VERB8" x="429" y="111" width="106" height="20" uuid="6018e9a2-1452-42a6-b223-8fb2a136c9f3"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Importo Cofinanziato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="676" y="111" width="63" height="20" uuid="888a1f17-0132-44b4-93e2-ad8742d653f1"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Rimodulato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="546" y="111" width="50" height="20" uuid="d5774445-892f-4190-a412-bb7dab25c7c8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Iniziale:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="106" y="131" width="284" height="20" uuid="9a9477c1-6ad8-422a-bb37-2b6c623d62de"/>
+			</rectangle>
+			<textField isBlankWhenNull="true">
+				<reportElement style="VER8" x="310" y="131" width="80" height="20" uuid="a4feb6b2-0cb4-48ac-ac42-61e10e69c07e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dataProrogaRimodulata}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="VER8" x="167" y="131" width="80" height="20" uuid="9c73a3e9-6304-48c7-bf4b-a82c57672422"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dataProroga}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="VERB8" x="5" y="131" width="100" height="20" uuid="da6045ff-92f1-4aab-bd70-20a7b4476735"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Data Proroga:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="247" y="131" width="63" height="20" uuid="92cb9270-82c1-4651-9404-975a772f2b03"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Rimodulato:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="VERB8" x="117" y="131" width="50" height="20" uuid="78a393b5-e6bd-4d78-90da-1713d3bb71a4"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Iniziale:]]></text>
+			</staticText>
+			<image scaleImage="RetainShape">
+				<reportElement key="image-1" mode="Transparent" x="0" y="0" width="400" height="36" uuid="ba2d8cbb-4e02-4271-bb3d-6657001df51e"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<subreport isUsingCache="false">
+				<reportElement x="0" y="0" width="822" height="24" uuid="0a1cf568-a357-43cb-8689-c112cda0716c"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("anniPianoEconomico")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "rimodula_ppe_anno_sub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25">
+			<textField>
+				<reportElement style="VERB8" x="697" y="7" width="80" height="15" uuid="ca2843c6-e6e9-4c0d-95b3-82f9c4676191"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="VERB8" x="777" y="7" width="40" height="15" uuid="a9e6c30a-ddda-4fc7-8c60-00b0c930c28f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement style="VERB8" x="67" y="7" width="54" height="15" uuid="4175ff7c-605d-4ac5-834b-4dde804eadbc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-37" style="VERB8" x="10" y="7" width="57" height="15" uuid="aced61b0-24ed-42be-9307-ba5a78fe2e31"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Data di Stampa:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

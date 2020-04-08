@@ -1,0 +1,1423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto_detail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="ISO-8859-1"/>
+	<property name="ireport.zoom" value="2.0490403660952152"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="VER6" fontName="Times New Roman" fontSize="6" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI6" fontName="Times New Roman" fontSize="6" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB6" fontName="Times New Roman" fontSize="6" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER7" fontName="Times New Roman" fontSize="7" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI7" fontName="Times New Roman" fontSize="7" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB7" fontName="Times New Roman" fontSize="7" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI8" fontName="Times New Roman" fontSize="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER16" fontName="Times New Roman" fontSize="16" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB20" fontName="Times New Roman" fontSize="20" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB10" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERBI9" fontName="Times New Roman" fontSize="9" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VERB9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<style name="VER8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO1" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PATH_LOGO_FORNITORE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="UTENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["ADMIN"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_EST" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["CONSIGLIO NAZIONALE DELLE RICERCHE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DESCR_AGG_ENTE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(2019)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CENTRO_RESPONSABILITA" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["084.000.000"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PG_PROGETTO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[Integer.valueOf(30264)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DT_INIZIO" class="java.sql.Timestamp" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DT_FINE" class="java.sql.Timestamp" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DT_PROROGA" class="java.sql.Timestamp" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DESC_FINANZIAMENTO" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FL_PIANO_ECO_FIN" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_UO_COORDINATRICE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="P_IM_FINANZIATO" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_IM_COFINANZIATO" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_TOTALE_ENTRATE" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_TOTALE_REVERSALI" class="java.math.BigDecimal" isForPrompting="false"/>
+	<parameter name="P_PRINT_DETAIL" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_UO_ENTE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Y"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT   a.ORDINE_ESERCIZIO,
+         a.pg_progetto, a.esercizio, a.cd_unita_piano, a.cd_voce_piano,
+         b.ds_voce_piano,
+         a.cd_centro_responsabilita, a.cd_linea_attivita,
+         c.ds_cdr, d.cd_natura,
+         a.esercizio_voce, a.ti_appartenenza, a.ti_gestione, a.cd_elemento_voce,
+         e.ds_elemento_voce,
+         a.importo_fin, a.stanziamento_fin, a.variapiu_fin,
+         a.variameno_fin, a.trasfpiu_fin, a.trasfmeno_fin, a.importo_cofin,
+         a.stanziamento_cofin, a.variapiu_cofin, a.variameno_cofin, a.trasfpiu_cofin,
+         a.trasfmeno_cofin, a.impacc_fin, a.impacc_cofin, a.manris_fin, a.manris_cofin
+FROM (
+SELECT   CASE
+           WHEN x.esercizio = $P{P_ESERCIZIO}
+           THEN -10000
+           ELSE x.esercizio - $P{P_ESERCIZIO}
+         END ORDINE_ESERCIZIO,
+         x.pg_progetto, x.esercizio, x.cd_unita_piano, x.cd_voce_piano,
+         x.cd_centro_responsabilita, x.cd_linea_attivita,
+         x.esercizio_voce, x.ti_appartenenza, x.ti_gestione, x.cd_elemento_voce,
+         SUM (x.importo_fin) importo_fin,
+         SUM (x.stanziamento_fin) stanziamento_fin,
+         SUM (x.variapiu_fin) variapiu_fin,
+         SUM (x.variameno_fin) variameno_fin,
+         SUM (x.trasfpiu_fin) trasfpiu_fin,
+         SUM (x.trasfmeno_fin) trasfmeno_fin,
+         SUM (x.importo_cofin) importo_cofin,
+         SUM (x.stanziamento_cofin) stanziamento_cofin,
+         SUM (x.variapiu_cofin) variapiu_cofin,
+         SUM (x.variameno_cofin) variameno_cofin,
+         SUM (x.trasfpiu_cofin) trasfpiu_cofin,
+         SUM (x.trasfmeno_cofin) trasfmeno_cofin,
+         SUM (x.impacc_fin) impacc_fin,
+         SUM (x.impacc_cofin) impacc_cofin,
+         SUM (x.manris_fin) manris_fin,
+         SUM (x.manris_cofin) manris_cofin
+FROM (SELECT a.pg_progetto, a.esercizio_piano esercizio,
+             a.cd_unita_organizzativa cd_unita_piano, a.cd_voce_piano,
+             null cd_centro_responsabilita, null cd_linea_attivita,
+             null esercizio_voce, null ti_appartenenza, null ti_gestione, null cd_elemento_voce,
+             NVL(a.im_spesa_finanziato, 0) importo_fin,
+             0 stanziamento_fin, 0 variapiu_fin, 0 variameno_fin,
+             0 trasfpiu_fin, 0 trasfmeno_fin,
+             NVL(a.im_spesa_cofinanziato, 0) importo_cofin,
+             0 stanziamento_cofin, 0 variapiu_cofin, 0 variameno_cofin,
+             0 trasfpiu_cofin, 0 trasfmeno_cofin,
+             0 impacc_fin, 0 impacc_cofin, 0 manris_fin, 0 manris_cofin
+      FROM progetto_piano_economico a
+      UNION ALL
+      SELECT a.pg_progetto, a.esercizio_piano,
+             a.cd_unita_organizzativa, a.cd_voce_piano,
+             b.cd_centro_responsabilita, b.cd_linea_attivita,
+             b.esercizio_voce, b.ti_appartenenza, b.ti_gestione, b.cd_elemento_voce,
+             0 importo_fin,
+             b.stanziamento_fin,
+             b.variapiu_fin, b.variameno_fin,
+             b.trasfpiu_fin, b.trasfmeno_fin,
+             0 importo_cofin,
+             b.stanziamento_cofin,
+             b.variapiu_cofin, b.variameno_cofin,
+             b.trasfpiu_cofin, b.trasfmeno_cofin,
+             b.impacc_fin, b.impacc_cofin,
+             b.manris_fin, b.manris_cofin
+        FROM ass_progetto_piaeco_voce a,
+             V_SALDI_GAE_VOCE_PROGETTO b
+        WHERE a.pg_progetto = b.pg_progetto
+        AND   a.esercizio_piano = b.esercizio
+        AND   a.esercizio_voce = b.esercizio
+        AND   a.ti_appartenenza = b.ti_appartenenza
+        AND   a.ti_gestione = b.ti_gestione
+        AND   a.cd_elemento_voce = b.cd_elemento_voce) x
+WHERE X.PG_PROGETTO = $P{P_PG_PROGETTO}
+GROUP BY x.pg_progetto, x.esercizio,
+         x.cd_unita_piano,
+         x.cd_voce_piano,
+         x.cd_centro_responsabilita,
+         x.cd_linea_attivita,
+         x.esercizio_voce,
+         x.ti_appartenenza,
+         x.ti_gestione,
+         x.cd_elemento_voce) a, voce_piano_economico_prg b, cdr c, linea_attivita d, elemento_voce e
+WHERE B.CD_UNITA_ORGANIZZATIVA = A.CD_UNITA_PIANO
+AND   B.CD_VOCE_PIANO = A.CD_VOCE_PIANO
+AND   A.CD_CENTRO_RESPONSABILITA = C.CD_CENTRO_RESPONSABILITA (+)
+AND   A.CD_CENTRO_RESPONSABILITA = D.CD_CENTRO_RESPONSABILITA (+)
+AND   A.CD_LINEA_ATTIVITA = D.CD_LINEA_ATTIVITA (+)
+AND   A.ESERCIZIO_VOCE = E.ESERCIZIO (+)
+AND   A.TI_APPARTENENZA = E.TI_APPARTENENZA (+)
+AND   A.TI_GESTIONE = E.TI_GESTIONE (+)
+AND   A.CD_ELEMENTO_VOCE = E.CD_ELEMENTO_VOCE (+)
+ORDER BY A.ORDINE_ESERCIZIO, A.cd_unita_piano,
+         A.cd_voce_piano, A.cd_centro_responsabilita,
+         A.cd_linea_attivita, A.cd_elemento_voce]]>
+	</queryString>
+	<field name="ORDINE_ESERCIZIO" class="java.math.BigDecimal"/>
+	<field name="PG_PROGETTO" class="java.math.BigDecimal"/>
+	<field name="ESERCIZIO" class="java.lang.Integer"/>
+	<field name="CD_UNITA_PIANO" class="java.lang.String"/>
+	<field name="CD_VOCE_PIANO" class="java.lang.String"/>
+	<field name="DS_VOCE_PIANO" class="java.lang.String"/>
+	<field name="CD_CENTRO_RESPONSABILITA" class="java.lang.String"/>
+	<field name="CD_LINEA_ATTIVITA" class="java.lang.String"/>
+	<field name="DS_CDR" class="java.lang.String"/>
+	<field name="CD_NATURA" class="java.lang.String"/>
+	<field name="ESERCIZIO_VOCE" class="java.math.BigDecimal"/>
+	<field name="TI_APPARTENENZA" class="java.lang.String"/>
+	<field name="TI_GESTIONE" class="java.lang.String"/>
+	<field name="CD_ELEMENTO_VOCE" class="java.lang.String"/>
+	<field name="DS_ELEMENTO_VOCE" class="java.lang.String"/>
+	<field name="IMPORTO_FIN" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO_FIN" class="java.math.BigDecimal"/>
+	<field name="VARIAPIU_FIN" class="java.math.BigDecimal"/>
+	<field name="VARIAMENO_FIN" class="java.math.BigDecimal"/>
+	<field name="TRASFPIU_FIN" class="java.math.BigDecimal"/>
+	<field name="TRASFMENO_FIN" class="java.math.BigDecimal"/>
+	<field name="IMPORTO_COFIN" class="java.math.BigDecimal"/>
+	<field name="STANZIAMENTO_COFIN" class="java.math.BigDecimal"/>
+	<field name="VARIAPIU_COFIN" class="java.math.BigDecimal"/>
+	<field name="VARIAMENO_COFIN" class="java.math.BigDecimal"/>
+	<field name="TRASFPIU_COFIN" class="java.math.BigDecimal"/>
+	<field name="TRASFMENO_COFIN" class="java.math.BigDecimal"/>
+	<field name="IMPACC_FIN" class="java.math.BigDecimal"/>
+	<field name="IMPACC_COFIN" class="java.math.BigDecimal"/>
+	<field name="MANRIS_FIN" class="java.math.BigDecimal"/>
+	<field name="MANRIS_COFIN" class="java.math.BigDecimal"/>
+	<variable name="ASSESTATO_FIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{STANZIAMENTO_FIN}.add($F{VARIAPIU_FIN}).subtract($F{VARIAMENO_FIN})]]></variableExpression>
+	</variable>
+	<variable name="ASSESTATO_COFIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{STANZIAMENTO_COFIN}.add($F{VARIAPIU_COFIN}).subtract($F{VARIAMENO_COFIN})]]></variableExpression>
+	</variable>
+	<variable name="TRASFERITO_FIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN}).compareTo(BigDecimal.ZERO)<0?
+$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN}).abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="TRASFERITO_COFIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{TRASFPIU_FIN}.subtract($F{TRASFMENO_FIN}).compareTo(BigDecimal.ZERO)<0?  $F{TRASFPIU_COFIN}.subtract($F{TRASFMENO_COFIN}).abs():BigDecimal.ZERO]]></variableExpression>
+	</variable>
+	<variable name="DISP_IMPEGNO_FIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}.subtract($F{IMPACC_FIN})]]></variableExpression>
+	</variable>
+	<variable name="DISP_IMPEGNO_COFIN" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}.subtract($F{IMPACC_COFIN})]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_FIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_COFIN_VOCE_ECONOMICA" class="java.math.BigDecimal" resetType="Group" resetGroup="VOCE_ECONOMICA" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_FIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_COFIN_CDR" class="java.math.BigDecimal" resetType="Group" resetGroup="CDR" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_FIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_FIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_FIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_FIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_FIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_COFIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_COFIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_COFIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_COFIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_COFIN_ESE" class="java.math.BigDecimal" resetType="Group" resetGroup="ESERCIZIO" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_FIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_FIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_FIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_FIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_FIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPORTO_COFIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPORTO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_ASSESTATO_COFIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{ASSESTATO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_TRASFERITO_COFIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{TRASFERITO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_IMPACC_COFIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{IMPACC_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="SUM_DISP_IMPEGNO_COFIN_GEN" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></variableExpression>
+	</variable>
+	<variable name="cdrPrinted" class="java.lang.Integer" resetType="Group" resetGroup="VOCE_ECONOMICA" incrementType="Group" incrementGroup="CDR">
+		<variableExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}!=null&&
+($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
+$F{CD_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})) ?
+($V{cdrPrinted} + 1) : $V{cdrPrinted}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="ESERCIZIO">
+		<groupExpression><![CDATA[$F{ESERCIZIO}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<textField>
+					<reportElement style="VERB8" x="3" y="1" width="257" height="15" uuid="86ae881c-5cbe-4575-a031-dac7cac24b9c"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{ESERCIZIO} + " - Esercizio " +
+($F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})==0?"di COMPETENZA":
+$F{ESERCIZIO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<textField isStretchWithOverflow="true">
+					<reportElement style="VERB8" x="3" y="1" width="296" height="15" uuid="bcce2779-23a1-47a5-85b8-a284c99ede56"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA["Totale Esercizio "+$F{ESERCIZIO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="303" y="1" width="59" height="15" uuid="274eab2d-64f6-45b4-b4d8-d70e888a6633"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_ESE}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="362" y="1" width="59" height="15" uuid="5095e213-6dd7-4eca-9642-3a2657a30827"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_ESE}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="c97b3e1b-69e8-4156-b227-2567f2d1c6a4"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TRASFERITO_FIN_ESE}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="598" y="1" width="59" height="15" uuid="a3a6deb1-1417-4b1b-b6f1-5ea5b4e52595"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_ESE}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="539" y="1" width="59" height="15" uuid="ff1bfdb8-1a6a-429a-8e06-cdbcd7e220b4"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_ESE}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="1" width="59" height="15" uuid="24670145-083c-4397-b003-d9c056a1eb14"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_ESE}
+.subtract($V{SUM_ASSESTATO_FIN_ESE})
+.subtract($V{SUM_TRASFERITO_FIN_ESE})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="716" y="1" width="59" height="15" uuid="f5721a31-449b-4f6f-b5ac-7dd3a621ce33"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_ESE}
+.subtract($V{SUM_ASSESTATO_COFIN_ESE})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="18b9b3d8-7673-43af-811f-9a2b92722a1c"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_ESE}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="775" y="1" width="59" height="15" uuid="49d08315-dcb5-46f9-8b39-911e6d31ba91"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_ESE}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="VOCE_ECONOMICA">
+		<groupExpression><![CDATA[$F{CD_UNITA_PIANO}+$F{CD_VOCE_PIANO}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<staticText>
+					<reportElement key="staticText-54" style="VERB8" x="10" y="1" width="62" height="15" uuid="bb398e99-a5be-443b-90ff-8307273eac0e"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[Voce Economica:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="VERB8" x="72" y="1" width="231" height="15" uuid="9a7af229-5f48-4943-b2eb-488453ac0997"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CD_VOCE_PIANO}+" - "+$F{DS_VOCE_PIANO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="303" y="1" width="59" height="15" uuid="35ed27e9-5fd0-4dab-9fb8-a2473abecc37"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="362" y="1" width="59" height="15" uuid="e1b95e6e-482b-4ba4-acc8-c7fa37aa72c1"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="1" width="59" height="15" uuid="95f605de-bd1b-4a06-b5c3-0932d22f2f4a"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_VOCE_ECONOMICA}
+.subtract($V{SUM_ASSESTATO_FIN_VOCE_ECONOMICA})
+.subtract($V{SUM_TRASFERITO_FIN_VOCE_ECONOMICA})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="539" y="1" width="59" height="15" uuid="2d642505-3b73-48b4-9a08-205a5dec0cdf"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="8c528cd8-0be5-4352-bb95-95608f6f6de6"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="598" y="1" width="59" height="15" uuid="d4c03d2e-7a3b-4133-b769-5308f3041a57"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="716" y="1" width="59" height="15" uuid="8c65084b-af87-4e15-b8eb-dbba8efba39d"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_VOCE_ECONOMICA}
+.subtract($V{SUM_ASSESTATO_COFIN_VOCE_ECONOMICA})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="775" y="1" width="59" height="15" uuid="7b4868be-2ea0-4144-8ab1-12897618b830"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="933dfdfe-01c7-4026-9093-c5cd955e0783"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TRASFERITO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&$V{cdrPrinted}>0]]></printWhenExpression>
+				<staticText>
+					<reportElement key="staticText-54" style="VERB8" x="10" y="1" width="90" height="15" uuid="bc170807-319d-454d-a011-75b2fce9e146"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[Totale Voce Economica:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="VERB8" x="100" y="1" width="203" height="15" uuid="127cb4b7-ab70-4dcb-a477-1387582f97b5"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CD_VOCE_PIANO}+" - "+$F{DS_VOCE_PIANO}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="303" y="1" width="59" height="15" uuid="5b2ad69f-5dcf-4cfa-aff9-a65e5c3f7565"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="362" y="1" width="59" height="15" uuid="a06d5d53-065e-438e-a841-b78ef8b001c6"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="eecbab37-1c06-4e1f-bb8c-863c5ef1b8e3"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TRASFERITO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="598" y="1" width="59" height="15" uuid="731673d5-348a-4a3f-a2de-7f0e0412be3a"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="539" y="1" width="59" height="15" uuid="28d40be5-d598-49cc-af85-dc3de379a96a"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="1" width="59" height="15" uuid="e5214980-037b-4a57-90bd-8ed35b166b78"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_VOCE_ECONOMICA}
+.subtract($V{SUM_ASSESTATO_FIN_VOCE_ECONOMICA})
+.subtract($V{SUM_TRASFERITO_FIN_VOCE_ECONOMICA})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="716" y="1" width="59" height="15" uuid="5f2b47e1-7873-434b-b34d-16a830a7be38"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_VOCE_ECONOMICA}
+.subtract($V{SUM_ASSESTATO_COFIN_VOCE_ECONOMICA})]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="f36f5350-1ed2-4847-85cd-06d87fd9a955"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="775" y="1" width="59" height="15" uuid="7b9af54f-3d65-4708-ba36-fd9dd3cb4953"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5" lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_VOCE_ECONOMICA}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="CDR">
+		<groupExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
+$F{CD_CENTRO_RESPONSABILITA}!=null&&
+($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
+$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="VERB8" x="42" y="1" width="261" height="15" uuid="a35d304d-4645-4736-afd3-9e54dc4ec887"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}+" - "+$F{DS_CDR}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-54" style="VERB8" x="16" y="1" width="26" height="15" uuid="d5c97146-fa7d-4adb-888c-fc9ca4f11293"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[CdR:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-54" style="VERB8" x="27" y="16" width="26" height="15" uuid="40a7a7e2-fbad-4dfb-80e9-ff610ff4f4ab"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[GAE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-54" style="VERB8" x="89" y="16" width="26" height="15" uuid="307f8083-e545-4454-98d2-c8420fe81b80"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Natura]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-54" style="VERB8" x="124" y="16" width="26" height="15" uuid="50d8f139-2dbd-4bd9-a50e-781fbe2c5cdc"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Voce]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="17">
+				<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
+$F{CD_CENTRO_RESPONSABILITA}!=null&&
+($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
+$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
+				<staticText>
+					<reportElement key="staticText-54" style="VERB8" x="16" y="1" width="53" height="15" uuid="8dab7f75-3cf6-417f-84ee-768c4f254fff"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="0.0" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle"/>
+					<text><![CDATA[Totale CDR:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="VERB8" x="69" y="1" width="234" height="15" uuid="1027269a-6dc8-4171-8f6c-47b4940a2bd6"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CD_CENTRO_RESPONSABILITA}+" - "+$F{DS_CDR}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="362" y="1" width="59" height="15" uuid="22db3e26-c13c-4b2e-aac1-17baacbdb2a7"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_CDR}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="108ee9d0-c573-4812-9587-ddd326344782"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_TRASFERITO_FIN_CDR}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="539" y="1" width="59" height="15" uuid="699a2931-e67b-4e06-95f5-1b8d16f84d5a"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_CDR}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="5b0fe940-6f0d-40bd-bc7f-73d3a90dd5e7"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_CDR}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="775" y="1" width="59" height="15" uuid="ce99fb72-c8e4-4f99-ab93-fcebe9a7cb26"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_CDR}]]></textFieldExpression>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="303" y="1" width="59" height="15" uuid="9d76cbd7-58ec-41f6-b47a-34e0d332d0e2"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="1" width="59" height="15" uuid="c6732efb-2e94-4015-95b7-194369e66746"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="598" y="1" width="59" height="15" uuid="63f87554-2b32-456e-8bea-97644bd5f43a"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				</textField>
+				<textField evaluationTime="Group" evaluationGroup="CDR" pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="716" y="1" width="59" height="15" uuid="ac9115dd-d095-4926-b00b-9a0a3aa1daee"/>
+					<box topPadding="4" rightPadding="4">
+						<topPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="71">
+			<rectangle>
+				<reportElement x="2" y="1" width="301" height="68" uuid="bd51cefd-c9f3-42d0-9664-74174accce8a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="5" y="39" width="296" height="1" uuid="51af47af-9e8d-430a-b84e-f95730963f99"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="3" width="72" height="10" uuid="709515ee-cd1e-448a-bdac-814bfc90073a"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Tipo Finanziamento:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="VER8" x="77" y="3" width="117" height="10" uuid="935337f3-c06a-403d-b742-989899778d34"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_DESC_FINANZIAMENTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="15" width="41" height="10" uuid="c435a7b4-7145-4663-9c74-924b2bea1dbd"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Data Inizio:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="VER8" x="46" y="15" width="54" height="10" uuid="1dbef90c-197c-4ca0-ac6e-4540ead43385"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_DT_INIZIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="103" y="15" width="37" height="10" uuid="f736cf88-5553-4725-b390-108d4d1b1b4b"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Data Fine:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="VER8" x="140" y="15" width="54" height="10" uuid="2094448e-4da9-4fa6-9235-66580f53a225"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_DT_FINE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="196" y="15" width="51" height="10" uuid="b201b2b1-fb25-4a38-af71-3d91906ad371">
+					<printWhenExpression><![CDATA[$P{P_DT_PROROGA}!=null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Data Proroga:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement style="VER8" x="247" y="15" width="54" height="10" uuid="bf63dece-b75b-434d-a328-b44d0d270bd4"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_DT_PROROGA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="196" y="3" width="64" height="10" uuid="b8540dc7-6826-494e-896e-90b370ad4e48"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Piano Economico:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement style="VER8" x="260" y="3" width="41" height="10" uuid="4e4b3d4b-9f51-45b8-aec7-e9faa4f03158"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_FL_PIANO_ECO_FIN}.equals("Y")?"SI":"NO"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="27" width="67" height="10" uuid="c67d1cb0-d30b-467a-a8bd-12e5cdce4756"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Quota Finanziata:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="147" y="27" width="85" height="10" uuid="8fe1f6f7-9771-4eb7-9011-d31009186e81"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Quota Cofinanziata:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement style="VER8" x="77" y="27" width="60" height="10" uuid="d97b51a7-bc91-4bf8-885c-09e43d44da0d"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_IM_FINANZIATO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement style="VER8" x="232" y="27" width="60" height="10" uuid="c0b4807c-e819-4591-8922-1b6b003b4228"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_IM_COFINANZIATO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="42" width="72" height="10" uuid="ac8047d7-4b20-4df4-8b22-a8e398f081fc"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Importo Accertato:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="77" y="42" width="60" height="10" uuid="f6471376-74eb-4509-aba9-be350f1eb88a"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_TOTALE_ENTRATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="5" y="56" width="67" height="10" uuid="eb0c1f03-781b-4f5d-8391-b02de29eab55"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Importo Riscosso:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="77" y="56" width="60" height="10" uuid="cc757d9a-9073-4f6e-a9a3-165ca3c34c0d"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_TOTALE_REVERSALI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="147" y="56" width="85" height="10" uuid="052add31-aa09-47ca-bf74-9b758d269a39"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Importo da Riscuotere:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="232" y="42" width="60" height="10" uuid="8cafe4c2-b67a-463b-925d-b86337014c90"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_IM_FINANZIATO}.subtract($P{P_TOTALE_ENTRATE})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-54" style="VERB8" x="147" y="42" width="85" height="10" uuid="fcbdc88c-169e-4bb9-bcdb-47c3796fc140"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Importo da Accertare:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="VER8" x="232" y="56" width="60" height="10" uuid="4ff7775c-7b63-41af-acd3-ceaf6547d0f2"/>
+				<box topPadding="0" rightPadding="4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{P_IM_FINANZIATO}.subtract($P{P_TOTALE_REVERSALI})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="303" y="1" width="295" height="29" uuid="680fbaa5-b5d5-4184-b061-0ea83f472fc1"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Quota Finanziata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="598" y="1" width="236" height="29" uuid="7d0bcdfd-e781-40ba-92cc-091ee1451ecc"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Quota Cofinanziata]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="303" y="30" width="59" height="21" uuid="2ed05790-ef28-40bc-b21f-15efbae62662"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Piano
+Economico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="362" y="30" width="59" height="21" uuid="579626e9-0139-473e-8bdd-1f8c3f9ffd53"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Assestato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="421" y="30" width="59" height="21" uuid="e150da9b-327e-40cb-ae84-ae3059557f68"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Trasferito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="480" y="30" width="59" height="21" uuid="278fbcfa-494b-4a02-b336-121205dac326"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Differenza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="539" y="30" width="59" height="21" uuid="c585d929-3e4d-42a4-8b31-53de90159672"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Disponibilità ad Impegnare]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="598" y="30" width="59" height="21" uuid="3dedb61e-551a-4992-af30-4b2325db1905"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Piano
+Economico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="716" y="30" width="59" height="21" uuid="dcd5d0f7-5509-46ad-b42f-0cb3cb2599b1"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Differenza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="775" y="30" width="59" height="21" uuid="0189043b-98bd-477e-81d9-14fe1ce060ec"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Disponibilità ad Impegnare]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="657" y="30" width="59" height="21" uuid="3237da05-0caf-433f-9047-c4d9d7210ab0"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Assestato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="303" y="51" width="59" height="18" uuid="f28f9481-f56b-48c0-8fce-e6a942ae1e6f"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(a)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="362" y="51" width="59" height="18" uuid="04e2d239-4876-4c56-8b99-68df3bcfddb8"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(b)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="421" y="51" width="59" height="18" uuid="dd4159c5-aab9-46ab-b446-4b244dab231c"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(c)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="480" y="51" width="59" height="18" uuid="e5c81582-b5f2-490b-94c2-071dcd22622c"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(d=a-b-c)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="539" y="51" width="59" height="18" uuid="189e9beb-838d-477b-a733-bdb3330f4cc2"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(e)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="657" y="51" width="59" height="18" uuid="0b1360ce-57d3-47f0-8655-9f085982e0cd"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(g)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="775" y="51" width="59" height="18" uuid="f9077c73-b5de-4deb-9460-e82afae38e85"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(i)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="598" y="51" width="59" height="18" uuid="e2e2b5fd-bcf4-4ae7-a6bb-2f25e7b9a54b"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(f)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-44" style="VERB8" x="716" y="51" width="59" height="18" uuid="bdce3f92-4bf6-4a62-8349-4fa402eb6dab"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[(h=f-g)]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="17">
+			<printWhenExpression><![CDATA[$P{P_PRINT_DETAIL}.equals("Y")&&
+$F{CD_CENTRO_RESPONSABILITA}!=null&&
+($F{CD_CENTRO_RESPONSABILITA}.equals($P{P_CENTRO_RESPONSABILITA})||
+$P{P_CENTRO_RESPONSABILITA}.substring(7).equals($P{P_UO_COORDINATRICE})||
+$P{P_UO_ENTE}.equals("Y"))]]></printWhenExpression>
+			<textField>
+				<reportElement style="VERB8" x="27" y="1" width="62" height="15" uuid="97325fb5-eaf7-46d3-8bad-657925cdf9fa"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_LINEA_ATTIVITA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="VER8" x="89" y="1" width="35" height="15" uuid="61f7f355-e6ce-46fd-a80e-2678a67a14bb"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_NATURA}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="VER8" x="124" y="1" width="179" height="15" uuid="3ac7599d-55fe-4ea5-a466-88a034c52280"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="362" y="1" width="59" height="15" uuid="3eb341c5-e006-4e55-ade3-e4ff2a8225e7"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{ASSESTATO_FIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="98972277-2d4b-4741-b00a-ddce3203beaf"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{TRASFERITO_FIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="539" y="1" width="59" height="15" uuid="fe2d640b-c3ce-4b2e-b562-26ff6e2b3543"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{DISP_IMPEGNO_FIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="26b662df-3e87-4ea6-b494-3699c15552b3"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{ASSESTATO_COFIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VER8" positionType="Float" stretchType="RelativeToBandHeight" x="775" y="1" width="59" height="15" uuid="6f2fd695-95de-4533-bd69-b22c548401fc"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{DISP_IMPEGNO_COFIN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="17">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="VERB8" x="4" y="1" width="296" height="15" uuid="52cf3e27-aabd-437c-8aac-9c6fcaf9d22a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["TOTALE GENERALE"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="303" y="1" width="59" height="15" uuid="ecc7407b-9781-4541-8751-5d2ef4019afd"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_GEN}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="362" y="1" width="59" height="15" uuid="8c46bead-82a7-4c01-a779-352daa400880"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_FIN_GEN}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="421" y="1" width="59" height="15" uuid="e123c016-a394-4bfc-8273-9cf686b1e8ae"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_TRASFERITO_FIN_GEN}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="598" y="1" width="59" height="15" uuid="9a428db1-9e55-4cbb-a076-c0e3c40dfba7"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_GEN}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="539" y="1" width="59" height="15" uuid="41af479e-9800-44a5-bd46-7d2714dee4c1"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_FIN_GEN}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="480" y="1" width="59" height="15" uuid="0ed86afb-99a9-4c11-a986-1b70e64a7e2b"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_IMPORTO_FIN_GEN}
+.subtract($V{SUM_ASSESTATO_FIN_GEN})
+.subtract($V{SUM_TRASFERITO_FIN_GEN})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="716" y="1" width="59" height="15" uuid="8609418d-a06c-4783-9668-de6e7d5ca5fd"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_IMPORTO_COFIN_GEN}
+.subtract($V{SUM_ASSESTATO_COFIN_GEN})]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="657" y="1" width="59" height="15" uuid="795478e4-a922-4c65-a1dc-eca46c729683"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_COFIN_GEN}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Group" evaluationGroup="VOCE_ECONOMICA" pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-62" style="VERB8" positionType="Float" stretchType="RelativeToBandHeight" x="775" y="1" width="59" height="15" uuid="84d7f25f-8d3f-4f41-b641-7859d6693c39"/>
+				<box topPadding="4" rightPadding="4">
+					<topPen lineWidth="0.5" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{SUM_DISP_IMPEGNO_COFIN_GEN}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
