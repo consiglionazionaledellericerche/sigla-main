@@ -27,6 +27,8 @@
 	<field name="tipoAttivita" class="java.lang.String"/>
 	<field name="nomeCognomeUtente" class="java.lang.String"/>
 	<field name="anno" class="java.lang.String"/>
+	<field name="modalita" class="java.lang.String"/>
+	<field name="dataAvvioSmartWorking" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -34,7 +36,7 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="170" splitType="Stretch">
+		<band height="152" splitType="Stretch">
 			<image onErrorType="Blank">
 				<reportElement key="image-1" x="0" y="0" width="553" height="41" uuid="fc584efd-e1bd-4b99-b160-de23e440a320"/>
 				<box>
@@ -77,13 +79,6 @@
 					<textFieldExpression><![CDATA["DIRETTORE/DIRIGENTE/RESPONSABILE: " + $F{direttore}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement key="staticText-1" style="TNRG12" x="1" y="154" width="552" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
-					<textElement markup="none">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese}]]></textFieldExpression>
-				</textField>
-				<textField>
 					<reportElement key="staticText-1" style="TNRG12" x="1" y="101" width="552" height="13" uuid="96be028c-85f4-4344-8e4c-a670330aaeda"/>
 					<textElement markup="none">
 						<font size="10" isBold="true"/>
@@ -91,7 +86,7 @@
 					<textFieldExpression><![CDATA["NOMINATIVO: " + $F{nomeCognomeUtente}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement key="staticText-1" style="TNRG12" x="1" y="76" width="552" height="13" uuid="bc32d321-748e-4778-91d5-660d9a8c1ccb"/>
+					<reportElement key="staticText-1" style="TNRGC12" x="1" y="76" width="552" height="13" uuid="bc32d321-748e-4778-91d5-660d9a8c1ccb"/>
 					<textElement textAlignment="Center" markup="none">
 						<font size="10" isBold="true" isItalic="true"/>
 					</textElement>
@@ -104,6 +99,36 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
+		<band height="19" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("rendicontazione")]]></printWhenExpression>
+			<textField>
+				<reportElement key="staticText-1" style="TNRG12" x="0" y="2" width="552" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
+				<textElement markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="19" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<textField>
+				<reportElement key="staticText-1" style="TNRG12" x="0" y="2" width="224" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
+				<textElement markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DATA DI AVVIO DELLO SMART WORKING: "]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement key="staticText-1" style="TNRG12" x="224" y="2" width="224" height="13" uuid="89a09416-19a1-404a-8dc0-9241fb626d49"/>
+				<textElement markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(
+    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        .parse($F{dataAvvioSmartWorking})
+)]]></textFieldExpression>
+			</textField>
+		</band>
 		<band height="25" splitType="Stretch">
 			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("rendicontazione")]]></printWhenExpression>
 			<textField>
@@ -114,6 +139,16 @@
 				<textFieldExpression><![CDATA["Relazione sulle attività svolte"]]></textFieldExpression>
 			</textField>
 		</band>
+		<band height="24">
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<textField>
+				<reportElement key="staticText-1" style="TNRGC14" x="0" y="1" width="552" height="17" uuid="655ba701-af05-40cb-927e-c21f1a7be679"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Attività in smart working"]]></textFieldExpression>
+			</textField>
+		</band>
 		<band height="6">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="1" y="1" width="553" height="1" uuid="216673d5-1bf0-4959-8abb-9150d940e03d"/>
@@ -122,13 +157,42 @@
 				</graphicElement>
 			</line>
 		</band>
-		<band height="50">
+		<band height="28">
 			<textField isStretchWithOverflow="true">
-				<reportElement key="staticText-1" style="TNRG12" x="2" y="3" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
+				<reportElement key="staticText-1" style="TNRG12" x="1" y="3" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
 				<textElement textAlignment="Justified" markup="html">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="44">
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<textField>
+				<reportElement key="staticText-1" style="TNRGC14" x="0" y="24" width="552" height="17" uuid="6008452e-f2fa-4155-863d-ecb593d235f8"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Modalità di svolgimento dell’attività lavorativa"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="6">
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="1" width="553" height="1" uuid="216673d5-1bf0-4959-8abb-9150d940e03d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="44">
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement key="staticText-1" style="TNRG12" x="1" y="1" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="65366b15-f49b-4f19-8b33-f9f5633a5d47"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modalita}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
