@@ -25,6 +25,8 @@
 	<field name="mese" class="java.lang.String"/>
 	<field name="attivita_svolta" class="java.lang.String"/>
 	<field name="tipoAttivita" class="java.lang.String"/>
+	<field name="nomeCognomeUtente" class="java.lang.String"/>
+	<field name="anno" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -32,7 +34,7 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="134" splitType="Stretch">
+		<band height="170" splitType="Stretch">
 			<image onErrorType="Blank">
 				<reportElement key="image-1" x="0" y="0" width="553" height="41" uuid="fc584efd-e1bd-4b99-b160-de23e440a320"/>
 				<box>
@@ -52,34 +54,50 @@
 "Scheda di programmazione dell’attività individuale in modalità di lavoro agile":
 "Scheda di monitoraggio dell’attività individuale in modalità di lavoro agile"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement key="staticText-1" style="TNRG12" x="1" y="80" width="281" height="13" uuid="685d6aa4-c4b2-4439-8611-7f530734f4a8"/>
-				<textElement markup="none">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["MATRICOLA: " + $F{matricola}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement key="staticText-1" style="TNRG12" x="296" y="80" width="257" height="13" uuid="e1a8fc7a-94fb-4c3d-bc2c-5d1ec8b8052a"/>
-				<textElement markup="none">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["CDS: " + $F{cds}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement key="staticText-1" style="TNRG12" x="1" y="97" width="552" height="13" uuid="b9fd8816-7925-4b98-956b-23cbde2318ba"/>
-				<textElement markup="none">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["DIRETTORE/DIRIGENTE/RESPONSABILE: " + $F{direttore}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement key="staticText-1" style="TNRG12" x="1" y="115" width="552" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
-				<textElement markup="none">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese}]]></textFieldExpression>
-			</textField>
+			<elementGroup>
+				<textField>
+					<reportElement key="staticText-1" style="TNRG12" x="296" y="119" width="257" height="13" uuid="e1a8fc7a-94fb-4c3d-bc2c-5d1ec8b8052a"/>
+					<textElement markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["CDS: " + $F{cds}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="staticText-1" style="TNRG12" x="1" y="119" width="281" height="13" uuid="685d6aa4-c4b2-4439-8611-7f530734f4a8"/>
+					<textElement markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["MATRICOLA: " + $F{matricola}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="staticText-1" style="TNRG12" x="1" y="136" width="552" height="13" uuid="b9fd8816-7925-4b98-956b-23cbde2318ba"/>
+					<textElement markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["DIRETTORE/DIRIGENTE/RESPONSABILE: " + $F{direttore}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="staticText-1" style="TNRG12" x="1" y="154" width="552" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
+					<textElement markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["MESE MONITORAGGIO: " + $F{mese}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="staticText-1" style="TNRG12" x="1" y="101" width="552" height="13" uuid="96be028c-85f4-4344-8e4c-a670330aaeda"/>
+					<textElement markup="none">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["NOMINATIVO: " + $F{nomeCognomeUtente}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement key="staticText-1" style="TNRG12" x="1" y="76" width="552" height="13" uuid="bc32d321-748e-4778-91d5-660d9a8c1ccb"/>
+					<textElement textAlignment="Center" markup="none">
+						<font size="10" isBold="true" isItalic="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ANNO " + $F{anno}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
 		</band>
 	</pageHeader>
 	<columnHeader>
