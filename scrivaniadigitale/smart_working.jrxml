@@ -126,7 +126,7 @@
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="513" y="0" width="40" height="20" uuid="581306bb-5afb-4ca2-ab69-25b1e76d90fc"/>
+				<reportElement x="513" y="3" width="40" height="20" uuid="581306bb-5afb-4ca2-ab69-25b1e76d90fc"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
