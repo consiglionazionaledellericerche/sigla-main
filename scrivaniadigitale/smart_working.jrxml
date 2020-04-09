@@ -53,8 +53,8 @@
 					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipoAttivita}.equals("rendicontazione")?
-"Scheda di programmazione dell’attività individuale in modalità di lavoro agile":
-"Scheda di monitoraggio dell’attività individuale in modalità di lavoro agile"]]></textFieldExpression>
+"Scheda di monitoraggio dell’attività individuale in modalità di lavoro agile":
+"Scheda di programmazione dell’attività individuale in modalità di lavoro agile"]]></textFieldExpression>
 			</textField>
 			<elementGroup>
 				<textField>
