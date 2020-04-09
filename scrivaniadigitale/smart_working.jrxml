@@ -24,6 +24,7 @@
 	<field name="direttore" class="java.lang.String"/>
 	<field name="mese" class="java.lang.String"/>
 	<field name="attivita_svolta" class="java.lang.String"/>
+	<field name="tipoAttivita" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -47,7 +48,9 @@
 				<textElement textAlignment="Center" markup="none">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Scheda di monitoraggio dell’attività individuale in modalità di lavoro agile"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tipoAttivita}.equals("rendicontazione")?
+"Scheda di programmazione dell’attività individuale in modalità di lavoro agile":
+"Scheda di monitoraggio dell’attività individuale in modalità di lavoro agile"]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement key="staticText-1" style="TNRG12" x="1" y="80" width="281" height="13" uuid="685d6aa4-c4b2-4439-8611-7f530734f4a8"/>
@@ -84,37 +87,39 @@
 	</columnHeader>
 	<detail>
 		<band height="25" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("rendicontazione")]]></printWhenExpression>
 			<textField>
 				<reportElement key="staticText-1" style="TNRGC14" x="0" y="4" width="552" height="17" uuid="60c7777e-8df1-42b8-aab1-896d5a56f0e4"/>
 				<textElement textAlignment="Center" markup="none">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Relazione sulle attività svolte"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Relazione sulle attività svolte"
+]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="1" y="23" width="553" height="1" uuid="216673d5-1bf0-4959-8abb-9150d940e03d"/>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
-				</graphicElement>
-			</line>
 		</band>
 		<band height="50">
 			<textField isStretchWithOverflow="true">
-				<reportElement key="staticText-1" style="TNRG12" x="1" y="3" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
+				<reportElement key="staticText-1" style="TNRG12" x="1" y="9" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
 				<textElement textAlignment="Justified" markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="1" width="553" height="1" uuid="216673d5-1bf0-4959-8abb-9150d940e03d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="20" splitType="Stretch">
+		<band height="28" splitType="Stretch">
 			<textField>
-				<reportElement x="433" y="0" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9"/>
+				<reportElement x="433" y="3" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
@@ -128,7 +133,7 @@
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="0" width="197" height="20" uuid="c8b2c202-b6e3-428a-b7ea-e58e4eb3e7f8"/>
+				<reportElement x="0" y="3" width="197" height="20" uuid="c8b2c202-b6e3-428a-b7ea-e58e4eb3e7f8"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
