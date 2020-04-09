@@ -93,8 +93,7 @@
 				<textElement textAlignment="Center" markup="none">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Relazione sulle attività svolte"
-]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Relazione sulle attività svolte"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="50">
@@ -103,7 +102,7 @@
 				<textElement textAlignment="Justified" markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{attivita_svolta}.replace("\\n","\n")]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="1" y="1" width="553" height="1" uuid="216673d5-1bf0-4959-8abb-9150d940e03d"/>
