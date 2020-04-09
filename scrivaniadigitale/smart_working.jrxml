@@ -96,20 +96,22 @@
 				<textFieldExpression><![CDATA["Relazione sulle attività svolte"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="50">
-			<textField isStretchWithOverflow="true">
-				<reportElement key="staticText-1" style="TNRG12" x="1" y="9" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
-				<textElement textAlignment="Justified" markup="none">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
-			</textField>
+		<band height="6">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="1" y="1" width="553" height="1" uuid="216673d5-1bf0-4959-8abb-9150d940e03d"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+		</band>
+		<band height="50">
+			<textField isStretchWithOverflow="true">
+				<reportElement key="staticText-1" style="TNRG12" x="2" y="3" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
+				<textElement textAlignment="Justified" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
