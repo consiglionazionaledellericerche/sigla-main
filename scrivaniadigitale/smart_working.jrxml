@@ -126,7 +126,10 @@
 				<textElement markup="none">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{dataAvvioSmartWorking}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(
+    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        .parse($F{dataAvvioSmartWorking})
+)]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="25" splitType="Stretch">
