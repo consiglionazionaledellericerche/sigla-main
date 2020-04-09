@@ -121,7 +121,7 @@
 			<textField pattern="">
 				<reportElement key="staticText-1" style="TNRG12" x="224" y="2" width="224" height="13" uuid="89a09416-19a1-404a-8dc0-9241fb626d49">
 					<printWhenExpression><![CDATA[$F{dataAvvioSmartWorking} != null &&
-$F{dataAvvioSmartWorking}.length() > 0]]></printWhenExpression>
+!$F{dataAvvioSmartWorking}.equals("null")]]></printWhenExpression>
 				</reportElement>
 				<textElement markup="none">
 					<font size="10" isBold="true"/>
