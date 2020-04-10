@@ -164,7 +164,7 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement key="staticText-1" style="TNRG12" x="1" y="3" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="7eecd943-ebe0-4508-a377-823a3d4164b3"/>
 				<textElement textAlignment="Justified" markup="html">
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{attivita_svolta}]]></textFieldExpression>
 			</textField>
@@ -193,7 +193,7 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement key="staticText-1" style="TNRG12" x="1" y="1" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="65366b15-f49b-4f19-8b33-f9f5633a5d47"/>
 				<textElement textAlignment="Justified" markup="html">
-					<font size="10" isBold="true"/>
+					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{modalita}]]></textFieldExpression>
 			</textField>
