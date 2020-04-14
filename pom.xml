@@ -50,7 +50,7 @@
 		<pdfbox.version>2.0.0</pdfbox.version>
 		<storage.cloud.version>2.0.6</storage.cloud.version>
 		<git.changelog.maven.plugin.version>1.61</git.changelog.maven.plugin.version>
-		<version.thorntail>2.5.0.Final</version.thorntail>
+		<version.thorntail>2.6.0.Final</version.thorntail>
 
 		<version.arquillian>1.2.1.Final</version.arquillian>
 		<version.arquillian-drone>2.0.1.Final</version.arquillian-drone>

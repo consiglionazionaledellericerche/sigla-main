@@ -127,6 +127,10 @@ thorntail:
     default-security-domain: other
     default-missing-method-permissions-deny-access: true
 
+  swagger:
+    web-app:
+      context: swagger
+
 repository:
   base:
     url: http://as1dock.si.cnr.it:8080/alfresco/
