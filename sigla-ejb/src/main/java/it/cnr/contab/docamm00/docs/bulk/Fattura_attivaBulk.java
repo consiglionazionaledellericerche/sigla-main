@@ -22,6 +22,7 @@ package it.cnr.contab.docamm00.docs.bulk;
  * Creation date: (9/5/2001 5:02:18 PM)
  * @author: Ardire Alfonso
  */
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
@@ -69,6 +70,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String CONTRATTO           = "C";
 	public final static String LIBERA              = "L";
 	public final static String TARIFFARIO          = "T";
+	@JsonIgnore
 	private int num_dettColl=0;
 
 	private StorageObject storageObject;
@@ -146,6 +148,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public final static String TIPO_FATTURA_ATTIVA = "F";
 	public final static String TIPO_NOTA_DI_CREDITO = "C";
 	public final static String TIPO_NOTA_DI_DEBITO = "D";
+	@JsonIgnore
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	private String statoFattElett;
 	public final static Dictionary statoInvioSdiKeys;
@@ -242,61 +245,86 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		tipoFatturaKeys.put(TIPO_NOTA_DI_DEBITO,"Nota Debito");	
 
 	}
+	@JsonIgnore
 	protected SezionaleBulk sezionale;
+	@JsonIgnore
 	protected Tipo_sezionaleBulk tipo_sezionale;
+	@JsonIgnore
 	protected DivisaBulk valuta;
+	@JsonIgnore
 	private Fattura_attivaBulk fattura_attiva;
+	@JsonIgnore
 	protected AnagraficoBulk anagrafico;
+	@JsonIgnore
 	protected TerzoBulk cliente;
-	protected TerzoBulk terzo_uo;	
+	@JsonIgnore
+	protected TerzoBulk terzo_uo;
+	@JsonIgnore
 	protected BancaBulk banca_uo;
 	protected Rif_modalita_pagamentoBulk modalita_pagamento_uo;
 	protected Rif_termini_pagamentoBulk termini_pagamento_uo;
 	protected Consuntivo_rigaVBulk consuntivo_riga;
 
+	@JsonIgnore
 	private BulkList fattura_attiva_dettColl = new BulkList();
+	@JsonIgnore
 	private BulkList riferimenti_bancari = new BulkList();
+	@JsonIgnore
 	private Collection fattura_attiva_consuntivoColl = new Vector();
+	@JsonIgnore
 	private AccertamentiTable fattura_attiva_accertamentiHash = null;
+	@JsonIgnore
 	private Map fattura_attiva_ass_totaliMap = null;
+	@JsonIgnore
 	private CarichiInventarioTable carichiInventarioHash = null;
+	@JsonIgnore
 	private AssociazioniInventarioTable associazioniInventarioHash = null;
+	@JsonIgnore
 	private Boolean ha_beniColl;
+	@JsonIgnore
 	private java.math.BigDecimal importoTotalePerAccertamento = new java.math.BigDecimal(0);
 
 	public static final char DIVISIONE = '/';
 	public static final char MOLTIPLICA = '*';
+	@JsonIgnore
 	private char changeOperation = MOLTIPLICA;
 	private java.sql.Timestamp inizio_validita_valuta;
 	private java.sql.Timestamp fine_validita_valuta;
 
-
-
+	@JsonIgnore
 	private java.util.Collection sezionali;
+	@JsonIgnore
 	private java.util.Collection tipo_prestazioni;
-
-	private java.util.Collection valute;	
+	@JsonIgnore
+	private java.util.Collection valute;
+	@JsonIgnore
 	private java.util.Collection banche_uo;
+	@JsonIgnore
 	private java.util.Collection modalita_uo;
+	@JsonIgnore
 	private java.util.Collection termini_uo;
 
 	public final static String STATO_IVA_A = "A";
 	public final static String STATO_IVA_B = "B";
 	public final static String STATO_IVA_C = "C";
 
-
+	@JsonIgnore
 	private java.util.Vector dettagliCancellati = new Vector();
+	@JsonIgnore
 	private java.util.Vector documentiContabiliCancellati = new Vector();
+	@JsonIgnore
 	private PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
-
+	@JsonIgnore
 	private boolean isDeleting = false;
+	@JsonIgnore
 	private String sezionaliFlag = SEZIONALI_FLAGS_ALL;
 
 	private java.lang.String riportata = NON_RIPORTATO;
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 	private Integer esercizioInScrivania;
-
+	@JsonIgnore
 	private String collegamentoDocumentale;
+	@JsonIgnore
 	private Boolean caricaDatiPerFatturazioneElettronica = true;
 
 	/*
@@ -305,17 +333,27 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * procedura provvede a non rieffettuare la ricontabilizzazione in COAN e COGE.
 	 *    
 	 */
-	private boolean isDetailDoubled = false; //serve per sapere se è stata sdoppiata una riga di dettaglio 
+	@JsonIgnore
+	private boolean isDetailDoubled = false; //serve per sapere se è stata sdoppiata una riga di dettaglio
+	@JsonIgnore
 	private boolean isDocumentoModificabile = true; //serve per sapere se il documento è modificabile o meno
-
+	@JsonIgnore
 	private java.sql.Timestamp dt_termine_creazione_docamm = null;
+	@JsonIgnore
 	private boolean isGestoreBancaFatturaAttiva;
+	@JsonIgnore
 	private boolean isIvaRecuperabile=true;
+	@JsonIgnore
 	private BulkList fattura_attiva_intrastatColl = new BulkList();
+	@JsonIgnore
 	private java.util.Collection modalita_trasportoColl = null;
+	@JsonIgnore
 	private java.util.Collection condizione_consegnaColl = null;
+	@JsonIgnore
 	private java.util.Collection modalita_erogazioneColl = null;
+	@JsonIgnore
 	private java.util.Collection modalita_incassoColl = null;
+	@JsonIgnore
 	private boolean isAttivoSplitPayment=false;
 
 	public Fattura_attivaBulk() {
@@ -599,8 +637,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public char getChangeOperation() {
 		return changeOperation;
 	}
+	@JsonIgnore
 	public List getChildren() {
-
 		return getFattura_attiva_dettColl();
 	}
 
@@ -675,6 +713,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (2/15/2002 2:28:51 PM)
 	 * @return java.util.Vector
 	 */
+	@JsonIgnore
 	public java.util.Vector getDettagliNonContabilizzati() {
 
 		Vector dettagliNonContabilizzati = new Vector();
@@ -692,8 +731,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (2/15/2002 2:28:51 PM)
 	 * @return java.util.Vector
 	 */
+	@JsonIgnore
 	public java.util.Vector getDettagliPagati() {
-
 		Vector dettagliPagati = new Vector();
 		if (getFattura_attiva_dettColl() != null) {
 			for (Iterator i = getFattura_attiva_dettColl().iterator(); i.hasNext();) {
@@ -709,15 +748,16 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (2/15/2002 2:31:04 PM)
 	 * @return java.util.Vector
 	 */
+	@JsonIgnore
 	public java.util.Vector getDocumentiContabiliCancellati() {
 		return documentiContabiliCancellati;
 	}
+	@JsonIgnore
 	public Class getDocumentoAmministrativoClassForDelete() {
-
 		return Fattura_attiva_IBulk.class;
 	}
+	@JsonIgnore
 	public Class getDocumentoContabileClassForDelete() {
-
 		return it.cnr.contab.doccont00.core.bulk.ObbligazioneOrdBulk.class;
 	}
 	/**
@@ -895,6 +935,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	/* 
 	 * Getter dell'attributo riportata
 	 */
+	@JsonIgnore
 	public Dictionary getRiportataKeys() {
 		return STATI_RIPORTO;
 	}
@@ -903,6 +944,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (25/02/2002 17.21.44)
 	 * @return java.util.Dictionary
 	 */
+	@JsonIgnore
 	public final static java.util.Dictionary getSan_marinoKeys() {
 		return san_marinoKeys;
 	}
@@ -911,6 +953,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (18/10/2001 14.41.50)
 	 * @return it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk
 	 */
+	@JsonIgnore
 	public it.cnr.contab.docamm00.tabrif.bulk.SezionaleBulk getSezionale() {
 		return sezionale;
 	}
@@ -919,6 +962,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (18/10/2001 14.41.50)
 	 * @return java.util.Collection
 	 */
+	@JsonIgnore
 	public java.util.Collection<Tipo_sezionaleBulk> getSezionali() {
 		return sezionali;
 	}
@@ -927,8 +971,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (3/13/2002 10:36:39 AM)
 	 * @return int
 	 */
+	@JsonIgnore
 	public String getSezionaliFlag() {
-
 		if (getFl_intra_ue() != null && getFl_intra_ue().booleanValue()) {
 			setFl_extra_ue(Boolean.FALSE);
 			setFl_san_marino(Boolean.FALSE);
@@ -958,9 +1002,11 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (3/13/2002 10:36:39 AM)
 	 * @return int
 	 */
+	@JsonIgnore
 	public Dictionary getSezionaliFlags() {
 		return SEZIONALI_FLAG_KEYS;
 	}
+	@JsonIgnore
 	public Dictionary getStato_cofiKeys() {
 		return STATO;
 	}
@@ -969,7 +1015,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 *
 	 * @return java.util.Dictionary
 	 */
-
+	@JsonIgnore
 	public Dictionary getStato_cofiKeysForSearch() {
 
 		it.cnr.jada.util.OrderedHashtable d = (it.cnr.jada.util.OrderedHashtable)getStato_cofiKeys();
@@ -984,8 +1030,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (2/15/2002 2:28:51 PM)
 	 * @return java.util.Vector
 	 */
+	@JsonIgnore
 	public String getStatoIVA() {
-
 		return (getProtocollo_iva() == null ||
 				getProtocollo_iva_generale() == null) ?
 						"A" : "B";
@@ -1017,12 +1063,14 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	/* 
 	 * Getter dell'attributo ti_associato_manrev
 	 */
+	@JsonIgnore
 	public Dictionary getTi_associato_manrevKeys() {
 		return STATO_MANDATO;
 	}
 	/* 
 	 * Getter dell'attributo ti_associato_manrev
 	 */
+	@JsonIgnore
 	public Dictionary getTi_associato_manrevKeysForSearch() {
 		return getTi_associato_manrevKeys();
 	}
@@ -1031,7 +1079,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 *
 	 * @return java.util.Dictionary
 	 */
-
+	@JsonIgnore
 	public Dictionary getTi_causale_emissioneKeys() {
 		return TMOTIVOEMISSIONE;
 	}
@@ -1165,6 +1213,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isAbledToInsertUOBank() {
 		return getTerzo_uo() == null;
 	}
@@ -1173,8 +1222,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isAbledToModifyTipoFattura() {
-
 		return ! (getCrudStatus() == OggettoBulk.UNDEFINED ||
 				(fattura_attiva_dettColl != null &&
 				fattura_attiva_dettColl.isEmpty() &&
@@ -1238,8 +1287,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isROcliente() {
-
 		return isROClienteSearchTool() || getCliente() == null ||
 				getCliente().getCrudStatus() == OggettoBulk.NORMAL;
 	}
@@ -1248,8 +1297,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isROClienteCrudTool() {
-
 		return isROClienteSearchTool();
 	}
 	/**
@@ -1257,8 +1306,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isROclienteForSearch() {
-
 		return isROcliente();
 	}
 	/**
@@ -1266,8 +1315,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isROClienteSearchTool() {
-
 		return 	(fattura_attiva_accertamentiHash != null && 
 				!fattura_attiva_accertamentiHash.isEmpty()) ||
 				(fattura_attiva_intrastatColl != null && 
@@ -1279,8 +1328,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isRODateCompetenzaCOGE() {
-
 		return getFattura_attiva_dettColl() != null &&
 				!getFattura_attiva_dettColl().isEmpty();
 	}
@@ -1289,8 +1338,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isROFl_liquidazione_differita() {
-
 		return isStampataSuRegistroIVA();
 	}
 	/**
@@ -1298,8 +1347,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isROimporto() {
-
 		return true;
 	}
 	/**
@@ -1307,8 +1356,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Creation date: (10/4/2001 2:42:26 PM)
 	 * @return boolean
 	 */
+	@JsonIgnore
 	public boolean isROImportoTotalePerAccertamento() {
-
 		return true;
 	}
 	/**
@@ -1317,7 +1366,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * @return java.util.Vector
 	 */
 	public boolean isStampataSuRegistroIVA() {
-
 		return STATO_IVA_B.equalsIgnoreCase(getStatoIVA()) ||
 				STATO_IVA_C.equalsIgnoreCase(getStatoIVA());
 	}
@@ -1325,8 +1373,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	 * Insert the method's description here.
 	 * Creation date: (13/05/2002 11.33.25)
 	 */
+	@JsonIgnore
 	public boolean isVoidable() {
-
 		// Gennaro Borriello - (02/11/2004 16.48.21)
 		// Fix sul controllo dello "Stato Riportato": controlla che il documento sia stato riportato 
 		//	DA UN ES. PRECEDENTE a quello di scrivania.			
@@ -1973,7 +2021,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public void setHa_beniColl(Boolean ha_beniColl) {
 		this.ha_beniColl = ha_beniColl;
 	}
-
+	@JsonIgnore
 	public boolean isDetailDoubled() {
 		return isDetailDoubled;
 	}
@@ -1986,7 +2034,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public void setDocumentoModificabile(boolean isDocumentoModificabile) {
 		this.isDocumentoModificabile = isDocumentoModificabile;
 	}
-
+	@JsonIgnore
 	public boolean isROModalita_pagamento() {
 		//	if (isRiportata()&& isContabilizzato()) 
 		return false;
@@ -1996,17 +2044,20 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public void setIvaRecuperabile(boolean isIvaRecuperabile) {
 		this.isIvaRecuperabile = isIvaRecuperabile;
 	}
+	@JsonIgnore
 	public boolean isIvaRecuperabile() {
 		return isIvaRecuperabile;
 	}
+	@JsonIgnore
 	public Dictionary getTi_bene_servizioKeys() {
 		return FATTURA_BENI_SERVIZI;
 	}
+	@JsonIgnore
 	public Dictionary getStatoFattureElettronicheKeys() {
 		return statoFattureElettronicheKeys;
 	}
+	@JsonIgnore
 	public boolean isROTi_bene_servizio() {
-
 		return	//isCommerciale() &&
 				((getFl_extra_ue() != null && getFl_extra_ue().booleanValue()) ||
 						(getFl_intra_ue() != null && getFl_intra_ue().booleanValue())) &&
@@ -2080,8 +2131,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 			BulkList fattura_attiva_intrastatColl) {
 		this.fattura_attiva_intrastatColl = fattura_attiva_intrastatColl;
 	}
+	@JsonIgnore
 	public String getSupplierNationType() {
-
 		String cond = null;
 		if (getFl_intra_ue() != null && getFl_intra_ue().booleanValue())
 			cond = it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk.CEE;
@@ -2093,8 +2144,8 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 			cond = it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk.ITALIA;
 		return cond;
 	}
+	@JsonIgnore
 	public boolean isAbledToModifyFlagsTipoFattura() {
-
 		return isAbledToModifyTipoFattura() ||
 				(getCliente() != null &&
 				getCliente().getCrudStatus() == OggettoBulk.NORMAL);

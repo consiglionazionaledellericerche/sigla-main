@@ -11,7 +11,7 @@
 ## MAVEN dependency
 |Artifact| Version |
 |---|---|
-|[thorntail.io](https://thorntail.io/)| ![Maven Central](https://img.shields.io/maven-central/v/io.thorntail/bom-all/2.5.0.Final.svg)|
+|[thorntail.io](https://thorntail.io/)| ![Maven Central](https://img.shields.io/maven-central/v/io.thorntail/bom-all/2.6.0.Final.svg)|
 |[Spring.io](https://spring.io/)| ![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.springframework/spring-context/5.1.8.RELEASE.svg) |
 |[Liquibase](https://www.liquibase.org/) | ![Maven Central](https://img.shields.io/maven-central/v/org.liquibase/liquibase-core/3.5.3.svg)|
 |[SIOPE+](https://github.com/consiglionazionaledellericerche/siopeplus) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/siopeplus.svg)|

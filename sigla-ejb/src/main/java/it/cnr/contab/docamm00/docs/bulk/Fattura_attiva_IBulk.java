@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -30,9 +31,11 @@ import it.cnr.jada.util.action.CRUDBP;
  */
 @JsonInclude(value=Include.NON_NULL)
 public class Fattura_attiva_IBulk extends Fattura_attivaBulk {
-
+	@JsonIgnore
 	private Nota_di_credito_attivaBulk notaCreditoAutomaticaGenerata = null;
+	@JsonIgnore
 	private java.util.HashMap storniHashMap = new java.util.HashMap();
+	@JsonIgnore
 	private java.util.HashMap addebitiHashMap = new java.util.HashMap();
 	/**
 	 * Fattura_attiva_IBulk constructor comment.

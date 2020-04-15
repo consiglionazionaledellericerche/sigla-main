@@ -17,6 +17,10 @@
 
 package it.cnr.contab.web.rest.local.doccont;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
 import it.cnr.contab.web.rest.config.SIGLARoles;
 
 import javax.annotation.security.RolesAllowed;
@@ -26,15 +30,23 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Local
 @Path("/datiPagamenti")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RolesAllowed(SIGLARoles.PORTALE)
+@Api("Comunicazione Dati Pagamenti")
 public interface ComunicaDatiPagamentiLocal {
 
     @GET
+    @ApiOperation(value = "Recupera i dati dei pagamenti",
+            notes = "Accesso consentito solo alle utenze abilitate al ruolo PORTALE",
+            response = MandatoComunicaDatiBulk.class,
+            responseContainer = "List",
+            authorizations = @Authorization(value = "BASIC")
+    )
     Response recuperoDatiPagamenti(@Context HttpServletRequest request,
                                    @QueryParam("esercizio") Integer esercizio,
                                    @QueryParam("cdCds") String cdCds,

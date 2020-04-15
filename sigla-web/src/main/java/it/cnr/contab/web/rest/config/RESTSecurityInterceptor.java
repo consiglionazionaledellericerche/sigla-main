@@ -23,6 +23,7 @@ import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import java.util.Arrays;
@@ -39,9 +40,7 @@ import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.container.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MultivaluedMap;
@@ -55,7 +54,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Provider
-public class RESTSecurityInterceptor implements ContainerRequestFilter, ExceptionMapper<Exception> {
+public class RESTSecurityInterceptor implements ContainerRequestFilter, ContainerResponseFilter , ExceptionMapper<Exception> {
 
 	private Logger LOGGER = LoggerFactory.getLogger(RESTSecurityInterceptor.class);
 	@Context
@@ -169,5 +168,14 @@ public class RESTSecurityInterceptor implements ContainerRequestFilter, Exceptio
 			return Response.status(((RestException)exception.getCause()).getStatus()).entity(((RestException)exception.getCause()).getErrorMap()).build();			
 		LOGGER.error("ERROR for REST SERVICE", exception);
 		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(exception).build();
+	}
+
+	@Override
+	public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
+		containerRequestContext.getHeaders().add("Access-Control-Allow-Origin", "*");
+		containerRequestContext.getHeaders().add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+		containerRequestContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
+		containerRequestContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+		containerRequestContext.getHeaders().add("Access-Control-Max-Age", "1209600");
 	}
 }

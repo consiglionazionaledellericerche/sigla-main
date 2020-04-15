@@ -17,9 +17,15 @@
 
 package it.cnr.contab.web.rest.local.docamm;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import it.cnr.contab.client.docamm.FatturaAttiva;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
 import it.cnr.contab.web.rest.config.AccessoAllowed;
 import it.cnr.contab.web.rest.config.AccessoEnum;
+import it.cnr.contab.web.rest.config.SIGLASecurityContext;
 
 import java.util.List;
 
@@ -39,20 +45,44 @@ import javax.ws.rs.core.Response;
 @Path("/fatturaattiva")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Api("Fatturazione Attiva")
 public interface FatturaAttivaLocal {
 	/**
      * GET  /restapi/fatturaattiva/ricerca -> return Fattura attiva
      */
     @GET
     @AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTV)
-    public Response ricercaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
+    @ApiOperation(value = "Recupera i dati della Fattura Attiva",
+            notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTV",
+            response = Fattura_attivaBulk.class,
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
+    Response ricercaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
 
 	/**
 	 * POST  /restapi/fatturaattiva-> return Fattura attiva
 	 */
 	@POST
 	@AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTM)
-	public Response inserisciFatture(@Context HttpServletRequest request, List<FatturaAttiva> fatture) throws Exception;
+    @ApiOperation(value = "Inserisce una o più Fatture Attive",
+            notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTM",
+            response = Fattura_attivaBulk.class,
+            responseContainer = "List",
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
+    Response inserisciFatture(@Context HttpServletRequest request, List<FatturaAttiva> fatture) throws Exception;
 	
 	/**
      * GET  /restapi/fatturaattiva/ricerca -> return Fattura attiva
@@ -61,6 +91,17 @@ public interface FatturaAttivaLocal {
     @Path("/print")
     @AccessoAllowed(value=AccessoEnum.AMMFATTURDOCSFATATTV)
     @Produces("application/pdf")
-    public Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
+    @ApiOperation(value = "Fornisce la stampa della Fattura Attiva in pdf",
+            notes = "Accesso consentito solo alle utenze abilitate con accesso AMMFATTURDOCSFATATTV",
+            response = byte[].class,
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
+    Response stampaFattura(@Context HttpServletRequest request, @QueryParam ("pg") Long pg) throws Exception;
 
 }
