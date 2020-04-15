@@ -996,7 +996,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     //Carica tutti gli allegati presenti anche in  altre UO Partecipanti che in precedenza erano state UO Coordinatrici
     private ProgettoBulk innerInitializeModelForEditAllegati(ActionContext actioncontext, ProgettoBulk oggettoBulk, String cdUnitaOrganizzativa) throws BusinessProcessException {
         String storePath = getStorePath(oggettoBulk, false);
-        storePath.replaceFirst(oggettoBulk.getCd_unita_organizzativa(), cdUnitaOrganizzativa);
+        storePath = storePath.replaceFirst(oggettoBulk.getCd_unita_organizzativa(), cdUnitaOrganizzativa);
         final ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettoBulk, storePath);
 
         //Aggiungo gli allegati delle rimodulazioni approvate
