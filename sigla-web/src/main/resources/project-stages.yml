@@ -130,6 +130,8 @@ thorntail:
   swagger:
     web-app:
       context: swagger
+      json:
+        path: /SIGLA/restapi/swagger.json
 
 repository:
   base:
