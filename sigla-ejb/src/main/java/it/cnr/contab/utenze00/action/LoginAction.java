@@ -532,6 +532,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
         return context.findForward("desktop");
     }
 
+    public Forward doSelezionaContesto(ActionContext context, Integer esercizio) {
+        return doSelezionaContesto(context, esercizio, null, null, null);
+    }
+
     /**
      * Gestisce l'azione di selezione di un contesto
      *

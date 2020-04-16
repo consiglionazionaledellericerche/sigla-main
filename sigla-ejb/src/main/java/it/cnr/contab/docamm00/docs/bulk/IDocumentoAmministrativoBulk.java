@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.docs.bulk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 /**
  * Insert the type's description here.
@@ -73,6 +74,7 @@ String getCd_uo();
  * Creation date: (12/17/2001 12:55:46 PM)
  * @return it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
  */
+@JsonIgnore
 public Class getChildClass();
 /**
  * Insert the method's description here.
@@ -106,12 +108,14 @@ public java.math.BigDecimal getImportoSignForDelete(java.math.BigDecimal importo
  * Creation date: (12/17/2001 12:55:46 PM)
  * @return it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
  */
+@JsonIgnore
 public String getManagerName();
 /**
  * Insert the method's description here.
  * Creation date: (12/17/2001 12:55:46 PM)
  * @return it.cnr.contab.docamm00.docs.bulk.ObbligazioniTable
  */
+@JsonIgnore
 public String getManagerOptions();
 /**
  * Insert the method's description here.

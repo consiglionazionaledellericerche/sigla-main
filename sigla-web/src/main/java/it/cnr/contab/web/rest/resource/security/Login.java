@@ -17,8 +17,10 @@
 
 package it.cnr.contab.web.rest.resource.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.annotation.security.PermitAll;
-import javax.ejb.Stateless;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
@@ -26,19 +28,24 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import java.net.URI;
-import java.net.URISyntaxException;
+import javax.ws.rs.core.SecurityContext;
+import java.util.Optional;
 
 @Path("login")
 @PermitAll
 public class Login {
+    private final Logger LOGGER = LoggerFactory.getLogger(Login.class);
+    @Context
+    SecurityContext securityContext;
 
     @POST
     public Response postLogin(@Context HttpServletRequest request, @FormParam("j_username") String username, @FormParam("j_password") String password) {
         try {
-            request.login(username, password);
+            if (!Optional.ofNullable(securityContext.getUserPrincipal()).isPresent())
+                request.login(username, password);
             return Response.ok().build();
         } catch (ServletException e) {
+            LOGGER.error("Login error for user:{} password:{}", username, password, e);
             return Response.serverError().build();
         }
     }

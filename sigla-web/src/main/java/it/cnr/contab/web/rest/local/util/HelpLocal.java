@@ -17,19 +17,30 @@
 
 package it.cnr.contab.web.rest.local.util;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.util.Map;
 
 @Local
 @Path("/help")
 @Produces(MediaType.MEDIA_TYPE_WILDCARD)
+@Api("Help")
 public interface HelpLocal {
 
     @GET
+    @ApiOperation(value = "Restituisce la URL dell'Help associata al BusinessProcess o alla pagina",
+            notes = "Nel caso che non sia definita resitituisce la pagina iniziale",
+            response = URI.class
+    )
     Response get(@Context HttpServletRequest request, @QueryParam("jspName") String jspName, @QueryParam("bpName") String bpName) throws Exception;
 
 }

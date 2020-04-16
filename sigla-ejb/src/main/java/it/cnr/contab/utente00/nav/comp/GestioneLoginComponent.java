@@ -870,8 +870,9 @@ public class GestioneLoginComponent
             LDAPService ldapService = SpringUtil.getBean(LDAPService.class);
             return ldapService
                     .findPersonById(uid)
-                    .filter(person -> person.getCnrapp1().equalsIgnoreCase("si"))
-                    .isPresent();
+                    .flatMap(person -> Optional.ofNullable(person.getCnrapp1()))
+                    .map(s -> s.equalsIgnoreCase("si"))
+                    .orElse(Boolean.FALSE);
         } catch (NoSuchBeanDefinitionException _ex){
             return true;
         } catch (Throwable e) {

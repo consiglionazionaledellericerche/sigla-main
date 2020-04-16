@@ -281,8 +281,6 @@ public class RicercaTerziBP extends BusinessProcess implements ResponseXMLBP{
 			logger.error("GeneraXML error -> ", e);
 		}
     }
-	
-	
 
 	private Node generaDettaglioTerzoNoDip(Document xmldoc, Integer codice,
 			String ti_entita, String cognome, String nome,
