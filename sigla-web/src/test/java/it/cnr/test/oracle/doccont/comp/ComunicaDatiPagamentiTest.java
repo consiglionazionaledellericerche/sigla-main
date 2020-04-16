@@ -45,7 +45,7 @@ public class ComunicaDatiPagamentiTest extends DeploymentsOracle {
         mandatoComunicaDatiBulk.setPg_mandato(new Long(9));
 
         List<MandatoComunicaDatiBulk> dati =
-                crudComponentSession.find(testUserContext, MandatoComunicaDatiBulk.class, "recuperoDati", testUserContext, mandatoComunicaDatiBulk);
+                crudComponentSession.find(testUserContext, MandatoComunicaDatiBulk.class, "recuperoDati", testUserContext, mandatoComunicaDatiBulk, null, null);
         assertNotNull(dati);
         assertTrue(!dati.isEmpty());
     }

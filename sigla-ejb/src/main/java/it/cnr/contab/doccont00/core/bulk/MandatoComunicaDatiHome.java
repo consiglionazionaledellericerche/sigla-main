@@ -99,8 +99,12 @@ public class MandatoComunicaDatiHome extends BulkHome {
         sql.addSQLJoin("v_mandato_reversale_voce.esercizio","V_CLASSIFICAZIONE_VOCI_ALL.esercizio");
         sql.addSQLJoin("v_mandato_reversale_voce.ti_gestione","V_CLASSIFICAZIONE_VOCI_ALL.ti_gestione");
         sql.addSQLJoin("v_mandato_reversale_voce.cd_voce","V_CLASSIFICAZIONE_VOCI_ALL.cd_livello6");
-        sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.GREATER_EQUALS, daData );
-        sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.LESS_EQUALS, aData );
+        if (daData != null){
+            sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.GREATER_EQUALS, daData );
+        }
+        if (aData != null){
+            sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.LESS_EQUALS, aData );
+        }
         sql.addSQLClause("AND", "mandato.stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_PAGATO );
         sql.addSQLClause("AND", "mandato.esercizio", SQLBuilder.GREATER_EQUALS, MandatoComunicaDatiBulk.ANNO_INIZIO_PUBBLICAZIONE );
         sql.addSQLClause("AND", "ti_documento", SQLBuilder.EQUALS, "M" );
