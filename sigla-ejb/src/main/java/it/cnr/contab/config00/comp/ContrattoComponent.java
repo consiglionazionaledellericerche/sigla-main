@@ -2050,7 +2050,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				contratto.setFigura_giuridica_esterna(getTerzoFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaAggiudicatarioExt()));
 
 				gestioneCigSuContrattoDaFlows(userContext, contratto);
-				gestioneCupSuContrattoDaFlows(userContext, contratto);
 			
 				contratto = (ContrattoBulk)creaConBulk(userContext, contratto);
 				return contratto;
@@ -2096,24 +2095,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					contratto.setCig(cig);
 				}
 				
-			}
-		}
-		private void gestioneCupSuContrattoDaFlows(UserContext userContext, ContrattoBulk contratto)
-				throws ComponentException, PersistencyException {
-			if (contratto.getCdCupExt() != null){
-				
-				CupBulk cup = new CupBulk();
-				cup.setCdCup(contratto.getCdCupExt());
-				cup.setDescrizione(contratto.getOggetto());
-				CupHome cupHome = (CupHome)getHome(userContext, cup);
-				CupBulk cupDb = (CupBulk)cupHome.findByPrimaryKey(cup);
-				if (cupDb != null){
-					contratto.setCup(cupDb);
-				} else {
-					cup.setUser(contratto.getUser());
-					cup.setToBeCreated();
-					contratto.setCup(cup);
-				}
 			}
 		}
 		private TerzoBulk getTerzoFromCodiceFiscalePiva(UserContext userContext, String codFisPiva)throws it.cnr.jada.comp.ComponentException{

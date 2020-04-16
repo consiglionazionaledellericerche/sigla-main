@@ -39,11 +39,15 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	@JsonIgnore
 	protected MissioneBulk missione;
 
-	/********************* SPESA *****************************/	
+	/********************* SPESA *****************************/
+	@JsonIgnore
 	private DivisaBulk divisa_spesa = new DivisaBulk();
 
+	@JsonIgnore
 	protected Missione_tipo_spesaBulk tipo_spesa;
+	@JsonIgnore
 	protected Missione_tipo_pastoBulk tipo_pasto;
+	@JsonIgnore
 	protected Missione_rimborso_kmBulk tipo_auto;
 
 	private final static java.util.Dictionary tipoAutoKeys;
@@ -59,15 +63,19 @@ public class Missione_dettaglioBulk extends Missione_dettaglioBase
 	/**** Gestione edita, conferma, annulla dettaglio di spesa ***/	
 	public static final int STATUS_NOT_CONFIRMED = 0;
 	public static final int STATUS_CONFIRMED = 1;
+	@JsonIgnore
 	private String allegatiDocumentale;
+	@JsonIgnore
 	private BulkList<AllegatoMissioneDettaglioSpesaBulk> dettaglioSpesaAllegati = new BulkList<AllegatoMissioneDettaglioSpesaBulk>();
 	private int status = STATUS_NOT_CONFIRMED;
+	@JsonIgnore
 	protected Missione_dettaglioBulk spesaIniziale;
 	/***************************************************************/
 
 
 	/********************* DIARIA *****************************/
-	protected Missione_diariaBulk diaria;	
+	@JsonIgnore
+	protected Missione_diariaBulk diaria;
 	public Missione_dettaglioBulk() {
 		super();
 	}

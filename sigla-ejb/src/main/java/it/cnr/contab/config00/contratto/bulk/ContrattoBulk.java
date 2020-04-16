@@ -21,13 +21,12 @@
 */
 package it.cnr.contab.config00.contratto.bulk;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.Transient;
 
-import it.cnr.contab.util.PercentFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.util.action.CRUDBP;
 import org.springframework.util.StringUtils;
@@ -38,8 +37,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
-import it.cnr.contab.config00.contratto.model.DittaInvitataExt;
-import it.cnr.contab.config00.contratto.model.UoAbilitataExt;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
@@ -101,12 +98,6 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 	private ProgettoBulk progetto;
 	
 	private Boolean allegatoFlusso;
-	private String cdCupExt;
-	
-	
-	private BulkList<UoAbilitataExt> listaUoAbilitateExt;
-	private BulkList<DittaInvitataExt> listaDitteInvitateExt;
-	
 	private BulkList associazioneUO = new BulkList();
 	private BulkList associazioneUODisponibili = new BulkList();
 	private BulkList ditteInvitate = new BulkList();
@@ -939,26 +930,8 @@ public class ContrattoBulk extends ContrattoBase implements ICancellatoLogicamen
 			java.math.BigDecimal tot_docamm_cont_spe_netto) {
 		this.tot_docamm_cont_spe_netto = tot_docamm_cont_spe_netto;
 	}
-	public String getCdCupExt() {
-		return cdCupExt;
-	}
-	public void setCdCupExt(String cdCupExt) {
-		this.cdCupExt = cdCupExt;
-	}
-	public BulkList<UoAbilitataExt> getListaUoAbilitateExt() {
-		return listaUoAbilitateExt;
-	}
-	public void setListaUoAbilitateExt(BulkList<UoAbilitataExt> listaUoAbilitateExt) {
-		this.listaUoAbilitateExt = listaUoAbilitateExt;
-	}	
 	public Boolean isFromFlussoAcquisti() {
 		return !StringUtils.isEmpty(getCodiceFlussoAcquisti());
-	}
-	public BulkList<DittaInvitataExt> getListaDitteInvitateExt() {
-		return listaDitteInvitateExt;
-	}
-	public void setListaDitteInvitateExt(BulkList<DittaInvitataExt> listaDitteInvitateExt) {
-		this.listaDitteInvitateExt = listaDitteInvitateExt;
 	}
 	public Boolean getAllegatoFlusso() {
 		return allegatoFlusso;

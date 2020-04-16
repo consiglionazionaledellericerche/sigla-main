@@ -17,8 +17,12 @@
 
 package it.cnr.contab.web.rest.local.docamm;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.web.rest.config.SIGLARoles;
+import it.cnr.contab.web.rest.config.SIGLASecurityContext;
 import it.cnr.contab.web.rest.model.MassimaleSpesaBulk;
 
 import javax.annotation.security.RolesAllowed;
@@ -40,17 +44,58 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RolesAllowed(SIGLARoles.MISSIONI)
+@Api("Missioni. Gestione dei rimborsi delle trasferte.")
 public interface MissioneLocal {
+    /**
+     * POST  /restapi/missioni/validaMassimaleSpesa -> return OK o KO
+     */
     @POST
     @Path(value = "/validaMassimaleSpesa")
+    @ApiOperation(value = "Verifica se la spesa è consentina in funzione dei massimali presenti",
+            notes = "Accesso consentito solo alle utenze abilitate al ruolo MISSIONI",
+            response = String.class,
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
     Response validaMassimaleSpesa(@Context HttpServletRequest request, MassimaleSpesaBulk massimaleSpesaBulk) throws Exception;
 
+    /**
+     * PUT  /restapi/missioni -> return Missione
+     */
     @PUT
+    @ApiOperation(value = "Inserisce una missione.",
+            notes = "Accesso consentito solo alle utenze abilitate al ruolo MISSIONI",
+            response = MissioneBulk.class,
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
     public Response insert(@Context HttpServletRequest request, MissioneBulk missioneBulk) throws Exception;
 
+    /**
+     * DELETE  /restapi/missioni -> return OK
+     */
     @DELETE
     @Path("{id}")
+    @ApiOperation(value = "Elimina una missione.",
+            notes = "Accesso consentito solo alle utenze abilitate al ruolo MISSIONI",
+            response = String.class,
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
     public Response delete(@Context HttpServletRequest request, @PathParam("id") long idRimborsoMissione) throws Exception;
-
-
 }

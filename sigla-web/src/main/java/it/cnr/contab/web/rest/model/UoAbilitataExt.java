@@ -15,7 +15,7 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package it.cnr.contab.config00.contratto.model;
+package it.cnr.contab.web.rest.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
