@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Smart Working" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
 	<property name="ireport.zoom" value="2.1435888100000016"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="82"/>
+	<property name="ireport.y" value="207"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
 	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
@@ -203,30 +203,30 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="28" splitType="Stretch">
+		<band height="78" splitType="Stretch">
 			<textField>
-				<reportElement x="433" y="3" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9"/>
+				<reportElement x="433" y="54" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="513" y="3" width="40" height="20" uuid="581306bb-5afb-4ca2-ab69-25b1e76d90fc"/>
+				<reportElement x="513" y="54" width="40" height="20" uuid="581306bb-5afb-4ca2-ab69-25b1e76d90fc"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="3" width="197" height="20" uuid="c8b2c202-b6e3-428a-b7ea-e58e4eb3e7f8"/>
+				<reportElement x="0" y="54" width="197" height="20" uuid="c8b2c202-b6e3-428a-b7ea-e58e4eb3e7f8"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="553" height="1" uuid="198750be-9ef7-4204-9d4a-437c10f0a4b4"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="51" width="553" height="1" uuid="198750be-9ef7-4204-9d4a-437c10f0a4b4"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
