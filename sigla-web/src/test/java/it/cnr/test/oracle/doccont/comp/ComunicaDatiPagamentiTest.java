@@ -40,9 +40,9 @@ public class ComunicaDatiPagamentiTest extends DeploymentsOracle {
     public void test() throws Exception {
         final TestUserContext testUserContext = new TestUserContext();
         final MandatoComunicaDatiBulk mandatoComunicaDatiBulk = new MandatoComunicaDatiBulk();
-        mandatoComunicaDatiBulk.setEsercizio(2016);
-        mandatoComunicaDatiBulk.setCd_cds("099");
-        mandatoComunicaDatiBulk.setPg_mandato(new Long(93693));
+        mandatoComunicaDatiBulk.setEsercizio(2020);
+        mandatoComunicaDatiBulk.setCd_cds("035");
+        mandatoComunicaDatiBulk.setPg_mandato(new Long(3146));
 
         List<MandatoComunicaDatiBulk> dati =
                 crudComponentSession.find(testUserContext, MandatoComunicaDatiBulk.class, "recuperoDati", testUserContext, mandatoComunicaDatiBulk, null, null);
