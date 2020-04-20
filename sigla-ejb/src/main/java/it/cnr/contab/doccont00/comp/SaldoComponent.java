@@ -3607,6 +3607,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					BigDecimal impCurrentVariazioneClass =
 							cdsMap.get(cds).stream()
 								  .filter(rigavar->{
+								  		return rigavar.getLinea_attivita().getNatura().isFonteInterna();
+								  })
+								  .filter(rigavar->{
 										return listVociClass.stream()
 												.filter(voceClass->voceClass.getEsercizio().equals(rigavar.getElemento_voce().getEsercizio()))
 												.filter(voceClass->voceClass.getTi_gestione().equals(rigavar.getElemento_voce().getTi_gestione()))
