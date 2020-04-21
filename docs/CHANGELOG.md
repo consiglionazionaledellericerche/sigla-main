@@ -1,3 +1,27 @@
+## Release 6.2.11  -- _April 21, 2020_ 
+**Changes**
+
+>**Update MissioneBase.java**
+>
+>[016e9dba4acfa49](https://github.com/consiglionazionaledellericerche/sigla-main/commit/016e9dba4acfa49) GASPARRO GIANFRANCO *April 21, 2020*
+
+
+## Release 6.2.10  -- _April 20, 2020_ 
+**Changes**
+
+>**Update default-repository.properties**
+>
+>[ac7efa4e1e82229](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac7efa4e1e82229) SPASIANO MARCO *April 20, 2020*
+
+
+## Release 6.2.9  -- _April 20, 2020_ 
+**Changes**
+
+>**FIX Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: il controllo limite classificazione per cds nel momento in cui viene resa definitiva una variazione di competenza è stato limitato solo alle fonti interne**
+>
+>[cecf12ae1f1150b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cecf12ae1f1150b) raffaele.pagano *April 20, 2020*
+
+
 ## Release 6.2.8  -- _April 20, 2020_ 
 **Changes**
 
