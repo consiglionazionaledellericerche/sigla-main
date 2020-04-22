@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="piano_economico_progetto_detail" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e2b12cdf-7e2e-475f-8db5-046d497e7fd2">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
@@ -80,8 +81,7 @@ from (select CASE
       and   A.TI_GESTIONE = C.TI_GESTIONE
       and   A.CD_ELEMENTO_VOCE = C.CD_ELEMENTO_VOCE
       and   A.PG_PROGETTO = $P{P_PG_PROGETTO})
-order by ORDINE_ESERCIZIO
-]]>
+order by ORDINE_ESERCIZIO, CD_VOCE_PIANO]]>
 	</queryString>
 	<field name="ORDINE_ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="ESERCIZIO_PIANO" class="java.lang.Integer"/>
@@ -136,7 +136,7 @@ $F{ESERCIZIO_PIANO}.compareTo($P{P_ESERCIZIO})<0?"Precedente":"Futuro")]]></text
 	</pageHeader>
 	<detail>
 		<band height="17">
-			<textField isStretchWithOverflow="true">
+			<textField textAdjust="StretchHeight">
 				<reportElement style="VER8" x="47" y="1" width="779" height="15" uuid="3ac7599d-55fe-4ea5-a466-88a034c52280"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CD_ELEMENTO_VOCE}+" - "+$F{DS_ELEMENTO_VOCE}]]></textFieldExpression>
