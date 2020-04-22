@@ -3633,6 +3633,10 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 												sqlAssestato.addClause(FindClause.AND, "ti_appartenenza", SQLBuilder.EQUALS, voceClass.getTi_appartenenza());
 												sqlAssestato.addClause(FindClause.AND, "cd_elemento_voce", SQLBuilder.EQUALS, voceClass.getCd_elemento_voce());
 
+												sqlAssestato.addTableToHeader("NATURA");
+												sqlAssestato.addSQLJoin("V_ASSESTATO.CD_NATURA","NATURA.CD_NATURA");
+												sqlAssestato.addSQLClause(FindClause.AND,"NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
+
 												sqlAssestato.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA", "A");
 												sqlAssestato.addSQLJoin("V_ASSESTATO.ESERCIZIO","A.ESERCIZIO");
 												sqlAssestato.addSQLJoin("V_ASSESTATO.CD_CENTRO_RESPONSABILITA","A.CD_ROOT");
@@ -3666,9 +3670,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								+variazione provvisoria corrente che sta diventando definitiva
 						 */
 						if (impApprovatoClass.add(impVariazioniDefinitiveClass).add(impCurrentVariazioneClass).compareTo(impLimiteClass)>0)
-							throw new ApplicationRuntimeException("Operazione non possibile!\nLa qta stanziata dal CDS "+cds+
+							throw new ApplicationRuntimeException("Operazione non possibile!\nLa quota stanziata dal CDS "+cds+
 									" per la classificazione '"+classificazione.getCd_classificazione()+" - "+classificazione.getDs_classificazione()+
-									"',  di euro "+ new it.cnr.contab.util.EuroFormat().format(impApprovatoClass.add(impVariazioniDefinitiveClass).add(impCurrentVariazioneClass))+
+									"',  di euro "+ new it.cnr.contab.util.EuroFormat().format(impApprovatoClass.add(impVariazioniDefinitiveClass))+
 									"\n(ottenuta sommando alla quota approvata di euro "+new it.cnr.contab.util.EuroFormat().format(impApprovatoClass)+" la quota di altre variazioni definitive " +
 									"in attesa di approvazione di euro "+new it.cnr.contab.util.EuroFormat().format(impVariazioniDefinitiveClass.subtract(impCurrentVariazioneClass))+ " e la quota " +
 									"della corrente variazione di euro "+new it.cnr.contab.util.EuroFormat().format(impCurrentVariazioneClass)+")\nsupererebbe l'importo " +
