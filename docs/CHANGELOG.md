@@ -1,3 +1,15 @@
+## Release 6.2.12  -- _April 24, 2020_ 
+**Changes**
+
+>**FIX Mandato con modalità di pagamento ACCREDITOCONTOCORRENTEPOSTALE**
+>
+>[6328f13cfd7b60f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6328f13cfd7b60f) marco.spasiano *April 24, 2020*
+
+>**FIX Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: ulteriore correzione per limitare controllo alle sole fonti interne**
+>
+>[8dc94f3de7c5178](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8dc94f3de7c5178) raffaele.pagano *April 22, 2020*
+
+
 ## Release 6.2.11  -- _April 21, 2020_ 
 **Changes**
 
