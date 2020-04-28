@@ -81,6 +81,24 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 	<field name="AVANZO_PREC_N" class="java.math.BigDecimal"/>
 	<field name="DISAVANZO_N" class="java.math.BigDecimal"/>
 	<field name="DISAVANZO_PREC_N" class="java.math.BigDecimal"/>
+	<variable name="FONDO_INIZ_CASSA_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FONDO_INIZ_CASSA_N}]]></variableExpression>
+	</variable>
+	<variable name="FONDO_INIZ_CASSA_PREC_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FONDO_INIZ_CASSA_PREC_N}]]></variableExpression>
+	</variable>
+	<variable name="AVANZO_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AVANZO_N}]]></variableExpression>
+	</variable>
+	<variable name="AVANZO_PREC_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AVANZO_PREC_N}]]></variableExpression>
+	</variable>
+	<variable name="DISAVANZO_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DISAVANZO_N}]]></variableExpression>
+	</variable>
+	<variable name="DISAVANZO_PREC_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DISAVANZO_PREC_N}]]></variableExpression>
+	</variable>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
