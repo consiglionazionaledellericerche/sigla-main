@@ -1,3 +1,11 @@
+## Release 6.2.13  -- _April 28, 2020_ 
+**Changes**
+
+>**Cambiato oggeto mail PEC per bonifici estero**
+>
+>[01be10227e74d86](https://github.com/consiglionazionaledellericerche/sigla-main/commit/01be10227e74d86) marco.spasiano *April 28, 2020*
+
+
 ## Release 6.2.12  -- _April 24, 2020_ 
 **Changes**
 
