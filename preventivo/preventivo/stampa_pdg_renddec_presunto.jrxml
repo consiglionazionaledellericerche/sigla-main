@@ -84,7 +84,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 	<detail>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="1ff6c8e3-a2f1-4ed8-a174-c81fe451790a"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -166,7 +166,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="2b10db9c-a6f1-415f-a554-cf551546a0d9"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -248,7 +248,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("S"))]]></printWhenExpression>
-			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="30707203-172c-4a23-a82f-1f6a936b876a"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
