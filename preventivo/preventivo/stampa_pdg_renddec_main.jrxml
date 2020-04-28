@@ -328,7 +328,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 		<variableExpression><![CDATA[$F{TOT_ACC_IMP}]]></variableExpression>
 	</variable>
 	<variable name="SUM_RIS_PAG_REPORT" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$V{RIS_PAG_COMP_RES}]]></variableExpression>
+		<variableExpression><![CDATA[$F{RIS_PAG}.add($F{RES_RIS_PAG})]]></variableExpression>
 	</variable>
 	<variable name="SUM_RES_INI_ES_PREC_REPORT" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{RES_INI_ES_PREC}]]></variableExpression>
