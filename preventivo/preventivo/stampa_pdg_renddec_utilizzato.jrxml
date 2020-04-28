@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_renddec_utilizzato" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="24af8a89-a111-4482-8d29-ad49832e8ac4">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
@@ -30,10 +31,10 @@
 	</parameter>
 	<queryString>
 		<![CDATA[Select
-SUM(DECODE(TIPO,'S',RES_INI_ES, -RES_INI_ES)) RES_INI_ES,
+0 RES_INI_ES,
 SUM(DECODE(TIPO,'S',TOT_ACC_IMP,-TOT_ACC_IMP)) TOT_ACC_IMP,
 SUM(DECODE(TIPO,'S',Nvl(RIS_PAG,0)+Nvl(RES_RIS_PAG,0),-(Nvl(RIS_PAG,0)+Nvl(RES_RIS_PAG,0)))) RIS_PAG,
-SUM(DECODE(TIPO,'S',RES_INI_ES_PREC,-RES_INI_ES_PREC)) RES_INI_ES_PREC,
+0 RES_INI_ES_PREC,
 SUM(DECODE(TIPO,'S',TOT_ACC_IMP_PREC,-TOT_ACC_IMP_PREC)) TOT_ACC_IMP_PREC,
 SUM(DECODE(TIPO,'S',Nvl(RIS_PAG_PREC,0),-(Nvl(RIS_PAG_PREC,0)))) RIS_PAG_PREC
 FROM TMP_STAMPA_RENDICONTO]]>
