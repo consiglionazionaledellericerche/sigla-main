@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_renddec_presunto" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d46d46af-3026-4ad6-946a-7bc9a7147a9d">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
@@ -54,25 +55,25 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
       FROM CONFIGURAZIONE_CNR
       WHERE ESERCIZIO=$P{P_ESERCIZIO}
       AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
-      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA_DEF'
       UNION ALL
       SELECT 0 FONDO_CASSA, IM01 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
       FROM CONFIGURAZIONE_CNR
       WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
       AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
-      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA_DEF'
       UNION ALL
       SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, IM01 AVANZO, 0 AVANZO_PRE
       FROM CONFIGURAZIONE_CNR
       WHERE ESERCIZIO=$P{P_ESERCIZIO}
       AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
-      AND   CD_CHIAVE_SECONDARIA = 'AVANZO'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO_DEF'
       UNION ALL
       SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, IM01 AVANZO_PRE
       FROM CONFIGURAZIONE_CNR
       WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
       AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
-      AND   CD_CHIAVE_SECONDARIA = 'AVANZO')]]>
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO_DEF')]]>
 	</queryString>
 	<field name="FONDO_INIZ_CASSA_N" class="java.math.BigDecimal"/>
 	<field name="FONDO_INIZ_CASSA_PREC_N" class="java.math.BigDecimal"/>
@@ -83,7 +84,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 	<detail>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="1ff6c8e3-a2f1-4ed8-a174-c81fe451790a"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -94,7 +95,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Avanzo di amministrazione presunto"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Avanzo di amministrazione"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="432" y="0" width="65" height="13" uuid="06fcb915-e45c-4808-814c-4a378a562a6e"/>
@@ -165,7 +166,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("E"))]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="2b10db9c-a6f1-415f-a554-cf551546a0d9"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -176,7 +177,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Fondo iniziale di cassa presunto"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Fondo iniziale di cassa"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="432" y="0" width="65" height="13" uuid="9ff0e98f-36e5-4329-a91a-a95146cae687"/>
@@ -247,7 +248,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 		</band>
 		<band height="13">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_TIPO}.equals("S"))]]></printWhenExpression>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
 				<reportElement key="textField-7" style="VERBI6" x="4" y="2" width="427" height="9" uuid="30707203-172c-4a23-a82f-1f6a936b876a"/>
 				<box>
 					<topPen lineWidth="0.0" lineColor="#000000"/>
@@ -258,7 +259,7 @@ FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Disavanzo di amministrazione presunto"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Disavanzo di amministrazione"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-41" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="432" y="0" width="65" height="13" uuid="d62be6a7-0773-406d-aa81-c3170f8e44b3"/>
