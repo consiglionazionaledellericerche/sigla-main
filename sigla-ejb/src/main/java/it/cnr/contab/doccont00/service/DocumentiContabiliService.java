@@ -273,7 +273,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         // Create the email message
         SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
         email.setHostName(pecHostName);
+        String subject = "";
         if (isNoEuroOrSepa) {
+            subject += "Bonifici Estero - ";
             if (pecMailToBancaNoEuroSepa != null && pecMailToBancaNoEuroSepa.split(";").length != 0) {
                 email.addTo(pecMailToBancaNoEuroSepa.split(";"));
             } else {
@@ -288,10 +290,11 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         }
 
         email.setFrom(pecMailFromBanca, pecMailFromBanca);
+        subject +="Invio Distinta 1210";
         if (nrDistinta != null)
-            email.setSubject("Invio Distinta 1210 " + nrDistinta);
-        else
-            email.setSubject("Invio Distinta 1210");
+            subject +=" " + nrDistinta;
+
+        email.setSubject(subject);
 
         // add the attachment
         for (String key : nodes) {
@@ -308,6 +311,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         // Create the email message
         SimplePECMail email = new SimplePECMail(pecMailFromBanca, pecMailFromBancaPassword);
         email.setHostName(pecHostName);
+        String subject = "";
         if (isDistintaStipendi) {
             email.addTo(
                     Optional.ofNullable(pecMailToBancaForStipendi)
@@ -318,6 +322,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             }));
         } else {
             if (isNoEuroOrSepa) {
+                subject += "Bonifici Estero - ";
                 if (pecMailToBancaNoEuroSepa != null && pecMailToBancaNoEuroSepa.split(";").length != 0) {
                     email.addTo(pecMailToBancaNoEuroSepa.split(";"));
                 } else {
@@ -332,10 +337,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
             }
         }
         email.setFrom(pecMailFromBanca, pecMailFromBanca);
-        if (nrDistinta != null)
-            email.setSubject(nrDistinta);
-        else
-            email.setSubject("Invio Distinta e Documenti");
+        subject += (nrDistinta != null ? nrDistinta : "Invio Distinta e Documenti");
+
+        email.setSubject(subject);
         email.setMsg("In allegato i documenti");
         // add the attachment
         for (String key : nodes) {
