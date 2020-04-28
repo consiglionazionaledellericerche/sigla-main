@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="stampa_pdg_renddec_utilizzato" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="24af8a89-a111-4482-8d29-ad49832e8ac4">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ISIN_SIGLAProduzione"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -28,22 +31,102 @@
 	<parameter name="P_TIPO" class="java.lang.String">
 		<defaultValueExpression><![CDATA["E"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_ESERCIZIO" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Integer(2010)]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[Select
-SUM(DECODE(TIPO,'S',RES_INI_ES, -RES_INI_ES)) RES_INI_ES,
+		<![CDATA[SELECT SUM(RES_INI_ES) RES_INI_ES, SUM(TOT_ACC_IMP) TOT_ACC_IMP, SUM(RIS_PAG) RIS_PAG, SUM(RES_INI_ES_PREC) RES_INI_ES_PREC, SUM(TOT_ACC_IMP_PREC) TOT_ACC_IMP_PREC, SUM(RIS_PAG_PREC) RIS_PAG_PREC, 
+SUM(FONDO_INIZ_CASSA_N) FONDO_INIZ_CASSA_N, SUM(FONDO_INIZ_CASSA_PREC_N) FONDO_INIZ_CASSA_PREC_N, SUM(AVANZO_N) AVANZO_N, SUM(AVANZO_PREC_N) AVANZO_PREC_N, SUM(DISAVANZO_N) DISAVANZO_N, SUM(DISAVANZO_PREC_N) DISAVANZO_PREC_N
+FROM (
+Select
+0 RES_INI_ES,
 SUM(DECODE(TIPO,'S',TOT_ACC_IMP,-TOT_ACC_IMP)) TOT_ACC_IMP,
 SUM(DECODE(TIPO,'S',Nvl(RIS_PAG,0)+Nvl(RES_RIS_PAG,0),-(Nvl(RIS_PAG,0)+Nvl(RES_RIS_PAG,0)))) RIS_PAG,
-SUM(DECODE(TIPO,'S',RES_INI_ES_PREC,-RES_INI_ES_PREC)) RES_INI_ES_PREC,
+0 RES_INI_ES_PREC,
 SUM(DECODE(TIPO,'S',TOT_ACC_IMP_PREC,-TOT_ACC_IMP_PREC)) TOT_ACC_IMP_PREC,
-SUM(DECODE(TIPO,'S',Nvl(RIS_PAG_PREC,0),-(Nvl(RIS_PAG_PREC,0)))) RIS_PAG_PREC
-FROM TMP_STAMPA_RENDICONTO]]>
+SUM(DECODE(TIPO,'S',Nvl(RIS_PAG_PREC,0),-(Nvl(RIS_PAG_PREC,0)))) RIS_PAG_PREC,
+0 FONDO_INIZ_CASSA_N, 0 FONDO_INIZ_CASSA_PREC_N, 0 AVANZO_N, 0 AVANZO_PREC_N, 0 DISAVANZO_N, 0 DISAVANZO_PREC_N
+FROM TMP_STAMPA_RENDICONTO
+UNION ALL
+SELECT 0 RES_INI_ES, 0 TOT_ACC_IMP, 0 RIS_PAG, 0 RES_INI_ES_PREC, 0 TOT_ACC_IMP_PREC, 0 RIS_PAG_PREC,
+NVL(SUM(FONDO_CASSA), 0) FONDO_INIZ_CASSA_N,
+NVL(SUM(FONDO_CASSA_PRE),0) FONDO_INIZ_CASSA_PREC_N,
+NVL(SUM(CASE WHEN NVL(AVANZO,0)>0
+             THEN AVANZO
+             ELSE 0
+             END), 0) AVANZO_N,
+NVL(SUM(CASE WHEN NVL(AVANZO_PRE,0)>0
+             THEN AVANZO_PRE
+             ELSE 0
+             END), 0) AVANZO_PREC_N,
+NVL(SUM(CASE WHEN NVL(AVANZO,0)<0
+             THEN ABS(AVANZO)
+             ELSE 0
+             END), 0) DISAVANZO_N,
+NVL(SUM(CASE WHEN NVL(AVANZO_PRE,0)<0
+             THEN ABS(AVANZO_PRE)
+             ELSE 0
+             END), 0) DISAVANZO_PREC_N
+FROM (SELECT IM01 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA_DEF'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, IM01 FONDO_CASSA_PRE, 0 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'FONDO_CASSA_DEF'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, IM01 AVANZO, 0 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO_DEF'
+      UNION ALL
+      SELECT 0 FONDO_CASSA, 0 FONDO_CASSA_PRE, 0 AVANZO, IM01 AVANZO_PRE
+      FROM CONFIGURAZIONE_CNR
+      WHERE ESERCIZIO=$P{P_ESERCIZIO}-1
+      AND   CD_CHIAVE_PRIMARIA = 'BILANCIO_ENTE'
+      AND   CD_CHIAVE_SECONDARIA = 'AVANZO_DEF'))]]>
 	</queryString>
-	<field name="RES_INI_ES" class="java.math.BigDecimal"/>
-	<field name="TOT_ACC_IMP" class="java.math.BigDecimal"/>
-	<field name="RIS_PAG" class="java.math.BigDecimal"/>
-	<field name="RES_INI_ES_PREC" class="java.math.BigDecimal"/>
-	<field name="TOT_ACC_IMP_PREC" class="java.math.BigDecimal"/>
-	<field name="RIS_PAG_PREC" class="java.math.BigDecimal"/>
+	<field name="RES_INI_ES" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="RES_INI_ES"/>
+	</field>
+	<field name="TOT_ACC_IMP" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOT_ACC_IMP"/>
+	</field>
+	<field name="RIS_PAG" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="RIS_PAG"/>
+	</field>
+	<field name="RES_INI_ES_PREC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="RES_INI_ES_PREC"/>
+	</field>
+	<field name="TOT_ACC_IMP_PREC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="TOT_ACC_IMP_PREC"/>
+	</field>
+	<field name="RIS_PAG_PREC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="RIS_PAG_PREC"/>
+	</field>
+	<field name="FONDO_INIZ_CASSA_N" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FONDO_INIZ_CASSA_N"/>
+	</field>
+	<field name="FONDO_INIZ_CASSA_PREC_N" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="FONDO_INIZ_CASSA_PREC_N"/>
+	</field>
+	<field name="AVANZO_N" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AVANZO_N"/>
+	</field>
+	<field name="AVANZO_PREC_N" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="AVANZO_PREC_N"/>
+	</field>
+	<field name="DISAVANZO_N" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DISAVANZO_N"/>
+	</field>
+	<field name="DISAVANZO_PREC_N" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="DISAVANZO_PREC_N"/>
+	</field>
 	<variable name="RES_INI_ES" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($P{P_TIPO}.equals("E")&&$F{RES_INI_ES}.compareTo(BigDecimal.ZERO)>0?$F{RES_INI_ES}.abs():
     ($P{P_TIPO}.equals("S")&&$F{RES_INI_ES}.compareTo(BigDecimal.ZERO)<0?$F{RES_INI_ES}.abs():BigDecimal.ZERO)
@@ -64,6 +147,24 @@ FROM TMP_STAMPA_RENDICONTO]]>
 	</variable>
 	<variable name="RIS_PAG_PREC" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($P{P_TIPO}.equals("E")&&$F{RIS_PAG_PREC}.compareTo(BigDecimal.ZERO)>0?$F{RIS_PAG_PREC}.abs():($P{P_TIPO}.equals("S")&&$F{RIS_PAG_PREC}.compareTo(BigDecimal.ZERO)<0?$F{RIS_PAG_PREC}.abs():BigDecimal.ZERO))]]></variableExpression>
+	</variable>
+	<variable name="FONDO_INIZ_CASSA_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FONDO_INIZ_CASSA_N}]]></variableExpression>
+	</variable>
+	<variable name="FONDO_INIZ_CASSA_PREC_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{FONDO_INIZ_CASSA_PREC_N}]]></variableExpression>
+	</variable>
+	<variable name="AVANZO_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AVANZO_N}]]></variableExpression>
+	</variable>
+	<variable name="AVANZO_PREC_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AVANZO_PREC_N}]]></variableExpression>
+	</variable>
+	<variable name="DISAVANZO_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DISAVANZO_N}]]></variableExpression>
+	</variable>
+	<variable name="DISAVANZO_PREC_N" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{DISAVANZO_PREC_N}]]></variableExpression>
 	</variable>
 	<title>
 		<band/>
