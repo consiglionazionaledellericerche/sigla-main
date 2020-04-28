@@ -1705,6 +1705,12 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="FONDO_INIZ_CASSA_N" toVariable="FONDO_INIZ_CASSA_N"/>
+				<returnValue subreportVariable="FONDO_INIZ_CASSA_PREC_N" toVariable="FONDO_INIZ_CASSA_PREC_N"/>
+				<returnValue subreportVariable="AVANZO_N" toVariable="AVANZO_N"/>
+				<returnValue subreportVariable="AVANZO_PREC_N" toVariable="AVANZO_PREC_N"/>
+				<returnValue subreportVariable="DISAVANZO_N" toVariable="DISAVANZO_N"/>
+				<returnValue subreportVariable="DISAVANZO_PREC_N" toVariable="DISAVANZO_PREC_N"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} +"stampa_pdg_renddec_presunto.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
