@@ -53,6 +53,12 @@ ORDER BY TIPO]]>
 	<field name="AVANZO_PREV" class="java.math.BigDecimal"/>
 	<field name="AVANZO_DEF" class="java.math.BigDecimal"/>
 	<field name="FONDO_CASSA_DEF" class="java.math.BigDecimal"/>
+	<variable name="AVANZO_PREV" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AVANZO_PREV}]]></variableExpression>
+	</variable>
+	<variable name="AVANZO_DEF" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{AVANZO_DEF}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>

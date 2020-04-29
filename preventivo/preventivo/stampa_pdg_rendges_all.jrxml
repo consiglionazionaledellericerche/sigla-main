@@ -71,13 +71,29 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select DS_LIVELLO1E, DS_LIVELLO2E, DS_LIVELLO3E, DS_LIVELLO4E, DS_LIVELLO5E, DS_LIVELLO6E, DS_LIVELLO7E, NULL DS_LIVELLO8E, NULL DS_LIVELLO9E,
-DS_LIVELLO1S, DS_LIVELLO2S, DS_LIVELLO3S, DS_LIVELLO4S, DS_LIVELLO5S, DS_LIVELLO6S, DS_LIVELLO7S, NULL DS_LIVELLO8S, NULL DS_LIVELLO9S
+DS_LIVELLO1S, DS_LIVELLO2S, DS_LIVELLO3S, DS_LIVELLO4S, DS_LIVELLO5S, DS_LIVELLO6S, DS_LIVELLO7S, NULL DS_LIVELLO8S, NULL DS_LIVELLO9S,
+(Select IM01 FROM CONFIGURAZIONE_CNR
+WHERE ESERCIZIO=$P{P_ESERCIZIO}
+AND CD_CHIAVE_PRIMARIA='BILANCIO_ENTE'
+AND CD_CHIAVE_SECONDARIA='AVANZO') AVANZO_PREV,
+(Select IM01 FROM CONFIGURAZIONE_CNR
+WHERE ESERCIZIO=$P{P_ESERCIZIO}
+AND CD_CHIAVE_PRIMARIA='BILANCIO_ENTE'
+AND CD_CHIAVE_SECONDARIA='AVANZO_DEF') AVANZO_DEF
 from parametri_livelli
 where esercizio=$P{P_ESERCIZIO}
 AND   $P{P_TIPO_AGGREGAZIONE} != 'SCI'
 UNION ALL
 select DS_LIVELLO1E, DS_LIVELLO2E, DS_LIVELLO3E, DS_LIVELLO4E, DS_LIVELLO5E, DS_LIVELLO6E, DS_LIVELLO7E, NULL DS_LIVELLO8E, NULL DS_LIVELLO9E,
-'Missione' DS_LIVELLO1S, 'Programma' DS_LIVELLO2S, DS_LIVELLO1S DS_LIVELLO3S, DS_LIVELLO2S DS_LIVELLO4S, DS_LIVELLO3S DS_LIVELLO5S, DS_LIVELLO4S DS_LIVELLO6S, DS_LIVELLO5S DS_LIVELLO7S, DS_LIVELLO6S DS_LIVELLO8S, DS_LIVELLO7S DS_LIVELLO9S
+'Missione' DS_LIVELLO1S, 'Programma' DS_LIVELLO2S, DS_LIVELLO1S DS_LIVELLO3S, DS_LIVELLO2S DS_LIVELLO4S, DS_LIVELLO3S DS_LIVELLO5S, DS_LIVELLO4S DS_LIVELLO6S, DS_LIVELLO5S DS_LIVELLO7S, DS_LIVELLO6S DS_LIVELLO8S, DS_LIVELLO7S DS_LIVELLO9S,
+(Select IM01 FROM CONFIGURAZIONE_CNR
+WHERE ESERCIZIO=$P{P_ESERCIZIO}
+AND CD_CHIAVE_PRIMARIA='BILANCIO_ENTE'
+AND CD_CHIAVE_SECONDARIA='AVANZO') AVANZO_PREV,
+(Select IM01 FROM CONFIGURAZIONE_CNR
+WHERE ESERCIZIO=$P{P_ESERCIZIO}
+AND CD_CHIAVE_PRIMARIA='BILANCIO_ENTE'
+AND CD_CHIAVE_SECONDARIA='AVANZO_DEF') AVANZO_DEF
 from parametri_livelli
 where esercizio=$P{P_ESERCIZIO}
 AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
@@ -100,6 +116,8 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 	<field name="DS_LIVELLO7S" class="java.lang.String"/>
 	<field name="DS_LIVELLO8S" class="java.lang.String"/>
 	<field name="DS_LIVELLO9S" class="java.lang.String"/>
+	<field name="AVANZO_PREV" class="java.math.BigDecimal"/>
+	<field name="AVANZO_DEF" class="java.math.BigDecimal"/>
 	<background>
 		<band/>
 	</background>
@@ -119,11 +137,11 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 				<subreportParameter name="ROTTURA">
 					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO6S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6S}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO8S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO6S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6S}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO4S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4S}]]></subreportParameterExpression>
@@ -146,17 +164,20 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 				<subreportParameter name="DS_LIVELLO4E">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4E}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO9E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO9E}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_ORIGINE">
 					<subreportParameterExpression><![CDATA[$P{P_ORIGINE}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO9E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO9E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="NOME_EST">
 					<subreportParameterExpression><![CDATA[$P{NOME_EST}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="PATH_LOGO1">
 					<subreportParameterExpression><![CDATA[$P{PATH_LOGO1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="AVANZO_PREV">
+					<subreportParameterExpression><![CDATA[$F{AVANZO_PREV}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DESCR_AGG_ENTE">
 					<subreportParameterExpression><![CDATA[$P{DESCR_AGG_ENTE}]]></subreportParameterExpression>
@@ -185,11 +206,14 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="P_TIPO_RENDICONTO">
+					<subreportParameterExpression><![CDATA[$P{P_TIPO_RENDICONTO}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO7E">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7E}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_TIPO_RENDICONTO">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO_RENDICONTO}]]></subreportParameterExpression>
+				<subreportParameter name="AVANZO_DEF">
+					<subreportParameterExpression><![CDATA[$F{AVANZO_DEF}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="P_TIPO">
 					<subreportParameterExpression><![CDATA[$P{P_TIPO}]]></subreportParameterExpression>
@@ -203,17 +227,17 @@ AND   $P{P_TIPO_AGGREGAZIONE} = 'SCI']]>
 				<subreportParameter name="DS_LIVELLO1E">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO1E}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO3E">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3E}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="RIEPILOGO">
 					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_TIPO_AGGREGAZIONE">
-					<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
+				<subreportParameter name="DS_LIVELLO3E">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3E}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO7S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_TIPO_AGGREGAZIONE">
+					<subreportParameterExpression><![CDATA[$P{P_TIPO_AGGREGAZIONE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_rendges_all_main.jasper"]]></subreportExpression>

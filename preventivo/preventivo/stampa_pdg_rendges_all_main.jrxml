@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6105100000000179"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="231"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -78,6 +78,12 @@
 	<parameter name="DS_LIVELLO9S" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AVANZO_PREV" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new BigDecimal(0)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AVANZO_DEF" class="java.math.BigDecimal" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new BigDecimal(0)]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT tipo, peso_livello1, peso_livello2,
@@ -668,6 +674,12 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	<variable name="CASSA_RIS_PAG" class="java.math.BigDecimal">
 		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
+	<variable name="AVANZO_PREV" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="AVANZO_DEF" class="java.math.BigDecimal" resetType="None">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
 	<group name="SOMMARIO">
 		<groupExpression><![CDATA["SOMMARIO"]]></groupExpression>
 		<groupFooter>
@@ -931,6 +943,20 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	</group>
 	<group name="RIEPILOGO_TITOLI">
 		<groupExpression><![CDATA["RIEPILOGO_TITOLI"]]></groupExpression>
+		<groupHeader>
+			<band>
+				<subreport isUsingCache="true" runToBottom="false">
+					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1171" height="0" uuid="3dafd8b0-df98-4b15-a0fe-ee5d06a96d18">
+						<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) )) && "E".equals($P{P_TIPO})]]></printWhenExpression>
+					</reportElement>
+					<subreportParameter name="P_ESERCIZIO">
+						<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_rendges_all_presunto.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
 		<groupFooter>
 			<band height="17">
 				<printWhenExpression><![CDATA[Boolean.valueOf($P{RIEPILOGO}.equals("S"))]]></printWhenExpression>
@@ -5866,21 +5892,6 @@ definitiva]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
-	<columnHeader>
-		<band splitType="Stretch">
-			<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) )) && "E".equals($P{P_TIPO})]]></printWhenExpression>
-			<subreport isUsingCache="true">
-				<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1171" height="0" uuid="3dafd8b0-df98-4b15-a0fe-ee5d06a96d18">
-					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) )) && "E".equals($P{P_TIPO})]]></printWhenExpression>
-				</reportElement>
-				<subreportParameter name="P_ESERCIZIO">
-					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_rendges_all_presunto.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
-	</columnHeader>
 	<detail>
 		<band height="13" splitType="Stretch">
 			<printWhenExpression><![CDATA[Boolean.valueOf($P{P_NUM_LIV}.compareTo(new Integer(1)) == 0
@@ -8099,7 +8110,9 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_PREV_INI_REPORT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
+?$V{SUM_PREV_INI_REPORT}.add($P{AVANZO_PREV})
+:$V{SUM_PREV_INI_REPORT}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-167" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="48" height="15" uuid="0cd1fe01-5024-4090-a685-bd284f88acae"/>
@@ -8110,7 +8123,11 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
+?($P{AVANZO_DEF}.compareTo($P{AVANZO_PREV})>0
+    ?$V{SUM_VAR_PIU_REPORT}.add($P{AVANZO_DEF}.subtract($P{AVANZO_PREV})).abs()
+    :$V{SUM_VAR_PIU_REPORT}.abs())
+:$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-168" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="48" height="15" uuid="170f359a-2df2-4b76-9025-51ecd3df107d"/>
@@ -8121,7 +8138,12 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_REPORT}.abs()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
+?($P{AVANZO_DEF}.compareTo($P{AVANZO_PREV})<0
+    ?$V{SUM_VAR_MENO_REPORT}.add($P{AVANZO_DEF}.subtract($P{AVANZO_PREV})).abs()
+    :$V{SUM_VAR_MENO_REPORT}.abs())
+:$V{SUM_VAR_MENO_REPORT}.abs()
+]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="355" y="0" width="48" height="15" uuid="5c19db60-3386-47e5-8020-a8bdbe89eaa1"/>
@@ -8132,7 +8154,9 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_REPORT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
+?$V{SUM_ASSESTATO_REPORT}.add($P{AVANZO_DEF})
+:$V{SUM_ASSESTATO_REPORT}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="403" y="0" width="48" height="15" uuid="0619c818-d9c1-44da-95ea-b561a8210909"/>
@@ -8277,7 +8301,7 @@ $V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP}
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[($V{CASSA_RIS_PAG}.abs().equals($V{CASSA_RIS_PAG} )?$V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG}):$V{SUM_CASSA_RIS_PAG_REPORT})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{SUM_CASSA_RIS_PAG_REPORT})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1027" y="0" width="48" height="15" uuid="85b984ce-11d5-4fb9-aae8-27235fb1e451"/>
@@ -8288,8 +8312,8 @@ $V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP}
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).compareTo(BigDecimal.ZERO)<0?
-$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).compareTo(BigDecimal.ZERO)<0?
+$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1075" y="0" width="48" height="15" uuid="ecff74b8-fe83-4ec3-a29e-5e5b3a36da3f"/>
@@ -8300,8 +8324,8 @@ $V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).compareTo(BigDecimal.ZERO)>0?
-$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).compareTo(BigDecimal.ZERO)>0?
+$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1123" y="0" width="48" height="15" uuid="51d2280d-a360-4972-a4af-cb41f445dd5d"/>
