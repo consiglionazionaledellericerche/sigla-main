@@ -8277,7 +8277,7 @@ $V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP}
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[($V{CASSA_RIS_PAG}.abs().equals($V{CASSA_RIS_PAG} )?$V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG}):$V{SUM_CASSA_RIS_PAG_REPORT})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($V{SUM_CASSA_RIS_PAG_REPORT})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1027" y="0" width="48" height="15" uuid="85b984ce-11d5-4fb9-aae8-27235fb1e451"/>
@@ -8288,8 +8288,8 @@ $V{SUM_ASSESTATO_REPORT}.subtract($V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP}
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).compareTo(BigDecimal.ZERO)<0?
-$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).compareTo(BigDecimal.ZERO)<0?
+$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1075" y="0" width="48" height="15" uuid="ecff74b8-fe83-4ec3-a29e-5e5b3a36da3f"/>
@@ -8300,8 +8300,8 @@ $V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).compareTo(BigDecimal.ZERO)>0?
-$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}.add($V{CASSA_RIS_PAG})).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).compareTo(BigDecimal.ZERO)>0?
+$V{SUM_CASSA_PREV_REPORT}.subtract($V{SUM_CASSA_RIS_PAG_REPORT}).abs():BigDecimal.ZERO.abs()]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="1123" y="0" width="48" height="15" uuid="51d2280d-a360-4972-a4af-cb41f445dd5d"/>
