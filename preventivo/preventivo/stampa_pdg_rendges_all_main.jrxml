@@ -668,6 +668,12 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	<variable name="CASSA_RIS_PAG" class="java.math.BigDecimal">
 		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
+	<variable name="AVANZO_PREV" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="AVANZO_DEF" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
 	<group name="SOMMARIO">
 		<groupExpression><![CDATA["SOMMARIO"]]></groupExpression>
 		<groupFooter>
@@ -689,7 +695,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_REPORT}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_PREV_INI_REPORT}.add($V{AVANZO_PREV})]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-167" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="259" y="0" width="48" height="15" uuid="571a14c6-ea15-4d9b-94ff-f62eb937f3f5"/>
@@ -699,7 +705,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{AVANZO_DEF}.compareTo($V{AVANZO_PREV})>0?$V{SUM_VAR_PIU_REPORT}.add($F{AVANZO_DEF}.subtract($F{AVANZO_PREV})).abs():$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-168" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="48" height="15" uuid="ed9550af-cb0c-4b02-8478-2bca7733d159"/>
@@ -709,7 +715,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_VAR_MENO_REPORT}.abs()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{AVANZO_DEF}.compareTo($V{AVANZO_PREV})<0?$V{SUM_VAR_MENO_REPORT}.add($F{AVANZO_DEF}.subtract($F{AVANZO_PREV})).abs():$V{SUM_VAR_MENO_REPORT}.abs()]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="355" y="0" width="48" height="15" uuid="7cd2ba2f-9682-4a93-ad43-39922af5f7ea"/>
@@ -719,7 +725,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_REPORT}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{SUM_ASSESTATO_REPORT}.add($V{AVANZO_DEF})]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="403" y="0" width="48" height="15" uuid="f361195f-89c9-4a27-b7a2-2e451d3304ef"/>
@@ -5877,6 +5883,8 @@ definitiva]]></text>
 					<subreportParameterExpression><![CDATA[$P{P_ESERCIZIO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="AVANZO_PREV" toVariable="AVANZO_PREV"/>
+				<returnValue subreportVariable="AVANZO_DEF" toVariable="AVANZO_DEF"/>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "stampa_pdg_rendges_all_presunto.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
