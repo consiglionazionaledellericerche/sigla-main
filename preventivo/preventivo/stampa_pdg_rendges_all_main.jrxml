@@ -705,7 +705,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{AVANZO_DEF}.compareTo($V{AVANZO_PREV})>0?$V{SUM_VAR_PIU_REPORT}.add($F{AVANZO_DEF}.subtract($F{AVANZO_PREV})).abs():$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{AVANZO_DEF}.compareTo($V{AVANZO_PREV})>0?$V{SUM_VAR_PIU_REPORT}.add($V{AVANZO_DEF}.subtract($V{AVANZO_PREV})).abs():$V{SUM_VAR_PIU_REPORT}.abs()]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-168" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="307" y="0" width="48" height="15" uuid="ed9550af-cb0c-4b02-8478-2bca7733d159"/>
@@ -715,7 +715,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$V{AVANZO_DEF}.compareTo($V{AVANZO_PREV})<0?$V{SUM_VAR_MENO_REPORT}.add($F{AVANZO_DEF}.subtract($F{AVANZO_PREV})).abs():$V{SUM_VAR_MENO_REPORT}.abs()]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{AVANZO_DEF}.compareTo($V{AVANZO_PREV})<0?$V{SUM_VAR_MENO_REPORT}.add($V{AVANZO_DEF}.subtract($V{AVANZO_PREV})).abs():$V{SUM_VAR_MENO_REPORT}.abs()]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="355" y="0" width="48" height="15" uuid="7cd2ba2f-9682-4a93-ad43-39922af5f7ea"/>
