@@ -677,8 +677,8 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	<group name="SOMMARIO">
 		<groupExpression><![CDATA["SOMMARIO"]]></groupExpression>
 		<groupHeader>
-			<band splitType="Immediate">
-				<subreport isUsingCache="true">
+			<band>
+				<subreport isUsingCache="true" runToBottom="true">
 					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1171" height="0" uuid="3dafd8b0-df98-4b15-a0fe-ee5d06a96d18">
 						<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) )) && "E".equals($P{P_TIPO})]]></printWhenExpression>
 					</reportElement>
