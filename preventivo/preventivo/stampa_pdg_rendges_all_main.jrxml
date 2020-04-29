@@ -668,10 +668,10 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	<variable name="CASSA_RIS_PAG" class="java.math.BigDecimal">
 		<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
 	</variable>
-	<variable name="AVANZO_PREV" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="AVANZO_PREV" class="java.math.BigDecimal" resetType="None">
 		<variableExpression><![CDATA[]]></variableExpression>
 	</variable>
-	<variable name="AVANZO_DEF" class="java.math.BigDecimal" calculation="Sum">
+	<variable name="AVANZO_DEF" class="java.math.BigDecimal" resetType="None">
 		<variableExpression><![CDATA[]]></variableExpression>
 	</variable>
 	<group name="SOMMARIO">
