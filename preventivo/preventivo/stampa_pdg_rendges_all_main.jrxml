@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="1.6105100000000179"/>
 	<property name="ireport.x" value="14"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="231"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -677,7 +677,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 	<group name="SOMMARIO">
 		<groupExpression><![CDATA["SOMMARIO"]]></groupExpression>
 		<groupHeader>
-			<band>
+			<band splitType="Immediate">
 				<subreport isUsingCache="true">
 					<reportElement key="subreport-1" positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="1171" height="0" uuid="3dafd8b0-df98-4b15-a0fe-ee5d06a96d18">
 						<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER}.equals( new Integer(1) )) && "E".equals($P{P_TIPO})]]></printWhenExpression>
