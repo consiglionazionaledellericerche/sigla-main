@@ -8110,7 +8110,7 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("S")
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
 ?$V{SUM_PREV_INI_REPORT}.add($P{AVANZO_PREV})
 :$V{SUM_PREV_INI_REPORT}]]></textFieldExpression>
 			</textField>
@@ -8123,7 +8123,7 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("S")
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
 ?($P{AVANZO_DEF}.compareTo($P{AVANZO_PREV})>0
     ?$V{SUM_VAR_PIU_REPORT}.add($P{AVANZO_DEF}.subtract($P{AVANZO_PREV})).abs()
     :$V{SUM_VAR_PIU_REPORT}.abs())
@@ -8138,7 +8138,7 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("S")
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
 ?($P{AVANZO_DEF}.compareTo($P{AVANZO_PREV})<0
     ?$V{SUM_VAR_MENO_REPORT}.add($P{AVANZO_DEF}.subtract($P{AVANZO_PREV})).abs()
     :$V{SUM_VAR_MENO_REPORT}.abs())
@@ -8154,7 +8154,7 @@ $F{CD_LIVELLO9}]]></textFieldExpression>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("S")
+				<textFieldExpression><![CDATA[$P{P_TIPO}.equals("E")
 ?$V{SUM_ASSESTATO_REPORT}.add($P{AVANZO_DEF})
 :$V{SUM_ASSESTATO_REPORT}]]></textFieldExpression>
 			</textField>
