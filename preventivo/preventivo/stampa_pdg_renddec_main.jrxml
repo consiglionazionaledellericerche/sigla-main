@@ -2580,7 +2580,7 @@ $F{CD_LIVELLO2}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP}).add($V{AVANZO_N})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_REPORT}.add($V{TOT_ACC_IMP})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-166" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="562" y="0" width="65" height="13" uuid="94748859-fbcf-43b9-a1f0-ad123e5abfff"/>
@@ -2591,7 +2591,7 @@ $F{CD_LIVELLO2}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_REPORT}.add($V{RIS_PAG}).add($V{FONDO_INIZ_CASSA_N})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_REPORT}.add($V{RIS_PAG})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-167" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="627" y="0" width="65" height="13" uuid="401f0b1e-c594-44c6-8b76-47b3e9d604a4"/>
@@ -2613,7 +2613,7 @@ $F{CD_LIVELLO2}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_PREC_REPORT}.add($V{TOT_ACC_IMP_PREC}).add($V{AVANZO_PREC_N})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_TOT_ACC_IMP_PREC_REPORT}.add($V{TOT_ACC_IMP_PREC})]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement key="textField-169" style="VERB6" positionType="Float" stretchType="RelativeToBandHeight" x="757" y="0" width="65" height="13" uuid="acc216de-dad5-4a80-abb2-570fa2ad629c"/>
@@ -2624,7 +2624,7 @@ $F{CD_LIVELLO2}]]></textFieldExpression>
 					<rightPen lineWidth="0.0" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_PREC_REPORT}.add($V{RIS_PAG_PREC}).add($V{FONDO_INIZ_CASSA_PREC_N})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{SUM_RIS_PAG_PREC_REPORT}.add($V{RIS_PAG_PREC})]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
