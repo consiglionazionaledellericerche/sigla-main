@@ -497,14 +497,12 @@
 	<fieldProperty
 		name="fl_cervellone"
 		property="fl_cervellone"
-		readonlyPropertyOnEdit="dipendente"
 		label="Soggetto ad Agevolazioni Fiscali 'Rientro dei cervelli'"
 		inputType="CHECKBOX" 
 		nullable="false"/>
 	<fieldProperty
 		name="dt_inizio_res_italia"
 		property="dt_inizio_res_italia"
-		readonlyPropertyOnEdit="dipendente"
 		label="Data Inizio res./dom. in Italia"
 		inputType="TEXT"
 		inputSize="8"		
@@ -512,7 +510,6 @@
 	<fieldProperty
 		name="dt_fine_res_italia"
 		property="dt_fine_res_italia"
-		readonlyPropertyOnEdit="dipendente"
 		label="Data Fine res./dom. in Italia"
 		inputType="TEXT"
 		inputSize="8"
