@@ -41,7 +41,7 @@
     <bean id="documentiContabiliService" class="it.cnr.contab.doccont00.service.DocumentiContabiliService" >
         <property name="arubaSignServiceClient" ref="arubaSignServiceClient"/>
         <property name="pecHostName" value="${pec.host.name}"/>
-        <property name="pecMailFromBanca" value="${pec.mail.from.banca}"/>
+        <property name="pecMailFromBanca" value="${pec.mail.from.banca.username}"/>
         <property name="pecMailFromBancaPassword" value="${pec.mail.from.banca.password}"/>
         <property name="pecMailToBancaNoEuroSepa" value="${pec.mail.to.banca.noeuro.sepa}"/>        
         <property name="pecMailToBancaItaliaF23F24" value="${pec.mail.to.banca.italia.f23.f24}"/>
