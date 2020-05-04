@@ -110,7 +110,8 @@
 			</textField>
 		</band>
 		<band height="19" splitType="Stretch">
-			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione") && $F{dataAvvioSmartWorking} != null &&
+!$F{dataAvvioSmartWorking}.equals("null")]]></printWhenExpression>
 			<textField>
 				<reportElement key="staticText-1" style="TNRG12" x="0" y="2" width="224" height="13" uuid="f161e5a4-8abf-49eb-9bc4-35a64fce224f"/>
 				<textElement markup="none">
@@ -170,7 +171,8 @@
 			</textField>
 		</band>
 		<band height="44">
-			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione") && $F{modalita} != null &&
+!$F{modalita}.equals("null")]]></printWhenExpression>
 			<textField>
 				<reportElement key="staticText-1" style="TNRGC14" x="0" y="24" width="552" height="17" uuid="6008452e-f2fa-4155-863d-ecb593d235f8"/>
 				<textElement textAlignment="Center" markup="none">
@@ -189,7 +191,8 @@
 			</line>
 		</band>
 		<band height="44">
-			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione")]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{tipoAttivita}.equals("programmazione") && $F{modalita} != null &&
+!$F{modalita}.equals("null")]]></printWhenExpression>
 			<textField isStretchWithOverflow="true">
 				<reportElement key="staticText-1" style="TNRG12" x="1" y="1" width="552" height="17" isPrintWhenDetailOverflows="true" uuid="65366b15-f49b-4f19-8b33-f9f5633a5d47"/>
 				<textElement textAlignment="Justified" markup="html">
