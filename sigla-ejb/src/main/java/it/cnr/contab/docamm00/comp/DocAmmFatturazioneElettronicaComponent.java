@@ -378,6 +378,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 			ObjectFactory factory = new ObjectFactory();
 			FatturaElettronicaType fatturaType = factory.createFatturaElettronicaType();
+			fatturaType.setSistemaEmittente(Utility.APPLICATION_TITLE);
 			fatturaType.setVersione(fattura.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
 			FatturaElettronicaHeaderType fatturaHeaderType = factory.createFatturaElettronicaHeaderType();
 			TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();

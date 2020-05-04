@@ -135,13 +135,16 @@ thorntail:
 
 repository:
   base:
-    url: http://as1dock.si.cnr.it:8080/alfresco/
+    url: http://gestdoc.cnr.it:90/alfresco/
+#    url: http://as1dock.si.cnr.it:8080/alfresco/
 org:
   apache:
     chemistry:
       opencmis:
-        user: admin
-        password: admin
+#        user: admin
+#        password: admin
+        user: sigla
+        password: algispw
         session:
           repository:
             id: -default-

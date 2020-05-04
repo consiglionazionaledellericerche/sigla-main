@@ -110,7 +110,6 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.lang.Integer esercizio_obbligazione;
 
 	// FL_ASSOCIATO_COMPENSO CHAR(1) NOT NULL
-	@JsonIgnore
 	private java.lang.Boolean fl_associato_compenso;
 
 	// FL_COMUNE_ALTRO CHAR(1) NOT NULL
