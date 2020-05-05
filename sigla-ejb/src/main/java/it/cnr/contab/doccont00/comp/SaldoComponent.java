@@ -3669,7 +3669,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								+variazioni definitive
 								+variazione provvisoria corrente che sta diventando definitiva
 						 */
-						if (impApprovatoClass.add(impVariazioniDefinitiveClass).add(impCurrentVariazioneClass).compareTo(impLimiteClass)>0)
+						if (impApprovatoClass.add(impVariazioniDefinitiveClass).compareTo(impLimiteClass)>0)
 							throw new ApplicationRuntimeException("Operazione non possibile!\nLa quota stanziata dal CDS "+cds+
 									" per la classificazione '"+classificazione.getCd_classificazione()+" - "+classificazione.getDs_classificazione()+
 									"',  di euro "+ new it.cnr.contab.util.EuroFormat().format(impApprovatoClass.add(impVariazioniDefinitiveClass))+
