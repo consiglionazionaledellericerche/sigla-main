@@ -2185,6 +2185,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				AnagraficoBulk a = (AnagraficoBulk) aHome
 						.findByPrimaryKey(aKey);
 
+				if (a.getFl_cervellone() && (a.getAnno_inizio_res_fis() == null || a.getAnno_fine_agevolazioni() == null)){
+					throw new it.cnr.jada.comp.ApplicationException(
+							"Per la persona in esame è impostata l'agevolazione fiscale del rientro dei cervelli ma non è indicato l'anno inizio residenza fiscale o l'anno di fine delle agevolazioni.");
+				}
 				if (data_da.get(GregorianCalendar.YEAR) == data_a
 						.get(GregorianCalendar.YEAR)) {
 					if (a.getFl_cervellone()
@@ -3705,7 +3709,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			filtro.setTiIstituzionaleCommerciale(compenso
 					.getTi_istituz_commerc());
 			filtro.setFlBonus(compenso.isDaBonus());
-			filtro.setFlSplitPayment(compenso.getFl_split_payment()); 
+			filtro.setFlSplitPayment(compenso.getFl_split_payment());
 			if (filtro.getCdTipoRapporto() != null
 					&& filtro.getCdTipoRapporto().equals("DIP")) {
 				try {
@@ -3783,7 +3787,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				AnagraficoBulk aKey = new AnagraficoBulk(t.getCd_anag());
 				AnagraficoBulk a = (AnagraficoBulk) aHome
 						.findByPrimaryKey(aKey);
-
 				if (data_da.get(GregorianCalendar.YEAR) == data_a
 						.get(GregorianCalendar.YEAR)) {
 					if (a.getFl_cervellone()

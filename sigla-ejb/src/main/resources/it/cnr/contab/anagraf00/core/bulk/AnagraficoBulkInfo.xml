@@ -517,18 +517,16 @@
 	<fieldProperty
 		name="anno_inizio_res_fis"
 		property="anno_inizio_res_fis"
-		readonlyPropertyOnEdit="dipendente"
 		label="Anno Inizio residenza fiscale"
 		inputSize="4"
 		inputType="TEXT" 
 		enabledOnInsert = "false"
 		enabledOnEdit = "false"
 		enabledOnSearch = "false"
-		enabledOnFreeSearch = "false" />				
+		enabledOnFreeSearch = "false" />
 	<fieldProperty
 		name="anno_fine_agevolazioni"
 		property="anno_fine_agevolazioni"
-		readonlyPropertyOnEdit="dipendente"
 		label="Anno Fine agevolazioni"
 		inputSize="4"
 		inputType="TEXT"
