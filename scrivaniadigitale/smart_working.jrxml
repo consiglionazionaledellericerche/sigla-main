@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Smart-Working" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
 	<property name="ireport.zoom" value="2.1435888100000016"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="207"/>
+	<property name="ireport.y" value="182"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
 	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
@@ -72,7 +72,9 @@
 					<textFieldExpression><![CDATA["MATRICOLA: " + $F{matricola}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement key="staticText-1" style="TNRG12" x="1" y="136" width="552" height="13" uuid="b9fd8816-7925-4b98-956b-23cbde2318ba"/>
+					<reportElement key="staticText-1" style="TNRG12" x="1" y="136" width="552" height="13" uuid="b9fd8816-7925-4b98-956b-23cbde2318ba">
+						<printWhenExpression><![CDATA[false]]></printWhenExpression>
+					</reportElement>
 					<textElement markup="none">
 						<font size="10" isBold="true"/>
 					</textElement>
