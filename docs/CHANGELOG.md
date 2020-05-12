@@ -1,3 +1,31 @@
+## Release 6.2.15  -- _May 12, 2020_ 
+**Changes**
+
+>**Add API REST for Terzo rapporto**
+>
+>[c97763de3ba3122](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c97763de3ba3122) marco.spasiano *May 12, 2020*
+
+>**Add contributors badge**
+>
+>[65708aec0e9a124](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65708aec0e9a124) Marco Spasiano *May 08, 2020*
+
+>**Aggiunto controllo di coerenza tra rientro dei cervelli e anno di inizio residenza e fine agevolazioni fiscali**
+>
+>[188b1a2aaf082ae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/188b1a2aaf082ae) gianfranco.gasparro *May 06, 2020*
+
+>**FIX Nuova gestione limiti di spesa per classificazione voci: corretto controllo sul limite**
+>
+>[9efd5fbaa7c65ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9efd5fbaa7c65ce) raffaele.pagano *May 05, 2020*
+
+>**FIX property for pec**
+>
+>[fd15371dad44120](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fd15371dad44120) marco.spasiano *May 04, 2020*
+
+>**Permessa modifica dati Rientro cervelli per i dipendenti**
+>
+>[fbd9cf3a9fe4ccf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fbd9cf3a9fe4ccf) gianfranco.gasparro *May 04, 2020*
+
+
 ## Release 6.2.13  -- _April 28, 2020_ 
 **Changes**
 
