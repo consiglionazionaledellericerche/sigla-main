@@ -875,14 +875,6 @@ end if;
       End If;
    End;
 
-   If aUOPersonale.cd_unita_organizzativa != aObb.cd_unita_organizzativa then
-      If cnrutil.isLabelObbligazione() Then
-        IBMERR001.RAISE_ERR_GENERICO('Obbligazione n. '||aObb.pg_obbligazione||' associata a liquidazione stipendi mese n. '||aStip.mese||' es '||aStip.esercizio||' ha UO non uguale a quella del personale');
-      Else
-        IBMERR001.RAISE_ERR_GENERICO('Impegno n. '||aObb.pg_obbligazione||' associato a liquidazione stipendi mese n. '||aStip.mese||' es. '||aStip.esercizio||' ha UO non uguale a quella del personale');
-      End If;
-   End If;
-
    If aIndex=1 then
     Select * into aTerzoVersamento
     From  terzo
