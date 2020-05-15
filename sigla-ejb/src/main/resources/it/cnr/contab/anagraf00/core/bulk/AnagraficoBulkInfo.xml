@@ -519,21 +519,21 @@
 		property="anno_inizio_res_fis"
 		label="Anno Inizio residenza fiscale"
 		inputSize="4"
-		inputType="TEXT" 
-		enabledOnInsert = "false"
-		enabledOnEdit = "false"
-		enabledOnSearch = "false"
-		enabledOnFreeSearch = "false" />
+		inputType="TEXT"
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		readonlyPropertyOnEdit="ROAnniCervelloniAbilitati"
+	/>
 	<fieldProperty
 		name="anno_fine_agevolazioni"
 		property="anno_fine_agevolazioni"
 		label="Anno Fine agevolazioni"
 		inputSize="4"
 		inputType="TEXT"
-		enabledOnInsert = "false"
-		enabledOnEdit = "false"
-		enabledOnSearch = "false"
-		enabledOnFreeSearch = "false" />						
+		enabledOnInsert = "true"
+		enabledOnEdit = "true"
+		readonlyPropertyOnEdit="ROAnniCervelloniAbilitati"
+	/>
 	<fieldProperty
 		name="im_reddito_complessivo"
 		property="anagrafico_esercizio.im_reddito_complessivo"

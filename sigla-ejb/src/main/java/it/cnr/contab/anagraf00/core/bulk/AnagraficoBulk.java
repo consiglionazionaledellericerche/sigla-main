@@ -895,8 +895,20 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 		super.validate();
 		if(getDt_nascita()!=null && getDt_nascita().after(it.cnr.jada.util.ejb.EJBCommonServices.getServerDate()))
 			throw new ValidationException("La Data di nascita non può essere antecedente alla data odierna");
-		if (getFl_cervellone() == true && getDt_inizio_res_italia()==null)
-			throw new ValidationException("Inserire la Data di Inizio residenza/domicilio in italia");
+		if (getFl_cervellone() == true){
+			if (getDt_inizio_res_italia()==null)
+				throw new ValidationException("Inserire la Data di Inizio residenza/domicilio in italia");
+			if (dipendente){
+				if (getAnno_inizio_res_fis()==null){
+					throw new ValidationException("Inserire l'anno di inizio residenza");
+				}
+				if (getAnno_fine_agevolazioni()==null){
+					throw new ValidationException("Inserire l'anno di fine agevolazioni");
+				}
+
+			}
+
+		}
 		if (getFl_abilita_diaria_miss_est() == true && (getDt_inizio_diaria_miss_est()==null || getDt_fine_diaria_miss_est()==null))
 			throw new ValidationException("Inserire la Data di inizio e fine autorizzazione ad avere la diaria per particolari missioni estere");
 		
@@ -991,5 +1003,8 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 	}
 	public Boolean isPartitaIvaVerificata(){
 		return getFlPivaVerificata() != null && getFlPivaVerificata().equals("Y"); 
+	}
+	public boolean isROAnniCervelloniAbilitati(){
+		return getFl_cervellone() == null || !getFl_cervellone() || !isDipendente();
 	}
 }

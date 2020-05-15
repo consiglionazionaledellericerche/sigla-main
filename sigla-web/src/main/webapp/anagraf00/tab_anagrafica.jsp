@@ -86,9 +86,9 @@
 			</tr>
 			<tr>	
 				<td><% bp.getController().writeFormLabel(out,"anno_inizio_res_fis");%></td>
-				<td><% bp.getController().writeFormInput(out,"anno_inizio_res_fis");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"anno_inizio_res_fis",false,null,"");%></td>
 				<td><% bp.getController().writeFormLabel(out,"anno_fine_agevolazioni");%></td>
-				<td><% bp.getController().writeFormInput(out,"anno_fine_agevolazioni");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"anno_fine_agevolazioni",false,null,"");%></td>
 			</tr>
 		<%} %>	
 		<%if (bp.isAbilitatoAutorizzareDiaria()) { %>	
