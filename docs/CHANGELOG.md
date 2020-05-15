@@ -1,3 +1,27 @@
+## Release 6.2.16  -- _May 15, 2020_ 
+**Changes**
+
+>**Consentita modifica anno inizio e fine agevolazioni per i dipendente che usufruiscono l'agevolazione fiscale "rientro cervelli"**
+>
+>[3fe1a256d9121ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3fe1a256d9121ce) gianfranco.gasparro *May 15, 2020*
+
+>**Procedura Stipendi: eliminato controllo di impegni solo Uo Personale**
+>
+>[833846da653f8e3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/833846da653f8e3) raffaele.pagano *May 15, 2020*
+
+>**define log lever SEVERE on org.jboss.as.ejb3.invocation**
+>
+>[b632bd5d2e68090](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b632bd5d2e68090) marco.spasiano *May 14, 2020*
+
+>**Aggiornamento package**
+>
+>[80ab94a668082da](https://github.com/consiglionazionaledellericerche/sigla-main/commit/80ab94a668082da) marco.spasiano *May 14, 2020*
+
+>**FIX API REST for Terzo rapporto**
+>
+>[23acaf5d324f296](https://github.com/consiglionazionaledellericerche/sigla-main/commit/23acaf5d324f296) marco.spasiano *May 12, 2020*
+
+
 ## Release 6.2.15  -- _May 12, 2020_ 
 **Changes**
 
