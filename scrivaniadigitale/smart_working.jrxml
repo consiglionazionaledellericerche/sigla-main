@@ -133,7 +133,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[java.time.Instant.parse($F{dataAvvioSmartWorking})
     .atZone(java.time.ZoneId.of( "Europe/Paris" ))
-    .format(java.time.DateTimeFormatter.ofPattern("dd/MM/yyyy"))]]></textFieldExpression>
+    .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="25" splitType="Stretch">
