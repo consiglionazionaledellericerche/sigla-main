@@ -165,6 +165,7 @@ public void copyFrom(
 	setFl_merce_intra_ue(fattura_passiva.getFl_merce_intra_ue());
 	setFl_fattura_compenso(fattura_passiva.getFl_fattura_compenso());
 	setDs_fattura_passiva(fattura_passiva.getDs_fattura_passiva());
+	setFl_split_payment(fattura_passiva.getFl_split_payment());
 	//setDt_fattura_fornitore(fattura_passiva.getDt_fattura_fornitore());
 	//setDt_scadenza(fattura_passiva.getDt_scadenza());
 
@@ -461,7 +462,7 @@ private void resetModalitaEnte() {
 /**
  * Insert the method's description here.
  * Creation date: (11/16/2001 3:21:35 PM)
- * @param newAccertamentiHash java.util.Hashtable
+ * @param newAccertamenti_scadenzarioHash java.util.Hashtable
  */
 public void setAccertamenti_scadenzarioHash(AccertamentiTable newAccertamenti_scadenzarioHash) {
 	accertamenti_scadenzarioHash = newAccertamenti_scadenzarioHash;
