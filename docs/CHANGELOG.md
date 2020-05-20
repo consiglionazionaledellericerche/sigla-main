@@ -1,3 +1,19 @@
+## Release 6.2.17  -- _May 20, 2020_ 
+**Changes**
+
+>**Fix Classificazioni: errore NullPointerException in fase di creazione**
+>
+>[eda1b82d7018051](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eda1b82d7018051) raffaele.pagano *May 20, 2020*
+
+>**FIX Registrazione Nota Credito: controlla inventario solo se liquidabile**
+>
+>[b0fa13d03d4b62a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b0fa13d03d4b62a) raffaele.pagano *May 19, 2020*
+
+>**FIX Registrazione Nota Credito: non aggiornava il flag SplitPayment con valore proveniente da fattura**
+>
+>[33ca1e1dab388fc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/33ca1e1dab388fc) raffaele.pagano *May 19, 2020*
+
+
 ## Release 6.2.16  -- _May 15, 2020_ 
 **Changes**
 
