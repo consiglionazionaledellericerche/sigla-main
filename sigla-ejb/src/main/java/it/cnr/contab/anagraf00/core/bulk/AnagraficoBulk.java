@@ -49,9 +49,11 @@ public class AnagraficoBulk extends AnagraficoBase {
 	public final static Dictionary SESSO;
 	public final static Dictionary ti_titoloStudioKeys;
 
+	private boolean abilitatoTrattamenti;
 	private boolean notGestoreIstat;
 	private ComuneBulk  comune_fiscale;
 	private ComuneBulk  comune_nascita;
+
 	private NazioneBulk nazionalita;
 
 	private it.cnr.contab.anagraf00.tabrif.bulk.Classificazione_anagBulk classificazione_anag;
@@ -1005,6 +1007,14 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 		return getFlPivaVerificata() != null && getFlPivaVerificata().equals("Y"); 
 	}
 	public boolean isROAnniCervelloniAbilitati(){
-		return getFl_cervellone() == null || !getFl_cervellone() || !isDipendente();
+		return getFl_cervellone() == null || !getFl_cervellone() || !isDipendente()|| (isDipendente() && !abilitatoTrattamenti);
 	}
+	public boolean isAbilitatoTrattamenti() {
+		return abilitatoTrattamenti;
+	}
+
+	public void setAbilitatoTrattamenti(boolean abilitatoTrattamenti) {
+		this.abilitatoTrattamenti = abilitatoTrattamenti;
+	}
+
 }

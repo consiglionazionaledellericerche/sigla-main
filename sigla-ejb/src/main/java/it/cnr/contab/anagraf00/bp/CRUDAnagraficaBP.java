@@ -1314,12 +1314,15 @@ public OggettoBulk initializeModelForInsert(ActionContext context,OggettoBulk bu
 	try {
 		setSupervisore(Utility.createUtenteComponentSession().isSupervisore(context.getUserContext()));
 		anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(context.getUserContext()));
+		anagrafico.setAbilitatoTrattamenti(!UtenteBulk.isAbilitatoAllTrattamenti(context.getUserContext()));
 		if (isUoEnte(context))
 			anagrafico.setUo_ente(true);
 		else
 			anagrafico.setUo_ente(false);
 		
 	} catch (ComponentException e1) {
+		handleException(e1);
+	} catch (IntrospectionException e1) {
 		handleException(e1);
 	} catch (RemoteException e1) {
 		handleException(e1);
@@ -1334,11 +1337,14 @@ public OggettoBulk initializeModelForEdit(ActionContext actioncontext,OggettoBul
 		try {
 			setSupervisore(Utility.createUtenteComponentSession().isSupervisore(actioncontext.getUserContext()));
 			anagrafico.setNotGestoreIstat(!UtenteBulk.isGestoreIstatSiope(actioncontext.getUserContext()));
+			anagrafico.setAbilitatoTrattamenti(UtenteBulk.isAbilitatoAllTrattamenti(actioncontext.getUserContext()));
 			if (isUoEnte(actioncontext))
 				anagrafico.setUo_ente(true);
 			else
 				anagrafico.setUo_ente(false);
 		} catch (ComponentException e1) {
+			handleException(e1);
+		} catch (IntrospectionException e1) {
 			handleException(e1);
 		} catch (RemoteException e1) {
 			handleException(e1);
