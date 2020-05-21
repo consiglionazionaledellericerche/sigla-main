@@ -1,3 +1,11 @@
+## Release 6.2.18  -- _May 21, 2020_ 
+**Changes**
+
+>**Consentita modifica delle impostazioni di cervellone su anagrafico per i dipendenti nel caso di abilitazioni ai trattamenti.**
+>
+>[a09c21aa26a5aed](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a09c21aa26a5aed) gianfranco.gasparro *May 21, 2020*
+
+
 ## Release 6.2.17  -- _May 20, 2020_ 
 **Changes**
 
