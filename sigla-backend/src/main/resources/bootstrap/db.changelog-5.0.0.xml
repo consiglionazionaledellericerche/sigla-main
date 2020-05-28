@@ -3334,5 +3334,321 @@ TRASPORTO_AEREO"/>
     <changeSet author="marco.spasiano" id="ldap-server-drop">
         <dropTable tableName="LDAP_SERVER"></dropTable>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="inventario-beni-add-index-targa">
+        <createIndex indexName="IX_INVENTARIO_BENI05" tableName="inventario_beni">
+            <column name="targa"/>
+        </createIndex>
+    </changeSet>
 
+    <changeSet author="gianfranco.gasparro" id="inizio-gestione-pagopa">
+        <createTable remarks="Tabella contenente le possibili tipologie di casistiche per le scadenze di Pagopa." tableName="tipo_scadenza_pagopa">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descrizione" remarks="Descrizione del tipo di scadenza." type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aux_digit" remarks="Aux Digit come da specifiche PagoPA." type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application_code" remarks="Esistenza dell'Application Code" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application_code_default" remarks="Application Code di default." type="VARCHAR(2)"/>
+            <column name="codice_segregazione" remarks="Esistenza del codice di Segregazione" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lunghezza_iuv_base" remarks="Lunghezza IUV Base" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="iuv_check_digit" remarks="Esistenza del check digit dello IUV" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lunghezza_iuv" remarks="Lunghezza Codice IUV" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="tipo_scadenza_pagopa_pkey" tableName="tipo_scadenza_pagopa"/>
+
+        <createTable remarks="Tabella contenente i periodi di validità per la gestione PagoPA." tableName="gestione_pagopa">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tipo_scadenza_pagopa" remarks="Identificativo del tipo scadenza PagoPA." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_ini_validita" remarks="Data Inizio Validita del bollo" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_fin_validita" remarks="Data Fine Validita del bollo" type="${date.type}"/>
+            <column name="posizione_debitoria" remarks="Attiva la gestione della posizione debitoria" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="posizione_creditoria" remarks="Attiva la gestione della posizione creditoria" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="gestione_pagopa_pkey" tableName="gestione_pagopa"/>
+
+        <createTable remarks="Tabella contenente le posizioni debitorie di PAGOPA." tableName="scadenza_pagopa">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio di registrazione dell''atto assoggettato a bollo." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Codice UO che ha registrato la posizione debitoria." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_posizione" remarks="Tipo Posizione PagoPA. D: Debitoria, C: Creditoria" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tipo_scadenza_pagopa" remarks="Tipo Scadenza PagoPA. D: Debitoria, C: Creditoria" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_avviso" remarks="Codice Avviso" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stato" remarks="Stato. VAL: Valido" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_scadenza" remarks="Data scadenza" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="note" remarks="Note" type="VARCHAR(2000)"/>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="scadenza_pagopa_pkey" tableName="scadenza_pagopa"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_unita_organizzativa" baseTableName="scadenza_pagopa" constraintName="fk_scadenza_pagopa01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_organizzativa" referencedTableName="unita_organizzativa"/>
+
+        <createIndex indexName="FX_SCADENZA_PAGOPA01" tableName="scadenza_pagopa">
+            <column name="cd_unita_organizzativa"/>
+        </createIndex>
+
+        <createIndex indexName="IX_SCADENZA_PAGOPA02" tableName="scadenza_pagopa">
+            <column name="cd_avviso"/>
+            <column name="tipo_posizione"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_tipo_scadenza_pagopa_add_divisor">
+        <addColumn tableName="tipo_scadenza_pagopa">
+            <column name="divisore_check_digit" remarks="Divisore per Check Digit" type="INT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="accessi-pagopa">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGSCADENZAPAGOPAM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione PagoPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGSCADENZAPAGOPAV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione PagoPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGSCADENZAPAGOPAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDScadenzaPagopaBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGSCADENZAPAGOPAV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDScadenzaPagopaBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.PAGOPA"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="PagoPA"/>
+            <column name="pg_ordinamento" type="BIGINT" value="15"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="PAGOPA"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM"/>
+            <column name="url_icona" type="VARCHAR(200)" value="book_closed.gif"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.PAGOPA.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGSCADENZAPAGOPAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDScadenzaPagopaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.PAGOPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.PAGOPA.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGSCADENZAPAGOPAV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDScadenzaPagopaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.PAGOPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="insert-base-pagopa">
+        <insert tableName="tipo_scadenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="1"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 0"/>
+            <column name="aux_digit" type="NUMERIC" value="0"/>
+            <column name="application_code" type="STRING" value="Y"/>
+            <column name="application_code_default" type="STRING" value="00"/>
+            <column name="codice_segregazione" type="STRING" value="N"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="13"/>
+            <column name="iuv_check_digit" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="15"/>
+            <column name="divisore_check_digit" type="NUMERIC" value="93"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="tipo_scadenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="2"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 1"/>
+            <column name="aux_digit" type="NUMERIC" value="1"/>
+            <column name="application_code" type="STRING" value="N"/>
+            <column name="codice_segregazione" type="STRING" value="N"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="17"/>
+            <column name="iuv_check_digit" type="STRING" value="N"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="17"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="tipo_scadenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="3"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 2"/>
+            <column name="aux_digit" type="NUMERIC" value="2"/>
+            <column name="application_code" type="STRING" value="N"/>
+            <column name="codice_segregazione" type="STRING" value="N"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="15"/>
+            <column name="iuv_check_digit" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="17"/>
+            <column name="divisore_check_digit" type="NUMERIC" value="93"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="tipo_scadenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="4"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 3"/>
+            <column name="aux_digit" type="NUMERIC" value="3"/>
+            <column name="application_code" type="STRING" value="N"/>
+            <column name="codice_segregazione" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="13"/>
+            <column name="iuv_check_digit" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="17"/>
+            <column name="divisore_check_digit" type="NUMERIC" value="93"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="gestione_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="1"/>
+            <column name="id_tipo_scadenza_pagopa" type="NUMERIC" value="1"/>
+            <column name="dt_ini_validita" type="${date.type}" valueDate="to_Date('01012002','ddmmyyyy')"/>
+            <column name="posizione_debitoria" type="STRING" value="N"/>
+            <column name="posizione_creditoria" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
