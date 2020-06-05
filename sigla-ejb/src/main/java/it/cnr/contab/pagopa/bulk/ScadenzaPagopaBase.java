@@ -19,6 +19,7 @@ package it.cnr.contab.pagopa.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
@@ -30,10 +31,8 @@ public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
 	// CD_UNITA_ORGANIZZATIVA VARCHAR(30) NOT NULL
 	private String cdUnitaOrganizzativa;
 	
-	// DESCRIZIONE_ATTO VARCHAR2(300 BYTE) NOT NULL
 	private String tipoPosizione;
 
-	// ID_TIPO_ATTO_BOLLO NUMBER NOT NULL
 	private Integer idTipoScadenzaPagopa;
 
 	public String getCdIuv() {
@@ -44,9 +43,23 @@ public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
 		this.cdIuv = cdIuv;
 	}
 
+	public String getCdTipoDocAmm() {
+		return cdTipoDocAmm;
+	}
+
+	public void setCdTipoDocAmm(String cdTipoDocAmm) {
+		this.cdTipoDocAmm = cdTipoDocAmm;
+	}
+
 	// CD_PROVV VARCHAR(20)
 	private String cdAvviso;
 	private String cdIuv;
+	private String cdCdsDocAmm;
+	private String cdUoDocAmm;
+	private String cdTipoDocAmm;
+	private BigDecimal importoScadenza;
+	private Integer esercizioDocAmm;
+	private Long pgDocAmm;
 
 	// NUMERO_PROVV DECIMAL(10,0)
 	private String stato;
@@ -64,6 +77,46 @@ public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
 
 	public Integer getEsercizio() {
 		return esercizio;
+	}
+
+	public String getCdCdsDocAmm() {
+		return cdCdsDocAmm;
+	}
+
+	public void setCdCdsDocAmm(String cdCdsDocAmm) {
+		this.cdCdsDocAmm = cdCdsDocAmm;
+	}
+
+	public String getCdUoDocAmm() {
+		return cdUoDocAmm;
+	}
+
+	public void setCdUoDocAmm(String cdUoDocAmm) {
+		this.cdUoDocAmm = cdUoDocAmm;
+	}
+
+	public BigDecimal getImportoScadenza() {
+		return importoScadenza;
+	}
+
+	public void setImportoScadenza(BigDecimal importoScadenza) {
+		this.importoScadenza = importoScadenza;
+	}
+
+	public Integer getEsercizioDocAmm() {
+		return esercizioDocAmm;
+	}
+
+	public void setEsercizioDocAmm(Integer esercizioDocAmm) {
+		this.esercizioDocAmm = esercizioDocAmm;
+	}
+
+	public Long getPgDocAmm() {
+		return pgDocAmm;
+	}
+
+	public void setPgDocAmm(Long pgDocAmm) {
+		this.pgDocAmm = pgDocAmm;
 	}
 
 	public void setEsercizio(Integer esercizio) {

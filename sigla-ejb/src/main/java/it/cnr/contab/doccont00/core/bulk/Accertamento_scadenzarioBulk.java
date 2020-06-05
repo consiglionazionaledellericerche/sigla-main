@@ -26,6 +26,8 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.pagopa.bulk.ScadenzaPagopaBulk;
+import it.cnr.contab.pagopa.bulk.TipoScadenzaPagopaBulk;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -51,13 +53,14 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 
 	private Integer esercizio_doc_attivo;
 	private String cd_tipo_documento_amm;	
-	private java.lang.Long pg_doc_attivo;	
+	private java.lang.Long pg_doc_attivo;
+	private ScadenzaPagopaBulk scadenzaPagopa;
 
 	private boolean fromDocAmm = false;	
 
 	private java.math.BigDecimal importoDisponibile;
 
-	public Accertamento_scadenzarioBulk() 
+	public Accertamento_scadenzarioBulk()
 	{
 	}
 	/**
@@ -458,5 +461,24 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	public java.math.BigDecimal getImportoNonIncassato() {
 		return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
 				subtract(Optional.ofNullable(getIm_associato_doc_contabile()).map(map -> map).orElse(BigDecimal.ZERO));
+	}
+	public ScadenzaPagopaBulk getScadenzaPagopa() {
+		return scadenzaPagopa;
+	}
+
+	public void setScadenzaPagopa(ScadenzaPagopaBulk scadenzaPagopa) {
+		this.scadenzaPagopa = scadenzaPagopa;
+	}
+
+	@Override
+	public Long getIdScadenzaPagopa() {
+		return Optional.ofNullable(getScadenzaPagopa())
+				.map(ScadenzaPagopaBulk::getId)
+				.orElse(null);
+	}
+
+	@Override
+	public void setIdScadenzaPagopa(Long idScadenzaPagopa) {
+		Optional.ofNullable(getScadenzaPagopa()).ifPresent(el->el.setId(idScadenzaPagopa));
 	}
 }

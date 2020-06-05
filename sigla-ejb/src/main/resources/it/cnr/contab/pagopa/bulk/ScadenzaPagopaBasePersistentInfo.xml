@@ -77,6 +77,38 @@
 			columnSize="7"
 			nullable="false" />
 		<columnMapping
+				columnName="IMPORTO_SCADENZA"
+				propertyName="importoScadenza"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="CD_CDS_DOC_AMM"
+				propertyName="cdCdsDocAmm"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="CD_UO_DOC_AMM"
+				propertyName="cdUoDocAmm"
+				sqlTypeName="VARCHAR"
+				columnSize="30"/>
+		<columnMapping
+				columnName="ESERCIZIO_DOC_AMM"
+				propertyName="esercizioDocAmm"
+				sqlTypeName="DECIMAL"
+				columnSize="4"/>
+		<columnMapping
+				columnName="CD_TIPO_DOC_AMM"
+				propertyName="cdTipoDocAmm"
+				sqlTypeName="VARCHAR"
+				columnSize="10"/>
+		<columnMapping
+				columnName="PG_DOC_AMM"
+				propertyName="pgDocAmm"
+				sqlTypeName="DECIMAL"
+				columnSize="10"/>
+		<columnMapping
 			columnName="PG_VER_REC"
 			propertyName="pg_ver_rec"
 			sqlTypeName="DECIMAL"
@@ -125,6 +157,18 @@
 		name="note" />
 	<persistentProperty
 	    name="dtScadenza" />
+	<persistentProperty
+			name="importoScadenza" />
+	<persistentProperty
+			name="cdCdsDocAmm"/>
+	<persistentProperty
+			name="cdUoDocAmm"/>
+	<persistentProperty
+			name="esercizioDocAmm"/>
+	<persistentProperty
+			name="cdTipoDocAmm"/>
+	<persistentProperty
+			name="pgDocAmm"/>
 	<persistentProperty
 		name="pg_ver_rec" />
 	<persistentProperty

@@ -58,6 +58,7 @@ import it.cnr.contab.pagopa.bulk.GestionePagopaBulk;
 import it.cnr.contab.pagopa.bulk.ScadenzaPagopaBulk;
 import it.cnr.contab.pagopa.bulk.GestionePagopaHome;
 import it.cnr.contab.pagopa.bulk.TipoScadenzaPagopaBulk;
+import it.cnr.contab.pagopa.ejb.ScadenzaPagopaComponentSession;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.service.PrintService;
@@ -199,6 +200,22 @@ public class FatturaAttivaSingolaComponent
                 fattura_attiva.setFattura_attiva_accertamentiHash(newAccertamentiHash);
                 for (java.util.Enumeration e = ((AccertamentiTable) newAccertamentiHash.clone()).keys(); e.hasMoreElements(); ) {
                     Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) e.nextElement();
+/*
+                    if (scadenza.getCrudStatus() == 5){
+                        ScadenzaPagopaComponentSession pagopaComponent = (ScadenzaPagopaComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPAGOPA_EJB_ScadenzaPagopaComponentSession", ScadenzaPagopaComponentSession.class);
+                        try {
+                            ScadenzaPagopaBulk scadenzaPagopa = pagopaComponent.generaPosizioneDebitoria(userContext, fattura_attiva, scadenza.getDt_scadenza_incasso(), scadenza.getIm_scadenza());
+                            scadenzaPagopa = (ScadenzaPagopaBulk) super.creaConBulk(userContext, scadenzaPagopa);
+                            for (java.util.Enumeration e1 = ((AccertamentiTable) fattura_attiva.getFattura_attiva_accertamentiHash()).keys(); e1.hasMoreElements(); ) {
+                                Accertamento_scadenzarioBulk scadenzaFattura = (Accertamento_scadenzarioBulk) e1.nextElement();
+                                scadenzaFattura.setScadenzaPagopa(scadenzaPagopa);
+                                scadenzaFattura.setToBeUpdated();
+                            }
+                        } catch (RemoteException remoteException) {
+                            throw  new ComponentException(remoteException);
+                        }
+                    }
+*/
                     scadenza.setIm_associato_doc_amm(calcolaTotaleAccertamentoPer(userContext, scadenza, fattura_attiva));
                     updateImportoAssociatoDocAmm(userContext, scadenza);
                 }
@@ -811,59 +828,6 @@ public class FatturaAttivaSingolaComponent
             fattura_attiva.setProgrUnivocoAnno(progressiviSession.getNextPG(userContext, numerazioneProgressivoUnivoco));
         } catch (Throwable t) {
             throw handleException(fattura_attiva, t);
-        }
-    }
-
-    private ScadenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza) throws ComponentException {
-
-        try {
-            GestionePagopaHome home = (GestionePagopaHome) getHome(userContext, GestionePagopaBulk.class);
-            GestionePagopaBulk gestionePagopaBulk = home.findGestionePagopa(DateServices.getDataOdierna());
-            if (gestionePagopaBulk != null){
-                ScadenzaPagopaBulk scadenzaPagopaBulk = new ScadenzaPagopaBulk();
-                ProgressiviAmmComponentSession progressiviSession = (ProgressiviAmmComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRDOCAMM00_EJB_ProgressiviAmmComponentSession", ProgressiviAmmComponentSession.class);
-                Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
-                Numerazione_doc_ammBulk numerazioneProgressivoUnivoco = new Numerazione_doc_ammBulk(documentoAmministrativoBulk, uoEnte);
-                numerazioneProgressivoUnivoco.setCd_tipo_documento_amm(Numerazione_doc_ammBulk.TIPO_POSIZIONE_DEBITORIA_PAGOPA);
-                Long iuvSenzaAnno = progressiviSession.getNextPG(userContext, numerazioneProgressivoUnivoco);
-
-                TipoScadenzaPagopaBulk tipoScadenzaPagopaBulk = gestionePagopaBulk.getTipoScadenzaPagopa();
-                try {
-                    tipoScadenzaPagopaBulk = (TipoScadenzaPagopaBulk) getHome(userContext, tipoScadenzaPagopaBulk).findByPrimaryKey(tipoScadenzaPagopaBulk);
-                } catch (it.cnr.jada.persistency.PersistencyException e) {
-                    throw handleException(tipoScadenzaPagopaBulk, e);
-                }
-
-                String codiceAvviso = tipoScadenzaPagopaBulk.getAuxDigit().toString();
-                if (tipoScadenzaPagopaBulk.getApplicationCode()){
-                    codiceAvviso += tipoScadenzaPagopaBulk.getApplicationCodeDefault();
-                }
-
-                String iuv = documentoAmministrativoBulk.getEsercizio().toString()+Utility.lpad(iuvSenzaAnno.toString(),tipoScadenzaPagopaBulk.getLunghezzaIuvBase() - 4,'0');
-
-                if (tipoScadenzaPagopaBulk.getIuvCheckDigit()){
-                    BigDecimal iuvBase = new BigDecimal(iuv);
-                    BigDecimal divisorStandard = new BigDecimal(tipoScadenzaPagopaBulk.getDivisoreCheckDigit());
-                    BigDecimal mod = iuvBase.remainder(divisorStandard);
-                    iuv += mod.toString();
-                }
-                codiceAvviso += iuv;
-                scadenzaPagopaBulk.setCdUnitaOrganizzativa(documentoAmministrativoBulk.getCd_uo());
-                scadenzaPagopaBulk.setCdAvviso(codiceAvviso);
-                scadenzaPagopaBulk.setCdIuv(iuv);
-                scadenzaPagopaBulk.setTipoScadenzaPagopa(tipoScadenzaPagopaBulk);
-                scadenzaPagopaBulk.setEsercizio(documentoAmministrativoBulk.getEsercizio());
-                scadenzaPagopaBulk.setDtScadenza(dataScadenza);
-                scadenzaPagopaBulk.setTipoPosizione(ScadenzaPagopaBulk.TIPO_POSIZIONE_CREDITORIA);
-                scadenzaPagopaBulk.setStato(ScadenzaPagopaBulk.STATO_VALIDO);
-                scadenzaPagopaBulk.setToBeCreated();
-                return scadenzaPagopaBulk;
-            } else {
-                throw new it.cnr.jada.comp.ApplicationException("La gestione PagoPA non è indicata per la data odierna");
-            }
-
-        } catch (Throwable t) {
-            throw handleException(t);
         }
     }
 
