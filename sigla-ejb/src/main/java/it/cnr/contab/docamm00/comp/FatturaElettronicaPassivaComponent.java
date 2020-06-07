@@ -214,20 +214,23 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						.map(DocumentoEleTestataBulk::getDocEleAcquistoColl)
 						.flatMap(documentoEleAcquistoBulks -> documentoEleAcquistoBulks.stream())
 						.map(DocumentoEleAcquistoBulk::getAcquistoCig)
+						.filter(s -> !s.isEmpty())
 						.collect(Collectors.toList());
-				ContrattoHome contrattoHome = (ContrattoHome) getHome(usercontext, ContrattoBulk.class);
-				for(String cig : cigs) {
-					final Optional<ContrattoBulk> optionalContrattoBulk = contrattoHome.findByCIG(usercontext, cig).stream().findAny();
-					if (optionalContrattoBulk.isPresent()) {
-						final TerzoBulk figura_giuridica_esterna = optionalContrattoBulk.get().getFigura_giuridica_esterna();
-						if(
-								Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale())
-									.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getCodice_fiscale_anagrafico()).orElse(""))).isPresent() ||
-								Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodice())
-										.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getPartita_iva_anagrafico()).orElse(""))).isPresent()
-						) {
-							documentoEleTrasmissioneBulk.setPrestatore(figura_giuridica_esterna);
-							documentoEleTrasmissioneBulk.setPrestatoreAnag(figura_giuridica_esterna.getAnagrafico());
+				if (!cigs.isEmpty()) {
+					ContrattoHome contrattoHome = (ContrattoHome) getHome(usercontext, ContrattoBulk.class);
+					for(String cig : cigs) {
+						final Optional<ContrattoBulk> optionalContrattoBulk = contrattoHome.findByCIG(usercontext, cig).stream().findAny();
+						if (optionalContrattoBulk.isPresent()) {
+							final TerzoBulk figura_giuridica_esterna = optionalContrattoBulk.get().getFigura_giuridica_esterna();
+							if(
+									Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale())
+											.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getCodice_fiscale_anagrafico()).orElse(""))).isPresent() ||
+											Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodice())
+													.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getPartita_iva_anagrafico()).orElse(""))).isPresent()
+							) {
+								documentoEleTrasmissioneBulk.setPrestatore(figura_giuridica_esterna);
+								documentoEleTrasmissioneBulk.setPrestatoreAnag(figura_giuridica_esterna.getAnagrafico());
+							}
 						}
 					}
 				}
