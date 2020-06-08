@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_veicoli" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" whenResourceMissingType="Error" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="155"/>
+	<property name="ireport.y" value="131"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
 	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
@@ -30,13 +30,13 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="159" splitType="Stretch">
+		<band height="107" splitType="Stretch">
 			<image isUsingCache="true">
 				<reportElement x="13" y="2" width="531" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
-				<reportElement x="13" y="45" width="531" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<reportElement style="TNRG12" x="13" y="45" width="531" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -49,123 +49,9 @@
 				</textElement>
 				<textFieldExpression><![CDATA["REPORT VEICOLI ANNO:  " + $F{anno}]]></textFieldExpression>
 			</textField>
-			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="13" y="88" width="531" height="57" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="0" y="0" width="77" height="25" uuid="f4fe3674-8ac6-44de-a086-f1cf9bd4142c"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Targa]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="395" y="0" width="66" height="25" uuid="d3d5ae0c-9107-47f6-afaa-bf0dffaebfcf"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Assicurazione]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="461" y="0" width="70" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Noleggio]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="197" y="0" width="66" height="25" uuid="cb04094e-8f8d-446e-80f9-50e0252c7ee3"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Responsabile]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="263" y="0" width="66" height="25" uuid="769f6187-c256-4466-af3e-884cde4860df"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Tipo Proprietà]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="329" y="0" width="66" height="25" uuid="22197fc8-a9dd-4913-b562-636571f00222"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Bollo]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="77" y="0" width="120" height="25" uuid="f7450d9f-023b-4e2e-8b55-9d5578b2fe76"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Istituto]]></text>
-				</staticText>
-			</frame>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="165">
-			<subreport runToBottom="false">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="13" y="0" width="531" height="22" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
-				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("veicolos")]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_veicoli_dettagli_sub.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band height="165"/>
 	</detail>
 </jasperReport>
