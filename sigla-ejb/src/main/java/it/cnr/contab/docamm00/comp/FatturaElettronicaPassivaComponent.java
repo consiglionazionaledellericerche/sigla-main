@@ -214,7 +214,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						.map(DocumentoEleTestataBulk::getDocEleAcquistoColl)
 						.flatMap(documentoEleAcquistoBulks -> documentoEleAcquistoBulks.stream())
 						.map(DocumentoEleAcquistoBulk::getAcquistoCig)
-						.filter(s -> !s.isEmpty())
+						.filter(s -> Optional.ofNullable(s).isPresent())
 						.collect(Collectors.toList());
 				if (!cigs.isEmpty()) {
 					ContrattoHome contrattoHome = (ContrattoHome) getHome(usercontext, ContrattoBulk.class);
