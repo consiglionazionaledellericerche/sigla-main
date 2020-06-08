@@ -39,7 +39,7 @@
 	<pageHeader>
 		<band height="68" splitType="Stretch">
 			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="13" y="2" width="531" height="57" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e"/>
+				<reportElement stretchType="RelativeToBandHeight" x="13" y="2" width="531" height="47" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
