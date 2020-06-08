@@ -29,7 +29,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="159" splitType="Stretch">
+		<band height="238" splitType="Stretch">
 			<image isUsingCache="true">
 				<reportElement x="13" y="2" width="531" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
