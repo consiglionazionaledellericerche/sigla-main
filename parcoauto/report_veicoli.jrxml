@@ -3,6 +3,16 @@
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="155"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["../img/"]]></defaultValueExpression>
 	</parameter>
@@ -49,7 +59,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<staticText>
-					<reportElement mode="Transparent" x="0" y="0" width="77" height="25" uuid="f4fe3674-8ac6-44de-a086-f1cf9bd4142c"/>
+					<reportElement style="TNRG10" mode="Transparent" x="0" y="0" width="77" height="25" uuid="f4fe3674-8ac6-44de-a086-f1cf9bd4142c"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -63,7 +73,7 @@
 					<text><![CDATA[Targa]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Transparent" x="395" y="0" width="66" height="25" uuid="d3d5ae0c-9107-47f6-afaa-bf0dffaebfcf"/>
+					<reportElement style="TNRG10" mode="Transparent" x="395" y="0" width="66" height="25" uuid="d3d5ae0c-9107-47f6-afaa-bf0dffaebfcf"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -77,7 +87,7 @@
 					<text><![CDATA[Assicurazione]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Transparent" x="461" y="0" width="70" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
+					<reportElement style="TNRG10" mode="Transparent" x="461" y="0" width="70" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -91,7 +101,7 @@
 					<text><![CDATA[Noleggio]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Transparent" x="197" y="0" width="66" height="25" uuid="cb04094e-8f8d-446e-80f9-50e0252c7ee3"/>
+					<reportElement style="TNRG10" mode="Transparent" x="197" y="0" width="66" height="25" uuid="cb04094e-8f8d-446e-80f9-50e0252c7ee3"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -105,7 +115,7 @@
 					<text><![CDATA[Responsabile]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Transparent" x="263" y="0" width="66" height="25" uuid="769f6187-c256-4466-af3e-884cde4860df"/>
+					<reportElement style="TNRG10" mode="Transparent" x="263" y="0" width="66" height="25" uuid="769f6187-c256-4466-af3e-884cde4860df"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -119,7 +129,7 @@
 					<text><![CDATA[Tipo Proprietà]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Transparent" x="329" y="0" width="66" height="25" uuid="22197fc8-a9dd-4913-b562-636571f00222"/>
+					<reportElement style="TNRG10" mode="Transparent" x="329" y="0" width="66" height="25" uuid="22197fc8-a9dd-4913-b562-636571f00222"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -133,7 +143,7 @@
 					<text><![CDATA[Bollo]]></text>
 				</staticText>
 				<staticText>
-					<reportElement mode="Transparent" x="77" y="0" width="120" height="25" uuid="f7450d9f-023b-4e2e-8b55-9d5578b2fe76"/>
+					<reportElement style="TNRG10" mode="Transparent" x="77" y="0" width="120" height="25" uuid="f7450d9f-023b-4e2e-8b55-9d5578b2fe76"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
