@@ -28,26 +28,16 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="238" splitType="Stretch">
+	<title>
+		<band height="50">
 			<image isUsingCache="true">
-				<reportElement x="13" y="2" width="531" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
+				<reportElement x="3" y="4" width="531" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
-			<textField isBlankWhenNull="false">
-				<reportElement x="13" y="45" width="531" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["REPORT VEICOLI ANNO:  " + $F{anno}]]></textFieldExpression>
-			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="238" splitType="Stretch">
 			<frame>
 				<reportElement stretchType="RelativeToBandHeight" x="13" y="88" width="531" height="57" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e"/>
 				<box>
