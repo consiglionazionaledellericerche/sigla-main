@@ -84,7 +84,7 @@
 				<textFieldExpression><![CDATA[$F{responsabile}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="461" y="0" width="64" height="22" backcolor="#FFFFFF" uuid="0e010af6-cb50-48fe-b4ed-cdad5918ea23"/>
+				<reportElement mode="Opaque" x="461" y="0" width="70" height="22" backcolor="#FFFFFF" uuid="0e010af6-cb50-48fe-b4ed-cdad5918ea23"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>

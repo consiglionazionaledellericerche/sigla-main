@@ -28,11 +28,11 @@
 	<pageHeader>
 		<band height="235" splitType="Stretch">
 			<image isUsingCache="true">
-				<reportElement x="174" y="2" width="202" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
+				<reportElement x="13" y="2" width="531" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
 			<textField isBlankWhenNull="false">
-				<reportElement x="23" y="39" width="521" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<reportElement x="13" y="45" width="531" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
 				<box>
 					<pen lineWidth="0.0" lineStyle="Dashed"/>
 					<topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -83,12 +83,12 @@
 					<text><![CDATA[Assicurazione]]></text>
 				</staticText>
 				<subreport runToBottom="false">
-					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="524" height="13" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="531" height="22" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
 					<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("veicolos")]]></dataSourceExpression>
 					<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_veicoli_dettagli_sub.jasper"]]></subreportExpression>
 				</subreport>
 				<staticText>
-					<reportElement style="bold" mode="Transparent" x="461" y="0" width="64" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
+					<reportElement style="bold" mode="Transparent" x="461" y="0" width="70" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
