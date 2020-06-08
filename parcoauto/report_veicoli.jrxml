@@ -9,8 +9,8 @@
 		</box>
 	</style>
 	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
-	<parameter name="DIR_IMAGE" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../img/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
@@ -84,7 +84,7 @@
 				</staticText>
 				<subreport runToBottom="false">
 					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="524" height="13" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
-					<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("printDettagliSpeseRimborsoMissione")]]></dataSourceExpression>
+					<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("veicolos")]]></dataSourceExpression>
 					<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_veicoli_dettagli_sub.jasper"]]></subreportExpression>
 				</subreport>
 				<staticText>
