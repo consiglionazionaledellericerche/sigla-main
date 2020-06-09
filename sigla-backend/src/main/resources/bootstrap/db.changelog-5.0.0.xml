@@ -3335,4 +3335,9 @@ TRASPORTO_AEREO"/>
         <dropTable tableName="LDAP_SERVER"></dropTable>
     </changeSet>
 
+    <changeSet author="raffaele.pagano" id="incarichi-parametri-add-column-allega-conflitto-interesse">
+        <addColumn tableName="incarichi_parametri">
+            <column name="allega_conflitto_interesse" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

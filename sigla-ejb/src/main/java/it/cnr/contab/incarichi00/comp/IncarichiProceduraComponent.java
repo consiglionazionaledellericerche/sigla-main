@@ -647,6 +647,19 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
 					}
 				}
+				if (incarico.getConflittoInteressi()==null) {
+					if (parametri!=null && parametri.getAllega_conflitto_interesse()!=null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+							//Istanzio la classe per riempire tipo_archivioKeys
+							new Incarichi_procedura_archivioBulk();
+						}
+
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString()+"\".");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString()+"\".");
+					}
+				}
 				if (incarico.getDecretoDiNomina()==null) {
 					if (parametri!=null && parametri.getAllega_decreto_nomina()!=null && parametri.getAllega_decreto_nomina().equals("Y")) { 
 						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
@@ -1496,7 +1509,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				sql.addClause(FindClause.OR, "cd_tipo_attivita", SQLBuilder.EQUALS, procedura.getCd_tipo_attivita());
 				sql.addClause(FindClause.OR, "cd_tipo_attivita", SQLBuilder.ISNULL, null);
 			sql.closeParenthesis();
-				sql.openParenthesis(FindClause.AND);
+			sql.openParenthesis(FindClause.AND);
 				sql.addClause(FindClause.OR, "cd_tipo_incarico", SQLBuilder.EQUALS, procedura.getCd_tipo_incarico());
 				sql.addClause(FindClause.OR, "cd_tipo_incarico", SQLBuilder.ISNULL, null);
 			sql.closeParenthesis();
@@ -1582,6 +1595,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						if (!(parametriDefinitivi.getFl_invio_fp()!=null && parametriDefinitivi.getFl_invio_fp().equals("Y")) &&
 							parametri.getFl_invio_fp()!=null)
 							parametriDefinitivi.setFl_invio_fp(parametri.getFl_invio_fp());
+						if (!(parametriDefinitivi.getAllega_conflitto_interesse()!=null && parametriDefinitivi.getAllega_conflitto_interesse().equals("Y")) &&
+							parametri.getAllega_conflitto_interesse()!=null)
+							parametriDefinitivi.setAllega_conflitto_interesse(parametri.getAllega_conflitto_interesse());
 					}
 				}
 				return parametriDefinitivi;
