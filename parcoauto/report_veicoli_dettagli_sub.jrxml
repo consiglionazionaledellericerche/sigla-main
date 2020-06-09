@@ -43,7 +43,7 @@
 	<detail>
 		<band height="25">
 			<textField>
-				<reportElement style="TNR10" mode="Transparent" x="77" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
@@ -67,7 +67,7 @@
 				<text><![CDATA[Isttituto]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="TNR10" mode="Transparent" x="77" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="dfd8fe88-f736-4b52-8277-0c2da599b357"/>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="dfd8fe88-f736-4b52-8277-0c2da599b357"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
@@ -95,14 +95,14 @@
 		<band height="25">
 			<printWhenExpression><![CDATA[$F{tipoProprieta} != null && $F{tipoProprieta} != ""]]></printWhenExpression>
 			<staticText>
-				<reportElement style="TNRG10" mode="Transparent" x="1" y="1" width="77" height="22" uuid="fd0039b7-8398-488f-acae-f8bc5eb0e00a"/>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="fd0039b7-8398-488f-acae-f8bc5eb0e00a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[Tipo Propietà]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="TNR10" mode="Transparent" x="79" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="bc56522b-9b60-4090-8384-deb7fa5fbad1"/>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="bc56522b-9b60-4090-8384-deb7fa5fbad1"/>
 				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
