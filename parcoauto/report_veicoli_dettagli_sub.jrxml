@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_veicoli_dettagli_sub" pageWidth="524" pageHeight="802" columnWidth="524" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="511b4f54-a834-44fd-aa94-c84429234118">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_veicoli_dettagli_sub" pageWidth="531" pageHeight="802" columnWidth="531" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="511b4f54-a834-44fd-aa94-c84429234118">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="table">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="bold" mode="Transparent" fontName="Times New Roman" isItalic="true" isUnderline="true" isStrikeThrough="true" pdfFontName="Times-Bold"/>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -37,112 +41,133 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="22">
+		<band height="25">
 			<textField>
-				<reportElement mode="Transparent" x="0" y="0" width="77" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="45508ba6-abfa-4c41-8f4d-d03c0c1a44b1"/>
+				<textElement verticalAlignment="Middle" markup="styled">
 					<font fontName="Times New Roman" size="9" isBold="false"/>
 					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{targa}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToBandHeight" mode="Opaque" x="77" y="0" width="120" height="22" backcolor="#FFFFFF" uuid="1092c234-69f7-4b43-9837-f9926fd6defa"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="9"/>
-					<paragraph leftIndent="5"/>
+			<staticText>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="6c9f7290-c709-463c-b653-5f5805a80fe2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Targa]]></text>
+			</staticText>
+		</band>
+		<band height="25">
+			<staticText>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="307ecfbe-b0ef-4e28-b81d-617bc0300113"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Istituto]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="dfd8fe88-f736-4b52-8277-0c2da599b357"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{istituto}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="197" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="a07362ba-ef03-469b-a1b1-7853e8310265"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="9"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+		</band>
+		<band height="25">
+			<staticText>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="cc9836d7-5b29-4e9e-9609-c21ec211a437"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Responsabile]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="dd83be08-f0d2-49e7-a43d-3e8ca596f752"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{responsabile}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="461" y="0" width="64" height="22" backcolor="#FFFFFF" uuid="0e010af6-cb50-48fe-b4ed-cdad5918ea23"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="9"/>
-					<paragraph leftIndent="5" rightIndent="5" spacingBefore="2" spacingAfter="2"/>
+		</band>
+		<band height="25">
+			<printWhenExpression><![CDATA[$F{tipoProprieta} != null && $F{tipoProprieta} != ""]]></printWhenExpression>
+			<staticText>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="fd0039b7-8398-488f-acae-f8bc5eb0e00a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{noleggio}]]></textFieldExpression>
-			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="9"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+				<text><![CDATA[Tipo Propietà]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="bc56522b-9b60-4090-8384-deb7fa5fbad1"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipoProprieta}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="329" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="e1288606-0a7d-4cd8-8a81-00b294e48dab"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="9"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+		</band>
+		<band height="25">
+			<printWhenExpression><![CDATA[$F{bollo} != null && $F{bollo} != ""]]></printWhenExpression>
+			<staticText>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="c79838d1-ed6e-4e2a-8daa-0277a87ab781"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Bollo]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="26525e62-ffa8-4914-8c71-9ed533da6203"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{bollo}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="395" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="5b186a7a-dae9-4b57-8df1-5cee44c32409"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="styled">
-					<font fontName="Times New Roman" size="9"/>
-					<paragraph leftIndent="5" rightIndent="5"/>
+		</band>
+		<band height="25">
+			<printWhenExpression><![CDATA[$F{assicurazione} != null && $F{assicurazione} != ""]]></printWhenExpression>
+			<textField>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="1e472905-7241-4285-8f6d-640d2bf347ea"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{assicurazione}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="2bb4f4e0-6e12-4937-a9b9-14bcd6a9b461"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Assicurazione]]></text>
+			</staticText>
+		</band>
+		<band height="25">
+			<printWhenExpression><![CDATA[$F{noleggio} != null && $F{noleggio} != ""]]></printWhenExpression>
+			<textField>
+				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="9d6bfec8-0559-49da-8ba7-85ac06d0d4aa"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font fontName="Times New Roman" size="9" isBold="false"/>
+					<paragraph lineSpacing="Single" leftIndent="5" spacingBefore="2" spacingAfter="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{noleggio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="TNRG10" mode="Transparent" x="0" y="1" width="77" height="22" uuid="78fb899b-cb8d-456a-a76b-28c8121f7d81"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Noleggio]]></text>
+			</staticText>
+		</band>
+		<band height="4">
+			<line>
+				<reportElement x="1" y="2" width="530" height="1" uuid="e70ae639-8908-4b20-81f7-c62748e5b3d3"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

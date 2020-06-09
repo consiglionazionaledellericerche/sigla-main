@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_veicoli" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-veicoli" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Error" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="table" mode="Transparent" isBold="true">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
-	<parameter name="DIR_IMAGE" class="java.lang.String">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
+	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
+	<style name="TNR10" fontName="Times New Roman" fontSize="10" pdfFontName="Times-Roman"/>
+	<style name="TNR8" fontName="Times New Roman" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="TNRG10" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG12" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNRG8" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
+	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["../img/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
-		<parameterDescription><![CDATA[]]></parameterDescription>
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<queryString language="json">
@@ -25,148 +28,63 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="235" splitType="Stretch">
+	<title>
+		<band height="50">
 			<image isUsingCache="true">
-				<reportElement x="174" y="2" width="202" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
+				<reportElement x="3" y="4" width="531" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
 				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
 			</image>
-			<textField isBlankWhenNull="false">
-				<reportElement x="23" y="39" width="521" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
-				<box>
-					<pen lineWidth="0.0" lineStyle="Dashed"/>
-					<topPen lineWidth="0.0" lineStyle="Dashed"/>
-					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
-					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
-					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="12" isBold="true"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40">
+			<textField>
+				<reportElement key="staticText-1" style="TNRGC14" x="0" y="0" width="552" height="23" uuid="826c5f57-f50d-4c29-8591-e9254c35cd37"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="14" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["REPORT VEICOLI ANNO:  " + $F{anno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Parco Auto - Anno: " + $F{anno}]]></textFieldExpression>
 			</textField>
-			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="13" y="88" width="531" height="57" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<staticText>
-					<reportElement style="bold" mode="Transparent" x="0" y="0" width="77" height="25" uuid="f4fe3674-8ac6-44de-a086-f1cf9bd4142c"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Targa]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="bold" mode="Transparent" x="395" y="0" width="66" height="25" uuid="d3d5ae0c-9107-47f6-afaa-bf0dffaebfcf"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Assicurazione]]></text>
-				</staticText>
-				<subreport runToBottom="false">
-					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="524" height="13" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
-					<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("printDettagliSpeseRimborsoMissione")]]></dataSourceExpression>
-					<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_veicoli_dettagli_sub.jasper"]]></subreportExpression>
-				</subreport>
-				<staticText>
-					<reportElement style="bold" mode="Transparent" x="461" y="0" width="64" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Noleggio]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="bold" mode="Transparent" x="197" y="0" width="66" height="25" uuid="cb04094e-8f8d-446e-80f9-50e0252c7ee3"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Responsabile]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="bold" mode="Transparent" x="263" y="0" width="66" height="25" uuid="769f6187-c256-4466-af3e-884cde4860df"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Tipo Proprietà]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="bold" mode="Transparent" x="329" y="0" width="66" height="25" uuid="22197fc8-a9dd-4913-b562-636571f00222"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Bollo]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="bold" mode="Transparent" x="77" y="0" width="120" height="25" uuid="f7450d9f-023b-4e2e-8b55-9d5578b2fe76"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Istituto]]></text>
-				</staticText>
-			</frame>
 		</band>
 	</pageHeader>
-	<columnHeader>
-		<band height="138" splitType="Stretch"/>
-	</columnHeader>
+	<detail>
+		<band height="26">
+			<subreport runToBottom="false">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="0" width="531" height="22" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("veicolos")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_veicoli_dettagli_sub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
 	<pageFooter>
-		<band height="70" splitType="Stretch"/>
+		<band height="31">
+			<textField>
+				<reportElement x="436" y="7" width="80" height="20" uuid="dde61084-3c8a-4fe5-9dda-04c9c54170d2"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="516" y="7" width="40" height="20" uuid="84f20ba2-c91a-4f7e-b22c-2930b00cda75"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="3" y="7" width="197" height="20" uuid="11440257-fb7d-41e8-9b65-3b0938daa634"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="3" y="4" width="553" height="1" uuid="64f3539f-2153-4c7b-bb10-5c187c6fd6b3"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="335" splitType="Stretch"/>
-	</summary>
 </jasperReport>
