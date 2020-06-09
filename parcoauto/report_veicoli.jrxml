@@ -37,123 +37,54 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="68" splitType="Stretch">
-			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="13" y="2" width="531" height="47" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="0" y="0" width="77" height="25" uuid="f4fe3674-8ac6-44de-a086-f1cf9bd4142c"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Targa]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="395" y="0" width="66" height="25" uuid="d3d5ae0c-9107-47f6-afaa-bf0dffaebfcf"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Assicurazione]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="461" y="0" width="70" height="25" uuid="f16475be-c442-4f0b-89b4-87aedfa8ecfa"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Noleggio]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="197" y="0" width="66" height="25" uuid="cb04094e-8f8d-446e-80f9-50e0252c7ee3"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Responsabile]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="263" y="0" width="66" height="25" uuid="769f6187-c256-4466-af3e-884cde4860df"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Tipo Proprietà]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="329" y="0" width="66" height="25" uuid="22197fc8-a9dd-4913-b562-636571f00222"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Bollo]]></text>
-				</staticText>
-				<staticText>
-					<reportElement style="TNRG10" mode="Transparent" x="77" y="0" width="120" height="25" uuid="f7450d9f-023b-4e2e-8b55-9d5578b2fe76"/>
-					<box>
-						<pen lineWidth="0.5"/>
-						<topPen lineWidth="0.5"/>
-						<leftPen lineWidth="0.5"/>
-						<bottomPen lineWidth="0.5"/>
-						<rightPen lineWidth="0.5"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<paragraph lineSpacing="Single"/>
-					</textElement>
-					<text><![CDATA[Istituto]]></text>
-				</staticText>
-				<subreport runToBottom="false">
-					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="25" width="531" height="22" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
-					<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("veicolos")]]></dataSourceExpression>
-					<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_veicoli_dettagli_sub.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
+		<band height="40">
+			<textField>
+				<reportElement key="staticText-1" style="TNRGC14" x="0" y="0" width="552" height="23" uuid="826c5f57-f50d-4c29-8591-e9254c35cd37"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Parco Auto - Anno: " + $F{anno}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
-		<band/>
+		<band height="26">
+			<subreport runToBottom="false">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="3" y="0" width="531" height="22" uuid="fec37bc5-13be-478f-b309-bee6a232b109"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JsonDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("veicolos")]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{DIR_SUBREPORT} + "report_veicoli_dettagli_sub.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
+	<pageFooter>
+		<band height="31">
+			<textField>
+				<reportElement x="436" y="7" width="80" height="20" uuid="dde61084-3c8a-4fe5-9dda-04c9c54170d2"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="516" y="7" width="40" height="20" uuid="84f20ba2-c91a-4f7e-b22c-2930b00cda75"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="3" y="7" width="197" height="20" uuid="11440257-fb7d-41e8-9b65-3b0938daa634"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="3" y="4" width="553" height="1" uuid="64f3539f-2153-4c7b-bb10-5c187c6fd6b3"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>
 </jasperReport>
