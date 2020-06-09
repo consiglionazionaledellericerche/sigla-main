@@ -73,7 +73,7 @@
 				<textFieldExpression><![CDATA[$F{istituto}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TNR10" mode="Opaque" x="197" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="a07362ba-ef03-469b-a1b1-7853e8310265"/>
+				<reportElement style="TNR10" stretchType="RelativeToBandHeight" mode="Opaque" x="197" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="a07362ba-ef03-469b-a1b1-7853e8310265"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -88,7 +88,7 @@
 				<textFieldExpression><![CDATA[$F{responsabile}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TNR10" mode="Opaque" x="461" y="0" width="70" height="22" backcolor="#FFFFFF" uuid="0e010af6-cb50-48fe-b4ed-cdad5918ea23"/>
+				<reportElement style="TNR10" stretchType="RelativeToBandHeight" mode="Opaque" x="461" y="0" width="70" height="22" backcolor="#FFFFFF" uuid="0e010af6-cb50-48fe-b4ed-cdad5918ea23"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -103,7 +103,7 @@
 				<textFieldExpression><![CDATA[$F{noleggio}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TNR10" mode="Opaque" x="263" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264"/>
+				<reportElement style="TNR10" stretchType="RelativeToBandHeight" mode="Opaque" x="263" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="1f113fb8-240f-4d48-a4d3-e3c11884b264"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -118,7 +118,7 @@
 				<textFieldExpression><![CDATA[$F{tipoProprieta}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TNR10" mode="Opaque" x="329" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="e1288606-0a7d-4cd8-8a81-00b294e48dab"/>
+				<reportElement style="TNR10" stretchType="RelativeToBandHeight" mode="Opaque" x="329" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="e1288606-0a7d-4cd8-8a81-00b294e48dab"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -133,7 +133,7 @@
 				<textFieldExpression><![CDATA[$F{bollo}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement style="TNR10" mode="Opaque" x="395" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="5b186a7a-dae9-4b57-8df1-5cee44c32409"/>
+				<reportElement style="TNR10" stretchType="RelativeToBandHeight" mode="Opaque" x="395" y="0" width="66" height="22" backcolor="#FFFFFF" uuid="5b186a7a-dae9-4b57-8df1-5cee44c32409"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
