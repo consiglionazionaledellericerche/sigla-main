@@ -64,7 +64,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[Isttituto]]></text>
+				<text><![CDATA[Istituto]]></text>
 			</staticText>
 			<textField>
 				<reportElement style="TNR10" mode="Transparent" x="78" y="1" width="454" height="22" backcolor="#FFFFFF" uuid="dfd8fe88-f736-4b52-8277-0c2da599b357"/>
