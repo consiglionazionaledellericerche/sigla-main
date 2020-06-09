@@ -1,3 +1,19 @@
+## Release 6.2.21  -- _June 09, 2020_ 
+**Changes**
+
+>**FIX riceca nazione iban per ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B**
+>
+>[8a6999324eb85a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a6999324eb85a8) marco.spasiano *June 09, 2020*
+
+
+## Release 6.2.20  -- _June 08, 2020_ 
+**Changes**
+
+>**FIX CIG null on aggiunto popolamento della fattura elettronica tramite CIG presente sul contratto**
+>
+>[5b389ee9561183a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b389ee9561183a) marco.spasiano *June 08, 2020*
+
+
 ## Release 6.2.19  -- _June 07, 2020_ 
 **Changes**
 
