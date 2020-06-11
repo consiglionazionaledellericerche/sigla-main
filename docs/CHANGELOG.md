@@ -1,3 +1,39 @@
+## Release 6.2.21  -- _June 09, 2020_ 
+**Changes**
+
+>**FIX riceca nazione iban per ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B**
+>
+>[8a6999324eb85a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a6999324eb85a8) marco.spasiano *June 09, 2020*
+
+
+## Release 6.2.20  -- _June 08, 2020_ 
+**Changes**
+
+>**FIX CIG null on aggiunto popolamento della fattura elettronica tramite CIG presente sul contratto**
+>
+>[5b389ee9561183a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5b389ee9561183a) marco.spasiano *June 08, 2020*
+
+
+## Release 6.2.19  -- _June 07, 2020_ 
+**Changes**
+
+>**Aggiunto popolamento della fattura elettronica tramite CIG presente sul contratto**
+>
+>[b9b4c46e92531c5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b9b4c46e92531c5) marco.spasiano *June 07, 2020*
+
+>**Aggiunto popolamento della fattura elettronica tramite CIG presente sul contratto**
+>
+>[d2c120462f6d127](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2c120462f6d127) marco.spasiano *June 07, 2020*
+
+>**Stampa Rendiconto Finanziario: corretta valorizzazione colonna variazione residui**
+>
+>[44cad47d982be8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44cad47d982be8d) raffaele.pagano *June 05, 2020*
+
+>**Aggiunta e corretta view di controllo sulle partite di giro**
+>
+>[8d5d4e97b0e54ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d5d4e97b0e54ff) gianfranco.gasparro *May 25, 2020*
+
+
 ## Release 6.2.18  -- _May 21, 2020_ 
 **Changes**
 

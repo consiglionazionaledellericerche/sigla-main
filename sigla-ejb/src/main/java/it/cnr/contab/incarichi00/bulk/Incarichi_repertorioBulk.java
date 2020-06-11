@@ -34,8 +34,10 @@ import it.cnr.contab.incarichi00.bulk.storage.StorageFolderBorseStudio;
 import it.cnr.contab.incarichi00.bulk.storage.StorageFolderContrattiModel;
 import it.cnr.contab.incarichi00.bulk.storage.StorageFolderIncarico;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkCollection;
 import it.cnr.jada.bulk.BulkList;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 
 import java.math.BigDecimal;
@@ -255,8 +257,7 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 	 * Restituisce un array di <code>BulkCollection</code> contenenti oggetti
 	 * bulk da rendere persistenti insieme al ricevente.
 	 * L'implementazione standard restituisce <code>null</code>.
-	 * @see it.cnr.jada.comp.GenericComponent#makeBulkPersistent
-	 */ 
+	 */
 	public BulkCollection[] getBulkLists() {
 		return new it.cnr.jada.bulk.BulkCollection[] { 
 				getIncarichi_repertorio_annoColl(), getArchivioAllegati(), 
@@ -477,6 +478,15 @@ public class Incarichi_repertorioBulk extends Incarichi_repertorioBase {
 		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
 			Incarichi_repertorio_archivioBulk allegato = (Incarichi_repertorio_archivioBulk)i.next();
 			if (allegato.isAttoEsitoControllo()) {
+				return allegato;
+			}
+		}
+		return null;
+	}
+	public Incarichi_repertorio_archivioBulk getConflittoInteressi(){
+		for ( Iterator i = getArchivioAllegati().iterator(); i.hasNext(); ) {
+			Incarichi_repertorio_archivioBulk allegato = (Incarichi_repertorio_archivioBulk)i.next();
+			if (allegato.isConflittoInteressi()) {
 				return allegato;
 			}
 		}

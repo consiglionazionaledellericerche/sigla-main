@@ -29,6 +29,8 @@ import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -77,6 +79,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.mail.internet.InternetAddress;
 
@@ -200,24 +205,53 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     			}        	        		
         	}catch (Exception _ex) {
         	}
-        	if (documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null || 
+
+			if (documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null ||
         			documentoEleTrasmissioneBulk.getPrestatoreCodice() != null) {
-        		List<AnagraficoBulk> anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
-        				documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),
-        				documentoEleTrasmissioneBulk.getPrestatoreCodice());
-        		if (anagraficoBulks != null && !anagraficoBulks.isEmpty()) {
-        			if (anagraficoBulks.size() == 1) {
-        				documentoEleTrasmissioneBulk.setPrestatoreAnag(anagraficoBulks.get(0));
-        				List<TerzoBulk> terzi = terzoHome.findTerzi(anagraficoBulks.get(0));
-        				if (terzi != null && !terzi.isEmpty() && terzi.size() == 1) {
-        					documentoEleTrasmissioneBulk.setPrestatore(terzi.get(0));
-        				}
-        			} else {
-        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
-        						documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() +" o la partita IVA: " + 
-        						documentoEleTrasmissioneBulk.getPrestatoreCodice());
-        			}
-        		}
+				final List<String> cigs = documentoEleTrasmissioneBulk
+						.getDocEleTestataColl()
+						.stream()
+						.map(DocumentoEleTestataBulk::getDocEleAcquistoColl)
+						.flatMap(documentoEleAcquistoBulks -> documentoEleAcquistoBulks.stream())
+						.map(DocumentoEleAcquistoBulk::getAcquistoCig)
+						.filter(s -> Optional.ofNullable(s).isPresent())
+						.collect(Collectors.toList());
+				if (!cigs.isEmpty()) {
+					ContrattoHome contrattoHome = (ContrattoHome) getHome(usercontext, ContrattoBulk.class);
+					for(String cig : cigs) {
+						final Optional<ContrattoBulk> optionalContrattoBulk = contrattoHome.findByCIG(usercontext, cig).stream().findAny();
+						if (optionalContrattoBulk.isPresent()) {
+							final TerzoBulk figura_giuridica_esterna = optionalContrattoBulk.get().getFigura_giuridica_esterna();
+							if(
+									Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale())
+											.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getCodice_fiscale_anagrafico()).orElse(""))).isPresent() ||
+											Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodice())
+													.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getPartita_iva_anagrafico()).orElse(""))).isPresent()
+							) {
+								documentoEleTrasmissioneBulk.setPrestatore(figura_giuridica_esterna);
+								documentoEleTrasmissioneBulk.setPrestatoreAnag(figura_giuridica_esterna.getAnagrafico());
+							}
+						}
+					}
+				}
+				if (documentoEleTrasmissioneBulk.getPrestatore() == null) {
+					List<AnagraficoBulk> anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
+							documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),
+							documentoEleTrasmissioneBulk.getPrestatoreCodice());
+					if (anagraficoBulks != null && !anagraficoBulks.isEmpty()) {
+						if (anagraficoBulks.size() == 1) {
+							documentoEleTrasmissioneBulk.setPrestatoreAnag(anagraficoBulks.get(0));
+							List<TerzoBulk> terzi = terzoHome.findTerzi(anagraficoBulks.get(0));
+							if (terzi != null && !terzi.isEmpty() && terzi.size() == 1) {
+								documentoEleTrasmissioneBulk.setPrestatore(terzi.get(0));
+							}
+						} else {
+							anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" +
+									documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() +" o la partita IVA: " +
+									documentoEleTrasmissioneBulk.getPrestatoreCodice());
+						}
+					}
+				}
         	}
 
         	if (documentoEleTrasmissioneBulk.getRappresentanteCodicefiscale() != null || 

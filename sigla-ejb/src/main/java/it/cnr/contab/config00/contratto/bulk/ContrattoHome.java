@@ -27,6 +27,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.AccertamentoBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
@@ -38,6 +39,7 @@ import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.persistency.sql.SQLUnion;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class ContrattoHome extends BulkHome {
     public ContrattoHome(java.sql.Connection conn) {
@@ -479,5 +481,13 @@ public class ContrattoHome extends BulkHome {
         sql.addSQLClause("AND", "STATO_CONTRATTO_PADRE", SQLBuilder.EQUALS, contratto_padre.getStato());
         sql.addSQLClause("AND", "PG_CONTRATTO_PADRE", sql.EQUALS, contratto_padre.getPg_contratto());
         return sql;
+    }
+
+    public List<ContrattoBulk> findByCIG(UserContext userContext, String cig) throws PersistencyException {
+        SQLBuilder sql = createSQLBuilder();
+        sql.addSQLClause("AND", "CD_CIG", SQLBuilder.EQUALS, cig);
+        final List all = fetchAll(sql);
+        getHomeCache().fetchAll(userContext);
+        return all;
     }
 }
