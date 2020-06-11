@@ -1007,7 +1007,7 @@ public void setTi_entita_persona_struttura(int newTi_entita_persona_struttura) {
 		return getFlPivaVerificata() != null && getFlPivaVerificata().equals("Y"); 
 	}
 	public boolean isROAnniCervelloniAbilitati(){
-		return getFl_cervellone() == null || !getFl_cervellone() || !isDipendente()|| (isDipendente() && !abilitatoTrattamenti);
+		return getFl_cervellone() == null || !getFl_cervellone() || !abilitatoTrattamenti;
 	}
 	public boolean isAbilitatoTrattamenti() {
 		return abilitatoTrattamenti;
