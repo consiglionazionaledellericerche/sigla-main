@@ -18,20 +18,23 @@
 package it.cnr.contab.web.rest.resource.config00;
 
 import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.client.docamm.Contratto;
+import it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupHome;
 import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
@@ -207,6 +210,25 @@ public class ContrattoResource implements ContrattoLocal {
 				cup.setToBeCreated();
 				contratto.setCup(cup);
 			}
+		}
+	}
+	@Override
+	public Response recuperoDatiContratto(@Context HttpServletRequest request, @QueryParam("uo") String uo,
+										  @QueryParam("cdTerzo") Integer cdTerzo) throws Exception {
+		LOGGER.debug("REST request per recupero Dati Contratto.");
+		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+		final ContrattoDatiSintesiBulk contrattoDatiSintesiBulk = new ContrattoDatiSintesiBulk();
+		Optional.ofNullable(uo).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, uo di selezione obbligatoria."));
+		Optional.ofNullable(cdTerzo).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, codice terzo di selezione obbligatoria."));
+
+		try {
+			List<ContrattoDatiSintesiBulk> dati =
+					crudComponentSession.find(userContext, ContrattoDatiSintesiBulk.class, "recuperoDati", userContext, contrattoDatiSintesiBulk, ContrattoBulk.NATURA_CONTABILE_PASSIVO, cdTerzo, uo);
+
+			LOGGER.debug("Fine REST per recupero Dati Contratto.");
+			return Response.ok(Optional.ofNullable(dati).orElse(Collections.emptyList())).build();
+		} catch (Exception _ex) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("ERROR", _ex)).build();
 		}
 	}
 }
