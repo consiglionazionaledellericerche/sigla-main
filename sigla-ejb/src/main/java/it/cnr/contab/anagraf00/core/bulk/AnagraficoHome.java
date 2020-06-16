@@ -698,9 +698,13 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 	 */
 
 	public java.util.Collection findAssociatiStudio(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+		return findAssociatiStudio(anagrafico.getCd_anag());
+	}
+
+	public java.util.Collection findAssociatiStudio(Integer cdAnag) throws IntrospectionException, PersistencyException {
 		PersistentHome anagraficoTerzoHome = getHomeCache().getHome(Anagrafico_terzoBulk.class);
 		SQLBuilder sql = anagraficoTerzoHome.createSQLBuilder();
-		sql.addClause("AND", "cd_anag", SQLBuilder.EQUALS, anagrafico.getCd_anag());
+		sql.addClause("AND", "cd_anag", SQLBuilder.EQUALS, cdAnag);
 		sql.addClause("AND", "ti_legame", SQLBuilder.EQUALS, Anagrafico_terzoBulk.LEGAME_STUDIO_ASSOCIATO);
 		return anagraficoTerzoHome.fetchAll(sql);
 	}

@@ -30,7 +30,7 @@
 	boolean isRODettaglio = false;
 	if (allegato!=null && ((allegato.isContratto() && (bp.isSuperUtente() || bp.isUtenteAbilitatoModificaAllegatoContratto())) ||
 						   allegato.isAllegatoGenerico() ||
-						   allegato.isCurriculumVincitore() || allegato.isProgetto())) {
+						   allegato.isCurriculumVincitore() || allegato.isConflittoInteressi() || allegato.isProgetto())) {
 		isRODettaglio = incarico==null||allegato==null||!allegato.isToBeCreated()||
 						!allegato.isAllegatoValido()||
 						incarico.getIncarichi_procedura().getFaseProcesso().compareTo(Incarichi_proceduraBulk.FASE_PUBBLICAZIONE)==0||
@@ -61,18 +61,23 @@ function doScaricaFile() {
 	</tr>
     <% if (allegato==null || allegato.getTipo_archivio()!=null) {%>
 	    <% if (allegato!=null && allegato.getTipo_archivio()!=null &&
-	    	  (allegato.isContratto() || allegato.isCurriculumVincitore())) {%>
+	    	  (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isConflittoInteressi())) {%>
 		<tr>
 			<td colspan=5>
 			<div class="Group Group card p-2 bg-danger text-white h5"><table>
-				<% if (allegato.isContratto() || allegato.isCurriculumVincitore()) { %>
+				<% if (allegato.isContratto() || allegato.isCurriculumVincitore() || allegato.isConflittoInteressi()) { %>
 				<tr><td valign=top>
 			    	<span class="FormLabel">Attenzione:</span>
 			    </td>
 			    <td valign=top>
 			    	<span class="FormLabel">
 					al fine di rispettare le norme in materia di tutela dei dati personali, <br>
-					prima di allegare il file del contratto da pubblicare sul sito internet istituzionale del CNR <br>
+					prima di allegare il file
+					<%if (allegato.isContratto()) {%>del contratto
+					<%} else if (allegato.isCurriculumVincitore()) {%>del curriculum
+					<%} else {%>dell''Attestazione di avvenuta verifica insussistenza cause di conflitto di interesse'
+					<%}%>
+					da pubblicare sul sito internet istituzionale del CNR <br>
 					e' necessario verificare che lo stesso esponga <b><i><u>esclusivamente</u></i></b> i seguenti dati personali: <br>
 					<b><i>Nome, Cognome, Luogo e Data di nascita, Codice Fiscale</i></b> <br>
 					Ogni altro dato personale dovrà essere <b><i>"<u>oscurato</u>"</i></b><br><br>

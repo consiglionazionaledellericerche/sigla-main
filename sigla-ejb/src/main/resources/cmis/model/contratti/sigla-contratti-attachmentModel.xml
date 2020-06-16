@@ -111,6 +111,11 @@
 			<description>Dichiarazione Rapporti con altre PA</description>
 			<parent>sigla_contratti_attachment:document</parent>
 		</type>
+		<type name="sigla_contratti_attachment:dichiarazione_insussistenza_conflitto_interessi">
+			<title>Dichiarazione Insussistenza Conflitto Interessi</title>
+			<description>Dichiarazione Insussistenza Conflitto Interessi</description>
+			<parent>sigla_contratti_attachment:document</parent>
+		</type>
 		<type name="sigla_contratti_attachment:nomina_rup">
 			<title>Nomina RUP</title>
 			<description>Nomina RUP</description>
