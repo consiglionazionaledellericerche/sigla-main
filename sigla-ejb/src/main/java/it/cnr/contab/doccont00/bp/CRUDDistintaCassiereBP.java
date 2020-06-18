@@ -19,6 +19,7 @@ package it.cnr.contab.doccont00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.BancaBulk;
+import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
@@ -1264,6 +1265,11 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                         infoben.setDestinazione("LIBERA");
                         infoben.setNumeroContoBancaItaliaEnteRicevente("0001777");
                         infoben.setTipoContabilitaEnteRicevente("INFRUTTIFERA");
+                    } else if (docContabile.getTiDocumento().compareTo(MandatoBulk.TIPO_PAGAMENTO) == 0
+                            && docContabile.getModalitaPagamento() != null
+                            && docContabile.getModalitaPagamento().compareTo("ATP-TA") == 0) {
+                        infoben.setTipoPagamento(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value());
+                        infoben.setNumeroContoBancaItaliaEnteRicevente(docContabile.getNumeroConto());
                     }
                     // 19/11/2015 MANDATI a NETTO 0, richiesta modifica tipo
                     // pagamento
