@@ -23,6 +23,7 @@ import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
@@ -50,8 +51,10 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
+import javax.ejb.EJBException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 /**
@@ -118,7 +121,26 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private boolean carryingThrough = false;
     private boolean ribaltato;
     private boolean nocompenso = true;
+
+    public Timestamp getDataInizioGestioneRiduzioneCuneo() {
+        return dataInizioGestioneRiduzioneCuneo;
+    }
+
+    public void setDataInizioGestioneRiduzioneCuneo(Timestamp dataInizioGestioneRiduzioneCuneo) {
+        this.dataInizioGestioneRiduzioneCuneo = dataInizioGestioneRiduzioneCuneo;
+    }
+
+    public Timestamp getDataFineGestioneRiduzioneCuneo() {
+        return dataFineGestioneRiduzioneCuneo;
+    }
+
+    public void setDataFineGestioneRiduzioneCuneo(Timestamp dataFineGestioneRiduzioneCuneo) {
+        this.dataFineGestioneRiduzioneCuneo = dataFineGestioneRiduzioneCuneo;
+    }
+
     private Boolean isGestioneIncarichiEnabled = null;
+    private Timestamp dataInizioGestioneRiduzioneCuneo = null;
+    private Timestamp dataFineGestioneRiduzioneCuneo = null;
 
     //private Boolean isGestionePrestazioneCompensoEnabled = null;
 
@@ -674,15 +696,11 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
         try {
             setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
-/*
-		String attivaPrestazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getVal01(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()), "*", "GESTIONE_COMPENSI", "ATTIVA_PRESTAZIONE");
-		if (attivaPrestazione==null)
-			throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per GESTIONE_COMPENSI - ATTIVA_PRESTAZIONE");
-		if (attivaPrestazione.compareTo(new String("Y"))==0)
-		    setGestionePrestazioneCompensoEnabled(true);
-		else
-			setGestionePrestazioneCompensoEnabled(false);
-*/
+            Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context.getUserContext(), null, null, Configurazione_cnrBulk.PK_RIDUZIONE_CUNEO_DL_3_2020, Configurazione_cnrBulk.SK_DATA_INIZIO);
+            if (configurazione != null){
+                dataInizioGestioneRiduzioneCuneo = configurazione.getDt01();
+                dataFineGestioneRiduzioneCuneo = configurazione.getDt02();
+            }
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
         } catch (java.rmi.RemoteException ex) {

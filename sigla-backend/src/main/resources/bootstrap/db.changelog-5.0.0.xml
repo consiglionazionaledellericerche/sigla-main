@@ -3340,4 +3340,32 @@ TRASPORTO_AEREO"/>
             <column name="allega_conflitto_interesse" type="CHAR(1)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="configurazione_cnr-add-data-inizio-riduzione-cuneo-dl320">
+        <insert tableName="configurazione_cnr" dbms="oracle">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="RIDUZIONE_CUNEO_DL_3_2020"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_INIZIO"/>
+            <column name="dt01" type="${date.type}" valueDate="to_Date('01072020','ddmmyyyy')"/>
+            <column name="dt02" type="${date.type}" valueDate="to_Date('31122100','ddmmyyyy')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="configurazione_cnr" dbms="postgresql">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="RIDUZIONE_CUNEO_DL_3_2020"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_INIZIO"/>
+            <column name="dt01" type="${date.type}" valueDate="to_timestamp('2020-01-07','YYYY-mm-DD')"/>
+            <column name="dt02" type="${date.type}" valueDate="to_timestamp('2100-12-31','YYYY-mm-DD')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

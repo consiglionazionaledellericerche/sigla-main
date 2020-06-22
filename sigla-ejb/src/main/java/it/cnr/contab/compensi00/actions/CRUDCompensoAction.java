@@ -966,7 +966,8 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			
 			if (compenso.getDt_a_competenza_coge() == null)
 				throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
-			
+
+			controlloRiduzioneCuneo32020(bp, compenso);
 			GregorianCalendar data_a = (GregorianCalendar) GregorianCalendar.getInstance();
 			GregorianCalendar old_data_a = (GregorianCalendar) GregorianCalendar.getInstance();
 			data_a.setTime(((CompensoBulk)bp.getModel()).getDt_a_competenza_coge());
@@ -1041,7 +1042,8 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 			return context.findDefaultForward();
 		if (compenso.getDt_da_competenza_coge() == null)
 			throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
-		
+
+		controlloRiduzioneCuneo32020(bp, compenso);
 		GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 		GregorianCalendar old_data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 		data_da.setTime(((CompensoBulk)bp.getModel()).getDt_da_competenza_coge());
@@ -1105,7 +1107,26 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 		return handleException(context, ex);
 	}
 }
-public Forward doOnDtRegistrazioneChange(ActionContext context) {
+
+	private void controlloRiduzioneCuneo32020(CRUDCompensoBP bp, CompensoBulk compenso) throws it.cnr.jada.comp.ApplicationException {
+
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+		if (compenso.getDt_a_competenza_coge() != null && compenso.getDt_da_competenza_coge() != null){
+			if (compenso.getDt_da_competenza_coge().compareTo(bp.getDataFineGestioneRiduzioneCuneo()) < 0 ||
+					compenso.getDt_a_competenza_coge().compareTo(bp.getDataFineGestioneRiduzioneCuneo()) < 0){
+				if (compenso.getDt_da_competenza_coge().compareTo(bp.getDataInizioGestioneRiduzioneCuneo()) < 0 &&
+						compenso.getDt_a_competenza_coge().compareTo(bp.getDataInizioGestioneRiduzioneCuneo()) >= 0){
+					throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(bp.getDataInizioGestioneRiduzioneCuneo()));
+				}
+				if (compenso.getDt_da_competenza_coge().compareTo(bp.getDataFineGestioneRiduzioneCuneo()) <= 0 &&
+						compenso.getDt_a_competenza_coge().compareTo(bp.getDataFineGestioneRiduzioneCuneo()) > 0){
+					throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(bp.getDataFineGestioneRiduzioneCuneo()));
+				}
+			}
+		}
+	}
+
+	public Forward doOnDtRegistrazioneChange(ActionContext context) {
 
 	try {
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);

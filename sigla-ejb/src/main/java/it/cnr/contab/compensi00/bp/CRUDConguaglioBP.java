@@ -19,6 +19,7 @@ package it.cnr.contab.compensi00.bp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
@@ -30,8 +31,10 @@ import it.cnr.contab.anagraf00.util.ExPartitaIVA;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.*;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.reports.bp.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.ValidationException;
@@ -61,11 +64,29 @@ public CRUDConguaglioBP(String function) {
   * Il conguaglio viene messo in Visualizzazione se il compenso associato ha
   * una obbligazione riportata.
   */
- 
-public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException 
+
+private Timestamp dataInizioGestioneRiduzioneCuneo = null;
+private Timestamp dataFineGestioneRiduzioneCuneo = null;
+
+	public Timestamp getDataInizioGestioneRiduzioneCuneo() {
+		return dataInizioGestioneRiduzioneCuneo;
+	}
+
+	public void setDataInizioGestioneRiduzioneCuneo(Timestamp dataInizioGestioneRiduzioneCuneo) {
+		this.dataInizioGestioneRiduzioneCuneo = dataInizioGestioneRiduzioneCuneo;
+	}
+
+	public Timestamp getDataFineGestioneRiduzioneCuneo() {
+		return dataFineGestioneRiduzioneCuneo;
+	}
+
+	public void setDataFineGestioneRiduzioneCuneo(Timestamp dataFineGestioneRiduzioneCuneo) {
+		this.dataFineGestioneRiduzioneCuneo = dataFineGestioneRiduzioneCuneo;
+	}
+	public void basicEdit(it.cnr.jada.action.ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException
 {
 	super.basicEdit(context, bulk, doInitializeForEdit);
-	
+
 	ConguaglioBulk conguaglio = (ConguaglioBulk)getModel();
 	if (!isViewing())
 	{

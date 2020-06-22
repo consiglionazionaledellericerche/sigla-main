@@ -28,6 +28,9 @@ PROCEDURE abilitaConguaglio
    aRecRateizzaClassificCoriP0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
    aRecRateizzaClassificCoriR0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
 
+    isChiavePrimariaRiduzioneCuneo CONSTANT CONFIGURAZIONE_CNR.cd_chiave_primaria%TYPE := 'RIDUZIONE_CUNEO_DL_3_2020';
+    isChiaveSecondariaDataInizio CONSTANT CONFIGURAZIONE_CNR.cd_chiave_secondaria%TYPE := 'DATA_INIZIO';
+    dataInizioRiduzioneCuneo date;
 BEGIN
    -------------------------------------------------------------------------------------------------
    -- Memorizzazione parametri generali della procedura
@@ -84,6 +87,7 @@ BEGIN
 
    BEGIN
 
+
       SELECT COUNT(*) INTO esisteCompenso
       FROM   DUAL
       WHERE  EXISTS
@@ -99,6 +103,25 @@ BEGIN
          IBMERR001.RAISE_ERR_GENERICO
             ('Non è stato trovato alcun compenso eleggibile a conguaglio per anagrafico ' ||
              aRecAnagrafico.cd_anag );
+      END IF;
+
+      dataInizioRiduzioneCuneo := Trunc(CNRCTB015.getDt01PerChiave(isChiavePrimariaRiduzioneCuneo, isChiaveSecondariaDataInizio));
+
+      SELECT COUNT(*) INTO esisteCompenso
+      FROM   DUAL
+      WHERE  EXISTS
+             (SELECT 1
+              FROM   V_COMPENSO_CONGUAGLIO_BASE A
+              WHERE  A.cd_anag = aRecAnagrafico.cd_anag AND
+                     A.esercizio_compenso <= inEsercizioConguaglio AND
+                     A.dt_emissione_mandato >= aDataIniEsercizio AND
+                     A.dt_emissione_mandato <= aDataFinEsercizio AND
+                     A.DT_A_COMPETENZA_COGE >= dataInizioRiduzioneCuneo AND
+                     A.stato_cofi = 'P');
+
+      IF esisteCompenso > 0 THEN
+         IBMERR001.RAISE_ERR_GENERICO
+            ('Esistono compensi con data competenza superiore alla data di inizio riduzione del cuneo fiscale('||to_char(dataInizioRiduzioneCuneo,'dd/mm/yyyy')||'). Conguaglio momentaneamente non possibile.' );
       END IF;
 
    END;
@@ -349,7 +372,7 @@ PROCEDURE creaCompensoConguaglio
    aRecRateizzaClassificCoriP0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
    aRecRateizzaClassificCoriR0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
 
-   isChiavePrimariaConguaglio CONSTANT CONFIGURAZIONE_CNR.cd_chiave_primaria%TYPE := 'CONGUAGLIO';
+  isChiavePrimariaConguaglio CONSTANT CONFIGURAZIONE_CNR.cd_chiave_primaria%TYPE := 'CONGUAGLIO';
    isLimiteImportoEmisMandato CONSTANT CONFIGURAZIONE_CNR.cd_chiave_secondaria%TYPE := 'IMPORTO_LIMITE_EMISSIONE_MANDATO';
 
    importoLimite CONFIGURAZIONE_CNR.im01%Type;
