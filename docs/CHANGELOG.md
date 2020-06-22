@@ -1,3 +1,43 @@
+## Release 6.2.23  -- _June 22, 2020_ 
+**Changes**
+
+>**Inizio Modifiche per Riduzione Cuneo Fiscale. Aggiunta blocchi su compensi e conguagli**
+>
+>[b3794566819ea5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b3794566819ea5c) gianfranco.gasparro *June 22, 2020*
+
+>**Inizio Modifiche per Riduzione Cuneo Fiscale. Aggiunta blocchi su compensi e conguagli**
+>
+>[0a92a49367fedc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0a92a49367fedc7) gianfranco.gasparro *June 22, 2020*
+
+>**Inizio Modifiche per Riduzione Cuneo Fiscale. Aggiunta blocchi su compensi e conguagli**
+>
+>[ac510cc41a9d8c0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ac510cc41a9d8c0) gianfranco.gasparro *June 22, 2020*
+
+>**Piano Economico: stampati i dettagli dei conti**
+>
+>[ddf7c8e4c605b44](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ddf7c8e4c605b44) raffaele.pagano *June 18, 2020*
+
+>**Add ATP-TA for OPI**
+>
+>[4055c5811bccac4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4055c5811bccac4) marco.spasiano *June 16, 2020*
+
+>**Bug Piano Economico: non effettuava controllo su esercizi esterni alla data di validità del progetto**
+>
+>[214e001f9f44bd9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/214e001f9f44bd9) raffaele.pagano *June 15, 2020*
+
+>**Piano Economico Progetti: anomalia nel calcolo saldi cofinanziati in presenza di trasferimenti**
+>
+>[b3ee3017c63acbf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b3ee3017c63acbf) raffaele.pagano *June 10, 2020*
+
+>**Adempimenti ex art. 15 D. Lgs.33_2013 - Inserita gestione parametrica per rendere obbligatorio l'inserimento del file di tipo 'Attestazione insussistenza conflitti interesse' in fase di inserimento incarico**
+>
+>[1fe4c3d9f2a47dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1fe4c3d9f2a47dd) raffaele.pagano *June 09, 2020*
+
+>**FIX riceca nazione iban per ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B**
+>
+>[8a6999324eb85a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a6999324eb85a8) marco.spasiano *June 09, 2020*
+
+
 ## Release 6.2.22  -- _June 12, 2020_ 
 **Changes**
 
@@ -9,14 +49,6 @@
 >
 >[c0cd51033ab22a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0cd51033ab22a6) gianfranco.gasparro *June 11, 2020*
 
->**Piano Economico Progetti: anomalia nel calcolo saldi cofinanziati in presenza di trasferimenti**
->
->[b3ee3017c63acbf](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b3ee3017c63acbf) raffaele.pagano *June 10, 2020*
-
->**Adempimenti ex art. 15 D. Lgs.33_2013 - Inserita gestione parametrica per rendere obbligatorio l'inserimento del file di tipo 'Attestazione insussistenza conflitti interesse' in fase di inserimento incarico**
->
->[1fe4c3d9f2a47dd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1fe4c3d9f2a47dd) raffaele.pagano *June 09, 2020*
-
 >**Stampa Rendiconto Finanziario: corretta valorizzazione colonna variazione residui**
 >
 >[44cad47d982be8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44cad47d982be8d) raffaele.pagano *June 05, 2020*
@@ -24,14 +56,6 @@
 >**Aggiunta e corretta view di controllo sulle partite di giro**
 >
 >[8d5d4e97b0e54ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d5d4e97b0e54ff) gianfranco.gasparro *May 25, 2020*
-
-
-## Release 6.2.21  -- _June 09, 2020_ 
-**Changes**
-
->**FIX riceca nazione iban per ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B**
->
->[8a6999324eb85a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a6999324eb85a8) marco.spasiano *June 09, 2020*
 
 
 ## Release 6.2.20  -- _June 08, 2020_ 
