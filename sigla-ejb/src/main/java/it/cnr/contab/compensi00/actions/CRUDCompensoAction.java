@@ -1118,6 +1118,9 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 						compenso.getDt_a_competenza_coge().compareTo(bp.getDataInizioGestioneRiduzioneCuneo()) >= 0){
 					throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(bp.getDataInizioGestioneRiduzioneCuneo()));
 				}
+				if (compenso.getDt_da_competenza_coge().compareTo(bp.getDataInizioGestioneRiduzioneCuneo()) >= 0){
+					throw new it.cnr.jada.comp.ApplicationException("Operazione momentaneamente non consentita, in attesa di adeguamento SIGLA. Le date di competenza devono essere entrambe precedenti alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(bp.getDataInizioGestioneRiduzioneCuneo()));
+				}
 				if (compenso.getDt_da_competenza_coge().compareTo(bp.getDataFineGestioneRiduzioneCuneo()) <= 0 &&
 						compenso.getDt_a_competenza_coge().compareTo(bp.getDataFineGestioneRiduzioneCuneo()) > 0){
 					throw new it.cnr.jada.comp.ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(bp.getDataFineGestioneRiduzioneCuneo()));

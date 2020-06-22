@@ -1176,7 +1176,7 @@ BEGIN
       OPEN gen_cur FOR
 
            SELECT *
-           FROM   V_TIPO_TRATTAMENTO_TIPO_CORI
+           FROM   V_TIPO_TRATTAMENTO_TIPO_CORI, TIPO_CONTRIBUTO_RITENUTA
            WHERE  cd_trattamento = aRecTipoTrattamento.cd_trattamento AND
                   dt_ini_val_trattamento = aRecTipoTrattamento.dt_ini_validita AND
                   dt_fin_val_trattamento = aRecTipoTrattamento.dt_fin_validita AND
