@@ -1,3 +1,11 @@
+## Release 6.2.24  -- _June 24, 2020_ 
+**Changes**
+
+>**Piano Economico: ripristinato sospensione controllo su variazioni di anni precedenti a quello di attivazione della gestione.**
+>
+>[ba5f8996381177c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba5f8996381177c) raffaele.pagano *June 24, 2020*
+
+
 ## Release 6.2.23  -- _June 22, 2020_ 
 **Changes**
 
