@@ -1293,7 +1293,8 @@
        --indice BINARY_INTEGER,
        aImportoRiferimento NUMBER,
        inNumGGTotMinPerCredito INTEGER,
-       aRecCompenso COMPENSO%ROWTYPE
+       aRecCompenso COMPENSO%ROWTYPE,
+       cdCori TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE
       ) RETURN NUMBER;
 
    FUNCTION getNumeroGGCompensiCreditoArr
@@ -1319,14 +1320,16 @@
        aCdUoCompenso COMPENSO.cd_unita_organizzativa%TYPE,
        aEsercizioCompenso COMPENSO.esercizio%TYPE,
        aPgCompenso COMPENSO.pg_compenso%TYPE,
-       aTerzo TERZO.cd_terzo%TYPE
+       aTerzo TERZO.cd_terzo%TYPE,
+       cdCori TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE
       ) RETURN NUMBER;
 
 FUNCTION arrotondaCredito
    (
     aCredito  CREDITO_IRPEF.im_credito%TYPE,
     DtDaComp COMPENSO.DT_DA_COMPETENZA_COGE%TYPE,
-    DtAComp  COMPENSO.DT_A_COMPETENZA_COGE%TYPE
+    DtAComp  COMPENSO.DT_A_COMPETENZA_COGE%TYPE,
+    aRecCreditoIrpef  CREDITO_IRPEF%ROWTYPE
    ) RETURN NUMBER;
 
    PROCEDURE riempiCarFamTmp

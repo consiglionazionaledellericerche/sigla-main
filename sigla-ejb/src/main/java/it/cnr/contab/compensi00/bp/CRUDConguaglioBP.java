@@ -541,4 +541,21 @@ public String doVerificaIncoerenzaCarichiFam(ActionContext context) throws Busin
 	}
 }
 
+	public void controlloRiduzioneCuneo32020(ConguaglioBulk conguaglio) throws ValidationException {
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+		if (conguaglio.getDt_a_competenza_coge() != null && conguaglio.getDt_da_competenza_coge() != null){
+			if (conguaglio.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0 ||
+					conguaglio.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0){
+				if (conguaglio.getDt_da_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) < 0 &&
+						conguaglio.getDt_a_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) >= 0){
+					throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataInizioGestioneRiduzioneCuneo()));
+				}
+				if (conguaglio.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) <= 0 &&
+						conguaglio.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) > 0){
+					throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataFineGestioneRiduzioneCuneo()));
+				}
+			}
+		}
+	}
+
 }

@@ -301,6 +301,7 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			conguaglio.setDt_a_competenza_coge(oldDataCompCoge);
 			throw e;
 		}
+		bp.controlloRiduzioneCuneo32020(conguaglio);
 		conguaglio.setStatoToAbilitaConguaglio();
 		return context.findDefaultForward();
 
@@ -342,6 +343,7 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			option.addAttribute("errorCodeTerzo", new Integer(errorCodeTerzo));
 			return option;
 		}
+		bp.controlloRiduzioneCuneo32020(conguaglio);
 
 		bp.findTipiRapporto(context);
 		bp.ripristinaSelezioneTipoRapporto();

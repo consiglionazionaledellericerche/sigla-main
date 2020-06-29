@@ -3368,4 +3368,11 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irper-detrazioni-riduzione_cuneo">
+        <addColumn tableName="credito_irpef">
+            <column name="fl_detrazione" type="CHAR(1)" defaultValue="N" remarks="Indica se il credito funziona come detrazione">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

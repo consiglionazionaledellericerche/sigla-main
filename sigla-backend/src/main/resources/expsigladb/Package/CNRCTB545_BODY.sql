@@ -338,7 +338,7 @@ BEGIN
 
       IF aContatore = 0 THEN
          IBMERR001.RAISE_ERR_GENERICO
-            ('Riferimento allo scaglione per contributo ritenuta ' || aCdContributoRitenuta || ' / Regione '||aCdRegione||' / Comune '||aPgComune||' non trovato');
+            ('Riferimento allo scaglione per contributo ritenuta ' || aCdContributoRitenuta || ' / Regione '||aCdRegione||' / Comune '||aPgComune||' non trovato'||aTiAnagrafico||' '||aDataRif||' '||aCdProvincia||' '||aImportoRif );
       END IF;
 
    END;
