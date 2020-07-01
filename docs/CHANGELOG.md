@@ -1,3 +1,11 @@
+## Release 6.2.25  -- _July 01, 2020_ 
+**Changes**
+
+>**Bug Variazioni Prelievo: non visualizzava voci in presenza di progetti scaduti**
+>
+>[9d335cdc266fb7e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d335cdc266fb7e) raffaele.pagano *July 01, 2020*
+
+
 ## Release 6.2.24  -- _June 24, 2020_ 
 **Changes**
 
