@@ -712,7 +712,7 @@ $F{DS_COMUNE_NASCITA}+
 						<bottomPen lineWidth="0.0" lineColor="#000000"/>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<text><![CDATA[Applicazione CUNEO DL 3/2020]]></text>
+					<text><![CDATA[Applicazione Cuneo DL 3/2020]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-37" style="TNR9" x="229" y="71" width="32" height="13" isRemoveLineWhenBlank="true" printWhenGroupChanges="PG_COMPENSO" uuid="6ffe5d05-0db5-4107-bf91-f73664c60704">
