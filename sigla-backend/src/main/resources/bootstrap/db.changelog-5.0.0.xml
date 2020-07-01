@@ -3375,4 +3375,33 @@ TRASPORTO_AEREO"/>
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-compenso-detrazioni-riduzione_cuneo">
+        <addColumn tableName="compenso">
+            <column name="detrazione_riduzione_cuneo" remarks="Detrazione per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+            </column>
+            <column name="detrazione_rid_cuneo_netto" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irpef-im_credito_base">
+        <addColumn tableName="credito_irpef">
+            <column name="im_credito_base" defaultValue="0" remarks="Nel caso di formula attiva viene indicato il valore fisso del credito da aggiungere a quello che viene calcolato dalla formula" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-anagrafico_esercizio-no_credito_cuneo_irpef">
+        <addColumn tableName="anagrafico_esercizio">
+            <column name="fl_no_credito_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fisclae irpef. Dominio Y = SI Non deve essere applicato il credito cuneo fiscale irpef. N = NO Deve essere applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_no_detr_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fisclae irpef. Dominio Y = SI Non deve essere applicato il credito cuneo fiscale irpef. N = NO Deve essere applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addNotNull-compenso-detrazione_cuneo">
+        <addNotNullConstraint columnName="detrazione_riduzione_cuneo" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
+        <addNotNullConstraint columnName="detrazione_rid_cuneo_netto" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
+    </changeSet>
 </databaseChangeLog>

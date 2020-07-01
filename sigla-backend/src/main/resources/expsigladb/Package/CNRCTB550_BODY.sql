@@ -635,6 +635,10 @@ BEGIN
                                                                   aRecAnagrafico.cd_anag);
    glbFlNoCreditoIrpef:=CNRCTB080.getAnagFlNoCreditoIrpef(inEsercizioCompenso,
                                                           aRecAnagrafico.cd_anag);
+   glbFlNoCreditoCuneoIrpef:=CNRCTB080.getAnagFlNoCreditoCuneoIrpef(inEsercizioCompenso,
+                                                          aRecAnagrafico.cd_anag);
+   glbFlNoDetrCuneoIrpef:=CNRCTB080.getAnagFlNoDetrCuneoIrpef(inEsercizioCompenso,
+                                                          aRecAnagrafico.cd_anag);
 
    glbRedditoComplessivo:=cnrctb080.getAnagRedditoComplessivo(inEsercizioCompenso,
                                                               aRecAnagrafico.cd_anag);
@@ -1096,11 +1100,13 @@ BEGIN
       aImDetrazioniCo:=aRecCompenso.detrazione_coniuge;
       aImDetrazioniFi:=aRecCompenso.detrazione_figli;
       aImDetrazioniAl:=aRecCompenso.detrazione_altri;
+      aImDetrazioniRidCuneo:=aRecCompenso.detrazione_riduzione_cuneo;
       aImDetrazioniPeNetto:=aRecCompenso.detrazioni_personali_netto;
       aImDetrazioniLaNetto:=aRecCompenso.detrazioni_la_netto;
       aImDetrazioniCoNetto:=aRecCompenso.detrazione_coniuge_netto;
       aImDetrazioniFiNetto:=aRecCompenso.detrazione_figli_netto;
       aImDetrazioniAlNetto:=aRecCompenso.detrazione_altri_netto;
+      aImDetrazioniRidCuneoNetto:=aRecCompenso.detrazione_rid_cuneo_netto;
       RETURN;
    END IF;
 
@@ -1114,11 +1120,13 @@ BEGIN
    aImDetrazioniCo:=0;
    aImDetrazioniFi:=0;
    aImDetrazioniAl:=0;
+   aImDetrazioniRidCuneo := 0;
    aImDetrazioniPeNetto:=0;
    aImDetrazioniLaNetto:=0;
    aImDetrazioniCoNetto:=0;
    aImDetrazioniFiNetto:=0;
    aImDetrazioniAlNetto:=0;
+   aImDetrazioniRidCuneoNetto := 0;
 
    -- Se si tratta di compenso da conguaglio non attivo le detrazione che sono calcolate dal
    -- conguaglio stesso
@@ -3247,7 +3255,7 @@ PROCEDURE calcolaDetrazioni
    aImDetrazioniCoPesata NUMBER(15,4);
    aImDetrazioniFiPesata NUMBER(15,4);
    aImDetrazioniAlPesata NUMBER(15,4);
-
+   aImDetrazioniRidCuneoPesata number(15,4);
    --aTotRedditoComplessivo  NUMBER(15,2);
 Begin
 
@@ -3785,7 +3793,8 @@ BEGIN
    aImDetrazioniCoNetto:=aImDetrazioniCo;
    aImDetrazioniFiNetto:=aImDetrazioniFi;
    aImDetrazioniAlNetto:=aImDetrazioniAl;
-   aTotDetrazioni:=aImDetrazioniPe + aImDetrazioniLa + aImDetrazioniCo + aImDetrazioniFi + aImDetrazioniAl;
+   aImDetrazioniRidCuneoNetto:=aImDetrazioniRidCuneo;
+   aTotDetrazioni:=aImDetrazioniPe + aImDetrazioniLa + aImDetrazioniCo + aImDetrazioniFi + aImDetrazioniAl + aImDetrazioniRidCuneo;
 
    -- Cancellazione dei dettagli preesistenti
 
@@ -4155,6 +4164,8 @@ BEGIN
                 detrazione_figli = aImDetrazioniFi,
                 detrazione_figli_netto = aImDetrazioniFiNetto,
                 detrazione_altri = aImDetrazioniAl,
+                detrazione_riduzione_cuneo = aImDetrazioniRidCuneo,
+                detrazione_rid_cuneo_netto = aImDetrazioniRidCuneoNetto,
                 detrazione_altri_netto = aImDetrazioniAlNetto,
                 imponibile_fiscale = aImponibileIrpefLordo,
                 im_deduzione_irpef = aImportoDeduzioneIrpef,
@@ -4286,7 +4297,7 @@ BEGIN
 
    BEGIN
 
-      FOR i IN 1 .. 5
+      FOR i IN 1 .. 6
 
       LOOP
 
@@ -4345,6 +4356,18 @@ BEGIN
                      --aImportoResto:=aImportoResto + aImDetrazioniAlNetto;
                      aImportoResto:=aImDetrazioniAlNetto * -1;
                      aImDetrazioniAlNetto:=0;
+                  ELSE
+                     aImportoResto:=0;
+                     EXIT;
+                  END IF;
+               END IF;
+         ELSIF i = 6 THEN
+               IF aImDetrazioniRidCuneoNetto > 0 THEN
+                  aImDetrazioniRidCuneoNetto:=aImDetrazioniRidCuneoNetto - aImportoResto;
+                  IF aImDetrazioniRidCuneoNetto < 0 THEN
+                     --aImportoResto:=aImportoResto + aImDetrazioniAlNetto;
+                     aImportoResto:=aImDetrazioniRidCuneoNetto * -1;
+                     aImDetrazioniRidCuneoNetto:=0;
                   ELSE
                      aImportoResto:=0;
                      EXIT;
@@ -5919,7 +5942,8 @@ FUNCTION calcolaCreditoIrpef
    aNumeroGGArretrato INTEGER;
    --aNumeroGGRateNonAssComp INTEGER;
    aNumeroGGRateTotCreditoCorr INTEGER;
-
+   aCreditoBase NUMBER(15,2) := 0;
+   dataInizioGestioneCuneoFiscale date;
 BEGIN
    aCredito :=0;
    aCreditoCorrente :=0;
@@ -5941,7 +5965,11 @@ BEGIN
 --pipe.send_message('aImportoRiferimento = '||aImportoRiferimento);
 --pipe.send_message('glbFlNoCreditoIrpef = '||glbFlNoCreditoIrpef);
    --�revista la gestione ed il terzo non ha chiesto che non sia applicato
-   If glbFlNoCreditoIrpef != 'Y' Then
+   dataInizioGestioneCuneoFiscale := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
+
+   If ((aRecCompenso.dt_a_competenza_coge < dataInizioGestioneCuneoFiscale and glbFlNoCreditoIrpef != 'Y') or
+        (aRecCompenso.dt_a_competenza_coge >= dataInizioGestioneCuneoFiscale and glbFlNoCreditoCuneoIrpef != 'Y') or
+        (aRecCompenso.dt_a_competenza_coge >= dataInizioGestioneCuneoFiscale and glbFlNoDetrCuneoIrpef != 'Y'))Then
         -------------------------------------------------------------------------------------------------
         -- Determinazione giorni
 
@@ -5975,7 +6003,6 @@ BEGIN
         IF aRecCreditoIrpef.im_credito = 0 then
             RETURN aCredito;
         END IF;
-
         IF ((aRecCompenso.dt_da_competenza_coge >= aRecCreditoIrpef.dt_inizio_applicazione
              AND
              aRecCompenso.dt_da_competenza_coge <= aRecCreditoIrpef.dt_fine_validita)
@@ -5998,6 +6025,7 @@ BEGIN
 --pipe.send_message('aCreditoTotAnno = '||aCreditoTotAnno);
              -- applico il coefficiente
              aCreditoTotAnno := aCreditoTotAnno * aCoefficiente;
+             aCreditoTotAnno := aCreditoTotAnno + aRecCreditoIrpef.im_credito_base;
 
 --pipe.send_message('aCreditoTotAnno con coefficiente = '||aCreditoTotAnno);
              -- prima di calcolare il credito controllo che non abbia gi�icevuto tutto il credito
@@ -6042,7 +6070,11 @@ BEGIN
                 -- aCredito sar�a somma di aCreditoCorrente (credito per il periodo di applicazione) +
                 -- aCreditoArretrato (credito per i mesi del periodo compreso dalla validit�ll'applicazione)
 
-                aCreditoCorrente := ROUND(((aRecCreditoIrpef.im_credito/aGGAnno)* aNumeroGG),2);
+                aCreditoCorrente := ROUND(((aRecCreditoIrpef.im_credito /aGGAnno) * aNumeroGG),2);
+                if aRecCreditoIrpef.im_credito_base != 0 then
+                 aCreditoBase := ROUND(((aRecCreditoIrpef.im_credito_base /aGGAnno) * aNumeroGG),2);
+                end if;
+
 --pipe.send_message('aCreditoCorrente = '||aCreditoCorrente);
                 -- calcolo aCreditoArretrato solo se non �tato DIP dalla data di inizio applicazione
                 -- alla data di inizio competenza del compenso che sto pagando
@@ -6120,6 +6152,7 @@ BEGIN
 --pipe.send_message('aCredito = '||aCredito);
 --pipe.send_message('aCoefficiente = '||aCoefficiente);
                 aCredito := ROUND((aCredito * aCoefficiente),2);
+                aCredito := aCredito + aCreditoBase;
 --pipe.send_message('aCredito NEW = '||aCredito);
            End If;  -- If aCreditoGiaCalcolato  < aCreditoTotAnno then
         END IF;
@@ -6136,7 +6169,17 @@ BEGIN
              end if;
 --pipe.send_message('aCredito FINE = '||aCredito);
         END IF;
-
+        if aRecCreditoIrpef.fl_detrazione = 'Y' THEN
+            if  aRecCompenso.dt_a_competenza_coge >= dataInizioGestioneCuneoFiscale and glbFlNoDetrCuneoIrpef != 'Y' then
+                aImDetrazioniRidCuneo := aCredito;
+            end if;
+            aCredito := 0;
+        else
+           If ((aRecCompenso.dt_a_competenza_coge < dataInizioGestioneCuneoFiscale and glbFlNoCreditoIrpef = 'Y') or
+                (aRecCompenso.dt_a_competenza_coge >= dataInizioGestioneCuneoFiscale and glbFlNoCreditoCuneoIrpef = 'Y') )Then
+               aCredito := 0;
+           END IF;
+        END IF;
   End If;   -- FINE  If glbFlNoCreditoIrpef != 'Y' Then
   RETURN - aCredito;
   END;

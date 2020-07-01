@@ -521,11 +521,13 @@
    aImDetrazioniFi NUMBER(15,2);
    aImDetrazioniFiS NUMBER(15,2);
    aImDetrazioniAl NUMBER(15,2);
+   aImDetrazioniRidCuneo NUMBER(15,2);
    aImDetrazioniPeNetto NUMBER(15,2);
    aImDetrazioniLaNetto NUMBER(15,2);
    aImDetrazioniCoNetto NUMBER(15,2);
    aImDetrazioniFiNetto NUMBER(15,2);
    aImDetrazioniAlNetto NUMBER(15,2);
+   aImDetrazioniRidCuneoNetto NUMBER(15,2);
 
    -- Memorizza la base di calcolo delle deduzioni
 
@@ -565,6 +567,8 @@
    -- Memorizza gestione no credito IRPEF per il soggetto anagrafico
 
    glbFlNoCreditoIrpef CHAR(1);
+   glbFlNoCreditoCuneoIrpef CHAR(1);
+   glbFlNoDetrCuneoIrpef CHAR(1);
 
    -- Memorizza il Reddito Complessivo e quello della prima casa presenti in anagrafica
 

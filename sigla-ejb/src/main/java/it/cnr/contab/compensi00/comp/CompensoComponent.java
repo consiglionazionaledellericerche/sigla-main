@@ -28,7 +28,6 @@ import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.anagraf00.core.bulk.RapportoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -93,7 +92,6 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -133,7 +131,6 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.PrimaryKeyHashMap;
 import it.cnr.jada.bulk.PrimaryKeyHashtable;
@@ -5320,6 +5317,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			compenso.setDetrazione_figli_netto(new java.math.BigDecimal(0));
 		if (compenso.getDetrazione_altri_netto() == null)
 			compenso.setDetrazione_altri_netto(new java.math.BigDecimal(0));
+		if (compenso.getDetrazioneRiduzioneCuneo() == null)
+			compenso.setDetrazioneRiduzioneCuneo(new java.math.BigDecimal(0));
+		if (compenso.getDetrazioneRidCuneoNetto() == null)
+			compenso.setDetrazioneRidCuneoNetto(new java.math.BigDecimal(0));
 
 		if (compenso.isSenzaCalcoli())
 			validaCompensoSenzaCalcoli(userContext, compenso);

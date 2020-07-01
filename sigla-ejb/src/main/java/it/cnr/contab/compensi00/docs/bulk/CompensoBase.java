@@ -21,6 +21,8 @@ import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.*;
 
+import java.math.BigDecimal;
+
 public class CompensoBase extends CompensoKey implements Keyed {
 	// ALIQUOTA_FISCALE DECIMAL(6,3)
 	private java.math.BigDecimal aliquota_fiscale;
@@ -112,6 +114,10 @@ public class CompensoBase extends CompensoKey implements Keyed {
 
 	// DETRAZIONE_ALTRI DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal detrazione_altri;
+
+	private java.math.BigDecimal detrazioneRiduzioneCuneo;
+
+	private java.math.BigDecimal detrazioneRidCuneoNetto;
 
 	// DETRAZIONE_ALTRI_NETTO DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal detrazione_altri_netto;
@@ -1851,4 +1857,20 @@ public void setTi_istituz_commerc(java.lang.String ti_istituz_commerc) {
 	public void setMotivo_assenza_cig(String motivo_assenza_cig) {
 		this.motivo_assenza_cig = motivo_assenza_cig;
 	}
+	public BigDecimal getDetrazioneRiduzioneCuneo() {
+		return detrazioneRiduzioneCuneo;
+	}
+
+	public void setDetrazioneRiduzioneCuneo(BigDecimal detrazioneRiduzioneCuneo) {
+		this.detrazioneRiduzioneCuneo = detrazioneRiduzioneCuneo;
+	}
+
+	public BigDecimal getDetrazioneRidCuneoNetto() {
+		return detrazioneRidCuneoNetto;
+	}
+
+	public void setDetrazioneRidCuneoNetto(BigDecimal detrazioneRidCuneoNetto) {
+		this.detrazioneRidCuneoNetto = detrazioneRidCuneoNetto;
+	}
+
 }

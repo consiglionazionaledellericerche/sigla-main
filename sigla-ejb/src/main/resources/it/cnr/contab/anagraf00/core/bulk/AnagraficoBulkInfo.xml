@@ -561,6 +561,18 @@
 		label="No Credito Irpef" 		
 		nullable="false" />
 	<fieldProperty
+			name="fl_no_credito_cuneo_irpef"
+			property="anagrafico_esercizio.fl_no_credito_cuneo_irpef"
+			inputType="CHECKBOX"
+			label="No Credito Cuneo Irpef"
+			nullable="false" />
+	<fieldProperty
+			name="fl_no_detr_cuneo_irpef"
+			property="anagrafico_esercizio.fl_no_detr_cuneo_irpef"
+			inputType="CHECKBOX"
+			label="No Detrazione Cuneo Irpef"
+			nullable="false" />
+	<fieldProperty
 		name="fl_detrazioni_altri_tipi"
 		property="anagrafico_esercizio.fl_detrazioni_altri_tipi"
 		inputType="CHECKBOX"
@@ -944,6 +956,10 @@
 		name="im_reddito_abitaz_princ" />		
 	<formFieldProperty
 		name="fl_applica_detr_pers_max" />
+	<formFieldProperty
+			name="fl_no_credito_cuneo_irpef" />
+	<formFieldProperty
+			name="fl_no_detr_cuneo_irpef" />
 	<formFieldProperty
 		name="fl_no_credito_irpef" />
 	<formFieldProperty
