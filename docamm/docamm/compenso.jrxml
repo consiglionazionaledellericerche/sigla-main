@@ -4,7 +4,7 @@
 	<property name="ireport.encoding" value="ISO-8859-1"/>
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="102"/>
+	<property name="ireport.y" value="1014"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -1254,6 +1254,45 @@ $V{Sum_AMM_LORDO}.compareTo(new BigDecimal(0))!=0)]]></printWhenExpression>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{IM_CORI_SOSPESO}]]></textFieldExpression>
 				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-44" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="353" y="48" width="87" height="15" isRemoveLineWhenBlank="true" uuid="530d68e4-0fa8-4c2a-a5ca-ab229d65e13f">
+						<printWhenExpression><![CDATA[new Boolean(!$F{DETRAZIONE_RID_CUNEO_NETTO}.equals(new BigDecimal(0)))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_NETTO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-45" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="446" y="48" width="83" height="15" isRemoveLineWhenBlank="true" uuid="97b5c593-a484-4aea-99cd-7886e567ba66">
+						<printWhenExpression><![CDATA[new Boolean(!$F{DETRAZIONE_RID_CUNEO_NETTO}.equals(new BigDecimal(0)))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_NETTO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-44" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="2" y="48" width="259" height="15" isRemoveLineWhenBlank="true" uuid="dc733b52-c585-451f-aa82-b5d1b6906936">
+						<printWhenExpression><![CDATA[new Boolean(!$F{DETRAZIONE_RID_CUNEO_NETTO}.equals(new BigDecimal(0)))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Top"/>
+					<text><![CDATA[Detrazione Cuneo DL 3/2020]]></text>
+				</staticText>
 			</band>
 		</groupFooter>
 	</group>
