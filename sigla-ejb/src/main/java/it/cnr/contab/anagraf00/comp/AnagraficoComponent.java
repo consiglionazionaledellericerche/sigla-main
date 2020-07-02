@@ -546,6 +546,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         anagrafico_esercizio.setIm_reddito_complessivo(new java.math.BigDecimal(0));
         anagrafico_esercizio.setIm_reddito_abitaz_princ(new java.math.BigDecimal(0));
         anagrafico_esercizio.setFl_no_credito_irpef(Boolean.FALSE);
+        anagrafico_esercizio.setFl_no_credito_cuneo_irpef(Boolean.FALSE);
+        anagrafico_esercizio.setFl_no_detr_cuneo_irpef(Boolean.FALSE);
         anagrafico_esercizio.setFl_detrazioni_altri_tipi(Boolean.FALSE);
         anagrafico_esercizio.setToBeCreated();
         anagrafico.setAnagrafico_esercizio(anagrafico_esercizio);
@@ -1371,6 +1373,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             || (anag_eserc.getFl_applica_detr_pers_max() != null && anag_eserc.getFl_applica_detr_pers_max().booleanValue())
                             || (anag_eserc.getIm_deduzione_family_area() != null && anag_eserc.getIm_deduzione_family_area().compareTo(new java.math.BigDecimal(0)) > 0)
                             || (anag_eserc.getFl_no_credito_irpef() != null && anag_eserc.getFl_no_credito_irpef().booleanValue())
+                            || (anag_eserc.getFl_no_detr_cuneo_irpef() != null && anag_eserc.getFl_no_detr_cuneo_irpef().booleanValue())
+                            || (anag_eserc.getFl_no_credito_cuneo_irpef() != null && anag_eserc.getFl_no_credito_cuneo_irpef().booleanValue())
                             || (anag_eserc.getFl_detrazioni_altri_tipi() != null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())) {
 
                         //inizializzo i flag se non valorizzati
@@ -1406,6 +1410,16 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             // else
                             //		anag_eserc.setFl_no_credito_irpef(new Boolean(true));
                             anag_eserc.setFl_no_credito_irpef(new Boolean(false));
+                        }
+                        if (anag_eserc.getFl_no_credito_cuneo_irpef() == null) {
+                            // potrebbero attivarlo dopo l'inserimento di anagrafico_esercizio negli esercizi futuri
+                            // quindi lo inizializziamo sempre a NO, il calcolo del Bonus viene fatto solo con gestione attiva
+                            anag_eserc.setFl_no_credito_cuneo_irpef(new Boolean(false));
+                        }
+                        if (anag_eserc.getFl_no_detr_cuneo_irpef() == null) {
+                            // potrebbero attivarlo dopo l'inserimento di anagrafico_esercizio negli esercizi futuri
+                            // quindi lo inizializziamo sempre a NO, il calcolo del Bonus viene fatto solo con gestione attiva
+                            anag_eserc.setFl_no_detr_cuneo_irpef(new Boolean(false));
                         }
                         if (anag_eserc.getFl_detrazioni_altri_tipi() == null) {
                             // lo inizializziamo sempre a NO

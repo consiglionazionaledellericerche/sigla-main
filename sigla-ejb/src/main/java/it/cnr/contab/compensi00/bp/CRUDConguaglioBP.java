@@ -34,6 +34,7 @@ import it.cnr.contab.compensi00.ejb.*;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.reports.bp.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
@@ -94,7 +95,23 @@ private Timestamp dataFineGestioneRiduzioneCuneo = null;
 			setStatus(VIEW);
 	}
 }
-/**
+	protected void init(Config config, ActionContext context) throws BusinessProcessException {
+		super.init(config, context);
+
+		try {
+			Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context.getUserContext(), null, null, Configurazione_cnrBulk.PK_RIDUZIONE_CUNEO_DL_3_2020, Configurazione_cnrBulk.SK_DATA_INIZIO);
+			if (configurazione != null){
+				dataInizioGestioneRiduzioneCuneo = configurazione.getDt01();
+				dataFineGestioneRiduzioneCuneo = configurazione.getDt02();
+			}
+		} catch (it.cnr.jada.comp.ComponentException ex) {
+			throw handleException(ex);
+		} catch (java.rmi.RemoteException ex) {
+			throw handleException(ex);
+		}
+	}
+
+	/**
  * Insert the method's description here.
  * Creation date: (25/02/2002 12.56.44)
  * @return it.cnr.contab.compensi00.docs.bulk.CompensoBulk
@@ -540,5 +557,25 @@ public String doVerificaIncoerenzaCarichiFam(ActionContext context) throws Busin
 		throw handleException(e);
 	}
 }
+
+	public void controlloRiduzioneCuneo32020(ConguaglioBulk conguaglio) throws ValidationException {
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+		if (conguaglio.getDt_a_competenza_coge() != null && conguaglio.getDt_da_competenza_coge() != null){
+			if (conguaglio.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0 ||
+					conguaglio.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0){
+				if (conguaglio.getDt_da_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) >= 0){
+					throw new ValidationException("Operazione momentaneamente non consentita in quanto sono in corso in SIGLA le modifiche per l'introduzione della riduzione del cuneo fiscale. Le date di competenza devono essere entrambe precedenti alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataInizioGestioneRiduzioneCuneo()));
+				}
+				if (conguaglio.getDt_da_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) < 0 &&
+						conguaglio.getDt_a_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) >= 0){
+					throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataInizioGestioneRiduzioneCuneo()));
+				}
+				if (conguaglio.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) <= 0 &&
+						conguaglio.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) > 0){
+					throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataFineGestioneRiduzioneCuneo()));
+				}
+			}
+		}
+	}
 
 }

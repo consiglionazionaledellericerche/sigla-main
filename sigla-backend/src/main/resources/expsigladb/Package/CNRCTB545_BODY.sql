@@ -338,7 +338,7 @@ BEGIN
 
       IF aContatore = 0 THEN
          IBMERR001.RAISE_ERR_GENERICO
-            ('Riferimento allo scaglione per contributo ritenuta ' || aCdContributoRitenuta || ' / Regione '||aCdRegione||' / Comune '||aPgComune||' non trovato');
+            ('Riferimento allo scaglione per contributo ritenuta ' || aCdContributoRitenuta || ' / Regione '||aCdRegione||' / Comune '||aPgComune||' non trovato'||aTiAnagrafico||' '||aDataRif||' '||aCdProvincia||' '||aImportoRif );
       END IF;
 
    END;
@@ -634,11 +634,13 @@ BEGIN
            DETRAZIONE_CONIUGE,
            DETRAZIONE_FIGLI,
            DETRAZIONE_ALTRI,
+           DETRAZIONE_RIDUZIONE_CUNEO,
            DETRAZIONI_PERSONALI_NETTO,
            DETRAZIONI_LA_NETTO,
            DETRAZIONE_CONIUGE_NETTO,
            DETRAZIONE_FIGLI_NETTO,
            DETRAZIONE_ALTRI_NETTO,
+           DETRAZIONE_RID_CUNEO_NETTO,
            CD_CDS_DOC_GENRC,
            CD_UO_DOC_GENRC,
            ESERCIZIO_DOC_GENRC,
@@ -745,11 +747,13 @@ BEGIN
            aRecCompenso.detrazione_coniuge,
            aRecCompenso.detrazione_figli,
            aRecCompenso.detrazione_altri,
+           aRecCompenso.detrazione_riduzione_cuneo,
            aRecCompenso.detrazioni_personali_netto,
            aRecCompenso.detrazioni_la_netto,
            aRecCompenso.detrazione_coniuge_netto,
            aRecCompenso.detrazione_figli_netto,
            aRecCompenso.detrazione_altri_netto,
+           aRecCompenso.detrazione_rid_cuneo_netto,
            aRecCompenso.cd_cds_doc_genrc,
            aRecCompenso.cd_uo_doc_genrc,
            aRecCompenso.esercizio_doc_genrc,
@@ -1013,11 +1017,13 @@ BEGIN
               detrazione_coniuge,
               detrazione_figli,
               detrazione_altri,
+              detrazione_riduzione_cuneo,
               detrazioni_personali_netto,
               detrazioni_la_netto,
               detrazione_coniuge_netto,
               detrazione_figli_netto,
               detrazione_altri_netto,
+              detrazione_rid_cuneo_netto,
               cd_cds_doc_genrc,
               cd_uo_doc_genrc,
               esercizio_doc_genrc,
@@ -1151,11 +1157,13 @@ BEGIN
               A.detrazione_coniuge,
               A.detrazione_figli,
               A.detrazione_altri,
+              A.detrazione_riduzione_cuneo,
               A.detrazioni_personali_netto,
               A.detrazioni_la_netto,
               A.detrazione_coniuge_netto,
               A.detrazione_figli_netto,
               A.detrazione_altri_netto,
+              A.detrazione_rid_cuneo_netto,
               A.cd_cds_doc_genrc,
               A.cd_uo_doc_genrc,
               A.esercizio_doc_genrc,

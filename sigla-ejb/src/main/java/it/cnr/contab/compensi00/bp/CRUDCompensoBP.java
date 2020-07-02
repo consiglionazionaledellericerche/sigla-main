@@ -393,6 +393,23 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         }
     }
 
+    public void controlloRiduzioneCuneo32020(CompensoBulk compenso) throws ValidationException {
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        if (compenso.getDt_a_competenza_coge() != null && compenso.getDt_da_competenza_coge() != null){
+            if (compenso.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0 ||
+                    compenso.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0){
+                if (compenso.getDt_da_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) < 0 &&
+                        compenso.getDt_a_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) >= 0){
+                    throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataInizioGestioneRiduzioneCuneo()));
+                }
+                if (compenso.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) <= 0 &&
+                        compenso.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) > 0){
+                    throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataFineGestioneRiduzioneCuneo()));
+                }
+            }
+        }
+    }
+
     /**
      * Gestisce la richiesta di "esecuzione del calcolo" del compenso
      */
@@ -1517,7 +1534,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
                 else
                     completeSearchTool(context, getModel(), getBulkInfo().getFieldProperty("find_tipologia_rischio"));
 
-
+            controlloRiduzioneCuneo32020(compenso);
         } catch (it.cnr.jada.bulk.ValidationException ex) {
             throw handleException(ex);
         }

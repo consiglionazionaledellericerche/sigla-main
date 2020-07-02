@@ -821,7 +821,20 @@
                 propertyName="motivo_assenza_cig"
                 sqlTypeName="VARCHAR"
                 columnSize="250"/>
-					
+		<columnMapping
+				columnName="DETRAZIONE_RIDUZIONE_CUNEO"
+				propertyName="detrazioneRiduzioneCuneo"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="DETRAZIONE_RID_CUNEO_NETTO"
+				propertyName="detrazioneRidCuneoNetto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="cognome" />
@@ -1097,4 +1110,8 @@
 		name="fl_split_payment" />			
     <persistentProperty
             name="motivo_assenza_cig"/>
+	<persistentProperty
+			name="detrazioneRiduzioneCuneo"/>
+	<persistentProperty
+			name="detrazioneRidCuneoNetto"/>
 </SQLPersistentInfo>
