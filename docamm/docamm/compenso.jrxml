@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="compenso" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="5" bottomMargin="5" uuid="6370b549-4da3-45ce-9f46-644ae686a077">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="ISO-8859-1"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="1014"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -21,17 +21,17 @@
 		<defaultValueExpression><![CDATA["..//..//img//"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2017)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2020)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="CDS" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["008"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["000.407"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["008.003"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Pg_compenso" class="java.lang.Integer" isForPrompting="false">
 		<parameterDescription><![CDATA[Non valorizzare al rilascio]]></parameterDescription>
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[35]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Terzo" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[Attenzione lasciare %]]></parameterDescription>
@@ -46,9 +46,13 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select a.*,b.FL_DEDUZIONE_IRPEF,b.FL_DEDUZIONE_FAMILY,b.FL_DETRAZIONI_ALTRE,b.FL_DETRAZIONI_FAMILY,FL_CREDITO_IRPEF
-from v_compenso a, parametri_cnr b
+		<![CDATA[select a.*,b.FL_DEDUZIONE_IRPEF,b.FL_DEDUZIONE_FAMILY,b.FL_DETRAZIONI_ALTRE,b.FL_DETRAZIONI_FAMILY,FL_CREDITO_IRPEF,c.dt01 DATA_INIZIO_RIDUZIONE_CUNEO
+from v_compenso a, parametri_cnr b, CONFIGURAZIONE_CNR C
 WHERE a.ESERCIZIO = $P{Esercizio}
+  AND c.esercizio = '0'
+  AND c.CD_UNITA_FUNZIONALE = '*'
+  AND c.CD_CHIAVE_PRIMARIA = 'RIDUZIONE_CUNEO_DL_3_2020'
+  AND c.CD_CHIAVE_SECONDARIA = 'DATA_INIZIO'
   AND a.CD_CDS like $P{CDS}
   AND a.CD_UNITA_ORGANIZZATIVA like $P{UO}
 AND ($P{Pg_compenso} is null OR a.PG_COMPENSO = $P{Pg_compenso})
@@ -74,6 +78,7 @@ order by a.cd_unita_organizzativa,a.pg_compenso, a.ordinamento, a.ti_ente_percip
 	<field name="DETRAZIONE_FIGLI_NETTO" class="java.math.BigDecimal"/>
 	<field name="DETRAZIONI_LA_NETTO" class="java.math.BigDecimal"/>
 	<field name="DETRAZIONI_PERSONALI_NETTO" class="java.math.BigDecimal"/>
+	<field name="DETRAZIONE_RID_CUNEO_NETTO" class="java.math.BigDecimal"/>
 	<field name="IM_DEDUZIONE_IRPEF" class="java.math.BigDecimal"/>
 	<field name="CD_TERZO" class="java.math.BigDecimal"/>
 	<field name="NOME" class="java.lang.String"/>
@@ -142,12 +147,15 @@ order by a.cd_unita_organizzativa,a.pg_compenso, a.ordinamento, a.ti_ente_percip
 	<field name="UTCR" class="java.lang.String"/>
 	<field name="DS_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
 	<field name="FL_NO_CREDITO_IRPEF" class="java.lang.String"/>
+	<field name="FL_NO_CREDITO_CUNEO_IRPEF" class="java.lang.String"/>
+	<field name="FL_NO_DETR_CUNEO_IRPEF" class="java.lang.String"/>
 	<field name="DS_NAZIONE_SEDE" class="java.lang.String"/>
 	<field name="FL_DEDUZIONE_IRPEF" class="java.lang.String"/>
 	<field name="FL_DEDUZIONE_FAMILY" class="java.lang.String"/>
 	<field name="FL_DETRAZIONI_ALTRE" class="java.lang.String"/>
 	<field name="FL_DETRAZIONI_FAMILY" class="java.lang.String"/>
 	<field name="FL_CREDITO_IRPEF" class="java.lang.String"/>
+	<field name="DATA_INIZIO_RIDUZIONE_CUNEO" class="java.sql.Timestamp"/>
 	<variable name="AMM_LORDO" class="java.math.BigDecimal">
 		<variableExpression><![CDATA[($F{CLASSIFICAZIONE}.equals("PR")&& $F{TI_ENTE_PERCIPIENTE}.equals("P")?$F{AMMONTARE_LORDO}.negate():
 ($F{CLASSIFICAZIONE}.equals("IL")&& $F{TI_ENTE_PERCIPIENTE}.equals("P")?$F{AMMONTARE_LORDO}.negate():
@@ -671,7 +679,7 @@ $F{DS_COMUNE_NASCITA}+
 				</line>
 				<textField isBlankWhenNull="true">
 					<reportElement key="textField-37" style="TNR9" x="229" y="71" width="32" height="13" isRemoveLineWhenBlank="true" printWhenGroupChanges="PG_COMPENSO" uuid="d72ed223-d4e6-400f-bed1-d68992148218">
-						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y"))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y")) && $F{DT_A_COMPETENZA_COGE}.compareTo($F{DATA_INIZIO_RIDUZIONE_CUNEO}) < 0]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -684,7 +692,7 @@ $F{DS_COMUNE_NASCITA}+
 				</textField>
 				<staticText>
 					<reportElement key="staticText-39" style="TNRG9" x="13" y="72" width="176" height="13" isRemoveLineWhenBlank="true" uuid="b2acea44-3151-4092-a592-6d17226f87d1">
-						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y"))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y"))  && $F{DT_A_COMPETENZA_COGE}.compareTo($F{DATA_INIZIO_RIDUZIONE_CUNEO}) < 0]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -694,6 +702,31 @@ $F{DS_COMUNE_NASCITA}+
 					</box>
 					<text><![CDATA[Applicazione BONUS DL 66/2014]]></text>
 				</staticText>
+				<staticText>
+					<reportElement key="staticText-39" style="TNRG9" x="13" y="72" width="176" height="13" isRemoveLineWhenBlank="true" uuid="f89f507d-49b1-43ad-baf4-5501b4f39244">
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y")) && $F{DT_A_COMPETENZA_COGE}.compareTo($F{DATA_INIZIO_RIDUZIONE_CUNEO}) >= 0]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<text><![CDATA[Applicazione Cuneo DL 3/2020]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-37" style="TNR9" x="229" y="71" width="32" height="13" isRemoveLineWhenBlank="true" printWhenGroupChanges="PG_COMPENSO" uuid="6ffe5d05-0db5-4107-bf91-f73664c60704">
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y")) && $F{DT_A_COMPETENZA_COGE}.compareTo($F{DATA_INIZIO_RIDUZIONE_CUNEO}) >= 0]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[($F{FL_NO_CREDITO_CUNEO_IRPEF}.equals("Y")?"NO":"SI")]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -731,6 +764,39 @@ $F{DS_COMUNE_NASCITA}+
 				</line>
 				<line>
 					<reportElement key="line-78" stretchType="RelativeToBandHeight" x="7" y="0" width="1" height="16" isRemoveLineWhenBlank="true" uuid="b3e27f45-598a-4289-aa8c-b6cd29ba6b13"/>
+				</line>
+			</band>
+			<band height="16">
+				<staticText>
+					<reportElement key="staticText-45" style="TNRG9" stretchType="RelativeToBandHeight" x="14" y="2" width="215" height="13" uuid="fd6ee7a5-f2a8-4757-aba4-e16286bd068d">
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y")) && $F{DT_A_COMPETENZA_COGE}.compareTo($F{DATA_INIZIO_RIDUZIONE_CUNEO}) >= 0]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<text><![CDATA[Ulteriore Detrazione Cuneo DL 3/2020]]></text>
+				</staticText>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-47" style="TNR9" stretchType="RelativeToBandHeight" x="229" y="2" width="32" height="13" printWhenGroupChanges="PG_COMPENSO" uuid="68a55a54-284a-4b4b-a977-545d7e29117d">
+						<printWhenExpression><![CDATA[new Boolean($F{FL_CREDITO_IRPEF}.equals("Y")) && $F{DT_A_COMPETENZA_COGE}.compareTo($F{DATA_INIZIO_RIDUZIONE_CUNEO}) >= 0]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[($F{FL_NO_DETR_CUNEO_IRPEF}.equals("Y")?"NO":"SI")]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement key="line-77" stretchType="RelativeToBandHeight" x="263" y="0" width="1" height="16" uuid="9ebd5f9c-7f8c-4131-8a45-42c3ba98ae05"/>
+				</line>
+				<line>
+					<reportElement key="line-78" stretchType="RelativeToBandHeight" x="7" y="0" width="1" height="16" isRemoveLineWhenBlank="true" uuid="a48ee94d-b300-4038-b179-e1dd4aa4faa5"/>
 				</line>
 			</band>
 		</groupHeader>
@@ -1188,6 +1254,45 @@ $V{Sum_AMM_LORDO}.compareTo(new BigDecimal(0))!=0)]]></printWhenExpression>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{IM_CORI_SOSPESO}]]></textFieldExpression>
 				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-44" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="353" y="48" width="87" height="15" isRemoveLineWhenBlank="true" uuid="530d68e4-0fa8-4c2a-a5ca-ab229d65e13f">
+						<printWhenExpression><![CDATA[new Boolean(!$F{DETRAZIONE_RID_CUNEO_NETTO}.equals(new BigDecimal(0)))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_NETTO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-45" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="446" y="48" width="83" height="15" isRemoveLineWhenBlank="true" uuid="97b5c593-a484-4aea-99cd-7886e567ba66">
+						<printWhenExpression><![CDATA[new Boolean(!$F{DETRAZIONE_RID_CUNEO_NETTO}.equals(new BigDecimal(0)))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_NETTO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-44" style="TNR9" positionType="Float" stretchType="RelativeToBandHeight" mode="Transparent" x="2" y="48" width="259" height="15" isRemoveLineWhenBlank="true" uuid="dc733b52-c585-451f-aa82-b5d1b6906936">
+						<printWhenExpression><![CDATA[new Boolean(!$F{DETRAZIONE_RID_CUNEO_NETTO}.equals(new BigDecimal(0)))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement verticalAlignment="Top"/>
+					<text><![CDATA[Detrazione Cuneo DL 3/2020]]></text>
+				</staticText>
 			</band>
 		</groupFooter>
 	</group>
