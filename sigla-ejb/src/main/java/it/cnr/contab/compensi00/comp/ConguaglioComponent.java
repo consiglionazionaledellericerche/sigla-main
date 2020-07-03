@@ -21,6 +21,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 
 import javax.ejb.EJBException;
@@ -29,12 +30,14 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.ejb.*;
 import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.compensi00.ejb.*;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.ejb.Parametri_cnrComponentSession;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.*;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
@@ -60,7 +63,11 @@ public ConguaglioComponent() {
   *
 **/
 private void abilitaConguaglio(UserContext userContext, ConguaglioBulk conguaglio) throws ComponentException{
-
+	try{
+	controlloRiduzioneCuneo32020(userContext, conguaglio);
+	}catch(ComponentException ex){
+		throw new ApplicationException(ex);
+	}
 	try{
 		LoggableStatement cs = new LoggableStatement(getConnection(userContext), 
 				"{call "+it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
@@ -1211,10 +1218,45 @@ private void upgKeyAssCompensoConguaglio(UserContext userContext, ConguaglioBulk
   * @param	conguaglio l'OggettoBulk da validare
   *
 **/
+
+public void controlloRiduzioneCuneo32020(UserContext userContext, ConguaglioBulk conguaglio) throws ComponentException {
+	Timestamp dataInizioGestioneRiduzioneCuneo = null;
+	Timestamp dataFineGestioneRiduzioneCuneo = null;
+	try {
+		Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, Configurazione_cnrBulk.PK_RIDUZIONE_CUNEO_DL_3_2020, Configurazione_cnrBulk.SK_DATA_INIZIO);
+		if (configurazione != null){
+			dataInizioGestioneRiduzioneCuneo = configurazione.getDt01();
+			dataFineGestioneRiduzioneCuneo = configurazione.getDt02();
+		}
+	} catch (RemoteException | ComponentException ex) {
+		throw new ComponentException(ex);
+	}
+
+	java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+	if (conguaglio.getDt_a_competenza_coge() != null && conguaglio.getDt_da_competenza_coge() != null){
+		if (conguaglio.getDt_da_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) < 0 ||
+				conguaglio.getDt_a_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) < 0){
+			if (conguaglio.getDt_da_competenza_coge().compareTo(dataInizioGestioneRiduzioneCuneo) >= 0){
+				throw new ComponentException("Operazione momentaneamente non consentita in quanto sono in corso in SIGLA le modifiche per l'introduzione della riduzione del cuneo fiscale. Le date di competenza devono essere entrambe precedenti alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(dataInizioGestioneRiduzioneCuneo));
+			}
+			if (conguaglio.getDt_da_competenza_coge().compareTo(dataInizioGestioneRiduzioneCuneo) < 0 &&
+					conguaglio.getDt_a_competenza_coge().compareTo(dataInizioGestioneRiduzioneCuneo) >= 0){
+				throw new ComponentException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(dataInizioGestioneRiduzioneCuneo));
+			}
+			if (conguaglio.getDt_da_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) <= 0 &&
+					conguaglio.getDt_a_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) > 0){
+				throw new ComponentException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(dataFineGestioneRiduzioneCuneo));
+			}
+		}
+	}
+}
+
 private void validaConguaglio(UserContext userContext, ConguaglioBulk conguaglio) throws ComponentException
 {
+
 	// Controllo Testata Conguaglio
-	try{conguaglio.validaTestata();}
+	try{conguaglio.validaTestata();
+	controlloRiduzioneCuneo32020(userContext, conguaglio);}
 	catch(java.text.ParseException ex){throw handleException(ex);}
 	catch(javax.ejb.EJBException ex){throw handleException(ex);}		
 

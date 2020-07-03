@@ -22,11 +22,15 @@ import it.cnr.contab.anagraf00.tabrif.bulk.*;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneItalianoBulk;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+
+import java.sql.Timestamp;
 
 public class ConguaglioBulk extends ConguaglioBase {
 
