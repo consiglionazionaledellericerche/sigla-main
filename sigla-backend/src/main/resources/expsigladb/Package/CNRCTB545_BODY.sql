@@ -168,8 +168,8 @@ EXCEPTION
               FROM   TIPO_TRATTAMENTO A
               WHERE  A.cd_trattamento = aCdTrattamento AND
                      A.dt_fin_validita =
-		        (SELECT MAX(B.dt_fin_validita)
-			 FROM   TIPO_TRATTAMENTO B
+            (SELECT MAX(B.dt_fin_validita)
+       FROM   TIPO_TRATTAMENTO B
                          WHERE  B.cd_trattamento = A.cd_trattamento);
 
               RETURN aRecTipoTrattamento;
@@ -747,13 +747,13 @@ BEGIN
            aRecCompenso.detrazione_coniuge,
            aRecCompenso.detrazione_figli,
            aRecCompenso.detrazione_altri,
-           aRecCompenso.detrazione_riduzione_cuneo,
+           nvl(aRecCompenso.detrazione_riduzione_cuneo,0),
            aRecCompenso.detrazioni_personali_netto,
            aRecCompenso.detrazioni_la_netto,
            aRecCompenso.detrazione_coniuge_netto,
            aRecCompenso.detrazione_figli_netto,
            aRecCompenso.detrazione_altri_netto,
-           aRecCompenso.detrazione_rid_cuneo_netto,
+           nvl(aRecCompenso.detrazione_rid_cuneo_netto,0),
            aRecCompenso.cd_cds_doc_genrc,
            aRecCompenso.cd_uo_doc_genrc,
            aRecCompenso.esercizio_doc_genrc,
@@ -1072,13 +1072,13 @@ BEGIN
               stato_contratto,
               pg_contratto,
               im_tot_reddito_complessivo,
-							PG_TROVATO,
-							DATA_PROTOCOLLO,
-							NUMERO_PROTOCOLLO,
-							DT_SCADENZA,
-							STATO_LIQUIDAZIONE,
-							CAUSALE,
-							fl_documento_ele	)
+              PG_TROVATO,
+              DATA_PROTOCOLLO,
+              NUMERO_PROTOCOLLO,
+              DT_SCADENZA,
+              STATO_LIQUIDAZIONE,
+              CAUSALE,
+              fl_documento_ele  )
        SELECT aCdCdsCopia,
               aCdUnitaOrganizzativaCopia,
               aEsercizioCopia,
@@ -1213,12 +1213,12 @@ BEGIN
               A.pg_contratto,
               A.im_tot_reddito_complessivo,
               A.pg_trovato,
-							A.data_protocollo,
-							A.numero_protocollo,
-							A.dt_scadenza,
-							A.stato_liquidazione,
-							A.causale,
-							A.fl_documento_ele
+              A.data_protocollo,
+              A.numero_protocollo,
+              A.dt_scadenza,
+              A.stato_liquidazione,
+              A.causale,
+              A.fl_documento_ele
        FROM   COMPENSO A
        WHERE  A.cd_cds = aCdCds AND
               A.esercizio = aEsercizio AND
@@ -2125,19 +2125,19 @@ BEGIN
        aRecCompensoOri.fl_generata_fattura  = 'Y') THEN
       isCancella:='Y';
       Begin
-      		aRecFatturaPassiva:=CNRCTB120.getFatturaRiferimento(aRecCompensoOri.esercizio,
+          aRecFatturaPassiva:=CNRCTB120.getFatturaRiferimento(aRecCompensoOri.esercizio,
                                                               aRecCompensoOri.cd_cds,
                                                               aRecCompensoOri.cd_unita_organizzativa,
                                                               aRecCompensoOri.pg_compenso,
                                                               eseguiLock);
       exception when no_data_found then
       --  gestione pregressa all'inserimento degli estremi del compenso sulla fattura
-      	aRecFatturaPassiva:=CNRCTB120.getTstFatturaDaRifTerzo(aRecCompensoOri.cd_terzo,
+        aRecFatturaPassiva:=CNRCTB120.getTstFatturaDaRifTerzo(aRecCompensoOri.cd_terzo,
                                                             aRecCompensoOri.esercizio_fattura_fornitore,
                                                             CNRCTB100.TI_FATT_FATTURA,
                                                             aRecCompensoOri.nr_fattura_fornitore,
                                                             eseguiLock);
-			end;
+      end;
    END IF;
 
    -- Lettura del cori IVA del compenso in elaborazione per decidere se fare o meno l'inserimento.
@@ -2195,7 +2195,7 @@ BEGIN
              'Fattura UO ' || aRecFatturaPassiva.cd_unita_organizzativa || ' numero ' ||
              aRecFatturaPassiva.esercizio || '/' || aRecFatturaPassiva.pg_fattura_passiva);
       END IF;
-			IF aRecFatturaPassiva.progr_univoco IS NOT NULL THEN
+      IF aRecFatturaPassiva.progr_univoco IS NOT NULL THEN
          IBMERR001.RAISE_ERR_GENERICO
             ('Impossibile eliminare una fattura già inserita nel registro unico delle fatture - ' ||
              'Fattura UO ' || aRecFatturaPassiva.cd_unita_organizzativa || ' numero ' ||
@@ -2335,8 +2335,8 @@ cnrctb100.chkDtRegistrazPerIva (aRecFatturaPassiva.cd_cds_origine, aRecFatturaPa
         from fattura_passiva
         where
         esercizio   = aRecFatturaPassiva.esercizio      and
-    	  cd_cds      = aRecFatturaPassiva.cd_cds_origine and
-    	  cd_unita_organizzativa= aRecFatturaPassiva.cd_uo_origine;
+        cd_cds      = aRecFatturaPassiva.cd_cds_origine and
+        cd_unita_organizzativa= aRecFatturaPassiva.cd_uo_origine;
     exception when no_data_found then
       max_dt_registrazione:=null;
      end;
