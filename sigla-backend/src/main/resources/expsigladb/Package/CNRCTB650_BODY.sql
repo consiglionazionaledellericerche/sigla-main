@@ -1549,10 +1549,13 @@ BEGIN
 --              if aCdCori = 'BONUSDL66' THEN
 --              RAISE_APPLICATION_ERROR(-20100,mess);
 --              END IF;
-              IF trovatoCredito = 'N' then
-                  IBMERR001.RAISE_ERR_GENERICO
-                     ('Credito non trovato tra i compensi già liquidati. Verificare i dati.');
-              end if;
+                IF trovatoCredito = 'N' then
+                  conta:=tabCreditoIrpef.COUNT + 1;
+                  tabCreditoIrpef(conta).tCdCori := aCdCori;
+                  tabCreditoIrpef(conta).tDtIniValCori := DT_INI_VAL_CORI;
+                  tabCreditoIrpef(conta).tImCreditoIrpefGoduto := 0;
+                  tabCreditoIrpef(conta).tImCreditoIrpefDovuto := importoCredito;
+                end if;
 
              totImportoDetrazioni := totImportoDetrazioni + importoDetrazioni;
           end loop;

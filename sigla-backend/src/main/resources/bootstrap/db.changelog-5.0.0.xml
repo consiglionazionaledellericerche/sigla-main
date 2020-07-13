@@ -3440,4 +3440,14 @@ TRASPORTO_AEREO"/>
             <column name="dt_ini_validita_cori"/>
         </createIndex>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-tmp_report_generico-importi_rid_cuneo">
+        <addColumn tableName="tmp_report_generico">
+            <column name="importo_56" remarks="Importo 56" type="numeric(20, 3)">
+            </column>
+            <column name="importo_57" remarks="Importo 57" type="numeric(20, 3)">
+            </column>
+            <column name="importo_58" remarks="Importo 58" type="numeric(20, 3)">
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
