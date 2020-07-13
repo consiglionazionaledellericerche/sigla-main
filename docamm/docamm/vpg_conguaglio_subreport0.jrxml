@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vpg_conguaglio_subreport0" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a438d503-866b-40be-8a30-1855531bd96c">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="257"/>
+	<property name="ireport.y" value="1356"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
@@ -20,16 +20,16 @@
 	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNR9GC" fontName="Times New Roman" fontSize="9" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<parameter name="CDS" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["000"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["080"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="UO" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["000.407"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["080.000"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(2014)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2020)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Pg_conguaglio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[new Integer(5)]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[new Integer(2)]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["..\\..\\img\\"]]></defaultValueExpression>
@@ -150,8 +150,13 @@ order by tipo,pg_compenso]]>
 	<field name="IM_CORI_SOSP_CONG" class="java.math.BigDecimal"/>
 	<field name="AMMONTARE" class="java.math.BigDecimal"/>
 	<field name="FL_NO_CREDITO_IRPEF" class="java.lang.String"/>
+	<field name="FL_NO_CREDITO_CUNEO_IRPEF" class="java.lang.String"/>
+	<field name="FL_NO_DETR_CUNEO_IRPEF" class="java.lang.String"/>
 	<field name="IM_CREDITO_IRPEF_GODUTO" class="java.math.BigDecimal"/>
 	<field name="IM_CREDITO_IRPEF_DOVUTO" class="java.math.BigDecimal"/>
+	<field name="DETRAZIONE_RID_CUNEO_ESTERNO" class="java.math.BigDecimal"/>
+	<field name="DETRAZIONE_RID_CUNEO_GODUTO" class="java.math.BigDecimal"/>
+	<field name="DETRAZIONE_RID_CUNEO_DOVUTO" class="java.math.BigDecimal"/>
 	<field name="FL_DEDUZIONE_IRPEF" class="java.lang.String"/>
 	<field name="FL_DEDUZIONE_FAMILY" class="java.lang.String"/>
 	<field name="FL_DETRAZIONI_ALTRE" class="java.lang.String"/>
@@ -788,7 +793,7 @@ order by tipo,pg_compenso]]>
 	<group name="FlagDetrazioni">
 		<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
 		<groupHeader>
-			<band height="110" splitType="Stretch">
+			<band height="132" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("B")&&
 ($F{FL_DETRAZIONI_ALTRE}.equals( "Y" )||$F{FL_DETRAZIONI_FAMILY}.equals( "Y" )))]]></printWhenExpression>
 				<staticText>
@@ -825,7 +830,7 @@ order by tipo,pg_compenso]]>
 					<text><![CDATA[Applicazione detrazioni familiari]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-90" style="TNRG9" x="28" y="61" width="205" height="11" uuid="d44094e5-1e48-41fe-8eb8-91f54c9bbd5c"/>
+					<reportElement key="staticText-90" style="TNRG9" x="28" y="84" width="205" height="11" uuid="d44094e5-1e48-41fe-8eb8-91f54c9bbd5c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -836,7 +841,7 @@ order by tipo,pg_compenso]]>
 					<text><![CDATA[Dati rilevanti ai fini del calcolo delle detrazioni]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-91" style="TNR9" x="28" y="73" width="205" height="11" uuid="8e50d25a-7a87-4083-95b2-01a0dd94bea9"/>
+					<reportElement key="staticText-91" style="TNR9" x="28" y="96" width="205" height="11" uuid="8e50d25a-7a87-4083-95b2-01a0dd94bea9"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -847,7 +852,7 @@ order by tipo,pg_compenso]]>
 					<text><![CDATA[Reddito Abitazione Principale e sue pertinenze]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-92" style="TNR9" x="28" y="85" width="378" height="11" uuid="2e66f08a-21f3-4b82-bc0e-7d53929620c7"/>
+					<reportElement key="staticText-92" style="TNR9" x="28" y="108" width="378" height="11" uuid="2e66f08a-21f3-4b82-bc0e-7d53929620c7"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -858,7 +863,7 @@ order by tipo,pg_compenso]]>
 					<text><![CDATA[Imponibile Irpef aggiuntivo all'imponibile Irpef CNR (escluso Reddito Abitazione Principale)]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-93" style="TNR9" x="28" y="97" width="78" height="11" uuid="72435e33-70ac-472c-ab36-72f348b2397f">
+					<reportElement key="staticText-93" style="TNR9" x="28" y="120" width="78" height="11" uuid="72435e33-70ac-472c-ab36-72f348b2397f">
 						<printWhenExpression><![CDATA[new Boolean(!$F{IM_DETRAZIONE_PERSONALE_ANAG}.equals(new BigDecimal(0)))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -891,7 +896,7 @@ order by tipo,pg_compenso]]>
 					<textFieldExpression><![CDATA[($F{FL_NO_DETRAZIONI_FAMILY}.equals("NO")? "Si" :  "No" )]]></textFieldExpression>
 				</textField>
 				<textField pattern="##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9" x="407" y="73" width="100" height="11" uuid="a0a80765-cd45-408d-ab4c-11db610f4d49"/>
+					<reportElement key="textField" style="TNR9" x="407" y="96" width="100" height="11" uuid="a0a80765-cd45-408d-ab4c-11db610f4d49"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -902,7 +907,7 @@ order by tipo,pg_compenso]]>
 					<textFieldExpression><![CDATA[$F{IM_REDDITO_ABITAZ_PRINC}]]></textFieldExpression>
 				</textField>
 				<textField pattern="##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9" x="407" y="85" width="100" height="11" uuid="687c92b8-880a-4007-a0b7-f812fa5d60b5"/>
+					<reportElement key="textField" style="TNR9" x="407" y="108" width="100" height="11" uuid="687c92b8-880a-4007-a0b7-f812fa5d60b5"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -913,7 +918,7 @@ order by tipo,pg_compenso]]>
 					<textFieldExpression><![CDATA[$F{IM_REDDITO_COMPLESSIVO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="##0.00" isBlankWhenNull="false">
-					<reportElement key="textField" style="TNR9" x="407" y="97" width="100" height="11" uuid="48be9f9a-65cc-473f-aab7-a870d1bb1c71">
+					<reportElement key="textField" style="TNR9" x="407" y="120" width="100" height="11" uuid="48be9f9a-65cc-473f-aab7-a870d1bb1c71">
 						<printWhenExpression><![CDATA[new Boolean(!$F{IM_DETRAZIONE_PERSONALE_ANAG}.equals(new BigDecimal(0)))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -994,6 +999,48 @@ order by tipo,pg_compenso]]>
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textFieldExpression><![CDATA[($F{FL_NO_CREDITO_IRPEF}.equals("NO")? "Si" :  "No" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-86" style="TNR9" x="1" y="61" width="172" height="11" uuid="fb18e7c9-dbab-495e-bbed-ecaa9bb791a0"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Applicazione rid. Cuneo DL 3/2020]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-86" style="TNR9" x="1" y="73" width="172" height="11" uuid="84273691-03b1-447d-934a-f83db03a281b"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Applicazione detr. rid. Cuneo DL 3/2020]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR9" x="250" y="60" width="100" height="11" uuid="3b471ea8-62a8-4a09-adce-58cc0170f35a"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[($F{FL_NO_CREDITO_CUNEO_IRPEF}.equals("NO")? "Si" :  "No" )]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField" style="TNR9" x="250" y="72" width="100" height="11" uuid="b078d003-8b55-46cf-8446-bc2090a1a3b6"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[($F{FL_NO_DETR_CUNEO_IRPEF}.equals("NO")? "Si" :  "No" )]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -1113,7 +1160,7 @@ order by tipo,pg_compenso]]>
 	<group name="DetrazioniDett">
 		<groupExpression><![CDATA[$V{REPORT_COUNT}]]></groupExpression>
 		<groupHeader>
-			<band height="106" splitType="Stretch">
+			<band height="118" splitType="Stretch">
 				<printWhenExpression><![CDATA[new Boolean($F{TIPO}.equals("B")&&
 ($F{FL_DETRAZIONI_ALTRE}.equals( "Y" )||$F{FL_DETRAZIONI_FAMILY}.equals( "Y" )))]]></printWhenExpression>
 				<staticText>
@@ -1227,7 +1274,7 @@ order by tipo,pg_compenso]]>
 					<text><![CDATA[Altri Familiari]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-105" style="TNRG9" x="4" y="91" width="150" height="11" uuid="4a33aa61-78fd-4c0a-b463-ca2d7d1df689"/>
+					<reportElement key="staticText-105" style="TNRG9" x="4" y="104" width="150" height="11" uuid="4a33aa61-78fd-4c0a-b463-ca2d7d1df689"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1370,7 +1417,7 @@ order by tipo,pg_compenso]]>
 					<textFieldExpression><![CDATA[$F{DETRAZIONI_AL_DOVUTO}.subtract($F{DETRAZIONI_AL_ESTERNO}).subtract($F{DETRAZIONI_AL_GODUTO})]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-62" style="TNRG9" x="179" y="91" width="85" height="11" uuid="ab40b987-c3af-406d-a999-75050f625015"/>
+					<reportElement key="textField-62" style="TNRG9" x="179" y="104" width="85" height="11" uuid="ab40b987-c3af-406d-a999-75050f625015"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1381,7 +1428,7 @@ order by tipo,pg_compenso]]>
 					<textFieldExpression><![CDATA[($F{DETRAZIONI_PE_DOVUTO}.add($F{DETRAZIONI_LA_DOVUTO})).add($F{DETRAZIONI_CO_DOVUTO}).add($F{DETRAZIONI_FI_DOVUTO}).add($F{DETRAZIONI_AL_DOVUTO})]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-63" style="TNRG9" x="266" y="91" width="85" height="11" uuid="66c6ec56-c89f-4514-bbb5-d2960fffc423"/>
+					<reportElement key="textField-63" style="TNRG9" x="266" y="104" width="85" height="11" uuid="66c6ec56-c89f-4514-bbb5-d2960fffc423"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1392,7 +1439,7 @@ order by tipo,pg_compenso]]>
 					<textFieldExpression><![CDATA[($F{DETRAZIONI_PE_GODUTO}.add($F{DETRAZIONI_LA_GODUTO})).add($F{DETRAZIONI_CO_GODUTO}).add($F{DETRAZIONI_FI_GODUTO}).add($F{DETRAZIONI_AL_GODUTO})]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-64" style="TNRG9" x="440" y="91" width="85" height="11" uuid="7cd60721-d1aa-436d-808a-154ef6a8269c"/>
+					<reportElement key="textField-64" style="TNRG9" x="440" y="104" width="85" height="11" uuid="7cd60721-d1aa-436d-808a-154ef6a8269c"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -1480,7 +1527,7 @@ order by tipo,pg_compenso]]>
 					<textFieldExpression><![CDATA[$F{DETRAZIONI_AL_ESTERNO}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
-					<reportElement key="textField-85" style="TNRG9" x="353" y="91" width="85" height="11" uuid="c994dcc9-c4fe-4616-a2bf-b26b6969d8dc">
+					<reportElement key="textField-85" style="TNRG9" x="353" y="104" width="85" height="11" uuid="c994dcc9-c4fe-4616-a2bf-b26b6969d8dc">
 						<printWhenExpression><![CDATA[new Boolean(!$F{CODICE_FISCALE_ESTERNO}.equals(null))]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -1491,6 +1538,63 @@ order by tipo,pg_compenso]]>
 					</box>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$F{DETRAZIONI_PE_ESTERNO}.add($F{DETRAZIONI_LA_ESTERNO}).add($F{DETRAZIONI_CO_ESTERNO}).add($F{DETRAZIONI_FI_ESTERNO}).add($F{DETRAZIONI_AL_ESTERNO})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-104" style="TNR9" x="18" y="90" width="121" height="11" uuid="2dff3a26-320e-4544-af43-c47c6b025e6d"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Left"/>
+					<text><![CDATA[Detrazioni rid. Cuneo DL 3/2020]]></text>
+				</staticText>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-55" style="TNR9" x="179" y="90" width="85" height="11" uuid="1ffeaef7-156a-431f-afb7-72edd16de987"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_DOVUTO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-57" style="TNR9" x="266" y="90" width="85" height="11" uuid="7088fb38-53a6-41c1-80ad-63048b964058"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_GODUTO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-84" style="TNR9" x="353" y="90" width="85" height="11" uuid="bcf884e5-9434-4dc4-9d29-d2c87ad859bb">
+						<printWhenExpression><![CDATA[new Boolean(!$F{CODICE_FISCALE_ESTERNO}.equals(null))]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_ESTERNO}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+					<reportElement key="textField-61" style="TNR9" x="440" y="90" width="85" height="11" uuid="59b408e2-cefe-402c-b9e6-a98b9000a547"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{DETRAZIONE_RID_CUNEO_DOVUTO}.subtract($F{DETRAZIONE_RID_CUNEO_ESTERNO}).subtract($F{DETRAZIONE_RID_CUNEO_GODUTO})]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -2476,7 +2580,7 @@ $F{IM_ADDCOM_DOVUTO}.subtract($F{IM_ADDCOM_ESTERNO}).subtract($F{IM_ADDCOM_GODUT
 				<textFieldExpression><![CDATA[$F{IM_CREDITO_IRPEF_DOVUTO}.subtract($F{IM_CREDITO_IRPEF_GODUTO})]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="staticText-99" style="TNRG9" x="268" y="112" width="85" height="11" uuid="ca3f8eb4-a925-4d0e-8091-daa25a399c67"/>
+				<reportElement key="staticText-99" style="TNRG9" x="286" y="112" width="67" height="11" uuid="ca3f8eb4-a925-4d0e-8091-daa25a399c67"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2484,10 +2588,10 @@ $F{IM_ADDCOM_DOVUTO}.subtract($F{IM_ADDCOM_ESTERNO}).subtract($F{IM_ADDCOM_GODUT
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Bonus goduto]]></text>
+				<text><![CDATA[goduto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-98" style="TNRG9" x="181" y="112" width="85" height="11" uuid="80d957e8-8e6f-4548-8220-99067d85768a"/>
+				<reportElement key="staticText-98" style="TNRG9" x="198" y="112" width="68" height="11" uuid="80d957e8-8e6f-4548-8220-99067d85768a"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -2495,18 +2599,20 @@ $F{IM_ADDCOM_DOVUTO}.subtract($F{IM_ADDCOM_ESTERNO}).subtract($F{IM_ADDCOM_GODUT
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Bonus dovuto]]></text>
+				<text><![CDATA[dovuto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText-97" style="TNRG9" x="6" y="112" width="100" height="11" uuid="e805f4d2-08de-4e3b-812c-d4bb04e0f02d"/>
+				<reportElement key="staticText-97" style="TNRG9" x="6" y="112" width="180" height="11" uuid="e805f4d2-08de-4e3b-812c-d4bb04e0f02d"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left"/>
-				<text><![CDATA[BONUS DL 66/2014]]></text>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[BONUS DL 66/2014 - RID. CUNEO DL 3/2020]]></text>
 			</staticText>
 			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
 				<reportElement key="textField" style="TNR9" x="268" y="125" width="85" height="11" uuid="c27f2c68-5b4b-42be-92ca-bb5838a9f642"/>
