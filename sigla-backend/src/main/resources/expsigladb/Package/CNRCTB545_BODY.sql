@@ -1607,6 +1607,77 @@ BEGIN
    RETURN aNumeroMM;
 
 END getMesiMatriceDate;
+
+-- ==================================================================================================
+-- Ritorna la minima data presente in una matrice date
+-- ==================================================================================================
+FUNCTION getMinimaMatriceDate
+   (
+    aIntervalloDate intervalloDateTab
+   ) RETURN date IS
+   dataMinima date := null;
+   i BINARY_INTEGER;
+
+BEGIN
+
+   -- Abilito il calcolo solo se la matrice date è piena
+
+   IF aIntervalloDate.COUNT > 0 THEN
+
+      FOR i IN aIntervalloDate.FIRST .. aIntervalloDate.LAST
+
+      LOOP
+
+         if dataMinima is null then
+            dataMinima := aIntervalloDate(i).tDataDa;
+         else
+            if dataMinima > aIntervalloDate(i).tDataDa then
+                dataMinima := aIntervalloDate(i).tDataDa;
+            end if;
+         end if;
+
+     END LOOP;
+
+   END IF;
+
+   RETURN dataMinima;
+
+END getMinimaMatriceDate;
+-- ==================================================================================================
+-- Ritorna la massima data presente in una matrice date
+-- ==================================================================================================
+FUNCTION getMassimaMatriceDate
+   (
+    aIntervalloDate intervalloDateTab
+   ) RETURN date IS
+   dataMassima date := null;
+   i BINARY_INTEGER;
+
+BEGIN
+
+   -- Abilito il calcolo solo se la matrice date è piena
+
+   IF aIntervalloDate.COUNT > 0 THEN
+
+      FOR i IN aIntervalloDate.FIRST .. aIntervalloDate.LAST
+
+      LOOP
+
+         if dataMassima is null then
+            dataMassima := aIntervalloDate(i).tDataA;
+         else
+            if dataMassima < aIntervalloDate(i).tDataA then
+                dataMassima := aIntervalloDate(i).tDataA;
+            end if;
+         end if;
+
+     END LOOP;
+
+   END IF;
+
+   RETURN dataMassima;
+
+END getMassimaMatriceDate;
 -- ==================================================================================================
 -- Ritorna il numero di Mesi presenti in una matrice date in un dato Esercizio calcolandoli
 -- e schiacciando i duplicati

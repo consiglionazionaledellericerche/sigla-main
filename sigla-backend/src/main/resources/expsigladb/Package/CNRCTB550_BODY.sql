@@ -1194,10 +1194,15 @@ BEGIN
                   dt_ini_val_tipo_cori <= aRecCompenso.dt_registrazione AND
                   dt_fin_val_tipo_cori >= aRecCompenso.dt_registrazione ) OR
                   (TI_CASSA_COMPETENZA = 'CO' AND
-                   dt_ini_val_tratt_cori <= aRecCompenso.dt_da_competenza_coge AND
+                   (dt_ini_val_tratt_cori <= aRecCompenso.dt_da_competenza_coge AND
                    dt_fin_val_tratt_cori >= aRecCompenso.dt_a_competenza_coge AND
                    dt_ini_val_tipo_cori <= aRecCompenso.dt_da_competenza_coge AND
-                   dt_fin_val_tipo_cori >= aRecCompenso.dt_a_competenza_coge ))
+                   dt_fin_val_tipo_cori >= aRecCompenso.dt_a_competenza_coge ) or
+                   (aOrigineCompenso=CNRCTB545.isCompensoConguaglio AND FL_CREDITO_IRPEF = 'Y' and
+                    ((aRecCompenso.dt_da_competenza_coge between dt_ini_val_tratt_cori  and dt_fin_val_tratt_cori ) or
+                     (aRecCompenso.dt_a_competenza_coge between dt_ini_val_tratt_cori  and dt_fin_val_tratt_cori )) and
+                    ((aRecCompenso.dt_da_competenza_coge between dt_ini_val_tipo_cori  and dt_fin_val_tipo_cori ) or
+                     (aRecCompenso.dt_a_competenza_coge between dt_ini_val_tipo_cori  and dt_fin_val_tipo_cori )))))
            ORDER BY cd_trattamento,
                     id_riga;
 
@@ -1206,34 +1211,33 @@ BEGIN
          FETCH gen_cur INTO aRecVTrattamento;
 
          EXIT WHEN gen_cur%NOTFOUND;
+             i:=i + 1;
 
-         i:=i + 1;
-
-         tabella_cori(i).tCdCori:=aRecVTrattamento.cd_cori;
-         tabella_cori(i).tDtIniValCori:=aRecVTrattamento.dt_ini_val_tipo_cori;
-         tabella_cori(i).tTiCassaCompetenza:=aRecVTrattamento.ti_cassa_competenza;
-         tabella_cori(i).tPrecisione:=aRecVTrattamento.precisione;
-         tabella_cori(i).tPgClassificazioneMontanti:=aRecVTrattamento.pg_classificazione_montanti;
-         tabella_cori(i).tCdClassificazioneCori:=aRecVTrattamento.cd_classificazione_cori;
-         tabella_cori(i).tFlScriviMontanti:=aRecVTrattamento.fl_scrivi_montanti;
-         tabella_cori(i).tIdRiga:=aRecVTrattamento.id_riga;
-         tabella_cori(i).tSegno:=aRecVTrattamento.segno;
-         tabella_cori(i).tCalcoloImponibile:=aRecVTrattamento.calcolo_imponibile;
-         tabella_cori(i).tFlSospensioneIrpef:=aRecVTrattamento.fl_sospensione_irpef;
-         tabella_cori(i).tFlCreditoIrpef:=aRecVTrattamento.fl_credito_irpef;
-         tabella_cori(i).tMontante:=NULL;
-         tabella_cori(i).tImponibileLordo:=NULL;
-         tabella_cori(i).tImDeduzioneIrpef:=NULL;
-         tabella_cori(i).tImDeduzioneFamily:=NULL;
-         tabella_cori(i).tImponibileNetto:=NULL;
-         tabella_cori(i).tAliquotaEnte:=NULL;
-         tabella_cori(i).tBaseCalcoloEnte:=NULL;
-         tabella_cori(i).tAmmontareEnteLordo:=NULL;
-         tabella_cori(i).tAmmontareEnte:=NULL;
-         tabella_cori(i).tAliquotaPercip:=NULL;
-         tabella_cori(i).tBaseCalcoloPercip:=NULL;
-         tabella_cori(i).tAmmontarePercipLordo:=NULL;
-         tabella_cori(i).tAmmontarePercip:=NULL;
+             tabella_cori(i).tCdCori:=aRecVTrattamento.cd_cori;
+             tabella_cori(i).tDtIniValCori:=aRecVTrattamento.dt_ini_val_tipo_cori;
+             tabella_cori(i).tTiCassaCompetenza:=aRecVTrattamento.ti_cassa_competenza;
+             tabella_cori(i).tPrecisione:=aRecVTrattamento.precisione;
+             tabella_cori(i).tPgClassificazioneMontanti:=aRecVTrattamento.pg_classificazione_montanti;
+             tabella_cori(i).tCdClassificazioneCori:=aRecVTrattamento.cd_classificazione_cori;
+             tabella_cori(i).tFlScriviMontanti:=aRecVTrattamento.fl_scrivi_montanti;
+             tabella_cori(i).tIdRiga:=aRecVTrattamento.id_riga;
+             tabella_cori(i).tSegno:=aRecVTrattamento.segno;
+             tabella_cori(i).tCalcoloImponibile:=aRecVTrattamento.calcolo_imponibile;
+             tabella_cori(i).tFlSospensioneIrpef:=aRecVTrattamento.fl_sospensione_irpef;
+             tabella_cori(i).tFlCreditoIrpef:=aRecVTrattamento.fl_credito_irpef;
+             tabella_cori(i).tMontante:=NULL;
+             tabella_cori(i).tImponibileLordo:=NULL;
+             tabella_cori(i).tImDeduzioneIrpef:=NULL;
+             tabella_cori(i).tImDeduzioneFamily:=NULL;
+             tabella_cori(i).tImponibileNetto:=NULL;
+             tabella_cori(i).tAliquotaEnte:=NULL;
+             tabella_cori(i).tBaseCalcoloEnte:=NULL;
+             tabella_cori(i).tAmmontareEnteLordo:=NULL;
+             tabella_cori(i).tAmmontareEnte:=NULL;
+             tabella_cori(i).tAliquotaPercip:=NULL;
+             tabella_cori(i).tBaseCalcoloPercip:=NULL;
+             tabella_cori(i).tAmmontarePercipLordo:=NULL;
+             tabella_cori(i).tAmmontarePercip:=NULL;
       END LOOP;
       -- close cursore
 
@@ -5980,7 +5984,6 @@ BEGIN
 
         -------------------------------------------------------------------------------------------------
         -- Leggo parametri per credito
-
         BEGIN
            SELECT * INTO aRecCreditoIrpef
            FROM   CREDITO_IRPEF

@@ -156,6 +156,12 @@ public java.math.BigDecimal getDetrazioni_pe() {
 		return null;
 	return getDetrazioni_pe_dovuto().add(getDetrazioni_pe_goduto().negate());
 }
+	public java.math.BigDecimal getDetrazioni_rid_cuneo() {
+
+		if (getDetrazioni_rid_cuneo_dovuto()==null || getDetrazioni_rid_cuneo_goduto()==null)
+			return null;
+		return getDetrazioni_rid_cuneo_dovuto().add(getDetrazioni_rid_cuneo_goduto().negate());
+	}
 /**
  * Insert the method's description here.
  * Creation date: (22/02/2002 18.34.06)
@@ -393,7 +399,8 @@ public java.math.BigDecimal getTotale_detrazioni_dovuto() {
 		getDetrazioni_pe_dovuto()==null ||
 		getDetrazioni_co_dovuto()==null ||
 		getDetrazioni_fi_dovuto()==null ||
-		getDetrazioni_al_dovuto()==null )
+		getDetrazioni_al_dovuto()==null ||
+			getDetrazioni_rid_cuneo_dovuto()==null )
 			return null;
 	java.math.BigDecimal tot = new java.math.BigDecimal(0);
 	tot = tot.add(getDetrazioni_la_dovuto());
@@ -401,6 +408,7 @@ public java.math.BigDecimal getTotale_detrazioni_dovuto() {
 	tot = tot.add(getDetrazioni_co_dovuto());
 	tot = tot.add(getDetrazioni_fi_dovuto());
 	tot = tot.add(getDetrazioni_al_dovuto());
+	tot = tot.add(getDetrazioni_rid_cuneo_dovuto());
 	return tot;
 }
 public java.math.BigDecimal getTotale_detrazioni_goduto() {
@@ -409,7 +417,8 @@ public java.math.BigDecimal getTotale_detrazioni_goduto() {
 		getDetrazioni_pe_goduto()==null ||
 		getDetrazioni_co_goduto()==null ||
 		getDetrazioni_fi_goduto()==null ||
-		getDetrazioni_al_goduto()==null )
+		getDetrazioni_al_goduto()==null ||
+			getDetrazioni_rid_cuneo_goduto()==null )
 			return null;
 	java.math.BigDecimal tot = new java.math.BigDecimal(0);
 	tot = tot.add(getDetrazioni_la_goduto());
@@ -417,6 +426,7 @@ public java.math.BigDecimal getTotale_detrazioni_goduto() {
 	tot = tot.add(getDetrazioni_co_goduto());
 	tot = tot.add(getDetrazioni_fi_goduto());
 	tot = tot.add(getDetrazioni_al_goduto());
+	tot = tot.add(getDetrazioni_rid_cuneo_goduto());
 	return tot;
 }
 public java.math.BigDecimal getTotale_irpef() {
@@ -495,8 +505,11 @@ public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp,it.cnr.
 	setFl_no_detrazioni_altre(Boolean.FALSE);
 	setFl_no_detrazioni_family(Boolean.FALSE);
 	setFl_detrazioni_altri_tipi(Boolean.FALSE);
-	setFl_no_credito_irpef(Boolean.FALSE);	
-	
+	setFl_no_credito_irpef(Boolean.FALSE);
+	setFl_no_credito_cuneo_irpef(Boolean.FALSE);
+	setFl_no_detr_cuneo_irpef(Boolean.FALSE);
+
+
 	return this;
 }
 /**
@@ -592,6 +605,7 @@ private void resetDetrazioniDovuto(){
 	setDetrazioni_co_dovuto(new java.math.BigDecimal(0));
 	setDetrazioni_fi_dovuto(new java.math.BigDecimal(0));
 	setDetrazioni_al_dovuto(new java.math.BigDecimal(0));
+	setDetrazioni_rid_cuneo_dovuto(new java.math.BigDecimal(0));
 }
 /**
  * Insert the method's description here.
@@ -606,6 +620,7 @@ private void resetDetrazioniEsterno(){
 	setDetrazioni_co_esterno(new java.math.BigDecimal(0));
 	setDetrazioni_fi_esterno(new java.math.BigDecimal(0));
 	setDetrazioni_al_esterno(new java.math.BigDecimal(0));
+	setDetrazioni_rid_cuneo_esterno(new java.math.BigDecimal(0));
 }
 /**
  * Insert the method's description here.
@@ -620,6 +635,7 @@ private void resetDetrazioniGoduto(){
 	setDetrazioni_co_goduto(new java.math.BigDecimal(0));
 	setDetrazioni_fi_goduto(new java.math.BigDecimal(0));
 	setDetrazioni_al_goduto(new java.math.BigDecimal(0));
+	setDetrazioni_rid_cuneo_goduto(new java.math.BigDecimal(0));
 }
 /**
  * Insert the method's description here.
@@ -929,7 +945,9 @@ public void validaDatiEsterni() throws ApplicationException{
 	if (getDetrazioni_fi_esterno()==null)
 		throw new ApplicationException("Il campo DETRAZIONI FIGLI non può essere vuoto");
 	if (getDetrazioni_al_esterno()==null)
-		throw new ApplicationException("Il campo DETRAZIONI ALTRI non può essere vuoto");	
+		throw new ApplicationException("Il campo DETRAZIONI ALTRI non può essere vuoto");
+	if (getDetrazioni_rid_cuneo_esterno()==null)
+		throw new ApplicationException("Il campo DETRAZIONI RIDUZIONE CUNEO non può essere vuoto");
 }
 public void validaTerzo() throws ApplicationException{
 

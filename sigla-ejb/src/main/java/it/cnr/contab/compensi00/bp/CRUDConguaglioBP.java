@@ -433,6 +433,8 @@ public void doValidaDatiEsterni(ActionContext context) throws ApplicationExcepti
 		conguaglio.setDetrazioni_al_esterno(new BigDecimal(0));
 	if(conguaglio.getDetrazioni_pe_esterno()==null)
 		conguaglio.setDetrazioni_pe_esterno(new BigDecimal(0));
+	if(conguaglio.getDetrazioni_rid_cuneo_esterno()==null)
+		conguaglio.setDetrazioni_rid_cuneo_esterno(new BigDecimal(0));
 	if (
 	   (conguaglio.getCodice_fiscale_esterno()!= null ||
 	    conguaglio.getDt_da_competenza_esterno()!= null ||
@@ -506,7 +508,7 @@ public void doValidaDatiEsterni(ActionContext context) throws ApplicationExcepti
 	    {
 	    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: E' obbligatorio inserire il Comune per la relativa Addizionale.");
 	    }
-	    if ((conguaglio.getDetrazioni_fi_esterno().add(conguaglio.getDetrazioni_co_esterno()).add(conguaglio.getDetrazioni_al_esterno()).add(conguaglio.getIm_irpef_esterno())).compareTo(conguaglio.getImponibile_fiscale_esterno())>0)
+	    if ((conguaglio.getDetrazioni_fi_esterno().add(conguaglio.getDetrazioni_co_esterno()).add(conguaglio.getDetrazioni_rid_cuneo_esterno()).add(conguaglio.getDetrazioni_al_esterno()).add(conguaglio.getIm_irpef_esterno())).compareTo(conguaglio.getImponibile_fiscale_esterno())>0)
 		{
 		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: La somma delle detrazioni e della Ritenuta irpef non può essere superiore all'Imponibile fiscale.");
 		}

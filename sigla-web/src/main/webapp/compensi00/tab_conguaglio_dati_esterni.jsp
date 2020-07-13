@@ -70,6 +70,8 @@
 	<td><% bp.getController().writeFormInput(out,"detrazioni_fi_esterno"); %></td>
 	<td><% bp.getController().writeFormLabel(out,"detrazioni_al_esterno"); %></td>
 	<td><% bp.getController().writeFormInput(out,"detrazioni_al_esterno"); %></td>
+	<td><% bp.getController().writeFormLabel(out,"detrazioni_rid_cuneo_esterno"); %></td>
+	<td><% bp.getController().writeFormInput(out,"detrazioni_rid_cuneo_esterno"); %></td>
   </tr>
 </table>
 </fieldset>

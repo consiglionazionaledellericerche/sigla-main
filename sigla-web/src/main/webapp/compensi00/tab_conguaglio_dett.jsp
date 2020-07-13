@@ -127,6 +127,12 @@
 	<td><% bp.getController().writeFormInput(out,"detrazioni_al"); %></td>
   </tr>
   <tr>
+	<td><% bp.getController().writeFormLabel(out,"detrazioni_rid_cuneo"); %></td>
+	<td><% bp.getController().writeFormInput(out,"detrazioni_rid_cuneo_dovuto"); %></td>
+	<td><% bp.getController().writeFormInput(out,"detrazioni_rid_cuneo_goduto"); %></td>
+	<td><% bp.getController().writeFormInput(out,"detrazioni_rid_cuneo"); %></td>
+  </tr>
+  <tr>
 	<td><% bp.getController().writeFormLabel(out,"totale_detrazioni"); %></td>
 	<td><% bp.getController().writeFormInput(out,"totale_detrazioni_dovuto"); %></td>
 	<td><% bp.getController().writeFormInput(out,"totale_detrazioni_goduto"); %></td>

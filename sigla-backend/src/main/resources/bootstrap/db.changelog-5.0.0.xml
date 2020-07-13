@@ -3404,4 +3404,40 @@ TRASPORTO_AEREO"/>
         <addNotNullConstraint columnName="detrazione_riduzione_cuneo" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
         <addNotNullConstraint columnName="detrazione_rid_cuneo_netto" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-detrazioni-riduzione_cuneo">
+        <addColumn tableName="conguaglio">
+            <column name="detrazione_rid_cuneo_esterno" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detrazione_rid_cuneo_goduto" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detrazione_rid_cuneo_dovuto" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-no_credito_cuneo_irpef">
+        <addColumn tableName="conguaglio">
+            <column name="fl_no_credito_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fiscale irpef. Dominio Y = SI Applicato il credito cuneo fiscale irpef. N = Non applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_no_detr_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione della detrazione del Cuneo Fiscale irpef. Dominio Y = SI Applicata la detrazione cuneo fiscale irpef. N = Non applicata la detrazione cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irpef-cd_cori">
+        <addColumn tableName="credito_irpef">
+            <column name="cd_cori" type="VARCHAR(10)" remarks="Codice contributo ritenuta collegato al Credito Irpef">
+            </column>
+            <column name="dt_ini_validita_cori" type="DATE" remarks="Data inizio validita contributo ritenuta collegato al Credito Irpef">
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="cd_cori,dt_ini_validita_cori" baseTableName="credito_irpef" constraintName="fk_credito_irpef01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_contributo_ritenuta, dt_ini_validita" referencedTableName="tipo_contributo_ritenuta"/>
+        <createIndex indexName="fx_credito_irpef01" tableName="credito_irpef">
+            <column name="cd_cori"/>
+            <column name="dt_ini_validita_cori"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>
