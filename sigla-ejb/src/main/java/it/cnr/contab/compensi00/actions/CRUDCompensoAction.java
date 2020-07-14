@@ -968,7 +968,6 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			if (compenso.getDt_a_competenza_coge() == null)
 				throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
 
-			bp.controlloRiduzioneCuneo32020(compenso);
 			GregorianCalendar data_a = (GregorianCalendar) GregorianCalendar.getInstance();
 			GregorianCalendar old_data_a = (GregorianCalendar) GregorianCalendar.getInstance();
 			data_a.setTime(((CompensoBulk)bp.getModel()).getDt_a_competenza_coge());
@@ -987,9 +986,6 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			//r.p. 20/10/2008 commentato perchè non vengono valorizzate in automatico data inizio e fine competenze
 			//compenso.validaDate();
 		} catch(it.cnr.jada.bulk.FillException e) {
-			compenso.setDt_a_competenza_coge(oldDataCompCoge);
-			throw e;
-		} catch(ValidationException e) {
 			compenso.setDt_a_competenza_coge(oldDataCompCoge);
 			throw e;
 		} catch(it.cnr.jada.comp.ApplicationException e) {
@@ -1047,7 +1043,6 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 		if (compenso.getDt_da_competenza_coge() == null)
 			throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
 
-		bp.controlloRiduzioneCuneo32020(compenso);
 		GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 		GregorianCalendar old_data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 		data_da.setTime(((CompensoBulk)bp.getModel()).getDt_da_competenza_coge());

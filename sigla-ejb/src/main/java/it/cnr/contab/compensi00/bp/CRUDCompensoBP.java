@@ -47,6 +47,7 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
@@ -122,25 +123,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private boolean ribaltato;
     private boolean nocompenso = true;
 
-    public Timestamp getDataInizioGestioneRiduzioneCuneo() {
-        return dataInizioGestioneRiduzioneCuneo;
-    }
-
-    public void setDataInizioGestioneRiduzioneCuneo(Timestamp dataInizioGestioneRiduzioneCuneo) {
-        this.dataInizioGestioneRiduzioneCuneo = dataInizioGestioneRiduzioneCuneo;
-    }
-
-    public Timestamp getDataFineGestioneRiduzioneCuneo() {
-        return dataFineGestioneRiduzioneCuneo;
-    }
-
-    public void setDataFineGestioneRiduzioneCuneo(Timestamp dataFineGestioneRiduzioneCuneo) {
-        this.dataFineGestioneRiduzioneCuneo = dataFineGestioneRiduzioneCuneo;
-    }
-
     private Boolean isGestioneIncarichiEnabled = null;
-    private Timestamp dataInizioGestioneRiduzioneCuneo = null;
-    private Timestamp dataFineGestioneRiduzioneCuneo = null;
 
     //private Boolean isGestionePrestazioneCompensoEnabled = null;
 
@@ -390,23 +373,6 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
             throw handleException(ex);
         } catch (java.rmi.RemoteException ex) {
             throw handleException(ex);
-        }
-    }
-
-    public void controlloRiduzioneCuneo32020(CompensoBulk compenso) throws ValidationException {
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
-        if (compenso.getDt_a_competenza_coge() != null && compenso.getDt_da_competenza_coge() != null){
-            if (compenso.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0 ||
-                    compenso.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) < 0){
-                if (compenso.getDt_da_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) < 0 &&
-                        compenso.getDt_a_competenza_coge().compareTo(getDataInizioGestioneRiduzioneCuneo()) >= 0){
-                    throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataInizioGestioneRiduzioneCuneo()));
-                }
-                if (compenso.getDt_da_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) <= 0 &&
-                        compenso.getDt_a_competenza_coge().compareTo(getDataFineGestioneRiduzioneCuneo()) > 0){
-                    throw new ValidationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(getDataFineGestioneRiduzioneCuneo()));
-                }
-            }
         }
     }
 
@@ -713,11 +679,6 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
         try {
             setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
-            Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( context.getUserContext(), null, null, Configurazione_cnrBulk.PK_RIDUZIONE_CUNEO_DL_3_2020, Configurazione_cnrBulk.SK_DATA_INIZIO);
-            if (configurazione != null){
-                dataInizioGestioneRiduzioneCuneo = configurazione.getDt01();
-                dataFineGestioneRiduzioneCuneo = configurazione.getDt02();
-            }
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
         } catch (java.rmi.RemoteException ex) {
@@ -1255,7 +1216,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
             CompensoBulk compenso = comp.onTipoTrattamentoChange(context.getUserContext(), (CompensoBulk) getModel());
             setModel(context, compenso);
         } catch (it.cnr.jada.comp.ComponentException ex) {
-            throw handleException(ex);
+            throw new BusinessProcessException(ex);
         } catch (java.rmi.RemoteException ex) {
             throw handleException(ex);
         }
@@ -1534,7 +1495,6 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
                 else
                     completeSearchTool(context, getModel(), getBulkInfo().getFieldProperty("find_tipologia_rischio"));
 
-            controlloRiduzioneCuneo32020(compenso);
         } catch (it.cnr.jada.bulk.ValidationException ex) {
             throw handleException(ex);
         }
