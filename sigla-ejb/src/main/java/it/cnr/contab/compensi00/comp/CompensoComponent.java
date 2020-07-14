@@ -3846,6 +3846,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 	}
 
+	private Boolean isCompensoSoggettoConguaglio(Tipo_trattamentoBulk tratt){
+		if (tratt != null && tratt.getFl_soggetto_conguaglio() != null && tratt.getFl_soggetto_conguaglio()){
+			return true;
+		}
+		return false;
+	}
 	private Boolean isCompensoSoloInailEnte(Tipo_trattamentoBulk tratt){
 		if (tratt != null && tratt.getFl_solo_inail_ente() != null && tratt.getFl_solo_inail_ente()){
 			return true;
@@ -4062,7 +4068,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 **/
 	public CompensoBulk onTipoTrattamentoChange(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
-
+		if (isCompensoSoggettoConguaglio(compenso.getTipoTrattamento())){
+			controlloRiduzioneCuneo32020(userContext, compenso);
+		}
 		compenso.resetDatiLiquidazione();
 		setDatiLiquidazione(userContext, compenso);
 
@@ -4978,6 +4986,41 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 *            l'OggettoBulk da validare
 	 * 
 	 **/
+
+	private void controlloRiduzioneCuneo32020(UserContext userContext, CompensoBulk compenso) throws ComponentException {
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+		Timestamp dataInizioGestioneRiduzioneCuneo = null;
+		Timestamp dataFineGestioneRiduzioneCuneo = null;
+		try {
+			Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, Configurazione_cnrBulk.PK_RIDUZIONE_CUNEO_DL_3_2020, Configurazione_cnrBulk.SK_DATA_INIZIO);
+			if (configurazione != null){
+				dataInizioGestioneRiduzioneCuneo = configurazione.getDt01();
+				dataFineGestioneRiduzioneCuneo = configurazione.getDt02();
+			}
+		} catch (it.cnr.jada.comp.ComponentException ex) {
+			throw handleException(ex);
+		} catch (java.rmi.RemoteException ex) {
+			throw handleException(ex);
+		}
+
+
+		if (compenso.getDt_a_competenza_coge() != null && compenso.getDt_da_competenza_coge() != null){
+			if (compenso.getDt_da_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) < 0 ||
+					compenso.getDt_a_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) < 0){
+				if (compenso.getDt_da_competenza_coge().compareTo(dataInizioGestioneRiduzioneCuneo) < 0 &&
+						compenso.getDt_a_competenza_coge().compareTo(dataInizioGestioneRiduzioneCuneo) >= 0){
+					throw new ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(dataInizioGestioneRiduzioneCuneo));
+				}
+				if (compenso.getDt_da_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) <= 0 &&
+						compenso.getDt_a_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) > 0){
+					throw new ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(dataFineGestioneRiduzioneCuneo));
+				}
+			}
+		}
+	}
+
+
+
 	private void validaCompenso(UserContext userContext, CompensoBulk compenso)
 			throws ComponentException {
 		// Controllo Testata Compenso
@@ -4986,6 +5029,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				throw new ApplicationException(
 						"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
 			}
+		}
+		if (isCompensoSoggettoConguaglio(compenso.getTipoTrattamento())){
+			controlloRiduzioneCuneo32020(userContext, compenso);
 		}
 		try {
 	

@@ -53,9 +53,15 @@
 <table>
   <tr>
   	<td align="center"><span class="FormLabel"></span></td>
-  	<td align="center"><span class="FormLabel">Bonus dovuto</span></td>
-  	<td align="center"><span class="FormLabel">Bonus goduto</span></td>
+  	<td align="center"><span class="FormLabel">Dovuto</span></td>
+  	<td align="center"><span class="FormLabel">Goduto</span></td>
   	<td align="center"><span class="FormLabel">Conguaglio</span></td>
+  </tr>
+  <tr>
+	<td><% bp.getController().writeFormLabel(out,"im_bonus_irpef"); %></td>
+	<td><% bp.getController().writeFormInput(out,"im_bonus_irpef_dovuto"); %></td>
+	<td><% bp.getController().writeFormInput(out,"im_bonus_irpef_goduto"); %></td>
+	<td><% bp.getController().writeFormInput(out,"im_bonus_irpef"); %></td>
   </tr>
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"im_credito_irpef"); %></td>

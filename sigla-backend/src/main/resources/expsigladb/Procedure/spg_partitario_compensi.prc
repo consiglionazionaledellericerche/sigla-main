@@ -57,6 +57,7 @@ CREATE OR REPLACE PROCEDURE SPG_PARTITARIO_COMPENSI
  aTotDetrCon number(15,2) := 0;
  aTotDetrFi number(15,2) := 0;
  aTotDetrAl number(15,2) := 0;
+ aTotDetrRidCuneo number(15,2) := 0;
  aTotIrpef number(15,2) := 0;
  aTotFamily number(15,2) := 0;
   uoEnte unita_organizzativa%rowtype;
@@ -272,7 +273,8 @@ begin
 							DETRAZIONI_PERSONALI,
 							DETRAZIONI_CONIUGE,
 							DETRAZIONI_FIGLI,
-							DETRAZIONI_ALTRI)
+							DETRAZIONI_ALTRI,
+                            DETRAZIONI_RID_CUNEO)
 
 		  select aId,
 		 		'chiave',
@@ -310,7 +312,8 @@ begin
 				aComp.detrazioni_personali,
 				aComp.detrazione_coniuge,
 				aComp.detrazione_figli,
-				aComp.detrazione_altri
+				aComp.detrazione_altri,
+                aComp.detrazione_riduzione_cuneo
 		  from unita_organizzativa uo1
 		  	  ,unita_organizzativa uo2
 			  ,tipo_rapporto rapp
@@ -353,7 +356,8 @@ begin
 								DETRAZIONI_PERSONALI,
 								DETRAZIONI_CONIUGE,
 								DETRAZIONI_FIGLI,
-								DETRAZIONI_ALTRI)
+								DETRAZIONI_ALTRI,
+                                DETRAZIONI_RID_CUNEO)
 
 			 select aId,
 		 			'chiave',
@@ -377,7 +381,8 @@ begin
 					aComp.detrazioni_personali,
 					aComp.detrazione_coniuge,
 					aComp.detrazione_figli,
-					aComp.detrazione_altri
+					aComp.detrazione_altri,
+                    aComp.detrazione_riduzione_cuneo
 			 from tipo_contributo_ritenuta tcr
 			 where tcr.cd_contributo_ritenuta = aCori.cd_contributo_ritenuta
 			   and tcr.dt_ini_validita		  = aCori.dt_ini_validita;
@@ -391,8 +396,9 @@ begin
 			  sum(v.DETRAZIONI_FIGLI),
 			  sum(v.DETRAZIONI_ALTRI),
 			  sum(v.IM_DEDUZIONE_IRPEF),
-			  sum(v.IM_DEDUZIONE_FAMILY)
-	   into aTotDetrPers, aTotDetrCon, aTotDetrFi, aTotDetrAl, aTotIrpef, aTotFamily
+			  sum(v.IM_DEDUZIONE_FAMILY),
+              sum(v.DETRAZIONI_RID_CUNEO)
+	   into aTotDetrPers, aTotDetrCon, aTotDetrFi, aTotDetrAl, aTotIrpef, aTotFamily, aTotDetrRidCuneo
 	   from vpg_partitario_compensi v
 	   where id = aId
 	     and chiave = 'chiave'
@@ -451,7 +457,8 @@ begin
 							TOT_DETRAZIONI_FIGLI,
 							TOT_DETRAZIONI_ALTRI,
 							TOT_DEDUZIONE_IRPEF,
-							TOT_DEDUZIONE_FAMILY
+							TOT_DEDUZIONE_FAMILY,
+							TOT_DETRAZIONI_RID_CUNEO
 							)
 		   values (aId,
 		   		  'chiave',
@@ -473,7 +480,8 @@ begin
 				  aTotDetrFi,
 				  aTotDetrAl,
 				  aTotIrpef,
-				  aTotFamily);
+				  aTotFamily,
+				  aTotDetrRidCuneo);
 
 	   end loop; -- fine loop 5 (cori inseriti)
 
@@ -490,8 +498,9 @@ begin
 		   sum(v.DETRAZIONI_FIGLI),
 		   sum(v.DETRAZIONI_ALTRI),
 		   sum(v.IM_DEDUZIONE_IRPEF),
-		   sum(v.IM_DEDUZIONE_FAMILY)
-	into aTotDetrPers, aTotDetrCon, aTotDetrFi, aTotDetrAl,aTotIrpef,aTotFamily
+		   sum(v.IM_DEDUZIONE_FAMILY),
+           sum(v.DETRAZIONI_RID_CUNEO)
+	into aTotDetrPers, aTotDetrCon, aTotDetrFi, aTotDetrAl,aTotIrpef,aTotFamily, aTotDetrRidCuneo
 	from vpg_partitario_compensi v
 	where id = aId
 	  and chiave = 'chiave'
@@ -542,7 +551,8 @@ begin
 						     TOT_DETRAZIONI_FIGLI,
 						     TOT_DETRAZIONI_ALTRI,
 						     TOT_DEDUZIONE_IRPEF,
-					             TOT_DEDUZIONE_FAMILY
+					             TOT_DEDUZIONE_FAMILY,
+                             TOT_DETRAZIONI_RID_CUNEO
 						     )
 		values (aId,
 			    'chiave',
@@ -564,7 +574,8 @@ begin
 				aTotDetrFi,
 				aTotDetrAl,
 				aTotIrpef,
-				aTotFamily
+				aTotFamily,
+                aTotDetrRidCuneo
 				);
 
 	 end loop; -- fine loop 6 (cori per ente)
@@ -577,5 +588,3 @@ begin
 
 end;
 /
-
-

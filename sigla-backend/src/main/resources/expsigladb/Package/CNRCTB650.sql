@@ -332,6 +332,7 @@
    glbDeduzioneFamilyGoduto NUMBER(15,2);
    glbImportoIrpefSospesoGoduto NUMBER(15,2);
    glbImportoCreditoIrpefGoduto NUMBER(15,2);
+   glbImportoBonusIrpefGoduto NUMBER(15,2);
 
    glbImportoIrpefDovuto NUMBER(15,2);
    glbImportoFamilyDovuto NUMBER(15,2);
@@ -347,7 +348,7 @@
    glbDeduzioneIrpefDovuto NUMBER(15,2);
    glbDeduzioneFamilyDovuto NUMBER(15,2);
    glbImportoCreditoIrpefDovuto NUMBER(15,2);
-
+   glbImportoBonusIrpefDovuto NUMBER(15,2);
    -- Valore addebito rate di esercizio precedente (rateizzazione addizionali territorio)
 
    glbImpAddRegRateEseprec NUMBER(15,2);

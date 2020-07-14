@@ -844,14 +844,26 @@
 		property="im_credito_irpef_dovuto"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="ROTEXT"
-		label="Credito irpef dovuto" />		
+		label="Credito irpef dovuto" />
+	<fieldProperty
+			name="im_bonus_irpef_dovuto"
+			property="im_bonus_irpef_dovuto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Bonus irpef dovuto" />
 	<fieldProperty
 		name="im_credito_irpef_goduto"
 		property="im_credito_irpef_goduto"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="ROTEXT"
-		label="Credito irpef goduto" />	
-				
+		label="Credito irpef goduto" />
+	<fieldProperty
+			name="im_bonus_irpef_goduto"
+			property="im_bonus_irpef_goduto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Bonus irpef goduto" />
+
 /*********** ****** **************/
 /*********** TOTALI **************/
 	<fieldProperty
@@ -919,8 +931,14 @@
 		property="im_credito_irpef"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="ROTEXT"
-		label="BONUS DL 66/2014" />
-		
+		label="CUNEO DL 3/2020" />
+	<fieldProperty
+			name="im_bonus_irpef"
+			property="im_bonus_irpef"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="BONUS DL 66/2014" />
+
 	<fieldProperty
 		name="totale_irpef_dovuto"
 		property="totale_irpef_dovuto"
@@ -1061,6 +1079,9 @@
 	<formFieldProperty name="im_credito_irpef_dovuto" />
 	<formFieldProperty name="im_credito_irpef_goduto" />
 	<formFieldProperty name="im_credito_irpef" />
+	<formFieldProperty name="im_bonus_irpef_dovuto" />
+	<formFieldProperty name="im_bonus_irpef_goduto" />
+	<formFieldProperty name="im_bonus_irpef" />
 	<formFieldProperty name="im_irpef" />
 	<formFieldProperty name="im_addreg" />
 	<formFieldProperty name="im_addprov" />

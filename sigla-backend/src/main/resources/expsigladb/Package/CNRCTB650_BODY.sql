@@ -370,8 +370,11 @@ PROCEDURE creaCompensoConguaglio
    aDataMin date;
    aDataMax date;
    i_credito number := 0;
+   dataInizioGestioneCuneoFiscale date;
+
 BEGIN
 
+   dataInizioGestioneCuneoFiscale := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
    -------------------------------------------------------------------------------------------------
    -- Memorizzazione parametri generali della procedura
 
@@ -927,6 +930,7 @@ BEGIN
       glbDeduzioneIrpefDovuto:=0;
       glbDeduzioneFamilyDovuto:=0;
       glbImportoCreditoIrpefDovuto:=0;
+      glbImportoBonusIrpefDovuto:=0;
 
       glbImpAddRegRateEseprec:=0;
       glbImpAddProRateEseprec:=0;
@@ -1034,7 +1038,11 @@ BEGIN
 
       CLOSE gen_cur_cori;
       FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
-        glbImportoCreditoIrpefDovuto := glbImportoCreditoIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+        if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
+            glbImportoCreditoIrpefDovuto := glbImportoCreditoIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+        else
+            glbImportoBonusIrpefDovuto := glbImportoBonusIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+        end if;
       END LOOP;
 
    END;
@@ -1106,7 +1114,7 @@ BEGIN
       --glbImportoCreditoIrpefGoduto e glbImportoCreditoIrpefDovuto sono entrambi positivi
 --pipe.send_message('glbImportoCreditoIrpefDovuto = '||glbImportoCreditoIrpefDovuto);
 --pipe.send_message('glbImportoCreditoIrpefGoduto = '||glbImportoCreditoIrpefGoduto);
-      aImCompCongCreditoIrpef := -(glbImportoCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto);
+      aImCompCongCreditoIrpef := -(glbImportoCreditoIrpefDovuto + glbImportoBonusIrpefDovuto - glbImportoCreditoIrpefGoduto - glbImportoBonusIrpefGoduto);
    End;
 
    -------------------------------------------------------------------------------------------------
@@ -1130,6 +1138,7 @@ BEGIN
              im_deduzione_goduto = glbDeduzioneIrpefGoduto,
              im_deduzione_family_goduto = glbDeduzioneFamilyGoduto,
              im_credito_irpef_goduto = glbImportoCreditoIrpefGoduto,
+             im_bonus_irpef_goduto = glbImportoBonusIrpefGoduto,
              im_irpef_dovuto = glbImportoIrpefDovuto,
              im_family_dovuto = glbImportoFamilyDovuto,
              im_addreg_dovuto = glbImportoAddRegDovuto,
@@ -1144,6 +1153,7 @@ BEGIN
              im_deduzione_dovuto = glbDeduzioneIrpefDovuto,
              im_deduzione_family_dovuto = glbDeduzioneFamilyDovuto,
              im_credito_irpef_dovuto = glbImportoCreditoIrpefDovuto,
+             im_bonus_irpef_dovuto = glbImportoBonusIrpefDovuto,
              imponibile_irpef_lordo = glbImponibileLordoIrpef,
              imponibile_irpef_netto = glbImponibileNettoIrpef,
              numero_giorni = glbNumeroGiorni,
@@ -1549,10 +1559,13 @@ BEGIN
 --              if aCdCori = 'BONUSDL66' THEN
 --              RAISE_APPLICATION_ERROR(-20100,mess);
 --              END IF;
-              IF trovatoCredito = 'N' then
-                  IBMERR001.RAISE_ERR_GENERICO
-                     ('Credito non trovato tra i compensi già liquidati. Verificare i dati.');
-              end if;
+                IF trovatoCredito = 'N' then
+                  conta:=tabCreditoIrpef.COUNT + 1;
+                  tabCreditoIrpef(conta).tCdCori := aCdCori;
+                  tabCreditoIrpef(conta).tDtIniValCori := DT_INI_VAL_CORI;
+                  tabCreditoIrpef(conta).tImCreditoIrpefGoduto := 0;
+                  tabCreditoIrpef(conta).tImCreditoIrpefDovuto := importoCredito;
+                end if;
 
              totImportoDetrazioni := totImportoDetrazioni + importoDetrazioni;
           end loop;
@@ -1677,6 +1690,7 @@ BEGIN
          glbDeduzioneIrpefGoduto:=aRecConguaglioUltimo.im_deduzione_dovuto;
          glbDeduzioneFamilyGoduto:=aRecConguaglioUltimo.im_deduzione_family_dovuto;
          glbImportoCreditoIrpefGoduto := aRecConguaglioUltimo.im_credito_irpef_dovuto;
+         glbImportoBonusIrpefGoduto := aRecConguaglioUltimo.im_bonus_irpef_dovuto;
          glbDataMinCompetenza:=aRecConguaglioUltimo.dt_da_competenza_coge;
          glbDataMaxCompetenza:=aRecConguaglioUltimo.dt_a_competenza_coge;
 
@@ -1722,6 +1736,7 @@ BEGIN
            glbDeduzioneFamilyGoduto:=0;
            glbImportoIrpefSospesoGoduto:=0;
            glbImportoCreditoIrpefGoduto:=0;
+           glbImportoBonusIrpefGoduto:=0;
            glbDataMinCompetenza:=NULL;
            glbDataMaxCompetenza:=NULL;
 
@@ -1746,7 +1761,11 @@ PROCEDURE leggiCompensiPerConguaglio
    gen_cur_cori GenericCurTyp;
    i_credito number := 0;
    trovatoCredito char(1):= 'N';
+   dataInizioGestioneCuneoFiscale date;
+
 BEGIN
+
+   dataInizioGestioneCuneoFiscale := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
 
    eseguiLock:='Y';
 
@@ -1980,7 +1999,6 @@ BEGIN
 
                IF CNRCTB545.IsCoriCreditoIrpef(aRecCoriConguaglio.cd_contributo_ritenuta) = 'Y' then
                   IF aRecCompensoConguaglioBase.is_associato_conguaglio = 'N' THEN
-                     glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
                      i_credito := 0;
                      trovatoCredito := 'N';
 
@@ -1989,6 +2007,11 @@ BEGIN
                           if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_validita then
                            tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto := tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
                            trovatoCredito := 'S';
+                           if dataInizioGestioneCuneoFiscale <= aRecCoriConguaglio.dt_ini_validita then
+                             glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                           else
+                             glbImportoBonusIrpefGoduto:=glbImportoBonusIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                           end if;
                           end if;
                        end loop;
                       end if;
@@ -1998,6 +2021,11 @@ BEGIN
                          tabCreditoIrpef(i_credito).tDtIniValCori := aRecCoriConguaglio.dt_ini_validita;
                          tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto := -aRecCoriConguaglio.ammontare_lordo;
                          tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto := 0;
+                         if dataInizioGestioneCuneoFiscale <= aRecCoriConguaglio.dt_ini_validita then
+                           glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                         else
+                           glbImportoBonusIrpefGoduto:=glbImportoBonusIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                         end if;
                       end if;
                   END IF;
                END IF;
