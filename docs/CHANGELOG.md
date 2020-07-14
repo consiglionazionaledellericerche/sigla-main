@@ -1,21 +1,41 @@
-## Release 6.2.25  -- _July 01, 2020_ 
+## Release 6.2.28  -- _July 07, 2020_ 
 **Changes**
 
->**Bug Variazioni Prelievo: non visualizzava voci in presenza di progetti scaduti**
+>**Fix Variazioni a favore Ragioneria: corretto controllo in caso di assegnazioni fondi da GAE Natura 6 che in alcuni casi non lo permetteva**
 >
->[9d335cdc266fb7e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d335cdc266fb7e) raffaele.pagano *July 01, 2020*
+>[f3eb456ac691fe1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3eb456ac691fe1) raffaele.pagano *July 07, 2020*
 
-
-## Release 6.2.24  -- _June 24, 2020_ 
-**Changes**
-
->**Piano Economico: ripristinato sospensione controllo su variazioni di anni precedenti a quello di attivazione della gestione.**
+>**Fix Creazione Compenso da Conguaglio**
 >
->[ba5f8996381177c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba5f8996381177c) raffaele.pagano *June 24, 2020*
+>[56d3c3c193efe9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56d3c3c193efe9a) gianfranco.gasparro *July 06, 2020*
 
 
-## Release 6.2.23  -- _June 22, 2020_ 
+## Release 6.2.27  -- _July 03, 2020_ 
 **Changes**
+
+>**Corretto blocco su Conguaglio.**
+>
+>[20324355b5a8265](https://github.com/consiglionazionaledellericerche/sigla-main/commit/20324355b5a8265) gianfranco.gasparro *July 03, 2020*
+
+
+## Release 6.2.26  -- _July 02, 2020_ 
+**Changes**
+
+>**Update .gitlab-ci.yml**
+>
+>[6de0b1592cc15ef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6de0b1592cc15ef) SPASIANO MARCO *July 02, 2020*
+
+>**Fix per modifiche della riduzione al cuneo fiscale**
+>
+>[52165cc1d254f21](https://github.com/consiglionazionaledellericerche/sigla-main/commit/52165cc1d254f21) gianfranco.gasparro *July 01, 2020*
+
+>**Fix per modifiche della riduzione al cuneo fiscale**
+>
+>[b0e2fdc9534bdf9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b0e2fdc9534bdf9) gianfranco.gasparro *June 29, 2020*
+
+>**Creato branch per modifiche della riduzione al cuneo fiscale**
+>
+>[4ac10b24c9c84ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ac10b24c9c84ba) gianfranco.gasparro *June 29, 2020*
 
 >**Inizio Modifiche per Riduzione Cuneo Fiscale. Aggiunta blocchi su compensi e conguagli**
 >
@@ -52,6 +72,22 @@
 >**FIX riceca nazione iban per ACCREDITO TESORERIA PROVINCIALE STATO PER TAB B**
 >
 >[8a6999324eb85a8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8a6999324eb85a8) marco.spasiano *June 09, 2020*
+
+
+## Release 6.2.25  -- _July 01, 2020_ 
+**Changes**
+
+>**Bug Variazioni Prelievo: non visualizzava voci in presenza di progetti scaduti**
+>
+>[9d335cdc266fb7e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9d335cdc266fb7e) raffaele.pagano *July 01, 2020*
+
+
+## Release 6.2.24  -- _June 24, 2020_ 
+**Changes**
+
+>**Piano Economico: ripristinato sospensione controllo su variazioni di anni precedenti a quello di attivazione della gestione.**
+>
+>[ba5f8996381177c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba5f8996381177c) raffaele.pagano *June 24, 2020*
 
 
 ## Release 6.2.22  -- _June 12, 2020_ 

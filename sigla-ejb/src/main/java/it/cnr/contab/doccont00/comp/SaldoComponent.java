@@ -3101,27 +3101,11 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					}
 				}
 				{
+					/**
+					 * 90. in un progetto non scaduto è possibile prelevare fondi dalla voce speciale (11048) solo se assegnati a GAE di natura 6 dello stesso progetto
+					 * 	(regola non valida per trasferimenti ad Aree)
+					 */
 					if (!isVariazioneArea) {
-						/**
-						 * 90. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
-						 * 		a. un progetto scaduto
-						 * 		b. dalla voce speciale (11048) sullo stesso progetto
-						 * 		c. da una GAE di natura 6 sullo stesso progetto
-						 * 	(regola non valida per trasferimenti ad Aree)
-						 */
-						listCtrlPianoEco.stream()
-								.filter(el -> !el.isScaduto(dataChiusura))
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
-								.findFirst().ifPresent(el -> {
-							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
-									el.getProgetto().getCd_progetto() + " (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
-									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
-						});
-
 						listCtrlPianoEco.stream()
 								.filter(el -> !el.isScaduto(dataChiusura))
 								.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
@@ -3133,6 +3117,29 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto " +
 									"su GAE di natura 6 - 'Reimpiego di risorse' ("+
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego())) + ")");
+						});
+
+					}
+
+					/**
+					 * 90.1 è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
+					 * 		a. un progetto scaduto
+					 * 		b. dalla voce speciale (11048) sullo stesso progetto
+					 * 		c. da una GAE di natura 6 sullo stesso progetto
+					 * 	(regola non valida per trasferimenti ad Aree)
+					 */
+					if (!isVariazioneArea && !isVariazioneRagioneria) {
+						listCtrlPianoEco.stream()
+								.filter(el -> !el.isScaduto(dataChiusura))
+								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
+								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
+								.findFirst().ifPresent(el -> {
+							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
+									el.getProgetto().getCd_progetto() + " (" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
+									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
+									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
 						});
 
 						BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
@@ -3154,7 +3161,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						}
 					} else {
 						/**
-						 * 90. in una variazione di area se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
+						 * 90. in una variazione di area/ragioneria se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree o Ragioneria di uguale Natura
 						 */
 						BigDecimal impSaldoNaturaReimpiego = listCtrlPianoEco.stream()
 								.map(CtrlPianoEco::getDett)
@@ -3165,22 +3172,23 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
 						if (impSaldoNaturaReimpiego.compareTo(BigDecimal.ZERO)<0) {
-							//Vuol dire che ho ridotto su GAE Natura 6 per cui deve essere bilanciato solo con Aree di uguale natura
-							BigDecimal impSaldoNaturaReimpiegoArea = listCtrlPianoEco.stream()
+							//Vuol dire che ho ridotto su GAE Natura 6 per cui deve essere bilanciato solo con Aree/Ragioneria di uguale natura
+							BigDecimal impSaldoNaturaReimpiegoAreaRagioneria = listCtrlPianoEco.stream()
 									.map(CtrlPianoEco::getDett)
 									.flatMap(List::stream)
-									.filter(el->el.isUoArea())
+									.filter(el->isVariazioneArea?el.isUoArea():el.isUoRagioneria())
 									.filter(el->el.isNaturaReimpiego())
 									.map(CtrlPianoEcoDett::getImporto)
 									.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
-							if (impSaldoNaturaReimpiegoArea.compareTo(BigDecimal.ZERO)<0 ||
-									impSaldoNaturaReimpiegoArea.abs().compareTo(impSaldoNaturaReimpiego.abs())!=0)
+							if (impSaldoNaturaReimpiegoAreaRagioneria.compareTo(BigDecimal.ZERO)<0 ||
+									impSaldoNaturaReimpiegoAreaRagioneria.abs().compareTo(impSaldoNaturaReimpiego.abs())!=0)
 								throw new ApplicationException("Attenzione! Risultano prelievi"
 										+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiego.abs())
-										+ " su GAE di natura 6 - 'Reimpiego di risorse' che non risultano totalmente coperti da variazioni a favore"
-										+ " di Aree su GAE di natura 6 - 'Reimpiego di risorse' ("
-										+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiegoArea.abs())+").");
+										+ " su GAE di natura 6 - 'Reimpiego di risorse' che non risultano totalmente coperti da variazioni a favore "
+										+ (isVariazioneArea?"di Aree":"della Ragioneria")
+										+ " su GAE di natura 6 - 'Reimpiego di risorse' ("
+										+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiegoAreaRagioneria.abs())+").");
 						}
 					}
 				}
