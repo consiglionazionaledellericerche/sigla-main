@@ -586,7 +586,7 @@ order by sequenza, cd_contributo_ritenuta]]>
 				</staticText>
 				<textField pattern="###0.00;-###0.00" isBlankWhenNull="false">
 					<reportElement key="textField" style="TNR10" x="640" y="13" width="126" height="13" uuid="85292f35-0f50-4ecc-8112-1c874c9a8c2b">
-						<printWhenExpression><![CDATA[new Boolean(!$F{TOT_DETRAZIONI_RID_CUNEO}.equals(new BigDecimal("0")))]]></printWhenExpression>
+						<printWhenExpression><![CDATA[new Boolean(!$F{DETRAZIONI_RID_CUNEO}.equals(new BigDecimal("0")))]]></printWhenExpression>
 					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
