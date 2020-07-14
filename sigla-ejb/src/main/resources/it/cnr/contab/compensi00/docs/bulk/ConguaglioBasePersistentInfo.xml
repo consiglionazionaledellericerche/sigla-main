@@ -610,7 +610,21 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
-			nullable="false" />			
+			nullable="false" />
+		<columnMapping
+				columnName="IM_BONUS_IRPEF_GODUTO"
+				propertyName="im_bonus_irpef_goduto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="IM_BONUS_IRPEF_DOVUTO"
+				propertyName="im_bonus_irpef_dovuto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -795,5 +809,9 @@
 	<persistentProperty
 		name="im_credito_irpef_goduto" />	
 	<persistentProperty
-		name="im_credito_irpef_dovuto" />			
+		name="im_credito_irpef_dovuto" />
+	<persistentProperty
+			name="im_bonus_irpef_goduto" />
+	<persistentProperty
+			name="im_bonus_irpef_dovuto" />
 </SQLPersistentInfo>

@@ -3450,4 +3450,42 @@ TRASPORTO_AEREO"/>
             </column>
         </addColumn>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-divisione_importi_credito_bonus">
+        <addColumn tableName="conguaglio">
+            <column name="im_bonus_irpef_dovuto" defaultValue="0" remarks="Importo bonus DL 66/2014 dovuto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_bonus_irpef_goduto" defaultValue="0" remarks="Importo bonus DL 66/2014 goduto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-tmp_report_generico-importi_bonus">
+        <addColumn tableName="tmp_report_generico">
+            <column name="importo_59" remarks="Importo 60" type="numeric(20, 3)">
+            </column>
+            <column name="importo_60" remarks="Importo 59" type="numeric(20, 3)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-importi_bonus">
+        <update tableName="conguaglio">
+            <column name="im_bonus_irpef_dovuto" valueComputed='im_credito_irpef_dovuto'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-importi_bonus_goduto">
+        <update tableName="conguaglio">
+            <column name="im_bonus_irpef_goduto" valueComputed='im_credito_irpef_goduto'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-azzera-credito">
+        <update tableName="conguaglio">
+            <column name="im_credito_irpef_dovuto" value='0'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-azzera-credito-goduto">
+        <update tableName="conguaglio">
+            <column name="im_credito_irpef_goduto" value='0'/>
+        </update>
+    </changeSet>
 </databaseChangeLog>
