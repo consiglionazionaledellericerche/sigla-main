@@ -957,7 +957,7 @@ BEGIN
             --per ora passo glbNumeroGiorni che è anche il numero gg del cud
 --pipe.send_message('3 ');
 
-            calcolaCreditoIrpefDovuto(aTotRedditoComplessivo,
+            calcolaCreditoIrpefDovuto(glbImponibileNettoIrpef,
                                       glbNumeroGiorni,
                                       aRecCompenso,
                                       aDataMin,

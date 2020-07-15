@@ -5030,7 +5030,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 						"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
 			}
 		}
-		if (isCompensoSoggettoConguaglio(compenso.getTipoTrattamento())){
+		if (isCompensoSoggettoConguaglio(compenso.getTipoTrattamento()) && !compenso.isDaConguaglio() ){
 			controlloRiduzioneCuneo32020(userContext, compenso);
 		}
 		try {
