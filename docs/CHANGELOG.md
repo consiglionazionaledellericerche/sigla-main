@@ -1,3 +1,11 @@
+## Release 6.2.30  -- _July 15, 2020_ 
+**Changes**
+
+>**Fix Conguagli detrazioni.**
+>
+>[36327f396abbf04](https://github.com/consiglionazionaledellericerche/sigla-main/commit/36327f396abbf04) gianfranco.gasparro *July 15, 2020*
+
+
 ## Release 6.2.29  -- _July 15, 2020_ 
 **Changes**
 
