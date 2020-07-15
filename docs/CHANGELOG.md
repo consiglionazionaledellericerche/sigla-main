@@ -1,13 +1,41 @@
+## Release 6.2.29  -- _July 15, 2020_ 
+**Changes**
+
+>**Fix Liquibase tmp_report_generico.**
+>
+>[d4ea054df26cd96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4ea054df26cd96) gianfranco.gasparro *July 15, 2020*
+
+>**Sdoppiato bonus irpef e riduzione cuneo su conguaglio**
+>
+>[2fbdffec2d196b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fbdffec2d196b8) gianfranco.gasparro *July 14, 2020*
+
+>**Sdoppiato bonus irpef e riduzione cuneo su conguaglio**
+>
+>[44ed3629d43f62c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44ed3629d43f62c) gianfranco.gasparro *July 14, 2020*
+
+>**Aggiunte colonne per stampe conguaglio**
+>
+>[2a8d74e7a89535c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2a8d74e7a89535c) gianfranco.gasparro *July 13, 2020*
+
+>**Gestione Riduzione Cuneo per Conguaglio**
+>
+>[6bc51226d0b44c5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bc51226d0b44c5) gianfranco.gasparro *July 13, 2020*
+
+>**Rimodulazione Progetti: visualizzato campo 'Quota utilizzata'**
+>
+>[88903324b8ebe8a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/88903324b8ebe8a) raffaele.pagano *July 08, 2020*
+
+>**Fix Creazione Compenso da Conguaglio**
+>
+>[56d3c3c193efe9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56d3c3c193efe9a) gianfranco.gasparro *July 06, 2020*
+
+
 ## Release 6.2.28  -- _July 07, 2020_ 
 **Changes**
 
 >**Fix Variazioni a favore Ragioneria: corretto controllo in caso di assegnazioni fondi da GAE Natura 6 che in alcuni casi non lo permetteva**
 >
 >[f3eb456ac691fe1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3eb456ac691fe1) raffaele.pagano *July 07, 2020*
-
->**Fix Creazione Compenso da Conguaglio**
->
->[56d3c3c193efe9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56d3c3c193efe9a) gianfranco.gasparro *July 06, 2020*
 
 
 ## Release 6.2.27  -- _July 03, 2020_ 
