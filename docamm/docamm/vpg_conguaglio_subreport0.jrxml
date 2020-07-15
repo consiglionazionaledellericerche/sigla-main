@@ -1451,7 +1451,7 @@ order by tipo,pg_compenso]]>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[(($F{DETRAZIONI_PE_DOVUTO}.add($F{DETRAZIONI_LA_DOVUTO})).add($F{DETRAZIONI_CO_DOVUTO}).add($F{DETRAZIONI_FI_DOVUTO}).add($F{DETRAZIONI_AL_DOVUTO}).add($F{DETRAZIONE_RID_CUNEO_DOVUTO}))
 .subtract(($F{DETRAZIONI_PE_ESTERNO}.add($F{DETRAZIONI_LA_ESTERNO})).add($F{DETRAZIONI_CO_ESTERNO}.add($F{DETRAZIONI_FI_ESTERNO}).add($F{DETRAZIONI_AL_ESTERNO}).add($F{DETRAZIONE_RID_CUNEO_ESTERNO})))
-.subtract(($F{DETRAZIONI_PE_GODUTO}).add($F{DETRAZIONI_LA_GODUTO}).add($F{DETRAZIONI_CO_GODUTO}).add($F{DETRAZIONI_FI_GODUTO}).add($F{DETRAZIONI_AL_GODUTO}).add($F{DETRAZIONE_RID_CUNEO_DOVUTO}))]]></textFieldExpression>
+.subtract(($F{DETRAZIONI_PE_GODUTO}).add($F{DETRAZIONI_LA_GODUTO}).add($F{DETRAZIONI_CO_GODUTO}).add($F{DETRAZIONI_FI_GODUTO}).add($F{DETRAZIONI_AL_GODUTO}).add($F{DETRAZIONE_RID_CUNEO_GODUTO}))]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
 					<reportElement key="textField" style="TNRG9" x="180" y="14" width="121" height="11" uuid="ccb4fbf7-ec20-4b5c-a7d7-19e2d4c0a0d8"/>
