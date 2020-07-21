@@ -23,17 +23,53 @@
 	SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 %>
 <div class="Group">	
-	<table class="Panel">
+	<table class="Panel ">
 		<tr>
-			<td><%JSPUtils.button(out, "img/import24.gif", "Carica Fattura", "if (disableDblClick()) javascript:submitForm('doCaricaFattura')", bp.getParentRoot().isBootstrap());%></td>
-			<td><%JSPUtils.button(out, "img/export24.gif", "Controlla Fatture Ricevute", "if (disableDblClick()) javascript:submitForm('doControllaFatture')", bp.getParentRoot().isBootstrap());%></td>
-			<td><%JSPUtils.button(out, "img/export24.gif", "Allinea Notifiche di Esito", "if (disableDblClick()) javascript:submitForm('doAllineaNotifiche')", bp.getParentRoot().isBootstrap());%></td>
-			<td><%JSPUtils.button(out, "img/import24.gif", "Scan PEC", "if (disableDblClick()) javascript:submitForm('doScaricaFatture')", bp.getParentRoot().isBootstrap());%></td>
+			<td>
+                <%JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/import24.gif",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-external-link faa-shake" : "img/import24.gif",
+                        "Carica Fattura Elettronica",
+                        "if (disableDblClick()) submitForm('doCaricaFattura')",
+                        "btn-primary btn-block btn-title faa-parent animated-hover",
+                        true,
+                        bp.getParentRoot().isBootstrap());%>
+			</td>
+			<td>
+                <%JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-check" : "img/export24.gif",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-check" : "img/export24.gif",
+                        "Controlla Fatture Ricevute",
+                        "if (disableDblClick()) submitForm('doControllaFatture')",
+                        "btn-success btn-block btn-title",
+                        true,
+                        bp.getParentRoot().isBootstrap());%>
+			</td>
+			<td>
+                <%JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-check" : "img/export24.gif",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-check" : "img/export24.gif",
+                        "Allinea Notifiche di Esito",
+                        "if (disableDblClick()) submitForm('doAllineaNotifiche')",
+                        "btn-warning btn-block btn-title",
+                        true,
+                        bp.getParentRoot().isBootstrap());%>
+			</td>
+			<td>
+                <%JSPUtils.button(out,
+                        bp.getParentRoot().isBootstrap() ? "fa fa-refresh" : "img/export24.gif",
+                        bp.getParentRoot().isBootstrap() ? "fa fa-refresh" : "img/export24.gif",
+                        "Scarica Fatture dalla PEC",
+                        "if (disableDblClick()) submitForm('doScaricaFatture')",
+                        "btn-danger btn-block btn-title",
+                        true,
+                        bp.getParentRoot().isBootstrap());%>
+			</td>
 		</tr>				
 	</table>
 </div>
-<div class="Group">	
-	<table class="Panel">
+<div class="Group mt-2">
+	<table class="Panel card p-2">
 	<%bp.writeForm(out, "default"); %>	
 	</table>
 </div>
