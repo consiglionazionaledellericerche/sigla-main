@@ -234,7 +234,10 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						}
 					}
 				}
-				if (documentoEleTrasmissioneBulk.getPrestatore() == null) {
+				if (!Optional.ofNullable(documentoEleTrasmissioneBulk)
+						.flatMap(documentoEleTrasmissioneBulk1 -> Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatore()))
+						.flatMap(terzoBulk -> Optional.ofNullable(terzoBulk.getCd_terzo()))
+						.isPresent()) {
 					List<AnagraficoBulk> anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
 							documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),
 							documentoEleTrasmissioneBulk.getPrestatoreCodice());
