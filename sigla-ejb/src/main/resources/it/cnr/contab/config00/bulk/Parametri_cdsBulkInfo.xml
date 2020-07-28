@@ -254,6 +254,16 @@
 		property="fl_limite_residui_impropri"
 		label="Applicazione Limite Spesa Residui Impropri"
 		inputType="CHECKBOX" />
+	<fieldProperty
+		name="abil_progetto_strorg"
+		property="abil_progetto_strorg"
+		keysProperty="abilProgettiKeys"
+		label="Visibilità progetti per:"
+		inputType="SELECT"
+		nullable="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
 
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="centro_spesa" />
@@ -287,6 +297,7 @@
 	<formFieldProperty name="fl_riaccertamento" />		
 	<formFieldProperty name="fl_riobbligazione" />
 	<formFieldProperty name="fl_limite_residui_impropri" />
+	<formFieldProperty name="abil_progetto_strorg" />
 
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
@@ -323,6 +334,7 @@
 	<columnFieldProperty name="fl_riaccertamento" />		
 	<columnFieldProperty name="fl_riobbligazione" />
 	<columnFieldProperty name="fl_limite_residui_impropri" />
+	<columnFieldProperty name="abil_progetto_strorg" />
 
 	<findFieldProperty name="cd_unita_organizzativa" />
 	<findFieldProperty name="cd_dipartimento" />
@@ -354,4 +366,6 @@
 	<findFieldProperty name="fl_blocco_iban" />
 	<findFieldProperty name="fl_kit_firma_digitale" />
 	<findFieldProperty name="fl_limite_residui_impropri" />
+	<findFieldProperty name="abil_progetto_strorg" />
+
 </bulkInfo>

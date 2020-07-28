@@ -3488,4 +3488,10 @@ TRASPORTO_AEREO"/>
             <column name="im_credito_irpef_goduto" value='0'/>
         </update>
     </changeSet>
+    <changeSet id="add-column-abil_progetto_strorg-on-cds" author="marco.spasiano">
+        <addColumn tableName="parametri_cds">
+            <column name="abil_progetto_strorg" type="VARCHAR(3)"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

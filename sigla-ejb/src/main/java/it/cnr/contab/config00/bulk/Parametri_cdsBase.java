@@ -67,6 +67,9 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 
 	private java.lang.Boolean fl_limite_residui_impropri;
 
+	// ABIL_PROGETTO_STRORG VARCHAR2(3)
+	private java.lang.String abil_progetto_strorg;
+
 	public Parametri_cdsBase() {
 		super();
 	}
@@ -319,5 +322,13 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 
 	public void setFl_limite_residui_impropri(Boolean fl_limite_residui_impropri) {
 		this.fl_limite_residui_impropri = fl_limite_residui_impropri;
+	}
+
+	public String getAbil_progetto_strorg() {
+		return abil_progetto_strorg;
+	}
+
+	public void setAbil_progetto_strorg(String abil_progetto_strorg) {
+		this.abil_progetto_strorg = abil_progetto_strorg;
 	}
 }
