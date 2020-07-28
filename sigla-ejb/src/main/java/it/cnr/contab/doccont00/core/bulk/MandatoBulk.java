@@ -859,6 +859,16 @@ public class MandatoBulk extends MandatoBase implements IManRevBulk, IDefferUpda
      */
     public void validate() throws ValidationException {
         super.validate();
+        if (!Optional.ofNullable(getIm_netto())
+                .filter(imnetto -> imnetto.compareTo(BigDecimal.ZERO) >= 0)
+                .isPresent()) {
+            throw new ValidationException("L'importo Netto del Manndato è oggligatorio e non può essere negativo.");
+        }
+        if (!Optional.ofNullable(getIm_ritenute())
+                .filter(imnetto -> imnetto.compareTo(BigDecimal.ZERO) >= 0)
+                .isPresent()) {
+            throw new ValidationException("L'importo delle rtitenute non può essere negativo.");
+        }
 
         // controllo su campo DATA EMISSIONE
         if (getDt_emissione() == null)
