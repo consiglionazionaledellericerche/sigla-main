@@ -31,7 +31,7 @@
 	</parameter>
 	<parameter name="Pg_compenso" class="java.lang.Integer" isForPrompting="false">
 		<parameterDescription><![CDATA[Non valorizzare al rilascio]]></parameterDescription>
-		<defaultValueExpression><![CDATA[35]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="Terzo" class="java.lang.String" isForPrompting="false">
 		<parameterDescription><![CDATA[Attenzione lasciare %]]></parameterDescription>
