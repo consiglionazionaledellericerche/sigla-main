@@ -1,3 +1,47 @@
+## Release 6.2.34  -- _August 03, 2020_ 
+**Changes**
+
+>**Eliminata modifica Ciro. Andava in errore il salvataggio di un nuovo ID inventario in tabelle di riferimento. Svuotava la condizione sul responsabile della uo e andava in errore "La ricerca ha fornito più di un risultato per il campo".**
+>
+>[535a63d0117beb1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/535a63d0117beb1) gianfranco.gasparro *August 03, 2020*
+
+>**Variazioni Progetti; consentito il passaggio di fondi da progetti attivi di Aree alla Ragioneria anche se il progetto varia**
+>
+>[3e7b37a48b90d5b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3e7b37a48b90d5b) raffaele.pagano *August 03, 2020*
+
+
+## Release 6.2.33  -- _July 28, 2020_ 
+**Changes**
+
+>**Aggiunto parametro sulla visibilità dei progetti sui parametri CdS**
+>
+>[9017082c5217468](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9017082c5217468) mspasiano *July 28, 2020*
+
+>**Aggiunto blocco sull'emissione dei Mandati con netto o ritenute negative**
+>
+>[dd874b47956f502](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd874b47956f502) mspasiano *July 28, 2020*
+
+
+## Release 6.2.32  -- _July 24, 2020_ 
+**Changes**
+
+>**FIX NullPointerException on selectProgettoRimodulatoForSearchByClause**
+>
+>[9df075b5b4c1210](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9df075b5b4c1210) mspasiano *July 24, 2020*
+
+
+## Release 6.2.31  -- _July 22, 2020_ 
+**Changes**
+
+>**FIX completamento fattura**
+>
+>[b24df562cc22ebd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b24df562cc22ebd) mspasiano *July 22, 2020*
+
+>**Add Identificativo SDI sul caricamento manuale della Fattura elettronica**
+>
+>[b9dd36f5cee9f6e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b9dd36f5cee9f6e) mspasiano *July 21, 2020*
+
+
 ## Release 6.2.30  -- _July 15, 2020_ 
 **Changes**
 
