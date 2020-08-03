@@ -2930,7 +2930,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		
 					/**
 					 * 31. se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto 
-					 * 	  (regola non valida per progetti di Aree e CdrPersonale)
+					 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
 					 *     
 					 *     N.B.: la sottrazione dalla voce speciale è consentita purchè sia compensata da trasferimenti a GAE di natura 6
 					 *     controllo effettuato al punto 90
@@ -2959,18 +2959,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				/**
 				 * 40. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stessa area
+				 *    (regola non valida per Trasferimenti a Ragioneria)
 				 */
-				listCtrlPianoEco.stream()
-					.filter(el->!el.isScaduto(dataChiusura))
-					.filter(el->el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)>0)
-					.filter(el->el.getImpSpesaNegativiArea().compareTo(el.getImpSpesaPositiviArea())>0)
-					.findFirst().ifPresent(el->{
-					throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dall'area fondi dal progetto "+
-							el.getProgetto().getCd_progetto()+" (" + 
-							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiArea()) +
-							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
-							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");});
-		
+				if (!isVariazioneRagioneria) {
+					listCtrlPianoEco.stream()
+							.filter(el -> !el.isScaduto(dataChiusura))
+							.filter(el -> el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO) > 0)
+							.filter(el -> el.getImpSpesaNegativiArea().compareTo(el.getImpSpesaPositiviArea()) > 0)
+							.findFirst().ifPresent(el -> {
+						throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dall'area fondi dal progetto " +
+								el.getProgetto().getCd_progetto() + " (" +
+								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiArea()) +
+								") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area (" +
+								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");
+					});
+				}
+
 				/**
 				 * 50. se un progetto è aperto e vengono sottratte somme al CDR Personale queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stesso CDR
