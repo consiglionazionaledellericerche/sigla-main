@@ -3498,4 +3498,4 @@ TRASPORTO_AEREO"/>
             <column name="dt_ini_val_gruppo_iva" type="${date.type}"></column>
         </addColumn>
     </changeSet>
-/databaseChangeLog>
+</databaseChangeLog>
