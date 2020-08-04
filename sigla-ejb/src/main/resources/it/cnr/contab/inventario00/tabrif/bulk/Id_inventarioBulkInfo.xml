@@ -62,6 +62,14 @@
 		inputSize="80"
 		inputType="ROTEXT"
 		label="Ds Unità Reponsabile" />
+	<fieldProperty
+			name="nr_inventario_iniziale"
+			property="nr_inventario_iniziale"
+			inputType="TEXT"
+			maxLength="10"
+			inputSize="10"
+			nullable="false"
+			label="Nr. Inventario iniziale" />
 
 	<formFieldProperty
 		name="pg_inventario" />
@@ -69,6 +77,8 @@
 		name="ds_inventario" />
 	<formFieldProperty
 		name="cd_inventario_origine" />
+	<formFieldProperty
+			name="nr_inventario_iniziale" />
 	<formFieldProperty
 		name="cd_uo_resp" />
 	<formFieldProperty

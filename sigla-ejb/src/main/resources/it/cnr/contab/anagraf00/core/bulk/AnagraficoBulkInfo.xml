@@ -420,10 +420,8 @@
 		property="ti_entita_giuridica"
 		readonlyPropertyOnEdit="dipendente"
 		keysProperty="ti_entita_giuridicaKeys"
-		label="Tipo entita' giuridica" 
-		inputType="RADIOGROUP"
-		enabledOnSearch="true"
-		layout="HORIZONTAL" />
+		label="Tipo entita' giuridica"
+		inputType="SELECT" />
 	<fieldProperty
 		name="ti_italiano_estero"
 		property="ti_italiano_estero"

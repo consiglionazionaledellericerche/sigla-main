@@ -68,6 +68,7 @@ public class AnagraficoBulk extends AnagraficoBase {
 
 	public final static String ALTRO         = "A";
 	public final static String DITTA_INDIVID = "D";
+	public final static String GRUPPO_IVA    = "G";
 	public final static String DIVERSI       = "D";
 	public final static String ENTE_PUBBLICO = "P";
 	public final static String FEMMINA       = "F";
@@ -123,6 +124,7 @@ public class AnagraficoBulk extends AnagraficoBase {
 		
 		ENTITA_GIURIDICA = new it.cnr.jada.util.OrderedHashtable();
 		ENTITA_GIURIDICA.put(ENTE_PUBBLICO,"Ente pubblico");
+		ENTITA_GIURIDICA.put(GRUPPO_IVA,"Gruppo IVA");
 		ENTITA_GIURIDICA.put(ALTRO,"Altro");
 		
 		ENTITA_FISICA = new it.cnr.jada.util.OrderedHashtable();
@@ -540,6 +542,9 @@ public boolean isDipendente() {
 	 * @return boolean
 	 */
 
+	public boolean isGruppoIVA() {
+		return isPersonaGiuridica() && GRUPPO_IVA.equals(getTi_entita_giuridica());
+	}
 	public boolean isEntePubblico() {
 		return isPersonaGiuridica() && ENTE_PUBBLICO.equals(getTi_entita_giuridica());
 	}

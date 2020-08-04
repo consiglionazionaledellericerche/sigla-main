@@ -3493,5 +3493,9 @@ TRASPORTO_AEREO"/>
             <column name="abil_progetto_strorg" type="VARCHAR(3)"></column>
         </addColumn>
     </changeSet>
-
-</databaseChangeLog>
+    <changeSet id="add-column-dt_ini_val_gr_iva-on-anagrafico" author="gianfranco.gasparro">
+        <addColumn tableName="anagrafico">
+            <column name="dt_ini_val_gruppo_iva" type="${date.type}"></column>
+        </addColumn>
+    </changeSet>
+/databaseChangeLog>
