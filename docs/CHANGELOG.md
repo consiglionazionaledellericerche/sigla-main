@@ -1,3 +1,38 @@
+## Release 6.2.35  -- _August 31, 2020_ 
+**Changes**
+
+>**Fix Gestione Gruppi IVA**
+>
+>[e062facfc504cf4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e062facfc504cf4) gianfranco.gasparro *August 31, 2020*
+
+>**Gestione Gruppi IVA**
+>
+>[c880d27101fdcfb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c880d27101fdcfb) gianfranco.gasparro *August 31, 2020*
+
+>**Add infinispan configuration**
+>
+>[2426b25dcc65f6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2426b25dcc65f6f) mspasiano *August 31, 2020*
+
+>**Fix**
+>
+>[db31df493e33124](https://github.com/consiglionazionaledellericerche/sigla-main/commit/db31df493e33124) gianfranco.gasparro *August 04, 2020*
+
+>**Fix**
+>
+>[217751fa8db09ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/217751fa8db09ab) gianfranco.gasparro *August 04, 2020*
+
+>**Aggiunto campo numero inventario iniziale**
+>
+>[e16ddc472f6ce3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e16ddc472f6ce3d) gianfranco.gasparro *August 04, 2020*
+
+
+### Jira changelog-5 
+
+>**Update db.changelog-5.0.0.xml**
+>
+>[2bba35c767f06d3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bba35c767f06d3) PAGANO RAFFAELE *August 04, 2020*
+
+
 ## Release 6.2.34  -- _August 03, 2020_ 
 **Changes**
 
