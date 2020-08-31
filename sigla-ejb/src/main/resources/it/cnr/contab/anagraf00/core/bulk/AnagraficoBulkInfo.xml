@@ -237,11 +237,20 @@
 		formatName="date_short"
 		/>
 	<fieldProperty
+			name="dtIniValGruppoIva"
+			property="dtIniValGruppoIva"
+			label="Data Inizio Validit&#224; gruppo IVA"
+			inputType="TEXT"
+			inputSize="8"
+			formatName="date_short"
+	/>
+	<fieldProperty
 		name="dt_canc"
 		property="dt_canc"
-		readonlyPropertyOnEdit="dipendente"
-		label="dt_canc"
+		label="Data Fine Validit&#224; gruppo IVA"
 		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
 		/>
 	<fieldProperty
 		name="dt_fine_rapporto"
@@ -731,6 +740,18 @@
 	<columnFieldProperty
 		name="find_tipologia_istat"
 		label="Tipologia Istat"/>  -->
+	<form name="searchtool_completo">
+		<formFieldProperty
+				name="cd_anag"/>
+		<formFieldProperty
+				name="ragione_sociale"/>
+		<formFieldProperty
+				name="cognome"/>
+		<formFieldProperty
+				name="nome"/>
+		<formFieldProperty
+				name="codice_fiscale"/>
+	</form>
 	<form name="searchtool">
 		<formFieldProperty
 			name="cd_anag"/> 
@@ -811,6 +832,9 @@
 	<formFieldProperty
 		name="dt_canc"
 		/>
+	<formFieldProperty
+			name="dtIniValGruppoIva"
+	/>
 	<formFieldProperty
 		name="dt_fine_rapporto"
 		/>

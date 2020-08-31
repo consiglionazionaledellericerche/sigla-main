@@ -36,6 +36,7 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.FillException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.*;
@@ -119,19 +120,30 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		}
 	}
 	public Forward doBringBackCRUDPrestatore(ActionContext context, DocumentoEleTestataBulk bulk, TerzoBulk terzo) {
+		CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 		if (terzo != null) {
 			if (terzo.getAnagrafico().getPartita_iva() == null)
 				throw new MessageToUser("Terzo non valido! Partita IVA obbligatoria!");						
-			if (terzo.getAnagrafico().getCodice_fiscale() == null)
+			if (terzo.getAnagrafico().getCodice_fiscale() == null && !terzo.getAnagrafico().isGruppoIVA())
 				throw new MessageToUser("Terzo non valido! Codice Fiscale obbligatorio!");
 			if (bulk.getDocumentoEleTrasmissione().getPrestatoreCodicefiscale() != null) {
 				if (!bulk.getDocumentoEleTrasmissione().getPrestatoreCodicefiscale().equals(terzo.getAnagrafico().getCodice_fiscale()))
 					throw new MessageToUser("Terzo non valido! Codice Fiscale non congruente!");				
 			}
 			if (bulk.getDocumentoEleTrasmissione().getPrestatoreCodice() != null) {
-				if (!bulk.getDocumentoEleTrasmissione().getPrestatoreCodice().equals(terzo.getAnagrafico().getPartita_iva()))
-					throw new MessageToUser("Terzo non valido! Partita IVA non congruente!");		
-			}			
+				if (!bulk.getDocumentoEleTrasmissione().getPrestatoreCodice().equals(terzo.getAnagrafico().getPartita_iva())) {
+					try {
+						if (bulk.getDocumentoEleTrasmissione().getPrestatoreCodicefiscale() == null ||
+							!fatturaPassivaElettronicaBP.isPartitaIvaGruppoIva(context.getUserContext(), terzo.getAnagrafico(), bulk.getDocumentoEleTrasmissione().getPrestatoreCodice(), bulk.getDataDocumento())){
+							throw new MessageToUser("Terzo non valido! Partita IVA non congruente!");
+						}
+					} catch (BusinessProcessException e) {
+						return handleException(context,e);
+					} catch (ValidationException e) {
+						return handleException(context,e);
+					}
+				}
+			}
 			bulk.getDocumentoEleTrasmissione().setPrestatore(terzo);
 			bulk.getDocumentoEleTrasmissione().setPrestatoreAnag(terzo.getAnagrafico());			
 		}

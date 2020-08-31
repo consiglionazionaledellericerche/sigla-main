@@ -2230,7 +2230,26 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 fattura_passiva.setCognome(fornitoreTrovato.getAnagrafico().getCognome());
                 fattura_passiva.setRagione_sociale(fornitoreTrovato.getAnagrafico().getRagione_sociale());
                 fattura_passiva.setCodice_fiscale(fornitoreTrovato.getAnagrafico().getCodice_fiscale());
-                fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                if (fattura_passiva.getPartita_iva()!= null){
+                    it.cnr.contab.anagraf00.core.bulk.AnagraficoHome home = (it.cnr.contab.anagraf00.core.bulk.AnagraficoHome) getHome(uc, AnagraficoBulk.class);
+                    Collection coll = home.findGruppiIvaAssociati(fornitoreTrovato.getAnagrafico());
+                    Boolean trovato = false;
+                    if (coll != null && !coll.isEmpty()){
+                        for (java.util.Iterator i = coll.iterator(); i.hasNext(); ) {
+                            AssGruppoIvaAnagBulk assGruppoIvaAnagBulk = (AssGruppoIvaAnagBulk) i.next();
+                            AnagraficoBulk anagraficoBulk = (AnagraficoBulk)home.findByPrimaryKey(assGruppoIvaAnagBulk.getAnagraficoGruppoIva());
+                            if (anagraficoBulk != null && anagraficoBulk.isGruppoIVA() && fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDtIniValGruppoIva()) > 0 &&
+                                    fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDt_canc()) < 0 && anagraficoBulk.getPartita_iva().compareTo(fattura_passiva.getPartita_iva()) == 0){
+                                trovato = true;
+                            }
+                        }
+                    }
+                    if (!trovato){
+                        fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                    }
+                } else {
+                    fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                }
 
                 it.cnr.contab.anagraf00.core.bulk.TerzoHome home = (it.cnr.contab.anagraf00.core.bulk.TerzoHome) getHome(uc, fornitoreTrovato);
                 try {

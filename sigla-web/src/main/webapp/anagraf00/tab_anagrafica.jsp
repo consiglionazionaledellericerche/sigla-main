@@ -47,6 +47,14 @@
 			<td><%bp.getController().writeFormInput(out,"default","ti_entita_giuridica",false,null,"onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
 		</tr>
 	<%} %>
+		<%if (anagrafico.isGruppoIVA()) { %>
+			<tr>
+				<td><% bp.getController().writeFormLabel(out,"dtIniValGruppoIva");%>
+				<% bp.getController().writeFormInput(out,null,"dtIniValGruppoIva",false,null,"");%>
+				<% bp.getController().writeFormLabel(out,"dt_canc");%>
+				<% bp.getController().writeFormInput(out,null,"dt_canc",false,null,"");%></td>
+			</tr>
+		<%} %>
 <%if (!anagrafico.isStrutturaCNR()) { %>
 		<tr>
 			<td>
@@ -75,7 +83,7 @@
 				<% bp.getController().writeFormLabel(out,"fl_cervellone");%>
 			</td>	
 		</tr>	
-		<%if (anagrafico.isFl_cervellone().booleanValue()) { %>	
+		<%if (anagrafico.isFl_cervellone().booleanValue()) { %>
 			</table>
 			<table>		
 			<tr>

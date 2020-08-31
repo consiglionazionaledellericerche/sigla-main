@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.bp;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -30,6 +31,7 @@ import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.jada.UserContext;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -488,6 +490,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	    	nbp.setModel(context, fatturaPassivaBulk);
 
 	    	action.doCalcolaTotaleFatturaFornitoreInEur(context);
+			fatturaPassivaBulk.setPartita_iva(documentoEleTestata.getDocumentoEleTrasmissione().getPrestatoreCodice());
 	    	action.doBringBackSearchFornitore(context, fatturaPassivaBulk, documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());
 
 	    	fatturaPassivaBulk = (Fattura_passivaBulk) nbp.getModel();
@@ -631,6 +634,17 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.equalsIgnoreCase("D:sigla_fatture_attachment:document"))
 			return true;
 		return super.excludeChild(storageObject);
+	}
+
+	public Boolean isPartitaIvaGruppoIva(UserContext usercontext, AnagraficoBulk anagrafico, String partitaIva, Timestamp dataDocumento) throws BusinessProcessException, ValidationException {
+		try {
+			return ((FatturaElettronicaPassivaComponentSession)createComponentSession()).
+					isPartitaIvaGruppoIva(usercontext, anagrafico, partitaIva, dataDocumento);
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
 	}
 
 	@Override

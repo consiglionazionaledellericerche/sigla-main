@@ -2100,8 +2100,17 @@ public class FatturaAttivaSingolaComponent
                 fatturaAttiva.setCognome(terzo.getAnagrafico().getCognome());
                 fatturaAttiva.setRagione_sociale(terzo.getAnagrafico().getRagione_sociale());
                 fatturaAttiva.setCodice_fiscale(terzo.getAnagrafico().getCodice_fiscale());
-                fatturaAttiva.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
                 AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(aUC, AnagraficoBulk.class);
+                if (!terzo.getAnagrafico().isGruppoIVA()){
+                    AnagraficoBulk ana = anagraficoHome.findGruppoIva(terzo.getAnagrafico(), fatturaAttiva.getDt_registrazione());
+                    if (ana != null){
+                        fatturaAttiva.setPartita_iva(ana.getPartita_iva());
+                    } else {
+                        fatturaAttiva.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
+                    }
+                } else {
+                    fatturaAttiva.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
+                }
                 fatturaAttiva.getCliente().getAnagrafico().setDichiarazioni_intento(new BulkList(anagraficoHome.findDichiarazioni_intentoValide(terzo.getAnagrafico())));
 
                 impostaDatiPerFatturazioneElettronica(aUC, fatturaAttiva, terzo);

@@ -35,6 +35,7 @@ public class AnagraficoBulk extends AnagraficoBase {
 	private it.cnr.jada.bulk.BulkList carichi_familiari_anag = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList dichiarazioni_intento = new it.cnr.jada.bulk.BulkList();
 	//private it.cnr.jada.bulk.BulkList terzi = new it.cnr.jada.bulk.BulkList();
+	private it.cnr.jada.bulk.BulkList assGruppoIva = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList rapporti = new it.cnr.jada.bulk.BulkList();
 	private it.cnr.jada.bulk.BulkList pagamenti_esterni = new BulkList();	
 	private it.cnr.jada.bulk.BulkList associatiStudio = new it.cnr.jada.bulk.BulkList();
@@ -201,6 +202,15 @@ public AnagraficoBulk(java.lang.Integer cd_anag) {
 	 * @see removeFromRapporti
 	 */
 
+	public int addToAssGruppoIva(AssGruppoIvaAnagBulk assGruppoIvaAnagBulk) {
+		assGruppoIva.add(assGruppoIvaAnagBulk);
+		if (isGruppoIVA()){
+			assGruppoIvaAnagBulk.setAnagraficoGruppoIva(this);
+		} else {
+			assGruppoIvaAnagBulk.setAnagrafico(this);
+		}
+		return assGruppoIva.size()-1;
+	}
 	public int addToRapporti(RapportoBulk rapporto) {
 		rapporti.add(rapporto);
 		rapporto.setAnagrafico(this);
@@ -259,6 +269,7 @@ public it.cnr.contab.anagraf00.tabrif.bulk.Codici_attivita_inpsBulk getAttivitaI
 														carichi_familiari_anag,
 														dichiarazioni_intento,
 														rapporti,
+				                                        assGruppoIva,
 														pagamenti_esterni,
 														associatiStudio
 													   };
@@ -428,6 +439,9 @@ public java.lang.Long getPg_nazione_nazionalita() {
 	 * @see setRapporti
 	 */
 
+	public it.cnr.jada.bulk.BulkList getAssGruppoIva() {
+		return assGruppoIva;
+	}
 	public it.cnr.jada.bulk.BulkList getRapporti() {
 		return rapporti;
 	}
@@ -673,6 +687,11 @@ public boolean isROcd_attivita_inps() {
 		rpp.setInquadramenti(null);
 		return rpp;
 	}
+
+	public AssGruppoIvaAnagBulk removeFromAssGruppoIva(int index) {
+		AssGruppoIvaAnagBulk ass = (AssGruppoIvaAnagBulk) assGruppoIva.remove(index);
+		return ass;
+	}
 	/**
 	 * Elimina l'<code>Pagamento_esternoBulk</code> alla posizione index dalla lista
 	 * pagamenti_esterni.
@@ -857,6 +876,11 @@ public void setPg_nazione_fiscale(java.lang.Long pg_nazione_fiscale) {
 public void setPg_nazione_nazionalita(java.lang.Long pg_nazione_nazionalita) {
 	this.getNazionalita().setPg_nazione(pg_nazione_nazionalita);
 }
+
+	public void setAssGruppoIva(BulkList anagraficoGruppiIvaCollegati) {
+		this.assGruppoIva = anagraficoGruppiIvaCollegati;
+	}
+
 	/**
 	 * Imposta l'elenco dei rapporti.
 	 *

@@ -17,12 +17,7 @@
 
 package it.cnr.contab.docamm00.comp;
 
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoHome;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
@@ -58,11 +53,14 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
@@ -76,10 +74,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -157,8 +152,30 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 		return sql;
 	}
-	
-    @SuppressWarnings("unchecked")
+
+	public Boolean isPartitaIvaGruppoIva(UserContext usercontext, AnagraficoBulk anagrafico, String partitaIva, Timestamp dataDocumento) throws ComponentException{
+		AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(usercontext,AnagraficoBulk.class);
+		try {
+			Collection coll = anagraficoHome.findGruppiIvaAssociati(anagrafico);
+			if (!coll.isEmpty()){
+				for (Iterator d = coll.iterator(); d.hasNext(); ) {
+					AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
+					AnagraficoBulk anagraficoGruppoIva = assColl.getAnagraficoGruppoIva();
+					anagraficoGruppoIva = (AnagraficoBulk)anagraficoHome.findByPrimaryKey(usercontext, anagraficoGruppoIva);
+					if (anagraficoGruppoIva.getPartita_iva().compareTo(partitaIva) == 0 && dataDocumento.compareTo(anagraficoGruppoIva.getDt_canc()) <= 0  && dataDocumento.compareTo(anagraficoGruppoIva.getDtIniValGruppoIva()) >= 0 ){
+						return true;
+					}
+				}
+			}
+		} catch (IntrospectionException e) {
+			throw handleException(e);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
 	public void completaDocumento(UserContext usercontext, DocumentoEleTrasmissioneBulk documentoEleTrasmissioneBulk) throws ComponentException{
         try{
         	AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(usercontext,AnagraficoBulk.class);
@@ -238,12 +255,14 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						.flatMap(documentoEleTrasmissioneBulk1 -> Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatore()))
 						.flatMap(terzoBulk -> Optional.ofNullable(terzoBulk.getCd_terzo()))
 						.isPresent()) {
-					List<AnagraficoBulk> anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
+					List<AnagraficoBulk> anagraficoBulks = null;
+					anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
 							documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),
 							documentoEleTrasmissioneBulk.getPrestatoreCodice());
 					if (anagraficoBulks != null && !anagraficoBulks.isEmpty()) {
 						if (anagraficoBulks.size() == 1) {
-							documentoEleTrasmissioneBulk.setPrestatoreAnag(anagraficoBulks.get(0));
+							AnagraficoBulk anag = anagraficoBulks.get(0);
+							documentoEleTrasmissioneBulk.setPrestatoreAnag(anag);
 							List<TerzoBulk> terzi = terzoHome.findTerzi(anagraficoBulks.get(0));
 							if (terzi != null && !terzi.isEmpty() && terzi.size() == 1) {
 								documentoEleTrasmissioneBulk.setPrestatore(terzi.get(0));
