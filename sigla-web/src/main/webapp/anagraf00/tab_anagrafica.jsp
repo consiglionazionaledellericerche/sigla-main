@@ -19,7 +19,7 @@
 <legend class="GroupLabel card-header h3 text-primary">Tipologia</legend>
 	<table class="card-block">
 		<tr>
-			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,null,"onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
+			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,null,"onChange=\"submitForm('doCambiaTi_entita')\"");%></td>
 			 	<td>
 					<% if (anagrafico.getDt_fine_rapporto()!=null) { %>
 						<span class="FormLabel" style="color:red">
