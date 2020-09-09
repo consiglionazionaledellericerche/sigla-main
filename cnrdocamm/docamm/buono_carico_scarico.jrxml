@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
 	<property name="ireport.zoom" value="2.1435888100000016"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2"/>
+	<property name="ireport.y" value="35"/>
 	<style name="TNRGC14" fontName="Times New Roman" fontSize="14" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
 	<style name="TNRC10" fontName="Times New Roman" isItalic="true" pdfFontName="Times-Italic"/>
 	<style name="TNRGC12" fontName="Times New Roman" fontSize="12" isBold="true" isItalic="true" pdfFontName="Times-BoldItalic"/>
@@ -14,22 +14,22 @@
 	<style name="TNR9" fontName="Times New Roman" fontSize="9" pdfFontName="Times-Roman"/>
 	<style name="TNRG9" fontName="Times New Roman" fontSize="9" isBold="true" pdfFontName="Times-Bold"/>
 	<parameter name="esercizio" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[2019]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[2018]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_inventario" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[347]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[277]]></defaultValueExpression>
 	</parameter>
 	<parameter name="ti_documento" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["S"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pg_buono_c_s" class="java.lang.Integer" isForPrompting="false">
-		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[21]]></defaultValueExpression>
 	</parameter>
 	<parameter name="DIR_IMAGE" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
+		<![CDATA[SELECT DISTINCT
 TESTATA.PG_INVENTARIO,
 TESTATA.TI_DOCUMENTO,
 TESTATA.ESERCIZIO,
@@ -43,6 +43,7 @@ DETTAGLIO.PROGRESSIVO,
 DETTAGLIO.INTERVALLO,
 DETTAGLIO.QUANTITA,
 DETTAGLIO.VALORE_UNITARIO,
+(DETTAGLIO.QUANTITA * DETTAGLIO.VALORE_UNITARIO) VALORE_DETTAGLIO_BENE,
 INVENTARIO.DS_BENE,
 INVENTARIO.CD_UNITA_ORGANIZZATIVA,
 UNITA_ORGANIZZATIVA.DS_UNITA_ORGANIZZATIVA,
@@ -105,6 +106,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 	<field name="INTERVALLO" class="java.lang.String"/>
 	<field name="QUANTITA" class="java.math.BigDecimal"/>
 	<field name="VALORE_UNITARIO" class="java.math.BigDecimal"/>
+	<field name="VALORE_DETTAGLIO_BENE" class="java.math.BigDecimal"/>
 	<field name="DS_BENE" class="java.lang.String"/>
 	<field name="CD_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
 	<field name="DS_UNITA_ORGANIZZATIVA" class="java.lang.String"/>
@@ -122,6 +124,9 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 	<field name="FL_VENDITA" class="java.lang.String"/>
 	<variable name="TOTALE" class="java.math.BigDecimal" resetType="Group" resetGroup="TESTATA" calculation="Sum">
 		<variableExpression><![CDATA[$F{VALORE_UNITARIO}.multiply($F{QUANTITA})]]></variableExpression>
+	</variable>
+	<variable name="TOTALE_ALIENAZIONE" class="java.math.BigDecimal" resetType="Group" resetGroup="TESTATA" calculation="Sum">
+		<variableExpression><![CDATA[$F{VALORE_ALIENAZIONE}.multiply($F{QUANTITA})]]></variableExpression>
 	</variable>
 	<group name="TESTATA">
 		<groupExpression><![CDATA[$F{PG_INVENTARIO}]]></groupExpression>
@@ -178,7 +183,9 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					<text><![CDATA[CODICE BENE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-4" style="TNRG10" x="678" y="3" width="59" height="26" uuid="fe8b1d77-523e-4703-b1bb-3943da06e746"/>
+					<reportElement key="staticText-4" style="TNRG10" x="741" y="3" width="59" height="26" uuid="fe8b1d77-523e-4703-b1bb-3943da06e746">
+						<printWhenExpression><![CDATA[$F{FL_VENDITA}.equals( "Y") || !$F{TI_DOCUMENTO}.equals("C")]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -249,7 +256,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					<text><![CDATA[ETICHETTA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement key="staticText-4" style="TNRG10" x="738" y="3" width="63" height="26" uuid="ab09b524-dfff-426d-bd0e-4a2f6b6c58e1">
+					<reportElement key="staticText-4" style="TNRG10" x="678" y="3" width="63" height="26" uuid="ab09b524-dfff-426d-bd0e-4a2f6b6c58e1">
 						<printWhenExpression><![CDATA[$F{FL_VENDITA}.equals( "Y")]]></printWhenExpression>
 					</reportElement>
 					<box>
@@ -276,12 +283,42 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					</textElement>
 					<text><![CDATA[DESCRIZIONE]]></text>
 				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="678" y="3" width="63" height="26" uuid="5205043a-4b6c-41bf-b30b-94d658b08582">
+						<printWhenExpression><![CDATA[$F{TI_DOCUMENTO}.equals("C")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[IMPORTO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement key="staticText-4" style="TNRG10" x="678" y="3" width="63" height="26" uuid="70e464d8-05f4-4d9d-ad44-2ba064ad5c9f">
+						<printWhenExpression><![CDATA[$F{TI_DOCUMENTO}.equals("S") && !$F{FL_VENDITA}.equals( "Y")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[VALORE SCARICATO]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="52">
 				<staticText>
-					<reportElement key="staticText-4" style="TNRG10" x="570" y="2" width="81" height="13" uuid="19cd133a-1700-4888-b8f8-f45c3b6383e6"/>
+					<reportElement key="staticText-4" style="TNRG10" x="553" y="2" width="98" height="13" uuid="19cd133a-1700-4888-b8f8-f45c3b6383e6"/>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -291,10 +328,12 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					<textElement textAlignment="Right">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[TOTALE]]></text>
+					<text><![CDATA[TOTALE BUONO]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement key="textField-11" style="TNRG10" x="666" y="2" width="80" height="13" isRemoveLineWhenBlank="true" uuid="fd829b66-a9be-49a6-831d-70b3e9585d0e"/>
+					<reportElement key="textField-11" style="TNRG10" x="670" y="2" width="71" height="13" isRemoveLineWhenBlank="true" uuid="fd829b66-a9be-49a6-831d-70b3e9585d0e">
+						<printWhenExpression><![CDATA[!$F{FL_VENDITA}.equals( "Y")]]></printWhenExpression>
+					</reportElement>
 					<box>
 						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -325,6 +364,21 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					</reportElement>
 					<textElement markup="none"/>
 					<textFieldExpression><![CDATA["Delegato: " + $F{DELEGATO}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement key="textField-11" style="TNRG10" x="670" y="2" width="71" height="13" isRemoveLineWhenBlank="true" uuid="334fd797-514b-4201-9c2c-839906f3dd9d">
+						<printWhenExpression><![CDATA[$F{FL_VENDITA}.equals( "Y")]]></printWhenExpression>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new DecimalFormat("¤ #,##0.00").format($V{TOTALE_ALIENAZIONE})]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -368,7 +422,9 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 				<textFieldExpression><![CDATA[$F{NR_INVENTARIO}+"-"+String.format("%03d", $F{PROGRESSIVO}.intValue())]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField-11" style="TNR10" x="678" y="2" width="59" height="13" isRemoveLineWhenBlank="true" uuid="3480b9e0-eb18-4d22-8d2a-bbd7a7844287"/>
+				<reportElement key="textField-11" style="TNR10" x="741" y="2" width="59" height="13" isRemoveLineWhenBlank="true" uuid="3480b9e0-eb18-4d22-8d2a-bbd7a7844287">
+					<printWhenExpression><![CDATA[$F{FL_VENDITA}.equals( "Y") || !$F{TI_DOCUMENTO}.equals("C")]]></printWhenExpression>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -435,7 +491,7 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 				<textFieldExpression><![CDATA[$F{ETICHETTA}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement key="textField-11" style="TNR10" x="738" y="2" width="63" height="13" isRemoveLineWhenBlank="true" uuid="00c05e1e-a09c-4769-b7c2-a9582986c3b9">
+				<reportElement key="textField-11" style="TNR10" x="678" y="2" width="63" height="13" isRemoveLineWhenBlank="true" uuid="00c05e1e-a09c-4769-b7c2-a9582986c3b9">
 					<printWhenExpression><![CDATA[$F{FL_VENDITA}.equals( "Y")]]></printWhenExpression>
 				</reportElement>
 				<box>
@@ -461,6 +517,21 @@ AND TESTATA.PG_BUONO_C_S = $P{pg_buono_c_s}]]>
 					<font isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DS_BENE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField-11" style="TNR10" x="678" y="2" width="63" height="13" isRemoveLineWhenBlank="true" uuid="92ce55f4-7a87-4e4e-a321-280ee435adf0">
+					<printWhenExpression><![CDATA[!$F{FL_VENDITA}.equals( "Y")]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new DecimalFormat("¤ #,##0.00").format($F{VALORE_DETTAGLIO_BENE})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
