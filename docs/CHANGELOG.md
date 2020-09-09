@@ -1,3 +1,15 @@
+## Release 6.2.36  -- _September 09, 2020_ 
+**Changes**
+
+>**Corretta controllo su anno data inizio progetto che può risultare anche superiore al primo anno del piano economico**
+>
+>[1b41d765e963235](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1b41d765e963235) raffaele.pagano *September 09, 2020*
+
+>**Fix Conguaglio. Aggiunto blocco che in fase di conguaglio non si può superare importo annuale del bonus Renzi e del Cuneo**
+>
+>[e603a89fde74976](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e603a89fde74976) gianfranco.gasparro *September 09, 2020*
+
+
 ## Release 6.2.35  -- _August 31, 2020_ 
 **Changes**
 
