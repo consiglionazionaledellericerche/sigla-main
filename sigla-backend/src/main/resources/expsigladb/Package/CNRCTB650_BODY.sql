@@ -956,6 +956,12 @@ BEGIN
          IF CNRCTB545.IsCoriCreditoIrpef(aRecCoriConguaglio.cd_contributo_ritenuta) = 'Y'  then
             --per ora passo glbNumeroGiorni che è anche il numero gg del cud
 --pipe.send_message('3 ');
+   if aDataMin < to_date('01/01/'||aRecCompenso.Esercizio,'dd/mm/yyyy') then
+    aDataMin := to_date('01/01/'||aRecCompenso.Esercizio,'dd/mm/yyyy');
+   end if;
+   if aDataMax > to_date('31/12/'||aRecCompenso.Esercizio,'dd/mm/yyyy') then
+    aDataMax := to_date('31/12/'||aRecCompenso.Esercizio,'dd/mm/yyyy');
+   end if;
 
             calcolaCreditoIrpefDovuto(glbImponibileNettoIrpef,
                                       glbNumeroGiorni,
@@ -965,6 +971,17 @@ BEGIN
                                       aRecCoriConguaglio.cd_contributo_ritenuta,
                                       aRecCoriConguaglio.dt_ini_validita,
                                       aImTotDetrazioniCuneo);
+      FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+        if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
+          if tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto > tabCreditoIrpef(i_credito).tImCreditoMaxDovuto then
+            tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto := tabCreditoIrpef(i_credito).tImCreditoMaxDovuto;
+          end if;
+        else
+          if tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto > tabCreditoIrpef(i_credito).tImCreditoMaxDovuto then
+            tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto := tabCreditoIrpef(i_credito).tImCreditoMaxDovuto;
+          end if;
+        end if;
+      END LOOP;
 --            creditoGiaCalcolato := 'S';
 --pipe.send_message('glbImportoCreditoIrpefDovuto '||glbImportoCreditoIrpefDovuto);
          END IF;
@@ -1551,6 +1568,7 @@ BEGIN
               conta := 0;
               FOR conta IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
                 if tabCreditoIrpef(conta).tCdCori = aCdCori and tabCreditoIrpef(conta).tDtIniValCori = DT_INI_VAL_CORI then
+                 tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
                  tabCreditoIrpef(conta).tImCreditoIrpefDovuto := tabCreditoIrpef(conta).tImCreditoIrpefDovuto + importoCredito;
                  trovatoCredito := 'S';
                 end if;
@@ -1565,6 +1583,7 @@ BEGIN
                   tabCreditoIrpef(conta).tDtIniValCori := DT_INI_VAL_CORI;
                   tabCreditoIrpef(conta).tImCreditoIrpefGoduto := 0;
                   tabCreditoIrpef(conta).tImCreditoIrpefDovuto := importoCredito;
+                  tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
                 end if;
 
              totImportoDetrazioni := totImportoDetrazioni + importoDetrazioni;

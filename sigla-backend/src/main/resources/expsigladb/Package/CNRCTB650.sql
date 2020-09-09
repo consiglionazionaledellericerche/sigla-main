@@ -304,7 +304,8 @@
         tCdCori CONTRIBUTO_RITENUTA.cd_contributo_ritenuta%TYPE,
         tDtIniValCori TIPO_CONTRIBUTO_RITENUTA.dt_ini_validita%TYPE,
         tImCreditoIrpefGoduto CONTRIBUTO_RITENUTA.ammontare%TYPE,
-        tImCreditoIrpefDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE
+        tImCreditoIrpefDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE,
+        tImCreditoMaxDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE
        );
    TYPE tCreditoIrpef IS TABLE OF recCreditoIrpef
         INDEX BY BINARY_INTEGER;
