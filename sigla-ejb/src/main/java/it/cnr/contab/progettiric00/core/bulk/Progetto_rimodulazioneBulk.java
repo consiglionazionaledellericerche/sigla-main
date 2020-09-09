@@ -539,7 +539,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 		
 		this.getAllDetailsProgettoPianoEconomico().stream()
 			.filter(progetto_piano_economicoBulk -> Optional.ofNullable(progetto_piano_economicoBulk.getEsercizio_piano()).isPresent())
-			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioRimodulato())<0)
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioForPianoEconomico())<0)
 			.filter(el->!el.isDetailRimodulatoEliminato())
 			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
 			.min(Comparator.comparing(Integer::valueOf))
