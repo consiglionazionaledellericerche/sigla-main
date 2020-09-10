@@ -7841,7 +7841,17 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             List listaNota = (getHome(userContext, Nota_di_credito_attivaBulk.class).find(nota));
 
             if (listaNota == null || listaNota.isEmpty()) {
-                return null;
+                Nota_di_debito_attivaBulk notaDebito = new Nota_di_debito_attivaBulk();
+                notaDebito.setNomeFileInvioSdi(nomeFileInvioSdi);
+                List listaNotaDebito = (getHome(userContext, Nota_di_debito_attivaBulk.class).find(notaDebito));
+
+                if (listaNotaDebito == null || listaNotaDebito.isEmpty()) {
+                    return null;
+                } else if (listaNotaDebito.size() == 1) {
+                    return (Nota_di_debito_attivaBulk) listaNota.get(0);
+                } else {
+                    throw new ComponentException("Esistono più note di debito aventi lo stesso nome file di invio a SDI! " + nomeFileInvioSdi);
+                }
             } else if (listaNota.size() == 1) {
                 return (Nota_di_credito_attivaBulk) listaNota.get(0);
             } else {
