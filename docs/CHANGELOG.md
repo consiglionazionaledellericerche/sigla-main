@@ -1,3 +1,11 @@
+## Release 6.2.37  -- _September 10, 2020_ 
+**Changes**
+
+>**Gestito invio nota di debito attiva**
+>
+>[998e91d1ccf74d9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/998e91d1ccf74d9) gianfranco.gasparro *September 10, 2020*
+
+
 ## Release 6.2.36  -- _September 09, 2020_ 
 **Changes**
 
