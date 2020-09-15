@@ -2573,7 +2573,7 @@ public class FatturaAttivaSingolaComponent
                         while (ri.hasMoreElements()) {
                             Nota_di_credito_attivaBulk notaDiCredito = (Nota_di_credito_attivaBulk) ri.nextElement();
                             notaDiCredito =(Nota_di_credito_attivaBulk) findByPrimaryKey(userContext, notaDiCredito);
-                            if (notaDiCredito != null && notaDiCredito.isFatturaElettronicaScartata() && notaDiCredito.getIm_totale_fattura().compareTo(ndd.getIm_totale_fattura()) == 0){
+                            if (notaDiCredito != null && (notaDiCredito.isFatturaElettronicaScartata()||notaDiCredito.isFatturaElettronicaRifiutata()) && notaDiCredito.getIm_totale_fattura().compareTo(ndd.getIm_totale_fattura()) == 0){
                                 impostaDocumentoDaNonInviare(ndd);
                             }
                         }
