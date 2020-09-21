@@ -1570,15 +1570,16 @@ BEGIN
 --             IF importoCredito > 0 THEN
 --RAISE_APPLICATION_ERROR(-20100,giorniCompetenzaCredito||' '||importoCredito||' '||importoDetrazioni||' '||inNumGGTotMinPerCredito||' '||aDataMin||' '||aDataMax||' '||aRecCreditoIrpef.dt_inizio_validita);
 --            END IF;
-              conta := 0;
-              FOR conta IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
-                if tabCreditoIrpef(conta).tCdCori = aCdCori and tabCreditoIrpef(conta).tDtIniValCori = DT_INI_VAL_CORI then
-                 tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
-                 tabCreditoIrpef(conta).tImCreditoIrpefDovuto := tabCreditoIrpef(conta).tImCreditoIrpefDovuto + importoCredito;
-                 trovatoCredito := 'S';
-                end if;
-                mess := mess||tabCreditoIrpef(conta).tCdCori||' '||tabCreditoIrpef(conta).tDtIniValCori||' '||tabCreditoIrpef(conta).tImCreditoIrpefDovuto||' '||tabCreditoIrpef(conta).tImCreditoIrpefGoduto;
-              END LOOP;
+              IF tabCreditoIrpef.COUNT > 0 THEN
+                FOR conta IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+                  if tabCreditoIrpef(conta).tCdCori = aCdCori and tabCreditoIrpef(conta).tDtIniValCori = DT_INI_VAL_CORI then
+                   tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
+                   tabCreditoIrpef(conta).tImCreditoIrpefDovuto := tabCreditoIrpef(conta).tImCreditoIrpefDovuto + importoCredito;
+                   trovatoCredito := 'S';
+                  end if;
+                  mess := mess||tabCreditoIrpef(conta).tCdCori||' '||tabCreditoIrpef(conta).tDtIniValCori||' '||tabCreditoIrpef(conta).tImCreditoIrpefDovuto||' '||tabCreditoIrpef(conta).tImCreditoIrpefGoduto;
+                END LOOP;
+              END IF;
 --              if aCdCori = 'BONUSDL66' THEN
 --              RAISE_APPLICATION_ERROR(-20100,mess);
 --              END IF;
