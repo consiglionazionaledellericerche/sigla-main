@@ -3533,4 +3533,9 @@ TRASPORTO_AEREO"/>
 
         <addForeignKeyConstraint baseColumnNames="cd_anag" baseTableName="ass_gruppo_iva_anag" constraintName="fk_ass_gruppo_iva_anag02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_anag" referencedTableName="anagrafico"/>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index-inventario_beni-targa">
+        <createIndex indexName="ix_inventario_beni01" tableName="inventario_beni">
+            <column name="TARGA"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>
