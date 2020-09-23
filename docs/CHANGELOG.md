@@ -1,3 +1,35 @@
+## Release 6.2.39  -- _September 23, 2020_ 
+**Changes**
+
+>**FIX remote maven repo on DOckerfile**
+>
+>[a888f34d1744e68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a888f34d1744e68) mspasiano *September 23, 2020*
+
+>**Aggiunto indice su targa di Inventario_beni**
+>
+>[fc8c5d68f82806c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc8c5d68f82806c) gianfranco.gasparro *September 21, 2020*
+
+>**Fix anomalia conguaglio**
+>
+>[aab773a5d928025](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aab773a5d928025) gianfranco.gasparro *September 21, 2020*
+
+>**Fix anomalia conguaglio nei dati irpef dovuti che non venivano considerato nel compenso generato**
+>
+>[381263b6fb8a4ef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/381263b6fb8a4ef) gianfranco.gasparro *September 17, 2020*
+
+>**Fix**
+>
+>[5bacf6df921e492](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5bacf6df921e492) gianfranco.gasparro *September 15, 2020*
+
+
+## Release 6.2.38  -- _September 14, 2020_ 
+**Changes**
+
+>**Corretta creazione di nota di debito attiva da non inviare a SDI nel caso di esistenza di diverse note di credito**
+>
+>[ec3c920946c5cab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ec3c920946c5cab) gianfranco.gasparro *September 12, 2020*
+
+
 ## Release 6.2.37  -- _September 10, 2020_ 
 **Changes**
 
