@@ -13,15 +13,15 @@
 #      You should have received a copy of the GNU Affero General Public License
 #      along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import sphinx_material
+import docs_italia_theme
 
 # Register the theme as an extension to generate a sitemap.xml
 # extensions.append('sphinx_material')
 from recommonmark.parser import CommonMarkParser
-
 source_parsers = {
     '.md': CommonMarkParser,
 }
+
 project = 'Sistema Informativo Gestione Linee di Attività'
 release = '6.2.38'
 author = u'Consiglio Nazionale delle Ricerche'
@@ -36,19 +36,17 @@ latex_elements = {
     'extraclassoptions': 'openany,oneside'
 }
 epub_basename = u'Manuale-SIGLA'
-# Choose the material theme
-html_theme = 'sphinx_material'
-#html_theme = 'sphinx_materialdesign_theme'
-# Get the them path
-html_theme_path = sphinx_material.html_theme_path()
-# Register the required helpers for the html context
-html_context = sphinx_material.get_html_context()
-copyright = "2004 - 2020 Consiglio Nazionale delle Ricerche"
+
+html_theme = "docs_italia_theme"
+html_theme_path = [docs_italia_theme.get_html_theme_path()]
+
+copyright = "2020 Consiglio Nazionale delle Ricerche"
+html_title = "Sistema Informativo Gestione Linee di Attività"
 html_show_sourcelink = False
 html_favicon = "favicon.ico"
 html_logo = "logo.png"
-latex_logo = 'logo.png'
-html_title = "Home"
+latex_logo = 'logo_blue.png'
+html_baseurl = 'docs'
 smartquotes = False
 language = "it"
 # The master toctree document.
@@ -68,6 +66,7 @@ html_css_files = [
     'css/material.css'
 ]
 extensions = [
+    'docs_italia_theme',
     'sphinxcontrib.images',
     "sphinx.ext.autodoc",
     "numpydoc",
@@ -81,16 +80,4 @@ extensions = [
     "sphinx_markdown_tables",
     'sphinx.ext.githubpages'
 ]
-html_theme_options = {
-    'base_url': 'https://consiglionazionaledellericerche.github.io/sigla-main',
-    'repo_url': 'https://github.com/consiglionazionaledellericerche/sigla-main/',
-    'repo_name': 'consiglionazionaledellericerche/sigla-main',
-    'nav_title': 'Sistema Informativo Gestione Linee di Attività',
-    'html_minify': True,
-    'css_minify': True,
-    'version_dropdown': False,
-    'globaltoc_depth': 5,
-    # Set the color and the accent color
-    'color_primary': 'indingo',
-    'color_accent': 'light-blue'
-}
+
