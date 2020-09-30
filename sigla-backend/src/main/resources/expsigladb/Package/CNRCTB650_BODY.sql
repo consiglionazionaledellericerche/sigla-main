@@ -1547,17 +1547,25 @@ BEGIN
              FETCH credito INTO aRecCreditoIrpef;
 
              EXIT WHEN credito%NOTFOUND;
-
-
              if aDataMin between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita and
                 aDataMax between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
                 giorniCompetenzaCredito := inNumGGTotMinPerCredito;
              else
-                if aDataMin between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
-                    giorniCompetenzaCredito := IBMUTL001.getDaysBetween(aDataMin, aRecCreditoIrpef.dt_fine_validita);
-                else
-                    giorniCompetenzaCredito := IBMUTL001.getDaysBetween(aRecCreditoIrpef.dt_inizio_validita, aDataMax);
-                end if;
+                  giorniCompetenzaCredito := 0;
+                  FOR i IN tabella_date_ok.FIRST .. tabella_date_ok.LAST
+                  LOOP
+                    if tabella_date_ok(i).tDataDa between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
+                      if tabella_date_ok(i).tDataA between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
+                        giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(tabella_date_ok(i).tDataDa, tabella_date_ok(i).tDataA);
+                      else
+                        giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(tabella_date_ok(i).tDataDa, aRecCreditoIrpef.dt_fine_validita);
+                      end if;
+                    elsif tabella_date_ok(i).tDataA between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
+                      giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(aRecCreditoIrpef.dt_inizio_validita, tabella_date_ok(i).tDataA);
+                    elsif tabella_date_ok(i).tDataDa < aRecCreditoIrpef.dt_inizio_validita and tabella_date_ok(i).tDataA > aRecCreditoIrpef.dt_inizio_validita then
+                      giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(aRecCreditoIrpef.dt_inizio_validita, aRecCreditoIrpef.dt_fine_validita);
+                    end if;
+                  END LOOP;
              end if;
              importoCredito := 0;
              importoDetrazioni := 0;
