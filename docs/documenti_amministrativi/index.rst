@@ -1,4 +1,4 @@
-i.. toctree::
+.. toctree::
    :maxdepth: -1
 
-   cassa_economale
+   cassa_economale/index
