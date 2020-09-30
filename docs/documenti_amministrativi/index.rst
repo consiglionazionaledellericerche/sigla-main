@@ -1,4 +1,4 @@
-.. toctree::
+i.. toctree::
    :maxdepth: -1
 
-   cassa_economale
+   documenti_amministrativi
