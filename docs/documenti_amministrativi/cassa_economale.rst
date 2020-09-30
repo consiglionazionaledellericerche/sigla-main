@@ -50,6 +50,7 @@ Le spese documentate, invece, non hanno bisogno di nessuna ulteriore associazion
 
 **Rentegro**
 Il Reintegro del fondo consente di selezionare le spese già associate al Fondo per procedere con l'elaborazione. La ricerca totale in automatico è impostata per mostrare l'elenco delle 'Spese non documentate' (Spese documentate = N). Impostando i vari filtri di ricerca (compreso il flag 'spese documentae = S/N), si possono effettuare i reintegri delle varie tipologie di spese. In questo modo la procedura automaticamente creerà mandati relativi alle spese selezioate, utilizzando l'impegno indicato per la singola spesa, solo che il mandato è intestato direttamente all'Economo. I mandati così creati seguono il processo classico di tutti i mandati per la firma e l'invio in tesoreria. In questo modo il Fondo resta sempre reintegrato per lo stesso importo iniziale e solo alla fine sarà restituita la differenza non spesa.
+Dalla funzione 'Spese Fondo Economale' è sempre possibile consultare l'elenco spese del Fondo, le informazioni delle singole spese ed i reintegri effettuati oppure no per singola spesa.
 
 **Chiusura spese**
 Questa funzione controlla i reintegri effettuati e chiude le spese:
