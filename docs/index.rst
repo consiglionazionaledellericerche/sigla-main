@@ -55,7 +55,7 @@ Organizzato in questo modo il sistema prevede gestisce e controlla l’aspetto a
 
    documenti_contabili/index
    
- .. toctree::
+.. toctree::
    :maxdepth: -1
 
    documenti_amministrativi/index
