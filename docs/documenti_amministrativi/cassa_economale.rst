@@ -28,11 +28,36 @@ Dopo l'apertura del fondo è possibile effettuare pagamenti di cassa economale i
 - Spese documentate;
 - Spese non documentate.
 
-Per quanto riguarda le Spese Docomentate, queste riguardano tutti i documenti amministrativi registrati in Sigla:
+Per quanto riguarda le **Spese Docomentate**, queste riguardano tutti i documenti amministrativi registrati in Sigla:
 - Fatture
 - Documenti Generici
 - Missioni
 - Compensi
 - Anticipi
 
-Registrati indicando nella prima parte del documento la dizione 'Pagamento con Fondo Economale'. In questo modo i documenti saranno disponibili ad essere associati, successivamente alla registrazione, al Fondo economale.
+Registrati indicando nella prima parte del documento, nel campo 'Fondo economale' la dizione 'Usa Fondo Economale'. In questo modo i documenti saranno disponibili ad essere associati, successivamente alla registrazione, al Fondo economale.
+Questi documenti non necessitano di nessun'altra informazione perchè sono regolarmente intestati al fornitore effettivo e su di essi è indicato il corretto impegno di spesa.
+
+Per quanto riguarda le **Spese non documentate**, queste vengono registrate direttamente sul Fondo economale, attraverso la funzionalità **'Spese Fondo economale'**.
+
+Questa funzionalità consente di visualizzare e gestire tutte le spese legate al Fondo, siano esse documentate che non.
+Entrando nella funzione e selezionando il fondo, è possibile visualizzare le spese già create o crearne di nuove. Se non documentate è richiesto il codice fiscale ed il cap del beneficiario, altrimenti specificando 'spese documentate' è possibile scegliere il tipo di documento amministrativo e successivamente ricercare il singolo documento.
+
+Importante ricordare che le Spese non documentate non hanno l'impegno di riferimento come quelle documentate, quindi bisogna associarle direttamente sul fondo economale indicando l'impegno di riferimento. La ricerca degli impegni con il filtro attivato sul terzo cerca tutti gli impegni verso Creditori Diversi. La data di scadenza impostata come filtro è la data del giorni.
+
+Rentegro
+Il Reintegro del fondo consente di selezionare le spese già associate al Fondo e chiederne il Reintegro. In questo modo la procedura automaticamente creerà mandati relativi alle singole spese, per l'impegno corretto indicato per la spesa, solo che il mandato è intestato all'Economo. In questo modo il Fondo resta sempre reintegrato per lo stesso importo e solo alla fine sarà restituita la differenza.
+
+Chiusura spese
+Questa funzione controlla i reintegri effettuati e chiude le spese:
+- Controlla che tutti i compensi siano reintegrati;
+- Mette il fondo in 'chiusura spese';
+- reintegra eventuali spese non ancora reintegrate;
+- segna se c'èè da emettere una reversale e per quale importo.
+
+Chiusura fondo
+Emette la reversale di restituzione chiudendo la partita di giro aperta in fase di apertura del fondo.
+
+Chiusura Fondo
+
+
