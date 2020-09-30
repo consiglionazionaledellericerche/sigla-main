@@ -20,5 +20,19 @@ La funzionalità che gestisce il Fondo economale consente la creazione del Fondo
 - Alimentare la sezione degli 'Importi' specificando il Mandato di apertura del Fondo ed i massimali di spesa definiti per le spese Documentate e quelle non Documentate.
 
 Questa sezione può essere consultata successivamente per verificare la situazione delle spese da reintegrare, i reintegri effettuati e il residuo del Fondo.
+La funzione inoltre mostra eventuale 'Mandati associati' emessi per il reintegro del Fondo e successivamente assocati al Fondo.
 
+**Creazione e associazione spese al Fondo economale**
 
+Dopo l'apertura del fondo è possibile effettuare pagamenti di cassa economale in due diverse modalità:
+- Spese documentate;
+- Spese non documentate.
+
+Per quanto riguarda le Spese Docomentate, queste riguardano tutti i documenti amministrativi registrati in Sigla:
+- Fatture
+- Documenti Generici
+- Missioni
+- Compensi
+- Anticipi
+
+Registrati indicando nella prima parte del documento la dizione 'Pagamento con Fondo Economale'. In questo modo i documenti saranno disponibili ad essere associati, successivamente alla registrazione, al Fondo economale.
