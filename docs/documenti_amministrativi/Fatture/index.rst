@@ -1,3 +1,7 @@
+=======
+Fatture
+=======
+
 .. toctree::
    :maxdepth: -1
 
