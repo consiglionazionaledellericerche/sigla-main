@@ -1,6 +1,6 @@
-===================
-Documenti Contabili
-===================
+========================
+Documenti Amministrativi
+========================
 
 .. toctree::
    :maxdepth: -1
