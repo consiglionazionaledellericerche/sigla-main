@@ -8,7 +8,7 @@
       <div class="link-list-wrapper">
         <ul class="link-list">
           {% for download in docsitalia_data.document.downloads %}
-          <a class="dropdown-item" href="{{ download.url }}" download>
+          <a class="dropdown-item" href="/{{ docsitalia_data.document.github_repo }}/{{ download.url }}" download>
             {{ download.type }}
           </a>
           {% if not loop.last %}
