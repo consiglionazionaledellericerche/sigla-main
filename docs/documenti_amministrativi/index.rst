@@ -5,4 +5,9 @@ Documenti Amministrativi
 .. toctree::
    :maxdepth: -1
 
-   cassa_economale/index
+   Fatture/index
+
+.. toctree::
+   :maxdepth: -1
+
+   cassa_economale.rst
