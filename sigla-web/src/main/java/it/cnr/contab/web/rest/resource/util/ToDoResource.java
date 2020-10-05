@@ -382,7 +382,7 @@ public class ToDoResource implements ToDoLocal {
                                                 "fa fa-fw fa-briefcase text-primary",
                                                 "Missioni",
                                                 firstLabel(i),
-                                                detailLabel(i, "Missione", "Missioni", "da confermare.")
+                                                detailLabel(i, "Missione", "Missioni", "da pagare.")
                                         ));
                                     }
                                 } catch (ComponentException | RemoteException e) {
