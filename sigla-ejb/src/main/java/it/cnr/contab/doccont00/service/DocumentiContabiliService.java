@@ -621,7 +621,11 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             movBulk.setCodiceFiscaleCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getCodiceFiscaleCreditoreEffettivo());
                         }
                         movBulk.setCausale(movimentoContoEvidenza.getCausale());
-                        movBulk.setNumeroSospeso(movimentoContoEvidenza.getNumeroSospeso());
+                        movBulk.setNumeroSospeso(
+                                movimentoContoEvidenza.getSospeso().stream()
+                                    .map(InformazioniContoEvidenza.MovimentoContoEvidenza.Sospeso::getNumeroProvvisorio)
+                                    .findAny().orElse(null)
+                        );
                         movBulk.setToBeCreated();
                         infoBulk.addToMovConto(movBulk);
                     });

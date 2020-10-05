@@ -4873,7 +4873,7 @@ public class DistintaCassiereComponent extends
                     sostituzioneMandato.setEsercizioMandatoDaSostituire(mandatoRiemissione.getEsercizio());
                     sostituzioneMandato.setNumeroMandatoDaSostituire(mandatoRiemissione.getPg_mandato().intValue());
                     // TODO Valore fisso a 1
-                    sostituzioneMandato.setProgressivoBeneficiarioDaSostituire(BigInteger.ONE);
+                    sostituzioneMandato.setProgressivoBeneficiarioDaSostituire(BigInteger.ONE.intValue());
                     infoben.setSostituzioneMandato(sostituzioneMandato);
                 }
 
