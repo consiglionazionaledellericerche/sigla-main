@@ -1,5 +1,229 @@
-## Release 6.2.39  -- _September 23, 2020_ 
+## Release 6.2.40  -- _October 05, 2020_ 
 **Changes**
+
+>**Cambiata specifica OPI**
+>
+>[6a4be4825d7a438](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6a4be4825d7a438) mspasiano *October 05, 2020*
+
+>**Cambiata specifica OPI**
+>
+>[e9dcab4a313c9e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e9dcab4a313c9e6) mspasiano *October 05, 2020*
+
+>**Aggiunto l'hint nelle figiure per la documentazione**
+>
+>[6b8881f39481ef2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6b8881f39481ef2) mspasiano *October 05, 2020*
+
+>**Cambiata la width della finestra per l'help in linea**
+>
+>[d06a5b59080f8a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d06a5b59080f8a5) mspasiano *October 05, 2020*
+
+>**Resa obbligatoria la causale per i documenti 1210**
+>
+>[6f75d2508814f16](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6f75d2508814f16) mspasiano *October 05, 2020*
+
+>**Cambiata etichetta in missioni da pagare**
+>
+>[8fe28534b707069](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8fe28534b707069) mspasiano *October 05, 2020*
+
+>**Aggiornamento VIEW**
+>
+>[31108c745295476](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31108c745295476) mspasiano *October 05, 2020*
+
+>**Update index.rst**
+>
+>[82870931a4a5d10](https://github.com/consiglionazionaledellericerche/sigla-main/commit/82870931a4a5d10) Marco Spasiano *October 01, 2020*
+
+>**Update index.rst**
+>
+>[4c74d5dfbaca744](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c74d5dfbaca744) Marco Spasiano *October 01, 2020*
+
+>**Update index.rst**
+>
+>[196e1bfddeb3a73](https://github.com/consiglionazionaledellericerche/sigla-main/commit/196e1bfddeb3a73) Marco Spasiano *October 01, 2020*
+
+>**Update fattura_passiva.rst**
+>
+>[da06f328bfc2d2f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/da06f328bfc2d2f) patriziavillani *October 01, 2020*
+
+>**Create fattura_attiva.rst**
+>
+>[0db8f8fd53589c8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0db8f8fd53589c8) patriziavillani *October 01, 2020*
+
+>**Create index.rst**
+>
+>[607a8be9e6bbd06](https://github.com/consiglionazionaledellericerche/sigla-main/commit/607a8be9e6bbd06) patriziavillani *October 01, 2020*
+
+>**Create fattura_passiva.rst**
+>
+>[fb1a1577de5ac54](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fb1a1577de5ac54) patriziavillani *October 01, 2020*
+
+>**Update index.rst**
+>
+>[98e3565f12517bc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/98e3565f12517bc) patriziavillani *October 01, 2020*
+
+>**Delete cassa_economale.rst**
+>
+>[52c06d019dbf132](https://github.com/consiglionazionaledellericerche/sigla-main/commit/52c06d019dbf132) patriziavillani *October 01, 2020*
+
+>**Delete index.rst**
+>
+>[e2a161a041cbb36](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e2a161a041cbb36) patriziavillani *October 01, 2020*
+
+>**Create cassa_economale.rst**
+>
+>[2c6a1bb0cf17b1f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2c6a1bb0cf17b1f) patriziavillani *October 01, 2020*
+
+>**Fix download pdf for documents**
+>
+>[9da00cfa713f150](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9da00cfa713f150) mspasiano *October 01, 2020*
+
+>**Update index.rst**
+>
+>[10d1805c2a91e42](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10d1805c2a91e42) patriziavillani *October 01, 2020*
+
+>**Update index.rst**
+>
+>[de6fd77bbbdca64](https://github.com/consiglionazionaledellericerche/sigla-main/commit/de6fd77bbbdca64) patriziavillani *October 01, 2020*
+
+>**Update index.rst**
+>
+>[97e2ea31fde1c90](https://github.com/consiglionazionaledellericerche/sigla-main/commit/97e2ea31fde1c90) patriziavillani *October 01, 2020*
+
+>**Create index.rst**
+>
+>[d2422d4f2b14037](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d2422d4f2b14037) patriziavillani *October 01, 2020*
+
+>**Delete cassa_economale.index**
+>
+>[c92edec90494690](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c92edec90494690) patriziavillani *October 01, 2020*
+
+>**Update index.rst**
+>
+>[8bc5f176b3e2254](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8bc5f176b3e2254) patriziavillani *October 01, 2020*
+
+>**Delete cassa_economale.rst**
+>
+>[53644bd866cde44](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53644bd866cde44) patriziavillani *October 01, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[4e71f8689d759c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4e71f8689d759c9) patriziavillani *October 01, 2020*
+
+>**Create cassa_economale.index**
+>
+>[c7e7c2c0cf5ad51](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7e7c2c0cf5ad51) patriziavillani *October 01, 2020*
+
+>**Create cassa_economale.rst**
+>
+>[e255a855589925e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e255a855589925e) patriziavillani *October 01, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[fcf690461078e1b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fcf690461078e1b) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[812ba6992ce103f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/812ba6992ce103f) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[12b39e2ca71cf70](https://github.com/consiglionazionaledellericerche/sigla-main/commit/12b39e2ca71cf70) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[fdf224230f0995c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fdf224230f0995c) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[628ad8a7b2074e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/628ad8a7b2074e8) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[0c012bfe46fd475](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0c012bfe46fd475) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[c0949d581caad30](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0949d581caad30) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[ab79e649c859c9a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ab79e649c859c9a) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[33c91b18e617a8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/33c91b18e617a8b) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[74e9fdb6e5a550e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/74e9fdb6e5a550e) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[0ada3c897e1e5a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0ada3c897e1e5a1) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[b72909b0590ea0c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b72909b0590ea0c) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[0aa386722ca6c8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0aa386722ca6c8d) patriziavillani *September 30, 2020*
+
+>**Create index.rst**
+>
+>[c933f5ca72a84ed](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c933f5ca72a84ed) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[23796068f02aeda](https://github.com/consiglionazionaledellericerche/sigla-main/commit/23796068f02aeda) patriziavillani *September 30, 2020*
+
+>**Delete index.rst**
+>
+>[fb95c73df0ab463](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fb95c73df0ab463) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[b95476778616a88](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b95476778616a88) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[4ead7d1faa5d52f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ead7d1faa5d52f) patriziavillani *September 30, 2020*
+
+>**Update cassa_economale.rst**
+>
+>[d7f67193d3dcc5b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d7f67193d3dcc5b) patriziavillani *September 30, 2020*
+
+>**Update and rename cassa_economale to cassa_economale.rst**
+>
+>[a5cb75ba4be7f44](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a5cb75ba4be7f44) patriziavillani *September 30, 2020*
+
+>**Create index.rst**
+>
+>[35228d600265711](https://github.com/consiglionazionaledellericerche/sigla-main/commit/35228d600265711) patriziavillani *September 30, 2020*
+
+>**Create cassa_economale**
+>
+>[573636fe7c536b1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/573636fe7c536b1) patriziavillani *September 30, 2020*
+
+>**Update index.rst**
+>
+>[4104fc35c92e5c5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4104fc35c92e5c5) patriziavillani *September 30, 2020*
+
+>**Fix**
+>
+>[5e8b4860f49f327](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e8b4860f49f327) gianfranco.gasparro *September 30, 2020*
+
+>**Fix conguagli nel caso di buchi tra i vari incarichi**
+>
+>[441c15c512bd73b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/441c15c512bd73b) gianfranco.gasparro *September 30, 2020*
+
+>**Change theme of document**
+>
+>[64bb82d2db5194c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64bb82d2db5194c) mspasiano *September 25, 2020*
+
+>**Change theme of document**
+>
+>[3a2174b20307732](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3a2174b20307732) mspasiano *September 25, 2020*
 
 >**FIX remote maven repo on DOckerfile**
 >
