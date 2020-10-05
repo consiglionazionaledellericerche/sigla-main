@@ -4,6 +4,7 @@ Indicazioni generali Layout
 
 Obiettivo del presente documento è fornire le informazioni necessarie all’utilizzo dell'interfaccia per la procedura SIGLA. 
 Saranno date indicazioni sulle modalità grafiche e di utilizzo rispetto a:
+
 - Accesso all’applicazione e modifica dati di accesso all’interno dell’applicazione;
 - Presentazione e Funzionalità per quanto riguarda il menù;
 - Presentazione dell'interfaccia SIGLA e utilizzo dei vari componenti;
@@ -21,10 +22,16 @@ Accesso all’applicazione SIGLA
 Tutto ciò che riguarda le credenziali di accesso, abilitazioni all’accesso da parte dell’amministratore delle Utenze e scadenza delle password, non è oggetto di modifica. Di seguito vengono indicate le nuove modalità di presentazione della mappa di accesso:
 
 .. figure:: screenshot/home.png
+	:alt: Schermata di accesso a SIGLA
+
+   	Schermata di accesso a SIGLA
 
 Nel caso l’utente avesse, per le proprie credenziali, più utenze di accesso Sigla, viene mostrato l’elenco delle utenze disponibili e valide:
 
 .. figure:: screenshot/home_2.png
+	:alt: Schermata di accesso a SIGLA utente multiplo
+
+   	Schermata di accesso a SIGLA utente multiplo
 
 Dopo la scelta dell’utenza di accesso, viene selezionato come al solito il CDS/UO/CDR di accesso tra quelli abilitati:
 
