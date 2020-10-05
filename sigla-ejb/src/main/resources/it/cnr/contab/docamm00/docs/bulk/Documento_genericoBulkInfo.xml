@@ -577,6 +577,7 @@
 		inputSize="100"		
 		inputType="TEXT"
 		label="MOTIVO DEL PAGAMENTO"
+		nullable="false"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		caseSensitiveSearch="false" />		

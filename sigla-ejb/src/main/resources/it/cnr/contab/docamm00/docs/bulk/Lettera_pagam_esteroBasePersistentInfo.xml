@@ -143,7 +143,8 @@
 			columnName="MOTIVO_PAG"
 			propertyName="motivo_pag"
 			sqlTypeName="VARCHAR"
-			columnSize="250"/>
+			columnSize="250"
+			nullable="false"/>
 		<columnMapping
 			columnName="AMMONTARE_DEBITO"
 			propertyName="ammontare_debito"
