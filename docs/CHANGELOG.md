@@ -1,3 +1,11 @@
+## Release 6.2.44  -- _October 06, 2020_ 
+**Changes**
+
+>**Aggiornamento flusso OPI aggiunta data pagamento SIOPE**
+>
+>[dbe5bf03eb14fd3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dbe5bf03eb14fd3) mspasiano *October 06, 2020*
+
+
 ## Release 6.2.43  -- _October 06, 2020_ 
 **Changes**
 
