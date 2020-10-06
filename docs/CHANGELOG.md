@@ -1,5 +1,21 @@
-## Release 6.2.40  -- _October 05, 2020_ 
+## Release 6.2.42  -- _October 06, 2020_ 
 **Changes**
+
+>**Cambiata specifica OPI**
+>
+>[99d1d845714428b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/99d1d845714428b) mspasiano *October 06, 2020*
+
+
+## Release 6.2.41  -- _October 06, 2020_ 
+**Changes**
+
+>**Cambiata specifica OPI**
+>
+>[ee1195c4a02e06e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee1195c4a02e06e) mspasiano *October 06, 2020*
+
+>**Update conf.py**
+>
+>[031e42d7bdf3a26](https://github.com/consiglionazionaledellericerche/sigla-main/commit/031e42d7bdf3a26) Marco Spasiano *October 06, 2020*
 
 >**Cambiata specifica OPI**
 >
