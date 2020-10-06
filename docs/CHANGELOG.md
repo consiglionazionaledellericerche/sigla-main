@@ -1,3 +1,11 @@
+## Release 6.2.43  -- _October 06, 2020_ 
+**Changes**
+
+>**Cambiata specifica OPI**
+>
+>[5edfdf4b91d701d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5edfdf4b91d701d) mspasiano *October 06, 2020*
+
+
 ## Release 6.2.42  -- _October 06, 2020_ 
 **Changes**
 
