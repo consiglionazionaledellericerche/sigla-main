@@ -79,6 +79,7 @@ import javax.ejb.EJBException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -89,7 +90,11 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.concurrent.CompletionException;
 import java.util.regex.Pattern;
@@ -5674,15 +5679,17 @@ public class DistintaCassiereComponent extends
                                        it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione clas,
                                        ObjectFactory objectFactory,
                                        V_mandato_reversaleBulk bulk,
-                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException {
+                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         clas.setClassificazioneDatiSiopeUscite(getClassificazioneDatiSiope(userContext, objectFactory, bulk, codiceSiope));
     }
 
     private CtClassificazioneDatiSiopeUscite getClassificazioneDatiSiope(UserContext userContext,
                                        ObjectFactory objectFactory,
                                        V_mandato_reversaleBulk bulk,
-                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException {
+                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
+        final XMLGregorianCalendar dataPagamentoSIOPE = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDate.now().plus(3, ChronoUnit.DAYS).toString());
+
         Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
                 .map(s -> TipoDebitoSIOPE.getValueFrom(s));
         if (!tipoDebitoSIOPE.isPresent() || (tipoDebitoSIOPE.isPresent() && tipoDebitoSIOPE.get().equals(TipoDebitoSIOPE.COMMERCIALE))) {
@@ -5870,6 +5877,7 @@ public class DistintaCassiereComponent extends
                                 CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                                 ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                                ctDatiFatturaSiope.setDataScadenzaPagamSiope(dataPagamentoSIOPE);
                                 //TODO CONTROLLARE SE NOTA
                                 ctDatiFatturaSiope.setImportoSiope(importo.setScale(2, BigDecimal.ROUND_HALF_UP));
 
@@ -5970,6 +5978,7 @@ public class DistintaCassiereComponent extends
                             CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                             ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
                             ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                            ctDatiFatturaSiope.setDataScadenzaPagamSiope(dataPagamentoSIOPE);
                             //TODO CONTROLLARE SE NOTA
                             ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP));
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
