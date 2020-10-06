@@ -15,13 +15,6 @@
 
 import docs_italia_theme
 
-# Register the theme as an extension to generate a sitemap.xml
-# extensions.append('sphinx_material')
-from recommonmark.parser import CommonMarkParser
-source_parsers = {
-    '.md': CommonMarkParser,
-}
-
 project = 'Sistema Informativo Gestione Linee di Attività'
 release = '6.2.39'
 author = u'Consiglio Nazionale delle Ricerche'
@@ -49,35 +42,19 @@ latex_logo = 'logo.png'
 html_baseurl = 'docs'
 smartquotes = False
 language = "it"
+numfig = True
 # The master toctree document.
 master_doc = 'index'
-source_suffix = ['.rst','.md']
-html_sidebars = {
-    '**': ['localtoc.html', 'globaltoc.html', 'sourcelink.html', 'searchbox.html']
-}
+source_suffix = '.rst'
 # These folders are copied to the documentation's HTML output
-html_static_path = ['_static']
 templates_path = ['_templates']
-# These paths are either relative to html_static_path
-# or fully qualified paths (eg. https://...)
-html_css_files = [
-    'css/extra.css',
-    'css/hacks.css',
-    'css/material.css'
-]
-extensions = [
-    'docs_italia_theme',
-    'sphinxcontrib.images',
-    "sphinx.ext.autodoc",
-    "numpydoc",
-    "sphinx.ext.doctest",
-    "sphinx.ext.extlinks",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.todo",
-    "sphinx.ext.mathjax",
-    "sphinx.ext.viewcode",
-    "nbsphinx",
-    "sphinx_markdown_tables",
-    'sphinx.ext.githubpages'
-]
 
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.ifconfig',
+    'docs_italia_theme'
+]
