@@ -512,8 +512,16 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     flusso.setUser(userContext.getUser());
                     flusso.setCodiceAbiBt(new Long(flussoGiornaleDiCassa.getTestataMessaggio().getCodiceABIBT()));
                     flusso.setDataOraCreazioneFlusso(new Timestamp(flussoGiornaleDiCassa.getTestataMessaggio().getDataOraCreazioneFlusso().toGregorianCalendar().getTime().getTime()));
-                    flusso.setDataInizioPeriodoRif(new Timestamp(flussoGiornaleDiCassa.getDataInizioPeriodoRiferimento().toGregorianCalendar().getTime().getTime()));
-                    flusso.setDataFinePeriodoRif(new Timestamp(flussoGiornaleDiCassa.getDataFinePeriodoRiferimento().toGregorianCalendar().getTime().getTime()));
+                    flusso.setDataInizioPeriodoRif(
+                            Optional.ofNullable(flussoGiornaleDiCassa.getDataRiferimentoGdC())
+                                .map(xmlGregorianCalendar -> new Timestamp(xmlGregorianCalendar.toGregorianCalendar().getTime().getTime()))
+                                .orElse(null)
+                    );
+                    flusso.setDataFinePeriodoRif(
+                            Optional.ofNullable(flussoGiornaleDiCassa.getDataRiferimentoGdC())
+                                    .map(xmlGregorianCalendar -> new Timestamp(xmlGregorianCalendar.toGregorianCalendar().getTime().getTime()))
+                                    .orElse(null)
+                    );
                     flusso.setCodiceEnte(flussoGiornaleDiCassa.getTestataMessaggio().getCodiceEnte());
                     flusso.setDescrizioneEnte(flussoGiornaleDiCassa.getTestataMessaggio().getDescrizioneEnte());
                     flusso.setCodiceEnteBt(flussoGiornaleDiCassa.getTestataMessaggio().getCodiceEnteBT());
