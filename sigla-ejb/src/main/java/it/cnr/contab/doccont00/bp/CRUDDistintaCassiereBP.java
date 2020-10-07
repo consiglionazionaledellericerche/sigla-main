@@ -52,6 +52,7 @@ import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.utenze00.bulk.UtenteFirmaDettaglioBulk;
 import it.cnr.contab.util.*;
+import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.contab.util00.bp.AllegatiCRUDBP;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.UserContext;
@@ -843,9 +844,15 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             BancaBulk bancauo = componentDistinta.recuperaIbanUo(userContext,
                     bulk.getUo());
             Mandato man = new Mandato();
-            List list = componentDistinta
-                    .findDocumentiFlusso(userContext, bulk);
-            man.setTipoOperazione("INSERIMENTO");
+            List list = componentDistinta.findDocumentiFlusso(userContext, bulk);
+            Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
+                    .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
+                    .orElse(Boolean.FALSE);
+            if (isVariazioneDefinitiva) {
+                man.setTipoOperazione("INSERIMENTO");
+            } else {
+                man.setTipoOperazione("VARIAZIONE");
+            }
             GregorianCalendar gcdi = new GregorianCalendar();
 
             boolean obb_iban = false;
