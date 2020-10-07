@@ -783,7 +783,7 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 				sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
 			} else {
 				sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
-				sql.addClause("AND", "ti_entita_giuridica", SQLBuilder.NOT_EQUALS, AnagraficoBulk.GRUPPO_IVA);
+				sql.addClause("AND", "ti_entita_giuridica", SQLBuilder.NOT_EQUALS, AnagraficoBulk.GIURIDICA);
 			}
 		return fetchAll(sql);
 	}

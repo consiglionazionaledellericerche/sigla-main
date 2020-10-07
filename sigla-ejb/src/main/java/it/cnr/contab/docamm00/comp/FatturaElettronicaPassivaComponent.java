@@ -242,8 +242,9 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 							if(
 									Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale())
 											.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getCodice_fiscale_anagrafico()).orElse(""))).isPresent() ||
-											Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodice())
-													.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getPartita_iva_anagrafico()).orElse(""))).isPresent()
+											(Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodice())
+													.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getPartita_iva_anagrafico()).orElse(""))).isPresent() &&
+													!figura_giuridica_esterna.getAnagrafico().getTi_entita_giuridica().equalsIgnoreCase(AnagraficoBulk.GIURIDICA))
 							) {
 								documentoEleTrasmissioneBulk.setPrestatore(figura_giuridica_esterna);
 								documentoEleTrasmissioneBulk.setPrestatoreAnag(figura_giuridica_esterna.getAnagrafico());
