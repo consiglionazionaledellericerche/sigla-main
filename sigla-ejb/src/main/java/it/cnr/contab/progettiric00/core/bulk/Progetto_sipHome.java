@@ -23,14 +23,8 @@
  */
 package it.cnr.contab.progettiric00.core.bulk;
 
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_enteBulk;
-import it.cnr.contab.config00.bulk.Parametri_enteHome;
-import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
-import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
-import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.prevent01.bulk.Pdg_moduloBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.DetailedRuntimeException;
@@ -164,10 +158,15 @@ public class Progetto_sipHome extends BulkHome {
 		SQLBuilder sql = progettohome.createSQLBuilder();
 		sql.addTableToHeader("UNITA_ORGANIZZATIVA");
 		sql.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", "V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA");
-		sql.openParenthesis("AND");		  
+		sql.openParenthesis("AND");
 
 		Parametri_enteBulk parEnte = ((Parametri_enteHome)getHomeCache().getHome(Parametri_enteBulk.class)).getParametriEnteAttiva();
-		if (parEnte.isAbilProgettoUO())
+		boolean abilProgettoUO = parEnte.isAbilProgettoUO();
+		Optional<String> abilProgetti = ((Parametri_cdsHome) getHomeCache().getHome(Parametri_cdsBulk.class)).getAbilProgetti(aUC, CNRUserContext.getCd_cds(aUC));
+		if (abilProgetti.isPresent()) {
+			abilProgettoUO = abilProgetti.get().equalsIgnoreCase(V_struttura_organizzativaHome.LIVELLO_UO);
+		}
+		if (abilProgettoUO)
 			sql.addSQLClause(FindClause.AND,"V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(aUC));
 		else
 			sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));

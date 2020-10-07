@@ -62,6 +62,8 @@ thorntail:
         level: ERROR
       org.jboss.as.ejb3:
         level: ERROR
+      org.jboss.as.ejb3.invocation:
+        level: SEVERE
       org.jboss.as.dependency.private:
         level: ERROR
       org.jboss.as.server.deployment:
@@ -133,6 +135,48 @@ thorntail:
       json:
         path: /SIGLA/restapi/swagger.json
 
+  infinispan:
+    cache-containers:
+      sigla-web:
+        default-cache: passivation
+        module: org.wildfly.clustering.web.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
+      sigla-ejb:
+        default-cache: passivation
+        module: org.wildfly.clustering.ejb.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
 repository:
   base:
     url: http://gestdoc.cnr.it:90/alfresco/

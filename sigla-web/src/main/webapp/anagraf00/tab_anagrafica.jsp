@@ -19,7 +19,7 @@
 <legend class="GroupLabel card-header h3 text-primary">Tipologia</legend>
 	<table class="card-block">
 		<tr>
-			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,null,"onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
+			<td><%bp.getController().writeFormInput(out,"default","ti_entita",false,null,"onChange=\"submitForm('doCambiaTi_entita')\"");%></td>
 			 	<td>
 					<% if (anagrafico.getDt_fine_rapporto()!=null) { %>
 						<span class="FormLabel" style="color:red">
@@ -47,6 +47,14 @@
 			<td><%bp.getController().writeFormInput(out,"default","ti_entita_giuridica",false,null,"onclick=\"submitForm('doCambiaTi_entita')\"");%></td>
 		</tr>
 	<%} %>
+		<%if (anagrafico.isGruppoIVA()) { %>
+			<tr>
+				<td><% bp.getController().writeFormLabel(out,"dtIniValGruppoIva");%>
+				<% bp.getController().writeFormInput(out,null,"dtIniValGruppoIva",false,null,"");%>
+				<% bp.getController().writeFormLabel(out,"dt_canc");%>
+				<% bp.getController().writeFormInput(out,null,"dt_canc",false,null,"");%></td>
+			</tr>
+		<%} %>
 <%if (!anagrafico.isStrutturaCNR()) { %>
 		<tr>
 			<td>
@@ -75,7 +83,7 @@
 				<% bp.getController().writeFormLabel(out,"fl_cervellone");%>
 			</td>	
 		</tr>	
-		<%if (anagrafico.isFl_cervellone().booleanValue()) { %>	
+		<%if (anagrafico.isFl_cervellone().booleanValue()) { %>
 			</table>
 			<table>		
 			<tr>
@@ -86,9 +94,9 @@
 			</tr>
 			<tr>	
 				<td><% bp.getController().writeFormLabel(out,"anno_inizio_res_fis");%></td>
-				<td><% bp.getController().writeFormInput(out,"anno_inizio_res_fis");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"anno_inizio_res_fis",false,null,"");%></td>
 				<td><% bp.getController().writeFormLabel(out,"anno_fine_agevolazioni");%></td>
-				<td><% bp.getController().writeFormInput(out,"anno_fine_agevolazioni");%></td>
+				<td><% bp.getController().writeFormInput(out,null,"anno_fine_agevolazioni",false,null,"");%></td>
 			</tr>
 		<%} %>	
 		<%if (bp.isAbilitatoAutorizzareDiaria()) { %>	

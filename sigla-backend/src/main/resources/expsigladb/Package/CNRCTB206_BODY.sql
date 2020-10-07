@@ -1161,7 +1161,22 @@ Dbms_Output.PUT_LINE ('riga '||j);
 
 -- 20.06.2006 STANI LE SCRITTURE DI RATEI PARTE 2 DEVONO ALIMENTARE L'IVA (trascurata alla contabilizzazione (205))
 --            MA "NON" I COSTI PER RITENUTE CARICO ENTE PER I COMPENSI (CHE VENGONO PRESE L'ANNO PRIMA)
-
+					declare
+						fl_split  char(1):='N';
+						begin	
+					   If  aDocTst.cd_tipo_documento = CNRCTB100.TI_FATTURA_ATTIVA Then
+							select FL_LIQUIDAZIONE_DIFFERITA into fl_split
+							from fattura_attiva
+							where  
+							fattura_attiva.ti_fattura =  aDocTst.ti_fattura and
+					    fattura_attiva.esercizio = aDocTst.ESERCIZIO and
+					    fattura_attiva.cd_cds_origine = aDocTst.CD_CDS_ORIGINE and
+					    fattura_attiva.cd_uo_origine = aDocTst.CD_UO_ORIGINE and
+					    fattura_attiva.pg_fattura_attiva = aDocTst.PG_NUMERO_DOCUMENTO;
+						else 
+						  fl_split:='N';
+						end if;
+						if  (fl_split = 'N')  then 
                  For aDocCori in (Select *
                                   From   V_DOC_AMM_COGE_CORI
                                   Where  cd_cds                 = aDocTst.cd_cds And
@@ -1184,7 +1199,8 @@ Dbms_Output.PUT_LINE ('riga '||j);
 
                     aNewListMov(aNewListMov.Count+1) := aNewMov;
                  End Loop;
-
+     End if;
+     end;
    End If;  -- del tipo documento per il giro sull'iva
 			aNewMov := aNewListMov(aNewListMov.Count);
       tot_doc:=aNewListMov(aNewListMov.Count).IM_MOVIMENTO;

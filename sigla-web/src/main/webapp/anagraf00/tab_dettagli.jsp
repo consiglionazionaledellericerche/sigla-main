@@ -126,6 +126,14 @@
 			<td><% bp.getController().writeFormLabel(out,"fl_no_credito_irpef");%></td>
 			<td colspan="2"><% bp.getController().writeFormInput(out,"fl_no_credito_irpef");%></td>
 		  </tr>	
+          <tr>
+			<td><% bp.getController().writeFormLabel(out,"fl_no_credito_cuneo_irpef");%></td>
+			<td colspan="2"><% bp.getController().writeFormInput(out,"fl_no_credito_cuneo_irpef");%></td>
+		  </tr>
+          <tr>
+			<td><% bp.getController().writeFormLabel(out,"fl_no_detr_cuneo_irpef");%></td>
+			<td colspan="2"><% bp.getController().writeFormInput(out,"fl_no_detr_cuneo_irpef");%></td>
+		  </tr>
 		<% } %>
 		<% if(bp.isSupervisore()) {%> 
           <tr>

@@ -17,7 +17,7 @@ In entrambi i casi, nel momento in cui ci fossero messaggi di interesse per l’
 all’accesso in SIGLA viene evidenziato sulla barra delle applicazioni l’icona della
 ‘letterina’ con il numero di messaggi da leggere. Cliccando sull’icona vengono mostrati i messaggi:
 
-.. thumbnail:: ../screenshot/message.png
+.. figure:: ../screenshot/message.png
 
 Il primo messaggio è stato configurato in modo da restare in ‘cassetta postale’ fino ad
 una certa scadenza e quindi non sarà possibile per l’utente eliminarlo fino alla scadenza

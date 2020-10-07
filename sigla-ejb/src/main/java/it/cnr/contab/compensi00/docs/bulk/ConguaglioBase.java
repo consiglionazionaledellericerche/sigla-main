@@ -22,6 +22,8 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
+import java.math.BigDecimal;
+
 public class ConguaglioBase extends ConguaglioKey implements Keyed {
 	// CD_CDS_COMPENSO VARCHAR(30)
 	private java.lang.String cd_cds_compenso;
@@ -262,12 +264,78 @@ public class ConguaglioBase extends ConguaglioKey implements Keyed {
 	
 	// FL_NO_CREDITO_IRPEF CHAR(1) NOT NULL
 	private java.lang.Boolean fl_no_credito_irpef;
-	
+
+	public Boolean getFl_no_credito_cuneo_irpef() {
+		return fl_no_credito_cuneo_irpef;
+	}
+
+	public void setFl_no_credito_cuneo_irpef(Boolean fl_no_credito_cuneo_irpef) {
+		this.fl_no_credito_cuneo_irpef = fl_no_credito_cuneo_irpef;
+	}
+
+	public Boolean getFl_no_detr_cuneo_irpef() {
+		return fl_no_detr_cuneo_irpef;
+	}
+
+	public void setFl_no_detr_cuneo_irpef(Boolean fl_no_detr_cuneo_irpef) {
+		this.fl_no_detr_cuneo_irpef = fl_no_detr_cuneo_irpef;
+	}
+
+	private java.lang.Boolean fl_no_credito_cuneo_irpef;
+	private java.lang.Boolean fl_no_detr_cuneo_irpef;
+
 	// IM_CREDITO_IRPEF_GODUTO(15,2)
 	private java.math.BigDecimal im_credito_irpef_goduto;
-	
+
+	public BigDecimal getDetrazioni_rid_cuneo_dovuto() {
+		return detrazioni_rid_cuneo_dovuto;
+	}
+
+	public void setDetrazioni_rid_cuneo_dovuto(BigDecimal detrazioni_rid_cuneo_dovuto) {
+		this.detrazioni_rid_cuneo_dovuto = detrazioni_rid_cuneo_dovuto;
+	}
+
+	public BigDecimal getDetrazioni_rid_cuneo_goduto() {
+		return detrazioni_rid_cuneo_goduto;
+	}
+
+	public void setDetrazioni_rid_cuneo_goduto(BigDecimal detrazioni_rid_cuneo_goduto) {
+		this.detrazioni_rid_cuneo_goduto = detrazioni_rid_cuneo_goduto;
+	}
+
+	public BigDecimal getDetrazioni_rid_cuneo_esterno() {
+		return detrazioni_rid_cuneo_esterno;
+	}
+
+	public void setDetrazioni_rid_cuneo_esterno(BigDecimal detrazioni_rid_cuneo_esterno) {
+		this.detrazioni_rid_cuneo_esterno = detrazioni_rid_cuneo_esterno;
+	}
+
 	// IM_CREDITO_IRPEF_DOVUTO(15,2)
 	private java.math.BigDecimal im_credito_irpef_dovuto;
+
+	public BigDecimal getIm_bonus_irpef_dovuto() {
+		return im_bonus_irpef_dovuto;
+	}
+
+	public void setIm_bonus_irpef_dovuto(BigDecimal im_bonus_irpef_dovuto) {
+		this.im_bonus_irpef_dovuto = im_bonus_irpef_dovuto;
+	}
+
+	public BigDecimal getIm_bonus_irpef_goduto() {
+		return im_bonus_irpef_goduto;
+	}
+
+	public void setIm_bonus_irpef_goduto(BigDecimal im_bonus_irpef_goduto) {
+		this.im_bonus_irpef_goduto = im_bonus_irpef_goduto;
+	}
+
+	private java.math.BigDecimal im_bonus_irpef_dovuto;
+	private java.math.BigDecimal im_bonus_irpef_goduto;
+
+	private java.math.BigDecimal detrazioni_rid_cuneo_dovuto;
+	private java.math.BigDecimal detrazioni_rid_cuneo_goduto;
+	private java.math.BigDecimal detrazioni_rid_cuneo_esterno;
 public ConguaglioBase() {
 	super();
 }

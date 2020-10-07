@@ -2073,7 +2073,7 @@ public class MissioneComponent extends CRUDComponent implements IMissioneMgr, Cl
         try {
             //	Verifico che l'esercizio della missione (scrivania) sia aperto
             if (!verificaStatoEsercizio(aUC, new it.cnr.contab.config00.esercizio.bulk.EsercizioBulk(missione.getCd_cds(), ((it.cnr.contab.utenze00.bp.CNRUserContext) aUC).getEsercizio())))
-                throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire una missione per un esercizio non aperto!");
+                throw new it.cnr.jada.comp.ApplicationException("Impossibile inserire una missione missione per un esercizio non aperto!");
 
             missione.setDt_registrazione(getDataRegistrazione(aUC, missione));
 

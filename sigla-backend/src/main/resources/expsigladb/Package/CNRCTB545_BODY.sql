@@ -168,8 +168,8 @@ EXCEPTION
               FROM   TIPO_TRATTAMENTO A
               WHERE  A.cd_trattamento = aCdTrattamento AND
                      A.dt_fin_validita =
-		        (SELECT MAX(B.dt_fin_validita)
-			 FROM   TIPO_TRATTAMENTO B
+            (SELECT MAX(B.dt_fin_validita)
+       FROM   TIPO_TRATTAMENTO B
                          WHERE  B.cd_trattamento = A.cd_trattamento);
 
               RETURN aRecTipoTrattamento;
@@ -338,7 +338,7 @@ BEGIN
 
       IF aContatore = 0 THEN
          IBMERR001.RAISE_ERR_GENERICO
-            ('Riferimento allo scaglione per contributo ritenuta ' || aCdContributoRitenuta || ' / Regione '||aCdRegione||' / Comune '||aPgComune||' non trovato');
+            ('Riferimento allo scaglione per contributo ritenuta ' || aCdContributoRitenuta || ' / Regione '||aCdRegione||' / Comune '||aPgComune||' non trovato'||aTiAnagrafico||' '||aDataRif||' '||aCdProvincia||' '||aImportoRif );
       END IF;
 
    END;
@@ -634,11 +634,13 @@ BEGIN
            DETRAZIONE_CONIUGE,
            DETRAZIONE_FIGLI,
            DETRAZIONE_ALTRI,
+           DETRAZIONE_RIDUZIONE_CUNEO,
            DETRAZIONI_PERSONALI_NETTO,
            DETRAZIONI_LA_NETTO,
            DETRAZIONE_CONIUGE_NETTO,
            DETRAZIONE_FIGLI_NETTO,
            DETRAZIONE_ALTRI_NETTO,
+           DETRAZIONE_RID_CUNEO_NETTO,
            CD_CDS_DOC_GENRC,
            CD_UO_DOC_GENRC,
            ESERCIZIO_DOC_GENRC,
@@ -745,11 +747,13 @@ BEGIN
            aRecCompenso.detrazione_coniuge,
            aRecCompenso.detrazione_figli,
            aRecCompenso.detrazione_altri,
+           nvl(aRecCompenso.detrazione_riduzione_cuneo,0),
            aRecCompenso.detrazioni_personali_netto,
            aRecCompenso.detrazioni_la_netto,
            aRecCompenso.detrazione_coniuge_netto,
            aRecCompenso.detrazione_figli_netto,
            aRecCompenso.detrazione_altri_netto,
+           nvl(aRecCompenso.detrazione_rid_cuneo_netto,0),
            aRecCompenso.cd_cds_doc_genrc,
            aRecCompenso.cd_uo_doc_genrc,
            aRecCompenso.esercizio_doc_genrc,
@@ -1013,11 +1017,13 @@ BEGIN
               detrazione_coniuge,
               detrazione_figli,
               detrazione_altri,
+              detrazione_riduzione_cuneo,
               detrazioni_personali_netto,
               detrazioni_la_netto,
               detrazione_coniuge_netto,
               detrazione_figli_netto,
               detrazione_altri_netto,
+              detrazione_rid_cuneo_netto,
               cd_cds_doc_genrc,
               cd_uo_doc_genrc,
               esercizio_doc_genrc,
@@ -1066,13 +1072,13 @@ BEGIN
               stato_contratto,
               pg_contratto,
               im_tot_reddito_complessivo,
-							PG_TROVATO,
-							DATA_PROTOCOLLO,
-							NUMERO_PROTOCOLLO,
-							DT_SCADENZA,
-							STATO_LIQUIDAZIONE,
-							CAUSALE,
-							fl_documento_ele	)
+              PG_TROVATO,
+              DATA_PROTOCOLLO,
+              NUMERO_PROTOCOLLO,
+              DT_SCADENZA,
+              STATO_LIQUIDAZIONE,
+              CAUSALE,
+              fl_documento_ele  )
        SELECT aCdCdsCopia,
               aCdUnitaOrganizzativaCopia,
               aEsercizioCopia,
@@ -1151,11 +1157,13 @@ BEGIN
               A.detrazione_coniuge,
               A.detrazione_figli,
               A.detrazione_altri,
+              A.detrazione_riduzione_cuneo,
               A.detrazioni_personali_netto,
               A.detrazioni_la_netto,
               A.detrazione_coniuge_netto,
               A.detrazione_figli_netto,
               A.detrazione_altri_netto,
+              A.detrazione_rid_cuneo_netto,
               A.cd_cds_doc_genrc,
               A.cd_uo_doc_genrc,
               A.esercizio_doc_genrc,
@@ -1205,12 +1213,12 @@ BEGIN
               A.pg_contratto,
               A.im_tot_reddito_complessivo,
               A.pg_trovato,
-							A.data_protocollo,
-							A.numero_protocollo,
-							A.dt_scadenza,
-							A.stato_liquidazione,
-							A.causale,
-							A.fl_documento_ele
+              A.data_protocollo,
+              A.numero_protocollo,
+              A.dt_scadenza,
+              A.stato_liquidazione,
+              A.causale,
+              A.fl_documento_ele
        FROM   COMPENSO A
        WHERE  A.cd_cds = aCdCds AND
               A.esercizio = aEsercizio AND
@@ -1599,6 +1607,77 @@ BEGIN
    RETURN aNumeroMM;
 
 END getMesiMatriceDate;
+
+-- ==================================================================================================
+-- Ritorna la minima data presente in una matrice date
+-- ==================================================================================================
+FUNCTION getMinimaMatriceDate
+   (
+    aIntervalloDate intervalloDateTab
+   ) RETURN date IS
+   dataMinima date := null;
+   i BINARY_INTEGER;
+
+BEGIN
+
+   -- Abilito il calcolo solo se la matrice date è piena
+
+   IF aIntervalloDate.COUNT > 0 THEN
+
+      FOR i IN aIntervalloDate.FIRST .. aIntervalloDate.LAST
+
+      LOOP
+
+         if dataMinima is null then
+            dataMinima := aIntervalloDate(i).tDataDa;
+         else
+            if dataMinima > aIntervalloDate(i).tDataDa then
+                dataMinima := aIntervalloDate(i).tDataDa;
+            end if;
+         end if;
+
+     END LOOP;
+
+   END IF;
+
+   RETURN dataMinima;
+
+END getMinimaMatriceDate;
+-- ==================================================================================================
+-- Ritorna la massima data presente in una matrice date
+-- ==================================================================================================
+FUNCTION getMassimaMatriceDate
+   (
+    aIntervalloDate intervalloDateTab
+   ) RETURN date IS
+   dataMassima date := null;
+   i BINARY_INTEGER;
+
+BEGIN
+
+   -- Abilito il calcolo solo se la matrice date è piena
+
+   IF aIntervalloDate.COUNT > 0 THEN
+
+      FOR i IN aIntervalloDate.FIRST .. aIntervalloDate.LAST
+
+      LOOP
+
+         if dataMassima is null then
+            dataMassima := aIntervalloDate(i).tDataA;
+         else
+            if dataMassima < aIntervalloDate(i).tDataA then
+                dataMassima := aIntervalloDate(i).tDataA;
+            end if;
+         end if;
+
+     END LOOP;
+
+   END IF;
+
+   RETURN dataMassima;
+
+END getMassimaMatriceDate;
 -- ==================================================================================================
 -- Ritorna il numero di Mesi presenti in una matrice date in un dato Esercizio calcolandoli
 -- e schiacciando i duplicati
@@ -2117,19 +2196,19 @@ BEGIN
        aRecCompensoOri.fl_generata_fattura  = 'Y') THEN
       isCancella:='Y';
       Begin
-      		aRecFatturaPassiva:=CNRCTB120.getFatturaRiferimento(aRecCompensoOri.esercizio,
+          aRecFatturaPassiva:=CNRCTB120.getFatturaRiferimento(aRecCompensoOri.esercizio,
                                                               aRecCompensoOri.cd_cds,
                                                               aRecCompensoOri.cd_unita_organizzativa,
                                                               aRecCompensoOri.pg_compenso,
                                                               eseguiLock);
       exception when no_data_found then
       --  gestione pregressa all'inserimento degli estremi del compenso sulla fattura
-      	aRecFatturaPassiva:=CNRCTB120.getTstFatturaDaRifTerzo(aRecCompensoOri.cd_terzo,
+        aRecFatturaPassiva:=CNRCTB120.getTstFatturaDaRifTerzo(aRecCompensoOri.cd_terzo,
                                                             aRecCompensoOri.esercizio_fattura_fornitore,
                                                             CNRCTB100.TI_FATT_FATTURA,
                                                             aRecCompensoOri.nr_fattura_fornitore,
                                                             eseguiLock);
-			end;
+      end;
    END IF;
 
    -- Lettura del cori IVA del compenso in elaborazione per decidere se fare o meno l'inserimento.
@@ -2187,7 +2266,7 @@ BEGIN
              'Fattura UO ' || aRecFatturaPassiva.cd_unita_organizzativa || ' numero ' ||
              aRecFatturaPassiva.esercizio || '/' || aRecFatturaPassiva.pg_fattura_passiva);
       END IF;
-			IF aRecFatturaPassiva.progr_univoco IS NOT NULL THEN
+      IF aRecFatturaPassiva.progr_univoco IS NOT NULL THEN
          IBMERR001.RAISE_ERR_GENERICO
             ('Impossibile eliminare una fattura già inserita nel registro unico delle fatture - ' ||
              'Fattura UO ' || aRecFatturaPassiva.cd_unita_organizzativa || ' numero ' ||
@@ -2327,8 +2406,8 @@ cnrctb100.chkDtRegistrazPerIva (aRecFatturaPassiva.cd_cds_origine, aRecFatturaPa
         from fattura_passiva
         where
         esercizio   = aRecFatturaPassiva.esercizio      and
-    	  cd_cds      = aRecFatturaPassiva.cd_cds_origine and
-    	  cd_unita_organizzativa= aRecFatturaPassiva.cd_uo_origine;
+        cd_cds      = aRecFatturaPassiva.cd_cds_origine and
+        cd_unita_organizzativa= aRecFatturaPassiva.cd_uo_origine;
     exception when no_data_found then
       max_dt_registrazione:=null;
      end;

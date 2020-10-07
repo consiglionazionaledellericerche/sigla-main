@@ -19,6 +19,7 @@ package it.cnr.contab.compensi00.bp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
@@ -30,8 +31,11 @@ import it.cnr.contab.anagraf00.util.ExPartitaIVA;
 import it.cnr.contab.compensi00.tabrif.bulk.*;
 import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.*;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.reports.bp.*;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.ValidationException;
@@ -61,11 +65,11 @@ public CRUDConguaglioBP(String function) {
   * Il conguaglio viene messo in Visualizzazione se il compenso associato ha
   * una obbligazione riportata.
   */
- 
-public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException 
+
+	public void basicEdit(it.cnr.jada.action.ActionContext context, it.cnr.jada.bulk.OggettoBulk bulk, boolean doInitializeForEdit) throws it.cnr.jada.action.BusinessProcessException
 {
 	super.basicEdit(context, bulk, doInitializeForEdit);
-	
+
 	ConguaglioBulk conguaglio = (ConguaglioBulk)getModel();
 	if (!isViewing())
 	{
@@ -73,7 +77,8 @@ public void basicEdit(it.cnr.jada.action.ActionContext context,it.cnr.jada.bulk.
 			setStatus(VIEW);
 	}
 }
-/**
+
+	/**
  * Insert the method's description here.
  * Creation date: (25/02/2002 12.56.44)
  * @return it.cnr.contab.compensi00.docs.bulk.CompensoBulk
@@ -428,6 +433,8 @@ public void doValidaDatiEsterni(ActionContext context) throws ApplicationExcepti
 		conguaglio.setDetrazioni_al_esterno(new BigDecimal(0));
 	if(conguaglio.getDetrazioni_pe_esterno()==null)
 		conguaglio.setDetrazioni_pe_esterno(new BigDecimal(0));
+	if(conguaglio.getDetrazioni_rid_cuneo_esterno()==null)
+		conguaglio.setDetrazioni_rid_cuneo_esterno(new BigDecimal(0));
 	if (
 	   (conguaglio.getCodice_fiscale_esterno()!= null ||
 	    conguaglio.getDt_da_competenza_esterno()!= null ||
@@ -501,7 +508,7 @@ public void doValidaDatiEsterni(ActionContext context) throws ApplicationExcepti
 	    {
 	    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: E' obbligatorio inserire il Comune per la relativa Addizionale.");
 	    }
-	    if ((conguaglio.getDetrazioni_fi_esterno().add(conguaglio.getDetrazioni_co_esterno()).add(conguaglio.getDetrazioni_al_esterno()).add(conguaglio.getIm_irpef_esterno())).compareTo(conguaglio.getImponibile_fiscale_esterno())>0)
+	    if ((conguaglio.getDetrazioni_fi_esterno().add(conguaglio.getDetrazioni_co_esterno()).add(conguaglio.getDetrazioni_rid_cuneo_esterno()).add(conguaglio.getDetrazioni_al_esterno()).add(conguaglio.getIm_irpef_esterno())).compareTo(conguaglio.getImponibile_fiscale_esterno())>0)
 		{
 		    	throw new it.cnr.jada.comp.ApplicationException("Dati Esterni: La somma delle detrazioni e della Ritenuta irpef non può essere superiore all'Imponibile fiscale.");
 		}

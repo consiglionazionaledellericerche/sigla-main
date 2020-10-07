@@ -382,6 +382,20 @@
        aNumeroGGProprio IN OUT INTEGER
       );
 
+   PROCEDURE getNumeroGGRateMcarriera
+      (
+       aRecAnagrafico ANAGRAFICO%ROWTYPE,
+       aRecCompenso COMPENSO%ROWTYPE,
+       aCdCdsMcarriera MINICARRIERA.cd_cds%TYPE,
+       aCdUoMcarriera MINICARRIERA.cd_unita_organizzativa%TYPE,
+       aEsercizioMcarriera MINICARRIERA.esercizio%TYPE,
+       aPgMcarriera MINICARRIERA.pg_minicarriera%TYPE,
+       aDataInizio date,
+       aDataFine date,
+       aNumeroGGTutti IN OUT INTEGER,
+       aNumeroGGProprio IN OUT INTEGER
+      );
+
 -- Inserita routine di calcolo del numero complessivo di Mesi per le rate di minicarriera per revisione
 -- calcolo della deduzione FAMILY
 

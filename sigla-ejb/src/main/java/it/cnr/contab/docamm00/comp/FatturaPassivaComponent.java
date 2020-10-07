@@ -2230,7 +2230,26 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 fattura_passiva.setCognome(fornitoreTrovato.getAnagrafico().getCognome());
                 fattura_passiva.setRagione_sociale(fornitoreTrovato.getAnagrafico().getRagione_sociale());
                 fattura_passiva.setCodice_fiscale(fornitoreTrovato.getAnagrafico().getCodice_fiscale());
-                fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                if (fattura_passiva.getPartita_iva()!= null){
+                    it.cnr.contab.anagraf00.core.bulk.AnagraficoHome home = (it.cnr.contab.anagraf00.core.bulk.AnagraficoHome) getHome(uc, AnagraficoBulk.class);
+                    Collection coll = home.findGruppiIvaAssociati(fornitoreTrovato.getAnagrafico());
+                    Boolean trovato = false;
+                    if (coll != null && !coll.isEmpty()){
+                        for (java.util.Iterator i = coll.iterator(); i.hasNext(); ) {
+                            AssGruppoIvaAnagBulk assGruppoIvaAnagBulk = (AssGruppoIvaAnagBulk) i.next();
+                            AnagraficoBulk anagraficoBulk = (AnagraficoBulk)home.findByPrimaryKey(assGruppoIvaAnagBulk.getAnagraficoGruppoIva());
+                            if (anagraficoBulk != null && anagraficoBulk.isGruppoIVA() && fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDtIniValGruppoIva()) > 0 &&
+                                    fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDt_canc()) < 0 && anagraficoBulk.getPartita_iva().compareTo(fattura_passiva.getPartita_iva()) == 0){
+                                trovato = true;
+                            }
+                        }
+                    }
+                    if (!trovato){
+                        fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                    }
+                } else {
+                    fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                }
 
                 it.cnr.contab.anagraf00.core.bulk.TerzoHome home = (it.cnr.contab.anagraf00.core.bulk.TerzoHome) getHome(uc, fornitoreTrovato);
                 try {
@@ -2884,11 +2903,12 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
             if (fattura_passiva instanceof Fattura_passiva_IBulk || fattura_passiva instanceof Nota_di_creditoBulk) {
                 if (fattura_passiva.existARowToBeInventoried()) {
                     verificaEsistenzaEdAperturaInventario(userContext, fattura_passiva);
-                    if (fattura_passiva instanceof Fattura_passiva_IBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva) &&
-                            (fattura_passiva.getStato_liquidazione() == null || fattura_passiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ) == 0))
-                        throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
-                    if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
-                        throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
+                    if (fattura_passiva.getStato_liquidazione() == null || fattura_passiva.getStato_liquidazione().compareTo(Fattura_passiva_IBulk.LIQ) == 0) {
+                        if (fattura_passiva instanceof Fattura_passiva_IBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
+                            throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
+                        if (fattura_passiva instanceof Nota_di_creditoBulk && hasFatturaPassivaARowNotInventoried(userContext, fattura_passiva))
+                            throw new it.cnr.jada.comp.ApplicationException("Attenzione: è necessario inventariare tutti i dettagli.");
+                    }
                 }
             }
             validaFattura(userContext, fattura_passiva);

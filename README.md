@@ -2,6 +2,7 @@
 
 [![license](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://github.com/consiglionazionaledellericerche/sigla-main/blob/master/LICENSE)
 [![maven central](https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?style=flat)](https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-parent)
+[![contributors](https://img.shields.io/github/contributors/consiglionazionaledellericerche/sigla-main.svg?style=flat)](https://github.com/consiglionazionaledellericerche/sigla-main/contributors/)
 [![Docker Stars](https://img.shields.io/docker/stars/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
 [![Build doc Status](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=travis)](https://travis-ci.com/consiglionazionaledellericerche/sigla-main)

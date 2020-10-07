@@ -20,19 +20,19 @@ Accesso all’applicazione SIGLA
 
 Tutto ciò che riguarda le credenziali di accesso, abilitazioni all’accesso da parte dell’amministratore delle Utenze e scadenza delle password, non è oggetto di modifica. Di seguito vengono indicate le nuove modalità di presentazione della mappa di accesso:
 
-.. thumbnail:: screenshot/home.png
+.. figure:: screenshot/home.png
 
 Nel caso l’utente avesse, per le proprie credenziali, più utenze di accesso Sigla, viene mostrato l’elenco delle utenze disponibili e valide:
 
-.. thumbnail:: screenshot/home_2.png
+.. figure:: screenshot/home_2.png
 
 Dopo la scelta dell’utenza di accesso, viene selezionato come al solito il CDS/UO/CDR di accesso tra quelli abilitati:
 
-.. thumbnail:: screenshot/workspace.png
+.. figure:: screenshot/workspace.png
 
 e si entra nell’applicazione con il menù delle funzionalità abilitate:
 
-.. thumbnail:: screenshot/workspace_2.png
+.. figure:: screenshot/workspace_2.png
 
 Informazioni all’accesso
 ------------------------
@@ -51,14 +51,14 @@ Subito dopo l’accesso all’applicazione vengono evidenziati alcuni processi a
 
 Le informazioni vengono fornite automaticamente subito dopo l’accesso come nell’esempio che segue e solo in relazione alle abilitazioni dell’utente e della UO di accesso. Cliccando sui link evidenziati in ogni box, si accede direttamente alle funzionalità in cui è possibile completare le operazioni oggetto dei messaggi.
 
-.. thumbnail:: screenshot/workspace_3.png
+.. figure:: screenshot/workspace_3.png
 
 Altre Informazioni generali
 ---------------------------
 
 Vediamo di seguito altre informazioni importanti e alcune utilità messe a disposizione nella nuova interfaccia SIGLA, dopo l’accesso all’applicazione:
 
-.. thumbnail:: screenshot/navbar.png
+.. figure:: screenshot/navbar.png
 
 Le informazioni relative al CDS/UO, all’esercizio contabile, e all’utenza di accesso, vengono indicate dall’utente al primo utilizzo della nuova interfaccia SIGLA e riportate in automatico per gli accessi successivi senza necessità di doverle indicare di nuovo.
 
@@ -73,17 +73,17 @@ Gestione dei preferiti
 
 La lista dei preferiti è alimentata liberamente dall’utente durante la navigazione all’interno delle funzionalità:
 
-.. thumbnail:: screenshot/navbar_2.png
+.. figure:: screenshot/navbar_2.png
 
 La lista dei preferiti è sempre disponibile nella barra delle applicazioni. L’utente può spostarsi in qualsiasi momento in una delle funzionalità della lista.
 
 E’ possibile inoltre gestire i preferiti, accedendo alla lista, ed entrando nella relativa gestione:
 
-.. thumbnail:: screenshot/navbar_3.png
+.. figure:: screenshot/navbar_3.png
 
 La gestione dei preferiti consente di eliminare e/o aggiungere funzioni alla lista ed eventualmente modificare le informazioni inserite in fase di aggiunta della funzione tra i preferiti:
 
-.. thumbnail:: screenshot/bookmark.png
+.. figure:: screenshot/bookmark.png
 
 Per poter accedere alla ‘Gestione Preferiti’ occorre che l’utente abbia l’abilitazione alla funzione (Abilitazione da aggiungere da parte del gestore delle utenze).
 L’aggiornamento dei preferiti, invece, serve per applicare le modifiche (aggiunta o eliminazione) alla lista dei preferiti.
@@ -100,7 +100,7 @@ La messaggistica di cui si sta parlando, di tipo ‘Avviso’, si riferisce a du
 
 In entrambi i casi, nel momento in cui ci fossero messaggi di interesse per l’utente, all’accesso in SIGLA viene evidenziato sulla barra delle applicazioni l’icona della ‘letterina’ con il numero di messaggi da leggere. Cliccando sull’icona vengono mostrati i messaggi:
 
-.. thumbnail:: screenshot/message.png
+.. figure:: screenshot/message.png
 
 Il primo messaggio è stato configurato in modo da restare in ‘cassetta postale’ fino ad una certa scadenza e quindi non sarà possibile per l’utente eliminarlo fino alla scadenza programmata.
 Il secondo messaggio, invece, non avendo nessuna scadenza programmata perché si tratta di un ‘avviso’, può essere selezionato e cancellato dall’utente dopo la lettura. In questo ultimo caso resta a scelta dell’utente se tenere il messaggio come promemoria
@@ -124,7 +124,7 @@ Il tasto ‘Aggiorna menù’, invece, serve per applicare le eventuali modifich
 
 E’ inoltre possibile chiudere l’area della mappa riservata al menù così da avere più spazio per la funzionalità aperta:
 
-.. thumbnail:: screenshot/tree_search.png
+.. figure:: screenshot/tree_search.png
 
 Nell’esempio riportato nella figura precedente, è stata indicata, nel campo di ricerca voci di menù, la scritta ‘elettron’ ed è stata restituita la lista di funzioni di menù in cui compare questo testo. Cliccando su una delle voci dell’elenco si accede alla funzionalità in maniera rapida, evitando di navigare tra le voci del menù.
 
@@ -141,7 +141,7 @@ Le funzionalità di Sigla presentano un layout standard che prevede, oltre alle 
 
 Nella figura riportata di seguito sono riportate le icone e le utilità di cui abbiamo appena parlato:
 
-.. thumbnail:: screenshot/toolbar_2.png
+.. figure:: screenshot/toolbar_2.png
 
 La funzione indicata nell’esempio precedente è strutturata in diverse Pagine (o Tab) e la pagina su cui si è posizionati è evidenziata dal fatto che non è colorata come le altre.
 
@@ -149,7 +149,7 @@ La pagina, in questo caso, è strutturata in due sezioni evidenziate dal Titolo 
 
 Altre icone ricorrenti, riferite alla gestione dei campi della mappa, sono:
 
-.. thumbnail:: screenshot/validation_2.png
+.. figure:: screenshot/validation_2.png
 
 Nell’esempio precedente ci sono, inoltre, in alto nella mappa una serie di funzionalità disponibili per la gestione specifica del processo di gestione.
 
@@ -157,34 +157,34 @@ All’interno di ogni mappa, infine, possono esserci icone in più, rispetto a q
 
 Riportiamo a titolo di esempio alcune di esse:
 
-.. thumbnail:: screenshot/map_3.png
+.. figure:: screenshot/map_3.png
 
 Nella sezione dello scadenzario impegno (esempio di inserimento dettagli) abbiamo il seguente layout:
 
-.. thumbnail:: screenshot/map_4.png
+.. figure:: screenshot/map_4.png
 
 Per quanto riguarda i campi di tipo ‘data’ è disponibile il calendario da cui può essere selezionata la data (selezionando anno, mese e giorno) ed eventualmente l’ora, ove fosse richiesto dalla funzionalità:
 
-.. thumbnail:: screenshot/map_5.png
+.. figure:: screenshot/map_5.png
 
 Resta comunque sempre la possibilità di indicare manualmente la data anche se vanno indicati manualmente tutti i caratteri (anche il separatore ‘/’ tra giorno, mese e anno).
 
 Per quanto riguarda le griglie, invece, il layout standard è il seguente:
 
-.. thumbnail:: screenshot/map_6.png
+.. figure:: screenshot/map_6.png
 
 La testata della griglia riporta l’intestazione delle colonne, la possibilità di ordinare i dati per la singola colonna in modalità crescente o decrescente e la possibilità di ‘nascondere’ la colonna.
 
 Per quanto riguarda le stampe, infine, la mappa si presenta con le seguenti icone, oltre quelle già viste:
 
-.. thumbnail:: screenshot/print_4.png
+.. figure:: screenshot/print_4.png
 
 E il riporto nella mappa della coda di stampe:
 
-.. thumbnail:: screenshot/print_5.png
+.. figure:: screenshot/print_5.png
 
 Responsive
 ==========
 Infine è importante sottolineare che con l’utilizzo del nuovo layout Sigla, è possibile accedere all’applicazione anche da qualsiasi dispositivo mobile perché automaticamente le mappe si adattano allo schermo che le contiene:
 
-.. thumbnail:: screenshot/main.png
+.. figure:: screenshot/main.png

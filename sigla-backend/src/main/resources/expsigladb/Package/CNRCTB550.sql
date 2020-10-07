@@ -521,11 +521,13 @@
    aImDetrazioniFi NUMBER(15,2);
    aImDetrazioniFiS NUMBER(15,2);
    aImDetrazioniAl NUMBER(15,2);
+   aImDetrazioniRidCuneo NUMBER(15,2);
    aImDetrazioniPeNetto NUMBER(15,2);
    aImDetrazioniLaNetto NUMBER(15,2);
    aImDetrazioniCoNetto NUMBER(15,2);
    aImDetrazioniFiNetto NUMBER(15,2);
    aImDetrazioniAlNetto NUMBER(15,2);
+   aImDetrazioniRidCuneoNetto NUMBER(15,2);
 
    -- Memorizza la base di calcolo delle deduzioni
 
@@ -565,6 +567,8 @@
    -- Memorizza gestione no credito IRPEF per il soggetto anagrafico
 
    glbFlNoCreditoIrpef CHAR(1);
+   glbFlNoCreditoCuneoIrpef CHAR(1);
+   glbFlNoDetrCuneoIrpef CHAR(1);
 
    -- Memorizza il Reddito Complessivo e quello della prima casa presenti in anagrafica
 
@@ -1293,7 +1297,8 @@
        --indice BINARY_INTEGER,
        aImportoRiferimento NUMBER,
        inNumGGTotMinPerCredito INTEGER,
-       aRecCompenso COMPENSO%ROWTYPE
+       aRecCompenso COMPENSO%ROWTYPE,
+       cdCori TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE
       ) RETURN NUMBER;
 
    FUNCTION getNumeroGGCompensiCreditoArr
@@ -1319,14 +1324,16 @@
        aCdUoCompenso COMPENSO.cd_unita_organizzativa%TYPE,
        aEsercizioCompenso COMPENSO.esercizio%TYPE,
        aPgCompenso COMPENSO.pg_compenso%TYPE,
-       aTerzo TERZO.cd_terzo%TYPE
+       aTerzo TERZO.cd_terzo%TYPE,
+       cdCori TIPO_CONTRIBUTO_RITENUTA.CD_CONTRIBUTO_RITENUTA%TYPE
       ) RETURN NUMBER;
 
 FUNCTION arrotondaCredito
    (
     aCredito  CREDITO_IRPEF.im_credito%TYPE,
     DtDaComp COMPENSO.DT_DA_COMPETENZA_COGE%TYPE,
-    DtAComp  COMPENSO.DT_A_COMPETENZA_COGE%TYPE
+    DtAComp  COMPENSO.DT_A_COMPETENZA_COGE%TYPE,
+    aRecCreditoIrpef  CREDITO_IRPEF%ROWTYPE
    ) RETURN NUMBER;
 
    PROCEDURE riempiCarFamTmp

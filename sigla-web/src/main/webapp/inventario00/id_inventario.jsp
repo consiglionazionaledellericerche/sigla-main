@@ -31,6 +31,10 @@
 			<td><% bp.getController().writeFormInput(out,"ds_inventario");%></td>
 		</tr>
 		<tr>
+			<td><% bp.getController().writeFormLabel(out,"nr_inventario_iniziale");%></td>
+			<td><% bp.getController().writeFormInput(out,"nr_inventario_iniziale");%></td>
+		</tr>
+		<tr>
 			<td><% bp.getController().writeFormLabel(out,"cd_inventario_origine");%></td>
 			<td><% bp.getController().writeFormInput(out,"cd_inventario_origine");%></td>
 		</tr>

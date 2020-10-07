@@ -599,7 +599,18 @@ public class IncarichiProceduraAction extends it.cnr.jada.util.action.CRUDAction
 	        return handleException(actioncontext, exception);
 	    }
 	}
-	
+	public Forward doAddConflittoInteresseToCRUD(ActionContext actioncontext, String s) {
+		try
+		{
+			fillModel(actioncontext);
+			((Incarichi_archivioCRUDController)getController(actioncontext, s)).addConflittoInteresse(actioncontext);
+			return actioncontext.findDefaultForward();
+		}
+		catch(Exception exception)
+		{
+			return handleException(actioncontext, exception);
+		}
+	}
 	public Forward doAddBandoToCRUD(ActionContext actioncontext, String s) {
 	    try
 	    {

@@ -1336,6 +1336,24 @@
 		inputType="TEXT"
 		nullable="false"
 		label="Detr. altri netto" />
+	<fieldProperty
+			name="detrazioneRiduzioneCuneo"
+			property="detrazioneRiduzioneCuneo"
+			formatName="it.cnr.contab.util.EuroFormat"
+			maxLength="20"
+			inputSize="20"
+			inputType="TEXT"
+			nullable="false"
+			label="Detr. Riduzione Cuneo" />
+	<fieldProperty
+			name="detrazioneRidCuneoNetto"
+			property="detrazioneRidCuneoNetto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			maxLength="20"
+			inputSize="20"
+			inputType="TEXT"
+			nullable="false"
+			label="Detr. Riduzione Cuneo Netto" />
 /*********************************************/
 	<fieldProperty
 		name="pg_conguaglio"
@@ -1640,6 +1658,8 @@
 	<formFieldProperty name="detrazione_coniuge_netto" />
 	<formFieldProperty name="detrazione_figli_netto" />
 	<formFieldProperty name="detrazione_altri_netto" />
+	<formFieldProperty name="detrazioneRiduzioneCuneo" />
+	<formFieldProperty name="detrazioneRidCuneoNetto" />
 	<formFieldProperty name="fl_senza_calcoli" />
 	<formFieldProperty name="fl_recupero_rate" />		
 	<formFieldProperty name="contoA" />

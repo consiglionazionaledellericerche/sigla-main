@@ -29,6 +29,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_OBBLIGATORIETA_ORDINI = "OBBLIGATORIETA_ORDINI";
 	public final static String PK_PARAMETRI_ORDINI = "PARAMETRI_ORDINI";
 
+	public final static String PK_RIDUZIONE_CUNEO_DL_3_2020 = "RIDUZIONE_CUNEO_DL_3_2020";
+	public final static String SK_DATA_INIZIO = "DATA_INIZIO";
 	public final static String PK_LINEA_ATTIVITA_SPECIALE = "LINEA_ATTIVITA_SPECIALE";
 	public final static String SK_LINEA_COMUNE_VERSAMENTO_IVA = "LINEA_COMUNE_VERSAMENTO_IVA";
 	

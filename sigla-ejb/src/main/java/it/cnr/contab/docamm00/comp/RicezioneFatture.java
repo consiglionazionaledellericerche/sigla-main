@@ -992,7 +992,8 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
     }
 
     public void riceviFatturaSIGLA(BigInteger identificativoSdI,
-                                   String nomeFile, String replyTo, DataHandler file, String nomeFileMetadati,
+                                   String nomeFile, String replyTo, DataHandler file,
+                                   String nomeFileMetadati,
                                    DataHandler metadati) throws ComponentException {
         FileSdIConMetadatiType parametersIn = new FileSdIConMetadatiType();
         parametersIn.setIdentificativoSdI(identificativoSdI);

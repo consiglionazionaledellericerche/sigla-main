@@ -43,7 +43,7 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 	protected BulkList classVociAssociate = new BulkList();
 	protected BulkList pdgPianoRipartoSpese = new BulkList();
 	private BigDecimal tot_imp_piano_riparto_spese;
-	private BulkList<LimiteSpesaClassBulk> limitiSpesaClassColl;
+	private BulkList<LimiteSpesaClassBulk> limitiSpesaClassColl = new BulkList();
 
 	public static final String TIPO_CLASSIFICAZIONE_01 ="T01";
 	public static final String TIPO_CLASSIFICAZIONE_02 ="T02";

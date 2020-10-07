@@ -660,6 +660,17 @@
        aIntervalloDate intervalloDateTab
       ) RETURN INTEGER;
 
+-- Ritorna la massima data presente in una matrice date
+   FUNCTION getMassimaMatriceDate
+   (
+    aIntervalloDate intervalloDateTab
+   ) RETURN date;
+-- Ritorna la minima data presente in una matrice date
+   FUNCTION getMinimaMatriceDate
+   (
+    aIntervalloDate intervalloDateTab
+   ) RETURN date;
+
 -- Ritorna il numero di mesi presenti in una matrice date
 
    FUNCTION getMesiMatriceDate

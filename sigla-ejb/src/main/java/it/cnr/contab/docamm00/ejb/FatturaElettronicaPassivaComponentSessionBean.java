@@ -17,6 +17,7 @@
 
 package it.cnr.contab.docamm00.ejb;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.comp.FatturaElettronicaPassivaComponent;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -29,6 +30,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.NoRollbackException;
 import it.cnr.jada.persistency.PersistencyException;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -328,5 +330,23 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
             throw uncaughtError(userContext, componentObj, error);
         }
 	}
+    public Boolean isPartitaIvaGruppoIva(UserContext usercontext, AnagraficoBulk anagrafico, String partitaIva, Timestamp dataDocumento) throws ComponentException, EJBException{
+        pre_component_invocation(usercontext, componentObj);
+        try{
+            Boolean aBoolean = ((FatturaElettronicaPassivaComponent)componentObj).isPartitaIvaGruppoIva(usercontext, anagrafico, partitaIva, dataDocumento);
+            component_invocation_succes(usercontext, componentObj);
+            return aBoolean;
+        }catch(NoRollbackException norollbackexception){
+            component_invocation_succes(usercontext, componentObj);
+            throw norollbackexception;
+        }catch(ComponentException componentexception){
+            component_invocation_failure(usercontext, componentObj);
+            throw componentexception;
+        }catch(RuntimeException runtimeexception){
+            throw uncaughtRuntimeException(usercontext, componentObj, runtimeexception);
+        }catch(Error error){
+            throw uncaughtError(usercontext, componentObj, error);
+        }
+    }
 
 }

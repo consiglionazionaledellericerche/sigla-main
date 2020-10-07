@@ -2086,6 +2086,8 @@ public class CompensoBulk extends CompensoBase implements IDefferUpdateSaldi, ID
 		setDetrazione_figli_netto(new java.math.BigDecimal(0));
 		setDetrazioni_la_netto(new java.math.BigDecimal(0));
 		setDetrazioni_personali_netto(new java.math.BigDecimal(0));
+		setDetrazioneRiduzioneCuneo(new java.math.BigDecimal(0));
+		setDetrazioneRidCuneoNetto(new java.math.BigDecimal(0));
 	}
 
 	private void resetFlags() {

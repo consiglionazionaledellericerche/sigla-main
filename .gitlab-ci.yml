@@ -159,7 +159,7 @@ perform-maven-release-maven-central:
 publiccode:
   stage: publiccode
   image: golang
-  allow_failure: false
+  allow_failure: true
   before_script:
     - go get github.com/italia/publiccode-parser-go/pcvalidate
   script:

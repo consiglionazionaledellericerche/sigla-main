@@ -26,21 +26,13 @@ import java.util.stream.Collectors;
 import javax.ejb.EJBException;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.config00.bulk.Parametri_cnrHome;
-import it.cnr.contab.config00.bulk.Parametri_enteBulk;
-import it.cnr.contab.config00.bulk.Parametri_enteHome;
+import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.sto.bulk.Ass_uo_areaBulk;
-import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
-import it.cnr.contab.config00.sto.bulk.DipartimentoHome;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.*;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
@@ -350,10 +342,15 @@ public class ProgettoHome extends BulkHome {
 		SQLBuilder sql = progettohome.createSQLBuilder();
 		sql.addTableToHeader("UNITA_ORGANIZZATIVA");
 		sql.addSQLJoin("UNITA_ORGANIZZATIVA.CD_UNITA_ORGANIZZATIVA", "V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA");
-		sql.openParenthesis("AND");		  
-		
+		sql.openParenthesis("AND");
+
 		Parametri_enteBulk parEnte = ((Parametri_enteHome)getHomeCache().getHome(Parametri_enteBulk.class)).getParametriEnteAttiva();
-		if (parEnte.isAbilProgettoUO())
+		boolean abilProgettoUO = parEnte.isAbilProgettoUO();
+		Optional<String> abilProgetti = ((Parametri_cdsHome) getHomeCache().getHome(Parametri_cdsBulk.class)).getAbilProgetti(aUC, CNRUserContext.getCd_cds(aUC));
+		if (abilProgetti.isPresent()) {
+			abilProgettoUO = abilProgetti.get().equalsIgnoreCase(V_struttura_organizzativaHome.LIVELLO_UO);
+		}
+		if (abilProgettoUO)
 			sql.addSQLClause(FindClause.AND,"V_ABIL_PROGETTI.CD_UNITA_ORGANIZZATIVA",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(aUC));
 		else
 			sql.addSQLClause("AND","UNITA_ORGANIZZATIVA.CD_UNITA_PADRE",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(aUC));

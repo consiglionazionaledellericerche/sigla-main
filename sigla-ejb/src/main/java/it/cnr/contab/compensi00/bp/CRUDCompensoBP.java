@@ -23,6 +23,7 @@ import it.cnr.contab.compensi00.docs.bulk.*;
 import it.cnr.contab.compensi00.ejb.CompensoComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.Tipo_trattamentoBulk;
 import it.cnr.contab.config00.bulk.CigBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoSpesaBP;
@@ -46,12 +47,15 @@ import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Config;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 
+import javax.ejb.EJBException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 /**
@@ -118,6 +122,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
     private boolean carryingThrough = false;
     private boolean ribaltato;
     private boolean nocompenso = true;
+
     private Boolean isGestioneIncarichiEnabled = null;
 
     //private Boolean isGestionePrestazioneCompensoEnabled = null;
@@ -674,15 +679,6 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
 
         try {
             setGestioneIncarichiEnabled(Utility.createParametriCnrComponentSession().getParametriCnr(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext())).getFl_incarico());
-/*
-		String attivaPrestazione = ((it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession")).getVal01(context.getUserContext(), CNRUserContext.getEsercizio(context.getUserContext()), "*", "GESTIONE_COMPENSI", "ATTIVA_PRESTAZIONE");
-		if (attivaPrestazione==null)
-			throw new ApplicationException("Configurazione CNR: non sono stati impostati i valori per GESTIONE_COMPENSI - ATTIVA_PRESTAZIONE");
-		if (attivaPrestazione.compareTo(new String("Y"))==0)
-		    setGestionePrestazioneCompensoEnabled(true);
-		else
-			setGestionePrestazioneCompensoEnabled(false);
-*/
         } catch (it.cnr.jada.comp.ComponentException ex) {
             throw handleException(ex);
         } catch (java.rmi.RemoteException ex) {
@@ -1220,7 +1216,7 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
             CompensoBulk compenso = comp.onTipoTrattamentoChange(context.getUserContext(), (CompensoBulk) getModel());
             setModel(context, compenso);
         } catch (it.cnr.jada.comp.ComponentException ex) {
-            throw handleException(ex);
+            throw new BusinessProcessException(ex);
         } catch (java.rmi.RemoteException ex) {
             throw handleException(ex);
         }
@@ -1498,7 +1494,6 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
                     throw new it.cnr.jada.bulk.ValidationException("Inserire la Tipologia di Rischio");
                 else
                     completeSearchTool(context, getModel(), getBulkInfo().getFieldProperty("find_tipologia_rischio"));
-
 
         } catch (it.cnr.jada.bulk.ValidationException ex) {
             throw handleException(ex);

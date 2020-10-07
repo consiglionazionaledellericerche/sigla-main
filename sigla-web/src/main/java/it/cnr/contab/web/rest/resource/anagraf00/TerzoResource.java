@@ -18,6 +18,7 @@
 package it.cnr.contab.web.rest.resource.anagraf00;
 
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.ejb.EJB;
@@ -29,6 +30,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
+import it.cnr.jada.bulk.OggettoBulk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +54,7 @@ public class TerzoResource implements TerzoLocal {
 	@Context SecurityContext securityContext;
 	@EJB CRUDComponentSession crudComponentSession;
 	@EJB TerzoComponentSession terzoComponentSession;
+	@EJB AnagraficoComponentSession anagraficoComponentSession;
 	@EJB Unita_organizzativaComponentSession unita_organizzativaComponentSession;
 	
     public Response update(@Context HttpServletRequest request, TerzoBulk terzoBulk) throws Exception {
@@ -92,7 +97,22 @@ public class TerzoResource implements TerzoLocal {
     	return Response.status(Status.OK).entity(terzoBulk).build();
     }
 
-    private TerzoBulk getTerzo(UserContext userContext, Integer cdTerzo) throws PersistencyException, ComponentException, RemoteException, EJBException {
+	@Override
+	public Response tipoRapporto(String codicefiscale) throws Exception {
+		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+		Optional.ofNullable(codicefiscale).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il codice fiscale."));
+		final List<AnagraficoBulk> anagraficoBulks = crudComponentSession.find(userContext, AnagraficoBulk.class, "findByCodiceFiscaleOrPartitaIVA", codicefiscale, null);
+		return Response.status(Status.OK).entity(
+			crudComponentSession.find(
+					userContext,
+					AnagraficoBulk.class,
+					"findRapporti",
+					anagraficoBulks.stream().findAny().orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, nessun anagrafico trovato per il codice fiscale indicato."))
+			)
+		).build();
+	}
+
+	private TerzoBulk getTerzo(UserContext userContext, Integer cdTerzo) throws PersistencyException, ComponentException, RemoteException, EJBException {
 		TerzoBulk terzoBulk = new TerzoBulk();
 		terzoBulk.setCd_terzo(cdTerzo);
 		terzoBulk = (TerzoBulk)crudComponentSession.findByPrimaryKey(userContext, terzoBulk);

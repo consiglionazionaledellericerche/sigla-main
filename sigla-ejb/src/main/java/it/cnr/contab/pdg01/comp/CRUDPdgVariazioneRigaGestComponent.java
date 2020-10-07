@@ -697,10 +697,12 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 						/*
 							Progetto scaduto.
 							1) Se variazione di maggiore entrata/spesa su stesso istituto e/o istituti diversi devo poter associare qualsiasi voce di bilancio
+							1) Se variazione di tipo prelievo dai fondi devo poter associare qualsiasi voce di bilancio
 							2) Per altre variazioni devo poter movimentare solo le voci di bilancio movimentate e non associate che hanno un assestato da spostare
 						 */
 						if (!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO.equals(dett.getPdg_variazione().getTipologia()) &&
-							!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_ISTITUTI_DIVERSI.equals(dett.getPdg_variazione().getTipologia())) {
+							!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_ISTITUTI_DIVERSI.equals(dett.getPdg_variazione().getTipologia()) &&
+						    !Tipo_variazioneBulk.PRELIEVO_FONDI.equals(dett.getPdg_variazione().getTipologia())) {
 							//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
 							//all'utente di effettuare una variazione negativa
 							List<V_saldi_voce_progettoBulk> vociConDisponibilita = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))

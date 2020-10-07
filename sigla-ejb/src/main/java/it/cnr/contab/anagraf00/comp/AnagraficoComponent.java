@@ -58,10 +58,7 @@ import javax.ejb.EJBException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Questa classe svolge le operazioni fondamentali di lettura, scrittura e filtro dei dati
@@ -546,6 +543,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         anagrafico_esercizio.setIm_reddito_complessivo(new java.math.BigDecimal(0));
         anagrafico_esercizio.setIm_reddito_abitaz_princ(new java.math.BigDecimal(0));
         anagrafico_esercizio.setFl_no_credito_irpef(Boolean.FALSE);
+        anagrafico_esercizio.setFl_no_credito_cuneo_irpef(Boolean.FALSE);
+        anagrafico_esercizio.setFl_no_detr_cuneo_irpef(Boolean.FALSE);
         anagrafico_esercizio.setFl_detrazioni_altri_tipi(Boolean.FALSE);
         anagrafico_esercizio.setToBeCreated();
         anagrafico.setAnagrafico_esercizio(anagrafico_esercizio);
@@ -574,6 +573,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
             //anagrafico.setTerzi(new BulkList(anagraficoHome.findTerzi(anagrafico)));
             anagrafico.setRapporti(new BulkList(anagraficoHome.findRapporti(anagrafico)));
+            anagrafico.setAssGruppoIva(new BulkList(anagraficoHome.findAssGruppoIva(anagrafico)));
             anagrafico.setDichiarazioni_intento(new BulkList(anagraficoHome.findDichiarazioni_intento(anagrafico)));
             anagrafico.setCarichi_familiari_anag(new BulkList(anagraficoHome.findCarichi_familiari_anag(anagrafico)));
             anagrafico.setPagamenti_esterni(new BulkList(anagraficoHome.findPagamenti_esterni(anagrafico)));
@@ -883,6 +883,38 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
 
         if (NazioneBulk.EXTRA_CEE.equals(anag.getTi_italiano_estero()))
             sql.addSQLClause("AND", "TI_ITALIANO_ESTERO", sql.NOT_EQUALS, NazioneBulk.ITALIA);
+
+        return sql;
+    }
+
+    public SQLBuilder selectAnagraficoByClause(UserContext userContext,
+                                                   AssGruppoIvaAnagBulk ass,
+                                                   AnagraficoBulk anag_find,
+                                                   CompoundFindClause clause)
+            throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+        if (clause == null) clause = anag_find.buildFindClauses(null);
+
+        SQLBuilder sql = getHome(userContext, anag_find).createSQLBuilder();
+        sql.openParenthesis("AND");
+        sql.addSQLClause("AND", "TI_ENTITA_GIURIDICA", sql.ISNULL, null);
+        sql.addSQLClause("OR", "TI_ENTITA_GIURIDICA", sql.NOT_EQUALS, AnagraficoBulk.GRUPPO_IVA);
+        sql.closeParenthesis();
+        if (clause != null) sql.addClause(clause);
+
+        return sql;
+    }
+
+    public SQLBuilder selectAnagraficoGruppoIvaByClause(UserContext userContext,
+                                               AssGruppoIvaAnagBulk ass,
+                                               AnagraficoBulk anag_find,
+                                               CompoundFindClause clause)
+            throws ComponentException, it.cnr.jada.persistency.PersistencyException {
+        if (clause == null) clause = anag_find.buildFindClauses(null);
+
+        SQLBuilder sql = getHome(userContext, anag_find).createSQLBuilder();
+        sql.addSQLClause("AND", "TI_ENTITA_GIURIDICA", sql.EQUALS, AnagraficoBulk.GRUPPO_IVA);
+        sql.addSQLClause("AND", "DT_INI_VAL_GRUPPO_IVA", sql.ISNOTNULL, null);
+        if (clause != null) sql.addClause(clause);
 
         return sql;
     }
@@ -1371,6 +1403,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             || (anag_eserc.getFl_applica_detr_pers_max() != null && anag_eserc.getFl_applica_detr_pers_max().booleanValue())
                             || (anag_eserc.getIm_deduzione_family_area() != null && anag_eserc.getIm_deduzione_family_area().compareTo(new java.math.BigDecimal(0)) > 0)
                             || (anag_eserc.getFl_no_credito_irpef() != null && anag_eserc.getFl_no_credito_irpef().booleanValue())
+                            || (anag_eserc.getFl_no_detr_cuneo_irpef() != null && anag_eserc.getFl_no_detr_cuneo_irpef().booleanValue())
+                            || (anag_eserc.getFl_no_credito_cuneo_irpef() != null && anag_eserc.getFl_no_credito_cuneo_irpef().booleanValue())
                             || (anag_eserc.getFl_detrazioni_altri_tipi() != null && anag_eserc.getFl_detrazioni_altri_tipi().booleanValue())) {
 
                         //inizializzo i flag se non valorizzati
@@ -1406,6 +1440,16 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             // else
                             //		anag_eserc.setFl_no_credito_irpef(new Boolean(true));
                             anag_eserc.setFl_no_credito_irpef(new Boolean(false));
+                        }
+                        if (anag_eserc.getFl_no_credito_cuneo_irpef() == null) {
+                            // potrebbero attivarlo dopo l'inserimento di anagrafico_esercizio negli esercizi futuri
+                            // quindi lo inizializziamo sempre a NO, il calcolo del Bonus viene fatto solo con gestione attiva
+                            anag_eserc.setFl_no_credito_cuneo_irpef(new Boolean(false));
+                        }
+                        if (anag_eserc.getFl_no_detr_cuneo_irpef() == null) {
+                            // potrebbero attivarlo dopo l'inserimento di anagrafico_esercizio negli esercizi futuri
+                            // quindi lo inizializziamo sempre a NO, il calcolo del Bonus viene fatto solo con gestione attiva
+                            anag_eserc.setFl_no_detr_cuneo_irpef(new Boolean(false));
                         }
                         if (anag_eserc.getFl_detrazioni_altri_tipi() == null) {
                             // lo inizializziamo sempre a NO
@@ -1452,6 +1496,19 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
 
         // RIPULITURA CAMPI
         // vengono posti a null i campi non valorizzabili in base alla tipologia di anagrafica
+        if (!anagrafico.isGruppoIVA()){
+            anagrafico.setDtIniValGruppoIva(null);
+        } else {
+            if (anagrafico.getDtIniValGruppoIva() == null){
+                throw new it.cnr.jada.comp.ApplicationException("La data inizio validità del gruppo IVA è obbligatoria.");
+            }
+            if (anagrafico.getDt_canc() == null){
+                throw new it.cnr.jada.comp.ApplicationException("La data fine validità del gruppo IVA è obbligatoria.");
+            }
+            if (anagrafico.getDtIniValGruppoIva().after(anagrafico.getDt_canc())){
+                throw new it.cnr.jada.comp.ApplicationException("La data inizio validità del gruppo IVA deve essere precedente alla data di fine validità.");
+            }
+        }
         if (anagrafico.isPersonaFisica() || anagrafico.isDiversi()) {
             // PERSONA FISICA or DIVERSI
             anagrafico.setTi_entita_giuridica(null);
@@ -1462,7 +1519,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             // PERSONA GIURIDICA
             anagrafico.setTi_entita_fisica(null);
             anagrafico.setCognome(null);
-            anagrafico.setDt_canc(null);
+            if (!anagrafico.isGruppoIVA())
+                anagrafico.setDt_canc(null);
             anagrafico.setDt_nascita(null);
             anagrafico.setNome(null);
             anagrafico.setComune_nascita(null);
@@ -1694,6 +1752,80 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         validaDettagli(anagrafico);
         if (anagrafico.getCarichi_familiari_anag() != null) {
             validaTi_persona(userContext, anagrafico);
+        }
+        controlliGruppoIVA(userContext, anagrafico);
+    }
+
+    private void controlliGruppoIVA(UserContext userContext, AnagraficoBulk anagrafico) throws ComponentException {
+        if (!anagrafico.getAssGruppoIva().isEmpty()){
+            AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
+            for (Iterator di = anagrafico.getAssGruppoIva().iterator(); di.hasNext(); ) {
+                AssGruppoIvaAnagBulk ass = (AssGruppoIvaAnagBulk) di.next();
+
+                if (ass.isToBeCreated()|| ass.isToBeUpdated()) {
+                    Collection coll = null;
+                        try {
+                            if (anagrafico.isGruppoIVA()){
+                                coll = anagraficoHome.findGruppiIvaAssociati(ass.getAnagrafico());
+                            } else {
+                                coll = anagraficoHome.findGruppiIvaAssociati(anagrafico);
+                            }
+                        } catch (IntrospectionException e) {
+                            throw handleException(e);
+                        } catch (PersistencyException e) {
+                            throw handleException(e);
+                        }
+                        if (!coll.isEmpty()){
+                                for (Iterator d = coll.iterator(); d.hasNext(); ) {
+                                    AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
+                                    if (anagrafico.isGruppoIVA()){
+                                        controlloCongruenzaDateGruppiIva(userContext, anagrafico, assColl.getAnagraficoGruppoIva());
+                                    } else {
+                                        controlloCongruenzaDateGruppiIva(userContext, ass.getAnagraficoGruppoIva(), assColl.getAnagraficoGruppoIva());
+                                    }
+                                }
+                        }
+                    }
+                }
+            if (anagrafico.isGruppoIVA()){
+                for (Iterator di = anagrafico.getAssGruppoIva().iterator(); di.hasNext(); ) {
+                    AssGruppoIvaAnagBulk ass = (AssGruppoIvaAnagBulk) di.next();
+                    try {
+                        Collection coll = anagraficoHome.findGruppiIvaAssociati(ass.getAnagrafico());
+                        for (Iterator d = coll.iterator(); d.hasNext(); ) {
+                            AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
+                            if (!assColl.getAnagraficoGruppoIva().equalsByPrimaryKey(anagrafico)){
+                                controlloCongruenzaDateGruppiIva(userContext, anagrafico, assColl.getAnagraficoGruppoIva());
+                            }
+                        }
+                    } catch (IntrospectionException e) {
+                        throw handleException(e);
+                    } catch (PersistencyException e) {
+                        throw handleException(e);
+                    }
+                }
+            }
+        }
+    }
+
+    private void controlloCongruenzaDateGruppiIva(UserContext userContext, AnagraficoBulk anagrafico, AnagraficoBulk anagraficoAssBulk) throws ApplicationException, ComponentException {
+        try {
+            if (!anagrafico.isToBeCreated())
+            anagrafico = (AnagraficoBulk)getHome(userContext,anagrafico).findByPrimaryKey(anagrafico);
+            if (!anagraficoAssBulk.isToBeCreated())
+            anagraficoAssBulk = (AnagraficoBulk)getHome(userContext,anagraficoAssBulk).findByPrimaryKey(anagraficoAssBulk);
+
+        if (anagraficoAssBulk.getDt_canc() != null && anagrafico.getDtIniValGruppoIva() != null && anagrafico.getDt_canc() != null && anagraficoAssBulk.getDtIniValGruppoIva() != null &&
+                (anagraficoAssBulk.getDt_canc().compareTo(anagrafico.getDtIniValGruppoIva()) >= 0 &&
+                anagrafico.getDt_canc().compareTo(anagraficoAssBulk.getDtIniValGruppoIva()) >= 0) ||
+                (anagraficoAssBulk.getDtIniValGruppoIva().compareTo(anagrafico.getDt_canc()) <= 0 &&
+                        anagrafico.getDtIniValGruppoIva().compareTo(anagraficoAssBulk.getDt_canc()) <= 0)) {
+            throw new ApplicationException("Date incongruenti per i gruppi IVA associati all'anagrafico " + anagraficoAssBulk.getCd_anag());
+        }
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        } catch (ComponentException e) {
+            throw handleException(e);
         }
     }
 

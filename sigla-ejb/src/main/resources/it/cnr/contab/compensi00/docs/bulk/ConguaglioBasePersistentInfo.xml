@@ -129,12 +129,26 @@
 			columnScale="2"
 			nullable="false" />
 		<columnMapping
+				columnName="DETRAZIONE_RID_CUNEO_DOVUTO"
+				propertyName="detrazioni_rid_cuneo_dovuto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
 			columnName="DETRAZIONI_AL_ESTERNO"
 			propertyName="detrazioni_al_esterno"
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />
+		<columnMapping
+				columnName="DETRAZIONE_RID_CUNEO_ESTERNO"
+				propertyName="detrazioni_rid_cuneo_esterno"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
 		<columnMapping
 			columnName="IM_LORDO_CONGUAGLIO"
 			propertyName="im_lordo_conguaglio"
@@ -318,6 +332,13 @@
 			columnSize="15"
 			columnScale="2"
 			nullable="false" />
+		<columnMapping
+				columnName="DETRAZIONE_RID_CUNEO_GODUTO"
+				propertyName="detrazioni_rid_cuneo_goduto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
 		<columnMapping
 			columnName="DETRAZIONI_LA_ESTERNO"
 			propertyName="detrazioni_la_esterno"
@@ -561,7 +582,21 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			nullable="false"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />	
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+				columnName="FL_NO_CREDITO_CUNEO_IRPEF"
+				propertyName="fl_no_credito_cuneo_irpef"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+				columnName="FL_NO_DETR_CUNEO_IRPEF"
+				propertyName="fl_no_detr_cuneo_irpef"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
 			columnName="IM_CREDITO_IRPEF_GODUTO"
 			propertyName="im_credito_irpef_goduto"
@@ -575,7 +610,21 @@
 			sqlTypeName="DECIMAL"
 			columnSize="15"
 			columnScale="2"
-			nullable="false" />			
+			nullable="false" />
+		<columnMapping
+				columnName="IM_BONUS_IRPEF_GODUTO"
+				propertyName="im_bonus_irpef_goduto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
+		<columnMapping
+				columnName="IM_BONUS_IRPEF_DOVUTO"
+				propertyName="im_bonus_irpef_dovuto"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="false" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="dt_cancellazione" />
@@ -610,9 +659,13 @@
 	<persistentProperty
 		name="detrazioni_al_dovuto" />
 	<persistentProperty
+			name="detrazioni_rid_cuneo_dovuto" />
+	<persistentProperty
 		name="im_addprov_goduto" />
 	<persistentProperty
 		name="detrazioni_al_esterno" />
+	<persistentProperty
+			name="detrazioni_rid_cuneo_esterno" />
 	<persistentProperty
 		name="cd_termini_pag" />
 	<persistentProperty
@@ -671,6 +724,8 @@
 		name="pg_comune" />
 	<persistentProperty
 		name="detrazioni_al_goduto" />
+	<persistentProperty
+			name="detrazioni_rid_cuneo_goduto" />
 	<persistentProperty
 		name="detrazioni_la_esterno" />
 	<persistentProperty
@@ -746,9 +801,17 @@
 	<persistentProperty
 		name="fl_detrazioni_altri_tipi" />			
 	<persistentProperty
-		name="fl_no_credito_irpef" />			
+		name="fl_no_credito_irpef" />
+	<persistentProperty
+			name="fl_no_credito_cuneo_irpef" />
+	<persistentProperty
+			name="fl_no_detr_cuneo_irpef" />
 	<persistentProperty
 		name="im_credito_irpef_goduto" />	
 	<persistentProperty
-		name="im_credito_irpef_dovuto" />			
+		name="im_credito_irpef_dovuto" />
+	<persistentProperty
+			name="im_bonus_irpef_goduto" />
+	<persistentProperty
+			name="im_bonus_irpef_dovuto" />
 </SQLPersistentInfo>

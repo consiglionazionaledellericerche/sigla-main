@@ -2100,8 +2100,17 @@ public class FatturaAttivaSingolaComponent
                 fatturaAttiva.setCognome(terzo.getAnagrafico().getCognome());
                 fatturaAttiva.setRagione_sociale(terzo.getAnagrafico().getRagione_sociale());
                 fatturaAttiva.setCodice_fiscale(terzo.getAnagrafico().getCodice_fiscale());
-                fatturaAttiva.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
                 AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(aUC, AnagraficoBulk.class);
+                if (!terzo.getAnagrafico().isGruppoIVA()){
+                    AnagraficoBulk ana = anagraficoHome.findGruppoIva(terzo.getAnagrafico(), fatturaAttiva.getDt_registrazione());
+                    if (ana != null){
+                        fatturaAttiva.setPartita_iva(ana.getPartita_iva());
+                    } else {
+                        fatturaAttiva.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
+                    }
+                } else {
+                    fatturaAttiva.setPartita_iva(terzo.getAnagrafico().getPartita_iva());
+                }
                 fatturaAttiva.getCliente().getAnagrafico().setDichiarazioni_intento(new BulkList(anagraficoHome.findDichiarazioni_intentoValide(terzo.getAnagrafico())));
 
                 impostaDatiPerFatturazioneElettronica(aUC, fatturaAttiva, terzo);
@@ -2560,11 +2569,13 @@ public class FatturaAttivaSingolaComponent
                 Fattura_attiva_IBulk fatturaOriginaria = rigaFA.getFattura_attivaI();
                 RemoteIterator ri = findNotaDiCreditoFor(userContext, fatturaOriginaria);
                 try {
-                    if (ri != null  && ri.countElements() == 1) {
-                        Nota_di_credito_attivaBulk notaDiCredito = (Nota_di_credito_attivaBulk) ri.nextElement();
-                        notaDiCredito =(Nota_di_credito_attivaBulk) findByPrimaryKey(userContext, notaDiCredito);
-                        if (notaDiCredito != null && notaDiCredito.isFatturaElettronicaScartata() && notaDiCredito.isNotaCreditoDaNonInviareASdi() && notaDiCredito.getIm_totale_fattura().compareTo(ndd.getIm_totale_fattura()) == 0){
-                            impostaDocumentoDaNonInviare(ndd);
+                    if (ri != null  && ri.countElements() > 0) {
+                        while (ri.hasMoreElements()) {
+                            Nota_di_credito_attivaBulk notaDiCredito = (Nota_di_credito_attivaBulk) ri.nextElement();
+                            notaDiCredito =(Nota_di_credito_attivaBulk) findByPrimaryKey(userContext, notaDiCredito);
+                            if (notaDiCredito != null && (notaDiCredito.isFatturaElettronicaScartata()||notaDiCredito.isFatturaElettronicaRifiutata()) && notaDiCredito.getIm_totale_fattura().compareTo(ndd.getIm_totale_fattura()) == 0){
+                                impostaDocumentoDaNonInviare(ndd);
+                            }
                         }
                     }
                 } catch (RemoteException e) {
@@ -7832,7 +7843,17 @@ private void deleteAssociazioniInventarioWith(UserContext userContext,Fattura_at
             List listaNota = (getHome(userContext, Nota_di_credito_attivaBulk.class).find(nota));
 
             if (listaNota == null || listaNota.isEmpty()) {
-                return null;
+                Nota_di_debito_attivaBulk notaDebito = new Nota_di_debito_attivaBulk();
+                notaDebito.setNomeFileInvioSdi(nomeFileInvioSdi);
+                List listaNotaDebito = (getHome(userContext, Nota_di_debito_attivaBulk.class).find(notaDebito));
+
+                if (listaNotaDebito == null || listaNotaDebito.isEmpty()) {
+                    return null;
+                } else if (listaNotaDebito.size() == 1) {
+                    return (Nota_di_debito_attivaBulk) listaNota.get(0);
+                } else {
+                    throw new ComponentException("Esistono più note di debito aventi lo stesso nome file di invio a SDI! " + nomeFileInvioSdi);
+                }
             } else if (listaNota.size() == 1) {
                 return (Nota_di_credito_attivaBulk) listaNota.get(0);
             } else {

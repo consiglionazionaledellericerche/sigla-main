@@ -383,6 +383,18 @@
        aCdAnag ANAGRAFICO.cd_anag%TYPE
       ) RETURN VARCHAR2;
 
+   FUNCTION getAnagFlNoCreditoCuneoIrpef
+      (
+       aEsercizio NUMBER,
+       aCdAnag ANAGRAFICO.cd_anag%TYPE
+      ) RETURN VARCHAR2;
+
+   FUNCTION getAnagFlNoDetrCuneoIrpef
+      (
+       aEsercizio NUMBER,
+       aCdAnag ANAGRAFICO.cd_anag%TYPE
+      ) RETURN VARCHAR2;
+
 -- Recupero del Reddito complessivo impostato da utente solo per il calcolo delle detrazioni
 
    FUNCTION getAnagRedditoComplessivo

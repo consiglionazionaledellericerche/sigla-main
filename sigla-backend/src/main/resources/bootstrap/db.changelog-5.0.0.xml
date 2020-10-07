@@ -3335,4 +3335,207 @@ TRASPORTO_AEREO"/>
         <dropTable tableName="LDAP_SERVER"></dropTable>
     </changeSet>
 
+    <changeSet author="raffaele.pagano" id="incarichi-parametri-add-column-allega-conflitto-interesse">
+        <addColumn tableName="incarichi_parametri">
+            <column name="allega_conflitto_interesse" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="configurazione_cnr-add-data-inizio-riduzione-cuneo-dl320">
+        <insert tableName="configurazione_cnr" dbms="oracle">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="RIDUZIONE_CUNEO_DL_3_2020"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_INIZIO"/>
+            <column name="dt01" type="${date.type}" valueDate="to_Date('01072020','ddmmyyyy')"/>
+            <column name="dt02" type="${date.type}" valueDate="to_Date('31122100','ddmmyyyy')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="configurazione_cnr" dbms="postgresql">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="RIDUZIONE_CUNEO_DL_3_2020"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_INIZIO"/>
+            <column name="dt01" type="${date.type}" valueDate="to_timestamp('2020-01-07','YYYY-mm-DD')"/>
+            <column name="dt02" type="${date.type}" valueDate="to_timestamp('2100-12-31','YYYY-mm-DD')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irper-detrazioni-riduzione_cuneo">
+        <addColumn tableName="credito_irpef">
+            <column name="fl_detrazione" type="CHAR(1)" defaultValue="N" remarks="Indica se il credito funziona come detrazione">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-compenso-detrazioni-riduzione_cuneo">
+        <addColumn tableName="compenso">
+            <column name="detrazione_riduzione_cuneo" remarks="Detrazione per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+            </column>
+            <column name="detrazione_rid_cuneo_netto" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irpef-im_credito_base">
+        <addColumn tableName="credito_irpef">
+            <column name="im_credito_base" defaultValue="0" remarks="Nel caso di formula attiva viene indicato il valore fisso del credito da aggiungere a quello che viene calcolato dalla formula" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-anagrafico_esercizio-no_credito_cuneo_irpef">
+        <addColumn tableName="anagrafico_esercizio">
+            <column name="fl_no_credito_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fisclae irpef. Dominio Y = SI Non deve essere applicato il credito cuneo fiscale irpef. N = NO Deve essere applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_no_detr_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fisclae irpef. Dominio Y = SI Non deve essere applicato il credito cuneo fiscale irpef. N = NO Deve essere applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addNotNull-compenso-detrazione_cuneo">
+        <addNotNullConstraint columnName="detrazione_riduzione_cuneo" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
+        <addNotNullConstraint columnName="detrazione_rid_cuneo_netto" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-detrazioni-riduzione_cuneo">
+        <addColumn tableName="conguaglio">
+            <column name="detrazione_rid_cuneo_esterno" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detrazione_rid_cuneo_goduto" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detrazione_rid_cuneo_dovuto" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-no_credito_cuneo_irpef">
+        <addColumn tableName="conguaglio">
+            <column name="fl_no_credito_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fiscale irpef. Dominio Y = SI Applicato il credito cuneo fiscale irpef. N = Non applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_no_detr_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione della detrazione del Cuneo Fiscale irpef. Dominio Y = SI Applicata la detrazione cuneo fiscale irpef. N = Non applicata la detrazione cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irpef-cd_cori">
+        <addColumn tableName="credito_irpef">
+            <column name="cd_cori" type="VARCHAR(10)" remarks="Codice contributo ritenuta collegato al Credito Irpef">
+            </column>
+            <column name="dt_ini_validita_cori" type="DATE" remarks="Data inizio validita contributo ritenuta collegato al Credito Irpef">
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="cd_cori,dt_ini_validita_cori" baseTableName="credito_irpef" constraintName="fk_credito_irpef01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_contributo_ritenuta, dt_ini_validita" referencedTableName="tipo_contributo_ritenuta"/>
+        <createIndex indexName="fx_credito_irpef01" tableName="credito_irpef">
+            <column name="cd_cori"/>
+            <column name="dt_ini_validita_cori"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-tmp_report_generico-importi_rid_cuneo"  dbms="oracle">
+        <addColumn tableName="tmp_report_generico">
+            <column name="importo_56" remarks="Importo 56" type="numeric(20, 3)">
+            </column>
+            <column name="importo_57" remarks="Importo 57" type="numeric(20, 3)">
+            </column>
+            <column name="importo_58" remarks="Importo 58" type="numeric(20, 3)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-divisione_importi_credito_bonus">
+        <addColumn tableName="conguaglio">
+            <column name="im_bonus_irpef_dovuto" defaultValue="0" remarks="Importo bonus DL 66/2014 dovuto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_bonus_irpef_goduto" defaultValue="0" remarks="Importo bonus DL 66/2014 goduto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-tmp_report_generico-importi_bonus" dbms="oracle">
+        <addColumn tableName="tmp_report_generico">
+            <column name="importo_59" remarks="Importo 60" type="numeric(20, 3)">
+            </column>
+            <column name="importo_60" remarks="Importo 59" type="numeric(20, 3)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-importi_bonus">
+        <update tableName="conguaglio">
+            <column name="im_bonus_irpef_dovuto" valueComputed='im_credito_irpef_dovuto'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-importi_bonus_goduto">
+        <update tableName="conguaglio">
+            <column name="im_bonus_irpef_goduto" valueComputed='im_credito_irpef_goduto'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-azzera-credito">
+        <update tableName="conguaglio">
+            <column name="im_credito_irpef_dovuto" value='0'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-azzera-credito-goduto">
+        <update tableName="conguaglio">
+            <column name="im_credito_irpef_goduto" value='0'/>
+        </update>
+    </changeSet>
+    <changeSet id="add-column-abil_progetto_strorg-on-cds" author="marco.spasiano">
+        <addColumn tableName="parametri_cds">
+            <column name="abil_progetto_strorg" type="VARCHAR(3)"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="add-column-dt_ini_val_gr_iva-on-anagrafico" author="gianfranco.gasparro">
+        <addColumn tableName="anagrafico">
+            <column name="dt_ini_val_gruppo_iva" type="${date.type}"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_table_ass_gruppo_iva_anag">
+        <createTable remarks="Tabella contenente le associazioni tra anagrafico di tipo Gruppo IVA e anagrafico diverse da Gruppo IVA." tableName="ass_gruppo_iva_anag">
+            <column name="cd_anag_gr_iva" remarks="Anagrafico Gruppo IVA" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_anag" remarks="Anagrafico non di tipo Gruppo IVA" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stato" type="varchar2(3)" remarks="Stato della distinta siope+">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_cancellazione" remarks="Data Cancellazione" type="${date.type}"/>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_anag_gr_iva,cd_anag" constraintName="ass_gruppo_iva_anag_pkey" tableName="ass_gruppo_iva_anag"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_anag_gr_iva" baseTableName="ass_gruppo_iva_anag" constraintName="fk_ass_gruppo_iva_anag01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_anag" referencedTableName="anagrafico"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_anag" baseTableName="ass_gruppo_iva_anag" constraintName="fk_ass_gruppo_iva_anag02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_anag" referencedTableName="anagrafico"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index-inventario_beni-targa">
+        <createIndex indexName="ix_inventario_beni01" tableName="inventario_beni">
+            <column name="TARGA"/>
+        </createIndex>
+    </changeSet>
 </databaseChangeLog>

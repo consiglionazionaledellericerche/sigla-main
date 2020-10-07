@@ -104,11 +104,13 @@
 	<formFieldProperty
 		name="file" />
 	<formFieldProperty
+		name="identificativoSdI" />
+	<formFieldProperty
 		name="metadati" />
 	<formFieldProperty
 		name="fileFattureRicevute" />
 	<formFieldProperty
-			name="identificativoSDI" />
+		name="identificativoSDI" />
 	<formFieldProperty
 		name="daysBefore" />	
 			
