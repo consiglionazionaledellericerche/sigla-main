@@ -1,3 +1,19 @@
+## Release 6.2.45  -- _October 07, 2020_ 
+**Changes**
+
+>**FIX persona giuridica nel completamento della fattura elettronica**
+>
+>[fab00d97d297c9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fab00d97d297c9c) mspasiano *October 07, 2020*
+
+>**Cambiata valorizzazione della data di scadenz del pagamento SIOPE**
+>
+>[ee16e08e78bf49a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee16e08e78bf49a) mspasiano *October 07, 2020*
+
+>**Aggiunta gestione variazione per flusso OPI non SIOPE+**
+>
+>[6deacb119d86d46](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6deacb119d86d46) mspasiano *October 07, 2020*
+
+
 ## Release 6.2.44  -- _October 06, 2020_ 
 **Changes**
 
