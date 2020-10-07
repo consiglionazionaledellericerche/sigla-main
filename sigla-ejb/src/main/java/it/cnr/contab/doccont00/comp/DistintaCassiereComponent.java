@@ -90,6 +90,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -5688,7 +5689,6 @@ public class DistintaCassiereComponent extends
                                        V_mandato_reversaleBulk bulk,
                                        String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
-        final XMLGregorianCalendar dataPagamentoSIOPE = DatatypeFactory.newInstance().newXMLGregorianCalendar(LocalDate.now().plus(3, ChronoUnit.DAYS).toString());
 
         Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
                 .map(s -> TipoDebitoSIOPE.getValueFrom(s));
@@ -5877,7 +5877,7 @@ public class DistintaCassiereComponent extends
                                 CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                                 ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
-                                ctDatiFatturaSiope.setDataScadenzaPagamSiope(dataPagamentoSIOPE);
+                                ctDatiFatturaSiope.setDataScadenzaPagamSiope(convertToXMLGregorianCalendar(fattura_passivaBulk.getDt_scadenza()));
                                 //TODO CONTROLLARE SE NOTA
                                 ctDatiFatturaSiope.setImportoSiope(importo.setScale(2, BigDecimal.ROUND_HALF_UP));
 
@@ -5978,7 +5978,7 @@ public class DistintaCassiereComponent extends
                             CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                             ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
                             ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
-                            ctDatiFatturaSiope.setDataScadenzaPagamSiope(dataPagamentoSIOPE);
+                            ctDatiFatturaSiope.setDataScadenzaPagamSiope(convertToXMLGregorianCalendar(fattura_passivaBulk.get().getDt_scadenza()));
                             //TODO CONTROLLARE SE NOTA
                             ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP));
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
@@ -6011,6 +6011,14 @@ public class DistintaCassiereComponent extends
             }
         }
         return ctClassificazioneDatiSiopeUscite;
+    }
+
+    private XMLGregorianCalendar convertToXMLGregorianCalendar(Timestamp timestamp) {
+        try {
+            return DatatypeFactory.newInstance().newXMLGregorianCalendar(timestamp.toInstant().toString());
+        } catch (DatatypeConfigurationException e) {
+            throw new RuntimeException("Cannot convert timpestamp to XMLGregorianCalendar " + timestamp.toInstant().toString());
+        }
     }
 
     public Long findMaxMovimentoContoEvidenza(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {
