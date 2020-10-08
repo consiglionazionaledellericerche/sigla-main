@@ -6015,7 +6015,7 @@ public class DistintaCassiereComponent extends
 
     private XMLGregorianCalendar convertToXMLGregorianCalendar(Timestamp timestamp) {
         try {
-            return DatatypeFactory.newInstance().newXMLGregorianCalendar(timestamp.toInstant().toString());
+            return DatatypeFactory.newInstance().newXMLGregorianCalendar(timestamp.toLocalDateTime().toLocalDate().toString());
         } catch (DatatypeConfigurationException e) {
             throw new RuntimeException("Cannot convert timpestamp to XMLGregorianCalendar " + timestamp.toInstant().toString());
         }
