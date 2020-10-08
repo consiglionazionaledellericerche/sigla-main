@@ -179,16 +179,13 @@ thorntail:
               purge: false
 repository:
   base:
-    url: http://gestdoc.cnr.it:90/alfresco/
-#    url: http://as1dock.si.cnr.it:8080/alfresco/
+    url: http://as1dock.si.cnr.it:8080/alfresco/
 org:
   apache:
     chemistry:
       opencmis:
-#        user: admin
-#        password: admin
-        user: sigla
-        password: algispw
+        user: admin
+        password: admin
         session:
           repository:
             id: -default-
