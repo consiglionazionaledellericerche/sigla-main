@@ -1,5 +1,9 @@
-## Release 6.2.45  -- _October 07, 2020_ 
+## Release 6.2.46  -- _October 08, 2020_ 
 **Changes**
+
+>**FIX data_scadenza_pagam_siope remove time**
+>
+>[95a126d917dac8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95a126d917dac8b) mspasiano *October 08, 2020*
 
 >**FIX persona giuridica nel completamento della fattura elettronica**
 >
