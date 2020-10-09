@@ -1,5 +1,97 @@
-## Release 6.2.45  -- _October 07, 2020_ 
+## Release 6.2.47  -- _October 08, 2020_ 
 **Changes**
+
+>**Fix tipo TD24 fattura elettronica**
+>
+>[ba19fd6a13263d1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba19fd6a13263d1) gianfranco.gasparro *October 08, 2020*
+
+>**Fix**
+>
+>[5e8b4860f49f327](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e8b4860f49f327) gianfranco.gasparro *September 30, 2020*
+
+>**Fix conguagli nel caso di buchi tra i vari incarichi**
+>
+>[441c15c512bd73b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/441c15c512bd73b) gianfranco.gasparro *September 30, 2020*
+
+>**Change theme of document**
+>
+>[64bb82d2db5194c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64bb82d2db5194c) mspasiano *September 25, 2020*
+
+>**Change theme of document**
+>
+>[3a2174b20307732](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3a2174b20307732) mspasiano *September 25, 2020*
+
+>**FIX remote maven repo on DOckerfile**
+>
+>[a888f34d1744e68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a888f34d1744e68) mspasiano *September 23, 2020*
+
+>**Aggiunto indice su targa di Inventario_beni**
+>
+>[fc8c5d68f82806c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc8c5d68f82806c) gianfranco.gasparro *September 21, 2020*
+
+>**Fix anomalia conguaglio**
+>
+>[aab773a5d928025](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aab773a5d928025) gianfranco.gasparro *September 21, 2020*
+
+>**Fix anomalia conguaglio nei dati irpef dovuti che non venivano considerato nel compenso generato**
+>
+>[381263b6fb8a4ef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/381263b6fb8a4ef) gianfranco.gasparro *September 17, 2020*
+
+>**Fix**
+>
+>[5bacf6df921e492](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5bacf6df921e492) gianfranco.gasparro *September 15, 2020*
+
+>**Modifiche per Versione 1.2.1.**
+>
+>[1beeb085812fdfb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1beeb085812fdfb) gianfranco.gasparro *May 04, 2020*
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[497a3e5b6520c2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/497a3e5b6520c2e) gianfranco.gasparro *April 16, 2020*
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[379603aeda42335](https://github.com/consiglionazionaledellericerche/sigla-main/commit/379603aeda42335) gianfranco.gasparro *April 16, 2020*
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[b02a7f13b887c5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b02a7f13b887c5c) gianfranco.gasparro *April 16, 2020*
+
+>**Adeguato a swagger i servizi REST di Missioni e Contratto**
+>
+>[f3f768f6b2c478d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3f768f6b2c478d) gianfranco.gasparro *April 16, 2020*
+
+>**Fix allegati progetti: corretta errata visualizzazione di file allegati al progetto (venivano visualizzati più volte gli stessi file)**
+>
+>[2b807e0755a22df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b807e0755a22df) raffaele.pagano *April 15, 2020*
+
+>**Fix**
+>
+>[f9fb58f2f09242c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9fb58f2f09242c) gianfranco.gasparro *April 15, 2020*
+
+>**Add json path for swagger**
+>
+>[37d40dde54fcfc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37d40dde54fcfc7) marco.spasiano *April 15, 2020*
+
+>**FIX maven.repo on docker compose [ci skip]**
+>
+>[6fa78ab6028da18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fa78ab6028da18) marco.spasiano *April 14, 2020*
+
+>**Added swagger for API documentation and change Thorntail version to 2.6.0.Final**
+>
+>[d56bf4ac17c4b79](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d56bf4ac17c4b79) marco.spasiano *April 14, 2020*
+
+>**Completata comunicazione dati pagamenti**
+>
+>[37515cc236fae02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37515cc236fae02) gianfranco.gasparro *March 27, 2020*
+
+
+## Release 6.2.46  -- _October 08, 2020_ 
+**Changes**
+
+>**FIX data_scadenza_pagam_siope remove time**
+>
+>[95a126d917dac8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95a126d917dac8b) mspasiano *October 08, 2020*
 
 >**FIX persona giuridica nel completamento della fattura elettronica**
 >
@@ -256,42 +348,6 @@
 >**Update index.rst**
 >
 >[4104fc35c92e5c5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4104fc35c92e5c5) patriziavillani *September 30, 2020*
-
->**Fix**
->
->[5e8b4860f49f327](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5e8b4860f49f327) gianfranco.gasparro *September 30, 2020*
-
->**Fix conguagli nel caso di buchi tra i vari incarichi**
->
->[441c15c512bd73b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/441c15c512bd73b) gianfranco.gasparro *September 30, 2020*
-
->**Change theme of document**
->
->[64bb82d2db5194c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/64bb82d2db5194c) mspasiano *September 25, 2020*
-
->**Change theme of document**
->
->[3a2174b20307732](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3a2174b20307732) mspasiano *September 25, 2020*
-
->**FIX remote maven repo on DOckerfile**
->
->[a888f34d1744e68](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a888f34d1744e68) mspasiano *September 23, 2020*
-
->**Aggiunto indice su targa di Inventario_beni**
->
->[fc8c5d68f82806c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fc8c5d68f82806c) gianfranco.gasparro *September 21, 2020*
-
->**Fix anomalia conguaglio**
->
->[aab773a5d928025](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aab773a5d928025) gianfranco.gasparro *September 21, 2020*
-
->**Fix anomalia conguaglio nei dati irpef dovuti che non venivano considerato nel compenso generato**
->
->[381263b6fb8a4ef](https://github.com/consiglionazionaledellericerche/sigla-main/commit/381263b6fb8a4ef) gianfranco.gasparro *September 17, 2020*
-
->**Fix**
->
->[5bacf6df921e492](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5bacf6df921e492) gianfranco.gasparro *September 15, 2020*
 
 
 ## Release 6.2.38  -- _September 14, 2020_ 
@@ -687,50 +743,6 @@
 >**FIX Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: il controllo limite classificazione per cds nel momento in cui viene resa definitiva una variazione di competenza è stato limitato solo alle fonti interne**
 >
 >[cecf12ae1f1150b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cecf12ae1f1150b) raffaele.pagano *April 20, 2020*
-
-
-## Release 6.2.8  -- _April 20, 2020_ 
-**Changes**
-
->**Corretto test per comunicazione dati pagamenti**
->
->[497a3e5b6520c2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/497a3e5b6520c2e) gianfranco.gasparro *April 16, 2020*
-
->**Corretto test per comunicazione dati pagamenti**
->
->[379603aeda42335](https://github.com/consiglionazionaledellericerche/sigla-main/commit/379603aeda42335) gianfranco.gasparro *April 16, 2020*
-
->**Corretto test per comunicazione dati pagamenti**
->
->[b02a7f13b887c5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b02a7f13b887c5c) gianfranco.gasparro *April 16, 2020*
-
->**Adeguato a swagger i servizi REST di Missioni e Contratto**
->
->[f3f768f6b2c478d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3f768f6b2c478d) gianfranco.gasparro *April 16, 2020*
-
->**Fix allegati progetti: corretta errata visualizzazione di file allegati al progetto (venivano visualizzati più volte gli stessi file)**
->
->[2b807e0755a22df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b807e0755a22df) raffaele.pagano *April 15, 2020*
-
->**Fix**
->
->[f9fb58f2f09242c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9fb58f2f09242c) gianfranco.gasparro *April 15, 2020*
-
->**Add json path for swagger**
->
->[37d40dde54fcfc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37d40dde54fcfc7) marco.spasiano *April 15, 2020*
-
->**FIX maven.repo on docker compose [ci skip]**
->
->[6fa78ab6028da18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fa78ab6028da18) marco.spasiano *April 14, 2020*
-
->**Added swagger for API documentation and change Thorntail version to 2.6.0.Final**
->
->[d56bf4ac17c4b79](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d56bf4ac17c4b79) marco.spasiano *April 14, 2020*
-
->**Completata comunicazione dati pagamenti**
->
->[37515cc236fae02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37515cc236fae02) gianfranco.gasparro *March 27, 2020*
 
 
 ## Release 6.2.7  -- _April 07, 2020_ 
