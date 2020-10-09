@@ -1,3 +1,31 @@
+## Release 6.2.48  -- _October 09, 2020_ 
+**Changes**
+
+>**Aggiornata versione thorntail alla 2.7.0.Final**
+>
+>[81775f131ab6489](https://github.com/consiglionazionaledellericerche/sigla-main/commit/81775f131ab6489) mspasiano *October 09, 2020*
+
+>**Trasmissione ordinativi esteri via PEC in un unico file PDF**
+>
+>[67c53a63425f72d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/67c53a63425f72d) mspasiano *October 09, 2020*
+
+>**FIX data_scadenza_pagam_siope remove time**
+>
+>[95a126d917dac8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95a126d917dac8b) mspasiano *October 08, 2020*
+
+>**FIX persona giuridica nel completamento della fattura elettronica**
+>
+>[fab00d97d297c9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fab00d97d297c9c) mspasiano *October 07, 2020*
+
+>**Cambiata valorizzazione della data di scadenz del pagamento SIOPE**
+>
+>[ee16e08e78bf49a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee16e08e78bf49a) mspasiano *October 07, 2020*
+
+>**Aggiunta gestione variazione per flusso OPI non SIOPE+**
+>
+>[6deacb119d86d46](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6deacb119d86d46) mspasiano *October 07, 2020*
+
+
 ## Release 6.2.47  -- _October 08, 2020_ 
 **Changes**
 
@@ -84,26 +112,6 @@
 >**Completata comunicazione dati pagamenti**
 >
 >[37515cc236fae02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37515cc236fae02) gianfranco.gasparro *March 27, 2020*
-
-
-## Release 6.2.46  -- _October 08, 2020_ 
-**Changes**
-
->**FIX data_scadenza_pagam_siope remove time**
->
->[95a126d917dac8b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95a126d917dac8b) mspasiano *October 08, 2020*
-
->**FIX persona giuridica nel completamento della fattura elettronica**
->
->[fab00d97d297c9c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fab00d97d297c9c) mspasiano *October 07, 2020*
-
->**Cambiata valorizzazione della data di scadenz del pagamento SIOPE**
->
->[ee16e08e78bf49a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ee16e08e78bf49a) mspasiano *October 07, 2020*
-
->**Aggiunta gestione variazione per flusso OPI non SIOPE+**
->
->[6deacb119d86d46](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6deacb119d86d46) mspasiano *October 07, 2020*
 
 
 ## Release 6.2.44  -- _October 06, 2020_ 
