@@ -46,6 +46,7 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.ColumnFieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDNotNullConstraintException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.OrderedHashtable;
@@ -236,6 +237,8 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                 aggiornaStato(context, MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO, v_mandato_reversaleBulk);
             }
             setMessage("Cancellazione effettuata correttamente.");
+        } catch (CRUDNotNullConstraintException e) {
+            setMessage(e.getUserMessage());
         } catch (ApplicationException e) {
             setMessage(e.getMessage());
         } catch (ComponentException e) {

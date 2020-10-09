@@ -74,6 +74,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -81,10 +83,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.activation.DataSource;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.security.Principal;
 import java.sql.Timestamp;
@@ -99,6 +98,8 @@ import java.util.stream.Stream;
 
 public class DocumentiContabiliService extends StoreService implements InitializingBean {
     public static final String SIOPEPLUS = "SIOPEPLUS";
+    public static final String DISTINTA_PEC_PDF = "Distinta_PEC.pdf";
+
     private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
     final String pattern = "dd MMMM YYYY' alle 'HH:mm:ss";
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
@@ -787,10 +788,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
             List<String> nodes = new ArrayList<String>();
             StorageObject distintaStorageObject = getStorageObjectByPath(
                     distinta.getStorePath().concat(storageDriver.SUFFIX).concat(distinta.getCMISName()));
-
             nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
-
-
             List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
                     .dettagliDistinta(
                             userContext,
@@ -822,7 +820,30 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
                     .filter(s -> s != null)
                     .forEach(s -> nodes.add(s));
-            if (nodes.size() > 1) {
+            if (distinta.getFl_sepa()) {
+                PDFMergerUtility ut = new PDFMergerUtility();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                ut.setDestinationStream(out);
+                nodes.stream()
+                        .map(key -> getResource(key))
+                        .forEach(inputStream -> ut.addSource(inputStream));
+                try {
+                    ut.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
+                } catch (IOException _ex) {
+                    logger.error("SIOPE+ Invia PEC", _ex);
+                }
+                StorageObject distintaPEC = restoreSimpleDocument(
+                        distinta,
+                        new ByteArrayInputStream(out.toByteArray()),
+                        MimeTypes.PDF.mimetype(),
+                        DISTINTA_PEC_PDF,
+                        distinta.getStorePath(),
+                        false
+                );
+                nodes.clear();
+                nodes.add(distintaPEC.getKey());
+            }
+            if (nodes.size() > 0) {
                 inviaDistintaPEC(nodes, isEstero,
                         "Invio Distinta Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
                                 " Progressivo Flusso: " + distinta.getProgFlusso() +

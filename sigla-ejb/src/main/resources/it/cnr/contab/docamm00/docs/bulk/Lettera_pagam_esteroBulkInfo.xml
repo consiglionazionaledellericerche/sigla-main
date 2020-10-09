@@ -139,7 +139,18 @@
 		maxLength="10"
 		inputSize="10"
 		formatName="date_short"
-		label="Data cancellazione" />		
+		label="Data cancellazione" />
+	<fieldProperty
+		name="motivo_pag"
+		property="motivo_pag"
+		maxLength="250"
+		inputSize="100"
+		inputType="TEXT"
+		label="MOTIVO DEL PAGAMENTO"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		caseSensitiveSearch="false"/>
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -162,7 +173,9 @@
 		name="sospeso" />
 	<formFieldProperty
 		name="stato_trasmissione" />
-			
+	<formFieldProperty
+		name="motivo_pag" />
+
 	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
@@ -214,7 +227,9 @@
 		name="esercizio_distinta" />
 	<findFieldProperty
 		name="pg_distinta" />
-			
+	<findFieldProperty
+		name="motivo_pag" />
+
 	<columnSet
         name="firmaBase">
 		<columnFieldProperty
