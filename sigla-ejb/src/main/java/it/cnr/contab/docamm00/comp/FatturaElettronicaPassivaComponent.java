@@ -408,7 +408,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
     	if (oggettobulk instanceof DocumentoEleTestataBulk){
     		((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione().setToBeUpdated();
-			controlloTipiDocumento();
+			controlloTipiDocumento(oggettobulk);
     		notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     		super.modificaConBulk(usercontext, ((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione());
     		cambiaStatoCompletato(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
