@@ -1,3 +1,11 @@
+## Release 6.2.49  -- _October 11, 2020_ 
+**Changes**
+
+>**Aggiunto controllo su nuovi tipi documento in attesa che l'ufficio affari fiscali ci indichi cosa fare.**
+>
+>[c258dfc141ff85c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c258dfc141ff85c) gianfranco.gasparro *October 11, 2020*
+
+
 ## Release 6.2.48  -- _October 09, 2020_ 
 **Changes**
 
