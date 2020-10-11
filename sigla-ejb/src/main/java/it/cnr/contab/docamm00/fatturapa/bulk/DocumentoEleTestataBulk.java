@@ -21,9 +21,7 @@
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
 import java.math.BigDecimal;
-import java.util.Dictionary;
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
@@ -52,7 +50,12 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	 */
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unchecked")
-	
+
+	public static final List<String> TIPI_DOCUMENTO_IN_ATTESA_FATTURAZIONE_ELETTRONICA = Arrays.asList(TipoDocumentoType.TD_16.value(),TipoDocumentoType.TD_17.value(),
+			TipoDocumentoType.TD_18.value(), TipoDocumentoType.TD_19.value(), TipoDocumentoType.TD_21.value(), TipoDocumentoType.TD_22.value(),
+			TipoDocumentoType.TD_23.value(), TipoDocumentoType.TD_25.value(), TipoDocumentoType.TD_26.value(),
+			TipoDocumentoType.TD_27.value());
+	public static final List<String> TIPI_DOCUMENTO_NON_GESTITI_IN_FATTURAZIONE_ELETTRONICA = Arrays.asList(TipoDocumentoType.TD_24.value());
 	public static final String STATO_CONSEGNA_ESITO_CONSEGNATO_SDI = "CON";
 	public static final String STATO_CONSEGNA_ESITO_SCARTATO_SDI = "SCA";
 	public static final java.util.Dictionary<String, String> statoNotificaEsitoKeys = new OrderedHashtable();	
@@ -88,8 +91,18 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_04.value(),"Nota di credito");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_05.value(),"Nota di debito");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_06.value(),"Parcella");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_16.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_17.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_18.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_19.value(),"Fattura");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_20.value(),"Autofattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_21.value(),"Autofattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_22.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_23.value(),"Fattura");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_24.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_25.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_26.value(),"Fattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_27.value(),"Fattura");
 
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_01.value(),"contanti");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_02.value(),"assegno");
@@ -683,6 +696,18 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 			else
 				return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && e.getImposta().compareTo(BigDecimal.ZERO)!=0 && 
 				  (e.getEsigibilitaIva()==null || !e.getEsigibilitaIva().equals("S"))).count()==0;
+		return false;
+	}
+	public boolean isTipoDocumentoNonGestitoFatturazioneElettronica() {
+		if (getTipoDocumento() != null && TIPI_DOCUMENTO_NON_GESTITI_IN_FATTURAZIONE_ELETTRONICA.contains(getTipoDocumento())){
+			return true;
+		}
+		return false;
+	}
+	public boolean isTipoDocumentoInAttesaFatturazioneElettronica() {
+		if (getTipoDocumento() != null && TIPI_DOCUMENTO_IN_ATTESA_FATTURAZIONE_ELETTRONICA.contains(getTipoDocumento())){
+			return true;
+		}
 		return false;
 	}
 }
