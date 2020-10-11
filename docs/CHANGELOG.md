@@ -1,3 +1,15 @@
+## Release 6.2.50  -- _October 11, 2020_ 
+**Changes**
+
+>**Fix**
+>
+>[25e3f546b83eec2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/25e3f546b83eec2) gianfranco.gasparro *October 11, 2020*
+
+>**Fix**
+>
+>[a6612706b6523fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a6612706b6523fe) gianfranco.gasparro *October 11, 2020*
+
+
 ## Release 6.2.49  -- _October 11, 2020_ 
 **Changes**
 
