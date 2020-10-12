@@ -5347,25 +5347,29 @@ public class DistintaCassiereComponent extends
                         if (!salta) {
                             // 17/01/2018 per non indicare cup nel tag - fine aggiunta
                             if (doc.getCdSiope() != null) {
-                                // cambio codice siope senza cup dovrebbe essere il
-                                // resto
+                                // cambio codice siope senza cup dovrebbe essere il resto
                                 if (oldDoc != null
-                                        && oldDoc.getCdSiope().compareTo(
-                                        doc.getCdSiope()) != 0
+                                        && oldDoc.getCdSiope().compareTo(doc.getCdSiope()) != 0
                                         && doc.getCdCup() == null
                                         && totAssSiope.compareTo(totAssCup) != 0
                                         && totAssCup.compareTo(BigDecimal.ZERO) != 0) {
                                     clas = objectFactory.createMandatoInformazioniBeneficiarioClassificazione();
                                     clas.setCodiceCgu(oldDoc.getCdSiope());
-                                    clas.setImporto((totAssSiope.subtract(totAssCup))
-                                            .setScale(2, BigDecimal.ROUND_HALF_UP));
+                                    clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
                                     caricaClassificazione(userContext, clas, objectFactory, bulk, oldDoc.getCdSiope());
 
                                     totAssCup = BigDecimal.ZERO;
                                     totAssSiope = BigDecimal.ZERO;
                                     infoben.getClassificazione().add(clas);
 
-                                } else
+                                    // Carico l'attuale codice SIOPE
+                                    clas = objectFactory.createMandatoInformazioniBeneficiarioClassificazione();
+                                    clas.setCodiceCgu(doc.getCdSiope());
+                                    clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
+                                    caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
+                                    infoben.getClassificazione().add(clas);
+
+                                } else {
                                     // stesso codice siope senza cup resto
                                     if (oldDoc != null
                                             && oldDoc.getCdSiope().compareTo(
@@ -5424,8 +5428,7 @@ public class DistintaCassiereComponent extends
                                                 caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                                 infoben.getClassificazione().add(clas);
-                                            } else // diverso siope con cup null e precedente
-                                                // completamente associato a cup
+                                            } else // diverso siope con cup null e precedente completamente associato a cup
                                                 if (oldDoc != null
                                                         && oldDoc.getCdSiope().compareTo(
                                                         doc.getCdSiope()) != 0
@@ -5438,28 +5441,25 @@ public class DistintaCassiereComponent extends
                                                             BigDecimal.ROUND_HALF_UP));
                                                     totAssSiope = BigDecimal.ZERO;
                                                     totAssCup = BigDecimal.ZERO;
-                                                    caricaClassificazione(userContext, clas, objectFactory, bulk,doc.getCdSiope());
+                                                    caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
                                                     infoben.getClassificazione().add(clas);
                                                 } else
                                                     // primo inserimento
-                                                    if (doc.getCdCup() != null
-                                                            && doc.getImportoCup().compareTo(
-                                                            BigDecimal.ZERO) != 0) {
+                                                    if (doc.getCdCup() != null && doc.getImportoCup().compareTo(BigDecimal.ZERO) != 0) {
                                                         clas = objectFactory.createMandatoInformazioniBeneficiarioClassificazione();
                                                         clas.setCodiceCgu(doc.getCdSiope());
                                                         clas.setCodiceCup(doc.getCdCup());
-                                                        clas.setImporto(doc.getImportoCup().setScale(2,
-                                                                BigDecimal.ROUND_HALF_UP));
+                                                        clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
                                                         totAssCup = doc.getImportoCup();
                                                         totAssSiope = doc.getImportoCge();
                                                         // Causale Cup
                                                         if (infoben.getCausale() != null) {
-                                                            if (!infoben.getCausale().contains(
-                                                                    doc.getCdCup()))
-                                                                infoben.setCausale(infoben.getCausale()
-                                                                        + "-" + doc.getCdCup());
-                                                        } else
+                                                            if (!infoben.getCausale().contains(doc.getCdCup())) {
+                                                                infoben.setCausale(infoben.getCausale() + "-" + doc.getCdCup());
+                                                            }
+                                                        } else {
                                                             infoben.setCausale("CUP " + doc.getCdCup());
+                                                        }
                                                         caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                                         infoben.getClassificazione().add(clas);
@@ -5472,6 +5472,7 @@ public class DistintaCassiereComponent extends
                                                         caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
                                                         infoben.getClassificazione().add(clas);
                                                     }
+                                }
                                 oldDoc = doc;
                             }
                         } // if(!salta){ -- 17/01/2018 per non indicare cup nel tag
