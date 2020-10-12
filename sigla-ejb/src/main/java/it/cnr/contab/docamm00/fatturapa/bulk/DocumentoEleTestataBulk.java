@@ -149,6 +149,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private boolean attivoSplitPaymentProf=false;
 	private boolean abilitato=false;
 	private boolean RODocumento=true;
+	private boolean isFromInizializzaBulkPerModifica = false;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -157,6 +158,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public DocumentoEleTestataBulk() {
 		super();
 	}
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DOCUMENTO_ELE_TESTATA
@@ -710,4 +712,12 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		}
 		return false;
 	}
+	public boolean isFromInizializzaBulkPerModifica() {
+		return isFromInizializzaBulkPerModifica;
+	}
+
+	public void setFromInizializzaBulkPerModifica(boolean fromInizializzaBulkPerModifica) {
+		isFromInizializzaBulkPerModifica = fromInizializzaBulkPerModifica;
+	}
+
 }

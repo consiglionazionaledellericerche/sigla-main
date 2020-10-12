@@ -99,6 +99,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		try {
 			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(usercontext, "AMMFATTURDOCSFATPASA");
 			documentoEleTestata.setAbilitato(hasAccesso);
+			documentoEleTestata.setFromInizializzaBulkPerModifica(true);
 			documentoEleTestata.setAttivoSplitPayment(Utility.createFatturaPassivaComponentSession().isAttivoSplitPayment(usercontext, documentoEleTestata.getDataDocumento()));
 			
 			documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
@@ -394,7 +395,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     }
 
     public void controlloTipiDocumento(OggettoBulk oggettobulk) throws ComponentException {
-		if (!((DocumentoEleTestataBulk)oggettobulk).isRifiutata() && ((DocumentoEleTestataBulk)oggettobulk).isAbilitato()){
+		if (!((DocumentoEleTestataBulk)oggettobulk).isRifiutata() && ((DocumentoEleTestataBulk)oggettobulk).isFromInizializzaBulkPerModifica()){
 			if (((DocumentoEleTestataBulk)oggettobulk).isTipoDocumentoNonGestitoFatturazioneElettronica()){
 				throw new it.cnr.jada.comp.ApplicationException("Il documento ha un tipo "+((DocumentoEleTestataBulk)oggettobulk).getTipoDocumento()+ " che non è possibile gestire. E' possibile solo rifiutare il documento.");
 			}
