@@ -1,3 +1,11 @@
+## Release 6.2.53  -- _October 12, 2020_ 
+**Changes**
+
+>**FIX invia distinta PEC**
+>
+>[98d65dbcd0f5b94](https://github.com/consiglionazionaledellericerche/sigla-main/commit/98d65dbcd0f5b94) mspasiano *October 12, 2020*
+
+
 ## Release 6.2.52  -- _October 12, 2020_ 
 **Changes**
 
