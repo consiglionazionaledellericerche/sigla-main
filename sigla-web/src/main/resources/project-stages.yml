@@ -86,6 +86,7 @@ thorntail:
         level: INFO
   management:
     http-interface-management-interface:
+      console-enabled: true
       security-realm: ManagementRealm
     security-realms:
       ManagementRealm:

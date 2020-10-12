@@ -211,10 +211,6 @@
         </dependency>
         <dependency>
             <groupId>io.thorntail</groupId>
-            <artifactId>management</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.thorntail</groupId>
             <artifactId>swagger</artifactId>
         </dependency>
         <dependency>
@@ -224,6 +220,14 @@
         <dependency>
             <groupId>org.picketbox</groupId>
             <artifactId>picketbox</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>management</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>management-console</artifactId>
         </dependency>
         <!-- SIGLA  dependency-->
         <dependency>
