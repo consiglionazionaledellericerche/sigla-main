@@ -820,6 +820,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
                     .filter(s -> s != null)
                     .forEach(s -> nodes.add(s));
+            boolean inviaDistinta = nodes.size() > 1;
             if (distinta.getFl_sepa()) {
                 PDFMergerUtility ut = new PDFMergerUtility();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -843,7 +844,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 nodes.clear();
                 nodes.add(distintaPEC.getKey());
             }
-            if (nodes.size() > 0) {
+            if (inviaDistinta) {
                 inviaDistintaPEC(nodes, isEstero,
                         "Invio Distinta Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
                                 " Progressivo Flusso: " + distinta.getProgFlusso() +
