@@ -20,6 +20,7 @@ package it.cnr.contab.incarichi00.comp;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.bilaterali00.bulk.Blt_visiteBulk;
 import it.cnr.contab.incarichi00.bulk.*;
 import it.cnr.contab.incarichi00.bulk.storage.*;
 import it.cnr.si.spring.storage.bulk.StorageFile;
@@ -476,6 +477,13 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 	}	
 
 	private void validaProceduraIncarico(UserContext aUC,Incarichi_proceduraBulk procedura) throws ComponentException {
+		Incarichi_proceduraBulk incaricoOld = null;
+		try {
+			if (!procedura.isToBeCreated())
+				incaricoOld = (Incarichi_proceduraBulk) getTempHome(aUC, procedura.getClass()).findByPrimaryKey(procedura);
+		} catch (PersistencyException e) {
+		}
+
 		if (procedura.getTerzo_resp()==null || procedura.getTerzo_resp().getCd_terzo()==null)
 			throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non può essere vuoto.") );
 		/*
@@ -647,7 +655,11 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
 					}
 				}
-				if (incarico.getConflittoInteressi()==null) {
+				//Il documento viene richiesto solo in fase di salvataggio definitivo della procedura.
+				//In caso di semplice cambio importi per anno non deve scattare il controllo, dato che per incarichi vecchi
+				//tale documento non esiste.
+				if (incarico.getConflittoInteressi()==null &&
+						!Optional.ofNullable(incaricoOld).map(Incarichi_proceduraBulk::isProceduraDefinitiva).orElse(Boolean.FALSE)) {
 					if (parametri!=null && parametri.getAllega_conflitto_interesse()!=null && parametri.getAllega_conflitto_interesse().equals("Y")) {
 						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
 							//Istanzio la classe per riempire tipo_archivioKeys
