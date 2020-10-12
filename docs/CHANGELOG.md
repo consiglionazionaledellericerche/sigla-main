@@ -1,3 +1,11 @@
+## Release 6.2.51  -- _October 12, 2020_ 
+**Changes**
+
+>**Add management-console to thorntail**
+>
+>[40278ced4e117a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/40278ced4e117a6) mspasiano *October 12, 2020*
+
+
 ## Release 6.2.50  -- _October 11, 2020_ 
 **Changes**
 
