@@ -25,10 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ejb.EJBException;
-
-import it.cnr.contab.config00.bulk.*;
-import it.cnr.contab.config00.consultazioni.bulk.VContrattiTotaliDetBulk;
+import javax.ejb.EJBException;import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -38,7 +35,6 @@ import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
-import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociHome;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
 import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
@@ -56,7 +52,6 @@ import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
@@ -3074,6 +3069,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.filter(el->!el.isUoArea())
 						.filter(el->!el.isCdrPersonale())
 						.filter(el->!el.isVoceSpeciale())
+						.filter(el->!el.isUoRagioneria())
 						.filter(el->el.isNaturaFonteEsterna())
 						.map(CtrlPianoEcoDett::getImporto)
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
@@ -3081,7 +3077,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				{
 					/**
 					 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o
-					 *    al CDR Personale
+					 *    al CDR Personale o alla UO Ragioneria solo su GAE Natura 6
 					 */
 					if (impSaldoPrgAttiviFonteEsterna.compareTo(BigDecimal.ZERO)<0) {
 						//Vuol dire che ho ridotto progetti attivi sulle fonti esterne per cui deve essere bilanciato solo con Aree di uguale natura o
@@ -3090,8 +3086,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.filter(el->!el.isScaduto(dataChiusura))
 								.map(CtrlPianoEco::getDett)
 								.flatMap(List::stream)
-								.filter(el->el.isUoArea()||el.isCdrPersonale())
+								.filter(el->el.isUoArea()||el.isCdrPersonale()||el.isUoRagioneria())
 								.filter(el->el.isUoArea()?el.isNaturaFonteEsterna():Boolean.TRUE)
+								.filter(el->el.isUoRagioneria()?el.isNaturaReimpiego():Boolean.TRUE)
 								.map(CtrlPianoEcoDett::getImporto)
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 		
@@ -3100,7 +3097,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
 									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviFonteEsterna.abs())
 									+ " su GAE Fonte Esterna che non risultano totalmente coperti da variazioni a favore"
-									+ " di Aree su GAE Fonte Esterna o CDR Personale ("
+									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria su GAE di natura 6 ("
 									+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviCashFund.abs())+").");						
 					}
 				}
