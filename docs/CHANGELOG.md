@@ -1,3 +1,11 @@
+## Release 6.2.52  -- _October 12, 2020_ 
+**Changes**
+
+>**Fix anomalia emissione fatture attive**
+>
+>[d003329b6a4af49](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d003329b6a4af49) gianfranco.gasparro *October 12, 2020*
+
+
 ## Release 6.2.51  -- _October 12, 2020_ 
 **Changes**
 
