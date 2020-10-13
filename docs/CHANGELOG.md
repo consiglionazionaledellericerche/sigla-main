@@ -1,3 +1,11 @@
+## Release 6.2.55  -- _October 13, 2020_ 
+**Changes**
+
+>**Ingrandito campo natura**
+>
+>[26822d5e98466e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26822d5e98466e6) gianfranco.gasparro *October 13, 2020*
+
+
 ## Release 6.2.54  -- _October 12, 2020_ 
 **Changes**
 
