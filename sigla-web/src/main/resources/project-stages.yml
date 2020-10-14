@@ -84,15 +84,19 @@ thorntail:
         suffix: .yyyy-MM-dd
         named-formatter: LOG_FORMATTER
         level: INFO
+
   management:
+    audit-access:
+      audit-log-logger:
+        log-boot: true
+        enabled: true
+    bind:
+      address: 0.0.0.0
     http-interface-management-interface:
       console-enabled: true
       security-realm: ManagementRealm
     security-realms:
       ManagementRealm:
-        local-authentication:
-          default-user: '$local'
-          skip-group-loading: true
         in-memory-authentication:
           users:
             admin:
