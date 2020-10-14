@@ -3538,4 +3538,7 @@ TRASPORTO_AEREO"/>
             <column name="TARGA"/>
         </createIndex>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_documento_ele_iva-modify-natura">
+        <modifyDataType tableName="documento_ele_iva" columnName="natura" newDataType="VARCHAR(4)"/>
+    </changeSet>
 </databaseChangeLog>
