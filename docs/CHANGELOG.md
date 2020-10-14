@@ -1,5 +1,25 @@
-## Release 6.2.53  -- _October 12, 2020_ 
+## Release 6.2.55  -- _October 13, 2020_ 
 **Changes**
+
+>**Ingrandito campo natura**
+>
+>[26822d5e98466e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26822d5e98466e6) gianfranco.gasparro *October 13, 2020*
+
+
+## Release 6.2.54  -- _October 12, 2020_ 
+**Changes**
+
+>**Incarichi: in fase di salvataggio non viene richiesto l'allegato di conflitto di interessi se l'incarico era già definitivo**
+>
+>[1d4d63a12c013cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1d4d63a12c013cb) raffaele.pagano *October 12, 2020*
+
+>**Variazioni di bilancio: inserito controolo per trasferimento a Ragioneria - i fondi devono essere trasferiti a GAE di natura 6**
+>
+>[829035424881e14](https://github.com/consiglionazionaledellericerche/sigla-main/commit/829035424881e14) raffaele.pagano *October 12, 2020*
+
+>**FIX flusso SIOPE+**
+>
+>[cd2f557bd1d7e25](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cd2f557bd1d7e25) mspasiano *October 12, 2020*
 
 >**FIX invia distinta PEC**
 >
