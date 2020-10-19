@@ -2,7 +2,7 @@
 --  DDL for Package Body CNRCTB018
 --------------------------------------------------------
 
-CREATE OR REPLACE PACKAGE BODY "CNRCTB018"" is
+CREATE OR REPLACE PACKAGE BODY "CNRCTB018" is
 
   procedure aggiornaNumeratori(aEsercizio number, aCdCds varchar2, aUser varchar2) is
    aNewNum NUMERAZIONE_DOC_CONT%rowtype;
