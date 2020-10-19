@@ -1,3 +1,11 @@
+## Release 6.2.57  -- _October 19, 2020_ 
+**Changes**
+
+>**FIX package body**
+>
+>[b80ca84493caa6c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b80ca84493caa6c) mspasiano *October 19, 2020*
+
+
 ## Release 6.2.56  -- _October 19, 2020_ 
 **Changes**
 
