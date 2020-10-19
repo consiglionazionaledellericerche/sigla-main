@@ -1,13 +1,21 @@
-## Release 6.2.55  -- _October 13, 2020_ 
+## Release 6.2.56  -- _October 19, 2020_ 
 **Changes**
 
->**Ingrandito campo natura**
+>**Add jmx remote configuration**
 >
->[26822d5e98466e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26822d5e98466e6) gianfranco.gasparro *October 13, 2020*
+>[7a932b391ef4d4c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7a932b391ef4d4c) mspasiano *October 19, 2020*
 
+>**Add copy spilt payment on nota di credito/debito**
+>
+>[6d29f0d2e8264a4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d29f0d2e8264a4) mspasiano *October 19, 2020*
 
-## Release 6.2.54  -- _October 12, 2020_ 
-**Changes**
+>**Add thorntail management-interface**
+>
+>[3b92dad74e97272](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b92dad74e97272) mspasiano *October 14, 2020*
+
+>**Correzione campi tabelle per ribaltamento esercizio**
+>
+>[7150300fcbbbb8e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7150300fcbbbb8e) raffaele.pagano *October 14, 2020*
 
 >**Incarichi: in fase di salvataggio non viene richiesto l'allegato di conflitto di interessi se l'incarico era già definitivo**
 >
@@ -24,6 +32,14 @@
 >**FIX invia distinta PEC**
 >
 >[98d65dbcd0f5b94](https://github.com/consiglionazionaledellericerche/sigla-main/commit/98d65dbcd0f5b94) mspasiano *October 12, 2020*
+
+
+## Release 6.2.55  -- _October 13, 2020_ 
+**Changes**
+
+>**Ingrandito campo natura**
+>
+>[26822d5e98466e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26822d5e98466e6) gianfranco.gasparro *October 13, 2020*
 
 
 ## Release 6.2.52  -- _October 12, 2020_ 
