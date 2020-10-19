@@ -146,6 +146,9 @@ $F{STATO}.equals("PRP")?"Provvisorio":""]]></textFieldExpression>
 		<band height="23">
 			<subreport>
 				<reportElement x="0" y="0" width="842" height="23" isPrintInFirstWholeBand="true" uuid="0cd2a161-c443-4e5b-bb29-4c7594984da5"/>
+				<subreportParameter name="P_DT_PROROGA">
+					<subreportParameterExpression><![CDATA[$F{DT_PROROGA}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="P_TOTALE_REVERSALI">
 					<subreportParameterExpression><![CDATA[$F{TOTALE_REVERSALI}==null?BigDecimal.ZERO:$F{TOTALE_REVERSALI}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -185,11 +188,11 @@ $F{STATO}.equals("PRP")?"Provvisorio":""]]></textFieldExpression>
 				<subreportParameter name="P_UO_COORDINATRICE">
 					<subreportParameterExpression><![CDATA[$F{CD_UNITA_ORGANIZZATIVA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_DESC_FINANZIAMENTO">
-					<subreportParameterExpression><![CDATA[$F{DESC_FINANZIAMENTO}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="P_PG_PROGETTO">
 					<subreportParameterExpression><![CDATA[$P{P_PG_PROGETTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_DESC_FINANZIAMENTO">
+					<subreportParameterExpression><![CDATA[$F{DESC_FINANZIAMENTO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "piano_economico_progetto_detail.jasper"]]></subreportExpression>
