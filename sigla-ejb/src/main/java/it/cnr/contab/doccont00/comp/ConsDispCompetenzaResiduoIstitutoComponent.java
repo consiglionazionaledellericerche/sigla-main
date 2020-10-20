@@ -357,8 +357,10 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 					||pathDestinazione.indexOf("VOCEVOCEVOCENATVOCEMODVOCECDRVOCEGAE")>=0){
 					addColumn(sql,"LDA",true);
 					addColumn(sql,"DS_LDA",true);
+					addColumn(sql,"CD_RESPONSABILE_TERZO",true);
 					addSQLGroupBy(sql,"LDA",isBaseSQL);
 					addSQLGroupBy(sql,"DS_LDA",isBaseSQL&&true);
+					addSQLGroupBy(sql,"CD_RESPONSABILE_TERZO",isBaseSQL&&true);
 				}
 			}
 			
@@ -367,11 +369,13 @@ public class ConsDispCompetenzaResiduoIstitutoComponent extends CRUDComponent {
 					pathDestinazione.indexOf("ENTCDSVOCEPROGCOMMMODCDRGAE")>=0||pathDestinazione.indexOf("ENTCDSVOCECDRGAE")>=0	){
 					addColumn(sql,"LDA",true);
 					addColumn(sql,"DS_LDA",true);
+					addColumn(sql,"CD_RESPONSABILE_TERZO",true);
 					addColumn(sql,"CD_NATURA",true);
 					addColumn(sql,"DS_NATURA",true);
 					addColumn(sql,"TIPO",true);
 					addSQLGroupBy(sql,"LDA",isBaseSQL);
 					addSQLGroupBy(sql,"DS_LDA",isBaseSQL&&true);
+					addSQLGroupBy(sql,"CD_RESPONSABILE_TERZO",isBaseSQL&&true);
 					addSQLGroupBy(sql,"CD_NATURA",isBaseSQL);
 					addSQLGroupBy(sql,"DS_NATURA",isBaseSQL&&true);
 					addSQLGroupBy(sql,"TIPO",isBaseSQL&&true);

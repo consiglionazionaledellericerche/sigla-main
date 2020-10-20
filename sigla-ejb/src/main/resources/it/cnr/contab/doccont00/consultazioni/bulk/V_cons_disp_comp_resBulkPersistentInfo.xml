@@ -112,6 +112,12 @@
 			columnSize="300"
 			nullable="true" />
 		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
+		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="esercizio"
 			sqlTypeName="DECIMAL"
@@ -325,6 +331,8 @@
 		name="lda" />
 	<persistentProperty
 		name="ds_lda" />
+	<persistentProperty
+			name="cd_responsabile_terzo" />
 	<persistentProperty
 		name="esercizio" />
 	<persistentProperty
@@ -650,6 +658,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
 	</columnMap>
 	
 	<columnMap 
@@ -711,6 +725,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
 	</columnMap>
 	
 	<columnMap 
@@ -850,7 +870,13 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
-	</columnMap>	
+		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
+	</columnMap>
 	
 <!-- CDS / Voce / Cdr / GAE -->	
 	<columnMap 
@@ -887,12 +913,14 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
-	</columnMap>	
-	
-	
-	
-	
-	
+		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
+	</columnMap>
+
 	<columnMap 
 		name="DIP"
 		tableName="V_CONS_DISP_COMP_RES">
@@ -1183,6 +1211,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
 	</columnMap>
 	
 	<columnMap 
@@ -1244,6 +1278,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
 	</columnMap>
 	
 	<columnMap 
@@ -1524,6 +1564,12 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_RESPONSABILE_TERZO"
+				propertyName="cd_responsabile_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
 	</columnMap>
 	
 </SQLPersistentInfo>
