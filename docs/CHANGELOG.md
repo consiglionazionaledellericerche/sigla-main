@@ -1,3 +1,11 @@
+## Release 6.2.58  -- _October 20, 2020_ 
+**Changes**
+
+>**FIX PDGP authentication**
+>
+>[2e742b717366429](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e742b717366429) mspasiano *October 20, 2020*
+
+
 ## Release 6.2.57  -- _October 19, 2020_ 
 **Changes**
 
