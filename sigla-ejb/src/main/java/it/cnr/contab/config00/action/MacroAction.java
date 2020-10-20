@@ -55,6 +55,9 @@ import it.cnr.jada.util.action.BulkAction;
 import it.cnr.jada.util.action.FormAction;
 import it.cnr.jada.util.action.OptionBP;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.Optional;
@@ -135,7 +138,7 @@ public class MacroAction extends BulkAction {
 			Integer[] esercizi = getComponentSession().listaEserciziPerUtente(actioncontext.getUserContext(),utente);
 			int annoInCorso = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
 			ui.setEsercizi(esercizi);
-			
+
  			utente = getComponentSession().validaUtente(actioncontext.getUserContext(),utente);
 			if (utente == null || !(utente instanceof UtenteComuneBulk)) {
 				setErrorMessage(actioncontext,"Nome utente o password sbagliati.");
@@ -164,7 +167,14 @@ public class MacroAction extends BulkAction {
 			        ui.getCdr().getCd_centro_responsabilita());			
 			actioncontext.setUserContext(userContext);
 			actioncontext.setUserInfo(ui);
-			//Se il mode è H allora va in sola visualizzazione altrimenti in modifica			
+			HttpServletRequest request = ((HttpActionContext) actioncontext).getRequest();
+			try {
+				request.login(cd_utente, pwd);
+			} catch (ServletException e) {
+				setErrorMessage(actioncontext,"Nome utente o password sbagliati.");
+				return actioncontext.findDefaultForward();
+			}
+			//Se il mode è H allora va in sola visualizzazione altrimenti in modifica
 			mode = mode.equals("H")?"V":"M";
             if (costi_personale.equals("N")){
 				Object[] parametri;
