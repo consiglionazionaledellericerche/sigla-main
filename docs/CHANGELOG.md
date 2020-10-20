@@ -1,3 +1,15 @@
+## Release 6.2.59  -- _October 20, 2020_ 
+**Changes**
+
+>**Aggiunto campo terzo responsabile GAE**
+>
+>[7706026593aa0af](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7706026593aa0af) gianfranco.gasparro *October 20, 2020*
+
+>**Consentita possibilità di inserire un rapporto diverso da Dipendente su un dipendente nel caso di utente con privilegio ALLTRA**
+>
+>[65a4f6071d2a6e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/65a4f6071d2a6e2) gianfranco.gasparro *October 20, 2020*
+
+
 ## Release 6.2.58  -- _October 20, 2020_ 
 **Changes**
 
