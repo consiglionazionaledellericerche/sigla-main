@@ -125,7 +125,7 @@ public class CRUDAnagraficaBP extends SimpleCRUDBP {
 			validaRapporto(context,(RapportoBulk)bulk);
 		}
 		public boolean isInputReadonly() {
-			return super.isInputReadonly() || isRapportoReadonly((RapportoBulk)getModel());
+			return super.isInputReadonly() || isRapportoReadonly((AnagraficoBulk)getParentModel(), (RapportoBulk)getModel());
 		}
 		public boolean isShrinkable() {
 			return super.isShrinkable() && isRapportoShrinkable((RapportoBulk)getModel());
@@ -297,8 +297,8 @@ protected boolean isInquadramentoReadonly(InquadramentoBulk inquadramento) {
 protected boolean isInquadramentoShrinkable(InquadramentoBulk inquadramento) {
 	return true;
 }
-protected boolean isRapportoReadonly(RapportoBulk rapporto) {
-	return rapporto != null && rapporto.getTipo_rapporto() != null && rapporto.getTipo_rapporto().isDipendente();
+protected boolean isRapportoReadonly(AnagraficoBulk anagraficoBulk, RapportoBulk rapporto) {
+	return rapporto != null && rapporto.getTipo_rapporto() != null && (rapporto.getTipo_rapporto().isDipendente() && !anagraficoBulk.isAbilitatoTrattamenti());
 }
 protected boolean isRapportoShrinkable(RapportoBulk rapporto) {
 	return true;

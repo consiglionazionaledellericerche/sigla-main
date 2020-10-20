@@ -1937,7 +1937,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             RapportoBulk rapporto_dip = (RapportoBulk) i_dip.next();
 
                             // Controlla la data di INIZIO validità del rapporto NON dipendente
-                            if (rapporto.getDt_ini_validita().after(rapporto_dip.getDt_ini_validita()) &&
+// Aggiunta la condizione se non è dipendente perchè ci sono casi in cui è necessario creare un rapporto ASS su un dipendente attivo. Questa possibilità è data solo agli utenti con privilegio ALLTRA.
+                            if (!anagrafico.isDipendente() && rapporto.getDt_ini_validita().after(rapporto_dip.getDt_ini_validita()) &&
                                     rapporto.getDt_ini_validita().before(rapporto_dip.getDt_fin_validita())) {
 
                                 throw new ApplicationException("Attenzione: la data di INIZIO validità del rapporto "
@@ -1946,7 +1947,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                         + rapporto_dip.getTipo_rapporto().getDs_tipo_rapporto());
                             }
                             // Controlla la data di FINE validità del rapporto NON dipendente
-                            else if (rapporto.getDt_fin_validita().after(rapporto_dip.getDt_ini_validita()) &&
+// Aggiunta la condizione se non è dipendente perchè ci sono casi in cui è necessario creare un rapporto ASS su un dipendente attivo. Questa possibilità è data solo agli utenti con privilegio ALLTRA.
+                            else if (!anagrafico.isDipendente() && rapporto.getDt_fin_validita().after(rapporto_dip.getDt_ini_validita()) &&
                                     rapporto.getDt_fin_validita().before(rapporto_dip.getDt_fin_validita())) {
 
                                 throw new ApplicationException("Attenzione: la data di FINE validità del rapporto "

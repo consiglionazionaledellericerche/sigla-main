@@ -19,7 +19,7 @@
 %>
 
 <%if( !anagrafico.isStrutturaCNR() ) { %>
-	<%	bp.getCrudRapporti().writeHTMLTable(pageContext,null,(!anagrafico.isDipendente()),false,(!anagrafico.isDipendente()),"100%","150px"); %>
+	<%	bp.getCrudRapporti().writeHTMLTable(pageContext,null,(!anagrafico.isDipendente() || anagrafico.isAbilitatoTrattamenti()),false,(!anagrafico.isDipendente() || anagrafico.isAbilitatoTrattamenti()),"100%","150px"); %>
 	
 	<%	JSPUtils.tabbed(
 				pageContext,
