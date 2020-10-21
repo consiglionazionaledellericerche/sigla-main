@@ -1,3 +1,11 @@
+## Release 6.2.60  -- _October 21, 2020_ 
+**Changes**
+
+>**Add log on PDGP**
+>
+>[fa7fada82a93744](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa7fada82a93744) mspasiano *October 21, 2020*
+
+
 ## Release 6.2.59  -- _October 20, 2020_ 
 **Changes**
 
