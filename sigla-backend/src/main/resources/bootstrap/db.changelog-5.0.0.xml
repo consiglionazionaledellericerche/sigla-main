@@ -3541,7 +3541,10 @@ TRASPORTO_AEREO"/>
     <changeSet author="gianfranco.gasparro" id="alter_documento_ele_iva-modify-natura">
         <modifyDataType tableName="documento_ele_iva" columnName="natura" newDataType="VARCHAR(4)"/>
     </changeSet>
-    <changeSet author="marco.spasiano" id="alter_EXT_CASSIERE00_LOGS-MODIFY-NOME_FILE">
-        <modifyDataType tableName="EXT_CASSIERE00_LOGS" columnName="NOME_FILE" newDataType="VARCHAR(50)"/>
+    <changeSet author="gianfranco.gasparro" id="alter_documento_ele_tributi-modify-natura">
+        <modifyDataType tableName="documento_ele_tributi" columnName="natura" newDataType="VARCHAR(4)"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_voce_iva-modify-natura">
+        <modifyDataType tableName="voce_iva" columnName="natura_oper_non_imp_sdi" newDataType="VARCHAR(4)"/>
     </changeSet>
 </databaseChangeLog>
