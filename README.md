@@ -1,12 +1,13 @@
 # SIGLA - _Sistema Informativo Gestione Linee di Attività_
 
-[![license](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://github.com/consiglionazionaledellericerche/sigla-main/blob/master/LICENSE)
-[![maven central](https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?style=flat)](https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-parent)
-[![contributors](https://img.shields.io/github/contributors/consiglionazionaledellericerche/sigla-main.svg?style=flat)](https://github.com/consiglionazionaledellericerche/sigla-main/contributors/)
-[![Docker Stars](https://img.shields.io/docker/stars/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/consiglionazionalericerche/sigla-main.svg)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
-[![Build doc Status](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=travis)](https://travis-ci.com/consiglionazionaledellericerche/sigla-main)
-[![docs](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=docs)](https://consiglionazionaledellericerche.github.io/sigla-main)
+[![license](https://img.shields.io/badge/License-AGPL%20v3-blue.svg?logo=license&style=for-the-badge)](https://github.com/consiglionazionaledellericerche/sigla-main/blob/master/LICENSE)
+[![Supported JVM Versions](https://img.shields.io/badge/JVM-8-brightgreen.svg?style=for-the-badge&logo=Java)](https://openjdk.java.net/install/)
+[![maven central](https://img.shields.io/maven-central/v/it.cnr.si.sigla/sigla-parent.svg?logo=apache-maven&style=for-the-badge)](https://mvnrepository.com/artifact/it.cnr.si.sigla/sigla-parent)
+[![contributors](https://img.shields.io/github/contributors/consiglionazionaledellericerche/sigla-main.svg?logo=github&style=for-the-badge)](https://github.com/consiglionazionaledellericerche/sigla-main/contributors/)
+[![Docker Stars](https://img.shields.io/docker/stars/consiglionazionalericerche/sigla-main.svg?logo=docker&style=for-the-badge)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/consiglionazionalericerche/sigla-main.svg?logo=docker&style=for-the-badge)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
+[![Build doc Status](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?logo=travis&style=for-the-badge)](https://travis-ci.com/consiglionazionaledellericerche/sigla-main)
+[![docs](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=docs&logo=doc&style=for-the-badge)](https://consiglionazionaledellericerche.github.io/sigla-main)
 
 
 ## MAVEN dependency
