@@ -141,8 +141,8 @@
 		name="natura"
 		property="natura"
 		inputType="TEXT"
-		inputSize="2"
-		maxLength="2"
+		inputSize="4"
+		maxLength="4"
 		enabledOnEdit="false"
 		label="Natura" />
 	<fieldProperty
