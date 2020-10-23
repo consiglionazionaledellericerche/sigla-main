@@ -190,6 +190,7 @@ public class MacroAction extends BulkAction {
             actioncontext.setUserInfo(ui);
             HttpServletRequest request = ((HttpActionContext) actioncontext).getRequest();
             try {
+                request.logout();
                 request.login(cd_utente, pwd);
             } catch (ServletException e) {
                 setErrorMessage(actioncontext, "Nome utente o password sbagliati.");

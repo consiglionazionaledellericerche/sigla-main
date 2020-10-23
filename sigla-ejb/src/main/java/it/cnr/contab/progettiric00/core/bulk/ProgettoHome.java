@@ -575,7 +575,7 @@ public class ProgettoHome extends BulkHome {
 				progetto_sip.setCd_progetto(geco_commessa.getCod_comm());
 				progetto_sip.setDs_progetto(geco_commessa.getDescr_comm());
 				progetto_sip.setUnita_organizzativa((Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(geco_commessa.getCds()+"."+geco_commessa.getSede_svol_uo())));
-				if (geco_commessa.getCod_3rzo_resp() != null)
+				if (Optional.ofNullable(geco_commessa.getCod_3rzo_resp()).filter(s -> s.length() > 0).isPresent())
 					progetto_sip.setResponsabile((TerzoBulk)getHomeCache().getHome(TerzoBulk.class).findByPrimaryKey(new TerzoBulk(new Integer(geco_commessa.getCod_3rzo_resp()))));				
 				progetto_sip.setDt_inizio(geco_commessa.getData_inizio_attivita());
 				if (geco_commessa.getEsito_negoz() != null)
@@ -636,7 +636,7 @@ public class ProgettoHome extends BulkHome {
 					progetto_sip.setStato(geco_modulo.getCod_tip().equals(new Long(1))?"PS":geco_modulo.getCod_tip().equals(new Long(2))?"SC":null);
 					*/
 				progetto_sip.setUnita_organizzativa((Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(geco_modulo.getSede_princ_cdsuo())));
-				if (geco_modulo.getCod_3rzo_gest() != null)
+				if (Optional.ofNullable(geco_modulo.getCod_3rzo_gest()).filter(s -> s.length() > 0).isPresent())
 					progetto_sip.setResponsabile((TerzoBulk)getHomeCache().getHome(TerzoBulk.class).findByPrimaryKey(new TerzoBulk(new Integer(geco_modulo.getCod_3rzo_gest()))));				
 				progetto_sip.setDt_inizio(geco_modulo.getData_inizio_attivita());
 				if (geco_modulo.getEsito_negoz() != null)
