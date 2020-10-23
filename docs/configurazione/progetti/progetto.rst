@@ -90,7 +90,8 @@ Ci sono diverse modalità per modificare nelcorso dell'anno di gestione gli impo
 - Spostamento importi oltre i limiti dell'utilizzato (impegni e trasferimenti): non consentito;
 - Spostamento importi da un progetto ad un altro (solo se il primo è chiuso, tramite la gae specifica di natura 6, si rimodulazione se oltre limiti delle voci economiche, si variazioni) 
 
-**Utilizzo Voce Speciale**
+**Voce Speciale**
+
 Importante nota da tener presente nella gestione successiva del Piano Economico del Progetto è la Voce Speciale. Questa Voce è definita parametricamente (equivale alla Voce di spesa per il Personale a tempo indeterminato) e consente lo spostamento, tramite la GEA di natura 6, di soldi su altre voci di spesa del Piano economico prima ancora che il Progetto sia scaduto. Lo spostamento di fondi tramite la Vice Speciale deve avvenire nell'ambito dello stesso progetto e solo attraverso la GAE di natura 6.
 Alla Voce Speciale non è consentito invece attribuire soldi attraverso le Variazioni di Bilancio.
 
