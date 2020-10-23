@@ -1,3 +1,67 @@
+## Release 6.2.61  -- _October 23, 2020_ 
+**Changes**
+
+>**Add logo**
+>
+>[f4ac563aeaafe01](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f4ac563aeaafe01) marco.spasiano *October 23, 2020*
+
+>**Update README.md**
+>
+>[51b888826c7119b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/51b888826c7119b) Marco Spasiano *October 23, 2020*
+
+>**Add logo**
+>
+>[0810ccf5183105e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0810ccf5183105e) marco.spasiano *October 23, 2020*
+
+>**Update README.md**
+>
+>[22baf7223d0c119](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22baf7223d0c119) Marco Spasiano *October 23, 2020*
+
+>**Update README.md**
+>
+>[6a9464f798a123e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6a9464f798a123e) Marco Spasiano *October 23, 2020*
+
+>**Update README.md**
+>
+>[bf745dd3abfc59c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bf745dd3abfc59c) Marco Spasiano *October 23, 2020*
+
+>**Update Ribaltamento.rst**
+>
+>[a0f6db2c9aa4b3a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a0f6db2c9aa4b3a) patriziavillani *October 23, 2020*
+
+>**Create Ribaltamento.rst**
+>
+>[a51fc2c460844ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a51fc2c460844ba) patriziavillani *October 23, 2020*
+
+>**FIX import project from PDGP**
+>
+>[69fa86a9d827068](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69fa86a9d827068) marco.spasiano *October 23, 2020*
+
+>**Update progetto.rst**
+>
+>[477c21104264dcd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/477c21104264dcd) patriziavillani *October 23, 2020*
+
+>**Update progetto.rst**
+>
+>[960e08cf30acb0b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/960e08cf30acb0b) patriziavillani *October 23, 2020*
+
+>**Update README.md**
+>
+>[2702a68c0acd3f8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2702a68c0acd3f8) Marco Spasiano *October 23, 2020*
+
+>**FIX ambiguous column definition**
+>
+>[ca9821e1d4f1c96](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ca9821e1d4f1c96) marco.spasiano *October 23, 2020*
+
+>**Gestiti nuove natura iva per adeguamento fatturazione elettronica**
+>
+>[ebc360fd3418e0d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ebc360fd3418e0d) gianfranco.gasparro *October 23, 2020*
+
+>**Changed the filename column for uploading logs**
+>
+>[187bdf9c9cebf1b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/187bdf9c9cebf1b) marco.spasiano *October 23, 2020*
+
+
 ## Release 6.2.60  -- _October 21, 2020_ 
 **Changes**
 
