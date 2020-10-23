@@ -7,18 +7,18 @@
 [![Docker Stars](https://img.shields.io/docker/stars/consiglionazionalericerche/sigla-main.svg?logo=docker&style=for-the-badge)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/consiglionazionalericerche/sigla-main.svg?logo=docker&style=for-the-badge)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
 [![Build doc Status](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?logo=travis&style=for-the-badge)](https://travis-ci.com/consiglionazionaledellericerche/sigla-main)
-[![docs](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=docs&logo=doc&style=for-the-badge)](https://consiglionazionaledellericerche.github.io/sigla-main)
+[![docs](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=docs&logo=read-the-docs&style=for-the-badge)](https://consiglionazionaledellericerche.github.io/sigla-main)
 
 
 ## MAVEN dependency
 |Artifact| Version |
 |---|---|
-|[thorntail.io](https://thorntail.io/)| ![Maven Central](https://img.shields.io/maven-central/v/io.thorntail/bom-all/2.6.0.Final.svg)|
-|[Spring.io](https://spring.io/)| ![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.springframework/spring-context/5.1.8.RELEASE.svg) |
-|[Liquibase](https://www.liquibase.org/) | ![Maven Central](https://img.shields.io/maven-central/v/org.liquibase/liquibase-core/3.5.3.svg)|
-|[SIOPE+](https://github.com/consiglionazionaledellericerche/siopeplus) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/siopeplus.svg)|
-|[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud/2.0.2.svg)|
-|[JADA JEE Framework](https://github.com/consiglionazionaledellericerche/jada) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/jada.svg)|
+|[thorntail.io](https://thorntail.io/)| ![Maven Central](https://img.shields.io/maven-central/v/io.thorntail/bom-all/2.7.0.Final.svg?style=for-the-badge)|
+|[Spring.io](https://spring.io/)| ![Maven Central with version prefix filter](https://img.shields.io/maven-central/v/org.springframework/spring-context/5.1.8.RELEASE.svg?logo=spring&style=for-the-badge) |
+|[Liquibase](https://www.liquibase.org/) | ![Maven Central](https://img.shields.io/maven-central/v/org.liquibase/liquibase-core/3.5.3.svg?style=for-the-badge)|
+|[SIOPE+](https://github.com/consiglionazionaledellericerche/siopeplus) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/siopeplus.svg?style=for-the-badge)|
+|[Storage Cloud](https://github.com/consiglionazionaledellericerche/storage-cloud) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si.storage/storage-cloud/2.0.2.svg?style=for-the-badge)|
+|[JADA JEE Framework](https://github.com/consiglionazionaledellericerche/jada) | ![Maven Central](https://img.shields.io/maven-central/v/it.cnr.si/jada.svg?style=for-the-badge)|
  
 ## Introduzione
 Al fine di fornire elementi generali della Soluzione applicativa, evidenziamo informazioni di sintesi sul Sistema Contabile SIGLA, di proprietà del CNR, che si occupa di processi amministrativi e contabili, di previsione, gestione e di rendicontazione. Il Sistema si rivolge ad Enti pubblici, in particolare Enti di ricerca, che operano in regime di Contabilità Finanziaria, con obbligo di adozione, in aggiunta, del sistema di contabilità basato su rilevazione dei fatti di gestione in termini economici, patrimoniali ed analitici.
