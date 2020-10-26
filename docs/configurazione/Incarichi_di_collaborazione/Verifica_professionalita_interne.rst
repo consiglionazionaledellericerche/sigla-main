@@ -1,2 +1,0 @@
-Verifica Professionalità Interne
-================================
