@@ -29,9 +29,7 @@
 	<action path="/ConsObbligazioniAction"
 		actionClass="it.cnr.contab.consultazioni.action.ConsObbligazioniAction">
 	</action>
-	<action path="/RicercaLiberaConsObbligazioniAction"
-			actionClass="it.cnr.contab.consultazioni.action.RicercaLiberaConsObbligazioniAction">
-	</action>
+
 
 
 	<action path="/ConsWorkpackageAction"
@@ -1804,10 +1802,5 @@
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeMandatiRestAction" />
 		<init-param name="searchResultColumnSet" value="BASEDETT" />
 		<init-param name="freeSearchSet" value="BASEDETT" />
-	</businessProcess>
-	<businessProcess name="RicercaLiberaConsObbligazioni"
-					 className="it.cnr.contab.consultazioni.bp.RicercaLiberaConsObbligazioniBP">
-		<forward name="default" path="/util/form_ricerca_libera.jsp" />
-		<init-param name="defaultAction" value="RicercaLiberaConsObbligazioniAction" />
 	</businessProcess>
 </action-mappings>

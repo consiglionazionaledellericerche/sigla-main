@@ -23,29 +23,18 @@
  */
 package it.cnr.contab.consultazioni.bp;
 
-import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
-import it.cnr.contab.utenze00.bp.SelezionatoreCdrBP;
-import it.cnr.contab.utenze00.bulk.CNRUserInfo;
-import it.cnr.jada.DetailedRuntimeException;
+import it.cnr.contab.consultazioni.action.ConsObbligazioniAction;
 import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.Config;
 import it.cnr.jada.util.RemoteIterator;
-import it.cnr.jada.util.RemoteOrderable;
-import it.cnr.jada.util.action.CondizioneComplessaBulk;
 import it.cnr.jada.util.action.RicercaLiberaBP;
 import it.cnr.jada.util.action.SearchProvider;
 import it.cnr.jada.util.action.SelezionatoreListaBP;
-import it.cnr.jada.util.jsp.Button;
-
-import java.rmi.RemoteException;
-import java.util.Iterator;
-import java.util.Optional;
 
 /**
  * @author mincarnato
@@ -53,12 +42,24 @@ import java.util.Optional;
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class ConsObbligazioniBP extends SelezionatoreListaBP
-        implements SearchProvider {
+public class ConsObbligazioniBP extends SelezionatoreListaBP implements SearchProvider {
 
+    private final int navPosition = 0;
+    private final boolean flNuovoPdg = false;
+    private final java.math.BigDecimal pg_stampa = null;
+    private final java.math.BigDecimal currentSequence = null;
     private String componentSessioneName;
     private Class bulkClass;
     private CompoundFindClause findclause;
+    private CompoundFindClause baseclause;
+
+    public ConsObbligazioniBP() {
+        super();
+    }
+
+    public ConsObbligazioniBP(String function) {
+        super(function);
+    }
 
     public CompoundFindClause getFindclause() {
         return findclause;
@@ -74,22 +75,6 @@ public class ConsObbligazioniBP extends SelezionatoreListaBP
 
     public void setBaseclause(CompoundFindClause baseclause) {
         this.baseclause = baseclause;
-    }
-
-    private CompoundFindClause baseclause;
-    private int navPosition = 0;
-    private boolean flNuovoPdg = false;
-
-    private java.math.BigDecimal pg_stampa = null;
-    private java.math.BigDecimal currentSequence = null;
-
-
-    public ConsObbligazioniBP() {
-        super();
-    }
-
-    public ConsObbligazioniBP(String function) {
-        super(function);
     }
 
     public void openIterator(it.cnr.jada.action.ActionContext context) throws it.cnr.jada.action.BusinessProcessException {
@@ -108,7 +93,7 @@ public class ConsObbligazioniBP extends SelezionatoreListaBP
     }
 
     private CompoundFindClause addBaseClause(ActionContext actioncontext) {
-        if (getBaseclause() == null && getFunction() != null){
+        if (getBaseclause() == null && getFunction() != null) {
             CompoundFindClause compoundFindClause = new CompoundFindClause();
             compoundFindClause.addClause("AND", "esercizio", SQLBuilder.EQUALS, new Integer(3000));
             setBaseclause(compoundFindClause);
@@ -135,14 +120,25 @@ public class ConsObbligazioniBP extends SelezionatoreListaBP
             super.init(config, context);
             setBulkClassName(config.getInitParameter("bulkClassName"));
             setComponentSessioneName(config.getInitParameter("componentSessionName"));
-            if (getFunction() != null){
-                openIterator(context);
-            }
         } catch (Throwable e) {
             throw new BusinessProcessException(e);
         }
     }
 
+    @Override
+    public BusinessProcess initBusinessProcess(ActionContext actioncontext) throws BusinessProcessException {
+        BusinessProcess businessProcess = super.initBusinessProcess(actioncontext);
+        ConsObbligazioniAction consObbligazioniAction = new ConsObbligazioniAction();
+        RicercaLiberaBP ricercaLiberaBP = (RicercaLiberaBP) actioncontext.createBusinessProcess("RicercaLibera");
+        ricercaLiberaBP.setSearchProvider(this);
+        ricercaLiberaBP.setShowSearchResult(false);
+        ricercaLiberaBP.setCanPerformSearchWithoutClauses(false);
+        ricercaLiberaBP.setPrototype(getModel());
+        actioncontext.addHookForward("searchResult", consObbligazioniAction, "doRigheSelezionate");
+        actioncontext.addHookForward("close", consObbligazioniAction, "doCloseRicercaLibera");
+        actioncontext.addBusinessProcess(ricercaLiberaBP);
+        return ricercaLiberaBP;
+    }
 
     public RemoteIterator search(
             ActionContext actioncontext,
@@ -153,20 +149,19 @@ public class ConsObbligazioniBP extends SelezionatoreListaBP
                 compoundfindclause,
                 oggettobulk);
     }
+
     public it.cnr.jada.ejb.CRUDComponentSession createComponentSession() throws javax.ejb.EJBException, java.rmi.RemoteException, BusinessProcessException {
 
         return (it.cnr.jada.ejb.CRUDComponentSession) createComponentSession("JADAEJB_CRUDComponentSession", it.cnr.jada.ejb.CRUDComponentSession.class);
     }
-
-
 
     public it.cnr.jada.util.RemoteIterator findFreeSearch(
             ActionContext context,
             it.cnr.jada.persistency.sql.CompoundFindClause clauses,
             OggettoBulk model)
             throws it.cnr.jada.action.BusinessProcessException {
-        if (!clauses.getClauses().hasMoreElements()){
-            throw handleException(new BusinessProcessException("E' necessario indicare almeno un criterio di selezione."));
+        if (!clauses.getClauses().hasMoreElements()) {
+            throw handleException(new ApplicationException("E' necessario indicare almeno un criterio di selezione."));
         }
         try {
             it.cnr.jada.util.RemoteIterator ri =
