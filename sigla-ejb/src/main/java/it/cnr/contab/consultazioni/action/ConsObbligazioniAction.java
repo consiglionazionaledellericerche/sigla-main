@@ -24,15 +24,18 @@
 package it.cnr.contab.consultazioni.action;
 
 import it.cnr.contab.consultazioni.bp.ConsObbligazioniBP;
+import it.cnr.contab.consultazioni.bp.RicercaLiberaConsObbligazioniBP;
 import it.cnr.contab.consultazioni.bulk.ConsObbligazioniBulk;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.util.action.ConsultazioniAction;
-import it.cnr.jada.util.action.RicercaLiberaBP;
+import it.cnr.jada.util.action.*;
+
+import java.util.Optional;
 
 /**
  * @author mincarnato
@@ -40,29 +43,11 @@ import it.cnr.jada.util.action.RicercaLiberaBP;
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class ConsObbligazioniAction extends ConsultazioniAction {
+public class ConsObbligazioniAction extends SelezionatoreListaAction {
 
-	public Forward doBringBack(ActionContext actioncontext) {
-		return null;
-	}
-
-	public Forward doFiltraFiles(ActionContext context) {
-		try {
-			ConsObbligazioniBP bp = (ConsObbligazioniBP)context.getBusinessProcess();
-			RicercaLiberaBP ricercaLiberaBP = (RicercaLiberaBP)context.createBusinessProcess("RicercaLibera");
-			ricercaLiberaBP.setSearchProvider(bp);
-			ricercaLiberaBP.setFreeSearchSet(null);
-			ricercaLiberaBP.setShowSearchResult(false);
-			ricercaLiberaBP.setCanPerformSearchWithoutClauses(false);
-			ricercaLiberaBP.setPrototype( bp.createEmptyModelForFreeSearch(context));
-			//context.addHookForward("seleziona",this,"doSelezionaObbligazioni");
-			context.addHookForward("searchResult",this,"doObbligazioniSelezionate");			
-			//context.addHookForward("filter",this,"doRiportaFiltraFiles");
-			//context.addHookForward("close",this,"doDefault");
-			return context.addBusinessProcess(ricercaLiberaBP);
-		} catch(Throwable e) {
-			return handleException(context,e);
-		}
+	@Override
+	public Forward basicDoBringBack(ActionContext actioncontext) throws BusinessProcessException {
+		return actioncontext.findDefaultForward();
 	}
 
 	public Forward doCloseForm(ActionContext context)
@@ -71,7 +56,7 @@ public class ConsObbligazioniAction extends ConsultazioniAction {
 		try
 		{
 			ConsObbligazioniBP bp = (ConsObbligazioniBP)context.getBusinessProcess();
-			bp.setFindclause(null);
+//			bp.setFindclause(null);
 			return super.doCloseForm(context);
 		}
 		catch(Throwable throwable)
@@ -79,32 +64,94 @@ public class ConsObbligazioniAction extends ConsultazioniAction {
 			return handleException(context, throwable);
 		}
 	}
+	public Forward doRicercaLibera(ActionContext context) {
+		ConsObbligazioniBP bp = (ConsObbligazioniBP)context.getBusinessProcess();
+		RicercaLiberaConsObbligazioniBP ricercaLiberaBP = null;
+		try {
 
-	public Forward doCancellaFiltro(ActionContext context) {
-		try 
-		{
-			ConsObbligazioniBP bp = (ConsObbligazioniBP)context.getBusinessProcess();
-			it.cnr.jada.util.RemoteIterator ri = bp.search(context,(CompoundFindClause) null,(OggettoBulk) new ConsObbligazioniBulk()); 
-			bp.setIterator(context,ri);
-			return context.findDefaultForward();
-		} catch(Throwable e) {
-			return handleException(context,e);
-		}
-	}
+			Optional<CRUDBP> crudbp = Optional.ofNullable(bp.getParent())
+					.filter(CRUDBP.class::isInstance)
+					.map(CRUDBP.class::cast);
 
-	public Forward doObbligazioniSelezionate(ActionContext context)
-	{
-	
-		try 
-		{
-			ConsObbligazioniBP bp = (ConsObbligazioniBP)context.getBusinessProcess();
-			HookForward hook = (HookForward)context.getCaller();
-			it.cnr.jada.util.RemoteIterator ri = (it.cnr.jada.util.RemoteIterator)hook.getParameter("remoteIterator");
-			bp.setIterator(context,ri);
-			bp.setDirty(true);
+			if (crudbp.isPresent() ||
+					Optional.ofNullable(bp)
+							.filter(SearchProvider.class::isInstance)
+							.isPresent() ||
+					Optional.ofNullable(bp.getParent())
+							.filter(SearchProvider.class::isInstance)
+							.isPresent()
+
+			) {
+				SearchProvider searchProvider = Optional.ofNullable(bp.getFormField())
+						.map(formField -> crudbp.get().getSearchProvider(
+								formField.getModel(),
+								formField.getField().getProperty()))
+						.map(SearchProvider.class::cast)
+						.orElseGet(() -> {
+							if (crudbp.isPresent()) {
+								return crudbp.get().getSearchProvider();
+							} else {
+								return Optional.ofNullable(bp)
+										.filter(SearchProvider.class::isInstance)
+										.map(SearchProvider.class::cast)
+										.orElseGet(() -> Optional.ofNullable(bp.getParent())
+												.filter(SearchProvider.class::isInstance)
+												.map(SearchProvider.class::cast)
+												.orElse(null));
+							}
+						});
+
+				OggettoBulk oggettoBulk = Optional.ofNullable(bp.getFormField())
+						.map(formField -> bp.getBulkInfo())
+						.map(bulkInfo -> bulkInfo.getBulkClass())
+						.map(aClass -> {
+							try {
+								return aClass.newInstance();
+							} catch (InstantiationException | IllegalAccessException e) {
+								throw new DetailedRuntimeException(e);
+							}
+						})
+						.filter(OggettoBulk.class::isInstance)
+						.map(OggettoBulk.class::cast)
+						.orElseGet(() -> {
+							if (Optional.ofNullable(bp).filter(SelezionatoreSearchBP.class::isInstance).isPresent())
+								return bp.getModel();
+							if (crudbp.isPresent()) {
+								try {
+									return crudbp.get().createEmptyModelForFreeSearch(context);
+								} catch (BusinessProcessException e) {
+									throw new DetailedRuntimeException(e);
+								}
+							} else {
+								return bp.getModel();
+							}
+						});
+
+				ricercaLiberaBP = (RicercaLiberaConsObbligazioniBP) context.createBusinessProcess("RicercaLiberaConsObbligazioni");
+				ricercaLiberaBP.setSearchProvider(bp);
+				ricercaLiberaBP.setFreeSearchSet(
+						Optional.ofNullable(bp.getFormField())
+								.filter(formField -> Optional.ofNullable(formField.getField()).isPresent())
+								.map(formField -> formField.getField())
+								.map(fieldProperty -> fieldProperty.getFreeSearchSet())
+								.orElseGet(() -> {
+									if (crudbp.isPresent())
+										return crudbp.get().getFreeSearchSet();
+									else
+										return "default";
+								})
+				);
+				ricercaLiberaBP.setShowSearchResult(true);
+				ricercaLiberaBP.setCanPerformSearchWithoutClauses(true);
+				ricercaLiberaBP.setPrototype(oggettoBulk);
+				context.addHookForward("close",this,"doDefault");
+			}
+			context.addBusinessProcess(ricercaLiberaBP);
 			return context.findDefaultForward();
-		} catch(Throwable e) {
-			return handleException(context,e);
+		} catch (BusinessProcessException e) {
+			return handleException(context, e);
+		} catch (Throwable e) {
+			return handleException(context, e);
 		}
 	}
 

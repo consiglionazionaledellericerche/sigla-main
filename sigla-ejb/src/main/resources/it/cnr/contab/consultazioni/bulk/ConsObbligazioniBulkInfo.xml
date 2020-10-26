@@ -224,6 +224,13 @@
 		maxLength="10"
 		formatName="date_short"
 		label="Data documento Amministrativo" />
+	<fieldProperty
+			name="cd_terzo_resp_gae"
+			property="cd_terzo_resp_gae"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="10"
+			label="Terzo Resp GAE" />
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -234,6 +241,8 @@
 		name="cd_linea_attivita" />
 	<formFieldProperty
 		name="ds_linea_attivita" />
+	<formFieldProperty
+			name="cd_terzo_resp_gae" />
 	<formFieldProperty
 		name="cd_elemento_voce" />
 	<formFieldProperty
@@ -292,6 +301,8 @@
 		name="ds_linea_attivita"
 		label="Descrizione GAE" />
 	<columnFieldProperty
+			name="cd_terzo_resp_gae" />
+	<columnFieldProperty
 		name="cd_elemento_voce" />
 	<columnFieldProperty
 		name="dt_registrazione" />
@@ -349,6 +360,8 @@
 		name="cd_linea_attivita" />
 	<findFieldProperty
 		name="ds_linea_attivita" />
+	<findFieldProperty
+			name="cd_terzo_resp_gae" />
 	<findFieldProperty
 		name="cd_elemento_voce" />
 	<findFieldProperty

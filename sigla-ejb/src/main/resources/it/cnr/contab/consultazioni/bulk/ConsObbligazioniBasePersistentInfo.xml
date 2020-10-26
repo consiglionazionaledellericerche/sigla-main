@@ -198,7 +198,13 @@
 			propertyName="data_pagamento"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
-		
+		<columnMapping
+				columnName="CD_TERZO_RESP_GAE"
+				propertyName="cd_terzo_resp_gae"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
+
 	</defaultColumnMap>	
 	<persistentProperty
 		name="pg_obbligazione_scadenzario" />
@@ -269,5 +275,7 @@
 	<persistentProperty
 		name="esercizio_contratto" />
 	<persistentProperty
-		name="pg_contratto" />	
+		name="pg_contratto" />
+	<persistentProperty
+			name="cd_terzo_resp_gae" />
 </SQLPersistentInfo>

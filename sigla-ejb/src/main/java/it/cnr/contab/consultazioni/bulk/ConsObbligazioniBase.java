@@ -93,9 +93,19 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 	
 	private java.lang.Integer esercizio_contratto;
 
+	public Integer getCd_terzo_resp_gae() {
+		return cd_terzo_resp_gae;
+	}
+
+	public void setCd_terzo_resp_gae(Integer cd_terzo_resp_gae) {
+		this.cd_terzo_resp_gae = cd_terzo_resp_gae;
+	}
+
 	private java.lang.Long pg_contratto;
 
-//  DT_PAGAMENTO TIMESTAMP(7)
+	private java.lang.Integer cd_terzo_resp_gae;
+
+	//  DT_PAGAMENTO TIMESTAMP(7)
 	private java.sql.Timestamp data_pagamento;
 
 //  DT_DOCAMM TIMESTAMP(7)
