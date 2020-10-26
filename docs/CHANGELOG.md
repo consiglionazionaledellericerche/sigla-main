@@ -1,3 +1,71 @@
+## Release 6.2.62  -- _October 26, 2020_ 
+**Changes**
+
+>**FIX consultazione impegni**
+>
+>[be3f123c2fe9d45](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be3f123c2fe9d45) marco.spasiano *October 26, 2020*
+
+>**Gestione colonna residui passivi con impropri limitato al tipo di ente**
+>
+>[942e66bf255484c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/942e66bf255484c) raffaele.pagano *October 26, 2020*
+
+>**Create premessa.rst**
+>
+>[0225877bb271440](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0225877bb271440) patriziavillani *October 26, 2020*
+
+>**Update index.rst**
+>
+>[fdba4e7839173b9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fdba4e7839173b9) patriziavillani *October 26, 2020*
+
+>**Update index.rst**
+>
+>[43261346c39685b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/43261346c39685b) patriziavillani *October 26, 2020*
+
+>**Inizio Correzione Consultazione Impegni per GAE**
+>
+>[5f69c8e1db229a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5f69c8e1db229a9) gianfranco.gasparro *October 26, 2020*
+
+>**Create index.rst**
+>
+>[f14b72f24f719b8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f14b72f24f719b8) patriziavillani *October 26, 2020*
+
+>**Delete index.rst**
+>
+>[b3e8b7d84050365](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b3e8b7d84050365) patriziavillani *October 26, 2020*
+
+>**Create verifica_professionalita_interne**
+>
+>[1d64ee57e96f834](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1d64ee57e96f834) patriziavillani *October 26, 2020*
+
+>**Delete Verifica_professionalita_interne.rst**
+>
+>[69e268c602d2dc3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/69e268c602d2dc3) patriziavillani *October 26, 2020*
+
+>**Create index.rst**
+>
+>[307ff5413d1cd44](https://github.com/consiglionazionaledellericerche/sigla-main/commit/307ff5413d1cd44) patriziavillani *October 26, 2020*
+
+>**Create Verifica_professionalita_interne.rst**
+>
+>[b149602fa9687e0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b149602fa9687e0) patriziavillani *October 26, 2020*
+
+>**Update gestione_utenze.rst**
+>
+>[6a1ff1f90bcfb22](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6a1ff1f90bcfb22) patriziavillani *October 26, 2020*
+
+>**Update anagrafica_clienti_fornitori.rst**
+>
+>[10398a6088a73d8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/10398a6088a73d8) patriziavillani *October 26, 2020*
+
+>**Update README.md**
+>
+>[a806d38dd97845a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a806d38dd97845a) Marco Spasiano *October 26, 2020*
+
+>**FIX logo git [ci skip]**
+>
+>[f1a4593a08b05f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f1a4593a08b05f4) marco.spasiano *October 26, 2020*
+
+
 ## Release 6.2.61  -- _October 23, 2020_ 
 **Changes**
 
