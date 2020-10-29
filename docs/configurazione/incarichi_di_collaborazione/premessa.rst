@@ -1,6 +1,6 @@
-========
-Premessa
-========
+================================
+Premessa e Riferimenti normativi
+================================
 
 Il Manuale operativo relativo agli Incarichi illustra nel dettaglio le procedure necessarie a dare attuazione al **Disciplinare per il conferimento di incarichi di collaborazione** 
 (nel seguito Disciplinare incarichi) e recepisce le indicazioni legislative introdotte  dalla Legge 69/2009 e dal D.L. 78/2009, convertito  in  Legge 102/2009.
@@ -154,6 +154,21 @@ Il ricorso a contratti di collaborazione coordinata e continuativa per lo svolgi
 Pertanto, eccetto i casi tassativamente individuati dalla norma medesima e descritti al paragrafo 6.3, potranno essere conferiti tali incarichi a soggetti in possesso del Diploma di Laurea, conseguito secondo la normativa in vigore anteriormente al D.M. 509/99, oppure della Laurea Specialistica, oppure della Laurea Magistrale di cui al D.M. 270/04 ovvero a soggetti in possesso della laurea triennale con ulteriore documentata specializzazione conseguita mediante percorsi didattici universitari completi e formalmente definiti dai rispettivi ordinamenti. 
 - DPCNR 4 maggio 2005, n. 25034 “Regolamento di amministrazione, contabilità e finanza del CNR - art. 89 titolato “Prestazioni di lavoro autonomo” stabilisce che “  … omissis …  il CNR può concludere contratti d’opera o affidare incarichi professionali per lo svolgimento di compiti temporanei, e determinati nell’oggetto. … omissis …” .
 - Le circolari della P.C.M. Dipartimento della Funzione pubblica, la n. 4 del 15 luglio 2004 e la n. 5 del 21 dicembre 2006, nonché la Corte dei Conti nella adunanza a sezioni riunite del 15 febbraio 2005 ribadiscono su tale punto quanto sopra illustrato.
+
+Sulla base di quanto detto si possono, pertanto, elencare i requisiti che consentono di qualificare un rapporto di lavoro autonomo in regime di collaborazione occasionale di tipo non abituale:
+
+- provata esperienza nonché particolare e comprovata specializzazione universitaria del collaboratore eccetto i casi tassativamente individuati dalla norma;
+- non abitualità:  cooperazione occasionale ed episodica all’attività del committente;
+- temporaneità dell’incarico;
+- straordinarietà ed occasionalità della prestazione: limitata ad una o più questioni distinte e preventivamente determinate;
+- personalità ed elevata professionalità della prestazione: prevalenza del carattere professionale e personale dell’apporto lavorativo del collaboratore;
+- compenso: non periodico (a saldo, a prestazione eseguita);
+- proporzione del compenso all’utilità conseguita ed alla qualità e quantità dell’opera prestata;
+- riconducibilità dell’attività ad obiettivi, programmi e progetti.
+
+Il collaboratore è tenuto a svolgere relazioni intermedie ed una relazione finale al fine di consentire al CNR di verificare la rispondenza dell’attività svolta agli obiettivi prefissati e/o raggiunti.
+Elementi in comune con la collaborazione coordinata e continuativa possono essere considerati l’assenza del vincolo di subordinazione e la libertà di organizzare la prestazione al di fuori di vincoli di orario. Il collaboratore, se espressamente autorizzato, può utilizzare le apparecchiature e le strutture del CNR, senza che tale utilizzo implichi, in nessun caso, l’instaurazione di un rapporto di lavoro subordinato
+
 
 
 
