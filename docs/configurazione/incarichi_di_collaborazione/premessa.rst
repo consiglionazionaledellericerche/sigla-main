@@ -56,6 +56,7 @@ Gli incarichi di collaborazione, nella forma di lavoro autonomo, non possono ess
 Ciascuna tipologia di rapporto è caratterizzata da aspetti qualificanti peculiari che di seguito vengono rappresentati.
 
 **Le collaborazioni coordinate e continuative**
+
 Riferimenti normativi:
 -	artt. 2222 – 2228 del Codice Civile;
 -	Codice di Procedura Civile (regole processuali in materia di lavoro) - art. 409 comma 3;
@@ -108,6 +109,7 @@ Tuttavia è causa di sospensione dell’incarico:
 
 
 **Le collaborazioni occasionali di tipo non abituale**
+
 Riferimenti normativi:
 -	artt. 2222 – 2228 del Codice Civile;
 -	D.P.R. n. 917 del 22 dicembre 1986 (TUIR) art. 67, comma 1 lettera L);
@@ -128,13 +130,13 @@ a)	l'oggetto della prestazione deve corrispondere alle competenze attribuite dal
 b)	l'amministrazione deve avere preliminarmente accertato l'impossibilità oggettiva di utilizzare le risorse umane disponibili al suo interno;
 c)	la prestazione deve essere di natura temporanea e altamente qualificata;
 d)	devono essere preventivamente determinati durata, luogo, oggetto e compenso della collaborazione.
-Si prescinde dal requisito della comprovata specializzazione universitaria in caso di stipulazione di contratti di collaborazione di natura occasionale o coordinata e continuativa per attività che debbano essere svolte da professionisti iscritti in ordini o albi o con soggetti che operino nel campo dell'arte, dello spettacolo, dei mestieri artigianali o dell’attività informatica nonché a supporto dell’attività didattica e di ricerca, per i servizi di orientamento, compreso il collocamento, e di certificazione dei contratti di lavoro di cui al decreto legislativo 10 settembre 2003, n. 276, purché senza nuovi o maggiori oneri a carico della finanza pubblica, ferma restando la necessità di accertare la maturata
-esperienza nel settore.	 
+Si prescinde dal requisito della comprovata specializzazione universitaria in caso di stipulazione di contratti di collaborazione di natura occasionale o coordinata e continuativa per attività che debbano essere svolte da professionisti iscritti in ordini o albi o con soggetti che operino nel campo dell'arte, dello spettacolo, dei mestieri artigianali o dell’attività informatica nonché a supporto dell’attività didattica e di ricerca, per i servizi di orientamento, compreso il collocamento, e di certificazione dei contratti di lavoro di cui al decreto legislativo 10 settembre 2003, n. 276, purché senza nuovi o maggiori oneri a carico della finanza pubblica, ferma restando la necessità di accertare la maturata esperienza nel settore.	 
 Il ricorso a contratti di collaborazione coordinata e continuativa per lo svolgimento di funzioni ordinarie o l'utilizzo dei collaboratori come lavoratori subordinati è causa di responsabilità amministrativa per il dirigente che ha stipulato i contratti. Il secondo periodo dell'articolo 1, comma 9, del decreto-legge 12 luglio 2004, n. 168, convertito, con modificazioni, dalla legge 30 luglio 2004, n. 191, è soppresso”. Si applicano le disposizioni previste dall'articolo 36, comma 3, del presente decreto”.
--	Parere Dipartimento Funzione Pubblica - UPPA 05/08 del 21/1/2008: “l’utilizzo dell’espressione esperti di particolare e comprovata specializzazione universitaria, deve far ritenere quale requisito minimo necessario il possesso della laurea magistrale o del titolo equivalente”. 
--	Parere Dipartimento Funzione Pubblica - UPPA 10/08 del 28/1/2008: ”Non sono tuttavia da escludere altre specializzazioni frutto di percorsi didattici universitari completi e definiti formalmente dai rispettivi ordinamenti, in aggiunta alla laurea triennale”. 
+- Parere Dipartimento Funzione Pubblica - UPPA 05/08 del 21/1/2008: “l’utilizzo dell’espressione esperti di particolare e comprovata specializzazione universitaria, deve far ritenere quale requisito minimo necessario il possesso della laurea magistrale o del titolo equivalente”. 
+- Parere Dipartimento Funzione Pubblica - UPPA 10/08 del 28/1/2008: ”Non sono tuttavia da escludere altre specializzazioni frutto di percorsi didattici universitari completi e definiti formalmente dai rispettivi ordinamenti, in aggiunta alla laurea triennale”. 
 Pertanto, eccetto i casi tassativamente individuati dalla norma medesima e descritti al paragrafo 6.3, potranno essere conferiti tali incarichi a soggetti in possesso del Diploma di Laurea, conseguito secondo la normativa in vigore anteriormente al D.M. 509/99, oppure della Laurea Specialistica, oppure della Laurea Magistrale di cui al D.M. 270/04 ovvero a soggetti in possesso della laurea triennale con ulteriore documentata specializzazione conseguita mediante percorsi didattici universitari completi e formalmente definiti dai rispettivi ordinamenti. 
--	DPCNR 4 maggio 2005, n. 25034 “Regolamento di amministrazione, contabilità e finanza del CNR - art. 89 titolato “Prestazioni di lavoro autonomo” stabilisce che “  … omissis …  il CNR può concludere contratti d’opera o affidare incarichi professionali per lo svolgimento di compiti temporanei, e determinati nell’oggetto. … omissis …” .
+- DPCNR 4 maggio 2005, n. 25034 “Regolamento di amministrazione, contabilità e finanza del CNR - art. 89 titolato “Prestazioni di lavoro autonomo” stabilisce che “  … omissis …  il CNR può concludere contratti d’opera o affidare incarichi professionali per lo svolgimento di compiti temporanei, e determinati nell’oggetto. … omissis …” .
+- Le circolari della P.C.M. Dipartimento della Funzione pubblica, la n. 4 del 15 luglio 2004 e la n. 5 del 21 dicembre 2006, nonché la Corte dei Conti nella adunanza a sezioni riunite del 15 febbraio 2005 ribadiscono su tale punto quanto sopra illustrato.
 
 
 
