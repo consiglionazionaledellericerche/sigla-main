@@ -16,6 +16,7 @@ amministrativa (artt. 51 e 97 della Costituzione).
 
 La disposizione contenuta nel comma 2 dell’art. 14 del Disciplinare incarichi individua gli articoli del disciplinare che devono essere applicati anche a contratti derivanti da fonti (legislative, regolamentari, contrattuali, ecc.) diverse dall’art. 7 comma 6 del D. Lgs. 165/2001 e che non abbiano una autonoma e compiuta disciplina (autonoma e compiuta disciplina di cui invece godono i contratti d’opera di cui all’art. 51 comma 6 della L 27/12/1997 n. 449).
 Tali articoli sono:
+
 - art. 3, comma 6, che riguarda la pubblicità dell’avviso di conferimento dell’incarico;
 - art. 4, che riguarda la procedura comparativa per l’individuazione del contraente.
 
