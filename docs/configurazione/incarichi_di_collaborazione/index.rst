@@ -1,37 +1,10 @@
 Incarichi di collaborazione
 ===========================
-*Gruppo di lavoro per lo studio, l’organizzazione, la programmazione e
-l’avvio delle attività di pubblicizzazione dei contratti riguardanti gli
-incarichi esterni e di monitoraggio della relativa spesa*
-
-**\______________________________________\_**
-
-**Manuale operativo**
 
 **Le procedure per il conferimento di incarichi di collaborazione**
 
 *(in attuazione del Disciplinare prot. PRESID-CNR n. 6498 del 14/11/2007
 e successive modifiche ed integrazioni )*
-
-*A cura di:*
-
-*Parte amministrativo - contabile*
-
-*Alessandro Preti*
-
-*Roberto Tatarelli*
-
-*Sonia Migali*
-
-*Parte informatica – procedura SIGLA*
-
-*Paola Garzenini*
-
-*Claudia Rosati*
-
-*Raffaele Pagano*
-
-*Matilde D’urso*
 
 .. toctree::
   :maxdepth: 2
