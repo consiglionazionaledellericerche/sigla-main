@@ -3547,4 +3547,47 @@ TRASPORTO_AEREO"/>
     <changeSet author="gianfranco.gasparro" id="alter_voce_iva-modify-natura">
         <modifyDataType tableName="voce_iva" columnName="natura_oper_non_imp_sdi" newDataType="VARCHAR(4)"/>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-cons-pdgp-prog-gae">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="ti_accesso" type="CHAR(1)" value=""/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione PdGP - Progetto/GAE"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsProgEcoVoceGaeBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.PRV.PDGMODAGG.CON.PDGPPROGGAE"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Consultazione PDGP - Progetto/GAE"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsProgEcoVoceGaeBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="90"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="PDGPPROGGAE"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.PRV.PDGMODAGG.CON"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="fix-accesso-cons-pdgp-prog-gae">
+        <update tableName="accesso">
+            <column name="ti_accesso" value='D' type="CHAR(1)"/>
+            <where>cd_accesso = 'CFGPDGPCONSPROGGAE'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

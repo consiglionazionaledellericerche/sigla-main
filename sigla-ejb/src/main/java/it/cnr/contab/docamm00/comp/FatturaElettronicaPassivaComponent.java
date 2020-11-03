@@ -276,6 +276,28 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						}
 					}
 				}
+				if (documentoEleTrasmissioneBulk.getPrestatoreCodice() != null){
+					List<AnagraficoBulk> list = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(null,documentoEleTrasmissioneBulk.getPrestatoreCodice());
+					if (list != null && list.size() == 1){
+						AnagraficoBulk anagraficoBulk = list.get(0);
+						if (anagraficoBulk.isGruppoIVA()){
+							documentoEleTrasmissioneBulk.setPrestatoreAnag(anagraficoBulk);
+							documentoEleTrasmissioneBulk.setPrestatore(null);
+							if (documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null){
+								List<AnagraficoBulk> lista = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),null);
+								if (lista != null && lista.size() == 1){
+									AnagraficoBulk anagraficoPerTerzo = lista.get(0);
+									if (documentoEleTrasmissioneBulk.getDataRicezione().compareTo(anagraficoBulk.getDt_canc()) <= 0  && documentoEleTrasmissioneBulk.getDataRicezione().compareTo(anagraficoBulk.getDtIniValGruppoIva()) > 0){
+										List<TerzoBulk> listaTerzi = terzoHome.findTerzi(anagraficoPerTerzo);
+										if (listaTerzi.size() == 0){
+											documentoEleTrasmissioneBulk.setPrestatore(listaTerzi.get(0));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
         	}
 
         	if (documentoEleTrasmissioneBulk.getRappresentanteCodicefiscale() != null || 

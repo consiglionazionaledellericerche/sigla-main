@@ -32,6 +32,8 @@ import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.util.RemoteIterator;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -645,6 +647,11 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		} catch (RemoteException e) {
 			throw handleException(e);
 		}
+	}
+
+	@Override
+	public RemoteIterator find(ActionContext actioncontext, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk, OggettoBulk oggettobulk1, String s) throws BusinessProcessException {
+		return super.find(actioncontext, compoundfindclause, oggettobulk, oggettobulk1, s);
 	}
 
 	@Override

@@ -76,7 +76,7 @@
 			enabledOnFreeSearch="false" />
 	<fieldProperty
 			name="dtCancGruppoIva"
-			property="anagraficoGruppoIva.dtIniValGruppoIva"
+			property="anagraficoGruppoIva.dt_canc"
 			label="Data Fine Validita"
 			inputType="TEXT"
 			formatName="date_short"
