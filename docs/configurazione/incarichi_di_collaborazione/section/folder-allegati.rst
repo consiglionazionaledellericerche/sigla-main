@@ -1,25 +1,17 @@
 Folder: “Allegati”
-==========================
+==================
 
 Il folder consente di allegare le varie tipologie di documenti che vengono richiesti in maniera obbligatoria dalla procedura.
 
-“Tipologia del file archiviato”: è il tipo di contenuto del file che si sta allegando. Le tipologie dei file non dovranno più essere scelte
-utilizzando il menù a tendina bensì selezionando l’apposito bottone:
+“Tipologia del file archiviato”: è il tipo di contenuto del file che si sta allegando. Le tipologie dei file non dovranno più essere scelte utilizzando il menù a tendina bensì selezionando l’apposito bottone:
 
--  |image1| **- “Avviso da pubblicare”** : è obbligatorio solo nel caso
-   il cui sia prevista la procedura comparativa; tale file sarà
-   pubblicato sul sito del CNR insieme ad una breve descrizione
-   dell’avviso per il conferimento di un incarico;
+-  **- “Avviso da pubblicare”** : è obbligatorio solo nel caso il cui sia prevista la procedura comparativa; tale file sarà pubblicato sul sito del CNR insieme ad una breve descrizione dell’avviso per il conferimento di un incarico;
 
--  |image2| **- “Allegato generico”**: è un allegato generico, non
-   obbligatorio, che il soggetto ritiene opportuno allegare
-   all’incarico;
+-  .. figure:: ../../screenshot/allegato_generico.png :alt: Allegato Generico **- “Allegato generico”**: è un allegato generico, non obbligatorio, che il soggetto ritiene opportuno allegare all’incarico;
 
--  |image3| - **“Contratto Stipulato”**: è un allegato obbligatorio
-   qualsiasi sia la procedura amministrativa utilizzata.
+- **“Contratto Stipulato”**: è un allegato obbligatorio qualsiasi sia la procedura amministrativa utilizzata.
 
--  |image4| - **“Decisione a contrattare”**: è un allegato obbligatorio
-   qualsiasi sia la procedura amministrativa utilizzata.
+- **“Decisione a contrattare”**: è un allegato obbligatorio qualsiasi sia la procedura amministrativa utilizzata.
    
 - **“Esito controllo Corte dei Conti”** : è un allegato non più richiesto dalla normativa vigente.
 
@@ -44,15 +36,6 @@ Il folder delle variazioni è visibile solo per gli incarichi che risultano in s
 Esistono due tipologie di variazioni, una per adeguare il contratto alla durata del progetto nel periodo transitorio e l’altra per gestire gli incrementi delle aliquote previdenziali e assicurative.
 
 
-.. |image1| image:: ./media/image62.jpg
-   :width: 0.40694in
-   :height: 0.25in
 .. |image2| image:: ./media/image63.jpg
    :width: 0.38611in
    :height: 0.22917in
-.. |image3| image:: ./media/image64.jpg
-   :width: 0.375in
-   :height: 0.22917in
-.. |image4| image:: ./media/image65.jpg
-   :width: 0.39583in
-   :height: 0.25in
