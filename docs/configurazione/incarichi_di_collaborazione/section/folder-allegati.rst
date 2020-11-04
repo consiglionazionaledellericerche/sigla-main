@@ -40,6 +40,4 @@ Il folder delle variazioni è visibile solo per gli incarichi che risultano in s
 Esistono due tipologie di variazioni, una per adeguare il contratto alla durata del progetto nel periodo transitorio e l’altra per gestire gli incrementi delle aliquote previdenziali e assicurative.
 
 
-.. |image2| image:: ./media/image63.jpg
-   :width: 0.38611in
-   :height: 0.22917in
+
