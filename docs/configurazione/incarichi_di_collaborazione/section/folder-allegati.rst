@@ -7,7 +7,7 @@ Il folder consente di allegare le varie tipologie di documenti che vengono richi
 
 -  **- “Avviso da pubblicare”** : è obbligatorio solo nel caso il cui sia prevista la procedura comparativa; tale file sarà pubblicato sul sito del CNR insieme ad una breve descrizione dell’avviso per il conferimento di un incarico;
 
-.. figure:: screenshot/documento_generico.png
+.. figure:: ../../../screenshot/documento_generico.png
 	:alt: Documento generico
    
    	Documento generico
