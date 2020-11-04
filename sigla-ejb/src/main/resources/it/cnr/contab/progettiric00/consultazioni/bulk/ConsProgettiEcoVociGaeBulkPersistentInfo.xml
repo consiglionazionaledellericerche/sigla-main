@@ -20,13 +20,19 @@
 	persistentClassName="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"
 	homeClassName="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeHome">
 	<defaultColumnMap
-		tableName="PROGETTO_PIANO_ECONOMICO">
+		tableName="PROGETTO_GEST">
 		<columnMapping
 			columnName="ESERCIZIO_PIANO"
 			propertyName="esercizio_piano"
 			sqlTypeName="DECIMAL"
 			columnSize="4"
 			nullable="true" />
+		<columnMapping
+				columnName="CD_VOCE_PIANO"
+				propertyName="cd_voce_piano"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
 		<columnMapping
 			columnName="CD_CENTRO_RESPONSABILITA"
 			propertyName="cd_centro_responsabilita"
@@ -39,6 +45,48 @@
 			sqlTypeName="VARCHAR"
 			columnSize="300"
 			nullable="true" />
+		<columnMapping
+				columnName="im_spesa_finanziato"
+				propertyName="im_spesa_finanziato"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="im_spesa_cofinanziato"
+				propertyName="im_spesa_cofinanziato"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="cd_elemento_voce"
+				propertyName="cd_elemento_voce"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="ds_elemento_voce"
+				propertyName="ds_elemento_voce"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="cd_linea_attivita"
+				propertyName="cd_linea_attivita"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="manris_fin"
+				propertyName="manris_fin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="manris_cofin"
+				propertyName="manris_cofin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
 		<columnMapping
 				columnName="PG_PROGETTO"
 				propertyName="pg_progetto"
@@ -83,17 +131,29 @@
 			nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
+			name="pg_progetto" />
+	<persistentProperty
+			name="cd_progetto" />
+	<persistentProperty
+			name="ds_progetto" />
+	<persistentProperty
 		name="esercizio_piano" />
+	<persistentProperty
+			name="cd_voce_piano" />
+	<persistentProperty
+			name="im_spesa_finanziato" />
+	<persistentProperty
+			name="im_spesa_cofinanziato" />
 	<persistentProperty
 		name="cd_centro_responsabilita" />
 	<persistentProperty
-		name="ds_cdr" />
+			name="ds_cdr" />
 	<persistentProperty
-		name="cd_progetto" />
+			name="cd_elemento_voce" />
 	<persistentProperty
-			name="pg_progetto" />
+			name="ds_elemento_voce" />
 	<persistentProperty
-		name="ds_progetto" />
+			name="cd_linea_attivita" />
 	<persistentProperty
 		name="assestato_fin" />
 	<persistentProperty
@@ -102,4 +162,8 @@
 		name="impacc_fin" />
 	<persistentProperty
 		name="impacc_cofin" />
+	<persistentProperty
+			name="manris_fin" />
+	<persistentProperty
+			name="manris_cofin" />
 </SQLPersistentInfo>

@@ -17,6 +17,8 @@
 
 package it.cnr.contab.progettiric00.consultazioni.bulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
@@ -26,33 +28,113 @@ public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persisten
 	public ConsProgettiEcoVociGaeBulk() {
 		super();
 	}
+
+	public String getCd_linea_attivita() {
+		return cd_linea_attivita;
+	}
+
+	public void setCd_linea_attivita(String cd_linea_attivita) {
+		this.cd_linea_attivita = cd_linea_attivita;
+	}
+
+	public String getCd_voce_piano() {
+		return cd_voce_piano;
+	}
+
+	public void setCd_voce_piano(String cd_voce_piano) {
+		this.cd_voce_piano = cd_voce_piano;
+	}
+
+	public String getCd_elemento_voce() {
+		return cd_elemento_voce;
+	}
+
+	public void setCd_elemento_voce(String cd_elemento_voce) {
+		this.cd_elemento_voce = cd_elemento_voce;
+	}
+
+	public String getDs_elemento_voce() {
+		return ds_elemento_voce;
+	}
+
+	public void setDs_elemento_voce(String ds_elemento_voce) {
+		this.ds_elemento_voce = ds_elemento_voce;
+	}
+
+	public BigDecimal getIm_spesa_finanziato() {
+		return im_spesa_finanziato;
+	}
+
+	public void setIm_spesa_finanziato(BigDecimal im_spesa_finanziato) {
+		this.im_spesa_finanziato = im_spesa_finanziato;
+	}
+
+	public BigDecimal getIm_spesa_cofinanziato() {
+		return im_spesa_cofinanziato;
+	}
+
+	public void setIm_spesa_cofinanziato(BigDecimal im_spesa_cofinanziato) {
+		this.im_spesa_cofinanziato = im_spesa_cofinanziato;
+	}
+
+	public BigDecimal getManris_fin() {
+		return manris_fin;
+	}
+
+	public void setManris_fin(BigDecimal manris_fin) {
+		this.manris_fin = manris_fin;
+	}
+
+	public BigDecimal getManris_cofin() {
+		return manris_cofin;
+	}
+
+	public void setManris_cofin(BigDecimal manris_cofin) {
+		this.manris_cofin = manris_cofin;
+	}
+
 	//	ESERCIZIO DECIMAL(4,0)
 	private Integer esercizio_piano;
 
 	private String  cd_centro_responsabilita;
 
-	protected it.cnr.contab.progettiric00.core.bulk.ProgettoBulk findProgetto;
+	protected it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk findProgettoForPrint;
 
 	private String  ds_cdr;
 
 	private Integer pg_progetto;
 
 	private String  cd_progetto;
-		
+
+	private String  cd_linea_attivita;
+
+	private String  cd_voce_piano;
+
+	private String  cd_elemento_voce;
+
+	private String  ds_elemento_voce;
+
 	private String  ds_progetto;
 
-	private java.math.BigDecimal assestato_fin;
+	private java.math.BigDecimal im_spesa_finanziato;
 		
+	private java.math.BigDecimal im_spesa_cofinanziato;
+
+	private java.math.BigDecimal assestato_fin;
+
 	private java.math.BigDecimal assestato_cofin;
-	
+
 	private java.math.BigDecimal impacc_fin;
 	
 	private java.math.BigDecimal impacc_cofin;
 
+	private java.math.BigDecimal manris_fin;
+
+	private java.math.BigDecimal manris_cofin;
+
 	public String getCd_centro_responsabilita() {
 		return cd_centro_responsabilita;
 	}
-
 	public void setCd_centro_responsabilita(String cd_centro_responsabilita) {
 		this.cd_centro_responsabilita = cd_centro_responsabilita;
 	}
@@ -129,14 +211,15 @@ public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persisten
 		this.impacc_cofin = impacc_cofin;
 	}
 
-	public ProgettoBulk getFindProgetto() {
-		return findProgetto;
+	public Progetto_sipBulk getFindProgettoForPrint() {
+		return findProgettoForPrint;
 	}
 
-	public void setProgettoForPrint(ProgettoBulk findProgetto) {
-		this.findProgetto = findProgetto;
-		if (getFindProgetto() != null){
-			setPg_progetto(getFindProgetto().getPg_progetto());
+	public void setFindProgettoForPrint(Progetto_sipBulk findProgetto) {
+		this.findProgettoForPrint = findProgetto;
+		if (getFindProgettoForPrint() != null){
+			setPg_progetto(getFindProgettoForPrint().getPg_progetto());
 		}
 	}
+
 }

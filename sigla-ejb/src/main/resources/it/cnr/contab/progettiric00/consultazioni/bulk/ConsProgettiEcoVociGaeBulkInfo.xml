@@ -28,6 +28,35 @@
 		maxLength="4"
 		label="esercizio" />
 	<fieldProperty
+			name="cd_voce_piano"
+			property="cd_voce_piano"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="10"
+			label="Voce Economica" />
+	<fieldProperty
+			name="cd_linea_attivita"
+			property="cd_linea_attivita"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="GAE" />
+	<fieldProperty
+			name="cd_elemento_voce"
+			property="cd_elemento_voce"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="Voce" />
+	<fieldProperty
+			name="ds_elemento_voce"
+			property="ds_elemento_voce"
+			inputType="TEXTAREA"
+			cols="60"
+			rows="5"
+			maxLength="300"
+			label="Descr. Voce" />
+	<fieldProperty
 		name="cd_centro_responsabilita"
 		property="cd_centro_responsabilita"
 		inputType="TEXT"
@@ -82,6 +111,22 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Impegnato Fin." />
 	<fieldProperty
+			name="im_spesa_finanziato"
+			property="im_spesa_finanziato"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Finanziato Voce Ec.." />
+	<fieldProperty
+			name="im_spesa_cofinanziato"
+			property="im_spesa_cofinanziato"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Cofinanziato Voce Ec." />
+	<fieldProperty
 		name="impacc_cofin"
 		property="impacc_cofin"
 		inputType="TEXT"
@@ -90,33 +135,65 @@
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Impegnato Cofin." />
 	<fieldProperty
-			name="findProgetto"
-			property="findProgetto"
+			name="manris_fin"
+			property="manris_fin"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Mandato Fin." />
+	<fieldProperty
+			name="manris_cofin"
+			property="manris_cofin"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Mandato Cofin." />
+	<fieldProperty
+			name="findProgettoForPrint"
+			property="findProgettoForPrint"
 			enabledOnEdit="true"
 			inputType="SEARCHTOOL"
-			formName="searchtool"
+			formName="form_searchtool_progetto"
 			completeOnSave="true"
 			label="Progetto"/>
 
-	<formFieldProperty name="esercizio_piano" />
-	<formFieldProperty name="cd_centro_responsabilita" />
-	<formFieldProperty name="ds_cdr" />
 	<formFieldProperty name="cd_progetto" />
 	<formFieldProperty name="ds_progetto" />
+	<formFieldProperty name="cd_voce_piano" />
+	<formFieldProperty name="esercizio_piano" />
+	<formFieldProperty name="im_spesa_finanziato" />
+	<formFieldProperty name="im_spesa_cofinanziato" />
+	<formFieldProperty name="cd_centro_responsabilita" />
+	<formFieldProperty name="ds_cdr" />
+	<formFieldProperty name="cd_elemento_voce" />
+	<formFieldProperty name="ds_elemento_voce" />
+	<formFieldProperty name="cd_linea_attivita" />
 	<formFieldProperty name="assestato_fin" />
 	<formFieldProperty name="assestato_cofin" />
 	<formFieldProperty name="impacc_fin" />
 	<formFieldProperty name="impacc_cofin" />
-	<formFieldProperty name="findProgetto" />
+	<formFieldProperty name="manris_fin" />
+	<formFieldProperty name="manris_cofin" />
+	<formFieldProperty name="findProgettoForPrint" />
 
- 	<columnFieldProperty name="esercizio_piano" />
-	<columnFieldProperty name="cd_centro_responsabilita" />
-	<columnFieldProperty name="ds_cdr" />
 	<columnFieldProperty name="cd_progetto" />
 	<columnFieldProperty name="ds_progetto" />
+	<columnFieldProperty name="cd_voce_piano" />
+ 	<columnFieldProperty name="esercizio_piano" />
+	<columnFieldProperty name="im_spesa_finanziato" />
+	<columnFieldProperty name="im_spesa_cofinanziato" />
+	<columnFieldProperty name="cd_centro_responsabilita" />
+	<columnFieldProperty name="ds_cdr" />
+	<columnFieldProperty name="cd_elemento_voce" />
+	<columnFieldProperty name="ds_elemento_voce" />
+	<columnFieldProperty name="cd_linea_attivita" />
 	<columnFieldProperty name="assestato_fin" />
 	<columnFieldProperty name="assestato_cofin" />
 	<columnFieldProperty name="impacc_fin" />
 	<columnFieldProperty name="impacc_cofin" />
- 	
+	<columnFieldProperty name="manris_fin" />
+	<columnFieldProperty name="manris_cofin" />
+
 </bulkInfo>

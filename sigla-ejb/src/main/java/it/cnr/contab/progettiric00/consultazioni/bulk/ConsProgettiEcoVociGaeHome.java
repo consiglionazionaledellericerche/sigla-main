@@ -22,9 +22,13 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
 import it.cnr.contab.doccont00.core.bulk.Mandato_rigaBulk;
+import it.cnr.contab.pdg00.bulk.Stampa_pdg_etr_speVBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
@@ -41,6 +45,7 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 	public ConsProgettiEcoVociGaeHome(Connection conn, PersistentCache persistentCache) {
 		super(ConsProgettiEcoVociGaeBulk.class, conn, persistentCache);
 	}
+
 	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause)
 			throws PersistencyException
 	{
@@ -61,18 +66,26 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 
 */
 		sql.resetColumns();
-		sql.addColumn("PROGETTO_PIANO_ECONOMICO.esercizio_piano");
-		sql.addColumn("PROGETTO_PIANO_ECONOMICO.pg_progetto");
-		sql.addColumn("PROGETTO_GEST.CD_PROGETTO","cd_progetto");
-		sql.addColumn("PROGETTO_GEST.DS_PROGETTO", "ds_progetto");
+		sql.addColumn("PROGETTO_PIANO_ECONOMICO.cd_voce_piano","cd_voce_piano");
+		sql.addColumn("PROGETTO_PIANO_ECONOMICO.esercizio_piano","esercizio_piano");
+		sql.addColumn("PROGETTO_PIANO_ECONOMICO.im_spesa_finanziato","im_spesa_finanziato");
+		sql.addColumn("PROGETTO_PIANO_ECONOMICO.im_spesa_cofinanziato","im_spesa_cofinanziato");
+		sql.addColumn("ELEMENTO_VOCE.CD_ELEMENTO_VOCE","cd_elemento_voce");
+		sql.addColumn("ELEMENTO_VOCE.DS_ELEMENTO_VOCE","ds_elemento_voce");
+		sql.addColumn("V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita","cd_linea_attivita");
+		sql.addColumn("PROGETTO_GEST.pg_progetto");
+		sql.addColumn("PROGETTO_GEST.CD_PROGETTO");
+		sql.addColumn("PROGETTO_GEST.DS_PROGETTO");
 		sql.addColumn("CDR.CD_CENTRO_RESPONSABILITA", "cd_centro_responsabilita");
 		sql.addColumn("CDR.DS_CDR", "ds_cdr");
 		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_fin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_FIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_FIN,0)","assestato_fin");
 		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_cofin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_coFIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_coFIN,0)","assestato_cofin");
 		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_cofin,0)","impacc_cofin");
 		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_fin,0)","impacc_fin");
+		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_cofin,0)","manris_cofin");
+		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_fin,0)","manris_fin");
 
-		sql.addTableToHeader("PROGETTO_GEST");
+		sql.addTableToHeader("PROGETTO_PIANO_ECONOMICO");
 		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.pg_progetto","PROGETTO_GEST.pg_progetto");
 
 
@@ -97,7 +110,6 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 		sql.addTableToHeader("CDR");
 		sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA(+)");
 
-		sql.addSQLClause("AND", "PROGETTO_PIANO_ECONOMICO.pg_progetto", SQLBuilder.EQUALS, new Long(33300));
 		sql.addSQLClause("AND", "PROGETTO_GEST.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext) );
 
 		return sql;

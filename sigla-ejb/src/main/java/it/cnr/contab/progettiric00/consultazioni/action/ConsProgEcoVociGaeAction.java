@@ -26,6 +26,7 @@ import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.action.BulkAction;
 
 import javax.ejb.RemoveException;
@@ -44,7 +45,9 @@ public Forward doCerca(ActionContext context) throws RemoteException, Instantiat
 
 		
 		ConsProgEcoVoceGaeDettBP dettBP = (ConsProgEcoVoceGaeDettBP) context.createBusinessProcess("ConsProgEcoVoceGaeDettBP");
-		it.cnr.jada.util.RemoteIterator ri = dettBP.createComponentSession().cerca(context.getUserContext(), new CompoundFindClause(), assestato);
+		CompoundFindClause clause = new CompoundFindClause();
+		clause.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, assestato.getPg_progetto());
+		it.cnr.jada.util.RemoteIterator ri = dettBP.createComponentSession().cerca(context.getUserContext(), clause, assestato);
 		
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		if (ri.countElements() == 0) {

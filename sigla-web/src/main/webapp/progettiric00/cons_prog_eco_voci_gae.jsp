@@ -24,14 +24,9 @@
 		<table width="100%">
 
               <tr>
-                <td><% bp.getController().writeFormLabel(out,"findProgetto");%></td>
-                <td><% bp.getController().writeFormInput(out,"findProgetto"); %></td>
+                <td><% bp.getController().writeFormLabel(out,"findProgettoForPrint");%></td>
+                <td><% bp.getController().writeFormInput(out,"findProgettoForPrint"); %></td>
               </tr>
-		  <tr>
-				<td> <% bp.getController().writeFormLabel(out,"esercizio_piano"); %></td>
-    			<td> <% bp.getController().writeFormInput(out,null,"esercizio_piano",false,null,"");%></td>
-    		 </tr>
-
     	</table>
 		
 	</div>

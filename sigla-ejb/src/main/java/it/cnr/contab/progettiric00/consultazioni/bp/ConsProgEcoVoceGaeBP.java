@@ -67,7 +67,7 @@ public class ConsProgEcoVoceGaeBP extends BulkBP
 
 	public RemoteIterator find(ActionContext actioncontext, CompoundFindClause clauses, OggettoBulk bulk, OggettoBulk context, String property) throws BusinessProcessException {
 		try {
-			CRUDComponentSession cs = (CRUDComponentSession) createComponentSession("JADAEJB_CRUDComponentSession");
+			CRUDComponentSession cs = (CRUDComponentSession) createComponentSession("CNRPDG00_EJB_PdGPreventivoComponentSession");
 			if (cs == null) return null;
 			return EJBCommonServices.openRemoteIterator(
 					actioncontext,
