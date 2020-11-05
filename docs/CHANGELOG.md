@@ -1,3 +1,63 @@
+## Release 6.2.64  -- _November 05, 2020_ 
+**Changes**
+
+>**Rilascio Consultazione Progetto/PianoEconomico/GAE**
+>
+>[867b98951ebd892](https://github.com/consiglionazionaledellericerche/sigla-main/commit/867b98951ebd892) gianfranco.gasparro *November 05, 2020*
+
+>**Rilascio Consultazione Progetto/PianoEconomico/GAE**
+>
+>[1110fb8bb46ad6d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1110fb8bb46ad6d) gianfranco.gasparro *November 04, 2020*
+
+
+## Release 6.2.63  -- _November 03, 2020_ 
+**Changes**
+
+>**Corretta gestione Gruppi IVA su fatturazione elettronica ed inizio rilascio Consultazione Progetto/PianoEconomico/GAE**
+>
+>[392bf6087e44e1b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/392bf6087e44e1b) gianfranco.gasparro *November 03, 2020*
+
+>**Aggiunti documenti per gli Incarichi di collaborazione**
+>
+>[0998f00b17b90ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0998f00b17b90ce) marco.spasiano *October 30, 2020*
+
+>**Update premessa.rst**
+>
+>[b5501439f63f3bb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b5501439f63f3bb) patriziavillani *October 29, 2020*
+
+>**Update premessa.rst**
+>
+>[e1c3b7a1f7d806b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e1c3b7a1f7d806b) patriziavillani *October 29, 2020*
+
+>**Update premessa.rst**
+>
+>[facfa6f27a8b0c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/facfa6f27a8b0c6) patriziavillani *October 29, 2020*
+
+>**Update premessa.rst**
+>
+>[097e7f03232627b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/097e7f03232627b) patriziavillani *October 29, 2020*
+
+>**Update premessa.rst**
+>
+>[2149b9fecde0589](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2149b9fecde0589) patriziavillani *October 29, 2020*
+
+>**Update premessa.rst**
+>
+>[8abe5f74d4e340e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8abe5f74d4e340e) patriziavillani *October 29, 2020*
+
+>**Update premessa.rst**
+>
+>[46ac1f180ed26cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/46ac1f180ed26cb) patriziavillani *October 29, 2020*
+
+>**Update premessa.rst**
+>
+>[3aea8908f630b41](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3aea8908f630b41) patriziavillani *October 29, 2020*
+
+>**Update index.rst**
+>
+>[d3953a82da719f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d3953a82da719f4) patriziavillani *October 29, 2020*
+
+
 ## Release 6.2.62  -- _October 26, 2020_ 
 **Changes**
 
