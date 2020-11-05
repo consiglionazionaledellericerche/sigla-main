@@ -3590,4 +3590,16 @@ TRASPORTO_AEREO"/>
             <where>cd_accesso = 'CFGPDGPCONSPROGGAE'</where>
         </update>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="fix-accesso-nome-cons-pdgp-prog-gae">
+        <update tableName="accesso">
+            <column name="ds_accesso" value='Movimentazione Piano Economico' type="CHAR(200)"/>
+            <where>cd_accesso = 'CFGPDGPCONSPROGGAE'</where>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="fix-albero_main-ds_nodo">
+        <update tableName="albero_main">
+            <column name="ds_nodo" value='Movimentazione Piano Economico' type="CHAR(200)"/>
+            <where>cd_nodo = '0.PRV.PDGMODAGG.CON.PDGPPROGGAE'</where>
+        </update>
+    </changeSet>
 </databaseChangeLog>

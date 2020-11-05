@@ -111,7 +111,12 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 		sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA(+)");
 
 		sql.addSQLClause("AND", "PROGETTO_GEST.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext) );
-
+		sql.addOrderBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
+		sql.addOrderBy("PROGETTO_PIANO_ECONOMICO.esercizio_piano");
+		sql.addOrderBy("CDR.CD_CENTRO_RESPONSABILITA");
+		sql.addOrderBy("ELEMENTO_VOCE.cd_elemento_voce");
+		sql.addOrderBy("ELEMENTO_VOCE.cd_elemento_voce");
+		sql.addOrderBy("V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita");
 		return sql;
 	}
 }

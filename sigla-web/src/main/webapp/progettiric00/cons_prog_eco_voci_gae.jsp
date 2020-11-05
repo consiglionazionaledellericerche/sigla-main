@@ -10,7 +10,7 @@
 <% JSPUtils.printBaseUrl(pageContext); %>
 <script language="JavaScript" src="scripts/util.js"></script>
 <script language="javascript" src="scripts/css.js"></script>
-<title>Consultazione Progetto/Piano Economico/Voce/GAE</title>
+<title>Movimentazione Progetto - Piano Economico - Voce - GAE</title>
 </head>
 <body class="Form">
 

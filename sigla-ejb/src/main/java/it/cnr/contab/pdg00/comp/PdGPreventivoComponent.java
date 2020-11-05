@@ -4120,18 +4120,11 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 		sql.addClause( clause );
 		sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
 		sql.addSQLClause("AND", "TIPO_FASE", SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
+		sql.addSQLClause("AND", "PG_PROGETTO_OTHER_FIELD", SQLBuilder.ISNOTNULL,"");
 		// Se uo 999.000 in scrivania: visualizza tutti i progetti
 		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
 		if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-			String subQuery = "SELECT PG_PROGETTO FROM "
-					+ it.cnr.jada.util.ejb.EJBCommonServices.getDefaultSchema()
-					+ "V_SALDI_GAE_VOCE_PROGETTO " + "WHERE esercizio = ? "
-					+ "AND CD_CENTRO_RESPONSABILITA = ? ";
-			sql.addParameter(CNRUserContext.getEsercizio(userContext), Types.NUMERIC, 0);
-			sql.addParameter(CNRUserContext.getCd_cdr(userContext), Types.VARCHAR, 0);
-
-			sql.addSQLClause("AND", "PG_PROGETTO IN ( "
-					+ subQuery + " )");
+			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_unita_organizzativa());
 		}
 		sql.addOrderBy("cd_progetto");
 		return sql;
