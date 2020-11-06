@@ -3602,4 +3602,18 @@ TRASPORTO_AEREO"/>
             <where>cd_nodo = '0.PRV.PDGMODAGG.CON.PDGPPROGGAE'</where>
         </update>
     </changeSet>
+    <changeSet id="add_data_rifiuto_fattura_motivi_pred" author="marco.spasiano">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="COSTANTI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_RIFIUTO_FATTURA_SDI_MOTIVI_PREDEFINITI"/>
+            <column name="dt01" type="${date.type}" valueDate="to_Date('06112020','ddmmyyyy')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

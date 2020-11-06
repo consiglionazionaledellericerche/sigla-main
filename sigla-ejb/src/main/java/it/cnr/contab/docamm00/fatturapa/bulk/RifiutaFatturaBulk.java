@@ -38,26 +38,17 @@ public class RifiutaFatturaBulk extends OggettoBulk {
 
     private String message;
     private Timestamp dataRicezione;
-
+    private Timestamp dataLimite;
     public RifiutaFatturaBulk() {
         super();
     }
 
-    public RifiutaFatturaBulk(Timestamp dataRicezione) {
+    public RifiutaFatturaBulk(Timestamp dataRicezione, Timestamp dataLimite) {
         this.dataRicezione = dataRicezione;
+        this.dataLimite = dataLimite;
     }
 
     public boolean isMotivoLibero() {
-        java.util.Calendar calendar = java.util.GregorianCalendar.getInstance();
-        calendar.set(java.util.Calendar.DAY_OF_MONTH, 6);
-        calendar.set(java.util.Calendar.MONTH, 10);
-        calendar.set(java.util.Calendar.YEAR, 2020);
-        calendar.set(java.util.Calendar.HOUR, 0);
-        calendar.set(java.util.Calendar.MINUTE, 0);
-        calendar.set(java.util.Calendar.SECOND, 0);
-        calendar.set(java.util.Calendar.MILLISECOND, 0);
-        calendar.set(java.util.Calendar.AM_PM, java.util.Calendar.AM);
-        Timestamp dataLimite = new Timestamp(calendar.getTime().getTime());
         return this.dataRicezione.before(dataLimite);
     }
 

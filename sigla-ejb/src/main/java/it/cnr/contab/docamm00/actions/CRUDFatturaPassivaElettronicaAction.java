@@ -21,6 +21,7 @@ import it.cnr.contab.anagraf00.bp.CRUDTerzoBP;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
 import it.cnr.contab.docamm00.bp.RifiutaFatturaBP;
@@ -249,8 +250,16 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			if (bulk.getFlDecorrenzaTermini().equalsIgnoreCase("S")) {
 				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalità di invio PEC (Vedere Manuale)!");
 			} else {
+				Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)
+						it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRCONFIG00_EJB_Configurazione_cnrComponentSession");
 				RifiutaFatturaBP rifiutaFatturaBP = (RifiutaFatturaBP) context.createBusinessProcess("RifiutaFatturaBP");
-				rifiutaFatturaBP.setModel(context, new RifiutaFatturaBulk(bulk.getDocumentoEleTrasmissione().getDataRicezione()));
+				rifiutaFatturaBP.setModel(
+						context,
+						new RifiutaFatturaBulk(
+								bulk.getDocumentoEleTrasmissione().getDataRicezione(),
+								sess.getDt01(context.getUserContext(), new Integer(0), "*", "COSTANTI", "DATA_RIFIUTO_FATTURA_SDI_MOTIVI_PREDEFINITI")
+						)
+				);
 				context.addHookForward("motivoRifiuto",this,"doConfirmRifiutaFattura");
 				return context.addBusinessProcess(rifiutaFatturaBP);
 			}
