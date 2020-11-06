@@ -23,10 +23,13 @@ import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaBP;
 import it.cnr.contab.docamm00.bp.CRUDFatturaPassivaElettronicaBP;
+import it.cnr.contab.docamm00.bp.RifiutaFatturaBP;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.RifiutaFatturaBulk;
+import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -220,19 +223,19 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 		}		    	
     }
 
-	public Forward doConfirmRifiutaFattura(ActionContext context, it.cnr.jada.util.action.OptionBP option) throws BusinessProcessException {
+	public Forward doConfirmRifiutaFattura(ActionContext context) throws BusinessProcessException {
 		CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 		DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
+		HookForward caller = (HookForward)context.getCaller();
+		RifiutaFatturaBulk rifiutaFatturaBulk = (RifiutaFatturaBulk) caller.getParameter("motivoRifiuto");
 		try {
-			if (option.getOption() == it.cnr.jada.util.action.OptionBP.YES_BUTTON) {
-				Object motivoRifiuto = ((HttpActionContext)context).getRequest().getParameter("main.motivoRifiuto");
-				if (motivoRifiuto != null && String.valueOf(motivoRifiuto).length() > 0) {
-					bulk.setMotivoRifiuto(String.valueOf(motivoRifiuto));
-					fatturaPassivaElettronicaBP.rifiutaFattura(context, bulk);					
-				} else {
-					fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto è obbligatorio!");
-				}				
-			}			
+			String motivoRifiuto = rifiutaFatturaBulk.getMessage();
+			if (motivoRifiuto != null && String.valueOf(motivoRifiuto).length() > 0) {
+				bulk.setMotivoRifiuto(String.valueOf(motivoRifiuto));
+				fatturaPassivaElettronicaBP.rifiutaFattura(context, bulk);
+			} else {
+				fatturaPassivaElettronicaBP.setMessage("Il Motivo del rifiuto è obbligatorio!");
+			}
 		} catch (Exception e) {
 			return handleException(context,e);
 		}		
@@ -246,10 +249,10 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			if (bulk.getFlDecorrenzaTermini().equalsIgnoreCase("S")) {
 				fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalità di invio PEC (Vedere Manuale)!");
 			} else {
-				String message = "Inserire il motivo di rifiuto della fattura:";
-				message += "<textarea maxLength=\"255\" name=\"main.motivoRifiuto\" class=\"FormInput w-100\" "+
-						"cols=\"60\" rows=\"5\" onfocus=\"focused(this)\" onclick=\"cancelBubble(event)\"></textarea>";
-				openConfirm( context, message, it.cnr.jada.util.action.OptionBP.CONFIRM_YES_NO, "doConfirmRifiutaFattura");				
+				RifiutaFatturaBP rifiutaFatturaBP = (RifiutaFatturaBP) context.createBusinessProcess("RifiutaFatturaBP");
+				rifiutaFatturaBP.setModel(context, new RifiutaFatturaBulk(bulk.getDocumentoEleTrasmissione().getDataRicezione()));
+				context.addHookForward("motivoRifiuto",this,"doConfirmRifiutaFattura");
+				return context.addBusinessProcess(rifiutaFatturaBP);
 			}
 			return context.findDefaultForward();			
 		} catch (Exception e) {
