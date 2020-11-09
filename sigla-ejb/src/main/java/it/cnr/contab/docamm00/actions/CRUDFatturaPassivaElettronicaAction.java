@@ -32,6 +32,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.RifiutaFatturaBulk;
 import it.cnr.contab.firma.bulk.FirmaOTPBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.action.Forward;
@@ -273,6 +274,20 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
 			CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
 			DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
 			BigDecimal tot_riepilogo=BigDecimal.ZERO;
+			if (!bulk.isRifiutata() && bulk.isFromInizializzaBulkPerModifica()){
+				if (bulk.isTipoDocumentoNonGestitoFatturazioneElettronica()){
+					throw new ApplicationMessageFormatException(
+							"Il documento ha un tipo '{0}' che non è possibile gestire. E' possibile solo rifiutare il documento.",
+							DocumentoEleTestataBulk.tiTipoDocumentoKeys.get(bulk.getTipoDocumento())
+					);
+				}
+				if (bulk.isTipoDocumentoInAttesaFatturazioneElettronica()){
+					throw new ApplicationMessageFormatException(
+							"Il documento ha un tipo '{0}' che non è possibile gestire. Contattare l'helpdesk per maggiori chiarimenti.",
+							DocumentoEleTestataBulk.tiTipoDocumentoKeys.get(bulk.getTipoDocumento())
+					);
+				}
+			}
 			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(context.getUserContext(), "AMMFATTURDOCSFATPASA");
 			if (bulk.getImportoDocumento() == null) {
 				fatturaPassivaElettronicaBP.setMessage("Prima di procedere verificare il totale del documento!");

@@ -61,7 +61,7 @@ public class RifiutaFatturaBulk extends OggettoBulk {
     }
 
     public enum MotivoRifiutoType {
-        A("fattura riferita ad una operazione che non è stata posta in essere in favore del soggetto  destinatario della trasmissione del documento"),
+        A("fattura riferita ad una operazione che non è stata posta in essere in favore del soggetto destinatario della trasmissione del documento"),
         B("omessa o errata indicazione del Codice identificativo di Gara (CIG) o del Codice unico di Progetto (CUP), da riportare in fattura nell’apposito campo previsto nel tracciato XML"),
         C("omessa o errata indicazione del codice di repertorio per i dispositivi medici e per i farmaci"),
         D("omessa o errata indicazione del codice di Autorizzazione all’immissione in commercio (AIC) e del corrispondente quantitativo da riportare in fattura per i farmaci"),

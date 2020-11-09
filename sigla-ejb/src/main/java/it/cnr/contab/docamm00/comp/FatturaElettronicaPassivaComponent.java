@@ -416,23 +416,10 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     	}
     }
 
-    public void controlloTipiDocumento(OggettoBulk oggettobulk) throws ComponentException {
-		if (!((DocumentoEleTestataBulk)oggettobulk).isRifiutata() && ((DocumentoEleTestataBulk)oggettobulk).isFromInizializzaBulkPerModifica()){
-			if (((DocumentoEleTestataBulk)oggettobulk).isTipoDocumentoNonGestitoFatturazioneElettronica()){
-				throw new it.cnr.jada.comp.ApplicationException("Il documento ha un tipo "+((DocumentoEleTestataBulk)oggettobulk).getTipoDocumento()+ " che non è possibile gestire. E' possibile solo rifiutare il documento.");
-			}
-			if (((DocumentoEleTestataBulk)oggettobulk).isTipoDocumentoInAttesaFatturazioneElettronica()){
-				throw new it.cnr.jada.comp.ApplicationException("Il documento ha un tipo "+((DocumentoEleTestataBulk)oggettobulk).getTipoDocumento()+ " che non è possibile gestire. Contattare l'helpdesk per maggiori chiarimenti.");
-			}
-		}
-
-	}
-
     public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
     	if (oggettobulk instanceof DocumentoEleTestataBulk){
     		((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione().setToBeUpdated();
-			controlloTipiDocumento(oggettobulk);
-    		notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
+			notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     		super.modificaConBulk(usercontext, ((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione());
     		cambiaStatoCompletato(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     	}
