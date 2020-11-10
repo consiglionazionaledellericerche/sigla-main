@@ -255,8 +255,8 @@ Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di profess
 |        |        |        | pubbli |        |        |        |        |
 |        |        |        | care”. |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
-| |image | Annull | Dirett | ------ | L’inca |        |        |        |
-| 22|    | ata    | ore    | ------ | rico   |        |        |        |
+|        | Annull | Dirett | ------ | L’inca |        |        |        |
+|        | ata    | ore    | ------ | rico   |        |        |        |
 |        |        |        | ------ | non    |        |        |        |
 |        |        |        | ------ | può    |        |        |        |
 |        |        |        | --     | più    |        |        |        |
@@ -303,8 +303,8 @@ Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di profess
 |        |        |        | del    |        |        |        |        |
 |        |        |        | CNR.   |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
-|        | |image | Scadut | Automa | Il     | L’inca |        |        |
-|        | 23|    | a      | tico   | passag | rico   |        |        |
+|        |        | Scadut | Automa | Il     | L’inca |        |        |
+|        |        | a      | tico   | passag | rico   |        |        |
 |        |        |        |        | gio    | non    |        |        |
 |        |        |        |        | di     | può    |        |        |
 |        |        |        |        | stato  | più    |        |        |
@@ -404,8 +404,8 @@ Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di profess
 |        |        |        |        |        | Conti” |        |        |
 |        |        |        |        |        | ;      |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        | |image |        |        |        |        |        |
-|        |        | 24|    |        |        |        |        |        |
+|        |        |        |        |        |        |        |        |
+|        |        |        |        |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
 |        |        |        | Defini | Dirett | Il     | L'inca |        |
 |        |        |        | tiva   | ore    | folder | rico   |        |
@@ -479,8 +479,8 @@ Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di profess
 |        |        |        |        |        | Conti” |        |        |
 |        |        |        |        |        | .      |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        | |image |        |        |        |        |        |
-|        |        | 25|    |        |        |        |        |        |
+|        |        |        |        |        |        |        |        |
+|        |        |        |        |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
 |        |        |        |        |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
@@ -534,18 +534,18 @@ Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di profess
 |        |        |        |        |        |        |        | minica |
 |        |        |        |        |        |        |        | rriere |
 +--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        | |image |        |        |        |        |
-|        |        |        | 26|    |        |        |        |        |
+|        |        |        |        |        |        |        |        |
+|        |        |        |        |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
 |        |        |        |        |        |        |        | 53     |
 +--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        | |image |        |        |        |        |
-|        |        |        | 27|    |        |        |        |        |
+|        |        |        |        |        |        |        |        |
+|        |        |        |        |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
 |        |        |        |        |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        | |image |        |        |        |        |
-|        |        |        | 28|    |        |        |        |        |
+|        |        |        |        |        |        |        |        |
+|        |        |        |        |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
 
 Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di professionalità interna e SENZA procedura comparativa
