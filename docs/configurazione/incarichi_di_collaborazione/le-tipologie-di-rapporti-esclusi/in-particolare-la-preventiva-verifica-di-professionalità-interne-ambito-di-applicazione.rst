@@ -75,7 +75,7 @@ Tali incarichi devono, comunque, essere registrati nella procedura di contabilit
 
 Naturalmente tali tipologie di incarichi possono essere gestite anche con le modalità previste al paragrafo 6.4 laddove configurabili come prestazioni “meramente occasionali”.
 
-**7.3 Deroga al requisito della comprovata specializzazione universitaria**
+**Deroga al requisito della comprovata specializzazione universitaria**
 
 *Riferimenti normativi:*
 
@@ -118,7 +118,7 @@ Al fine di applicare correttamente la norma, sarà necessario:
 
 -  nel caso sub c) accertare che il soggetto operi nel campo dei mestieri artigianali e che, pertanto, risulti iscritto nella CCIA come artigiano.
 
-**7.4 Incarichi di collaborazione per prestazioni “meramente occasionali”: esclusione dall’obbligo delle**
+**Incarichi di collaborazione per prestazioni “meramente occasionali”: esclusione dall’obbligo delle**
 
 .. [1]
     Cfr. art. 3 comma 3 del Disciplinare incarichi
