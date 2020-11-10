@@ -123,8 +123,7 @@ Tuttavia è causa di sospensione dell’incarico:
 
 -  la malattia superiore ai trenta giorni; in tale caso il contratto viene sospeso e riprenderà a decorrere dal venir meno della causa di sospensione ad eccezione del caso in cui l’obbiettivo per il quale è stato conferito l’incarico sia già stato raggiunto durante il periodo di sospensione  [5]_;
 
--  la maternità, per la cui disciplina si rinvia al Decreto del Ministero del Lavoro e della Previdenza Sociale del 12 luglio 2007 (pubblicato in G.U. 23 ottobre 2007, 
-n. 247)  [6]_.
+-  la maternità, per la cui disciplina si rinvia al Decreto del Ministero del Lavoro e della Previdenza Sociale del 12 luglio 2007 (pubblicato in G.U. 23 ottobre 2007, n. 247)  [6]_.
 
 .. [1]
     Cfr. art. 2 comma 1 del Disciplinare incarichi
