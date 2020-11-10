@@ -1,10 +1,7 @@
-21.2.3.10 Incarichi associati alla procedura di conferimento Incarico
-=====================================================================
+Incarichi associati alla procedura di conferimento Incarico
+============================================================
 
-**Gli incarichi associati alla “Procedura di conferimento incarichi”
-(l’associazione è possibile solo quando la stessa è in stato “In
-Scadenza”) prevedono delle fasi diverse che di seguito sono riportate,
-in maniera schematica:**
+**Gli incarichi associati alla “Procedura di conferimento incarichi” (l’associazione è possibile solo quando la stessa è in stato “In Scadenza”) prevedono delle fasi diverse che di seguito sono riportate, in maniera schematica:**
 
 +--------+--------+--------+--------+--------+--------+--------+--------+
 | **Stat | **Sogg | **Cont | **Note |        |        |        |        |
@@ -241,27 +238,3 @@ in maniera schematica:**
 |        |        |        | 7|     |        |        |        |        |
 +--------+--------+--------+--------+--------+--------+--------+--------+
 
-.. |image0| image:: ./media/image31.png
-   :width: 0.46111in
-   :height: 3.24445in
-.. |image1| image:: ./media/image25.png
-   :width: 0.38056in
-   :height: 1.40278in
-.. |image2| image:: ./media/image25.png
-   :width: 0.41667in
-   :height: 0.58333in
-.. |image3| image:: ./media/image26.png
-   :width: 0.48611in
-   :height: 0.92639in
-.. |image4| image:: ./media/image31.png
-   :width: 0.46111in
-   :height: 3.24445in
-.. |image5| image:: ./media/image25.png
-   :width: 0.38056in
-   :height: 1.40278in
-.. |image6| image:: ./media/image25.png
-   :width: 0.41667in
-   :height: 0.58333in
-.. |image7| image:: ./media/image26.png
-   :width: 0.48611in
-   :height: 0.92639in
