@@ -129,8 +129,7 @@ Al fine del corretto inquadramento, gli incarichi predetti vengono definiti come
 
 -  **Altri incarichi:** incarichi con oggetto non corrispondente alla classificazione suddetta, quali ad esempio le attività inerenti il supporto *“ … ai servizi amministrativi o tecnici dell’ente …”* [5]_. In tale tipologia, a titolo esemplificativo, rientrano le seguenti attività: audit, notarili, mediche (sicurezza del lavoro),    seminari e docenze.
 
-Si fa presente che ogni attività svolta dal collaboratore incaricato, e non solo l’attività di studio, deve essere oggetto di specifica e dettagliata relazione sulla base di quanto stabilito nell’atto di incarico (decisione a contrattare/contratto) che deve essere conservata agli atti dal responsabile del procedimento che ha affidato l’incarico
- [6]_.
+Si fa presente che ogni attività svolta dal collaboratore incaricato, e non solo l’attività di studio, deve essere oggetto di specifica e dettagliata relazione sulla base di quanto stabilito nell’atto di incarico (decisione a contrattare/contratto) che deve essere conservata agli atti dal responsabile del procedimento che ha affidato l’incarico [6]_.
 
 Nel seguito sarà chiarito che gli incarichi conferiti sotto forma di collaborazioni coordinate e continuative, indipendentemente dalla tipologia di attività oggetto del contratto (studio/ricerca/consulenza/contabile/audit), non sono soggetti ad alcun limite di spesa qualora la prestazione sia finalizzata all’attuazione di progetti di ricerca e/o di innovazione tecnologica  [7]_ [8]_ .
 
