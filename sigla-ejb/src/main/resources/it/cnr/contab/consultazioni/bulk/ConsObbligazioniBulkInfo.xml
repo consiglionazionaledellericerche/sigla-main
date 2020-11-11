@@ -231,6 +231,20 @@
 			inputSize="10"
 			maxLength="10"
 			label="Terzo Resp GAE" />
+	<fieldProperty
+			name="cd_progetto_padre"
+			property="cd_progetto_padre"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="Area Progettuale" />
+	<fieldProperty
+			name="cd_progetto"
+			property="cd_progetto"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="Progetto" />
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -243,6 +257,10 @@
 		name="ds_linea_attivita" />
 	<formFieldProperty
 			name="cd_terzo_resp_gae" />
+	<formFieldProperty
+			name="cd_progetto" />
+	<formFieldProperty
+			name="cd_progetto_padre" />
 	<formFieldProperty
 		name="cd_elemento_voce" />
 	<formFieldProperty
@@ -295,6 +313,10 @@
 		name="uo" />
 	<columnFieldProperty
 		name="cd_centro_responsabilita" />
+	<columnFieldProperty
+			name="cd_progetto_padre" />
+	<columnFieldProperty
+			name="cd_progetto" />
 	<columnFieldProperty
 		name="cd_linea_attivita" />
 	<columnFieldProperty
@@ -356,6 +378,10 @@
 		name="uo" />
 	<findFieldProperty
 		name="cd_centro_responsabilita" />
+	<findFieldProperty
+			name="cd_progetto_padre" />
+	<findFieldProperty
+			name="cd_progetto" />
 	<findFieldProperty
 		name="cd_linea_attivita" />
 	<findFieldProperty

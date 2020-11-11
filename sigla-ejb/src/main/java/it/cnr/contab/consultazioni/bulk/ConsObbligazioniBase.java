@@ -105,6 +105,26 @@ public class ConsObbligazioniBase extends  OggettoBulk implements Persistent {
 
 	private java.lang.Integer cd_terzo_resp_gae;
 
+	private java.lang.String cd_progetto;
+
+	public String getCd_progetto() {
+		return cd_progetto;
+	}
+
+	public void setCd_progetto(String cd_progetto) {
+		this.cd_progetto = cd_progetto;
+	}
+
+	public String getCd_progetto_padre() {
+		return cd_progetto_padre;
+	}
+
+	public void setCd_progetto_padre(String cd_progetto_padre) {
+		this.cd_progetto_padre = cd_progetto_padre;
+	}
+
+	private java.lang.String cd_progetto_padre;
+
 	//  DT_PAGAMENTO TIMESTAMP(7)
 	private java.sql.Timestamp data_pagamento;
 

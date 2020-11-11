@@ -204,6 +204,18 @@
 				sqlTypeName="DECIMAL"
 				columnSize="8"
 				nullable="true" />
+		<columnMapping
+				columnName="CD_PROGETTO"
+				propertyName="cd_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_PROGETTO_PADRE"
+				propertyName="cd_progetto_padre"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
 
 	</defaultColumnMap>	
 	<persistentProperty
@@ -278,4 +290,8 @@
 		name="pg_contratto" />
 	<persistentProperty
 			name="cd_terzo_resp_gae" />
+	<persistentProperty
+			name="cd_progetto" />
+	<persistentProperty
+			name="cd_progetto_padre" />
 </SQLPersistentInfo>
