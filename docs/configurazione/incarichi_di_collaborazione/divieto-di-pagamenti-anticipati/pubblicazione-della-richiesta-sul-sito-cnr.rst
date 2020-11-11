@@ -113,10 +113,9 @@ In stato “definitivo” l’incarico può essere collegato a compensi e/o mini
 
 Inoltre è possibile modificare la ripartizione della spesa presunta sui vari esercizi, sempre nel rispetto dei limiti di spesa. 
 
-+-----------------------------------------------------------------------+
-| Annullata : Il passaggio di stato, consentito solo al Direttore       |
-|                                                                       |
-+-----------------------------------------------------------------------+
+.. warning::
+
+    Annullata : Il passaggio di stato, consentito solo al Direttore
 
 -  Chiusa : Il passaggio di stato, consentito solo al Direttore, avviene cliccando sull’icona “Concludi Incarico”. Solo gli incarichi collegati ad almeno un compenso possono assumere tale stato. Un incarico risulta collegato ad un compenso quando “l’importo utilizzato” nel folder “importo per anno” è diverso da zero.
 
@@ -187,10 +186,9 @@ In stato “definitivo” l’incarico può essere collegato a compensi e/o mini
 
 Inoltre è possibile modificare la ripartizione della spesa presunta sui vari esercizi, sempre nel rispetto dei limiti di spesa.
 
-+-----------------------------------------------------------------------+
-| Annullato : Il passaggio di stato, consentito solo al Direttore,      |
-| avviene nel caso in cui è stato                                       |
-+-----------------------------------------------------------------------+
+.. warning::
+
+    Annullato : Il passaggio di stato, consentito solo al Direttore, avviene nel caso in cui è stato
 
 -  Chiuso : il passaggio di stato, consentito solo al Direttore, avviene cliccando sull’icona “Concludi Incarico”. Solo gli incarichi collegati ad almeno un compenso possono assumere tale stato. Un incarico risulta collegato ad un compenso quando “l’importo utilizzato” nel folder “importo per anno” è diverso da zero .
 
@@ -216,337 +214,64 @@ Successione degli stati nell’ambito delle procedure amministrative
 
 La funzione “Procedura di conferimento incarichi” è a supporto delle procedure amministrative per l’affidamento di incarichi. Ciascuna procedura prevede delle fasi diverse; di seguito sono riportati, in maniera schematica, i percorsi logici di ciascuna procedura amministrativa suddivisi per **Mono-Incarico** e **MultiIncarico**. Nel caso del **Mono-Incarico** gli Stati della Procedura di Conferimento Incarichi sono gli stessi di quelli dell’unico incarico ad essa associato.
 
-\ Procedura Conferimento MONO-Incarico CON l’obbligo della verifica di professionalità interna e CON procedura comparativa
+Procedura Conferimento MONO-Incarico CON l’obbligo della verifica di professionalità interna e CON procedura comparativa
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di professionalità interna e CON procedura comparativa
----------------------------------------------------------------------------------------------------------------------------
+.. list-table:: Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di professionalità interna e CON procedura comparativa
+   :widths: 20 20 30 30
+   :header-rows: 1
 
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        | **Stat | **Sogg | **Cont | **Note |        |        |        |
-|        | o**    | etti   | rolli  | **     |        |        |        |
-|        |        | abilit | al     |        |        |        |        |
-|        |        | ati**  | salvat |        |        |        |        |
-|        |        |        | aggio* |        |        |        |        |
-|        |        |        | *      |        |        |        |        |
-+========+========+========+========+========+========+========+========+
-| Provvi |        | Tutti  | Verifi | I      |        |        |        |
-| soria  |        |        | ca     | campi  |        |        |        |
-|        |        |        | dei    | sono   |        |        |        |
-|        |        |        | limiti | tutti  |        |        |        |
-|        |        |        | (se    | modifi |        |        |        |
-|        |        |        | necess | cabili |        |        |        |
-|        |        |        | ario). | .      |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-| Pubbli |        | Dirett | Deve   | I      |        |        |        |
-| cata   |        | ore    | essere | campi  |        |        |        |
-|        |        |        | stato  | non    |        |        |        |
-|        |        |        | allega | sono   |        |        |        |
-|        |        |        | to     | modifi |        |        |        |
-|        |        |        | almeno | cabili |        |        |        |
-|        |        |        | un     | .      |        |        |        |
-|        |        |        | file   |        |        |        |        |
-|        |        |        | di     |        |        |        |        |
-|        |        |        | tipo   |        |        |        |        |
-|        |        |        | “Avvis |        |        |        |        |
-|        |        |        | o      |        |        |        |        |
-|        |        |        | da     |        |        |        |        |
-|        |        |        | pubbli |        |        |        |        |
-|        |        |        | care”. |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        | Annull | Dirett | ------ | L’inca |        |        |        |
-|        | ata    | ore    | ------ | rico   |        |        |        |
-|        |        |        | ------ | non    |        |        |        |
-|        |        |        | ------ | può    |        |        |        |
-|        |        |        | --     | più    |        |        |        |
-|        |        |        |        | essere |        |        |        |
-|        |        |        |        | affida |        |        |        |
-|        |        |        |        | to,    |        |        |        |
-|        |        |        |        | la     |        |        |        |
-|        |        |        |        | pubbli |        |        |        |
-|        |        |        |        | cazion |        |        |        |
-|        |        |        |        | e      |        |        |        |
-|        |        |        |        | viene  |        |        |        |
-|        |        |        |        | elimin |        |        |        |
-|        |        |        |        | ata.   |        |        |        |
-|        |        |        |        | Il     |        |        |        |
-|        |        |        |        | proces |        |        |        |
-|        |        |        |        | so     |        |        |        |
-|        |        |        |        | è      |        |        |        |
-|        |        |        |        | conclu |        |        |        |
-|        |        |        |        | so.    |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        | In     | Automa | Il     | Il     |        |        |        |
-|        | Scaden | tico   | passag | folder |        |        |        |
-|        | za     |        | gio    | Incari |        |        |        |
-|        |        |        | di     | chi    |        |        |        |
-|        |        |        | stato  | è      |        |        |        |
-|        |        |        | è      | visibi |        |        |        |
-|        |        |        | automa | le     |        |        |        |
-|        |        |        | tico   | per    |        |        |        |
-|        |        |        | se     | l’inse |        |        |        |
-|        |        |        | sono   | riment |        |        |        |
-|        |        |        | passat | o      |        |        |        |
-|        |        |        | i      | dei    |        |        |        |
-|        |        |        | 14     | contra |        |        |        |
-|        |        |        | giorni | tti    |        |        |        |
-|        |        |        | dalla  |        |        |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        | pubbli |        |        |        |        |
-|        |        |        | cazion |        |        |        |        |
-|        |        |        | e      |        |        |        |        |
-|        |        |        | dell'a |        |        |        |        |
-|        |        |        | vviso  |        |        |        |        |
-|        |        |        | sul    |        |        |        |        |
-|        |        |        | sito   |        |        |        |        |
-|        |        |        | del    |        |        |        |        |
-|        |        |        | CNR.   |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        | Scadut | Automa | Il     | L’inca |        |        |
-|        |        | a      | tico   | passag | rico   |        |        |
-|        |        |        |        | gio    | non    |        |        |
-|        |        |        |        | di     | può    |        |        |
-|        |        |        |        | stato  | più    |        |        |
-|        |        |        |        | è      | essere |        |        |
-|        |        |        |        | automa | affida |        |        |
-|        |        |        |        | tico   | to.    |        |        |
-|        |        |        |        | se     | Il     |        |        |
-|        |        |        |        | sono   | proces |        |        |
-|        |        |        |        | passat | so     |        |        |
-|        |        |        |        | i      | è      |        |        |
-|        |        |        |        | 74     | conclu |        |        |
-|        |        |        |        | giorni | so.    |        |        |
-|        |        |        |        | dalla  |        |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        | pubbli |        |        |        |
-|        |        |        |        | cazion |        |        |        |
-|        |        |        |        | e      |        |        |        |
-|        |        |        |        | dell'a |        |        |        |
-|        |        |        |        | vviso  |        |        |        |
-|        |        |        |        | sul    |        |        |        |
-|        |        |        |        | sito   |        |        |        |
-|        |        |        |        | del    |        |        |        |
-|        |        |        |        | CNR.   |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        | Inviat | Dirett | Nel    | Il     |        |        |
-|        |        | a      | ore    | folder | Contra |        |        |
-|        |        | Corte  |        | “Incar | tto    |        |        |
-|        |        | dei    |        | ichi”  | necess |        |        |
-|        |        | Conti  |        | deve   | ita    |        |        |
-|        |        |        |        | essere | del    |        |        |
-|        |        |        |        | impost | contro |        |        |
-|        |        |        |        | ato    | llo    |        |        |
-|        |        |        |        | l’appo | di     |        |        |
-|        |        |        |        | sito   | legitt |        |        |
-|        |        |        |        | flag,  | imità  |        |        |
-|        |        |        |        | deve   | della  |        |        |
-|        |        |        |        |        | Corte  |        |        |
-|        |        |        |        | essere | dei    |        |        |
-|        |        |        |        | valori | Conti. |        |        |
-|        |        |        |        | zzata  |        |        |        |
-|        |        |        |        | la     |        |        |        |
-|        |        |        |        | data   |        |        |        |
-|        |        |        |        | di     |        |        |        |
-|        |        |        |        | stipul |        |        |        |
-|        |        |        |        | a      |        |        |        |
-|        |        |        |        | ed il  |        |        |        |
-|        |        |        |        | contra |        |        |        |
-|        |        |        |        | ente;  |        |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        | Deve   |        |        |        |
-|        |        |        |        | essere |        |        |        |
-|        |        |        |        | stato  |        |        |        |
-|        |        |        |        | allega |        |        |        |
-|        |        |        |        | to     |        |        |        |
-|        |        |        |        | almeno |        |        |        |
-|        |        |        |        | un     |        |        |        |
-|        |        |        |        | file   |        |        |        |
-|        |        |        |        | di     |        |        |        |
-|        |        |        |        | tipo   |        |        |        |
-|        |        |        |        | “Contr |        |        |        |
-|        |        |        |        | atto   |        |        |        |
-|        |        |        |        | Stipul |        |        |        |
-|        |        |        |        | ato”;  |        |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        | Deve   |        |        |        |
-|        |        |        |        | essere |        |        |        |
-|        |        |        |        | stato  |        |        |        |
-|        |        |        |        | allega |        |        |        |
-|        |        |        |        | to     |        |        |        |
-|        |        |        |        | almeno |        |        |        |
-|        |        |        |        | un     |        |        |        |
-|        |        |        |        | file   |        |        |        |
-|        |        |        |        | di     |        |        |        |
-|        |        |        |        | tipo   |        |        |        |
-|        |        |        |        | “Decis |        |        |        |
-|        |        |        |        | ione   |        |        |        |
-|        |        |        |        | a      |        |        |        |
-|        |        |        |        | contra |        |        |        |
-|        |        |        |        | ttare” |        |        |        |
-|        |        |        |        | .      |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        | Annull | Dirett | Deve   | L’esit |        |
-|        |        |        | ata    | ore    | essere | o      |        |
-|        |        |        |        |        | stato  | della  |        |
-|        |        |        |        |        | allega | Corte  |        |
-|        |        |        |        |        | to     | dei    |        |
-|        |        |        |        |        | almeno | Conti  |        |
-|        |        |        |        |        | un     | è      |        |
-|        |        |        |        |        | file   | “Illeg |        |
-|        |        |        |        |        | di     | ittimo |        |
-|        |        |        |        |        | tipo   | ”.     |        |
-|        |        |        |        |        | “Esito |        |        |
-|        |        |        |        |        | Contro |        |        |
-|        |        |        |        |        | llo    |        |        |
-|        |        |        |        |        | Corte  |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        | Conti” |        |        |
-|        |        |        |        |        | ;      |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        | Defini | Dirett | Il     | L'inca |        |
-|        |        |        | tiva   | ore    | folder | rico   |        |
-|        |        |        |        |        | "Incar | può    |        |
-|        |        |        |        |        | ichi"  | essere |        |
-|        |        |        |        |        | deve   | utiliz |        |
-|        |        |        |        |        | essere | zato   |        |
-|        |        |        |        |        | compil | all'in |        |
-|        |        |        |        |        | ato    | terno  |        |
-|        |        |        |        |        | in     | delle  |        |
-|        |        |        |        |        | tutte  |        |        |
-|        |        |        |        |        | le sue | minica |        |
-|        |        |        |        |        | parti; | rriere |        |
-|        |        |        |        |        |        | e nei  |        |
-|        |        |        |        |        | Deve   | compen |        |
-|        |        |        |        |        | essere | si.    |        |
-|        |        |        |        |        | stato  |        |        |
-|        |        |        |        |        | allega | L'unic |        |
-|        |        |        |        |        | to     | o      |        |
-|        |        |        |        |        | almeno | campo  |        |
-|        |        |        |        |        | un     | modifi |        |
-|        |        |        |        |        | file   | cabile |        |
-|        |        |        |        |        | di     | è la   |        |
-|        |        |        |        |        | tipo   | "Proro |        |
-|        |        |        |        |        | “Contr | ga".   |        |
-|        |        |        |        |        | atto   |        |        |
-|        |        |        |        |        | Stipul |        |        |
-|        |        |        |        |        | ato”;  |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        | Deve   |        |        |
-|        |        |        |        |        | essere |        |        |
-|        |        |        |        |        | stato  |        |        |
-|        |        |        |        |        | allega |        |        |
-|        |        |        |        |        | to     |        |        |
-|        |        |        |        |        | almeno |        |        |
-|        |        |        |        |        | un     |        |        |
-|        |        |        |        |        | file   |        |        |
-|        |        |        |        |        | di     |        |        |
-|        |        |        |        |        | tipo   |        |        |
-|        |        |        |        |        | “Decis |        |        |
-|        |        |        |        |        | ione   |        |        |
-|        |        |        |        |        | a      |        |        |
-|        |        |        |        |        | contra |        |        |
-|        |        |        |        |        | ttare” |        |        |
-|        |        |        |        |        | ;      |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        | Se è   |        |        |
-|        |        |        |        |        | previs |        |        |
-|        |        |        |        |        | to     |        |        |
-|        |        |        |        |        | l’invi |        |        |
-|        |        |        |        |        | o      |        |        |
-|        |        |        |        |        | alla   |        |        |
-|        |        |        |        |        | Corte  |        |        |
-|        |        |        |        |        | dei    |        |        |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        | Conti, |        |        |
-|        |        |        |        |        | deve   |        |        |
-|        |        |        |        |        | essere |        |        |
-|        |        |        |        |        | stato  |        |        |
-|        |        |        |        |        | allega |        |        |
-|        |        |        |        |        | to     |        |        |
-|        |        |        |        |        | almeno |        |        |
-|        |        |        |        |        | un     |        |        |
-|        |        |        |        |        | file   |        |        |
-|        |        |        |        |        | di     |        |        |
-|        |        |        |        |        | tipo   |        |        |
-|        |        |        |        |        | “Esito |        |        |
-|        |        |        |        |        | Contro |        |        |
-|        |        |        |        |        | llo    |        |        |
-|        |        |        |        |        | Corte  |        |        |
-|        |        |        |        |        | Conti” |        |        |
-|        |        |        |        |        | .      |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        | Chiusa | Dirett | L'inca | I      |
-|        |        |        |        |        | ore    | rico   | campi  |
-|        |        |        |        |        |        | viene  | non    |
-|        |        |        |        |        |        | chiuso | sono   |
-|        |        |        |        |        |        | quando | modifi |
-|        |        |        |        |        |        | l'impo | cabili |
-|        |        |        |        |        |        | rto    | .      |
-|        |        |        |        |        |        | risult |        |
-|        |        |        |        |        |        | a      | L'inca |
-|        |        |        |        |        |        | parzia | rico   |
-|        |        |        |        |        |        | lmente | non    |
-|        |        |        |        |        |        |        | può    |
-|        |        |        |        |        |        | utiliz | più    |
-|        |        |        |        |        |        | zato   | essere |
-|        |        |        |        |        |        |        | utiliz |
-|        |        |        |        |        |        |        | zato   |
-|        |        |        |        |        |        |        | nei    |
-|        |        |        |        |        |        |        | compen |
-|        |        |        |        |        |        |        | si     |
-|        |        |        |        |        |        |        | e      |
-|        |        |        |        |        |        |        | nelle  |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        | minica |
-|        |        |        |        |        |        |        | rriere |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        | Elimin | Dirett | L'inca | I      |
-|        |        |        |        | ata    | ore    | rico   | campi  |
-|        |        |        |        |        |        | viene  | non    |
-|        |        |        |        |        |        | elimin | sono   |
-|        |        |        |        |        |        | ato    | modifi |
-|        |        |        |        |        |        | quando | cabili |
-|        |        |        |        |        |        | non è  | .      |
-|        |        |        |        |        |        | stato  |        |
-|        |        |        |        |        |        | fatto  | L'inca |
-|        |        |        |        |        |        | alcun  | rico   |
-|        |        |        |        |        |        | pagame | non    |
-|        |        |        |        |        |        | nto.   | può    |
-|        |        |        |        |        |        |        | più    |
-|        |        |        |        |        |        |        | essere |
-|        |        |        |        |        |        |        | utiliz |
-|        |        |        |        |        |        |        | zato   |
-|        |        |        |        |        |        |        | nei    |
-|        |        |        |        |        |        |        | compen |
-|        |        |        |        |        |        |        | si     |
-|        |        |        |        |        |        |        | e      |
-|        |        |        |        |        |        |        | nelle  |
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        | minica |
-|        |        |        |        |        |        |        | rriere |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        | 53     |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
-|        |        |        |        |        |        |        |        |
-|        |        |        |        |        |        |        |        |
-+--------+--------+--------+--------+--------+--------+--------+--------+
+   * - Stato
+     - Soggetti abilitati
+     - Controlli al Salvataggio
+     - Note
+   * - Provvisoria
+     - Tutti
+     - Verifica dei limiti (se necessario)
+     - I campi son tutti modificabili
+   * - Pubblicata
+     - Direttore
+     - Deve essere stato allega to almeno un file di tipo “Avviso da pubblicare”.
+     - I campi non sono modificabili.
+   * - Annullata
+     - Direttore
+     - ----------------------------
+     - L’incarico non può più essere affidato, la pubblicazione viene eliminata. Il processo è concluso.
+   * - In Scadenza
+     - Automatico
+     - Il passaggio di stato è automatico se sono passati 14 giorni dalla pubblicazion e dell'avviso sul sito del CNR.
+     - Il folder Incarichi è visibile per l’inserimento dei contratti
+   * - Scaduta
+     - Automatico
+     - Il passaggio di stato è automatico se sono passati 74 giorni dalla pubblicazione dell'avviso sul sito del CNR.
+     - L’incarico non può più essere affidato. Il processo è concluso.
+   * - Inviata Corte dei Conti
+     - Direttore
+     - Nel folder “Incarichi” deve essere impostato l’apposito flag, deve essere valorizzata la data di stipula ed il contraente; Deve essere stato allegato almeno un file di tipo “Contratto Stipulato”; Deve essere stato allegato almeno un file di tipo “Decisione a contrattare”.
+     - Il Contratto necessità del controllo di legittimità della Corte dei Conti.
+   * - Annullata
+     - Direttore
+     - Deve essere stato allegato almeno un file di tipo “Esito Contro llo Corte Conti” ;
+     - L’esito della Corte dei Conti è “Illegittimo ”.
+   * - Definitiva
+     - Direttore
+     - Il folder "Incarichi" deve essere compil ato in tutte le sue parti; Deve essere stato allegato almeno un file di tipo “Contratto Stipulato”; Deve essere stato allegato almeno un file di tipo “Decisione a contrattare”; Se è previsto l’invio alla Corte dei Conti, deve essere stato allegato almeno un file di tipo “Esito Controllo Corte Conti”.
+     - L'incarico può essere utiliz zato all'interno delle minicarriere e nei compensi. L'unico campo modificabile è la "Proroga".
+   * - Chiusa
+     - Direttore
+     - L'incarico viene chiuso quando l'importo risult a parzialmente utilizzato
+     - I campi non sono modificabili. L'incarico non può più essere utilizzato nei compensi e nelle minicarriere.
+   * - Eliminata
+     - Direttore
+     - L'incarico viene eliminato quando non è stato fatto alcun pagamento.
+     - I campi non sono modificabili. L'incarico non può più essere utilizzato nei compensi e nelle minicarriere
+
+
+
+
+
+
 
 Procedura Conferimento MONO-Incarico SENZA l’obbligo della verifica di professionalità interna e SENZA procedura comparativa
 -----------------------------------------------------------------------------------------------------------------------------

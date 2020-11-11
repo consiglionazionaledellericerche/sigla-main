@@ -36,7 +36,8 @@ Organizzato in questo modo il sistema prevede gestisce e controlla l’aspetto a
 ------------------------------------------------
 
 .. toctree::
-   :maxdepth: -1
+   :numbered:
+   :maxdepth: 2
 
    nuovo_layout
    funzionalita_servizio/index
