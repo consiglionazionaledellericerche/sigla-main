@@ -32,6 +32,8 @@ epub_basename = u'Manuale-SIGLA'
 
 html_theme = "docs_italia_theme"
 html_theme_path = [docs_italia_theme.get_html_theme_path()]
+# These folders are copied to the documentation's HTML output
+html_static_path = ['_static']
 
 copyright = "2020 Consiglio Nazionale delle Ricerche"
 html_title = "Sistema Informativo Gestione Linee di Attività"

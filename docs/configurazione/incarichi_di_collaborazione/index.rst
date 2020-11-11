@@ -3,8 +3,7 @@ Incarichi di collaborazione
 
 **Le procedure per il conferimento di incarichi di collaborazione**
 
-*(in attuazione del Disciplinare prot. PRESID-CNR n. 6498 del 14/11/2007
-e successive modifiche ed integrazioni )*
+*(in attuazione del Disciplinare prot. PRESID-CNR n. 6498 del 14/11/2007 e successive modifiche ed integrazioni )*
 
 .. toctree::
   :maxdepth: 2
