@@ -16,6 +16,8 @@
  */
 
 package it.cnr.contab.progettiric00.consultazioni.bulk;
+import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoGestBulk;
 import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
@@ -23,10 +25,35 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.Persistent;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 
 public class ConsProgettiEcoVociGaeBulk extends OggettoBulk implements Persistent {
+	public final static java.util.Dictionary <String,String> TIPOLOGIA_STAMPA_KEYS;
+	private java.lang.String tipoStampa;
+	public final static String SINTETICA = "SINTETICA";
+	public final static String DETTAGLIATA = "DETTAGLIATA";
+
+	public String getTipoStampa() {
+		return tipoStampa;
+	}
+
+	public void setTipoStampa(String tipoStampa) {
+		this.tipoStampa = tipoStampa;
+	}
+
+	static {
+		TIPOLOGIA_STAMPA_KEYS = new it.cnr.jada.util.OrderedHashtable();
+		TIPOLOGIA_STAMPA_KEYS.put(SINTETICA,"Sintetica");
+		TIPOLOGIA_STAMPA_KEYS.put(DETTAGLIATA,"Dettagliata per Voce e GAE");
+	}
+
+
 	public ConsProgettiEcoVociGaeBulk() {
 		super();
+	}
+
+	public static java.util.Dictionary getTipologiaStampaKeys() {
+		return TIPOLOGIA_STAMPA_KEYS;
 	}
 
 	public String getCd_linea_attivita() {

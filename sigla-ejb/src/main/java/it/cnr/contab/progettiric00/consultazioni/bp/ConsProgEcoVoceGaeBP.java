@@ -53,7 +53,7 @@ public class ConsProgEcoVoceGaeBP extends BulkBP
 			CompoundFindClause clauses = new CompoundFindClause();
 			Integer esercizio = CNRUserContext.getEsercizio(context.getUserContext());
             clauses.addClause("AND","esercizio",SQLBuilder.EQUALS,esercizio);
-			
+			bulk.setTipoStampa(ConsProgettiEcoVociGaeBulk.DETTAGLIATA);
 
 			setModel(context,bulk);
 			bulk.setEsercizio_piano(esercizio);

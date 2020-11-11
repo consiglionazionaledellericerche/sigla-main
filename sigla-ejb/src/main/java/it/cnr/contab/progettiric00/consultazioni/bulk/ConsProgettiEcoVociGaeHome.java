@@ -31,12 +31,12 @@ import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.PersistentHome;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
 
 import java.sql.Connection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class ConsProgettiEcoVociGaeHome extends BulkHome {
 	public ConsProgettiEcoVociGaeHome(Connection conn) {
@@ -49,6 +49,20 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 	public SQLBuilder selectByClause(UserContext usercontext, CompoundFindClause compoundfindclause)
 			throws PersistencyException
 	{
+		boolean isSintetica= false;
+		final Stream<SimpleFindClause> clauses = Optional.ofNullable(compoundfindclause)
+				.map(compoundFindClause -> compoundFindClause.getClauses())
+				.map(enumeration -> Collections.list(enumeration).stream())
+				.map(stream -> stream
+						.filter(SimpleFindClause.class::isInstance)
+						.map(SimpleFindClause.class::cast)
+				).orElse(Stream.empty());
+		if (clauses.filter(clause ->
+				clause.getPropertyName() != null &&
+						clause.getPropertyName().equals(ConsProgettiEcoVociGaeBulk.SINTETICA))
+					.findAny().isPresent())
+			isSintetica= true;
+
 		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
 /*
 //TODO
@@ -70,20 +84,35 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 		sql.addColumn("PROGETTO_PIANO_ECONOMICO.esercizio_piano","esercizio_piano");
 		sql.addColumn("PROGETTO_PIANO_ECONOMICO.im_spesa_finanziato","im_spesa_finanziato");
 		sql.addColumn("PROGETTO_PIANO_ECONOMICO.im_spesa_cofinanziato","im_spesa_cofinanziato");
-		sql.addColumn("ELEMENTO_VOCE.CD_ELEMENTO_VOCE","cd_elemento_voce");
-		sql.addColumn("ELEMENTO_VOCE.DS_ELEMENTO_VOCE","ds_elemento_voce");
-		sql.addColumn("V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita","cd_linea_attivita");
+		if (isSintetica){
+			sql.addColumn("PROGETTO_PIANO_ECONOMICO.cd_voce_piano","cd_elemento_voce");
+			sql.addColumn("PROGETTO_PIANO_ECONOMICO.cd_voce_piano","ds_elemento_voce");
+			sql.addColumn("PROGETTO_PIANO_ECONOMICO.cd_voce_piano","cd_linea_attivita");
+		} else {
+			sql.addColumn("ELEMENTO_VOCE.CD_ELEMENTO_VOCE","cd_elemento_voce");
+			sql.addColumn("ELEMENTO_VOCE.DS_ELEMENTO_VOCE","ds_elemento_voce");
+			sql.addColumn("V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita","cd_linea_attivita");
+		}
 		sql.addColumn("PROGETTO_GEST.pg_progetto");
 		sql.addColumn("PROGETTO_GEST.CD_PROGETTO");
 		sql.addColumn("PROGETTO_GEST.DS_PROGETTO");
 		sql.addColumn("CDR.CD_CENTRO_RESPONSABILITA", "cd_centro_responsabilita");
 		sql.addColumn("CDR.DS_CDR", "ds_cdr");
-		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_fin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_FIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_FIN,0)","assestato_fin");
-		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_cofin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_coFIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_coFIN,0)","assestato_cofin");
-		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_cofin,0)","impacc_cofin");
-		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_fin,0)","impacc_fin");
-		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_cofin,0)","manris_cofin");
-		sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_fin,0)","manris_fin");
+		if (isSintetica){
+			sql.addColumn("sum(NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_fin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_FIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_FIN,0))","assestato_fin");
+			sql.addColumn("sum(NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_cofin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_coFIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_coFIN,0))","assestato_cofin");
+			sql.addColumn("sum(NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_cofin,0))","impacc_cofin");
+			sql.addColumn("sum(NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_fin,0))","impacc_fin");
+			sql.addColumn("sum(NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_cofin,0))","manris_cofin");
+			sql.addColumn("sum(NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_fin,0))","manris_fin");
+		} else {
+			sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_fin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_FIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_FIN,0)","assestato_fin");
+			sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.stanziamento_cofin,0) + NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAPIU_coFIN,0) - NVL(V_SALDI_GAE_VOCE_PROGETTO.VARIAMENO_coFIN,0)","assestato_cofin");
+			sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_cofin,0)","impacc_cofin");
+			sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.impacc_fin,0)","impacc_fin");
+			sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_cofin,0)","manris_cofin");
+			sql.addColumn("NVL(V_SALDI_GAE_VOCE_PROGETTO.manris_fin,0)","manris_fin");
+		}
 
 		sql.addTableToHeader("PROGETTO_PIANO_ECONOMICO");
 		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.pg_progetto","PROGETTO_GEST.pg_progetto");
@@ -101,22 +130,52 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
 
 		sql.addTableToHeader("V_SALDI_GAE_VOCE_PROGETTO");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.ESERCIZIO(+)");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "V_SALDI_GAE_VOCE_PROGETTO.TI_APPARTENENZA(+)");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "V_SALDI_GAE_VOCE_PROGETTO.TI_GESTIONE(+)");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.CD_ELEMENTO_VOCE(+)");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", "V_SALDI_GAE_VOCE_PROGETTO.PG_PROGETTO(+)");
+		if (isSintetica){
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.ESERCIZIO");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "V_SALDI_GAE_VOCE_PROGETTO.TI_APPARTENENZA");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "V_SALDI_GAE_VOCE_PROGETTO.TI_GESTIONE");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.CD_ELEMENTO_VOCE");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", "V_SALDI_GAE_VOCE_PROGETTO.PG_PROGETTO");
+		} else {
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.ESERCIZIO(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "V_SALDI_GAE_VOCE_PROGETTO.TI_APPARTENENZA(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "V_SALDI_GAE_VOCE_PROGETTO.TI_GESTIONE(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.CD_ELEMENTO_VOCE(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", "V_SALDI_GAE_VOCE_PROGETTO.PG_PROGETTO(+)");
+
+		}
 
 		sql.addTableToHeader("CDR");
-		sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA(+)");
+		if (isSintetica){
+			sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA");
+		} else {
+			sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA(+)");
+		}
 
 		sql.addSQLClause("AND", "PROGETTO_GEST.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext) );
+
+		if (isSintetica){
+			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.im_spesa_finanziato");
+			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.im_spesa_cofinanziato");
+			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
+			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.esercizio_piano");
+			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
+			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
+			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
+			sql.addSQLGroupBy("PROGETTO_GEST.pg_progetto");
+			sql.addSQLGroupBy("PROGETTO_GEST.cd_progetto");
+			sql.addSQLGroupBy("PROGETTO_GEST.ds_progetto");
+			sql.addSQLGroupBy("CDR.cd_centro_responsabilita");
+			sql.addSQLGroupBy("CDR.ds_cdr");
+		}
 		sql.addOrderBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
 		sql.addOrderBy("PROGETTO_PIANO_ECONOMICO.esercizio_piano");
 		sql.addOrderBy("CDR.CD_CENTRO_RESPONSABILITA");
-		sql.addOrderBy("ELEMENTO_VOCE.cd_elemento_voce");
-		sql.addOrderBy("ELEMENTO_VOCE.cd_elemento_voce");
-		sql.addOrderBy("V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita");
+		if (!isSintetica){
+			sql.addOrderBy("ELEMENTO_VOCE.cd_elemento_voce");
+			sql.addOrderBy("ELEMENTO_VOCE.cd_elemento_voce");
+			sql.addOrderBy("V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita");
+		}
 		return sql;
 	}
 }

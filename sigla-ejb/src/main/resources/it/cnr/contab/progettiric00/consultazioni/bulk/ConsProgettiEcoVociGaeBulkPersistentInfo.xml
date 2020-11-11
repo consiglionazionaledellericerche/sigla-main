@@ -130,6 +130,123 @@
 			columnSize="22"
 			nullable="true" />
 	</defaultColumnMap>
+	<columnMap
+			name="SINTETICA"
+			tableName="PROGETTO_GEST">
+		<columnMapping
+				columnName="manris_fin"
+				propertyName="manris_fin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="manris_cofin"
+				propertyName="manris_cofin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="PG_PROGETTO"
+				propertyName="pg_progetto"
+				sqlTypeName="DECIMAL"
+				columnSize="7"
+				nullable="false"/>
+		<columnMapping
+				columnName="CD_PROGETTO"
+				propertyName="cd_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_PROGETTO"
+				propertyName="ds_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="433"
+				nullable="true" />
+		<columnMapping
+				columnName="assestato_fin"
+				propertyName="assestato_fin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="assestato_cofin"
+				propertyName="assestato_cofin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="impacc_fin"
+				propertyName="impacc_fin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="impacc_cofin"
+				propertyName="impacc_cofin"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="ESERCIZIO_PIANO"
+				propertyName="esercizio_piano"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_VOCE_PIANO"
+				propertyName="cd_voce_piano"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_CENTRO_RESPONSABILITA"
+				propertyName="cd_centro_responsabilita"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_CDR"
+				propertyName="ds_cdr"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="im_spesa_finanziato"
+				propertyName="im_spesa_finanziato"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+		<columnMapping
+				columnName="im_spesa_cofinanziato"
+				propertyName="im_spesa_cofinanziato"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="true" />
+	</columnMap>
+	<columnMap
+			name="DETTAGLIATA"
+			tableName="PROGETTO_GEST"
+			extends="SINTETICA" >
+		<columnMapping
+				columnName="cd_elemento_voce"
+				propertyName="cd_elemento_voce"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+		<columnMapping
+				columnName="ds_elemento_voce"
+				propertyName="ds_elemento_voce"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="cd_linea_attivita"
+				propertyName="cd_linea_attivita"
+				sqlTypeName="VARCHAR"
+				columnSize="10"
+				nullable="true" />
+	</columnMap>
 	<persistentProperty
 			name="pg_progetto" />
 	<persistentProperty

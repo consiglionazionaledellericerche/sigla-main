@@ -30,6 +30,18 @@
     	</table>
 		
 	</div>
+	  <div class="Group card p-2 mb-2">
+	    <table class="w-50">
+	      <tr>
+			<td>
+				<% bp.getController().writeFormLabel(out,"tipoStampa");%>
+			</td>
+			<td>
+				<% bp.getController().writeFormInput(out,null,"tipoStampa",false,null,"");%>
+			</td>
+		  </tr>
+	    </table>
+	  </div>
 <%	bp.closeFormWindow(pageContext); %>
 </body>
 </html> 

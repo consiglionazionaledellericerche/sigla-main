@@ -39,12 +39,18 @@ import java.util.Iterator;
 
 public class ConsProgEcoVoceGaeDettBP extends ConsultazioniBP
 {
-	public ConsAssCompPerDataComponentSession createConsAssCompPerDataComponentSession() throws javax.ejb.EJBException,java.rmi.RemoteException {
-		return (ConsAssCompPerDataComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession", ConsAssCompPerDataComponentSession.class);
-	}
-	
 	public CRUDComponentSession createComponentSession() throws BusinessProcessException {
 		return (CRUDComponentSession)createComponentSession("JADAEJB_CRUDComponentSession",ConsAssCompPerDataComponentSession.class);
 	}
-	
+
+	public void impostaColonne(Boolean isDettagliata){
+		if (isDettagliata){
+			setSearchResultColumnSet("DETTAGLIATA");
+			setFreeSearchSet("DETTAGLIATA");
+		} else {
+			setSearchResultColumnSet("SINTETICA");
+			setFreeSearchSet("SINTETICA");
+		}
+	}
+
 }

@@ -158,7 +158,16 @@
 			formName="form_searchtool_progetto"
 			completeOnSave="true"
 			label="Progetto"/>
+	<fieldProperty
+			name="tipoStampa"
+			property="tipoStampa"
+			keysProperty="TIPOLOGIA_STAMPA_KEYS"
+			inputType="RADIOGROUP"
+			layout = "HORIZONTAL"
+			label="Tipo Stampa"
+			caseSensitiveSearch="false" />
 
+	<formFieldProperty name="tipoStampa" />
 	<formFieldProperty name="cd_progetto" />
 	<formFieldProperty name="ds_progetto" />
 	<formFieldProperty name="cd_voce_piano" />
@@ -195,5 +204,42 @@
 	<columnFieldProperty name="impacc_cofin" />
 	<columnFieldProperty name="manris_fin" />
 	<columnFieldProperty name="manris_cofin" />
+
+	<columnSet name="SINTETICA">
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_voce_piano" />
+		<columnFieldProperty name="esercizio_piano" />
+		<columnFieldProperty name="im_spesa_finanziato" />
+		<columnFieldProperty name="im_spesa_cofinanziato" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="assestato_fin" />
+		<columnFieldProperty name="assestato_cofin" />
+		<columnFieldProperty name="impacc_fin" />
+		<columnFieldProperty name="impacc_cofin" />
+		<columnFieldProperty name="manris_fin" />
+		<columnFieldProperty name="manris_cofin" />
+	</columnSet>
+	<columnSet name="DETTAGLIATA">
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_voce_piano" />
+		<columnFieldProperty name="esercizio_piano" />
+		<columnFieldProperty name="im_spesa_finanziato" />
+		<columnFieldProperty name="im_spesa_cofinanziato" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_elemento_voce" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="assestato_fin" />
+		<columnFieldProperty name="assestato_cofin" />
+		<columnFieldProperty name="impacc_fin" />
+		<columnFieldProperty name="impacc_cofin" />
+		<columnFieldProperty name="manris_fin" />
+		<columnFieldProperty name="manris_cofin" />
+	</columnSet>
+
 
 </bulkInfo>

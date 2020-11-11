@@ -39,15 +39,21 @@ public class ConsProgEcoVociGaeAction extends BulkAction {
 public Forward doCerca(ActionContext context) throws RemoteException, InstantiationException, RemoveException{
 	try {
 		ConsProgEcoVoceGaeBP bp= (ConsProgEcoVoceGaeBP) context.getBusinessProcess();
-		ConsProgettiEcoVociGaeBulk assestato = (ConsProgettiEcoVociGaeBulk)bp.getModel();
+		ConsProgettiEcoVociGaeBulk selezione = (ConsProgettiEcoVociGaeBulk)bp.getModel();
 		bp.fillModel(context); 
-		bp.valorizzaProgetto(context,assestato);
+		bp.valorizzaProgetto(context,selezione);
 
 		
 		ConsProgEcoVoceGaeDettBP dettBP = (ConsProgEcoVoceGaeDettBP) context.createBusinessProcess("ConsProgEcoVoceGaeDettBP");
 		CompoundFindClause clause = new CompoundFindClause();
-		clause.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, assestato.getPg_progetto());
-		it.cnr.jada.util.RemoteIterator ri = dettBP.createComponentSession().cerca(context.getUserContext(), clause, assestato);
+		clause.addClause("AND", "pg_progetto", SQLBuilder.EQUALS, selezione.getPg_progetto());
+		if (selezione.getTipoStampa().equals(ConsProgettiEcoVociGaeBulk.SINTETICA)){
+			clause.addClause("AND", ConsProgettiEcoVociGaeBulk.SINTETICA, SQLBuilder.EQUALS, true);
+			dettBP.impostaColonne(false);
+		} else {
+			dettBP.impostaColonne(true);
+		}
+		it.cnr.jada.util.RemoteIterator ri = dettBP.createComponentSession().cerca(context.getUserContext(), clause, selezione);
 		
 		ri = it.cnr.jada.util.ejb.EJBCommonServices.openRemoteIterator(context,ri);
 		if (ri.countElements() == 0) {
