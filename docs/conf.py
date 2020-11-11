@@ -13,10 +13,10 @@
 #      You should have received a copy of the GNU Affero General Public License
 #      along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import docs_italia_theme
+import docs_cnr_theme
 
 project = 'Sistema Informativo Gestione Linee di Attività'
-release = '6.2.66'
+release = '6.2.68'
 author = u'Consiglio Nazionale delle Ricerche'
 
 show_authors = True
@@ -30,8 +30,8 @@ latex_elements = {
 }
 epub_basename = u'Manuale-SIGLA'
 
-html_theme = "docs_italia_theme"
-html_theme_path = [docs_italia_theme.get_html_theme_path()]
+html_theme = "docs_cnr_theme"
+html_theme_path = [docs_cnr_theme.get_html_theme_path()]
 # These folders are copied to the documentation's HTML output
 html_static_path = ['_static']
 
@@ -58,5 +58,5 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
-    'docs_italia_theme'
+    'docs_cnr_theme'
 ]

@@ -52,6 +52,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.contab.util.Utility;
@@ -1399,8 +1400,11 @@ public class DistintaCassiereComponent extends
                             MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
                 } else {
                     sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.dt_firma", SQLBuilder.ISNOTNULL, null);
-                    sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
+                    sql.openParenthesis(FindClause.AND);
+                        sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
                             MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+                        sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.esito_operazione", SQLBuilder.EQUALS, EsitoOperazione.NON_ACQUISITO.value());
+                    sql.closeParenthesis();
                 }
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
