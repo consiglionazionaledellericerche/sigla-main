@@ -3616,4 +3616,39 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet id="modify_position_CFGPDGPCONSPROGGAE" author="gianfranco.gasparro">
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PROGETTI.CONS"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Consultazioni"/>
+            <column name="pg_ordinamento" type="BIGINT" value="6"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CONS"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PROGETTI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <delete tableName="albero_main">
+            <where>cd_nodo = '0.PRV.PDGMODAGG.CON.PDGPPROGGAE'</where>
+        </delete>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PROGETTI.CONS.MOVPIAECO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Movimentazione Piano Economico"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsProgEcoVoceGaeBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="1"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="MOVPIAECO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PROGETTI.CONS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
