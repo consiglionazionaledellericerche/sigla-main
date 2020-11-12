@@ -2,7 +2,8 @@
 Configurazione
 ================
 .. toctree::
-   :maxdepth: -1
+   :caption: Indice dei contenuti
+   :maxdepth: 2
 
    progetti/index
    gae

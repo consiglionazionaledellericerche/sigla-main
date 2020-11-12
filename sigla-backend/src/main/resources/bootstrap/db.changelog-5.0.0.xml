@@ -21,6 +21,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="data_rifiuto_fattura" value="to_Date('06112020','ddmmyyyy')" dbms="oracle"/>
+    <property name="data_rifiuto_fattura" value="timestamp '2020-11-06'" dbms="postgresql,h2"/>
+
     <changeSet author="marco.spasiano" id="addColumn-ti_bollo-voce_iva">
         <addColumn tableName="voce_iva">
             <column name="ti_bollo" type="CHAR(1)" defaultValue="N" remarks="Codice IVA soggetto a Bollo Dominio: S  =  Sì N  =  No D  =  Specifica Dicitura indicata su Configurazione CNR.">
@@ -3608,7 +3612,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_unita_funzionale" type="STRING" value="*"/>
             <column name="cd_chiave_primaria" type="STRING" value="COSTANTI"/>
             <column name="cd_chiave_secondaria" type="STRING" value="DATA_RIFIUTO_FATTURA_SDI_MOTIVI_PREDEFINITI"/>
-            <column name="dt01" type="${date.type}" valueDate="to_Date('06112020','ddmmyyyy')"/>
+            <column name="dt01" type="${date.type}" valueDate="${data_rifiuto_fattura}"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
             <column name="utcr" type="STRING" value="SYSTEM"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
