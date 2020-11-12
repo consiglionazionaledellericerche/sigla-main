@@ -1690,7 +1690,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 anagrafico.getPartita_iva() != null
                         || anagrafico.getCodice_fiscale() != null) {
             try {
-                SQLBuilder sql = getHome(userContext, anagrafico).createSQLBuilder();
+                AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(userContext, anagrafico);
+                SQLBuilder sql = anagraficoHome.createSQLBuilder();
                 sql.openParenthesis("AND");
                 sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, anagrafico.getPartita_iva());
                 sql.addClause(
@@ -1702,9 +1703,18 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 sql.addClause("AND", "dt_fine_rapporto", SQLBuilder.ISNULL, null);
                 if (!anagrafico.isToBeCreated())
                     sql.addClause("AND", "cd_anag", SQLBuilder.NOT_EQUALS, anagrafico.getCd_anag());
-                if (sql.executeExistsQuery(getConnection(userContext)))
-                    throw new ApplicationException("Esiste già un'altra anagrafica con questo codice fiscale o partita iva");
-            } catch (java.sql.SQLException e) {
+
+                 List<AnagraficoBulk> listaAnagrafica = anagraficoHome.fetchAll(sql);
+                if (listaAnagrafica.size() > 1){
+                    throw new ApplicationException("Esistono altre anagrafiche con questo codice fiscale o partita iva");
+                }
+                if (listaAnagrafica.size() == 1){
+                    AnagraficoBulk anagraficoConDatiUguali = listaAnagrafica.get(0);
+                    if ((!anagrafico.isGruppoIVA() && !anagraficoConDatiUguali.isGruppoIVA()) || (anagrafico.isGruppoIVA() && anagraficoConDatiUguali.isGruppoIVA())){
+                        throw new ApplicationException("Esiste già l'anagrafica "+anagraficoConDatiUguali.getCd_anag()+" con questo codice fiscale o partita iva");
+                    }
+                }
+            } catch (PersistencyException e) {
                 throw handleException(e);
             }
         }
