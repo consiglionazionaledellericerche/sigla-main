@@ -1,3 +1,238 @@
+## Release 6.2.70  -- _November 12, 2020_ 
+**Changes**
+
+>**Consentito salvataggio di un gruppo IVA con la stessa Partita IVA di un altra anagrafica**
+>
+>[fb52702b1acb694](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fb52702b1acb694) gianfranco.gasparro *November 12, 2020*
+
+>**FIX liquibase for data rifiuto fatture elettroniche**
+>
+>[452f1604bd0edd8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/452f1604bd0edd8) marco.spasiano *November 12, 2020*
+
+
+## Release 6.2.69  -- _November 11, 2020_ 
+**Changes**
+
+>**Aggiunta opzione consultazione sintetica alla Consultazione delle movimentazioni del piano economico**
+>
+>[df96da4f876669c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/df96da4f876669c) gianfranco.gasparro *November 11, 2020*
+
+>**Aggiunte colonne progetto ed area progettuale sulla consultazione Impegni/GAE**
+>
+>[86a970874817b7a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/86a970874817b7a) gianfranco.gasparro *November 11, 2020*
+
+>**Aggiunto Codice Natura nella descrizione delle operazioni non imponibili di SDI**
+>
+>[abd5dd0d1e3fbe7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/abd5dd0d1e3fbe7) gianfranco.gasparro *November 11, 2020*
+
+>**FIX docs and theme**
+>
+>[6cec17f4cab7f50](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6cec17f4cab7f50) marco.spasiano *November 11, 2020*
+
+>**FIX tables in docs and add favicon**
+>
+>[c57f5fe1e05fcb4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c57f5fe1e05fcb4) marco.spasiano *November 11, 2020*
+
+>**FIX tables in docs and add favicon**
+>
+>[be0d90f54936524](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be0d90f54936524) marco.spasiano *November 11, 2020*
+
+>**Spostata consultazione Movimentazione Piano Economico**
+>
+>[36820b0aa8ed2ad](https://github.com/consiglionazionaledellericerche/sigla-main/commit/36820b0aa8ed2ad) gianfranco.gasparro *November 10, 2020*
+
+>**Update condizione-sospensiva-dellefficacia-del-contratto-negli-incarichi-co.co.co-per-gli-anni-successivi-al-primo.rst**
+>
+>[fdc038d45e5cc28](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fdc038d45e5cc28) patriziavillani *November 10, 2020*
+
+>**Update i-limiti-di-spesa-per-incarichi-di-natura-occasionale.rst**
+>
+>[de1adf33dc95643](https://github.com/consiglionazionaledellericerche/sigla-main/commit/de1adf33dc95643) patriziavillani *November 10, 2020*
+
+>**Update pubblicazione-della-richiesta-sul-sito-cnr.rst**
+>
+>[90066fc903bdd8f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/90066fc903bdd8f) patriziavillani *November 10, 2020*
+
+>**Update pubblicazione-della-richiesta-sul-sito-cnr.rst**
+>
+>[f853b91e139b07f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f853b91e139b07f) patriziavillani *November 10, 2020*
+
+>**Update inserimento-dati-della-richiesta.rst**
+>
+>[70135f4295e0953](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70135f4295e0953) patriziavillani *November 10, 2020*
+
+>**Update i-fase-verifica-della-sussistenza-di-professionalità-interne.rst**
+>
+>[8125f59226f6f17](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8125f59226f6f17) patriziavillani *November 10, 2020*
+
+>**Update in-particolare-la-preventiva-verifica-di-professionalità-interne-ambito-di-applicazione.rst**
+>
+>[22b4ac8cc7e63c6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/22b4ac8cc7e63c6) patriziavillani *November 10, 2020*
+
+>**Update in-particolare-la-preventiva-verifica-di-professionalità-interne-ambito-di-applicazione.rst**
+>
+>[49d0aef129c9f7f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/49d0aef129c9f7f) patriziavillani *November 10, 2020*
+
+>**Update le-collaborazioni-occasionali-di-tipo-non-abituale.rst**
+>
+>[52a9f03d5c397e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/52a9f03d5c397e2) patriziavillani *November 10, 2020*
+
+>**Update le-collaborazioni-occasionali-di-tipo-professionale-con-partita-iva.rst**
+>
+>[f497f0214aa81e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f497f0214aa81e8) patriziavillani *November 10, 2020*
+
+>**Update le-collaborazioni-occasionali-di-tipo-professionale-con-partita-iva.rst**
+>
+>[dd7743613b5ab43](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dd7743613b5ab43) patriziavillani *November 10, 2020*
+
+>**Update le-collaborazioni-coordinate-e-continuative.rst**
+>
+>[7229833b256dcdd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7229833b256dcdd) patriziavillani *November 10, 2020*
+
+>**Update le-collaborazioni-coordinate-e-continuative.rst**
+>
+>[264421b814a40c2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/264421b814a40c2) patriziavillani *November 10, 2020*
+
+>**Update procedure-comparative-e-di-pubblicità.rst**
+>
+>[39b2ca118b85ae6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/39b2ca118b85ae6) patriziavillani *November 10, 2020*
+
+>**Update variazioni-per-adeguamento-incremento-aliquote.rst**
+>
+>[fdb9fedd2d9d9f1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fdb9fedd2d9d9f1) patriziavillani *November 10, 2020*
+
+>**Update procedura-conferimento-multi-incarico-senza-lobbligo-della-verifica-di-professionalità-interna-e-senza-procedura-comparativa.rst**
+>
+>[7594b8d2e6113fc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7594b8d2e6113fc) patriziavillani *November 10, 2020*
+
+>**Update procedura-conferimento-multi-incarico-con-lobbligo-della-verifica-di-professionalità-interna-e-senza-procedura-comparativa.rst**
+>
+>[6193a8af3e4f10f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6193a8af3e4f10f) patriziavillani *November 10, 2020*
+
+>**Update incarichi-associati-alla-procedura-di-conferimento-incarico.rst**
+>
+>[f50c5c71695b767](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f50c5c71695b767) patriziavillani *November 10, 2020*
+
+>**Update folder-procedura.rst**
+>
+>[182b52111bf56ea](https://github.com/consiglionazionaledellericerche/sigla-main/commit/182b52111bf56ea) patriziavillani *November 10, 2020*
+
+>**Update folder-incarichi.rst**
+>
+>[d0e95015db0009b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d0e95015db0009b) patriziavillani *November 10, 2020*
+
+>**Update folder-importi-per-anno.rst**
+>
+>[ec97d30dad8596e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ec97d30dad8596e) patriziavillani *November 10, 2020*
+
+
+## Release 6.2.68  -- _November 11, 2020_ 
+**Changes**
+
+>**Resi visibili i mandati non acquisiti nlla distinta degli annulli**
+>
+>[d1dd6ede7a5a17b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1dd6ede7a5a17b) marco.spasiano *November 11, 2020*
+
+
+## Release 6.2.66  -- _November 09, 2020_ 
+**Changes**
+
+>**Add release tag on docker hub central**
+>
+>[6ab1c5effd1a9a4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6ab1c5effd1a9a4) marco.spasiano *November 09, 2020*
+
+>**FIX version of junit**
+>
+>[7dc8c64da071316](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7dc8c64da071316) marco.spasiano *November 09, 2020*
+
+>**Fatture Elettroniche non gestite**
+>
+>[311b95a69a7998a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/311b95a69a7998a) marco.spasiano *November 09, 2020*
+
+
+## Release 6.2.65  -- _November 06, 2020_ 
+**Changes**
+
+>**Rifiuto fatture Elettroniche motivo predefinito**
+>
+>[5acd17709d12168](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5acd17709d12168) marco.spasiano *November 06, 2020*
+
+>**Rifiuto fatture Elettroniche motivo predefinito**
+>
+>[9aa70856ba014e0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9aa70856ba014e0) marco.spasiano *November 06, 2020*
+
+>**Update folder-allegati.rst**
+>
+>[84ac72fbc00001e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/84ac72fbc00001e) patriziavillani *November 04, 2020*
+
+>**Update folder-allegati.rst**
+>
+>[13d5455b6e2eb16](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13d5455b6e2eb16) patriziavillani *November 04, 2020*
+
+>**Update folder-allegati.rst**
+>
+>[ff48889fad23911](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ff48889fad23911) patriziavillani *November 04, 2020*
+
+>**Add files via upload**
+>
+>[33fd7f1decd9fb4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/33fd7f1decd9fb4) patriziavillani *November 04, 2020*
+
+>**Update folder-allegati.rst**
+>
+>[bfd8cdc4f37a491](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bfd8cdc4f37a491) patriziavillani *November 04, 2020*
+
+>**Update folder-allegati.rst**
+>
+>[3355b564019eed4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3355b564019eed4) patriziavillani *November 03, 2020*
+
+>**Update folder-allegati.rst**
+>
+>[7bd33be60e042eb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7bd33be60e042eb) patriziavillani *November 02, 2020*
+
+>**Update caso-b-appalto-di-servizi-a-studio-associato.rst**
+>
+>[89ce5d70eb63e8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/89ce5d70eb63e8d) patriziavillani *November 02, 2020*
+
+>**Update caso-a-incarico-a-professionista-fattura-dello-studio-associato.rst**
+>
+>[ef6fe214220a02e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ef6fe214220a02e) patriziavillani *November 02, 2020*
+
+>**Update divieto-di-pagamenti-anticipati.rst**
+>
+>[1f9cbd0d1af08de](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1f9cbd0d1af08de) patriziavillani *November 02, 2020*
+
+>**Update index.rst**
+>
+>[b0f42ca32ebb9a1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b0f42ca32ebb9a1) patriziavillani *November 02, 2020*
+
+>**Update il-limite-della-retribuzione-da-corrispondere-per-gli-incarichi.rst**
+>
+>[f4390a7274550ac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f4390a7274550ac) patriziavillani *November 02, 2020*
+
+>**Update le-tipologie-di-rapporti-esclusi.rst**
+>
+>[b5e7961783bb481](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b5e7961783bb481) patriziavillani *November 02, 2020*
+
+>**Update premessa-e-ambito-di-applicazione.rst**
+>
+>[f1409e476d8333f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f1409e476d8333f) patriziavillani *November 02, 2020*
+
+>**Update index.rst**
+>
+>[f11c888ad9a2d58](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f11c888ad9a2d58) patriziavillani *November 02, 2020*
+
+>**Create premessa.rst**
+>
+>[03afa332a02ae22](https://github.com/consiglionazionaledellericerche/sigla-main/commit/03afa332a02ae22) Marco Spasiano *November 02, 2020*
+
+
+### Jira comma-2 
+
+>**Update applicazione-parziale-del-disciplinare-art.-14-comma-2.rst**
+>
+>[228b3ba051fdfb2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/228b3ba051fdfb2) patriziavillani *November 02, 2020*
+
+
 ## Release 6.2.64  -- _November 05, 2020_ 
 **Changes**
 
