@@ -25,8 +25,3 @@ Si sottolinea, inoltre, che per il conferimento di tali incarichi, non è necess
 Tali incarichi dovranno comunque essere registrati nella procedura SIGLA, in quanto sono sottoposti ai medesimi obblighi di pubblicità degli altri incarichi, con l’avvertenza che in tale caso dovrà essere valorizzato l’apposito flag “Selezione art.51 comma 6 L. 449/1997”.
 
 
-.. [1]
-    Cfr. artt. 1 e 2 commi 1, 2 e 3 del Disciplinare incarichi
-
-.. [2]
-    Cfr. art. 5 comma 1 del Disciplinare incarichi
