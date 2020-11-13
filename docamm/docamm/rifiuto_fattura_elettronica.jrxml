@@ -39,6 +39,9 @@
 	<parameter name="data_ricezione" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
+	<queryString>
+		<![CDATA[SELECT 1 FROM DUAL ]]>
+	</queryString>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
