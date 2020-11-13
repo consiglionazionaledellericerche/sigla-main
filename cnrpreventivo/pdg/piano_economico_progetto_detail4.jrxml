@@ -81,7 +81,7 @@ from (select CASE
       and   A.TI_GESTIONE = C.TI_GESTIONE
       and   A.CD_ELEMENTO_VOCE = C.CD_ELEMENTO_VOCE
       and   A.PG_PROGETTO = $P{P_PG_PROGETTO})
-order by ORDINE_ESERCIZIO, CD_VOCE_PIANO]]>
+order by ORDINE_ESERCIZIO, CD_VOCE_PIANO, CD_ELEMENTO_VOCE]]>
 	</queryString>
 	<field name="ORDINE_ESERCIZIO" class="java.math.BigDecimal"/>
 	<field name="ESERCIZIO_PIANO" class="java.lang.Integer"/>
