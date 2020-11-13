@@ -24,7 +24,7 @@ Gli incarichi di collaborazione coordinata e continuativa disciplinati dal D.M. 
 
 Deve, invece, trovare applicazione l’art. 4 del disciplinare che prevede l’obbligo di individuare il contraente tramite procedura comparativa pubblica. Tali incarichi dovranno comunque essere registrati nella procedura SIGLA in quanto sono sottoposti ai medesimi obblighi di pubblicità degli altri incarichi.
 
-**2.2 Incarichi in cui l’individuazione del collaboratore è effettuata dal soggetto esterno committente**
+**Incarichi in cui l’individuazione del collaboratore è effettuata dal soggetto esterno committente**
 
 Ulteriore ambito di applicazione dell’art. 14 comma 2 del Disciplinare Incarichi riguarda gli incarichi di collaborazione che trovano la propria fonte normativa in un contratto o in una convenzione in cui l’individuazione del collaboratore è effettuata dal soggetto esterno finanziatore del progetto di ricerca e/o dal partner contrattuale. In questi casi, non solo non è necessario verificare la sussistenza di personale in servizio in grado di adempiere alla prestazione richiesta (a meno che tale possibilità non sia espressamente contemplata nel contratto/convenzione), ma non è possibile neanche individuare il contraente tramite procedura comparativa pubblica, in quanto la scelta
 per l’individuazione del medesimo non è riservata al CNR, bensì al soggetto esterno finanziatore del progetto di ricerca e/o dal partner contrattuale.
