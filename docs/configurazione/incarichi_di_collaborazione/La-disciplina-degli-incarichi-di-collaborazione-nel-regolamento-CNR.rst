@@ -15,6 +15,7 @@ I presupposti di legittimità per il conferimento degli incarichi
 ================================================================
 
 Riferimenti normativi:
+
 -	Dlgs 165/2001 - art. 7 c. 6 e 6 bis e  art. 53 c. 8;
 -	Corte dei Conti nella adunanza a sezioni riunite del 15 febbraio 2005;
 -	Circolare n. 5 della P.C.M. Dipartimento della Funzione pubblica del 21 dicembre 2006;
