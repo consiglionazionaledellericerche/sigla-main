@@ -40,7 +40,7 @@
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT 1 FROM DUAL ]]>
+		<![CDATA[SELECT 1 FROM DUAL]]>
 	</queryString>
 	<background>
 		<band splitType="Stretch"/>
@@ -143,7 +143,8 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 				<text><![CDATA[Amministrazione CNR]]></text>
 			</staticText>
 		</band>
-		<band>
+		<band height="50">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
 				<reportElement style="TNR8" x="0" y="10" width="550" height="30" uuid="939f712b-f97d-448a-b7e6-4026cc804760"/>
 				<text><![CDATA[Nota: questa è un'e-mail generata automaticamente e non avremo la possibilità di leggere eventuali e-mail di risposta. Non rispondere a questo messaggio.]]></text>
@@ -151,7 +152,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="346">
+		<band height="35">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
 				<reportElement x="433" y="5" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9">
