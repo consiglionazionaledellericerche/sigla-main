@@ -13,6 +13,8 @@ Incarichi di collaborazione
   applicazione-parziale-del-disciplinare-art.-14-comma-2.rst
   le-tipologie-di-rapporti-esclusi.rst
   incarichi-di-collaborazione-in-forma-non-abituale.rst
+  Le-tipologie-di-attività-oggetto-di-incarico.rst
+  
   il-limite-della-retribuzione-da-corrispondere-per-gli-incarichi.rst
   divieto-di-pagamenti-anticipati.rst
   section.rst
