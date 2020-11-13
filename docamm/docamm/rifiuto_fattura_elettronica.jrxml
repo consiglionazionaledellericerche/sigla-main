@@ -107,7 +107,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 			</textField>
 		</band>
 		<band height="19">
-			<textField>
+			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" x="0" y="5" width="552" height="14" uuid="f6f5a1a7-0199-4b3f-9e99-07eddbd4aa68">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -116,7 +116,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 		</band>
 		<band height="19">
 			<printWhenExpression><![CDATA[$P{note} != null]]></printWhenExpression>
-			<textField>
+			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" x="0" y="5" width="552" height="14" uuid="318cc7a5-f5db-44bf-b59e-ab2ca73c1a23">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -143,18 +143,15 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 				<text><![CDATA[Amministrazione CNR]]></text>
 			</staticText>
 		</band>
-		<band height="52">
+		<band>
 			<staticText>
 				<reportElement style="TNR8" x="0" y="10" width="550" height="30" uuid="939f712b-f97d-448a-b7e6-4026cc804760"/>
 				<text><![CDATA[Nota: questa è un'e-mail generata automaticamente e non avremo la possibilità di leggere eventuali e-mail di risposta. Non rispondere a questo messaggio.]]></text>
 			</staticText>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="30" splitType="Stretch">
+		<band height="346">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
 				<reportElement x="433" y="5" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9">
