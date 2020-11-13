@@ -106,7 +106,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 ",  inviato a questa Amministrazione, è stato rifiutato per i seguenti motivi:"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="19">
+		<band height="19" splitType="Stretch">
 			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" x="0" y="5" width="552" height="14" uuid="f6f5a1a7-0199-4b3f-9e99-07eddbd4aa68">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -114,7 +114,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 				<textFieldExpression><![CDATA[$P{message}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="19">
+		<band height="19" splitType="Stretch">
 			<printWhenExpression><![CDATA[$P{note} != null]]></printWhenExpression>
 			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" x="0" y="5" width="552" height="14" uuid="318cc7a5-f5db-44bf-b59e-ab2ca73c1a23">
