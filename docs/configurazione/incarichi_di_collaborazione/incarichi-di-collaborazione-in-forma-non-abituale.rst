@@ -277,7 +277,7 @@ Elementi in comune con la collaborazione coordinata e continuativa possono esser
     Cfr. art. 8 del Disciplinare incarichi
     
     
-    Le collaborazioni occasionali di tipo professionale con partita Iva
+Le collaborazioni occasionali di tipo professionale con partita Iva
 ===================================================================
 
 *Riferimenti normativi:*
