@@ -38,9 +38,6 @@ Ciascuna tipologia di rapporto è caratterizzata da aspetti qualificanti peculia
   :maxdepth: 3
   :caption: Indice dei contenuti
 
-  le-tipologie-di-rapporti-esclusi/le-collaborazioni-coordinate-e-continuative.rst
-  le-tipologie-di-rapporti-esclusi/le-collaborazioni-occasionali-di-tipo-non-abituale.rst
-  le-tipologie-di-rapporti-esclusi/le-collaborazioni-occasionali-di-tipo-professionale-con-partita-iva.rst
   le-tipologie-di-rapporti-esclusi/in-particolare-la-preventiva-verifica-di-professionalità-interne-ambito-di-applicazione.rst
   le-tipologie-di-rapporti-esclusi/procedure-comparative-e-di-pubblicità.rst
 
