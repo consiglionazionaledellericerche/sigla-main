@@ -15,6 +15,7 @@ Incarichi di collaborazione
   incarichi-di-collaborazione-in-forma-non-abituale.rst
   Le-tipologie-di-attività-oggetto-di-incarico.rst
   La-disciplina-degli-incarichi-di-collaborazione-nel-regolamento-CNR.rst
+  9.rst
   
   il-limite-della-retribuzione-da-corrispondere-per-gli-incarichi.rst
   divieto-di-pagamenti-anticipati.rst
