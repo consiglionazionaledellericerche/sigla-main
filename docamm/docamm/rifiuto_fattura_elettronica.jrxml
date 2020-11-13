@@ -39,6 +39,9 @@
 	<parameter name="data_ricezione" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
+	<parameter name="is_nota" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT 1 FROM DUAL]]>
 	</queryString>
@@ -72,7 +75,7 @@
 				<textElement textAlignment="Center" rotation="None">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Pec per RIFIUTO documento elettronico]]></text>
+				<text><![CDATA[PEC per RIFIUTO documento elettronico]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -124,6 +127,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 			</textField>
 		</band>
 		<band height="25" splitType="Stretch">
+			<printWhenExpression><![CDATA[!$P{is_nota}]]></printWhenExpression>
 			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" stretchType="ElementGroupHeight" x="0" y="5" width="552" height="14" uuid="7d942931-f8cf-459d-b221-20a34d0f4f6e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
