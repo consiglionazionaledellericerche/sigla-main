@@ -34,12 +34,6 @@ Gli incarichi di collaborazione, nella forma di lavoro autonomo, non possono ess
 
 Ciascuna tipologia di rapporto è caratterizzata da aspetti qualificanti peculiari che di seguito vengono rappresentati.
 
-.. toctree::
-  :maxdepth: 3
-  :caption: Indice dei contenuti
-
-  le-tipologie-di-rapporti-esclusi/in-particolare-la-preventiva-verifica-di-professionalità-interne-ambito-di-applicazione.rst
-  le-tipologie-di-rapporti-esclusi/procedure-comparative-e-di-pubblicità.rst
 
 .. [1]
     Cfr. artt. 1 e 2 commi 1, 2 e 3 del Disciplinare incarichi
