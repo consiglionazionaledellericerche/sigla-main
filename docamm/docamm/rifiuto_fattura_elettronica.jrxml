@@ -118,7 +118,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 			</textField>
 		</band>
 		<band height="19" splitType="Stretch">
-			<printWhenExpression><![CDATA[$P{note} != null &&  $P{note}.length() > 0]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$P{note} != null &&  !$P{note}.equals("null")]]></printWhenExpression>
 			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" x="0" y="5" width="552" height="14" uuid="318cc7a5-f5db-44bf-b59e-ab2ca73c1a23">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
