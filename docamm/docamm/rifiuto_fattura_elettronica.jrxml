@@ -101,8 +101,8 @@
 				<reportElement style="TNR10" x="0" y="5" width="552" height="34" uuid="b7b93c4b-ab1f-4bd5-adc9-5b6b8917e8b6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<textFieldExpression><![CDATA["Il documento elettronico " + $P{tipo_documento}  + 
-", Identificativo SdI: " + $P{identificativo_sdi}+", Numero: " + $P{numero_documento} + " del " + 
+				<textFieldExpression><![CDATA["Il documento elettronico \"" + $P{tipo_documento}  + 
+"\", Identificativo SdI: " + $P{identificativo_sdi}+", Numero: " + $P{numero_documento} + " del " + 
 new SimpleDateFormat("dd/MM/yyyy").format( $P{data_documento}) +
 " ricevuto in data " + 
 new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) + 
