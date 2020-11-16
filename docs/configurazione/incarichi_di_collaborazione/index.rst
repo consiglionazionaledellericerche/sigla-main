@@ -16,6 +16,7 @@ Incarichi di collaborazione
   Le-tipologie-di-attività-oggetto-di-incarico.rst
   La-disciplina-degli-incarichi-di-collaborazione-nel-regolamento-CNR.rst
   La-durata-del-contratto.rst
+  Il-conferimento-degli-incarichi-con-il-solo-rimborso.rst
   
   il-limite-della-retribuzione-da-corrispondere-per-gli-incarichi.rst
   divieto-di-pagamenti-anticipati.rst
