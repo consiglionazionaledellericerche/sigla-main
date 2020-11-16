@@ -40,7 +40,7 @@ La persona individuata per lo svolgimento dell’incarico dovrà presentare una 
 
 Il procedimento si conclude con l’inserimento nella procedura SIGLA dell’incarico conferito.
 
-**17. Gli obblighi di comunicazione**
+**Gli obblighi di comunicazione**
 
 Al fine di adempiere ai vari obblighi di comunicazione a cui l’Ente è tenuto ai sensi delle norme vigenti (Corte dei Conti, Dipartimento della Funzione Pubblica, Governo, Parlamento, ecc.), i Centri di Responsabilità sono tenuti ad allegare informaticamente ad ogni incarico registrato nella procedura SIGLA i seguenti documenti:
 
@@ -60,7 +60,7 @@ Nell’ambito delle suddetta competenza l’Ufficio predetto, in particolare, co
 -  la trasmissione alla Corte dei Conti degli atti di affidamento di incarichi di studio, ricerca e consulenza, come da `circolare CNR n.
    12/2006. <http://www.ittig.cnr.it/BancheDatiGuide/circolari/c06-12.htm>`__
 
-**18.La pubblicità degli incarichi conferiti**
+**La pubblicità degli incarichi conferiti**
 
 *Riferimenti normativi:*
 
@@ -81,7 +81,7 @@ funzione di controllo, osservando così i principi di imparzialità e buon andam
 
 Si raccomanda, pertanto, la massima attenzione nella predisposizione dei contratti avendo cura di utilizzare, par quanto possibile, gli schemi in allegato al presente Manuale.
 
-**19.Riepilogo delle fonti normative**
+**Riepilogo delle fonti normative**
 
 Si riporta nel seguito l’elenco delle fonti normative citate nel presente Manuale e dell’art. 27 della legge 24 novembre 2000 n. 340
 
@@ -189,88 +189,4 @@ Allegato 11Schema di “Contratto di prestazione d’opera in regime di lavoro a
 Allegato 12Schema di “Contratto di collaborazione professionale di lavoro autonomo”;
 
 Allegato 13Tabella di sintesi dei presupposti di legittimità e dei limiti di spesa; Allegato 14Schema di “Contratto occasionale” semplificato.
-
-**21.La gestione degli incarichi di collaborazione con la procedura SIGLA**
-
-Nella procedura di contabilità del CNR SIGLA è stata implementata la gestione del nuovo “disciplinare per il conferimento degli incarichi di collaborazione” (provvedimento Vice Presidente n. 64 prot. PRESID-CNR 0006498 del 14/11/2007). Le nuove funzioni sono disponibili nel menù di SIGLA nell’ambito della macroarea di CONFIGURAZIONE.
-
-Con le funzioni suddette è possibile gestire sia il di conferimento di un singolo incarico **(Mono-Incarico)** che l’affidamento di più incarichi della stessa tipologia con un’unica procedura di conferimento **(Multi-Incarico)**.
-
-Naturalmente, in quest’ultimo caso, è necessario che gli incarichi da conferire abbiano:
-
--  la medesima attività da svolgere; • il medesimo importo del corrispettivo;
-
--  la medesima tipologia contrattuale.
-
-Sono stati rilasciati i seguenti accessi :
-
-+-----------------------+-----------------------+-----------------------+
-| **Nome accesso**      | **Descrizione**       | **Percorso nel menù   |
-|                       |                       | dell’applicazione**   |
-+=======================+=======================+=======================+
-| CFGINCARICHIINCRICM   | Gestione              | Configurazione /      |
-|                       |                       | Incarichi di          |
-|                       | Verifica              | collaborazione /      |
-|                       | professionalità       | Verifica              |
-|                       | interna               | professionalità       |
-|                       |                       | interna / gestione    |
-+-----------------------+-----------------------+-----------------------+
-| CFGINCARICHIINCRICV   | Visualizzazione       | Configurazione /      |
-|                       |                       | Incarichi di          |
-|                       | Verifica              | collaborazione /      |
-|                       | professionalità       | Verifica              |
-|                       | interna               | professionalità       |
-|                       |                       | interna /             |
-|                       |                       | visualizzazione       |
-+-----------------------+-----------------------+-----------------------+
-| CFGINCARICHIINCPRCM   | Gestione              | Configurazione /      |
-|                       |                       | Incarichi di          |
-|                       | Procedura             | collaborazione /      |
-|                       | Conferimento          | Procedura             |
-|                       | Incarichi             | Conferimento          |
-|                       |                       | Incarichi / gestione  |
-+-----------------------+-----------------------+-----------------------+
-| CFGINCARICHIINCPRCV   | Visualizzazione       | Configurazione /      |
-|                       |                       | Incarichi di          |
-|                       | Procedura             | collaborazione /      |
-|                       | Conferimento          |                       |
-|                       | Incarichi             | Procedura             |
-|                       |                       | Conferimento          |
-|                       |                       | Incarichi /           |
-|                       |                       | visualizzazione       |
-+-----------------------+-----------------------+-----------------------+
-| CFGINCARICHIINCREPV   | Visualizzazione       | Configurazione /      |
-|                       | Incarichi             | Incarichi di          |
-|                       |                       | collaborazione /      |
-|                       |                       | Gestione Incarichi /  |
-|                       |                       | visualizzazione       |
-+-----------------------+-----------------------+-----------------------+
-| CFGINCARICHITIPOATTV  | Visualizzazione Tipo  | Configurazione /      |
-|                       | Attività              | Incarichi di          |
-|                       |                       | collaborazione /      |
-|                       |                       | tabelle di            |
-|                       |                       | riferimento /Tipo     |
-|                       |                       | Attività /            |
-|                       |                       |                       |
-|                       |                       | visualizzazione       |
-+-----------------------+-----------------------+-----------------------+
-| CFGINCARICHITIPOINCV  | Visualizzazione Tipo  | Configurazione /      |
-|                       | Incarico              | Incarichi di          |
-|                       |                       | collaborazione /      |
-|                       |                       | tabelle di            |
-|                       |                       | riferimento / Tipo    |
-|                       |                       | Incarico /            |
-|                       |                       |                       |
-|                       |                       | visualizzazione       |
-+-----------------------+-----------------------+-----------------------+
-
-Si ricorda che, per assegnare i nuovi accessi agli utenti interessati, occorre collegarsi con l'utenza di amministratore del CDS, entrare in gestione utenza comune, selezionare il tab "Accessi", ricercare la UO su cui opera l'utente ed assegnare i nuovi accessi selezionandoli dalla lista degli "Accessi disponibili".
-
-Inoltre si ricorda che le funzioni riservate esclusivamente al direttore (DIRIST) possono essere assegnate ad un’utenza associando a questa il ruolo “INCARICHI - Accessi per incarichi compresa pubblicazione”.
-
-**Verifica Professionalità Interne**
-
-.. [1]
-    Cfr. art. 5 comma 4 del Disciplinare incarichi
-
 
