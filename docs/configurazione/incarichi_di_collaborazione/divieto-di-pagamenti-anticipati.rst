@@ -69,11 +69,7 @@ Si riassume nel seguito il procedimento per l’affidamento degli incarichi (fas
   :caption: Indice dei contenuti
 
   divieto-di-pagamenti-anticipati/fasi-del-procedimento.rst
-  divieto-di-pagamenti-anticipati/obblighi-comunicazione.rst
-  divieto-di-pagamenti-anticipati/pubblicita.rst
-  divieto-di-pagamenti-anticipati/riepilogo-norme.rst
-  divieto-di-pagamenti-anticipati/allegati.rst
-
+  
 .. [1]
     Cfr. art. 4 comma 2 del Disciplinare incarichi
 
