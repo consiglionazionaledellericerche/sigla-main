@@ -18,6 +18,7 @@ Incarichi di collaborazione
   La-durata-del-contratto.rst
   Il-conferimento-degli-incarichi-con-il-solo-rimborso.rst
   il-conferimento-degli-incarichi-al-personale-cessato.rst
+  i-limiti-di-spesa.rst
   
   il-limite-della-retribuzione-da-corrispondere-per-gli-incarichi.rst
   divieto-di-pagamenti-anticipati.rst
