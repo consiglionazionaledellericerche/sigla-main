@@ -1,5 +1,8 @@
+Le fasi del procedimento
+========================
+
 I fase – Verifica della sussistenza di professionalità interne
-==============================================================
+--------------------------------------------------------------
 
 Il procedimento ha inizio con la verifica della sussistenza, all’interno dell’Ente, di personale dipendente (a tempo determinato o indeterminato) che possegga la professionalità necessaria allo svolgimento delle attività oggetto dell’incarico.
 
