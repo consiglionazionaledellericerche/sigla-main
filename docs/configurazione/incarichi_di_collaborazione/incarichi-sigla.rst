@@ -94,8 +94,7 @@ Si raccomanda, infine, di controllare in particolar modo la correttezza dell’i
 Al momento del salvataggio viene assegnata una numerazione automatica alla richiesta e lo stato di Provvisoria . In questo stato è ancora possibile effettuare eventuali aggiunte e variazioni a quanto già inserito ed anche cancellare tutta la richiesta tramite il bottone Elimina.
 
 
-Pubblicazione della richiesta sul sito CNR
-==========================================
+**Pubblicazione della richiesta sul sito CNR**
 
 Il bottone Pubblica è abilitato solo alle utenze in procedura che hanno il ruolo di Direttore di Istituto (DIRIST).
 
@@ -148,8 +147,9 @@ Il tasto “Avvia Procedura Conferimento Incarico” rimane attivo sino a quando
 
 Se alla “Verifica di Professionalità interna” risulta collegata almeno una “Procedura di conferimento incarico” viene attivato il tab “Elenco Procedure incarichi Associate” per la loro consultazione. Tramite il tasto “Apri Procedura” è possibile accedere direttamente alla mappa di gestione della “Procedura di conferimento Incarichi” selezionata.
 
+======================================================
 Procedura Conferimento Incarichi e Gestione Incarichi
------------------------------------------------------
+======================================================
 
 La funzione “Procedura conferimento Incarichi” è stata implementata al fine di consentire agli utenti di gestire, con un’unica procedura, l’affidamento di più incarichi della stessa tipologia.
 
@@ -209,7 +209,6 @@ In stato “definitivo” l’incarico può essere collegato a compensi e/o mini
 
 Inoltre è possibile modificare la ripartizione della spesa presunta sui vari esercizi, sempre nel rispetto dei limiti di spesa. 
 
-.. warning::
 
     Annullata : Il passaggio di stato, consentito solo al Direttore
 
@@ -282,9 +281,7 @@ In stato “definitivo” l’incarico può essere collegato a compensi e/o mini
 
 Inoltre è possibile modificare la ripartizione della spesa presunta sui vari esercizi, sempre nel rispetto dei limiti di spesa.
 
-.. warning::
-
-    Annullato : Il passaggio di stato, consentito solo al Direttore, avviene nel caso in cui è stato
+-  Annullato : Il passaggio di stato, consentito solo al Direttore, avviene nel caso in cui è stato
 
 -  Chiuso : il passaggio di stato, consentito solo al Direttore, avviene cliccando sull’icona “Concludi Incarico”. Solo gli incarichi collegati ad almeno un compenso possono assumere tale stato. Un incarico risulta collegato ad un compenso quando “l’importo utilizzato” nel folder “importo per anno” è diverso da zero .
 
@@ -390,7 +387,5 @@ Procedura Conferimento MULTI-Incarico SENZA l’obbligo della verifica di profes
 
 
 
-.. [1]
-    Cfr. art. 5 comma 4 del Disciplinare incarichi
 
 
