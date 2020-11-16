@@ -17,6 +17,7 @@ Incarichi di collaborazione
   La-disciplina-degli-incarichi-di-collaborazione-nel-regolamento-CNR.rst
   La-durata-del-contratto.rst
   Il-conferimento-degli-incarichi-con-il-solo-rimborso.rst
+  il-conferimento-degli-incarichi-al-personale-cessato.rst
   
   il-limite-della-retribuzione-da-corrispondere-per-gli-incarichi.rst
   divieto-di-pagamenti-anticipati.rst
