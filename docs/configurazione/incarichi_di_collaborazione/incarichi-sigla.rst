@@ -8,7 +8,9 @@ Con le funzioni suddette è possibile gestire sia il di conferimento di un singo
 
 Naturalmente, in quest’ultimo caso, è necessario che gli incarichi da conferire abbiano:
 
--  la medesima attività da svolgere; • il medesimo importo del corrispettivo;
+-  la medesima attività da svolgere;
+
+-  il medesimo importo del corrispettivo;
 
 -  la medesima tipologia contrattuale.
 
@@ -125,11 +127,14 @@ Esito della Ricerca di Professionalità Interne
 
 Il sistema controlla in automatico la scadenza delle richieste pubblicate. Il giorno successivo alla data di scadenza la richiesta viene posta in stato di Scadenza aprendo all’utenza, con il ruolo di Direttore di Istituto, la possibilità di inserire l’esito della ricerca interna.
 
-Nel caso di **Mono-Incarico,** va compilato il riquadro dell’Esito della ricerca con le seguenti possibilità:
+Nel caso di:
+
+**Mono-Incarico,** va compilato il riquadro dell’Esito della ricerca con le seguenti possibilità:
 
 **Conforme alla richiesta** : la richiesta viene passata nello stato di chiusa e non viene attivato il bottone “Avvia Procedura Conferimento Incarico”.
 
 **Non conforme alla richiesta** oppure **Non pervenute candidature :**
+
 la richiesta viene sempre salvata nello stato di chiusa, ma viene attivato il bottone “Avvia Procedura Conferimento Incarico” che consente di avviare la Procedura di conferimento incarico (provvisoria) ad un soggetto esterno.
 
 Nel caso di **Multi-Incarico**, va compilato il riquadro dell’Esito della ricerca individuando:
@@ -153,7 +158,7 @@ Procedura Conferimento Incarichi e Gestione Incarichi
 
 La funzione “Procedura conferimento Incarichi” è stata implementata al fine di consentire agli utenti di gestire, con un’unica procedura, l’affidamento di più incarichi della stessa tipologia.
 
-Nel caso di avvio di una “Procedura di conferimento **Multi-Incarico**\ ” la funzione, nel folder “Incarichi”, consente l’associazione di più incarichi.
+Nel caso di avvio di una “Procedura di conferimento **Multi-Incarico** la funzione, nel folder “Incarichi”, consente l’associazione di più incarichi.
 
 *Procedura Conferimento Incarichi*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -210,7 +215,7 @@ In stato “definitivo” l’incarico può essere collegato a compensi e/o mini
 Inoltre è possibile modificare la ripartizione della spesa presunta sui vari esercizi, sempre nel rispetto dei limiti di spesa. 
 
 
-    Annullata : Il passaggio di stato, consentito solo al Direttore
+-  Annullata : Il passaggio di stato, consentito solo al Direttore
 
 -  Chiusa : Il passaggio di stato, consentito solo al Direttore, avviene cliccando sull’icona “Concludi Incarico”. Solo gli incarichi collegati ad almeno un compenso possono assumere tale stato. Un incarico risulta collegato ad un compenso quando “l’importo utilizzato” nel folder “importo per anno” è diverso da zero.
 
@@ -225,6 +230,7 @@ Il passaggio di stato comporta:
 -  la possibilità di riutilizzare l’eventuale riferimento della ricerca di professionalità interna (sempre che sia ancora valida) per un altro incarico.
 
 -  Eliminata : Il passaggio di stato, consentito solo al Direttore, avviene cliccando sull’icona “Concludi Incarico”. Solo gli incarichi che non siano stati collegati ad un compenso possono assumere tale stato. Un incarico risulta non collegato ad un compenso quando “l’importo utilizzato” nel folder “importo per anno” è uguale a zero.
+   
    Il passaggio di stato comporta:
 
    -  l’impossibilità di utilizzare l’incarico nei compensi e nelle minicarriere;
@@ -384,6 +390,16 @@ Procedura Conferimento MULTI-Incarico CON l’obbligo della verifica di professi
 Procedura Conferimento MULTI-Incarico SENZA l’obbligo della verifica di professionalità interna e CON procedura comparativa
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+Procedura Conferimento MULTI-Incarico SENZA l’obbligo della verifica di professionalità interna e SENZA procedura comparativa
+-----------------------------------------------------------------------------------------------------------------------------
+
+Non è possibile attivare procedure Multi-Incarico in presenza di Procedure amministrative che non prevedono la procedura comparativa.
+
+Procedura Conferimento MULTI-Incarico CON l’obbligo della verifica di professionalità interna e SENZA procedura comparativa
+---------------------------------------------------------------------------------------------------------------------------
+
+Non è possibile attivare procedure Multi-Incarico in presenza di Procedure amministrative che non prevedono la procedura comparativa.
 
 
 
