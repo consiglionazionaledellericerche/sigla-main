@@ -68,7 +68,6 @@ Si riassume nel seguito il procedimento per l’affidamento degli incarichi (fas
   :maxdepth: 3
   :caption: Indice dei contenuti
 
-  divieto-di-pagamenti-anticipati/i-fase-verifica-della-sussistenza-di-professionalità-interne.rst
   divieto-di-pagamenti-anticipati/inserimento-dati-della-richiesta.rst
   divieto-di-pagamenti-anticipati/pubblicazione-della-richiesta-sul-sito-cnr.rst
 
