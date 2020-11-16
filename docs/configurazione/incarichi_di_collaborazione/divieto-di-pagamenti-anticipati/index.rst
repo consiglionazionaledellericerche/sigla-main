@@ -9,3 +9,5 @@ Fasi del Procedimento e riepilogo delle norme
   fasi-del-procedimento.rst
   obblighi-comunicazione.rst
   pubblicita.rst
+  riepilogo-norme.rst
+  allegati.rst
