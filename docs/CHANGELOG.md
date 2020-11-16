@@ -1,3 +1,11 @@
+## Release 6.2.71  -- _November 16, 2020_ 
+**Changes**
+
+>**Corretta consultazione "Movimentazione Piano Economico" aggiungendo i dati del piano economico non assegnati alle voci di bilancio**
+>
+>[98e3cc0324e8c8c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/98e3cc0324e8c8c) gianfranco.gasparro *November 16, 2020*
+
+
 ## Release 6.2.70  -- _November 12, 2020_ 
 **Changes**
 
