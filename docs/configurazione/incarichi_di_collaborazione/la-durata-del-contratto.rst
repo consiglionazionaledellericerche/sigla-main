@@ -35,7 +35,6 @@ e/o l’attualità del programma da verificarsi annualmente da parte del Dirigen
 contratto.
 
 
-Il conferimento degli incarichi con il solo rimborso delle spese di trasferta
-=============================================================================
+
 
 
