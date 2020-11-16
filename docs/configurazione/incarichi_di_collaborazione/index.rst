@@ -21,5 +21,9 @@ Incarichi di collaborazione
   i-limiti-di-spesa.rst
   il-limite-della-retribuzione.rst
   divieto-di-pagamenti-anticipati.rst
+  divieto-di-pagamenti-anticipati/obblighi-comunicazione.rst
+  divieto-di-pagamenti-anticipati/pubblicita.rst
+  divieto-di-pagamenti-anticipati/riepilogo-norme.rst
+  divieto-di-pagamenti-anticipati/allegati.rst
   incarichi-sigla.rst
   section.rst
