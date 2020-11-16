@@ -20,7 +20,6 @@ Incarichi di collaborazione
   il-conferimento-degli-incarichi-al-personale-cessato.rst
   i-limiti-di-spesa.rst
   il-limite-della-retribuzione.rst
-  divieto-di-pagamenti-anticipati.rst
-  fasi-del-procedimento.rst
+  divieto-di-pagamenti-anticipati.index
   incarichi-sigla.rst
   section.rst
