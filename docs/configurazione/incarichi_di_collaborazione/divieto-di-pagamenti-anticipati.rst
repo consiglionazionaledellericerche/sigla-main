@@ -70,6 +70,11 @@ Si riassume nel seguito il procedimento per l’affidamento degli incarichi (fas
 
   divieto-di-pagamenti-anticipati/inserimento-dati-della-richiesta.rst
   divieto-di-pagamenti-anticipati/pubblicazione-della-richiesta-sul-sito-cnr.rst
+  divieto-di-pagamenti-anticipati/fasi-del-procedimento.rst
+  divieto-di-pagamenti-anticipati/obblighi-comunicazione.rst
+  divieto-di-pagamenti-anticipati/pubblicita.rst
+  divieto-di-pagamenti-anticipati/riepilogo-norme.rst
+  divieto-di-pagamenti-anticipati/allegati.rst
 
 .. [1]
     Cfr. art. 4 comma 2 del Disciplinare incarichi
