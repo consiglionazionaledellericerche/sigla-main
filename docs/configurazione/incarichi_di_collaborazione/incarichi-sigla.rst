@@ -401,4 +401,4 @@ Procedura Conferimento MULTI-Incarico CON l’obbligo della verifica di professi
 
 Non è possibile attivare procedure Multi-Incarico in presenza di Procedure amministrative che non prevedono la procedura comparativa.
 
-
+section.rst
