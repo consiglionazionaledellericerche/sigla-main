@@ -20,7 +20,7 @@
 	persistentClassName="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"
 	homeClassName="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeHome">
 	<defaultColumnMap
-		tableName="PROGETTO_GEST">
+		tableName="PROGETTO_SIP">
 		<columnMapping
 			columnName="ESERCIZIO_PIANO"
 			propertyName="esercizio_piano"
@@ -132,7 +132,7 @@
 	</defaultColumnMap>
 	<columnMap
 			name="SINTETICA"
-			tableName="PROGETTO_GEST">
+			tableName="PROGETTO_SIP">
 		<columnMapping
 				columnName="manris_fin"
 				propertyName="manris_fin"
@@ -226,7 +226,7 @@
 	</columnMap>
 	<columnMap
 			name="DETTAGLIATA"
-			tableName="PROGETTO_GEST"
+			tableName="PROGETTO_SIP"
 			extends="SINTETICA" >
 		<columnMapping
 				columnName="cd_elemento_voce"

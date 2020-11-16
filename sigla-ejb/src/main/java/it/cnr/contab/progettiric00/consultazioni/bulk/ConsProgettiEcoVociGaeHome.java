@@ -64,21 +64,6 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 			isSintetica= true;
 
 		SQLBuilder sql = super.selectByClause(usercontext, compoundfindclause);
-/*
-//TODO
-		sql.addSQLClause("AND","ESERCIZIO",sql.EQUALS, CNRUserContext.getEsercizio(usercontext));
-		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
-		//	Se uo 999.000 in scrivania: visualizza tutto l'elenco
-		if (!((CNRUserContext) usercontext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
-			sql.addSQLClause("AND","CDS",SQLBuilder.EQUALS,CNRUserContext.getCd_cds(usercontext));
-			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHomeCache().getHome(Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(usercontext)));
-			if(!uoScrivania.isUoCds())
-				sql.addSQLClause("AND","UO",SQLBuilder.EQUALS,CNRUserContext.getCd_unita_organizzativa(usercontext));
-		}
-
-//FINE TODO
-
-*/
 		sql.resetColumns();
 		sql.addColumn("PROGETTO_PIANO_ECONOMICO.cd_voce_piano","cd_voce_piano");
 		sql.addColumn("PROGETTO_PIANO_ECONOMICO.esercizio_piano","esercizio_piano");
@@ -93,9 +78,9 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 			sql.addColumn("ELEMENTO_VOCE.DS_ELEMENTO_VOCE","ds_elemento_voce");
 			sql.addColumn("V_SALDI_GAE_VOCE_PROGETTO.cd_linea_attivita","cd_linea_attivita");
 		}
-		sql.addColumn("PROGETTO_GEST.pg_progetto");
-		sql.addColumn("PROGETTO_GEST.CD_PROGETTO");
-		sql.addColumn("PROGETTO_GEST.DS_PROGETTO");
+		sql.addColumn("PROGETTO_SIP.pg_progetto");
+		sql.addColumn("PROGETTO_SIP.CD_PROGETTO");
+		sql.addColumn("PROGETTO_SIP.DS_PROGETTO");
 		sql.addColumn("CDR.CD_CENTRO_RESPONSABILITA", "cd_centro_responsabilita");
 		sql.addColumn("CDR.DS_CDR", "ds_cdr");
 		if (isSintetica){
@@ -115,27 +100,27 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 		}
 
 		sql.addTableToHeader("PROGETTO_PIANO_ECONOMICO");
-		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.pg_progetto","PROGETTO_GEST.pg_progetto");
+		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.pg_progetto","PROGETTO_SIP.pg_progetto");
 
 
 		sql.addTableToHeader("ASS_PROGETTO_PIAECO_VOCE");
-		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.PG_PROGETTO","ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO");
-		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.ESERCIZIO_PIANO","ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO");
-		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.CD_VOCE_PIANO","ASS_PROGETTO_PIAECO_VOCE.CD_VOCE_PIANO");
+		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.PG_PROGETTO","ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO(+)");
+		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.ESERCIZIO_PIANO","ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO(+)");
+		sql.addSQLJoin("PROGETTO_PIANO_ECONOMICO.CD_VOCE_PIANO","ASS_PROGETTO_PIAECO_VOCE.CD_VOCE_PIANO(+)");
 
 		sql.addTableToHeader("ELEMENTO_VOCE");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "ELEMENTO_VOCE.ESERCIZIO");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "ELEMENTO_VOCE.TI_APPARTENENZA");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "ELEMENTO_VOCE.TI_GESTIONE");
-		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "ELEMENTO_VOCE.CD_ELEMENTO_VOCE");
+		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "ELEMENTO_VOCE.ESERCIZIO(+)");
+		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "ELEMENTO_VOCE.TI_APPARTENENZA(+)");
+		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "ELEMENTO_VOCE.TI_GESTIONE(+)");
+		sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "ELEMENTO_VOCE.CD_ELEMENTO_VOCE(+)");
 
 		sql.addTableToHeader("V_SALDI_GAE_VOCE_PROGETTO");
 		if (isSintetica){
-			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.ESERCIZIO");
-			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "V_SALDI_GAE_VOCE_PROGETTO.TI_APPARTENENZA");
-			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "V_SALDI_GAE_VOCE_PROGETTO.TI_GESTIONE");
-			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.CD_ELEMENTO_VOCE");
-			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", "V_SALDI_GAE_VOCE_PROGETTO.PG_PROGETTO");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.ESERCIZIO(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "V_SALDI_GAE_VOCE_PROGETTO.TI_APPARTENENZA(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_GESTIONE", "V_SALDI_GAE_VOCE_PROGETTO.TI_GESTIONE(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.CD_ELEMENTO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.CD_ELEMENTO_VOCE(+)");
+			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", "V_SALDI_GAE_VOCE_PROGETTO.PG_PROGETTO(+)");
 		} else {
 			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_VOCE", "V_SALDI_GAE_VOCE_PROGETTO.ESERCIZIO(+)");
 			sql.addSQLJoin("ASS_PROGETTO_PIAECO_VOCE.TI_APPARTENENZA", "V_SALDI_GAE_VOCE_PROGETTO.TI_APPARTENENZA(+)");
@@ -147,12 +132,13 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 
 		sql.addTableToHeader("CDR");
 		if (isSintetica){
-			sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA");
+			sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA(+)");
 		} else {
 			sql.addSQLJoin("V_SALDI_GAE_VOCE_PROGETTO.CD_CENTRO_RESPONSABILITA","CDR.CD_CENTRO_RESPONSABILITA(+)");
 		}
 
-		sql.addSQLClause("AND", "PROGETTO_GEST.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext) );
+		sql.addSQLClause("AND", "PROGETTO_SIP.ESERCIZIO", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(usercontext) );
+		sql.addSQLClause("AND", "PROGETTO_SIP.TIPO_FASE", SQLBuilder.EQUALS, ProgettoBulk.TIPO_FASE_GESTIONE );
 
 		if (isSintetica){
 			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.im_spesa_finanziato");
@@ -162,9 +148,9 @@ public class ConsProgettiEcoVociGaeHome extends BulkHome {
 			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
 			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
 			sql.addSQLGroupBy("PROGETTO_PIANO_ECONOMICO.cd_voce_piano");
-			sql.addSQLGroupBy("PROGETTO_GEST.pg_progetto");
-			sql.addSQLGroupBy("PROGETTO_GEST.cd_progetto");
-			sql.addSQLGroupBy("PROGETTO_GEST.ds_progetto");
+			sql.addSQLGroupBy("PROGETTO_SIP.pg_progetto");
+			sql.addSQLGroupBy("PROGETTO_SIP.cd_progetto");
+			sql.addSQLGroupBy("PROGETTO_SIP.ds_progetto");
 			sql.addSQLGroupBy("CDR.cd_centro_responsabilita");
 			sql.addSQLGroupBy("CDR.ds_cdr");
 		}
