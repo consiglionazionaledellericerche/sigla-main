@@ -12,6 +12,17 @@ Incarichi di collaborazione
   premessa-e-ambito-di-applicazione.rst
   applicazione-parziale-del-disciplinare-art.-14-comma-2.rst
   le-tipologie-di-rapporti-esclusi.rst
-  il-limite-della-retribuzione-da-corrispondere-per-gli-incarichi.rst
+  incarichi-di-collaborazione-in-forma-non-abituale.rst
+  Le-tipologie-di-attività-oggetto-di-incarico.rst
+  La-disciplina-degli-incarichi-di-collaborazione-nel-regolamento-CNR.rst
+  la-durata-del-contratto.rst
+  Il-conferimento-degli-incarichi-con-il-solo-rimborso.rst
+  il-conferimento-degli-incarichi-al-personale-cessato.rst
+  i-limiti-di-spesa.rst
+  il-limite-della-retribuzione.rst
   divieto-di-pagamenti-anticipati.rst
+  divieto-di-pagamenti-anticipati/obblighi-comunicazione.rst
+  divieto-di-pagamenti-anticipati/pubblicita.rst
+  divieto-di-pagamenti-anticipati/riepilogo-norme.rst
+  incarichi-sigla.rst
   section.rst

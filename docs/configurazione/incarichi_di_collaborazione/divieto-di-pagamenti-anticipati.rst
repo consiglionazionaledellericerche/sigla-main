@@ -18,7 +18,7 @@ Tale prescrizione è riportata anche nel “Regolamento di amministrazione, cont
 Pertanto, nei contratti stipulati non può essere in nessun caso prevista la corresponsione di acconti o pagamenti anticipati rispetto all’espletamento della prestazione. Come già affermato in più parti del presente Manuale e negli schemi di contratto forniti, per procedere al pagamento del compenso è sempre necessario che esista una relazione, un
 “opus” presentato dal soggetto titolare di un incarico sul quale venga apposto il visto sulla regolarità della prestazione e sulla conformità stessa ai requisiti quantitativi e qualitativi, ai termini ed alle condizioni pattuite.
 
-**15.La decisione a contrattare e le tipologie di contratti per l’affidamento degli incarichi**
+**La decisione a contrattare e le tipologie di contratti per l’affidamento degli incarichi**
 
 *Riferimenti normativi:*
 
@@ -60,7 +60,7 @@ Con il medesimo fine, si forniscono in allegato gli schemi di contratto per l’
 
 Tali contratti sono stati debitamente aggiornati alla luce delle nuove disposizioni e, pertanto sostituiscono gli schemi già trasmessi, da ultimo, con la circolare CNR 16/2009.
 
-**16. Le fasi del procedimento per l’affidamento degli incarichi**
+**Le fasi del procedimento per l’affidamento degli incarichi**
 
 Si riassume nel seguito il procedimento per l’affidamento degli incarichi (fase I, II e III).
 
@@ -68,10 +68,8 @@ Si riassume nel seguito il procedimento per l’affidamento degli incarichi (fas
   :maxdepth: 3
   :caption: Indice dei contenuti
 
-  divieto-di-pagamenti-anticipati/i-fase-verifica-della-sussistenza-di-professionalità-interne.rst
-  divieto-di-pagamenti-anticipati/inserimento-dati-della-richiesta.rst
-  divieto-di-pagamenti-anticipati/pubblicazione-della-richiesta-sul-sito-cnr.rst
-
+  divieto-di-pagamenti-anticipati/fasi-del-procedimento.rst
+  
 .. [1]
     Cfr. art. 4 comma 2 del Disciplinare incarichi
 
