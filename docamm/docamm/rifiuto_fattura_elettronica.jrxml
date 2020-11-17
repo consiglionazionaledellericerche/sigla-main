@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.15.0.final utlizzo versione della libreria JasperReports6.15.0-dd49bfb94918336b8321d5507193f0169ead4e95  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Smart-Working" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rifiuto Fattura Elettronica" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ada9059e-7dc7-48d5-9818-a9bf934b6390">
 	<property name="ireport.zoom" value="2.1435888100000016"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="182"/>
@@ -39,8 +39,11 @@
 	<parameter name="data_ricezione" class="java.util.Date" isForPrompting="false">
 		<defaultValueExpression><![CDATA[new Date()]]></defaultValueExpression>
 	</parameter>
-	<queryString language="json">
-		<![CDATA[]]>
+	<parameter name="is_nota" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 1 FROM DUAL]]>
 	</queryString>
 	<background>
 		<band splitType="Stretch"/>
@@ -72,7 +75,7 @@
 				<textElement textAlignment="Center" rotation="None">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Pec per RIFIUTO documento elettronico]]></text>
+				<text><![CDATA[PEC per RIFIUTO documento elettronico]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -98,25 +101,25 @@
 				<reportElement style="TNR10" x="0" y="5" width="552" height="34" uuid="b7b93c4b-ab1f-4bd5-adc9-5b6b8917e8b6">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<textFieldExpression><![CDATA["Il documento elettronico " + $P{tipo_documento}  + 
-", Identificativo SdI: " + $P{identificativo_sdi}+", Numero: " + $P{numero_documento} + " del " + 
+				<textFieldExpression><![CDATA["Il documento elettronico \"" + $P{tipo_documento}  + 
+"\", Identificativo SdI: " + $P{identificativo_sdi}+", Numero: " + $P{numero_documento} + " del " + 
 new SimpleDateFormat("dd/MM/yyyy").format( $P{data_documento}) +
 " ricevuto in data " + 
 new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) + 
 ",  inviato a questa Amministrazione, è stato rifiutato per i seguenti motivi:"]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="19">
-			<textField>
-				<reportElement style="TNR10" x="0" y="5" width="552" height="14" uuid="f6f5a1a7-0199-4b3f-9e99-07eddbd4aa68">
+		<band height="19" splitType="Stretch">
+			<textField textAdjust="StretchHeight">
+				<reportElement style="TNRG12" x="0" y="5" width="552" height="14" uuid="f6f5a1a7-0199-4b3f-9e99-07eddbd4aa68">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$P{message}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="19">
-			<printWhenExpression><![CDATA[$P{note} != null]]></printWhenExpression>
-			<textField>
+		<band height="19" splitType="Stretch">
+			<printWhenExpression><![CDATA[$P{note} != null &&  !$P{note}.equals("null")]]></printWhenExpression>
+			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" x="0" y="5" width="552" height="14" uuid="318cc7a5-f5db-44bf-b59e-ab2ca73c1a23">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -124,6 +127,7 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 			</textField>
 		</band>
 		<band height="25" splitType="Stretch">
+			<printWhenExpression><![CDATA[!$P{is_nota}]]></printWhenExpression>
 			<textField textAdjust="StretchHeight">
 				<reportElement style="TNR10" stretchType="ElementGroupHeight" x="0" y="5" width="552" height="14" uuid="7d942931-f8cf-459d-b221-20a34d0f4f6e">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -143,18 +147,16 @@ new SimpleDateFormat("dd/MM/yyyy").format( $P{data_ricezione}) +
 				<text><![CDATA[Amministrazione CNR]]></text>
 			</staticText>
 		</band>
-		<band height="52">
+		<band height="50">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<staticText>
 				<reportElement style="TNR8" x="0" y="10" width="550" height="30" uuid="939f712b-f97d-448a-b7e6-4026cc804760"/>
 				<text><![CDATA[Nota: questa è un'e-mail generata automaticamente e non avremo la possibilità di leggere eventuali e-mail di risposta. Non rispondere a questo messaggio.]]></text>
 			</staticText>
 		</band>
 	</detail>
-	<columnFooter>
-		<band splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="30" splitType="Stretch">
+		<band height="35">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
 				<reportElement x="433" y="5" width="80" height="20" uuid="470de593-d664-4c1f-9aa6-6a40cf355cf9">
