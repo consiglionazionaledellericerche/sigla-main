@@ -20,7 +20,7 @@
     <div class="col-md-9 mx-auto mt-3">
         <div class="card card-shadow">
           <h3 class="card-header">
-            <i class="fa fa-question-circle fa-fw fa-2x text-info" aria-hidden="true"></i> Rifiuto della fattura al Fornitore
+            <i class="fa fa-envelope-open fa-fw fa-2x text-info" aria-hidden="true"></i> Rifiuto della fattura al Fornitore
           </h3>
           <div class="card-block p-3">
             <div class="form-group row">
