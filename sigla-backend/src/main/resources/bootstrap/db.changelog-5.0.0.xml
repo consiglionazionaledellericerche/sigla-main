@@ -3655,4 +3655,24 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet id="add_collegamento_nota_fattura_sdi" author="marco.spasiano">
+        <addColumn tableName="documento_ele_testata">
+            <column name="id_paese_fat_col" type="VARCHAR(2)"/>
+            <column name="id_codice_fat_col" type="VARCHAR(28)"/>
+            <column name="identificativo_sdi_fat_col" type="BIGINT"/>
+            <column name="progressivo_fat_col" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="id_paese_fat_col,id_codice_fat_col,identificativo_sdi_fat_col,progressivo_fat_col"
+                                 baseTableName="documento_ele_testata"
+                                 constraintName="fk_doc_ele_testata03"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id_paese,id_codice,identificativo_sdi,progressivo"
+                                 referencedTableName="documento_ele_testata"/>
+
+    </changeSet>
+
 </databaseChangeLog>

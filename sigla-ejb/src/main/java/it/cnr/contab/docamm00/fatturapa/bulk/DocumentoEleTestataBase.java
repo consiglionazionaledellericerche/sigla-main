@@ -229,7 +229,12 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	private java.lang.String cdUnitaCompetenza;
 	
 	private java.lang.String flIrregistrabile;
-	
+
+	private java.lang.String idPaeseFatCol;
+	private java.lang.String idCodiceFatCol;
+	private java.lang.Long identificativoSdiFatCol;
+	private java.lang.Long progressivoFatCol;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DOCUMENTO_ELE_TESTATA
@@ -1180,5 +1185,37 @@ public class DocumentoEleTestataBase extends DocumentoEleTestataKey implements K
 	}
 	public void setCdUnitaCompetenza(java.lang.String cdUnitaCompetenza) {
 		this.cdUnitaCompetenza = cdUnitaCompetenza;
-	}	
+	}
+
+	public String getIdPaeseFatCol() {
+		return idPaeseFatCol;
+	}
+
+	public void setIdPaeseFatCol(String idPaeseFatCol) {
+		this.idPaeseFatCol = idPaeseFatCol;
+	}
+
+	public String getIdCodiceFatCol() {
+		return idCodiceFatCol;
+	}
+
+	public void setIdCodiceFatCol(String idCodiceFatCol) {
+		this.idCodiceFatCol = idCodiceFatCol;
+	}
+
+	public Long getIdentificativoSdiFatCol() {
+		return identificativoSdiFatCol;
+	}
+
+	public void setIdentificativoSdiFatCol(Long identificativoSdiFatCol) {
+		this.identificativoSdiFatCol = identificativoSdiFatCol;
+	}
+
+	public Long getProgressivoFatCol() {
+		return progressivoFatCol;
+	}
+
+	public void setProgressivoFatCol(Long progressivoFatCol) {
+		this.progressivoFatCol = progressivoFatCol;
+	}
 }

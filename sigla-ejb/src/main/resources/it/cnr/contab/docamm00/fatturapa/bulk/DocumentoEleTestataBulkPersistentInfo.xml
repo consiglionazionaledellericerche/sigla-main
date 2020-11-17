@@ -38,7 +38,21 @@
 			propertyName="modalitaPagamento.rif_modalita_pagamento.cd_modalita_pag" />
 		<columnMapping
 			columnName="CD_UNITA_COMPETENZA"
-			propertyName="unitaCompetenza.cd_unita_organizzativa" />		
+			propertyName="unitaCompetenza.cd_unita_organizzativa" />
+
+		<columnMapping
+			columnName="ID_PAESE_FAT_COL"
+			propertyName="fatturaCollegata.documentoEleTrasmissione.idPaese" />
+		<columnMapping
+			columnName="ID_CODICE_FAT_COL"
+			propertyName="fatturaCollegata.documentoEleTrasmissione.idCodice" />
+		<columnMapping
+			columnName="IDENTIFICATIVO_SDI_FAT_COL"
+			propertyName="fatturaCollegata.documentoEleTrasmissione.identificativoSdi" />
+		<columnMapping
+			columnName="PROGRESSIVO_FAT_COL"
+			propertyName="fatturaCollegata.progressivo" />
+
 	</defaultColumnMap>
 	<columnMap 
 		name="V_DOCUMENTO_ELE"
@@ -94,7 +108,8 @@
 			sqlTypeName="DATE"
 			converterClassName="it.cnr.contab.util.DateTruncConverter"
 			columnSize="7"			
-			propertyName="documentoEleTrasmissione.dataRicezione"/>	    		
+			propertyName="documentoEleTrasmissione.dataRicezione"/>
+
 	</columnMap>	
 	<persistentProperty
 		name="documentoEleTrasmissione"
@@ -102,5 +117,8 @@
 	<persistentProperty
 		name="modalitaPagamento" />
 	<persistentProperty
-		name="unitaCompetenza" />		
+		name="unitaCompetenza" />
+	<persistentProperty
+		name="fatturaCollegata" />
+
 </SQLPersistentInfo>

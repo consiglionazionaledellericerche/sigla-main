@@ -146,6 +146,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private boolean RODocumento=true;
 	private boolean isFromInizializzaBulkPerModifica = false;
 
+	private DocumentoEleTestataBulk fatturaCollegata;
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DOCUMENTO_ELE_TESTATA
@@ -715,4 +716,55 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		isFromInizializzaBulkPerModifica = fromInizializzaBulkPerModifica;
 	}
 
+	public DocumentoEleTestataBulk getFatturaCollegata() {
+		return fatturaCollegata;
+	}
+
+	public void setFatturaCollegata(DocumentoEleTestataBulk fatturaCollegata) {
+		this.fatturaCollegata = fatturaCollegata;
+	}
+
+	public String getIdPaeseFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+					.map(DocumentoEleTestataBulk::getIdPaese)
+					.orElse(null);
+	}
+
+	public void setIdPaeseFatCol(String idPaeseFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+			.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setIdPaese(idPaeseFatCol));
+	}
+
+	public String getIdCodiceFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+				.map(DocumentoEleTestataBulk::getIdCodice)
+				.orElse(null);
+	}
+
+	public void setIdCodiceFatCol(String idCodiceFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+				.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setIdCodice(idCodiceFatCol));
+	}
+
+	public Long getIdentificativoSdiFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+				.map(DocumentoEleTestataBulk::getIdentificativoSdi)
+				.orElse(null);
+	}
+
+	public void setIdentificativoSdiFatCol(Long identificativoSdiFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+				.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setIdentificativoSdi(identificativoSdiFatCol));
+	}
+
+	public Long getProgressivoFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+				.map(DocumentoEleTestataBulk::getProgressivo)
+				.orElse(null);
+	}
+
+	public void setProgressivoFatCol(Long progressivoFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+				.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setProgressivo(progressivoFatCol));
+	}
 }

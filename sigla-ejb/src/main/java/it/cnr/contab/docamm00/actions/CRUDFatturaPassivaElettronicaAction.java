@@ -250,6 +250,18 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
         return context.findDefaultForward();
     }
 
+    public Forward doMostraFatturaCollegata(ActionContext context) throws BusinessProcessException {
+        CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
+        DocumentoEleTestataBulk nota = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
+        Optional<DocumentoEleTestataBulk> fatturaCollegata = Optional.ofNullable(nota.getFatturaCollegata());
+        if (fatturaCollegata.isPresent()) {
+            CRUDFatturaPassivaElettronicaBP nbp = (CRUDFatturaPassivaElettronicaBP) context.createBusinessProcess("CRUDFatturaPassivaElettronicaBP");
+            nbp.edit(context, fatturaCollegata.get());
+            return context.addBusinessProcess(nbp);
+        }
+        return context.findDefaultForward();
+    }
+
     public Forward doCollegaFattura(ActionContext context) throws BusinessProcessException {
         try {
             CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();

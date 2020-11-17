@@ -169,6 +169,15 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				model.isRifiutabile());
 	}
 
+	public boolean isMostraFatturaCollegataButtonHidden() {
+		DocumentoEleTestataBulk model = (DocumentoEleTestataBulk)getModel();
+		return !(isEditable() && model != null &&
+				model.getIdentificativoSdi() != null &&
+				Optional.ofNullable(model.getTipoDocumento())
+						.map(s -> s.equalsIgnoreCase(TipoDocumentoType.TD_04.value())).orElse(Boolean.FALSE) &&
+				model.getStatoDocumentoEle().equals(StatoDocumentoEleEnum.STORNATO));
+	}
+
 	public boolean isEsitoRifiutatoButtonHidden() {
 		return !(getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
 				tipoIntegrazioneSDI.equals(TipoIntegrazioneSDI.PEC) &&
@@ -208,6 +217,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.getHandler().getProperties(getClass()), "Toolbar.rifiutaConPEC"));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.collegaNota"));
+		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.mostraFatturaCollegata"));
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.accetta"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
@@ -726,6 +737,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	public void collegaNotaFattura(ActionContext context, DocumentoEleTestataBulk fattura, DocumentoEleTestataBulk nota) throws BusinessProcessException {
 		try {
 			nota.setStatoDocumento(StatoDocumentoEleEnum.STORNATO.name());
+			nota.setFatturaCollegata(fattura);
 			nota.setToBeUpdated();
 			getComponentSession().modificaConBulk(context.getUserContext(), nota);
 			fattura.setStatoDocumento(StatoDocumentoEleEnum.STORNATO.name());
