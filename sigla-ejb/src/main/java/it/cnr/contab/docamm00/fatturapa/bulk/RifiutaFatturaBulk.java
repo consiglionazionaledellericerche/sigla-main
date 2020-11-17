@@ -18,12 +18,11 @@
 package it.cnr.contab.docamm00.fatturapa.bulk;
 
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class RifiutaFatturaBulk extends OggettoBulk {
@@ -36,11 +35,23 @@ public class RifiutaFatturaBulk extends OggettoBulk {
                     Hashtable::new
             ));
 
-    private String message;
+    private String messageOption;
+    private String messageText;
+
     private Timestamp dataRicezione;
     private Timestamp dataLimite;
+    private DocumentoEleTestataBulk documentoEleTestataBulk;
+    private String emailPEC;
+    private String note;
+    private boolean messageOptionSelected = Boolean.FALSE;
+
     public RifiutaFatturaBulk() {
         super();
+    }
+
+    public RifiutaFatturaBulk(String emailPEC, DocumentoEleTestataBulk documentoEleTestataBulk) {
+        this.documentoEleTestataBulk = documentoEleTestataBulk;
+        this.emailPEC = emailPEC;
     }
 
     public RifiutaFatturaBulk(Timestamp dataRicezione, Timestamp dataLimite) {
@@ -48,16 +59,73 @@ public class RifiutaFatturaBulk extends OggettoBulk {
         this.dataLimite = dataLimite;
     }
 
+    public boolean isDecorrenzaTermini() {
+        return Optional.ofNullable(this.documentoEleTestataBulk)
+                        .map(DocumentoEleTestataBulk::isRicevutaDecorrenzaTermini)
+                        .orElse(Boolean.FALSE);
+    }
+
     public boolean isMotivoLibero() {
         return this.dataRicezione.before(dataLimite);
     }
 
-    public String getMessage() {
-        return message;
+    public boolean isMessageOptionSelected() {
+        return this.messageOptionSelected;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMessageOptionSelected(boolean messageOptionSelected) {
+        this.messageOptionSelected = messageOptionSelected;
+    }
+
+    public String getMessage() {
+
+        return Optional.ofNullable(this.messageText).orElse(this.messageOption);
+    }
+
+    public String getMessageOption() {
+        return messageOption;
+    }
+
+    public void setMessageOption(String messageOption) {
+        this.messageOption = messageOption;
+    }
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
+
+    public String getEmailPEC() {
+        return emailPEC;
+    }
+
+    public void setEmailPEC(String emailPEC) {
+        this.emailPEC = emailPEC;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    @Override
+    public void validate() throws ValidationException {
+        super.validate();
+        if (Optional.ofNullable(documentoEleTestataBulk).isPresent()) {
+            Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+            if (!p.matcher(Optional.ofNullable(getEmailPEC()).orElse("")).find()) {
+                throw new ValidationException("Inserire un indirizzo PEC valido!");
+            }
+        }
+        if (!Optional.ofNullable(getMessage()).filter(s -> s.trim().length() > 0 ).isPresent()) {
+            throw new ValidationException("Inserire il Motivo del Rifiuto!");
+        }
     }
 
     public enum MotivoRifiutoType {

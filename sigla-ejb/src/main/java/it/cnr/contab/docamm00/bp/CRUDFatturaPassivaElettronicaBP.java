@@ -18,22 +18,34 @@
 package it.cnr.contab.docamm00.bp;
 
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
+import it.cnr.contab.anagraf00.core.bulk.ContattoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TelefonoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.actions.CRUDFatturaPassivaAction;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
+import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
 import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.fatturapa.bulk.*;
+import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
 import it.cnr.contab.docamm00.tabrif.bulk.Tipo_sezionaleBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Voce_ivaBulk;
+import it.cnr.contab.reports.bulk.Print_spoolerBulk;
+import it.cnr.contab.reports.bulk.Report;
+import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.util.action.FormBP;
+import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -53,6 +65,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -60,10 +73,15 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
+import javax.mail.util.ByteArrayDataSource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspWriter;
@@ -74,7 +92,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoDocumentoType;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.mail.EmailException;
 
 public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatturaBulk, DocumentoEleTestataBulk> implements FatturaPassivaElettronicaBP{
 	private static final long serialVersionUID = 1L;
@@ -83,7 +103,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			new SimpleDetailCRUDController("RifDocEleLineaColl",DocumentoEleLineaBulk.class,"docEleLineaColl",this);
 	private final SimpleDetailCRUDController crudDocEleIVAColl = 
 			new SimpleDetailCRUDController("RifDocEleIVAColl",DocumentoEleIvaBulk.class,"docEleIVAColl",this);
-	private final SimpleDetailCRUDController crudDocEleAllegatiColl = 
+	private final SimpleDetailCRUDController crudDocEleAllegatiColl =
 			new SimpleDetailCRUDController("RifDocEleAllegatiColl",DocumentoEleAllegatiBulk.class,"docEleAllegatiColl",this);
 	private final SimpleDetailCRUDController crudDocEleTributiColl = 
 			new SimpleDetailCRUDController("RifDocEleTributiColl",DocumentoEleTributiBulk.class,"docEleTributiColl",this);
@@ -133,6 +153,22 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				((DocumentoEleTestataBulk)getModel()).isRifiutabile();
 	}
 
+	public boolean isRifiutaConPECButtonEnabled() {
+		DocumentoEleTestataBulk model = (DocumentoEleTestataBulk)getModel();
+		return isEditable() && model != null &&
+				model.getIdentificativoSdi() != null &&
+				model.isRifiutabile();
+	}
+
+	public boolean isCollegaFatturaButtonHidden() {
+		DocumentoEleTestataBulk model = (DocumentoEleTestataBulk)getModel();
+		return !(isEditable() && model != null &&
+				model.getIdentificativoSdi() != null &&
+				Optional.ofNullable(model.getTipoDocumento())
+						.map(s -> s.equalsIgnoreCase(TipoDocumentoType.TD_04.value())).orElse(Boolean.FALSE) &&
+				model.isRifiutabile());
+	}
+
 	public boolean isEsitoRifiutatoButtonHidden() {
 		return !(getModel() != null && ((DocumentoEleTestataBulk)getModel()).getIdentificativoSdi() != null &&
 				tipoIntegrazioneSDI.equals(TipoIntegrazioneSDI.PEC) &&
@@ -169,7 +205,12 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.getHandler().getProperties(getClass()), "Toolbar.rifiuta"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.rifiutaConPEC"));
+		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+				.getHandler().getProperties(getClass()), "Toolbar.collegaNota"));
+		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.accetta"));
+		toolbar.get(toolbar.size() - 1).setSeparator(true);
 		toolbar.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
 				.getHandler().getProperties(getClass()), "Toolbar.visuallizza.fattura"));
 		toolbar.get(toolbar.size() - 1).setSeparator(true);
@@ -654,6 +695,163 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		return super.find(actioncontext, compoundfindclause, oggettobulk, oggettobulk1, s);
 	}
 
+	protected CRUDComponentSession getComponentSession() {
+		return (CRUDComponentSession) EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession");
+	}
+
+	public String getEMailPEC(ActionContext actionContext) throws BusinessProcessException {
+		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
+		Optional<TerzoBulk> prestatore = Optional.ofNullable(documentoEleTestata.getDocumentoEleTrasmissione().getPrestatore());
+		if (!prestatore.isPresent())
+			return null;
+		try {
+			final List<TelefonoBulk> findTelefoni = Optional.ofNullable(getComponentSession().find(
+					actionContext.getUserContext(), prestatore.get().getClass(),
+					"findTelefoni", prestatore.get(), TelefonoBulk.PEC))
+					.filter(List.class::isInstance)
+					.map(List.class::cast)
+					.orElse(Collections.emptyList());
+			return findTelefoni
+					.stream()
+					.filter(telefonoBulk -> Optional.ofNullable(telefonoBulk.getRiferimento()).isPresent() &&
+										telefonoBulk.getFattElettronica())
+					.map(TelefonoBulk::getRiferimento)
+					.findAny()
+					.orElse(null);
+		} catch (ComponentException|RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
+	public void collegaNotaFattura(ActionContext context, DocumentoEleTestataBulk fattura, DocumentoEleTestataBulk nota) throws BusinessProcessException {
+		try {
+			nota.setStatoDocumento(StatoDocumentoEleEnum.STORNATO.name());
+			nota.setToBeUpdated();
+			getComponentSession().modificaConBulk(context.getUserContext(), nota);
+			fattura.setStatoDocumento(StatoDocumentoEleEnum.STORNATO.name());
+			fattura.setToBeUpdated();
+			getComponentSession().modificaConBulk(context.getUserContext(), fattura);
+			setMessage(FormBP.INFO_MESSAGE, "La Fattura [" + fattura.getNumeroDocumento() + "] è stata collegata alla nota correttamente.");
+			edit(context, nota);
+		} catch (ComponentException | RemoteException e) {
+			throw handleException(e);
+		}
+	}
+
+	public void rifiutaFatturaConPEC(ActionContext context, DocumentoEleTestataBulk bulk, RifiutaFatturaBulk rifiutaFatturaBulk) throws BusinessProcessException {
+		try {
+			TerzoBulk prestatore =
+					Optional.ofNullable(bulk.getDocumentoEleTrasmissione().getPrestatore())
+						.orElseThrow(() -> new ApplicationException("Valorizzare il terzo cedente/prestatore"));
+			TerzoBulk terzoPerUnitaOrganizzativa = ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession"))
+					.cercaTerzoPerUnitaOrganizzativa(
+							context.getUserContext(), bulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa());
+			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Print_spoolerBulk print = new Print_spoolerBulk();
+			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
+			print.setFlEmail(false);
+			print.setReport("/docamm/docamm/rifiuto_fattura_elettronica.jasper");
+			print.setNomeFile(
+					"Comunicazione di non registrabilità del ".concat(
+							LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+					).concat(".pdf")
+			);
+			print.setUtcr(context.getUserContext().getUser());
+			print.addParam("message", rifiutaFatturaBulk.getMessage(), String.class);
+			print.addParam("note", rifiutaFatturaBulk.getNote(), String.class);
+			print.addParam("is_nota", bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value()), Boolean.class);
+
+			print.addParam("codice_uo", bulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_unita_organizzativa(), String.class);
+			print.addParam("descrizione_uo", bulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getDs_unita_organizzativa(), String.class);
+			print.addParam("codice_cuu", terzoPerUnitaOrganizzativa.getCodiceUnivocoUfficioIpa(), String.class);
+
+			print.addParam("denominazione_sede", prestatore.getDenominazione_sede(), String.class);
+			print.addParam("pec", rifiutaFatturaBulk.getEmailPEC(), String.class);
+
+			print.addParam("tipo_documento", DocumentoEleTestataBulk.tiTipoDocumentoKeys.get(bulk.getTipoDocumento()), String.class);
+			print.addParam("identificativo_sdi", bulk.getIdentificativoSdi(), Long.class);
+			print.addParam("numero_documento", bulk.getNumeroDocumento(), String.class);
+			print.addParam("data_documento", bulk.getDataDocumento(), Date.class, dateFormat);
+			print.addParam("data_ricezione", bulk.getDocumentoEleTrasmissione().getDataRicezione(), Date.class, dateFormat);
+
+			Report report = SpringUtil.getBean("printService",
+					PrintService.class).executeReport(context.getUserContext(),
+					print);
+			AllegatoFatturaBulk allegatoFatturaBulk = new AllegatoFatturaBulk();
+			allegatoFatturaBulk.setNome(report.getName());
+			allegatoFatturaBulk.setAspectName(AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA);
+			allegatoFatturaBulk.setTitolo("Allegato inviato al seguente indirizzo email: " + rifiutaFatturaBulk.getEmailPEC());
+			final StorageObject storageObject = SpringUtil.getBean("storeService", StoreService.class)
+					.restoreSimpleDocument(
+						allegatoFatturaBulk,
+						report.getInputStream(),
+						report.getContentType(),
+						report.getName(),
+						Optional.ofNullable(getStorePath(bulk, false))
+							.orElseThrow(() -> new ApplicationException("Path sul documentale non trovato, contattare il supporto Help Desk!")),
+					false
+					);
+
+			FatturaPassivaElettronicaService fatturaPassivaElettronicaService = SpringUtil.getBean("fatturaPassivaElettronicaService",
+					FatturaPassivaElettronicaService.class);
+			fatturaPassivaElettronicaService.inviaPECFornitore(
+					context.getUserContext(),
+					new ByteArrayDataSource(storeService.getResource(storageObject.getKey()), MimeTypes.PDF.mimetype()),
+					report.getName(),
+					rifiutaFatturaBulk.getEmailPEC(),
+					"Rifiuto documento elettronico ricevuto IdentificativoSdI: " + bulk.getIdentificativoSdi(),
+					"Rifiuto documento elettronico ricevuto. Informazioni del rifiuto e riferimenti del documento in allegato."+
+							"\n\nNota: questa è un'e-mail generata automaticamente e non avremo la possibilità di " +
+							"leggere eventuali e-mail di risposta. Non rispondere a questo messaggio."
+			);
+			bulk.setFlIrregistrabile("S");
+			if (bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value())) {
+				bulk.setStatoDocumento(StatoDocumentoEleEnum.RIFIUTATA_CON_PEC.name());
+			} else {
+				bulk.setStatoDocumento(StatoDocumentoEleEnum.DA_STORNARE.name());
+			}
+			bulk.setToBeUpdated();
+			OggettoBulk oggettoBulk = getComponentSession().modificaConBulk(context.getUserContext(), bulk);
+			if (!Optional.ofNullable(getEMailPEC(context)).isPresent()) {
+				TelefonoBulk telefonoBulk = new TelefonoBulk();
+				telefonoBulk.setTerzo(prestatore);
+				telefonoBulk.setRiferimento(rifiutaFatturaBulk.getEmailPEC());
+				telefonoBulk.setTi_riferimento(TelefonoBulk.PEC);
+				telefonoBulk.setFattElettronica(Boolean.TRUE);
+				telefonoBulk.setToBeCreated();
+				getComponentSession().creaConBulk(context.getUserContext(), telefonoBulk);
+			}
+			setMessage("Comunicazione inviata correttamente.");
+			edit(context, oggettoBulk);
+		} catch (ComponentException | IOException | EmailException e) {
+			throw handleException(e);
+		}
+	}
+
+	private boolean isComunicazioneNonRegistabilita(AllegatoGenericoBulk allegato) {
+		return Optional.ofNullable(allegato)
+				.filter(AllegatoFatturaBulk.class::isInstance)
+				.map(AllegatoFatturaBulk.class::cast)
+				.map(AllegatoFatturaBulk::getAspect)
+				.filter(strings -> strings.contains(AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA))
+				.isPresent();
+	}
+	@Override
+	protected Boolean isPossibileCancellazione(AllegatoGenericoBulk allegato) {
+		if (isComunicazioneNonRegistabilita(allegato)) {
+			return false;
+		}
+		return super.isPossibileCancellazione(allegato);
+	}
+
+	@Override
+	protected Boolean isPossibileModifica(AllegatoGenericoBulk allegato) {
+		if (isComunicazioneNonRegistabilita(allegato)) {
+			return false;
+		}
+		return super.isPossibileModifica(allegato);
+	}
+
 	@Override
 	protected void completeAllegato(AllegatoFatturaBulk allegato) throws ApplicationException {
 		Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(allegato.getStorageKey()))
@@ -671,9 +869,10 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	@Override
 	public String getAllegatiFormName() {
 		DocumentoEleTestataBulk documentoEleTestata = (DocumentoEleTestataBulk) getModel();
-		if (documentoEleTestata.isRicevutaDecorrenzaTermini())
+		String allegatiFormName = super.getAllegatiFormName();
+		if (documentoEleTestata.isRicevutaDecorrenzaTermini() && allegatiFormName.equalsIgnoreCase("default"))
 			return "decorrenzaTermini";
-		return super.getAllegatiFormName();
+		return allegatiFormName;
 	}
 	
 	@Override

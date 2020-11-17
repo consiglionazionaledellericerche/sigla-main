@@ -47,7 +47,12 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	public static AllegatoGenericoBulk construct(String storageKey){
 		return new AllegatoGenericoBulk(storageKey);
 	}
-	
+	public static AllegatoGenericoBulk name(String name){
+		AllegatoGenericoBulk allegatoGenericoBulk = new AllegatoGenericoBulk();
+		allegatoGenericoBulk.setNome(name);
+		return allegatoGenericoBulk;
+	}
+
 	public AllegatoGenericoBulk(String storageKey) {
 		super();
 		this.storageKey = storageKey;

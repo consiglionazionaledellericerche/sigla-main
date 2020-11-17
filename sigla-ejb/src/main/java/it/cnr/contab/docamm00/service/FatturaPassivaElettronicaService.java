@@ -25,6 +25,7 @@ import it.cnr.contab.docamm00.ejb.FatturaElettronicaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RicezioneFatturePA;
 import it.cnr.contab.docamm00.ejb.TrasmissioneFatturePA;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
+import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
 import it.cnr.contab.docamm00.fatturapa.bulk.TipoIntegrazioneSDI;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
 import it.cnr.contab.utenze00.bp.WSUserContext;
@@ -33,6 +34,7 @@ import it.cnr.contab.util.StringEncrypter.EncryptionException;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -49,6 +51,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.rmi.RemoteException;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -98,6 +101,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	private FatturaElettronicaPassivaComponentSession fatturaElettronicaPassivaComponentSession;
 	private RicercaDocContComponentSession ricercaDocContComponentSession;
 	private DocAmmFatturazioneElettronicaComponentSession docAmmFatturazioneElettronicaComponentSession;
+	private CRUDComponentSession crudComponentSession;
 
 	private RicezioneFatturePA ricezioneFattureService;
 	private TrasmissioneFatturePA trasmissioneFattureService;
@@ -109,7 +113,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 
 	private String pecHostName, pecURLName, pecSDIAddress, pecSDISubjectFatturaAttivaInvioTerm, pecSDISubjectNotificaPecTerm, pecSDISubjectFatturaPassivaNotificaScartoEsitoTerm,
 			pecSDIFromStringTerm, pecSDISubjectRiceviFattureTerm, pecSDISubjectFatturaAttivaRicevutaConsegnaTerm, pecSDISubjectFatturaAttivaNotificaScartoTerm, pecSDISubjectFatturaAttivaMancataConsegnaTerm,
-			pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm, pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn, pecSDISubjectMancataConsegnaPecTerm;
+			pecSDISubjectNotificaEsitoTerm, pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm,
+			pecSDISubjectNotificaRifiutoTerm,
+			pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm, pecHostAddressReturn,
+			pecSDISubjectMancataConsegnaPecTerm;
 	private List<String> pecScanFolderName, pecScanReceiptFolderName, pecHostAddress;
 
 
@@ -146,6 +153,11 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				.filter(DocAmmFatturazioneElettronicaComponentSession.class::isInstance)
 				.map(DocAmmFatturazioneElettronicaComponentSession.class::cast)
 				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb CNRDOCAMM00_EJB_DocAmmFatturazioneElettronicaComponentSession"));
+
+		this.crudComponentSession = Optional.ofNullable(EJBCommonServices.createEJB("JADAEJB_CRUDComponentSession"))
+				.filter(CRUDComponentSession.class::isInstance)
+				.map(CRUDComponentSession.class::cast)
+				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb JADAEJB_CRUDComponentSession"));
 
 	}
 
@@ -187,6 +199,10 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	public void setPecSDISubjectMancataConsegnaPecTerm(
 			String pecSDISubjectMancataConsegnaPecTerm) {
 		this.pecSDISubjectMancataConsegnaPecTerm = pecSDISubjectMancataConsegnaPecTerm;
+	}
+
+	public void setPecSDISubjectNotificaRifiutoTerm(String pecSDISubjectNotificaRifiutoTerm) {
+		this.pecSDISubjectNotificaRifiutoTerm = pecSDISubjectNotificaRifiutoTerm;
 	}
 
 	public void setFatturaElettronicaPassivaComponentSession(
@@ -278,7 +294,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				logger.info("PEC scan is disabled");
 			} else {
 				logger.info("PEC SCAN for ricevi Fatture started at: "+new Date());
-				Configurazione_cnrBulk email = fatturaElettronicaPassivaComponentSession.getEmailPecSdi(userContext);
+				Configurazione_cnrBulk email = fatturaElettronicaPassivaComponentSession.getEmailPecSdi(userContext, true);
 				if (email == null) {
 					logger.info("PEC SCAN for ricevi Fatture alredy started in another server.");
 				} else {
@@ -415,7 +431,7 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 	}
 
 	public void pecScan(String userName, String password, Integer daysBefore, String filterOggetto) throws ComponentException {
-		logger.info("PEC SCAN for ricevi Fatture email: "+userName + "pwd :" +password);
+		logger.info("PEC SCAN for ricevi Fatture email: {} pwd: {} ", userName, password);
 		Properties props = System.getProperties();
 		props.putAll(pecMailConf);
 		try {
@@ -431,6 +447,8 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			searchMailFromPec(userName, password, store, daysBefore, filterOggetto);
 			searchMailFromSdi(userName, store, daysBefore, filterOggetto);
 			searchMailFromReturn(userName, store, daysBefore, filterOggetto);
+			//TODO Per ora disabilitato
+			//searchMailForRifiutoPEC(userName, store, daysBefore, filterOggetto);
 			store.close();
 		} catch (AuthenticationFailedException e) {
 			logger.error("Error while scan PEC email:" +userName + " - password:"+password);
@@ -484,6 +502,23 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 				if (!folder.isOpen())
 					folder.open(Folder.READ_ONLY);
 				processingMailFromReturn(folder, userName, daysBefore, filterOggetto);
+				if (folder.isOpen())
+					folder.close(true);
+			}
+		}
+	}
+
+	private void searchMailForRifiutoPEC(String userName, final Store store, Integer daysBefore, String filterOggetto)
+			throws MessagingException {
+		List<Folder> folders = new ArrayList<Folder>();
+		for (String folderName : pecScanFolderName) {
+			folders.add(store.getFolder(folderName));
+		}
+		for (Folder folder : folders) {
+			if (folder.exists()) {
+				if (!folder.isOpen())
+					folder.open(Folder.READ_ONLY);
+				processingMailForRifiutoPEC(folder, userName, daysBefore, filterOggetto);
 				if (folder.isOpen())
 					folder.close(true);
 			}
@@ -607,6 +642,70 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 			}
 		}
 	}
+
+	private void processingMailForRifiutoPEC(Folder folder, String userName, Integer daysBefore, String filterOggetto) throws MessagingException{
+		List<SearchTerm> terms = new ArrayList<SearchTerm>();
+		addConditionDate(terms, daysBefore);
+		Optional.ofNullable(filterOggetto)
+				.ifPresent(s -> terms.add(new SubjectTerm(s)));
+		terms.add(new SubjectTerm(pecSDISubjectNotificaRifiutoTerm));
+		Message messages[] = folder.search(new AndTerm(terms.toArray(new SearchTerm[terms.size()])));
+		logger.info("Recuperati {} messaggi di rifiuto dalla casella PEC {} nella folder {}", messages.length , userName, folder.getFullName());
+		Arrays.asList(messages)
+				.stream()
+				.filter(message -> {
+					try {
+						return Optional.ofNullable(message.getSubject()).isPresent();
+					} catch (MessagingException e) {
+						throw new DetailedRuntimeException(e);
+					}
+				})
+				.forEach(message -> {
+					try{
+						String[] headerMessage = getMessageID(message);
+						if (headerMessage != null){
+							String messageID = Arrays.asList(headerMessage).toString();
+							String messageIDWithUser = userName + " " + messageID;
+							logger.info("MessageIDWithUser {}", messageIDWithUser);
+							if (!listaMessageIdAlreadyScanned.contains(messageIDWithUser)){
+								try {
+									String subject = message.getSubject();
+									Long identificativoSdI = Long.valueOf(
+											subject.substring(
+												subject.indexOf(pecSDISubjectNotificaRifiutoTerm) + pecSDISubjectNotificaRifiutoTerm.length() + 2
+											)
+									);
+									fatturaElettronicaPassivaComponentSession.recuperoDocumento(
+											userContext,
+											identificativoSdI
+									).forEach(documentoEleTestataBulk -> {
+										if (!subject.startsWith("ACCETTAZIONE")) {
+											if (subject.startsWith("AVVISO DI MANCATA CONSEGNA")){
+												// TODO Abilitare stato documento
+												//documentoEleTestataBulk.setStatoDocumento(StatoDocumentoEleEnum.PEC_NON_INVIATA.name());
+											} else {
+												documentoEleTestataBulk.setStatoDocumento(StatoDocumentoEleEnum.DA_STORNARE.name());
+											}
+											documentoEleTestataBulk.setToBeUpdated();
+											try {
+												crudComponentSession.modificaConBulk(userContext, documentoEleTestataBulk);
+											} catch (ComponentException|RemoteException e) {
+												throw new DetailedRuntimeException(e);
+											}
+										}
+									});
+									listaMessageIdAlreadyScanned.add(messageIDWithUser);
+								} catch (Exception e) {
+									logger.error("PEC scan error while importing file.", e);
+								}
+							}
+						}
+					} catch (MessagingException e) {
+						logger.error("Errore durante il recupero dell'ID del messaggio.", e);
+					}
+				});
+	}
+
 	public List<SearchTerm> createTermsForSearchSdi(Boolean dateForRecoveryNotifier, Integer daysBefore) {
 		List<SearchTerm> terms = new ArrayList<SearchTerm>();
 		addConditionDate(terms,dateForRecoveryNotifier, daysBefore);
@@ -958,6 +1057,27 @@ public class FatturaPassivaElettronicaService implements InitializingBean{
 		email.setSubject(pecSDISubjectFatturaAttivaInvioTerm + " "+idFattura);
 		email.setMsg("Invio Fattura Elettronica. "+ idFattura);
 		email.attach(fatturaAttivaSigned, idFattura, "");
+		// send the email
+		email.send();
+	}
+
+	public void inviaPECFornitore(UserContext userContext, DataSource attach, String filename, String emailPEC, String subject, String msg) throws ComponentException, EmailException {
+		Configurazione_cnrBulk emailPecSdi = fatturaElettronicaPassivaComponentSession.getEmailPecSdi(userContext, false);
+		String userName = emailPecSdi.getVal01();
+		String password = null;
+		try {
+			password = StringEncrypter.decrypt(userName, emailPecSdi.getVal02());
+		} catch (EncryptionException e1) {
+			new AuthenticationFailedException("Cannot decrypt password");
+		}
+		// Create the email message
+		SimplePECMail email = new SimplePECMail(userName, password);
+		email.setHostName(pecHostName);
+		email.addTo(emailPEC);
+		email.setFrom(userName, userName);
+		email.setSubject(subject);
+		email.setMsg(msg);
+		email.attach(attach, filename, "");
 		// send the email
 		email.send();
 	}

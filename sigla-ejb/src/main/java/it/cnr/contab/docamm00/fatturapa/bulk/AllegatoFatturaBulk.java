@@ -31,14 +31,21 @@ public class AllegatoFatturaBulk extends AllegatoGenericoBulk {
 	public static OrderedHashtable aspectNamesKeys = new OrderedHashtable(),
 			aspectNamesDecorrenzaTerminiKeys;
 
+	public static final String P_SIGLA_FATTURE_ATTACHMENT_DURC = "P:sigla_fatture_attachment:durc";
+	public static final String P_SIGLA_FATTURE_ATTACHMENT_TACCIABILITA = "P:sigla_fatture_attachment:tacciabilita";
+	public static final String P_SIGLA_FATTURE_ATTACHMENT_PRESTAZIONE_RESA = "P:sigla_fatture_attachment:prestazione_resa";
+	public static final String P_SIGLA_FATTURE_ATTACHMENT_ALTRO = "P:sigla_fatture_attachment:altro";
+	public static final String P_SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA = "P:sigla_fatture_attachment:comunicazione_non_registrabilita";
+
 	static {
-		aspectNamesKeys.put("P:sigla_fatture_attachment:durc","DURC");
-		aspectNamesKeys.put("P:sigla_fatture_attachment:tacciabilita","Tracciabilità");
-		aspectNamesKeys.put("P:sigla_fatture_attachment:prestazione_resa","Prestazione Resa");
-		aspectNamesKeys.put("P:sigla_fatture_attachment:altro","Altro");
+		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_DURC,"DURC");
+		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_TACCIABILITA,"Tracciabilità");
+		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_PRESTAZIONE_RESA,"Prestazione Resa");
+		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_ALTRO,"Altro");
+		aspectNamesKeys.put(P_SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA,"Comunicazione di non registrabilità");
 
 		aspectNamesDecorrenzaTerminiKeys = (OrderedHashtable) aspectNamesKeys.clone();
-		aspectNamesDecorrenzaTerminiKeys.put("P:sigla_fatture_attachment:comunicazione_non_registrabilita","Comunicazione di non registrabilità");
+		aspectNamesDecorrenzaTerminiKeys.put(P_SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA,"Comunicazione di non registrabilità");
 	}
 	private String aspectName;
 

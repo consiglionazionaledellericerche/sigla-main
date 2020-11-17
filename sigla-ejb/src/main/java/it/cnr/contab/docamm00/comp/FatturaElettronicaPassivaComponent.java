@@ -240,12 +240,16 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 						final Optional<ContrattoBulk> optionalContrattoBulk = contrattoHome.findByCIG(usercontext, cig).stream().findAny();
 						if (optionalContrattoBulk.isPresent()) {
 							final TerzoBulk figura_giuridica_esterna = optionalContrattoBulk.get().getFigura_giuridica_esterna();
-							if(
-									Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale())
+							if(Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale())
 											.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getCodice_fiscale_anagrafico()).orElse(""))).isPresent() ||
 											(Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodice())
 													.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getPartita_iva_anagrafico()).orElse(""))).isPresent() &&
-													!figura_giuridica_esterna.getAnagrafico().getTi_entita_giuridica().equalsIgnoreCase(AnagraficoBulk.GIURIDICA))
+													!Optional.ofNullable(figura_giuridica_esterna)
+															.flatMap(terzoBulk -> Optional.ofNullable(terzoBulk.getAnagrafico()))
+															.flatMap(anagraficoBulk -> Optional.ofNullable(anagraficoBulk.getTi_entita_giuridica()))
+															.map(s -> s.equalsIgnoreCase(AnagraficoBulk.GIURIDICA))
+															.orElse(Boolean.TRUE)
+											)
 							) {
 								documentoEleTrasmissioneBulk.setPrestatore(figura_giuridica_esterna);
 								documentoEleTrasmissioneBulk.setPrestatoreAnag(figura_giuridica_esterna.getAnagrafico());
@@ -565,16 +569,18 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 	}	
 
-	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext, boolean lock) throws it.cnr.jada.comp.ComponentException {
 		try {
 			Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(Configurazione_cnrBulk.PK_EMAIL_PEC,Configurazione_cnrBulk.SK_SDI, "*",  new Integer(0));
 			Configurazione_cnrHome configurazione_cnrHome = (Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class);
 			configurazione_cnrBulk = (Configurazione_cnrBulk) configurazione_cnrHome.findAndLock(configurazione_cnrBulk);
-			if ("Y".equalsIgnoreCase(configurazione_cnrBulk.getVal04()))
-				return null;
-			configurazione_cnrBulk.setVal04("Y");
-			configurazione_cnrBulk.setToBeUpdated();
-			configurazione_cnrHome.update(configurazione_cnrBulk, userContext);
+			if (lock) {
+				if ("Y".equalsIgnoreCase(configurazione_cnrBulk.getVal04()))
+					return null;
+				configurazione_cnrBulk.setVal04("Y");
+				configurazione_cnrBulk.setToBeUpdated();
+				configurazione_cnrHome.update(configurazione_cnrBulk, userContext);
+			}
 			return configurazione_cnrBulk;
 		} catch (BusyResourceException _ex) {
 			return null;

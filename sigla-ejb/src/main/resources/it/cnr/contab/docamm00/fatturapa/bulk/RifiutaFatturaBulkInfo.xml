@@ -22,22 +22,49 @@
 
     <fieldProperty
             name="message_text"
-            property="message"
-            label="Inserire il motivo di rifiuto della fattura:"
+            property="messageText"
+            label="Motivo:"
             inputType="TEXTAREA"
             maxLength="250"
             cols="60"
             rows="5"
             nullable="false"/>
     <fieldProperty
+            name="note"
+            property="note"
+            label="Note:"
+            inputType="TEXTAREA"
+            maxLength="1000"
+            cols="60"
+            rows="5"/>
+    <fieldProperty
             name="message_option"
-            property="message"
-            label="Inserire il motivo di rifiuto della fattura:"
+            property="messageOption"
+            label="Motivo predefinito:"
             keysProperty="motivoRifiutoKeys"
             inputType="SELECT"
             nullable="false"/>
 
-    <formFieldProperty name="message_text" />
+    <fieldProperty
+            name="message_option_nullable"
+            property="messageOption"
+            label="Motivo predefinito:"
+            keysProperty="motivoRifiutoKeys"
+            command="doOnChangeMessage"
+            inputType="SELECT"/>
+
+    <fieldProperty
+            name="emailPEC"
+            property="emailPEC"
+            label="PEC:"
+            inputType="TEXT"
+            maxLength="100"
+            nullable="false"/>
+
     <formFieldProperty name="message_option"/>
+    <formFieldProperty name="message_option_nullable"/>
+    <formFieldProperty name="message_text" />
+    <formFieldProperty name="emailPEC" />
+    <formFieldProperty name="note" />
 
 </bulkInfo>

@@ -55,7 +55,7 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws ComponentException, RemoteException;
 	public abstract boolean existsIdentificativo(UserContext usercontext, java.lang.Long identificativoSdI)
 			throws ComponentException, RemoteException;
-	public abstract Configurazione_cnrBulk getEmailPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException;
+	public abstract Configurazione_cnrBulk getEmailPecSdi(UserContext userContext, boolean lock) throws it.cnr.jada.comp.ComponentException;
 	public List<DocumentoEleTestataBulk> recuperoDocumento(UserContext usercontext, Long identificativoSdI) 
 			throws ComponentException, RemoteException;
 	public List<DocumentoEleTrasmissioneBulk> recuperoTrasmissione(UserContext usercontext, Long identificativoSdI) 

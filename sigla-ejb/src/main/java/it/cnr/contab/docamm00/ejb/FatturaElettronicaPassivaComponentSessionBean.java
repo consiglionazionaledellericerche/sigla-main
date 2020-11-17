@@ -110,10 +110,10 @@ public class FatturaElettronicaPassivaComponentSessionBean extends it.cnr.jada.e
             throw uncaughtError(usercontext, componentObj, error);
         }
     }
-	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException{
+	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext, boolean lock) throws it.cnr.jada.comp.ComponentException{
         pre_component_invocation(userContext, componentObj);
         try{
-        	Configurazione_cnrBulk result = ((FatturaElettronicaPassivaComponent)componentObj).getEmailPecSdi(userContext);
+        	Configurazione_cnrBulk result = ((FatturaElettronicaPassivaComponent)componentObj).getEmailPecSdi(userContext, lock);
             component_invocation_succes(userContext, componentObj);
             return result;
         }catch(NoRollbackException norollbackexception){

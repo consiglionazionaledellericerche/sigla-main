@@ -74,17 +74,12 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		tiDecorrenzaTerminiKeys.put("S","Si");
 		tiDecorrenzaTerminiKeys.put("N","No");
 
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.COMPLETO.name(),StatoDocumentoEleEnum.COMPLETO.name());
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.REGISTRATO.name(),StatoDocumentoEleEnum.REGISTRATO.name());
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.RIFIUTATO.name(),StatoDocumentoEleEnum.RIFIUTATO.name());
+		Arrays.stream(StatoDocumentoEleEnum.values()).forEach(statoDocumentoEleEnum -> {
+			tiStatoDocumentoKeys.put(statoDocumentoEleEnum.name(),statoDocumentoEleEnum.label());
+			tiStatoDocumentoSelectKeys.put(statoDocumentoEleEnum.name(),statoDocumentoEleEnum.label());
+		});
 		tiStatoDocumentoKeys.put(STATO_DOCUMENTO_TUTTI,STATO_DOCUMENTO_TUTTI);
 
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.COMPLETO.name(),StatoDocumentoEleEnum.COMPLETO.name());
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.REGISTRATO.name(),StatoDocumentoEleEnum.REGISTRATO.name());
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.RIFIUTATO.name(),StatoDocumentoEleEnum.RIFIUTATO.name());
-		
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_01.value(),"Fattura");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_02.value(),"Acconto / anticipo su fattura");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_03.value(),"Acconto / anticipo su parcella");
@@ -133,7 +128,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private Unita_organizzativaBulk unitaCompetenza =  new Unita_organizzativaBulk();
 	
 	/**
-	 * [MODALITA_PAGAMENTO Descrive le modalità  di pagamento previste per un dato terzo.]
+	 * [MODALITA_PAGAMENTO Descrive le modalità di pagamento previste per un dato terzo.]
 	 **/
 	private Modalita_pagamentoBulk modalitaPagamento =  new Modalita_pagamentoBulk();
 	
