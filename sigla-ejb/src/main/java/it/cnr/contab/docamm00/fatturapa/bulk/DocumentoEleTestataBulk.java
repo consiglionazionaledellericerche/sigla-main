@@ -147,6 +147,8 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private boolean isFromInizializzaBulkPerModifica = false;
 
 	private DocumentoEleTestataBulk fatturaCollegata;
+	private DocumentoEleTestataBulk notaCollegata;
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DOCUMENTO_ELE_TESTATA
@@ -381,7 +383,13 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public BulkList<DocumentoEleDdtBulk> getDocEleDdtColl() {
 		return docEleDdtColl;
 	}
-	
+
+	public String getStatoDocumentoLabel() {
+		return Optional.ofNullable(getStatoDocumento())
+					.map(s -> StatoDocumentoEleEnum.valueOf(s).label())
+					.orElse(null);
+	}
+
 	public StatoDocumentoEleEnum getStatoDocumentoEle() {
 		try {
 			if (getStatoDocumento() != null)
@@ -766,5 +774,13 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public void setProgressivoFatCol(Long progressivoFatCol) {
 		Optional.ofNullable(this.fatturaCollegata)
 				.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setProgressivo(progressivoFatCol));
+	}
+
+	public DocumentoEleTestataBulk getNotaCollegata() {
+		return notaCollegata;
+	}
+
+	public void setNotaCollegata(DocumentoEleTestataBulk notaCollegata) {
+		this.notaCollegata = notaCollegata;
 	}
 }

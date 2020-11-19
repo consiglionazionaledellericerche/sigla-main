@@ -119,10 +119,17 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			if ((documentoEleTestata.getDocEleTributiColl()!=null && !documentoEleTestata.getDocEleTributiColl().isEmpty()) 
 					||(documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
 					(documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
-							documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
-					{
-						documentoEleTestata.setAttivoSplitPaymentProf(Utility.createFatturaPassivaComponentSession().isAttivoSplitPaymentProf(usercontext, documentoEleTestata.getDataDocumento()));
-					}	
+							documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name())))){
+				documentoEleTestata.setAttivoSplitPaymentProf(Utility.createFatturaPassivaComponentSession().isAttivoSplitPaymentProf(usercontext, documentoEleTestata.getDataDocumento()));
+			}
+			DocumentoEleTestataBulk nota = new DocumentoEleTestataBulk();
+			nota.setFatturaCollegata(documentoEleTestata);
+			documentoEleTestata.setNotaCollegata(
+					(DocumentoEleTestataBulk) getHome(usercontext, DocumentoEleTestataBulk.class)
+					.find(nota)
+					.stream()
+					.findAny().orElse(null)
+			);
 			getHomeCache(usercontext).fetchAll(usercontext);
 		} catch (RemoteException | PersistencyException e) {
 			throw handleException(e);
