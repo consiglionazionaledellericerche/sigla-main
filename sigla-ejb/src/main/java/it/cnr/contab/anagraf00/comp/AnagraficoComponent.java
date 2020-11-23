@@ -1705,13 +1705,14 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                     sql.addClause("AND", "cd_anag", SQLBuilder.NOT_EQUALS, anagrafico.getCd_anag());
 
                  List<AnagraficoBulk> listaAnagrafica = anagraficoHome.fetchAll(sql);
-                if (listaAnagrafica.size() > 1){
+/*                if (listaAnagrafica.size() > 1){
                     throw new ApplicationException("Esistono altre anagrafiche con questo codice fiscale o partita iva");
-                }
-                if (listaAnagrafica.size() == 1){
-                    AnagraficoBulk anagraficoConDatiUguali = listaAnagrafica.get(0);
-                    if ((!anagrafico.isGruppoIVA() && !anagraficoConDatiUguali.isGruppoIVA()) || (anagrafico.isGruppoIVA() && anagraficoConDatiUguali.isGruppoIVA())){
-                        throw new ApplicationException("Esiste già l'anagrafica "+anagraficoConDatiUguali.getCd_anag()+" con questo codice fiscale o partita iva");
+                }*/
+                if (listaAnagrafica.size() > 0){
+                    for (AnagraficoBulk anagraficoConDatiUguali : listaAnagrafica){
+                        if ((!anagrafico.isGruppoIVA() && !anagraficoConDatiUguali.isGruppoIVA()) || (anagrafico.isGruppoIVA() && anagraficoConDatiUguali.isGruppoIVA())){
+                            throw new ApplicationException("Esiste già l'anagrafica "+anagraficoConDatiUguali.getCd_anag()+" con questo codice fiscale o partita iva");
+                        }
                     }
                 }
             } catch (PersistencyException e) {
