@@ -23,7 +23,7 @@
     <fieldProperty
             name="message_text"
             property="messageText"
-            label="Motivo:"
+            label="Richiesta storno:"
             inputType="TEXTAREA"
             maxLength="250"
             cols="60"
@@ -40,7 +40,7 @@
     <fieldProperty
             name="message_option"
             property="messageOption"
-            label="Motivo predefinito:"
+            label="Rifiuto:"
             keysProperty="motivoRifiutoKeys"
             inputType="SELECT"
             nullable="false"/>
@@ -48,7 +48,7 @@
     <fieldProperty
             name="message_option_nullable"
             property="messageOption"
-            label="Motivo predefinito:"
+            label="Rifiuto:"
             keysProperty="motivoRifiutoKeys"
             command="doOnChangeMessage"
             inputType="SELECT"/>

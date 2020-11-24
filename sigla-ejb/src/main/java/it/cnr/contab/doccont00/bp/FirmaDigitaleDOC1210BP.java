@@ -22,6 +22,7 @@ import it.cnr.contab.docamm00.docs.bulk.Lettera_pagam_esteroBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.AbilitatoFirma;
@@ -188,10 +189,15 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_"+lettera.getCommissioni_spese(), "X", false));
                 fields.add(valorizzaField(pdAcroForm, "COMMISSIONI_SPESE_ESTERE_"+lettera.getCommissioni_spese_estere(), "X", false));
 
-                pdAcroForm.flatten(fields.stream()
-                        .filter(pdField -> Optional.ofNullable(pdField).isPresent())
-                        .collect(Collectors.toList()), true);
-
+                try {
+					pdAcroForm.flatten(fields.stream()
+							.filter(pdField -> Optional.ofNullable(pdField).isPresent())
+							.collect(Collectors.toList()), true);
+				} catch (IllegalArgumentException _ex) {
+					throw new ApplicationMessageFormatException(
+							"Predisposizione non possibile. Controllare i caratteri inseriti! {0}", _ex.getMessage()
+					);
+				}
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
 				document.save(output);
 				document.close();

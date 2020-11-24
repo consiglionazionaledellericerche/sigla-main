@@ -24,6 +24,7 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.ejb.EsercizioComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.config00.tabnum.ejb.Numerazione_baseComponentSession;
 import it.cnr.contab.docamm00.actions.CRUDFatturaPassivaAction;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaBulk;
@@ -41,6 +42,7 @@ import it.cnr.contab.reports.service.PrintService;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
@@ -76,7 +78,10 @@ import java.sql.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -772,6 +777,9 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			TerzoBulk terzoPerUnitaOrganizzativa = ((it.cnr.contab.anagraf00.ejb.TerzoComponentSession) createComponentSession("CNRANAGRAF00_EJB_TerzoComponentSession"))
 					.cercaTerzoPerUnitaOrganizzativa(
 							context.getUserContext(), bulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa());
+			Numerazione_baseComponentSession numerazione = (Numerazione_baseComponentSession)
+							EJBCommonServices.createEJB("CNRCONFIG00_TABNUM_EJB_Numerazione_baseComponentSession");
+
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
@@ -783,6 +791,11 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 					).concat(".pdf")
 			);
 			print.setUtcr(context.getUserContext().getUser());
+			print.addParam("title",
+					Optional.ofNullable(rifiutaFatturaBulk.getMessageText())
+						.map(s -> "Richiesta storno Documento Elettronico")
+						.orElseGet(() -> "Rifiuto Documento Elettronico"),
+					String.class);
 			print.addParam("message", rifiutaFatturaBulk.getMessage(), String.class);
 			print.addParam("note", rifiutaFatturaBulk.getNote(), String.class);
 			print.addParam("is_nota", bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value()), Boolean.class);
@@ -803,13 +816,27 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			Report report = SpringUtil.getBean("printService",
 					PrintService.class).executeReport(context.getUserContext(),
 					print);
-			AllegatoFatturaBulk allegatoFatturaBulk = new AllegatoFatturaBulk();
-			allegatoFatturaBulk.setNome(report.getName());
-			allegatoFatturaBulk.setAspectName(AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA);
-			allegatoFatturaBulk.setTitolo("Allegato inviato al seguente indirizzo email: " + rifiutaFatturaBulk.getEmailPEC());
+			LocalDateTime now = LocalDateTime.now();
+			int esercizio = now.getYear();
+			Long numProtocollo = numerazione.creaNuovoProgressivo(
+					context.getUserContext(),
+					esercizio,
+					"RIFIUTO_FATTURA_PEC",
+					"NUM_PROTOCOLLO",
+					CNRUserContext.getUser(context.getUserContext())
+			);
+
+			AllegatoNonRegistrabilitaBulk allegatoNonRegistrabilitaBulk = new AllegatoNonRegistrabilitaBulk();
+			allegatoNonRegistrabilitaBulk.setNome(report.getName());
+			allegatoNonRegistrabilitaBulk.setUtenteSIGLA(CNRUserContext.getUser(context.getUserContext()));
+			allegatoNonRegistrabilitaBulk.setAnnoProtocollo(esercizio);
+			allegatoNonRegistrabilitaBulk.setNumeroProtocollo(Utility.lpad(numProtocollo, 6, '0'));
+			allegatoNonRegistrabilitaBulk.setDataProtocollo(Date.from(now.toInstant(ZoneOffset.UTC)));
+			allegatoNonRegistrabilitaBulk.setTitolo("Allegato inviato al seguente indirizzo email: " + rifiutaFatturaBulk.getEmailPEC());
+
 			final StorageObject storageObject = SpringUtil.getBean("storeService", StoreService.class)
 					.restoreSimpleDocument(
-						allegatoFatturaBulk,
+						allegatoNonRegistrabilitaBulk,
 						report.getInputStream(),
 						report.getContentType(),
 						report.getName(),
@@ -825,10 +852,15 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 					new ByteArrayDataSource(storeService.getResource(storageObject.getKey()), MimeTypes.PDF.mimetype()),
 					report.getName(),
 					rifiutaFatturaBulk.getEmailPEC(),
-					"Rifiuto documento elettronico ricevuto IdentificativoSdI: " + bulk.getIdentificativoSdi(),
-					"Rifiuto documento elettronico ricevuto. Informazioni del rifiuto e riferimenti del documento in allegato."+
-							"\n\nNota: questa è un'e-mail generata automaticamente e non avremo la possibilità di " +
-							"leggere eventuali e-mail di risposta. Non rispondere a questo messaggio."
+					Optional.ofNullable(rifiutaFatturaBulk.getMessageText())
+							.map(s -> "Richiesta Storno documento elettronico ricevuto IdentificativoSdI: ")
+							.orElseGet(() -> "Rifiuto documento elettronico ricevuto IdentificativoSdI: ").concat(bulk.getIdentificativoSdi().toString()),
+					Optional.ofNullable(rifiutaFatturaBulk.getMessageText())
+							.map(s -> "Richiesta Storno documento elettronico ricevuto. ")
+							.orElseGet(() -> "Rifiuto documento elettronico ricevuto. ").concat(
+								"Informazioni del rifiuto e riferimenti del documento in allegato."+
+								"\n\nNota: questa è un'e-mail generata automaticamente e non avremo la possibilità di " +
+								"leggere eventuali e-mail di risposta. Non rispondere a questo messaggio.")
 			);
 			bulk.setFlIrregistrabile("S");
 			if (bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value())) {
@@ -849,7 +881,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			}
 			setMessage("Comunicazione inviata correttamente.");
 			edit(context, oggettoBulk);
-		} catch (ComponentException | IOException | EmailException e) {
+		} catch (ComponentException | IOException | EmailException | BusyResourceException e) {
 			throw handleException(e);
 		}
 	}
@@ -859,7 +891,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 				.filter(AllegatoFatturaBulk.class::isInstance)
 				.map(AllegatoFatturaBulk.class::cast)
 				.map(AllegatoFatturaBulk::getAspect)
-				.filter(strings -> strings.contains(AllegatoFatturaBulk.P_SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA))
+				.filter(strings -> strings.contains(StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA.value()))
 				.isPresent();
 	}
 	@Override

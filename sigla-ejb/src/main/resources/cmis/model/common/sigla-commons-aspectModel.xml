@@ -132,5 +132,49 @@
 				</property>
 			</properties>
 		</aspect>
+		<aspect name="sigla_commons_aspect:flusso_pubblicazione">
+			<title>Gestione Pubblicazioni</title>
+			<properties>
+				<property name="sigla_commons_aspect:pubblicazione_trasparenza">
+					<title>Pubblicazione Trasparenza</title>
+					<type>d:boolean</type>
+				</property>
+				<property name="sigla_commons_aspect:pubblicazione_urp">
+					<title>Pubblicazione URP</title>
+					<type>d:boolean</type>
+				</property>
+			</properties>
+		</aspect>
+		<aspect name="sigla_commons_aspect:protocollo">
+			<title>Common Metadata for Protocollo</title>
+			<properties>
+				<property name="sigla_commons_aspect:anno_protocollo">
+					<title>Anno del protocollo</title>
+					<type>d:int</type>
+					<mandatory>true</mandatory>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+				<property name="sigla_commons_aspect:data_protocollo">
+					<title>Data Protocollo</title>
+					<type>d:datetime</type>
+					<mandatory>true</mandatory>
+					<multiple>false</multiple>
+				</property>
+				<property name="sigla_commons_aspect:numero_protocollo">
+					<title>Numero del protocollo</title>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<index enabled="true">
+						<atomic>true</atomic>
+						<stored>false</stored>
+						<tokenised>both</tokenised>
+					</index>
+				</property>
+			</properties>
+		</aspect>
 	</aspects>
 </model>

@@ -20,7 +20,7 @@
     <div class="col-md-9 mx-auto mt-3">
         <div class="card card-shadow">
           <h3 class="card-header text-primary">
-            <i class="fa fa-envelope-open fa-fw fa-2x" aria-hidden="true"></i> Rifiuto della fattura al Fornitore
+            <i class="fa fa-envelope-open fa-fw fa-2x" aria-hidden="true"></i> Invia PEC
           </h3>
           <div class="card-block p-3">
             <div class="form-group row">
@@ -33,7 +33,7 @@
             </div>
             <%if (bulk.isDecorrenzaTermini()) { %>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">
+                    <label class="col-sm-2 col-form-label text-danger">
                         <% bp.getController().writeFormLabel(out,"message_option_nullable"); %>
                     </label>
                     <div class="col-sm-10">
@@ -43,7 +43,7 @@
             <%}%>
             <%if (!bulk.isMessageOptionSelected()) { %>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">
+                    <label class="col-sm-2 col-form-label text-danger">
                         <% bp.getController().writeFormLabel(out,"message_text"); %>
                     </label>
                     <div class="col-sm-10">
