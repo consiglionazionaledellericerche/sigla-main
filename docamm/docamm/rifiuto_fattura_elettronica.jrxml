@@ -42,6 +42,9 @@
 	<parameter name="is_nota" class="java.lang.Boolean">
 		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
 	</parameter>
+	<parameter name="title" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Richiesta storno Documento Elettronico"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT 1 FROM DUAL]]>
 	</queryString>
@@ -70,13 +73,11 @@
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement style="TNR10" x="1" y="86" width="552" height="24" uuid="70d3d381-f406-4793-894a-7489c3ed8d03"/>
-				<textElement textAlignment="Center" rotation="None">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[PEC per RIFIUTO documento elettronico]]></text>
-			</staticText>
+			<textField>
+				<reportElement style="TNRGC14" x="0" y="80" width="553" height="30" uuid="95e846db-e82d-437c-9997-dfdca293aea9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
