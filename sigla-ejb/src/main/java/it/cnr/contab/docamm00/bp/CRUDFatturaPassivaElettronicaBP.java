@@ -779,7 +779,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 							context.getUserContext(), bulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa());
 			Numerazione_baseComponentSession numerazione = (Numerazione_baseComponentSession)
 							EJBCommonServices.createEJB("CNRCONFIG00_TABNUM_EJB_Numerazione_baseComponentSession");
-
+			boolean isNota = bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value());
 			Format dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Print_spoolerBulk print = new Print_spoolerBulk();
 			print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
@@ -793,12 +793,13 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			print.setUtcr(context.getUserContext().getUser());
 			print.addParam("title",
 					Optional.ofNullable(rifiutaFatturaBulk.getMessageText())
+						.filter(s -> !isNota)
 						.map(s -> "Richiesta storno Documento Elettronico")
 						.orElseGet(() -> "Rifiuto Documento Elettronico"),
 					String.class);
 			print.addParam("message", rifiutaFatturaBulk.getMessage(), String.class);
 			print.addParam("note", rifiutaFatturaBulk.getNote(), String.class);
-			print.addParam("is_nota", bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value()), Boolean.class);
+			print.addParam("is_nota", isNota, Boolean.class);
 
 			print.addParam("codice_uo", bulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getCd_unita_organizzativa(), String.class);
 			print.addParam("descrizione_uo", bulk.getDocumentoEleTrasmissione().getUnitaOrganizzativa().getDs_unita_organizzativa(), String.class);
@@ -853,9 +854,11 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 					report.getName(),
 					rifiutaFatturaBulk.getEmailPEC(),
 					Optional.ofNullable(rifiutaFatturaBulk.getMessageText())
+							.filter(s -> !isNota)
 							.map(s -> "Richiesta Storno documento elettronico ricevuto IdentificativoSdI: ")
 							.orElseGet(() -> "Rifiuto documento elettronico ricevuto IdentificativoSdI: ").concat(bulk.getIdentificativoSdi().toString()),
 					Optional.ofNullable(rifiutaFatturaBulk.getMessageText())
+							.filter(s -> !isNota)
 							.map(s -> "Richiesta Storno documento elettronico ricevuto. ")
 							.orElseGet(() -> "Rifiuto documento elettronico ricevuto. ").concat(
 								"Informazioni del rifiuto e riferimenti del documento in allegato."+
@@ -863,7 +866,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 								"leggere eventuali e-mail di risposta. Non rispondere a questo messaggio.")
 			);
 			bulk.setFlIrregistrabile("S");
-			if (bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value())) {
+			if (isNota) {
 				bulk.setStatoDocumento(StatoDocumentoEleEnum.RIFIUTATA_CON_PEC.name());
 			} else {
 				bulk.setStatoDocumento(StatoDocumentoEleEnum.DA_STORNARE.name());

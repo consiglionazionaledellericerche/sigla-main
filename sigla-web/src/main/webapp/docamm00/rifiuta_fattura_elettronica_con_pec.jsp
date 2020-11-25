@@ -36,7 +36,7 @@
                         <tr><% bp.getController().writeFormField(out,"message_option_nullable"); %></tr>
                     <%}%>
                     <%if (!bulk.isMessageOptionSelected()) { %>
-                        <tr><% bp.getController().writeFormField(out,"message_text"); %></tr>
+                        <tr><% bp.getController().writeFormField(out,bulk.isNota() ? "message_text_nota": "message_text"); %></tr>
                     <%}%>
                     <tr><% bp.getController().writeFormField(out,"note"); %></tr>
 				</table>

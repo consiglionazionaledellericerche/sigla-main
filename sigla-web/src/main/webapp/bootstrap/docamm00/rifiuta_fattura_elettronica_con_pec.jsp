@@ -44,10 +44,10 @@
             <%if (!bulk.isMessageOptionSelected()) { %>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label text-danger">
-                        <% bp.getController().writeFormLabel(out,"message_text"); %>
+                        <% bp.getController().writeFormLabel(out,bulk.isNota() ? "message_text_nota": "message_text"); %>
                     </label>
                     <div class="col-sm-10">
-                        <% bp.getController().writeFormInput(out,"message_text"); %>
+                        <% bp.getController().writeFormInput(out,bulk.isNota() ? "message_text_nota": "message_text"); %>
                     </div>
                 </div>
             <%}%>

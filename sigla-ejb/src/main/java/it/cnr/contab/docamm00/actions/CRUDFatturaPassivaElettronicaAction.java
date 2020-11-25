@@ -46,6 +46,7 @@ import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
+import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.TipoDocumentoType;
 
 import javax.ejb.RemoveException;
 import java.math.BigDecimal;
@@ -319,7 +320,8 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
                     new RifiutaFatturaBulk(
                             Optional.ofNullable(fatturaPassivaElettronicaBP.getEMailPEC(context))
                                     .orElse(bulk.getDocumentoEleTrasmissione().getPrestatoreEmail()),
-                            bulk
+                            bulk,
+                            bulk.getTipoDocumento().equalsIgnoreCase(TipoDocumentoType.TD_04.value())
                     )
             );
             context.addHookForward("model", this, "doConfirmRifiutaFatturaConPEC");

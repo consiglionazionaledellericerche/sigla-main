@@ -30,6 +30,16 @@
             rows="5"
             nullable="false"/>
     <fieldProperty
+            name="message_text_nota"
+            property="messageText"
+            label="Rifiuto:"
+            inputType="TEXTAREA"
+            maxLength="250"
+            cols="60"
+            rows="5"
+            nullable="false"/>
+
+    <fieldProperty
             name="note"
             property="note"
             label="Note:"
@@ -64,6 +74,7 @@
     <formFieldProperty name="message_option"/>
     <formFieldProperty name="message_option_nullable"/>
     <formFieldProperty name="message_text" />
+    <formFieldProperty name="message_text_nota" />
     <formFieldProperty name="emailPEC" />
     <formFieldProperty name="note" />
 

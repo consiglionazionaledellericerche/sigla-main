@@ -44,14 +44,16 @@ public class RifiutaFatturaBulk extends OggettoBulk {
     private String emailPEC;
     private String note;
     private boolean messageOptionSelected = Boolean.FALSE;
+    private boolean nota = Boolean.FALSE;
 
     public RifiutaFatturaBulk() {
         super();
     }
 
-    public RifiutaFatturaBulk(String emailPEC, DocumentoEleTestataBulk documentoEleTestataBulk) {
+    public RifiutaFatturaBulk(String emailPEC, DocumentoEleTestataBulk documentoEleTestataBulk, boolean nota) {
         this.documentoEleTestataBulk = documentoEleTestataBulk;
         this.emailPEC = emailPEC;
+        this.nota = nota;
     }
 
     public RifiutaFatturaBulk(Timestamp dataRicezione, Timestamp dataLimite) {
@@ -112,6 +114,14 @@ public class RifiutaFatturaBulk extends OggettoBulk {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public void setNota(boolean nota) {
+        this.nota = nota;
+    }
+
+    public boolean isNota() {
+        return nota;
     }
 
     @Override
