@@ -1,9 +1,13 @@
-## Release 6.2.72  -- _November 23, 2020_ 
+## Release 6.2.73  -- _November 26, 2020_ 
 **Changes**
 
->**Tolto messaggio di errore nel caso di più codici anagrafico recuperati con stesso codici fiscale e/o partita IVA per la gestione del Gruppo IVA**
+>**Rifiuto Fattura elettronica Gazzetta Ufficiale (G.U. n° 262 del 22 ottobre 2020)  del decreto del 24 agosto 2020, n. 132, Ministero dell’Economia e delle Finanze.**
 >
->[26009a6d41f596e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26009a6d41f596e) gianfranco.gasparro *November 23, 2020*
+>[7666d9272f4531e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7666d9272f4531e) marco.spasiano *November 25, 2020*
+
+>**Rifiuto Fattura elettronica Gazzetta Ufficiale (G.U. n° 262 del 22 ottobre 2020)  del decreto del 24 agosto 2020, n. 132, Ministero dell’Economia e delle Finanze.**
+>
+>[0d67bf80d2be0e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0d67bf80d2be0e8) marco.spasiano *November 24, 2020*
 
 >**Rifiuto Fattura elettronica Gazzetta Ufficiale (G.U. n° 262 del 22 ottobre 2020)  del decreto del 24 agosto 2020, n. 132, Ministero dell’Economia e delle Finanze.**
 >
@@ -383,6 +387,14 @@
 >**Update applicazione-parziale-del-disciplinare-art.-14-comma-2.rst**
 >
 >[8701305c35ea385](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8701305c35ea385) patriziavillani *November 13, 2020*
+
+
+## Release 6.2.72  -- _November 23, 2020_ 
+**Changes**
+
+>**Tolto messaggio di errore nel caso di più codici anagrafico recuperati con stesso codici fiscale e/o partita IVA per la gestione del Gruppo IVA**
+>
+>[26009a6d41f596e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/26009a6d41f596e) gianfranco.gasparro *November 23, 2020*
 
 
 ## Release 6.2.71  -- _November 16, 2020_ 
