@@ -1,3 +1,11 @@
+## Release 6.2.74  -- _November 26, 2020_ 
+**Changes**
+
+>**Sbloccati tipi TD_24 e TD_25 dopo la comunicazione di Paolo Collacchi**
+>
+>[75e0ca0094a2d21](https://github.com/consiglionazionaledellericerche/sigla-main/commit/75e0ca0094a2d21) gianfranco.gasparro *November 26, 2020*
+
+
 ## Release 6.2.73  -- _November 26, 2020_ 
 **Changes**
 
