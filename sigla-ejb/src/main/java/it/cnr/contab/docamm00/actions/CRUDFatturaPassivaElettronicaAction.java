@@ -350,12 +350,6 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
             DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
             BigDecimal tot_riepilogo = BigDecimal.ZERO;
             if (!bulk.isRifiutata() && bulk.isFromInizializzaBulkPerModifica()) {
-                if (bulk.isTipoDocumentoNonGestitoFatturazioneElettronica()) {
-                    throw new ApplicationMessageFormatException(
-                            "Il documento ha un tipo '{0}' che non è possibile gestire. E' possibile solo rifiutare il documento.",
-                            DocumentoEleTestataBulk.tiTipoDocumentoKeys.get(bulk.getTipoDocumento())
-                    );
-                }
                 if (bulk.isTipoDocumentoInAttesaFatturazioneElettronica()) {
                     throw new ApplicationMessageFormatException(
                             "Il documento ha un tipo '{0}' che non è possibile gestire. Contattare l'helpdesk per maggiori chiarimenti.",

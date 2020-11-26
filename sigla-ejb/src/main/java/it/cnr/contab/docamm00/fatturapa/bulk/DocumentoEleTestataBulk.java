@@ -53,9 +53,8 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 
 	public static final List<String> TIPI_DOCUMENTO_IN_ATTESA_FATTURAZIONE_ELETTRONICA = Arrays.asList(TipoDocumentoType.TD_16.value(),TipoDocumentoType.TD_17.value(),
 			TipoDocumentoType.TD_18.value(), TipoDocumentoType.TD_19.value(), TipoDocumentoType.TD_21.value(), TipoDocumentoType.TD_22.value(),
-			TipoDocumentoType.TD_23.value(), TipoDocumentoType.TD_25.value(), TipoDocumentoType.TD_26.value(),
+			TipoDocumentoType.TD_23.value(), TipoDocumentoType.TD_26.value(),
 			TipoDocumentoType.TD_27.value());
-	public static final List<String> TIPI_DOCUMENTO_NON_GESTITI_IN_FATTURAZIONE_ELETTRONICA = Arrays.asList(TipoDocumentoType.TD_24.value());
 	public static final String STATO_CONSEGNA_ESITO_CONSEGNATO_SDI = "CON";
 	public static final String STATO_CONSEGNA_ESITO_SCARTATO_SDI = "SCA";
 	public static final java.util.Dictionary<String, String> statoNotificaEsitoKeys = new OrderedHashtable();	
@@ -702,12 +701,6 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 			else
 				return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && e.getImposta().compareTo(BigDecimal.ZERO)!=0 && 
 				  (e.getEsigibilitaIva()==null || !e.getEsigibilitaIva().equals("S"))).count()==0;
-		return false;
-	}
-	public boolean isTipoDocumentoNonGestitoFatturazioneElettronica() {
-		if (getTipoDocumento() != null && TIPI_DOCUMENTO_NON_GESTITI_IN_FATTURAZIONE_ELETTRONICA.contains(getTipoDocumento())){
-			return true;
-		}
 		return false;
 	}
 	public boolean isTipoDocumentoInAttesaFatturazioneElettronica() {
