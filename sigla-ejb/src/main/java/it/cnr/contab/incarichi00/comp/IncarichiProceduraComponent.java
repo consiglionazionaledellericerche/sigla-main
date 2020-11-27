@@ -1714,7 +1714,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		List<StorageObject> nodeAddAspect = new ArrayList<StorageObject>();
 		ContrattiService contrattiService = SpringUtil.getBean(ContrattiService.class);
 		try{
-		    Optional.ofNullable(contrattiService.getStorageObjectByPath(incarico_procedura.getCMISFolder().getCMISPath()))
+		    Optional.ofNullable(contrattiService.getStorageObjectByPath(incarico_procedura.
+					getCMISFolder().getCMISPath()))
                     .filter(storageObject ->
                             storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(
                                     StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value()
