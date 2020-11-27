@@ -19,6 +19,7 @@ package it.cnr.contab.config00.bp;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -95,7 +96,7 @@ public class CRUDConfigAnagContrattoMasterBP extends CRUDConfigAnagContrattoBP {
 			ContrattoComponentSession comp = (ContrattoComponentSession)createComponentSession();
 			comp.modificaConBulk(context.getUserContext(), contratto);
 			if (storageObject != null){
-				contrattoService.removeConsumer(storageObject,"GROUP_CONTRATTI");
+				contrattoService.removeConsumer(storageObject, SIGLAGroups.GROUP_CONTRATTI.name());
 			}
 			edit(context,contratto);
 		}catch(it.cnr.jada.comp.ComponentException ex){

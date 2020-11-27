@@ -71,6 +71,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -1658,7 +1659,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				}
 				if (storageObject != null){
 					contrattoService.addAspect(storageObject, "P:sigla_contratti_aspect:stato_definitivo");
-					contrattoService.addConsumer(storageObject,"GROUP_CONTRATTI");
+					contrattoService.addConsumer(storageObject, SIGLAGroups.GROUP_CONTRATTI.name());
 					contrattoService.setInheritedPermission(
 							contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo)),
 							Boolean.FALSE);

@@ -23,6 +23,7 @@ import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.bilaterali00.bulk.Blt_visiteBulk;
 import it.cnr.contab.incarichi00.bulk.*;
 import it.cnr.contab.incarichi00.bulk.storage.*;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
@@ -1730,6 +1731,10 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
 					Optional<StorageObject> optStorage = Optional.ofNullable(contrattiService.getStorageObjectBykey(allegato.getCms_node_ref()));
+					if (optStorage.isPresent()) {
+						contrattiService.addConsumer(optStorage.get(), SIGLAGroups.GROUP_CONTRATTI.name());
+						contrattiService.addConsumer(optStorage.get(), SIGLAGroups.GROUP_INCARICHI.name());
+					}
 					optStorage.filter(storageObject ->
                                     !storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(
                                             StorageContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()

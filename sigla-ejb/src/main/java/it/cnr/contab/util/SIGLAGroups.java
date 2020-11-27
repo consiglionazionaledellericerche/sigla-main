@@ -18,5 +18,7 @@
 package it.cnr.contab.util;
 
 public enum SIGLAGroups {
-    GROUP_EMPPAY_GROUP
+    GROUP_EMPPAY_GROUP,
+    GROUP_CONTRATTI,
+    GROUP_INCARICHI
 }
