@@ -770,6 +770,9 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 
 	public void rifiutaFatturaConPEC(ActionContext context, DocumentoEleTestataBulk bulk, RifiutaFatturaBulk rifiutaFatturaBulk) throws BusinessProcessException {
 		try {
+			if (isDirty()) {
+				save(context);
+			}
 			TerzoBulk prestatore =
 					Optional.ofNullable(bulk.getDocumentoEleTrasmissione().getPrestatore())
 						.orElseThrow(() -> new ApplicationException("Valorizzare il terzo cedente/prestatore"));
@@ -883,7 +886,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 			}
 			setMessage("Comunicazione inviata correttamente.");
 			edit(context, oggettoBulk);
-		} catch (ComponentException | IOException | EmailException | BusyResourceException e) {
+		} catch (ComponentException | IOException | EmailException | BusyResourceException | ValidationException e) {
 			throw handleException(e);
 		}
 	}
