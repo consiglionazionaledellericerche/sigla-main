@@ -772,6 +772,7 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 		try {
 			if (isDirty()) {
 				save(context);
+				bulk = (DocumentoEleTestataBulk) getComponentSession().findByPrimaryKey(context.getUserContext(), bulk);
 			}
 			TerzoBulk prestatore =
 					Optional.ofNullable(bulk.getDocumentoEleTrasmissione().getPrestatore())
