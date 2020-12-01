@@ -1,3 +1,43 @@
+## Release 6.2.76  -- _December 01, 2020_ 
+**Changes**
+
+>**Eliminata la ricerca dello stato del documeno di variazione nel caso del CdS Ente**
+>
+>[b68be72dd5b22e2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b68be72dd5b22e2) marco.spasiano *December 01, 2020*
+
+
+## Release 6.2.75  -- _December 01, 2020_ 
+**Changes**
+
+>**Aggiunti permessi come Consumer ai gruppi INCARICHI e CONTRATTI alla creazione di una folder**
+>
+>[c0c3368c734d44a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c0c3368c734d44a) marco.spasiano *December 01, 2020*
+
+>**Aggiunti permessi come Consumer ai gruppi INCARICHI e CONTRATTI alla creazione di una folder**
+>
+>[825731d9ec6604e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/825731d9ec6604e) marco.spasiano *December 01, 2020*
+
+>**Aggiunti permessi come Consumer ai gruppi INCARICHI e CONTRATTI alla creazione di una folder**
+>
+>[7d6e2f1edd31dd7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7d6e2f1edd31dd7) marco.spasiano *December 01, 2020*
+
+>**Aggiunto salvataggio prima del rifiuto con PEC**
+>
+>[fa17577fb4c57ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fa17577fb4c57ba) marco.spasiano *December 01, 2020*
+
+>**Aggiunti permessi come Consumer ai gruppi INCARICHI e CONTRATTI alla creazione di una folder**
+>
+>[508e21d38186649](https://github.com/consiglionazionaledellericerche/sigla-main/commit/508e21d38186649) marco.spasiano *November 27, 2020*
+
+>**Rimosso filtro automatico in ricerca come non registrabile**
+>
+>[3766688730a38c9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3766688730a38c9) marco.spasiano *November 27, 2020*
+
+>**Add ACL to Incarchi file**
+>
+>[fe63e6233de95d8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fe63e6233de95d8) marco.spasiano *November 27, 2020*
+
+
 ## Release 6.2.74  -- _November 26, 2020_ 
 **Changes**
 
