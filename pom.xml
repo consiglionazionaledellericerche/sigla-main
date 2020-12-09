@@ -44,6 +44,7 @@
 		<spring.version>5.2.5.RELEASE</spring.version>
 		<jada.version>7.0.13</jada.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.directory>target</project.build.directory>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
 		<liquibase.version>3.5.3</liquibase.version>
