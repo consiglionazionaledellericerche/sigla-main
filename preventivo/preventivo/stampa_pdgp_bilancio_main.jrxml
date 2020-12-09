@@ -33,6 +33,9 @@
 	<parameter name="P_FONTE" class="java.lang.String">
 		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_TIPO_STAMPA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="P_NUM_LIV" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
 	</parameter>
@@ -1698,7 +1701,7 @@ ORDER BY peso_livello1, peso_livello2, CD_LIVELLO1, CD_LIVELLO2, CD_LIVELLO3, CD
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["PREVENTIVO FINANZIARIO " +
-($P{P_FONTE}.startsWith("DEC")?"DECISIONALE":"GESTIONALE")]]></textFieldExpression>
+($P{P_TIPO_STAMPA}.startsWith("DEC")?"DECISIONALE":"GESTIONALE")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField-184" style="VERB7" x="55" y="55" width="521" height="11" uuid="2d60c71d-837e-46fc-ac0b-9c504cac20aa"/>
