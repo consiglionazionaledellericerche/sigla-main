@@ -1,3 +1,19 @@
+## Release 6.2.78  -- _December 09, 2020_ 
+**Changes**
+
+>**FIX Stampa Bilancio**
+>
+>[4496d8a8d99c2a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4496d8a8d99c2a0) raffaele.pagano *December 09, 2020*
+
+
+## Release 6.2.77  -- _December 09, 2020_ 
+**Changes**
+
+>**Closed ISSUE #51**
+>
+>[b0ce7325d36b35d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b0ce7325d36b35d) marco.spasiano *December 09, 2020*
+
+
 ## Release 6.2.76  -- _December 01, 2020_ 
 **Changes**
 
