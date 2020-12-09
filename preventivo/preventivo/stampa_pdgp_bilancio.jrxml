@@ -33,6 +33,9 @@
 	<parameter name="P_FONTE" class="java.lang.String">
 		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="P_TIPO_STAMPA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ASSFIN"]]></defaultValueExpression>
+	</parameter>
 	<parameter name="P_NUM_LIV" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[new Integer(4)]]></defaultValueExpression>
 	</parameter>
@@ -101,11 +104,11 @@ AND   SUBSTR($P{P_FONTE},-3) = 'SCI']]>
 				<subreportParameter name="ROTTURA">
 					<subreportParameterExpression><![CDATA[$P{ROTTURA}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="DS_LIVELLO6S">
-					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6S}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO8S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8S}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DS_LIVELLO6S">
+					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO6S}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO4S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO4S}]]></subreportParameterExpression>
@@ -113,11 +116,11 @@ AND   SUBSTR($P{P_FONTE},-3) = 'SCI']]>
 				<subreportParameter name="DIR_IMAGE">
 					<subreportParameterExpression><![CDATA[$P{DIR_IMAGE}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="P_FONTE">
-					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO8E">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO8E}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="P_FONTE">
+					<subreportParameterExpression><![CDATA[$P{P_FONTE}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO2S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO2S}]]></subreportParameterExpression>
@@ -173,11 +176,14 @@ AND   SUBSTR($P{P_FONTE},-3) = 'SCI']]>
 				<subreportParameter name="DS_LIVELLO1E">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO1E}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="RIEPILOGO">
-					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
+				<subreportParameter name="P_TIPO_STAMPA">
+					<subreportParameterExpression><![CDATA[$P{P_TIPO_STAMPA}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO3E">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO3E}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="RIEPILOGO">
+					<subreportParameterExpression><![CDATA[$P{RIEPILOGO}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="DS_LIVELLO7S">
 					<subreportParameterExpression><![CDATA[$F{DS_LIVELLO7S}]]></subreportParameterExpression>
