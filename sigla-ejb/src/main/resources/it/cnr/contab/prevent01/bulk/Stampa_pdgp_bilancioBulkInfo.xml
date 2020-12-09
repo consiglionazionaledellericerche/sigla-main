@@ -130,8 +130,8 @@
 			parameterPosition="3"
 			parameterType="STRING"
 			paramNameJR="P_FONTE"
-			paramTypeJR="java.lang.String" />	
-		<printFieldProperty 
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty
 			name="nr_livello"
 			property="nr_livello"
 			parameterPosition="4"
@@ -141,10 +141,17 @@
 		<printFieldProperty 
 			name="riepilogo"
 			property="riepilogo"
-			parameterPosition="3"
+			parameterPosition="5"
 			parameterType="STRING"
 			paramNameJR="RIEPILOGO"
-			paramTypeJR="java.lang.String" />	
+			paramTypeJR="java.lang.String" />
+		<printFieldProperty
+			name="ti_stampa"
+			property="ti_stampa"
+			parameterPosition="6"
+			parameterType="STRING"
+			paramNameJR="P_TIPO_STAMPA"
+			paramTypeJR="java.lang.String" />
 	</printForm>
 
 	<printForm
