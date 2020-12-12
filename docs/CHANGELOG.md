@@ -1,3 +1,11 @@
+## Release 6.2.79  -- _December 12, 2020_ 
+**Changes**
+
+>**Eliminata la ricerca dello stato del documeno di variazione per tutti i CdS**
+>
+>[2eabb9c38fad8ca](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2eabb9c38fad8ca) marco.spasiano *December 12, 2020*
+
+
 ## Release 6.2.78  -- _December 09, 2020_ 
 **Changes**
 
