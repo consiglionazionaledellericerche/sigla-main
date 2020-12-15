@@ -64,7 +64,7 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
         UserContext userContext = new WSUserContext("SIOPEPLUS", null,
                 new Integer(Calendar.getInstance().get(Calendar.YEAR)),
                 null, null, null);
-        boolean annullaMandati = Boolean.FALSE, annullaReversali = Boolean.FALSE;
+        boolean annullaMandati = Boolean.FALSE, annullaReversali = Boolean.FALSE, riportaMandatoDaFirmare = Boolean.FALSE;
         try {
             annullaMandati =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
@@ -76,6 +76,17 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
                     ))
                             .map(s -> Boolean.valueOf(s))
                             .orElse(Boolean.FALSE);
+            riportaMandatoDaFirmare =
+                    Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
+                            userContext,
+                            Calendar.getInstance().get(Calendar.YEAR),
+                            "*",
+                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_RIPORTA_MANDATO_DAFIRMARE
+                    ))
+                            .map(s -> Boolean.valueOf(s))
+                            .orElse(Boolean.FALSE);
+
             annullaReversali =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
                             userContext,
@@ -124,7 +135,7 @@ public class MessaggiSiopePlusResource implements MessaggiSiopePlusLocal {
                         Optional.ofNullable(dataA)
                                 .map(s -> LocalDateTime.parse(dataA, DateTimeFormatter.ISO_DATE_TIME))
                                 .orElse(null),
-                        download, annullaMandati, annullaReversali
+                        download, annullaMandati, annullaReversali, riportaMandatoDaFirmare
                 );
                 break;
             }

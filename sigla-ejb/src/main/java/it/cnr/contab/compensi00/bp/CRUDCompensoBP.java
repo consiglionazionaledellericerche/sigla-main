@@ -34,6 +34,7 @@ import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.ejb.RiportoDocAmmComponentSession;
 import it.cnr.contab.doccont00.bp.IDefferedUpdateSaldiBP;
 import it.cnr.contab.doccont00.bp.IValidaDocContBP;
+import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorio_annoBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
@@ -41,6 +42,7 @@ import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bp.GestioneUtenteBP;
 import it.cnr.contab.util.Utility;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
@@ -1762,4 +1764,25 @@ public class CRUDCompensoBP extends it.cnr.jada.util.action.SimpleCRUDBP impleme
         return super.isInputReadonly();
     }
 
+    @Override
+    public boolean isInputReadonlyFieldName(String fieldName) {
+        return Optional.ofNullable(fieldName)
+                .filter(s -> s.equalsIgnoreCase("modalita_pagamento") || s.equalsIgnoreCase("listaBanche"))
+                .flatMap(s -> Optional.ofNullable(getModel()))
+                .filter(CompensoBulk.class::isInstance)
+                .map(CompensoBulk.class::cast)
+                .flatMap(compensoBulk -> Optional.ofNullable(compensoBulk.getDocContPrincipale()))
+                .flatMap(v_doc_cont_compBulk -> Optional.ofNullable(v_doc_cont_compBulk.getManRev()))
+                .filter(MandatoBulk.class::isInstance)
+                .map(MandatoBulk.class::cast)
+                .map(mandatoBulk -> {
+                    return !(Optional.ofNullable(mandatoBulk.getEsitoOperazione())
+                            .filter(s -> s.equalsIgnoreCase(EsitoOperazione.NON_ACQUISITO.value()))
+                            .isPresent() &&
+                    Optional.ofNullable(mandatoBulk.getStato_trasmissione())
+                            .filter(s -> s.equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO))
+                            .isPresent());
+                })
+                .orElse(super.isInputReadonlyFieldName(fieldName));
+    }
 }

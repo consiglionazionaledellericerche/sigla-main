@@ -1664,7 +1664,8 @@ public Forward doTab(ActionContext context,String tabName,String pageName) {
 			if ("tabCompenso".equalsIgnoreCase(bp.getTab(tabName))){
 				compenso.validaTestata();
 			}
-			if ("tabCompensoTerzo".equalsIgnoreCase(bp.getTab(tabName))){
+			if ("tabCompensoTerzo".equalsIgnoreCase(pageName)){
+				basicDoLoadDocContAssociati(context);
 			}
 			if ("tabCompensoDatiLiquidazione".equalsIgnoreCase(bp.getTab(tabName))) {
 			}

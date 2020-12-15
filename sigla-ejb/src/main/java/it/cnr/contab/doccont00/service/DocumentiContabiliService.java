@@ -873,7 +873,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .findAny().isPresent();
     }
 
-    private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali) throws Exception {
+    private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali, boolean riportaMandatoDaFirmare) throws Exception {
         final MessaggioXML<MessaggiEsitoApplicativo> messaggioXML = ordinativiSiopePlusService.getLocation(risultato.getLocation(), MessaggiEsitoApplicativo.class);
         final MessaggiEsitoApplicativo messaggiEsitoApplicativo = messaggioXML.getObject();
         final List<Object> esitoReversaliOrEsitoMandati = messaggiEsitoApplicativo.getEsitoReversaliOrEsitoMandati();
@@ -920,6 +920,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                     .map(StringBuffer::toString)
                                     .orElse(null)
                     );
+                    if (!annullaMandati && riportaMandatoDaFirmare && mandato.getEsitoOperazione().equalsIgnoreCase(EsitoOperazione.NON_ACQUISITO.value())) {
+                        mandato.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+                    }
                     mandato.setToBeUpdated();
                     try {
                         SIOPEPlusEsitoBulk siopePlusEsitoBulk = new SIOPEPlusEsitoBulk();
@@ -1033,8 +1036,16 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
                             mandatoComponentSession.annullaMandato(userContext, mandatoBulk, true);
                         } catch (ComponentException | RemoteException e) {
-                            _ex.set(e);
                             logger.error("SIOPE+ ANNULLA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
+                            if (riportaMandatoDaFirmare && mandatoBulk.getEsitoOperazione().equalsIgnoreCase(EsitoOperazione.NON_ACQUISITO.value())) {
+                                mandatoBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+                                mandatoBulk.setToBeUpdated();
+                                try {
+                                    crudComponentSession.modificaConBulk(userContext, mandatoBulk);
+                                } catch (ComponentException | RemoteException ex) {
+                                    logger.error("SIOPE+ AGGIORNA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
+                                }
+                            }
                         }
                     });
         }
@@ -1179,7 +1190,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 });
     }
 
-    public Stream<Risultato> downloadMessaggiEsitoApplicativo(LocalDateTime dataDa, LocalDateTime dataA, Boolean download, boolean annullaMandati, boolean annullaReversali) {
+    public Stream<Risultato> downloadMessaggiEsitoApplicativo(
+            LocalDateTime dataDa,
+            LocalDateTime dataA,
+            Boolean download,
+            boolean annullaMandati,
+            boolean annullaReversali,
+            boolean riportaMandatoDaFirmare
+    ) {
         final List<Risultato> allMessaggi = ordinativiSiopePlusService.getAllMessaggi(Esito.ESITOAPPLICATIVO,
                 dataDa, dataA, download, null);
         logger.info("SIOPE+ Lista Esito Applicativo: {}", allMessaggi);
@@ -1190,7 +1208,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     try {
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
                                 new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato));
-                        messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali);
+                        messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali, riportaMandatoDaFirmare);
                         logger.info("SIOPE+ ESITO APPLICATIVO elaborato risultato: {}", risultato);
 
                         siopePlusRisultatoBulk.setToBeDeleted();
@@ -1208,9 +1226,21 @@ public class DocumentiContabiliService extends StoreService implements Initializ
      */
     public void messaggiSiopeplus(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
         boolean annullaMandati = Boolean.FALSE,
-                annullaReversali = Boolean.FALSE;
+                annullaReversali = Boolean.FALSE,
+                riportaMandatoDaFirmare = Boolean.FALSE;
         String userForGiornaleDiCassa = SIOPEPLUS;
         try {
+            riportaMandatoDaFirmare =
+                    Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
+                            userContext,
+                            Calendar.getInstance().get(Calendar.YEAR),
+                            "*",
+                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_RIPORTA_MANDATO_DAFIRMARE
+                    ))
+                            .map(s -> Boolean.valueOf(s))
+                            .orElse(Boolean.FALSE);
+
             annullaMandati =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
                             userContext,
@@ -1265,7 +1295,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             break;
                         }
                         case ESITOAPPLICATIVO: {
-                            messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali);
+                            messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali, riportaMandatoDaFirmare);
                             break;
                         }
                         case GIORNALEDICASSA: {
@@ -1300,7 +1330,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         downloadMessaggiEsito(dataDa, dataA, download)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
-        downloadMessaggiEsitoApplicativo(dataDa, dataA, download, annullaMandati, annullaReversali)
+        downloadMessaggiEsitoApplicativo(dataDa, dataA, download, annullaMandati, annullaReversali, riportaMandatoDaFirmare)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
         downloadGiornalieraDiCassa(dataDa, dataA, download, userForGiornaleDiCassa)

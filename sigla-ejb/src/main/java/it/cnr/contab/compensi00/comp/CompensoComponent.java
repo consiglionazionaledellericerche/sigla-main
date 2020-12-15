@@ -130,11 +130,9 @@ import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashMap;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
@@ -4032,9 +4030,43 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		validaContratto(userContext, compenso);
 
 		controlliCig(compenso);
-		
+
+		aggiornaModalitaPagamentoMandatoAssociato(userContext, compenso);
+
 		return compenso;
 
+	}
+
+	private void aggiornaModalitaPagamentoMandatoAssociato(UserContext userContext, CompensoBulk compenso) throws ComponentException {
+		try {
+			BulkHome home = getHome(userContext, Mandato_rigaIBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, compenso.getCd_cds());
+			sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, compenso.getCd_unita_organizzativa());
+			sql.addClause(FindClause.AND, "esercizio_doc_amm", SQLBuilder.EQUALS, compenso.getEsercizio());
+			sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, Numerazione_doc_ammBulk.TIPO_COMPENSO);
+			sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, compenso.getPg_compenso());
+			List<Mandato_rigaIBulk> result = home.fetchAll(sql);
+			getHomeCache(userContext).fetchAll(userContext);
+			result
+					.stream()
+					.filter(mandato_rigaIBulk -> {
+						return !mandato_rigaIBulk.getModalita_pagamento().getRif_modalita_pagamento().equalsByPrimaryKey(compenso.getModalitaPagamento()) ||
+								!mandato_rigaIBulk.getBanca().equalsByPrimaryKey(compenso.getBanca());
+					})
+					.forEach(mandato_rigaIBulk -> {
+						mandato_rigaIBulk.getModalita_pagamento().setRif_modalita_pagamento(compenso.getModalitaPagamento());
+						mandato_rigaIBulk.setBanca(compenso.getBanca());
+						mandato_rigaIBulk.setToBeUpdated();
+						try {
+							home.update(mandato_rigaIBulk, userContext);
+						} catch (PersistencyException e) {
+							throw new DetailedRuntimeException(e);
+						}
+					});
+		} catch (PersistencyException _ex) {
+			throw handleException(_ex);
+		}
 	}
 
 	public void controlliCig(CompensoBulk compenso) throws ApplicationException {

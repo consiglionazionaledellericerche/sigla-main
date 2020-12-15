@@ -136,6 +136,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String SK_ATTIVO_SIOPEPLUS = "ATTIVO_SIOPEPLUS";
 	public final static String SK_ANNULLA_MANDATI = "ANNULLA_MANDATI";
 	public final static String SK_ANNULLA_REVERSALI = "ANNULLA_REVERSALI";
+	public final static String SK_RIPORTA_MANDATO_DAFIRMARE = "RIPORTA_MANDATO_DAFIRMARE";
 
 	public final static String PK_AGGIORNAMENTO_IMPEGNO_DA_ORDINE = "AGGIORNAMENTO IMPEGNO DA ORDINE";
 	public final static String IMPEGNO_CHIUSURA_FORZATA_A_RESIDUO = "IMPEGNO CHIUSURA FORZATA A RESIDUO";
