@@ -1,5 +1,9 @@
-## Release 6.2.79  -- _December 12, 2020_ 
+## Release 6.2.80  -- _December 15, 2020_ 
 **Changes**
+
+>**Aggiunta la possibilità di cambiare la modalità di pagamento ai compensi associati a mandati non acuisiti, riportato il mandato il stato trasmissione emesso per i mandati non acquisiti.**
+>
+>[bdfbde8b7e0f350](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bdfbde8b7e0f350) marco.spasiano *December 15, 2020*
 
 >**Eliminata la ricerca dello stato del documeno di variazione per tutti i CdS**
 >
