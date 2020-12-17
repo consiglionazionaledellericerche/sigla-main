@@ -283,7 +283,8 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
             try {
                 CompoundFindClause compoundFindClause = new CompoundFindClause();
                 compoundFindClause.addClause(FindClause.AND, "statoDocumento", SQLBuilder.EQUALS, StatoDocumentoEleEnum.DA_STORNARE.name());
-				compoundFindClause.addClause(FindClause.AND, "documentoEleTrasmissione.prestatore", SQLBuilder.EQUALS, bulk.getDocumentoEleTrasmissione().getPrestatore());
+				compoundFindClause.addClause(FindClause.AND, "documentoEleTrasmissione.prestatore", SQLBuilder.EQUALS,
+                        bulk.getDocumentoEleTrasmissione().getPrestatore());
                 compoundFindClause.addClause(FindClause.AND, "importoDocumento", SQLBuilder.EQUALS, bulk.getImportoDocumento().abs());
                 it.cnr.jada.util.RemoteIterator ri = fatturaPassivaElettronicaBP.createComponentSession()
                         .cerca(context.getUserContext(), compoundFindClause, new DocumentoEleTestataBulk());

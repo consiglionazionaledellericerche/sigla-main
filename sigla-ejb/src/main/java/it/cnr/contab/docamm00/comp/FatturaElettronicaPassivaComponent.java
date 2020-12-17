@@ -629,6 +629,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSdI);
+		sql.addClause(FindClause.AND, "cmisNodeRef", SQLBuilder.ISNOTNULL, null);
 		try {
 			return home.fetchAll(sql);
 		} catch (PersistencyException e) {
