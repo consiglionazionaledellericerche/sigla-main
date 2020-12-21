@@ -1,5 +1,17 @@
-## Release 6.2.80  -- _December 15, 2020_ 
+## Release 6.2.82  -- _December 21, 2020_ 
 **Changes**
+
+>**FIX collega Nota di Credito Elettronica a Fattura**
+>
+>[9a86fa21c468200](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a86fa21c468200) marco.spasiano *December 21, 2020*
+
+
+## Release 6.2.81  -- _December 18, 2020_ 
+**Changes**
+
+>**FIX scarica fattura elettronica controllata l'esistenza della fattura sulla base documentale**
+>
+>[4a92fad33067cff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4a92fad33067cff) marco.spasiano *December 17, 2020*
 
 >**Aggiunta la possibilità di cambiare la modalità di pagamento ai compensi associati a mandati non acuisiti, riportato il mandato il stato trasmissione emesso per i mandati non acquisiti.**
 >
