@@ -31,6 +31,7 @@ import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleIvaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.RifiutaFatturaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.StatoDocumentoEleEnum;
+import it.cnr.contab.ordmag.ordini.bulk.EvasioneOrdineRigaBulk;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.jada.action.*;
@@ -52,7 +53,9 @@ import javax.ejb.RemoveException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
     private static final long serialVersionUID = 1L;
@@ -242,9 +245,16 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
         HookForward caller = (HookForward) context.getCaller();
         CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
         DocumentoEleTestataBulk nota = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
-        Optional<DocumentoEleTestataBulk> fattura = Optional.ofNullable(caller.getParameter("selezione"))
-                .filter(DocumentoEleTestataBulk.class::isInstance)
-                .map(DocumentoEleTestataBulk.class::cast);
+        Optional<DocumentoEleTestataBulk> fattura = Optional.ofNullable(caller.getParameter("selectedElements"))
+                .filter(List.class::isInstance)
+                .map(List.class::cast)
+                .filter(list -> !list.isEmpty())
+                .map(list ->
+                        list.stream()
+                                .filter(DocumentoEleTestataBulk.class::isInstance)
+                                .map(DocumentoEleTestataBulk.class::cast)
+                ).orElse(Stream.empty())
+                .findAny();
         if (fattura.isPresent()) {
             fatturaPassivaElettronicaBP.collegaNotaFattura(context, fattura.get(), nota);
         }
