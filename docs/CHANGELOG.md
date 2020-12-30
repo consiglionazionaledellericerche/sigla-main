@@ -1,3 +1,11 @@
+## Release 6.2.83  -- _December 30, 2020_ 
+**Changes**
+
+>**Aggiunto filtro sui codici IVA nella registrazione della fattura in base alla natura presente sul documento elettronico**
+>
+>[d0a68ba3a6b99b6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d0a68ba3a6b99b6) marco.spasiano *December 30, 2020*
+
+
 ## Release 6.2.82  -- _December 21, 2020_ 
 **Changes**
 
