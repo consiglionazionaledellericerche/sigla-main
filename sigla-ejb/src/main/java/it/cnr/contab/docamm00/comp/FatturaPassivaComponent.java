@@ -5791,7 +5791,18 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         				sql.addSQLClause("AND", "CD_VOCE_IVA", sql.EQUALS, voceIva.getCd_voce_iva());
         		}
         }
-        		 
+        Optional<DocumentoEleTestataBulk> documentoEleTestataBulk = Optional.ofNullable(dettaglio.getFattura_passiva())
+                .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()));
+        if (documentoEleTestataBulk.isPresent()) {
+            sql.openParenthesis(FindClause.AND);
+            documentoEleTestataBulk.get()
+                    .getDocEleIVAColl()
+                    .stream()
+                    .forEach(documentoEleIvaBulk -> {
+                        sql.addSQLClause(FindClause.OR, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
+                    });
+            sql.closeParenthesis();
+        }
         sql.addClause(clauses);
         return sql;
     }
