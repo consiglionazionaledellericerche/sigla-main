@@ -126,10 +126,14 @@ BEGIN
                                  nvl(case when a.esercizio = a.esercizio_res
                                           then NVL (im_stanz_iniziale_a1, 0) + NVL (variazioni_piu, 0) - NVL (variazioni_meno, 0) 
                                                - NVL (im_mandati_reversali_pro, 0)
-                                          else NVL (im_stanz_res_improprio, 0) 
-                                               + NVL (var_piu_stanz_res_imp, 0) - NVL (var_meno_stanz_res_imp, 0 ) 
-                                               + NVL (im_obbl_res_pro, 0) 
-                                               - NVL (im_mandati_reversali_pro, 0) - NVL (im_mandati_reversali_imp, 0)
+                                          else case when e.descrizione='CNR'
+                                                    then NVL (im_stanz_res_improprio, 0)
+                                                         + NVL (var_piu_stanz_res_imp, 0) - NVL (var_meno_stanz_res_imp, 0 )
+                                                         + NVL (im_obbl_res_pro, 0)
+                                                         - NVL (im_mandati_reversali_pro, 0) - NVL (im_mandati_reversali_imp, 0)
+                                                    else NVL (im_obbl_res_pro, 0)
+                                                         - NVL (im_mandati_reversali_pro, 0) - NVL (im_mandati_reversali_imp, 0)
+                                                    end
                                           end, 0) IM_RESIDUO_AC,
                                  nvl(case when a.esercizio = a.esercizio_res
                                           then NVL (im_obbl_acc_comp, 0) - NVL (im_mandati_reversali_pro, 0)
@@ -137,11 +141,13 @@ BEGIN
                                                - NVL (im_mandati_reversali_pro, 0) - NVL (im_mandati_reversali_imp, 0)
                                           end, 0) IM_RESIDUO_AC_SOLO_IMP
                           from voce_f_saldi_cdr_linea a,
-                               v_linea_attivita_valida linea
+                               v_linea_attivita_valida linea,
+                               parametri_ente e
                           where a.esercizio = P_ESERCIZIO-1
                           and   a.esercizio = linea.esercizio (+)
                           and   a.cd_centro_responsabilita = linea.cd_centro_responsabilita (+)
-                          and   a.cd_linea_attivita = linea.cd_linea_attivita (+))
+                          and   a.cd_linea_attivita = linea.cd_linea_attivita (+)
+                          and   e.attivo = 'Y')
                    group by CD_CENTRO_RESPONSABILITA, TI_GESTIONE, CD_ELEMENTO_VOCE, CD_PROGRAMMA, CD_MISSIONE) loop
         Declare
           im_residuo saldi_stanziamenti.im_stanz_iniziale_a1%type;
@@ -273,14 +279,19 @@ BEGIN
                                       AND   TI_GESTIONE_OLD = A.TI_GESTIONE
                                       AND   CD_ELEMENTO_VOCE_OLD = A.CD_ELEMENTO_VOCE), A.CD_ELEMENTO_VOCE) CD_ELEMENTO_VOCE,
                                  linea.cd_programma, linea.cd_missione, 
-                                 NVL (im_stanz_res_improprio, 0) + NVL (im_obbl_res_pro, 0) IM_RESIDUO_AP
+                                 case when e.descrizione='CNR'
+                                      then NVL (im_stanz_res_improprio, 0) + NVL (im_obbl_res_pro, 0)
+                                      else NVL (im_obbl_res_pro, 0)
+                                 end IM_RESIDUO_AP
                           from voce_f_saldi_cdr_linea a,
-                               v_linea_attivita_valida linea
+                               v_linea_attivita_valida linea,
+                               parametri_ente e
                           where a.esercizio = P_ESERCIZIO-1
                           and   a.esercizio_res < a.esercizio
                           and   a.esercizio = linea.esercizio (+)
                           and   a.cd_centro_responsabilita = linea.cd_centro_responsabilita (+)
-                          and   a.cd_linea_attivita = linea.cd_linea_attivita (+))
+                          and   a.cd_linea_attivita = linea.cd_linea_attivita (+)
+                          and   e.attivo = 'Y')
                    group by CD_CENTRO_RESPONSABILITA, TI_GESTIONE, CD_ELEMENTO_VOCE, CD_PROGRAMMA, CD_MISSIONE) loop
       
           Update PDG_DATI_STAMPA_BILANCIO_TEMP
