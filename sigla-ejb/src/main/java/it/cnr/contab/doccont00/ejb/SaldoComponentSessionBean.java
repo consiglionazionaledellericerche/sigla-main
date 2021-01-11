@@ -510,10 +510,10 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		}
 	}
 
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk) throws ComponentException,javax.ejb.EJBException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(userContext,componentObj);
 		try {
-			componentObj.checkBloccoDisponibilitaResidue(userContext,cdr,cdLineaAttivita,elementoVoceBulk);
+			componentObj.checkBloccoImpegniNatfin(userContext,cdr,cdLineaAttivita,elementoVoceBulk,tipoObbligazione);
 			component_invocation_succes(userContext,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(userContext,componentObj);
@@ -528,10 +528,10 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		}
 	}
 
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk) throws ComponentException,javax.ejb.EJBException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(userContext,componentObj);
 		try {
-			componentObj.checkBloccoDisponibilitaResidue(userContext,workpackageBulk,elementoVoceBulk);
+			componentObj.checkBloccoImpegniNatfin(userContext,workpackageBulk,elementoVoceBulk,tipoObbligazione);
 			component_invocation_succes(userContext,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(userContext,componentObj);
@@ -546,10 +546,10 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		}
 	}
 
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,javax.ejb.EJBException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(userContext,componentObj);
 		try {
-			componentObj.checkBloccoDisponibilitaResidue(userContext,variazione);
+			componentObj.checkBloccoImpegniNatfin(userContext,variazione);
 			component_invocation_succes(userContext,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(userContext,componentObj);

@@ -552,7 +552,7 @@ public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserCon
 		}
 	}
 }
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
 			invoke("checkBloccoDisponibilitaResidue",new Object[] {
 					userContext,
@@ -571,7 +571,7 @@ public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserCon
 			}
 		}
 	}
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
 			invoke("checkBloccoDisponibilitaResidue",new Object[] {
 					userContext,
@@ -589,7 +589,7 @@ public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserCon
 			}
 		}
 	}
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, Var_stanz_resBulk variazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, Var_stanz_resBulk variazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
 		try {
 			invoke("checkBloccoDisponibilitaResidue",new Object[] {
 					userContext,

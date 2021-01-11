@@ -287,7 +287,7 @@ begin
   						    GG_DEROGA_OBBL_RES_PRG_SCAD,
   						    FL_COMUNICA_PAGAMENTI,
   						    FL_LIMITE_COMPETENZA,
-  						    FL_LIMITE_RESIDUI_IMPROPRI)
+  						    BLOCCO_IMPEGNI_NATFIN)
 			values (aEs,
 				aElVoce.TI_APPARTENENZA,
 				aElVoce.TI_GESTIONE,
@@ -338,7 +338,7 @@ begin
   				aElVoce.GG_DEROGA_OBBL_RES_PRG_SCAD,
   				aElVoce.FL_COMUNICA_PAGAMENTI,
   				aElVoce.FL_LIMITE_COMPETENZA,
-  				aElVoce.FL_LIMITE_RESIDUI_IMPROPRI);
+  				aElVoce.BLOCCO_IMPEGNI_NATFIN);
 		exception when DUP_VAL_ON_INDEX then
 			ibmutl200.LOGWAR(aPgEsec,'ELEMENTO_VOCE con PK('||aEs||', '
 					||aElVoce.TI_APPARTENENZA||', '
@@ -1507,7 +1507,7 @@ begin
   						    GG_DEROGA_OBBL_RES_PRG_SCAD,
                             FL_COMUNICA_PAGAMENTI,
                             FL_LIMITE_COMPETENZA,
-                            FL_LIMITE_RESIDUI_IMPROPRI)
+                            BLOCCO_IMPEGNI_NATFIN)
 			values (aEsDest,
 				aElVoce.TI_APPARTENENZA,
 				aElVoce.TI_GESTIONE,
@@ -1558,7 +1558,7 @@ begin
   				aElVoce.GG_DEROGA_OBBL_RES_PRG_SCAD,
                 aElVoce.FL_COMUNICA_PAGAMENTI,
                 aElVoce.FL_LIMITE_COMPETENZA,
-                aElVoce.FL_LIMITE_RESIDUI_IMPROPRI
+                aElVoce.BLOCCO_IMPEGNI_NATFIN
   				);
 		exception when DUP_VAL_ON_INDEX then
 			ibmutl200.LOGWAR(aPgEsec,'ELEMENTO_VOCE con PK('||aEsDest||', '
@@ -2213,7 +2213,7 @@ dbms_output.put_line('0014');
   						   CD_DIPARTIMENTO,
   						   FL_RIACCERTAMENTO,
   						   FL_RIOBBLIGAZIONE,
-  						   FL_LIMITE_RESIDUI_IMPROPRI,
+  						   FL_BLOCCO_IMPEGNI_NATFIN,
                            ABIL_PROGETTO_STRORG)
 			 select aCds.cd_unita_organizzativa,
 			 	aEsDest,
@@ -2250,7 +2250,7 @@ dbms_output.put_line('0014');
   				cd_dipartimento,
   				FL_RIACCERTAMENTO,
   				FL_RIOBBLIGAZIONE,
-  				FL_LIMITE_RESIDUI_IMPROPRI,
+  				FL_BLOCCO_IMPEGNI_NATFIN,
                 ABIL_PROGETTO_STRORG
 			 from parametri_cds
 			 where CD_CDS = aCds.cd_unita_organizzativa

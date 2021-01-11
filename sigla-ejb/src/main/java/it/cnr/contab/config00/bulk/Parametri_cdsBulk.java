@@ -75,7 +75,7 @@ public class Parametri_cdsBulk extends Parametri_cdsBase {
 		setFl_approva_var_pdg(new Boolean( false ) );
 		setFl_approva_var_stanz_res(new Boolean( false ) );
 		setFl_blocco_iban(new Boolean(false));
-		setFl_limite_residui_impropri(Boolean.FALSE);
+		setFl_blocco_impegni_natfin(Boolean.FALSE);
 		return this;
 	}
 	

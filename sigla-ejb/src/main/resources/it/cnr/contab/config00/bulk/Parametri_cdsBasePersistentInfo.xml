@@ -222,8 +222,8 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="FL_LIMITE_RESIDUI_IMPROPRI"
-			propertyName="fl_limite_residui_impropri"
+			columnName="FL_BLOCCO_IMPEGNI_NATFIN"
+			propertyName="fl_blocco_impegni_natfin"
 			sqlTypeName="CHAR"
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
@@ -298,7 +298,7 @@
 	<persistentProperty
 		name="fl_riobbligazione" />
 	<persistentProperty
-		name="fl_limite_residui_impropri" />
+		name="fl_blocco_impegni_natfin" />
 	<persistentProperty
 		name="abil_progetto_strorg" />
 

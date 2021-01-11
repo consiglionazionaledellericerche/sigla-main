@@ -3675,4 +3675,50 @@ TRASPORTO_AEREO"/>
 
     </changeSet>
 
+    <changeSet author="raffaele.pagano" id="inserimento-privilegio-sblocco-impegni">
+        <insert tableName="privilegio">
+            <column name="cd_privilegio" type="STRING" value="SBLIMP"/>
+            <column name="ds_privilegio" type="STRING" value="Abilitato alla creazione/modifica degli impegni anche in caso di blocco."/>
+            <column name="ti_privilegio" type="STRING" value="C"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-elemento-voce-add-column-blocco-impegni-natfin">
+        <addColumn tableName="elemento_voce">
+            <column name="blocco_impegni_natfin" remarks="Blocco impegni per natura e finanziamento sulla base dei valori Configurazione_cnrBulk.PK_BLOCCO_RESIDUI e Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO - Dominio (
+                'C' = Solo Competenza,
+                'R' = Solo Residui,
+                'A' = Competenza/Residui,
+                'N' = Nessuno)" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="update-column-blocco-impegni-table-elemento-voce">
+        <sql>
+            update elemento_voce
+            set blocco_impegni_natfin = 'N';
+        </sql>
+        <sql>
+            update elemento_voce
+            set blocco_impegni_natfin = 'R'
+            where FL_LIMITE_RESIDUI_IMPROPRI = 'Y';
+        </sql>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-elemento-voce-modify-column-blocco-impegni-natfin">
+        <addNotNullConstraint columnName="blocco_impegni_natfin" tableName="elemento_voce" columnDataType="CHAR(1)"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="drop-column-limite-residui-impropri-table-elemento-voce">
+        <dropColumn tableName="elemento_voce" columnName="fl_limite_residui_impropri"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="rename-column-limite-residui-impropri-table-parametri-cds">
+        <renameColumn oldColumnName="fl_limite_residui_impropri" newColumnName="fl_blocco_impegni_natfin" tableName="parametri_cds" remarks="Blocco impegni per natura e finanziamento sulla base dei valori Configurazione_cnrBulk.PK_BLOCCO_RESIDUI e Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO. Il flag lavora insieme a quello identico presente sull'elemento voce."/>
+    </changeSet>
 </databaseChangeLog>

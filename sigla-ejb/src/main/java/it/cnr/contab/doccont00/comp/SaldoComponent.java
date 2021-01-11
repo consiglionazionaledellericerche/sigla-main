@@ -42,6 +42,7 @@ import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_variazioniBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
@@ -2910,7 +2911,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								  .compareTo(BigDecimal.ZERO)>0)
 						.filter(el->el.getImpSpesaPositiviNetti()
 									  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
-									  .compareTo(el.getImpSpesaNegativiNetti()
+										  .compareTo(el.getImpSpesaNegativiNetti()
 											  	   .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO))>0)
 						.findFirst().ifPresent(el->{
 						throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
@@ -3517,7 +3518,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
 	//Controllo che restituisce errore.
 	//Se la variazione passa a definitivo controllo che non siano modificate combinazioni contabili per le quali sia attivo un blocco residui
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException {
 		try	{
 			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
 					findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
@@ -3530,8 +3531,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			Var_stanz_resHome varResHome = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
 			for (java.util.Iterator dett = varResHome.findAllVariazioniRiga(variazione).iterator(); dett.hasNext(); ) {
 				Var_stanz_res_rigaBulk rigaVar = (Var_stanz_res_rigaBulk) dett.next();
-				checkBloccoDisponibilitaResidue(userContext, rigaVar.getLinea_di_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_di_attivita().getCd_linea_attivita(),
-						rigaVar.getElemento_voce());
+				checkBloccoImpegniNatfin(userContext, rigaVar.getLinea_di_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_di_attivita().getCd_linea_attivita(),
+						rigaVar.getElemento_voce(), ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO);
 			}
 		} catch (PersistencyException e) {
 			throw new ComponentException(e);
@@ -3540,17 +3541,18 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		}
 	}
 
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk) throws ComponentException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException {
 		WorkpackageBulk workpackageBulk = ((WorkpackageHome) getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext, CNRUserContext.getEsercizio(userContext),
 					cdr, cdLineaAttivita);
-		checkBloccoDisponibilitaResidue(userContext, workpackageBulk, elementoVoceBulk);
+		checkBloccoImpegniNatfin(userContext, workpackageBulk, elementoVoceBulk, tipoObbligazione);
 	}
 
-	public void checkBloccoDisponibilitaResidue(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk) throws ComponentException {
+	public void checkBloccoImpegniNatfin(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException {
     	try {
-			if (elementoVoceBulk.getFl_limite_residui_impropri().equals(Boolean.TRUE)) {
+    		if ((ObbligazioneBulk.TIPO_COMPETENZA.equals(tipoObbligazione) && elementoVoceBulk.isAttivoBloccoResiduiNatfinCompetenza()) ||
+					((ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(tipoObbligazione) || ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(tipoObbligazione)) && elementoVoceBulk.isAttivoBloccoResiduiNatfinResidui())) {
 				Parametri_cdsBulk param_cds = (Parametri_cdsBulk)(getHome(userContext, Parametri_cdsBulk.class)).findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext)));
-				if (param_cds.getFl_limite_residui_impropri().equals(Boolean.TRUE)) {
+				if (param_cds.getFl_blocco_impegni_natfin().equals(Boolean.TRUE)) {
 					Configurazione_cnrBulk configBulk = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_BLOCCO_RESIDUI, Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO);
 					if (Optional.ofNullable(configBulk).isPresent()) {
 						Optional<String> optNatura = Optional.ofNullable(configBulk).map(Configurazione_cnrBulk::getVal01);

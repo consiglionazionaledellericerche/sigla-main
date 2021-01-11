@@ -65,7 +65,7 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 
 	private Boolean fl_riobbligazione;
 
-	private java.lang.Boolean fl_limite_residui_impropri;
+	private java.lang.Boolean fl_blocco_impegni_natfin;
 
 	// ABIL_PROGETTO_STRORG VARCHAR2(3)
 	private java.lang.String abil_progetto_strorg;
@@ -316,12 +316,12 @@ public class Parametri_cdsBase extends Parametri_cdsKey implements Keyed {
 		this.fl_riobbligazione = fl_riobbligazione;
 	}
 
-	public Boolean getFl_limite_residui_impropri() {
-		return fl_limite_residui_impropri;
+	public Boolean getFl_blocco_impegni_natfin() {
+		return fl_blocco_impegni_natfin;
 	}
 
-	public void setFl_limite_residui_impropri(Boolean fl_limite_residui_impropri) {
-		this.fl_limite_residui_impropri = fl_limite_residui_impropri;
+	public void setFl_blocco_impegni_natfin(Boolean fl_blocco_impegni_natfin) {
+		this.fl_blocco_impegni_natfin = fl_blocco_impegni_natfin;
 	}
 
 	public String getAbil_progetto_strorg() {
