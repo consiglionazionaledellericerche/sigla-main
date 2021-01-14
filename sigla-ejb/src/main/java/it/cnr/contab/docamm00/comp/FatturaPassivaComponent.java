@@ -5727,7 +5727,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throws ComponentException {
 
         Voce_ivaHome voceIvaHome = (Voce_ivaHome) getHome(userContext, Voce_ivaBulk.class);
-        it.cnr.jada.persistency.sql.SQLBuilder sql = voceIvaHome.createSQLBuilder();
+        it.cnr.jada.persistency.sql.SQLBuilder sql = voceIvaHome.createSQLBuilder(
+                Optional.ofNullable(dettaglio.getFattura_passiva())
+                    .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDt_fattura_fornitore()))
+                    .orElse(EJBCommonServices.getServerDate())
+        );
         sql.addSQLClause("AND", "ti_applicazione", sql.NOT_EQUALS, Voce_ivaBulk.VENDITE);
         //Richista 658 del 29/01/2004
 
