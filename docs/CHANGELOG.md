@@ -1,3 +1,19 @@
+## Release 6.2.84  -- _January 13, 2021_ 
+**Changes**
+
+>**FIX BUG on Aggiunto filtro sui codici IVA nella registrazione della fattura in base alla natura presente sul documento elettronico**
+>
+>[34b96ba37396381](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34b96ba37396381) marco.spasiano *January 12, 2021*
+
+>**Stampa Bilancio: eliminati residui impropri per enti che non li richiedono.**
+>
+>[6054fd9c256d8d8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6054fd9c256d8d8) raffaele.pagano *January 11, 2021*
+
+>**Estesa modifica blocco residui per natura/finanziamento anche sugli impegni di competenza**
+>
+>[b4c4e90f0a5a6d1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4c4e90f0a5a6d1) raffaele.pagano *January 11, 2021*
+
+
 ## Release 6.2.83  -- _December 30, 2020_ 
 **Changes**
 

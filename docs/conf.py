@@ -16,7 +16,7 @@
 import docs_cnr_theme
 
 project = 'Sistema Informativo Gestione Linee di Attività'
-release = '6.2.83'
+release = '6.2.84'
 author = u'Consiglio Nazionale delle Ricerche'
 
 show_authors = True

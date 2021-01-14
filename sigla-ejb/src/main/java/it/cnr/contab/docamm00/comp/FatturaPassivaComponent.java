@@ -5799,7 +5799,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
                     .getDocEleIVAColl()
                     .stream()
                     .forEach(documentoEleIvaBulk -> {
-                        sql.addSQLClause(FindClause.OR, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
+                        if(Optional.ofNullable(documentoEleIvaBulk.getNatura()).isPresent()) {
+                            sql.addSQLClause(FindClause.OR, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
+                        } else {
+                            sql.addClause(FindClause.OR, "percentuale", SQLBuilder.EQUALS, documentoEleIvaBulk.getAliquotaIva());
+                        }
                     });
             sql.closeParenthesis();
         }
