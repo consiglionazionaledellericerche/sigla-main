@@ -1822,17 +1822,17 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
     private void controlloCongruenzaDateGruppiIva(UserContext userContext, AnagraficoBulk anagrafico, AnagraficoBulk anagraficoAssBulk) throws ApplicationException, ComponentException {
         try {
             if (!anagrafico.isToBeCreated())
-            anagrafico = (AnagraficoBulk)getHome(userContext,anagrafico).findByPrimaryKey(anagrafico);
+                anagrafico = (AnagraficoBulk)getHome(userContext,anagrafico).findByPrimaryKey(anagrafico);
             if (!anagraficoAssBulk.isToBeCreated())
-            anagraficoAssBulk = (AnagraficoBulk)getHome(userContext,anagraficoAssBulk).findByPrimaryKey(anagraficoAssBulk);
+                anagraficoAssBulk = (AnagraficoBulk)getHome(userContext,anagraficoAssBulk).findByPrimaryKey(anagraficoAssBulk);
 
-        if (anagraficoAssBulk.getDt_canc() != null && anagrafico.getDtIniValGruppoIva() != null && anagrafico.getDt_canc() != null && anagraficoAssBulk.getDtIniValGruppoIva() != null &&
-                (anagraficoAssBulk.getDt_canc().compareTo(anagrafico.getDtIniValGruppoIva()) >= 0 &&
-                anagrafico.getDt_canc().compareTo(anagraficoAssBulk.getDtIniValGruppoIva()) >= 0) ||
-                (anagraficoAssBulk.getDtIniValGruppoIva().compareTo(anagrafico.getDt_canc()) <= 0 &&
-                        anagrafico.getDtIniValGruppoIva().compareTo(anagraficoAssBulk.getDt_canc()) <= 0)) {
-            throw new ApplicationException("Date incongruenti per i gruppi IVA associati all'anagrafico " + anagraficoAssBulk.getCd_anag());
-        }
+            if (anagraficoAssBulk.getDt_canc() != null && anagrafico.getDtIniValGruppoIva() != null && anagrafico.getDt_canc() != null && anagraficoAssBulk.getDtIniValGruppoIva() != null &&
+                ((anagraficoAssBulk.getDt_canc().compareTo(anagrafico.getDtIniValGruppoIva()) >= 0 &&
+                  anagrafico.getDt_canc().compareTo(anagraficoAssBulk.getDtIniValGruppoIva()) >= 0) ||
+                 (anagraficoAssBulk.getDtIniValGruppoIva().compareTo(anagrafico.getDt_canc()) <= 0 &&
+                  anagrafico.getDtIniValGruppoIva().compareTo(anagraficoAssBulk.getDt_canc()) <= 0))) {
+                throw new ApplicationException("Date incongruenti per i gruppi IVA associati all'anagrafico " + anagraficoAssBulk.getCd_anag());
+            }
         } catch (PersistencyException e) {
             throw handleException(e);
         } catch (ComponentException e) {
