@@ -962,7 +962,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);
@@ -1011,7 +1011,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);

@@ -971,7 +971,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
-						else if (procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
 						else
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
@@ -1751,7 +1751,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(optStorage.get(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(optStorage.get(), true);
-						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(optStorage.get(), true);
 						else
 							contrattiService.setInheritedPermission(optStorage.get(), false);
@@ -1798,7 +1798,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);
