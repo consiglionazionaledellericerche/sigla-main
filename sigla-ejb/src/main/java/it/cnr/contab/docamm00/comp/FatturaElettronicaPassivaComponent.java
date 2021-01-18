@@ -67,6 +67,7 @@ import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.SendMail;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
@@ -479,7 +480,11 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 	public SQLBuilder selectVoceIvaByClause(UserContext usercontext, DocumentoEleIvaBulk documentoEleIvaBulk, 
 			Voce_ivaBulk voce_ivaBulk, CompoundFindClause compoundfindclause) throws ComponentException, PersistencyException{
 		Voce_ivaHome voceIvaHome = (Voce_ivaHome) getHome(usercontext, Voce_ivaBulk.class);
-		SQLBuilder sqlVoceIva = voceIvaHome.selectByClause(compoundfindclause);
+		SQLBuilder sqlVoceIva = voceIvaHome.selectByClause(compoundfindclause,
+						Optional.ofNullable(documentoEleIvaBulk.getDocumentoEleTestata())
+									.flatMap(documentoEleTestataBulk -> Optional.ofNullable(documentoEleTestataBulk.getDataDocumento()))
+									.orElse(EJBCommonServices.getServerDate()));
+
 		sqlVoceIva.addClause(FindClause.AND, "percentuale", SQLBuilder.EQUALS, documentoEleIvaBulk.getAliquotaIva());
 		sqlVoceIva.addSQLClause(FindClause.AND, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
 		sqlVoceIva.addSQLClause("AND", "ti_applicazione", SQLBuilder.NOT_EQUALS, Voce_ivaBulk.VENDITE);
