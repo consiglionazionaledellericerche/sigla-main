@@ -3393,10 +3393,10 @@ TRASPORTO_AEREO"/>
             <column name="id_tipo_scadenza_pagopa" remarks="Identificativo del tipo scadenza PagoPA." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="dt_ini_validita" remarks="Data Inizio Validita del bollo" type="${date.type}">
+            <column name="dt_ini_validita" remarks="Data Inizio Validita" type="${date.type}">
                 <constraints nullable="false"/>
             </column>
-            <column name="dt_fin_validita" remarks="Data Fine Validita del bollo" type="${date.type}"/>
+            <column name="dt_fin_validita" remarks="Data Fine Validita" type="${date.type}"/>
             <column name="posizione_debitoria" remarks="Attiva la gestione della posizione debitoria" type="CHAR(1)">
                 <constraints nullable="false"/>
             </column>
@@ -3435,7 +3435,7 @@ TRASPORTO_AEREO"/>
             <column name="tipo_posizione" remarks="Tipo Posizione PagoPA. D: Debitoria, C: Creditoria" type="VARCHAR(1)">
                 <constraints nullable="false"/>
             </column>
-            <column name="id_tipo_scadenza_pagopa" remarks="Tipo Scadenza PagoPA. D: Debitoria, C: Creditoria" type="VARCHAR(1)">
+            <column name="id_tipo_scadenza_pagopa" remarks="ID Tipo Scadenza PagoPA." type="INT">
                 <constraints nullable="false"/>
             </column>
             <column name="cd_avviso" remarks="Codice Avviso" type="VARCHAR(50)">

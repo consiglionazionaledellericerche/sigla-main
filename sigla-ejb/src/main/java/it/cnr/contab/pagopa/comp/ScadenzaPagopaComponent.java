@@ -81,8 +81,6 @@ public class ScadenzaPagopaComponent extends CRUDComponent {
 					scadenzaPagopaBulk.setCdTipoDocAmm(documentoAmministrativoBulk.getCd_tipo_doc_amm());
 					scadenzaPagopaBulk.setEsercizioDocAmm(documentoAmministrativoBulk.getEsercizio());
 					scadenzaPagopaBulk.setPgDocAmm(documentoAmministrativoBulk.getPg_doc_amm());
-				} else {
-					Utility.createConfigurazioneCnrComponentSession().getUoDistintaTuttaSac(userContext, numerazioneProgressivoUnivoco.getEsercizio());
 				}
 				scadenzaPagopaBulk.setToBeCreated();
 				return scadenzaPagopaBulk;
