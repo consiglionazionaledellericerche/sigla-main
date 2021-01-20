@@ -4455,6 +4455,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         } catch (Throwable t) {
             throw handleException(t);
         }
+        setDt_termine_creazione_docamm(aUC, fattura_passiva);
         fattura_passiva.setHa_beniColl(ha_beniColl(aUC, fattura_passiva));
         fattura_passiva.setChangeOperationOn(fattura_passiva.getValuta());
         fattura_passiva.resetDefferredSaldi();
