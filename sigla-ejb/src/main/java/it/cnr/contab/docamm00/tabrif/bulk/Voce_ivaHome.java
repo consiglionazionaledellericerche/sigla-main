@@ -122,7 +122,7 @@ public class Voce_ivaHome extends BulkHome {
 
     public SQLBuilder selectByClause(CompoundFindClause compoundfindclause, Date dataEmissione)
             throws PersistencyException {
-        SQLBuilder sql = super.selectByClause(compoundfindclause);
+        SQLBuilder sql = createSQLBuilder(dataEmissione);
         sql.openParenthesis("AND");
         sql.addSQLClause("AND", "DT_CANCELLAZIONE", SQLBuilder.ISNULL, null);
         sql.addSQLClause("OR", "DT_CANCELLAZIONE", SQLBuilder.GREATER, dataEmissione);
