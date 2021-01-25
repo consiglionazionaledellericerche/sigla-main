@@ -1,9 +1,49 @@
-## Release 6.2.84  -- _January 13, 2021_ 
+## Release 6.2.88  -- _January 25, 2021_ 
 **Changes**
+
+>**Modifiche per adeguamento tracciato esterometro**
+>
+>[0f8181110e8bffc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0f8181110e8bffc) gianfranco.gasparro *January 25, 2021*
+
+>**Aggiunte fatture attive estere**
+>
+>[90bc5a44e20a380](https://github.com/consiglionazionaledellericerche/sigla-main/commit/90bc5a44e20a380) gianfranco.gasparro *January 20, 2021*
+
+>**Valorizzata la data di termine della creazione anche in modifica.**
+>
+>[30a61eff4bb66f7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/30a61eff4bb66f7) marco.spasiano *January 20, 2021*
+
+>**ABilitata la cencellazione del documeno di non registrabilità per le fatture eletrroniche con getFlIrregistrabile impostato a N**
+>
+>[848337f051b3be6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/848337f051b3be6) marco.spasiano *January 18, 2021*
 
 >**FIX BUG on Aggiunto filtro sui codici IVA nella registrazione della fattura in base alla natura presente sul documento elettronico**
 >
->[34b96ba37396381](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34b96ba37396381) marco.spasiano *January 12, 2021*
+>[8217838ce7f4fb0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8217838ce7f4fb0) marco.spasiano *January 18, 2021*
+
+>**FIX Ribaltamento Spese Accentrate: errore di too_many_rows**
+>
+>[0654ed3d4f795e8](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0654ed3d4f795e8) raffaele.pagano *January 14, 2021*
+
+>**FIX Scarico costi del personale: errore di SQLIntegrityConstraintViolationException**
+>
+>[1bb832ad2092b18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1bb832ad2092b18) raffaele.pagano *January 14, 2021*
+
+>**FIX BUG on Aggiunto filtro sui codici IVA nella registrazione della fattura in base alla natura presente sul documento elettronico**
+>
+>[99ef3b7cf020e34](https://github.com/consiglionazionaledellericerche/sigla-main/commit/99ef3b7cf020e34) marco.spasiano *January 14, 2021*
+
+>**Fix procedure pcc**
+>
+>[23ec7e84ed0f34f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/23ec7e84ed0f34f) raffaele.pagano *January 14, 2021*
+
+>**FIX Allegati Incarico: dati i permessi di pubblicazione ai file di tipo Insussistenza Conflitto di Interessi**
+>
+>[62637d762e66971](https://github.com/consiglionazionaledellericerche/sigla-main/commit/62637d762e66971) raffaele.pagano *January 14, 2021*
+
+>**FIX NullPointerException**
+>
+>[eafda05464824ab](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eafda05464824ab) raffaele.pagano *January 14, 2021*
 
 >**Stampa Bilancio: eliminati residui impropri per enti che non li richiedono.**
 >
@@ -12,6 +52,22 @@
 >**Estesa modifica blocco residui per natura/finanziamento anche sugli impegni di competenza**
 >
 >[b4c4e90f0a5a6d1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4c4e90f0a5a6d1) raffaele.pagano *January 11, 2021*
+
+
+## Release 6.2.87  -- _January 22, 2021_ 
+**Changes**
+
+>**FIX select voce iva dalla fattura elettronica**
+>
+>[ccee1b77bdcbf33](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ccee1b77bdcbf33) marco.spasiano *January 22, 2021*
+
+
+## Release 6.2.84  -- _January 13, 2021_ 
+**Changes**
+
+>**FIX BUG on Aggiunto filtro sui codici IVA nella registrazione della fattura in base alla natura presente sul documento elettronico**
+>
+>[34b96ba37396381](https://github.com/consiglionazionaledellericerche/sigla-main/commit/34b96ba37396381) marco.spasiano *January 12, 2021*
 
 
 ## Release 6.2.83  -- _December 30, 2020_ 
