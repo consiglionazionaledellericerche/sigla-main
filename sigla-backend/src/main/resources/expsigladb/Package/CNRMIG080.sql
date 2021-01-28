@@ -281,6 +281,9 @@ cINPGI 	 CONSTANT varchar2(2) := '13';
 
 cTIPO_RAPPORTO constant varchar2(10) := 'DIP';
 gPgLog number;
+
+TIPO_LOG_JOB_NSIP CONSTANT VARCHAR2(20) := 'REG_NSIP00';
+
 -- Functions e Procedures:
 --
 
@@ -357,6 +360,8 @@ gPgLog number;
  procedure INS_MONTANTE(aMontante montanti%rowtype);
 
  procedure UPD_MONTANTE (aMontante montanti%rowtype);
+
+ procedure JOB_AGGIORNA_COORD_BANCARIE(job number, pg_exec number, next_date date, nrGiorniBack number);
 
 --Flavia -- Modificata procedura: aggiunti i parametri di input aAnnoRif, aMeseRif e aAnaDip
 --procedure ALLINEA_MONTANTE(aData date, aUtente varchar2, aAnnoRif Number, aMeseRif Number, aAnaDip cnr_Anadip%rowtype);

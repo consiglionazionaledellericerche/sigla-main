@@ -3721,4 +3721,85 @@ TRASPORTO_AEREO"/>
     <changeSet author="raffaele.pagano" id="rename-column-limite-residui-impropri-table-parametri-cds">
         <renameColumn oldColumnName="fl_limite_residui_impropri" newColumnName="fl_blocco_impegni_natfin" tableName="parametri_cds" remarks="Blocco impegni per natura e finanziamento sulla base dei valori Configurazione_cnrBulk.PK_BLOCCO_RESIDUI e Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO. Il flag lavora insieme a quello identico presente sull'elemento voce."/>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="create-table-pea-ccordinate">
+        <createTable remarks="Tabella contenente le coordinate bancrie dei dipendenti NSIP" tableName="pea_coordinate">
+            <column name="dip_id" type="NUMBER(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_mod_pag" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_mod_out" type="CHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_cab" type="CHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_abi" type="CHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_num_conto" type="CHAR(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_st_corrente" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_delega" type="CHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_piazza" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_tipo_op" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_data_op" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_cin" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_iban" type="CHAR(34)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="inserimento-batch-agg-coordinate-dipendenti">
+        <insert tableName="batch_log_tipo">
+            <column name="cd_log_tipo" type="STRING" value="REG_NSIP00"/>
+            <column name="ti_log" type="STRING" value="0"/>
+            <column name="ds_log_tipo" type="STRING" value="Aggiornamento coordinate bancarie dipendenti NSIP"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+
+        <insert tableName="batch_procedura">
+            <column name="cd_procedura" type="STRING" value="AGGMODPAGDIPENDENTI"/>
+            <column name="ds_procedura" type="STRING" value="Aggiornamento modalità pagamento dipendenti da NSIP."/>
+            <column name="object_name" type="STRING" value="JOB_AGGIORNA_COORD_BANCARIE"/>
+            <column name="package_name" type="STRING" value="CNRMIG080"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+
+        <insert tableName="batch_procedura_parametro">
+            <column name="cd_procedura" type="STRING" value="AGGMODPAGDIPENDENTI"/>
+            <column name="nome_parametro" type="STRING" value="NRGIORNIBACK"/>
+            <column name="pg_valore_parametro" type="NUMERIC" value="1"/>
+            <column name="valore_number" type="NUMERIC" value="3"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

@@ -4,6 +4,8 @@
 
   CREATE OR REPLACE PACKAGE BODY "CNRMIG080" is
 
+ lPgExec number;
+
  procedure IMPOSTA_DATA_CESSAZIONE (aAnnoRif Number, aMeseRif Number, aUtente varchar2) is
  	dt_cessazione date;
  	aAnnoRif_prec number;
@@ -2441,78 +2443,64 @@ procedure UPD_INQUADRAMENTO (aAnaDip cnr_Anadip%rowtype
 	  and   cd_anag   = aMontante.cd_anag;
  end;
 
- /*procedure ALLINEA_MONTANTE(aData date, aUtente varchar2, aAnnoRif Number, aMeseRif Number, aAnaDip cnr_Anadip%rowtype) as
- lMontante montanti%rowtype;
- lAnaDip cnr_anadip%rowtype;
- lModificaMontante boolean;
+ procedure JOB_AGGIORNA_COORD_BANCARIE(job number, pg_exec number, next_date date, nrGiorniBack number) as
+    aTSNow date;
+    aUser varchar2(20);
  begin
+    aTSNow:=sysdate;
+    aUser:=IBMUTL200.getUserFromLog(pg_exec);
+    lPgExec := pg_exec;
 
- 	  -- cicliamo su tutte le righe della vista v_stipendi_montanti
- 	  -- Flavia -- aggiunta la where nella select, si cicla solo per la matricola che si sta processando e per l'anno di riferimento
- 	  for lVStipMon in (select * from v_stipendi_montanti
- 	  		    where esercizio = aAnnoRif
- 	  		    and matricola = aAnaDip.matricola)
-	  loop
-		  -- 1) Verifichiamo se il dipendente in esame è contenuto in cnr_anadip
-		  -- 2) Se il punto 2) vero allora aggiorniamo il montante
-		  lModificaMontante := false;
-		  ibmutl200.logInf(gPgLog ,'Processato Montante per Matricola ' || lVStipMon.matricola , '', '');
-		  Dbms_Output.put_line('ALLINEA_MONTANTE matricola '||lVStipMon.matricola);
-		  begin
-			  select *
-			  into lAnaDip
-			  from cnr_anadip
-			  where matricola = lVStipMon.matricola
-			  and anno_rif=aAnnoRif
-			  and mese_rif=aMeseRif
-			  for update nowait;
+    -- Aggiorna le info di testata del log
+    IBMUTL210.logStartExecutionUpd(pg_exec, TIPO_LOG_JOB_NSIP, job, 'Batch di aggiornamento coordinate bancarie dipendenti. Start:'||to_char(aTSNow,'YYYY/MM/DD HH-MI-SS'));
 
-			  lModificaMontante := true;
+    for recCoordinate in (select * from pea_coordinate
+                          where coo_iban is not null
+                          and coo_data_op > sysdate-nvl(nrGiorniBack,3)) loop
+      declare
+        recAnag ANAGRAFICO%ROWTYPE;
+        recTerzo TERZO%ROWTYPE;
+        recAnadip CNR_ANADIP%ROWTYPE;
+      begin
+          --recupero il rapporto attivo legato alla matricola
+          begin
+          	  Select distinct anagrafico.* INTO recAnag
+			  From rapporto, anagrafico
+			  Where anagrafico.cd_anag = rapporto.cd_anag
+              And   dt_fine_rapporto Is Null
+              And   matricola_dipendente = Rtrim(recCoordinate.dip_id);
 
-			  lVStipMon.IMPO_IRPEF_NETTO_DIP := nvl(lVStipMon.IMPO_IRPEF_NETTO_DIP,0);
-			  lVStipMon.IMPO_IRPEF_LORDO_DIP := nvl(lVStipMon.IMPO_IRPEF_LORDO_DIP,0);
-		  	  lVStipMon.IMPO_INPS_DIP := nvl(lVStipMon.IMPO_INPS_DIP,0);
-			  lVStipMon.IMPO_INPS_TESORO_DIP := nvl(lVStipMon.IMPO_INPS_TESORO_DIP,0);
-		  	  lVStipMon.IMPO_RIDUZ_DIP := nvl(lVStipMon.IMPO_RIDUZ_DIP,0);
-			  lVStipMon.IMPO_FONDO_FS_DIP := nvl(lVStipMon.IMPO_FONDO_FS_DIP,0);
-		  exception
-		  when no_Data_found then
-		  	   ibmutl200.logInf(gPgLog ,'Matricola ' || lVStipMon.matricola , ' non trovata ', '');
+              begin
+                 select * into recTerzo
+                 from terzo
+                 where cd_terzo = (select min(cd_terzo) from terzo where cd_anag = recAnag.cd_anag and dt_fine_rapporto is null);
 
-		  when others then
-		  	   ibmutl200.logInf(gPgLog ,'Matricola ' || lVStipMon.matricola , ' errore generico in aggiornamento montante ', '');
-		  	   --dbms_output.put_line('Matricola ' || lVStipMon.matricola||' Errore: '||substr(sqlerrm,1,200));
-		  end;
-		  if lModificaMontante then
-		  Dbms_Output.put_line('Modifica_MONTANTE '||lMontante.cd_anag);
+                 recAnadip.matricola := Rtrim(recCoordinate.DIP_ID);
+                 recAnadip.nominativo := Rtrim(recTerzo.DENOMINAZIONE_SEDE);
+                 recAnadip.mod_pag := Rtrim(recCoordinate.COO_MOD_PAG);
+                 recAnadip.iban_pag := Rtrim(recCoordinate.COO_IBAN);
+                 recAnadip.abi_pag := Rtrim(recCoordinate.COO_ABI);
+                 recAnadip.cab_pag := Rtrim(recCoordinate.COO_CAB);
+                 recAnadip.nrc_pag := Rtrim(recCoordinate.COO_NUM_CONTO);
+                 recAnadip.cin_pag := Rtrim(recCoordinate.COO_CIN);
 
-		  	 begin
-			 	  select *
-				  into lMontante
-				  from montanti
-				  where esercizio = lVStipMon.esercizio
-				  and cd_anag = lVStipMon.cd_anag
-				  for update nowait;
+                 IBMUTL015.setRbsBig;
 
-				  lMontante.IRPEF_DIPENDENTI := lMontante.IRPEF_DIPENDENTI + lVStipMon.IMPO_IRPEF_NETTO_DIP;
-				  lMontante.INPS_DIPENDENTI  := lMontante.INPS_DIPENDENTI + lVStipMon.IMPO_INPS_DIP;
-				  lMontante.INPS_TESORO_DIPENDENTI := lMontante.INPS_TESORO_DIPENDENTI + lVStipMon.IMPO_INPS_TESORO_DIP;
-				  lMontante.RIDUZ_DIPENDENTI := lMontante.RIDUZ_DIPENDENTI + lVStipMon.IMPO_RIDUZ_DIP;
-				  lMontante.FONDO_FS_DIPENDENTI := lMontante.FONDO_FS_DIPENDENTI + lVStipMon.IMPO_FONDO_FS_DIP;
-				  lMontante.PG_VER_REC := lMontante.PG_VER_REC + 1;
-				  lMontante.IRPEF_LORDO_DIPENDENTI := lMontante.IRPEF_LORDO_DIPENDENTI + lVStipMon.IMPO_IRPEF_LORDO_DIP;
-				  lMontante.DUVA := aData;
-				  lMontante.UTUV := aUtente;
+                 MODIFICABANCA(recAnadip, recAnag, recTerzo, aTSNow, aUser);
 
-
-				  upd_montante(lMontante);
-			 exception
-		  	 when no_Data_found then
-		  	   	  ibmutl200.logInf(gPgLog ,'Montante per Matricola ' || lVStipMon.matricola , ' non trovato ', '');
-			 when others then
-		  	   ibmutl200.logInf(gPgLog ,'Montante per Matricola ' || lVStipMon.matricola , ' errore generico ', '');
-			 end;
-		  end if;
-	  end loop;
- end;*/
+                 IBMUTL015.commitRbsBig;
+              exception when no_data_found then
+                 ibmutl200.logErr(pg_exec,'Matricola ' || recCoordinate.dip_id, 'Manca il TERZO associato al record ANAGRAFICO con codice '||recAnag.cd_anag, '');
+              end;
+          exception
+              when no_data_found then
+                ibmutl200.logInf(pg_exec,'Matricola ' || recCoordinate.dip_id, 'Dipendente non registrato in SIGLA', '');
+              when too_many_rows then
+                ibmutl200.logErr(pg_exec,'Matricola ' || recCoordinate.dip_id, 'Troppe anagrafiche attive presenti', '');
+            null;
+          end;
+      end;
+    end loop;
+    ibmutl200.logInf(pg_exec,'Batch di aggiornamento coordinate bancarie dipendenti.', 'End:'||to_char(sysdate,'YYYY/MM/DD HH-MI-SS'), '');
+ end;
 end;
