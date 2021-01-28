@@ -3757,12 +3757,8 @@ TRASPORTO_AEREO"/>
             <column name="coo_data_op" type="DATE">
                 <constraints nullable="false"/>
             </column>
-            <column name="coo_cin" type="CHAR(1)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="coo_iban" type="CHAR(34)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="coo_cin" type="CHAR(1)"/>
+            <column name="coo_iban" type="CHAR(34)"/>
         </createTable>
     </changeSet>
 
