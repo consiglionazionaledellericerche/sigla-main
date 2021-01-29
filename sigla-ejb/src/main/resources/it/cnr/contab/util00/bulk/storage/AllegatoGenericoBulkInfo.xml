@@ -110,6 +110,15 @@
 			name="attivaFile" />
 	</form>
 
+	<form name="onlyinsert">
+		<formFieldProperty
+				name="descrizione" />
+		<formFieldProperty
+				name="titolo" />
+		<formFieldProperty
+				name="file" />
+	</form>
+
 	<columnSet
 		name="readonly" >
 		<columnFieldProperty

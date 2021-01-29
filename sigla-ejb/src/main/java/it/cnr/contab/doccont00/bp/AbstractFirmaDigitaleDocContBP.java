@@ -122,7 +122,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
     public it.cnr.jada.util.jsp.Button[] createToolbar() {
         Button[] baseToolbar = super.createToolbar();
 
-        Button[] toolbar = new Button[baseToolbar.length + 8];
+        Button[] toolbar = new Button[baseToolbar.length + 9];
         int i = 0;
         for (Button button : baseToolbar) {
             toolbar[i++] = button;
@@ -137,6 +137,8 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
         toolbar[i - 1].setSeparator(true);
         toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
                 .getHandler().getProperties(getClass()), "Toolbar.predisponi");
+        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+                .getHandler().getProperties(getClass()), "Toolbar.allegadocumenti");
         toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
                 .getHandler().getProperties(getClass()), "Toolbar.zipdocumenti");
         toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
@@ -220,6 +222,10 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
     public boolean isPdfDocumentiButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
         return !oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
+    }
+
+    public boolean isAllegaDocumentiButtonHidden() {
+        return isZipDocumentiButtonHidden();
     }
 
     public boolean isZipDocumentiButtonHidden() {
