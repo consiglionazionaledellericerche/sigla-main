@@ -139,7 +139,7 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
 		return new Lettera_pagam_esteroBulk(cds,uo, esercizio,numero_documento);
 	}
 
-	private PDField valorizzaField(PDAcroForm pdAcroForm, String fieldName, String fieldValue, boolean autosize) throws IOException {
+	private PDField valorizzaField(PDAcroForm pdAcroForm, String fieldName, String fieldValue, boolean autosize) throws IOException, ApplicationException {
         PDField field = pdAcroForm.getField(fieldName);
         if (field != null) {
             if (field instanceof PDCheckBox) {
@@ -152,7 +152,9 @@ public class FirmaDigitaleDOC1210BP extends AbstractFirmaDigitaleDocContBP {
                         Optional.ofNullable(fieldValue)
                             .map(s -> s.replace("\r", " "))
                                 .map(s -> s.replace("\n", " "))
-                            .orElse(""));
+                            .orElseThrow(() -> new ApplicationMessageFormatException(
+									"Predisposizione non possibile. Il valore del campo [{0}] non può essere nullo!", fieldName
+							)));
             }
         }
         return field;
