@@ -1,3 +1,27 @@
+## Release 6.2.89  -- _January 29, 2021_ 
+**Changes**
+
+>**Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Resolve issue #64**
+>
+>[32afa9f04a51998](https://github.com/consiglionazionaledellericerche/sigla-main/commit/32afa9f04a51998) raffaele.pagano *January 29, 2021*
+
+>**Controllati i valori per la predisposizione dei documenti 1210**
+>
+>[b8b688223c102c3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b8b688223c102c3) marco.spasiano *January 29, 2021*
+
+>**Aggiunta la possibilità di allegare un file simultaneamente a più mandati o reversali con una selezione multipla, e chiusa la issue #61 .**
+>
+>[2bd9a63a6c5ec40](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bd9a63a6c5ec40) marco.spasiano *January 29, 2021*
+
+>**Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Resolve issue #64**
+>
+>[a1dc3432fb57313](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1dc3432fb57313) raffaele.pagano *January 28, 2021*
+
+>**Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Resolve issue #64**
+>
+>[ae863f224a1d819](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae863f224a1d819) raffaele.pagano *January 28, 2021*
+
+
 ## Release 6.2.88  -- _January 25, 2021_ 
 **Changes**
 
