@@ -34,9 +34,12 @@ import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 
+import javax.servlet.ServletException;
+import javax.servlet.jsp.PageContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -84,37 +87,48 @@ public class AllegatiMultipliDocContBP extends SimpleCRUDBP {
     @Override
     public void save(ActionContext actioncontext) throws ValidationException, BusinessProcessException {
         AllegatoGenericoBulk allegato = (AllegatoGenericoBulk) getModel();
-        UploadedFile uploadedFile = ((it.cnr.jada.action.HttpActionContext) actioncontext)
-                .getMultipartParameter("main.file");
-        allegato.setContentType(uploadedFile.getContentType());
-        allegato.setFile(uploadedFile.getFile());
-        allegato.setNome(uploadedFile.getName());
-        final File file = Optional.ofNullable(allegato.getFile())
-                .orElseThrow(() -> handleException(new ApplicationException("File non presente")));
-        List<StatoTrasmissione> result = new ArrayList<StatoTrasmissione>();
-        try {
-            for (StatoTrasmissione statoTrasmissione : documents) {
-                final Optional<StorageObject> parentFolder =
-                        Optional.ofNullable(storeService.getStorageObjectByPath(statoTrasmissione.getStorePath()));
-                if (parentFolder.isPresent()) {
-                    storeService.storeSimpleDocument(
-                            allegato,
-                            new FileInputStream(file),
-                            allegato.getContentType(),
-                            allegato.getNome(),
-                            statoTrasmissione.getStorePath()
-                    );
-                    result.add(statoTrasmissione);
+        List<UploadedFile> uploadedFiles = ((it.cnr.jada.action.HttpActionContext) actioncontext)
+                .getMultipartParameters("main.file");
+        for (UploadedFile uploadedFile : uploadedFiles) {
+            allegato.setContentType(
+                    Optional.ofNullable(uploadedFile)
+                            .flatMap(uploadedFile1 -> Optional.ofNullable(uploadedFile1.getContentType()))
+                            .orElseThrow(() -> handleException(new ApplicationException("Non è stato possibile determinare il tipo di file!")))
+            );
+            allegato.setNome(
+                    Optional.ofNullable(uploadedFile)
+                            .flatMap(uploadedFile1 -> Optional.ofNullable(uploadedFile1.getName()))
+                            .orElseThrow(() -> handleException(new ApplicationException("Non è stato possibile determinare il nome del file!")))
+
+            );
+            allegato.setFile(
+                    Optional.ofNullable(uploadedFile)
+                            .flatMap(uploadedFile1 -> Optional.ofNullable(uploadedFile1.getFile()))
+                            .orElseThrow(() -> handleException(new ApplicationException("File non presente!")))
+            );
+            try {
+                for (StatoTrasmissione statoTrasmissione : documents) {
+                    final Optional<StorageObject> parentFolder =
+                            Optional.ofNullable(storeService.getStorageObjectByPath(statoTrasmissione.getStorePath()));
+                    if (parentFolder.isPresent()) {
+                        storeService.storeSimpleDocument(
+                                allegato,
+                                new FileInputStream(allegato.getFile()),
+                                allegato.getContentType(),
+                                allegato.getNome(),
+                                statoTrasmissione.getStorePath()
+                        );
+                    }
                 }
+            } catch (FileNotFoundException e) {
+                throw handleException(e);
+            } catch (StorageException e) {
+                if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+                    throw handleException(new ApplicationException("File [" + allegato.getNome() + "] gia' presente. Inserimento non possibile!"));
+                throw handleException(e);
             }
-        } catch (FileNotFoundException e) {
-            throw handleException(e);
-        } catch (StorageException e) {
-            if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
-                throw handleException(new ApplicationException("File [" + allegato.getNome() + "] gia' presente. Inserimento non possibile!"));
-            throw handleException(e);
         }
-        setMessage(FormBP.INFO_MESSAGE, "Allegato inserito correttamente ai documenti: " +documentsLabel(result));
+        setMessage(FormBP.INFO_MESSAGE, "Allegati inseriti correttamente ai documenti.");
     }
 
     @Override
@@ -135,5 +149,10 @@ public class AllegatiMultipliDocContBP extends SimpleCRUDBP {
     @Override
     public boolean isFreeSearchButtonHidden() {
         return Boolean.TRUE;
+    }
+
+    @Override
+    public void openForm(javax.servlet.jsp.PageContext context, String action, String target) throws java.io.IOException, javax.servlet.ServletException {
+        openForm(context, action, target, "multipart/form-data");
     }
 }
