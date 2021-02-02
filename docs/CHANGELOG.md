@@ -1,3 +1,15 @@
+## Release 6.2.90  -- _February 02, 2021_ 
+**Changes**
+
+>**Aggiunta la possibilità di allegare più files contemporaneamente con selezione multipla**
+>
+>[b2c07628ab8e02d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b2c07628ab8e02d) marco.spasiano *February 02, 2021*
+
+>**Fix procedure CNRMIG080**
+>
+>[9239d72c0ddfec1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9239d72c0ddfec1) raffaele.pagano *February 01, 2021*
+
+
 ## Release 6.2.89  -- _January 29, 2021_ 
 **Changes**
 
