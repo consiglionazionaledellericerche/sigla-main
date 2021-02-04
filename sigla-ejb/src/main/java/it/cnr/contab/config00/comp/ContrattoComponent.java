@@ -215,14 +215,16 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 		sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
 		SQLBuilder sqlNotExists = getHome(userContext, contratto).createSQLBuilder();
 		sqlNotExists.addSQLJoin("CD_CIG", SQLBuilder.EQUALS, "CIG.CD_CIG");
+		sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, ContrattoBulk.STATO_CESSSATO);
 		if (contratto.getPg_contratto() != null){
-			sqlNotExists.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.NOT_EQUALS, contratto.getEsercizio());
-			sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
-			sqlNotExists.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
+			sqlNotExists.openParenthesis(FindClause.AND);
+			sqlNotExists.addSQLClause(FindClause.OR, "ESERCIZIO", SQLBuilder.NOT_EQUALS, contratto.getEsercizio());
+			sqlNotExists.addSQLClause(FindClause.OR, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
+			sqlNotExists.addSQLClause(FindClause.OR, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
+			sqlNotExists.closeParenthesis();
 		}
-		if (contratto.getCdCigExt() != null){
-			sql.addSQLClause("AND","CD_CIG",sql.EQUALS,contratto.getCdCigExt());
-		}
+		if (contratto.getCdCigExt() != null)
+			sql.addSQLClause(FindClause.AND,"CD_CIG",SQLBuilder.EQUALS,contratto.getCdCigExt());
 		sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
 		if (clause != null) 
 		  sql.addClause(clause);
