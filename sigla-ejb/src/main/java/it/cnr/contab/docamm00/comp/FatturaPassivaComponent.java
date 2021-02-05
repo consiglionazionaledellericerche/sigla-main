@@ -58,6 +58,7 @@ import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
@@ -6596,9 +6597,16 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     private void validazioneComune(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
-        if (!verificaEsistenzaSezionalePer(aUC, fatturaPassiva))
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è stato definito un sezionale per le " + fatturaPassiva.getDescrizioneEntitaPlurale() + " e il tipo sezionale \"" + fatturaPassiva.getTipo_sezionale().getDs_tipo_sezionale() + "\"!");
-
+        if (!verificaEsistenzaSezionalePer(aUC, fatturaPassiva)){
+            throw new ApplicationMessageFormatException(
+                    "Attenzione: non è stato definito un sezionale per le {0} e il tipo sezionale '{1}'!",
+                    fatturaPassiva.getDescrizioneEntitaPlurale(),
+                    Optional.ofNullable(fatturaPassiva)
+                        .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getTipo_sezionale()))
+                        .flatMap(tipo_sezionaleBulk -> Optional.ofNullable(tipo_sezionaleBulk.getDs_tipo_sezionale()))
+                        .orElse("NON DEFINITO")
+            );
+        }
         try{
             fatturaPassiva.validateDate();
 
