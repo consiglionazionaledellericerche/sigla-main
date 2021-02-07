@@ -1332,6 +1332,8 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 		 -- inseriamo la banca
 		 INS_BANCA(lBanca);
 
+         ibmutl200.logInf(lPgExec,'Matricola ' || aTerzo.cd_terzo, 'Inserite nuove coordinate bancarie.', '');
+
 --	  else -- lInsBanca
 
 	  	  -- in questo caso posso arrivarci in due modi

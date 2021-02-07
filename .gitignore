@@ -7,8 +7,8 @@
 target/
 build/
 *audit-log.log*
-/sigla-web/src/main/webapp/tmp/*.*
 log
 /docs/_build/
 /Makefile
 /_build/
+/sigla-web/src/main/webapp/tmp/

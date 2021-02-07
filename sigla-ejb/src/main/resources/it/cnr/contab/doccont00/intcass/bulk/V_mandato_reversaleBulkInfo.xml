@@ -268,6 +268,30 @@
             enabledOnSearch="true"
             label="Esito"/>
 
+
+    <fieldProperty
+            name="folder"
+            property="esercizio"
+            inputType="FILE"
+            inputSize="40"
+            maxLength="400"
+            fromFolder="true"
+            caseSensitiveSearch="false"
+            label="Cartella"/>
+
+    <fieldProperty
+            name="carica_folder"
+            property="esercizio"
+            inputType="BUTTON"
+            enabledOnSearch="false"
+            enabledOnInsert="false"
+            enabledOnView="false"
+            buttonClass="btn-outline-primary btn-title w-100"
+            iconClass="fa fa-fw fa-cloud-upload"
+            img="img/import24.gif"
+            href="javascript:submitForm('doCaricaFolder')"
+            label="Carica files..." />
+
     <formFieldProperty
             name="dt_trasmissione"/>
     <formFieldProperty
@@ -324,6 +348,13 @@
             name="pg_distinta"/>
     <formFieldProperty
             name="dt_firma"/>
+    <formFieldProperty
+            name="folder"/>
+    <formFieldProperty
+            name="carica_folder"/>
+
+
+
     <columnSet
             name="elencoConUo">
         <columnFieldProperty
