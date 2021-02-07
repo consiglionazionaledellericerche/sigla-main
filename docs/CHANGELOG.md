@@ -1,3 +1,43 @@
+## Release 6.2.93  -- _February 07, 2021_ 
+**Changes**
+
+>**Primo rilascio Consultazione Liquidazione CORI**
+>
+>[8100e21f3934420](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8100e21f3934420) gianfranco.gasparro *February 07, 2021*
+
+>**Inizio Sviluppo Consultazione Liquidazione CORI**
+>
+>[95d4596ce065238](https://github.com/consiglionazionaledellericerche/sigla-main/commit/95d4596ce065238) gianfranco.gasparro *February 07, 2021*
+
+>**Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Resolve issue #64**
+>
+>[a1dc3432fb57313](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1dc3432fb57313) raffaele.pagano *January 28, 2021*
+
+>**Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Resolve issue #64**
+>
+>[ae863f224a1d819](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae863f224a1d819) raffaele.pagano *January 28, 2021*
+
+
+## Release 6.2.92  -- _February 05, 2021_ 
+**Changes**
+
+>**FIX NPE on ivoice validation!**
+>
+>[4d24b7c5eef9d8f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4d24b7c5eef9d8f) marco.spasiano *February 05, 2021*
+
+
+## Release 6.2.91  -- _February 05, 2021_ 
+**Changes**
+
+>**FIX Stampa Mandato: non stampava banca terzo in caso di mancata indicazione del comune sulla banca stessa**
+>
+>[2d694bcc7a7791c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2d694bcc7a7791c) raffaele.pagano *February 04, 2021*
+
+>**Contratto: consentita la riassociazione di CIG associati a precedenti contratti che risultano cessati.**
+>
+>[0064727962d925f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/0064727962d925f) raffaele.pagano *February 04, 2021*
+
+
 ## Release 6.2.90  -- _February 02, 2021_ 
 **Changes**
 
@@ -24,14 +64,6 @@
 >**Aggiunta la possibilità di allegare un file simultaneamente a più mandati o reversali con una selezione multipla, e chiusa la issue #61 .**
 >
 >[2bd9a63a6c5ec40](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bd9a63a6c5ec40) marco.spasiano *January 29, 2021*
-
->**Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Resolve issue #64**
->
->[a1dc3432fb57313](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1dc3432fb57313) raffaele.pagano *January 28, 2021*
-
->**Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Resolve issue #64**
->
->[ae863f224a1d819](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae863f224a1d819) raffaele.pagano *January 28, 2021*
 
 
 ## Release 6.2.88  -- _January 25, 2021_ 
