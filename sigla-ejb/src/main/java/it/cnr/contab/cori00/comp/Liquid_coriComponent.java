@@ -29,13 +29,15 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
 import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
 import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
-import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
-import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.*;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipBulk;
+import it.cnr.contab.progettiric00.core.bulk.Progetto_sipHome;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -1088,8 +1090,49 @@ public class Liquid_coriComponent extends it.cnr.jada.comp.CRUDDetailComponent
         if (parametri.getPgFine() != null ){
             sql.addSQLClause("AND","NUMERO_MANDATO",SQLBuilder.LESS_EQUALS,parametri.getPgFine());
         }
+        if (parametri.getDaLiquidazione() != null && parametri.getDaLiquidazione().getPg_liquidazione() != null){
+            sql.addSQLClause("AND","PG_LIQUIDAZIONE",SQLBuilder.GREATER_EQUALS,parametri.getDaLiquidazione().getPg_liquidazione());
+        }
+        if (parametri.getaLiquidazione() != null && parametri.getaLiquidazione().getPg_liquidazione() != null){
+            sql.addSQLClause("AND","PG_LIQUIDAZIONE",SQLBuilder.LESS_EQUALS,parametri.getaLiquidazione().getPg_liquidazione());
+        }
 
         return  iterator(userContext,sql,VConsLiqCoriBulk.class,null);
     }
 
+    public ParSelConsLiqCoriBulk initializeConsultazioneCori(UserContext userContext, ParSelConsLiqCoriBulk parSelConsLiqCoriBulk) throws PersistencyException, ComponentException {
+        parSelConsLiqCoriBulk.setEsercizio_liquidazione(CNRUserContext.getEsercizio(userContext));
+        parSelConsLiqCoriBulk.setCd_cds_doc(CNRUserContext.getCd_cds(userContext));
+        parSelConsLiqCoriBulk.setCd_uo_liquidazione(CNRUserContext.getCd_unita_organizzativa(userContext));
+        Unita_organizzativaBulk uo = new Unita_organizzativaBulk(parSelConsLiqCoriBulk.getCd_uo_liquidazione());
+        uo = (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(uo);
+        parSelConsLiqCoriBulk.setDs_uo_liquidazione(uo.getDs_unita_organizzativa());
+        return parSelConsLiqCoriBulk;
+    }
+    public SQLBuilder selectDaLiquidazioneByClause (UserContext userContext,
+                                                          ParSelConsLiqCoriBulk par, Liquid_coriBulk liquid_coriBulk, CompoundFindClause clause) throws ComponentException, PersistencyException
+    {
+        Liquid_coriHome liquidHome = (Liquid_coriHome)getHome(userContext, Liquid_coriBulk.class);
+        SQLBuilder sql = liquidHome.createSQLBuilder();
+        sql.addClause( clause );
+        sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+        sql.addSQLClause("AND", "stato", SQLBuilder.EQUALS, "L");
+        sql.addSQLClause("AND", "PG_LIQUIDAZIONE", SQLBuilder.GREATER_EQUALS,new Integer("0"));
+        sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_unita_organizzativa());
+        sql.addOrderBy("pg_liquidazione");
+        return sql;
+    }
+    public SQLBuilder selectALiquidazioneByClause (UserContext userContext,
+                                                    ParSelConsLiqCoriBulk par, Liquid_coriBulk liquid_coriBulk, CompoundFindClause clause) throws ComponentException, PersistencyException
+    {
+        Liquid_coriHome liquidHome = (Liquid_coriHome)getHome(userContext, Liquid_coriBulk.class);
+        SQLBuilder sql = liquidHome.createSQLBuilder();
+        sql.addClause( clause );
+        sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+        sql.addSQLClause("AND", "stato", SQLBuilder.EQUALS, "L");
+        sql.addSQLClause("AND", "PG_LIQUIDAZIONE", SQLBuilder.GREATER_EQUALS,new Integer("0"));
+        sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_unita_organizzativa());
+        sql.addOrderBy("pg_liquidazione");
+        return sql;
+    }
 }

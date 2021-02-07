@@ -18,10 +18,13 @@
 package it.cnr.contab.cori00.actions;
 
 import it.cnr.contab.cori00.bp.ConsLiquidCoriBP;
+import it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk;
 import it.cnr.contab.cori00.views.bulk.ParSelConsLiqCoriBulk;
 import it.cnr.contab.cori00.views.bulk.VConsLiqCoriBulk;
+import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
 import it.cnr.contab.ordmag.magazzino.bp.ParametriSelezioneMovimentiMagBP;
 import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeBP;
 import it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeDettBP;
 import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
@@ -40,8 +43,45 @@ import java.rmi.RemoteException;
 
 public class ConsLiquidCoriAction extends BulkAction {
 
+	public Forward doBringBackSearchDaLiquidazione(ActionContext context,
+													   ParSelConsLiqCoriBulk parametri,
+													   Liquid_coriBulk liquid_coriBulk)
+			throws java.rmi.RemoteException {
 
-		public Forward doCerca(ActionContext context) throws RemoteException, InstantiationException, RemoveException{
+		if (liquid_coriBulk != null && parametri.getDaLiquidazione() == null){
+			parametri.setDaLiquidazione(liquid_coriBulk);
+		}
+		return context.findDefaultForward();
+	}
+
+	public Forward doBlankSearchDaLiquidazione(ActionContext context,
+													   ParSelConsLiqCoriBulk parametri)
+			throws java.rmi.RemoteException {
+
+		parametri.setDaLiquidazione(null);
+		return context.findDefaultForward();
+	}
+
+	public Forward doBringBackSearchALiquidazione(ActionContext context,
+												   ParSelConsLiqCoriBulk parametri,
+												   Liquid_coriBulk liquid_coriBulk)
+			throws java.rmi.RemoteException {
+
+		if (liquid_coriBulk != null && parametri.getDaLiquidazione() == null){
+			parametri.setaLiquidazione(liquid_coriBulk);
+		}
+		return context.findDefaultForward();
+	}
+
+	public Forward doBlankSearchALiquidazione(ActionContext context,
+											   ParSelConsLiqCoriBulk parametri)
+			throws java.rmi.RemoteException {
+
+		parametri.setaLiquidazione(null);
+		return context.findDefaultForward();
+	}
+
+	public Forward doCerca(ActionContext context) throws RemoteException, InstantiationException, RemoveException{
 			try {
 				ConsLiquidCoriBP bp= (ConsLiquidCoriBP) context.getBusinessProcess();
 				ParSelConsLiqCoriBulk selezione = (ParSelConsLiqCoriBulk)bp.getModel();

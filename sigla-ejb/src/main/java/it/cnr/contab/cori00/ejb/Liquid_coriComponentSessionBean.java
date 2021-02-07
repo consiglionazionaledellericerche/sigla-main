@@ -28,7 +28,9 @@ import it.cnr.contab.cori00.views.bulk.ParSelConsLiqCoriBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.contab.ordmag.magazzino.comp.MovimentiMagComponent;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.RemoteIterator;
 
 @Stateless(name="CNRCORI00_EJB_Liquid_coriComponentSession")
@@ -506,4 +508,23 @@ public void eliminaPendenti_f24Tot(UserContext param0) throws ComponentException
 			throw uncaughtError(userContext,componentObj,e);
 		}
 	}
+	public ParSelConsLiqCoriBulk initializeConsultazioneCori(UserContext userContext, ParSelConsLiqCoriBulk parametri) throws PersistencyException, ComponentException , RemoteException, ApplicationException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			ParSelConsLiqCoriBulk result = ((Liquid_coriComponent)componentObj).initializeConsultazioneCori(userContext, parametri);
+			component_invocation_succes(userContext,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
 }

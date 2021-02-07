@@ -27,7 +27,6 @@
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
-		nullable="false"
 		label="Dal Numero Mandato" />
 	<fieldProperty
 		name="pgFine"
@@ -35,21 +34,20 @@
 		inputType="TEXT"
 		maxLength="10"
 		inputSize="10"
-		nullable="false"
 		label="Al Numero Mandato" />
 	<fieldProperty
 			name="ds_uo_liquidazione"
 			property="ds_uo_liquidazione"
 			maxLength="100"
 			inputSize="100"
-			inputType="TEXT"
+			inputType="ROTEXT"
 			label="Descr Uo Liquidazione" />
 	<fieldProperty
 			name="cd_uo_liquidazione"
 			property="cd_uo_liquidazione"
 			maxLength="30"
 			inputSize="30"
-			inputType="TEXT"
+			inputType="ROTEXT"
 			label="Uo Liquidazione" />
 	<formFieldProperty
 		name="esercizio_liquidazione"
@@ -61,11 +59,27 @@
 		property="cd_cds_doc"
 		inputType="ROTEXT"
 		label="Cds" />
+	<fieldProperty
+			name="findDaLiquidazione"
+			property="daLiquidazione"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Da Numero Liquidazione" />
+	<fieldProperty
+			name="findALiquidazione"
+			property="aLiquidazione"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="A Numero Liquidazione" />
 	<formFieldProperty name="pgInizio" />
 	<formFieldProperty name="pgFine" />
 	<formFieldProperty name="cd_uo_liquidazione" />
 	<formFieldProperty name="ds_uo_liquidazione" />
 	<formFieldProperty name="esercizio_liquidazione" />
 	<formFieldProperty name="cd_cds_doc" />
+	<formFieldProperty name="findDaLiquidazione" />
+	<formFieldProperty name="findALiquidazione" />
 
 </bulkInfo>

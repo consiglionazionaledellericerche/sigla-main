@@ -30,13 +30,17 @@ import it.cnr.jada.action.Config;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
+
+import java.rmi.RemoteException;
 
 
 public class ConsLiquidCoriBP extends BulkBP
@@ -49,21 +53,26 @@ public class ConsLiquidCoriBP extends BulkBP
 	}
 
 	protected void init(Config config,ActionContext context) throws BusinessProcessException {
-		
-			ParSelConsLiqCoriBulk bulk = new ParSelConsLiqCoriBulk();
-			UserContext userContext = context.getUserContext();
-			bulk.setEsercizio_doc(CNRUserContext.getEsercizio(userContext));
-			bulk.setCd_cds_doc(CNRUserContext.getCd_cds(userContext));
-			bulk.setCd_uo_liquidazione(CNRUserContext.getCd_unita_organizzativa(userContext));
 
+		Liquid_coriComponentSession cs = (Liquid_coriComponentSession)createComponentSession(context);
+		ParSelConsLiqCoriBulk bulk = new ParSelConsLiqCoriBulk();
+		try {
+			bulk = cs.initializeConsultazioneCori(context.getUserContext(), bulk);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		} catch (ComponentException e) {
+			throw handleException(e);
+		} catch (RemoteException e) {
+			throw handleException(e);
+		}
 
-			setModel(context,bulk);
+		setModel(context,bulk);
 		super.init(config,context);
 	}
 
 	public RemoteIterator find(ActionContext actioncontext, CompoundFindClause clauses, OggettoBulk bulk, OggettoBulk context, String property) throws BusinessProcessException {
 		try {
-			CRUDComponentSession cs = (CRUDComponentSession) createComponentSession("JADAEJB_CRUDComponentSession");
+			CRUDComponentSession cs = createComponentSession(actioncontext);
 			if (cs == null) return null;
 			return EJBCommonServices.openRemoteIterator(
 					actioncontext,
@@ -81,21 +90,19 @@ public class ConsLiquidCoriBP extends BulkBP
 	}
 
 	public void controlloSelezioneValorizzata(ActionContext context, ParSelConsLiqCoriBulk bulk) throws ValidationException{
-		if (bulk.getPgInizio()== null)
-			throw new ValidationException("Valorizzare il parametro dal numero mandato");
-		if (bulk.getPgFine()== null)
-			throw new ValidationException("Valorizzare il parametro a numero mandato");
+		if (bulk.getPgInizio()== null && bulk.getPgFine()== null && bulk.getaLiquidazione() == null && bulk.getDaLiquidazione() == null)
+			throw new ValidationException("Valorizzare un parametro di selezione");
+		if ((bulk.getPgInizio()!= null && bulk.getPgFine()== null ) || (bulk.getPgInizio() == null && bulk.getPgFine() != null ))
+			throw new ValidationException("Valorizzare il numero iniziale ed il numero finale del mandato");
+		if ((bulk.getDaLiquidazione()!= null && bulk.getDaLiquidazione().getPg_liquidazione() != null && (bulk.getaLiquidazione()== null || bulk.getaLiquidazione().getPg_liquidazione() == null)) ||
+				((bulk.getDaLiquidazione() == null || bulk.getDaLiquidazione().getPg_liquidazione() == null)  && bulk.getaLiquidazione() != null && bulk.getaLiquidazione().getPg_liquidazione() != null))
+			throw new ValidationException("Valorizzare il numero iniziale ed il numero finale della liquidazione");
 	}
 	public RemoteIterator ricercaCori(ActionContext actioncontext) throws BusinessProcessException {
 		try {
 			Liquid_coriComponentSession cs = (Liquid_coriComponentSession)createComponentSession(actioncontext);
 			if (cs == null) return null;
 			ParSelConsLiqCoriBulk parSelConsLiqCoriBulk = (ParSelConsLiqCoriBulk)getModel();
-			try {
-				controlloSelezioneValorizzata(actioncontext,parSelConsLiqCoriBulk);
-			}catch (ValidationException validationException){
-				throw new ApplicationException(validationException);
-			}
 			return cs.ricercaCori(actioncontext.getUserContext(), parSelConsLiqCoriBulk);
 		} catch (it.cnr.jada.comp.ComponentException e) {
 			throw handleException(e);

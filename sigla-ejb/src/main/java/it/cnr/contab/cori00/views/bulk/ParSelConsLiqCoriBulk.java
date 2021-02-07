@@ -17,6 +17,8 @@
 
 package it.cnr.contab.cori00.views.bulk;
 
+import it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk;
+
 /**
  * OggettoBulk costruito per visualizzare i dati provenienti dalla vista <code>VSX_LIQUIDAZIONE_CORI</code> 
  *
@@ -29,6 +31,24 @@ public ParSelConsLiqCoriBulk() {
 }
 	private java.lang.Long pgInizio;
 	private java.lang.Long pgFine;
+	private Liquid_coriBulk daLiquidazione;
+	private Liquid_coriBulk aLiquidazione;
+
+	public Liquid_coriBulk getDaLiquidazione() {
+		return daLiquidazione;
+	}
+
+	public void setDaLiquidazione(Liquid_coriBulk daLiquidazione) {
+		this.daLiquidazione = daLiquidazione;
+	}
+
+	public Liquid_coriBulk getaLiquidazione() {
+		return aLiquidazione;
+	}
+
+	public void setaLiquidazione(Liquid_coriBulk aLiquidazione) {
+		this.aLiquidazione = aLiquidazione;
+	}
 
 	public Long getPgInizio() {
 		return pgInizio;

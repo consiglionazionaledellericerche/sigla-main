@@ -80,11 +80,12 @@
             <version>${ws.client.version}</version>
             <scope>provided</scope>
         </dependency>
+<!--
         <dependency>
             <groupId>it.cnr.si</groupId>
             <artifactId>ace-client</artifactId>
             <version>${ace.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>it.cnr.si</groupId>
             <artifactId>sdi-fatturapa</artifactId>

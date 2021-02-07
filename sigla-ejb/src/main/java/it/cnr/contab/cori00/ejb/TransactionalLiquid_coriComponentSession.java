@@ -25,7 +25,9 @@ import it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk;
 import it.cnr.contab.cori00.views.bulk.ParSelConsLiqCoriBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.ejb.*;
 
@@ -466,6 +468,23 @@ public void eliminaPendenti_f24Tot(UserContext userContext)
 	public RemoteIterator ricercaCori(UserContext userContext, ParSelConsLiqCoriBulk parametri) throws ComponentException, RemoteException{
 		try {
 			return (RemoteIterator)invoke("ricercaCori",new Object[] {
+					userContext,
+					parametri});
+		} catch(RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public ParSelConsLiqCoriBulk initializeConsultazioneCori(UserContext userContext, ParSelConsLiqCoriBulk parametri) throws ComponentException, PersistencyException, RemoteException, ApplicationException {
+		try {
+			return (ParSelConsLiqCoriBulk)invoke("initializeConsultazioneCori",new Object[] {
 					userContext,
 					parametri});
 		} catch(RemoteException e) {

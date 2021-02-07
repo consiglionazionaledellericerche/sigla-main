@@ -17,7 +17,6 @@
 
 package it.cnr.contab.anagraf00.comp;
 
-import feign.FeignException;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfHome;
@@ -58,14 +57,6 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.SendMail;
-import it.cnr.si.service.AceService;
-import it.cnr.si.service.dto.anagrafica.enums.TipoAppartenenza;
-import it.cnr.si.service.dto.anagrafica.letture.PersonaEntitaOrganizzativaWebDto;
-import it.cnr.si.service.dto.anagrafica.letture.PersonaWebDto;
-import it.cnr.si.service.dto.anagrafica.letture.UtenteWebDto;
-import it.cnr.si.service.dto.anagrafica.scritture.PersonaDto;
-import it.cnr.si.service.dto.anagrafica.scritture.PersonaEntitaOrganizzativaDto;
-import it.cnr.si.service.dto.anagrafica.scritture.UtenteDto;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -87,10 +78,11 @@ import java.util.stream.Collectors;
 
 public class AnagraficoComponent extends UtilitaAnagraficaComponent implements ICRUDMgr, IAnagraficoMgr, IPrintMgr {
     private static final String ACCESSO_MODIFICA_STRUTTURA_CNR = "CFGANAGCFCOREANAGSOM";
-    private AceService aceService;
+//    private AceService aceService;
 
     public AnagraficoComponent() {
-        aceService = SpringUtil.getBean("aceService", AceService.class);
+
+//        aceService = SpringUtil.getBean("aceService", AceService.class);
     }
 
     protected void adeguaDt_fine_rapportoTerzi(UserContext userContext, AnagraficoBulk anagrafico) throws it.cnr.jada.comp.ComponentException {
@@ -2546,7 +2538,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         }
     }
     public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk) throws ComponentException {
-        try {
+/*        try {
             if (!anagraficoBulk.isDipendente() && !anagraficoBulk.getRapporti().isEmpty()){
                 Optional<String> personaId = Optional.empty();
                 try {
@@ -2584,9 +2576,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             }
         } catch (Throwable e) {
             throw handleException(e);
-        }
+        }*/
     }
-    private void aggiornaPersonaEO(String utente, String dtIniValidita, String dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
+/*    private void aggiornaPersonaEO(String utente, String dtIniValidita, String dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
         PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
         personaEntitaOrganizzativaDto.setId(personaEOWebDto.getId());
         personaEntitaOrganizzativaDto.setNote(personaEOWebDto.getNote());
@@ -2602,11 +2594,11 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         personaEntitaOrganizzativaDto.setFineValidita(
         LocalDate.parse(dtFinValidita, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         );
-        //logger.info(personaEntitaOrganizzativaDto.toString());
+        logger.info(personaEntitaOrganizzativaDto.toString());
 
         aceService.updatePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
     }
-
+*/
     public java.sql.Timestamp getCurrentDate() {
         try {
             return it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();

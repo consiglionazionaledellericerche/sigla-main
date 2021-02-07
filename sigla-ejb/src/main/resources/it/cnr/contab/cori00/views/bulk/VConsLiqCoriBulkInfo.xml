@@ -44,24 +44,26 @@
 	<fieldProperty
 		name="im_liquidato"
 		property="im_liquidato"
-		maxLength="10"
-		inputSize="10"
+		inputSize="20"
+		maxLength="18"
 		inputType="TEXT"
+		formatName="it.cnr.contab.util.EuroFormat"
 		label="Importo Mandato"
 		caseSensitiveSearch="false" />
 	<fieldProperty
 			name="ammontare"
 			property="ammontare"
-			maxLength="10"
-			inputSize="10"
+			inputSize="20"
+			maxLength="18"
 			inputType="TEXT"
+			formatName="it.cnr.contab.util.EuroFormat"
 			label="Importo CORI"
 			caseSensitiveSearch="false" />
 	<fieldProperty
 		name="pg_comune"
 		property="pg_comune"
 		inputType="TEXT"
-		label="Comune" />
+		label="Id Comune" />
 	<fieldProperty
 		name="esercizio_compenso"
 		property="esercizio_compenso"
@@ -88,7 +90,7 @@
 		maxLength="10"
 		inputSize="10"
 		inputType="TEXT"
-		label="Regione" />
+		label="ID Regione" />
 	<fieldProperty
 		name="cd_gruppo_cr"
 		property="cd_gruppo_cr"
@@ -284,29 +286,31 @@
 			name="dt_a" />
 
 	<columnFieldProperty
-		name="cd_gruppo_cr" />
+			name="pg_liquidazione" />
+	<columnFieldProperty
+			name="numero_mandato" />
+	<columnFieldProperty
+			name="dt_emissione" />
+	<columnFieldProperty
+			name="im_liquidato" />
 	<columnFieldProperty
 			name="cd_contributo_ritenuta" />
 	<columnFieldProperty
-		name="cd_regione" />
-	<columnFieldProperty
-		name="pg_comune" />
-	<columnFieldProperty
-		name="im_liquidato" />
-	<columnFieldProperty
-			name="ds_regione" />
-	<columnFieldProperty
-			name="ds_comune" />
-	<columnFieldProperty
-			name="ti_ente_percipiente" />
+			name="ds_contributo_ritenuta" />
 	<columnFieldProperty
 			name="ammontare" />
 	<columnFieldProperty
-			name="pg_compenso" />
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+			name="ds_gruppo_cr" />
 	<columnFieldProperty
 			name="uo_compenso" />
 	<columnFieldProperty
 			name="ds_uo_compenso" />
+	<columnFieldProperty
+			name="esercizio_compenso" />
+	<columnFieldProperty
+			name="pg_compenso" />
 	<columnFieldProperty
 			name="ds_compenso" />
 	<columnFieldProperty
@@ -318,9 +322,17 @@
 	<columnFieldProperty
 			name="codice_fiscale" />
 	<columnFieldProperty
-			name="dt_da" />
+			name="cd_regione" />
 	<columnFieldProperty
-			name="dt_emissione" />
+			name="ds_regione" />
+	<columnFieldProperty
+			name="pg_comune" />
+	<columnFieldProperty
+			name="ds_comune" />
+	<columnFieldProperty
+			name="ti_ente_percipiente" />
+	<columnFieldProperty
+			name="dt_da" />
 	<columnFieldProperty
 			name="dt_a" />
 
