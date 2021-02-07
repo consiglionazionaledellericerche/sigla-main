@@ -2568,7 +2568,8 @@ BEGIN
    -- Inizializzazione variabili
 
    aCdRegione:='*';
-   aCdProvincia:='*';
+   aCdProvincia:='*';cd_contributo_ritenuta = 'BONUSDL66' AND
+
    aPgComune:=0;
    aMontanteNetto:=0;
    aAliquotaIrpefAnag:=aAliquotaFiscaleAnag;

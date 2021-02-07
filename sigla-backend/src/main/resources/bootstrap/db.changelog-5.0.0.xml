@@ -3798,4 +3798,41 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-cons-liquid_cori">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSLIQUIDCORI"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione CORI Liquidati"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSLIQUIDCORI"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsLiquidCoriBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.COMPEN.CORI.CONSCORILIQ"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Consultazione CORI Liquidati"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSLIQUIDCORI"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsLiquidCoriBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="90"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CONSCORILIQ"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.COMPEN.CORI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

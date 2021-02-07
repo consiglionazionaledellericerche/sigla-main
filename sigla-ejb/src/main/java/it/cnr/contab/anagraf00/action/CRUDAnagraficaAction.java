@@ -30,6 +30,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
@@ -932,6 +933,31 @@ public Forward doCambiaDateDiariaMissEst(ActionContext context) {
 		return handleException(context, e);
 	}
 	
+	}
+
+	public Forward doSalva(ActionContext actioncontext) throws java.rmi.RemoteException {
+		CRUDAnagraficaBP bp = (CRUDAnagraficaBP)getBusinessProcess(actioncontext);
+		try {
+			fillModel(actioncontext);
+
+			bp.save(actioncontext);
+			postSalvataggio(actioncontext);
+			return actioncontext.findDefaultForward();
+		} catch (ValidationException validationexception) {
+			getBusinessProcess(actioncontext).setErrorMessage(validationexception.getMessage());
+		} catch (Throwable throwable) {
+			return handleException(actioncontext, throwable);
+		}
+		return actioncontext.findDefaultForward();
+	}
+
+	protected void postSalvataggio(ActionContext context) throws BusinessProcessException {
+
+		CRUDAnagraficaBP bp = (CRUDAnagraficaBP) getBusinessProcess(context);
+		AnagraficoBulk anag = (AnagraficoBulk) bp.getModel();
+		if (!anag.isDipendente() && !anag.getRapporti().isEmpty()){
+			bp.aggiornaDatiAce(context, anag);
+		}
 	}
 
 }

@@ -25,8 +25,17 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.cori00.docs.bulk.*;
 import it.cnr.contab.cori00.views.bulk.*;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.logs.bulk.Batch_log_rigaBulk;
 import it.cnr.contab.logs.bulk.Batch_log_tstaBulk;
+import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagHome;
+import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -37,10 +46,8 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.LoggableStatement;
-import it.cnr.jada.persistency.sql.Query;
-import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.RemoteIterator;
 
 import javax.ejb.EJBException;
 import java.io.Serializable;
@@ -1068,4 +1075,21 @@ public class Liquid_coriComponent extends it.cnr.jada.comp.CRUDDetailComponent
             handleException(e);
         }
     }
+    public RemoteIterator ricercaCori(UserContext userContext, ParSelConsLiqCoriBulk parametri) throws ComponentException
+    {
+        VConsLiqCoriHome coriHome = (VConsLiqCoriHome)getHome(userContext, VConsLiqCoriBulk.class);
+        SQLBuilder sql = coriHome.createSQLBuilder();
+        sql.addSQLClause("AND","CD_UO_LIQUIDAZIONE",SQLBuilder.GREATER_EQUALS,parametri.getCd_uo_liquidazione());
+        sql.addSQLClause("AND","ESERCIZIO_LIQUIDAZIONE",SQLBuilder.GREATER_EQUALS,parametri.getEsercizio_liquidazione());
+        sql.addSQLClause("AND","NUMERO_MANDATO",SQLBuilder.GREATER_EQUALS,parametri.getPgInizio());
+        if (parametri.getPgInizio() != null ){
+            sql.addSQLClause("AND","NUMERO_MANDATO",SQLBuilder.GREATER_EQUALS,parametri.getPgInizio());
+        }
+        if (parametri.getPgFine() != null ){
+            sql.addSQLClause("AND","NUMERO_MANDATO",SQLBuilder.LESS_EQUALS,parametri.getPgFine());
+        }
+
+        return  iterator(userContext,sql,VConsLiqCoriBulk.class,null);
+    }
+
 }

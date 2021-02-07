@@ -17,6 +17,7 @@
 
 package it.cnr.contab.anagraf00.comp;
 
+import feign.FeignException;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfHome;
@@ -35,12 +36,15 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
+import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
+import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
+import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
@@ -53,12 +57,27 @@ import it.cnr.jada.persistency.Broker;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
+import it.cnr.jada.util.SendMail;
+import it.cnr.si.service.AceService;
+import it.cnr.si.service.dto.anagrafica.enums.TipoAppartenenza;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaEntitaOrganizzativaWebDto;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaWebDto;
+import it.cnr.si.service.dto.anagrafica.letture.UtenteWebDto;
+import it.cnr.si.service.dto.anagrafica.scritture.PersonaDto;
+import it.cnr.si.service.dto.anagrafica.scritture.PersonaEntitaOrganizzativaDto;
+import it.cnr.si.service.dto.anagrafica.scritture.UtenteDto;
 
 import javax.ejb.EJBException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.io.Reader;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Questa classe svolge le operazioni fondamentali di lettura, scrittura e filtro dei dati
@@ -68,8 +87,10 @@ import java.util.*;
 
 public class AnagraficoComponent extends UtilitaAnagraficaComponent implements ICRUDMgr, IAnagraficoMgr, IPrintMgr {
     private static final String ACCESSO_MODIFICA_STRUTTURA_CNR = "CFGANAGCFCOREANAGSOM";
+    private AceService aceService;
 
     public AnagraficoComponent() {
+        aceService = SpringUtil.getBean("aceService", AceService.class);
     }
 
     protected void adeguaDt_fine_rapportoTerzi(UserContext userContext, AnagraficoBulk anagrafico) throws it.cnr.jada.comp.ComponentException {
@@ -2524,4 +2545,74 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             throw handleException(e);
         }
     }
+    public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk) throws ComponentException {
+        try {
+            if (!anagraficoBulk.isDipendente() && !anagraficoBulk.getRapporti().isEmpty()){
+                Optional<String> personaId = Optional.empty();
+                try {
+                    personaId = Optional.ofNullable(aceService.getPersonaId(anagraficoBulk.getCodice_fiscale()));
+                } catch (FeignException _ex) {
+                }
+                if (!personaId.isPresent()) {
+                    SendMail.sendErrorMail("Invio Dati ACE: Codice fiscale "  + anagraficoBulk.getCodice_fiscale() +" non trovato.", "Per il codice fiscale: "  + anagraficoBulk.getCodice_fiscale() +" non è stata trovata la persona in ACE");
+                } else {
+                    try {
+                        Map<String, Object> params = new HashMap<>();
+                        params.put("persona", personaId.get());
+                        params.put("tipoAppartenenza", TipoAppartenenza.AFFERENZA_UO);
+                        List<PersonaEntitaOrganizzativaWebDto> personeEO;
+                        personeEO = aceService.personaEntitaOrganizzativaFind(params)
+                                .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
+                        if (personeEO == null || personeEO.isEmpty()){
+                            SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" non è stata trovata l'appartenenza in ACE");
+                        } else {
+// Prendo l'ultima appartenenza valida dopo averla ordinata
+                            Optional<PersonaEntitaOrganizzativaWebDto> personaEO = personeEO.stream().reduce((first, second) -> second);
+                            for (Object obj : anagraficoBulk.getRapporti()){
+                                RapportoBulk rapportoBulk = (RapportoBulk) obj;
+                                if (rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
+                                        rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0 ){
+                                    // devo prima ordinare i rapporti per data inizio...poi prendo solo quelli validi...se ci sta più di un rapporto valido devo anche inserire una appartenenza con la stessa uo.
+//                                    aggiornaPersonaEO(utente, dtIniValidita, dtFinValidita, personaEO);
+                                }
+                            }
+                        }
+
+                    } catch (FeignException _ex) {
+                    }
+                }
+            }
+        } catch (Throwable e) {
+            throw handleException(e);
+        }
+    }
+    private void aggiornaPersonaEO(String utente, String dtIniValidita, String dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
+        PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
+        personaEntitaOrganizzativaDto.setId(personaEOWebDto.getId());
+        personaEntitaOrganizzativaDto.setNote(personaEOWebDto.getNote());
+        personaEntitaOrganizzativaDto.setPermissions(personaEOWebDto.getPermissions());
+        personaEntitaOrganizzativaDto.setUtenteUva(utente);
+        personaEntitaOrganizzativaDto.setProvvedimento(personaEOWebDto.getProvvedimento());
+        personaEntitaOrganizzativaDto.setPersona(personaEOWebDto.getPersona().getId());
+        personaEntitaOrganizzativaDto.setTipoAppartenenza(personaEOWebDto.getTipoAppartenenza());
+        personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEOWebDto.getEntitaOrganizzativa().getId());
+        personaEntitaOrganizzativaDto.setInizioValidita(
+        LocalDate.parse(dtIniValidita, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        );
+        personaEntitaOrganizzativaDto.setFineValidita(
+        LocalDate.parse(dtFinValidita, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        );
+        //logger.info(personaEntitaOrganizzativaDto.toString());
+
+        aceService.updatePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
+    }
+
+    public java.sql.Timestamp getCurrentDate() {
+        try {
+            return it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
+        } catch (javax.ejb.EJBException e) {
+            throw new it.cnr.jada.DetailedRuntimeException(e);
+        }
+    }
+
 }

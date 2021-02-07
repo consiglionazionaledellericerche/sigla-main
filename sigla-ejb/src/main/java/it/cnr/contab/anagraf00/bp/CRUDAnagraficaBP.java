@@ -1471,10 +1471,17 @@ protected void validaDichiarazione(ActionContext context,Dichiarazione_intentoBu
 		}
 	}
 }
-public boolean isUoEnte(ActionContext context){	
-	Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
-	if (uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
-		return true;	
-	return false; 
-}	
+	public boolean isUoEnte(ActionContext context){
+		Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
+		if (uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+			return true;
+		return false;
+	}
+	public void aggiornaDatiAce(ActionContext context, AnagraficoBulk anagraficoBulk) throws BusinessProcessException {
+		try {
+			((AnagraficoComponentSession)createComponentSession()).aggiornaDatiAce(context.getUserContext(), anagraficoBulk);
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
 }

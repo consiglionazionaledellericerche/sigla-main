@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_cds_doc"
+		property="cd_cds_doc"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="cd_cds_doc" />
+	<fieldProperty
+		name="cd_uo_liquidazione"
+		property="cd_uo_liquidazione"
+		maxLength="30"
+		inputSize="30"
+		inputType="TEXT"
+		label="UO Liquidazione" />
+	<fieldProperty
+			name="uo_compenso"
+			property="uo_compenso"
+			maxLength="30"
+			inputSize="30"
+			inputType="TEXT"
+			label="UO Compenso" />
+	<fieldProperty
+		name="im_liquidato"
+		property="im_liquidato"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Importo Mandato"
+		caseSensitiveSearch="false" />
+	<fieldProperty
+			name="ammontare"
+			property="ammontare"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			label="Importo CORI"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+		name="pg_comune"
+		property="pg_comune"
+		inputType="TEXT"
+		label="Comune" />
+	<fieldProperty
+		name="esercizio_compenso"
+		property="esercizio_compenso"
+		inputType="TEXT"
+		label="Esercizio Compenso" />
+	<fieldProperty
+			name="esercizio_doc"
+			property="esercizio_doc"
+			inputType="TEXT"
+			label="Esercizio Mandato" />
+	<fieldProperty
+			name="esercizio_liquidazione"
+			property="esercizio_liquidazione"
+			inputType="TEXT"
+			label="Esercizio liquidazione" />
+	<fieldProperty
+		name="pg_liquidazione"
+		property="pg_liquidazione"
+		inputType="TEXT"
+		label="N. liquidazione" />
+	<fieldProperty
+		name="cd_regione"
+		property="cd_regione"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Regione" />
+	<fieldProperty
+		name="cd_gruppo_cr"
+		property="cd_gruppo_cr"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="Gruppo CORI" />
+	<fieldProperty
+			name="cd_contributo_ritenuta"
+			property="cd_contributo_ritenuta"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			label="Codice CORI" />
+	<fieldProperty
+			name="ti_ente_percipiente"
+			property="ti_ente_percipiente"
+			maxLength="1"
+			inputSize="1"
+			inputType="TEXT"
+			label="Ente/Percepiente" />
+	<fieldProperty
+			name="ds_contributo_ritenuta"
+			property="ds_contributo_ritenuta"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Descr. CORI" />
+	<fieldProperty
+			name="ds_uo_compenso"
+			property="ds_uo_compenso"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Descr Uo Compenso" />
+	<fieldProperty
+			name="ds_uo_liquidazione"
+			property="ds_uo_liquidazione"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Descr Uo Liquidazione" />
+	<fieldProperty
+			name="ds_compenso"
+			property="ds_compenso"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Descr Compenso" />
+	<fieldProperty
+		name="ds_gruppo_cr"
+		property="ds_gruppo_cr"
+		maxLength="100"
+		inputSize="100"
+		inputType="TEXT"
+		label="Descrizione Gruppo" />
+	<fieldProperty
+			name="ds_regione"
+			property="ds_regione"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Regione" />
+	<fieldProperty
+			name="ds_comune"
+			property="ds_comune"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Comune" />
+	<fieldProperty
+		name="numero_mandato"
+		property="numero_mandato"
+		maxLength="10"
+		inputSize="10"
+		inputType="TEXT"
+		label="N.Mandato" />
+	<fieldProperty
+			name="pg_compenso"
+			property="pg_compenso"
+			inputType="TEXT"
+			label="Numero Compenso" />
+	<fieldProperty
+			name="ragione_sociale"
+			property="ragione_sociale"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Ragione Sociale" />
+	<fieldProperty
+			name="codice_fiscale"
+			property="codice_fiscale"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Codice Fiscale" />
+	<fieldProperty
+			name="cognome"
+			property="cognome"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Cognome" />
+	<fieldProperty
+			name="nome"
+			property="nome"
+			maxLength="100"
+			inputSize="100"
+			inputType="TEXT"
+			label="Nome" />
+	<fieldProperty
+			name="dt_emissione"
+			property="dt_emissione"
+			inputType="TEXT"
+			inputSize="10"
+			formatName="date_short"
+			label="Data Mandato"/>
+	<fieldProperty
+			name="dt_da"
+			property="dt_da"
+			inputType="TEXT"
+			inputSize="10"
+			formatName="date_short"
+			label="Da Data Elaborazione"/>
+	<fieldProperty
+			name="dt_a"
+			property="dt_a"
+			inputType="TEXT"
+			inputSize="10"
+			formatName="date_short"
+			label="A Data Elaborazione"/>
+	<fieldProperty
+			name="dt_emissione"
+			property="dt_emissione"
+			inputType="TEXT"
+			inputSize="10"
+			formatName="date_short"
+			label="Data Mandato"/>
+
+	<formFieldProperty
+		name="cd_uo_liquidazione" />
+	<formFieldProperty
+		name="numero_mandato" />
+	<formFieldProperty
+		name="im_liquidato" />
+	<formFieldProperty
+		name="pg_comune" />
+	<formFieldProperty
+		name="esercizio_compenso" />
+	<formFieldProperty
+		name="pg_liquidazione" />
+	<formFieldProperty
+		name="cd_regione" />
+	<formFieldProperty
+		name="cd_cds_doc" />
+	<formFieldProperty
+		name="cd_gruppo_cr" />
+	<formFieldProperty
+			name="cd_contributo_ritenuta" />
+	<formFieldProperty
+		name="numero_mandato" />
+	<formFieldProperty
+			name="ds_regione" />
+	<formFieldProperty
+			name="ds_comune" />
+	<formFieldProperty
+			name="ti_ente_percipiente" />
+	<formFieldProperty
+			name="ammontare" />
+	<formFieldProperty
+			name="pg_compenso" />
+	<formFieldProperty
+			name="uo_compenso" />
+	<formFieldProperty
+			name="ds_uo_compenso" />
+	<formFieldProperty
+			name="ds_uo_liquidazione" />
+	<formFieldProperty
+			name="ds_compenso" />
+	<formFieldProperty
+			name="ragione_sociale" />
+	<formFieldProperty
+			name="cognome" />
+	<formFieldProperty
+			name="nome" />
+	<formFieldProperty
+			name="codice_fiscale" />
+	<formFieldProperty
+			name="dt_da" />
+	<formFieldProperty
+			name="dt_emissione" />
+	<formFieldProperty
+			name="dt_a" />
+
+	<columnFieldProperty
+		name="cd_gruppo_cr" />
+	<columnFieldProperty
+			name="cd_contributo_ritenuta" />
+	<columnFieldProperty
+		name="cd_regione" />
+	<columnFieldProperty
+		name="pg_comune" />
+	<columnFieldProperty
+		name="im_liquidato" />
+	<columnFieldProperty
+			name="ds_regione" />
+	<columnFieldProperty
+			name="ds_comune" />
+	<columnFieldProperty
+			name="ti_ente_percipiente" />
+	<columnFieldProperty
+			name="ammontare" />
+	<columnFieldProperty
+			name="pg_compenso" />
+	<columnFieldProperty
+			name="uo_compenso" />
+	<columnFieldProperty
+			name="ds_uo_compenso" />
+	<columnFieldProperty
+			name="ds_compenso" />
+	<columnFieldProperty
+			name="ragione_sociale" />
+	<columnFieldProperty
+			name="cognome" />
+	<columnFieldProperty
+			name="nome" />
+	<columnFieldProperty
+			name="codice_fiscale" />
+	<columnFieldProperty
+			name="dt_da" />
+	<columnFieldProperty
+			name="dt_emissione" />
+	<columnFieldProperty
+			name="dt_a" />
+
+	<findFieldProperty
+		name="cd_cds" />
+	<findFieldProperty
+			name="ds_regione" />
+	<findFieldProperty
+			name="ds_comune" />
+	<findFieldProperty
+		name="numero_mandato" />
+	<findFieldProperty
+			name="cd_contributo_ritenuta" />
+	<findFieldProperty
+		name="im_liquidato" />
+	<findFieldProperty
+		name="pg_comune" />
+	<findFieldProperty
+		name="esercizio_compenso" />
+	<findFieldProperty
+		name="pg_liquidazione" />
+	<findFieldProperty
+		name="cd_regione" />
+	<findFieldProperty
+		name="cd_cds_doc" />
+	<findFieldProperty
+		name="cd_gruppo_cr" />
+	<findFieldProperty
+			name="ti_ente_percipiente" />
+	<findFieldProperty
+			name="ammontare" />
+	<findFieldProperty
+			name="pg_compenso" />
+	<findFieldProperty
+			name="uo_compenso" />
+	<findFieldProperty
+			name="ds_uo_compenso" />
+	<findFieldProperty
+			name="ds_compenso" />
+	<findFieldProperty
+			name="ragione_sociale" />
+	<findFieldProperty
+			name="cognome" />
+	<findFieldProperty
+			name="nome" />
+	<findFieldProperty
+			name="codice_fiscale" />
+	<findFieldProperty
+			name="dt_da" />
+	<findFieldProperty
+			name="dt_emissione" />
+	<findFieldProperty
+			name="dt_a" />
+</bulkInfo>
