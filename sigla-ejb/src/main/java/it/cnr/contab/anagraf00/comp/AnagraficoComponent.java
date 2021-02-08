@@ -17,6 +17,7 @@
 
 package it.cnr.contab.anagraf00.comp;
 
+import feign.FeignException;
 import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.EcfHome;
@@ -36,6 +37,7 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
+import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
@@ -57,6 +59,12 @@ import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.SendMail;
+import it.cnr.si.service.AceService;
+import it.cnr.si.service.dto.anagrafica.enums.TipoAppartenenza;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaEntitaOrganizzativaWebDto;
+import it.cnr.si.service.dto.anagrafica.scritture.PersonaEntitaOrganizzativaDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -77,12 +85,13 @@ import java.util.stream.Collectors;
  */
 
 public class AnagraficoComponent extends UtilitaAnagraficaComponent implements ICRUDMgr, IAnagraficoMgr, IPrintMgr {
+    private transient static final Logger logger = LoggerFactory.getLogger(AnagraficoComponent.class);
     private static final String ACCESSO_MODIFICA_STRUTTURA_CNR = "CFGANAGCFCOREANAGSOM";
-//    private AceService aceService;
+    private AceService aceService;
 
     public AnagraficoComponent() {
 
-//        aceService = SpringUtil.getBean("aceService", AceService.class);
+        aceService = SpringUtil.getBean("aceService", AceService.class);
     }
 
     protected void adeguaDt_fine_rapportoTerzi(UserContext userContext, AnagraficoBulk anagrafico) throws it.cnr.jada.comp.ComponentException {
@@ -2538,7 +2547,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         }
     }
     public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk) throws ComponentException {
-/*        try {
+        try {
             if (!anagraficoBulk.isDipendente() && !anagraficoBulk.getRapporti().isEmpty()){
                 Optional<String> personaId = Optional.empty();
                 try {
@@ -2556,29 +2565,76 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         personeEO = aceService.personaEntitaOrganizzativaFind(params)
                                 .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
                         if (personeEO == null || personeEO.isEmpty()){
+                            String error = "Per la persona: "  + personaId.get() +" non è stata trovata l'appartenenza in ACE";
+                            logger.error(error);
                             SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" non è stata trovata l'appartenenza in ACE");
                         } else {
 // Prendo l'ultima appartenenza valida dopo averla ordinata
-                            Optional<PersonaEntitaOrganizzativaWebDto> personaEO = personeEO.stream().reduce((first, second) -> second);
+                            PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
+                            List<RapportoBulk> rapportiValidi = new LinkedList<>();
                             for (Object obj : anagraficoBulk.getRapporti()){
                                 RapportoBulk rapportoBulk = (RapportoBulk) obj;
-                                if (rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
-                                        rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0 ){
-                                    // devo prima ordinare i rapporti per data inizio...poi prendo solo quelli validi...se ci sta più di un rapporto valido devo anche inserire una appartenenza con la stessa uo.
-//                                    aggiornaPersonaEO(utente, dtIniValidita, dtFinValidita, personaEO);
+                                Tipo_rapportoBulk tipo_rapportoBulk = (Tipo_rapportoBulk) getHome(userContext, Tipo_rapportoBulk.class).findByPrimaryKey(rapportoBulk.getTipo_rapporto());
+                                if ((rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
+                                        rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente() ){
+                                    rapportiValidi.add(rapportoBulk);
+                                }
+                            }
+
+                            List<RapportoBulk> rapportiOrdinati = (List<RapportoBulk>) rapportiValidi.stream().sorted(Comparator.comparing(RapportoBulk::getDt_ini_validita)).collect(Collectors.toList());
+                            LocalDate dataFinePrecedente = null;
+                            RapportoBulk rapportoPrec = null;
+                            List<RapportoBulk> rapportiCongruenti = new LinkedList<>();
+                            for (RapportoBulk rapportoBulk : rapportiOrdinati){
+                                if (rapportoPrec == null){
+                                    rapportoPrec = rapportoBulk;
+                                    rapportiCongruenti.add(rapportoBulk);
+                                } else {
+                                    if (rapportoPrec.getDt_fin_validita().compareTo(rapportoBulk.getDt_ini_validita()) < 0){
+                                        rapportiCongruenti.add(rapportoBulk);
+                                    } else {
+                                        rapportiCongruenti = new LinkedList<>();
+                                        rapportiCongruenti.add(rapportoBulk);
+                                    }
+                                    rapportoPrec = rapportoBulk;
+                                }
+                            }
+
+                            boolean primoGiro = true;
+                            for (RapportoBulk rapportoBulk : rapportiCongruenti){
+                                if (primoGiro){
+                                    aggiornaPersonaEO(userContext.getUser(), personaEO.getInizioValidita(), rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate(), personaEO);
+                                    primoGiro = false;
+                                } else {
+                                    PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
+                                    personaEntitaOrganizzativaDto.setPersona(Integer.valueOf(personaId.get()));
+                                    personaEntitaOrganizzativaDto.setTipoAppartenenza(TipoAppartenenza.AFFERENZA_UO);
+                                    personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEO.getEntitaOrganizzativa().getId());
+                                    personaEntitaOrganizzativaDto.setInizioValidita(
+                                            rapportoBulk.getDt_ini_validita().toLocalDateTime().toLocalDate()
+                                    );
+                                    personaEntitaOrganizzativaDto.setFineValidita(
+                                            rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate()
+                                    );
+                                    logger.info(personaEntitaOrganizzativaDto.toString());
+                                    final PersonaEntitaOrganizzativaWebDto personaEntitaOrganizzativaWebDto =
+                                            aceService.savePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
                                 }
                             }
                         }
 
                     } catch (FeignException _ex) {
+                        String error = "Per la persona con id: "  + personaId.get() +" è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: "+_ex.getMessage();
+                        logger.error(error);
+                        SendMail.sendErrorMail("Invio Dati ACE: Eccezione durante l'aggiornamento delle appartenenze per la persona con ID "  + personaId.get() , error);
                     }
                 }
             }
         } catch (Throwable e) {
             throw handleException(e);
-        }*/
+        }
     }
-/*    private void aggiornaPersonaEO(String utente, String dtIniValidita, String dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
+    private void aggiornaPersonaEO(String utente, LocalDate dtIniValidita, LocalDate dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
         PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
         personaEntitaOrganizzativaDto.setId(personaEOWebDto.getId());
         personaEntitaOrganizzativaDto.setNote(personaEOWebDto.getNote());
@@ -2588,17 +2644,12 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         personaEntitaOrganizzativaDto.setPersona(personaEOWebDto.getPersona().getId());
         personaEntitaOrganizzativaDto.setTipoAppartenenza(personaEOWebDto.getTipoAppartenenza());
         personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEOWebDto.getEntitaOrganizzativa().getId());
-        personaEntitaOrganizzativaDto.setInizioValidita(
-        LocalDate.parse(dtIniValidita, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-        );
-        personaEntitaOrganizzativaDto.setFineValidita(
-        LocalDate.parse(dtFinValidita, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-        );
+        personaEntitaOrganizzativaDto.setInizioValidita(dtIniValidita);
+        personaEntitaOrganizzativaDto.setFineValidita(dtFinValidita);
         logger.info(personaEntitaOrganizzativaDto.toString());
 
         aceService.updatePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
     }
-*/
     public java.sql.Timestamp getCurrentDate() {
         try {
             return it.cnr.jada.util.ejb.EJBCommonServices.getServerDate();
@@ -2606,5 +2657,4 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             throw new it.cnr.jada.DetailedRuntimeException(e);
         }
     }
-
 }
