@@ -72,6 +72,7 @@
 		<property name="digitalPreservationCodRegFP" value="${DigitalPreservationCodRegFP}" />
 	</bean>
 	<bean id="gson" class="com.google.gson.Gson"/>
+	<bean id="aceService" class="it.cnr.si.service.AceService"/>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
 		<property name="gson" ref="gson"/>
