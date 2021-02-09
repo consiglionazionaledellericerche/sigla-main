@@ -244,7 +244,12 @@ cnr:
 help:
   base:
     url: https://consiglionazionaledellericerche.github.io/sigla-main
-
+authJWT:
+  username: ace
+  password: thisissecret
+ace:
+  url: "http://zuul-server.test.si.cnr.it/api"
+  username: app.sigla
 ---
 project:
   stage: demo-h2
