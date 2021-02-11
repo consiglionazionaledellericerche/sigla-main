@@ -2582,7 +2582,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         if (personeEO == null || personeEO.isEmpty()){
                             String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
                              logger.error(error);
-                            SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" non è stata trovata l'appartenenza in ACE");
+                            SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE");
                         } else {
 // Prendo l'ultima appartenenza valida dopo averla ordinata
                             PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
