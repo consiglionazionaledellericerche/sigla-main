@@ -21,8 +21,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.persistency.Broker;
+import it.cnr.si.service.dto.anagrafica.enums.TipoContratto;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Gestione dei dati relativi alla tabella Rapporto
@@ -36,6 +39,16 @@ public class RapportoBulk extends RapportoBase {
     @JsonIgnore
     private it.cnr.jada.bulk.BulkList inquadramenti = new BulkList();
     private java.sql.Timestamp dt_fin_validita_originale;
+
+    public static Map<String, TipoContratto> TIPOCONTRATTO_ACE = new HashMap<String, TipoContratto>(){
+        {
+            put("BORS", TipoContratto.BORSISTA);
+            put("ASS", TipoContratto.ASSOCIATO_CON_INCARICO_DI_COLLABORAZIONE);
+            put("COLL", TipoContratto.COLLABORATORE_PROFESSIONALE);
+            put("PROF", TipoContratto.COLLABORATORE_PROFESSIONALE);
+            put("OCCA", TipoContratto.COLLABORATORE_PROFESSIONALE);
+        }
+    };
 
     public RapportoBulk() {
         super();

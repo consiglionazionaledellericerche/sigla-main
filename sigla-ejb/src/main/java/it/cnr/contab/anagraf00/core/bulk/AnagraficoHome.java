@@ -804,4 +804,17 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 		sql.addSQLClause("AND","DT_FIN_VALIDITA",sql.GREATER_EQUALS,dataOdierna);
 		return home.fetchAll(sql);	
 	}
+/*	public java.util.List<AnagraficoBulk> findAnagraficoNonDipValidi() throws IntrospectionException, PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+
+		java.sql.Timestamp dataOdierna = getServerDate();
+
+		String subQuery = "  cd_anag > 225452 and CD_anag IN ( " +
+				"SELECT CD_anag FROM RAPPORTO " +
+				"WHERE cd_tipo_rapporto not in ('DIP','EXDIP') AND DT_INI_VALIDITA <= to_date('10/02/2021','dd/mm/yyyy') " +
+				" and DT_FIN_VALIDITA >= to_date('10/02/2021','dd/mm/yyyy')   AND duva > to_date('01/01/2018','dd/mm/yyyy')) ";
+		sql.addSQLClause("AND", subQuery);
+		sql.setOrderBy("cd_anag",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		return fetchAll(sql);
+	}*/
 }

@@ -61,7 +61,9 @@ import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.SendMail;
 import it.cnr.si.service.AceService;
 import it.cnr.si.service.dto.anagrafica.enums.TipoAppartenenza;
+import it.cnr.si.service.dto.anagrafica.enums.TipoContratto;
 import it.cnr.si.service.dto.anagrafica.letture.PersonaEntitaOrganizzativaWebDto;
+import it.cnr.si.service.dto.anagrafica.letture.PersonaWebDto;
 import it.cnr.si.service.dto.anagrafica.scritture.PersonaEntitaOrganizzativaDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -2547,7 +2549,19 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         }
     }
     public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk) throws ComponentException {
+/*        AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
+        List<AnagraficoBulk> listaAnagrafico = null;
         try {
+            listaAnagrafico = anagraficoHome.findAnagraficoNonDipValidi();
+        } catch (IntrospectionException e) {
+            e.printStackTrace();
+        } catch (PersistencyException e) {
+            e.printStackTrace();
+        }
+            for (AnagraficoBulk anagraficoBulk : listaAnagrafico){
+                logger.info(anagraficoBulk.getCd_anag().toString());
+                anagraficoBulk = (AnagraficoBulk)inizializzaBulkPerModifica(userContext, anagraficoBulk);*/
+                try {
             if (!anagraficoBulk.isDipendente() && !anagraficoBulk.getRapporti().isEmpty()){
                 Optional<String> personaId = Optional.empty();
                 try {
@@ -2557,6 +2571,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                 if (!personaId.isPresent()) {
                     SendMail.sendErrorMail("Invio Dati ACE: Codice fiscale "  + anagraficoBulk.getCodice_fiscale() +" non trovato.", "Per il codice fiscale: "  + anagraficoBulk.getCodice_fiscale() +" non è stata trovata la persona in ACE");
                 } else {
+                    PersonaWebDto personaWebDto = aceService.personaById(new Integer(personaId.get()));
                     try {
                         Map<String, Object> params = new HashMap<>();
                         params.put("persona", personaId.get());
@@ -2565,64 +2580,90 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         personeEO = aceService.personaEntitaOrganizzativaFind(params)
                                 .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
                         if (personeEO == null || personeEO.isEmpty()){
-                            String error = "Per la persona: "  + personaId.get() +" non è stata trovata l'appartenenza in ACE";
-                            logger.error(error);
+                            String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
+                             logger.error(error);
                             SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" non è stata trovata l'appartenenza in ACE");
                         } else {
 // Prendo l'ultima appartenenza valida dopo averla ordinata
                             PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
                             List<RapportoBulk> rapportiValidi = new LinkedList<>();
+                            boolean isExDipendente = false;
                             for (Object obj : anagraficoBulk.getRapporti()){
                                 RapportoBulk rapportoBulk = (RapportoBulk) obj;
                                 Tipo_rapportoBulk tipo_rapportoBulk = (Tipo_rapportoBulk) getHome(userContext, Tipo_rapportoBulk.class).findByPrimaryKey(rapportoBulk.getTipo_rapporto());
+                                if (tipo_rapportoBulk.isDipendente()){
+                                    isExDipendente = true;
+                                }
                                 if ((rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
-                                        rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente() ){
+                                        rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente()  &&
+                                        RapportoBulk.TIPOCONTRATTO_ACE.containsKey(tipo_rapportoBulk.getCd_tipo_rapporto())){
                                     rapportiValidi.add(rapportoBulk);
                                 }
                             }
 
-                            List<RapportoBulk> rapportiOrdinati = (List<RapportoBulk>) rapportiValidi.stream().sorted(Comparator.comparing(RapportoBulk::getDt_ini_validita)).collect(Collectors.toList());
-                            LocalDate dataFinePrecedente = null;
-                            RapportoBulk rapportoPrec = null;
-                            List<RapportoBulk> rapportiCongruenti = new LinkedList<>();
-                            for (RapportoBulk rapportoBulk : rapportiOrdinati){
-                                if (rapportoPrec == null){
-                                    rapportoPrec = rapportoBulk;
-                                    rapportiCongruenti.add(rapportoBulk);
-                                } else {
-                                    if (rapportoPrec.getDt_fin_validita().compareTo(rapportoBulk.getDt_ini_validita()) < 0){
+                            if (rapportiValidi.size() > 0){
+                                List<RapportoBulk> rapportiOrdinati = (List<RapportoBulk>) rapportiValidi.stream().sorted(Comparator.comparing(RapportoBulk::getDt_ini_validita)).collect(Collectors.toList());
+                                LocalDate dataFinePrecedente = null;
+                                RapportoBulk rapportoPrec = null;
+                                List<RapportoBulk> rapportiCongruenti = new LinkedList<>();
+                                for (RapportoBulk rapportoBulk : rapportiOrdinati){
+                                    if (rapportoPrec == null){
+                                        rapportoPrec = rapportoBulk;
                                         rapportiCongruenti.add(rapportoBulk);
                                     } else {
-                                        rapportiCongruenti = new LinkedList<>();
-                                        rapportiCongruenti.add(rapportoBulk);
+                                        if (rapportoPrec.getDt_fin_validita().compareTo(rapportoBulk.getDt_ini_validita()) < 0){
+                                            rapportiCongruenti.add(rapportoBulk);
+                                        } else {
+                                            rapportiCongruenti = new LinkedList<>();
+                                            rapportiCongruenti.add(rapportoBulk);
+                                        }
+                                        rapportoPrec = rapportoBulk;
                                     }
-                                    rapportoPrec = rapportoBulk;
                                 }
-                            }
-
-                            boolean primoGiro = true;
-                            for (RapportoBulk rapportoBulk : rapportiCongruenti){
-                                if (primoGiro){
-                                    aggiornaPersonaEO(userContext.getUser(), personaEO.getInizioValidita(), rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate(), personaEO);
-                                    primoGiro = false;
-                                } else {
-                                    PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
-                                    personaEntitaOrganizzativaDto.setPersona(Integer.valueOf(personaId.get()));
-                                    personaEntitaOrganizzativaDto.setTipoAppartenenza(TipoAppartenenza.AFFERENZA_UO);
-                                    personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEO.getEntitaOrganizzativa().getId());
-                                    personaEntitaOrganizzativaDto.setInizioValidita(
-                                            rapportoBulk.getDt_ini_validita().toLocalDateTime().toLocalDate()
-                                    );
-                                    personaEntitaOrganizzativaDto.setFineValidita(
-                                            rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate()
-                                    );
-                                    logger.info(personaEntitaOrganizzativaDto.toString());
-                                    final PersonaEntitaOrganizzativaWebDto personaEntitaOrganizzativaWebDto =
-                                            aceService.savePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
+                                if (rapportiCongruenti.size() > 0){
+                                    RapportoBulk ultimoRapportoValido = rapportiCongruenti.stream().reduce((first, second) -> second).get();
+                                    TipoContratto tipoContratto = Optional.ofNullable(ultimoRapportoValido.getCd_tipo_rapporto())
+                                            .filter(s -> RapportoBulk.TIPOCONTRATTO_ACE.containsKey(ultimoRapportoValido.getCd_tipo_rapporto()))
+                                            .map(s -> RapportoBulk.TIPOCONTRATTO_ACE.get(ultimoRapportoValido.getCd_tipo_rapporto()))
+                                            .orElse(null);
+                                    if (ultimoRapportoValido.getCd_tipo_rapporto().equals("ASS") && !isExDipendente){
+                                        tipoContratto = TipoContratto.ASSEGNISTA;
+                                    }
+                                    if (tipoContratto != null && (personaWebDto.getTipoContratto() == null || tipoContratto.compareTo(personaWebDto.getTipoContratto()) != 0)){
+                                        personaWebDto.setTipoContratto(tipoContratto);
+                                        personaWebDto.setDataCessazione(null);
+                                        personaWebDto.setDataPrevistaCessazione(null);
+                                        personaWebDto.setLivello(null);
+                                        personaWebDto.setProfilo(null);
+                                        aceService.updatePersona(personaWebDto);
+                                    }
+                                    boolean primoGiro = true;
+                                    for (RapportoBulk rapportoBulk : rapportiCongruenti){
+                                        if (primoGiro){
+                                            LocalDate dataFineRapporto = rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate();
+                                            if (personaEO.getFineValidita() == null || !dataFineRapporto.isEqual(personaEO.getFineValidita())){
+                                                aggiornaPersonaEO(userContext.getUser(), personaEO.getInizioValidita(), rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate(), personaEO);
+                                            }
+                                            primoGiro = false;
+                                        } else {
+                                            PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
+                                            personaEntitaOrganizzativaDto.setPersona(Integer.valueOf(personaId.get()));
+                                            personaEntitaOrganizzativaDto.setTipoAppartenenza(TipoAppartenenza.AFFERENZA_UO);
+                                            personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEO.getEntitaOrganizzativa().getId());
+                                            personaEntitaOrganizzativaDto.setInizioValidita(
+                                                    rapportoBulk.getDt_ini_validita().toLocalDateTime().toLocalDate()
+                                            );
+                                            personaEntitaOrganizzativaDto.setFineValidita(
+                                                    rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate()
+                                            );
+                                            logger.info(personaEntitaOrganizzativaDto.toString());
+                                            final PersonaEntitaOrganizzativaWebDto personaEntitaOrganizzativaWebDto =
+                                                    aceService.savePersonaEntitaOrganizzativa(personaEntitaOrganizzativaDto);
+                                        }
+                                    }
                                 }
                             }
                         }
-
                     } catch (FeignException _ex) {
                         String error = "Per la persona con id: "  + personaId.get() +" è stato riscontrato un errore durante l'aggiornamento dell'appartenenza in ACE: "+_ex.getMessage();
                         logger.error(error);
@@ -2633,6 +2674,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         } catch (Throwable e) {
             throw handleException(e);
         }
+//            }
     }
     private void aggiornaPersonaEO(String utente, LocalDate dtIniValidita, LocalDate dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
         PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();

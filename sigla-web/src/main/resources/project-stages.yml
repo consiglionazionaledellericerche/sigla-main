@@ -413,7 +413,7 @@ thorntail:
 
 ace:
   url: http://ace-webapp.test.si.cnr.it:5555/api
-  #  url: https://api.ace.cnr.it/api
+#  url: https://api.ace.cnr.it/api
   username: app.sigla
   password: siglapw
 
