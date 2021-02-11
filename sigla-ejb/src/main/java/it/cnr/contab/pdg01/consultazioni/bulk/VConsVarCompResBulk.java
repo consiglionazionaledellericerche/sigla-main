@@ -21,6 +21,7 @@
  */
 package it.cnr.contab.pdg01.consultazioni.bulk;
 
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -93,6 +94,9 @@ public class VConsVarCompResBulk extends OggettoBulk implements Persistent {
 	
 //  dtApprovazione TIMESTAMP(7)
 	private java.sql.Timestamp dtApprovazione;
+
+	// TI_MOTIVAZIONE_VARIAZIONE VARCHAR2(10)
+	private java.lang.String tiMotivazioneVariazione;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -409,5 +413,17 @@ public class VConsVarCompResBulk extends OggettoBulk implements Persistent {
 	}
 	public void setDtApprovazione(java.sql.Timestamp dtApprovazione) {
 		this.dtApprovazione = dtApprovazione;
+	}
+
+	public String getTiMotivazioneVariazione() {
+		return tiMotivazioneVariazione;
+	}
+
+	public void setTiMotivazioneVariazione(String tiMotivazioneVariazione) {
+		this.tiMotivazioneVariazione = tiMotivazioneVariazione;
+	}
+
+	public final java.util.Dictionary getTiMotivazioneVariazioneForSearchKeys() {
+		return Pdg_variazioneBulk.tiMotivazioneVariazioneForSearchKeys;
 	}
 }

@@ -1,3 +1,19 @@
+## Release 6.2.94  -- _February 08, 2021_ 
+**Changes**
+
+>**Consultazione Variazioni: aggiunto filtro per tipologia variazioni. Resolve issue #63**
+>
+>[31bccf7daa383dc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31bccf7daa383dc) raffaele.pagano *February 08, 2021*
+
+>**FIX error on compile**
+>
+>[fe30fc242eb8083](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fe30fc242eb8083) marco.spasiano *February 08, 2021*
+
+>**Fix view**
+>
+>[017334be889f0ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/017334be889f0ce) gianfranco.gasparro *February 07, 2021*
+
+
 ## Release 6.2.93  -- _February 07, 2021_ 
 **Changes**
 
