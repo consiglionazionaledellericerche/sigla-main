@@ -23,6 +23,10 @@ package it.cnr.contab.docamm00.docs.bulk;
  * @author: Roberto Peli
  */
 public interface IDocumentoAmministrativoRigaBulk {
+	public enum tipo {
+		GEN_CORA_E, GEN_CORV_E
+	}
+
 
 	public final static String NON_RIPORTATO = "N";
 	public final static String RIPORTATO = "R";
