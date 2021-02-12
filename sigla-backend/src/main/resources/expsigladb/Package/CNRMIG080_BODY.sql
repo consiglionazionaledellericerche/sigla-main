@@ -1132,7 +1132,7 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
  Numrighe number;
  pg_esistente number;
  flag BANCA.FL_CANCELLATO%type;
-
+ isBonificoEstero boolean := false;
 
  begin
 --Dbms_Output.put_line('MODIFICABANCA'||' matricola '||aAnaDip.matricola);
@@ -1154,9 +1154,9 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 						 for update nowait;
 					end;
 
-                    --verifico se è una modalità di pagamento di tipo estera (BOEST)
+                    --verifico se è una modalità di pagamento di tipo estera
                     If lCdModPagamento='BO' and substr(aAnaDip.iban_pag,1,2) not in ('00','IT') Then
-                       lCdModPagamento := 'BOEST';
+                       isBonificoEstero := true;
                     End If;
 
 					  	  -- recuperiamo la modalita pagamento
@@ -1214,7 +1214,7 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 
 							if pg_esistente is not null and flag = 'Y' and Nvl(aAnaDip.iban_pag,'0')!='0' then
                                 begin
-							         if lCdModPagamento!='BOEST' then
+							         if not isBonificoEstero then
                                         update banca
 										set fl_cancellato = 'N',
 											duva = sysdate,
@@ -1304,7 +1304,7 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 	  else -- lNumBanche>0
 	  	  -- la banca non esiste
           --se estera la creo
-          if lCdModPagamento='BOEST' then
+          if isBonificoEstero then
             lInsBanca := true;
           Else
     		  -- controlliamo se abi e cab sono validi
@@ -1329,7 +1329,7 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 	  	 -- Creo questa banca se e solo se non esiste banca e abi e cab sono validi
 		 lBanca.CD_TERZO  		:= aTerzo.cd_terzo;
 
-         if lCdModPagamento!='BOEST' then
+         if not isBonificoEstero then
 		   lBanca.CAB				:= aAnaDip.cab_pag;
 		   lBanca.ABI				:= aAnaDip.abi_pag;
          End If;
