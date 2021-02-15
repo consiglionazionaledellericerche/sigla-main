@@ -95,7 +95,6 @@ La compilazione della Testata prevederà l’inserimento della Data di trasferim
 =======================
 
 **Tabelle di riferimento**
-==========================
 
 Le tabelle di riferimento sono:
 
@@ -109,7 +108,6 @@ Le tabelle di riferimento sono:
 - Tra le tabelle di riferimento, solo l’Ubicazione ed il Consegnatario sono di interesse degli utenti. Entrambe dovranno essere aggiornate se si dovessero verificare dei cambiamenti.
 
 **Ubicazione** 
-
 Per poter compilare la tabella delle ubicazioni (articolata su massimo tre livelli) si dovrà procedere come segue:
 
 - inserire il “Codice Ubicazione Proprio” (campo esclusivamente numerico);
@@ -138,14 +136,12 @@ In caso di errore sarà possibile eliminare l’ubicazione inserita partendo dal
 In fase di nuovo inserimento, si consiglia l’utente di avvalersi della ricerca semplice o della ricerca guidata per visualizzare rispettivamente tutte o parte delle ubicazioni già presenti, al fine di mantenere un criterio omogeneo nell’organizzazione delle stesse. La tabella delle ubicazioni potrà essere implementata o modificata nella descrizione, a seconda delle esigenze dell’utente; qualora i beni vengano trasferiti in una sede con caratteristiche differenti rispetto alla precedente, tali da non consentire la semplice modifica delle ubicazioni esistenti, si dovrà provvedere a compilare nuovamente la tabella, avendo cura di riassegnare i beni alle nuove ubicazioni.
 
 **Consegnatario**
-
 Per quanto riguarda la tabella del "Consegnatario" sarà cura degli utenti provvedere al suo aggiornamento qualora cambi il direttore della Struttura.
 
 Per effettuare tale operazione bisognerà inserire il nuovo Consegnatario ricercandolo tramite le apposite icone poste a margine del campo, inserire la Data di inizio validità (che coinciderà con la data di nomina del Direttore dell’Istituto) e salvare. A salvataggio eseguito, il sistema aggiornerà automaticamente il campo "Data Fine Validità" riferito al precedente Consegnatario. Attraverso la ricerca semplice l’utente potrà visualizzare il nome e il periodo di validità dei precedenti Consegnatari.
 
 
 **Stampe**
-==========
 
 Le stampe previste sono:
 
@@ -153,9 +149,7 @@ Le stampe previste sono:
 - Stampa registro inventario
 
 **Stampa beni senza utilizzatori**
-
 La stampa “Beni senza utilizzatori” consentirà di individuare i beni privi di tale informazione. Allo stato attuale riguarda solo i beni ricevuti tramite un trasferimento. Per effettuare la stampa, l’utente selezionerà l’Unità organizzativa e le date che definiscono l’arco temporale di riferimento. Si ricorda che il sistema consentirà il calcolo automatico delle quote di ammortamento, solo se tutti i beni caricati riporteranno l’indicazione dell’utilizzatore e del GAE.
-
 **Stampa registro inventario**
 
 Il Registro Inventario è un documento contabile che racchiude e rappresenta i singoli elementi costituenti il patrimonio dell’Ente. La stampa è stata predisposta al fine di consentire all’utente le opportune verifiche. Sarà possibile, infatti, estrapolare i beni in relazione a determinati parametri: la categoria inventariale di appartenenza, la data di registrazione dei beni, il tipo di movimento selezionato al momento del carico, il codice e il tipo di bene (commerciale o istituzionale). Apponendo il flag Solo Totali il sistema consentirà, inoltre, di stampare solo i totali distinti per categoria-gruppo e totale generale.
