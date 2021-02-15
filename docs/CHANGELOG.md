@@ -1,9 +1,45 @@
-## Release 6.2.94  -- _February 08, 2021_ 
+## Release 6.2.98  -- _February 15, 2021_ 
 **Changes**
 
->**Consultazione Variazioni: aggiunto filtro per tipologia variazioni. Resolve issue #63**
+>**FIX calcolo importo SIOPE**
 >
->[31bccf7daa383dc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31bccf7daa383dc) raffaele.pagano *February 08, 2021*
+>[87397e03138a191](https://github.com/consiglionazionaledellericerche/sigla-main/commit/87397e03138a191) marco.spasiano *February 15, 2021*
+
+>**FIX ace client integration**
+>
+>[d21d09f1fa5c0b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d21d09f1fa5c0b4) marco.spasiano *February 15, 2021*
+
+>**Update inventario.rst**
+>
+>[52940d2bcedb0ea](https://github.com/consiglionazionaledellericerche/sigla-main/commit/52940d2bcedb0ea) patriziavillani *February 15, 2021*
+
+>**Update inventario.rst**
+>
+>[ff1ba1836c71bfd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ff1ba1836c71bfd) patriziavillani *February 15, 2021*
+
+>**Update inventario.rst**
+>
+>[7af657c50c22968](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7af657c50c22968) patriziavillani *February 12, 2021*
+
+>**Add files via upload**
+>
+>[f0bbff4405e7961](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f0bbff4405e7961) patriziavillani *February 12, 2021*
+
+>**Update inventario.rst**
+>
+>[16197ca20d94f15](https://github.com/consiglionazionaledellericerche/sigla-main/commit/16197ca20d94f15) patriziavillani *February 11, 2021*
+
+>**Update inventario.rst**
+>
+>[eb532b9fdfd9244](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eb532b9fdfd9244) patriziavillani *February 11, 2021*
+
+>**Create inventario.rst**
+>
+>[e4b6d763ecbe096](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4b6d763ecbe096) patriziavillani *February 11, 2021*
+
+>**Update index.rst**
+>
+>[c34866bc4ae8157](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c34866bc4ae8157) patriziavillani *February 11, 2021*
 
 >**FIX error on compile**
 >
@@ -12,6 +48,70 @@
 >**Fix view**
 >
 >[017334be889f0ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/017334be889f0ce) gianfranco.gasparro *February 07, 2021*
+
+
+## Release 6.2.97  -- _February 15, 2021_ 
+**Changes**
+
+>**Fix ClassCastException Double to Integer su clause RestSelect**
+>
+>[79a068e702308f4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/79a068e702308f4) gianfranco.gasparro *February 15, 2021*
+
+
+## Release 6.2.96  -- _February 13, 2021_ 
+**Changes**
+
+>**FIX test for ACE**
+>
+>[b69fb90f388273a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b69fb90f388273a) marco.spasiano *February 13, 2021*
+
+>**FIX riporta in provvisorio una variazione firmata**
+>
+>[56c60932533aa09](https://github.com/consiglionazionaledellericerche/sigla-main/commit/56c60932533aa09) marco.spasiano *February 12, 2021*
+
+>**FIX use google gson to serialize object, exclude field and class with annotation JsonIgnore**
+>
+>[1cd8fd1fb74bff4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1cd8fd1fb74bff4) marco.spasiano *February 12, 2021*
+
+>**Aggiunto blocco alla predisposizione per le Reversali cori non associate ai Mandati**
+>
+>[6c91bd35a246942](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c91bd35a246942) marco.spasiano *February 12, 2021*
+
+>**Fix procedure CNRMIG080**
+>
+>[13a4e85440e0920](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13a4e85440e0920) raffaele.pagano *February 12, 2021*
+
+>**FIX Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Modificata per Bonifici Esteri. Resolve issue #64**
+>
+>[9e55a4c389c5efb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e55a4c389c5efb) raffaele.pagano *February 11, 2021*
+
+>**Rilascio integrazione con ACE**
+>
+>[e4de8319f27fee7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4de8319f27fee7) gianfranco.gasparro *February 11, 2021*
+
+>**Rilascio integrazione con ACE**
+>
+>[40630148ebfc13e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/40630148ebfc13e) gianfranco.gasparro *February 11, 2021*
+
+>**FIX ace client integration**
+>
+>[217191d71ef034f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/217191d71ef034f) marco.spasiano *February 09, 2021*
+
+>**Inizio integrazione ACE**
+>
+>[a201965aed29e24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a201965aed29e24) gianfranco.gasparro *February 08, 2021*
+
+>**Inizio integrazione ACE**
+>
+>[3198c3d4bfc4966](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3198c3d4bfc4966) gianfranco.gasparro *February 08, 2021*
+
+
+## Release 6.2.94  -- _February 08, 2021_ 
+**Changes**
+
+>**Consultazione Variazioni: aggiunto filtro per tipologia variazioni. Resolve issue #63**
+>
+>[31bccf7daa383dc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31bccf7daa383dc) raffaele.pagano *February 08, 2021*
 
 
 ## Release 6.2.93  -- _February 07, 2021_ 
