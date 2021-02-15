@@ -7,3 +7,4 @@ Documenti Amministrativi
 
    Fatture/index
    cassa_economale.rst
+   inventario.rst
