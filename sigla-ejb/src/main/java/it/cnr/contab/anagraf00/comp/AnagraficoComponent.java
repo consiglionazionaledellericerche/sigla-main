@@ -2548,8 +2548,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             throw handleException(e);
         }
     }
-    public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk) throws ComponentException {
-/*        AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
+    public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk1) throws ComponentException {
+        AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
         List<AnagraficoBulk> listaAnagrafico = null;
         try {
             listaAnagrafico = anagraficoHome.findAnagraficoNonDipValidi();
@@ -2560,7 +2560,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         }
             for (AnagraficoBulk anagraficoBulk : listaAnagrafico){
                 logger.info(anagraficoBulk.getCd_anag().toString());
-                anagraficoBulk = (AnagraficoBulk)inizializzaBulkPerModifica(userContext, anagraficoBulk);*/
+                anagraficoBulk = (AnagraficoBulk)inizializzaBulkPerModifica(userContext, anagraficoBulk);
                 try {
             if (!anagraficoBulk.isDipendente() && !anagraficoBulk.getRapporti().isEmpty()){
                 Optional<String> personaId = Optional.empty();
@@ -2580,11 +2580,22 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                         personeEO = aceService.personaEntitaOrganizzativaFind(params)
                                 .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
                         if (personeEO == null || personeEO.isEmpty()){
-                            String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
+                            params = new HashMap<>();
+                            params.put("persona", personaId.get());
+                            params.put("tipoAppartenenza", TipoAppartenenza.SEDE);
+                            personeEO = aceService.personaEntitaOrganizzativaFind(params)
+                                    .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
+
+/*                            String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
                              logger.error(error);
-                            SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE");
-                        } else {
+                            SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE");*/
+                        }
+                        //else {
 // Prendo l'ultima appartenenza valida dopo averla ordinata
+                        if (personeEO == null || personeEO.isEmpty()){
+                            String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
+                            logger.error(error);
+                        } else {
                             PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
                             List<RapportoBulk> rapportiValidi = new LinkedList<>();
                             boolean isExDipendente = false;
@@ -2641,9 +2652,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                                     for (RapportoBulk rapportoBulk : rapportiCongruenti){
                                         if (primoGiro){
                                             LocalDate dataFineRapporto = rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate();
-                                            if (personaEO.getFineValidita() == null || !dataFineRapporto.isEqual(personaEO.getFineValidita())){
+//                                            if (personaEO.getFineValidita() == null || !dataFineRapporto.isEqual(personaEO.getFineValidita())){
                                                 aggiornaPersonaEO(userContext.getUser(), personaEO.getInizioValidita(), rapportoBulk.getDt_fin_validita().toLocalDateTime().toLocalDate(), personaEO);
-                                            }
+//                                            }
                                             primoGiro = false;
                                         } else {
                                             PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
@@ -2674,7 +2685,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         } catch (Throwable e) {
             throw handleException(e);
         }
-//            }
+            }
     }
     private void aggiornaPersonaEO(String utente, LocalDate dtIniValidita, LocalDate dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
         PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
@@ -2684,7 +2695,7 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         personaEntitaOrganizzativaDto.setUtenteUva(utente);
         personaEntitaOrganizzativaDto.setProvvedimento(personaEOWebDto.getProvvedimento());
         personaEntitaOrganizzativaDto.setPersona(personaEOWebDto.getPersona().getId());
-        personaEntitaOrganizzativaDto.setTipoAppartenenza(personaEOWebDto.getTipoAppartenenza());
+        personaEntitaOrganizzativaDto.setTipoAppartenenza(TipoAppartenenza.AFFERENZA_UO);
         personaEntitaOrganizzativaDto.setEntitaOrganizzativa(personaEOWebDto.getEntitaOrganizzativa().getId());
         personaEntitaOrganizzativaDto.setInizioValidita(dtIniValidita);
         personaEntitaOrganizzativaDto.setFineValidita(dtFinValidita);
