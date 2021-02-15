@@ -267,15 +267,7 @@ select  v.cd_cds,
         m.cd_modalita_pag,
         sosp.im_associato,
         --sum(sosp.im_associato),
-        (select sum(mandato_siope.importo) from mandato_siope
-        where
-            v.cd_cds = mandato_siope.cd_cds         and
-            v.esercizio = mandato_siope.esercizio    and
-            v.pg_mandato = mandato_siope.pg_mandato  and
-            cge.esercizio_siope= mandato_siope.esercizio_siope and
-            cge.ti_gestione= mandato_siope.ti_gestione     and
-            cge.cd_siope= mandato_siope.cd_siope
-            ) importo_cge,
+        sum(cge.importo) importo_cge,
         sum(c.importo) importo_cup,
         mandato.dt_pagamento_richiesta
         from v_mandato_terzo v,mandato_riga m, mandato_siope cge,mandato_siope_cup c,terzo,banca b,
