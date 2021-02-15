@@ -90,7 +90,7 @@ Consente di modificare la connotazione originaria data al bene, ovvero un bene p
 La funzione di Trasferimento dei beni all'interno della stessa Uo si compone di due pannelli la Testata e il Dettaglio.
 La compilazione della Testata prevederà l’inserimento della Data di trasferimento, la selezione del Tipo movimento scarico e del Tipo movimento carico e la Descrizione.
 
-=======================
+
 **Funzioni di Utilità**
 =======================
 
