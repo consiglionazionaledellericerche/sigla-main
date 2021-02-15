@@ -35,7 +35,7 @@
 		<module>sigla-web</module>
 	</modules>
 	<properties>
-		<ace.version>4.0.15</ace.version>
+		<ace.version>4.0.16</ace.version>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
     	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>

@@ -67,6 +67,7 @@ import it.cnr.si.service.dto.anagrafica.letture.PersonaWebDto;
 import it.cnr.si.service.dto.anagrafica.scritture.PersonaEntitaOrganizzativaDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 import javax.ejb.EJBException;
 import javax.mail.internet.AddressException;
@@ -92,8 +93,11 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
     private AceService aceService;
 
     public AnagraficoComponent() {
-
-        aceService = SpringUtil.getBean("aceService", AceService.class);
+        try {
+            aceService = SpringUtil.getBean("aceService", AceService.class);
+        } catch (NoSuchBeanDefinitionException _ex) {
+            logger.warn("URL of ACE is not defined");
+        }
     }
 
     protected void adeguaDt_fine_rapportoTerzi(UserContext userContext, AnagraficoBulk anagrafico) throws it.cnr.jada.comp.ComponentException {
@@ -2549,6 +2553,8 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         }
     }
     public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk1) throws ComponentException {
+        if (!Optional.ofNullable(aceService).isPresent())
+            return;
         AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
         List<AnagraficoBulk> listaAnagrafico = null;
         try {

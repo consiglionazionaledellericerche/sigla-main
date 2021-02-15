@@ -244,12 +244,6 @@ cnr:
 help:
   base:
     url: https://consiglionazionaledellericerche.github.io/sigla-main
-authJWT:
-  username: ace
-  password: thisissecret
-ace:
-  url: "http://zuul-server.test.si.cnr.it/api"
-  username: app.sigla
 ---
 project:
   stage: demo-h2
@@ -381,6 +375,14 @@ thorntail:
 repository:
   base:
     url: http://gestdoc.cnr.it:90/alfresco/
+
+authJWT:
+  username: ace
+  password: thisissecret
+ace:
+  url: "https://api.ace.cnr.it/api"
+  username: app.sigla
+
 spring:
   profiles:
     active: no-liquibase
@@ -410,12 +412,6 @@ thorntail:
         max-pool-size: 100
   deployment:
     timeout: 1200
-
-ace:
-  url: http://ace-webapp.test.si.cnr.it:5555/api
-#  url: https://api.ace.cnr.it/api
-  username: app.sigla
-  password: siglapw
 
 spring:
   profiles:
