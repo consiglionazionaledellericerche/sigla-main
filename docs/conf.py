@@ -15,6 +15,13 @@
 
 import docs_cnr_theme
 
+# Register the theme as an extension to generate a sitemap.xml
+# extensions.append('sphinx_material')
+from recommonmark.parser import CommonMarkParser
+source_parsers = {
+    '.md': CommonMarkParser,
+}
+
 project = 'Sistema Informativo Gestione Linee di Attività'
 release = '6.2.98'
 author = u'Consiglio Nazionale delle Ricerche'
