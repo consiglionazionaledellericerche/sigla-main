@@ -1,5 +1,13 @@
-## Release 6.2.98  -- _February 15, 2021_ 
+## Release 6.2.99  -- _February 16, 2021_ 
 **Changes**
+
+>**Corretto inserimento anagrafico da REST ed abilitata la consultazione dei comuni sigla**
+>
+>[843f59ba6fa05da](https://github.com/consiglionazionaledellericerche/sigla-main/commit/843f59ba6fa05da) gianfranco.gasparro *February 16, 2021*
+
+>**Update conf.py**
+>
+>[a1f5a11c48b6366](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a1f5a11c48b6366) Marco Spasiano *February 16, 2021*
 
 >**FIX calcolo importo SIOPE**
 >
