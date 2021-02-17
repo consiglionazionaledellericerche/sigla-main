@@ -1,5 +1,9 @@
-## Release 6.2.99  -- _February 16, 2021_ 
+## Release 6.2.100  -- _February 17, 2021_ 
 **Changes**
+
+>**Consentito inserimento del comune estero nel caso di inserimento di anagrafico da REST**
+>
+>[42bcff4dc30cc00](https://github.com/consiglionazionaledellericerche/sigla-main/commit/42bcff4dc30cc00) gianfranco.gasparro *February 17, 2021*
 
 >**Corretto inserimento anagrafico da REST ed abilitata la consultazione dei comuni sigla**
 >
