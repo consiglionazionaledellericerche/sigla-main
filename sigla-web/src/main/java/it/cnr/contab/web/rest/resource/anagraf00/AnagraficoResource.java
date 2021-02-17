@@ -17,20 +17,19 @@
 
 package it.cnr.contab.web.rest.resource.anagraf00;
 
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBase;
 import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TelefonoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
+import it.cnr.contab.anagraf00.ejb.ComuneComponentSession;
 import it.cnr.contab.anagraf00.ejb.TerzoComponentSession;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneEsteroBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.anagraf00.util.CodiceFiscaleControllo;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.local.anagraf00.AnagraficoLocal;
-import it.cnr.contab.web.rest.local.anagraf00.TerzoLocal;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
@@ -48,7 +47,6 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 import java.rmi.RemoteException;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Optional;
 
 @Stateless
@@ -58,6 +56,7 @@ public class AnagraficoResource implements AnagraficoLocal {
 	@EJB CRUDComponentSession crudComponentSession;
 	@EJB TerzoComponentSession terzoComponentSession;
 	@EJB AnagraficoComponentSession anagraficoComponentSession;
+	@EJB ComuneComponentSession comuneComponentSession;
 	@EJB Unita_organizzativaComponentSession unita_organizzativaComponentSession;
 	
     public Response insert(@Context HttpServletRequest request, AnagraficoBulk anagraficoBulk) throws Exception {
@@ -65,36 +64,64 @@ public class AnagraficoResource implements AnagraficoLocal {
 		Optional.ofNullable(anagraficoBulk.getCognome()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il cognome."));
 		Optional.ofNullable(anagraficoBulk.getNome()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il nome."));
 		Optional.ofNullable(anagraficoBulk.getDt_nascita()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare la data di nascita."));
-		Optional.ofNullable(anagraficoBulk.getPg_comune_nascita()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il comune di nascita."));
-		Optional.ofNullable(anagraficoBulk.getPg_comune_fiscale()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il comune di residenza."));
 		Optional.ofNullable(anagraficoBulk.getVia_fiscale()).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare l'indirizzo di residenza."));
 
-  		anagraficoBulk = (AnagraficoBulk) anagraficoComponentSession.inizializzaBulkPerInserimento(userContext, anagraficoBulk);
 
-		ComuneBulk comuneNascita = getComune(userContext, anagraficoBulk.getPg_comune_nascita());
-		if (comuneNascita == null){
-			throw  new RestException(Status.BAD_REQUEST, "Errore, comune di nascita non corretto.");
-		} else {
-			anagraficoBulk.setComune_nascita(comuneNascita);
-		}
-		ComuneBulk comuneResidenza = getComune(userContext, anagraficoBulk.getPg_comune_fiscale());
-		if (comuneResidenza == null){
-			throw  new RestException(Status.BAD_REQUEST, "Errore, comune di residenza non corretto.");
-		} else {
-			NazioneBulk nazioneResidenza = getNazione(userContext, comuneResidenza.getPg_nazione());
-			if (nazioneResidenza != null){
-				comuneResidenza.setNazione(nazioneResidenza);
+		NazioneBulk nazioneNascita = null;
+		if (anagraficoBulk.getPg_comune_nascita() == null){
+			ComuneBulk comune = anagraficoBulk.getComune_nascita();
+			if (isComuneDaNonInserire(comune)){
+				new RestException(Status.BAD_REQUEST, "Errore, indicare il comune di nascita.");
+			} else {
+				nazioneNascita = getNazione(userContext, comune.getNazione().getPg_nazione());
+				if (nazioneNascita != null && !nazioneNascita.getTi_nazione().equals(NazioneBulk.ITALIA)){
+					ComuneBulk comuneDaCreare = creaComune(userContext, nazioneNascita, comune.getDs_comune());
+					anagraficoBulk.setComune_nascita(comuneDaCreare);
+				}
 			}
-			anagraficoBulk.setComune_fiscale(comuneResidenza);
+		} else {
+			ComuneBulk comuneNascita = getComune(userContext, anagraficoBulk.getPg_comune_nascita());
+			if (comuneNascita == null){
+				throw  new RestException(Status.BAD_REQUEST, "Errore, comune di nascita non corretto.");
+			} else {
+				anagraficoBulk.setComune_nascita(comuneNascita);
+			}
+			nazioneNascita = getNazione(userContext, comuneNascita.getPg_nazione());
 		}
-		anagraficoBulk.setPg_nazione_fiscale(comuneResidenza.getPg_nazione());
-
-		NazioneBulk nazioneNascita = getNazione(userContext, comuneNascita.getPg_nazione());
+		if (anagraficoBulk.getPg_comune_fiscale() == null){
+			ComuneBulk comune = anagraficoBulk.getComune_fiscale();
+			if (isComuneDaNonInserire(comune)){
+				new RestException(Status.BAD_REQUEST, "Errore, indicare il comune di residenza.");
+			} else {
+				NazioneBulk nazioneResidenza = getNazione(userContext, comune.getNazione().getPg_nazione());
+				if (nazioneResidenza != null && !nazioneResidenza.getTi_nazione().equals(NazioneBulk.ITALIA)){
+					ComuneBulk comuneDaCreare = creaComune(userContext, nazioneResidenza, comune.getDs_comune());
+					anagraficoBulk.setTi_italiano_estero(nazioneResidenza.getTi_nazione());
+					anagraficoBulk.setComune_fiscale(comuneDaCreare);
+				}
+			}
+		} else {
+			ComuneBulk comuneResidenza = getComune(userContext, anagraficoBulk.getPg_comune_fiscale());
+			if (comuneResidenza == null){
+				throw  new RestException(Status.BAD_REQUEST, "Errore, comune di residenza non corretto.");
+			} else {
+				NazioneBulk nazioneResidenza = getNazione(userContext, comuneResidenza.getPg_nazione());
+				if (nazioneResidenza != null){
+					comuneResidenza.setNazione(nazioneResidenza);
+				}
+				anagraficoBulk.setTi_italiano_estero(nazioneResidenza.getTi_nazione());
+				anagraficoBulk.setComune_fiscale(comuneResidenza);
+			}
+		}
+		anagraficoBulk = (AnagraficoBulk) anagraficoComponentSession.inizializzaBulkPerInserimento(userContext, anagraficoBulk);
 		if (nazioneNascita != null){
 			anagraficoBulk.getComune_nascita().setNazione(nazioneNascita);
 			anagraficoBulk.setNazionalita(nazioneNascita);
-			anagraficoBulk.setPg_nazione_nazionalita(comuneNascita.getPg_nazione());
+			anagraficoBulk.setPg_nazione_nazionalita(anagraficoBulk.getComune_nascita().getPg_nazione());
 		}
+
+		anagraficoBulk.setPg_nazione_fiscale(anagraficoBulk.getComune_fiscale().getPg_nazione());
+
 		if (anagraficoBulk.getCodice_fiscale() == null){
 			anagraficoBulk.setCodice_fiscale(getCodiceFiscale(anagraficoBulk));
 		}
@@ -150,4 +177,21 @@ public class AnagraficoResource implements AnagraficoLocal {
 		cd_catastale);
 	}
 
+	public ComuneBulk creaComune(CNRUserContext userContext, NazioneBulk nazioneBulk, String dsComune) throws RemoteException, ComponentException {
+		ComuneBulk comune = new ComuneEsteroBulk();
+		comune.setNazione(nazioneBulk);
+		comune.setDs_comune(dsComune);
+		comune.setTi_italiano_estero(ComuneBulk.COMUNE_ESTERO);
+		comune.setCd_catastale(ComuneBulk.CODICE_CATASTALE_ESTERO);
+		comune.setToBeCreated();
+		comune = (ComuneBulk) comuneComponentSession.inizializzaBulkPerInserimento(userContext, comune);
+		comune = (ComuneBulk) comuneComponentSession.creaConBulk(userContext, comune);
+		return comune;
+	}
+	public Boolean isComuneDaNonInserire(ComuneBulk comune){
+		if (comune == null || comune.getNazione() == null || comune.getNazione().getPg_nazione() == null || !comune.getDa_inserire()){
+			return true;
+		}
+		return false;
+	}
 }

@@ -544,7 +544,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
     public OggettoBulk inizializzaBulkPerInserimento(UserContext userContext, OggettoBulk bulk) throws it.cnr.jada.comp.ComponentException {
         AnagraficoBulk anagrafico = (AnagraficoBulk) super.inizializzaBulkPerInserimento(userContext, bulk);
 
-        anagrafico.setTi_italiano_estero(NazioneBulk.ITALIA);
+        if (anagrafico.getTi_italiano_estero() == null) {
+            anagrafico.setTi_italiano_estero(NazioneBulk.ITALIA);
+        }
         if (anagrafico.getTi_entita_persona_struttura() == anagrafico.ENTITA_STRUTTURA) {
             anagrafico.setTi_entita(AnagraficoBulk.STRUT_CNR);
             anagrafico.setTi_entita_giuridica(null);
