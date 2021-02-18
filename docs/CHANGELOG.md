@@ -1,3 +1,11 @@
+## Release 6.2.101  -- _February 18, 2021_ 
+**Changes**
+
+>**FIX mandati annullati nel flusso OPI**
+>
+>[29d26006f82d911](https://github.com/consiglionazionaledellericerche/sigla-main/commit/29d26006f82d911) marco.spasiano *February 18, 2021*
+
+
 ## Release 6.2.100  -- _February 17, 2021_ 
 **Changes**
 
