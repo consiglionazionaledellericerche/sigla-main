@@ -26,6 +26,7 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.cori00.ejb.Liquid_coriComponentSession;
 import it.cnr.contab.doccont00.comp.DateServices;
+import it.cnr.contab.doccont00.comp.DistintaCassiereComponent;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
@@ -848,10 +849,14 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
                     .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
                     .orElse(Boolean.FALSE);
-            if (isVariazioneDefinitiva) {
-                man.setTipoOperazione("INSERIMENTO");
+            if (bulk.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO)) {
+                man.setTipoOperazione(DistintaCassiereComponent.ANNULLO);
             } else {
-                man.setTipoOperazione("VARIAZIONE");
+                if (isVariazioneDefinitiva) {
+                    man.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
+                } else {
+                    man.setTipoOperazione(DistintaCassiereComponent.VARIAZIONE);
+                }
             }
             GregorianCalendar gcdi = new GregorianCalendar();
 
