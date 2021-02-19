@@ -110,7 +110,7 @@ Solo i Progetti Approvati, che hanno Piano Economico specificato, possono essere
 Le operazioni possibili in fase di rimodulazione sono dettagliate di seguito. Gli stati della rimodulazione seguono le attività dell'utente e le relative validazioni da parte degli utenti abilitati a tale funzione.
 
 **Gestione Data Proroga**
-In fase di rimodulazione un progetto può essere prorogato operando appunto sulla ‘Data Proroga’. Specificando questa data viene obbligatoriamente richiesto un allegato di tipo ‘Proroga’ e se non si operano ulteriori rimodulazioni di importi, al salvataggio definitivo da parte dell’utente la Rimodulazione in oggetto diviene immediatamente Approvata.
+In fase di rimodulazione un progetto può essere prorogato operando appunto sulla ‘Data Proroga’. Specificando questa data viene obbligatoriamente richiesto un allegato di tipo ‘Proroga’ e se non si operano ulteriori rimodulazioni di importi (e variazioni collegate), al salvataggio definitivo da parte dell’utente, e dopo la validazione da parte della Sede Centrale, la Rimodulazione in oggetto diviene immediatamente Approvata.
 
 Per la gestione della rimodulazione del piano economico di un progetto, le modifiche possono riguardare:
 -	Aumento/Diminuzione importi Finanziati/Cofinanziati di un progetto (Totali e di conseguenza per categoria economica);
