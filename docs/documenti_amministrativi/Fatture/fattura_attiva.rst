@@ -14,7 +14,7 @@ Sono di seguito illustrati i vari folder di cui si compone la maschera “Fattur
 
 **Testata**
 
-.. figure:: /docs/screenshot/fatt_att_testata.png
+.. figure:: /screenshot/fatt_att_testata.png
 
 
 Analizziamo ora i vari campi presenti nel folder “Testata” che sono comuni per qualunque tipologia di fattura attiva che verrà emessa. 
