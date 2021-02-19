@@ -13,3 +13,4 @@ Per poter procedere alla registrazione di una fattura attiva bisogna entrare nel
 Sono di seguito illustrati i vari folder di cui si compone la maschera “Fattura Attiva”:
 
 **Testata**
+.. figure:: ../screenshot/Fattura_attiva_testata.png
