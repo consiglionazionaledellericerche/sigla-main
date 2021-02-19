@@ -88,3 +88,26 @@ N.B. PER TUTTE LE FATTURE EXTRA-UE NON DEVE MAI ESSERE COMPILATO IL MODELLO INTR
  
 Dopo la compilazione del folder “Dettaglio” si deve provvedere alla contabilizzazione della fattura (legare la stessa all’accertamento). Si mette il flag sul dettaglio che si vuole contabilizzare, si clicca sul pulsante 'contabilizza' e appare la maschera di ricerca o creazione dell’accertamento.  Naturalmente sarà possibile creare un accertamento solo se di competenza. Nel caso di emissione di fattura collegato ad un accertamento residuo si ricorda che la liquidazione IVA potrà (su apposita richiesta da effettuarsi entro il giorno 6 di ogni mese, tramite fax all’Ufficio Fiscale) gravare sugli stanziamenti residui solo per l’esercizio n-1. Nel caso di registrazione dell’accertamento collegato a codice terzo 2 (ad esempio accertamenti relativi  a quote di partecipazione a convegni) ricordarsi di togliere il flag nel quadratino “codice terzo” per poter richiamare l’accertamento. 
 
+**CONSUNTIVO**
+
+Tale folder viene compilato in automatico dal sistema tramite la compilazione del folder “dettaglio” e riepiloga  i dettagli per codice IVA. 
+
+**ACCERTAMENTI**
+
+Tale folder viene compilato in automatico a seguito della contabilizzazione del dettaglio. Nella parte superiore vengono riportate le scadenze dell’accertamento e facendo diventare blu il rigo della scadenza nella parte sottostante sono evidenziati i dettagli della fattura collegati alla scadenza dell’accertamento. 
+
+**INTRASTAT** 
+ 
+Se in testata è stato messo il flag su INTRA-UE sarà necessario, ove previsto,  compilare anche il folder “INTRASTAT”  
+
+**Cessione di beni**
+
+Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti. 
+
+**Cessione di servizi**
+
+Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti. 
+
+
+
+
