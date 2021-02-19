@@ -686,7 +686,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 						.filter(s -> s.equals(Stato.RIFIUTATO_SIOPEPLUS.value()))
 						.map(s -> "R")
 						.orElse("I"),
-				UUID.randomUUID().toString()
+				String.valueOf(getPg_ver_rec())
 		).stream().collect(
 				Collectors.joining("-")
 		);
