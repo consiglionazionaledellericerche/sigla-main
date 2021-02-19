@@ -7,7 +7,7 @@ name: sigla
 releaseDate: '2021-02-19'
 url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
 applicationSuite: jada
-softwareVersion: 6.2.102
+softwareVersion: 6.2.103
 developmentStatus: stable
 softwareType: standalone/web
 platforms:
