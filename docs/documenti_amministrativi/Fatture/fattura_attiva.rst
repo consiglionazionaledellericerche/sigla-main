@@ -14,4 +14,4 @@ Sono di seguito illustrati i vari folder di cui si compone la maschera “Fattur
 
 **Testata**
 
-.. figure:: /docs/screenshot/Fattura_attiva_testata.png
+.. figure:: /docs/screenshot/fatt_att_testata.png
