@@ -673,7 +673,7 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 		return suffix;
 	}
 
-	public String getIdentificativoFlusso() {
+	public String getBaseIdentificativoFlusso() {
 		return Arrays.asList(
 				Optional.ofNullable(getEsercizio())
 						.map(esercizio -> String.valueOf(esercizio))
@@ -681,7 +681,15 @@ public class Distinta_cassiereBulk extends Distinta_cassiereBase implements Alle
 				getCd_unita_organizzativa(),
 				Optional.ofNullable(getPg_distinta_def())
 						.map(pgDistintaDef -> String.valueOf(pgDistintaDef))
-						.orElse("0"),
+						.orElse("0")
+		).stream().collect(
+				Collectors.joining("-")
+		);
+
+	}
+	public String getIdentificativoFlusso() {
+		return Arrays.asList(
+				getBaseIdentificativoFlusso(),
 				Optional.ofNullable(getStato())
 						.filter(s -> s.equals(Stato.RIFIUTATO_SIOPEPLUS.value()))
 						.map(s -> "R")

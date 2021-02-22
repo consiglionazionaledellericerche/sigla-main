@@ -2337,14 +2337,24 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             );
         }
         Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
-        StorageObject storageObject = Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
+        final String storePath = distinta.getStorePath();
+        final String baseIdentificativoFlusso = distinta.getBaseIdentificativoFlusso();
+        Optional<StorageObject> optStorageObject = Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
                 Arrays.asList(
-                        distinta.getStorePath(),
+                        storePath,
                         distinta.getFileNameXML()
                 ).stream().collect(
                         Collectors.joining(StorageDriver.SUFFIX)
                 )
-        )).orElseThrow(() -> new ApplicationException("Flusso ordinativi siope+ non trovato!"));
+        ));
+        if (!optStorageObject.isPresent()) {
+            optStorageObject = documentiContabiliService.getChildren(documentiContabiliService.getStorageObjectByPath(storePath).getKey())
+                    .stream()
+                    .filter(storageObject1 -> storageObject1.<String>getPropertyValue(StoragePropertyNames.NAME.value())
+                            .startsWith(baseIdentificativoFlusso))
+                    .max(Comparator.comparing(storageObject1 -> storageObject1.getPropertyValue("cmis:lastModificationDate")));
+        }
+        StorageObject storageObject = optStorageObject.orElseThrow(() -> new ApplicationException("Flusso ordinativi siope+ non trovato!"));
 
         if (!documentiContabiliService.hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())) {
             ArubaSignServiceClient client = documentiContabiliService.getArubaSignServiceClient();
