@@ -1,3 +1,123 @@
+## Release 6.3.0  -- _February 22, 2021_ 
+**Changes**
+
+>**FIX identificativo flusso OPI**
+>
+>[e7548b8c7aa524f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7548b8c7aa524f) marco.spasiano *February 22, 2021*
+
+
+## Release 6.2.103  -- _February 19, 2021_ 
+**Changes**
+
+>**FIX identificativo flusso OPI**
+>
+>[ebd77dee178bb07](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ebd77dee178bb07) marco.spasiano *February 19, 2021*
+
+
+## Release 6.2.102  -- _February 19, 2021_ 
+**Changes**
+
+>**FIX identificativo flusso OPI**
+>
+>[44ec4da585daf46](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44ec4da585daf46) marco.spasiano *February 19, 2021*
+
+>**Add files via upload**
+>
+>[d4a3cc658a3ec8c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d4a3cc658a3ec8c) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[082ee020c2f2a91](https://github.com/consiglionazionaledellericerche/sigla-main/commit/082ee020c2f2a91) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[9be446ef181bff6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9be446ef181bff6) patriziavillani *February 19, 2021*
+
+>**Add files via upload**
+>
+>[4c63de8ec00ed7e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c63de8ec00ed7e) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[5f31f1d878e52a9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5f31f1d878e52a9) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[48ae292043aa82f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/48ae292043aa82f) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[d04c4b0be446cfe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d04c4b0be446cfe) Marco Spasiano *February 19, 2021*
+
+>**Update nota_credito_attiva.rst**
+>
+>[e587d0ad148d8a2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e587d0ad148d8a2) patriziavillani *February 19, 2021*
+
+>**Create nota_credito_attiva.rst**
+>
+>[72ec2881ba4c98d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72ec2881ba4c98d) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[71e72b6a100a090](https://github.com/consiglionazionaledellericerche/sigla-main/commit/71e72b6a100a090) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[2bb5cfbaa00dc54](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2bb5cfbaa00dc54) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[2c6ce8a5d789b31](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2c6ce8a5d789b31) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[c2e6e5606ce88a6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c2e6e5606ce88a6) patriziavillani *February 19, 2021*
+
+>**Add files via upload**
+>
+>[9051adcb6e26a29](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9051adcb6e26a29) patriziavillani *February 19, 2021*
+
+>**Delete Fattura_attiva_testata.png**
+>
+>[20ee3cc90ece9d6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/20ee3cc90ece9d6) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[9a9d84d30fb1c3d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9a9d84d30fb1c3d) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[3f8ad57599761fd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3f8ad57599761fd) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[62e28383bf8d1d1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/62e28383bf8d1d1) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[703254c0349457f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/703254c0349457f) patriziavillani *February 19, 2021*
+
+>**Add files via upload**
+>
+>[031b7db7c65d3c4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/031b7db7c65d3c4) patriziavillani *February 19, 2021*
+
+>**Delete Fattura Attiva Testata.png**
+>
+>[90364db7668d84a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/90364db7668d84a) patriziavillani *February 19, 2021*
+
+>**Add files via upload**
+>
+>[dc3f4a94fa6aa2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/dc3f4a94fa6aa2e) patriziavillani *February 19, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[c7ddfe50c212ff1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7ddfe50c212ff1) patriziavillani *February 19, 2021*
+
+>**Update progetto.rst**
+>
+>[a2d404891336457](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a2d404891336457) patriziavillani *February 19, 2021*
+
+
 ## Release 6.2.101  -- _February 18, 2021_ 
 **Changes**
 
