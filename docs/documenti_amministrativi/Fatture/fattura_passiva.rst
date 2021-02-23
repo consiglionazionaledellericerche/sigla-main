@@ -304,7 +304,68 @@ In questo caso occorre scegliere:
 
 **FORNITORE**
 
+Nel caso di fornitore italiano il sistema verifica che in anagrafica siano presenti sia la partita IVA che il codice fiscale. 
+Nel caso di fornitore INTRA-UE il sistema verifica la correttezza della partita IVA. 
+Il sistema nell’effettuare la ricerca è guidato dalle informazioni specificate in testata. 
+Verificare sempre la correttezza delle modalità di pagamento. Qualora siano presenti più tipologie nelle modalità di pagamento è possibile cliccando sul pulsante 'conto/i' modificare quella proposta dal sistema. 
+
+**DETTAGLIO**
+
+Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga che attiverà i campi sottostanti:
+
+-	Tipo. Viene compilatato in automatico dal sistema secondo la scelta effettuata in TESTATA 
+-	Bene/Servizio. Dovrà essere inserito il bene/servizio fornito o cliccando su 'azzera' e digitando il codice di riferimento o cliccando su 'cerca'  e scegliendo dalla tabella beni/servizi sottostante o cliccando su 'ricerca guidata' e impostando dei parametri. La tabella viene filtrata in base alle scelte effettuate in TESTATA. 
+-	I.V.A.  Il sistema di “default” propone il codice IVA collegato all’IVA ordinaria se in TESTATA è stato scelto il TIPO “Commerciale”; in caso di TIPO “Istituzionale” il sistema di “default” propone il codice IVA “IST”. Cliccando su 'azzera' è possibile cambiare il codice IVA da applicare al dettaglio della fattura o inserendo direttamente il codice di riferimento o cliccando su 'cerca' e scegliendo dalla tabella proposta. 
+-	Descrizione. Quanto riportato su questo campo apparirà nella stampa della fattura passiva. 
+-	Competenza dal/al. Vengono proposti direttamente dal sistema uguali a quelli inseriti in testata ma possono essere modificati dall’utente purché ricompresi nell’intervallo del periodo inserito in testata. 
+-	Quantità. Inserire e salvare attraverso l'apposita icona 'conferma'. In caso di errore utilizzare 'annulla' per annullare l’operazione. 
+-	Prezzo Unitario inserire l’importo del singolo bene/servizio e salvare attraverso l'apposita icona 'conferma'. In caso di errore utilizzare  'annulla' per annullare l’operazione. 
+-	Imponibile viene calcolato dal sistema (quantità * prezzo unitario).  
+-	Importo IVA viene calcolato dal sistema e dovrà/potrà essere modificato dall’utente solo in caso di non quadratura tra il totale calcolato da SIGLA e il totale fatturato (totale fatturato 550,00 - imponibile 454,54 - iva 95,45 - totale 549,99, in tal caso si aggiunge 1 cent. sull’importo IVA si salva attraverso l'apposita icona 'conferma'. Apparirà il messaggio “L'importo IVA e' forzato”.  
+-	Al fine del salvataggio la somma “Imponibile” + “Importo IVA” deve coincidere con il totale inserito in TESTATA. 
+-	Mod. pagamento il sistema propone la stessa modalità prevista nel folder FORNITORE. Unico caso in cui deve essere cambiato è per il pagamento ad Equitalia. 
+ 
+Dopo la compilazione del folder “Dettaglio” si deve provvedere alla contabilizzazione della fattura (legare la stessa all’impegno) si spunta il flag sul dettaglio che si vuole contabilizzare, si clicca sul pulsante 'contabilizza' e appare la maschera di ricerca o creazione dell’impegno.  Naturalmente sarà possibile creare un impegno se di competenza o su residui impropri. Il sistema, al fine del salvataggio, verifica che l’importo della scadenza dell’impegno sia pari al totale del dettaglio/dettagli della fattura che si vuole contabilizzare. 
+
+Vi sono delle eccezioni e precisamente:  
+
+- Fattura per acquisizione di beni da fornitore INTRA-UE nell’ambito dell’attività commerciale; 
+-	Fattura per acquisizione di beni da fornitore INTRA-UE provenienti da paesi EXTRA-UE  nell’ambito  dell’attività commerciale; 
+-	Fattura per acquisizione di beni da fornitore EXTRA-UE con merce da paesi INTRA-UE nell’ambito dell’attività commerciale; 
+-	Fattura per acquisizione di servizi da fornitore INTRA-UE nell’ambito dell’attività commerciale in caso di emissione di autofattura; 
+-	Fattura per acquisizione di servizi da fornitore EXTRA-UE nell’ambito dell’attività commerciale in caso di emissione di autofattura; 
+-	Fattura per acquisizione di servizi senza IVA da fornitore di SAN MARINO nell’ambito dell’attività commerciale in caso di emissione di autofattura. 
+
+In questi casi l’importo della scadenza dell’impegno dovrà essere pari all’importo dell’imponibile del dettaglio della fattura.  
+Nel caso di acquisizione di un bene inventariabile al momento della contabilizzazione il sistema propone la voce del piano su cui dovrà essere imputato l’impegno. 
+ 
+
+**CONSUNTIVO**
+
+Tale folder viene compilato in automatico dal sistema tramite la compilazione del folder “dettaglio” e riepiloga i dettagli per codice IVA. 
 
 
+**IMPEGNI**
+
+Tale folder viene compilato in automatico in seguito alla contabilizzazione del dettaglio. Nella parte superiore vengono riportate le scadenze dell’impegno e facendo diventare blu il rigo della scadenza nella parte sottostante sono evidenziati i dettagli della fattura collegati alla scadenza dell’impegno. 
+
+**DOCUMENTO 1210**
+
+Se tra le modalità di pagamento è stato scelto il modello 1210 è necessario, prima di inviare il modello cartaceo in banca, posizionarsi su questo folder e cliccare sul pulsantecrea le 'ttera pagamento estero', questo per consentire al sistema di blindare la disponibilità di cassa presente su SIGLA per l’importo pari alla fattura. Si ricorda che il modello 1210 cartaceo deve essere compilato per l’importo pari a quello della fattura cartacea e non per quello che viene inserito in SIGLA. 
+Successivamente alla lavorazione del modello 1210 la banca genera un sospeso di spesa che può essere richiamato tra i sospesi di spesa del c/c del CdR. Per poter emettere il mandato a regolamento sospeso prima è necessario legare il sospeso alla lettera di pagamento nel seguente modo: si richiama la fattura passiva ci si posiziona sul folder “Documento 1210”, si richiama il sospeso cliccando su 'azzera' e digitando il codice di riferimento o cliccando su 'cerca' e scegliendo dalla tabella sottostante o cliccando su 'ricerca guidata' e impostando dei parametri, si indicano nell’apposito record le commissioni e poi si adegua la scadenza dell’impegno per consentire il salvataggio. Anche in questo caso non avremo più l’uguaglianza tra il totale della scadenza impegno e il totale del dettaglio fattura,  questo per consentire  la contabilizzazione sia delle commissioni bancarie che l’eventuale oscillazione cambio. 
+
+Nel caso di:
+
+-	Fattura di acquisizione di beni da fornitore INTRA-UE nell’ambito istituzionale; 
+-	Fattura di acquisizione di servizi da fornitore INTRA-UE nell’ambito istituzionale (registro acquisti servizi non residenti); 
+-	Fattura per acquisizione di beni da fornitore EXTRA-UE con merce da paesi INTRA-UE nell’ambito dell’attività istituzionale; 
+-	Fattura di acquisizione di servizi da fornitore EXTRA-UE nell’ambito istituzionale (registro acquisti servizi non residenti). 
+
+La scadenza dell’impegno sarà pari all’importo del sospeso aumentato dell’importo totale IVA (come dal folder Consuntivo).  
+Negli altri casi la scadenza dell’impegno sarà pari all’importo del sospeso. 
+
+
+INTRASTAT
+=========
 
 
