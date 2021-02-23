@@ -28,13 +28,13 @@ Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento d
 - Fondo economale. scegliere nel menù a tendina la voce che interessa tenendo presente che 'USA FONDO ECONOMALE' non può essere usato nel caso di fatture:  
    - Intra U.E.
    - Extra U.E.  	 
-   - S. Marino con IVA
-   - S. Marino senza IVA
+   - San Marino con IVA
+   - San Marino senza IVA
    
 USARE FONDO ECONOMALE se la fattura sarà pagata tramite fondo economale. 
 NON USARE FONDO ECONOMALE se la fattura sarà pagata tramite mandato di pagamento. 
 
--	N. Fattura. Deve essere inserito il numero della fattura del fornitore. 
+- Numero Fattura. Deve essere inserito il numero della fattura del fornitore. 
 - Descrizione. Campo libero. 
 -	Data emissione. Deve essere inserita la data di emissione della fattura del fornitore. 
 -	Data di scadenza. Va indicata la data di scadenza della fattura (non serve per il trasferimento della liquidità da parte dell’Ufficio Bilancio che prende in considerazione le date di scadenza degli impegni liquidati). 
