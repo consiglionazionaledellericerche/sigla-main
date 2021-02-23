@@ -10,9 +10,12 @@ Per poter procedere alla registrazione di una fattura attiva bisogna entrare nel
           - visualizzazione   
           - gestione  
           
-La fatturazione elettronica Attiva, in Sigla, è strettamente integrata al processo dei documenti Attivi previsto dal Sistema di Interscambio. La gestione prevede l'invio automatico, dopo la Firma Digitale da parte del Responsabile, a SDI e la ricezione delle notifiche che vengono iportate direttamente sul Documento attivo in Sigla.
+La fatturazione elettronica Attiva, in Sigla, è strettamente integrata al processo dei documenti Attivi previsto dal Sistema di Interscambio. La gestione prevede l'invio automatico, dopo la Firma Digitale da parte del Responsabile, a SDI e la ricezione delle notifiche che vengono importate direttamente sul Documento attivo in Sigla.
 
-Tutto il processo e le informazioni sono stati dettagliati nell'apposito Manuale
+Tutto il processo e le informazioni sono stati dettagliati nell'apposito paragrafo:
+
+:doc:`Fattura Attiva Elettronica <fattura_attiva_elettronica>`
+
 
 :download:`Manuale Fatturazione elettronica Attiva</_static/MANUALE_FATT_ELE_ATT.pdf>`
 
