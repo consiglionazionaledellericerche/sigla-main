@@ -74,7 +74,19 @@ Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato del
 
 **Fattura per acquisizione di servizi da fornitore INTRA-UE nell’ambito dell’attività istituzionale**
 
+In questo caso occorre scegliere: 
 
+- Tipo: Istituzionale;
+- Spuntare: Intra U.E.
+- Servizi/Beni: Fattura di Servizi
+- Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI SERVIZI NON RESIDENTI
+
+In questo caso è l’utente che deve scegliere tra i 2 registri proposti in quanto tale scelta guiderà la possibilità di ricerca dei servizi nel folder “dettaglio”. 
+
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato dell’importo dell’IVA nel caso di fattura di servizi da inserire nel sezionale registro acquisti servizi non residente. 
+Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprensiva di IVA) nel caso di fattura di servizi da inserire nel sezionale acquisti istituzionale.  
+
+**Fattura per acquisizione di beni da fornitore INTRA-UE nell’ambito dell’attività commerciale**
 
 
 
