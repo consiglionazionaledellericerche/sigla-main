@@ -51,24 +51,24 @@ Analizziamo ora le varie tipologie di fatture passive che possono essere registr
 
 In questo caso occorre scegliere: 
 
-Tipo: Istituzionale;
-Il sistema in automatico proporrà il Sezionale: ACQUISTI ISTITUZIONALE
+- Tipo: Istituzionale;
+- Il sistema in automatico proporrà il Sezionale: ACQUISTI ISTITUZIONALE
 
 **Fattura per acquisizione di beni/servizi da fornitore italiano nell’ambito dell’attività commerciale**
 
 In questo caso occorre scegliere: 
 
-Tipo: Commerciale;
-Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO AQCUISTI
+- Tipo: Commerciale;
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO AQCUISTI
 
 **Fattura per acquisizione di beni da fornitore INTRA-UE nell’ambito dell’attività istituzionale**
 
 In questo caso occorre scegliere: 
 
-Tipo: Istituzionale;
-Spuntare: Intra U.E.
-Servizi/Beni: Fattura di Beni
-Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI BENI ISTITUZIONALE NON RESIDENTI
+- Tipo: Istituzionale;
+- Spuntare: Intra U.E.
+- Servizi/Beni: Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI BENI ISTITUZIONALE NON RESIDENTI
 
 Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato dell’importo dell’IVA. 
 
