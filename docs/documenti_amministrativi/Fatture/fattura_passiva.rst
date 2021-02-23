@@ -7,5 +7,7 @@ Per poter procedere alla registrazione di una fattura passiva bisogna entrare ne
 Documenti amministrativi  
  Fatture   
   fattura passiva  
-    visualizzazione  
+    
+    visualizzazione
+    
     gestione  
