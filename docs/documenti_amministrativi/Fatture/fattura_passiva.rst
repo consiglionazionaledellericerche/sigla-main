@@ -162,6 +162,147 @@ Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprens
 
 **Fattura per acquisizione di beni da fornitore EXTRA-UE nell’ambito dell’attività commerciale**
 
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Extra U.E. 
+- Servizi/Beni: Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+Il Totale sarà pari al totale della fattura. 
+
+**Fattura per acquisizione di beni da fornitore EXTRA-UE con merce da paesi INTRA-UE nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Extra U.E. 
+- Spuntare: Merce da paesi intra U.E. 
+- Servizi/Beni: Fattura di Beni
+- In automatico si attiverà: Autofattura
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) incrementato dell’importo dell’IVA. 
+
+**Fattura per acquisizione di servizi da fornitore EXTRA-UE nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Extra U.E. 
+- In automatico si attiverà: Autofattura
+- Servizi/Beni: Fattura di Servizi
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+In questo caso è l’utente che deve scegliere se lasciare o togliere il flag su autofattura in quanto tale scelta guiderà la possibilità di ricerca dei servizi nel folder “dettaglio”. 
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato dell’importo dell’IVA nel caso di autofattura. 
+Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprensiva di IVA) nel caso in cui non venga emessa l’autofattura.  
+
+**Fattura per acquisizione di beni/servizi con IVA da fornitore di SAN MARINO nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: San Marino con IVA 
+- Il sistema in automatico proporrà il Sezionale: ACQUISTI ISTITUZIONALE
+
+Il Totale sarà pari al totale della fattura. 
+
+**Fattura per acquisizione di beni/servizi con IVA da fornitore di SAN MARINO nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: San Marino con IVA 
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+Il Totale sarà pari al totale della fattura. 
+
+**Fattura per acquisizione di beni senza IVA da fornitore di SAN MARINO nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: San Marino senza IVA 
+- Servizi/Beni: Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI ISTITUZIONALE R.S.M. SENZA IVA
+
+Il Totale sarà pari al totale della fattura integrato dell’importo dell’IVA. 
+
+**Fattura per acquisizione di servizi senza IVA da fornitore di SAN MARINO nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: San Marino senza IVA 
+- Servizi/Beni: Fattura di Servizi
+- Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI SERVIZI NON RESIDENTI
+
+In questo caso è l’utente che deve scegliere tra i 2 registri proposti in quanto tale scelta guiderà la possibilità di ricerca dei servizi nel folder “dettaglio”. 
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA)  integrato dell’importo dell’IVA nel caso di fattura di servizi da inserire nel sezionale registro acquisti beni istituzionali non residente. 
+Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprensiva di IVA) nel caso di fattura di servizi da inserire nel sezionale acquisti istituzionale.  
+
+**Fattura per acquisizione di beni senza IVA da fornitore di SAN MARINO nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: San Marino senza IVA 
+- In automatico si attiverà: Autofattura
+- Servizi/Beni: Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA)  integrato dell’importo dell’IVA. 
+
+**Fattura per acquisizione di servizi senza IVA da fornitore di SAN MARINO nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: San Marino senza IVA 
+- In automatico si attiverà: Autofattura
+- Servizi/Beni: Fattura di Servizi
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+In questo caso è l’utente che deve scegliere se lasciare o togliere il flag su autofattura in quanto tale scelta guiderà la possibilità di ricerca dei servizi nel folder “dettaglio”. 
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato dell’importo dell’IVA nel caso di autofattura 
+Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprensiva di IVA) nel caso in cui non venga emessa l’autofattura.  
+
+**Fattura spedizioniere nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: Spedizioniere
+- e ricercare la fattura passiva a cui si riferisce nell'apposito campo 'Fattura estera'
+
+**Fattura spedizioniere nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Spedizioniere
+- e ricercare la fattura passiva a cui si riferisce nell'apposito campo 'Fattura estera'
+
+**Bolla Doganale nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: Bolla Doganale
+- e ricercare la fattura passiva a cui si riferisce nell'apposito campo 'Fattura estera'
+
+**Bolla Doganale nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Bolla Doganale
+- e ricercare la fattura passiva a cui si riferisce nell'apposito campo 'Fattura estera'
+
+
+
+**FORNITORE**
 
 
 
