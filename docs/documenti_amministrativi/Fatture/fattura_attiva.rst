@@ -14,7 +14,7 @@ La fatturazione elettronica Attiva, in Sigla, è strettamente integrata al proce
 
 Tutto il processo e le informazioni sono stati dettagliati nell'apposito paragrafo:
 
-:doc:`Fattura Attiva Elettronica <fattura_attiva_elettronica>`
+:doc:`Fattura Attiva Elettronica<fattura_attiva_elettronica>`
 
 
 :download:`Manuale Fatturazione elettronica Attiva</_static/MANUALE_FATT_ELE_ATT.pdf>`
