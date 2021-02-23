@@ -25,10 +25,10 @@ Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento d
 - N. Registrazione IVA. generale Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA. 
  
 - Liquidazione Differita. L'utilizzo di tale flag è limitato alle fatture ricevute nello svolgimento dell'attività commerciale. Per ulteriori dettagli sull'esigibilità differita delle fatture passive consultare la Circ. 17/2009. 
-- Fondo economale. scegliere nel menù a tendina la voce che interessa tenendo presente che:  USA FONDO ECONOMALE non può essere usato nel caso di fatture:  
+- Fondo economale. scegliere nel menù a tendina la voce che interessa tenendo presente che 'USA FONDO ECONOMALE' non può essere usato nel caso di fatture:  
    - Intra U.E.
    - Extra U.E.  	 
-   - S. Marino con IVA  	 
+   - S. Marino con IVA
    - S. Marino senza IVA
    
 USARE FONDO ECONOMALE se la fattura sarà pagata tramite fondo economale. 
