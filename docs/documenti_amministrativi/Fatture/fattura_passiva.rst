@@ -88,5 +88,82 @@ Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprens
 
 **Fattura per acquisizione di beni da fornitore INTRA-UE nell’ambito dell’attività commerciale**
 
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Intra U.E.
+- In automatico si attiverà: Autofattura
+- Servizi/Beni: Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato dell’importo dell’IVA. 
+
+**Fattura per acquisizione di beni da fornitore INTRA-UE provenienti da paesi EXTRA-UE nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Intra U.E.
+- Spuntare: 'Merce da paesi extra U.E.'
+- Il sistema proporrà in automatico 'Servizi/Beni' = Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+Il Totale sarà pari al totale della fattura integrato dell’importo dell’IVA. 
+
+**Fattura per acquisizione di servizi da fornitore INTRA-UE nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Intra U.E.
+- In automatico si attiverà: Autofattura
+- Servizi/Beni: Fattura di Servizi
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
+
+In questo caso è l’utente che deve scegliere se lasciare o togliere il flag su autofattura in quanto tale scelta guiderà la possibilità di ricerca dei servizi nel folder “dettaglio”. 
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato dell’importo dell’IVA nel caso di autofattura. 
+Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprensiva di IVA) nel caso in cui non venga emessa l’autofattura.  
+
+**Fattura per acquisizione di beni da fornitore EXTRA-UE nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: Extra U.E.
+- Servizi/Beni: Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: ACQUISTI ISTITUZIONALE
+
+Il Totale sarà pari al totale della fattura. 
+
+**Fattura per acquisizione di beni da fornitore EXTRA-UE con merce da paesi INTRA-UE nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: Extra U.E.
+- Spuntare: Merce da paesi intra U.E. 
+- Servizi/Beni: Fattura di Beni
+- Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI BENI ISTITUZIONALE NON RESIDENTI
+
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) incrementato dell’importo dell’IVA. 
+
+**Fattura per acquisizione di servizi da fornitore EXTRA-UE nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: Extra U.E. 
+- Servizi/Beni: Fattura di Servizi
+- Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI SERVIZI NON RESIDENTI
+
+In questo caso è l’utente che deve scegliere tra i 2 registri proposti in quanto tale scelta guiderà la possibilità di ricerca dei servizi nel folder “dettaglio”. 
+Il Totale sarà pari al totale della fattura (pervenuta senza IVA) integrato dell’importo dell’IVA nel caso di fattura di servizi da inserire nel sezionale registro acquisti beni servizi non residenti. 
+Il Totale sarà pari al totale della fattura (che dovrà pervenire già comprensiva di IVA) nel caso di fattura di servizi da inserire nel sezionale acquisti istituzionale.  
+
+**Fattura per acquisizione di beni da fornitore EXTRA-UE nell’ambito dell’attività commerciale**
+
+
+
+
 
 
