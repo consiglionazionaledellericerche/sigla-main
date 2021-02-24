@@ -24,6 +24,10 @@ jobs:
               make epub
               cp _build/epub/*.epub _build/html/
               touch _build/html/.nojekyll
+        - persist_to_workspace:
+            root: .
+            paths:
+            - _build      
   docs-deploy:
     docker:
       - image: node:8.10.0
