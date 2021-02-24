@@ -6,9 +6,9 @@
 [![contributors](https://img.shields.io/github/contributors/consiglionazionaledellericerche/sigla-main.svg?logo=github&style=for-the-badge)](https://github.com/consiglionazionaledellericerche/sigla-main/contributors/)
 [![Docker Stars](https://img.shields.io/docker/stars/consiglionazionalericerche/sigla-main.svg?logo=docker&style=for-the-badge)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/consiglionazionalericerche/sigla-main.svg?logo=docker&style=for-the-badge)](https://hub.docker.com/r/consiglionazionalericerche/sigla-main/)
-[![Build doc Status](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?logo=travis&style=for-the-badge)](https://travis-ci.com/consiglionazionaledellericerche/sigla-main)
-[![docs](https://img.shields.io/travis/consiglionazionaledellericerche/sigla-main.svg?label=docs&logo=read-the-docs&style=for-the-badge)](https://consiglionazionaledellericerche.github.io/sigla-main)
 
+[![<Build doc Status>](https://circleci.com/gh/consiglionazionaledellericerche/sigla-main.svg?style=svg)](https://app.circleci.com/pipelines/github/consiglionazionaledellericerche/sigla-main)
+[![<docs>](https://circleci.com/gh/consiglionazionaledellericerche/sigla-main.svg?style=shield)](https://consiglionazionaledellericerche.github.io/sigla-main)
 
 ## MAVEN dependency
 |Artifact| Version |
