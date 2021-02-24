@@ -18,7 +18,7 @@
 <%	CRUDNazioneBP bp = (CRUDNazioneBP)BusinessProcess.getBusinessProcess(request);
 	bp.openFormWindow(pageContext); %>
 
-<table class="Panel">
+<table class="Panel card p-2">
   <tr>
 	<td><% bp.getController().writeFormLabel(out,"pg_nazione"); %></td>
 	<td><% bp.getController().writeFormInput(out,"pg_nazione"); %></td>
@@ -67,6 +67,11 @@
 	<td><% bp.getController().writeFormLabel(out,"cd_area_estera"); %></td>
 	<td><% bp.getController().writeFormInput(out,"cd_area_estera"); %></td>
   </tr>
+    </tr>
+      <tr>
+  	<td><% bp.getController().writeFormLabel(out,"fl_sepa"); %></td>
+  	<td><% bp.getController().writeFormInput(out,"fl_sepa"); %></td>
+    </tr>
 </table>
 
 <%	bp.closeFormWindow(pageContext); %>

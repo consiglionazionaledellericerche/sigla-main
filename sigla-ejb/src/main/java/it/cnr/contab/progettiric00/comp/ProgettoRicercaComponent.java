@@ -437,7 +437,7 @@ public ProgettoRicercaComponent() {
 				for (Iterator iterator = allPiano.iterator(); iterator.hasNext();) {
 					Progetto_piano_economicoBulk pianoeco = (Progetto_piano_economicoBulk) iterator.next();
 					if (pianoeco.getEsercizio_piano()!=null && !pianoeco.getEsercizio_piano().equals(0))
-						if (pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoInizioOf())<0 || 
+						if (pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoInizioForPianoEconomico())<0 ||
 							pianoeco.getEsercizio_piano().compareTo(((ProgettoBulk)bulk).getAnnoFineOf())>0)
 							throw new it.cnr.jada.comp.ApplicationException("Attenzione: E' stato inserito nel piano economico un anno non compatibile con la durata del progetto!");	                	
 				}
@@ -1886,24 +1886,39 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				}
 	
 				List<Voce_f_saldi_cdr_lineaBulk> saldiList = new it.cnr.jada.bulk.BulkList(saldiHome.fetchAll(sqlSaldi));
-				
-				if (!Optional.ofNullable(rimodulazione).isPresent())
+				Integer currentAnno = saldiList.stream().mapToInt(el->el.getEsercizio()).max().orElse(999);
+
+				if (!Optional.ofNullable(rimodulazione).isPresent()) {
+					//Recupero l'ultimo anno di gestione in corso
 					saldiList.stream()
-						.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 || 
-								el.getAssestatoResiduoImproprio().compareTo(BigDecimal.ZERO)>0).findFirst().ifPresent(el->{
-		               	throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto e per l'anno contabile "
-		               			+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
-		               			" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " + 
-		               			"Operazione non consentita!");
+							.filter(el->{
+								if (el.getEsercizio().equals(currentAnno)) { //record dell'anno in corso
+									if (el.getEsercizio_res().equals(el.getEsercizio())) //record di competenza
+										return el.getAssestato().compareTo(BigDecimal.ZERO) > 0;
+									else //record residuo
+										return el.getAssestatoResiduoImproprio().compareTo(BigDecimal.ZERO) > 0 || el.getTotImpResiduoProprio().compareTo(BigDecimal.ZERO) > 0;
+								} else //record degli anni precedenti già ribaltati (controllo solo se pagati)
+									return el.getTotMandati().compareTo(BigDecimal.ZERO) > 0;
+							}).findFirst().ifPresent(el->{
+						throw new ApplicationRuntimeException("Attenzione: risulta movimentata, per il progetto "+progetto.getCd_progetto()
+								+" e per l'anno contabile "+el.getEsercizio_res()+", la voce di bilancio " + el.getTi_gestione()+"/"+el.getCd_voce()+
+								" che non risulta associata a nessun piano economico per l'anno "+el.getEsercizio_res()+". " +
+								"Operazione non consentita!");
 					});
+				}
 				else
 					saldiList.stream()
-					.filter(el-> 
-						//Nella rimodulazione risulta impegnata e quindi non scollegabile. 
+					.filter(el-> {
+						//Nella rimodulazione risulta impegnata e quindi non scollegabile.
 						//Se solo assestato l'incongruenza può essere eliminata tramite variazione
-						el.getTotImpCompetenza().compareTo(BigDecimal.ZERO)>0 ||
-						el.getTotImpResiduoImproprio().compareTo(BigDecimal.ZERO)>0
-					).filter(el-> //Non è associata al piano economico
+						if (el.getEsercizio().equals(currentAnno)) { //record dell'anno in corso
+							if (el.getEsercizio_res().equals(el.getEsercizio())) //record di competenza
+								return el.getTotImpCompetenza().compareTo(BigDecimal.ZERO) > 0;
+							else //record residuo
+								return el.getTotImpResiduoImproprio().compareTo(BigDecimal.ZERO) > 0 || el.getTotImpResiduoProprio().compareTo(BigDecimal.ZERO) > 0;
+						} else //record degli anni precedenti già ribaltati (controllo solo se pagati)
+							return el.getTotMandati().compareTo(BigDecimal.ZERO) > 0;
+					}).filter(el-> //Non è associata mico
 						!progetto.getAllDetailsProgettoPianoEconomico().stream()
 							.flatMap(ppe->ppe.getVociBilancioAssociate().stream())
 							.filter(vocePpe->vocePpe.getEsercizio_piano().equals(el.getEsercizio_res()))
@@ -2128,15 +2143,16 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 		    		List<ObbligazioneBulk> listObb = (List<ObbligazioneBulk>)prgHome.findObbligazioniAssociate(progetto.getPg_progetto(), annoFrom.intValue());
 
 		    		if (ctrlStato) {
-		    			listObb.stream().findFirst().ifPresent(el->{
-						throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto "
-		    				   	+ "(Obb: "+el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione() + "). "
-								+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
+		    			listObb.stream().filter(obb->obb.getIm_obbligazione().compareTo(BigDecimal.ZERO)>0).findFirst().ifPresent(el->{
+							throw new ApplicationRuntimeException("Attenzione: risultano obbligazioni emesse sul progetto "
+									+ "(Obb: "+el.getEsercizio()+"/"+el.getEsercizio_originale()+"/"+el.getPg_obbligazione() + "). "
+									+ "Non è possibile attribuirgli uno stato diverso da Approvato o Chiuso. Operazione non consentita!");
 		    			});
 		    		}
 		    		
 		    		if (ctrlDtInizio)
 			    		listObb.stream()
+							   .filter(obb->obb.getIm_obbligazione().compareTo(BigDecimal.ZERO)>0)
 			    			   .min((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
 			    			   .filter(el->el.getDt_registrazione().before(progetto.getOtherField().getDtInizio()))
 			    			   .ifPresent(el->{
@@ -2151,6 +2167,7 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 
 		    		if (ctrlDtFine && Optional.ofNullable(progetto.getOtherField().getDtFineEffettiva()).isPresent()) {
 			    		listObb.stream()
+							   .filter(obb->obb.getIm_obbligazione().compareTo(BigDecimal.ZERO)>0)
 			    			   .filter(el->!el.isObbligazioneResiduo())
 				 			   .max((p1, p2) -> p1.getDt_registrazione().compareTo(p2.getDt_registrazione()))
 				 			   .filter(el->el.getDt_registrazione().after(progetto.getOtherField().getDtFineEffettiva()))
@@ -2435,6 +2452,15 @@ public SQLBuilder selectModuloForPrintByClause (UserContext userContext,Stampa_e
 				getHome(userContext, Progetto_other_fieldBulk.class).update(otherField,userContext);
 			}
 		} catch (PersistencyException| RemoteException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public List<ProgettoBulk> getAllChildren(UserContext userContext, ProgettoBulk bulk) throws ComponentException{
+		try {
+			ProgettoHome ubiHome = (ProgettoHome)getHome(userContext,ProgettoBulk.class,"V_PROGETTO_PADRE");
+			return ubiHome.fetchAll(ubiHome.selectAllChildrenFor(userContext,bulk));
+		} catch (PersistencyException e) {
 			throw new ComponentException(e);
 		}
 	}

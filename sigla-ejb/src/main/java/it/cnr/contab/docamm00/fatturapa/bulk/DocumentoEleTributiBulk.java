@@ -31,6 +31,10 @@ public class DocumentoEleTributiBulk extends DocumentoEleTributiBase {
 	static {
 		tiTipoTributoKeys.put(TipoRitenutaType.RT_01.value(), "Ritenuta di acconto persone fisiche");
 		tiTipoTributoKeys.put(TipoRitenutaType.RT_02.value(), "Ritenuta di acconto persone giuridiche");
+		tiTipoTributoKeys.put(TipoRitenutaType.RT_03.value(), "Contributo INPS");
+		tiTipoTributoKeys.put(TipoRitenutaType.RT_04.value(), "Contributo ENASARCO");
+		tiTipoTributoKeys.put(TipoRitenutaType.RT_05.value(), "Contributo ENPAM");
+		tiTipoTributoKeys.put(TipoRitenutaType.RT_06.value(), "Altro contributo previdenziale");
 		tiTipoTributoKeys.put(TipoCassaType.TC_01.value(), "Cassa nazionale previdenza e assistenza avvocati e procuratori legali");
 		tiTipoTributoKeys.put(TipoCassaType.TC_02.value(), "Cassa previdenza dottori commercialisti");
 		tiTipoTributoKeys.put(TipoCassaType.TC_03.value(), "Cassa previdenza e assistenza geometri");

@@ -161,17 +161,20 @@ public class MagazzinoHome extends BulkHome {
 		SQLBuilder sql = this.selectByClause(compoundfindclause);
 		sql.addClause(FindClause.AND, "cdCds", SQLBuilder.EQUALS, CNRUserContext.getCd_cds(userContext));
 
-		AbilUtenteUopOperBulk abil = (AbilUtenteUopOperBulk)getHomeCache().getHome(AbilUtenteUopOperBulk.class).findByPrimaryKey(new AbilUtenteUopOperBulk(userContext.getUser(), unitaOperativa.getCdUnitaOperativa(), tipoOperazione));
-		if (abil == null) {
-			sql.addSQLClause(FindClause.AND, "1!=1");
-		} else if (Boolean.FALSE.equals(abil.getTuttiMagazzini())) {
-			sql.addTableToHeader("ABIL_UTENTE_UOP_OPER_MAG", "B");
-			sql.addSQLJoin("MAGAZZINO.CD_CDS", "B.CD_CDS");
-			sql.addSQLJoin("MAGAZZINO.CD_MAGAZZINO", "B.CD_MAGAZZINO");
-			sql.addSQLClause(FindClause.AND, "B.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, abil.getCdTipoOperazione());
-			sql.addSQLClause(FindClause.AND, "B.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, abil.getCdUnitaOperativa());
-			sql.addSQLClause(FindClause.AND, "B.CD_UTENTE", SQLBuilder.EQUALS, abil.getCdUtente());
+		if (unitaOperativa != null){
+			AbilUtenteUopOperBulk abil = (AbilUtenteUopOperBulk)getHomeCache().getHome(AbilUtenteUopOperBulk.class).findByPrimaryKey(new AbilUtenteUopOperBulk(userContext.getUser(), unitaOperativa.getCdUnitaOperativa(), tipoOperazione));
+			if (abil == null) {
+				sql.addSQLClause(FindClause.AND, "1!=1");
+			} else if (Boolean.FALSE.equals(abil.getTuttiMagazzini())) {
+				sql.addTableToHeader("ABIL_UTENTE_UOP_OPER_MAG", "B");
+				sql.addSQLJoin("MAGAZZINO.CD_CDS", "B.CD_CDS");
+				sql.addSQLJoin("MAGAZZINO.CD_MAGAZZINO", "B.CD_MAGAZZINO");
+				sql.addSQLClause(FindClause.AND, "B.CD_TIPO_OPERAZIONE", SQLBuilder.EQUALS, abil.getCdTipoOperazione());
+				sql.addSQLClause(FindClause.AND, "B.CD_UNITA_OPERATIVA", SQLBuilder.EQUALS, abil.getCdUnitaOperativa());
+				sql.addSQLClause(FindClause.AND, "B.CD_UTENTE", SQLBuilder.EQUALS, abil.getCdUtente());
+			}
 		}
+
 		return sql;
 	}
 

@@ -60,7 +60,10 @@ function doStampaOrdine() {
 				     bp.getController().writeFormField(out, "statoForSearch");
 				   } else {
 				     bp.getController().writeFormField(out, "statoForUpdate");
-				   } 
+				   }
+				%>
+				<%
+					bp.getController().writeFormField(out, "dataOrdineDef");
 				%>
 			</tr>
 		</table>

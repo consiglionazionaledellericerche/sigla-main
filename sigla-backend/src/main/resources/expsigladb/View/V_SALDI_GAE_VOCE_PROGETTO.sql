@@ -374,8 +374,7 @@ CREATE OR REPLACE FORCE VIEW "V_SALDI_GAE_VOCE_PROGETTO" ("PG_PROGETTO", "ESERCI
                         ELSE 0
                      END variapiu_cofin,
                      CASE
-                        WHEN NVL(b.im_variazione, 0) < 0 AND
-                             NVL(a.ti_motivazione_variazione,'X')!='TAE'
+                        WHEN NVL(b.im_variazione, 0) < 0
                         THEN ABS(NVL (b.im_variazione, 0))
                         ELSE 0
                      END variameno_cofin,

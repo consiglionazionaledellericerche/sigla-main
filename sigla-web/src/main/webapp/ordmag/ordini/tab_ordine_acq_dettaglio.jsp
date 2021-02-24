@@ -73,5 +73,9 @@ CRUDOrdineAcqBP bp = (CRUDOrdineAcqBP)BusinessProcess.getBusinessProcess(request
 			    bp.getRighe().writeFormField(out, "imTotaleRiga");
 			%>
 		</tr>
+		<tr>
+			<td><% bp.getRighe().writeFormLabel(out, "cercaDspConto"); %></td>
+			<td colspan="7"><% bp.getRighe().writeFormInput(out, "cercaDspConto"); %></td>
+		</tr>
 	</table>
 </div>

@@ -186,6 +186,16 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 			label="Allega Progetto")
 	private java.lang.String allega_progetto;
 
+	//  ALLEGA_INSUSSISTENZA_CONFLITTO_INTERESSE CHAR(1)
+	@FieldPropertyAnnotation(name="allega_conflitto_interesse",
+			inputType=InputType.TEXT,
+			enabledOnSearch=true,
+			enabledOnInsert=false,
+			enabledOnEdit=false,
+			nullable=false,
+			label="Allega Insussistenza Conflitto Interesse")
+	private java.lang.String allega_conflitto_interesse;
+
 //  INDICA_URL_PROGETTO CHAR(1)
 	@FieldPropertyAnnotation(name="indica_url_progetto",
 			inputType=InputType.TEXT,
@@ -331,5 +341,11 @@ public class Incarichi_parametriBase extends Incarichi_parametriKey implements K
 	public void setFl_invio_fp(java.lang.String fl_invio_fp) {
 		this.fl_invio_fp = fl_invio_fp;
 	}
-	
+
+	public String getAllega_conflitto_interesse() {
+		return allega_conflitto_interesse;
+	}
+	public void setAllega_conflitto_interesse(String allega_conflitto_interesse) {
+		this.allega_conflitto_interesse = allega_conflitto_interesse;
+	}
 }

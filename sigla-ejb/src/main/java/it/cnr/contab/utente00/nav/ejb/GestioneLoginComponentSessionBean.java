@@ -340,42 +340,7 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-	public it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerLogin(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-		pre_component_invocation(param0,componentObj);
-		try {
-			it.cnr.contab.config00.bulk.ApplicationServerBulk result = componentObj.validaServerLogin(param0,param1);
-			component_invocation_succes(param0,componentObj);
-			return result;
-		} catch(it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0,componentObj);
-			throw e;
-		} catch(it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param0,componentObj);
-			throw e;
-		} catch(RuntimeException e) {
-			throw uncaughtRuntimeException(param0,componentObj,e);
-		} catch(Error e) {
-			throw uncaughtError(param0,componentObj,e);
-		}
-	}
-	public it.cnr.contab.config00.bulk.ApplicationServerBulk validaServerAttivo(it.cnr.jada.UserContext param0,it.cnr.contab.config00.bulk.ApplicationServerBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-		pre_component_invocation(param0,componentObj);
-		try {
-			it.cnr.contab.config00.bulk.ApplicationServerBulk result = componentObj.validaServerAttivo(param0,param1);
-			component_invocation_succes(param0,componentObj);
-			return result;
-		} catch(it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0,componentObj);
-			throw e;
-		} catch(it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param0,componentObj);
-			throw e;
-		} catch(RuntimeException e) {
-			throw uncaughtRuntimeException(param0,componentObj,e);
-		} catch(Error e) {
-			throw uncaughtError(param0,componentObj,e);
-		}
-	}
+
 	public java.util.List utentiMultipli(it.cnr.jada.UserContext param0,it.cnr.contab.utenze00.bulk.UtenteBulk param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
 		pre_component_invocation(param0,componentObj);
 		try {
@@ -508,25 +473,6 @@ public class GestioneLoginComponentSessionBean extends it.cnr.jada.ejb.GenericCo
 		pre_component_invocation(param0,componentObj);
 		try {
 			List result = componentObj.getRuoli(param0, utente);
-			component_invocation_succes(param0,componentObj);
-			return result;
-		} catch(it.cnr.jada.comp.NoRollbackException e) {
-			component_invocation_succes(param0,componentObj);
-			throw e;
-		} catch(it.cnr.jada.comp.ComponentException e) {
-			component_invocation_failure(param0,componentObj);
-			throw e;
-		} catch(RuntimeException e) {
-			throw uncaughtRuntimeException(param0,componentObj,e);
-		} catch(Error e) {
-			throw uncaughtError(param0,componentObj,e);
-		}
-	}	
-	
-	public String[] getLdapUserFromMatricola(UserContext param0, Integer param1) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
-		pre_component_invocation(param0,componentObj);
-		try {
-			String[] result = componentObj.getLdapUserFromMatricola(param0, param1);
 			component_invocation_succes(param0,componentObj);
 			return result;
 		} catch(it.cnr.jada.comp.NoRollbackException e) {

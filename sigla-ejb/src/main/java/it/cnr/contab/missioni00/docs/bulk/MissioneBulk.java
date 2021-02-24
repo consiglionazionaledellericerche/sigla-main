@@ -76,13 +76,20 @@ import it.cnr.jada.util.action.CRUDBP;
 public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, IDocumentoAmministrativoSpesaBulk,AllegatoParentBulk, AllegatoStorePath
 {
 	// Testata Missione
+	@JsonIgnore
 	private boolean salvataggioTemporaneo = false;	// indica che sto eseguendo un salvataggio temporaneo
+	@JsonIgnore
 	private int annoSolare;
-	private int esercizioScrivania;	
+	@JsonIgnore
+	private int esercizioScrivania;
+	@JsonIgnore
 	private java.util.Vector collectionGiorni;
 	public final static Dictionary DA_GEMIS_DA_COMPLETARE;
+	@JsonIgnore
 	private java.util.List collectionGiorniSpese;
-	private java.util.List collectionGiorniSpeseSelezionati;		
+	@JsonIgnore
+	private java.util.List collectionGiorniSpeseSelezionati;
+	@JsonIgnore
 	protected Tipo_missioneBulk tipo_missione;
 	@JsonIgnore
 	private java.util.Collection tipi_missione;
@@ -112,38 +119,56 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 
 	// Tappe
 	private BulkList<Missione_tappaBulk> tappeMissioneColl = new BulkList<Missione_tappaBulk>();
+	@JsonIgnore
 	private PrimaryKeyHashtable tappeMissioneHash = null;
+	@JsonIgnore
 	private boolean tappeConfigurate = false;
 
 	// Dettagli spesa e diaria
 	private BulkList<Missione_dettaglioBulk> speseMissioneColl = new BulkList<Missione_dettaglioBulk>();
-	private BulkList<Missione_dettaglioBulk> diariaMissioneColl = new BulkList<Missione_dettaglioBulk>();	
+	@JsonIgnore
+	private BulkList<Missione_dettaglioBulk> diariaMissioneColl = new BulkList<Missione_dettaglioBulk>();
+	@JsonIgnore
 	private boolean speseInserite = false;
 
 	// Dettagli rimborso
+	@JsonIgnore
 	private BulkList<Missione_dettaglioBulk> rimborsoMissioneColl = new BulkList<Missione_dettaglioBulk>();
 
 	// Consuntivo missione
+	@JsonIgnore
 	private java.sql.Timestamp giorno_consuntivo;
-	private BigDecimal totaleSpeseDelGiorno = new BigDecimal(0);	
+	@JsonIgnore
+	private BigDecimal totaleSpeseDelGiorno = new BigDecimal(0);
+	@JsonIgnore
 	private BigDecimal totaleNettoDiariaDelGiorno = new BigDecimal(0);
-	private BigDecimal totaleEsenteDiariaDelGiorno = new BigDecimal(0);	
+	@JsonIgnore
+	private BigDecimal totaleEsenteDiariaDelGiorno = new BigDecimal(0);
+	@JsonIgnore
 	private BigDecimal totaleRimborsoDelGiorno = new BigDecimal(0);
+	@JsonIgnore
 	private BigDecimal totaleEsenteRimborsoDelGiorno = new BigDecimal(0);
 
 	//Unità Organizzativa
+	@JsonIgnore
 	private Unita_organizzativaBulk unitaOrganizzativa;
 
 	// Anagrafico
+	@JsonIgnore
 	private V_terzo_per_compensoBulk v_terzo;
 	protected Rif_inquadramentoBulk rif_inquadramento;
+	@JsonIgnore
 	private java.util.Collection inquadramenti;
 	protected Tipo_rapportoBulk tipo_rapporto;
-	private java.util.Collection tipi_rapporto;		
+	@JsonIgnore
+	private java.util.Collection tipi_rapporto;
 	protected BancaBulk banca;	
 	protected Rif_modalita_pagamentoBulk modalita_pagamento;
+	@JsonIgnore
 	protected Rif_termini_pagamentoBulk termini_pagamento;
+	@JsonIgnore
 	private java.util.Collection modalita;
+	@JsonIgnore
 	private java.util.Collection termini;
 	public final static String ANAG_ALTRO = "A";
 	public final static String ANAG_DIPENDENTE = "D";				
@@ -156,23 +181,35 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	}
 
 	// Diaria
+	@JsonIgnore
 	protected Tipo_trattamentoBulk tipo_trattamento;
-	private java.util.Collection tipi_trattamento;		
+	@JsonIgnore
+	private java.util.Collection tipi_trattamento;
 
 	// Compenso
+	@JsonIgnore
 	private CompensoBulk compenso = new CompensoBulk();
 
 	// Anticipo
+	@JsonIgnore
 	private AnticipoBulk anticipo = new AnticipoBulk();
+	@JsonIgnore
 	private AnticipoBulk anticipoClone = new AnticipoBulk();
 
 	// Obbligazione
+	@JsonIgnore
 	private Vector documentiContabiliCancellati = null;
+	@JsonIgnore
 	private Vector dettagliCancellati = null;
+	@JsonIgnore
 	private Obbligazione_scadenzarioBulk obbligazione_scadenzario = new Obbligazione_scadenzarioBulk();;
-	private Obbligazione_scadenzarioBulk obbligazione_scadenzarioClone = new Obbligazione_scadenzarioBulk();	
+	@JsonIgnore
+	private Obbligazione_scadenzarioBulk obbligazione_scadenzarioClone = new Obbligazione_scadenzarioBulk();
+	@JsonIgnore
 	private it.cnr.jada.bulk.PrimaryKeyHashMap deferredSaldi = new PrimaryKeyHashMap();
+	@JsonIgnore
 	private java.lang.String riportata = NON_RIPORTATO;
+	@JsonIgnore
 	private java.lang.String riportataInScrivania = NON_RIPORTATO;
 
 	// Dati da Rimborso Missione (GeMis)
@@ -217,6 +254,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	// Stati documento riportato
 	public final static Dictionary STATI_RIPORTO;
 
+	@JsonIgnore
 	private BulkList<AllegatoGenericoBulk> archivioAllegati = new BulkList<AllegatoGenericoBulk>();
 	public final static Dictionary STATO_LIQUIDAZIONE;
 	static
@@ -251,6 +289,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		STATO_LIQUIDAZIONE.put(SOSP, "Liquidazione sospesa");
 
 	}
+	@JsonIgnore
 	private java.sql.Timestamp dataInizioObbligoRegistroUnico;
 	public MissioneBulk() {
 		super();
@@ -1146,6 +1185,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 * Il metodo ritorna una BulkList contenente tutti i dettagli della missione (spese + diarie)
 	 */
 
+	@JsonIgnore
 	public BulkList<Missione_dettaglioBulk> getDettagliMissioneColl() 
 	{
 		BulkList<Missione_dettaglioBulk> listaDettagli = new BulkList<Missione_dettaglioBulk>();
@@ -1547,7 +1587,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	/**
 	 * Il metodo ritorna il valore dell'attributo 'terzo'
 	 */
-	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getTerzo() 
+	@JsonIgnore
+	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getTerzo()
 	{
 		if (getV_terzo()==null)
 			return null;
@@ -1557,7 +1598,8 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 	 * Metodo richiesto dall' interfaccia IDocumentoAmministrativoSpesaBulk
 	 * Il  metodo ritorna il terzo della missione
 	 */
-	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getTerzo_spesa() 
+	@JsonIgnore
+	public it.cnr.contab.anagraf00.core.bulk.TerzoBulk getTerzo_spesa()
 	{
 		return getTerzo();
 	}
@@ -2177,7 +2219,7 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 		GregorianCalendar inizio = getGregorianCalendar(getDt_inizio_missione());
 		GregorianCalendar fine = getGregorianCalendar(getDt_fine_missione());
 
-		if(	inizio.get(GregorianCalendar.YEAR) < (getEsercizio().intValue()-1))
+		if(	inizio.get(GregorianCalendar.YEAR) < (getEsercizio().intValue()-2))
 			throw new it.cnr.jada.action.MessageToUser( "La data di inizio missione non e' valida!" );
 		if(	fine.get(GregorianCalendar.YEAR) > (getEsercizio().intValue()+1))
 			throw new it.cnr.jada.action.MessageToUser( "La data di fine missione non e' valida!" );	  			 
@@ -2188,8 +2230,9 @@ public class MissioneBulk extends MissioneBase implements IDefferUpdateSaldi, ID
 
 		if(	inizio.get(GregorianCalendar.YEAR) == fine.get(GregorianCalendar.YEAR) &&
 				inizio.get(GregorianCalendar.YEAR) != getEsercizio().intValue()-1 &&
+				inizio.get(GregorianCalendar.YEAR) != getEsercizio().intValue()-2 &&
 				inizio.get(GregorianCalendar.YEAR) != getEsercizio().intValue())
-			throw new it.cnr.jada.action.MessageToUser( "Le date di inizio/fine missione possono solo essere entrambe nell'esercizio precedente, in quello corrente o a cavallo di esercizio !" );  	
+			throw new it.cnr.jada.action.MessageToUser( "Le date di inizio/fine missione possono solo essere entrambe di 2 esercizi precedenti, in quello corrente o a cavallo di esercizio !" );
 	}
 	/**
 	 * Il metodo ritorna TRUE se l'obbligazione la cui scadenza e' associata alla missione

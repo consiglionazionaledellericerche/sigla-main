@@ -277,6 +277,25 @@
 			sqlTypeName="DECIMAL"
 			columnSize="10"
 			nullable="true"/>
+		<columnMapping
+			columnName="FL_COMUNICA_PAGAMENTI"
+			propertyName="flComunicaPagamenti"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_LIMITE_COMPETENZA"
+			propertyName="fl_limite_competenza"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="BLOCCO_IMPEGNI_NATFIN"
+			propertyName="blocco_impegni_natfin"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"/>
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -363,4 +382,10 @@
 		name="gg_deroga_obbl_comp_prg_scad" />
 	<persistentProperty
 		name="gg_deroga_obbl_res_prg_scad" />
+	<persistentProperty
+		name="flComunicaPagamenti" />
+	<persistentProperty
+		name="fl_limite_competenza" />
+	<persistentProperty
+		name="blocco_impegni_natfin" />
 </SQLPersistentInfo>

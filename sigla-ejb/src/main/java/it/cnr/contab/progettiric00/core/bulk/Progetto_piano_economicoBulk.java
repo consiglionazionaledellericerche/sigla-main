@@ -43,7 +43,10 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 	private java.math.BigDecimal imSpesaFinanziatoRimodulatoPreDelete;
 	private java.math.BigDecimal imSpesaCofinanziatoRimodulatoPreDelete;
 	private boolean detailDerivato;
-	
+
+	//Indica il numero di anni precedenti per il quale è possibile caricare un piano economico rispetto alla data di inizio del progetto
+	public final static Integer ANNIPRE_PIANOECONOMICO = 14;
+
 	public Progetto_piano_economicoBulk() {
 		super();
 	}
@@ -189,12 +192,22 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 				.map(el->!el.isEmpty())
 				.orElse(Boolean.TRUE);
 	}
-	
+
+	/**
+	 * Ritorna la lista degli altri anni valorizzabili sul piano economico del progetto
+	 * La lista degli anni restituita è l'insieme di tutti gli anni compresi tra:
+	 * 1) 14 anni precedenti all'anno di inizio del progetto
+	 * 2) Anno fine/proroga del progetto
+	 *
+	 * Dalla lista viene eliminato l'anno corrente che non fa parte dell'insieme "altri anni".
+	 *
+	 * @return la lista degli altri anni valorizzabili sul piano economico del progetto
+	 */
 	public it.cnr.jada.util.OrderedHashtable getAnniList() {
 		OrderedHashtable list = new OrderedHashtable();
 		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getProgetto());
-		Integer annoInizio = Optional.ofNullable(this.getProgettoRimodulazione()).map(el->el.getAnnoInizioRimodulato())
-				.orElse(optProgetto.map(ProgettoBulk::getAnnoInizioOf).orElse(0));
+		Integer annoInizio = Optional.ofNullable(this.getProgettoRimodulazione()).map(el->el.getAnnoInizioForPianoEconomico())
+				.orElse(optProgetto.map(ProgettoBulk::getAnnoInizioForPianoEconomico).orElse(0));
 		Integer annoFine = Optional.ofNullable(this.getProgettoRimodulazione()).map(el->el.getAnnoFineRimodulato())
 				.orElse(optProgetto.map(ProgettoBulk::getAnnoFineOf).orElse(9999));
 		for (int i=annoFine;i>=annoInizio;i--)
@@ -210,7 +223,7 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 				.forEach(el->list.remove(el));
 		return list;
 	}
-	
+
 	public boolean isROEsercizio_piano() {
 		return Optional.ofNullable(this.getVoce_piano_economico()).isPresent();
 	}
@@ -244,6 +257,20 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 					   .filter(el->el.getEsercizio().equals(this.getEsercizio_piano()))
 					   .filter(el->!el.getStato().equals(Pdg_moduloBulk.STATO_AC))
 					   .findAny().isPresent();
+	}
+
+	public boolean isROImSpesaFinanziato() {
+		return this.isROProgettoPianoEconomico() ||
+				this.isAnnoPianoEconomicoMinoreAnnoInizio();
+	}
+
+	public boolean isAnnoPianoEconomicoMinoreAnnoInizio() {
+		Optional<ProgettoBulk> optProgetto = Optional.ofNullable(this.getProgetto());
+		Integer annoInizio = Optional.ofNullable(this.getProgettoRimodulazione()).map(el->el.getAnnoInizioRimodulato())
+				.orElse(optProgetto.map(ProgettoBulk::getAnnoInizioOf).orElse(0));
+		return Optional.ofNullable(this.getEsercizio_piano())
+						.map(el->el.compareTo(annoInizio)<0)
+						.orElse(Boolean.TRUE);
 	}
 
 	public java.math.BigDecimal getImSpesaFinanziatoRimodulato() {
@@ -376,7 +403,12 @@ public class Progetto_piano_economicoBulk extends Progetto_piano_economicoBase {
 		return isDetailRimodulatoEliminato() ||
 				Optional.ofNullable(this.getProgettoRimodulazione()).map(Progetto_rimodulazioneBulk::isROFieldRimodulazione).orElse(Boolean.TRUE);
 	}
-	
+
+	public boolean isROImSpesaFinanziatoRimodulatoAA() {
+		return isROFieldRimodulazione() ||
+				this.isAnnoPianoEconomicoMinoreAnnoInizio();
+	}
+
 	/**
 	 * Indica se l'anno del piano economico è all'interno del periodo di validità comreso
 	 * tra l'anno di attivazione del piano economico e l'ultimo anno contabile attivo

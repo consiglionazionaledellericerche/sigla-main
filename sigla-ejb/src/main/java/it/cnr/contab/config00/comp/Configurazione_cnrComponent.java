@@ -504,10 +504,10 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                 Configurazione_cnrBulk.SK_GESTIONE_ORDINI,
                 ASTERISCO,
                 CNRUserContext.getEsercizio(userContext));
-            return findConfigurazioneOrdini(userContext, configurazioneCnrKey)
+            return val01YesNo(userContext, configurazioneCnrKey)
                 .orElseGet(() -> {
                     try {
-                        return findConfigurazioneOrdini(userContext, configurazioneCnrKey.esercizio(0))
+                        return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
                                 .orElse(Boolean.FALSE);
                     } catch (PersistencyException|ComponentException e) {
                         throw new PersistencyError(e);
@@ -518,7 +518,28 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
         }
     }
 
-    private Optional<Boolean> findConfigurazioneOrdini(UserContext userContext, Configurazione_cnrKey configurazioneCnrKey) throws PersistencyException, ComponentException {
+    public Boolean isEconomicaPatrimonialeAttivaImputazioneManuale(UserContext userContext) throws ComponentException {
+        try {
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_ECONOMICO_PATRIMONIALE,
+                    Configurazione_cnrBulk.SK_IMPUTAZIONE_MANUALE,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val01YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        try {
+                            return val01YesNo(userContext, configurazioneCnrKey.esercizio(0))
+                                    .orElse(Boolean.FALSE);
+                        } catch (PersistencyException|ComponentException e) {
+                            throw new PersistencyError(e);
+                        }
+                    });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    private Optional<Boolean> val01YesNo(UserContext userContext, Configurazione_cnrKey configurazioneCnrKey) throws PersistencyException, ComponentException {
         final BulkHome home = getHome(userContext, Configurazione_cnrBulk.class);
         return Optional.ofNullable(home.findByPrimaryKey(configurazioneCnrKey))
                 .filter(Configurazione_cnrBulk.class::isInstance)
@@ -648,6 +669,38 @@ public class Configurazione_cnrComponent extends it.cnr.jada.comp.GenericCompone
                         }
                     });
 
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    public Boolean getGestioneImpegnoChiusuraForzataCompetenza(UserContext userContext) throws ComponentException {
+        try {
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_AGGIORNAMENTO_IMPEGNO_DA_ORDINE,
+                    Configurazione_cnrBulk.IMPEGNO_CHIUSURA_FORZATA_A_COMPETENZA,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val01YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        return Boolean.FALSE;
+                    });
+        } catch (PersistencyException e) {
+            throw handleException(e);
+        }
+    }
+
+    public Boolean getGestioneImpegnoChiusuraForzataResiduo(UserContext userContext) throws ComponentException {
+        try {
+            Configurazione_cnrKey configurazioneCnrKey = new Configurazione_cnrKey(
+                    Configurazione_cnrBulk.PK_AGGIORNAMENTO_IMPEGNO_DA_ORDINE,
+                    Configurazione_cnrBulk.IMPEGNO_CHIUSURA_FORZATA_A_RESIDUO,
+                    ASTERISCO,
+                    CNRUserContext.getEsercizio(userContext));
+            return val01YesNo(userContext, configurazioneCnrKey)
+                    .orElseGet(() -> {
+                        return Boolean.FALSE;
+                    });
         } catch (PersistencyException e) {
             throw handleException(e);
         }

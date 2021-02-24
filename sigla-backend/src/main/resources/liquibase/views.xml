@@ -2126,7 +2126,7 @@
             WHERE ((unita_organizzativa.fl_rubrica = 'N'::bpchar) AND ((unita_organizzativa.cd_tipo_unita)::text = 'SAC'::text));</createView>
     </changeSet>
     <changeSet dbms="h2" author="sigla" runOnChange="true" id="createView-v_unita_organizzativa-h2">
-        <createView fullDefinition="false" viewName="v_unita_organizzativa"> SELECT uo_cds.cd_unita_organizzativa AS cd_uo,
+        <createView fullDefinition="false" replaceIfExists="true" viewName="v_unita_organizzativa"> SELECT uo_cds.cd_unita_organizzativa AS cd_uo,
             unita_organizzativa.esercizio,
             unita_organizzativa.esercizio_inizio,
             unita_organizzativa.cd_unita_organizzativa,
@@ -2189,7 +2189,7 @@
                 AND ((unita_organizzativa.cd_tipo_unita) &lt;&gt; 'SAC'))
             UNION ALL
             SELECT uo_rubrica.cd_unita_organizzativa AS cd_uo,
-            unita_organizzativa.esercizio,
+            COALESCE(unita_organizzativa.esercizio,unita_organizzativa.esercizio_inizio),
             unita_organizzativa.esercizio_inizio,
             unita_organizzativa.cd_unita_organizzativa,
             unita_organizzativa.cd_proprio_unita,
@@ -2218,20 +2218,18 @@
             v_unita_organizzativa_valida uo_rubrica,
             v_cdr_valido cdr,
             v_cdr_valido cdr_rubrica
-            WHERE ((uo_rubrica.esercizio = unita_organizzativa.esercizio)
-                AND (cdr.esercizio = unita_organizzativa.esercizio)
-                AND (cdr_rubrica.esercizio = unita_organizzativa.esercizio)
-                AND (uo_rubrica.fl_rubrica = 'Y')
-                AND ((unita_organizzativa.cd_tipo_unita) = 'SAC')
-                AND ((uo_rubrica.cd_tipo_unita) = 'SAC')
-                AND ((unita_organizzativa.cd_unita_padre) = (uo_rubrica.cd_unita_padre))
-                AND ((cdr.cd_unita_organizzativa) = (unita_organizzativa.cd_unita_organizzativa))
-                AND ((cdr_rubrica.cd_unita_organizzativa) = (uo_rubrica.cd_unita_organizzativa))
-                AND ((((unita_organizzativa.cd_unita_organizzativa) &lt;&gt; (uo_rubrica.cd_unita_organizzativa))
-                AND (
-                    (cdr.cd_cdr_afferenza) = (cdr_rubrica.cd_centro_responsabilita)))
-                    OR ((unita_organizzativa.cd_unita_organizzativa) = (uo_rubrica.cd_unita_organizzativa)))
-                )
+            WHERE COALESCE(uo_rubrica.esercizio,0) = COALESCE(unita_organizzativa.esercizio,0)
+            AND COALESCE(cdr.esercizio,0) = COALESCE(unita_organizzativa.esercizio,0)
+            AND COALESCE(cdr_rubrica.esercizio,0) = COALESCE(unita_organizzativa.esercizio,0)
+            AND uo_rubrica.fl_rubrica = 'Y'
+            AND unita_organizzativa.cd_tipo_unita = 'SAC'
+            AND uo_rubrica.cd_tipo_unita = 'SAC'
+            AND unita_organizzativa.cd_unita_padre = uo_rubrica.cd_unita_padre
+            AND cdr.cd_unita_organizzativa =
+            unita_organizzativa.cd_unita_organizzativa
+            AND cdr_rubrica.cd_unita_organizzativa = uo_rubrica.cd_unita_organizzativa
+            AND (( unita_organizzativa.cd_unita_organizzativa &lt;&gt; uo_rubrica.cd_unita_organizzativa AND cdr.cd_cdr_afferenza = cdr_rubrica.cd_centro_responsabilita)
+            OR (unita_organizzativa.cd_unita_organizzativa = uo_rubrica.cd_unita_organizzativa))
             UNION ALL
             SELECT unita_organizzativa.cd_unita_organizzativa AS cd_uo,
             unita_organizzativa.esercizio,
@@ -3014,5 +3012,29 @@
             rapporto.matricola_dipendente = cnr_anadip.matricola and
             unita_organizzativa.cd_unita_organizzativa = SUBSTR(cnr_anadip.tit_afferen, 1, 3)|| '.'|| SUBSTR(cnr_anadip.tit_afferen, 4, 3)
             ORDER BY cnr_anadip.nominativo;</createView>
+    </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-PROGETTO_TEMP-h2">
+        <sqlFile dbms="h2" path="../expsigladb/View/PROGETTO_TEMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-PROGETTO-h2">
+        <sqlFile dbms="h2" path="../expsigladb/View/PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-V_PROGETTO_PADRE-h2">
+        <sqlFile dbms="h2" path="../expsigladb/View/V_PROGETTO_PADRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-V_LINEA_ATTIVITA_VALIDA-h2">
+        <sqlFile dbms="h2" path="../expsigladb/View/V_LINEA_ATTIVITA_VALIDA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-VOCE_F_SALDI_CDR_LINEA-h2">
+        <sqlFile dbms="h2" path="../expsigladb/View/VOCE_F_SALDI_CDR_LINEA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-V_SALDI_GAE_VOCE_PROGETTO-h2">
+        <sqlFile dbms="h2" path="../expsigladb/View/V_SALDI_GAE_VOCE_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="marco.spasiano" runOnChange="true" id="create-view-V_SALDI_VOCE_PROGETTO-h2">
+        <sqlFile dbms="h2" path="../expsigladb/View/V_SALDI_VOCE_PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" runOnChange="true" id="create-view-V_PARTITE_GIRO">
+        <sqlFile dbms="oracle" path="../expsigladb/View/v_partite_giro.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
 </databaseChangeLog>

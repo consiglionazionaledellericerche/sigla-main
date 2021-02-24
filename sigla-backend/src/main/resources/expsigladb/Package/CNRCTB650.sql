@@ -299,6 +299,18 @@
 -- Variabili globali
 --
 
+   TYPE recCreditoIrpef IS RECORD
+       (
+        tCdCori CONTRIBUTO_RITENUTA.cd_contributo_ritenuta%TYPE,
+        tDtIniValCori TIPO_CONTRIBUTO_RITENUTA.dt_ini_validita%TYPE,
+        tImCreditoIrpefGoduto CONTRIBUTO_RITENUTA.ammontare%TYPE,
+        tImCreditoIrpefDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE,
+        tImCreditoMaxDovuto CONTRIBUTO_RITENUTA.ammontare%TYPE
+       );
+   TYPE tCreditoIrpef IS TABLE OF recCreditoIrpef
+        INDEX BY BINARY_INTEGER;
+
+   tabCreditoIrpef tCreditoIrpef;
    dataOdierna DATE;
    aDataIniEsercizio DATE;
    aDataFinEsercizio DATE;
@@ -316,10 +328,12 @@
    glbDetrazioniCoGoduto NUMBER(15,2);
    glbDetrazioniFiGoduto NUMBER(15,2);
    glbDetrazioniAlGoduto NUMBER(15,2);
+   glbDetrazioniCuneoGoduto NUMBER(15,2);
    glbDeduzioneIrpefGoduto NUMBER(15,2);
    glbDeduzioneFamilyGoduto NUMBER(15,2);
    glbImportoIrpefSospesoGoduto NUMBER(15,2);
    glbImportoCreditoIrpefGoduto NUMBER(15,2);
+   glbImportoBonusIrpefGoduto NUMBER(15,2);
 
    glbImportoIrpefDovuto NUMBER(15,2);
    glbImportoFamilyDovuto NUMBER(15,2);
@@ -331,10 +345,11 @@
    glbDetrazioniCoDovuto NUMBER(15,2);
    glbDetrazioniFiDovuto NUMBER(15,2);
    glbDetrazioniAlDovuto NUMBER(15,2);
+   glbDetrazioniCuneoDovuto NUMBER(15,2);
    glbDeduzioneIrpefDovuto NUMBER(15,2);
    glbDeduzioneFamilyDovuto NUMBER(15,2);
    glbImportoCreditoIrpefDovuto NUMBER(15,2);
-
+   glbImportoBonusIrpefDovuto NUMBER(15,2);
    -- Valore addebito rate di esercizio precedente (rateizzazione addizionali territorio)
 
    glbImpAddRegRateEseprec NUMBER(15,2);
@@ -381,6 +396,8 @@
  -- Memorizza gestione no credito IRPEF per il soggetto anagrafico
 
    glbFlNoCreditoIrpef CHAR(1);
+   glbFlNoCreditoCuneoIrpef CHAR(1);
+   glbFlNoDetrCuneoIrpef CHAR(1);
 
    -- Memorizza il Reddito Complessivo e quello della prima casa presenti in anagrafica
 
@@ -582,7 +599,8 @@
        aImDetrazioniLaNetto IN OUT NUMBER,
        aImDetrazioniCoNetto IN OUT NUMBER,
        aImDetrazioniFiNetto IN OUT NUMBER,
-       aImDetrazioniAlNetto IN OUT NUMBER
+       aImDetrazioniAlNetto IN OUT NUMBER,
+       aImDetrazioniCuneoNetto IN OUT NUMBER
       );
 
 -- Cancellazione del conguaglio
@@ -647,10 +665,15 @@
 
 -- Calcolo del credito irpef
 
-   FUNCTION calcolaCreditoIrpefDovuto
+   procedure calcolaCreditoIrpefDovuto
       (
-       aImportoRiferimento NUMBER,
-       inNumGGTotMinPerCredito INTEGER,
-       aRecCompenso COMPENSO%ROWTYPE
-      ) RETURN  NUMBER;
+        aImportoRiferimento in NUMBER,
+        inNumGGTotMinPerCredito in INTEGER,
+        aRecCompenso in COMPENSO%ROWTYPE,
+        aDataMin in date,
+        aDataMax in date,
+        aCdCori in tipo_contributo_ritenuta.cd_contributo_ritenuta%type,
+        dt_ini_val_cori in tipo_contributo_ritenuta.dt_ini_validita%type,
+        totImportoDetrazioni in out number
+      ) ;
 END CNRCTB650;

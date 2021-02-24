@@ -24,8 +24,13 @@ import javax.ejb.EJBException;
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
 
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 @Stateless(name="CNRDOCCONT00_EJB_SaldoComponentSession")
 public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentSessionBean implements SaldoComponentSession  {
@@ -505,6 +510,75 @@ public class SaldoComponentSessionBean extends it.cnr.jada.ejb.GenericComponentS
 		}
 	}
 
-	
+	public void checkBloccoImpegniNatfin(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			componentObj.checkBloccoImpegniNatfin(userContext,cdr,cdLineaAttivita,elementoVoceBulk,tipoObbligazione);
+			component_invocation_succes(userContext,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
 
+	public void checkBloccoImpegniNatfin(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			componentObj.checkBloccoImpegniNatfin(userContext,workpackageBulk,elementoVoceBulk,tipoObbligazione);
+			component_invocation_succes(userContext,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public void checkBloccoImpegniNatfin(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			componentObj.checkBloccoImpegniNatfin(userContext,variazione);
+			component_invocation_succes(userContext,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
+
+	public void checkBloccoLimiteClassificazione(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(userContext,componentObj);
+		try {
+			componentObj.checkBloccoLimiteClassificazione(userContext,variazione);
+			component_invocation_succes(userContext,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(userContext,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(userContext,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(userContext,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(userContext,componentObj,e);
+		}
+	}
 }

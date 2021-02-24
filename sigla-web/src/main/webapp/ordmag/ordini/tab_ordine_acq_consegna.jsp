@@ -55,5 +55,9 @@
 			<td><%bp.getConsegne().writeFormLabel(out, "findObbligazioneScadenzario"); %></td>
 			<td colspan="7"><%bp.getConsegne().writeFormInput(out, "findObbligazioneScadenzario"); %></td>
 		</tr>
+		<tr>
+			<td><%bp.getConsegne().writeFormLabel(out, "cercaConto"); %></td>
+			<td colspan="7"><%bp.getConsegne().writeFormInput(out, "cercaConto"); %></td>
+		</tr>
 	</table>
 </div>

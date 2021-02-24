@@ -19,7 +19,10 @@ package it.cnr.contab.config00.sto.bulk;
 import java.sql.*;
 import java.sql.*;
 
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
@@ -63,4 +66,19 @@ public SQLBuilder createSQLBuilder()
 	sql.addClause( "AND", "cd_tipo_unita", SQLBuilder.EQUALS, Tipo_unita_organizzativaHome.TIPO_UO_ENTE);
 	return sql;
 }
+	public  Boolean isUoEnte(UserContext userContext) throws  ComponentException {
+		Unita_organizzativa_enteBulk uoEnte = getUoEnte(userContext);
+		if ( ((CNRUserContext)userContext).getCd_unita_organizzativa().equals ( uoEnte.getCd_unita_organizzativa() )){
+			return true;
+		}
+		return false;
+	}
+
+	public Unita_organizzativa_enteBulk getUoEnte(UserContext userContext) throws ComponentException {
+		try {
+			return (Unita_organizzativa_enteBulk) getHomeCache().getHome(Unita_organizzativa_enteBulk.class).findAll().get(0);
+		} catch (it.cnr.jada.persistency.PersistencyException e) {
+			throw new ComponentException(e);
+		}
+	}
 }

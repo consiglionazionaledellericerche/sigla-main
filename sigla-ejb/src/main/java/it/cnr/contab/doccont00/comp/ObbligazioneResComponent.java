@@ -32,10 +32,12 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Optional;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_mod_voceBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_modificaBulk;
@@ -44,6 +46,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -229,11 +232,17 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 			}
 
 			if (totaleScad.compareTo((BigDecimal) prcImputazioneFinanziariaTable.get( key ))!=0) {
+				//se modifico l'importo del residuo devo controllare che non sia bloccata la creazione/modifica del residuo se attiva la gestione del limite sui residui sia sul CDS che sulla voce e per la natura e tipo
+				//finanziamento indicato in CONFIGURAZIONE_CNR
+				WorkpackageBulk latt = ((WorkpackageHome)getHome(aUC, WorkpackageBulk.class)).searchGAECompleta(aUC,CNRUserContext.getEsercizio(aUC),
+						key.getCd_centro_responsabilita(), key.getCd_linea_attivita());
+
+				if (!UtenteBulk.isAbilitatoSbloccoImpegni(aUC))
+					Utility.createSaldoComponentSession().checkBloccoImpegniNatfin(aUC, latt, obbligazione.getElemento_voce(), obbligazione.isObbligazioneResiduo()?ObbligazioneBulk.TIPO_RESIDUO_PROPRIO:ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO);
+
 				//se aumento l'importo del residuo devo controllare che il progetto non sia scaduto
 				if (totaleScad.compareTo((BigDecimal)prcImputazioneFinanziariaTable.get( key ))>0 &&
 					Utility.createParametriEnteComponentSession().isProgettoPianoEconomicoEnabled(aUC, CNRUserContext.getEsercizio(aUC))) {
-					WorkpackageBulk latt = ((WorkpackageHome)getHome(aUC, WorkpackageBulk.class)).searchGAECompleta(aUC,CNRUserContext.getEsercizio(aUC),
-							key.getCd_centro_responsabilita(), key.getCd_linea_attivita());
 					ProgettoBulk progetto = latt.getProgetto();
 					Optional.ofNullable(progetto.getOtherField())
 							.filter(el->el.isStatoApprovato()||el.isStatoChiuso())

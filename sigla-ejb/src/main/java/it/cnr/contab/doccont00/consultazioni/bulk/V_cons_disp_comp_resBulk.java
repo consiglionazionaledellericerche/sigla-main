@@ -73,8 +73,11 @@ public class V_cons_disp_comp_resBulk extends OggettoBulk  implements Persistent
  
 //    DS_LDA VARCHAR(300)
 	private java.lang.String ds_lda;
- 
-//    ESERCIZIO DECIMAL(4,0)
+
+//    CD_RESPONSABILE_TERZO DECIMAL(8,0)
+	private java.lang.Integer cd_responsabile_terzo;
+
+	//    ESERCIZIO DECIMAL(4,0)
 	private java.lang.Integer esercizio;
  
 //    ESERCIZIO_RES DECIMAL(4,0)
@@ -408,5 +411,13 @@ public class V_cons_disp_comp_resBulk extends OggettoBulk  implements Persistent
 	}
 	public void setAss_res(java.math.BigDecimal ass_res) {
 		this.ass_res = ass_res;
+	}
+
+	public Integer getCd_responsabile_terzo() {
+		return cd_responsabile_terzo;
+	}
+
+	public void setCd_responsabile_terzo(Integer cd_responsabile_terzo) {
+		this.cd_responsabile_terzo = cd_responsabile_terzo;
 	}
 }

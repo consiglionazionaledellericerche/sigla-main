@@ -176,6 +176,16 @@
 			columnSize="6"
 			nullable="true" />
 		<columnMapping
+				columnName="ESERCIZIO_EP"
+				propertyName="esercizioEp"
+				sqlTypeName="DECIMAL"
+				columnSize="4"/>
+		<columnMapping
+				columnName="CD_VOCE_EP"
+				propertyName="cdVoceEp"
+				sqlTypeName="VARCHAR"
+				columnSize="45"/>
+		<columnMapping
 			columnName="DT_CANCELLAZIONE"
 			propertyName="dtCancellazione"
 			sqlTypeName="TIMESTAMP"
@@ -260,6 +270,10 @@
 		name="arrAliIva" />
 	<persistentProperty
 		name="vecchiaConsegna" />
+	<persistentProperty
+			name="cdVoceEp" />
+	<persistentProperty
+			name="esercizioEp" />
 	<persistentProperty
 		name="dtCancellazione" />
 	<persistentProperty

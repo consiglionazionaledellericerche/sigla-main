@@ -123,8 +123,8 @@ RETURN number;
                   'DISTINTA_CASSIERE.PG_DISTINTA            = DISTINTA_CASSIERE_DET.PG_DISTINTA  AND  '||
                   'DISTINTA_CASSIERE.PG_DISTINTA IN(SELECT MIN(DET.PG_DISTINTA) FROM DISTINTA_CASSIERE_DET DET '||
                   'WHERE '||
-                  'MANDATO.CD_CDS               = DET.CD_CDS_ORIGINE  AND '||                           
-                  'MANDATO.ESERCIZIO            = DET.ESERCIZIO  AND '||                       
+                  'MANDATO.CD_CDS               = DET.CD_CDS_ORIGINE  AND '||
+                  'MANDATO.ESERCIZIO            = DET.ESERCIZIO  AND '||
                   'MANDATO.PG_MANDATO           = DET.PG_MANDATO)';
     Else
        Stringa := 'Select nvl(sum(MANDATO.IM_MANDATO), 0) from MANDATO '||
@@ -292,17 +292,22 @@ FUNCTION Tot_reversali(
 		CDS_ENTE:=CNRCTB020.GETCDCDSENTE (P_Anno);
 
     If nvl(P_EME_INV_RIS, 'E') IN ('I', 'D') Then
-       Stringa := 'Select nvl(sum(REVERSALE.IM_REVERSALE), 0) '||
-                  'from  REVERSALE, DISTINTA_CASSIERE, DISTINTA_CASSIERE_DET '||
-                  'WHERE REVERSALE.STATO != ''A'' AND '||
-                  '      REVERSALE.CD_CDS              = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE     AND '||
-                  '      REVERSALE.ESERCIZIO           = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
-                  '      REVERSALE.PG_REVERSALE        = DISTINTA_CASSIERE_DET.PG_REVERSALE AND '||
-                  '      DISTINTA_CASSIERE.CD_CDS      = DISTINTA_CASSIERE_DET.CD_CDS                 AND '||
-                  '      DISTINTA_CASSIERE.ESERCIZIO   = DISTINTA_CASSIERE_DET.ESERCIZIO              AND '||
-                  '      DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
-                  '      DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA';
-
+        Stringa := 'Select nvl(sum(REVERSALE.IM_REVERSALE), 0) '||
+          'FROM  REVERSALE, DISTINTA_CASSIERE, DISTINTA_CASSIERE_DET '||
+          'WHERE REVERSALE.STATO != ''A'' AND '||
+          '      REVERSALE.CD_CDS              = DISTINTA_CASSIERE_DET.CD_CDS_ORIGINE AND '||
+          '      REVERSALE.ESERCIZIO           = DISTINTA_CASSIERE_DET.ESERCIZIO  AND '||
+          '      REVERSALE.PG_REVERSALE        = DISTINTA_CASSIERE_DET.PG_REVERSALE AND '||
+          '      DISTINTA_CASSIERE.CD_CDS      = DISTINTA_CASSIERE_DET.CD_CDS AND '||
+          '      DISTINTA_CASSIERE.ESERCIZIO   = DISTINTA_CASSIERE_DET.ESERCIZIO AND '||
+          '      DISTINTA_CASSIERE.CD_UNITA_ORGANIZZATIVA = DISTINTA_CASSIERE_DET.CD_UNITA_ORGANIZZATIVA AND '||
+          '      DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA AND '||
+          '      DISTINTA_CASSIERE.PG_DISTINTA IN('||
+          '        SELECT MIN(DET.PG_DISTINTA) FROM DISTINTA_CASSIERE_DET DET '||
+          '        WHERE '||
+          '        REVERSALE.CD_CDS               = DET.CD_CDS_ORIGINE AND '||
+          '        REVERSALE.ESERCIZIO            = DET.ESERCIZIO AND '||
+          '        REVERSALE.PG_REVERSALE         = DET.PG_REVERSALE )';
     Else
        Stringa := 'Select nvl(sum(REVERSALE.im_REVERSALE), 0) from REVERSALE '||
                   ' WHERE STATO != ''A'' ';
@@ -598,8 +603,8 @@ FUNCTION Tot_reversali(
                'DISTINTA_CASSIERE.PG_DISTINTA = DISTINTA_CASSIERE_DET.PG_DISTINTA AND '||
                'DISTINTA_CASSIERE.PG_DISTINTA IN(SELECT MIN(DET.PG_DISTINTA) FROM DISTINTA_CASSIERE_DET DET '||
                'WHERE '||
-               'MANDATO.CD_CDS               = DET.CD_CDS_ORIGINE AND '||                           
-               'MANDATO.ESERCIZIO            = DET.ESERCIZIO  AND '||                       
+               'MANDATO.CD_CDS               = DET.CD_CDS_ORIGINE AND '||
+               'MANDATO.ESERCIZIO            = DET.ESERCIZIO  AND '||
                'MANDATO.PG_MANDATO           = DET.PG_MANDATO)';
 	if (parametri_esercizio.fl_tesoreria_unica='N') then
     If P_CDS IS NOT NULL Then

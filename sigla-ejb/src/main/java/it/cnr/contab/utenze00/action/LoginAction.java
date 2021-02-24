@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJBException;
 import java.rmi.RemoteException;
+import java.security.Principal;
 import java.util.Enumeration;
 import java.util.Optional;
 
@@ -169,7 +170,11 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                         break;
                     }
                 }
-            } catch (NoSuchBusinessProcessException e) {
+            } catch (NoSuchBusinessProcessException _ex) {
+                final Forward forward = doLogin(context, GestioneLoginComponent.VALIDA_FASE_INIZIALE);
+                if (forward == null)
+                    return initializeWorkspace(context);
+                return forward;
             }
             return context.findForward("home");
         } catch (Throwable e) {
@@ -183,25 +188,6 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
             CNRUserInfo ui = bp.getUserInfo();
             ui.setPassword(null);
             return context.findForward("login");
-        } catch (Throwable e) {
-            return handleException(context, e);
-        }
-    }
-
-    /**
-     * Gestisce il login all'applicazione
-     *
-     * @param context L'ActionContext della richiesta
-     * @return Il Forward alla pagina di risposta
-     * @throws java.text.ParseException
-     */
-    public Forward doEntra(ActionContext context) throws java.text.ParseException {
-        try {
-            initializeLdap(context);
-            Forward forward = doLogin(context, GestioneLoginComponent.VALIDA_FASE_INIZIALE);
-            if (forward == null)
-                forward = initializeWorkspace(context);
-            return forward;
         } catch (Throwable e) {
             return handleException(context, e);
         }
@@ -285,9 +271,34 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
         }
     }
 
+    /**
+     * Gestisce il login all'applicazione
+     *
+     * @param context L'ActionContext della richiesta
+     * @return Il Forward alla pagina di risposta
+     * @throws java.text.ParseException
+     */
+    public Forward doEntra(ActionContext context) throws java.text.ParseException {
+        try {
+            Forward forward = doLogin(context, GestioneLoginComponent.VALIDA_FASE_INIZIALE);
+            if (forward == null)
+                forward = initializeWorkspace(context);
+            return forward;
+        } catch (Throwable e) {
+            return handleException(context, e);
+        }
+    }
+
     private Forward doLogin(ActionContext context, int faseValidazione) throws java.text.ParseException {
         boolean utentiMultipliFound = false;
         CNRUserInfo ui = null;
+        final Optional<Principal> principalOptional = Optional.ofNullable(context)
+                .filter(HttpActionContext.class::isInstance)
+                .map(HttpActionContext.class::cast)
+                .map(HttpActionContext::getRequest)
+                .flatMap(request -> Optional.ofNullable(request.getUserPrincipal()));
+        if (!principalOptional.isPresent())
+            return context.findDefaultForward();
         try {
             if (context.getUserContext() == null)
                 context.setUserContext(new CNRUserContext("LOGIN", context.getSessionId(), null, null, null, null));
@@ -303,17 +314,12 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
                 return context.findForward("traced_login");
 
             UtenteBulk utente = new UtenteBulk();
-            utente.setCd_utente(Optional.ofNullable(ui.getLdap_userid()).orElse(ui.getUserid()));
-            utente.setPasswordInChiaro(ui.getPassword() != null ? ui.getPassword().toUpperCase() : null);
+            utente.setCd_utente(principalOptional.get().getName().toUpperCase());
             if (ui.getLdap_userid() != null) {
                 utente.setCd_utente_uid(ui.getLdap_userid());
-                utente.setLdap_password(Optional.ofNullable(ui.getLdap_password()).orElse(ui.getPassword()));
-            } else {
-                utente.setLdap_password(ui.getPassword());
             }
             utente.setUtente_multiplo(ui.getUtente_multiplo());
             ui.setUtente(utente);
-
             try {
                 utente = getComponentSession().validaUtente(context.getUserContext(), utente, faseValidazione);
             } catch (UtenteLdapNuovoException e) {
@@ -422,16 +428,6 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
         }
     }
 
-    private void initializeLdap(ActionContext context) {
-        CNRUserInfo ui = (CNRUserInfo) context.getUserInfo();
-
-        // cancelliamo l'utente e la password ldap
-        if (ui != null) {
-            ui.setLdap_userid(null);
-            ui.setLdap_password(null);
-        }
-    }
-
     private Forward initializeWorkspace(ActionContext context) throws java.text.ParseException, javax.ejb.EJBException, java.rmi.RemoteException, it.cnr.jada.comp.ComponentException, BusinessProcessException {
         CNRUserInfo ui = (CNRUserInfo) context.getUserInfo();
         LoginBP loginBP = (LoginBP) context.getBusinessProcess();
@@ -534,6 +530,10 @@ public class LoginAction extends it.cnr.jada.util.action.BulkAction {
         else
             bp.cercaUnitaOrganizzative(context);
         return context.findForward("desktop");
+    }
+
+    public Forward doSelezionaContesto(ActionContext context, Integer esercizio) {
+        return doSelezionaContesto(context, esercizio, null, null, null);
     }
 
     /**

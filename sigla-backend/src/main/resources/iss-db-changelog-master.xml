@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <property name="now" value="sysdate" dbms="oracle"/>
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <property name="date.type" value="DATE" dbms="oracle"/>
+    <property name="date.type" value="DATETIME" dbms="postgresql"/>
+
+    <property name="firstday" value="to_Date('0101${liquibase.bootstrap.esercizio}','ddmmyyyy')" dbms="oracle"/>
+    <property name="firstday" value="timestamp '${liquibase.bootstrap.esercizio}-01-01'" dbms="postgresql"/>
+
+    <property name="lastday" value="to_Date('3112${liquibase.bootstrap.esercizio}','ddmmyyyy')" dbms="oracle"/>
+    <property name="lastday" value="timestamp '${liquibase.bootstrap.esercizio}-12-31'" dbms="postgresql"/>
+
+    <!-- Inizio schema iniziale-->
+    <include file="bootstrap/tables.xml"/>
+    <include file="bootstrap/data.xml"/>
+    <include file="bootstrap/constraints.xml"/>
+    <!-- Fine schema iniziale-->
+    <include file="bootstrap/db.changelog-5.0.0.xml"/>
+
+    <include file="iss/db.changelog-5.0.0.xml"/>
+
+    <!-- Attenzione inserire i changeset prima della compilazione degli invalidi-->
+    <include file="liquibase/views.xml"/>
+    <include file="liquibase/oracle-sql4.xml"/>
+    <include file="liquibase/function-postgres.xml"/>
+    <include file="liquibase/function-h2.xml"/>
+    <include file="liquibase/oracle_compile_objects.xml"/>
+</databaseChangeLog>

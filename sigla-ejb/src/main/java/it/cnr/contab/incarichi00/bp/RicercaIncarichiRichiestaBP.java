@@ -633,6 +633,14 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 			elementIncarico.appendChild(elementLink);
 		}
 
+		Incarichi_repertorio_archivioBulk conflitto = incarico.getIncaricoRepertorio().getConflittoInteressi();
+		if (conflitto!=null && conflitto.getCms_node_ref()!=null) {
+			Element elementLink = xmldoc.createElement(getTagRadice()+":url_conflitto_interessi");
+			dato = "genericdownload/"+conflitto.getNome_file()+"?nodeRef="+conflitto.getCms_node_ref();
+			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+			elementIncarico.appendChild(elementLink);
+		}
+
 		Incarichi_procedura_archivioBulk progetto = incarico.getIncaricoRepertorio().getIncarichi_procedura().getProgetto();
 		if (progetto!=null && progetto.getCms_node_ref()!=null) {
 			Element elementLink = xmldoc.createElement(getTagRadice()+":url_progetto");
@@ -764,7 +772,6 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 		elementDataDichiarazione.appendChild(nodeDataDichiarazione);
 		elementRichiesta.appendChild(elementDataDichiarazione);
 
-
 		Incarichi_repertorio_archivioBulk curriculum = incarico.getIncaricoRepertorio().getCurriculumVincitore();
 		if (curriculum!=null && curriculum.getCms_node_ref()!=null && incarico.getDt_stipula()!=null) {
 			GregorianCalendar gc = (java.util.GregorianCalendar)GregorianCalendar.getInstance();
@@ -799,6 +806,14 @@ public class RicercaIncarichiRichiestaBP extends SelezionatoreListaBP implements
 				elementAggiornamentiCurriculum.appendChild(elementAggiornamento);
 			}
 			elementRichiesta.appendChild(elementAggiornamentiCurriculum);
+		}
+
+		Incarichi_repertorio_archivioBulk conflittoInteresse = incarico.getIncaricoRepertorio().getConflittoInteressi();
+		if (conflittoInteresse!=null && conflittoInteresse.getCms_node_ref()!=null) {
+			Element elementLink = xmldoc.createElement(getTagRadice()+":url_conflitto_interessi");
+			dato = "genericdownload/"+conflittoInteresse.getNome_file()+"?nodeRef="+conflittoInteresse.getCms_node_ref();
+			elementLink.appendChild(xmldoc.createTextNode(dato!=null?dato:""));
+			elementRichiesta.appendChild(elementLink);
 		}
 
 		if (incarico.getIncarichi_repertorio_rapp_detColl()!=null && !incarico.getIncarichi_repertorio_rapp_detColl().isEmpty()){

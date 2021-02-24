@@ -51,7 +51,7 @@
 	<fieldProperty
 		name="findUnitaOperativaOrdRic"
 		property="unitaOperativaRicevente"
-		inputType="searchtool"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="Unità Operativa Ricevente" />

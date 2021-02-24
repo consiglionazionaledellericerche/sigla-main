@@ -1214,17 +1214,24 @@ public class TerzoComponent extends UtilitaAnagraficaComponent implements ICRUDM
         try {
             NazioneHome home = (NazioneHome) getHome(userContext, NazioneBulk.class);
             SQLBuilder sql = home.createSQLBuilder();
-            sql.addClause("AND", "fl_iban", SQLBuilder.EQUALS, Boolean.TRUE);
-            sql.addClause("AND", "struttura_iban", SQLBuilder.ISNOTNULL, null);
-
+            sql.addClause(FindClause.AND, "fl_iban", SQLBuilder.EQUALS, Boolean.TRUE);
+            sql.addClause(FindClause.AND, "struttura_iban", SQLBuilder.ISNOTNULL, null);
+            final Optional<String> tipoPagamentoSiopePlus = Optional.ofNullable(bulk)
+                    .flatMap(bancaBulk -> Optional.ofNullable(bancaBulk.getTipo_pagamento_siope()));
+            if (tipoPagamentoSiopePlus.isPresent()) {
+                if (tipoPagamentoSiopePlus.get().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER.value()) ||
+                        tipoPagamentoSiopePlus.get().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value())) {
+                    sql.addClause(FindClause.AND, "fl_sepa", SQLBuilder.EQUALS, Boolean.TRUE);
+                } else {
+                    sql.addClause(FindClause.AND, "fl_sepa", SQLBuilder.EQUALS, Boolean.FALSE);
+                }
+            }
             sql.addOrderBy("cd_iso");
             Broker broker = home.createBroker(sql);
             lista = home.fetchAll(broker);
             broker.close();
         } catch (it.cnr.jada.persistency.PersistencyException pe) {
-            throw new ComponentException(pe);
-        } catch (Exception e) {
-            throw handleException(e);
+            throw handleException(pe);
         }
         return lista;
     }

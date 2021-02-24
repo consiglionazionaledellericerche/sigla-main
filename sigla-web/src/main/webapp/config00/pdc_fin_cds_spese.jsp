@@ -128,7 +128,18 @@
 	<tr>
 	  <% bp.getController().writeFormField(out,"gg_deroga_obbl_res_prg_scad");%>
 	</tr>	
-	</table>		
+	<tr>
+	  <% bp.getController().writeFormField(out,"flComunicaPagamenti");%>
+	</tr>
+    <% if (voce.isVoceSpesa()) { %>
+        <tr>
+            <% bp.getController().writeFormField(out,"fl_limite_competenza");%>
+        </tr>
+        <tr>
+            <% bp.getController().writeFormField(out,"blocco_impegni_natfin");%>
+        </tr>
+    <% } %>
+	</table>
 	<% if (!bp.isFlNuovoPdg()) ((EV_cds_spese_capitoloBulk) bp.getModel()).writeTable( out, ((EV_cds_spese_capitoloBulk) bp.getModel()).getAssociazioni() ); %>
 
 <%	bp.closeFormWindow(pageContext); %>

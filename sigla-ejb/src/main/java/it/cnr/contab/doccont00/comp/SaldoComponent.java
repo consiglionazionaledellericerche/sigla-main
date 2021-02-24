@@ -25,9 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ejb.EJBException;
-
-import it.cnr.contab.config00.bulk.*;
+import javax.ejb.EJBException;import it.cnr.contab.config00.bulk.*;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
@@ -35,19 +33,16 @@ import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.latt.bulk.CostantiTi_gestione;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
-import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Ass_evold_evnewHome;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceHome;
-import it.cnr.contab.config00.pdcfin.bulk.IVoceBilancioBulk;
-import it.cnr.contab.config00.pdcfin.bulk.NaturaBulk;
-import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
+import it.cnr.contab.config00.pdcfin.bulk.*;
 import it.cnr.contab.config00.pdcfin.cla.bulk.Classificazione_vociBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk;
+import it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
+import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
 import it.cnr.contab.gestiva00.core.bulk.Liquidazione_iva_variazioniBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneHome;
@@ -56,13 +51,8 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestHome;
 import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloBulk;
-import it.cnr.contab.prevent00.bulk.Pdg_vincoloHome;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaHome;
-import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cmpBulk;
+import it.cnr.contab.prevent00.bulk.*;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiBulk;
-import it.cnr.contab.prevent01.bulk.Pdg_modulo_costiHome;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
@@ -77,6 +67,7 @@ import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaBulk;
 import it.cnr.contab.varstanz00.bulk.Var_stanz_res_rigaHome;
 import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
@@ -1661,7 +1652,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
     //Se la variazione passa a definitivo controllo che gli importi inseriti in variazione non superino la disponibilità residua.
     //Se la variazione passa ad approvato controllo solo che il piano economico non sia sfondato sul voci del piano economico movimentate dalla variazione
     private String getMessaggioSfondamentoPianoEconomico(UserContext userContext, OggettoBulk variazione, boolean locked) throws ComponentException{
-		StringJoiner messaggio = new StringJoiner("<br><br>");
+		StringJoiner messaggio = new StringJoiner("\n\n");
 
     	boolean isVariazioneCompetenza = Optional.ofNullable(variazione).map(Pdg_variazioneBulk.class::isInstance).orElse(Boolean.FALSE);
 		boolean isVariazioneResidua = Optional.ofNullable(variazione).map(Var_stanz_resBulk.class::isInstance).orElse(Boolean.FALSE);
@@ -1681,20 +1672,20 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			if (Optional.ofNullable(annoFrom).map(BigDecimal::intValue).filter(el->el.compareTo(esercizioVariazione)<=0).isPresent()) {
 				List<CtrlDispPianoEco> listCtrlDispPianoEcoEtr = new ArrayList<CtrlDispPianoEco>();
 
-	            Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
+				Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
 				Var_stanz_resHome varResHome = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
-   	   		    Progetto_piano_economicoHome ppeHome = (Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class);
+				Progetto_piano_economicoHome ppeHome = (Progetto_piano_economicoHome)getHome(userContext,Progetto_piano_economicoBulk.class);
 
 				Optional<Progetto_rimodulazioneBulk> optProgettoRimodulazioneVariazione =
 						isVariazioneCompetenza?Optional.of(variazione).map(Pdg_variazioneBulk.class::cast).map(Pdg_variazioneBulk::getProgettoRimodulazione)
 											  :Optional.of(variazione).map(Var_stanz_resBulk.class::cast).map(Var_stanz_resBulk::getProgettoRimodulazione);
 
 				ProgettoBulk progettoRimodulato =  null;
-	            if (optProgettoRimodulazioneVariazione.isPresent()) {
-	            	Progetto_rimodulazioneHome prgHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
+				if (optProgettoRimodulazioneVariazione.isPresent()) {
+					Progetto_rimodulazioneHome prgHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
 					Progetto_rimodulazioneBulk rimodulazione = prgHome.rebuildRimodulazione(userContext, optProgettoRimodulazioneVariazione.get());
-	            	progettoRimodulato = (ProgettoBulk)prgHome.getProgettoRimodulato(rimodulazione).clone();
-	            }
+					progettoRimodulato = (ProgettoBulk)prgHome.getProgettoRimodulato(rimodulazione).clone();
+				}
 
 				if (isVariazioneCompetenza) {
 					for (java.util.Iterator dett = detHome.findDettagliEntrataVariazioneGestionale((Pdg_variazioneBulk)variazione).iterator(); dett.hasNext(); ) {
@@ -1709,40 +1700,51 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									"movimentazione non possibile in quanto la variazione è di tipo rimodulazione di altro progetto (" +
 									progettoRimodulato.getCd_progetto() + ").");
 
-						BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
+						//Il progetto viene controllato solo se non è scaduto (anno fine <= anno variazione) o, se scaduto,
+						// la variazione non è di tipo Maggiori Entrate/Spese nell'ambito del CDS
+						if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+								.filter(annoFine->annoFine.compareTo(esercizioVariazione)>=0).isPresent() ||
+							!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO.equals(((Pdg_variazioneBulk)variazione).getTipologia())) {
+							BigDecimal imVariazioneFin = Utility.nvl(rigaVar.getIm_entrata());
 
-						//recupero il record se presente altrimenti ne creo uno nuovo
-						CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
-								.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
-								.findFirst()
-								.orElse(new CtrlDispPianoEco(progetto, null));
+							//recupero il record se presente altrimenti ne creo uno nuovo
+							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEcoEtr.stream()
+									.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+									.findFirst()
+									.orElse(new CtrlDispPianoEco(progetto, null));
 
-						dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+							dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
 
-						if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
-							listCtrlDispPianoEcoEtr.add(dispPianoEco);
+							if (!listCtrlDispPianoEcoEtr.contains(dispPianoEco))
+								listCtrlDispPianoEcoEtr.add(dispPianoEco);
+						}
 					}
+
 					for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEcoEtr) {
 						ProgettoBulk progetto = ctrlDispPianoEco.getProgetto();
 						BigDecimal totFinanziato;
 
-						//Il controllo puntuale sul piano economico deve partire se sul progetto esiste un piano economico per l'anno della variazione.
-						//Pertanto viene controllato se esiste piano economico e se esercizio variazione compreso tra data inizio e fine progetto.
-						//In caso contrario viene controllato solo l'importo complessivo del progetto
+						List<Progetto_piano_economicoBulk> pianoEconomicoList = null;
+						if (Optional.ofNullable(progettoRimodulato).isPresent())
+							pianoEconomicoList = progettoRimodulato.getAllDetailsProgettoPianoEconomico();
+						else
+							pianoEconomicoList = (List<Progetto_piano_economicoBulk>) ppeHome.findProgettoPianoEconomicoList(progetto.getPg_progetto());
+
+						// Il controllo puntuale sul piano economico deve partire se:
+						// 1) sul progetto esiste un piano economico per l'anno della variazione.
+						// 2) l'anno della variazione è gestita (<=annoFrom)
+						// 3) l'anno della variazione rientra nel periodo di validità del progetto, ovvero esiste almeno un dettaglio per l'anno della variazione stessa
+						// In caso contrario viene controllato solo l'importo complessivo del progetto
 						boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() &&
-								Optional.ofNullable(progetto)
-										.flatMap(prg -> Optional.ofNullable(prg.getOtherField()))
-										.filter(of -> of.getAnnoInizio() <= esercizioVariazione)
-										.filter(of -> of.getAnnoFine() >= esercizioVariazione)
-										.isPresent();
+								(Optional.ofNullable(progetto)
+										 .flatMap(prg -> Optional.ofNullable(prg.getOtherField()))
+										 .filter(of -> of.getAnnoInizio() <= esercizioVariazione)
+										 .filter(of -> of.getAnnoFine() >= esercizioVariazione)
+										 .isPresent() ||
+								 Optional.ofNullable(pianoEconomicoList).orElse(new ArrayList<>()).stream()
+										 .filter(el -> el.getEsercizio_piano().equals(esercizioVariazione)).findAny().isPresent());
 
 						if (ctrlFinanziamentoAnnuale) {
-							List<Progetto_piano_economicoBulk> pianoEconomicoList = null;
-							if (Optional.ofNullable(progettoRimodulato).isPresent())
-								pianoEconomicoList = progettoRimodulato.getAllDetailsProgettoPianoEconomico();
-							else
-								pianoEconomicoList = (List<Progetto_piano_economicoBulk>) ppeHome.findProgettoPianoEconomicoList(progetto.getPg_progetto());
-
 							totFinanziato = pianoEconomicoList.stream()
 									.filter(el -> el.getEsercizio_piano().equals(esercizioVariazione))
 									.map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
@@ -1788,7 +1790,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					}
 				}
 
-	            List<CtrlDispPianoEco> listCtrlDispPianoEco = new ArrayList<CtrlDispPianoEco>();
+				List<CtrlDispPianoEco> listCtrlDispPianoEco = new ArrayList<CtrlDispPianoEco>();
 
 				if (isVariazioneCompetenza) {
 					for (java.util.Iterator dett = detHome.findDettagliSpesaVariazioneGestionale((Pdg_variazioneBulk) variazione).iterator(); dett.hasNext(); ) {
@@ -1803,32 +1805,26 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									"movimentazione non possibile in quanto la variazione è di tipo rimodulazione di altro progetto (" +
 									progettoRimodulato.getCd_progetto() + ").");
 
-						boolean isNaturaReimpiego = Optional.ofNullable(cdNaturaReimpiego).map(el -> el.equals(latt.getCd_natura()))
-								.orElse(Boolean.FALSE);
+						//Il progetto viene controllato solo se non è scaduto (anno fine <= anno variazione) o, se scaduto,
+						// la variazione non è di tipo Maggiori Entrate/Spese nell'ambito del CDS
+						if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+								.filter(annoFine -> annoFine.compareTo(esercizioVariazione) >= 0).isPresent() ||
+								!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO.equals(((Pdg_variazioneBulk) variazione).getTipologia())) {
+							boolean isNaturaReimpiego = Optional.ofNullable(cdNaturaReimpiego).map(el -> el.equals(latt.getCd_natura()))
+									.orElse(Boolean.FALSE);
 
-						BigDecimal imSpeseInterne = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_int()).compareTo(BigDecimal.ZERO) != 0
-								? rigaVar.getIm_spese_gest_decentrata_int() : Utility.nvl(rigaVar.getIm_spese_gest_accentrata_int());
-						BigDecimal imSpeseEsterne = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_est()).compareTo(BigDecimal.ZERO) != 0
-								? rigaVar.getIm_spese_gest_decentrata_est() : Utility.nvl(rigaVar.getIm_spese_gest_accentrata_est());
+							BigDecimal imSpeseInterne = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_int()).compareTo(BigDecimal.ZERO) != 0
+									? rigaVar.getIm_spese_gest_decentrata_int() : Utility.nvl(rigaVar.getIm_spese_gest_accentrata_int());
+							BigDecimal imSpeseEsterne = Utility.nvl(rigaVar.getIm_spese_gest_decentrata_est()).compareTo(BigDecimal.ZERO) != 0
+									? rigaVar.getIm_spese_gest_decentrata_est() : Utility.nvl(rigaVar.getIm_spese_gest_accentrata_est());
 
-						BigDecimal imVariazioneFin = BigDecimal.ZERO;
-						BigDecimal imVariazioneCofin = imSpeseInterne;
-						if (isNaturaReimpiego)
-							imVariazioneCofin = imVariazioneCofin.add(imSpeseEsterne);
-						else
-							imVariazioneFin = imSpeseEsterne;
+							BigDecimal imVariazioneFin = BigDecimal.ZERO;
+							BigDecimal imVariazioneCofin = imSpeseInterne;
+							if (isNaturaReimpiego)
+								imVariazioneCofin = imVariazioneCofin.add(imSpeseEsterne);
+							else
+								imVariazioneFin = imSpeseEsterne;
 
-						//Il controllo puntuale sul piano economico deve partire se sul progetto esiste un piano economico per l'anno della variazione.
-						//Pertanto viene controllato se esiste piano economico e se esercizio variazione compreso tra data inizio e fine progetto.
-						//In caso contrario viene controllato solo l'importo complessivo del progetto
-						boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() &&
-								Optional.ofNullable(progetto)
-										.flatMap(prg -> Optional.ofNullable(prg.getOtherField()))
-										.filter(of -> of.getAnnoInizio() <= esercizioVariazione)
-										.filter(of -> of.getAnnoFine() >= esercizioVariazione)
-										.isPresent();
-
-						if (ctrlFinanziamentoAnnuale) {
 							List<Progetto_piano_economicoBulk> pianoEconomicoList = null;
 							if (Optional.ofNullable(progettoRimodulato).isPresent())
 								pianoEconomicoList = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
@@ -1843,49 +1839,65 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 							else
 								pianoEconomicoList = (List<Progetto_piano_economicoBulk>) ppeHome.findProgettoPianoEconomicoList(esercizioVariazione, progetto.getPg_progetto(), rigaVar.getElemento_voce());
 
-							if (pianoEconomicoList == null || pianoEconomicoList.isEmpty()) {
-								//messaggio che non esce per rimodulazione progetto in quanto controllo effettuato in fase di approvaziomne ultima variazione
-								if (!Optional.ofNullable(progettoRimodulato).isPresent())
-									messaggio.add("Non risulta essere stato imputato alcun valore nel piano economico del progetto " + progetto.getCd_progetto() +
-											" per la Voce " + rigaVar.getCd_elemento_voce() + ".");
-							} else if (pianoEconomicoList.size() > 1)
-								messaggio.add("La Voce " + rigaVar.getCd_elemento_voce() + " risulta associata a più voci di piano economico del progetto " +
-										progetto.getCd_progetto() + ".");
-							else {
-								Progetto_piano_economicoBulk progettoPianoEconomico = pianoEconomicoList.get(0);
+							// Il controllo puntuale sul piano economico deve partire se:
+							// 1) sul progetto esiste un piano economico per l'anno della variazione.
+							// 2) l'anno della variazione è gestita (<=annoFrom)
+							// 3) l'anno della variazione rientra nel periodo di validità del progetto, ovvero esiste almeno un dettaglio per l'anno della variazione stessa
+							// In caso contrario viene controllato solo l'importo complessivo del progetto
+							boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() &&
+									(Optional.ofNullable(progetto)
+											.flatMap(prg -> Optional.ofNullable(prg.getOtherField()))
+											.filter(of -> of.getAnnoInizio() <= esercizioVariazione)
+											.filter(of -> of.getAnnoFine() >= esercizioVariazione)
+											.isPresent() ||
+									 Optional.ofNullable(pianoEconomicoList).orElse(new ArrayList<>()).stream()
+											.filter(el -> el.getEsercizio_piano().equals(esercizioVariazione)).findAny().isPresent());
 
-								if (progettoPianoEconomico.getFl_ctrl_disp() &&
+							if (ctrlFinanziamentoAnnuale) {
+								if (pianoEconomicoList == null || pianoEconomicoList.isEmpty()) {
+									//messaggio che non esce per rimodulazione progetto in quanto controllo effettuato in fase di approvaziomne ultima variazione
+									if (!Optional.ofNullable(progettoRimodulato).isPresent())
+										messaggio.add("Non risulta essere stato imputato alcun valore nel piano economico del progetto " + progetto.getCd_progetto() +
+												" per la Voce " + rigaVar.getCd_elemento_voce() + ".");
+								} else if (pianoEconomicoList.size() > 1)
+									messaggio.add("La Voce " + rigaVar.getCd_elemento_voce() + " risulta associata a più voci di piano economico del progetto " +
+											progetto.getCd_progetto() + ".");
+								else {
+									Progetto_piano_economicoBulk progettoPianoEconomico = pianoEconomicoList.get(0);
+
+									if (progettoPianoEconomico.getFl_ctrl_disp() &&
 										(progettoPianoEconomico.getEsercizio_piano().equals(0) ||
-												progettoPianoEconomico.getEsercizio_piano().equals(rigaVar.getEsercizio()))) {
-									//recupero il record se presente altrimenti ne creo uno nuovo
-									CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
-											.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
-											.filter(el -> el.getProgettoPianoEconomico().getPg_progetto().equals(progetto.getPg_progetto()))
-											.filter(el -> el.getProgettoPianoEconomico().getCd_unita_organizzativa().equals(progettoPianoEconomico.getCd_unita_organizzativa()))
-											.filter(el -> el.getProgettoPianoEconomico().getCd_voce_piano().equals(progettoPianoEconomico.getCd_voce_piano()))
-											.findFirst()
-											.orElse(new CtrlDispPianoEco(progetto, progettoPianoEconomico));
+													progettoPianoEconomico.getEsercizio_piano().equals(rigaVar.getEsercizio()))) {
+										//recupero il record se presente altrimenti ne creo uno nuovo
+										CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
+												.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+												.filter(el -> el.getProgettoPianoEconomico().getPg_progetto().equals(progetto.getPg_progetto()))
+												.filter(el -> el.getProgettoPianoEconomico().getCd_unita_organizzativa().equals(progettoPianoEconomico.getCd_unita_organizzativa()))
+												.filter(el -> el.getProgettoPianoEconomico().getCd_voce_piano().equals(progettoPianoEconomico.getCd_voce_piano()))
+												.findFirst()
+												.orElse(new CtrlDispPianoEco(progetto, progettoPianoEconomico));
 
-									dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
-									dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
+										dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+										dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
 
-									if (!listCtrlDispPianoEco.contains(dispPianoEco))
-										listCtrlDispPianoEco.add(dispPianoEco);
+										if (!listCtrlDispPianoEco.contains(dispPianoEco))
+											listCtrlDispPianoEco.add(dispPianoEco);
+									}
 								}
+							} else {
+								//recupero il record se presente altrimenti ne creo uno nuovo
+								CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
+										.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
+										.filter(el -> !Optional.ofNullable(el.getProgettoPianoEconomico()).isPresent())
+										.findFirst()
+										.orElse(new CtrlDispPianoEco(progetto, null));
+
+								dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
+								dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
+
+								if (!listCtrlDispPianoEco.contains(dispPianoEco))
+									listCtrlDispPianoEco.add(dispPianoEco);
 							}
-						} else {
-							//recupero il record se presente altrimenti ne creo uno nuovo
-							CtrlDispPianoEco dispPianoEco = listCtrlDispPianoEco.stream()
-									.filter(el -> el.getProgetto().getPg_progetto().equals(progetto.getPg_progetto()))
-									.filter(el -> !Optional.ofNullable(el.getProgettoPianoEconomico()).isPresent())
-									.findFirst()
-									.orElse(new CtrlDispPianoEco(progetto, null));
-
-							dispPianoEco.setImpFinanziato(dispPianoEco.getImpFinanziato().add(imVariazioneFin));
-							dispPianoEco.setImpCofinanziato(dispPianoEco.getImpCofinanziato().add(imVariazioneCofin));
-
-							if (!listCtrlDispPianoEco.contains(dispPianoEco))
-								listCtrlDispPianoEco.add(dispPianoEco);
 						}
 					}
 				} else {
@@ -1912,31 +1924,35 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						else if (Optional.ofNullable(latt.getNatura()).map(NaturaBulk::isFonteEsterna).orElse(Boolean.FALSE))
 							imVariazioneFin = Utility.nvl(rigaVar.getIm_variazione());
 
-						//Il controllo puntuale sul piano economico deve partire se sul progetto esiste un piano economico per l'anno della variazione.
-						//Pertanto viene controllato se esiste piano economico e se esercizio variazione compreso tra data inizio e fine progetto.
-						//In caso contrario viene controllato solo l'importo complessivo del progetto
+						List<Progetto_piano_economicoBulk> pianoEconomicoList = null;
+						if (Optional.ofNullable(progettoRimodulato).isPresent())
+							pianoEconomicoList = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
+									.filter(ppe -> {
+										return ppe.getVociBilancioAssociate().stream()
+												.filter(ppeVoc -> ppeVoc.getEsercizio_voce().equals(rigaVar.getEsercizio_res()))
+												.filter(ppeVoc -> ppeVoc.getTi_appartenenza().equals(rigaVar.getElemento_voce().getTi_appartenenza()))
+												.filter(ppeVoc -> ppeVoc.getTi_gestione().equals(rigaVar.getElemento_voce().getTi_gestione()))
+												.filter(ppeVoc -> ppeVoc.getCd_elemento_voce().equals(rigaVar.getElemento_voce().getCd_elemento_voce()))
+												.findFirst().isPresent();
+									}).collect(Collectors.toList());
+						else
+							pianoEconomicoList = (List<Progetto_piano_economicoBulk>) ppeHome.findProgettoPianoEconomicoList(esercizioVariazione, progetto.getPg_progetto(), rigaVar.getElemento_voce());
+
+						// Il controllo puntuale sul piano economico deve partire se:
+						// 1) sul progetto esiste un piano economico per l'anno della variazione.
+						// 2) l'anno della variazione è gestita (<=annoFrom)
+						// 3) l'anno della variazione rientra nel periodo di validità del progetto, ovvero esiste almeno un dettaglio per l'anno della variazione stessa
+						// In caso contrario viene controllato solo l'importo complessivo del progetto
 						boolean ctrlFinanziamentoAnnuale = progetto.isPianoEconomicoRequired() &&
-								Optional.ofNullable(progetto)
+								(Optional.ofNullable(progetto)
 										.flatMap(prg -> Optional.ofNullable(prg.getOtherField()))
 										.filter(of -> of.getAnnoInizio() <= esercizioVariazione)
 										.filter(of -> of.getAnnoFine() >= esercizioVariazione)
-										.isPresent();
+										.isPresent() ||
+								 Optional.ofNullable(pianoEconomicoList).orElse(new ArrayList<>()).stream()
+										.filter(el -> el.getEsercizio_piano().equals(esercizioVariazione)).findAny().isPresent());
 
 						if (ctrlFinanziamentoAnnuale) {
-							List<Progetto_piano_economicoBulk> pianoEconomicoList = null;
-							if (Optional.ofNullable(progettoRimodulato).isPresent())
-								pianoEconomicoList = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
-										.filter(ppe -> {
-											return ppe.getVociBilancioAssociate().stream()
-													.filter(ppeVoc -> ppeVoc.getEsercizio_voce().equals(rigaVar.getEsercizio_res()))
-													.filter(ppeVoc -> ppeVoc.getTi_appartenenza().equals(rigaVar.getElemento_voce().getTi_appartenenza()))
-													.filter(ppeVoc -> ppeVoc.getTi_gestione().equals(rigaVar.getElemento_voce().getTi_gestione()))
-													.filter(ppeVoc -> ppeVoc.getCd_elemento_voce().equals(rigaVar.getElemento_voce().getCd_elemento_voce()))
-													.findFirst().isPresent();
-										}).collect(Collectors.toList());
-							else
-								pianoEconomicoList = (List<Progetto_piano_economicoBulk>) ppeHome.findProgettoPianoEconomicoList(esercizioVariazione, progetto.getPg_progetto(), rigaVar.getElemento_voce());
-
 							if (pianoEconomicoList == null || pianoEconomicoList.isEmpty()) {
 								//messaggio che non esce per rimodulazione progetto in quanto controllo effettuato in fase di approvaziomne ultima variazione
 								if (!Optional.ofNullable(progettoRimodulato).isPresent())
@@ -1984,22 +2000,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 					}
 				}
 
-	            for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEco) {
-	            	Progetto_piano_economicoBulk ppe = ctrlDispPianoEco.getProgettoPianoEconomico();
-	            	if (Optional.ofNullable(ppe).isPresent()) {
-                        try {
-                            if (locked) {
-                                Progetto_piano_economicoBulk bulkToFind = new Progetto_piano_economicoBulk();
-                                bulkToFind.setVoce_piano_economico(ppe.getVoce_piano_economico());
-                                bulkToFind.setPg_progetto(ppe.getPg_progetto());
-                                bulkToFind.setEsercizio_piano(ppe.getEsercizio_piano());
-                                try {
-                                    bulkToFind = (Progetto_piano_economicoBulk) ppeHome.findAndLock(bulkToFind);
-                                } catch (ObjectNotFoundException ex) {}
-                            }
+				for (CtrlDispPianoEco ctrlDispPianoEco : listCtrlDispPianoEco) {
+					Progetto_piano_economicoBulk ppe = ctrlDispPianoEco.getProgettoPianoEconomico();
+					if (Optional.ofNullable(ppe).isPresent()) {
+						try {
+							if (locked) {
+								Progetto_piano_economicoBulk bulkToFind = new Progetto_piano_economicoBulk();
+								bulkToFind.setVoce_piano_economico(ppe.getVoce_piano_economico());
+								bulkToFind.setPg_progetto(ppe.getPg_progetto());
+								bulkToFind.setEsercizio_piano(ppe.getEsercizio_piano());
+								try {
+									bulkToFind = (Progetto_piano_economicoBulk) ppeHome.findAndLock(bulkToFind);
+								} catch (ObjectNotFoundException ex) {}
+							}
 
-    						if (Optional.ofNullable(progettoRimodulato).isPresent()) {
-    							//Controllo quota FINANZIATA
+							if (Optional.ofNullable(progettoRimodulato).isPresent()) {
+								//Controllo quota FINANZIATA
 								BigDecimal imRimodulatoFin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
 										.filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
 										.filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
@@ -2007,8 +2023,8 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										.map(Progetto_piano_economicoBulk::getIm_spesa_finanziato)
 										.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
-    							BigDecimal imStanziatoFin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
- 										.filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
+								BigDecimal imStanziatoFin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
+										.filter(ppeRim->ppeRim.getEsercizio_piano().equals(ppe.getEsercizio_piano()))
 										.filter(ppeRim->ppeRim.getCd_voce_piano().equals(ppe.getCd_voce_piano()))
 										.filter(ppeRim->ppeRim.getCd_unita_organizzativa().equals(ppe.getCd_unita_organizzativa()))
 										.filter(ppeRim->Optional.ofNullable(ppeRim.getVociBilancioAssociate()).isPresent())
@@ -2018,32 +2034,32 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 										.map(el->el.getAssestatoFinanziamento())
 										.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
-    							//Se l'importo stanziato è superiore a quello rimodulato, l'importo della variazione deve essere negativa al fine di riportare
+								//Se l'importo stanziato è superiore a quello rimodulato, l'importo della variazione deve essere negativa al fine di riportare
 								// lo stanziato a quadrare con il rimodulato
-    							if (imStanziatoFin.compareTo(imRimodulatoFin)>0) {
-    								if (ctrlDispPianoEco.getImpFinanziato().compareTo(BigDecimal.ZERO)>0)
-			                            messaggio.add("La variazione della quota finanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
-			                            		" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + 
-			                                    ") risulta essere positiva laddove la variazione richiesta dalla rimodulazione del progetto "+ 
-			                                    ctrlDispPianoEco.getProgetto().getCd_progetto() + " deve essere solo negativa.");
-    								//La variazione negativa non deve essere superiore a quanto richiesto dalla rimodulazione
+								if (imStanziatoFin.compareTo(imRimodulatoFin)>0) {
+									if (ctrlDispPianoEco.getImpFinanziato().compareTo(BigDecimal.ZERO)>0)
+										messaggio.add("La variazione della quota finanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
+												" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) +
+												") risulta essere positiva laddove la variazione richiesta dalla rimodulazione del progetto "+
+												ctrlDispPianoEco.getProgetto().getCd_progetto() + " deve essere solo negativa.");
+									//La variazione negativa non deve essere superiore a quanto richiesto dalla rimodulazione
 									//Es. se imRimodulato=1000 e imStanziato=2000 la variazione negativa non deve essere superiore a -1000
-    								if (imRimodulatoFin.subtract(imStanziatoFin).subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)>0)
-			                            messaggio.add("La variazione della quota finanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
-			                            		" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + 
-			                                    ") risulta essere superiore alla variazione richiesta dalla rimodulazione del progetto "+ 
-			                                    ctrlDispPianoEco.getProgetto().getCd_progetto() + 
-			                                    " ("+new it.cnr.contab.util.EuroFormat().format(imRimodulatoFin.subtract(imStanziatoFin)) + ").");
-    							} else {
-    								//La variazione non deve superare la disponibilità residua data dalla differenza tra imRimodulato e imStanziato
-    								if (imRimodulatoFin.subtract(imStanziatoFin).subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)<0)
-			                            messaggio.add("La disponibilità rimodulata della quota finanziata del piano economico "+ppe.getCd_voce_piano()+
-			                                    " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
-			                                    (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
-			                                    " ("+new it.cnr.contab.util.EuroFormat().format(imRimodulatoFin.subtract(imStanziatoFin))+")"+
-			                                    " non è sufficiente a coprire la variazione (" +
-			                                    new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
-    							}
+									if (imRimodulatoFin.subtract(imStanziatoFin).subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)>0)
+										 messaggio.add("La variazione della quota finanziata stanziata del piano economico "+ppe.getCd_voce_piano()+
+												" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) +
+												") risulta essere superiore alla variazione richiesta dalla rimodulazione del progetto "+
+												ctrlDispPianoEco.getProgetto().getCd_progetto() +
+												" ("+new it.cnr.contab.util.EuroFormat().format(imRimodulatoFin.subtract(imStanziatoFin)) + ").");
+								} else {
+									//La variazione non deve superare la disponibilità residua data dalla differenza tra imRimodulato e imStanziato
+									if (imRimodulatoFin.subtract(imStanziatoFin).subtract(ctrlDispPianoEco.getImpFinanziato()).compareTo(BigDecimal.ZERO)<0)
+										 messaggio.add("La disponibilità rimodulata della quota finanziata del piano economico "+ppe.getCd_voce_piano()+
+												  " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
+												  (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
+												  " ("+new it.cnr.contab.util.EuroFormat().format(imRimodulatoFin.subtract(imStanziatoFin))+")"+
+												  " non è sufficiente a coprire la variazione (" +
+												  new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
+								}
 
 								//Controllo quota COFINANZIATA
 								BigDecimal imRimodulatoCofin = progettoRimodulato.getAllDetailsProgettoPianoEconomico().stream()
@@ -2071,6 +2087,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 												" ("+new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) +
 												") risulta essere positiva laddove la variazione richiesta dalla rimodulazione del progetto "+
 												ctrlDispPianoEco.getProgetto().getCd_progetto() + " deve essere solo negativa.");
+
 									//La variazione negativa non deve essere superiore a quanto richiesto dalla rimodulazione
 									//Es. se imRimodulato=1000 e imStanziato=2000 la variazione negativa non deve essere superiore a -1000
 									if (imRimodulatoCofin.subtract(imStanziatoCofin).subtract(ctrlDispPianoEco.getImpCofinanziato()).compareTo(BigDecimal.ZERO)>0)
@@ -2093,19 +2110,19 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								V_saldi_piano_econom_progettoBulk saldo = ((V_saldi_piano_econom_progettoHome)getHome( userContext,V_saldi_piano_econom_progettoBulk.class )).
 										cercaSaldoPianoEconomico(ppe, "S");
 
-    							BigDecimal dispResiduaFin = Optional.ofNullable(saldo)
-                                		.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
-                                		.orElse(BigDecimal.ZERO)
-                                		.subtract(ctrlDispPianoEco.getImpFinanziato());
-		                        if (dispResiduaFin.compareTo(BigDecimal.ZERO)<0)
-		                            messaggio.add("La disponibilità quota finanziata del piano economico "+ppe.getCd_voce_piano()+
-		                                    " associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
-		                                    (ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
-		                                    " ("+new it.cnr.contab.util.EuroFormat().format(Optional.ofNullable(saldo)
-		                                    		.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
-		                                    		.orElse(BigDecimal.ZERO))+")"+
-		                                    " non è sufficiente a coprire la variazione (" +
-		                                    new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
+								BigDecimal dispResiduaFin = Optional.ofNullable(saldo)
+										.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
+										.orElse(BigDecimal.ZERO)
+										.subtract(ctrlDispPianoEco.getImpFinanziato());
+								if (dispResiduaFin.compareTo(BigDecimal.ZERO)<0)
+									messaggio.add("La disponibilità quota finanziata del piano economico "+ppe.getCd_voce_piano()+
+											" associato al progetto " + ctrlDispPianoEco.getProgetto().getCd_progetto() +
+											(ppe.getEsercizio_piano().equals(0)?"":" per l'esercizio "+ppe.getEsercizio_piano())+
+											" ("+new it.cnr.contab.util.EuroFormat().format(Optional.ofNullable(saldo)
+											.map(V_saldi_piano_econom_progettoBulk::getDispResiduaFinanziamento)
+											.orElse(BigDecimal.ZERO))+")"+
+											" non è sufficiente a coprire la variazione (" +
+											new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpFinanziato()) + ").");
 
 								BigDecimal dispResiduaCofin = Optional.ofNullable(saldo)
 										.map(V_saldi_piano_econom_progettoBulk::getDispResiduaCofinanziamento)
@@ -2118,47 +2135,47 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 											" ("+new it.cnr.contab.util.EuroFormat().format(saldo.getDispResiduaCofinanziamento())+")"+
 											" non è sufficiente a coprire la variazione (" +
 											new it.cnr.contab.util.EuroFormat().format(ctrlDispPianoEco.getImpCofinanziato()) + ").");
-    						}
-    					}
-                        catch (Exception ex ){
-                        	throw new RuntimeException(  ex );
-                        }
+							}
+						}
+						catch (Exception ex ){
+							throw new RuntimeException(  ex );
+						}
 					} else {
-		            	ProgettoBulk prg = ctrlDispPianoEco.getProgetto();
-			            {
-			            	BigDecimal totFinanziato = BigDecimal.ZERO;
-    						if (Optional.ofNullable(progettoRimodulato).isPresent())
-    							totFinanziato = progettoRimodulato.getImFinanziato();
-    						else
-    							totFinanziato = prg.getImFinanziato();
-				            
-    						BigDecimal assestatoSpePrgFes = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, 
-				            		null, null, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
-	
-				            if (totFinanziato.compareTo(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato()))<0)
-			                   messaggio.add("Progetto " + prg.getCd_progetto() + ": l'assestato totale spese 'fonti esterne' ("+
-	                    		   	   new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato())) +
-	                                   ") non può essere superiore alla quota finanziata (" +
-                                       new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ").");
-			            }
-			            {
-			            	BigDecimal totCofinanziato = BigDecimal.ZERO;
-    						if (Optional.ofNullable(progettoRimodulato).isPresent())
-    							totCofinanziato = progettoRimodulato.getImCofinanziato();
-    						else
-    							totCofinanziato = prg.getImCofinanziato();
+						ProgettoBulk prg = ctrlDispPianoEco.getProgetto();
+						{
+							BigDecimal totFinanziato = BigDecimal.ZERO;
+							if (Optional.ofNullable(progettoRimodulato).isPresent())
+								totFinanziato = progettoRimodulato.getImFinanziato();
+							else
+								totFinanziato = prg.getImFinanziato();
 
-    						BigDecimal assestatoSpePrgReimpiego = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE, 
-				            		null, null, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
-	
-				            if (totCofinanziato.compareTo(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato()))<0)
-			                   messaggio.add("Progetto " + prg.getCd_progetto() + ": l'assestato totale spese 'fonti interne' e 'natura reimpiego' ("+
-	                                   new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato())) +
-                                       ") non può essere superiore alla quota cofinanziata (" +
-                                       new it.cnr.contab.util.EuroFormat().format(totCofinanziato) + ").");
-				        }
+							BigDecimal assestatoSpePrgFes = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE,
+									null, null, Progetto_other_fieldHome.TI_IMPORTO_FINANZIATO);
+
+							if (totFinanziato.compareTo(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato()))<0)
+							   messaggio.add("Progetto " + prg.getCd_progetto() + ": l'assestato totale spese 'fonti esterne' ("+
+									   new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgFes.add(ctrlDispPianoEco.getImpFinanziato())) +
+									   ") non può essere superiore alla quota finanziata (" +
+									   new it.cnr.contab.util.EuroFormat().format(totFinanziato) + ").");
+						}
+						{
+							BigDecimal totCofinanziato = BigDecimal.ZERO;
+							if (Optional.ofNullable(progettoRimodulato).isPresent())
+								totCofinanziato = progettoRimodulato.getImCofinanziato();
+							else
+								totCofinanziato = prg.getImCofinanziato();
+
+							BigDecimal assestatoSpePrgReimpiego = this.getStanziamentoAssestatoProgetto(userContext, prg, Elemento_voceHome.GESTIONE_SPESE,
+									null, null, Progetto_other_fieldHome.TI_IMPORTO_COFINANZIATO);
+
+							if (totCofinanziato.compareTo(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato()))<0)
+							   messaggio.add("Progetto " + prg.getCd_progetto() + ": l'assestato totale spese 'fonti interne' e 'natura reimpiego' ("+
+										 new it.cnr.contab.util.EuroFormat().format(assestatoSpePrgReimpiego.add(ctrlDispPianoEco.getImpCofinanziato())) +
+										 ") non può essere superiore alla quota cofinanziata (" +
+										 new it.cnr.contab.util.EuroFormat().format(totCofinanziato) + ").");
+						}
 					}
-	            }
+				}
 	   		}
         }catch (PersistencyException e) {
             throw new ComponentException(e);
@@ -2866,9 +2883,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 
 				/**
 				 * 20. se un progetto è attivo è possibile sottrarre fondi a GAE di natura 6 solo assegnandoli a GAE di natura 6
-				 *    dello stesso progetto (regola non valida per progetti di Aree)
+				 *    dello stesso progetto (regola non valida per trasferimento ad Aree o Ragioneria)
 				 */
-				if (!isVariazioneArea)
+				if (!isVariazioneArea && !isVariazioneRagioneria)
 					listCtrlPianoEco.stream()
 						.filter(el->!el.isScaduto(dataChiusura))
 						.filter(el->el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO)>0)
@@ -2894,7 +2911,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								  .compareTo(BigDecimal.ZERO)>0)
 						.filter(el->el.getImpSpesaPositiviNetti()
 									  .add(addSpesePersonale?el.getImpSpesaPositiviCdrPersonale():BigDecimal.ZERO)
-									  .compareTo(el.getImpSpesaNegativiNetti()
+										  .compareTo(el.getImpSpesaNegativiNetti()
 											  	   .add(addSpesePersonale?el.getImpSpesaNegativiCdrPersonale():BigDecimal.ZERO))>0)
 						.findFirst().ifPresent(el->{
 						throw new DetailedRuntimeException("Attenzione! Sono stati attribuiti fondi al progetto "+
@@ -2909,7 +2926,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 		
 					/**
 					 * 31. se un progetto è aperto è possibile sottrarre somme su GAE non di natura 6 solo se assegnate allo stesso progetto 
-					 * 	  (regola non valida per progetti di Aree e CdrPersonale)
+					 * 	  (regola non valida per progetti di Aree, CdrPersonale e Ragioneria)
 					 *     
 					 *     N.B.: la sottrazione dalla voce speciale è consentita purchè sia compensata da trasferimenti a GAE di natura 6
 					 *     controllo effettuato al punto 90
@@ -2938,18 +2955,22 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 				/**
 				 * 40. se un progetto è aperto e vengono sottratte somme ad un'area queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stessa area
+				 *    (regola non valida per Trasferimenti a Ragioneria)
 				 */
-				listCtrlPianoEco.stream()
-					.filter(el->!el.isScaduto(dataChiusura))
-					.filter(el->el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO)>0)
-					.filter(el->el.getImpSpesaNegativiArea().compareTo(el.getImpSpesaPositiviArea())>0)
-					.findFirst().ifPresent(el->{
-					throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dall'area fondi dal progetto "+
-							el.getProgetto().getCd_progetto()+" (" + 
-							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiArea()) +
-							") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area ("+
-							new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");});
-		
+				if (!isVariazioneRagioneria) {
+					listCtrlPianoEco.stream()
+							.filter(el -> !el.isScaduto(dataChiusura))
+							.filter(el -> el.getImpSpesaNegativiArea().compareTo(BigDecimal.ZERO) > 0)
+							.filter(el -> el.getImpSpesaNegativiArea().compareTo(el.getImpSpesaPositiviArea()) > 0)
+							.findFirst().ifPresent(el -> {
+						throw new DetailedRuntimeException("Attenzione! Sono stati prelevati dall'area fondi dal progetto " +
+								el.getProgetto().getCd_progetto() + " (" +
+								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiArea()) +
+								") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto e della stessa area (" +
+								new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviArea()) + ")");
+					});
+				}
+
 				/**
 				 * 50. se un progetto è aperto e vengono sottratte somme al CDR Personale queste devono essere riassegnate 
 				 *    allo stesso progetto e alla stesso CDR
@@ -2988,9 +3009,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 				
 				{
-				/**
-				 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale o alla Uo Ragioneria
-				 */
+					/**
+					 * 60. se un progetto è scaduto se vengono sottratti importi devono essere girati a GaeNatura6 o al CDRPersonale o alla Uo Ragioneria
+					 */
 					BigDecimal impPositiviCashFund = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
 							.map(CtrlPianoEco::getDett)
@@ -3008,9 +3029,9 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								+ new it.cnr.contab.util.EuroFormat().format(impPositiviCashFund)+").");
 				}
 				{
-				/**
-				 * 70. se un progetto è attivo se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
-				 */
+					/**
+					 * 70. se un progetto è attivo se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
+					 */
 					BigDecimal impSaldoPrgAttiviNaturaReimpiego = listCtrlPianoEco.stream()
 							.filter(el->!el.isScaduto(dataChiusura))
 							.map(CtrlPianoEco::getDett)
@@ -3041,22 +3062,24 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviAreeNaturaReimpiego.abs())+").");						
 					}
 				}
+
+				BigDecimal impSaldoPrgAttiviFonteEsterna = listCtrlPianoEco.stream()
+						.filter(el->!el.isScaduto(dataChiusura))
+						.map(CtrlPianoEco::getDett)
+						.flatMap(List::stream)
+						.filter(el->!el.isUoArea())
+						.filter(el->!el.isCdrPersonale())
+						.filter(el->!el.isVoceSpeciale())
+						.filter(el->!el.isUoRagioneria())
+						.filter(el->el.isNaturaFonteEsterna())
+						.map(CtrlPianoEcoDett::getImporto)
+						.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
 				{
-				/**
-				 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o 
-				 *    al CDR Personale
-				 */
-					BigDecimal impSaldoPrgAttiviFonteEsterna = listCtrlPianoEco.stream()
-							.filter(el->!el.isScaduto(dataChiusura))
-							.map(CtrlPianoEco::getDett)
-							.flatMap(List::stream)
-							.filter(el->!el.isUoArea())
-							.filter(el->!el.isCdrPersonale())
-							.filter(el->!el.isVoceSpeciale())
-							.filter(el->el.isNaturaFonteEsterna())
-							.map(CtrlPianoEcoDett::getImporto)
-							.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
-		
+					/**
+					 * 80. se un progetto è attivo se vengono sottratti importi su GAE natura FES queste devono essere girate ad Aree di uguale Natura o
+					 *    al CDR Personale o alla UO Ragioneria solo su GAE Natura 6
+					 */
 					if (impSaldoPrgAttiviFonteEsterna.compareTo(BigDecimal.ZERO)<0) {
 						//Vuol dire che ho ridotto progetti attivi sulle fonti esterne per cui deve essere bilanciato solo con Aree di uguale natura o
 						// con CDR Personale
@@ -3064,42 +3087,27 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.filter(el->!el.isScaduto(dataChiusura))
 								.map(CtrlPianoEco::getDett)
 								.flatMap(List::stream)
-								.filter(el->el.isUoArea()||el.isCdrPersonale())
+								.filter(el->el.isUoArea()||el.isCdrPersonale()||el.isUoRagioneria())
 								.filter(el->el.isUoArea()?el.isNaturaFonteEsterna():Boolean.TRUE)
+								.filter(el->el.isUoRagioneria()?el.isNaturaReimpiego():Boolean.TRUE)
 								.map(CtrlPianoEcoDett::getImporto)
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 		
 						if (impSaldoPrgAttiviCashFund.compareTo(BigDecimal.ZERO)<0 ||
-								impSaldoPrgAttiviCashFund.abs().compareTo(impSaldoPrgAttiviFonteEsterna.abs())!=0)
+								impSaldoPrgAttiviCashFund.abs().compareTo(impSaldoPrgAttiviFonteEsterna.abs())<0)
 							throw new ApplicationException("Attenzione! Risultano prelievi da progetti attivi"
 									+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviFonteEsterna.abs())
 									+ " su GAE Fonte Esterna che non risultano totalmente coperti da variazioni a favore"
-									+ " di Aree su GAE Fonte Esterna o CDR Personale ("
+									+ " di Aree su GAE Fonte Esterna o CDR Personale o Uo Ragioneria su GAE di natura 6 ("
 									+ new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviCashFund.abs())+").");						
 					}
 				}
 				{
+					/**
+					 * 90. in un progetto non scaduto è possibile prelevare fondi dalla voce speciale (11048) solo se assegnati a GAE di natura 6 dello stesso progetto
+					 * 	(regola non valida per trasferimenti ad Aree)
+					 */
 					if (!isVariazioneArea) {
-						/**
-						 * 90. è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
-						 * 		a. un progetto scaduto
-						 * 		b. dalla voce speciale (11048) sullo stesso progetto
-						 * 		c. da una GAE di natura 6 sullo stesso progetto
-						 * 	(regola non valida per trasferimenti ad Aree)
-						 */
-						listCtrlPianoEco.stream()
-								.filter(el -> !el.isScaduto(dataChiusura))
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
-								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
-								.findFirst().ifPresent(el -> {
-							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
-									el.getProgetto().getCd_progetto() + " (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
-									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
-									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
-									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
-						});
-
 						listCtrlPianoEco.stream()
 								.filter(el -> !el.isScaduto(dataChiusura))
 								.filter(el -> el.getImpSpesaNegativiVoceSpeciale().compareTo(BigDecimal.ZERO) > 0)
@@ -3111,6 +3119,29 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 									") non compensati da un equivalente assegnazione nell'ambito dello stesso progetto " +
 									"su GAE di natura 6 - 'Reimpiego di risorse' ("+
 									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego().subtract(el.getImpSpesaNegativiNaturaReimpiego())) + ")");
+						});
+
+					}
+
+					/**
+					 * 90.1 è possibile attribuire fondi ad un progetto di natura 6 solo se ne vengono sottratti equivalenti da:
+					 * 		a. un progetto scaduto
+					 * 		b. dalla voce speciale (11048) sullo stesso progetto
+					 * 		c. da una GAE di natura 6 sullo stesso progetto
+					 * 	(regola non valida per trasferimenti ad Aree)
+					 */
+					if (!isVariazioneArea && !isVariazioneRagioneria) {
+						listCtrlPianoEco.stream()
+								.filter(el -> !el.isScaduto(dataChiusura))
+								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(BigDecimal.ZERO) > 0)
+								.filter(el -> el.getImpSpesaNegativiNaturaReimpiego().compareTo(el.getImpSpesaPositiviNaturaReimpiego()) != 0)
+								.findFirst().ifPresent(el -> {
+							throw new DetailedRuntimeException("Attenzione! Sono stati prelevati fondi dal progetto " +
+									el.getProgetto().getCd_progetto() + " (" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaNegativiNaturaReimpiego()) +
+									") da GAE di natura 6 - 'Reimpiego di risorse' non compensati da un equivalente " +
+									"assegnazione nell'ambito dello stesso progetto e della stessa natura (" +
+									new it.cnr.contab.util.EuroFormat().format(el.getImpSpesaPositiviNaturaReimpiego()) + ")");
 						});
 
 						BigDecimal saldoPositivoNaturaReimpiego = listCtrlPianoEco.stream()
@@ -3132,7 +3163,7 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 						}
 					} else {
 						/**
-						 * 90. in una variazione di area se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree di uguale Natura
+						 * 90. in una variazione di area/ragioneria se vengono sottratti importi su GAE natura 6 queste devono essere girate ad Aree o Ragioneria di uguale Natura
 						 */
 						BigDecimal impSaldoNaturaReimpiego = listCtrlPianoEco.stream()
 								.map(CtrlPianoEco::getDett)
@@ -3143,22 +3174,23 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
 						if (impSaldoNaturaReimpiego.compareTo(BigDecimal.ZERO)<0) {
-							//Vuol dire che ho ridotto su GAE Natura 6 per cui deve essere bilanciato solo con Aree di uguale natura
-							BigDecimal impSaldoNaturaReimpiegoArea = listCtrlPianoEco.stream()
+							//Vuol dire che ho ridotto su GAE Natura 6 per cui deve essere bilanciato solo con Aree/Ragioneria di uguale natura
+							BigDecimal impSaldoNaturaReimpiegoAreaRagioneria = listCtrlPianoEco.stream()
 									.map(CtrlPianoEco::getDett)
 									.flatMap(List::stream)
-									.filter(el->el.isUoArea())
+									.filter(el->isVariazioneArea?el.isUoArea():el.isUoRagioneria())
 									.filter(el->el.isNaturaReimpiego())
 									.map(CtrlPianoEcoDett::getImporto)
 									.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
 
-							if (impSaldoNaturaReimpiegoArea.compareTo(BigDecimal.ZERO)<0 ||
-									impSaldoNaturaReimpiegoArea.abs().compareTo(impSaldoNaturaReimpiego.abs())!=0)
+							if (impSaldoNaturaReimpiegoAreaRagioneria.compareTo(BigDecimal.ZERO)<0 ||
+									impSaldoNaturaReimpiegoAreaRagioneria.abs().compareTo(impSaldoNaturaReimpiego.abs())!=0)
 								throw new ApplicationException("Attenzione! Risultano prelievi"
 										+ " per un importo di "	+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiego.abs())
-										+ " su GAE di natura 6 - 'Reimpiego di risorse' che non risultano totalmente coperti da variazioni a favore"
-										+ " di Aree su GAE di natura 6 - 'Reimpiego di risorse' ("
-										+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiegoArea.abs())+").");
+										+ " su GAE di natura 6 - 'Reimpiego di risorse' che non risultano totalmente coperti da variazioni a favore "
+										+ (isVariazioneArea?"di Aree":"della Ragioneria")
+										+ " su GAE di natura 6 - 'Reimpiego di risorse' ("
+										+ new it.cnr.contab.util.EuroFormat().format(impSaldoNaturaReimpiegoAreaRagioneria.abs())+").");
 						}
 					}
 				}
@@ -3176,6 +3208,29 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 								+ " che non risultano totalmente coperti da variazioni a favore"
 								+ " di GAE di natura 6 - 'Reimpiego di risorse' ("
 								+ new it.cnr.contab.util.EuroFormat().format(impSpesaPositiviNaturaReimpiego)+").");
+				}
+				{
+					if (isVariazionePersonale) {
+						/**
+						 * 110. se vengono assegnate somme al CDR Personale devono essere prelevate da progetti scaduti e/o da progetti attivi su GAE Fonte Esterna
+						 */
+						BigDecimal impSaldoPrgAttiviPersonale = listCtrlPianoEco.stream()
+								.filter(el->!el.isScaduto(dataChiusura))
+								.map(CtrlPianoEco::getDett)
+								.flatMap(List::stream)
+								.filter(el->el.isCdrPersonale())
+								.map(CtrlPianoEcoDett::getImporto)
+								.reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+						if (impSaldoPrgAttiviPersonale.compareTo(BigDecimal.ZERO)>0) {
+							BigDecimal saldoCashFund = impSaldoPrgAttiviFonteEsterna.add(impNegativiPrgScaduti.negate());
+							if (saldoCashFund.compareTo(BigDecimal.ZERO) > 0 || impSaldoPrgAttiviPersonale.compareTo(saldoCashFund.abs()) != 0)
+								throw new ApplicationException("Attenzione! Risultano assegnazioni al CDR Personale "
+										+ " per un importo di " + new it.cnr.contab.util.EuroFormat().format(impSaldoPrgAttiviPersonale)
+										+ " che non risultano totalmente coperti da prelievi da progetti scaduti e/o progetti attivi su GAE Fonte Esterna' ("
+										+ new it.cnr.contab.util.EuroFormat().format(saldoCashFund.abs()) + ").");
+						}
+					}
 				}
 			}
 		} catch (RemoteException|PersistencyException e) {
@@ -3458,6 +3513,201 @@ public Voce_f_saldi_cdr_lineaBulk aggiornaAccertamentiResiduiPropri(UserContext 
 			return (CdrBulk)getHome(userContext, CdrBulk.class).findByPrimaryKey(new CdrBulk(cdrPersonale));
 		} catch(Throwable e) {
 			throw handleException(e);
+		}
+	}
+
+	//Controllo che restituisce errore.
+	//Se la variazione passa a definitivo controllo che non siano modificate combinazioni contabili per le quali sia attivo un blocco residui
+	public void checkBloccoImpegniNatfin(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException {
+		try	{
+			Unita_organizzativaBulk uoScrivania = (Unita_organizzativaBulk)getHome(userContext, Unita_organizzativaBulk.class).
+					findByPrimaryKey(new Unita_organizzativaBulk(CNRUserContext.getCd_unita_organizzativa(userContext)));
+			/*
+			 * non effettuo alcun controllo se è collegata la UO Ente e la variazione è fatta dalla UO Ente
+			 */
+			if (uoScrivania.isUoEnte() && variazione.getCentroDiResponsabilita().getUnita_padre().isUoEnte())
+				return;
+
+			Var_stanz_resHome varResHome = (Var_stanz_resHome)getHome(userContext,Var_stanz_resBulk.class);
+			for (java.util.Iterator dett = varResHome.findAllVariazioniRiga(variazione).iterator(); dett.hasNext(); ) {
+				Var_stanz_res_rigaBulk rigaVar = (Var_stanz_res_rigaBulk) dett.next();
+				checkBloccoImpegniNatfin(userContext, rigaVar.getLinea_di_attivita().getCd_centro_responsabilita(), rigaVar.getLinea_di_attivita().getCd_linea_attivita(),
+						rigaVar.getElemento_voce(), ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO);
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (EJBException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public void checkBloccoImpegniNatfin(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException {
+		WorkpackageBulk workpackageBulk = ((WorkpackageHome) getHome(userContext, WorkpackageBulk.class)).searchGAECompleta(userContext, CNRUserContext.getEsercizio(userContext),
+					cdr, cdLineaAttivita);
+		checkBloccoImpegniNatfin(userContext, workpackageBulk, elementoVoceBulk, tipoObbligazione);
+	}
+
+	public void checkBloccoImpegniNatfin(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws ComponentException {
+    	try {
+    		if ((ObbligazioneBulk.TIPO_COMPETENZA.equals(tipoObbligazione) && elementoVoceBulk.isAttivoBloccoResiduiNatfinCompetenza()) ||
+					((ObbligazioneBulk.TIPO_RESIDUO_PROPRIO.equals(tipoObbligazione) || ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO.equals(tipoObbligazione)) && elementoVoceBulk.isAttivoBloccoResiduiNatfinResidui())) {
+				Parametri_cdsBulk param_cds = (Parametri_cdsBulk)(getHome(userContext, Parametri_cdsBulk.class)).findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext)));
+				if (param_cds.getFl_blocco_impegni_natfin().equals(Boolean.TRUE)) {
+					Configurazione_cnrBulk configBulk = Utility.createConfigurazioneCnrComponentSession().getConfigurazione(userContext, CNRUserContext.getEsercizio(userContext), null, Configurazione_cnrBulk.PK_BLOCCO_RESIDUI, Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO);
+					if (Optional.ofNullable(configBulk).isPresent()) {
+						Optional<String> optNatura = Optional.ofNullable(configBulk).map(Configurazione_cnrBulk::getVal01);
+						Optional<String> optCodFinanziamento = Optional.ofNullable(configBulk).map(Configurazione_cnrBulk::getVal02);
+						if (optNatura.isPresent() || optCodFinanziamento.isPresent()) {
+							if (optNatura.map(el -> el.equals(workpackageBulk.getNatura().getTipo())).orElse(Boolean.TRUE) &&
+									optCodFinanziamento.map(el -> el.equals(workpackageBulk.getProgetto().getOtherField().getTipoFinanziamento().getCodice())).orElse(Boolean.TRUE))
+								throw new ApplicationException("Non è possibile effettuare movimentazioni per il CDR/GAE/Voce (" +
+										workpackageBulk.getCd_centro_responsabilita() + "/" + workpackageBulk.getCd_linea_attivita() + "/" + elementoVoceBulk.getCd_voce() +
+										"), in quanto " +
+										optNatura.map(el -> "GAE di natura " + el).orElse("") +
+										(optNatura.isPresent() && optCodFinanziamento.isPresent() ? " e " : "") +
+										optCodFinanziamento.map(el -> "Progetto di tipo " + el + " ").orElse("") + ".");
+						}
+					}
+				}
+			}
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		} catch (RemoteException e) {
+			throw new ComponentException(e);
+		}
+	}
+
+	public void checkBloccoLimiteClassificazione(UserContext userContext, Pdg_variazioneBulk variazione) throws ComponentException {
+		try {
+			Pdg_variazioneHome detHome = (Pdg_variazioneHome)getHome(userContext,Pdg_variazioneBulk.class);
+			V_classificazione_vociHome vClassVociHome = (V_classificazione_vociHome)getHome(userContext, V_classificazione_vociBulk.class);
+			Elemento_voceHome elementoVoceHome = (Elemento_voceHome)getHome(userContext, Elemento_voceBulk.class);
+			V_assestatoHome assHome = (V_assestatoHome)getHome(userContext,V_assestatoBulk.class);
+			LimiteSpesaClassHome dettHome = (LimiteSpesaClassHome)getHome(userContext,LimiteSpesaClassBulk.class);
+
+			//CERCO TUTTE LE CLASSIFICAZIONI CON LIMITE
+			SQLBuilder sqlClassLimite = vClassVociHome.createSQLBuilder();
+			sqlClassLimite.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, CNRUserContext.getEsercizio(userContext));
+			sqlClassLimite.addClause(FindClause.AND, "im_limite_assestato", SQLBuilder.ISNOTNULL, null);
+			sqlClassLimite.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, Elemento_voceHome.GESTIONE_SPESE);
+			List<V_classificazione_vociBulk> listClass = vClassVociHome.fetchAll(sqlClassLimite);
+
+			//CREO UNA MAPPA CHE PER OGNI CLASSIFICAZIONE CON LIMITE ABBIA I DATI DEI CDS E DELLE VOCI ASSOCIATE
+			Map<V_classificazione_vociBulk, List<Elemento_voceBulk>> mapClassificazioni = new HashMap<V_classificazione_vociBulk, List<Elemento_voceBulk>>();
+			Optional.ofNullable(listClass)
+					.map(List::stream)
+					.orElse(Stream.empty())
+					.forEach(classLimite->{
+						//verifico se la classificazione con limite appartiene a
+						try {
+							classLimite.setLimitiSpesaClassColl(new BulkList(dettHome.getDetailsFor(classLimite)));
+
+							//recupero tutte le voci della classificazione con limite
+							SQLBuilder sqlElementoVoce = elementoVoceHome.selectElementoVociAssociate(classLimite.getEsercizio(), classLimite.getNr_livello(), classLimite.getId_classificazione());
+							sqlElementoVoce.addClause(FindClause.AND, "fl_limite_competenza", SQLBuilder.EQUALS, Boolean.TRUE);
+							List<Elemento_voceBulk> listVociClass = elementoVoceHome.fetchAll(sqlElementoVoce);
+
+							mapClassificazioni.put(classLimite,listVociClass);
+						} catch (PersistencyException e) {
+							throw new RuntimeException(e);
+						}
+					});
+
+
+			//RAGGRUPPO PER CDS TUTTE LE RIGHE DI VARIAZIONE CON VOCE DI BILANCIO CON GESTIONE LIMITE ATTIVO
+			Collection<Pdg_variazione_riga_gestBulk> righeVar = detHome.findDettagliSpesaVariazioneGestionale(variazione);
+			getHomeCache(userContext).fetchAll(userContext);
+			Map<String, List<Pdg_variazione_riga_gestBulk>> cdsMap =
+					Optional.ofNullable(righeVar)
+							.map(el->el.stream())
+							.orElse(Stream.empty())
+							.filter(riga->riga.getElemento_voce().getFl_limite_competenza().equals(Boolean.TRUE))
+							.collect(Collectors.groupingBy(o->o.getCdr_assegnatario().getCd_cds()));
+
+			cdsMap.keySet().stream().forEach(cds-> {
+				mapClassificazioni.keySet().forEach(classificazione->{
+					List<Elemento_voceBulk> listVociClass = mapClassificazioni.get(classificazione);
+					//trovo l'importo della variazione provvisoria delle voci associate alla classificazione
+					BigDecimal impCurrentVariazioneClass =
+							cdsMap.get(cds).stream()
+								  .filter(rigavar->{
+								  		return rigavar.getLinea_attivita().getNatura().isFonteInterna();
+								  })
+								  .filter(rigavar->{
+										return listVociClass.stream()
+												.filter(voceClass->voceClass.getEsercizio().equals(rigavar.getElemento_voce().getEsercizio()))
+												.filter(voceClass->voceClass.getTi_gestione().equals(rigavar.getElemento_voce().getTi_gestione()))
+												.filter(voceClass->voceClass.getTi_appartenenza().equals(rigavar.getElemento_voce().getTi_appartenenza()))
+												.filter(voceClass->voceClass.getCd_elemento_voce().equals(rigavar.getElemento_voce().getCd_elemento_voce()))
+												.findFirst().isPresent();
+								  })
+								  .map(Pdg_variazione_riga_gestBulk::getIm_variazione)
+								  .reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+					if (impCurrentVariazioneClass.compareTo(BigDecimal.ZERO)>0) {
+						List<V_assestatoBulk> listAssestatoClass =
+								listVociClass.stream()
+										.filter(voceClass->voceClass.getFl_limite_competenza().equals(Boolean.TRUE))
+										.flatMap(voceClass->{
+											try {
+												SQLBuilder sqlAssestato = assHome.createSQLBuilder();
+												sqlAssestato.addClause(FindClause.AND, "esercizio", SQLBuilder.EQUALS, voceClass.getEsercizio());
+												sqlAssestato.addClause(FindClause.AND, "esercizio_res", SQLBuilder.EQUALS, voceClass.getEsercizio());
+												sqlAssestato.addClause(FindClause.AND, "ti_gestione", SQLBuilder.EQUALS, voceClass.getTi_gestione());
+												sqlAssestato.addClause(FindClause.AND, "ti_appartenenza", SQLBuilder.EQUALS, voceClass.getTi_appartenenza());
+												sqlAssestato.addClause(FindClause.AND, "cd_elemento_voce", SQLBuilder.EQUALS, voceClass.getCd_elemento_voce());
+
+												sqlAssestato.addTableToHeader("NATURA");
+												sqlAssestato.addSQLJoin("V_ASSESTATO.CD_NATURA","NATURA.CD_NATURA");
+												sqlAssestato.addSQLClause(FindClause.AND,"NATURA.TIPO", SQLBuilder.EQUALS, NaturaBulk.TIPO_NATURA_FONTI_INTERNE);
+
+												sqlAssestato.addTableToHeader("V_STRUTTURA_ORGANIZZATIVA", "A");
+												sqlAssestato.addSQLJoin("V_ASSESTATO.ESERCIZIO","A.ESERCIZIO");
+												sqlAssestato.addSQLJoin("V_ASSESTATO.CD_CENTRO_RESPONSABILITA","A.CD_ROOT");
+												sqlAssestato.addSQLClause(FindClause.AND,"A.CD_CDS", SQLBuilder.EQUALS, cds);
+
+												List<V_assestatoBulk> listAssestati = assHome.fetchAll(sqlAssestato);
+												//ritorna l'assestato della singola voce
+												return listAssestati.stream();
+											} catch (PersistencyException e) {
+												throw new RuntimeException(e);
+											}
+										})
+								.collect(Collectors.toList());
+
+						BigDecimal impApprovatoClass = listAssestatoClass.stream().map(V_assestatoBulk::getAssestato_iniziale).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+						BigDecimal impVariazioniDefinitiveClass = listAssestatoClass.stream().map(V_assestatoBulk::getVariazioni_definitive).reduce((x,y)->x.add(y)).orElse(BigDecimal.ZERO);
+
+						//recupero il limite per il cds
+						BigDecimal impLimiteClass = Optional.ofNullable(classificazione.getLimitiSpesaClassColl())
+								.map(List::stream)
+								.orElse(Stream.empty())
+								.filter(el->el.getCd_cds().equals(cds))
+								.map(LimiteSpesaClassBulk::getIm_limite_assestato)
+								.findFirst()
+								.orElse(BigDecimal.ZERO);
+
+						/*
+							Il controllo viene effettuato su:
+								assestato (dato dagli stanziamenti e le variazioni approvate)
+								+variazioni definitive
+								+variazione provvisoria corrente che sta diventando definitiva
+						 */
+						if (impApprovatoClass.add(impVariazioniDefinitiveClass).compareTo(impLimiteClass)>0)
+							throw new ApplicationRuntimeException("Operazione non possibile!\nLa quota stanziata dal CDS "+cds+
+									" per la classificazione '"+classificazione.getCd_classificazione()+" - "+classificazione.getDs_classificazione()+
+									"',  di euro "+ new it.cnr.contab.util.EuroFormat().format(impApprovatoClass.add(impVariazioniDefinitiveClass))+
+									"\n(ottenuta sommando alla quota approvata di euro "+new it.cnr.contab.util.EuroFormat().format(impApprovatoClass)+" la quota di altre variazioni definitive " +
+									"in attesa di approvazione di euro "+new it.cnr.contab.util.EuroFormat().format(impVariazioniDefinitiveClass.subtract(impCurrentVariazioneClass))+ " e la quota " +
+									"della corrente variazione di euro "+new it.cnr.contab.util.EuroFormat().format(impCurrentVariazioneClass)+")\nsupererebbe l'importo " +
+									"limite stabilito di euro "+new it.cnr.contab.util.EuroFormat().format(impLimiteClass)+".");
+					}
+				});
+			});
+		} catch (DetailedRuntimeException _ex) {
+			throw new ApplicationException(_ex.getMessage());
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
 		}
 	}
 }

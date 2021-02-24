@@ -20,7 +20,7 @@
 	persistentClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_areaBulk"
 	homeClassName="it.cnr.contab.prevent01.consultazioni.bulk.V_cons_pdgg_areaHome">
 	<defaultColumnMap
-		tableName="V_CONS_PDGG_ETR_X_AREA_DET">
+			tableName="V_CONS_PDGG_ETR_X_AREA_DET">
 		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="esercizio"

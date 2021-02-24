@@ -438,8 +438,14 @@ public BigDecimal getDispAdImpCompetenza(){
 public BigDecimal getTotImpResiduoImproprio(){
 	return getIm_obbl_res_imp().add(getVar_piu_obbl_res_imp()).subtract(getVar_meno_obbl_res_imp());
 }
+public BigDecimal getTotImpResiduoProprio(){
+	return getIm_obbl_res_pro().add(getVar_piu_obbl_res_pro()).subtract(getVar_meno_obbl_res_pro());
+}
 public BigDecimal getTotImpCompetenza(){
 	return getIm_obbl_acc_comp();
+}
+public BigDecimal getTotMandati(){
+	return getIm_mandati_reversali_pro().add(getIm_mandati_reversali_imp());
 }
 public void inizializzaSommeAZero(){
 	setIm_stanz_iniziale_a1(Utility.ZERO);

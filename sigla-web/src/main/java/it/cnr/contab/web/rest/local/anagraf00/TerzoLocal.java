@@ -17,28 +17,45 @@
 
 package it.cnr.contab.web.rest.local.anagraf00;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.web.rest.config.SIGLARoles;
+
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.web.rest.config.SIGLARoles;
 
 @Local
 @Path("/terzo")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RolesAllowed(SIGLARoles.TERZO)
+@Api("Terzo")
 public interface TerzoLocal {
 
 	@POST
-    public Response update(@Context HttpServletRequest request, TerzoBulk terzoBulk) throws Exception;
+    @ApiOperation(value = "Aggiorna un terzo",
+            notes = "Accesso consentito solo alle utenze abilitate e con ruolo '" + SIGLARoles.TERZO +"'",
+            response = TerzoBulk.class,
+            authorizations = @Authorization(value = "BASIC")
+    )
+    Response update(@Context HttpServletRequest request, TerzoBulk terzoBulk) throws Exception;
+
+	@GET
+    @Path("/tiporapporto/{codicefiscale}")
+    @ApiOperation(value = "Ritorna i rapporti associati al terzo",
+            notes = "Accesso consentito solo alle utenze abilitate e con ruolo '" + SIGLARoles.TERZO +"'",
+            response = RapportoBulk.class,
+            responseContainer = "List",
+            authorizations = @Authorization(value = "BASIC")
+    )
+    Response tipoRapporto(@PathParam("codicefiscale") String codicefiscale) throws Exception;
 
 }

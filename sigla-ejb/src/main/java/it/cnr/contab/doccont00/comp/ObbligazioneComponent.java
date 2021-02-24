@@ -25,17 +25,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Enumeration;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Vector;
+import java.util.*;
 import java.util.stream.Stream;
 
 import javax.ejb.EJBException;
@@ -1573,75 +1563,78 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 {
 	BigDecimal totaleOldScad = new BigDecimal(0);
 	BigDecimal totaleNewScad = new BigDecimal(0);
-	Obbligazione_scadenzarioBulk os;
-	Obbligazione_scad_voceBulk osv;
 	Obbligazione_scad_voceBulk key = new Obbligazione_scad_voceBulk();
 	boolean found=false;
 
 	try
 	{
-		if (obbligazione.isCompetenza()) { 
+		Parametri_cdsBulk param_cds = (Parametri_cdsBulk)(getHome(userContext, Parametri_cdsBulk.class)).findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext)));
+		boolean isObbligazioneResiduo = obbligazione.isObbligazioneResiduo() || obbligazione.isObbligazioneResiduoImproprio();
+		SaldoComponentSession saldoSession = Utility.createSaldoComponentSession();
 
-			SaldoComponentSession session = createSaldoComponentSession();
-			Parametri_cdsBulk param_cds = (Parametri_cdsBulk)(getHome(userContext, Parametri_cdsBulk.class)).findByPrimaryKey(new Parametri_cdsBulk(CNRUserContext.getCd_cds(userContext),CNRUserContext.getEsercizio(userContext)));
-			if (param_cds.getIm_soglia_consumo_residuo()==null) return;
+		//Questo controllo parte se cambiato l'importo per il CDR/GAE indicato e serve per:
+		// Obbligazione Competenza: per impedire di creare obbligazioni di cometenza in presenza di stanziamento residuo improprio
+		// Obbligazione Residuo: per bloccare la creazione/modifica del residuo se attiva la gestione del limite sui residui sia sul CDS che sulla voce e per la natura e tipo
+		// finanziamento indicato in CONFIGURAZIONE_CNR
+		if ((obbligazione.isCompetenza() && Optional.ofNullable(param_cds.getIm_soglia_consumo_residuo()).isPresent()) || isObbligazioneResiduo) {
+			totaleNewScad = obbligazione.getObbligazione_scadenzarioColl().stream()
+						.flatMap(os -> os.getObbligazione_scad_voceColl().stream())
+						.filter(osv -> osv.getCd_centro_responsabilita().equals(cdr))
+						.filter(osv -> osv.getCd_linea_attivita().equals(latt))
+						.filter(osv -> osv.getCd_voce().equals(voce.getCd_voce()))
+						.map(Obbligazione_scad_voceBulk::getIm_voce)
+						.reduce((x, y) -> x.add(y)).orElse(BigDecimal.ZERO);
 
-			for ( Iterator s = obbligazione.getObbligazione_scadenzarioColl().iterator(); s.hasNext(); )
-			{
-				os = (Obbligazione_scadenzarioBulk) s.next();
-				for ( Iterator d = os.getObbligazione_scad_voceColl().iterator(); d.hasNext(); )
-				{
-					osv = (Obbligazione_scad_voceBulk) d.next();
-					//totale per Cdr e per scadenza				
-					if (osv.getCd_centro_responsabilita().equals( cdr ) &&
-					    osv.getCd_linea_attivita().equals( latt ) &&
-					    osv.getCd_voce().equals(voce.getCd_voce())) {
-						totaleNewScad = totaleNewScad.add( osv.getIm_voce() );
-						break;
-					}
-				}
-			}
-
-			for ( Enumeration e = oldRipartizioneCdrVoceLinea.keys(); e.hasMoreElements(); ) 
-			{
-				key = (Obbligazione_scad_voceBulk)e.nextElement();
+			for (Enumeration e = oldRipartizioneCdrVoceLinea.keys(); e.hasMoreElements(); ) {
+				key = (Obbligazione_scad_voceBulk) e.nextElement();
 				found = false;
-				if (key.getCd_centro_responsabilita().equals( cdr ) &&
-					key.getCd_linea_attivita().equals( latt ) &&
-					key.getCd_voce().equals( voce.getCd_voce() ))	{
-					totaleOldScad = (BigDecimal) oldRipartizioneCdrVoceLinea.get( key );
+				if (key.getCd_centro_responsabilita().equals(cdr) &&
+						key.getCd_linea_attivita().equals(latt) &&
+						key.getCd_voce().equals(voce.getCd_voce())) {
+					totaleOldScad = (BigDecimal) oldRipartizioneCdrVoceLinea.get(key);
 					found = true;
 					break;
 				}
 			}
-			
-			/*
-			 * Controllo, in caso di creazione impegni di competenza o aumento dell'importo assegnato, 
-			 * che la disponibilità ad assumere impegni residui impropri non sia superiore al limite 
-			 * previsto nei parametri CNR
-			 * 
-			 **/
-			if (totaleOldScad.compareTo(totaleNewScad)==-1 || !found) {
-				BigDecimal totaleResidui = session.getTotaleSaldoResidui(userContext,cdr,latt,voce);
 
-				if (totaleResidui.compareTo(param_cds.getIm_soglia_consumo_residuo())==1) 
-					if (!found)
-						throw new ApplicationException("Non è possibile assumere impegni di competenza per il CDR/GAE/Voce (" + 
-													   cdr + "/" + latt + "/" + voce.getCd_voce() +
-													   "), in quanto esiste una disponibilità ad assumere impegni " +
-													   "su stanziamenti residui impropri (" + 
-													   new it.cnr.contab.util.EuroFormat().format(totaleResidui) + ").");
-					else
-						throw new ApplicationException("Non è possibile aumentare di " + 
-													   new it.cnr.contab.util.EuroFormat().format(totaleNewScad.subtract(totaleOldScad)) +
-													   " l'importo di competenza già assegnato per il CDR/GAE/Voce (" + 
-													   cdr + "/" + latt + "/" + voce.getCd_voce() +
-													   "), in quanto esiste una disponibilità ad assumere impegni " +
-													   "su stanziamenti residui impropri (" + 
-													   new it.cnr.contab.util.EuroFormat().format(totaleResidui) + ").");
+			/*
+			 * Controllo, in caso di creazione impegni di competenza o aumento dell'importo assegnato,
+			 * che la disponibilità ad assumere impegni residui impropri non sia superiore al limite
+			 * previsto nei parametri CNR
+			 *
+			 **/
+			if (totaleOldScad.compareTo(totaleNewScad) == -1 || !found) {
+				if (!UtenteBulk.isAbilitatoSbloccoImpegni(userContext)) {
+					if (obbligazione.isCompetenza())
+						saldoSession.checkBloccoImpegniNatfin(userContext, cdr, latt, (Elemento_voceBulk) voce, ObbligazioneBulk.TIPO_COMPETENZA);
+					if (obbligazione.isObbligazioneResiduo())
+						saldoSession.checkBloccoImpegniNatfin(userContext, cdr, latt, (Elemento_voceBulk) voce, ObbligazioneBulk.TIPO_RESIDUO_PROPRIO);
+					if (obbligazione.isObbligazioneResiduoImproprio())
+						saldoSession.checkBloccoImpegniNatfin(userContext, cdr, latt, (Elemento_voceBulk) voce, ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO);
+				}
+
+				if (obbligazione.isCompetenza()) {
+					BigDecimal totaleResidui = saldoSession.getTotaleSaldoResidui(userContext, cdr, latt, voce);
+
+					if (totaleResidui.compareTo(param_cds.getIm_soglia_consumo_residuo()) == 1)
+						if (!found)
+							throw new ApplicationException("Non è possibile assumere impegni di competenza per il CDR/GAE/Voce (" +
+									cdr + "/" + latt + "/" + voce.getCd_voce() +
+									"), in quanto esiste una disponibilità ad assumere impegni " +
+									"su stanziamenti residui impropri (" +
+									new it.cnr.contab.util.EuroFormat().format(totaleResidui) + ").");
+						else
+							throw new ApplicationException("Non è possibile aumentare di " +
+									new it.cnr.contab.util.EuroFormat().format(totaleNewScad.subtract(totaleOldScad)) +
+									" l'importo di competenza già assegnato per il CDR/GAE/Voce (" +
+									cdr + "/" + latt + "/" + voce.getCd_voce() +
+									"), in quanto esiste una disponibilità ad assumere impegni " +
+									"su stanziamenti residui impropri (" +
+									new it.cnr.contab.util.EuroFormat().format(totaleResidui) + ").");
+				}
 			}
 		}
-		
+
 		//Controllo valido solo per residui nati nell'anno (impropri e competenza)
 		//per i residui propri il controllo viene fatto solo all'atto della modifica totale positiva dell'importo. Il controllo
 		//è già presente in ObbligazioneResComponent

@@ -625,6 +625,20 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                     }
                 }
 
+                if (incarico.getConflittoInteressi() == null) {
+                    if (parametri != null && parametri.getAllega_conflitto_interesse() != null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+                        if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+                            //Istanzio la classe per riempire tipo_archivioKeys
+                            new Incarichi_procedura_archivioBulk();
+                        }
+
+                        if (incarico.getV_terzo() != null && incarico.getV_terzo().getCognome() != null && incarico.getV_terzo().getNome() != null)
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \"" + incarico.getV_terzo().getCognome() + " " + incarico.getV_terzo().getNome() + "\" un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString() + "\".");
+                        else
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString() + "\".");
+                    }
+                }
+
                 if (incarico.getDecretoDiNomina() == null) {
                     if (parametri != null && parametri.getAllega_decreto_nomina() != null && parametri.getAllega_decreto_nomina().equals("Y")) {
                         if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
@@ -948,7 +962,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);
@@ -997,7 +1011,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);

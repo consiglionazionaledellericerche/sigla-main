@@ -106,4 +106,20 @@
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet author="raffaele.pagano" id="configurazione-cnr-add-blocco-residui-impropri">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="2020"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="BLOCCO_RESIDUI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="NATURA_FINANZIAMENTO"/>
+            <column name="val01" type="STRING" value="FIN"/>
+            <column name="val02" type="STRING" value="FOE"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

@@ -12,8 +12,8 @@ stages:
 variables:
   M2_REPO: "/builds/dev/sigla-main/.m2/repository"
   MAVEN_OPTS: "-Djava.awt.headless=true -Dsonar.host.url=$SONAR_HOST_URL"
-  MAVEN_CLI_OPTS: "-s .m2/settings.xml -Dmaven.repo.local=/builds/dev/sigla-main/.m2/repository -Dnexus.url=$NEXUS_URL -Dnexus.login=$NEXUS_USERNAME -Dnexus.pwd=$NEXUS_PASSWORD --batch-mode --errors --fail-at-end --show-version"
-  MAVEN_CLI_CENTRAL_OPTS: "-s .m2/settings.xml -Dmaven.repo.local=/builds/dev/sigla-main/.m2/repository -Pprod,maven-central,publiccode -Dnexus.url=$NEXUS_URL -Dsonatype.login=$SONATYPE_USERNAME -Dsonatype.pwd=$SONATYPE_PASSWORD -DskipTests --batch-mode --errors --fail-at-end --show-version"
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml -DskipTests -Dmaven.repo.local=/builds/dev/sigla-main/.m2/repository -Pall-test,CMIS -Dnexus.url=$NEXUS_URL -Dnexus.login=$NEXUS_USERNAME -Dnexus.pwd=$NEXUS_PASSWORD -Dace.passwod=$ACE_PASSWORD --batch-mode --errors --fail-at-end --show-version"
+  MAVEN_CLI_CENTRAL_OPTS: "-s .m2/settings.xml -Dmaven.repo.local=/builds/dev/sigla-main/.m2/repository -Pprod,CMIS,maven-central,release-version,docs -Dnexus.url=$NEXUS_URL -Dsonatype.login=$SONATYPE_USERNAME -Dsonatype.pwd=$SONATYPE_PASSWORD --batch-mode --errors --fail-at-end --show-version"
   CONTAINER_TEST_IMAGE: $CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
   CONTAINER_RELEASE_IMAGE: $CI_PROJECT_PATH:latest
 
@@ -64,9 +64,9 @@ docker-build-push-hub:
     - docker build -t $CI_PROJECT_NAME:$CI_COMMIT_REF_NAME .
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
     - docker tag $CI_PROJECT_NAME:$CI_COMMIT_REF_NAME $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
-    - docker tag $CI_PROJECT_NAME:$CI_COMMIT_REF_NAME $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:latest
+    - docker tag $CI_PROJECT_NAME:$CI_COMMIT_REF_NAME $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:release
     - docker push $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
-    - docker push $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:latest
+    - docker push $DOCKER_HUB_ORGANIZATION/$CI_PROJECT_NAME:release
   only:
     - tags
 
@@ -144,8 +144,8 @@ perform-maven-release-maven-central:
     - echo "pinentry-mode loopback" > /root/.gnupg/gpg.conf
     - echo "allow-loopback-pinentry" > /root/.gnupg/gpg-agent.conf
     - gpg --batch --import <(echo "$GPG_PRIVATE_KEY")
-    - mvn release:clean release:prepare -DreleaseVersion=$MAVEN_RELEASE_VERSION -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
-    - mvn release:perform -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
+    - mvn release:clean release:prepare -DreleaseVersion=$MAVEN_RELEASE_VERSION -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE -DskipTests" -DskipTests -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
+    - mvn release:perform -Pprod,javadoc -Darguments="-Dgpg.passphrase=$GPG_PASSPHRASE" -Dresume=false -B $MAVEN_CLI_CENTRAL_OPTS
     - mvn se.bjurr.gitchangelog:git-changelog-maven-plugin:git-changelog
     - mvn -Pchangelog scm:checkin
   only:
@@ -159,7 +159,7 @@ perform-maven-release-maven-central:
 publiccode:
   stage: publiccode
   image: golang
-  allow_failure: false
+  allow_failure: true
   before_script:
     - go get github.com/italia/publiccode-parser-go/pcvalidate
   script:

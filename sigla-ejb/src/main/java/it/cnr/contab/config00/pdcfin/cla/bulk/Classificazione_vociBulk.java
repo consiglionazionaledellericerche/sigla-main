@@ -23,7 +23,11 @@ package it.cnr.contab.config00.pdcfin.cla.bulk;
 
 import java.math.BigDecimal;
 import java.util.Dictionary;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
+import it.cnr.contab.config00.pdcfin.bulk.LimiteSpesaClassBulk;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_piano_ripartoBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -39,7 +43,8 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 	protected BulkList classVociAssociate = new BulkList();
 	protected BulkList pdgPianoRipartoSpese = new BulkList();
 	private BigDecimal tot_imp_piano_riparto_spese;
-	
+	private BulkList<LimiteSpesaClassBulk> limitiSpesaClassColl = new BulkList();
+
 	public static final String TIPO_CLASSIFICAZIONE_01 ="T01";
 	public static final String TIPO_CLASSIFICAZIONE_02 ="T02";
 	public static final String TIPO_CLASSIFICAZIONE_03 ="T03";
@@ -95,10 +100,16 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 		dett.setEsercizio(this.getEsercizio());
 		getPdgPianoRipartoSpese().add(dett);
 		return getPdgPianoRipartoSpese().size()-1;
-	}	
+	}
+
+	public int addToLimitiSpesaClassColl(LimiteSpesaClassBulk dett) {
+		dett.setV_classificazione_voci((V_classificazione_vociBulk)this);
+		getLimitiSpesaClassColl().add(dett);
+		return getLimitiSpesaClassColl().size()-1;
+	}
 
 	public it.cnr.jada.bulk.BulkCollection[] getBulkLists() {
-		return new it.cnr.jada.bulk.BulkCollection[] {getClassVociAssociate(), getPdgPianoRipartoSpese()};
+		return new it.cnr.jada.bulk.BulkCollection[] {getClassVociAssociate(), getPdgPianoRipartoSpese(), getLimitiSpesaClassColl()};
 	}
 	
 	public Classificazione_vociBulk removeFromClassVociAssociate(int index) {
@@ -110,7 +121,12 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 		Pdg_piano_ripartoBulk dett = (Pdg_piano_ripartoBulk)getPdgPianoRipartoSpese().remove(index);
 		return dett;
 	}
- 
+
+	public LimiteSpesaClassBulk removeFromLimitiSpesaClassColl(int index) {
+		LimiteSpesaClassBulk dett = (LimiteSpesaClassBulk)getLimitiSpesaClassColl().remove(index);
+		return dett;
+	}
+
  	protected Classificazione_vociBulk(String ti_gestione, String cd_livello1, String cd_livello2, String cd_livello3, String cd_livello4, String cd_livello5, String cd_livello6, String cd_livello7) {
 		super();
 		setTi_gestione(ti_gestione);
@@ -330,5 +346,21 @@ public class Classificazione_vociBulk extends Classificazione_vociBase {
 	
 	public static Dictionary getTi_classificazioneKeys() {
 		return ti_classificazioneKeys;
+	}
+
+	public BulkList<LimiteSpesaClassBulk> getLimitiSpesaClassColl() {
+		return limitiSpesaClassColl;
+	}
+
+	public void setLimitiSpesaClassColl(BulkList<LimiteSpesaClassBulk> limitiSpesaClassColl) {
+		this.limitiSpesaClassColl = limitiSpesaClassColl;
+	}
+
+	public BigDecimal getImLimiteAssestatoRipartito() {
+		return Optional.ofNullable(getLimitiSpesaClassColl())
+				.map(List::stream)
+				.orElse(Stream.empty())
+				.map(LimiteSpesaClassBulk::getIm_limite_assestato)
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 }

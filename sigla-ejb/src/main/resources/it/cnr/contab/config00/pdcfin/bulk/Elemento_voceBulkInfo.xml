@@ -170,7 +170,7 @@
 		enabledOnInsert="true"				
 		inputType="CHECKBOX"
 		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />			
+		enabledOnFreeSearch="false" />
 	<fieldProperty
 		name="find_capoconto_fin"
 		property="capoconto_fin"
@@ -408,7 +408,35 @@
 		label="Giorni di deroga sulla scadenza del progetto per la creazione di obbligazioni di residuo"
 		inputType="TEXT"
 		maxLength="10" />
-				
+	<fieldProperty
+		name="flComunicaPagamenti"
+		property="flComunicaPagamenti"
+		label="Pubblica Pagamenti"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="fl_limite_competenza"
+		property="fl_limite_competenza"
+		label="Applicazione Limite Competenza"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="blocco_impegni_natfin"
+		property="blocco_impegni_natfin"
+		keysProperty="blocco_impegni_natfinKeys"
+		label="Blocco Impegni per Natura/Finanziamento"
+		inputType="SELECT"
+		nullable="false"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
+
 	<form
 		name="searchtool" >
 		<formFieldProperty
@@ -465,6 +493,9 @@
 	<columnFieldProperty
 		name="fl_missioni"
 		/>
+	<columnFieldProperty
+			name="flComunicaPagamenti"
+	/>
 	<columnFieldProperty
 		name="cd_capoconto_fin"
 		/>
@@ -607,7 +638,10 @@
    <formFieldProperty
 		name="fl_missioni"
     />
-   <formFieldProperty
+	<formFieldProperty
+			name="flComunicaPagamenti"
+	/>
+	<formFieldProperty
 		name="find_capoconto_fin"
     />
    <formFieldProperty
@@ -665,8 +699,12 @@
 	<formFieldProperty
 		name="gg_deroga_obbl_comp_prg_scad" />
 	<formFieldProperty
-		name="gg_deroga_obbl_res_prg_scad" />	
-		
+		name="gg_deroga_obbl_res_prg_scad" />
+	<formFieldProperty
+		name="fl_limite_competenza" />
+	<formFieldProperty
+		name="blocco_impegni_natfin" />
+
 	<findFieldProperty
 		name="esercizio"
 		/>
@@ -720,7 +758,9 @@
 	<findFieldProperty
 		name="gg_deroga_obbl_comp_prg_scad" />
 	<findFieldProperty
-		name="gg_deroga_obbl_res_prg_scad" />	
+		name="gg_deroga_obbl_res_prg_scad" />
+	<findFieldProperty
+		name="blocco_impegni_natfin" />
 
 	<form
 		name="searchtool_x_var_stanz_res" >

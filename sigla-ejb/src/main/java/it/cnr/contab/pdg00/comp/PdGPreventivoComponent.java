@@ -18,6 +18,11 @@
 package it.cnr.contab.pdg00.comp;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
+import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqRigaBulk;
+import it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.messaggio00.bulk.MessaggioBulk;
 import it.cnr.contab.messaggio00.bulk.MessaggioHome;
@@ -44,8 +49,6 @@ import it.cnr.contab.pdg00.cdip.bulk.Ass_pdg_variazione_cdrHome;
 import it.cnr.contab.pdg00.cdip.bulk.Stampa_rendiconto_finanziarioVBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregato_etr_detBulk;
 import it.cnr.contab.prevent00.bulk.Pdg_aggregato_spe_detBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteHome;
@@ -63,6 +66,7 @@ import it.cnr.jada.util.ejb.EJBCommonServices;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
+import java.sql.Types;
 import java.util.Optional;
 import java.util.Vector;
 
@@ -4106,8 +4110,26 @@ protected Query select(UserContext userContext,CompoundFindClause clauses,Oggett
 			sql.addSQLExistsClause("AND",progettohome.abilitazioniProgetti(userContext));
 		}
 		return sql;
-	}		
-	public SQLBuilder selectDipartimentoForPrintByClause (UserContext userContext, 
+	}
+
+	public SQLBuilder selectFindProgettoForPrintByClause (UserContext userContext,
+													  ConsProgettiEcoVociGaeBulk stampa, Progetto_sipBulk progetto, CompoundFindClause clause) throws ComponentException, PersistencyException
+	{
+		Progetto_sipHome progettoSiphome = (Progetto_sipHome)getHome(userContext, Progetto_sipBulk.class);
+		SQLBuilder sql = progettoSiphome.createSQLBuilderAll();
+		sql.addClause( clause );
+		sql.addSQLClause("AND", "ESERCIZIO", SQLBuilder.EQUALS,CNRUserContext.getEsercizio(userContext));
+		sql.addSQLClause("AND", "TIPO_FASE", SQLBuilder.EQUALS,ProgettoBulk.TIPO_FASE_GESTIONE);
+		sql.addSQLClause("AND", "PG_PROGETTO_OTHER_FIELD", SQLBuilder.ISNOTNULL,"");
+		// Se uo 999.000 in scrivania: visualizza tutti i progetti
+		Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+		if (!((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa())){
+			sql.addSQLClause("AND", "CD_UNITA_ORGANIZZATIVA", SQLBuilder.EQUALS,((CNRUserContext) userContext).getCd_unita_organizzativa());
+		}
+		sql.addOrderBy("cd_progetto");
+		return sql;
+	}
+	public SQLBuilder selectDipartimentoForPrintByClause (UserContext userContext,
 	Stampa_pdg_etr_speVBulk stampa, DipartimentoBulk dipartimento, CompoundFindClause clause) throws ComponentException, PersistencyException
 	{	
 		SQLBuilder sql = getHome(userContext, dipartimento.getClass()).createSQLBuilder();

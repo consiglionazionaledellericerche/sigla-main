@@ -27,6 +27,8 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_attiva_rigaBulk;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
 import it.cnr.contab.prevent00.bulk.V_assestatoBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
@@ -55,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
+import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -1671,9 +1674,10 @@ public void validateTerzo( it.cnr.contab.anagraf00.core.bulk.TerzoBulk terzo ) t
 	public void setAnniResidui(it.cnr.jada.util.OrderedHashtable hashtable) {
 		anniResidui = hashtable;
 	}
-	public void caricaAnniResidui(ActionContext actioncontext) { 
-		for (int i=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-1;i>=CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue()-14;i--)
-			anniResidui.put(new Integer(i), new Integer(i));
+	public void caricaAnniResidui(ActionContext actioncontext) {
+		IntStream.iterate(CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue(), i -> i - 1)
+				.limit(SpringUtil.getBean(UtilService.class).getAnniResidui())
+				.forEach(value -> anniResidui.put(new Integer(value), new Integer(value)));
 	}
 	/* (non-Javadoc)
 	 * @see it.cnr.jada.bulk.OggettoBulk#clone()

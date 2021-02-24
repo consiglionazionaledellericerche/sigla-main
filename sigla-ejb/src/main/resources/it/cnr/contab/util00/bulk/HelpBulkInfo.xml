@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		nullable="false"
+		enabledOnEdit="false"
+		enabledOnInsert="false"
+		enabledOnSearch="true"
+		label="Progressivo" />
+	<fieldProperty
+		name="page"
+		property="page"
+		inputType="TEXT"
+		maxLength="2000"
+		enabledOnSearch="true"
+		inputCssClass="w-100"
+		label="Posizione fisica relativa della pagina jsp" />
+	<fieldProperty
+		name="bpName"
+		property="bpName"
+		keysProperty="bpKeys"
+		inputType="SELECT"
+		maxLength="50"
+		inputCssClass="w-100"
+		enabledOnSearch="true"
+		label="Nome del Business Process" />
+	<fieldProperty
+		name="helpUrl"
+		property="helpUrl"
+		inputType="TEXT"
+		maxLength="2000"
+		inputCssClass="w-100"
+		enabledOnSearch="true"
+		nullable="false"
+		label="URL della pagina di help" />
+	<fieldProperty
+		name="dsPage"
+		property="dsPage"
+		inputType="TEXTAREA"
+		inputCssClass="w-100"
+		cols="60"
+		rows="5"
+		maxLength="200"
+		enabledOnSearch="true"
+		label="Descrizione" />
+	<fieldProperty
+		name="flagMan"
+		property="flagMan"
+		inputType="TEXT"
+		inputSize="1"
+		maxLength="1"
+		enabledOnEdit="false"
+		label="Flag per leggere l'Help dal manuale on line" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+		<formFieldProperty
+			name="helpUrl" />
+		<formFieldProperty
+			name="dsPage" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="page" />
+	<formFieldProperty
+		name="bpName" />
+	<formFieldProperty
+		name="helpUrl" />
+	<formFieldProperty
+		name="dsPage" />
+
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="page" />
+	<findFieldProperty
+		name="helpUrl" />
+	<findFieldProperty
+		name="dsPage" />
+	<findFieldProperty
+		name="flagMan" />
+	<findFieldProperty
+		name="bpName" />
+
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="page" />
+	<columnFieldProperty
+		name="bpName" />
+	<columnFieldProperty
+		name="helpUrl" />
+
+</bulkInfo>

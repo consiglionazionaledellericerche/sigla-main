@@ -17,10 +17,15 @@
 
 package it.cnr.contab.utenze00.ejb;
 
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+
 import javax.ejb.Remote;
+import java.util.Map;
 
 @Remote
 public interface AssBpAccessoComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
     java.util.List findAccessoByBP(it.cnr.jada.UserContext param0, String param1) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
     it.cnr.contab.utenze00.bulk.AssBpAccessoBulk finAssBpAccesso(it.cnr.jada.UserContext userContext, String businessProcess, String tiFunzione) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
+    Map<String, String> findDescrizioneBP(UserContext userContext) throws it.cnr.jada.comp.ComponentException, java.rmi.RemoteException;
 }

@@ -53,11 +53,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>HelpServlet</servlet-name>
-		<servlet-class>it.cnr.jada.action.HelpServlet</servlet-class>
-		<load-on-startup>-1</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>MessageCheckServlet</servlet-name>
 		<servlet-class>it.cnr.contab.messaggio01.servlet.MessageCheckServlet</servlet-class>
 		<load-on-startup>6</load-on-startup>
@@ -102,14 +97,6 @@
 	<servlet-mapping>
 		<servlet-name>RestServlet</servlet-name>
 		<url-pattern>*.json</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>HelpServlet</servlet-name>
-		<url-pattern>/help/</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>HelpServlet</servlet-name>
-		<url-pattern>/help/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>OfflineReportServlet</servlet-name>
@@ -209,11 +196,55 @@
 		<mime-type>text/text</mime-type>
 	</mime-mapping>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>Login.do</welcome-file>
 	</welcome-file-list>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>HtmlAuth</web-resource-name>
+			<description>public url</description>
+			<url-pattern>/RicercaIncarichiRichiesta.do</url-pattern>
+			<url-pattern>/cancellaSchedulazione.do</url-pattern>
+			<url-pattern>/RicercaUOAction.do</url-pattern>
+			<url-pattern>/RicercaCDRAction.do</url-pattern>
+			<url-pattern>/RicercaVoceAction.do</url-pattern>
+			<url-pattern>/RicercaContrattoAction.do</url-pattern>
+			<url-pattern>/Macro.do</url-pattern>
+			<url-pattern>/RicercaTerziAction.do</url-pattern>
+			<url-pattern>/RicercaNaProComAction.do</url-pattern>
+			<url-pattern>/RicercaGAEAction.do</url-pattern>
+			<url-pattern>/RicercaGAEAction.do</url-pattern>
+			<url-pattern>/ConsUnitaOrganizzativaAction.do</url-pattern>
+			<url-pattern>/ConsCdRAction.do</url-pattern>
+			<url-pattern>/ConsCdSAction.do</url-pattern>
+			<url-pattern>/ConsDivisaAction.do</url-pattern>
+			<url-pattern>/ConsNazioneAction.do</url-pattern>
+			<url-pattern>/RicercaFatturaPassivaAction.do</url-pattern>
+			<url-pattern>/cancellaSchedulazioneExcel.do</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+	</security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>HtmlAuth</web-resource-name>
+			<description>application security constraints</description>
+			<url-pattern>*.do</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>USER</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<welcome-file-list>
+		<welcome-file>Login.do</welcome-file>
+	</welcome-file-list>
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>SIGLA realm</realm-name>
+		<form-login-config>
+			<form-login-page>/util/index.jsp</form-login-page>
+			<form-error-page>/utenze00/form_login.jsp?error-code=404</form-error-page>
+		</form-login-config>
+	</login-config>
 </web-app>

@@ -25,7 +25,7 @@
 	<fieldProperty
 		name="findBeneServizio"
 		property="beneServizio"
-		inputType="searchtool"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		formName="searchtool_codice"
 		enabledOnSearch="true"
 		label="Articolo" />
@@ -109,7 +109,7 @@
 	<fieldProperty
 		name="findUnitaOperativaOrdRic"
 		property="unitaOperativaRicevente"
-		inputType="searchtool"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		formName="searchtool"
 		enabledOnSearch="true"
 		label="UOP Ricevente" />
@@ -201,7 +201,7 @@
 	<columnFieldProperty
 		name="dsBeneServizio" />	
 	<columnFieldProperty
-		name="quantita" 
+		name="quantita"
 		inputType="ROTEXT"
 		label="Q.tà" />
 

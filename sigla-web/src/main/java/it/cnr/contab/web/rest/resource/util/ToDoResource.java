@@ -55,6 +55,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -64,6 +66,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Stateless
+@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class ToDoResource implements ToDoLocal {
     public static final String FIRMA_DIGITALE_PDG_VARIAZIONI_BP = "FirmaDigitalePdgVariazioniBP";
     public static final String FIRMA_DIGITALE_MANDATI_BP = "FirmaDigitaleMandatiBP";
@@ -379,7 +382,7 @@ public class ToDoResource implements ToDoLocal {
                                                 "fa fa-fw fa-briefcase text-primary",
                                                 "Missioni",
                                                 firstLabel(i),
-                                                detailLabel(i, "Missione", "Missioni", "da confermare.")
+                                                detailLabel(i, "Missione", "Missioni", "da pagare.")
                                         ));
                                     }
                                 } catch (ComponentException | RemoteException e) {

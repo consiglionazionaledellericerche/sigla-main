@@ -1,0 +1,6 @@
+CD_UNITA_ORGANIZZATIVA,CD_VOCE_PIANO,DS_VOCE_PIANO,FL_VALIDO,TIPOLOGIA,FL_LINK_VOCIBIL_ASSOCIATE,FL_ADD_VOCIBIL,FL_ALL_PREV_FIN,UTCR,UTUV,PG_VER_REC
+"999.000","CONS","Consumabili specifici di progetto","Y",NULL,"Y","Y","N","SYSTEM","SYSTEM","1"
+"999.000","SPE_GEN","Spese Generali","Y",NULL,"Y","Y","N","SYSTEM","SYSTEM","1"
+"999.000","PER_TD","Personale a Tempo Determinato","Y","PTD","Y","N","N","SYSTEM","SYSTEM","1"
+"999.000","PER_ALTRO","Altro Personale","Y","POT","Y","N","N","SYSTEM","SYSTEM","1"
+"999.000","PER_TI","Personale a Tempo Indeterminato","Y","PTI","Y","N","N","SYSTEM","SYSTEM","1"

@@ -53,12 +53,17 @@
   <action
           path="/TipoMovimentoAction" actionClass="it.cnr.contab.ordmag.magazzino.action.TipoMovimentoAction">
   </action>
-
-
   <action
           path="/LuogoConsegnaAction" actionClass="it.cnr.contab.ordmag.magazzino.action.LuogoConsegnaAction">
   </action>
+  <action
+          path="/ParametriSelezioneOrdiniAcqAction" actionClass="it.cnr.contab.ordmag.ordini.action.ParametriSelezioneOrdiniAcqAction">
+  </action>
 
+  <action
+          path="/SelezionaListaOrdiniEvasioneForzataAction" actionClass="it.cnr.contab.ordmag.ordini.action.SelezionaListaOrdiniEvasioneForzataAction">
+  </action>
+  SelezionaListaOrdiniEvasioneForzataAction
 
   <businessProcess name="CRUDGruppoMerceologicoBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
     <forward name="default" path="/ordmag/gruppomerceologico.jsp"/>
@@ -248,4 +253,30 @@
     <init-param name="componentSessionName" value="CNRORDMAG00_EJB_MovimentiMagComponentSession"/>
     <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagBulk"/>
   </businessProcess>
+  <businessProcess
+          name="ParametriSelezioneOrdiniConsegnaAcqBP" className="it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP">
+    <forward name="default" path="/ordmag/ordini/parametri_selezione_ordini_acq.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
+    <init-param name="defaultAction" value="ParametriSelezioneOrdiniAcqAction"/>
+    <init-param name="tipoSelezione" value="visOrdiniConsegna"/>
+  </businessProcess>
+
+  <businessProcess
+          name="EvasioneForzataOrdiniAcqDaBP" className="it.cnr.contab.ordmag.ordini.bp.ParametriSelezioneOrdiniAcqBP">
+    <forward name="default" path="/ordmag/ordini/parametri_selezione_ordini_acq.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.ordini.bulk.ParametriSelezioneOrdiniAcqBulk"/>
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
+    <init-param name="defaultAction" value="ParametriSelezioneOrdiniAcqAction"/>
+    <init-param name="tipoSelezione" value="evaForzataOrdini"/>
+  </businessProcess>
+
+  <businessProcess name="SelezionatoreEvasioneForzataBP" className="it.cnr.contab.ordmag.ordini.bp.SelezionatoreEvasioneForzataBP">
+    <forward name="default" path="/util/form_lista.jsp" />
+    <init-param name="defaultAction" value="SelezionaListaOrdiniEvasioneForzataAction" />
+    <init-param name="componentSessionName" value="CNRORDMAG00_EJB_OrdineAcqComponentSession"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.ordmag.magazzino.bulk.OrdiniAcqConsegnaBulk"/>
+  </businessProcess>
+
+
 </action-mappings>

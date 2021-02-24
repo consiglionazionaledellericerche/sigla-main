@@ -143,7 +143,7 @@ public class EvasioneOrdineComponent extends it.cnr.jada.comp.CRUDComponent impl
             Optional.ofNullable(filtro.getFind_ragione_sociale())
             .ifPresent(findRagioneSociale -> {
             			sql.generateJoin(TerzoBulk.class, AnagraficoBulk.class, "anagrafico", "ANAGRAFICO");
-                        sql.addSQLClause(FindClause.AND, "ANAGRAFICO.RAGIONE_SOCIALE", SQLBuilder.EQUALS, findRagioneSociale);
+                        sql.addSQLClause(FindClause.AND, "ANAGRAFICO.RAGIONE_SOCIALE", SQLBuilder.LIKE, "%"+findRagioneSociale.toUpperCase()+"%");
                     }
             );
         }

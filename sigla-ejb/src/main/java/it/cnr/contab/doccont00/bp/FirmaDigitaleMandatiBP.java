@@ -258,6 +258,12 @@ public class FirmaDigitaleMandatiBP extends AbstractFirmaDigitaleDocContBP {
 						message += "\nLa reversale n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " non risulta associata completamente a codici Siope, pertanto è stata esclusa dalla selezione.";
 						continue;
 					}
+					if (Utility.createReversaleComponentSession().isReversaleCORINonAssociataMandato(
+							actioncontext.getUserContext(),new ReversaleIBulk(v_mandato_reversaleBulk.getCd_cds(),v_mandato_reversaleBulk.getEsercizio(),v_mandato_reversaleBulk.getPg_documento_cont()))) {
+						message += "\nLa reversale n."+ v_mandato_reversaleBulk.getPg_documento_cont()+ " di versamento, non risulta associata a nessun mandato, pertanto è stata esclusa dalla selezione.";
+						continue;
+					}
+
 				}
 				predisponi(actioncontext, v_mandato_reversaleBulk, dateFormat);
 			}

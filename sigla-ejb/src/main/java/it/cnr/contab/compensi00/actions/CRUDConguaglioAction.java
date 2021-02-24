@@ -283,17 +283,17 @@ public Forward doElimina(ActionContext context) throws java.rmi.RemoteException
 }
 public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 
-	try{	
-		CRUDConguaglioBP bp = (CRUDConguaglioBP)getBusinessProcess(context);
-		ConguaglioBulk conguaglio = (ConguaglioBulk)bp.getModel();
-		java.sql.Timestamp oldDataCompCoge = conguaglio.getDt_a_competenza_coge();
+	CRUDConguaglioBP bp = (CRUDConguaglioBP)getBusinessProcess(context);
+	ConguaglioBulk conguaglio = (ConguaglioBulk)bp.getModel();
+	java.sql.Timestamp oldDataCompCoge = conguaglio.getDt_a_competenza_coge();
+	try{
 
 		try {
 			fillModel(context);
 			if (bp.isSearching())
 				return context.findDefaultForward();
 
-			((ConguaglioBulk)bp.getModel()).validaDate();
+			conguaglio.validaDate();
 		} catch(it.cnr.jada.bulk.FillException e) {
 			conguaglio.setDt_a_competenza_coge(oldDataCompCoge);
 			throw e;
@@ -301,28 +301,28 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			conguaglio.setDt_a_competenza_coge(oldDataCompCoge);
 			throw e;
 		}
-
 		conguaglio.setStatoToAbilitaConguaglio();
 		return context.findDefaultForward();
 
 	} catch(Throwable e) {
+		conguaglio.setDt_a_competenza_coge(oldDataCompCoge);
 		return handleException(context, e);
 	}
 }
-public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
-
-	try {
+	public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 		CRUDConguaglioBP bp = (CRUDConguaglioBP)getBusinessProcess(context);
 		java.sql.Timestamp oldDataCompCoge = ((ConguaglioBulk)bp.getModel()).getDt_da_competenza_coge();
+		ConguaglioBulk conguaglio = (ConguaglioBulk)bp.getModel();
+	try {
 		fillModel(context);
 
 		if (bp.isSearching())
 			return context.findDefaultForward();
 
 		try{
-			((ConguaglioBulk)bp.getModel()).validaDate();
+			conguaglio.validaDate();
 		} catch(it.cnr.jada.comp.ApplicationException e) {
-			((ConguaglioBulk)bp.getModel()).setDt_da_competenza_coge(oldDataCompCoge);
+			conguaglio.setDt_da_competenza_coge(oldDataCompCoge);
 			throw e;
 		}
 
@@ -342,14 +342,14 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 			option.addAttribute("errorCodeTerzo", new Integer(errorCodeTerzo));
 			return option;
 		}
-
 		bp.findTipiRapporto(context);
 		bp.ripristinaSelezioneTipoRapporto();
-		((ConguaglioBulk)bp.getModel()).setStatoToAbilitaConguaglio();
+		conguaglio.setStatoToAbilitaConguaglio();
 
 		return context.findDefaultForward();
 
 	}catch (Throwable ex) {
+		conguaglio.setDt_da_competenza_coge(oldDataCompCoge);
 		return handleException(context, ex);
 	}
 }

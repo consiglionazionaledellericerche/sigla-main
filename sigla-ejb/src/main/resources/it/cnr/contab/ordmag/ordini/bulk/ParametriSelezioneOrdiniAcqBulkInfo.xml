@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://contab.cnr.it/schema/SIGLA"
+	xsi:schemaLocation="http://contab.cnr.it/schema/SIGLA http://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+	shortDescription="Parametri Selezione Ordini Acquisto"
+	longDescription="Parametri Selezione Ordini Acquisto">
+	<fieldProperty
+		name="findUnitaOperativaOrd"
+		property="unitaOperativaAbilitata"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Unità Operativa" />
+	<fieldProperty
+		name="findMagazzino"
+		property="magazzinoAbilitato"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		label="Magazzino" />
+	<fieldProperty
+		name="findTerzo"
+		property="terzo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="Terzo" />
+	<fieldProperty
+		name="daDataOrdine"
+		property="daDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineChange"
+		label="Da Data Ordine" />
+	<fieldProperty
+		name="aDataOrdine"
+		property="aDataOrdine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Data Ordine" />
+	<fieldProperty
+		name="daDataOrdineDef"
+		property="daDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		command="doOnDaDataOrdineDefChange"
+		label="Da Dt Conferma Ord." />
+	<fieldProperty
+		name="aDataOrdineDef"
+		property="aDataOrdineDef"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Dt Conferma Ord." />
+	<fieldProperty
+		name="daNumeroOrdine"
+		property="daNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="Da Numero Ordine" />
+	<fieldProperty
+		name="aNumeroOrdine"
+		property="aNumeroOrdine"
+		inputType="TEXT"
+		inputSize="7"
+		maxLength="7"
+		enabledOnEdit="true"
+		enabledOnInsert="true"
+		label="A Numero Ordine" />
+
+	<fieldProperty
+			name="daDataPrevConsegna"
+			property="daDataPrevConsegna"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			command="doOnDaDataPrevConsegnaChange"
+			label="Da Dt Prev. Consegna Ord." />
+
+	<fieldProperty
+			name="aDataPrevConsegna"
+			property="aDataPrevConsegna"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnEdit="true"
+			enabledOnInsert="true"
+			label="A Dt Prev Consegna Ord." />
+
+	<fieldProperty
+			name="findDaBeneServizio"
+			property="daBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnSearch="true"
+			nullable="false"
+			label="Da Articolo" />
+	<fieldProperty
+			name="findABeneServizio"
+			property="aBeneServizio"
+			inputType="SEARCHTOOL"
+			formName="searchtool_codice"
+			enabledOnSearch="true"
+			nullable="false"
+			label="A Articolo" />
+
+	<fieldProperty
+			name="statoOrdine"
+			property="statoOrdine"
+			inputType="SELECT"
+			label="Stato Ordine"
+			nullable="false"
+			enabledOnSearch="true"
+			keysProperty="statoOrdineKeys" />
+
+	<fieldProperty
+		name="findNumerazioneOrd"
+		property="numerazioneOrd"
+		inputType="SEARCHTOOL"
+		formName="searchtool_ridotto"
+		enabledOnSearch="true"
+		label="Numerat. Ordine" />
+	<fieldProperty
+		name="findUnitaOperativaRicevente"
+		property="unitaOperativaRicevente"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
+		label="UOp Ricevente" />
+
+
+	<fieldProperty
+			name="statoConsegna"
+			property="statoConsegna"
+			inputType="SELECT"
+			label="Stato Consegna"
+			nullable="true"
+			enabledOnSearch="true"
+			keysProperty="statoConsegnaKeys" />
+
+	<fieldProperty
+			name="tipoConsegna"
+			property="tipoConsegna"
+			inputType="SELECT"
+			nullable="true"
+			keysProperty="tipoConsegnaKeys"
+			enabledOnSearch="true"
+			label="Tipo Consegna"/>
+
+	<fieldProperty
+			name="findResponsabile"
+			property="rup"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="Responsabile procedimento/RUP" />
+
+	<fieldProperty
+			name="findCup"
+			property="cup"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="CUP" />
+
+	<fieldProperty
+			name="findCig"
+			property="cig"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="CIG" />
+
+	<fieldProperty
+			name="findContratto"
+			property="contratto"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			CRUDBusinessProcessName="CRUDConfigAnagContrattoBP"
+			label="Contratto"
+			enabledOnSearch="true"	/>
+	<fieldProperty
+			name="findTipoOrdine"
+			property="tipoOrdine"
+			inputType="SEARCHTOOL"
+			formName="searchtool"
+			label="Tipo Ordine" />
+
+	<fieldProperty
+			name="findProceduraAmministrativa"
+			property="proceduraAmministrativa"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="Procedura Amministrativa" />
+
+	<fieldProperty
+			name="findImpegno"
+			property="impegno"
+			inputType="SEARCHTOOL"
+			formName="searchtool_ridotto"
+			label="Scadenza Impegno" />
+
+	<columnSet
+			name="visualOrdinAcpCons">
+		<columnFieldProperty
+				name="daDataOrdine"/>
+		<columnFieldProperty
+				name="cdNumeratore"
+				label="Numeratore"/>
+	</columnSet>
+	<formFieldProperty
+		name="findTerzo" />
+	<formFieldProperty
+		name="findMagazzino" />
+	<formFieldProperty
+		name="findUnitaOperativaOrd" />
+	<formFieldProperty
+		name="findUnitaOperativaRicevente" />
+
+	<formFieldProperty
+		name="findNumerazioneOrd" />
+	<formFieldProperty
+			name="findDaBeneServizio" />
+	<formFieldProperty
+			name="findABeneServizio" />
+
+	<formFieldProperty
+		name="daDataOrdine" />
+	<formFieldProperty
+			name="aDataOrdine" />
+	<formFieldProperty
+		name="daDataOrdineDef" />
+	<formFieldProperty
+			name="aDataOrdineDef" />
+	<formFieldProperty
+			name="daDataPrevConsegna" />
+	<formFieldProperty
+			name="aDataPrevConsegna" />
+
+	<formFieldProperty
+			name="statoOrdine"/>
+
+	<formFieldProperty
+			name="statoConsegna"/>
+
+	<formFieldProperty
+			name="tipoConsegna"/>
+
+	<formFieldProperty
+		name="daNumeroOrdine" />
+	<formFieldProperty
+			name="aNumeroOrdine" />
+	<formFieldProperty
+			name="findResponsabile" />
+	<formFieldProperty
+			name="findCup" />
+	<formFieldProperty
+			name="findCig" />
+	<formFieldProperty
+			name="findContratto" />
+	<formFieldProperty
+			name="findTipoOrdine" />
+
+	<formFieldProperty
+			name="findProceduraAmministrativa" />
+	<formFieldProperty
+			name="findImpegno" />
+
+</bulkInfo>

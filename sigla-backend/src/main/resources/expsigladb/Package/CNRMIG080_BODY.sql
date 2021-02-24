@@ -2,7 +2,7 @@
 --  DDL for Package Body CNRMIG080
 --------------------------------------------------------
 
-  CREATE OR REPLACE PACKAGE BODY "CNRMIG080" is
+create or replace PACKAGE BODY "CNRMIG080" is
 
  procedure IMPOSTA_DATA_CESSAZIONE (aAnnoRif Number, aMeseRif Number, aUtente varchar2) is
  	dt_cessazione date;
@@ -1132,7 +1132,7 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
  Numrighe number;
  pg_esistente number;
  flag BANCA.FL_CANCELLATO%type;
-
+ isBonificoEstero boolean := false;
 
  begin
 --Dbms_Output.put_line('MODIFICABANCA'||' matricola '||aAnaDip.matricola);
@@ -1153,6 +1153,11 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 						 where cd_modalita_pag_cnr = Nvl(Rtrim(aAnaDip.mod_pag),1)
 						 for update nowait;
 					end;
+
+                    --verifico se è una modalità di pagamento di tipo estera
+                    If lCdModPagamento='BO' and substr(aAnaDip.iban_pag,1,2) not in ('00','IT') Then
+                       isBonificoEstero := true;
+                    End If;
 
 					  	  -- recuperiamo la modalita pagamento
 						  select *
@@ -1178,8 +1183,8 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 						  --and   Nvl(cin,'0') = Nvl(aAnaDip.cin_pag,'0')
 						  and   Nvl(codice_iban,'0') = Nvl(aAnaDip.iban_pag,'0');
 
-
 	  if lNumBanche > 0 then
+
 	  	 -- la banca esiste
 		 lInsBanca := false;
 
@@ -1207,24 +1212,41 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 										and   Nvl(codice_iban,'0') = Nvl(aAnaDip.iban_pag,'0')
 										group by fl_cancellato;
 
-
 							if pg_esistente is not null and flag = 'Y' and Nvl(aAnaDip.iban_pag,'0')!='0' then
-
                                 begin
-											update banca
-											set fl_cancellato = 'N',
-												duva = sysdate,
-												utuv = 'CED',
-												origine = 'S',
-												intestazione = aAnaDip.nominativo,
-												numero_conto = lpad(aAnaDip.nrc_pag,12,'0'),
-												abi = aAnaDip.abi_pag,
-												cab = aAnaDip.cab_pag,
-												cin = aAnaDip.cin_pag
-												where pg_banca = pg_esistente
-												and cd_terzo = aTerzo.cd_terzo
-												and ti_pagamento = 'B'
-												and fl_cancellato = 'Y';
+							         if not isBonificoEstero then
+                                        update banca
+										set fl_cancellato = 'N',
+											duva = sysdate,
+											utuv = 'CED',
+											origine = 'S',
+											intestazione = aAnaDip.nominativo,
+											numero_conto = lpad(aAnaDip.nrc_pag,12,'0'),
+											abi = aAnaDip.abi_pag,
+											cab = aAnaDip.cab_pag,
+											cin = aAnaDip.cin_pag
+										where pg_banca = pg_esistente
+										and cd_terzo = aTerzo.cd_terzo
+										and ti_pagamento = lRifPagamento.ti_pagamento
+										and fl_cancellato = 'Y';
+                                    else
+                                        update banca
+										set fl_cancellato = 'N',
+											duva = sysdate,
+											utuv = 'CED',
+											origine = 'S',
+											intestazione = aAnaDip.nominativo,
+											numero_conto = lpad(aAnaDip.nrc_pag,12,'0'),
+											cin = aAnaDip.cin_pag
+										where pg_banca = pg_esistente
+										and cd_terzo = aTerzo.cd_terzo
+										and ti_pagamento = lRifPagamento.ti_pagamento
+										and fl_cancellato = 'Y';
+                                    end if;
+
+                                    If sql%rowcount > 0 Then
+                                       ibmutl200.logInf(gPgLog,'Matricola ' || aAnaDip.matricola, 'Riattivazione coordinate bancarie.', '');
+                                    End If;
 
 										    begin
 													select count(*) into num_conti_agg
@@ -1272,7 +1294,7 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 
 								exception
 									when others then
-											dbms_output.put_line('Errore nell''aggiornamento delle coordinate bancarie per il terzo '||aTerzo.cd_terzo);
+                                      ibmutl200.logErr(gPgLog,'Matricola ' || aAnaDip.matricola, 'Errore nell''aggiornamento delle coordinate bancarie','');
 								end;
 					    end if; --pg_esistente is not null...
 				end if;	--Numrighe = 1
@@ -1281,30 +1303,38 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 
 	  else -- lNumBanche>0
 	  	  -- la banca non esiste
-		  -- controlliamo se abi e cab sono validi
-	   	  select count(*)
-			  into lNumBancheValide
-			  from abicab
-			  where abi = aAnaDip.abi_pag
-			  and   cab = aAnaDip.cab_pag;
+          --se estera la creo
+          if isBonificoEstero then
+            lInsBanca := true;
+          Else
+    		  -- controlliamo se abi e cab sono validi
+              select count(*)
+                  into lNumBancheValide
+                  from abicab
+                  where abi = aAnaDip.abi_pag
+                  and   cab = aAnaDip.cab_pag;
 
-		  if lNumBancheValide > 0 then
-	  	  	 lInsBanca := true;
-		  else
-	  	  	 lInsBanca := false;
-		  	 if aAnaDip.abi_pag is not null and aAnaDip.cab_pag is not null then
-			 			ibmutl200.logInf(gPgLog ,'Matricola ' || aAnaDip.matricola , ' Banca non recuperata - ABI, CAB non presenti nella tabella ABICAB ', '');
-			 end if;  --aAnaDip.abi_pag is not null ...
-		 end if; --lNumBancheValide > 0
-
+              if lNumBancheValide > 0 then
+                 lInsBanca := true;
+              else
+                 lInsBanca := false;
+                 if aAnaDip.abi_pag is not null and aAnaDip.cab_pag is not null then
+                            ibmutl200.logErr(gPgLog ,'Matricola ' || aAnaDip.matricola , ' Banca non recuperata - ABI, CAB non presenti nella tabella ABICAB ', '');
+                 end if;  --aAnaDip.abi_pag is not null ...
+             end if; --lNumBancheValide > 0
+         End If;
 	  end if;-- lNumBanche>0
 
 	  if lInsBanca then
 	  	 -- Creo questa banca se e solo se non esiste banca e abi e cab sono validi
 		 lBanca.CD_TERZO  		:= aTerzo.cd_terzo;
-		 lBanca.CAB				:= aAnaDip.cab_pag;
-		 lBanca.ABI				:= aAnaDip.abi_pag;
-		 lBanca.TI_PAGAMENTO	:= lRifPagamento.ti_pagamento;
+
+         if not isBonificoEstero then
+		   lBanca.CAB				:= aAnaDip.cab_pag;
+		   lBanca.ABI				:= aAnaDip.abi_pag;
+         End If;
+
+         lBanca.TI_PAGAMENTO	:= lRifPagamento.ti_pagamento;
 		 lBanca.INTESTAZIONE	:= aAnaDip.NOMINATIVO;
 		 lBanca.QUIETANZA		:= NULL;
 		 -- 23/03/2016
@@ -1329,6 +1359,8 @@ procedure MODIFICABANCA(aAnaDip cnr_anadip%rowtype,aAnagrafico anagrafico%rowtyp
 
 		 -- inseriamo la banca
 		 INS_BANCA(lBanca);
+
+         ibmutl200.logInf(gPgLog,'Matricola ' || aAnaDip.matricola, 'Inserite nuove coordinate bancarie.', '');
 
 --	  else -- lInsBanca
 
@@ -2441,78 +2473,64 @@ procedure UPD_INQUADRAMENTO (aAnaDip cnr_Anadip%rowtype
 	  and   cd_anag   = aMontante.cd_anag;
  end;
 
- /*procedure ALLINEA_MONTANTE(aData date, aUtente varchar2, aAnnoRif Number, aMeseRif Number, aAnaDip cnr_Anadip%rowtype) as
- lMontante montanti%rowtype;
- lAnaDip cnr_anadip%rowtype;
- lModificaMontante boolean;
+ procedure JOB_AGGIORNA_COORD_BANCARIE(job number, pg_exec number, next_date date, nrGiorniBack number) as
+    aTSNow date;
+    aUser varchar2(20);
  begin
+    aTSNow:=sysdate;
+    aUser:=IBMUTL200.getUserFromLog(pg_exec);
+    gPgLog := pg_exec;
 
- 	  -- cicliamo su tutte le righe della vista v_stipendi_montanti
- 	  -- Flavia -- aggiunta la where nella select, si cicla solo per la matricola che si sta processando e per l'anno di riferimento
- 	  for lVStipMon in (select * from v_stipendi_montanti
- 	  		    where esercizio = aAnnoRif
- 	  		    and matricola = aAnaDip.matricola)
-	  loop
-		  -- 1) Verifichiamo se il dipendente in esame è contenuto in cnr_anadip
-		  -- 2) Se il punto 2) vero allora aggiorniamo il montante
-		  lModificaMontante := false;
-		  ibmutl200.logInf(gPgLog ,'Processato Montante per Matricola ' || lVStipMon.matricola , '', '');
-		  Dbms_Output.put_line('ALLINEA_MONTANTE matricola '||lVStipMon.matricola);
-		  begin
-			  select *
-			  into lAnaDip
-			  from cnr_anadip
-			  where matricola = lVStipMon.matricola
-			  and anno_rif=aAnnoRif
-			  and mese_rif=aMeseRif
-			  for update nowait;
+    -- Aggiorna le info di testata del log
+    IBMUTL210.logStartExecutionUpd(gPgLog, TIPO_LOG_JOB_NSIP, job, 'Batch di aggiornamento coordinate bancarie dipendenti. Start:'||to_char(aTSNow,'YYYY/MM/DD HH-MI-SS'));
 
-			  lModificaMontante := true;
+    for recCoordinate in (select * from pea_coordinate
+                          where coo_iban is not null
+                          and coo_data_op > sysdate-nvl(nrGiorniBack,3)) loop
+      declare
+        recAnag ANAGRAFICO%ROWTYPE;
+        recTerzo TERZO%ROWTYPE;
+        recAnadip CNR_ANADIP%ROWTYPE;
+      begin
+          --recupero il rapporto attivo legato alla matricola
+          begin
+          	  Select distinct anagrafico.* INTO recAnag
+			  From rapporto, anagrafico
+			  Where anagrafico.cd_anag = rapporto.cd_anag
+              And   dt_fine_rapporto Is Null
+              And   matricola_dipendente = Rtrim(recCoordinate.dip_id);
 
-			  lVStipMon.IMPO_IRPEF_NETTO_DIP := nvl(lVStipMon.IMPO_IRPEF_NETTO_DIP,0);
-			  lVStipMon.IMPO_IRPEF_LORDO_DIP := nvl(lVStipMon.IMPO_IRPEF_LORDO_DIP,0);
-		  	  lVStipMon.IMPO_INPS_DIP := nvl(lVStipMon.IMPO_INPS_DIP,0);
-			  lVStipMon.IMPO_INPS_TESORO_DIP := nvl(lVStipMon.IMPO_INPS_TESORO_DIP,0);
-		  	  lVStipMon.IMPO_RIDUZ_DIP := nvl(lVStipMon.IMPO_RIDUZ_DIP,0);
-			  lVStipMon.IMPO_FONDO_FS_DIP := nvl(lVStipMon.IMPO_FONDO_FS_DIP,0);
-		  exception
-		  when no_Data_found then
-		  	   ibmutl200.logInf(gPgLog ,'Matricola ' || lVStipMon.matricola , ' non trovata ', '');
+              begin
+                 select * into recTerzo
+                 from terzo
+                 where cd_terzo = (select min(cd_terzo) from terzo where cd_anag = recAnag.cd_anag and dt_fine_rapporto is null);
 
-		  when others then
-		  	   ibmutl200.logInf(gPgLog ,'Matricola ' || lVStipMon.matricola , ' errore generico in aggiornamento montante ', '');
-		  	   --dbms_output.put_line('Matricola ' || lVStipMon.matricola||' Errore: '||substr(sqlerrm,1,200));
-		  end;
-		  if lModificaMontante then
-		  Dbms_Output.put_line('Modifica_MONTANTE '||lMontante.cd_anag);
+                 recAnadip.matricola := Rtrim(recCoordinate.DIP_ID);
+                 recAnadip.nominativo := Rtrim(recTerzo.DENOMINAZIONE_SEDE);
+                 recAnadip.mod_pag := Rtrim(recCoordinate.COO_MOD_PAG);
+                 recAnadip.iban_pag := Rtrim(recCoordinate.COO_IBAN);
+                 recAnadip.abi_pag := Rtrim(recCoordinate.COO_ABI);
+                 recAnadip.cab_pag := Rtrim(recCoordinate.COO_CAB);
+                 recAnadip.nrc_pag := Rtrim(recCoordinate.COO_NUM_CONTO);
+                 recAnadip.cin_pag := Rtrim(recCoordinate.COO_CIN);
 
-		  	 begin
-			 	  select *
-				  into lMontante
-				  from montanti
-				  where esercizio = lVStipMon.esercizio
-				  and cd_anag = lVStipMon.cd_anag
-				  for update nowait;
+                 IBMUTL015.setRbsBig;
 
-				  lMontante.IRPEF_DIPENDENTI := lMontante.IRPEF_DIPENDENTI + lVStipMon.IMPO_IRPEF_NETTO_DIP;
-				  lMontante.INPS_DIPENDENTI  := lMontante.INPS_DIPENDENTI + lVStipMon.IMPO_INPS_DIP;
-				  lMontante.INPS_TESORO_DIPENDENTI := lMontante.INPS_TESORO_DIPENDENTI + lVStipMon.IMPO_INPS_TESORO_DIP;
-				  lMontante.RIDUZ_DIPENDENTI := lMontante.RIDUZ_DIPENDENTI + lVStipMon.IMPO_RIDUZ_DIP;
-				  lMontante.FONDO_FS_DIPENDENTI := lMontante.FONDO_FS_DIPENDENTI + lVStipMon.IMPO_FONDO_FS_DIP;
-				  lMontante.PG_VER_REC := lMontante.PG_VER_REC + 1;
-				  lMontante.IRPEF_LORDO_DIPENDENTI := lMontante.IRPEF_LORDO_DIPENDENTI + lVStipMon.IMPO_IRPEF_LORDO_DIP;
-				  lMontante.DUVA := aData;
-				  lMontante.UTUV := aUtente;
+                 MODIFICABANCA(recAnadip, recAnag, recTerzo, aTSNow, aUser);
 
-
-				  upd_montante(lMontante);
-			 exception
-		  	 when no_Data_found then
-		  	   	  ibmutl200.logInf(gPgLog ,'Montante per Matricola ' || lVStipMon.matricola , ' non trovato ', '');
-			 when others then
-		  	   ibmutl200.logInf(gPgLog ,'Montante per Matricola ' || lVStipMon.matricola , ' errore generico ', '');
-			 end;
-		  end if;
-	  end loop;
- end;*/
+                 IBMUTL015.commitRbsBig;
+              exception when no_data_found then
+                 ibmutl200.logErr(gPgLog,'Matricola ' || recCoordinate.dip_id, 'Manca il TERZO associato al record ANAGRAFICO con codice '||recAnag.cd_anag, '');
+              end;
+          exception
+              when no_data_found then
+                ibmutl200.logInf(gPgLog,'Matricola ' || recCoordinate.dip_id, 'Dipendente non registrato in SIGLA', '');
+              when too_many_rows then
+                ibmutl200.logErr(gPgLog,'Matricola ' || recCoordinate.dip_id, 'Troppe anagrafiche attive presenti', '');
+            null;
+          end;
+      end;
+    end loop;
+    ibmutl200.logInf(gPgLog,'Batch di aggiornamento coordinate bancarie dipendenti.', 'End:'||to_char(sysdate,'YYYY/MM/DD HH-MI-SS'), '');
+ end;
 end;

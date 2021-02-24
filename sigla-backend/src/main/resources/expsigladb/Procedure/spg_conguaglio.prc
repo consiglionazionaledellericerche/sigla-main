@@ -288,8 +288,15 @@ end;
               IM_CORI_SOSP_CONG,
               AMMONTARE,
               FL_NO_CREDITO_IRPEF,
+              FL_NO_CREDITO_CUNEO_IRPEF,
+              FL_NO_DETR_CUNEO_IRPEF,
               IM_CREDITO_IRPEF_GODUTO,
-              IM_CREDITO_IRPEF_DOVUTO)
+              IM_CREDITO_IRPEF_DOVUTO,
+              IM_BONUS_IRPEF_GODUTO,
+              IM_BONUS_IRPEF_DOVUTO,
+              DETRAZIONE_RID_CUNEO_ESTERNO,
+              DETRAZIONE_RID_CUNEO_GODUTO,
+              DETRAZIONE_RID_CUNEO_DOVUTO)
  values (aId,
  		'chiave',
 		'B',
@@ -360,8 +367,15 @@ end;
     IM_CORI_SOSP_CONG,
     AMMONTARE,
     decode(aConguaglio.FL_NO_CREDITO_IRPEF,'Y','SI','NO'),
+    decode(aConguaglio.FL_NO_CREDITO_CUNEO_IRPEF,'Y','SI','NO'),
+    decode(aConguaglio.FL_NO_DETR_CUNEO_IRPEF,'Y','SI','NO'),
     aConguaglio.IM_CREDITO_IRPEF_GODUTO,
-    aConguaglio.IM_CREDITO_IRPEF_DOVUTO);
+    aConguaglio.IM_CREDITO_IRPEF_DOVUTO,
+    aConguaglio.IM_BONUS_IRPEF_GODUTO,
+    aConguaglio.IM_BONUS_IRPEF_DOVUTO,
+    aConguaglio.DETRAZIONE_RID_CUNEO_ESTERNO,
+    aConguaglio.DETRAZIONE_RID_CUNEO_GODUTO,
+    aConguaglio.DETRAZIONE_RID_CUNEO_DOVUTO);
 
  -- dettagli compensi inseriti in conguaglio --> TIPO C
  for aComp in (select * from compenso comp

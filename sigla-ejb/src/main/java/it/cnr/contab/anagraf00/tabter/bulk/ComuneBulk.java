@@ -19,9 +19,6 @@ package it.cnr.contab.anagraf00.tabter.bulk;
 
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
-import it.cnr.jada.persistency.*;
-import it.cnr.jada.persistency.beans.*;
-import it.cnr.jada.persistency.sql.*;
 import it.cnr.jada.util.action.*;
 
 /**
@@ -32,6 +29,16 @@ public class ComuneBulk extends ComuneBase {
 
 	private ProvinciaBulk provincia;
 	private NazioneBulk nazione;
+
+	private Boolean da_inserire = false;
+
+	public Boolean getDa_inserire() {
+		return da_inserire;
+	}
+
+	public void setDa_inserire(Boolean da_inserire) {
+		this.da_inserire = da_inserire;
+	}
 
 	public static final String COMUNE_ITALIANO = "I";
 	public static final String COMUNE_ESTERO   = "E";

@@ -35,12 +35,7 @@ import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.Bene_servizioHome;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaHome;
-import it.cnr.contab.ordmag.anag00.MagazzinoBulk;
-import it.cnr.contab.ordmag.anag00.MagazzinoHome;
-import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
-import it.cnr.contab.ordmag.anag00.UnitaMisuraBulk;
-import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdBulk;
-import it.cnr.contab.ordmag.anag00.UnitaOperativaOrdHome;
+import it.cnr.contab.ordmag.anag00.*;
 import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoBulk;
 import it.cnr.contab.ordmag.magazzino.bulk.AbilitazioneMagazzinoHome;
 import it.cnr.contab.ordmag.magazzino.bulk.BollaScaricoMagBulk;
@@ -103,6 +98,8 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
 		movimentoMag.setDtRiferimento(dataRiferimento);
 		movimentoMag.setMagazzinoUt(magazzino);
 		movimentoMag.setUnitaOperativaOrd(unitaOperativa);
+		TipoMovimentoMagHome home = (TipoMovimentoMagHome) getHome(userContext, TipoMovimentoMagBulk.class);
+		tipoMovimento = (TipoMovimentoMagBulk)home.findByPrimaryKey(tipoMovimento);
 		movimentoMag.setTipoMovimentoMag(tipoMovimento);
 		movimentoMag.setPgMovimento(homeMag.recuperoProgressivoMovimento(userContext));
 		movimentoMag.setDivisa(divisa);
@@ -710,8 +707,8 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     	MovimentiMagHome movimentiHome = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
     	SQLBuilder sql = movimentiHome.createSQLBuilder();
     	sql.addColumn("BENE_SERVIZIO.DS_BENE_SERVIZIO");
-    	sql.addClause(FindClause.AND, "stato", SQLBuilder.NOT_EQUALS, MovimentiMagBulk.STATO_ANNULLATO);
-    	sql.addClause(FindClause.AND, "cdMagazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
+    	sql.addSQLClause(FindClause.AND, "MOVIMENTI_MAG.stato", SQLBuilder.NOT_EQUALS, MovimentiMagBulk.STATO_ANNULLATO);
+    	sql.addSQLClause(FindClause.AND, "cd_Magazzino", SQLBuilder.EQUALS, parametri.getMagazzinoAbilitato().getCdMagazzino());
     	if (parametri.getDaDataMovimento() != null ){
     		sql.addSQLClause("AND","DT_MOVIMENTO",SQLBuilder.GREATER_EQUALS,parametri.getDaDataMovimento());
     	} 
@@ -804,7 +801,7 @@ public class MovimentiMagComponent extends CRUDComponent implements ICRUDMgr, Cl
     private void aggiornaMovimentiConBollaScarico(UserContext userContext, BollaScaricoMagBulk bollaScaricoMag) throws ComponentException{
     	try {
 	    	BollaScaricoMagHome bollaHome = (BollaScaricoMagHome)getHome(userContext, BollaScaricoMagBulk.class);
-	    	MovimentiMagHome movHome = (MovimentiMagHome)getHome(userContext, BollaScaricoMagBulk.class);
+	    	MovimentiMagHome movHome = (MovimentiMagHome)getHome(userContext, MovimentiMagBulk.class);
 	    	Optional.ofNullable(bollaHome.findBollaScaricoRigaMagList(bollaScaricoMag))
 	    	.filter(list->!list.isEmpty())
 	    	.ifPresent(list->{

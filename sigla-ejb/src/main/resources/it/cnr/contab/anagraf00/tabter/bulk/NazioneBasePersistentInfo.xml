@@ -125,7 +125,14 @@
 			propertyName="cd_area_estera"
 			sqlTypeName="CHAR"
 			columnSize="2"
-			nullable="false" />			
+			nullable="false" />
+		<columnMapping
+			columnName="FL_SEPA"
+			propertyName="fl_sepa"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="nazionalita" />
@@ -162,5 +169,7 @@
 	<persistentProperty
 		name="utuv" />
 	<persistentProperty
-		name="cd_area_estera" />		
+		name="cd_area_estera" />
+	<persistentProperty
+		name="fl_sepa" />
 </SQLPersistentInfo>

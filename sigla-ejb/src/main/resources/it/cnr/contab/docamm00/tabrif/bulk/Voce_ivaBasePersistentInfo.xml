@@ -91,7 +91,7 @@
 			columnName="NATURA_OPER_NON_IMP_SDI"
 			propertyName="naturaOperNonImpSdi"
 			sqlTypeName="CHAR"
-			columnSize="2" />
+			columnSize="4" />
 		<columnMapping
 			columnName="RIF_NORM_OPER_NON_IMP_SDI"
 			propertyName="rifNormOperNonImpSdi"

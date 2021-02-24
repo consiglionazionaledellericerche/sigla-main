@@ -17,6 +17,8 @@
 
 package it.cnr.contab.incarichi00.service;
 
+import it.cnr.contab.util.SIGLAGroups;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 
@@ -28,6 +30,8 @@ import it.cnr.jada.DetailedException;
 import it.cnr.jada.comp.ApplicationException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class ContrattiService extends StoreService {
 	public StorageDocument getCMISProceduraFolder(Incarichi_proceduraBulk incarichi_proceduraBulk) throws DetailedException{
@@ -54,5 +58,23 @@ public class ContrattiService extends StoreService {
 			throw new ApplicationException("Errore di sistema, esistono più file di tipo decisione a contrattare per la procedura di conferimento incarichi "+
 					incarichi_procedura_archivioBulk.getEsercizio()+"/"+incarichi_procedura_archivioBulk.getProgressivo_riga());
 		return StorageDocument.construct(storageObjects.get(0));
+	}
+
+	@Override
+	public String createFolderIfNotPresent(String path, String name, Map<String, Object> metadataProperties) {
+		boolean present = Optional.ofNullable(
+				getStorageObjectByPath(
+						path.concat(path.equals(StorageDriver.SUFFIX) ? "" : StorageDriver.SUFFIX).concat(name),
+						true,
+						false
+				)
+		).isPresent();
+		String folderPath = super.createFolderIfNotPresent(path, name, metadataProperties);
+		if (!present) {
+			StorageObject storageObjectByPath = getStorageObjectByPath(folderPath);
+			addConsumer(storageObjectByPath, SIGLAGroups.GROUP_CONTRATTI.name());
+			addConsumer(storageObjectByPath, SIGLAGroups.GROUP_INCARICHI.name());
+		}
+		return folderPath;
 	}
 }

@@ -220,7 +220,18 @@
 			propertyName="fl_riobbligazione"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />						
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="FL_BLOCCO_IMPEGNI_NATFIN"
+			propertyName="fl_blocco_impegni_natfin"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="ABIL_PROGETTO_STRORG"
+			propertyName="abil_progetto_strorg"
+			sqlTypeName="VARCHAR"
+			columnSize="3"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="blocco_impegni_cdr_gae" />	
@@ -286,4 +297,9 @@
 		name="fl_riaccertamento" />
 	<persistentProperty
 		name="fl_riobbligazione" />
+	<persistentProperty
+		name="fl_blocco_impegni_natfin" />
+	<persistentProperty
+		name="abil_progetto_strorg" />
+
 </SQLPersistentInfo>

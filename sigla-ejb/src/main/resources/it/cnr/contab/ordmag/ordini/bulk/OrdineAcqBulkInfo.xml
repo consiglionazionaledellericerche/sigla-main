@@ -206,7 +206,7 @@
 		name="findFornitore"
 		property="fornitore"
 		formName="searchtool_lungo"
-		inputType="SEARCHTOOL"
+		inputType="SEARCHTOOL_WITH_LIKE"
 		readonlyProperty="ROFornitoreSearchTool"
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"
@@ -717,6 +717,7 @@
 		<formFieldProperty
 			name="numero" />
 	</form>
+
 	<formFieldProperty
 		name="findUnitaOperativaOrd" />
 	<formFieldProperty

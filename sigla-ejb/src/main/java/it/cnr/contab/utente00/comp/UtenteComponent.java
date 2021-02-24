@@ -20,24 +20,28 @@ package it.cnr.contab.utente00.comp;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioHome;
 import it.cnr.contab.config00.sto.bulk.*;
-
-import java.util.*;
-
 import it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.*;
 import it.cnr.contab.utenze00.service.UtenteHDService;
-import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.*;
-import it.cnr.jada.ejb.*;
+import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDDuplicateKeyException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.comp.ICRUDMgr;
 import it.cnr.jada.persistency.PersistencyException;
-import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.RemoteIterator;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.FindClause;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -113,20 +117,22 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 			{
 				UtenteTemplateBulk utente = (UtenteTemplateBulk) user;
 				UtenteHome utenteHome = (UtenteHome) getHome(userContext, utente.getClass() );
-
+				//Carica tutti gli accessi
+				List<AccessoBulk> accessiDisponibili =utenteHome.findAccessi_disponibili(utente, compoundfindclause);
 				// carica utente_unita_accesso
-
 				Collection result = utenteHome.findUtente_unita_accessi(utente);
 				for (java.util.Iterator i = result.iterator();i.hasNext();) 
 				{
 					Utente_unita_accessoBulk uua = (Utente_unita_accessoBulk)i.next();
+					if ( accessiDisponibili.contains(uua.getAccesso())){
+						uua.setAccesso( accessiDisponibili.get(accessiDisponibili.indexOf(uua.getAccesso())));
+						accessiDisponibili.remove(uua.getAccesso());
+					}
 					utente.addToUtente_unita_accessi( uua );
 				}
-
-
 				// carica accessi disponibili
-				utente.setAccessi_disponibili( utenteHome.findAccessi_disponibili(utente, compoundfindclause));
-
+				utente.setAccessi_disponibili( accessiDisponibili );
+				//utente.setAccessi_disponibili( utenteHome.findAccessi_disponibili(utente, compoundfindclause));
 			}
 		}
 		catch (Exception e )
@@ -170,20 +176,22 @@ public class UtenteComponent extends it.cnr.jada.comp.CRUDComponent implements I
 			{
 				UtenteTemplateBulk utente = (UtenteTemplateBulk) user;
 				UtenteHome utenteHome = (UtenteHome) getHome(userContext, utente.getClass() );
-
-
+				List<RuoloBulk> ruoliDisponibili = utenteHome.findRuoli_disponibili(utente);
 				// carica utente_unita_ruolo
 
 				Collection result = utenteHome.findUtente_unita_ruoli(utente);
 				for (java.util.Iterator i = result.iterator();i.hasNext();) 
 				{
 					Utente_unita_ruoloBulk uur = (Utente_unita_ruoloBulk)i.next();
+					if ( ruoliDisponibili.contains(uur.getRuolo())){
+						uur.setRuolo( ruoliDisponibili.get(ruoliDisponibili.indexOf(uur.getRuolo())));
+						ruoliDisponibili.remove(uur.getRuolo());
+					}
 					utente.addToUtente_unita_ruoli( uur );
 				}
-
 				// carica ruoli disponibili
-				utente.setRuoli_disponibili( utenteHome.findRuoli_disponibili(utente));			
-
+				utente.setRuoli_disponibili( ruoliDisponibili );
+				//utente.setRuoli_disponibili( utenteHome.findRuoli_disponibili(utente));
 			}
 		}
 		catch (Exception e )

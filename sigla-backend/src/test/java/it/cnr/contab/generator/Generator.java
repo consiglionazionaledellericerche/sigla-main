@@ -27,16 +27,16 @@ import java.nio.file.Files;
 public class Generator {
     public static void main(String[] args) {
         GeneratorBean bean = new GeneratorBean();
-        bean.setPackageName("it.cnr.contab.siope.plus.bulk");
-        bean.setSourceFolder(System.getProperty("user.home"));
-        bean.setTargetXMLFolder(System.getProperty("user.home"));
-        bean.setPrefix("SIOPEPlusEsito");
+        bean.setPackageName("it.cnr.contab.util.bulk");
+        bean.setSourceFolder(System.getProperty("user.home").concat(File.separator));
+        bean.setTargetXMLFolder(System.getProperty("user.home").concat(File.separator));
+        bean.setPrefix("Help");
 
-        bean.setTable("SIOPE_PLUS_ESITO");
+        bean.setTable("HELP_LKT");
         bean.setDriver("oracle.jdbc.driver.OracleDriver");
         bean.setUrl("jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF");
-        bean.setSchema("changeme");
-        bean.setUser("changeme");
+        bean.setSchema("PCIR009");
+        bean.setUser("PCIR009");
         bean.setPassword("dbform");
         ArtifactGenerator artifactGenerator = new ArtifactGenerator(bean);
         try {

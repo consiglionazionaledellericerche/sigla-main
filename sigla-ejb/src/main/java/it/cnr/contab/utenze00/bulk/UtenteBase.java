@@ -19,6 +19,8 @@ package it.cnr.contab.utenze00.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
+import java.util.Optional;
+
 public class UtenteBase extends UtenteKey implements Keyed {
 	// CD_CDR VARCHAR(30)
 	private java.lang.String cd_cdr;
@@ -294,7 +296,7 @@ public void setCd_utente_uid(java.lang.String cd_utente_uid) {
 	this.cd_utente_uid = cd_utente_uid;
 }
 public java.lang.Boolean getFl_autenticazione_ldap() {
-	return fl_autenticazione_ldap;
+	return Optional.ofNullable(fl_autenticazione_ldap).orElse(Boolean.FALSE);
 }
 public void setFl_autenticazione_ldap(java.lang.Boolean fl_autenticazione_ldap) {
 	this.fl_autenticazione_ldap = fl_autenticazione_ldap;

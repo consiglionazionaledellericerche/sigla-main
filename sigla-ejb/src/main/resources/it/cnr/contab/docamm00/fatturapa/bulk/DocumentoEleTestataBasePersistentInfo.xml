@@ -478,7 +478,27 @@
 			columnName="CD_UNITA_COMPETENZA"
 			propertyName="cdUnitaCompetenza"
 			sqlTypeName="VARCHAR"
-			columnSize="30"/>											
+			columnSize="30"/>
+		<columnMapping
+			columnName="ID_PAESE_FAT_COL"
+			propertyName="idPaeseFatCol"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+			columnName="ID_CODICE_FAT_COL"
+			propertyName="idCodiceFatCol"
+			sqlTypeName="VARCHAR"
+			columnSize="28"/>
+		<columnMapping
+			columnName="IDENTIFICATIVO_SDI_FAT_COL"
+			propertyName="identificativoSdiFatCol"
+			sqlTypeName="DECIMAL"
+			columnSize="22"/>
+		<columnMapping
+			columnName="PROGRESSIVO_FAT_COL"
+			propertyName="progressivoFatCol"
+			sqlTypeName="DECIMAL"
+			columnSize="22" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="tipoDocumento" />
@@ -629,5 +649,13 @@
 	<persistentProperty
 		name="flIrregistrabile" />		
 	<persistentProperty
-		name="cdUnitaCompetenza" />			
+		name="cdUnitaCompetenza" />
+	<persistentProperty
+		name="idPaeseFatCol" />
+	<persistentProperty
+		name="idCodiceFatCol" />
+	<persistentProperty
+		name="identificativoSdiFatCol"/>
+	<persistentProperty
+		name="progressivoFatCol" />
 </SQLPersistentInfo>

@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.pdcep.bulk.ContoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoRigaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Voidable;
@@ -63,6 +64,16 @@ public class OrdineAcqRigaBulk extends OrdineAcqRigaBase implements IDocumentoAm
 	private Obbligazione_scadenzarioBulk dspObbligazioneScadenzario;
 
 	private MagazzinoBulk dspMagazzino;
+
+	private ContoBulk dspConto;
+
+	public ContoBulk getDspConto() {
+		return dspConto;
+	}
+
+	public void setDspConto(ContoBulk dspConto) {
+		this.dspConto = dspConto;
+	}
 
 	private UnitaOperativaOrdBulk dspUopDest;
 	

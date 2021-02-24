@@ -1,0 +1,218 @@
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="cd_anag"
+		property="anagrafico.cd_anag"
+		label="Codice anagrafico"
+		inputType="TEXT"
+		enabledOnInsert="true"
+		enabledOnEdit="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="cognome"
+			property="anagrafico.cognome"
+			label="Cognome"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="nome"
+			property="anagrafico.nome"
+			label="Nome"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="ragione_sociale"
+			property="anagrafico.ragione_sociale"
+			label="Ragione Sociale"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="codice_fiscale"
+			property="anagrafico.codice_fiscale"
+			label="Codice Fiscale"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="dtIniValGruppoIva"
+			property="anagraficoGruppoIva.dtIniValGruppoIva"
+			label="Data inizio Validita"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="dtCancGruppoIva"
+			property="anagraficoGruppoIva.dt_canc"
+			label="Data Fine Validita"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="cd_anag_gr_iva"
+		property="anagraficoGruppoIva.cd_anag"
+		label="Codice anagrafico Gruppo IVA"
+		inputType="TEXT"
+		inputSize="20"
+		maxLength="8"
+		nullable="false"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="cognome_gr_iva"
+			property="anagraficoGruppoIva.cognome"
+			label="Cognome"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="nome_gr_iva"
+			property="anagraficoGruppoIva.nome"
+			label="Nome"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="ragione_sociale_gr_iva"
+			property="anagraficoGruppoIva.ragione_sociale"
+			label="Ragione Sociale"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+			name="partita_iva_gr_iva"
+			property="anagraficoGruppoIva.partita_iva"
+			label="Partita IVA"
+			inputType="TEXT"
+			enabledOnInsert="false"
+			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false" />
+	<fieldProperty
+		name="findAnagrafico"
+		property="anagrafico"
+		inputType="searchtool"
+		formName="searchtool_completo"
+		enabledOnSearch="true"
+		label="Anagrafico" />
+	<fieldProperty
+			name="anagraficoGruppoIva"
+			property="anagraficoGruppoIva"
+			inputType="searchtool"
+			formName="searchtool_completo"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			label="Anagrafico Gruppo IVA" />
+	<columnSet
+			name="gruppiIvaAssociati">
+		<columnFieldProperty
+				inputSize="10"
+				name="cd_anag_gr_iva" />
+		<columnFieldProperty
+				inputSize="80"
+				name="ragione_sociale_gr_iva" />
+		<columnFieldProperty
+				inputSize="20"
+				name="partita_iva_gr_iva" />
+		<columnFieldProperty
+				inputSize="20"
+				name="dtIniValGruppoIva" />
+		<columnFieldProperty
+				inputSize="20"
+				name="dtCancGruppoIva" />
+	</columnSet>
+	<columnSet
+			name="anagrafico">
+		<columnFieldProperty
+				inputSize="10"
+				name="cd_anag" />
+		<columnFieldProperty
+				inputSize="80"
+				name="ragione_sociale" />
+		<columnFieldProperty
+				inputSize="30"
+				name="cognome"/>
+		<columnFieldProperty
+				inputSize="30"
+				name="nome" />
+		<columnFieldProperty
+				inputSize="20"
+				name="codice_fiscale" />
+	</columnSet>
+	<formFieldProperty
+		name="cd_anag" />
+	<formFieldProperty
+			name="cd_anag_gr_iva" />
+	<formFieldProperty
+			name="findAnagrafico" />
+	<formFieldProperty
+			name="anagraficoGruppoIva" />
+	<columnFieldProperty
+			name="cd_anag" />
+	<columnFieldProperty
+			name="cd_anag_gr_iva" />
+	<columnFieldProperty
+			name="cognome"/>
+	<columnFieldProperty
+			name="nome" />
+	<columnFieldProperty
+			name="ragione_sociale" />
+	<columnFieldProperty
+			name="cognome_gr_iva"/>
+	<columnFieldProperty
+			name="nome_gr_iva" />
+	<columnFieldProperty
+			name="ragione_sociale_gr_iva" />
+	<columnFieldProperty
+			name="partita_iva_gr_iva" />
+	<columnFieldProperty
+			name="dtIniValGruppoIva" />
+	<columnFieldProperty
+			name="dtCancGruppoIva" />
+	<columnFieldProperty
+			name="codice_fiscale" />
+</bulkInfo>

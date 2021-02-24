@@ -28,7 +28,23 @@
 		inputSize="40"
 		nullable="false"
 		label="Tipologia" />
-	
+
+	<form name="readonly">
+		<formFieldProperty
+				enabledOnEdit="false"
+				name="aspectName" />
+		<formFieldProperty
+				name="nome" />
+		<formFieldProperty
+				name="descrizione"
+				enabledOnEdit="false" />
+		<formFieldProperty
+				name="titolo"
+				enabledOnEdit="false" />
+		<formFieldProperty
+				name="attivaFile" />
+	</form>
+
 	<form name="default">
 		<formFieldProperty
 			name="aspectName" />

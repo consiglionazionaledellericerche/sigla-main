@@ -18,7 +18,9 @@
 package it.cnr.contab.anagraf00.core.bulk;
 
 import java.sql.SQLException;
-
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Iterator;
 
 
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
@@ -231,6 +233,60 @@ public class AnagraficoHome extends BulkHome {
 		sql.setOrderBy("dt_ini_validita",it.cnr.jada.util.OrderConstants.ORDER_ASC);
 		sql.setOrderBy("cd_tipo_rapporto",it.cnr.jada.util.OrderConstants.ORDER_ASC);
 		return rapportoHome.fetchAll(sql);
+	}
+	public AnagraficoBulk findGruppoIva(AnagraficoBulk anagrafico, Timestamp data) throws IntrospectionException, PersistencyException {
+		AssGruppoIvaAnagBulk ass = findAssGruppoIva(anagrafico, data);
+		if (ass != null){
+			return ((AnagraficoBulk) findByPrimaryKey(ass.getAnagraficoGruppoIva()));
+		}
+		return null;
+	}
+	public AssGruppoIvaAnagBulk findAssGruppoIva(AnagraficoBulk anagrafico, Timestamp data) throws IntrospectionException, PersistencyException {
+		if (data != null){
+			Collection coll = findAssGruppoIva(anagrafico);
+			for (Iterator d = coll.iterator(); d.hasNext(); ) {
+				AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
+				AnagraficoBulk anagraficoBulk = (AnagraficoBulk) findByPrimaryKey(assColl.getAnagraficoGruppoIva());
+				if (anagraficoBulk.getDtIniValGruppoIva().compareTo(data) <= 0 && anagraficoBulk.getDt_canc().compareTo(data) >= 0) {
+					return assColl;
+				}
+			}
+		}
+		return null;
+	}
+	public java.util.Collection findAssGruppoIva(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+		PersistentHome assGruppoIvaHome = getHomeCache().getHome(AssGruppoIvaAnagBulk.class);
+		SQLBuilder sql = findAssGruppoIva(anagrafico, assGruppoIvaHome);
+		sql.setOrderBy("cd_anag",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		return assGruppoIvaHome.fetchAll(sql);
+	}
+
+	private SQLBuilder findAssGruppoIva(AnagraficoBulk anagrafico, PersistentHome assGruppoIvaHome) {
+		SQLBuilder sql = assGruppoIvaHome.createSQLBuilder();
+		if (anagrafico.isGruppoIVA()){
+			sql.addClause("AND","cd_anag_gr_iva",sql.EQUALS, anagrafico.getCd_anag());
+		} else {
+			sql.addClause("AND","cd_anag",sql.EQUALS, anagrafico.getCd_anag());
+		}
+		sql.addClause("AND","stato",sql.EQUALS,"INS");
+		return sql;
+	}
+
+	public java.util.Collection findGruppiIvaAssociati(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+		PersistentHome assGruppoIvaHome = getHomeCache().getHome(AssGruppoIvaAnagBulk.class);
+		SQLBuilder sql = assGruppoIvaHome.createSQLBuilder();
+		sql.addClause("AND","cd_anag",sql.EQUALS,anagrafico.getCd_anag());
+		sql.addClause("AND","stato",sql.EQUALS,"INS");
+		sql.setOrderBy("cd_anag",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		return assGruppoIvaHome.fetchAll(sql);
+	}
+	public java.util.Collection findAssociazioniAlGruppoIva(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+		PersistentHome assGruppoIvaHome = getHomeCache().getHome(AssGruppoIvaAnagBulk.class);
+		SQLBuilder sql = assGruppoIvaHome.createSQLBuilder();
+		sql.addClause("AND","cd_anag_gr_iva",sql.EQUALS,anagrafico.getCd_anag());
+		sql.addClause("AND","stato",sql.EQUALS,"INS");
+		sql.setOrderBy("cd_anag",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		return assGruppoIvaHome.fetchAll(sql);
 	}
 /**
  * Controlla che esista un rapporto di tipo DIPENDENTE per l'anagrafica in uso.
@@ -698,9 +754,13 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 	 */
 
 	public java.util.Collection findAssociatiStudio(AnagraficoBulk anagrafico) throws IntrospectionException, PersistencyException {
+		return findAssociatiStudio(anagrafico.getCd_anag());
+	}
+
+	public java.util.Collection findAssociatiStudio(Integer cdAnag) throws IntrospectionException, PersistencyException {
 		PersistentHome anagraficoTerzoHome = getHomeCache().getHome(Anagrafico_terzoBulk.class);
 		SQLBuilder sql = anagraficoTerzoHome.createSQLBuilder();
-		sql.addClause("AND", "cd_anag", SQLBuilder.EQUALS, anagrafico.getCd_anag());
+		sql.addClause("AND", "cd_anag", SQLBuilder.EQUALS, cdAnag);
 		sql.addClause("AND", "ti_legame", SQLBuilder.EQUALS, Anagrafico_terzoBulk.LEGAME_STUDIO_ASSOCIATO);
 		return anagraficoTerzoHome.fetchAll(sql);
 	}
@@ -719,7 +779,19 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 		if (codiceFiscale != null)
 			sql.addClause("AND", "codice_fiscale", SQLBuilder.EQUALS, codiceFiscale);
 		if (partitaIVA != null)
-			sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
+			if (codiceFiscale == null){
+				sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
+			} else {
+				sql.addClause("OR", "partita_iva", SQLBuilder.EQUALS, partitaIVA);
+				sql.addClause("AND", "ti_entita_giuridica", SQLBuilder.NOT_EQUALS, AnagraficoBulk.GIURIDICA);
+			}
+		return fetchAll(sql);
+	}
+
+	public java.util.List<AnagraficoBulk> findByCodiceFiscale(String codiceFiscale, String partitaIVA) throws IntrospectionException, PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+		if (codiceFiscale != null)
+			sql.addClause("AND", "codice_fiscale", SQLBuilder.EQUALS, codiceFiscale);
 		return fetchAll(sql);
 	}
 
@@ -731,5 +803,19 @@ public boolean findRapportoDipendenteFor(AnagraficoBulk anagrafico) throws Intro
 		sql.addSQLClause("AND","DT_INI_VALIDITA",sql.LESS_EQUALS,dataOdierna);
 		sql.addSQLClause("AND","DT_FIN_VALIDITA",sql.GREATER_EQUALS,dataOdierna);
 		return home.fetchAll(sql);	
+	}
+	public java.util.List<AnagraficoBulk> findAnagraficoNonDipValidi() throws IntrospectionException, PersistencyException {
+		SQLBuilder sql = createSQLBuilder();
+
+		java.sql.Timestamp dataOdierna = getServerDate();
+
+		String subQuery = "  cd_anag in (162098,178038,190455,199875,173750,164162,191931,195664,198585,167705,127634,201145,180226,199867,191395,164219,97551,201001,169091,143075,203324,203623,20724,175281,201620,179292,160478,174277,189201,171541,98209,152824,204374 ,204795 ,206729 ,207548 ,207760 ,208045 ,208233 ,208314 ,208462 ,208470 ,208738 ,209146 ,209436 ,209566 ,210487 ,211419 ,211638 ,211763 ,211929 ,212207 ,212694 ,213433 ,215939 ,217525 ,217576 ,217654 ,217666 ,218082 ,219165 ,219481 ,219488 ,219818 ,219908 ,220437 ,220665 ,220724 ,220847 ,221103 ,222618 ,222927 ,223502 ,223733 ,223781 ,224439 ,224478 ,224496 ,224498 ,225116 )" +
+				" and CD_anag IN ( " +
+				"SELECT CD_anag FROM RAPPORTO " +
+				"WHERE cd_tipo_rapporto not in ('DIP','EXDIP') AND DT_INI_VALIDITA <= to_date('10/02/2021','dd/mm/yyyy') " +
+				" and DT_FIN_VALIDITA >= to_date('10/02/2021','dd/mm/yyyy')   AND duva > to_date('01/01/2018','dd/mm/yyyy')) ";
+		sql.addSQLClause("AND", subQuery);
+		sql.setOrderBy("cd_anag",it.cnr.jada.util.OrderConstants.ORDER_ASC);
+		return fetchAll(sql);
 	}
 }

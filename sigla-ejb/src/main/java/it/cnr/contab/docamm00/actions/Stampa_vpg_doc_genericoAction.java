@@ -21,6 +21,9 @@ import it.cnr.contab.docamm00.docs.bulk.Stampa_vpg_doc_genericoBulk;
 import it.cnr.contab.reports.bp.ParametricPrintBP;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.Forward;
+
+import java.util.Optional;
+
 /**
  * Insert the type's description here.
  * Creation date: (20/03/2003 11.12.29)
@@ -45,6 +48,12 @@ public Forward doOnTipoDocumentoChange(ActionContext context) {
         
         ParametricPrintBP bp= (ParametricPrintBP) context.getBusinessProcess();
         Stampa_vpg_doc_genericoBulk stampa = (Stampa_vpg_doc_genericoBulk) bp.getModel();
+
+        if (!Optional.ofNullable(stampa).flatMap(el->Optional.ofNullable(el.getTipo_documento())).flatMap(el->Optional.ofNullable(el.getCd_tipo_documento_amm()))
+                .map(el->el.equals(Stampa_vpg_doc_genericoBulk.GENERICO_E)).orElse(Boolean.FALSE)) {
+            stampa.setTipoDocumentoGenerico(null);
+            stampa.setIdTipoDocumentoGenerico(null);
+        }
 
         return context.findDefaultForward();
     } catch (Throwable t) {

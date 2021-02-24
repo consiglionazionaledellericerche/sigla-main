@@ -71,6 +71,7 @@ import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldHome;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
 import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoHome;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -214,14 +215,16 @@ public class ContrattoComponent extends it.cnr.jada.comp.CRUDDetailComponent imp
 		sql.addSQLClause(FindClause.AND, "FL_VALIDO", SQLBuilder.EQUALS, "Y");
 		SQLBuilder sqlNotExists = getHome(userContext, contratto).createSQLBuilder();
 		sqlNotExists.addSQLJoin("CD_CIG", SQLBuilder.EQUALS, "CIG.CD_CIG");
+		sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, ContrattoBulk.STATO_CESSSATO);
 		if (contratto.getPg_contratto() != null){
-			sqlNotExists.addSQLClause(FindClause.AND, "ESERCIZIO", SQLBuilder.NOT_EQUALS, contratto.getEsercizio());
-			sqlNotExists.addSQLClause(FindClause.AND, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
-			sqlNotExists.addSQLClause(FindClause.AND, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
+			sqlNotExists.openParenthesis(FindClause.AND);
+			sqlNotExists.addSQLClause(FindClause.OR, "ESERCIZIO", SQLBuilder.NOT_EQUALS, contratto.getEsercizio());
+			sqlNotExists.addSQLClause(FindClause.OR, "STATO", SQLBuilder.NOT_EQUALS, contratto.getStato());
+			sqlNotExists.addSQLClause(FindClause.OR, "PG_CONTRATTO", SQLBuilder.NOT_EQUALS, contratto.getPg_contratto());
+			sqlNotExists.closeParenthesis();
 		}
-		if (contratto.getCdCigExt() != null){
-			sql.addSQLClause("AND","CD_CIG",sql.EQUALS,contratto.getCdCigExt());
-		}
+		if (contratto.getCdCigExt() != null)
+			sql.addSQLClause(FindClause.AND,"CD_CIG",SQLBuilder.EQUALS,contratto.getCdCigExt());
 		sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
 		if (clause != null) 
 		  sql.addClause(clause);
@@ -1658,7 +1661,7 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				}
 				if (storageObject != null){
 					contrattoService.addAspect(storageObject, "P:sigla_contratti_aspect:stato_definitivo");
-					contrattoService.addConsumer(storageObject,"GROUP_CONTRATTI");
+					contrattoService.addConsumer(storageObject, SIGLAGroups.GROUP_CONTRATTI.name());
 					contrattoService.setInheritedPermission(
 							contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contrattoDefinitivo)),
 							Boolean.FALSE);
@@ -2050,7 +2053,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 				contratto.setFigura_giuridica_esterna(getTerzoFromCodiceFiscalePiva(userContext, contratto.getCodfisPivaAggiudicatarioExt()));
 
 				gestioneCigSuContrattoDaFlows(userContext, contratto);
-				gestioneCupSuContrattoDaFlows(userContext, contratto);
 			
 				contratto = (ContrattoBulk)creaConBulk(userContext, contratto);
 				return contratto;
@@ -2096,24 +2098,6 @@ public SQLBuilder selectFigura_giuridica_esternaByClause(UserContext userContext
 					contratto.setCig(cig);
 				}
 				
-			}
-		}
-		private void gestioneCupSuContrattoDaFlows(UserContext userContext, ContrattoBulk contratto)
-				throws ComponentException, PersistencyException {
-			if (contratto.getCdCupExt() != null){
-				
-				CupBulk cup = new CupBulk();
-				cup.setCdCup(contratto.getCdCupExt());
-				cup.setDescrizione(contratto.getOggetto());
-				CupHome cupHome = (CupHome)getHome(userContext, cup);
-				CupBulk cupDb = (CupBulk)cupHome.findByPrimaryKey(cup);
-				if (cupDb != null){
-					contratto.setCup(cupDb);
-				} else {
-					cup.setUser(contratto.getUser());
-					cup.setToBeCreated();
-					contratto.setCup(cup);
-				}
 			}
 		}
 		private TerzoBulk getTerzoFromCodiceFiscalePiva(UserContext userContext, String codFisPiva)throws it.cnr.jada.comp.ComponentException{

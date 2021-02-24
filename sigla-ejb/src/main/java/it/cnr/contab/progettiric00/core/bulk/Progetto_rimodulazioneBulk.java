@@ -501,7 +501,18 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 				})
 				.orElse(0);
 	}
-	
+
+	/*
+		Ritorna l'anno di inizio utile per il caricamento del piano economico rimodulato
+		E' sempre pari a 14 anni precedenti all'anno inizio rimodulato.
+	 */
+	public Integer getAnnoInizioForPianoEconomico() {
+		return Optional.ofNullable(this.getAnnoInizioRimodulato())
+				.map(el->el-Progetto_piano_economicoBulk.ANNIPRE_PIANOECONOMICO)
+				.filter(el->el.compareTo(0)>0)
+				.orElse(0);
+	}
+
 	public Integer getAnnoFineRimodulato() {
 		Optional<Timestamp> optDtProroga = Optional.ofNullable(this.getDtProrogaRimodulato());
 		Optional<Integer> anno = Optional.empty();
@@ -528,7 +539,7 @@ public class Progetto_rimodulazioneBulk extends Progetto_rimodulazioneBase imple
 		
 		this.getAllDetailsProgettoPianoEconomico().stream()
 			.filter(progetto_piano_economicoBulk -> Optional.ofNullable(progetto_piano_economicoBulk.getEsercizio_piano()).isPresent())
-			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioRimodulato())<0)
+			.filter(el->el.getEsercizio_piano().compareTo(this.getAnnoInizioForPianoEconomico())<0)
 			.filter(el->!el.isDetailRimodulatoEliminato())
 			.map(Progetto_piano_economicoBulk::getEsercizio_piano)
 			.min(Comparator.comparing(Integer::valueOf))

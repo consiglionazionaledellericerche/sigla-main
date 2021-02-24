@@ -6,4 +6,4 @@ COPY sigla-web/target/sigla-thorntail.jar /opt/sigla-thorntail.jar
 
 EXPOSE 8080
 
-CMD java -Djava.security.egd=file:/dev/./urandom -Dremote.maven.repo=https://repository.jboss.org/nexus/content/groups/public/ -jar /opt/sigla-thorntail.jar
+CMD java -Djava.security.egd=file:/dev/./urandom -Dremote.maven.repo=https://repository.jboss.org/nexus/content/groups/public/,https://maven.repository.redhat.com/earlyaccess/all -jar /opt/sigla-thorntail.jar

@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>it.cnr.si.sigla</groupId>
 		<artifactId>sigla-parent</artifactId>
-		<version>6.1.29-SNAPSHOT</version>
+		<version>6.2.104-SNAPSHOT</version>
 	</parent>
 	<build>
 		<pluginManagement>
@@ -97,6 +97,18 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.ojdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<version>19.3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

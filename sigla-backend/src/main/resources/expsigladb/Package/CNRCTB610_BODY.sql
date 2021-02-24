@@ -370,11 +370,13 @@ BEGIN
    aRecCompenso.detrazione_coniuge:=0;
    aRecCompenso.detrazione_figli:=0;
    aRecCompenso.detrazione_altri:=0;
+   aRecCompenso.detrazione_riduzione_cuneo:=0;
    aRecCompenso.detrazioni_personali_netto:=0;
    aRecCompenso.detrazioni_la_netto:=0;
    aRecCompenso.detrazione_coniuge_netto:=0;
    aRecCompenso.detrazione_figli_netto:=0;
    aRecCompenso.detrazione_altri_netto:=0;
+   aRecCompenso.detrazione_rid_cuneo_netto := 0;
    aRecCompenso.imponibile_inail:=0;
    aRecCompenso.fl_generata_fattura:='N';
    aRecCompenso.fl_compenso_stipendi:='N';

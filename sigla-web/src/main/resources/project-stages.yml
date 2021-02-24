@@ -2,6 +2,41 @@ logger:
   level: DEBUG
 
 thorntail:
+  security:
+    security-domains:
+      sigla-auth:
+        cache-type: default
+        classic-authentication:
+          login-modules:
+            Ldap:
+              code: LdapExtended
+              flag: sufficient
+              module-options:
+                java.naming.provider.url: ldap://virtest1.si.cnr.it:389
+                java.naming.security.authentication: simple
+                bindDN: cn=mastercnrapp1,ou=account,o=cnr,c=it
+                bindCredential: ${cnr.ldap.master.credentials}
+                baseCtxDN: o=cnr, c=it
+                baseFilter: uid={0}
+                rolesCtxDN: ou=groups,o=cnr,c=it
+                roleFilter: member={1}
+                roleAttributeID: cn
+                defaultRole: USER
+                password-stacking: useFirstPass
+                storePass: true
+            Database:
+              code: 'it.cnr.contab.security.auth.DatabaseServerLoginModule'
+              flag: sufficient
+              module-options:
+                dsJndiName: java:/jdbc/CIR
+                principalsQuery: SELECT PASSWORD FROM UTENTE WHERE UPPER(cd_utente)=UPPER(?)
+                rolesQuery: SELECT DISTINCT CD_RUOLO, 'Roles' FROM UTENTE_UNITA_RUOLO WHERE UPPER(cd_utente)=UPPER(?)
+                hashAlgorithm: MD5
+                hashEncoding: BASE64
+                ignorePasswordCase: true
+                password-stacking: useFirstPass
+                hashStorePassword: false
+
   datasources:
     jdbc-drivers:
       oracle:
@@ -23,13 +58,17 @@ thorntail:
     path: SIGLA
   logging:
     loggers:
+      org.jboss.security:
+        level: ERROR
       org.jboss.as.ejb3:
         level: ERROR
+      org.jboss.as.ejb3.invocation:
+        level: SEVERE
       org.jboss.as.dependency.private:
         level: ERROR
       org.jboss.as.server.deployment:
         level: ERROR
-      io.undertow.servlet:
+      io.undertow:
         level: ERROR
     root-logger:
       handlers:
@@ -45,14 +84,28 @@ thorntail:
         suffix: .yyyy-MM-dd
         named-formatter: LOG_FORMATTER
         level: INFO
+  jmx:
+    expression-expose-model.domain-name: RemoteJMX
+    jmx-remoting-connector:
+      use-management-endpoint: true
+    resolved-expose-model.domain-name: RemoteJMX
+    show-model: true
+    audit-log-configuration:
+      enabled: true
+      log-boot: true
+
   management:
+    audit-access:
+      audit-log-logger:
+        log-boot: true
+        enabled: true
+    bind:
+      address: 0.0.0.0
     http-interface-management-interface:
+      console-enabled: true
       security-realm: ManagementRealm
     security-realms:
       ManagementRealm:
-        local-authentication:
-          default-user: '$local'
-          skip-group-loading: true
         in-memory-authentication:
           users:
             admin:
@@ -90,6 +143,54 @@ thorntail:
     default-security-domain: other
     default-missing-method-permissions-deny-access: true
 
+  swagger:
+    web-app:
+      context: swagger
+      json:
+        path: /SIGLA/restapi/swagger.json
+
+  infinispan:
+    cache-containers:
+      sigla-web:
+        default-cache: passivation
+        module: org.wildfly.clustering.web.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
+      sigla-ejb:
+        default-cache: passivation
+        module: org.wildfly.clustering.ejb.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
 repository:
   base:
     url: http://as1dock.si.cnr.it:8080/alfresco/
@@ -135,6 +236,14 @@ liquibase:
 cnr:
   storage:
     driver: cmis
+  ldap:
+    master:
+      url: ldap://virtest1.si.cnr.it:389
+      principal: cn=mastercnrapp1,ou=account,o=cnr,c=it
+      credentials: changeit!
+help:
+  base:
+    url: https://consiglionazionaledellericerche.github.io/sigla-main
 ---
 project:
   stage: demo-h2
@@ -266,6 +375,14 @@ thorntail:
 repository:
   base:
     url: http://gestdoc.cnr.it:90/alfresco/
+
+authJWT:
+  username: ace
+  password: thisissecret
+ace:
+  url: "https://api.ace.cnr.it/api"
+  username: app.sigla
+
 spring:
   profiles:
     active: no-liquibase

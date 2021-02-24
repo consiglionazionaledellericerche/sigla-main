@@ -64,6 +64,10 @@
                        <td><% bp.getController().writeFormInput( out, "ricercaSospesiInSospeso"); %></td>
                        <td><% bp.getController().writeFormLabel( out, "ricercaSospesiInSospeso"); %></td>
                     </tr>
+                    <tr>
+                       <td><% bp.getController().writeFormInput( out, "ricercaSospesiRiaccredito"); %></td>
+                       <td><% bp.getController().writeFormLabel( out, "ricercaSospesiRiaccredito"); %></td>
+                    </tr>
                 </table>
             </fieldset>
 		</td>

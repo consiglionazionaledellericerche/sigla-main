@@ -55,6 +55,8 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// FL_MISSIONI CHAR(1)
 	private java.lang.Boolean fl_missioni;
 
+	private java.lang.Boolean flComunicaPagamenti;
+
 	// FL_VOCE_NON_SOGG_IMP_AUT CHAR(1) NOT NULL
 	private java.lang.Boolean fl_voce_non_sogg_imp_aut;
 
@@ -121,7 +123,11 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 	// GG_DEROGA_OBBL_RES_PRG_SCAD INTEGER
 	private java.lang.Integer gg_deroga_obbl_res_prg_scad;
 
-public Elemento_voceBase() {
+	private java.lang.Boolean fl_limite_competenza;
+
+	private java.lang.String blocco_impegni_natfin;
+
+	public Elemento_voceBase() {
 	super();
 }
 public Elemento_voceBase(java.lang.String cd_elemento_voce,java.lang.Integer esercizio,java.lang.String ti_appartenenza,java.lang.String ti_gestione) {
@@ -310,14 +316,14 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 
 	/**
-	 * @param string
+	 * @param v_cod_cla_e
 	 */
 	public void setCod_cla_e(java.lang.String v_cod_cla_e) {
 		this.cod_cla_e = v_cod_cla_e;
 	}
 
 	/**
-	 * @param integer
+	 * @param v_esercizio_cla_e
 	 */
 	public void setEsercizio_cla_e(java.lang.Integer v_esercizio_cla_e) {
 		this.esercizio_cla_e = v_esercizio_cla_e;
@@ -338,14 +344,14 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	}
 
 	/**
-	 * @param string
+	 * @param newCod_cla_s
 	 */
 	public void setCod_cla_s(java.lang.String newCod_cla_s) {
 		this.cod_cla_s = newCod_cla_s;
 	}
 
 	/**
-	 * @param integer
+	 * @param newEsercizio_cla_s
 	 */
 	public void setEsercizio_cla_s(java.lang.Integer newEsercizio_cla_s) {
 		this.esercizio_cla_s = newEsercizio_cla_s;
@@ -492,5 +498,28 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 	
 	public void setGg_deroga_obbl_res_prg_scad(java.lang.Integer gg_deroga_obbl_res_prg_scad) {
 		this.gg_deroga_obbl_res_prg_scad = gg_deroga_obbl_res_prg_scad;
+	}
+	public Boolean getFlComunicaPagamenti() {
+		return flComunicaPagamenti;
+	}
+
+	public void setFlComunicaPagamenti(Boolean flComunicaPagamenti) {
+		this.flComunicaPagamenti = flComunicaPagamenti;
+	}
+
+	public Boolean getFl_limite_competenza() {
+		return fl_limite_competenza;
+	}
+
+	public void setFl_limite_competenza(Boolean fl_limite_competenza) {
+		this.fl_limite_competenza = fl_limite_competenza;
+	}
+
+	public String getBlocco_impegni_natfin() {
+		return blocco_impegni_natfin;
+	}
+
+	public void setBlocco_impegni_natfin(String blocco_impegni_natfin) {
+		this.blocco_impegni_natfin = blocco_impegni_natfin;
 	}
 }

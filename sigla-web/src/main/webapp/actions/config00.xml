@@ -378,7 +378,19 @@
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_LimiteSpesaComponentSession" />
 		<init-param name="defaultAction" value="CRUDLimiteSpesaAction" />
   </businessProcess>
-  
+
+  <action
+      path="/CRUDLimiteSpesaClassAction" actionClass="it.cnr.contab.config00.action.CRUDLimiteSpesaClassAction">
+  </action>
+
+  <businessProcess
+      name="CRUDLimiteSpesaClassBP" className="it.cnr.contab.config00.bp.CRUDLimiteSpesaClassBP">
+    <forward name="default" path="/config00/limite_spesa_class.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.config00.pdcfin.cla.bulk.V_classificazione_vociBulk" />
+        <init-param name="componentSessionName" value="CNRCONFIG00_EJB_LimiteSpesaClassComponentSession" />
+        <init-param name="defaultAction" value="CRUDLimiteSpesaClassAction" />
+  </businessProcess>
+
    <action 
       path="/CRUDClassificazioneVociEPAction" actionClass="it.cnr.contab.config00.action.CRUDClassificazioneVociEPAction">
   </action>

@@ -46,7 +46,7 @@ public class DocumentoEleTributiBase extends DocumentoEleTributiKey implements K
 //    ALIQUOTA_IVA DECIMAL(17,2)
 	private java.math.BigDecimal aliquotaIva;
  
-//    NATURA VARCHAR(2)
+//    squad VARCHAR(2)
 	private java.lang.String natura;
  
 //    RIFERIMENTO_AMMINISTRAZIONE VARCHAR(20)

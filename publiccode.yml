@@ -4,10 +4,10 @@
 
 publiccodeYmlVersion: '0.2'
 name: sigla
-releaseDate: '2020-02-10'
+releaseDate: '2021-02-19'
 url: 'https://github.com/consiglionazionaledellericerche/sigla-main'
 applicationSuite: jada
-softwareVersion: 6.1.28
+softwareVersion: 6.2.103
 developmentStatus: stable
 softwareType: standalone/web
 platforms:
@@ -173,7 +173,7 @@ description:
       SIGLA – Sistema informativo contabile per Enti Pubblici basato sulla
       contabilità finanziaria con rendicontazione anche economica ed analitica.
     documentation: >-
-      https://github.com/consiglionazionaledellericerche/sigla-main/tree/master/docs
+      https://consiglionazionaledellericerche.github.io/sigla-main
     apiDocumentation: 'https://github.com/consiglionazionaledellericerche/sigla-main'
     screenshots:
       - docs/screenshot/main.png

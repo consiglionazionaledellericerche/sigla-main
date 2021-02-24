@@ -1,0 +1,12 @@
+--- 
+document:
+  name: "Sistema Informativo Gestione Linee di Attività"
+  description: "SIGLA – Sistema informativo contabile per Enti Pubblici basato sulla contabilità finanziaria con rendicontazione anche economica ed analitica."
+  github_user: consiglionazionaledellericerche
+  github_repo: sigla-main
+  github_version: master/docs
+  downloads:
+    - type: pdf
+      url: Manuale-SIGLA.pdf
+    - type: epub
+      url: Manuale-SIGLA.epub

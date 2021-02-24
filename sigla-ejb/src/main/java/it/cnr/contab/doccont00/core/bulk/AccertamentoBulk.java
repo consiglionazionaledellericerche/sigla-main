@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.Vector;
 
 import it.cnr.contab.docamm00.docs.bulk.Nota_di_credito_rigaBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.UtilService;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 
 
@@ -38,6 +40,7 @@ import it.cnr.contab.utenze00.bp.CNRUserContext;
 
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
@@ -1205,9 +1208,9 @@ public void setCd_cds(java.lang.String cd_cds) {
 		anniResidui = hashtable;
 	}
 	public void caricaAnniResidui(ActionContext actioncontext) {
-		final int esercizio = CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue();
-		for (int i = esercizio -1; i>= esercizio -20; i--)
-			anniResidui.put(new Integer(i), new Integer(i));
+		IntStream.iterate(CNRUserContext.getEsercizio(actioncontext.getUserContext()).intValue(), i -> i - 1)
+				.limit(SpringUtil.getBean(UtilService.class).getAnniResidui())
+				.forEach(value -> anniResidui.put(new Integer(value), new Integer(value)));
 	}
 	/**
 	 * <!-- @TODO: da completare -->

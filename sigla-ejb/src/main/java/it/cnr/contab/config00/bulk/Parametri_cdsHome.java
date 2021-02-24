@@ -106,5 +106,11 @@ public class Parametri_cdsHome extends BulkHome {
 		else
 		  return parametri.getFl_progetto_numeratore().booleanValue();  
 	
-	}	
+	}
+
+	public Optional<String> getAbilProgetti(it.cnr.jada.UserContext userContext, String cd_cds) throws PersistencyException {
+		Parametri_cdsBulk parametri = (Parametri_cdsBulk)findByPrimaryKey( new Parametri_cdsBulk(cd_cds,CNRUserContext.getEsercizio(userContext)));
+		return Optional.ofNullable(parametri)
+					.map(Parametri_cdsBase::getAbil_progetto_strorg);
+	}
 }

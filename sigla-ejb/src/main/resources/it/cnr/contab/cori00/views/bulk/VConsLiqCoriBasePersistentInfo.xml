@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.views.bulk.VConsLiqCoriBase"
+	keyClassName="it.cnr.contab.cori00.views.bulk.VConsLiqCoriKey"
+	homeClassName="it.cnr.contab.cori00.views.bulk.VConsLiqCoriHome" >
+	<defaultColumnMap
+		tableName="V_CONS_LIQ_CORI" >
+<!--		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" /> -->
+		<columnMapping
+				columnName="DT_DA"
+				propertyName="dt_da"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="DT_EMISSIONE"
+				propertyName="dt_emissione"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="DT_A"
+				propertyName="dt_a"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="ESERCIZIO_DOC"
+				propertyName="esercizio_doc"
+				sqlTypeName="DECIMAL"
+				columnSize="4" />
+		<columnMapping
+				columnName="DS_GRUPPO_CR"
+				propertyName="ds_gruppo_cr"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
+		<columnMapping
+				columnName="DS_REGIONE"
+				propertyName="ds_regione"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
+		<columnMapping
+				columnName="DS_COMUNE"
+				propertyName="ds_comune"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
+		<columnMapping
+				columnName="DS_CONTRIBUTO_RITENUTA"
+				propertyName="ds_contributo_ritenuta"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
+		<columnMapping
+				columnName="DS_COMPENSO"
+				propertyName="ds_compenso"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
+		<columnMapping
+				columnName="DS_UO_COMPENSO"
+				propertyName="ds_uo_compenso"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
+		<columnMapping
+				columnName="DS_UO_LIQUIDAZIONE"
+				propertyName="ds_uo_liquidazione"
+				sqlTypeName="VARCHAR"
+				columnSize="250" />
+		<columnMapping
+				columnName="NOME"
+				propertyName="nome"
+				sqlTypeName="VARCHAR"
+				columnSize="50" />
+		<columnMapping
+				columnName="COGNOME"
+				propertyName="cognome"
+				sqlTypeName="VARCHAR"
+				columnSize="50" />
+		<columnMapping
+				columnName="CODICE_FISCALE"
+				propertyName="codice_fiscale"
+				sqlTypeName="VARCHAR"
+				columnSize="20" />
+		<columnMapping
+				columnName="RAGIONE_SOCIALE"
+				propertyName="ragione_sociale"
+				sqlTypeName="VARCHAR"
+				columnSize="100" />
+		<columnMapping
+				columnName="IM_LIQUIDATO"
+				propertyName="im_liquidato"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2" />
+		<columnMapping
+				columnName="AMMONTARE"
+				propertyName="ammontare"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2" />
+		<columnMapping
+				columnName="CD_CDS_DOC"
+				propertyName="cd_cds_doc"
+				sqlTypeName="VARCHAR"
+				columnSize="30" />
+		<columnMapping
+				columnName="NUMERO_MANDATO"
+				propertyName="numero_mandato"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="false"/>
+	</defaultColumnMap>
+	<persistentProperty
+		name="cd_cds_doc" />
+	<persistentProperty
+		name="ammontare" />
+	<persistentProperty
+		name="im_liquidato" />
+	<persistentProperty
+		name="ragione_sociale" />
+	<persistentProperty
+			name="dt_da" />
+	<persistentProperty
+			name="dt_emissione" />
+	<persistentProperty
+			name="dt_a" />
+	<persistentProperty
+			name="esercizio_doc" />
+	<persistentProperty
+			name="ds_gruppo_cr" />
+	<persistentProperty
+			name="ds_regione" />
+	<persistentProperty
+			name="ds_comune" />
+	<persistentProperty
+			name="ds_contributo_ritenuta" />
+	<persistentProperty
+			name="ds_compenso" />
+	<persistentProperty
+			name="ds_uo_compenso" />
+	<persistentProperty
+			name="ds_uo_liquidazione" />
+	<persistentProperty
+			name="nome" />
+	<persistentProperty
+			name="cognome" />
+	<persistentProperty
+			name="numero_mandato" />
+	<persistentProperty
+			name="codice_fiscale" />
+</SQLPersistentInfo>

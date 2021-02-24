@@ -605,8 +605,8 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 				
 				CessionarioCommittenteDTEType cessionario=factory.createCessionarioCommittenteDTEType();
 				DatiFatturaBodyDTEType fatturaBody=factory.createDatiFatturaBodyDTEType();
-				DatiGeneraliType datiGenerali =factory.createDatiGeneraliType();
-				DatiGeneraliType datiGeneraliOld =factory.createDatiGeneraliType();
+				DatiGeneraliDTEType  datiGenerali =factory.createDatiGeneraliDTEType();
+				DatiGeneraliDTEType datiGeneraliOld =factory.createDatiGeneraliDTEType();
 				DatiRiepilogoType datiRiepilogo = factory.createDatiRiepilogoType();
 				TipoDocumentoType tipoDoc;
 				DatiIVAType datiIva=factory.createDatiIVAType();
@@ -630,7 +630,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 										|| !datiGeneraliOld.getData().equals(convertDateToXmlGregorian(test.getData()))){
 									cessionario= new CessionarioCommittenteDTEType();
 									fatturaBody=new DatiFatturaBodyDTEType();
-									datiGenerali= new DatiGeneraliType(); 
+									datiGenerali= new DatiGeneraliDTEType();
 									datiRiepilogo=new DatiRiepilogoType();
 								} else{
 									datiRiepilogo=new DatiRiepilogoType();
@@ -643,7 +643,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 								p_iva.setIdPaese(NazioneITType.IT);
 								idFiscale.setIdFiscaleIVA(p_iva);
 								idFiscale.setCodiceFiscale(terzoCnr.getAnagrafico().getCodice_fiscale());
-								AltriDatiIdentificativiNoSedeType altrDatiId=factory.createAltriDatiIdentificativiNoSedeType();
+							    AltriDatiIdentificativiITType altrDatiId=factory.createAltriDatiIdentificativiITType();
 								altrDatiId.setDenominazione(substring80(terzoCnr.getAnagrafico().getRagione_sociale()));
 								cedente.setAltriDatiIdentificativi(altrDatiId);
 								cedente.setIdentificativiFiscali(idFiscale);
@@ -671,15 +671,15 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 											idFiscale_cli.setCodiceFiscale(test.getCodice_fiscale());
 							
 								cessionario.setIdentificativiFiscali(idFiscale_cli);
-								
-								AltriDatiIdentificativiNoCAPType altrDatiId_cli=factory.createAltriDatiIdentificativiNoCAPType();
+
+							    AltriDatiIdentificativiType altrDatiId_cli=factory.createAltriDatiIdentificativiType();
 								if(test.getRagione_sociale()!=null)
 									altrDatiId_cli.setDenominazione(substring80(test.getRagione_sociale()));
 								else{
 									altrDatiId_cli.setCognome(substring60(test.getCognome()));
 									altrDatiId_cli.setNome(substring60(test.getNome()));
 								}
-								IndirizzoNoCAPType ind_cli = factory.createIndirizzoNoCAPType();
+								IndirizzoType ind_cli = factory.createIndirizzoType();
 								ind_cli.setNazione(test.getStato_residenza());
 								ind_cli.setComune(substring60(test.getComune_sede()));
 								ind_cli.setIndirizzo(substring60(test.getIndirizzo_sede()));
@@ -746,8 +746,8 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 									idFiscale_forn.setCodiceFiscale(test.getCodice_fiscale());
 						
 							fornitore.setIdentificativiFiscali(idFiscale_forn);
-							
-							AltriDatiIdentificativiNoCAPType altrDatiIdforn=factory.createAltriDatiIdentificativiNoCAPType();
+
+							AltriDatiIdentificativiType altrDatiIdforn=factory.createAltriDatiIdentificativiType();
 							if(test.getRagione_sociale()!=null)
 								altrDatiIdforn.setDenominazione(substring80(test.getRagione_sociale()));
 							else
@@ -755,7 +755,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 								altrDatiIdforn.setCognome(substring60(test.getCognome()));
 								altrDatiIdforn.setNome(substring60(test.getNome()));
 							}
-							IndirizzoNoCAPType ind_forn = factory.createIndirizzoNoCAPType();
+							IndirizzoType ind_forn = factory.createIndirizzoType();
 							ind_forn.setNazione(test.getStato_residenza());
 							ind_forn.setComune(substring60(test.getComune_sede()));
 							ind_forn.setIndirizzo(substring60(test.getIndirizzo_sede()));
@@ -795,7 +795,7 @@ public class ElaboraFileIntraComponent extends it.cnr.jada.comp.CRUDComponent {
 							p_iva.setIdPaese(NazioneITType.IT);
 							idFiscale.setIdFiscaleIVA(p_iva);
 							idFiscale.setCodiceFiscale(terzoCnr.getAnagrafico().getCodice_fiscale());
-							AltriDatiIdentificativiNoSedeType altrDatiId=factory.createAltriDatiIdentificativiNoSedeType();
+							AltriDatiIdentificativiITType altrDatiId=factory.createAltriDatiIdentificativiITType();
 							altrDatiId.setDenominazione(substring80(terzoCnr.getAnagrafico().getRagione_sociale()));
 							committente.setAltriDatiIdentificativi(altrDatiId);
 							committente.setIdentificativiFiscali(idFiscale);

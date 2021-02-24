@@ -36,6 +36,14 @@
 		inputType="ROTEXT"
 		label="Cds" />
 	<fieldProperty
+		name="cds"
+		property="cds"
+		inputType="SEARCHTOOL"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		formName="searchtool"
+		label="Cds" />
+	<fieldProperty
 		name="dt_contabilizzazione"
 		property="dt_contabilizzazione"
 		inputType="TEXT"
@@ -80,6 +88,15 @@
 		inputType="ROTEXT"
 		label="Unit&#224; organizzativa"
 		caseSensitiveSearch="false" />
+	<fieldProperty
+		name="unita_organizzativa"
+		property="uo"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		label="Unit&#224; organizzativa"/>
+
 	<fieldProperty
 		name="stato"
 		property="stato"
@@ -190,7 +207,8 @@
 	<fieldProperty
 		name="find_terzo"
 		property="terzo"
-		inputType="SEARCHTOOL" 
+		inputType="SEARCHTOOL"
+		formName="searchtool"
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
@@ -273,11 +291,15 @@
 	<formFieldProperty
 		name="ds_cds" />
 	<formFieldProperty
+		name="cds" />
+	<formFieldProperty
 		name="dt_contabilizzazione" />
 	<formFieldProperty
 		name="pg_numero_documento" />
 	<formFieldProperty
 		name="ds_scrittura" />
+	<formFieldProperty
+		name="unita_organizzativa" />
 	<formFieldProperty
 		name="cd_unita_organizzativa" />
 	<formFieldProperty

@@ -50,6 +50,21 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 		indicazioneTrovatoKeys.put(INDICAZIONE_TROVATO_NESSUNA,"No");	
 	};
 
+	public static final String BLOCCO_IMPEGNI_NATFIN_COMPETENZA = "C";
+	public static final String BLOCCO_IMPEGNI_NATFIN_RESIDUI = "R";
+	public static final String BLOCCO_IMPEGNI_NATFIN_ALL = "A";
+	public static final String BLOCCO_IMPEGNI_NATFIN_NOTHING = "N";
+
+	public final static Dictionary blocco_impegni_natfinKeys;
+	static {
+		blocco_impegni_natfinKeys = new it.cnr.jada.util.OrderedHashtable();
+		blocco_impegni_natfinKeys.put(BLOCCO_IMPEGNI_NATFIN_COMPETENZA,"Solo Competenza");
+		blocco_impegni_natfinKeys.put(BLOCCO_IMPEGNI_NATFIN_RESIDUI,"Solo Residui");
+		blocco_impegni_natfinKeys.put(BLOCCO_IMPEGNI_NATFIN_ALL,"Competenza/Residui");
+		blocco_impegni_natfinKeys.put(BLOCCO_IMPEGNI_NATFIN_NOTHING,"Nessuno");
+
+	};
+
 	protected Elemento_voceBulk elemento_padre;
 	protected Capoconto_finBulk capoconto_fin = new Capoconto_finBulk();
 	private Classificazione_entrateBulk classificazione_entrate;
@@ -165,6 +180,8 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 		setFl_voce_personale(Boolean.FALSE);
 		setFl_missioni(Boolean.FALSE);
 		setFl_partita_giro(Boolean.FALSE);
+		setFlComunicaPagamenti(Boolean.FALSE);
+		setFl_limite_competenza(Boolean.FALSE);
 		return this;
 	}
 	/**
@@ -280,7 +297,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	}
 
 	/**
-	 * @param bulk
+	 * @param v_classificazione_entrate
 	 */
 	public void setClassificazione_entrate(Classificazione_entrateBulk v_classificazione_entrate) {
 		classificazione_entrate = v_classificazione_entrate;
@@ -316,7 +333,7 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	}
 
 	/**
-	 * @param bulk
+	 * @param newClassificazione_spese
 	 */
 	public void setClassificazione_spese(Classificazione_speseBulk newClassificazione_spese) {
 		classificazione_spese = newClassificazione_spese;
@@ -439,5 +456,23 @@ public class Elemento_voceBulk extends Elemento_voceBase implements IVoceBilanci
 	@Override
 	public void setCd_voce_piano(String cd_voce_piano) {
 		this.getVoce_piano_economico().setCd_voce_piano(cd_voce_piano);
+	}
+
+	public boolean isVoceEntrata(){
+		return Elemento_voceHome.GESTIONE_ENTRATE.equals(this.getTi_gestione());
+	}
+
+	public boolean isVoceSpesa(){
+		return Elemento_voceHome.GESTIONE_SPESE.equals(this.getTi_gestione());
+	}
+
+	public boolean isAttivoBloccoResiduiNatfinCompetenza() {
+		return BLOCCO_IMPEGNI_NATFIN_COMPETENZA.equals(getBlocco_impegni_natfin()) ||
+				BLOCCO_IMPEGNI_NATFIN_ALL.equals(getBlocco_impegni_natfin());
+	}
+
+	public boolean isAttivoBloccoResiduiNatfinResidui() {
+		return BLOCCO_IMPEGNI_NATFIN_RESIDUI.equals(getBlocco_impegni_natfin()) ||
+				BLOCCO_IMPEGNI_NATFIN_ALL.equals(getBlocco_impegni_natfin());
 	}
 }

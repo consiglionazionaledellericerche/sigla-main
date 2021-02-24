@@ -48,7 +48,8 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	final public static String TIPO_ALLEGATO_CONTRATTO = "A";
 	final public static String TIPO_DECISIONE_A_CONTRATTARE = "D";
 	final public static String TIPO_DECRETO_DI_NOMINA = "N";
-	final public static String TIPO_ATTO_ESITO_CONTROLLO = "E";	
+	final public static String TIPO_ATTO_ESITO_CONTROLLO = "E";
+	final public static String TIPO_CONFLITTO_INTERESSI = "I";
 	final public static String TIPO_PROGETTO = "T";
 
 	final public static String DEFAULT_NOME_FILE = "Allegato";	
@@ -75,6 +76,7 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 		tipo_archivioKeys.put(TIPO_DECISIONE_A_CONTRATTARE,"Decisione a contrattare");
 		tipo_archivioKeys.put(TIPO_ATTO_ESITO_CONTROLLO,"Esito Controllo Corte Conti");
 		tipo_archivioKeys.put(TIPO_PROGETTO,"Progetto");
+		tipo_archivioKeys.put(TIPO_CONFLITTO_INTERESSI,"Attestazione Insussistenza Conflitto Interesse");
 		tipo_archivioKeys.put(TIPO_GENERICO,"Allegato generico");
 		tipo_archivioKeys.put(TIPO_ALLEGATO_CONTRATTO,"Allegato Contratto");
 	}
@@ -99,9 +101,8 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	/**
 	 * Metodo che elimina il path dal nome del file
 	 *
+	 * @param file Il nome completo di path
 	 * @return Il nome del file senza path
-	 * 
-	 * @param Il nome completo di path
 	 */
 	public static String parseFilename(String file) {
 		StringTokenizer fileName = new StringTokenizer(file,"\\",false);
@@ -154,6 +155,9 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
 	}
 	public boolean isAttoEsitoControllo() {
 		return isAllegatoValido() && getTipo_archivio() != null && getTipo_archivio().equals(TIPO_ATTO_ESITO_CONTROLLO);
+	}
+	public boolean isConflittoInteressi() {
+		return isAllegatoValido() && getTipo_archivio() != null && getTipo_archivio().equals(TIPO_CONFLITTO_INTERESSI);
 	}
 	public void insertingUsing(Persister persister, UserContext userContext) {
 		if (getStato()==null)
@@ -221,7 +225,9 @@ public abstract class Incarichi_archivioBulk extends Incarichi_archivioBase {
     		nome = nome.append("ESICTR");
     	else if (this.isProgetto())
     		nome = nome.append("PRG");
-    	else 
+		else if (this.isConflittoInteressi())
+			nome = nome.append("CONFLINT");
+    	else
     		nome = nome.append("GEN");
     	return nome.toString();
 	}

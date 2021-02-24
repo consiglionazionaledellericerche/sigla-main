@@ -248,7 +248,22 @@
 		property="fl_riobbligazione"
 		label="Riobbligazione obbligatoria per ribaltamento" 
 		inputType="CHECKBOX" 
-		/>		
+		/>
+	<fieldProperty
+		name="fl_blocco_impegni_natfin"
+		property="fl_blocco_impegni_natfin"
+		label="Blocco Impegni per Natura/Finanziamento"
+		inputType="CHECKBOX" />
+	<fieldProperty
+		name="abil_progetto_strorg"
+		property="abil_progetto_strorg"
+		keysProperty="abilProgettiKeys"
+		label="Visibilità progetti per:"
+		inputType="SELECT"
+		nullable="true"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
 
 	<formFieldProperty name="esercizio" />
 	<formFieldProperty name="centro_spesa" />
@@ -280,8 +295,10 @@
 	<formFieldProperty name="fl_kit_firma_digitale" />
 
 	<formFieldProperty name="fl_riaccertamento" />		
-	<formFieldProperty name="fl_riobbligazione" />		
-		
+	<formFieldProperty name="fl_riobbligazione" />
+	<formFieldProperty name="fl_blocco_impegni_natfin" />
+	<formFieldProperty name="abil_progetto_strorg" />
+
 	<columnFieldProperty name="esercizio" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
 	<columnFieldProperty name="ds_unita_organizzativa" />
@@ -315,8 +332,10 @@
 	<columnFieldProperty name="fl_blocco_iban" />
 	<columnFieldProperty name="fl_kit_firma_digitale" />
 	<columnFieldProperty name="fl_riaccertamento" />		
-	<columnFieldProperty name="fl_riobbligazione" />		
-	
+	<columnFieldProperty name="fl_riobbligazione" />
+	<columnFieldProperty name="fl_blocco_impegni_natfin" />
+	<columnFieldProperty name="abil_progetto_strorg" />
+
 	<findFieldProperty name="cd_unita_organizzativa" />
 	<findFieldProperty name="cd_dipartimento" />
 	<findFieldProperty name="fl_commessa_obbligatoria" />
@@ -346,4 +365,7 @@
 	<findFieldProperty name="cd_linea_pgiro_s" />  
 	<findFieldProperty name="fl_blocco_iban" />
 	<findFieldProperty name="fl_kit_firma_digitale" />
+	<findFieldProperty name="fl_blocco_impegni_natfin" />
+	<findFieldProperty name="abil_progetto_strorg" />
+
 </bulkInfo>

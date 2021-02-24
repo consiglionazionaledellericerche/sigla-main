@@ -19,9 +19,9 @@ package it.cnr.contab.progettiric00.bp;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
-import java.util.List;
-import java.util.Optional;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,24 +32,18 @@ import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.doccont00.core.bulk.ObbligazioneBulk;
+import it.cnr.contab.doccont00.intcass.bulk.V_cons_sospesiBulk;
 import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_esercizioBulk;
-import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.AllegatoProgettoRimodulazioneBulk;
-import it.cnr.contab.progettiric00.core.bulk.Ass_progetto_piaeco_voceBulk;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_finanziatoreBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_other_fieldBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_partner_esternoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_piano_economicoBulk;
-import it.cnr.contab.progettiric00.core.bulk.Progetto_uoBulk;
-import it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk;
-import it.cnr.contab.progettiric00.core.bulk.V_saldi_voce_progettoBulk;
+import it.cnr.contab.progettiric00.core.bulk.*;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
+import it.cnr.contab.progettiric00.ejb.ProgettoRicercaPadreComponentSession;
 import it.cnr.contab.progettiric00.enumeration.StatoProgetto;
 import it.cnr.contab.progettiric00.tabrif.bulk.Voce_piano_economico_prgBulk;
 import it.cnr.contab.reports.bp.OfflineReportPrintBP;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
+import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.spring.service.StorePath;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoTypeBulk;
@@ -64,12 +58,14 @@ import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationRuntimeException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteBulkTree;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.AbstractPrintBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
 
@@ -563,8 +559,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
         if (existAnnoCorrente)
             hash.put(i++, new String[]{"tabProgettoPianoEconomicoAnnoCorrente", "Anno " + progetto.getEsercizio(), "/progettiric00/progetto_piano_economico_anno_corrente.jsp"});
 
-        if (!progetto.getAnnoInizioOf().equals(progetto.getEsercizio()) || !progetto.getAnnoFineOf().equals(progetto.getEsercizio()))
-            hash.put(i++, new String[]{"tabProgettoPianoEconomicoAltriAnni", "Altri Anni", "/progettiric00/progetto_piano_economico_altri_anni.jsp"});
+        hash.put(i++, new String[]{"tabProgettoPianoEconomicoAltriAnni", "Altri Anni", "/progettiric00/progetto_piano_economico_altri_anni.jsp"});
 
         if (!progetto.getVociMovimentateNonAssociate().isEmpty())
             hash.put(i++, new String[]{"tabProgettoVociMovimentateNonAssociate", "Voci Movimentate da Associare", "/progettiric00/progetto_piano_economico_voci_da_associare.jsp"});
@@ -974,34 +969,63 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     @Override
     public OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk)
     		throws BusinessProcessException {
-    	ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettobulk);
-    	//Aggiungo gli allegati delle rimodulazioni approvate
-    	progetto.getRimodulazioni().stream().filter(el->el.isStatoApprovato() || el.isStatoValidato())
-    	.forEach(rimodulazione->{
-    		rimodulazione.setProgetto(progetto);
-            String path = rimodulazione.getStorePath();
-            if (path != null && storeService.getStorageObjectByPath(path) != null) {
-                for (StorageObject storageObject : storeService.getChildren(storeService.getStorageObjectByPath(path).getKey())) {
-                    if (!storeService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()) && !excludeChild(storageObject) &&
-                        !Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()))
-                            .map(String.class::cast)
-                            .filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
-                            .isPresent()) {
-                        AllegatoProgettoRimodulazioneBulk allegato = new AllegatoProgettoRimodulazioneBulk(storageObject.getKey());
-                        allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-                        allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
-                        allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
-                        allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                        allegato.setObjectType(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
-                        allegato.setCrudStatus(OggettoBulk.NORMAL);
-                        progetto.addToArchivioAllegati(allegato);
-                    }
+        ProgettoBulk progetto = this.innerInitializeModelForEditAllegati(actioncontext,(ProgettoBulk)oggettobulk,((ProgettoBulk)oggettobulk).getCd_unita_organizzativa());
+        CRUDComponentSession session = createComponentSession();
+        if (!(session instanceof ProgettoRicercaPadreComponentSession)) {
+            try {
+                List<ProgettoBulk> progettifigli = ((ProgettoRicercaComponentSession) session).getAllChildren(actioncontext.getUserContext(), progetto);
+                List<String> cdUoList = Optional.ofNullable(progettifigli)
+                                                .map(List::stream)
+                                                .orElse(Stream.empty())
+                                                .map(ProgettoBulk::getCd_unita_organizzativa)
+                                                .distinct()
+                                                .collect(Collectors.toList());
+
+                for (Iterator i = cdUoList.iterator(); i.hasNext();) {
+                    String cdUnitaOrganizzativa = (String)i.next();
+                    if (!cdUnitaOrganizzativa.equals(progetto.getCd_unita_organizzativa()))
+                        progetto = (ProgettoBulk)this.innerInitializeModelForEditAllegati(actioncontext, progetto, cdUnitaOrganizzativa);
                 }
+            } catch (ComponentException | RemoteException e) {
+                throw handleException(e);
             }
-    	});
-        return oggettobulk;
+        }
+        return progetto;
     }
-    
+
+    //Carica tutti gli allegati presenti anche in  altre UO Partecipanti che in precedenza erano state UO Coordinatrici
+    private ProgettoBulk innerInitializeModelForEditAllegati(ActionContext actioncontext, ProgettoBulk oggettoBulk, String cdUnitaOrganizzativa) throws BusinessProcessException {
+        String storePath = getStorePath(oggettoBulk, false);
+        storePath = storePath.replaceFirst(oggettoBulk.getCd_unita_organizzativa(), cdUnitaOrganizzativa);
+        final ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettoBulk, storePath);
+
+        //Aggiungo gli allegati delle rimodulazioni approvate
+        progetto.getRimodulazioni().stream().filter(el->el.isStatoApprovato() || el.isStatoValidato())
+                .forEach(rimodulazione->{
+                    rimodulazione.setProgetto(progetto);
+                    String path = rimodulazione.getStorePath().replaceFirst(progetto.getCd_unita_organizzativa(), cdUnitaOrganizzativa);
+                    if (path != null && storeService.getStorageObjectByPath(path) != null) {
+                        for (StorageObject storageObject : storeService.getChildren(storeService.getStorageObjectByPath(path).getKey())) {
+                            if (!storeService.hasAspect(storageObject, StoragePropertyNames.SYS_ARCHIVED.value()) && !excludeChild(storageObject) &&
+                                    !Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()))
+                                            .map(String.class::cast)
+                                            .filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
+                                            .isPresent()) {
+                                AllegatoProgettoRimodulazioneBulk allegato = new AllegatoProgettoRimodulazioneBulk(storageObject.getKey());
+                                allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+                                allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
+                                allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
+                                allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
+                                allegato.setObjectType(storageObject.getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
+                                allegato.setCrudStatus(OggettoBulk.NORMAL);
+                                progetto.addToArchivioAllegati(allegato);
+                            }
+                        }
+                    }
+                });
+        return progetto;
+    }
+
     protected void initializePrintBP(AbstractPrintBP bp) {
         OfflineReportPrintBP printbp = (OfflineReportPrintBP) bp;
 

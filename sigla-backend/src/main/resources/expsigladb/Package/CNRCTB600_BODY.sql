@@ -1191,6 +1191,35 @@ PROCEDURE getNumeroGGRateMcarriera
 
    aDataInizio DATE;
    aDataFine DATE;
+begin   
+   aDataInizio:=TO_DATE('0101' || aRecCompenso.esercizio,'DDMMYYYY');
+   aDataFine:=TO_DATE('3112' || aRecCompenso.esercizio,'DDMMYYYY');
+   getNumeroGGRateMcarriera(aRecAnagrafico,
+      aRecCompenso,
+      aCdCdsMcarriera,
+      aCdUoMcarriera,
+      aEsercizioMcarriera,
+      aPgMcarriera,
+      aDataInizio,
+      aDataFine,
+      aNumeroGGTutti,
+      aNumeroGGProprio);
+end;
+
+PROCEDURE getNumeroGGRateMcarriera
+   (
+    aRecAnagrafico ANAGRAFICO%ROWTYPE,
+    aRecCompenso COMPENSO%ROWTYPE,
+    aCdCdsMcarriera MINICARRIERA.cd_cds%TYPE,
+    aCdUoMcarriera MINICARRIERA.cd_unita_organizzativa%TYPE,
+    aEsercizioMcarriera MINICARRIERA.esercizio%TYPE,
+    aPgMcarriera MINICARRIERA.pg_minicarriera%TYPE,
+    aDataInizio DATE,
+    aDataFine DATE,
+    aNumeroGGTutti IN OUT INTEGER,
+    aNumeroGGProprio IN OUT INTEGER
+   ) IS
+
    aCdTerzo TERZO.cd_terzo%TYPE;
    eseguiLock CHAR(1);
    flTrovato CHAR(1);
@@ -1211,8 +1240,6 @@ PROCEDURE getNumeroGGRateMcarriera
 
 BEGIN
 
-   aDataInizio:=TO_DATE('0101' || aRecCompenso.esercizio,'DDMMYYYY');
-   aDataFine:=TO_DATE('3112' || aRecCompenso.esercizio,'DDMMYYYY');
    aNumeroGGTutti:=0;
    aNumeroGGProprio:=0;
    aRecMinicarriera:=NULL;

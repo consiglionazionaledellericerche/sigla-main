@@ -21,9 +21,7 @@
  */
 package it.cnr.contab.docamm00.fatturapa.bulk;
 import java.math.BigDecimal;
-import java.util.Dictionary;
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 
 import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
@@ -52,7 +50,11 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	 */
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unchecked")
-	
+
+	public static final List<String> TIPI_DOCUMENTO_IN_ATTESA_FATTURAZIONE_ELETTRONICA = Arrays.asList(TipoDocumentoType.TD_16.value(),TipoDocumentoType.TD_17.value(),
+			TipoDocumentoType.TD_18.value(), TipoDocumentoType.TD_19.value(), TipoDocumentoType.TD_21.value(), TipoDocumentoType.TD_22.value(),
+			TipoDocumentoType.TD_23.value(), TipoDocumentoType.TD_26.value(),
+			TipoDocumentoType.TD_27.value());
 	public static final String STATO_CONSEGNA_ESITO_CONSEGNATO_SDI = "CON";
 	public static final String STATO_CONSEGNA_ESITO_SCARTATO_SDI = "SCA";
 	public static final java.util.Dictionary<String, String> statoNotificaEsitoKeys = new OrderedHashtable();	
@@ -71,24 +73,30 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 		tiDecorrenzaTerminiKeys.put("S","Si");
 		tiDecorrenzaTerminiKeys.put("N","No");
 
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.COMPLETO.name(),StatoDocumentoEleEnum.COMPLETO.name());
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.REGISTRATO.name(),StatoDocumentoEleEnum.REGISTRATO.name());
-		tiStatoDocumentoKeys.put(StatoDocumentoEleEnum.RIFIUTATO.name(),StatoDocumentoEleEnum.RIFIUTATO.name());
+		Arrays.stream(StatoDocumentoEleEnum.values()).forEach(statoDocumentoEleEnum -> {
+			tiStatoDocumentoKeys.put(statoDocumentoEleEnum.name(),statoDocumentoEleEnum.label());
+			tiStatoDocumentoSelectKeys.put(statoDocumentoEleEnum.name(),statoDocumentoEleEnum.label());
+		});
 		tiStatoDocumentoKeys.put(STATO_DOCUMENTO_TUTTI,STATO_DOCUMENTO_TUTTI);
 
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.AGGIORNATO.name(),StatoDocumentoEleEnum.AGGIORNATO.name());
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.COMPLETO.name(),StatoDocumentoEleEnum.COMPLETO.name());
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.REGISTRATO.name(),StatoDocumentoEleEnum.REGISTRATO.name());
-		tiStatoDocumentoSelectKeys.put(StatoDocumentoEleEnum.RIFIUTATO.name(),StatoDocumentoEleEnum.RIFIUTATO.name());
-		
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_01.value(),"Fattura");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_02.value(),"Acconto / anticipo su fattura");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_03.value(),"Acconto / anticipo su parcella");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_04.value(),"Nota di credito");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_05.value(),"Nota di debito");
 		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_06.value(),"Parcella");
-		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_20.value(),"Autofattura");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_16.value(),"Integrazione fattura reverse charge interno");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_17.value(),"Integrazione/autofattura per acquisto servizi dall'estero");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_18.value(),"Integrazione per acquisto di beni intracomunitari");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_19.value(),"Integrazione/autofattura per acquisto di beni ex art.17 c.2 DPR 633/72");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_20.value(),"Autofattura per regolarizzazione e integrazione delle fatture (ex art.6 c.8 d.lgs.471/97 o art.46 c.5 D.L. 331/93");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_21.value(),"Autofattura per splafonamento");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_22.value(),"Estrazione beni da Deposito IVA");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_23.value(),"Estrazione beni da Deposito IVA con versamento dell'IVA");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_24.value(),"Fattura differita di cui all'art.21, comma 4, lett. a)");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_25.value(),"Fattura differita di cui all'art.21, comma 4, terzo periodo lett. b)");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_26.value(),"Cessione di beni ammortizzabili e per passaggi interni (ex art.36 DPR 633/72)");
+		tiTipoDocumentoKeys.put(TipoDocumentoType.TD_27.value(),"Fattura per autoconsumo o per cessioni gratuite senza rivalsa");
 
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_01.value(),"contanti");
 		tiModalitaPagamentoKeys.put(ModalitaPagamentoType.MP_02.value(),"assegno");
@@ -119,7 +127,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private Unita_organizzativaBulk unitaCompetenza =  new Unita_organizzativaBulk();
 	
 	/**
-	 * [MODALITA_PAGAMENTO Descrive le modalità  di pagamento previste per un dato terzo.]
+	 * [MODALITA_PAGAMENTO Descrive le modalità di pagamento previste per un dato terzo.]
 	 **/
 	private Modalita_pagamentoBulk modalitaPagamento =  new Modalita_pagamentoBulk();
 	
@@ -135,6 +143,10 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	private boolean attivoSplitPaymentProf=false;
 	private boolean abilitato=false;
 	private boolean RODocumento=true;
+	private boolean isFromInizializzaBulkPerModifica = false;
+
+	private DocumentoEleTestataBulk fatturaCollegata;
+	private DocumentoEleTestataBulk notaCollegata;
 
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -143,6 +155,7 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public DocumentoEleTestataBulk() {
 		super();
 	}
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Table name: DOCUMENTO_ELE_TESTATA
@@ -369,7 +382,13 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 	public BulkList<DocumentoEleDdtBulk> getDocEleDdtColl() {
 		return docEleDdtColl;
 	}
-	
+
+	public String getStatoDocumentoLabel() {
+		return Optional.ofNullable(getStatoDocumento())
+					.map(s -> StatoDocumentoEleEnum.valueOf(s).label())
+					.orElse(null);
+	}
+
 	public StatoDocumentoEleEnum getStatoDocumentoEle() {
 		try {
 			if (getStatoDocumento() != null)
@@ -683,5 +702,78 @@ public class DocumentoEleTestataBulk extends DocumentoEleTestataBase implements 
 				return getDocEleIVAColl().stream().filter(e->e.getImposta()!=null && e.getImposta().compareTo(BigDecimal.ZERO)!=0 && 
 				  (e.getEsigibilitaIva()==null || !e.getEsigibilitaIva().equals("S"))).count()==0;
 		return false;
+	}
+	public boolean isTipoDocumentoInAttesaFatturazioneElettronica() {
+		if (getTipoDocumento() != null && TIPI_DOCUMENTO_IN_ATTESA_FATTURAZIONE_ELETTRONICA.contains(getTipoDocumento())){
+			return true;
+		}
+		return false;
+	}
+	public boolean isFromInizializzaBulkPerModifica() {
+		return isFromInizializzaBulkPerModifica;
+	}
+
+	public void setFromInizializzaBulkPerModifica(boolean fromInizializzaBulkPerModifica) {
+		isFromInizializzaBulkPerModifica = fromInizializzaBulkPerModifica;
+	}
+
+	public DocumentoEleTestataBulk getFatturaCollegata() {
+		return fatturaCollegata;
+	}
+
+	public void setFatturaCollegata(DocumentoEleTestataBulk fatturaCollegata) {
+		this.fatturaCollegata = fatturaCollegata;
+	}
+
+	public String getIdPaeseFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+					.map(DocumentoEleTestataBulk::getIdPaese)
+					.orElse(null);
+	}
+
+	public void setIdPaeseFatCol(String idPaeseFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+			.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setIdPaese(idPaeseFatCol));
+	}
+
+	public String getIdCodiceFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+				.map(DocumentoEleTestataBulk::getIdCodice)
+				.orElse(null);
+	}
+
+	public void setIdCodiceFatCol(String idCodiceFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+				.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setIdCodice(idCodiceFatCol));
+	}
+
+	public Long getIdentificativoSdiFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+				.map(DocumentoEleTestataBulk::getIdentificativoSdi)
+				.orElse(null);
+	}
+
+	public void setIdentificativoSdiFatCol(Long identificativoSdiFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+				.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setIdentificativoSdi(identificativoSdiFatCol));
+	}
+
+	public Long getProgressivoFatCol() {
+		return Optional.ofNullable(this.fatturaCollegata)
+				.map(DocumentoEleTestataBulk::getProgressivo)
+				.orElse(null);
+	}
+
+	public void setProgressivoFatCol(Long progressivoFatCol) {
+		Optional.ofNullable(this.fatturaCollegata)
+				.ifPresent(documentoEleTestataBulk -> documentoEleTestataBulk.setProgressivo(progressivoFatCol));
+	}
+
+	public DocumentoEleTestataBulk getNotaCollegata() {
+		return notaCollegata;
+	}
+
+	public void setNotaCollegata(DocumentoEleTestataBulk notaCollegata) {
+		this.notaCollegata = notaCollegata;
 	}
 }

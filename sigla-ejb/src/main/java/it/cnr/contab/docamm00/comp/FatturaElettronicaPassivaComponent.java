@@ -17,18 +17,15 @@
 
 package it.cnr.contab.docamm00.comp;
 
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoBulk;
-import it.cnr.contab.anagraf00.core.bulk.Modalita_pagamentoHome;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
+import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoHome;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.bulk.Parametri_cdsBulk;
 import it.cnr.contab.config00.bulk.Parametri_cdsHome;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoHome;
 import it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
@@ -56,17 +53,21 @@ import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailBulk;
 import it.cnr.contab.utenze00.bulk.Utente_indirizzi_mailHome;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.BulkList;
 import it.cnr.jada.bulk.BusyResourceException;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.SendMail;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.RegimeFiscaleType;
 import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.SoggettoEmittenteType;
 
@@ -74,9 +75,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.mail.internet.InternetAddress;
 
@@ -99,6 +100,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		try {
 			boolean hasAccesso = ((it.cnr.contab.utente00.nav.ejb.GestioneLoginComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRUTENZE00_NAV_EJB_GestioneLoginComponentSession")).controllaAccesso(usercontext, "AMMFATTURDOCSFATPASA");
 			documentoEleTestata.setAbilitato(hasAccesso);
+			documentoEleTestata.setFromInizializzaBulkPerModifica(true);
 			documentoEleTestata.setAttivoSplitPayment(Utility.createFatturaPassivaComponentSession().isAttivoSplitPayment(usercontext, documentoEleTestata.getDataDocumento()));
 			
 			documentoEleTestata.setDocEleLineaColl(new BulkList<DocumentoEleLineaBulk>(
@@ -118,10 +120,17 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 			if ((documentoEleTestata.getDocEleTributiColl()!=null && !documentoEleTestata.getDocEleTributiColl().isEmpty()) 
 					||(documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale()!= null && 
 					(documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_02.name()) ||
-							documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name()))))
-					{
-						documentoEleTestata.setAttivoSplitPaymentProf(Utility.createFatturaPassivaComponentSession().isAttivoSplitPaymentProf(usercontext, documentoEleTestata.getDataDocumento()));
-					}	
+							documentoEleTestata.getDocumentoEleTrasmissione().getRegimefiscale().equals(RegimeFiscaleType.RF_19.name())))){
+				documentoEleTestata.setAttivoSplitPaymentProf(Utility.createFatturaPassivaComponentSession().isAttivoSplitPaymentProf(usercontext, documentoEleTestata.getDataDocumento()));
+			}
+			DocumentoEleTestataBulk nota = new DocumentoEleTestataBulk();
+			nota.setFatturaCollegata(documentoEleTestata);
+			documentoEleTestata.setNotaCollegata(
+					(DocumentoEleTestataBulk) getHome(usercontext, DocumentoEleTestataBulk.class)
+					.find(nota)
+					.stream()
+					.findAny().orElse(null)
+			);
 			getHomeCache(usercontext).fetchAll(usercontext);
 		} catch (RemoteException | PersistencyException e) {
 			throw handleException(e);
@@ -152,8 +161,30 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 		return sql;
 	}
-	
-    @SuppressWarnings("unchecked")
+
+	public Boolean isPartitaIvaGruppoIva(UserContext usercontext, AnagraficoBulk anagrafico, String partitaIva, Timestamp dataDocumento) throws ComponentException{
+		AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(usercontext,AnagraficoBulk.class);
+		try {
+			Collection coll = anagraficoHome.findGruppiIvaAssociati(anagrafico);
+			if (!coll.isEmpty()){
+				for (Iterator d = coll.iterator(); d.hasNext(); ) {
+					AssGruppoIvaAnagBulk assColl = (AssGruppoIvaAnagBulk) d.next();
+					AnagraficoBulk anagraficoGruppoIva = assColl.getAnagraficoGruppoIva();
+					anagraficoGruppoIva = (AnagraficoBulk)anagraficoHome.findByPrimaryKey(usercontext, anagraficoGruppoIva);
+					if (anagraficoGruppoIva.getPartita_iva().compareTo(partitaIva) == 0 && dataDocumento.compareTo(anagraficoGruppoIva.getDt_canc()) <= 0  && dataDocumento.compareTo(anagraficoGruppoIva.getDtIniValGruppoIva()) >= 0 ){
+						return true;
+					}
+				}
+			}
+		} catch (IntrospectionException e) {
+			throw handleException(e);
+		} catch (PersistencyException e) {
+			throw handleException(e);
+		}
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
 	public void completaDocumento(UserContext usercontext, DocumentoEleTrasmissioneBulk documentoEleTrasmissioneBulk) throws ComponentException{
         try{
         	AnagraficoHome anagraficoHome = (AnagraficoHome)getHome(usercontext,AnagraficoBulk.class);
@@ -200,24 +231,85 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     			}        	        		
         	}catch (Exception _ex) {
         	}
-        	if (documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null || 
+
+			if (documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null ||
         			documentoEleTrasmissioneBulk.getPrestatoreCodice() != null) {
-        		List<AnagraficoBulk> anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
-        				documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),
-        				documentoEleTrasmissioneBulk.getPrestatoreCodice());
-        		if (anagraficoBulks != null && !anagraficoBulks.isEmpty()) {
-        			if (anagraficoBulks.size() == 1) {
-        				documentoEleTrasmissioneBulk.setPrestatoreAnag(anagraficoBulks.get(0));
-        				List<TerzoBulk> terzi = terzoHome.findTerzi(anagraficoBulks.get(0));
-        				if (terzi != null && !terzi.isEmpty() && terzi.size() == 1) {
-        					documentoEleTrasmissioneBulk.setPrestatore(terzi.get(0));
-        				}
-        			} else {
-        				anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" + 
-        						documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() +" o la partita IVA: " + 
-        						documentoEleTrasmissioneBulk.getPrestatoreCodice());
-        			}
-        		}
+				final List<String> cigs = documentoEleTrasmissioneBulk
+						.getDocEleTestataColl()
+						.stream()
+						.map(DocumentoEleTestataBulk::getDocEleAcquistoColl)
+						.flatMap(documentoEleAcquistoBulks -> documentoEleAcquistoBulks.stream())
+						.map(DocumentoEleAcquistoBulk::getAcquistoCig)
+						.filter(s -> Optional.ofNullable(s).isPresent())
+						.collect(Collectors.toList());
+				if (!cigs.isEmpty()) {
+					ContrattoHome contrattoHome = (ContrattoHome) getHome(usercontext, ContrattoBulk.class);
+					for(String cig : cigs) {
+						final Optional<ContrattoBulk> optionalContrattoBulk = contrattoHome.findByCIG(usercontext, cig).stream().findAny();
+						if (optionalContrattoBulk.isPresent()) {
+							final TerzoBulk figura_giuridica_esterna = optionalContrattoBulk.get().getFigura_giuridica_esterna();
+							if(Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale())
+											.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getCodice_fiscale_anagrafico()).orElse(""))).isPresent() ||
+											(Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatoreCodice())
+													.filter(s -> s.equalsIgnoreCase(Optional.ofNullable(figura_giuridica_esterna.getPartita_iva_anagrafico()).orElse(""))).isPresent() &&
+													!Optional.ofNullable(figura_giuridica_esterna)
+															.flatMap(terzoBulk -> Optional.ofNullable(terzoBulk.getAnagrafico()))
+															.flatMap(anagraficoBulk -> Optional.ofNullable(anagraficoBulk.getTi_entita_giuridica()))
+															.map(s -> s.equalsIgnoreCase(AnagraficoBulk.GIURIDICA))
+															.orElse(Boolean.TRUE)
+											)
+							) {
+								documentoEleTrasmissioneBulk.setPrestatore(figura_giuridica_esterna);
+								documentoEleTrasmissioneBulk.setPrestatoreAnag(figura_giuridica_esterna.getAnagrafico());
+							}
+						}
+					}
+				}
+				if (!Optional.ofNullable(documentoEleTrasmissioneBulk)
+						.flatMap(documentoEleTrasmissioneBulk1 -> Optional.ofNullable(documentoEleTrasmissioneBulk.getPrestatore()))
+						.flatMap(terzoBulk -> Optional.ofNullable(terzoBulk.getCd_terzo()))
+						.isPresent()) {
+					List<AnagraficoBulk> anagraficoBulks = null;
+					anagraficoBulks = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(
+							documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),
+							documentoEleTrasmissioneBulk.getPrestatoreCodice());
+					if (anagraficoBulks != null && !anagraficoBulks.isEmpty()) {
+						if (anagraficoBulks.size() == 1) {
+							AnagraficoBulk anag = anagraficoBulks.get(0);
+							documentoEleTrasmissioneBulk.setPrestatoreAnag(anag);
+							List<TerzoBulk> terzi = terzoHome.findTerzi(anagraficoBulks.get(0));
+							if (terzi != null && !terzi.isEmpty() && terzi.size() == 1) {
+								documentoEleTrasmissioneBulk.setPrestatore(terzi.get(0));
+							}
+						} else {
+							anomalieTrasmissione.add("Esistono più di una riga in anagrafica per il CF:" +
+									documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() +" o la partita IVA: " +
+									documentoEleTrasmissioneBulk.getPrestatoreCodice());
+						}
+					}
+				}
+				if (documentoEleTrasmissioneBulk.getPrestatoreCodice() != null){
+					List<AnagraficoBulk> list = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(null,documentoEleTrasmissioneBulk.getPrestatoreCodice());
+					if (list != null && list.size() == 1){
+						AnagraficoBulk anagraficoBulk = list.get(0);
+						if (anagraficoBulk.isGruppoIVA()){
+							documentoEleTrasmissioneBulk.setPrestatoreAnag(anagraficoBulk);
+							documentoEleTrasmissioneBulk.setPrestatore(null);
+							if (documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale() != null){
+								List<AnagraficoBulk> lista = anagraficoHome.findByCodiceFiscaleOrPartitaIVA(documentoEleTrasmissioneBulk.getPrestatoreCodicefiscale(),null);
+								if (lista != null && lista.size() == 1){
+									AnagraficoBulk anagraficoPerTerzo = lista.get(0);
+									if (documentoEleTrasmissioneBulk.getDataRicezione().compareTo(anagraficoBulk.getDt_canc()) <= 0  && documentoEleTrasmissioneBulk.getDataRicezione().compareTo(anagraficoBulk.getDtIniValGruppoIva()) > 0){
+										List<TerzoBulk> listaTerzi = terzoHome.findTerzi(anagraficoPerTerzo);
+										if (listaTerzi.size() == 0){
+											documentoEleTrasmissioneBulk.setPrestatore(listaTerzi.get(0));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
         	}
 
         	if (documentoEleTrasmissioneBulk.getRappresentanteCodicefiscale() != null || 
@@ -335,11 +427,11 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
     		}    		
     	}
     }
-    
+
     public OggettoBulk modificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
     	if (oggettobulk instanceof DocumentoEleTestataBulk){
     		((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione().setToBeUpdated();
-    		notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
+			notificaUOCompetenza(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     		super.modificaConBulk(usercontext, ((DocumentoEleTestataBulk)oggettobulk).getDocumentoEleTrasmissione());
     		cambiaStatoCompletato(usercontext, ((DocumentoEleTestataBulk)oggettobulk));
     	}
@@ -388,7 +480,11 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 	public SQLBuilder selectVoceIvaByClause(UserContext usercontext, DocumentoEleIvaBulk documentoEleIvaBulk, 
 			Voce_ivaBulk voce_ivaBulk, CompoundFindClause compoundfindclause) throws ComponentException, PersistencyException{
 		Voce_ivaHome voceIvaHome = (Voce_ivaHome) getHome(usercontext, Voce_ivaBulk.class);
-		SQLBuilder sqlVoceIva = voceIvaHome.selectByClause(compoundfindclause);
+		SQLBuilder sqlVoceIva = voceIvaHome.selectByClause(compoundfindclause,
+						Optional.ofNullable(documentoEleIvaBulk.getDocumentoEleTestata())
+									.flatMap(documentoEleTestataBulk -> Optional.ofNullable(documentoEleTestataBulk.getDataDocumento()))
+									.orElse(EJBCommonServices.getServerDate()));
+
 		sqlVoceIva.addClause(FindClause.AND, "percentuale", SQLBuilder.EQUALS, documentoEleIvaBulk.getAliquotaIva());
 		sqlVoceIva.addSQLClause(FindClause.AND, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
 		sqlVoceIva.addSQLClause("AND", "ti_applicazione", SQLBuilder.NOT_EQUALS, Voce_ivaBulk.VENDITE);
@@ -485,16 +581,18 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		}
 	}	
 
-	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+	public Configurazione_cnrBulk getEmailPecSdi(UserContext userContext, boolean lock) throws it.cnr.jada.comp.ComponentException {
 		try {
 			Configurazione_cnrBulk configurazione_cnrBulk  = new Configurazione_cnrBulk(Configurazione_cnrBulk.PK_EMAIL_PEC,Configurazione_cnrBulk.SK_SDI, "*",  new Integer(0));
 			Configurazione_cnrHome configurazione_cnrHome = (Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class);
 			configurazione_cnrBulk = (Configurazione_cnrBulk) configurazione_cnrHome.findAndLock(configurazione_cnrBulk);
-			if ("Y".equalsIgnoreCase(configurazione_cnrBulk.getVal04()))
-				return null;
-			configurazione_cnrBulk.setVal04("Y");
-			configurazione_cnrBulk.setToBeUpdated();
-			configurazione_cnrHome.update(configurazione_cnrBulk, userContext);
+			if (lock) {
+				if ("Y".equalsIgnoreCase(configurazione_cnrBulk.getVal04()))
+					return null;
+				configurazione_cnrBulk.setVal04("Y");
+				configurazione_cnrBulk.setToBeUpdated();
+				configurazione_cnrHome.update(configurazione_cnrBulk, userContext);
+			}
 			return configurazione_cnrBulk;
 		} catch (BusyResourceException _ex) {
 			return null;
@@ -536,6 +634,7 @@ public class FatturaElettronicaPassivaComponent extends it.cnr.jada.comp.CRUDCom
 		DocumentoEleTrasmissioneHome home = (DocumentoEleTrasmissioneHome) getHome(usercontext, DocumentoEleTrasmissioneBulk.class);
 		SQLBuilder sql = home.createSQLBuilder();
 		sql.addClause(FindClause.AND, "identificativoSdi", SQLBuilder.EQUALS, identificativoSdI);
+		sql.addClause(FindClause.AND, "cmisNodeRef", SQLBuilder.ISNOTNULL, null);
 		try {
 			return home.fetchAll(sql);
 		} catch (PersistencyException e) {

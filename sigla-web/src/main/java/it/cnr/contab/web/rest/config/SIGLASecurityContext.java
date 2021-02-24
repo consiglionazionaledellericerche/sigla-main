@@ -28,10 +28,10 @@ import javax.ws.rs.core.SecurityContext;
 
 public class SIGLASecurityContext implements SecurityContext {
 
-	private static final String X_SIGLA_CD_CDR = "X-sigla-cd-cdr";
-	private static final String X_SIGLA_CD_CDS = "X-sigla-cd-cds";
-	private static final String X_SIGLA_CD_UNITA_ORGANIZZATIVA = "X-sigla-cd-unita-organizzativa";
-	private static final String X_SIGLA_ESERCIZIO = "X-sigla-esercizio";
+	public static final String X_SIGLA_CD_CDR = "X-sigla-cd-cdr";
+	public static final String X_SIGLA_CD_CDS = "X-sigla-cd-cds";
+	public static final String X_SIGLA_CD_UNITA_ORGANIZZATIVA = "X-sigla-cd-unita-organizzativa";
+	public static final String X_SIGLA_ESERCIZIO = "X-sigla-esercizio";
 	private final CNRUserContext userContext;
 
 	public SIGLASecurityContext(ContainerRequestContext requestContext, String userName)

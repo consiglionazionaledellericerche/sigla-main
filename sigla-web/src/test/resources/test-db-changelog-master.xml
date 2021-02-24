@@ -33,6 +33,7 @@
         <addDefaultValue tableName="utente_unita_ruolo" columnName="duva" defaultValueDate="${now}"/>
 
         <loadData commentLineStartsWith="#" encoding="UTF-8" file="liquibase/csv/utente.csv" quotchar="&quot;" separator="," tableName="utente">
+            <column name="dt_ultima_var_password" type="${date.type}"/>
             <column name="dt_inizio_validita" type="${date.type}"/>
             <column name="dt_fine_validita" type="${date.type}"/>
         </loadData>
@@ -51,6 +52,16 @@
         <dropDefaultValue tableName="utente_unita_accesso" columnName="duva"/>
         <dropDefaultValue tableName="utente_unita_ruolo" columnName="dacr"/>
         <dropDefaultValue tableName="utente_unita_ruolo" columnName="duva"/>
+    </changeSet>
+    <changeSet author="test" id="create-tipo-progetto">
+        <addDefaultValue tableName="tipo_progetto" columnName="dacr" defaultValueDate="${now}"/>
+        <addDefaultValue tableName="tipo_progetto" columnName="duva" defaultValueDate="${now}"/>
+
+        <loadData commentLineStartsWith="#" encoding="UTF-8" file="liquibase/csv/tipo_progetto.csv" quotchar="&quot;" separator="," tableName="tipo_progetto">
+        </loadData>
+
+        <dropDefaultValue tableName="tipo_progetto" columnName="dacr"/>
+        <dropDefaultValue tableName="tipo_progetto" columnName="duva"/>
     </changeSet>
 
 </databaseChangeLog>

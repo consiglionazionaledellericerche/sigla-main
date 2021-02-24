@@ -1,4 +1,4 @@
-CREATE OR REPLACE Procedure PRT_S_CE_RICLASSIFICATO_J
+CREATE OR REPLACE Procedure PRT_S_CE_RICLASSIFICATO_JLELLO
 --
 -- Date: 06/08/2004
 -- Version: 1.2
@@ -165,17 +165,17 @@ Begin
    Where esercizio = INES And
          STATO In ('P', 'C');
 
-Dbms_Output.PUT_LINE ('CONTA_CDS_VALIDI '||CONTA_CDS_VALIDI||' CONTA_CHIUSI ');
+        Dbms_Output.PUT_LINE ('CONTA_CDS_VALIDI '||CONTA_CDS_VALIDI||' CONTA_CHIUSI ');
 
    If CONTA_CDS_VALIDI = CONTA_CHIUSI And CDS = '*' And UO = '*' Then
 
---- NON SERVE CICLARE IL LOOP, FACCIO UNA SELECT SOLA
+        --- NON SERVE CICLARE IL LOOP, FACCIO UNA SELECT SOLA
 
-          IF CONTI_ASS.CD_VOCE_EP = CONTO_AVANZO THEN
+       IF CONTI_ASS.CD_VOCE_EP = CONTO_AVANZO THEN
 
            FLAG_TOT := 'S';
 
-Dbms_Output.PUT_LINE ('SELECT SU CONTO '||CONTI_ASS.CD_VOCE_EP);
+            Dbms_Output.PUT_LINE ('SELECT SU CONTO '||CONTI_ASS.CD_VOCE_EP);
 
                 SELECT Nvl(sum(DECODE(D.SEZIONE, 'D', D.im_movimento)), 0),
                        Nvl(sum(DECODE(D.SEZIONE, 'A', D.im_movimento)), 0)
@@ -202,28 +202,28 @@ Dbms_Output.PUT_LINE ('SELECT SU CONTO '||CONTI_ASS.CD_VOCE_EP);
                                M2.PG_SCRITTURA            = D.PG_SCRITTURA AND
                                M2.cd_voce_ep = PROF_PERD);
 
-If conti_sn = 'Y' Then
-   I := I + 1;
-   -- inserimento dello schema di riclassificazione NELLA VIEW (FISSO)
-   insert into PRT_VPG_BIL_RICLASSIFICATO (ID, CHIAVE, TIPO, SEQUENZA,
-           ORDINE, CONTO_RICLASS, I_LIVELLO, II_LIVELLO, III_LIVELLO, IV_LIVELLO,
-           DESCRIZIONE, PARZIALE_I_ANNO, TOTALE_I_ANNO, PARZIALE_II_ANNO, TOTALE_II_ANNO,
-           SN_TOTALE)
-   VALUES (aId, 'chiave', 't', i,
-           SCHEMA_CE.SEQUENZA, Null, Null, Null, Null, NULL,
-           CONTI_ASS.CD_VOCE_EP||' '||aConto.ds_voce_ep,
-           Decode(CONTI_ASS.SEZIONE, 'D', DARE_CONTO-AVERE_CONTO, 'A', AVERE_CONTO-DARE_CONTO),
-           Null, Null, Null, 'N');
-End If;
+            If conti_sn = 'Y' Then
+               I := I + 1;
+               -- inserimento dello schema di riclassificazione NELLA VIEW (FISSO)
+               insert into PRT_VPG_BIL_RICLASSIFICATO (ID, CHIAVE, TIPO, SEQUENZA,
+                       ORDINE, CONTO_RICLASS, I_LIVELLO, II_LIVELLO, III_LIVELLO, IV_LIVELLO,
+                       DESCRIZIONE, PARZIALE_I_ANNO, TOTALE_I_ANNO, PARZIALE_II_ANNO, TOTALE_II_ANNO,
+                       SN_TOTALE)
+               VALUES (aId, 'chiave', 't', i,
+                       SCHEMA_CE.SEQUENZA, Null, Null, Null, Null, NULL,
+                       CONTI_ASS.CD_VOCE_EP||' '||aConto.ds_voce_ep,
+                       Decode(CONTI_ASS.SEZIONE, 'D', DARE_CONTO-AVERE_CONTO, 'A', AVERE_CONTO-DARE_CONTO),
+                       Null, Null, Null, 'N');
+            End If;
 
-DARE1 := DARE1 + DARE_CONTO;
-AVERE1 := AVERE1 + AVERE_CONTO;
+            DARE1 := DARE1 + DARE_CONTO;
+            AVERE1 := AVERE1 + AVERE_CONTO;
 
-          ELSE
+       ELSE
 
-Dbms_Output.PUT_LINE ('SELECT SU CONTO NON AVANZO '||CONTI_ASS.CD_VOCE_EP);
+            Dbms_Output.PUT_LINE ('SELECT SU CONTO NON AVANZO '||CONTI_ASS.CD_VOCE_EP);
 
-        -- PER CONTI NORMALI
+            -- PER CONTI NORMALI
 
                 SELECT Nvl(sum(DECODE(D.SEZIONE, 'D', D.im_movimento)), 0),
                        Nvl(sum(DECODE(D.SEZIONE, 'A', D.im_movimento)), 0)
@@ -240,147 +240,161 @@ Dbms_Output.PUT_LINE ('SELECT SU CONTO NON AVANZO '||CONTI_ASS.CD_VOCE_EP);
                        T.CD_CAUSALE_COGE != 'DETERMINAZIONE_UTILE_PERDITA')) AND
                        T.ESERCIZIO  = INES                 AND
                        D.CD_VOCE_EP = CONTI_ASS.CD_VOCE_EP AND
-        -- ANNO IN CORSO (SOLA COMPETENZA)
-        ((Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
-        -- A CAVALLO TRA ANNO PRECEDENTE ED ANNO ATTUALE
-         (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES-1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
-        -- A CAVALLO TRA ANNO ATTUALE ED ANNO SUCCESSIVO (TANTO CI SONO I RISCONTI)
-         (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) Or
-        -- O COMPLETAMENTE IN ESERCIZIO SUCCESSIVO (TANTO CI SONO I RISCONTI)
-         (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) ) And
-                       D.TI_ISTITUZ_COMMERC = Decode(IST_COMM, '*', D.TI_ISTITUZ_COMMERC, IST_COMM);
+                -- ANNO IN CORSO (SOLA COMPETENZA)
+                ((Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
+                -- A CAVALLO TRA ANNO PRECEDENTE ED ANNO ATTUALE
+                 (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES-1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
+                -- A CAVALLO TRA ANNO ATTUALE ED ANNO SUCCESSIVO (TANTO CI SONO I RISCONTI)
+                 (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) Or
+                -- O COMPLETAMENTE IN ESERCIZIO SUCCESSIVO (TANTO CI SONO I RISCONTI)
+                 (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) ) And
+                               D.TI_ISTITUZ_COMMERC = Decode(IST_COMM, '*', D.TI_ISTITUZ_COMMERC, IST_COMM);
 
-If conti_sn = 'Y' Then
-   I := I + 1;
-   -- inserimento dello schema di riclassificazione NELLA VIEW (FISSO)
-   insert into PRT_VPG_BIL_RICLASSIFICATO (ID, CHIAVE, TIPO, SEQUENZA,
-           ORDINE, CONTO_RICLASS, I_LIVELLO, II_LIVELLO, III_LIVELLO, IV_LIVELLO,
-           DESCRIZIONE, PARZIALE_I_ANNO, TOTALE_I_ANNO, PARZIALE_II_ANNO, TOTALE_II_ANNO,
-           SN_TOTALE)
-   VALUES (aId, 'chiave', 't', i,
-           SCHEMA_CE.SEQUENZA, Null, Null, Null, Null, NULL,
-           CONTI_ASS.CD_VOCE_EP||' '||aConto.ds_voce_ep,
-           Decode(CONTI_ASS.SEZIONE, 'D', DARE_CONTO-AVERE_CONTO, 'A', AVERE_CONTO-DARE_CONTO),
-           Null, Null, Null, 'N');
-End If;
+            If conti_sn = 'Y' Then
+               I := I + 1;
+               -- inserimento dello schema di riclassificazione NELLA VIEW (FISSO)
+               insert into PRT_VPG_BIL_RICLASSIFICATO (ID, CHIAVE, TIPO, SEQUENZA,
+                       ORDINE, CONTO_RICLASS, I_LIVELLO, II_LIVELLO, III_LIVELLO, IV_LIVELLO,
+                       DESCRIZIONE, PARZIALE_I_ANNO, TOTALE_I_ANNO, PARZIALE_II_ANNO, TOTALE_II_ANNO,
+                       SN_TOTALE)
+               VALUES (aId, 'chiave', 't', i,
+                       SCHEMA_CE.SEQUENZA, Null, Null, Null, Null, NULL,
+                       CONTI_ASS.CD_VOCE_EP||' '||aConto.ds_voce_ep,
+                       Decode(CONTI_ASS.SEZIONE, 'D', DARE_CONTO-AVERE_CONTO, 'A', AVERE_CONTO-DARE_CONTO),
+                       Null, Null, Null, 'N');
+            End If;
 
            DARE1 := DARE1 + DARE_CONTO;
            AVERE1 := AVERE1 + AVERE_CONTO;
 
-        End If;
+       End If;
 
    Else
-
-        For aCDS in (select CD_UNITA_ORGANIZZATIVA
+        Declare
+            DARE_CDS NUMBER(20,3) := 0;
+            AVERE_CDS NUMBER(20,3) := 0;
+        Begin
+            For aCDS in (select CD_UNITA_ORGANIZZATIVA
         	     from   v_unita_organizzativa_valida
                      Where  esercizio = INES And
                      	    fl_cds = 'Y' And
         		    CD_UNITA_ORGANIZZATIVA = Decode (cds, '*', CD_UNITA_ORGANIZZATIVA, cds)
                      Order by cd_unita_organizzativa) Loop  -- CDS VALIDI
 
-          IF CONTI_ASS.CD_VOCE_EP = CONTO_AVANZO THEN
+               IF CONTI_ASS.CD_VOCE_EP = CONTO_AVANZO THEN
 
-           FLAG_TOT := 'S';
+                  FLAG_TOT := 'S';
 
-                SELECT DARE1 + NVL(sum(DECODE(D.SEZIONE, 'D', D.im_movimento)), 0),
-                       AVERE1 + NVL(sum(DECODE(D.SEZIONE, 'A', D.im_movimento)), 0)
-                INTO   DARE1, AVERE1
-                FROM   MOVIMENTO_COGE D, SCRITTURA_PARTITA_DOPPIA T
-                WHERE  T.CD_CDS  = D.CD_CDS   AND
-                       T.ESERCIZIO = D.ESERCIZIO AND
-                       T.CD_UNITA_ORGANIZZATIVA = D.CD_UNITA_ORGANIZZATIVA and
-                       T.PG_SCRITTURA = D.PG_SCRITTURA AND
-                       T.ATTIVA = 'Y' AND
-                     ((T.CD_CAUSALE_COGE IS NULL) OR
-                      (T.CD_CAUSALE_COGE = 'DETERMINAZIONE_UTILE_PERDITA' AND CONTI_ASS.CD_VOCE_EP = CONTO_AVANZO)) AND
-                       T.CD_CDS     = aCDS.CD_UNITA_ORGANIZZATIVA AND
-                       T.ESERCIZIO  = INES                 AND
-                       T.CD_UNITA_ORGANIZZATIVA = decode(UO, '*', T.CD_UNITA_ORGANIZZATIVA, UO) AND
-                       D.CD_VOCE_EP = CONTI_ASS.CD_VOCE_EP AND
-        	      (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) OR
-         	       NVL(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) AND
-                       D.TI_ISTITUZ_COMMERC = Decode(IST_COMM, '*', D.TI_ISTITUZ_COMMERC, IST_COMM)
-                       AND EXISTS
-                        (SELECT 1
-                         FROM MOVIMENTO_COGE M2
-                         WHERE M2.CD_CDS                  = D.CD_CDS                 AND
-                               M2.ESERCIZIO               = D.ESERCIZIO              AND
-                               M2.CD_UNITA_ORGANIZZATIVA  = D.CD_UNITA_ORGANIZZATIVA AND
-                               M2.PG_SCRITTURA            = D.PG_SCRITTURA AND
-                               M2.cd_voce_ep = PROF_PERD);
+                  SELECT DARE_CDS + NVL(sum(DECODE(D.SEZIONE, 'D', D.im_movimento)), 0),
+                         AVERE_CDS + NVL(sum(DECODE(D.SEZIONE, 'A', D.im_movimento)), 0)
+                  INTO   DARE_CDS, AVERE_CDS
+                  FROM   MOVIMENTO_COGE D, SCRITTURA_PARTITA_DOPPIA T
+                  WHERE  T.CD_CDS  = D.CD_CDS   AND
+                         T.ESERCIZIO = D.ESERCIZIO AND
+                         T.CD_UNITA_ORGANIZZATIVA = D.CD_UNITA_ORGANIZZATIVA and
+                         T.PG_SCRITTURA = D.PG_SCRITTURA AND
+                         T.ATTIVA = 'Y' AND
+                       ((T.CD_CAUSALE_COGE IS NULL) OR
+                        (T.CD_CAUSALE_COGE = 'DETERMINAZIONE_UTILE_PERDITA' AND CONTI_ASS.CD_VOCE_EP = CONTO_AVANZO)) AND
+                         T.CD_CDS     = aCDS.CD_UNITA_ORGANIZZATIVA AND
+                         T.ESERCIZIO  = INES                 AND
+                         T.CD_UNITA_ORGANIZZATIVA = decode(UO, '*', T.CD_UNITA_ORGANIZZATIVA, UO) AND
+                         D.CD_VOCE_EP = CONTI_ASS.CD_VOCE_EP AND
+                    (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) OR
+                     NVL(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) AND
+                         D.TI_ISTITUZ_COMMERC = Decode(IST_COMM, '*', D.TI_ISTITUZ_COMMERC, IST_COMM)
+                         AND EXISTS
+                          (SELECT 1
+                           FROM MOVIMENTO_COGE M2
+                           WHERE M2.CD_CDS                  = D.CD_CDS                 AND
+                                 M2.ESERCIZIO               = D.ESERCIZIO              AND
+                                 M2.CD_UNITA_ORGANIZZATIVA  = D.CD_UNITA_ORGANIZZATIVA AND
+                                 M2.PG_SCRITTURA            = D.PG_SCRITTURA AND
+                                 M2.cd_voce_ep = PROF_PERD);
+               ELSE
 
-          ELSE
+                  -- PER CONTI NORMALI
 
-        -- PER CONTI NORMALI
-
-                SELECT DARE1 + NVL(sum(DECODE(D.SEZIONE, 'D', D.im_movimento)), 0),
-                       AVERE1 + NVL(sum(DECODE(D.SEZIONE, 'A', D.im_movimento)), 0)
-                INTO   DARE1, AVERE1
-                FROM   MOVIMENTO_COGE D, SCRITTURA_PARTITA_DOPPIA T
-                WHERE  T.CD_CDS  = D.CD_CDS   AND
-                       T.ESERCIZIO = D.ESERCIZIO AND
-                       T.CD_UNITA_ORGANIZZATIVA = D.CD_UNITA_ORGANIZZATIVA and
-                       T.PG_SCRITTURA = D.PG_SCRITTURA AND
-                       T.ATTIVA = 'Y' AND
-                      ((T.CD_CAUSALE_COGE IS NULL) OR
-                      (T.CD_CAUSALE_COGE != 'CHIUSURA_CONTO_ECONOMICO' AND
-                       T.CD_CAUSALE_COGE != 'CHIUSURA_STATO_PATRIMONIALE' AND
-                       T.CD_CAUSALE_COGE != 'DETERMINAZIONE_UTILE_PERDITA')) AND
-                       T.CD_CDS     = ACDS.CD_UNITA_ORGANIZZATIVA AND
-                       T.ESERCIZIO  = INES                 AND
-                       T.CD_UNITA_ORGANIZZATIVA = decode(UO, '*', T.CD_UNITA_ORGANIZZATIVA, UO) AND
-                       D.CD_VOCE_EP = CONTI_ASS.CD_VOCE_EP AND
-        -- ANNO IN CORSO (SOLA COMPETENZA)
-        ((Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
-        -- A CAVALLO TRA ANNO PRECEDENTE ED ANNO ATTUALE
-         (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES-1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
-        -- A CAVALLO TRA ANNO ATTUALE ED ANNO SUCCESSIVO (TANTO CI SONO I RISCONTI)
-         (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) Or
-        -- O COMPLETAMENTE IN ESERCIZIO SUCCESSIVO (TANTO CI SONO I RISCONTI)
-         (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) ) And
+                  SELECT DARE_CDS + NVL(sum(DECODE(D.SEZIONE, 'D', D.im_movimento)), 0),
+                         AVERE_CDS + NVL(sum(DECODE(D.SEZIONE, 'A', D.im_movimento)), 0)
+                  INTO   DARE_CDS, AVERE_CDS
+                  FROM   MOVIMENTO_COGE D, SCRITTURA_PARTITA_DOPPIA T
+                  WHERE  T.CD_CDS  = D.CD_CDS   AND
+                         T.ESERCIZIO = D.ESERCIZIO AND
+                         T.CD_UNITA_ORGANIZZATIVA = D.CD_UNITA_ORGANIZZATIVA and
+                         T.PG_SCRITTURA = D.PG_SCRITTURA AND
+                         T.ATTIVA = 'Y' AND
+                        ((T.CD_CAUSALE_COGE IS NULL) OR
+                        (T.CD_CAUSALE_COGE != 'CHIUSURA_CONTO_ECONOMICO' AND
+                         T.CD_CAUSALE_COGE != 'CHIUSURA_STATO_PATRIMONIALE' AND
+                         T.CD_CAUSALE_COGE != 'DETERMINAZIONE_UTILE_PERDITA')) AND
+                         T.CD_CDS     = ACDS.CD_UNITA_ORGANIZZATIVA AND
+                         T.ESERCIZIO  = INES                 AND
+                         T.CD_UNITA_ORGANIZZATIVA = decode(UO, '*', T.CD_UNITA_ORGANIZZATIVA, UO) AND
+                         D.CD_VOCE_EP = CONTI_ASS.CD_VOCE_EP AND
+                  -- ANNO IN CORSO (SOLA COMPETENZA)
+                   ((Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
+                  -- A CAVALLO TRA ANNO PRECEDENTE ED ANNO ATTUALE
+                   (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES-1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES)) Or
+                  -- A CAVALLO TRA ANNO ATTUALE ED ANNO SUCCESSIVO (TANTO CI SONO I RISCONTI)
+                   (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) Or
+                  -- O COMPLETAMENTE IN ESERCIZIO SUCCESSIVO (TANTO CI SONO I RISCONTI)
+                  (Nvl(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1) And Nvl(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1)) ) And
                        D.TI_ISTITUZ_COMMERC = Decode(IST_COMM, '*', D.TI_ISTITUZ_COMMERC, IST_COMM);
 
-        -- TOLGO MANUALMENTE LA QUOTA DI RISCONTO SOLO SE NON E' STATA FATTA LA CHIUSURA (CHE LI FA)
+                  -- TOLGO MANUALMENTE LA QUOTA DI RISCONTO SOLO SE NON E' STATA FATTA LA CHIUSURA (CHE LI FA)
+                  Begin
+                    Select * Into CHIUS_COEP
+                    From chiusura_coep
+                    Where esercizio = INES And
+                          cd_cds = ACDS.CD_UNITA_ORGANIZZATIVA;
+                  Exception
+                	WHEN No_Data_Found Then
+        	           CHIUS_COEP.STATO := Null;
+                  End;
 
-        Begin
-           Select * Into CHIUS_COEP
-           From chiusura_coep
-           Where esercizio = INES And
-                 cd_cds = ACDS.CD_UNITA_ORGANIZZATIVA;
-        Exception
-        	WHEN No_Data_Found Then
-        	  CHIUS_COEP.STATO := Null;
+                  If CHIUS_COEP.STATO Is Null Or CHIUS_COEP.STATO Not In ('P', 'C') Then
+                     SELECT DARE_CDS - NVL(SUM(ROUND(IM_MOVIMENTO*ROUND((D.DT_A_COMPETENZA_COGE-to_date('0101'||TO_CHAR(INES+1),'DDMMYYYY')+1)/(D.DT_A_COMPETENZA_COGE - D.DT_DA_COMPETENZA_COGE+1), 2), 2)), 0),
+                            AVERE_CDS - NVL(SUM(ROUND(IM_MOVIMENTO*ROUND((D.DT_A_COMPETENZA_COGE-to_date('0101'||TO_CHAR(INES+1),'DDMMYYYY')+1)/(D.DT_A_COMPETENZA_COGE - D.DT_DA_COMPETENZA_COGE+1), 2), 2)), 0)
+                     INTO   DARE_CDS, AVERE_CDS
+                     FROM   MOVIMENTO_COGE D, SCRITTURA_PARTITA_DOPPIA T
+                     WHERE  T.CD_CDS  = D.CD_CDS   AND
+                            T.ESERCIZIO = D.ESERCIZIO AND
+                            T.CD_UNITA_ORGANIZZATIVA = D.CD_UNITA_ORGANIZZATIVA and
+                            T.PG_SCRITTURA = D.PG_SCRITTURA AND
+                            T.ATTIVA = 'Y' AND
+                           ((T.CD_CAUSALE_COGE IS NULL) OR
+                           (T.CD_CAUSALE_COGE != 'CHIUSURA_CONTO_ECONOMICO' AND
+                            T.CD_CAUSALE_COGE != 'CHIUSURA_STATO_PATRIMONIALE' AND
+                            T.CD_CAUSALE_COGE != 'DETERMINAZIONE_UTILE_PERDITA')) AND
+                            T.CD_CDS     = ACDS.CD_UNITA_ORGANIZZATIVA AND
+                            T.ESERCIZIO  = INES                 AND
+                            T.CD_UNITA_ORGANIZZATIVA = decode(UO, '*', T.CD_UNITA_ORGANIZZATIVA, UO) AND
+                            D.CD_VOCE_EP = CONTI_ASS.CD_VOCE_EP AND
+                            NVL(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) AND
+                            NVL(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1) AND
+                            D.TI_ISTITUZ_COMMERC = Decode(IST_COMM, '*', D.TI_ISTITUZ_COMMERC, IST_COMM);
+                  End If; -- DELLA CHIUSURA COEP
+               END IF;  -- CONTO AVANZO / CONTO NORMALE
+            End Loop;  -- FINE CURSORE SU CDS
+
+            If conti_sn = 'Y' Then
+               I := I + 1;
+               -- inserimento dello schema di riclassificazione NELLA VIEW (FISSO)
+               insert into PRT_VPG_BIL_RICLASSIFICATO (ID, CHIAVE, TIPO, SEQUENZA,
+                       ORDINE, CONTO_RICLASS, I_LIVELLO, II_LIVELLO, III_LIVELLO, IV_LIVELLO,
+                       DESCRIZIONE, PARZIALE_I_ANNO, TOTALE_I_ANNO, PARZIALE_II_ANNO, TOTALE_II_ANNO,
+                       SN_TOTALE)
+               VALUES (aId, 'chiave', 't', i,
+                       SCHEMA_CE.SEQUENZA, Null, Null, Null, Null, NULL,
+                       CONTI_ASS.CD_VOCE_EP||' '||aConto.ds_voce_ep,
+                       Decode(CONTI_ASS.SEZIONE, 'D', DARE_CDS-AVERE_CDS, 'A', AVERE_CDS-DARE_CDS),
+                       Null, Null, Null, 'N');
+            End If;
+
+            DARE1 := DARE1 + DARE_CDS;
+            AVERE1 := AVERE1 + AVERE_CDS;
         End;
-
-           If CHIUS_COEP.STATO Is Null Or CHIUS_COEP.STATO Not In ('P', 'C') Then
-
-                SELECT DARE1 - NVL(SUM(ROUND(IM_MOVIMENTO*ROUND((D.DT_A_COMPETENZA_COGE-to_date('0101'||TO_CHAR(INES+1),'DDMMYYYY')+1)/(D.DT_A_COMPETENZA_COGE - D.DT_DA_COMPETENZA_COGE+1), 2), 2)), 0),
-                       AVERE1 - NVL(SUM(ROUND(IM_MOVIMENTO*ROUND((D.DT_A_COMPETENZA_COGE-to_date('0101'||TO_CHAR(INES+1),'DDMMYYYY')+1)/(D.DT_A_COMPETENZA_COGE - D.DT_DA_COMPETENZA_COGE+1), 2), 2)), 0)
-                INTO   DARE1, AVERE1
-                FROM   MOVIMENTO_COGE D, SCRITTURA_PARTITA_DOPPIA T
-                WHERE  T.CD_CDS  = D.CD_CDS   AND
-                       T.ESERCIZIO = D.ESERCIZIO AND
-                       T.CD_UNITA_ORGANIZZATIVA = D.CD_UNITA_ORGANIZZATIVA and
-                       T.PG_SCRITTURA = D.PG_SCRITTURA AND
-                       T.ATTIVA = 'Y' AND
-                      ((T.CD_CAUSALE_COGE IS NULL) OR
-                      (T.CD_CAUSALE_COGE != 'CHIUSURA_CONTO_ECONOMICO' AND
-                       T.CD_CAUSALE_COGE != 'CHIUSURA_STATO_PATRIMONIALE' AND
-                       T.CD_CAUSALE_COGE != 'DETERMINAZIONE_UTILE_PERDITA')) AND
-                       T.CD_CDS     = ACDS.CD_UNITA_ORGANIZZATIVA AND
-                       T.ESERCIZIO  = INES                 AND
-                       T.CD_UNITA_ORGANIZZATIVA = decode(UO, '*', T.CD_UNITA_ORGANIZZATIVA, UO) AND
-                       D.CD_VOCE_EP = CONTI_ASS.CD_VOCE_EP AND
-                       NVL(TO_CHAR(D.DT_DA_COMPETENZA_COGE, 'YYYY'), D.ESERCIZIO) = TO_CHAR(INES) AND
-                       NVL(TO_CHAR(D.DT_A_COMPETENZA_COGE,  'YYYY'), D.ESERCIZIO) = TO_CHAR(INES+1) AND
-                       D.TI_ISTITUZ_COMMERC = Decode(IST_COMM, '*', D.TI_ISTITUZ_COMMERC, IST_COMM);
-
-             End If; -- DELLA CHIUSURA COEP
-
-          END IF;  -- CONTO AVANZO / CONTO NORMALE
-
-        End Loop;  -- FINE CURSORE SU CDS
-
    End If;
 End;
 

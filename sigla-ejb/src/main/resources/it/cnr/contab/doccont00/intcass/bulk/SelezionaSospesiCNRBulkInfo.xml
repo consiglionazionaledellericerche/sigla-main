@@ -42,6 +42,14 @@
 		enabledOnSearch="false"
 		/>
 	<fieldProperty
+		name="ricercaSospesiRiaccredito"
+		property="ricercaSospesiRiaccredito"
+		label="Sospesi di riaccredito"
+		inputType="CHECKBOX"
+		enabledOnSearch="false"
+	/>
+
+	<fieldProperty
 		name="ti_entrata_spesa"
 		property="ti_entrata_spesa"
 		label="Entrata/Spesa"
@@ -57,6 +65,9 @@
 		name="ricercaSospesiInSospesoSelezionati"/>
 	<formFieldProperty
 		name="ricercaSospesiInSospeso"/>
+	<formFieldProperty
+		name="ricercaSospesiRiaccredito"/>
+
 	<formFieldProperty
 		name="ti_entrata_spesa"/>
 		

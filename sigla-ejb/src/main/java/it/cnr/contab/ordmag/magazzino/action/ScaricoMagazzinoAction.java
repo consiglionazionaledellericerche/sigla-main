@@ -85,7 +85,7 @@ public class ScaricoMagazzinoAction extends it.cnr.jada.util.action.CRUDAction {
 			bp.completeSearchTools(context, bp);
 			bp.getBeniServiziColl().validate(context);
 			bp.completeSearchTools(context, bp.getBeniServiziColl());
-			return openConfirm(context, "Attenzione! Confermi lo scarico dei beni selezionati?", OptionBP.CONFIRM_YES_NO, "doConfirmScaricaMagazzino");
+			return openConfirm(context, "Attenzione! Confermi lo scarico?", OptionBP.CONFIRM_YES_NO, "doConfirmScaricaMagazzino");
 		} catch(Exception e) {
 			return handleException(context,e);
 		}

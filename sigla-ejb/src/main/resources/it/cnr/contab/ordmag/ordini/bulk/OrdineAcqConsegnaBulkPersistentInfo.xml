@@ -69,6 +69,12 @@
 		<columnMapping
 			columnName="PG_OBBLIGAZIONE_SCAD"
 			propertyName="obbligazioneScadenzario.pg_obbligazione_scadenzario" />
+		<columnMapping
+				columnName="CD_VOCE_EP"
+				propertyName="contoBulk.cd_voce_ep" />
+		<columnMapping
+				columnName="ESERCIZIO_EP"
+				propertyName="contoBulk.esercizio" />
 	</defaultColumnMap>
     <columnMap
             name="DATI_ORDINI_COMPLETI"
@@ -116,6 +122,8 @@
 		name="unitaOperativaOrd" />
 	<persistentProperty
 		name="obbligazioneScadenzario" />
+	<persistentProperty
+			name="contoBulk" />
 
 	<fetchPolicy
 		name="it.cnr.contab.ordmag.ordini.comp.EvasioneOrdineComponent.cercaOrdini">

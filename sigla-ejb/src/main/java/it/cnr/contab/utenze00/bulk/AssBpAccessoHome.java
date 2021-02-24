@@ -22,12 +22,25 @@
 package it.cnr.contab.utenze00.bulk;
 import java.sql.Connection;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.SQLBuilder;
+
 public class AssBpAccessoHome extends BulkHome {
 	public AssBpAccessoHome(Connection conn) {
 		super(AssBpAccessoBulk.class, conn);
 	}
 	public AssBpAccessoHome(Connection conn, PersistentCache persistentCache) {
 		super(AssBpAccessoBulk.class, conn, persistentCache);
+	}
+
+	@Override
+	public SQLBuilder selectByClause(CompoundFindClause compoundfindclause) throws PersistencyException {
+		setColumnMap("PREFERITI");
+		final SQLBuilder sqlBuilder = super.selectByClause(compoundfindclause);
+		sqlBuilder.setAutoJoins(true);
+		sqlBuilder.generateJoin("accesso", "ACCESSO");
+		return sqlBuilder;
 	}
 }

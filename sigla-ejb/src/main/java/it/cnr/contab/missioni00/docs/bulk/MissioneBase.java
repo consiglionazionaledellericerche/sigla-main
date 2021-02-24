@@ -17,36 +17,45 @@
 
 package it.cnr.contab.missioni00.docs.bulk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.si.spring.storage.annotation.StoragePolicy;
 import it.cnr.si.spring.storage.annotation.StorageProperty;
 import it.cnr.jada.persistency.Keyed;
 
 public class MissioneBase extends MissioneKey implements Keyed {
 	// CD_CDS_ANTICIPO VARCHAR(30)
+	@JsonIgnore
 	private java.lang.String cd_cds_anticipo;
 
 	// CD_CDS_OBBLIGAZIONE VARCHAR(30)
+	@JsonIgnore
 	private java.lang.String cd_cds_obbligazione;
 
 	// CD_MODALITA_PAG VARCHAR(10) NOT NULL
+	@JsonIgnore
 	private java.lang.String cd_modalita_pag;
 
 	// CD_TERMINI_PAG VARCHAR(10)
+	@JsonIgnore
 	private java.lang.String cd_termini_pag;
 
 	// CD_TERZO DECIMAL(8,0) NOT NULL
 	private java.lang.Integer cd_terzo;
 
 	// CD_TIPO_MISSIONE VARCHAR(10)
+	@JsonIgnore
 	private java.lang.String cd_tipo_missione;
 
 	// CD_TIPO_RAPPORTO VARCHAR(10) NOT NULL
+	@JsonIgnore
 	private java.lang.String cd_tipo_rapporto;
 
 	// CD_TRATTAMENTO VARCHAR(10)
+	@JsonIgnore
 	private java.lang.String cd_trattamento;
 
 	// CD_UO_ANTICIPO VARCHAR(30)
+	@JsonIgnore
 	private java.lang.String cd_uo_anticipo;
 
 	// CODICE_FISCALE VARCHAR(20)
@@ -62,9 +71,11 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.lang.String ds_missione;
 
 	// DT_CANCELLAZIONE TIMESTAMP
+	@JsonIgnore
 	private java.sql.Timestamp dt_cancellazione;
 
 	// DT_EMISSIONE_MANDATO TIMESTAMP
+	@JsonIgnore
 	private java.sql.Timestamp dt_emissione_mandato;
 
 	// DT_FINE_MISSIONE TIMESTAMP NOT NULL
@@ -75,21 +86,27 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.sql.Timestamp dt_inizio_missione;
 
 	// DT_PAGAMENTO_FONDO_ECO TIMESTAMP
+	@JsonIgnore
 	private java.sql.Timestamp dt_pagamento_fondo_eco;
 
 	// DT_PAGAMENTO_MANDATO TIMESTAMP
+	@JsonIgnore
 	private java.sql.Timestamp dt_pagamento_mandato;
 
 	// DT_REGISTRAZIONE TIMESTAMP NOT NULL
+	@JsonIgnore
 	private java.sql.Timestamp dt_registrazione;
 
 	// DT_TRASMISSIONE_MANDATO TIMESTAMP
+	@JsonIgnore
 	private java.sql.Timestamp dt_trasmissione_mandato;
 
 	// ESERCIZIO_ANTICIPO DECIMAL(4,0)
+	@JsonIgnore
 	private java.lang.Integer esercizio_anticipo;
 
 	// ESERCIZIO_OBBLIGAZIONE DECIMAL(4,0)
+	@JsonIgnore
 	private java.lang.Integer esercizio_obbligazione;
 
 	// FL_ASSOCIATO_COMPENSO CHAR(1) NOT NULL
@@ -136,24 +153,31 @@ public class MissioneBase extends MissioneKey implements Keyed {
 	private java.lang.String partita_iva;
 
 	// PG_ANTICIPO DECIMAL(10,0)
+	@JsonIgnore
 	private java.lang.Long pg_anticipo;
 
 	// PG_BANCA DECIMAL(10,0) NOT NULL
+	@JsonIgnore
 	private java.lang.Long pg_banca;
 
     // ESERCIZIO_ORI_OBBLIGAZIONE DECIMAL(4,0)
+	@JsonIgnore
 	private java.lang.Integer esercizio_ori_obbligazione;
 
 	// PG_OBBLIGAZIONE DECIMAL(10,0)
+	@JsonIgnore
 	private java.lang.Long pg_obbligazione;
 
 	// PG_OBBLIGAZIONE_SCADENZARIO DECIMAL(10,0)
+	@JsonIgnore
 	private java.lang.Long pg_obbligazione_scadenzario;
 
 	// PG_RIF_INQUADRAMENTO DECIMAL(10,0) NOT NULL
+	@JsonIgnore
 	private java.lang.Long pg_rif_inquadramento;
 
 	// RAGIONE_SOCIALE VARCHAR(100)
+	@JsonIgnore
 	private java.lang.String ragione_sociale;
 
 	// STATO_COAN CHAR(1) NOT NULL
@@ -201,6 +225,7 @@ public class MissioneBase extends MissioneKey implements Keyed {
     private String idFolderOrdineMissione;
 	
 	// TI_ISTITUZ_COMMERC CHAR(1) NOT NULL
+	@JsonIgnore
 	private java.lang.Boolean daRimborsoDaCompletare;
 
 public MissioneBase() {

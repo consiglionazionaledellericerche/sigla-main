@@ -1062,7 +1062,6 @@ begin
         -- Leggo il CDR del personale e la sua linea SAUOP
 
         aCDRPersonale := CNRCTB020.GETCDRPERSONALE(aEsercizio);
-        aLASAUOP := CNRCTB010.getLASAUOP(aEsercizio, aCDRPersonale.cd_centro_responsabilita);
 
         If nvl(recParametriCnr.fl_nuovo_pdg,'N') = 'Y' Then
           If aLa_origine.cd_programma is null or aLa_origine.cd_missione is null Then
@@ -1095,7 +1094,10 @@ begin
                     ((LIVELLO_COFOG=0 or cd_cofog=aLa_origine.cd_cofog)))
                   ))
             And   CD_PROGRAMMA = aLa_origine.cd_programma
-            And   CD_MISSIONE = aLa_origine.cd_missione;
+            And   CD_MISSIONE = aLa_origine.cd_missione
+            And   rownum < 2;
+            -- Condizione inserita per evitare Too_Many_Rows.
+            -- E' stato chiesto di prendere sempre una anche se ne esistono tante e di non far scattare l'errore
           Exception
             When No_Data_Found Then
               If aCV.CDR_ACCENTRATORE = aCDRPersonale.CD_CENTRO_RESPONSABILITA Then
@@ -1109,6 +1111,7 @@ begin
                                            ', Programma '||aLa_origine.cd_programma||' e Missione '||aLa_origine.cd_missione||'! Operazione non possibile!');
           End;
         ElsIf aCV.CDR_ACCENTRATORE = aCDRPersonale.CD_CENTRO_RESPONSABILITA Then
+          aLASAUOP := CNRCTB010.getLASAUOP(aEsercizio, aCDRPersonale.cd_centro_responsabilita);
           ACDRLINEA_DETT := aLASAUOP.CD_CENTRO_RESPONSABILITA;
           ALINEA_DETT    := aLASAUOP.CD_LINEA_ATTIVITA;
         Else

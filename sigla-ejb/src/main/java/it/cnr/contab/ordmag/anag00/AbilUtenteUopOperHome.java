@@ -21,9 +21,11 @@
  */
 package it.cnr.contab.ordmag.anag00;
 import java.sql.Connection;
+import java.util.Optional;
 
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
@@ -42,5 +44,21 @@ public class AbilUtenteUopOperHome extends BulkHome {
 			return true;
 		}
 		return false;
+	}
+
+	public Boolean isUtenteAbilitatoTipoOperazione(UserContext userContext, String tipoOperazione)throws  ComponentException {
+		try{
+			SQLBuilder sql = this.createSQLBuilder();
+			sql.addClause("AND", "cdTipoOperazione", SQLBuilder.EQUALS, TipoOperazioneOrdBulk.OPERAZIONE_ORDINE);
+			sql.addClause("AND", "cdUtente", SQLBuilder.EQUALS, userContext.getUser());
+
+			Object abil = fetchMax(sql,"cdTipoOperazione",null);
+			if (Optional.ofNullable(abil).isPresent())
+				return true;
+
+			return false;
+		} catch (it.cnr.jada.persistency.PersistencyException e) {
+			throw new ComponentException(e);
+		}
 	}
 }

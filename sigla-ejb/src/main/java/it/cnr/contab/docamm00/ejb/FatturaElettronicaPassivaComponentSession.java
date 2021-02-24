@@ -16,6 +16,7 @@
  */
 
 package it.cnr.contab.docamm00.ejb;
+import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaBulk;
 import it.cnr.contab.docamm00.fatturapa.bulk.DocumentoEleTestataBulk;
@@ -27,6 +28,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 			throws ComponentException, RemoteException;
 	public abstract boolean existsIdentificativo(UserContext usercontext, java.lang.Long identificativoSdI)
 			throws ComponentException, RemoteException;
-	public abstract Configurazione_cnrBulk getEmailPecSdi(UserContext userContext) throws it.cnr.jada.comp.ComponentException;
+	public abstract Configurazione_cnrBulk getEmailPecSdi(UserContext userContext, boolean lock) throws it.cnr.jada.comp.ComponentException;
 	public List<DocumentoEleTestataBulk> recuperoDocumento(UserContext usercontext, Long identificativoSdI) 
 			throws ComponentException, RemoteException;
 	public List<DocumentoEleTrasmissioneBulk> recuperoTrasmissione(UserContext usercontext, Long identificativoSdI) 
@@ -65,4 +67,5 @@ public interface FatturaElettronicaPassivaComponentSession extends it.cnr.jada.e
 	public void aggiornaScartoEsitoPec(UserContext userContext, List<DocumentoEleTestataBulk> listaDoc, Calendar dataRicevimentoMail) 
 			throws PersistencyException, ComponentException,java.rmi.RemoteException;
 	public void unlockEmailPEC(UserContext userContext) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-}
+	public Boolean isPartitaIvaGruppoIva(UserContext usercontext, AnagraficoBulk anagrafico, String partitaIva, Timestamp dataDocumento) throws ComponentException,java.rmi.RemoteException;
+	}

@@ -53,7 +53,7 @@
 		property="esercizio_piano"
 		optionsProperty="anniList"
 		readonlyPropertyOnEdit="ROEsercizio_piano"
-		command="doDefault"
+		command="doOnEsercizioPianoChange"
 		inputType="SELECT"
 		inputSize="4"
 		maxLength="4"
@@ -74,7 +74,7 @@
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
-		readonlyPropertyOnEdit="ROProgettoPianoEconomico"
+		readonlyPropertyOnEdit="ROImSpesaFinanziato"
 		formatName="it.cnr.contab.util.EuroFormat"
 		label="Quota Finanziata" />
 	<fieldProperty
@@ -107,7 +107,7 @@
 	<fieldProperty
 		name="imSpesaFinanziatoRimodulatoAA"
 		property="imSpesaFinanziatoRimodulato"
-		readonlyProperty="ROFieldRimodulazione"
+		readonlyProperty="ROImSpesaFinanziatoRimodulatoAA"
 		inputSize="20"
 		maxLength="18"
 		inputType="TEXT"
@@ -474,6 +474,10 @@
 			headerLabel="QUOTE FINANZIATE"
 			label="Stanziata"/>
 		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
 			name="im_manris_spesa_finanziata"
 			headerLabel="QUOTE FINANZIATE"
 			label="Pagata"/>	
@@ -485,6 +489,10 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="QUOTE COFINANZIATE"
 			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>
 		<columnFieldProperty
 			name="im_manris_spesa_cofinanziata"
 			headerLabel="QUOTE COFINANZIATE"
@@ -523,6 +531,10 @@
 			headerLabel="QUOTE FINANZIATE"
 			label="Stanziata"/>
 		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
 			name="im_manris_spesa_finanziata"
 			headerLabel="QUOTE FINANZIATE"
 			label="Pagata"/>	
@@ -538,6 +550,10 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="QUOTE COFINANZIATE"
 			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>
 		<columnFieldProperty
 			name="im_manris_spesa_cofinanziata"
 			headerLabel="QUOTE COFINANZIATE"
@@ -628,6 +644,10 @@
 			headerLabel="QUOTE FINANZIATE"
 			label="Stanziata"/>
 		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
 			name="im_manris_spesa_finanziata"
 			headerLabel="QUOTE FINANZIATE"
 			label="Pagata"/>	
@@ -639,6 +659,10 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="QUOTE COFINANZIATE"
 			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>
 		<columnFieldProperty
 			name="im_manris_spesa_cofinanziata"
 			headerLabel="QUOTE COFINANZIATE"
@@ -673,6 +697,10 @@
 			headerLabel="QUOTE FINANZIATE"
 			label="Stanziata"/>
 		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
 			name="im_manris_spesa_finanziata"
 			headerLabel="QUOTE FINANZIATE"
 			label="Pagata"/>	
@@ -688,15 +716,19 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="QUOTE COFINANZIATE"
 			label="Stanziata"/>
-		<columnFieldProperty 
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
+			name="im_manris_spesa_cofinanziata"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Pagata"/>
+		<columnFieldProperty
 			name="imTotaleSpesa"
 			headerLabel="TOTALE QUOTE PE"
 			label="Corrente (A + B)"/> 
 		<columnFieldProperty
-			name="im_manris_spesa_cofinanziata"
-			headerLabel="QUOTE COFINANZIATE"
-			label="Pagata"/>	
-		<columnFieldProperty 
 			name="imTotaleSpesaRimodulato"
 			headerLabel="TOTALE QUOTE PE"
 			label="Rimodulata (A1 + B1)"/> 
@@ -768,6 +800,10 @@
 			headerLabel="QUOTE FINANZIATE"
 			label="Stanziata"/>
 		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
 			name="im_manris_spesa_finanziata"
 			headerLabel="QUOTE FINANZIATE"
 			label="Pagata"/>	
@@ -779,6 +815,10 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="QUOTE COFINANZIATE"
 			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>
 		<columnFieldProperty
 			name="im_manris_spesa_cofinanziata"
 			headerLabel="QUOTE COFINANZIATE"
@@ -806,6 +846,10 @@
 			headerLabel="QUOTE FINANZIATE"
 			label="Stanziata"/>
 		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
 			name="im_manris_spesa_finanziata"
 			headerLabel="QUOTE FINANZIATE"
 			label="Pagata"/>	
@@ -821,6 +865,10 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="QUOTE COFINANZIATE"
 			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>
 		<columnFieldProperty
 			name="im_manris_spesa_cofinanziata"
 			headerLabel="QUOTE COFINANZIATE"
@@ -853,6 +901,10 @@
 			headerLabel="QUOTE FINANZIATE"
 			label="Stanziata"/>
 		<columnFieldProperty
+			name="imUtilizzatoAssestatoFinanziamento"
+			headerLabel="QUOTE FINANZIATE"
+			label="Utilizzata"/>
+		<columnFieldProperty
 			name="im_manris_spesa_finanziata"
 			headerLabel="QUOTE FINANZIATE"
 			label="Pagata"/>	
@@ -864,6 +916,10 @@
 			name="imAssestatoSpesaCofinanziatoRimodulato"
 			headerLabel="QUOTE COFINANZIATE"
 			label="Stanziata"/>
+		<columnFieldProperty
+			name="imUtilizzatoAssestatoCofinanziamento"
+			headerLabel="QUOTE COFINANZIATE"
+			label="Utilizzata"/>
 		<columnFieldProperty
 			name="im_manris_spesa_cofinanziata"
 			headerLabel="QUOTE COFINANZIATE"

@@ -313,6 +313,7 @@ public class TerzoHome extends BulkHome {
                 .map(TerzoBulk::getCodiceUnivocoUfficioIpa)
                 .orElse(null);
     }
+
     @Override
     public SQLBuilder selectByClause(CompoundFindClause compoundfindclause)
             throws PersistencyException {

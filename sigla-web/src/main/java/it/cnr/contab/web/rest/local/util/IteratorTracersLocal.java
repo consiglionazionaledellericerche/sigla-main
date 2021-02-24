@@ -17,9 +17,19 @@
 
 package it.cnr.contab.web.rest.local.util;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
+import it.cnr.contab.web.rest.config.AccessoAllowed;
+import it.cnr.contab.web.rest.config.AccessoEnum;
+import it.cnr.jada.util.ejb.EJBTracer;
+
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -28,12 +38,14 @@ import javax.ws.rs.core.Response;
 @Path("/tracers")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@Api(value = "Tracer")
 public interface IteratorTracersLocal {
     @GET
+    @AccessoAllowed(value = AccessoEnum.XXXHTTPSESSIONXXXXXX)
+    @ApiOperation(value = "Resituisce gli iteratori ancori aperti",
+            notes = "Accesso consentito solo alle utenze abilitate a XXXHTTPSESSIONXXXXXX",
+            response = EJBTracer.IteratorTracer.class,
+            authorizations = @Authorization(value = "BASIC")
+    )
     Response map(@Context HttpServletRequest request) throws Exception;
-
-    @POST
-    @Path("/test")
-    Response test(@Context HttpServletRequest request) throws Exception;
-
 }

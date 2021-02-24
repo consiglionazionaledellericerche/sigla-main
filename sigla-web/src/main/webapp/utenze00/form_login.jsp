@@ -9,6 +9,9 @@
 		<script language="JavaScript" src="scripts/util.js"></script>
 		<script language="javascript" src="scripts/css.js"></script>
 		<title>Login</title>
+		<% if (request.getQueryString() != null && request.getQueryString().contains("error-code")) { %>
+		    <script>showMessage(1,"img/errormsg.gif","Nome utente o password sbagliati.")</script>
+		<%}%>
 	</head>
 	<body class="Workspace">
         <%
@@ -16,7 +19,7 @@
 	    if (bp!=null)
 			bp.openForm(pageContext);
 	    else { %>
-		<form name="mainForm" action="Login.do" method="post" onsubmit="return disableDblClick()">
+		<form name="mainForm" action="j_security_check" method="post" onsubmit="return disableDblClick()">
 			<input type="hidden" name="comando">
 			<input type="hidden" name="requestor" value="/SIGLA/utenze00/form_login.jsp">
 		<%
@@ -31,8 +34,8 @@
 					<tr>
 						<td colspan="2">
 							<table class="Panel" width="100%">
-								<tbody><tr><td><span class="FormLabel">Utente</span></td><td><input type="text" name="main.userid" class="FormInput" maxlength="200" size="15" onclick="cancelBubble(event)"></td></tr>
-								<tr><td><span class="FormLabel">Password</span></td><td><input type="password" name="main.password" class="FormInput" maxlength="200" size="15" onfocus="focused(this)"></td></tr>
+								<tbody><tr><td><span class="FormLabel">Utente</span></td><td><input type="text" name="j_username" class="FormInput" maxlength="200" size="15" onclick="cancelBubble(event)"></td></tr>
+								<tr><td><span class="FormLabel">Password</span></td><td><input type="password" name="j_password" class="FormInput" maxlength="200" size="15" onfocus="focused(this)"></td></tr>
 								<tr><td>&nbsp;</td></tr>
 							</tbody></table>
 						</td>

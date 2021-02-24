@@ -80,23 +80,57 @@ public class Voce_ivaBulk extends Voce_ivaBase {
 	
 	public final static String ESCLUSE_ART_15   = "N1";
 	public final static String NON_SOGGETTE    	= "N2";
+	public final static String NON_SOGGETTE_N2_1   = "N2.1";
+	public final static String NON_SOGGETTE_N2_2   = "N2.2";
+	public final static String NON_IMPONIBILI_N3_1   = "N3.1";
+	public final static String NON_IMPONIBILI_N3_2   = "N3.2";
+	public final static String NON_IMPONIBILI_N3_3   = "N3.3";
+	public final static String NON_IMPONIBILI_N3_4   = "N3.4";
+	public final static String NON_IMPONIBILI_N3_5   = "N3.5";
+	public final static String NON_IMPONIBILI_N3_6   = "N3.6";
 	public final static String NON_IMPONIBILI  	= "N3";
 	public final static String ESENTI		  	= "N4";
 	public final static String REGIME_MARGINE  	= "N5";
 	public final static String REVERSE_CHARGE  	= "N6";
+	public final static String REVERSE_CHARGE_N6_1   = "N6.1";
+	public final static String REVERSE_CHARGE_N6_2   = "N6.2";
+	public final static String REVERSE_CHARGE_N6_3   = "N6.3";
+	public final static String REVERSE_CHARGE_N6_4   = "N6.4";
+	public final static String REVERSE_CHARGE_N6_5   = "N6.5";
+	public final static String REVERSE_CHARGE_N6_6   = "N6.6";
+	public final static String REVERSE_CHARGE_N6_7   = "N6.7";
+	public final static String REVERSE_CHARGE_N6_8   = "N6.8";
+	public final static String REVERSE_CHARGE_N6_9   = "N6.9";
 	public final static String IVA_ALTRO_STATO  = "N7";
 
-	
+
 	public final static Dictionary naturaOperazioniNonImponibiliKeys;
 	static {
 		naturaOperazioniNonImponibiliKeys = new it.cnr.jada.util.OrderedHashtable();
-		naturaOperazioniNonImponibiliKeys.put(ESCLUSE_ART_15,"Escluse ex art. 15");
-		naturaOperazioniNonImponibiliKeys.put(NON_SOGGETTE,"Non Soggette");
-		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI,"Non Imponibili");	
-		naturaOperazioniNonImponibiliKeys.put(ESENTI,"Esenti");	
-		naturaOperazioniNonImponibiliKeys.put(REGIME_MARGINE,"Regime del Margine");	
-		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE,"Reverse charge");
-		naturaOperazioniNonImponibiliKeys.put(IVA_ALTRO_STATO,"IVA assolta in altro stato UE (vendite a distanza ex art. 40 c. 3 e 4 e art. 41 c. 1 lett. b,  DL 331/93; prestazione di servizi di telecomunicazioni, tele-radiodiffusione ed elettronici ex art. 7-sexies lett. f, g, art. 74-sexies DPR 633/72)");
+		naturaOperazioniNonImponibiliKeys.put(ESCLUSE_ART_15,"N1-Escluse ex art. 15");
+		naturaOperazioniNonImponibiliKeys.put(NON_SOGGETTE,"N2-Non Soggette");
+		naturaOperazioniNonImponibiliKeys.put(NON_SOGGETTE_N2_1,"N2.1-Non soggette ad IVA ai sensi degli artt. da 7 a 7-septies del DPR 633/72");
+		naturaOperazioniNonImponibiliKeys.put(NON_SOGGETTE_N2_2,"N2.2-Non soggette - altri casi");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI,"N3-Non Imponibili");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI_N3_1,"N3.1-Non imponibili - esportazioni");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI_N3_2,"N3.2-Non imponibili - cessioni intracomunitarie");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI_N3_3,"N3.3-Non imponibili - cessioni verso San Marino");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI_N3_4,"N3.4-Non imponibili - operazioni assimilate alle cessioni all'esportazione");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI_N3_5,"N3.5-Non imponibili - a seguito di dichiarazioni d'intento");
+		naturaOperazioniNonImponibiliKeys.put(NON_IMPONIBILI_N3_6,"N3.6-Non imponibili - altre operazioni che non concorrono alla formazione del plafond");
+		naturaOperazioniNonImponibiliKeys.put(ESENTI,"N4-Esenti");
+		naturaOperazioniNonImponibiliKeys.put(REGIME_MARGINE,"N5-Regime del Margine");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE,"N6-Reverse charge");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_1,"N6.1-Inversione contabile - cessione di rottami e altri materiali di recupero");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_2,"N6.2-Inversione contabile - cessione di oro e argento puro");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_3,"N6.3-Inversione contabile - subappalto nel settore edile");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_4,"N6.4-Inversione contabile - cessione di fabbricati");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_5,"N6.5-Inversione contabile - cessione di telefoni cellulari");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_6,"N6.6-Inversione contabile - cessione di prodotti elettronici");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_7,"N6.7-Inversione contabile - prestazioni comparto edile e settori connessi");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_8,"N6.8-Inversione contabile - operazioni settore energetico");
+		naturaOperazioniNonImponibiliKeys.put(REVERSE_CHARGE_N6_9,"N6.9-Inversione contabile - altri casi");
+		naturaOperazioniNonImponibiliKeys.put(IVA_ALTRO_STATO,"N7-IVA assolta in altro stato UE (vendite a distanza ex art. 40 c. 3 e 4 e art. 41 c. 1 lett. b,  DL 331/93; prestazione di servizi di telecomunicazioni, tele-radiodiffusione ed elettronici ex art. 7-sexies lett. f, g, art. 74-sexies DPR 633/72)");
 	};
 
  public Voce_ivaBulk() {

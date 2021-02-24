@@ -24,6 +24,7 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import it.cnr.contab.client.docamm.FatturaAttiva;
 import org.springframework.util.StringUtils;
 
 import javax.activation.DataHandler;
@@ -378,6 +379,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 			ObjectFactory factory = new ObjectFactory();
 			FatturaElettronicaType fatturaType = factory.createFatturaElettronicaType();
+			fatturaType.setSistemaEmittente(Utility.APPLICATION_TITLE.substring(0, 5));
 			fatturaType.setVersione(fattura.getCodiceUnivocoUfficioIpa()==null ? FormatoTrasmissioneType.FPR_12 : FormatoTrasmissioneType.FPA_12);
 			FatturaElettronicaHeaderType fatturaHeaderType = factory.createFatturaElettronicaHeaderType();
 			TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
@@ -423,7 +425,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 
 				if (terzoCnr.getAnagrafico() == null || terzoCnr.getAnagrafico().getPartita_iva() == null)
 					throw new ApplicationException("Impossibile Procedere! Manca la Partita Iva per il codice Anagrafica: "+terzoCnr.getCd_anag()+" del terzo: "+ terzoCnr.getCd_terzo()); 
-				anagraficiCedenteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, terzoCnr));
+				anagraficiCedenteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, terzoCnr, null));
 
 				if (terzoCnr.getAnagrafico().getCodice_fiscale() == null)
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per il codice Anagrafica: "+terzoCnr.getCd_anag()+" del terzo: "+ terzoCnr.getCd_terzo()); 
@@ -452,7 +454,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				if (fattura.getFl_intra_ue() && cliente.getAnagrafico().isPersonaGiuridica()  && cliente.getCodiceUnivocoUfficioIpa() == null && cliente.getAnagrafico().getPartita_iva() == null){
 					throw new ApplicationException("Impossibile Procedere! E' necessario indicare la partita IVA"); 
 				}
-				if ((!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) && fattura.getCodice_fiscale() == null){
+				if ((!fattura.isFatturaEstera() || !cliente.getAnagrafico().isPersonaGiuridica()) && (fattura.getCodice_fiscale() == null && !cliente.getAnagrafico().isGruppoIVA())){
 					throw new ApplicationException("Impossibile Procedere! Manca il Codice Fiscale per la Fattura: "+fattura.getEsercizio()+"-"+fattura.getPg_fattura_attiva()); 
 				}
 				if (!fattura.isFatturaEstera() ) {
@@ -460,9 +462,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 				}
 
 				if (cliente.getAnagrafico() != null && cliente.getAnagrafico().getPartita_iva() != null && (!cliente.getAnagrafico().isEntePubblico() || cliente.getAnagrafico().isPartitaIvaVerificata() || (fattura.getCodice_fiscale() != null && cliente.getAnagrafico().getPartita_iva().compareTo(fattura.getCodice_fiscale())!=0) )){
-					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
+					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente, fattura));
 				} else if (!StringUtils.hasLength(datiAnagraficiClienteType.getCodiceFiscale())){
-					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente));
+					datiAnagraficiClienteType.setIdFiscaleIVA(impostaIdFiscale(userContext, factory, cliente, fattura));
 				} else if (fattura.isFatturaEstera() && cliente.getAnagrafico().isPersonaFisica()){
 					IdFiscaleType idFiscale= factory.createIdFiscaleType();
 					idFiscale.setIdCodice("99999999999");
@@ -854,10 +856,6 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		return terzo.getAnagrafico().getCodice_fiscale();
 	}
 
-	private String impostaPartitaIva(UserContext userContext, TerzoBulk terzo) throws ComponentException{
-		return terzo.getAnagrafico().getPartita_iva();
-	}
-
 	private String impostaCodicePaese(UserContext userContext, TerzoBulk terzo) throws ComponentException, PersistencyException{
 		return impostaCodicePaese(userContext, terzo.getComune_sede());
 	}
@@ -880,9 +878,9 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 		return idTrasmittente;
 	}
 
-	private IdFiscaleType impostaIdFiscale(UserContext userContext, ObjectFactory factory, TerzoBulk terzo) throws ComponentException, PersistencyException{
+	private IdFiscaleType impostaIdFiscale(UserContext userContext, ObjectFactory factory, TerzoBulk terzo, Fattura_attivaBulk fattura) throws ComponentException, PersistencyException{
 		IdFiscaleType idFiscale= factory.createIdFiscaleType();
-		idFiscale.setIdCodice(impostaPartitaIva(userContext, terzo));
+		idFiscale.setIdCodice(fattura == null ? terzo.getAnagrafico().getPartita_iva() : fattura.getPartita_iva());
 		idFiscale.setIdPaese(impostaCodicePaese(userContext, terzo));
 		return idFiscale;
 	}

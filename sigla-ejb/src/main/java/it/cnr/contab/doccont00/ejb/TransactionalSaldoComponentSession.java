@@ -20,8 +20,13 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
+import it.cnr.contab.pdg00.bulk.Pdg_variazioneBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.varstanz00.bulk.Var_stanz_resBulk;
+import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
 public class TransactionalSaldoComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements SaldoComponentSession {
@@ -547,4 +552,75 @@ public java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserCon
 		}
 	}
 }
+	public void checkBloccoImpegniNatfin(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			invoke("checkBloccoDisponibilitaResidue",new Object[] {
+					userContext,
+					cdr,
+					cdLineaAttivita,
+					elementoVoceBulk});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public void checkBloccoImpegniNatfin(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			invoke("checkBloccoDisponibilitaResidue",new Object[] {
+					userContext,
+					workpackageBulk,
+					elementoVoceBulk});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public void checkBloccoImpegniNatfin(UserContext userContext, Var_stanz_resBulk variazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			invoke("checkBloccoDisponibilitaResidue",new Object[] {
+					userContext,
+					variazione});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
+	public void checkBloccoLimiteClassificazione(UserContext userContext, Pdg_variazioneBulk variazione) throws RemoteException,it.cnr.jada.comp.ComponentException {
+		try {
+			invoke("checkBloccoLimiteClassificazione",new Object[] {
+					userContext,
+					variazione});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 }

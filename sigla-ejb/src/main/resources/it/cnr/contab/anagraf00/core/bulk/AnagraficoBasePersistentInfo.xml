@@ -39,6 +39,11 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
 		<columnMapping
+				columnName="DT_INI_VAL_GRUPPO_IVA"
+				propertyName="dtIniValGruppoIva"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
+		<columnMapping
 			columnName="NUM_ISCRIZ_ALBO"
 			propertyName="num_iscriz_albo"
 			sqlTypeName="VARCHAR"
@@ -373,6 +378,8 @@
 		name="num_iscriz_albo" />
 	<persistentProperty
 		name="dt_canc" />
+	<persistentProperty
+			name="dtIniValGruppoIva" />
 	<persistentProperty
 		name="cap_comune_fiscale" />
 	<persistentProperty

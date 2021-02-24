@@ -1,0 +1,91 @@
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk"
+	homeClassName="it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiHome" >
+
+	<defaultColumnMap
+			tableName="MANDATO">
+		<columnMapping
+				columnName="CD_CDS"
+				propertyName="cd_cds"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false" />
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="false" />
+		<columnMapping
+				columnName="PG_MANDATO"
+				propertyName="pg_mandato"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="false" />
+		<columnMapping
+				columnName="DT_PAGAMENTO"
+				propertyName="dt_pagamento"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
+		<columnMapping
+				columnName="IMPORTO"
+				propertyName="importo"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="false" />
+		<columnMapping
+				columnName="denominazioneSede"
+				propertyName="denominazioneSede"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="false" />
+		<columnMapping
+				columnName="cdLiv4"
+				propertyName="cdLiv4"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="false" />
+		<columnMapping
+				columnName="dsLiv4"
+				propertyName="dsLiv4"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="false" />
+	</defaultColumnMap>
+
+	<persistentProperty
+			name="cd_cds"/>
+	<persistentProperty
+			name="esercizio"/>
+	<persistentProperty
+			name="pg_mandato"/>
+	<persistentProperty
+			name="dt_pagamento"/>
+	<persistentProperty
+			name="importo"/>
+	<persistentProperty
+			name="denominazioneSede"/>
+	<persistentProperty
+			name="cdLiv4"/>
+	<persistentProperty
+			name="dsLiv4"/>
+
+</SQLPersistentInfo>

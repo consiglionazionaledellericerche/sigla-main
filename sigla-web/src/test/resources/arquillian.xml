@@ -21,6 +21,8 @@
         <property name="browserCapabilities">chrome</property>
     </extension>
     <container qualifier="thorntail" default="true" mode="custom">
-        <protocol type="Servlet 3.0"/>
+        <protocol type="Servlet 3.0">
+            <property name="executionType">MANAGED</property>
+        </protocol>
     </container>
 </arquillian>

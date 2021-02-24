@@ -18,15 +18,24 @@
 package it.cnr.contab.config00.sto.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.*;
+
+import java.rmi.RemoteException;
 import java.sql.*;
+
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.ComuneHome;
 import it.cnr.contab.config00.pdcfin.bulk.*;
+import it.cnr.contab.ordmag.anag00.LuogoConsegnaMagBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
+
+import javax.ejb.EJBException;
 
 /**
  * Home dell'unità organizzativa bulk
@@ -572,4 +581,5 @@ public boolean verificaEsercizioPreventivo( Unita_organizzativaBulk uo ) throws 
 			throw new PersistencyException( e );
 	}
 }
+
 }

@@ -17,6 +17,10 @@
 
 package it.cnr.contab.reports.service;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.GsonBuilder;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Report;
 import it.cnr.contab.reports.ejb.OfflineReportComponentSession;
@@ -44,7 +48,6 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.InitializingBean;
 
 public class PrintService implements InitializingBean {
-	private Gson gson;
 
 	private String serverPrint;
 
@@ -57,10 +60,6 @@ public class PrintService implements InitializingBean {
 	}
 
 	private OfflineReportComponentSession offlineReportComponent;
-
-	public void setGson(Gson gson) {
-		this.gson = gson;
-	}
 	
 	public void setOfflineReportComponent(
 			OfflineReportComponentSession offlineReportComponent) {
@@ -83,6 +82,9 @@ public class PrintService implements InitializingBean {
 			);
 	        method.addHeader("Accept-Language", Locale.getDefault().toString());
 	        method.setHeader("Content-Type", "application/json;charset=UTF-8");
+			GsonBuilder builder = new GsonBuilder();
+			builder.setExclusionStrategies( new HiddenAnnotationExclusionStrategy() );
+			Gson gson = builder.create();
 	        HttpEntity requestEntity = new ByteArrayEntity(gson.toJson(printSpooler).getBytes());
 	       
 	        method.setEntity(requestEntity);
@@ -106,5 +108,15 @@ public class PrintService implements InitializingBean {
 				.filter(OfflineReportComponentSession.class::isInstance)
 				.map(OfflineReportComponentSession.class::cast)
 				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb BREPORTS_EJB_OfflineReportComponentSession"));
+	}
+
+	public class HiddenAnnotationExclusionStrategy implements ExclusionStrategy {
+		public boolean shouldSkipClass(Class<?> clazz) {
+			return clazz.getAnnotation(JsonIgnore.class) != null;
+		}
+
+		public boolean shouldSkipField(FieldAttributes f) {
+			return f.getAnnotation(JsonIgnore.class) != null;
+		}
 	}
 }

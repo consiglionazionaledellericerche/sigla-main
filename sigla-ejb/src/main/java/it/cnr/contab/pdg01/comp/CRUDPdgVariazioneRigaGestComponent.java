@@ -56,6 +56,7 @@ import it.cnr.contab.pdg00.ejb.PdGVariazioniComponentSession;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_entrata_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_gestBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_variazione_riga_spesa_gestBulk;
+import it.cnr.contab.pdg01.bulk.Tipo_variazioneBulk;
 import it.cnr.contab.pdg01.ejb.CRUDPdgVariazioneGestionaleComponentSession;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseBulk;
 import it.cnr.contab.prevent01.bulk.Pdg_modulo_speseHome;
@@ -613,71 +614,118 @@ public class CRUDPdgVariazioneRigaGestComponent extends it.cnr.jada.comp.CRUDCom
 				home.setFetchPolicy("it.cnr.contab.progettiric00.comp.ProgettoRicercaComponent.find");
 				ProgettoBulk progetto = (ProgettoBulk)home.findByPrimaryKey(dett.getProgetto());
 				getHomeCache(userContext).fetchAll(userContext);
+				/*
+					Il filtro sulle voci di bilancio presenti nel piano economico del progetto va fatto se:
+					1. il progetto prevede il piano economico
+					2. il progetto rientra nel periodo di attivazione dei progetti
+				 */
 				if (progetto.isPianoEconomicoRequired() &&
-						Optional.ofNullable(progetto.getOtherField().getAnnoFine()).map(annoFine->annoFine.compareTo(annoFrom.intValue())>=0).orElse(Boolean.TRUE)) {
-					Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome)getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
-			    	SQLBuilder assSql = assHome.createSQLBuilder();
-			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO",SQLBuilder.EQUALS,dett.getProgetto().getPg_progetto());
-			    	assSql.addSQLClause(FindClause.AND,"ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO",SQLBuilder.EQUALS,it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
-	
-					List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
-					List<Progetto_rimodulazione_voceBulk> listRim = new BulkList<Progetto_rimodulazione_voceBulk>();
-					if (Optional.ofNullable(dett.getPdg_variazione().getProgettoRimodulazione())
-							.filter(rim->rim.getPg_progetto().equals(dett.getProgetto().getPg_progetto()))
-							.isPresent()) {
-						Progetto_rimodulazioneHome rimHome = (Progetto_rimodulazioneHome)getHome(userContext, Progetto_rimodulazioneBulk.class);
-						listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(dett.getPdg_variazione().getProgettoRimodulazione()));
-					}
-					
-					if (list.isEmpty() && listRim.isEmpty())
-						sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,-100);
-					else {
-						//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
-						//all'utente di effettuare una variazione negativa
-						List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome)getHome(userContext, V_saldi_voce_progettoBulk.class))
-								.cercaSaldoVoce(progetto.getPg_progetto()).stream()
-												.filter(el->el.getAssestato().compareTo(BigDecimal.ZERO)>0 ||
-														el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO)>0)
-												.collect(Collectors.toList());
+						Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+								.filter(annoFine->annoFine.compareTo(annoFrom.intValue())>=0)
+								.isPresent()) {
+					/*
+						se il progetto è attivo (anno fine del progetto maggiore o uguale all'anno di esercizio) occorre sempre controllare le voci associate al piano economico del progetto
+					 */
+					if (Optional.ofNullable(progetto.getOtherField().getAnnoFine())
+								.filter(annoFine->annoFine.compareTo(CNRUserContext.getEsercizio(userContext))>=0)
+								.isPresent()) {
+						Ass_progetto_piaeco_voceHome assHome = (Ass_progetto_piaeco_voceHome) getHome(userContext, Ass_progetto_piaeco_voceBulk.class);
+						SQLBuilder assSql = assHome.createSQLBuilder();
+						assSql.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.PG_PROGETTO", SQLBuilder.EQUALS, dett.getProgetto().getPg_progetto());
+						assSql.addSQLClause(FindClause.AND, "ASS_PROGETTO_PIAECO_VOCE.ESERCIZIO_PIANO", SQLBuilder.EQUALS, it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
 
-						sql.openParenthesis(FindClause.AND);
-						for (Ass_progetto_piaeco_voceBulk assVoce : list) {
-							//Se la voce è stata eliminata nella rimodulazione la stessa non viene proposta
-							if (listRim.stream().filter(voceRim->voceRim.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
-									.filter(Progetto_rimodulazione_voceBulk::isTiOperazioneEliminato)
-									.filter(voceRim->!vociMovimentate.stream()
-												.filter(voceMov->voceMov.getEsercizio_voce().equals(voceRim.getElementoVoce().getEsercizio()))
-												.filter(voceMov->voceMov.getTi_appartenenza().equals(voceRim.getElementoVoce().getTi_appartenenza()))
-												.filter(voceMov->voceMov.getTi_gestione().equals(voceRim.getElementoVoce().getTi_gestione()))
-												.filter(voceMov->voceMov.getCd_elemento_voce().equals(voceRim.getElementoVoce().getCd_elemento_voce()))
-												.findFirst().isPresent())
-									.findFirst().isPresent())
-								continue;
-							Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
-							if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
-								sql.openParenthesis(FindClause.OR);
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
-								sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
-								sql.closeParenthesis();
-							}
+						List<Ass_progetto_piaeco_voceBulk> list = assHome.fetchAll(assSql);
+						List<Progetto_rimodulazione_voceBulk> listRim = new BulkList<Progetto_rimodulazione_voceBulk>();
+						if (Optional.ofNullable(dett.getPdg_variazione().getProgettoRimodulazione())
+								.filter(rim -> rim.getPg_progetto().equals(dett.getProgetto().getPg_progetto()))
+								.isPresent()) {
+							Progetto_rimodulazioneHome rimHome = (Progetto_rimodulazioneHome) getHome(userContext, Progetto_rimodulazioneBulk.class);
+							listRim = new BulkList<>(rimHome.findDettagliVoceRimodulazione(dett.getPdg_variazione().getProgettoRimodulazione()));
 						}
-						//Aggiungo le voci di bilancio inserite nella rimodulazione
-						for (Progetto_rimodulazione_voceBulk assRimVoce : listRim) {
-							if (assRimVoce.isTiOperazioneAggiunto()) {
-								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assRimVoce.getElementoVoce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio( userContext ));
-								if (Optional.ofNullable(voceNew).flatMap(el->Optional.ofNullable(el.getCd_elemento_voce())).isPresent()){
+
+						if (list.isEmpty() && listRim.isEmpty())
+							sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, -100);
+						else {
+							//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
+							//all'utente di effettuare una variazione negativa
+							List<V_saldi_voce_progettoBulk> vociMovimentate = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
+									.cercaSaldoVoce(progetto.getPg_progetto()).stream()
+									.filter(el -> el.getAssestato().compareTo(BigDecimal.ZERO) > 0 ||
+											el.getUtilizzatoAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0)
+									.collect(Collectors.toList());
+
+							sql.openParenthesis(FindClause.AND);
+							for (Ass_progetto_piaeco_voceBulk assVoce : list) {
+								//Se la voce è stata eliminata nella rimodulazione la stessa non viene proposta
+								if (listRim.stream().filter(voceRim -> voceRim.getElementoVoce().equalsByPrimaryKey(assVoce.getElemento_voce()))
+										.filter(Progetto_rimodulazione_voceBulk::isTiOperazioneEliminato)
+										.filter(voceRim -> !vociMovimentate.stream()
+												.filter(voceMov -> voceMov.getEsercizio_voce().equals(voceRim.getElementoVoce().getEsercizio()))
+												.filter(voceMov -> voceMov.getTi_appartenenza().equals(voceRim.getElementoVoce().getTi_appartenenza()))
+												.filter(voceMov -> voceMov.getTi_gestione().equals(voceRim.getElementoVoce().getTi_gestione()))
+												.filter(voceMov -> voceMov.getCd_elemento_voce().equals(voceRim.getElementoVoce().getCd_elemento_voce()))
+												.findFirst().isPresent())
+										.findFirst().isPresent())
+									continue;
+								Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assVoce.getElemento_voce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+								if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
 									sql.openParenthesis(FindClause.OR);
-									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO",SQLBuilder.EQUALS,voceNew.getEsercizio());
-									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA",SQLBuilder.EQUALS,voceNew.getTi_appartenenza());
-									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE",SQLBuilder.EQUALS,voceNew.getTi_gestione());
-									sql.addSQLClause(FindClause.AND,"V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE",SQLBuilder.EQUALS,voceNew.getCd_elemento_voce());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
 									sql.closeParenthesis();
 								}
 							}
+							//Aggiungo le voci di bilancio inserite nella rimodulazione
+							for (Progetto_rimodulazione_voceBulk assRimVoce : listRim) {
+								if (assRimVoce.isTiOperazioneAggiunto()) {
+									Elemento_voceBulk voceNew = Utility.createCRUDConfigAssEvoldEvnewComponentSession().getCurrentElementoVoce(userContext, assRimVoce.getElementoVoce(), it.cnr.contab.utenze00.bp.CNRUserContext.getEsercizio(userContext));
+									if (Optional.ofNullable(voceNew).flatMap(el -> Optional.ofNullable(el.getCd_elemento_voce())).isPresent()) {
+										sql.openParenthesis(FindClause.OR);
+										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+										sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+										sql.closeParenthesis();
+									}
+								}
+							}
+							sql.closeParenthesis();
 						}
-						sql.closeParenthesis();
+					} else {
+						/*
+							Progetto scaduto.
+							1) Se variazione di maggiore entrata/spesa su stesso istituto e/o istituti diversi devo poter associare qualsiasi voce di bilancio
+							1) Se variazione di tipo prelievo dai fondi devo poter associare qualsiasi voce di bilancio
+							2) Per altre variazioni devo poter movimentare solo le voci di bilancio movimentate e non associate che hanno un assestato da spostare
+						 */
+						if (!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_STESSO_ISTITUTO.equals(dett.getPdg_variazione().getTipologia()) &&
+							!Tipo_variazioneBulk.VARIAZIONE_POSITIVA_ISTITUTI_DIVERSI.equals(dett.getPdg_variazione().getTipologia()) &&
+						    !Tipo_variazioneBulk.PRELIEVO_FONDI.equals(dett.getPdg_variazione().getTipologia())) {
+							//Recupero la lista delle voci movimentate perchè se tra quelle da eliminare occorre comunque selezionarle per consentire
+							//all'utente di effettuare una variazione negativa
+							List<V_saldi_voce_progettoBulk> vociConDisponibilita = ((V_saldi_voce_progettoHome) getHome(userContext, V_saldi_voce_progettoBulk.class))
+									.cercaSaldoVoce(progetto.getPg_progetto()).stream()
+									.filter(el -> el.getDispAssestatoFinanziamento().compareTo(BigDecimal.ZERO) > 0 ||
+											el.getDispAssestatoCofinanziamento().compareTo(BigDecimal.ZERO) > 0)
+									.collect(Collectors.toList());
+
+							if (vociConDisponibilita.isEmpty())
+								sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, -100);
+							else {
+								sql.openParenthesis(FindClause.AND);
+								vociConDisponibilita.stream().forEach(voceNew->{
+									sql.openParenthesis(FindClause.OR);
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.ESERCIZIO", SQLBuilder.EQUALS, voceNew.getEsercizio());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_APPARTENENZA", SQLBuilder.EQUALS, voceNew.getTi_appartenenza());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.TI_GESTIONE", SQLBuilder.EQUALS, voceNew.getTi_gestione());
+									sql.addSQLClause(FindClause.AND, "V_ELEMENTO_VOCE_PDG_SPE.CD_ELEMENTO_VOCE", SQLBuilder.EQUALS, voceNew.getCd_elemento_voce());
+									sql.closeParenthesis();
+								});
+								sql.closeParenthesis();
+							}
+						}
 					}
 				}
 			}

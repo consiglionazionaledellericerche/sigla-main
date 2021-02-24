@@ -97,6 +97,7 @@ import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageDriver;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 
 
 @Stateless
@@ -244,7 +245,7 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 Source xslDoc = null;
                 if (formatoTrasmissione.equals("FPA12")) {
-                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.1.xsl"));
                 } else if (formatoTrasmissione.equals("SDI11")) {
                     xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
                 } else {
@@ -734,22 +735,25 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
             if (fatturaElettronicaBody.getDatiGenerali() != null &&
                     fatturaElettronicaBody.getDatiGenerali().getDatiGeneraliDocumento() != null) {
                 DatiGeneraliDocumentoType datiGeneraliDocumento = fatturaElettronicaBody.getDatiGenerali().getDatiGeneraliDocumento();
-                int indexTributo = 1;
+                int indexTributo = 0;
                 if (datiGeneraliDocumento.getDatiRitenuta() != null) {
                     List<String> anomalie = new ArrayList<String>();
-                    DocumentoEleTributiBulk docTributo = new DocumentoEleTributiBulk(idTrasmittente.getIdPaese(),
-                            idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long) progressivoTestata, (long) indexTributo);
-                    docTributo.setTipoRiga("RIT");
-                    if (datiGeneraliDocumento.getDatiRitenuta().getTipoRitenuta() != null)
-                        docTributo.setTipoTributo(datiGeneraliDocumento.getDatiRitenuta().getTipoRitenuta().value());
-                    docTributo.setImporto(truncBigDecimal(datiGeneraliDocumento.getDatiRitenuta().getImportoRitenuta()));
-                    docTributo.setAliquota(truncBigDecimal(datiGeneraliDocumento.getDatiRitenuta().getAliquotaRitenuta()));
-                    if (datiGeneraliDocumento.getDatiRitenuta().getCausalePagamento() != null)
-                        docTributo.setCausalePagamento(datiGeneraliDocumento.getDatiRitenuta().getCausalePagamento().value());
-                    if (!anomalie.isEmpty())
-                        docTributo.setAnomalie(StringUtils.join(anomalie.toArray(), " - "));
-                    docTributo.setToBeCreated();
-                    docTestata.addToDocEleTributiColl(docTributo);
+                    for (DatiRitenutaType ritenutaType : datiGeneraliDocumento.getDatiRitenuta()){
+                        indexTributo++;
+                        DocumentoEleTributiBulk docTributo = new DocumentoEleTributiBulk(idTrasmittente.getIdPaese(),
+                                idTrasmittente.getIdCodice(), identificativoSdI.longValue(), (long) progressivoTestata, (long) indexTributo);
+                        docTributo.setTipoRiga("RIT");
+                        if (ritenutaType.getTipoRitenuta() != null)
+                            docTributo.setTipoTributo(ritenutaType.getTipoRitenuta().value());
+                        docTributo.setImporto(truncBigDecimal(ritenutaType.getImportoRitenuta()));
+                        docTributo.setAliquota(truncBigDecimal(ritenutaType.getAliquotaRitenuta()));
+                        if (ritenutaType.getCausalePagamento() != null)
+                            docTributo.setCausalePagamento(ritenutaType.getCausalePagamento().value());
+                        if (!anomalie.isEmpty())
+                            docTributo.setAnomalie(StringUtils.join(anomalie.toArray(), " - "));
+                        docTributo.setToBeCreated();
+                        docTestata.addToDocEleTributiColl(docTributo);
+                    }
                 }
                 if (datiGeneraliDocumento.getDatiCassaPrevidenziale() != null &&
                         !datiGeneraliDocumento.getDatiCassaPrevidenziale().isEmpty()) {
@@ -988,7 +992,8 @@ public class RicezioneFatture implements it.cnr.contab.docamm00.ejb.RicezioneFat
     }
 
     public void riceviFatturaSIGLA(BigInteger identificativoSdI,
-                                   String nomeFile, String replyTo, DataHandler file, String nomeFileMetadati,
+                                   String nomeFile, String replyTo, DataHandler file,
+                                   String nomeFileMetadati,
                                    DataHandler metadati) throws ComponentException {
         FileSdIConMetadatiType parametersIn = new FileSdIConMetadatiType();
         parametersIn.setIdentificativoSdI(identificativoSdI);

@@ -1222,7 +1222,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                         .sdoppiaScadenzaInAutomatico(
                                 context.getUserContext(),
                                 scadenzaVecchia,
-                                scadenzaVecchia
+                                    scadenzaVecchia
                                         .getIm_scadenza()
                                         .subtract(
                                                 dettaglioSelezionato
@@ -1567,7 +1567,7 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                 TransformerFactory tFactory = TransformerFactory.newInstance();
                 Source xslDoc = null;
                 if (documentoEleTestata.getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("FPA12")){
-                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+                    xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.1.xsl"));
                 } else if (documentoEleTestata.getDocumentoEleTrasmissione().getFormatoTrasmissione().equals("SDI11")){
                     xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
                 } else {
