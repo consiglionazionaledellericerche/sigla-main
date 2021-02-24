@@ -46,7 +46,7 @@ jobs:
             git config user.name "marco.spasiano"
       - run:
           name: Deploy docs to gh-pages branch
-          command: gh-pages --dist _build/html
+          command: gh-pages --dotfiles --message "[skip ci] Updates" --dist _build/html
 workflows:
   version: 2
   build-and-deploy:
