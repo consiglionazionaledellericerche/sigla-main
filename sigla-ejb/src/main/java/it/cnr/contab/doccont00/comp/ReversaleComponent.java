@@ -3890,6 +3890,7 @@ REVERSALE
             sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, reversale.getEsercizio());
             sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, reversale.getCd_cds());
             sql.addClause("AND", "pg_reversale", SQLBuilder.EQUALS, reversale.getPg_reversale());
+            sql.addClause("AND", "stato", SQLBuilder.NOT_EQUALS, ReversaleBulk.STATO_REVERSALE_ANNULLATO);
             sql.addTableToHeader("REVERSALE_RIGA");
             sql.addSQLJoin( "REVERSALE_RIGA.ESERCIZIO", "REVERSALE.ESERCIZIO");
             sql.addSQLJoin( "REVERSALE_RIGA.CD_CDS", "REVERSALE.CD_CDS");
