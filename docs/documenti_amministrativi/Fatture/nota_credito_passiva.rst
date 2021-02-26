@@ -72,6 +72,7 @@ Dopo la contabilizzazione del dettaglio il sistema si posiziona sul folder storn
 
 Se la nota di credito è collegata ad una fattura pagata, e non sono presenti fatture dello stesso fornitore da pagare, il sistema, dopo la contabilizzazione del dettaglio,  propone la maschera della creazione e ricerca dell’accertamento. Dopo la compilazione dell’accertamento cliccando  su “riporta” si ritorna su questo folder e si devono scegliere le modalità di incasso (c/c ente). 
 
+**RIVEDERE**
 **PROTOCOLLO**
 
 Ai fini dell’inserimento nel registro IVA e per l’assegnazione del relativo numero al documento fiscale, è necessario protocollare.  
