@@ -74,5 +74,8 @@ Se la nota di credito è collegata ad una fattura pagata, e non sono presenti fa
 
 **PROTOCOLLO**
 
+Ai fini dell’inserimento nel registro IVA e per l’assegnazione del relativo numero al documento fiscale, è necessario protocollare.  
+Con l'introduzione della Fatturazione elettronica non è più necessario effettuare il Protocollo manuale attraverso l'apposita funzionalità perchè questo avviene automaticamente in fase di registrazione del documento elettronico.
+
 
 
