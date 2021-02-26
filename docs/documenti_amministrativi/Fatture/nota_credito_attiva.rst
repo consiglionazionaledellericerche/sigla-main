@@ -1,6 +1,6 @@
-============
-Nota Credito
-============
+===================
+Nota Credito Attiva
+===================
 
 Per poter procedere alla registrazione di una nota di credito bisogna entrare nella funzionalità della gestione delle Fatture Attive, richiamare la fattura attiva a cui si riferisce la nota di credito e cliccare sul pulsante 'Genera Nota Credito'. E’ sempre possibile emettere una nota di credito su fatture emesse nell’esercizio in corso (siano esse in stato “contabilizzato” o “incassato”); è possibile emettere note di credito su fatture emesse negli esercizi precedenti se sono in stato contabilizzato, qualora invece siano state incassate è possibile emettere la nota di credito solo se l’incasso è avvenuto nell’esercizio in corso.
 
