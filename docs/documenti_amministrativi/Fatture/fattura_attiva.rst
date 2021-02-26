@@ -16,9 +16,6 @@ Tutto il processo e le informazioni sono stati dettagliati nell'apposito paragra
 
 :doc:`Fattura Attiva Elettronica<fattura_attiva_elettronica>`
 
-
-:download:`Manuale Fatturazione elettronica Attiva</_static/MANUALE_FATT_ELE_ATT.pdf>`
-
 L'emissione di un documento attivo segue le stesse regole rispetto ai dati che l'utente deve inserire in Sigla. Sono di seguito indicati i vari folder di cui si compone la maschera “Fattura Attiva”. 
 
 **Testata**
