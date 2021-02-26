@@ -116,6 +116,11 @@ Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà
 
 Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti. 
 
+**PROTOCOLLO**
+
+Dopo aver salvato il documento, ai fini dell’inserimento nel registro IVA e per l’assegnazione del relativo numero, è necessario protocollare.  
+Con l'introduzione della Fatturazione elettronica non è più necessario effettuare il Protocollo manuale attraverso l'apposita funzionalità perchè questo avviene automaticamente con la firma del documento elettronico
+
 
 
 
