@@ -58,7 +58,11 @@ Se la nota di credito è collegata a una fattura incassata e non sono presenti f
 **PROTOCOLLO**
 
 Dopo aver salvato il documento, ai fini dell’inserimento nel registro IVA e per l’assegnazione del relativo numero, è necessario protocollare.  
-Con l'introduzione della Fatturazione elettronica non è più necessario effettuare il Protocollo manuale attraverso l'apposita funzionalità perchè questo avviene automaticamente con la firma del documento elettronico
+Con l'introduzione della Fatturazione elettronica non è più necessario effettuare il Protocollo manuale attraverso l'apposita funzionalità perchè questo avviene automaticamente con la firma del documento elettronico.
+
+**Caso Particolare**
+
+Un caso particolare di Nota Credito Attiva, è rappresentato dalle Note credito 'interne' che vengono generate automaticamente dalla procedura Sigla allo SCARTO di una fattura attiva da parte del Sistema di Interscambio (SDI). In questo caso la Nota credito generata automaticamente ha l'obiettivo di 'sistemare' fiscalmente la fattura emessa e  protocollata che deve essere totalmente stornata. La nota credito viene firmata allo stesso modo della fattura e non viene inviata al destinatario che, in questo caso, non ha mai ricevuto la fattura a cui si riferisce la Nota.
 
 
 
