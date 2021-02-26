@@ -365,7 +365,23 @@ La scadenza dell’impegno sarà pari all’importo del sospeso aumentato dell�
 Negli altri casi la scadenza dell’impegno sarà pari all’importo del sospeso. 
 
 
-INTRASTAT
-=========
+**INTRASTAT**
+
+Se in testata è stato spuntato il flag 'INTRA-UE' sarà necessario, ove previsto,  compilare anche il folder “INTRASTAT”  
+
+**Acquisizione di beni**
+Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti.
+
+**Acquisizione di servizi**
+Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti.
+
+**CONCLUSIONI**
+
+Si ricorda che sarà possibile procedere al salvataggio della fattura solo se tutti i folder interessati sono stati compilati. Nel caso di acquisizione di beni durevoli è necessario che tutti i beni siano stati inventariati. Tale operazione può essere gestita tramite i pulsanti presenti nella maschera principale della fattura:  
+
+- Inventaria 
+- Associa
+- Aumento Valore
+
 
 
