@@ -19,15 +19,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr.si.sigla</groupId>
-	<version>6.2.95-SNAPSHOT</version>
+	<version>6.3.1-SNAPSHOT</version>
 	<artifactId>sigla-parent</artifactId>
 	<description>Sistema Informativo per la Gestione delle Linee di Attività</description>
 	<packaging>pom</packaging>
 	<parent>
-    	<artifactId>archetype</artifactId>
-    	<groupId>it.cnr.si</groupId>
-    	<version>1.1.0</version>
-  	</parent>
+		<artifactId>archetype</artifactId>
+		<groupId>it.cnr.si</groupId>
+		<version>1.1.0</version>
+	</parent>
 	<modules>
 		<module>sigla-backend</module>
 		<module>sigla-ejb</module>
@@ -35,10 +35,10 @@
 		<module>sigla-web</module>
 	</modules>
 	<properties>
-		<ace.version>4.0.15</ace.version>
+		<ace.version>4.0.16</ace.version>
 		<perlapa.version>1.0.7</perlapa.version>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
-    	<sonar.skip>true</sonar.skip>
+		<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
 		<siopeplus.version>0.0.12</siopeplus.version>
 		<sdi.fatturapa.version>0.0.1</sdi.fatturapa.version>
@@ -129,10 +129,10 @@
 		<profile>
 			<id>docs</id>
 			<properties>
-                <timestamp>${maven.build.timestamp}</timestamp>
-                <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+				<timestamp>${maven.build.timestamp}</timestamp>
+				<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 				<scm.plugin.file.list>publiccode.yml,docs/conf.py</scm.plugin.file.list>
-            </properties>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>

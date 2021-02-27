@@ -223,4 +223,12 @@
 	<findFieldProperty name="cd_cap" />
 	<findFieldProperty name="pg_nazione" />
 	<findFieldProperty name="cd_provincia" />
+	<columnSet name="restService" >
+		<columnFieldProperty name="pg_comune"/>
+		<columnFieldProperty name="ds_comune"/>
+		<columnFieldProperty name="cd_provincia"/>
+		<columnFieldProperty name="cd_comune"/>
+		<columnFieldProperty name="cd_catastale"/>
+		<columnFieldProperty name="pg_nazione"/>
+	</columnSet>
 </bulkInfo>

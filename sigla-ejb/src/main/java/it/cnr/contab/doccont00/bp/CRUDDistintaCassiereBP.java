@@ -26,6 +26,7 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.cori00.ejb.Liquid_coriComponentSession;
 import it.cnr.contab.doccont00.comp.DateServices;
+import it.cnr.contab.doccont00.comp.DistintaCassiereComponent;
 import it.cnr.contab.doccont00.core.bulk.MandatoBulk;
 import it.cnr.contab.doccont00.core.bulk.ReversaleBulk;
 import it.cnr.contab.doccont00.ejb.DistintaCassiereComponentSession;
@@ -848,10 +849,14 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             Boolean isVariazioneDefinitiva = Optional.ofNullable(bulk.getStatoVarSos())
                     .map(statoVarSos -> statoVarSos.equals(StatoVariazioneSostituzione.VARIAZIONE_DEFINITIVA.value()))
                     .orElse(Boolean.FALSE);
-            if (isVariazioneDefinitiva) {
-                man.setTipoOperazione("INSERIMENTO");
+            if (bulk.getStato().equalsIgnoreCase(MandatoBulk.STATO_MANDATO_ANNULLATO)) {
+                man.setTipoOperazione(DistintaCassiereComponent.ANNULLO);
             } else {
-                man.setTipoOperazione("VARIAZIONE");
+                if (isVariazioneDefinitiva) {
+                    man.setTipoOperazione(DistintaCassiereComponent.INSERIMENTO);
+                } else {
+                    man.setTipoOperazione(DistintaCassiereComponent.VARIAZIONE);
+                }
             }
             GregorianCalendar gcdi = new GregorianCalendar();
 
@@ -2332,14 +2337,24 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             );
         }
         Distinta_cassiereBulk distinta = (Distinta_cassiereBulk) getModel();
-        StorageObject storageObject = Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
+        final String storePath = distinta.getStorePath();
+        final String baseIdentificativoFlusso = distinta.getBaseIdentificativoFlusso();
+        Optional<StorageObject> optStorageObject = Optional.ofNullable(documentiContabiliService.getStorageObjectByPath(
                 Arrays.asList(
-                        distinta.getStorePath(),
+                        storePath,
                         distinta.getFileNameXML()
                 ).stream().collect(
                         Collectors.joining(StorageDriver.SUFFIX)
                 )
-        )).orElseThrow(() -> new ApplicationException("Flusso ordinativi siope+ non trovato!"));
+        ));
+        if (!optStorageObject.isPresent()) {
+            optStorageObject = documentiContabiliService.getChildren(documentiContabiliService.getStorageObjectByPath(storePath).getKey())
+                    .stream()
+                    .filter(storageObject1 -> storageObject1.<String>getPropertyValue(StoragePropertyNames.NAME.value())
+                            .startsWith(baseIdentificativoFlusso))
+                    .max(Comparator.comparing(storageObject1 -> storageObject1.getPropertyValue("cmis:lastModificationDate")));
+        }
+        StorageObject storageObject = optStorageObject.orElseThrow(() -> new ApplicationException("Flusso ordinativi siope+ non trovato!"));
 
         if (!documentiContabiliService.hasAspect(storageObject, SIGLAStoragePropertyNames.CNR_SIGNEDDOCUMENT.value())) {
             ArubaSignServiceClient client = documentiContabiliService.getArubaSignServiceClient();
