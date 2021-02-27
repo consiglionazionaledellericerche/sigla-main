@@ -284,6 +284,11 @@
             <version>${ace.version}</version>
         </dependency>
         <dependency>
+            <groupId>it.cnr.si</groupId>
+            <artifactId>perlapa-client</artifactId>
+            <version>${perlapa.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>${liquibase.version}</version>

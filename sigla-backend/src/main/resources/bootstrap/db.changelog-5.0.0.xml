@@ -3835,4 +3835,22 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="raffaele.pagano" id="add-riferimenti-perla2018">
+        <addColumn tableName="unita_organizzativa">
+            <column name="codiceAooIpa" type="VARCHAR(100)" remarks="Codice univoco ipa che identifica le Aree Organizzative Omogenee (AOO) dell’Amministrazione dichiarante"/>
+        </addColumn>
+        <addColumn tableName="incarichi_repertorio">
+            <column name="idPerla" type="BIGINT" remarks="Identificativo attribuito dal sistema perla all'incarico."/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="incarichi-disable-invio-corte-conti">
+        <update tableName="incarichi_parametri">
+            <column name="fl_invio_fp" value='N' type="CHAR(1)"/>
+        </update>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="add-anomalie-perla2018">
+        <addColumn tableName="incarichi_repertorio">
+            <column name="anomalia_perla" type="VARCHAR(1000)" remarks="Anomalia verificatasi in fase di ultima comunicazione al sistema PerlaPa."/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

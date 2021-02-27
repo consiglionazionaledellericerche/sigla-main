@@ -86,8 +86,6 @@
 	  <%if (bp==null||bp.isIncarichiProceduraBP()) {%>
 		  <tr>
 	        <% bp.getController().writeFormField(out,"procedura_amministrativa");%>
-	        <td>&nbsp;&nbsp;</td>
-	        <% bp.getController().writeFormField(out,"fl_art51");%>
 	      </tr>
 	  <%}%>
     </table>

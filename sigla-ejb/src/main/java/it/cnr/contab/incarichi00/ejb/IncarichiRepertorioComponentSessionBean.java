@@ -18,6 +18,7 @@
 package it.cnr.contab.incarichi00.ejb;
 
 import it.cnr.contab.incarichi00.comp.IncarichiRepertorioComponent;
+import it.cnr.jada.comp.ComponentException;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -216,6 +217,40 @@ public class IncarichiRepertorioComponentSessionBean extends it.cnr.jada.ejb.CRU
 		pre_component_invocation(param0,componentObj);
 		try {
 			((IncarichiRepertorioComponent)componentObj).annullaDefinitivoCMIS(param0,param1);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void aggiornaDatiPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1,Long param2, String param3) throws it.cnr.jada.comp.ComponentException,javax.ejb.EJBException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((IncarichiRepertorioComponent)componentObj).aggiornaDatiPerla(param0,param1,param2,param3);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void comunicaPerla(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws ComponentException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((IncarichiRepertorioComponent)componentObj).comunicaPerla(param0,param1);
 			component_invocation_succes(param0,componentObj);
 		} catch(it.cnr.jada.comp.NoRollbackException e) {
 			component_invocation_succes(param0,componentObj);

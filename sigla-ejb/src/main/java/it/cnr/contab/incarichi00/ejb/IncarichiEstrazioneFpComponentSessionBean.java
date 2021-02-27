@@ -17,11 +17,14 @@
 
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
 import it.cnr.contab.incarichi00.comp.IncarichiEstrazioneFpComponent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import java.math.BigDecimal;
 
 /**
  * Bean implementation class for Enterprise Bean: CNRINCARICHI00_EJB_IncarichiEstrazioneFpComponentSession
@@ -159,5 +162,56 @@ public class IncarichiEstrazioneFpComponentSessionBean extends it.cnr.jada.ejb.C
 			throw uncaughtError(param0,componentObj,e);
 		}
 	}
-
+	public BigDecimal getPagatoIncarico(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			BigDecimal result = ((IncarichiEstrazioneFpComponent)componentObj).getPagatoIncarico(param0,param1);
+			component_invocation_succes(param0,componentObj);
+			return result;
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void comunicaPerla2018(it.cnr.jada.UserContext param0, Incarichi_repertorioBulk incaricoRepertorio) throws it.cnr.jada.comp.ComponentException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((IncarichiEstrazioneFpComponent)componentObj).comunicaPerla2018(param0,incaricoRepertorio);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
+	public void comunicaPerla2018(it.cnr.jada.UserContext param0, V_incarichi_elenco_fpBulk incaricoElenco) throws it.cnr.jada.comp.ComponentException {
+		pre_component_invocation(param0,componentObj);
+		try {
+			((IncarichiEstrazioneFpComponent)componentObj).comunicaPerla2018(param0,incaricoElenco);
+			component_invocation_succes(param0,componentObj);
+		} catch(it.cnr.jada.comp.NoRollbackException e) {
+			component_invocation_succes(param0,componentObj);
+			throw e;
+		} catch(it.cnr.jada.comp.ComponentException e) {
+			component_invocation_failure(param0,componentObj);
+			throw e;
+		} catch(RuntimeException e) {
+			throw uncaughtRuntimeException(param0,componentObj,e);
+		} catch(Error e) {
+			throw uncaughtError(param0,componentObj,e);
+		}
+	}
 }

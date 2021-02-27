@@ -20,11 +20,6 @@ package it.cnr.contab.incarichi00.comp;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
-import it.cnr.contab.bilaterali00.bulk.Blt_visiteBulk;
-import it.cnr.contab.incarichi00.bulk.*;
-import it.cnr.contab.incarichi00.bulk.storage.*;
-import it.cnr.contab.util.SIGLAGroups;
-import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
 import it.cnr.contab.compensi00.docs.bulk.V_terzo_per_compensoBulk;
@@ -40,24 +35,16 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
-import it.cnr.contab.incarichi00.bulk.storage.StorageFileIncarichi;
-import it.cnr.contab.incarichi00.storage.StorageContrattiAspect;
+import it.cnr.contab.incarichi00.bulk.*;
+import it.cnr.contab.incarichi00.bulk.storage.*;
 import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.incarichi00.ejb.RepertorioLimitiComponentSession;
 import it.cnr.contab.incarichi00.service.ContrattiService;
-import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametri_configBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametri_configHome;
-import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivitaBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_attivita_fpBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_incaricoBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaBulk;
-import it.cnr.contab.incarichi00.tabrif.bulk.Tipo_norma_perlaHome;
+import it.cnr.contab.incarichi00.storage.StorageContrattiAspect;
+import it.cnr.contab.incarichi00.tabrif.bulk.*;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
-import it.cnr.si.spring.storage.StorageException;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkList;
@@ -71,23 +58,21 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.si.spring.storage.StorageException;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.bulk.StorageFile;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.commons.lang.NotImplementedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.activation.MimetypesFileTypeMap;
+import javax.ejb.EJBException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.util.*;
-
-import javax.activation.MimetypesFileTypeMap;
-import javax.ejb.EJBException;
-
-import org.apache.commons.lang.NotImplementedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class IncarichiProceduraComponent extends CRUDComponent {
 	private transient static final Logger logger = LoggerFactory.getLogger(IncarichiProceduraComponent.class);
@@ -854,9 +839,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		for (Iterator<Incarichi_archivioBulk> i = listArchiviFile.iterator(); i.hasNext();) {
 			Incarichi_archivioBulk allegato = i.next();
 			if (!(allegato.getFile() == null || allegato.getFile().getName().equals(""))) {
+				String nomeFile = allegato.getFile().getName();
+				String estensioneFile = nomeFile.substring(nomeFile.lastIndexOf(".")+1);
 				if (listFileAllegabili != null && !listFileAllegabili.isEmpty()){
-					String nomeFile = allegato.getFile().getName();
-					String estensioneFile = nomeFile.substring(nomeFile.lastIndexOf(".")+1);
 					String estensioniValide = null;
 					
 					boolean valido = false;
@@ -870,6 +855,14 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					}
 					if (!valido)
 						throw new ApplicationException( "File non valido!\nI formati dei file consentiti sono "+estensioniValide+".");
+				}
+				if (!estensioneFile.equalsIgnoreCase("pdf")) {
+					if (allegato.isCurriculumVincitore())
+						throw new ApplicationException("File non valido!\nIl formato del file consentito per il Curriculum Vitae è il pdf.");
+					if (allegato.isAggiornamentoCurriculumVincitore())
+						throw new ApplicationException("File non valido!\nIl formato del file consentito per l'aggiornamento del Curriculum Vitae è il pdf.");
+					if (allegato.isAllegatoGenerico() && allegato instanceof Incarichi_repertorio_rappBulk)
+						throw new ApplicationException("File non valido!\nIl formato del file consentito per la Dichiarazione Altri Rapporti è il pdf.");
 				}
 			}
 		}
@@ -1215,8 +1208,11 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				procedura.setStato(Incarichi_proceduraBulk.STATO_PUBBLICATA);
 		}				
 		oggettobulk = super.eseguiModificaConBulk(usercontext, oggettobulk);
-		if (oggettobulk instanceof Incarichi_proceduraBulk)
-			archiviaAllegati(usercontext, (Incarichi_proceduraBulk)oggettobulk);
+		if (oggettobulk instanceof Incarichi_proceduraBulk) {
+			archiviaAllegati(usercontext, (Incarichi_proceduraBulk) oggettobulk);
+			comunicaPerla(usercontext, (Incarichi_proceduraBulk) oggettobulk);
+		}
+
 		return oggettobulk;
 	}
 	protected void validaCreaModificaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -2101,5 +2097,17 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		sql.addSQLClause(FindClause.AND, "TIPO_INCARICO.TIPO_ASSOCIAZIONE", SQLBuilder.EQUALS, Tipo_incaricoBulk.ASS_INCARICHI);
 
 		return sql;
+	}
+
+	private void comunicaPerla(UserContext userContext, Incarichi_proceduraBulk procedura) throws ComponentException {
+		try {
+			IncarichiRepertorioComponentSession incRepComponent = Utility.createIncarichiRepertorioComponentSession();
+			for (Iterator i=procedura.getIncarichi_repertorioColl().iterator();i.hasNext();) {
+				Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk) i.next();
+				incRepComponent.comunicaPerla(userContext, incarico);
+			}
+		} catch (Exception e){
+			throw handleException(e);
+		}
 	}
 }

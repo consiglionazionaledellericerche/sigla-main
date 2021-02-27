@@ -118,7 +118,11 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 	private BulkList incarichi_repertorio_rapp_detColl = new BulkList();
 
 	private java.sql.Timestamp dt_dichiarazione;
-	
+
+	private Integer idPerla;
+
+	private String codiceAooIpa;
+
 	public java.lang.Integer getEsercizio() {
 		return esercizio;
 	}
@@ -312,5 +316,21 @@ public class V_incarichi_elencoBulk extends OggettoBulk implements Persistent {
 	}
 	public void setDt_dichiarazione(java.sql.Timestamp dt_dichiarazione) {
 		this.dt_dichiarazione = dt_dichiarazione;
+	}
+
+	public Integer getIdPerla() {
+		return idPerla;
+	}
+
+	public void setIdPerla(Integer idPerla) {
+		this.idPerla = idPerla;
+	}
+
+	public String getCodiceAooIpa() {
+		return codiceAooIpa;
+	}
+
+	public void setCodiceAooIpa(String codiceAooIpa) {
+		this.codiceAooIpa = codiceAooIpa;
 	}
 }

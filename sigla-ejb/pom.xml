@@ -88,6 +88,12 @@
         </dependency>
         <dependency>
             <groupId>it.cnr.si</groupId>
+            <artifactId>perlapa-client</artifactId>
+            <version>${perlapa.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>it.cnr.si</groupId>
             <artifactId>sdi-fatturapa</artifactId>
             <version>${sdi.fatturapa.version}</version>
             <scope>provided</scope>
