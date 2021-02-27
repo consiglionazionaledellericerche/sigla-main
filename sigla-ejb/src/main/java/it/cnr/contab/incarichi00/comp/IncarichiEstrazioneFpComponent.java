@@ -1059,16 +1059,10 @@ public class IncarichiEstrazioneFpComponent extends CRUDComponent {
 				listAnomalie.add("Manca l'indicazione della data del riferimento normativo.");
 		}
 		if (Optional.ofNullable(consulentePerla.getPercettorePf()).isPresent()) {
-			if (consulentePerla.getAllegati().getCurriculumVitae()==null) {
-				//TODO DA ELIMINARE
-//				if (incarico.getCurriculumVincitore()==null || incarico.getCurriculumVincitore().getCms_node_ref()==null)
-//					listAnomalie.add("Incarico: " + incarico.getEsercizio() + "/" + incarico.getPg_repertorio() + " - Manca l'allegato di tipo Curriculum Vitae.");
-			}
-			if (consulentePerla.getAllegati().getDichiarazioneIncarichi()==null) {
-				//TODO DA ELIMINARE
-//				if (incarico.getIncarichi_repertorio_rappColl() == null || incarico.getIncarichi_repertorio_rappColl().isEmpty())
-//					listAnomalie.add("Incarico: " + incarico.getEsercizio() + "/" + incarico.getPg_repertorio() + " - Manca l'allegato di tipo Dichiarazione Altri Incarichi.");
-			}
+			if (consulentePerla.getAllegati().getCurriculumVitae()==null)
+				listAnomalie.add("Manca l'allegato di tipo Curriculum Vitae.");
+			if (consulentePerla.getAllegati().getDichiarazioneIncarichi()==null)
+				listAnomalie.add("Manca l'allegato di tipo Dichiarazione Altri Incarichi.");
 		}
 		return listAnomalie;
 	}
