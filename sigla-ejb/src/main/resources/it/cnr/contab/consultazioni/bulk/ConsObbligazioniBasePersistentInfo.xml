@@ -198,7 +198,25 @@
 			propertyName="data_pagamento"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7" />
-		
+		<columnMapping
+				columnName="CD_TERZO_RESP_GAE"
+				propertyName="cd_terzo_resp_gae"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_PROGETTO"
+				propertyName="cd_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+		<columnMapping
+				columnName="CD_PROGETTO_PADRE"
+				propertyName="cd_progetto_padre"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="true" />
+
 	</defaultColumnMap>	
 	<persistentProperty
 		name="pg_obbligazione_scadenzario" />
@@ -269,5 +287,11 @@
 	<persistentProperty
 		name="esercizio_contratto" />
 	<persistentProperty
-		name="pg_contratto" />	
+		name="pg_contratto" />
+	<persistentProperty
+			name="cd_terzo_resp_gae" />
+	<persistentProperty
+			name="cd_progetto" />
+	<persistentProperty
+			name="cd_progetto_padre" />
 </SQLPersistentInfo>

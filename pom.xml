@@ -19,7 +19,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.cnr.si.sigla</groupId>
-	<version>6.2.19-SNAPSHOT</version>
+	<version>6.3.1-SNAPSHOT</version>
 	<artifactId>sigla-parent</artifactId>
 	<description>Sistema Informativo per la Gestione delle Linee di Attività</description>
 	<packaging>pom</packaging>
@@ -35,28 +35,30 @@
 		<module>sigla-web</module>
 	</modules>
 	<properties>
+		<ace.version>4.0.16</ace.version>
 		<maven.javadoc.skip>true</maven.javadoc.skip>
     	<sonar.skip>true</sonar.skip>
 		<java.version>1.8</java.version>
-		<siopeplus.version>0.0.6</siopeplus.version>
+		<siopeplus.version>0.0.12</siopeplus.version>
 		<sdi.fatturapa.version>0.0.1</sdi.fatturapa.version>
-		<ws.client.version>0.0.4-SNAPSHOT</ws.client.version>
+		<ws.client.version>0.0.4</ws.client.version>
 		<spring.version>5.2.5.RELEASE</spring.version>
-		<jada.version>7.0.11</jada.version>
+		<jada.version>7.0.15</jada.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.directory>target</project.build.directory>
 		<sigla.build.number>${maven.build.timestamp}</sigla.build.number>
 		<slf4j.version>1.7.21</slf4j.version>
 		<liquibase.version>3.5.3</liquibase.version>
 		<pdfbox.version>2.0.0</pdfbox.version>
-		<storage.cloud.version>2.0.6</storage.cloud.version>
+		<storage.cloud.version>2.0.9</storage.cloud.version>
 		<git.changelog.maven.plugin.version>1.61</git.changelog.maven.plugin.version>
-		<version.thorntail>2.6.0.Final</version.thorntail>
+		<version.thorntail>2.7.0.Final</version.thorntail>
 
 		<version.arquillian>1.2.1.Final</version.arquillian>
 		<version.arquillian-drone>2.0.1.Final</version.arquillian-drone>
 		<version.arquillian-graphene>2.3.2</version.arquillian-graphene>
 		<arquillian.shrinkwrap.resolver>3.1.3</arquillian.shrinkwrap.resolver>
-		<version.junit>4.12</version.junit>
+		<version.junit>[4.13.1,)</version.junit>
 		<fluent-hc.version>4.5</fluent-hc.version>
 		<test.exclude.package>it.cnr.test.oracle.**</test.exclude.package>
 	</properties>

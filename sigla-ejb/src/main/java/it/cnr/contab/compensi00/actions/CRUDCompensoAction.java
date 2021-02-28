@@ -51,6 +51,7 @@ import it.cnr.jada.action.Forward;
 import it.cnr.jada.action.HookForward;
 import it.cnr.jada.action.MessageToUser;
 import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.BulkBP;
 import it.cnr.jada.util.action.CRUDBP;
 import it.cnr.jada.util.action.FormBP;
@@ -966,7 +967,7 @@ public Forward doOnDtACompetenzaCogeChange(ActionContext context) {
 			
 			if (compenso.getDt_a_competenza_coge() == null)
 				throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
-			
+
 			GregorianCalendar data_a = (GregorianCalendar) GregorianCalendar.getInstance();
 			GregorianCalendar old_data_a = (GregorianCalendar) GregorianCalendar.getInstance();
 			data_a.setTime(((CompensoBulk)bp.getModel()).getDt_a_competenza_coge());
@@ -1041,7 +1042,7 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 			return context.findDefaultForward();
 		if (compenso.getDt_da_competenza_coge() == null)
 			throw new it.cnr.jada.comp.ApplicationException("Non è possibile annullare la data di competenza");
-		
+
 		GregorianCalendar data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 		GregorianCalendar old_data_da = (GregorianCalendar) GregorianCalendar.getInstance();
 		data_da.setTime(((CompensoBulk)bp.getModel()).getDt_da_competenza_coge());
@@ -1105,7 +1106,8 @@ public Forward doOnDtDaCompetenzaCogeChange(ActionContext context) {
 		return handleException(context, ex);
 	}
 }
-public Forward doOnDtRegistrazioneChange(ActionContext context) {
+
+	public Forward doOnDtRegistrazioneChange(ActionContext context) {
 
 	try {
 		CRUDCompensoBP bp = (CRUDCompensoBP)getBusinessProcess(context);
@@ -1662,7 +1664,8 @@ public Forward doTab(ActionContext context,String tabName,String pageName) {
 			if ("tabCompenso".equalsIgnoreCase(bp.getTab(tabName))){
 				compenso.validaTestata();
 			}
-			if ("tabCompensoTerzo".equalsIgnoreCase(bp.getTab(tabName))){
+			if ("tabCompensoTerzo".equalsIgnoreCase(pageName)){
+				basicDoLoadDocContAssociati(context);
 			}
 			if ("tabCompensoDatiLiquidazione".equalsIgnoreCase(bp.getTab(tabName))) {
 			}

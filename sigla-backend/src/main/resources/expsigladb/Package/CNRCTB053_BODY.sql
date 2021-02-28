@@ -1094,7 +1094,10 @@ begin
                     ((LIVELLO_COFOG=0 or cd_cofog=aLa_origine.cd_cofog)))
                   ))
             And   CD_PROGRAMMA = aLa_origine.cd_programma
-            And   CD_MISSIONE = aLa_origine.cd_missione;
+            And   CD_MISSIONE = aLa_origine.cd_missione
+            And   rownum < 2;
+            -- Condizione inserita per evitare Too_Many_Rows.
+            -- E' stato chiesto di prendere sempre una anche se ne esistono tante e di non far scattare l'errore
           Exception
             When No_Data_Found Then
               If aCV.CDR_ACCENTRATORE = aCDRPersonale.CD_CENTRO_RESPONSABILITA Then

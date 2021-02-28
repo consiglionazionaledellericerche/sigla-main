@@ -1,0 +1,89 @@
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk"
+	homeClassName="it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiHome" >
+
+	<defaultColumnMap
+			tableName="CONTRATTO">
+		<columnMapping
+				columnName="ESERCIZIO"
+				propertyName="esercizio"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="false" />
+		<columnMapping
+				columnName="PG_CONTRATTO"
+				propertyName="pg_contratto"
+				sqlTypeName="DECIMAL"
+				columnSize="10"
+				nullable="false"/>
+		<columnMapping
+				columnName="DT_STIPULA"
+				propertyName="dt_stipula"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
+		<columnMapping
+				columnName="OGGETTO"
+				propertyName="oggetto"
+				sqlTypeName="VARCHAR"
+				columnSize="500"
+				nullable="false" />
+		<columnMapping
+				columnName="DT_PROROGA"
+				propertyName="dt_proroga"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
+		<columnMapping
+				columnName="DT_INIZIO_VALIDITA"
+				propertyName="dt_inizio_validita"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="DT_FINE_VALIDITA"
+				propertyName="dt_fine_validita"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_CONTRATTO_PASSIVO"
+				propertyName="im_contratto_passivo"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+	</defaultColumnMap>
+
+	<persistentProperty
+			name="esercizio"/>
+	<persistentProperty
+			name="pg_contratto"/>
+	<persistentProperty
+			name="oggetto"/>
+	<persistentProperty
+			name="dt_stipula"/>
+	<persistentProperty
+			name="dt_proroga"/>
+	<persistentProperty
+			name="dt_inizio_validita"/>
+	<persistentProperty
+			name="dt_fine_validita"/>
+	<persistentProperty
+			name="im_contratto_passivo"/>
+</SQLPersistentInfo>

@@ -230,6 +230,8 @@ public class ContrattoService extends StoreService {
 			AllegatoContrattoDocumentBulk allegato = AllegatoContrattoDocumentBulk.construct(child);
 			allegato.setNome(child.<String>getPropertyValue("sigla_contratti_attachment:original_name"));
 			allegato.setType(child.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()));
+			allegato.setTitolo(child.<String>getPropertyValue(StoragePropertyNames.TITLE.value()));
+			allegato.setDescrizione(child.<String>getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
 			allegato.setContrattoBulk(contratto);
 			updateProperties(allegato, child);
 			if (contratto.isDefinitivo() && !allegato.getType().equals(AllegatoContrattoDocumentBulk.GENERICO))

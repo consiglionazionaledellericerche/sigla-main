@@ -2,7 +2,7 @@
 --  DDL for Package Body CNRCTB018
 --------------------------------------------------------
 
-  CREATE OR REPLACE PACKAGE BODY "CNRCTB018" is
+CREATE OR REPLACE PACKAGE BODY "CNRCTB018" is
 
   procedure aggiornaNumeratori(aEsercizio number, aCdCds varchar2, aUser varchar2) is
    aNewNum NUMERAZIONE_DOC_CONT%rowtype;
@@ -327,6 +327,7 @@
     exception when dup_val_on_index then
 	 NULL;
 	end;
+			  dbms_output.put_line('1005');
 
     declare
       pLastResimpro number;
@@ -345,10 +346,11 @@
         pLastResimpro := pLastResimpro + pIncremento;
       End If;
 
-      While conta>0 Loop
+      While conta>0 LOOP
         SELECT count(0) INTO conta
         FROM NUMERAZIONE_DOC_CONT
-        where CD_TIPO_DOCUMENTO_CONT = TI_DOC_OBB_RES_IMPRO
+        where CD_CDS = aCdCds
+        AND   CD_TIPO_DOCUMENTO_CONT = TI_DOC_OBB_RES_IMPRO
         AND   primo BETWEEN pLastResimpro AND pLastResimpro+pIncremento-1;
 
         If CONTA > 0 THEN

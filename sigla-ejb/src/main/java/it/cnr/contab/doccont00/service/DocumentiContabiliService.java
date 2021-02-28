@@ -74,6 +74,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -81,10 +83,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.activation.DataSource;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.security.Principal;
 import java.sql.Timestamp;
@@ -99,6 +98,8 @@ import java.util.stream.Stream;
 
 public class DocumentiContabiliService extends StoreService implements InitializingBean {
     public static final String SIOPEPLUS = "SIOPEPLUS";
+    public static final String DISTINTA_PEC_PDF = "Distinta_PEC.pdf";
+
     private transient static final Logger logger = LoggerFactory.getLogger(DocumentiContabiliService.class);
     final String pattern = "dd MMMM YYYY' alle 'HH:mm:ss";
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
@@ -512,8 +513,16 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     flusso.setUser(userContext.getUser());
                     flusso.setCodiceAbiBt(new Long(flussoGiornaleDiCassa.getTestataMessaggio().getCodiceABIBT()));
                     flusso.setDataOraCreazioneFlusso(new Timestamp(flussoGiornaleDiCassa.getTestataMessaggio().getDataOraCreazioneFlusso().toGregorianCalendar().getTime().getTime()));
-                    flusso.setDataInizioPeriodoRif(new Timestamp(flussoGiornaleDiCassa.getDataInizioPeriodoRiferimento().toGregorianCalendar().getTime().getTime()));
-                    flusso.setDataFinePeriodoRif(new Timestamp(flussoGiornaleDiCassa.getDataFinePeriodoRiferimento().toGregorianCalendar().getTime().getTime()));
+                    flusso.setDataInizioPeriodoRif(
+                            Optional.ofNullable(flussoGiornaleDiCassa.getDataRiferimentoGdC())
+                                .map(xmlGregorianCalendar -> new Timestamp(xmlGregorianCalendar.toGregorianCalendar().getTime().getTime()))
+                                .orElse(null)
+                    );
+                    flusso.setDataFinePeriodoRif(
+                            Optional.ofNullable(flussoGiornaleDiCassa.getDataRiferimentoGdC())
+                                    .map(xmlGregorianCalendar -> new Timestamp(xmlGregorianCalendar.toGregorianCalendar().getTime().getTime()))
+                                    .orElse(null)
+                    );
                     flusso.setCodiceEnte(flussoGiornaleDiCassa.getTestataMessaggio().getCodiceEnte());
                     flusso.setDescrizioneEnte(flussoGiornaleDiCassa.getTestataMessaggio().getDescrizioneEnte());
                     flusso.setCodiceEnteBt(flussoGiornaleDiCassa.getTestataMessaggio().getCodiceEnteBT());
@@ -621,7 +630,11 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             movBulk.setCodiceFiscaleCreditoreEff(movimentoContoEvidenza.getCreditoreEffettivo().getCodiceFiscaleCreditoreEffettivo());
                         }
                         movBulk.setCausale(movimentoContoEvidenza.getCausale());
-                        movBulk.setNumeroSospeso(movimentoContoEvidenza.getNumeroSospeso());
+                        movBulk.setNumeroSospeso(
+                                movimentoContoEvidenza.getSospeso().stream()
+                                    .map(InformazioniContoEvidenza.MovimentoContoEvidenza.Sospeso::getNumeroProvvisorio)
+                                    .findAny().orElse(null)
+                        );
                         movBulk.setToBeCreated();
                         infoBulk.addToMovConto(movBulk);
                     });
@@ -775,10 +788,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
             List<String> nodes = new ArrayList<String>();
             StorageObject distintaStorageObject = getStorageObjectByPath(
                     distinta.getStorePath().concat(storageDriver.SUFFIX).concat(distinta.getCMISName()));
-
             nodes.add(distintaStorageObject.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
-
-
             List<V_mandato_reversaleBulk> dettagliMan = distintaCassiereComponentSession
                     .dettagliDistinta(
                             userContext,
@@ -810,7 +820,31 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     .map(v_mandato_reversaleBulk -> getDocumentKey(v_mandato_reversaleBulk, true))
                     .filter(s -> s != null)
                     .forEach(s -> nodes.add(s));
-            if (nodes.size() > 1) {
+            boolean inviaDistinta = nodes.size() > 1;
+            if (distinta.getFl_sepa()) {
+                PDFMergerUtility ut = new PDFMergerUtility();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                ut.setDestinationStream(out);
+                nodes.stream()
+                        .map(key -> getResource(key))
+                        .forEach(inputStream -> ut.addSource(inputStream));
+                try {
+                    ut.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
+                } catch (IOException _ex) {
+                    logger.error("SIOPE+ Invia PEC", _ex);
+                }
+                StorageObject distintaPEC = restoreSimpleDocument(
+                        distinta,
+                        new ByteArrayInputStream(out.toByteArray()),
+                        MimeTypes.PDF.mimetype(),
+                        DISTINTA_PEC_PDF,
+                        distinta.getStorePath(),
+                        false
+                );
+                nodes.clear();
+                nodes.add(distintaPEC.getKey());
+            }
+            if (inviaDistinta) {
                 inviaDistintaPEC(nodes, isEstero,
                         "Invio Distinta Identificativo_flusso: " + distinta.getIdentificativoFlusso() +
                                 " Progressivo Flusso: " + distinta.getProgFlusso() +
@@ -839,7 +873,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 .findAny().isPresent();
     }
 
-    private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali) throws Exception {
+    private void messaggioEsitoApplicativo(Risultato risultato, boolean annullaMandati, boolean annullaReversali, boolean riportaMandatoDaFirmare) throws Exception {
         final MessaggioXML<MessaggiEsitoApplicativo> messaggioXML = ordinativiSiopePlusService.getLocation(risultato.getLocation(), MessaggiEsitoApplicativo.class);
         final MessaggiEsitoApplicativo messaggiEsitoApplicativo = messaggioXML.getObject();
         final List<Object> esitoReversaliOrEsitoMandati = messaggiEsitoApplicativo.getEsitoReversaliOrEsitoMandati();
@@ -886,6 +920,9 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                                     .map(StringBuffer::toString)
                                     .orElse(null)
                     );
+                    if (!annullaMandati && riportaMandatoDaFirmare && mandato.getEsitoOperazione().equalsIgnoreCase(EsitoOperazione.NON_ACQUISITO.value())) {
+                        mandato.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+                    }
                     mandato.setToBeUpdated();
                     try {
                         SIOPEPlusEsitoBulk siopePlusEsitoBulk = new SIOPEPlusEsitoBulk();
@@ -999,8 +1036,16 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             logger.info("SIOPE+ ANNULLA MANDATO [{}/{}]", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato());
                             mandatoComponentSession.annullaMandato(userContext, mandatoBulk, true);
                         } catch (ComponentException | RemoteException e) {
-                            _ex.set(e);
                             logger.error("SIOPE+ ANNULLA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
+                            if (riportaMandatoDaFirmare && mandatoBulk.getEsitoOperazione().equalsIgnoreCase(EsitoOperazione.NON_ACQUISITO.value())) {
+                                mandatoBulk.setStato_trasmissione(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
+                                mandatoBulk.setToBeUpdated();
+                                try {
+                                    crudComponentSession.modificaConBulk(userContext, mandatoBulk);
+                                } catch (ComponentException | RemoteException ex) {
+                                    logger.error("SIOPE+ AGGIORNA MANDATO [{}/{}] ERROR", mandatoBulk.getEsercizio(), mandatoBulk.getPg_mandato(), e);
+                                }
+                            }
                         }
                     });
         }
@@ -1145,7 +1190,14 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                 });
     }
 
-    public Stream<Risultato> downloadMessaggiEsitoApplicativo(LocalDateTime dataDa, LocalDateTime dataA, Boolean download, boolean annullaMandati, boolean annullaReversali) {
+    public Stream<Risultato> downloadMessaggiEsitoApplicativo(
+            LocalDateTime dataDa,
+            LocalDateTime dataA,
+            Boolean download,
+            boolean annullaMandati,
+            boolean annullaReversali,
+            boolean riportaMandatoDaFirmare
+    ) {
         final List<Risultato> allMessaggi = ordinativiSiopePlusService.getAllMessaggi(Esito.ESITOAPPLICATIVO,
                 dataDa, dataA, download, null);
         logger.info("SIOPE+ Lista Esito Applicativo: {}", allMessaggi);
@@ -1156,7 +1208,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                     try {
                         final OggettoBulk siopePlusRisultatoBulk = crudComponentSession.creaConBulk(userContext,
                                 new SIOPEPlusRisultatoBulk(Esito.ESITOAPPLICATIVO.name(), risultato));
-                        messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali);
+                        messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali, riportaMandatoDaFirmare);
                         logger.info("SIOPE+ ESITO APPLICATIVO elaborato risultato: {}", risultato);
 
                         siopePlusRisultatoBulk.setToBeDeleted();
@@ -1174,9 +1226,21 @@ public class DocumentiContabiliService extends StoreService implements Initializ
      */
     public void messaggiSiopeplus(LocalDateTime dataDa, LocalDateTime dataA, Boolean download) {
         boolean annullaMandati = Boolean.FALSE,
-                annullaReversali = Boolean.FALSE;
+                annullaReversali = Boolean.FALSE,
+                riportaMandatoDaFirmare = Boolean.FALSE;
         String userForGiornaleDiCassa = SIOPEPLUS;
         try {
+            riportaMandatoDaFirmare =
+                    Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
+                            userContext,
+                            Calendar.getInstance().get(Calendar.YEAR),
+                            "*",
+                            Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI,
+                            Configurazione_cnrBulk.SK_RIPORTA_MANDATO_DAFIRMARE
+                    ))
+                            .map(s -> Boolean.valueOf(s))
+                            .orElse(Boolean.FALSE);
+
             annullaMandati =
                     Optional.ofNullable(configurazione_cnrComponentSession.getVal01(
                             userContext,
@@ -1231,7 +1295,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
                             break;
                         }
                         case ESITOAPPLICATIVO: {
-                            messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali);
+                            messaggioEsitoApplicativo(risultato, annullaMandati, annullaReversali, riportaMandatoDaFirmare);
                             break;
                         }
                         case GIORNALEDICASSA: {
@@ -1266,7 +1330,7 @@ public class DocumentiContabiliService extends StoreService implements Initializ
         downloadMessaggiEsito(dataDa, dataA, download)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
-        downloadMessaggiEsitoApplicativo(dataDa, dataA, download, annullaMandati, annullaReversali)
+        downloadMessaggiEsitoApplicativo(dataDa, dataA, download, annullaMandati, annullaReversali, riportaMandatoDaFirmare)
                 .map(Risultato::toString)
                 .forEach(logger::debug);
         downloadGiornalieraDiCassa(dataDa, dataA, download, userForGiornaleDiCassa)

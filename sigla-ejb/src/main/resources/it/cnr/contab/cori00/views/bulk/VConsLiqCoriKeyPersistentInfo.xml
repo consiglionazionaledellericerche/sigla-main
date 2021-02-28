@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.cori00.views.bulk.VConsLiqcoriKey" >
+	<defaultColumnMap
+		tableName="V_CONS_LIQ_CORI" >
+		<columnMapping
+				columnName="CD_UO_LIQUIDAZIONE"
+				propertyName="cd_uo_liquidazione"
+				sqlTypeName="VARCHAR"
+				columnSize="30"
+				nullable="false"
+				primary="true" />
+		<columnMapping
+				columnName="PG_LIQUIDAZIONE"
+				propertyName="pg_liquidazione"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="false"
+				primary="true" />
+		<columnMapping
+				columnName="ESERCIZIO_LIQUIDAZIONE"
+				propertyName="esercizio_liquidazione"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="false"
+				primary="true" />
+		<columnMapping
+			columnName="ESERCIZIO_COMPENSO"
+			propertyName="esercizio_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="4"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMPENSO"
+			propertyName="pg_compenso"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="UO_COMPENSO"
+			propertyName="uo_compenso"
+			sqlTypeName="VARCHAR"
+			columnSize="30"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_REGIONE"
+			propertyName="cd_regione"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_CONTRIBUTO_RITENUTA"
+			propertyName="cd_contributo_ritenuta"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="CD_GRUPPO_CR"
+			propertyName="cd_gruppo_cr"
+			sqlTypeName="VARCHAR"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="PG_COMUNE"
+			propertyName="pg_comune"
+			sqlTypeName="DECIMAL"
+			columnSize="10"
+			nullable="false"
+			primary="true" />
+		<columnMapping
+			columnName="TI_ENTE_PERCIPIENTE"
+			propertyName="ti_ente_percipiente"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="false"
+			primary="true" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="esercizio_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="uo_compenso"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_liquidazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="esercizio_liquidazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_uo_liquidazione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_regione"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_gruppo_cr"
+		partOfOid="true" />
+	<persistentProperty
+		name="cd_contributo_ritenuta"
+		partOfOid="true" />
+	<persistentProperty
+		name="pg_comune"
+		partOfOid="true" />
+	<persistentProperty
+		name="ti_ente_percipiente"
+		partOfOid="true" />
+</SQLPersistentInfo>

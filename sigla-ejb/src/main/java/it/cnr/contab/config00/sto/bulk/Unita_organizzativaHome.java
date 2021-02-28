@@ -582,14 +582,4 @@ public boolean verificaEsercizioPreventivo( Unita_organizzativaBulk uo ) throws 
 	}
 }
 
-	public SQLBuilder selectResponsabileByClause(it.cnr.jada.UserContext userContext, Unita_organizzativaBulk unita_organizzativaBulk, TerzoHome terzoHome, TerzoBulk comune, CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
-		SQLBuilder sql = terzoHome.createSQLBuilder();
-		return sql;
-	}
-
-	public SQLBuilder selectResponsabile_ammByClause(it.cnr.jada.UserContext userContext, Unita_organizzativaBulk unita_organizzativaBulk, TerzoHome terzoHome, TerzoBulk comune, CompoundFindClause clause)  throws ComponentException, EJBException, RemoteException {
-		SQLBuilder sql = terzoHome.createSQLBuilder();
-		return sql;
-	}
-
 }

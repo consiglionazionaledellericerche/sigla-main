@@ -2,10 +2,10 @@
 --  DDL for View V_CONS_DISP_COMP_RES
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_CONS_DISP_COMP_RES" ("PROGETTO", "DS_PROGETTO", "COMMESSA", "DS_COMMESSA", "MODULO", "DS_MODULO", "DIPARTIMENTO", "DS_DIPARTIMENTO", "CDS", "DS_CDS", "UO", "CDR", "DS_CDR", "LDA", "DS_LDA", "ESERCIZIO", "ESERCIZIO_RES", "CD_VOCE", "CD_ELEMENTO_VOCE", "DS_VOCE", "STANZ_INI", "VAR_PIU", "VAR_MENO", "ASSESTATO_COMP", "OBB_COMP", "VINCOLI_COMP", "DISP_COMP", "PAGATO_COMP", "STANZ_RES_IMP", "VAR_PIU_STANZ_RES_IMP", "VAR_MENO_STANZ_RES_IMP", "ASSESTATO_RES_IMP", "OBB_RES_IMP", "OBB_RES_PRO", "VAR_PIU_RES_PRO", "VAR_MENO_RES_PRO", "VINCOLI_RES", "DISP_RES", "PAGATO_RES", "CD_NATURA", "CD_UNITA_PIANO", "CD_VOCE_PIANO") AS 
+  CREATE OR REPLACE FORCE VIEW "V_CONS_DISP_COMP_RES" ("PROGETTO", "DS_PROGETTO", "COMMESSA", "DS_COMMESSA", "MODULO", "DS_MODULO", "DIPARTIMENTO", "DS_DIPARTIMENTO", "CDS", "DS_CDS", "UO", "CDR", "DS_CDR", "LDA", "DS_LDA", "CD_RESPONSABILE_TERZO", "ESERCIZIO", "ESERCIZIO_RES", "CD_VOCE", "CD_ELEMENTO_VOCE", "DS_VOCE", "STANZ_INI", "VAR_PIU", "VAR_MENO", "ASSESTATO_COMP", "OBB_COMP", "VINCOLI_COMP", "DISP_COMP", "PAGATO_COMP", "STANZ_RES_IMP", "VAR_PIU_STANZ_RES_IMP", "VAR_MENO_STANZ_RES_IMP", "ASSESTATO_RES_IMP", "OBB_RES_IMP", "OBB_RES_PRO", "VAR_PIU_RES_PRO", "VAR_MENO_RES_PRO", "VINCOLI_RES", "DISP_RES", "PAGATO_RES", "CD_NATURA", "CD_UNITA_PIANO", "CD_VOCE_PIANO") AS
   SELECT a.progetto, a.ds_progetto, a.commessa, a.ds_commessa, a.modulo,
           a.ds_modulo, a.dipartimento, a.ds_dipartimento, a.cds, a.ds_cds,
-          a.uo, a.cdr, a.ds_cdr, a.lda, a.ds_lda, a.esercizio,
+          a.uo, a.cdr, a.ds_cdr, a.lda, a.ds_lda, a.cd_responsabile_terzo,  a.esercizio,
           a.esercizio_res, a.cd_voce, a.cd_elemento_voce, a.ds_voce,
           a.stanz_ini, a.var_piu, a.var_meno, a.assestato_comp, a.obb_comp,
           0 vincoli_comp, a.disp_comp, a.pagato_comp, a.stanz_res_imp,
@@ -30,6 +30,7 @@
                   NVL (linea_attivita.ds_linea_attivita,
                        linea_attivita.denominazione
                       ) ds_lda,
+                  linea_attivita.cd_responsabile_terzo,
                   voce_f_saldi_cdr_linea.esercizio esercizio,
                   voce_f_saldi_cdr_linea.esercizio_res esercizio_res,
                   voce_f_saldi_cdr_linea.cd_voce cd_voce,
@@ -131,6 +132,7 @@
                   NVL (linea_attivita.ds_linea_attivita,
                        linea_attivita.denominazione
                       ) ds_linea_attivita,
+                  linea_attivita.cd_responsabile_terzo,
                   voce_f_saldi_cdr_linea.esercizio,
                   voce_f_saldi_cdr_linea.esercizio_res,
                   voce_f_saldi_cdr_linea.cd_voce,
@@ -205,7 +207,7 @@
    UNION ALL
    SELECT a.progetto, a.ds_progetto, a.commessa, a.ds_commessa, a.modulo,
           a.ds_modulo, a.dipartimento, a.ds_dipartimento, a.cds, a.ds_cds,
-          a.uo, a.cdr, a.ds_cdr, a.lda, a.ds_lda, a.esercizio,
+          a.uo, a.cdr, a.ds_cdr, a.lda, a.ds_lda, a.cd_responsabile_terzo, a.esercizio,
           a.esercizio_res, a.cd_voce, a.cd_elemento_voce, a.ds_voce,
           a.stanz_ini, a.var_piu, a.var_meno, a.assestato_comp, a.obb_comp,
           CASE
@@ -258,6 +260,7 @@
                   NVL (v_linea_attivita_valida.ds_linea_attivita,
                        v_linea_attivita_valida.denominazione
                       ) ds_lda,
+                  v_linea_attivita_valida.cd_responsabile_terzo,
                   voce_f_saldi_cdr_linea.esercizio,
                   voce_f_saldi_cdr_linea.esercizio_res,
                   voce_f_saldi_cdr_linea.cd_voce,

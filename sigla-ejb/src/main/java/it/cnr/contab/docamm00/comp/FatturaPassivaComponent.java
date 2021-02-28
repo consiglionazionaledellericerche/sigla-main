@@ -58,6 +58,7 @@ import it.cnr.contab.ordmag.ordini.bulk.*;
 import it.cnr.contab.pdg00.bulk.Pdg_preventivo_etr_detBulk;
 import it.cnr.contab.pdg01.bulk.Pdg_modulo_entrate_gestBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.DetailedRuntimeException;
@@ -2230,7 +2231,26 @@ public class FatturaPassivaComponent extends it.cnr.jada.comp.CRUDComponent
                 fattura_passiva.setCognome(fornitoreTrovato.getAnagrafico().getCognome());
                 fattura_passiva.setRagione_sociale(fornitoreTrovato.getAnagrafico().getRagione_sociale());
                 fattura_passiva.setCodice_fiscale(fornitoreTrovato.getAnagrafico().getCodice_fiscale());
-                fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                if (fattura_passiva.getPartita_iva()!= null){
+                    it.cnr.contab.anagraf00.core.bulk.AnagraficoHome home = (it.cnr.contab.anagraf00.core.bulk.AnagraficoHome) getHome(uc, AnagraficoBulk.class);
+                    Collection coll = home.findGruppiIvaAssociati(fornitoreTrovato.getAnagrafico());
+                    Boolean trovato = false;
+                    if (coll != null && !coll.isEmpty()){
+                        for (java.util.Iterator i = coll.iterator(); i.hasNext(); ) {
+                            AssGruppoIvaAnagBulk assGruppoIvaAnagBulk = (AssGruppoIvaAnagBulk) i.next();
+                            AnagraficoBulk anagraficoBulk = (AnagraficoBulk)home.findByPrimaryKey(assGruppoIvaAnagBulk.getAnagraficoGruppoIva());
+                            if (anagraficoBulk != null && anagraficoBulk.isGruppoIVA() && fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDtIniValGruppoIva()) > 0 &&
+                                    fattura_passiva.getDt_fattura_fornitore().compareTo(anagraficoBulk.getDt_canc()) < 0 && anagraficoBulk.getPartita_iva().compareTo(fattura_passiva.getPartita_iva()) == 0){
+                                trovato = true;
+                            }
+                        }
+                    }
+                    if (!trovato){
+                        fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                    }
+                } else {
+                    fattura_passiva.setPartita_iva(fornitoreTrovato.getAnagrafico().getPartita_iva());
+                }
 
                 it.cnr.contab.anagraf00.core.bulk.TerzoHome home = (it.cnr.contab.anagraf00.core.bulk.TerzoHome) getHome(uc, fornitoreTrovato);
                 try {
@@ -4436,6 +4456,7 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         } catch (Throwable t) {
             throw handleException(t);
         }
+        setDt_termine_creazione_docamm(aUC, fattura_passiva);
         fattura_passiva.setHa_beniColl(ha_beniColl(aUC, fattura_passiva));
         fattura_passiva.setChangeOperationOn(fattura_passiva.getValuta());
         fattura_passiva.resetDefferredSaldi();
@@ -5708,7 +5729,11 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
             throws ComponentException {
 
         Voce_ivaHome voceIvaHome = (Voce_ivaHome) getHome(userContext, Voce_ivaBulk.class);
-        it.cnr.jada.persistency.sql.SQLBuilder sql = voceIvaHome.createSQLBuilder();
+        it.cnr.jada.persistency.sql.SQLBuilder sql = voceIvaHome.createSQLBuilder(
+                Optional.ofNullable(dettaglio.getFattura_passiva())
+                    .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDt_fattura_fornitore()))
+                    .orElse(EJBCommonServices.getServerDate())
+        );
         sql.addSQLClause("AND", "ti_applicazione", sql.NOT_EQUALS, Voce_ivaBulk.VENDITE);
         //Richista 658 del 29/01/2004
 
@@ -5772,7 +5797,22 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         				sql.addSQLClause("AND", "CD_VOCE_IVA", sql.EQUALS, voceIva.getCd_voce_iva());
         		}
         }
-        		 
+        Optional<DocumentoEleTestataBulk> documentoEleTestataBulk = Optional.ofNullable(dettaglio.getFattura_passiva())
+                .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getDocumentoEleTestata()));
+        if (documentoEleTestataBulk.isPresent()) {
+            sql.openParenthesis(FindClause.AND);
+            documentoEleTestataBulk.get()
+                    .getDocEleIVAColl()
+                    .stream()
+                    .forEach(documentoEleIvaBulk -> {
+                        if(Optional.ofNullable(documentoEleIvaBulk.getNatura()).isPresent()) {
+                            sql.addSQLClause(FindClause.OR, "NATURA_OPER_NON_IMP_SDI", SQLBuilder.EQUALS, documentoEleIvaBulk.getNatura());
+                        } else {
+                            sql.addClause(FindClause.OR, "percentuale", SQLBuilder.EQUALS, documentoEleIvaBulk.getAliquotaIva());
+                        }
+                    });
+            sql.closeParenthesis();
+        }
         sql.addClause(clauses);
         return sql;
     }
@@ -6557,9 +6597,16 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
     }
 
     private void validazioneComune(UserContext aUC, Fattura_passivaBulk fatturaPassiva) throws ComponentException {
-        if (!verificaEsistenzaSezionalePer(aUC, fatturaPassiva))
-            throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è stato definito un sezionale per le " + fatturaPassiva.getDescrizioneEntitaPlurale() + " e il tipo sezionale \"" + fatturaPassiva.getTipo_sezionale().getDs_tipo_sezionale() + "\"!");
-
+        if (!verificaEsistenzaSezionalePer(aUC, fatturaPassiva)){
+            throw new ApplicationMessageFormatException(
+                    "Attenzione: non è stato definito un sezionale per le {0} e il tipo sezionale '{1}'!",
+                    fatturaPassiva.getDescrizioneEntitaPlurale(),
+                    Optional.ofNullable(fatturaPassiva)
+                        .flatMap(fattura_passivaBulk -> Optional.ofNullable(fattura_passivaBulk.getTipo_sezionale()))
+                        .flatMap(tipo_sezionaleBulk -> Optional.ofNullable(tipo_sezionaleBulk.getDs_tipo_sezionale()))
+                        .orElse("NON DEFINITO")
+            );
+        }
         try{
             fatturaPassiva.validateDate();
 
@@ -7610,105 +7657,84 @@ public java.util.Collection findModalita(UserContext aUC,Fattura_passiva_rigaBul
         if (fatturaPassiva.getDocumentoEleTestata() == null)
             throw new it.cnr.jada.comp.ApplicationException("Attenzione: non è possibile recuperare il documento elettronico!");
         boolean noSegno = false;
-	/*
-	if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() == null ||
-			  !fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value()))
-		// il fornitore è il prestatore
-	{
-		if (((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()!= null &&
-			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale()!= null &&
-			  fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale())!=0
-			 )
-			 ||
-			 fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()== null
-			 ||
-			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() ==null
-			)
-		   &&
-		   ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()!= null &&
-			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva()!= null &&
-			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva())!=0
-			 )
-			 ||
-			 fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()== null
-			 ||
-			 fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() == null
-			)
-		  )
-			throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quello inserito per il prestatore nel documento elettronico. CF: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() + " PI: " + fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() + "!");
-	}
-	*/
-        //if (fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente() != null &&
-        //	fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getSoggettoEmittente().equals(SoggettoEmittenteType.TZ.value()))
-        // il fornitore è l'intermediario o il rappresentante
-        //{
-        if (
-                ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
-                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() != null &&
-                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
-                )
-                        ||
-                        fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
-                        ||
-                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getCodice_fiscale() == null
-                )
-                        &&
-                        ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
-                        )
-                                ||
-                                fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
-                                ||
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatoreAnag().getPartita_iva() == null
-                        )
-
-                        &&
-
+        TerzoBulk terzoFatturaElettronica = fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getPrestatore();
+        try {
+            terzoFatturaElettronica = (TerzoBulk) ((TerzoHome) getHome(aUC, terzoFatturaElettronica)).findByPrimaryKey(terzoFatturaElettronica);
+            if (terzoFatturaElettronica != null){
+                AnagraficoBulk anagraficoTerzoFatturaElettronica = (AnagraficoBulk) ((AnagraficoHome) getHome(aUC, AnagraficoBulk.class)).findByPrimaryKey(terzoFatturaElettronica.getAnagrafico());
+                if (anagraficoTerzoFatturaElettronica != null &&
                         ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
+                                anagraficoTerzoFatturaElettronica.getCodice_fiscale() != null &&
+                                anagraficoTerzoFatturaElettronica.getCodice_fiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
                         )
                                 ||
                                 fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
                                 ||
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() == null
+                                anagraficoTerzoFatturaElettronica.getCodice_fiscale() == null
                         )
-                        &&
-                        ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
-                        )
-                                ||
-                                fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
-                                ||
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() == null
-                        )
+                                &&
+                                ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
+                                        anagraficoTerzoFatturaElettronica.getPartita_iva() != null &&
+                                        anagraficoTerzoFatturaElettronica.getPartita_iva().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
+                                )
+                                        ||
+                                        fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
+                                        ||
+                                        anagraficoTerzoFatturaElettronica.getPartita_iva() == null
+                                )
 
-                        &&
+                                &&
 
-                        ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
-                        )
-                                ||
-                                fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
-                                ||
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() == null
-                        )
-                        &&
-                        ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() != null &&
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
-                        )
-                                ||
-                                fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
-                                ||
-                                fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() == null
-                        )
+                                ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
+                                )
+                                        ||
+                                        fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
+                                        ||
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodicefiscale() == null
+                                )
+                                &&
+                                ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
+                                )
+                                        ||
+                                        fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
+                                        ||
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getIntermediarioCodice() == null
+                                )
+
+                                &&
+
+                                ((fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale()) != 0
+                                )
+                                        ||
+                                        fatturaPassiva.getFornitore().getAnagrafico().getCodice_fiscale() == null
+                                        ||
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodicefiscale() == null
+                                )
+                                &&
+                                ((fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() != null &&
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice().compareTo(fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva()) != 0
+                                )
+                                        ||
+                                        fatturaPassiva.getFornitore().getAnagrafico().getPartita_iva() == null
+                                        ||
+                                        fatturaPassiva.getDocumentoEleTestata().getDocumentoEleTrasmissione().getRappresentanteCodice() == null
+                                )
 
                 )
-            throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Prestatore/Rappresentante fiscale/Intermediario nel documento elettronico.");
+                    throw new it.cnr.jada.comp.ApplicationException("Almeno uno tra Codice Fiscale e Partita IVA del fornitore deve coincidere con quelli inseriti per il Prestatore/Rappresentante fiscale/Intermediario nel documento elettronico.");
+
+            }
+        } catch (Throwable e) {
+            throw handleException(e);
+        }
+
 
         //}
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");

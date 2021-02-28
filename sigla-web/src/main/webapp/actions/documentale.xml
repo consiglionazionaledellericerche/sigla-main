@@ -95,4 +95,12 @@
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
 	</businessProcess>
 
+	<businessProcess name="AllegatiMultipliDocContBP"
+					 className="it.cnr.contab.doccont00.bp.AllegatiMultipliDocContBP">
+		<forward name="default" path="/doccont00/allegati_multipli_doccont.jsp" />
+		<init-param name="defaultAction" value="CRUDAction" />
+		<init-param name="bulkClassName" value="it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+	</businessProcess>
+
 </action-mappings>

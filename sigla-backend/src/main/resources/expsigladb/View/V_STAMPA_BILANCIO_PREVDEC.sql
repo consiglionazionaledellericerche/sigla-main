@@ -550,11 +550,15 @@
                                                         saldi.cd_elemento_voce),
                           saldi.cd_elemento_voce
                          ) cd_elemento_voce,
-                       NVL (im_stanz_res_improprio, 0)
-                     + NVL (im_obbl_res_pro, 0) im_residuo_ap
-                FROM voce_f_saldi_cdr_linea saldi
+                     CASE WHEN e.descrizione='CNR'
+                     then NVL (im_stanz_res_improprio, 0) + NVL (im_obbl_res_pro, 0)
+                     else NVL (im_obbl_res_pro, 0)
+                     END im_residuo_ap
+                FROM voce_f_saldi_cdr_linea saldi,
+                     parametri_ente e
                WHERE saldi.esercizio > 2015
-                 AND saldi.esercizio_res < saldi.esercizio) a,
+                 AND saldi.esercizio_res < saldi.esercizio
+                 AND e.attivo = 'Y') a,
              elemento_voce b,
              v_classificazione_voci_all c
        WHERE b.esercizio = a.esercizio

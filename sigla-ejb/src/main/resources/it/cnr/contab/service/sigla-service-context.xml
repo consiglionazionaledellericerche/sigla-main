@@ -74,7 +74,6 @@
 	<bean id="gson" class="com.google.gson.Gson"/>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
-		<property name="gson" ref="gson"/>
 		<property name="serverPrint" value="${print.server.name}"/>
 	</bean>
 
@@ -96,6 +95,8 @@
 		<property name="pecSDISubjectFatturaAttivaNotificaScartoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.scarto.term}"/>
 		<property name="pecSDISubjectFatturaAttivaMancataConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.mancataConsegna.term}"/>
 		<property name="pecSDISubjectNotificaEsitoTerm" value="${pec.sdi.subject.notifica.esito.term}"/>
+		<property name="pecSDISubjectNotificaRifiutoTerm" value="${pec.sdi.subject.notifica.rifiuto.term}"/>
+
 		<property name="pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.decorrenzaTermini.term}"/>
 		<property name="pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.attestazioneTrasmissioneFattura.term}"/>
 		<property name="pecSDISubjectFatturaAttivaInvioTerm" value="${pec.sdi.subject.fatturaAttiva.invio.term}"/>

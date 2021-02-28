@@ -267,6 +267,12 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 				model.setUrlRequired(Boolean.TRUE);
 			add(actioncontext, model);
 		}
+		public void addConflittoInteresse(ActionContext actioncontext) throws BusinessProcessException {
+			Incarichi_repertorio_archivioBulk model = new Incarichi_repertorio_archivioBulk();
+			model.initializeForInsert(null, actioncontext);
+			model.setTipo_archivio(Incarichi_repertorio_archivioBulk.TIPO_CONFLITTO_INTERESSI);
+			add(actioncontext, model);
+		}
 		public void addAllegatoGenerico(ActionContext actioncontext) throws BusinessProcessException {
 			Incarichi_procedura_archivioBulk model = new Incarichi_procedura_archivioBulk();
 			model.initializeForInsert(null, actioncontext);
@@ -341,25 +347,39 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 								"btn btn-sm btn-secondary btn-outline-secondary",
 								isFromBootstrap);
 					}
-					if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
-						if (incarico.getCurriculumVincitore()==null) {
-							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-									context,
-									isFromBootstrap?"fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
-									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-									true,
-									"Curriculum Vincitore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
-									isFromBootstrap);
-						} else {
-							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-									context,
-									isFromBootstrap?"fa fa-fw fa-address-card text-primary":"img/paste16.gif",
-									"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-									true,
-									"Aggiornamento Curriculum Vincitore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
-									isFromBootstrap);
+					if (parametri!=null) {
+						if (parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
+							if (incarico.getCurriculumVincitore()==null) {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap?"fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
+										"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Curriculum Vincitore",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
+							} else {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap?"fa fa-fw fa-address-card text-primary":"img/paste16.gif",
+										"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Aggiornamento Curriculum Vincitore",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
+							}
+						}
+						if (parametri.getAllega_conflitto_interesse()!=null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+							if (incarico.getConflittoInteressi()==null) {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap?"fa fa-fw fa-user-times-o text-primary":"img/paste16.gif",
+										"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Attestazione Insussistenza Conflitto Interessi",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
+							}
 						}
 					}
 					if (incarico.getDecretoDiNomina()==null) {
@@ -429,40 +449,54 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 						procedura.getIncarichi_repertorioValidiColl() != null &&
 						procedura.getIncarichi_repertorioValidiColl().size() == 1 ) {
 					Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk)procedura.getIncarichi_repertorioValidiColl().get(0);
-					if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
-						if (incarico.getCurriculumVincitore()==null) {
-							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-									context,
-									isFromBootstrap?"fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
-									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-									true,
-									"Curriculum Vincitore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
-									isFromBootstrap);
-						} else {
-							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-									context,
-									isFromBootstrap?"fa fa-fw fa-address-card text-primary":"img/paste16.gif",
-									"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-									true,
-									"Aggiornamento Curriculum Vincitore",
-									"btn btn-sm btn-secondary btn-outline-secondary",
-									isFromBootstrap);
+					if (parametri!=null) {
+						if (parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
+							if (incarico.getCurriculumVincitore() == null) {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap ? "fa fa-fw fa-address-card-o text-primary" : "img/paste16.gif",
+										"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Curriculum Vincitore",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
+							} else {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap ? "fa fa-fw fa-address-card text-primary" : "img/paste16.gif",
+										"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Aggiornamento Curriculum Vincitore",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
 
-							innerDelete = innerDelete || Optional.ofNullable(getModel())
-									.filter(Incarichi_archivioBulk.class::isInstance)
-									.map(Incarichi_archivioBulk.class::cast)
-									.filter(el->el.isToBeCreated())
-									.filter(el->el.isAggiornamentoCurriculumVincitore())
-									.isPresent();
-
-							if (((CRUDIncarichiProceduraBP)getParentController()).isSuperUtente() ||
-									((CRUDIncarichiProceduraBP)getParentController()).isUtenteAbilitatoModificaAllegatoCurriculum()) {
 								innerDelete = innerDelete || Optional.ofNullable(getModel())
 										.filter(Incarichi_archivioBulk.class::isInstance)
 										.map(Incarichi_archivioBulk.class::cast)
-										.filter(el->el.isCurriculumVincitore() || el.isAggiornamentoCurriculumVincitore())
+										.filter(el -> el.isToBeCreated())
+										.filter(el -> el.isAggiornamentoCurriculumVincitore())
 										.isPresent();
+
+								if (((CRUDIncarichiProceduraBP) getParentController()).isSuperUtente() ||
+										((CRUDIncarichiProceduraBP) getParentController()).isUtenteAbilitatoModificaAllegatoCurriculum()) {
+									innerDelete = innerDelete || Optional.ofNullable(getModel())
+											.filter(Incarichi_archivioBulk.class::isInstance)
+											.map(Incarichi_archivioBulk.class::cast)
+											.filter(el -> el.isCurriculumVincitore() || el.isAggiornamentoCurriculumVincitore())
+											.isPresent();
+								}
+							}
+						}
+						if (parametri.getAllega_conflitto_interesse()!=null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+							if (incarico.getConflittoInteressi() == null) {
+								it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+										context,
+										isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/paste16.gif",
+										"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
+										true,
+										"Attestazione Insussistenza Conflitto Interessi",
+										"btn btn-sm btn-secondary btn-outline-secondary",
+										isFromBootstrap);
 							}
 						}
 					}
@@ -654,23 +688,37 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 							"Contratto",
 							isFromBootstrap);
 				}
-				if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
-					if (incarico.getCurriculumVincitore()==null) {
-						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-								context,
-								isFromBootstrap?"fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
-								"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-								true,
-								"Curriculum Vincitore",
-								isFromBootstrap);
-					} else {
-						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-								context,
-								isFromBootstrap?"fa fa-fw fa-address-card text-primary":"img/paste16.gif",
-								"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-								true,
-								"AggiornamentoCurriculum Vincitore",
-								isFromBootstrap);
+				if (parametri!=null) {
+					if (parametri.getAllega_curriculum_vitae() != null && parametri.getAllega_curriculum_vitae().equals("Y")) {
+						if (incarico.getCurriculumVincitore() == null) {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap ? "fa fa-fw fa-address-card-o text-primary" : "img/paste16.gif",
+									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Curriculum Vincitore",
+									isFromBootstrap);
+						} else {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap ? "fa fa-fw fa-address-card text-primary" : "img/paste16.gif",
+									"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Aggiornamento Curriculum Vincitore",
+									isFromBootstrap);
+						}
+					}
+					if (parametri.getAllega_conflitto_interesse()!=null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+						if (incarico.getConflittoInteressi() == null) {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/paste16.gif",
+									"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Attestazione Insussistenza Conflitto Interessi",
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
+						}
 					}
 				}
 				if (incarico.getDecretoDiNomina()==null) {
@@ -724,40 +772,54 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 										.filter(el->el.isContratto())
 										.isPresent();
 				}
-				if (parametri!=null && parametri.getAllega_curriculum_vitae()!=null && parametri.getAllega_curriculum_vitae().equals("Y")) {
-					if (incarico.getCurriculumVincitore()==null) {
-						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-								context,
-								isFromBootstrap? "fa fa-fw fa-address-card-o text-primary":"img/paste16.gif",
-								"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-								true,
-								"Curriculum Vincitore",
-								"btn btn-sm btn-secondary btn-outline-secondary",
-								isFromBootstrap);
-					} else {
-						it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
-								context,
-								isFromBootstrap? "fa fa-fw fa-address-card text-primary":"img/paste16.gif",
-								"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
-								true,
-								"Aggiornamento Curriculum Vincitore",
-								"btn btn-sm btn-secondary btn-outline-secondary",
-								isFromBootstrap);
+				if (parametri!=null) {
+					if (parametri.getAllega_curriculum_vitae() != null && parametri.getAllega_curriculum_vitae().equals("Y")) {
+						if (incarico.getCurriculumVincitore() == null) {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap ? "fa fa-fw fa-address-card-o text-primary" : "img/paste16.gif",
+									"javascript:submitForm('doAddCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Curriculum Vincitore",
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
+						} else {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap ? "fa fa-fw fa-address-card text-primary" : "img/paste16.gif",
+									"javascript:submitForm('doAddAggiornamentoCurriculumVincitoreToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Aggiornamento Curriculum Vincitore",
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 
-						innerDelete = innerDelete || Optional.ofNullable(getModel())
-								.filter(Incarichi_archivioBulk.class::isInstance)
-								.map(Incarichi_archivioBulk.class::cast)
-								.filter(el->el.isToBeCreated())
-								.filter(el->el.isAggiornamentoCurriculumVincitore())
-								.isPresent();
-
-						if (((CRUDIncarichiProceduraBP)getParentController().getParentController()).isSuperUtente() ||
-								((CRUDIncarichiProceduraBP)getParentController().getParentController()).isUtenteAbilitatoModificaAllegatoCurriculum()) {
 							innerDelete = innerDelete || Optional.ofNullable(getModel())
-															.filter(Incarichi_archivioBulk.class::isInstance)
-															.map(Incarichi_archivioBulk.class::cast)
-															.filter(el->el.isCurriculumVincitore()||el.isAggiornamentoCurriculumVincitore())
-															.isPresent();
+									.filter(Incarichi_archivioBulk.class::isInstance)
+									.map(Incarichi_archivioBulk.class::cast)
+									.filter(el -> el.isToBeCreated())
+									.filter(el -> el.isAggiornamentoCurriculumVincitore())
+									.isPresent();
+
+							if (((CRUDIncarichiProceduraBP) getParentController().getParentController()).isSuperUtente() ||
+									((CRUDIncarichiProceduraBP) getParentController().getParentController()).isUtenteAbilitatoModificaAllegatoCurriculum()) {
+								innerDelete = innerDelete || Optional.ofNullable(getModel())
+										.filter(Incarichi_archivioBulk.class::isInstance)
+										.map(Incarichi_archivioBulk.class::cast)
+										.filter(el -> el.isCurriculumVincitore() || el.isAggiornamentoCurriculumVincitore())
+										.isPresent();
+							}
+						}
+					}
+					if (parametri.getAllega_conflitto_interesse() != null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+						if (incarico.getConflittoInteressi() == null) {
+							it.cnr.jada.util.jsp.JSPUtils.toolbarButton(
+									context,
+									isFromBootstrap ? "fa fa-fw fa-user-times-o text-primary" : "img/paste16.gif",
+									"javascript:submitForm('doAddConflittoInteresseToCRUD(" + getInputPrefix() + ")')",
+									true,
+									"Attestazione Insussistenza Conflitto Interessi",
+									"btn btn-sm btn-secondary btn-outline-secondary",
+									isFromBootstrap);
 						}
 					}
 				}
@@ -942,7 +1004,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 
 	/**
 	 * Secondo costruttore della classe <code>CRUDIncarichiRepertorioBP</code>.
-	 * @param String function
+	 * @param function String function
 	 */
 	public CRUDIncarichiProceduraBP(String function) {
 		super(function);

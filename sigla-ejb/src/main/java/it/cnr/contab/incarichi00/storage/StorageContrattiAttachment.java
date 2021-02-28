@@ -29,8 +29,9 @@ public enum StorageContrattiAttachment {
 	SIGLA_CONTRATTI_ATTACHMENT_PROGETTO("D:sigla_contratti_attachment:progetto"),
 	SIGLA_CONTRATTI_ATTACHMENT_ALLEGATO_GENERICO("D:sigla_contratti_attachment:allegato_generico"),
 	SIGLA_CONTRATTI_ATTACHMENT_CAPITOLATO("D:sigla_contratti_attachment:capitolato"),
-	SIGLA_CONTRATTI_ATTACHMENT_DICHIARAZIONE_ALTRI_RAPPORTI("D:sigla_contratti_attachment:dichiarazione_altri_rapporti");
-	
+	SIGLA_CONTRATTI_ATTACHMENT_DICHIARAZIONE_ALTRI_RAPPORTI("D:sigla_contratti_attachment:dichiarazione_altri_rapporti"),
+	SIGLA_CONTRATTI_ATTACHMENT_CONFLITTO_INTERESSI("D:sigla_contratti_attachment:dichiarazione_insussistenza_conflitto_interessi");
+
 	private final String value;
 
 	private StorageContrattiAttachment(String value) {

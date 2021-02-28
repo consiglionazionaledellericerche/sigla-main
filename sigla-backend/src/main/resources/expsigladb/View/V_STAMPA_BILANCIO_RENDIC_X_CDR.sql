@@ -65,7 +65,8 @@
                              a.esercizio_res, 0,
                              DECODE(a.ti_gestione, 'E',
                                NVL (a.variazioni_residui_propri, 0),
-                               NVL (a.variazioni_positive, 0)
+                               NVL (a.variazioni_residui_propri, 0)
+                             + NVL (a.variazioni_positive, 0)
                              - NVL (a.variazioni_negative, 0))
                             ) tot_mod_impacc_res,
                      DECODE (a.esercizio,
@@ -136,7 +137,8 @@
                          a.esercizio_res, 0,
                             DECODE(a.ti_gestione, 'E',
                                NVL (a.variazioni_residui_propri, 0),
-                               NVL (a.variazioni_positive, 0)
+                               NVL (a.variazioni_residui_propri, 0)
+                             + NVL (a.variazioni_positive, 0)
                              - NVL (a.variazioni_negative, 0))
                         ) tot_mod_impacc_res_es_prec,
                      DECODE (a.esercizio,
@@ -290,7 +292,8 @@
                              a.esercizio_res, 0,
                              DECODE(a.ti_gestione, 'E',
                                NVL (a.variazioni_residui_propri, 0),
-                               NVL (a.variazioni_positive, 0)
+                               NVL (a.variazioni_residui_propri, 0)
+                             + NVL (a.variazioni_positive, 0)
                              - NVL (a.variazioni_negative, 0))
                             ) tot_mod_impacc_res,
                      DECODE (a.esercizio,
@@ -355,7 +358,8 @@
                          a.esercizio_res, 0,
                          DECODE(a.ti_gestione, 'E',
                                NVL (a.variazioni_residui_propri, 0),
-                               NVL (a.variazioni_positive, 0)
+                               NVL (a.variazioni_residui_propri, 0)
+                             + NVL (a.variazioni_positive, 0)
                              - NVL (a.variazioni_negative, 0))
                         ) tot_mod_impacc_res_es_prec,
                      DECODE (a.esercizio,

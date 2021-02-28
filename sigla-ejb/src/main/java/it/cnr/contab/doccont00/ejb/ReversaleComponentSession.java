@@ -48,4 +48,6 @@ it.cnr.contab.doccont00.core.bulk.ReversaleBulk annullaReversale(it.cnr.jada.Use
 java.lang.String isAnnullabile(it.cnr.jada.UserContext param0, it.cnr.contab.doccont00.core.bulk.ReversaleBulk param1)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean esisteAnnullodaRiemettereNonCollegato(it.cnr.jada.UserContext userContext,Integer esercizio, String cds )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 java.lang.Boolean isReversaleCollegataAnnullodaRiemettere(it.cnr.jada.UserContext userContext,it.cnr.contab.doccont00.core.bulk.ReversaleBulk rev )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+java.lang.Boolean isReversaleCORINonAssociataMandato(it.cnr.jada.UserContext userContext,it.cnr.contab.doccont00.core.bulk.ReversaleBulk rev )throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+
 }

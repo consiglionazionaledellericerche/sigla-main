@@ -23,20 +23,20 @@
 <title>Piano di Riparto delle Spese Accentrate</title>
 <body class="Form">
 <% bp.openFormWindow(pageContext);%>
-	<table class="Panel">
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "cd_classificazione"); %></td>	
-	<td><% bp.getController().writeFormInput( out, "cd_classificazione");%> </td>
-	</tr>
-	<tr>
-	<td><% bp.getController().writeFormLabel( out, "ds_classificazione"); %></td>	
-	<td><% bp.getController().writeFormInput( out, "ds_classificazione");%> </td>
-	</tr>
+	<table class="Panel card p-2">
+        <tr>
+            <td><% bp.getController().writeFormLabel( out, "cd_classificazione"); %></td>
+            <td><% bp.getController().writeFormInput( out, "cd_classificazione");%> </td>
+            </tr>
+            <tr>
+            <td><% bp.getController().writeFormLabel( out, "ds_classificazione"); %></td>
+            <td><% bp.getController().writeFormInput( out, "ds_classificazione");%> </td>
+        </tr>
 	</table>
-	<BR>
-	<%controller.writeHTMLTable(pageContext,"pdgPianoRipartoSpese",isTableEnabled,isSearchVisible,isTableEnabled,"100%","170px"); %>
-	<table class="Panel" cellspacing=2>
-	<BR>
+	<div class="card p-1">
+	    <%controller.writeHTMLTable(pageContext,"pdgPianoRipartoSpese",isTableEnabled,isSearchVisible,isTableEnabled,"100%","170px"); %>
+	</div>
+	<table class="Panel card p-2" cellspacing=2>
 	<tr>
 		<td><% controller.writeFormLabel(out,"default","find_centro_responsabilita"); %></td>
 		<td><% controller.writeFormInput(out,"default","find_centro_responsabilita"); %></td>			 
@@ -47,7 +47,7 @@
 	</tr>	
 </table>
 <BR>
-<table style="width:100%">
+<table style="width:100%" class="card p-2">
  	<tr>
   		<td style="width:50%">
 			<div class="Group" style="width:100%">

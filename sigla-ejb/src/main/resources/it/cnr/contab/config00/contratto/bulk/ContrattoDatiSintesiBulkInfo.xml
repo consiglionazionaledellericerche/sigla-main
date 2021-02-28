@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd"
+        shortDescription="Contratto">
+	<fieldProperty
+			name="esercizio"
+			property="esercizio"
+			inputType="TEXT"
+			label="Esercizio"
+			maxLength="4"
+			inputSize="8"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"/>
+	<fieldProperty
+			name="dt_stipula"
+			property="dt_stipula"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Data Stipula"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="dt_stipula"
+			property="dt_stipula"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Data Stipula"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="dt_proroga"
+			property="dt_proroga"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Data Proroga"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="dt_inizio_validita"
+			property="dt_inizio_validita"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Data Inizio"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="dt_fine_validita"
+			property="dt_fine_validita"
+			inputType="TEXT"
+			formatName="date_short"
+			label="Data Fine"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true" />
+	<fieldProperty
+			name="pg_contratto"
+			property="pg_contratto"
+			inputType="TEXT"
+			label="Numero Contratto"
+			maxLength="10"
+			inputSize="8"
+			enabledOnEdit="false"
+			enabledOnInsert="false"
+			enabledOnSearch="true"/>
+    <fieldProperty
+            name="oggetto"
+            property="oggetto"
+            inputSize="500"
+            inputType="TEXT"
+            label="Oggetto"/>
+    <fieldProperty
+            name="im_contratto_passivo"
+            property="im_contratto_passivo"
+            inputType="TEXT"
+            label="Importo Contratto"/>
+    <formFieldProperty
+            name="pg_contratto"/>
+    <formFieldProperty
+            name="oggetto"/>
+    <formFieldProperty
+            name="dt_stipula"/>
+    <formFieldProperty
+            name="dt_proroga"/>
+
+	<findFieldProperty
+			name="esercizio"/>
+
+</bulkInfo>

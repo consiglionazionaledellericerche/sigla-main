@@ -1604,8 +1604,14 @@ private void validaCdrLineaVoce(UserContext userContext, ObbligazioneBulk obblig
 			 *
 			 **/
 			if (totaleOldScad.compareTo(totaleNewScad) == -1 || !found) {
-				if (isObbligazioneResiduo && !Utility.createUtenteComponentSession().isSupervisore(userContext))
-					saldoSession.checkBloccoDisponibilitaResidue(userContext, cdr, latt, (Elemento_voceBulk)voce);
+				if (!UtenteBulk.isAbilitatoSbloccoImpegni(userContext)) {
+					if (obbligazione.isCompetenza())
+						saldoSession.checkBloccoImpegniNatfin(userContext, cdr, latt, (Elemento_voceBulk) voce, ObbligazioneBulk.TIPO_COMPETENZA);
+					if (obbligazione.isObbligazioneResiduo())
+						saldoSession.checkBloccoImpegniNatfin(userContext, cdr, latt, (Elemento_voceBulk) voce, ObbligazioneBulk.TIPO_RESIDUO_PROPRIO);
+					if (obbligazione.isObbligazioneResiduoImproprio())
+						saldoSession.checkBloccoImpegniNatfin(userContext, cdr, latt, (Elemento_voceBulk) voce, ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO);
+				}
 
 				if (obbligazione.isCompetenza()) {
 					BigDecimal totaleResidui = saldoSession.getTotaleSaldoResidui(userContext, cdr, latt, voce);

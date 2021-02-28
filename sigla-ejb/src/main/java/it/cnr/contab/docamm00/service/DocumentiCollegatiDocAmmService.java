@@ -389,7 +389,7 @@ public class DocumentiCollegatiDocAmmService extends DocumentiContabiliService {
                     .orElse("FPA12");
             Source xslDoc = null;
             if (formatoTrasmissione.equals("FPA12")) {
-                xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+                xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.1.xsl"));
             } else if (formatoTrasmissione.equals("SDI11")) {
                 xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.1.xsl"));
             } else {

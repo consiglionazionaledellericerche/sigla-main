@@ -28,6 +28,9 @@ PROCEDURE abilitaConguaglio
    aRecRateizzaClassificCoriP0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
    aRecRateizzaClassificCoriR0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
 
+    isChiavePrimariaRiduzioneCuneo CONSTANT CONFIGURAZIONE_CNR.cd_chiave_primaria%TYPE := 'RIDUZIONE_CUNEO_DL_3_2020';
+    isChiaveSecondariaDataInizio CONSTANT CONFIGURAZIONE_CNR.cd_chiave_secondaria%TYPE := 'DATA_INIZIO';
+    dataInizioRiduzioneCuneo date;
 BEGIN
    -------------------------------------------------------------------------------------------------
    -- Memorizzazione parametri generali della procedura
@@ -83,6 +86,7 @@ BEGIN
    -- nell'esercizio del conguaglio
 
    BEGIN
+
 
       SELECT COUNT(*) INTO esisteCompenso
       FROM   DUAL
@@ -237,6 +241,7 @@ BEGIN
                 detrazioni_co_esterno=aRecConguaglioUltimo.detrazioni_co_esterno,
                 detrazioni_fi_esterno=aRecConguaglioUltimo.detrazioni_fi_esterno,
                 detrazioni_al_esterno=aRecConguaglioUltimo.detrazioni_al_esterno,
+                detrazione_rid_cuneo_esterno=aRecConguaglioUltimo.detrazione_rid_cuneo_esterno,
                 im_detrazione_personale_anag=imDetrazioniPerAnag
          WHERE  cd_cds = aRecConguaglio.cd_cds AND
                 cd_unita_organizzativa = aRecConguaglio.cd_unita_organizzativa AND
@@ -263,6 +268,7 @@ BEGIN
                   detrazioni_co_esterno=0,
                   detrazioni_fi_esterno=0,
                   detrazioni_al_esterno=0,
+                  detrazione_rid_cuneo_esterno=0,
                   im_detrazione_personale_anag=imDetrazioniPerAnag
            WHERE  cd_cds = aRecConguaglio.cd_cds AND
                   cd_unita_organizzativa = aRecConguaglio.cd_unita_organizzativa AND
@@ -304,6 +310,8 @@ PROCEDURE creaCompensoConguaglio
    aImTotDetrazioniNettoCo NUMBER(15,2);
    aImTotDetrazioniNettoFi NUMBER(15,2);
    aImTotDetrazioniNettoAl NUMBER(15,2);
+   aImTotDetrazioniCuneo NUMBER(15,2) := 0;
+   aImTotDetrazioniNettoCuneo NUMBER(15,2) := 0;
 
    aImTotaleDetrazioni NUMBER(15,2);
    aImTotaleNetto NUMBER(15,2);
@@ -349,21 +357,28 @@ PROCEDURE creaCompensoConguaglio
    aRecRateizzaClassificCoriP0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
    aRecRateizzaClassificCoriR0 RATEIZZA_CLASSIFIC_CORI%ROWTYPE;
 
-   isChiavePrimariaConguaglio CONSTANT CONFIGURAZIONE_CNR.cd_chiave_primaria%TYPE := 'CONGUAGLIO';
+  isChiavePrimariaConguaglio CONSTANT CONFIGURAZIONE_CNR.cd_chiave_primaria%TYPE := 'CONGUAGLIO';
    isLimiteImportoEmisMandato CONSTANT CONFIGURAZIONE_CNR.cd_chiave_secondaria%TYPE := 'IMPORTO_LIMITE_EMISSIONE_MANDATO';
 
    importoLimite CONFIGURAZIONE_CNR.im01%Type;
 
    gen_cur_cori GenericCurTyp;
 
-   aDataSospensioneMin	date;
-   aDataSospensioneMax	date;
+   aDataSospensioneMin  date;
+   aDataSospensioneMax  date;
+
+   aDataMin date;
+   aDataMax date;
+   i_credito number := 0;
+   dataInizioGestioneCuneoFiscale date;
 
 BEGIN
 
+   dataInizioGestioneCuneoFiscale := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
    -------------------------------------------------------------------------------------------------
    -- Memorizzazione parametri generali della procedura
 
+   tabCreditoIrpef.DELETE;
    dataOdierna:=sysdate;
    aDataIniEsercizio:=TO_DATE('0101' || inEsercizioConguaglio,'DDMMYYYY');
    aDataFinEsercizio:=TO_DATE('3112' || inEsercizioConguaglio,'DDMMYYYY');
@@ -397,7 +412,7 @@ BEGIN
    aImTotDetrazioniFi:=0;
    aImTotDetrazioniFiS:=0;
    aImTotDetrazioniAl:=0;
-
+   aImTotDetrazioniCuneo :=0;
    aValoreMinScaglioneIrpef:=0;
    aValoreMaxScaglioneIrpef:=0;
 
@@ -544,6 +559,8 @@ BEGIN
    -- Calcolo del numero di giorni per date competenza compensi (tutti)
 
    glbNumeroGiorni:=CNRCTB545.getGiorniMatriceDate(tabella_date_ok);
+   aDataMax:=CNRCTB545.getMassimaMatriceDate(tabella_date_ok);
+   aDataMin:=CNRCTB545.getMinimaMatriceDate(tabella_date_ok);
 
    -------------------------------------------------------------------------------------------------
    -- Inserimento ed elaborazione del compenso
@@ -617,11 +634,13 @@ BEGIN
    aRecCompenso.detrazione_coniuge:=0;
    aRecCompenso.detrazione_figli:=0;
    aRecCompenso.detrazione_altri:=0;
+   aRecCompenso.detrazione_riduzione_cuneo:=0;
    aRecCompenso.detrazioni_personali_netto:=0;
    aRecCompenso.detrazioni_la_netto:=0;
    aRecCompenso.detrazione_coniuge_netto:=0;
    aRecCompenso.detrazione_figli_netto:=0;
    aRecCompenso.detrazione_altri_netto:=0;
+   aRecCompenso.detrazione_rid_cuneo_netto:=0;
    aRecCompenso.imponibile_inail:=0;
    aRecCompenso.fl_generata_fattura:='N';
    IF aRecTipoTrattamento.ti_commerciale = 'Y' THEN
@@ -690,30 +709,6 @@ BEGIN
    aImportoRifDetrazioniPer:=glbImponibileLordoIrpef;
    aImportoRifDetrazioniFam:=glbImponibileLordoIrpef;
    aImportoRifDetrazioni:=glbImponibileLordoIrpef;
---pipe.send_message('aImportoRifDetrazioniPer = '||aImportoRifDetrazioniPer);
---pipe.send_message('aImportoRifDetrazioniFam = '||aImportoRifDetrazioniFam);
-   -- Recupera i valori massimo e minimo dello scaglione Irpef di riferimento in caso di gestione
-   -- per conguaglio con aliquota massima in anagrafico. Il valore minimo è utilizzato, in questi casi,
-   -- come montante di riferimento per il calcolo delle detrazioni familiari e personali
-   /* valido per le vecchie detrazioni che dipendevano dallo scaglione
-   IF (aRecAnagrafico.aliquota_fiscale IS NOT NULL AND
-       aRecAnagrafico.aliquota_fiscale > 0) THEN
-      CNRCTB545.getValMinMaxSclAlqMaxIrpef(aRecConguaglio.dt_registrazione,
-                                           aRecTipoTrattamento,
-                                           aRecAnagrafico.aliquota_fiscale,
-                                           aValoreMinScaglioneIrpef,
-                                           aValoreMaxScaglioneIrpef);
-
-      IF aValoreMinScaglioneIrpef = 0 THEN
-         aImportoRifDetrazioniPer:=aValoreMaxScaglioneIrpef;
-         aImportoRifDetrazioniFam:=aValoreMaxScaglioneIrpef;
-      ELSE
-         aImportoRifDetrazioniPer:=aValoreMinScaglioneIrpef;
-         aImportoRifDetrazioniFam:=aValoreMinScaglioneIrpef;
-      END IF;
-
-   END IF;
-   */
 
    --Calcolo il totale del reddito complessivo
    --Aggiungo i redditi presenti nelle anagrafiche e quelli eventualmente come DIP
@@ -721,7 +716,7 @@ BEGIN
 --pipe.send_message('glbRedditoComplessivo = '||glbRedditoComplessivo);
 --pipe.send_message('glbImponibilePagatoDip = '||glbImponibilePagatoDip);
 
-	 aTotRedditoComplessivo := aImportoRifDetrazioni
+   aTotRedditoComplessivo := aImportoRifDetrazioni
                            + glbRedditoComplessivo
                            + glbImponibilePagatoDip;
 
@@ -732,12 +727,6 @@ BEGIN
     If glbFlNoDetrazioniFamily != 'Y' And
        aRecCompenso.ti_anagrafico = 'A' Then
       IF tabella_date_fam_ok_unite.COUNT > 0 THEN
-   /*
-	 --Aggiungo i redditi presenti nelle anagrafiche
-	 aTotRedditoComplessivo := aImportoRifDetrazioniFam
-                                   + glbRedditoComplessivo
-                                   + glbRedditoAbitazPrincipale;
-   */
          --controllo se esiste un figlio in assenza di coniuge
          Begin
             Select Count(1)
@@ -808,7 +797,7 @@ BEGIN
             --Gestiti i seguenti importi
             --aImTotDetrazioniFi          Detrazioni per tutti i figli
             --aImTotDetrazioniFiS         Detrazioni per il figlio S
-            --aImTotDetrazioniCo	  Detrazione per il coniuge fittizio
+            --aImTotDetrazioniCo    Detrazione per il coniuge fittizio
             If aImTotDetrazioniFiS >= aImTotDetrazioniCo Then
                 aImTotDetrazioniFi := aImTotDetrazioniFi;
             Else
@@ -836,11 +825,6 @@ BEGIN
     If glbFlNoDetrazioniAltre != 'Y' And
        aRecCompenso.ti_anagrafico = 'A' Then
 
-       /*
-       aTotRedditoComplessivo := aImportoRifDetrazioniPer
-                                   + glbRedditoComplessivo
-                                   + glbRedditoAbitazPrincipale;
-       */
       IF tabella_date_per_ok.COUNT > 0 THEN
 
          aImDetrazioniPe:=0;
@@ -890,15 +874,15 @@ BEGIN
                   detrazione_minima:=0;
          End;
 
-	       aImTotDetrazioniPe:=aImTotDetrazioniPe + maggiorazione;
+         aImTotDetrazioniPe:=aImTotDetrazioniPe + maggiorazione;
 
-	       --se il reddito è inferiore a 8000 euro e se il terzo lo ha richiesto,
-	       --gli viene applicata la detrazione massima
-	       If aTotRedditoComplessivo <= 8000 And glbFlApplicaDetrPersMax = 'Y' Then
-	          If aImTotDetrazioniPe < detrazione_minima Then
-	             aImTotDetrazioniPe := detrazione_minima;
-	          End If;
-	       End If;
+         --se il reddito è inferiore a 8000 euro e se il terzo lo ha richiesto,
+         --gli viene applicata la detrazione massima
+         If aTotRedditoComplessivo <= 8000 And glbFlApplicaDetrPersMax = 'Y' Then
+            If aImTotDetrazioniPe < detrazione_minima Then
+               aImTotDetrazioniPe := detrazione_minima;
+            End If;
+         End If;
       END IF;
     End If;
    END;
@@ -909,29 +893,8 @@ BEGIN
     If glbFlDetrazioniAltriTipi = 'Y' And
        aRecCompenso.ti_anagrafico = 'A' Then
 
-         /*
-         aTotRedditoComplessivo := aImportoRifDetrazioniPer
-                                   + glbRedditoComplessivo
-                                   + glbRedditoAbitazPrincipale;
-         */
       IF tabella_date_per_ok.COUNT > 0 THEN
             aImDetrazioniLa:=0;
-            /*
-            FOR i IN tabella_date_per_ok.FIRST .. tabella_date_per_ok.LAST
-
-            LOOP
-
-               CNRCTB550.calcolaDetrazioniAltriTipi(aTotRedditoComplessivo,   --aImportoRifDetrazioniPer,
-                                           aRecAnagrafico.cd_anag,
-                                           tabella_date_per_ok(i).tDataDa,
-                                           tabella_date_per_ok(i).tDataA,
-                                           aRecConguaglio.dt_registrazione,
-                                           aRecConguaglio.esercizio,
-                                           aImDetrazioniLa);
-
-               aImTotDetrazioniLa:=aImTotDetrazioniLa + aImDetrazioniLa;
-            END LOOP;
-            */
             /*Non vanno rapportate al periodo effettivamente pagato - questo solo nel conguaglio*/
             CNRCTB550.calcolaDetrazioniAltriTipi(aTotRedditoComplessivo,   --aImportoRifDetrazioniPer,
                                            aRecAnagrafico.cd_anag,
@@ -967,6 +930,7 @@ BEGIN
       glbDeduzioneIrpefDovuto:=0;
       glbDeduzioneFamilyDovuto:=0;
       glbImportoCreditoIrpefDovuto:=0;
+      glbImportoBonusIrpefDovuto:=0;
 
       glbImpAddRegRateEseprec:=0;
       glbImpAddProRateEseprec:=0;
@@ -989,7 +953,42 @@ BEGIN
 
          EXIT WHEN gen_cur_cori%NOTFOUND;
 --pipe.send_message('aRecCoriConguaglio.CD_CONTRIBUTO_RITENUTA '||aRecCoriConguaglio.CD_CONTRIBUTO_RITENUTA);
+         IF CNRCTB545.IsCoriCreditoIrpef(aRecCoriConguaglio.cd_contributo_ritenuta) = 'Y'  then
+            --per ora passo glbNumeroGiorni che è anche il numero gg del cud
+--pipe.send_message('3 ');
+   if aDataMin < to_date('01/01/'||aRecCompenso.Esercizio,'dd/mm/yyyy') then
+    aDataMin := to_date('01/01/'||aRecCompenso.Esercizio,'dd/mm/yyyy');
+   end if;
+   if aDataMax > to_date('31/12/'||aRecCompenso.Esercizio,'dd/mm/yyyy') then
+    aDataMax := to_date('31/12/'||aRecCompenso.Esercizio,'dd/mm/yyyy');
+   end if;
+
+            calcolaCreditoIrpefDovuto(glbImponibileNettoIrpef,
+                                      glbNumeroGiorni,
+                                      aRecCompenso,
+                                      aDataMin,
+                                      aDataMax,
+                                      aRecCoriConguaglio.cd_contributo_ritenuta,
+                                      aRecCoriConguaglio.dt_ini_validita,
+                                      aImTotDetrazioniCuneo);
+      FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+        if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
+          if tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto > tabCreditoIrpef(i_credito).tImCreditoMaxDovuto then
+            tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto := tabCreditoIrpef(i_credito).tImCreditoMaxDovuto;
+          end if;
+        else
+          if tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto > tabCreditoIrpef(i_credito).tImCreditoMaxDovuto then
+            tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto := tabCreditoIrpef(i_credito).tImCreditoMaxDovuto;
+          end if;
+        end if;
+      END LOOP;
+--            creditoGiaCalcolato := 'S';
+--pipe.send_message('glbImportoCreditoIrpefDovuto '||glbImportoCreditoIrpefDovuto);
+         END IF;
+
          -- IRPEF ----------------------------------------------------------------------------------
+         aImTotDetrazioniNettoCuneo:=aImTotDetrazioniCuneo;
+         glbDetrazioniCuneoDovuto:=aImTotDetrazioniNettoCuneo;
          IF CNRCTB545.getIsIrpefScaglioni(aRecCoriConguaglio.cd_classificazione_cori,
                                           aRecCoriConguaglio.pg_classificazione_montanti,
                                           aRecCoriConguaglio.fl_scrivi_montanti) = 'Y' Then
@@ -1002,7 +1001,7 @@ BEGIN
             -- Eventuale nettizzazione delle detrazioni
 
             aImTotaleDetrazioni:=aImTotDetrazioniCo + aImTotDetrazioniFi + aImTotDetrazioniAl +
-                                 aImTotDetrazioniPe + aImTotDetrazioniLa;
+                                 aImTotDetrazioniPe + aImTotDetrazioniLa + aImTotDetrazioniCuneo;
 
             aImTotDetrazioniNettoPe:=aImTotDetrazioniPe;
             aImTotDetrazioniNettoLa:=aImTotDetrazioniLa;
@@ -1017,7 +1016,8 @@ BEGIN
                                   aImTotDetrazioniNettoLa,
                                   aImTotDetrazioniNettoCo,
                                   aImTotDetrazioniNettoFi,
-                                  aImTotDetrazioniNettoAl);
+                                  aImTotDetrazioniNettoAl,
+                                  aImTotDetrazioniNettoCuneo);
 
             END IF;
 
@@ -1026,9 +1026,9 @@ BEGIN
             glbDetrazioniCoDovuto:=aImTotDetrazioniNettoCo;
             glbDetrazioniFiDovuto:=aImTotDetrazioniNettoFi;
             glbDetrazioniAlDovuto:=aImTotDetrazioniNettoAl;
+            glbDetrazioniCuneoDovuto:=aImTotDetrazioniNettoCuneo;
 
          END IF;
-
          -- Addizionali regionali, provinciali e comunali ------------------------------------------
 
          IF    aRecCoriConguaglio.cd_classificazione_cori = CNRCTB545.isCoriAddReg Then
@@ -1051,18 +1051,16 @@ BEGIN
                glbImpAddComRateEseprec:=aRecCoriConguaglio.ammontare_lordo;
          END IF;
 
-         IF CNRCTB545.IsCoriCreditoIrpef(aRecCoriConguaglio.cd_contributo_ritenuta) = 'Y' then
-            --per ora passo glbNumeroGiorni che è anche il numero gg del cud
---pipe.send_message('3 ');
-            glbImportoCreditoIrpefDovuto:=calcolaCreditoIrpefDovuto(aTotRedditoComplessivo,
-                                                                    glbNumeroGiorni,
-                                                                    aRecCompenso);
---pipe.send_message('glbImportoCreditoIrpefDovuto '||glbImportoCreditoIrpefDovuto);
-         END IF;
-
       END LOOP;
 
       CLOSE gen_cur_cori;
+      FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+        if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
+            glbImportoCreditoIrpefDovuto := glbImportoCreditoIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+        else
+            glbImportoBonusIrpefDovuto := glbImportoBonusIrpefDovuto + tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto;
+        end if;
+      END LOOP;
 
    END;
 
@@ -1075,11 +1073,11 @@ BEGIN
 
       aImNettoIrpefDovuto:=glbImportoIrpefDovuto - (glbDetrazioniPeDovuto + glbDetrazioniLaDovuto +
                                                     glbDetrazioniCoDovuto + glbDetrazioniFiDovuto +
-                                                    glbDetrazioniAlDovuto);
+                                                    glbDetrazioniAlDovuto + glbDetrazioniCuneoDovuto);
 
       aImNettoIrpefGoduto:=glbImportoIrpefGoduto - (glbDetrazioniPeGoduto + glbDetrazioniLaGoduto +
                                                     glbDetrazioniCoGoduto + glbDetrazioniFiGoduto +
-                                                    glbDetrazioniAlGoduto);
+                                                    glbDetrazioniAlGoduto + glbDetrazioniCuneoGoduto);
 
       aImCompCongIrpefNetto:=aImNettoIrpefDovuto - aImNettoIrpefGoduto - Nvl(aRecConguaglio.im_irpef_esterno,0);
       /* Se aImCompCongIrpefNetto  è maggiore di -0.49 e minore di -0.01 (cioè verrebbe emesso un mandato
@@ -1092,7 +1090,8 @@ BEGIN
                                                              Nvl(aRecConguaglio.detrazioni_la_esterno,0) +
                                                              Nvl(aRecConguaglio.detrazioni_co_esterno,0) +
                                                              Nvl(aRecConguaglio.detrazioni_fi_esterno,0) +
-                                                             Nvl(aRecConguaglio.detrazioni_al_esterno,0);
+                                                             Nvl(aRecConguaglio.detrazioni_al_esterno,0) +
+                                                             Nvl(aRecConguaglio.detrazione_rid_cuneo_esterno,0);
          Else
             --ALTRIMENTI PER IL DOVUTO DEVO SEMPRE FARE IN MODO CHE IMPOSTA LORDA - DETRAZIONI = IMPOSTA NETTA
             glbImportoIrpefDovuto := glbImportoIrpefDovuto + Nvl(aRecConguaglio.im_irpef_esterno,0) +
@@ -1100,7 +1099,8 @@ BEGIN
                                                              Nvl(aRecConguaglio.detrazioni_la_esterno,0) +
                                                              Nvl(aRecConguaglio.detrazioni_co_esterno,0) +
                                                              Nvl(aRecConguaglio.detrazioni_fi_esterno,0) +
-                                                             Nvl(aRecConguaglio.detrazioni_al_esterno,0)
+                                                             Nvl(aRecConguaglio.detrazioni_al_esterno,0) +
+                                                             Nvl(aRecConguaglio.detrazione_rid_cuneo_esterno,0)
                                      + Abs(aImCompCongIrpefNetto);
          End If;
          aImCompCongIrpefNetto := 0;        -- viene poi aggiornato su CONTRIBUTO_RITENUTA
@@ -1131,7 +1131,7 @@ BEGIN
       --glbImportoCreditoIrpefGoduto e glbImportoCreditoIrpefDovuto sono entrambi positivi
 --pipe.send_message('glbImportoCreditoIrpefDovuto = '||glbImportoCreditoIrpefDovuto);
 --pipe.send_message('glbImportoCreditoIrpefGoduto = '||glbImportoCreditoIrpefGoduto);
-      aImCompCongCreditoIrpef := -(glbImportoCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto);
+      aImCompCongCreditoIrpef := -(glbImportoCreditoIrpefDovuto + glbImportoBonusIrpefDovuto - glbImportoCreditoIrpefGoduto - glbImportoBonusIrpefGoduto);
    End;
 
    -------------------------------------------------------------------------------------------------
@@ -1151,9 +1151,11 @@ BEGIN
              detrazioni_co_goduto = glbDetrazioniCoGoduto,
              detrazioni_fi_goduto = glbDetrazioniFiGoduto,
              detrazioni_al_goduto = glbDetrazioniAlGoduto,
+             detrazione_rid_cuneo_goduto = glbDetrazioniCuneoGoduto,
              im_deduzione_goduto = glbDeduzioneIrpefGoduto,
              im_deduzione_family_goduto = glbDeduzioneFamilyGoduto,
              im_credito_irpef_goduto = glbImportoCreditoIrpefGoduto,
+             im_bonus_irpef_goduto = glbImportoBonusIrpefGoduto,
              im_irpef_dovuto = glbImportoIrpefDovuto,
              im_family_dovuto = glbImportoFamilyDovuto,
              im_addreg_dovuto = glbImportoAddRegDovuto,
@@ -1164,9 +1166,11 @@ BEGIN
              detrazioni_co_dovuto = glbDetrazioniCoDovuto,
              detrazioni_fi_dovuto = glbDetrazioniFiDovuto,
              detrazioni_al_dovuto = glbDetrazioniAlDovuto,
+             detrazione_rid_cuneo_dovuto = glbDetrazioniCuneoDovuto,
              im_deduzione_dovuto = glbDeduzioneIrpefDovuto,
              im_deduzione_family_dovuto = glbDeduzioneFamilyDovuto,
              im_credito_irpef_dovuto = glbImportoCreditoIrpefDovuto,
+             im_bonus_irpef_dovuto = glbImportoBonusIrpefDovuto,
              imponibile_irpef_lordo = glbImponibileLordoIrpef,
              imponibile_irpef_netto = glbImponibileNettoIrpef,
              numero_giorni = glbNumeroGiorni,
@@ -1181,7 +1185,9 @@ BEGIN
              fl_no_detrazioni_altre = glbFlNoDetrazioniAltre,
              fl_no_detrazioni_family = glbFlNoDetrazioniFamily,
              fl_detrazioni_altri_tipi = glbFlDetrazioniAltriTipi,
-             fl_no_credito_irpef = glbFlNoCreditoIrpef
+             fl_no_credito_irpef = glbFlNoCreditoIrpef,
+             fl_no_credito_cuneo_irpef = glbFlNoCreditoCuneoIrpef,
+             fl_no_detr_cuneo_irpef = glbFlNoDetrCuneoIrpef
       WHERE  cd_cds = aRecConguaglio.cd_cds AND
              cd_unita_organizzativa = aRecConguaglio.cd_unita_organizzativa AND
              esercizio = aRecConguaglio.esercizio AND
@@ -1236,49 +1242,55 @@ BEGIN
                   FL_SOSP VARCHAR2(1):='N';
                Begin
                  If aAmmontareCompCongNetto > 0 Then
-	                  If aRecAnagrafico.fl_sospensione_irpef = 'Y' And
-	                     dataOdierna >= aDataSospensioneMin And
-	                     dataOdierna <= aDataSospensioneMax Then
+                    If aRecAnagrafico.fl_sospensione_irpef = 'Y' And
+                       dataOdierna >= aDataSospensioneMin And
+                       dataOdierna <= aDataSospensioneMax Then
 
-	                     Select FL_SOSPENSIONE_IRPEF
-	                     Into FL_SOSP
-           	           From V_TIPO_TRATTAMENTO_TIPO_CORI
-           	         	 Where cd_trattamento = aRecTipoTrattamento.cd_trattamento AND
+                       Select FL_SOSPENSIONE_IRPEF
+                       Into FL_SOSP
+                       From V_TIPO_TRATTAMENTO_TIPO_CORI
+                       Where cd_trattamento = aRecTipoTrattamento.cd_trattamento AND
                               dt_ini_val_trattamento = aRecTipoTrattamento.dt_ini_validita AND
                               dt_fin_val_trattamento = aRecTipoTrattamento.dt_fin_validita And
                               cd_cori = aRecCoriConguaglio.cd_contributo_ritenuta And
+                              ((TI_CASSA_COMPETENZA = 'CA' AND
                               dt_ini_val_tratt_cori <= aRecCompenso.dt_registrazione AND
                               dt_fin_val_tratt_cori >= aRecCompenso.dt_registrazione AND
                               dt_ini_val_tipo_cori <= aRecCompenso.dt_registrazione AND
-                              dt_fin_val_tipo_cori >= aRecCompenso.dt_registrazione;
+                              dt_fin_val_tipo_cori >= aRecCompenso.dt_registrazione ) OR
+                              (TI_CASSA_COMPETENZA = 'CO' AND
+                               dt_ini_val_tratt_cori <= aRecCompenso.dt_da_competenza_coge AND
+                               dt_fin_val_tratt_cori >= aRecCompenso.dt_a_competenza_coge AND
+                               dt_ini_val_tipo_cori <= aRecCompenso.dt_da_competenza_coge AND
+                               dt_fin_val_tipo_cori >= aRecCompenso.dt_a_competenza_coge ));
 
                        If  FL_SOSP Is Not Null And fl_sosp = 'Y' Then
-	                          aImSospesoCompCong := aAmmontareCompCongNetto;
-	                          aAmmontareCompCongNetto:=aAmmontareCompCongNetto - aImSospesoCompCong;
-	                          aImCompCongIrpefNetto:=aAmmontareCompCongNetto;
-	                          aImSospesoCompCong := aImSospesoCompCong + glbImportoIrpefSospesoGoduto;
-	                     End If;
-	                  Else  -- non devo applicare la sospensione quindi me la valorizzo con quella della testata che è la precedente
-	                     aImSospesoCompCong := glbImportoIrpefSospesoGoduto;
-	                  End If;
-	               Elsif aAmmontareCompCongNetto < 0 Then
-	                  -- devo restituire i soldi al percipiente quindi non applico la sospensione
-	                  -- però ridulo la sospensione già calcolata
-	                  If glbImportoIrpefSospesoGoduto > 0 Then
-			                  If Abs(aAmmontareCompCongNetto) >= glbImportoIrpefSospesoGoduto Then
-			                        aAmmontareCompCongNetto := aAmmontareCompCongNetto + glbImportoIrpefSospesoGoduto;
-			                        aImSospesoCompCong := 0;
-			                        aImCompCongIrpefNetto:=aAmmontareCompCongNetto;
-			                  Elsif Abs(aAmmontareCompCongNetto) < glbImportoIrpefSospesoGoduto Then
-			                        aImSospesoCompCong := aAmmontareCompCongNetto + glbImportoIrpefSospesoGoduto;
-			                        aAmmontareCompCongNetto := 0;
-			                        aImCompCongIrpefNetto:=aAmmontareCompCongNetto;
-			                  End If;
-	                  End If;
-	               Else
-	                  aImSospesoCompCong := glbImportoIrpefSospesoGoduto;
-	               End If;
-	             End;
+                            aImSospesoCompCong := aAmmontareCompCongNetto;
+                            aAmmontareCompCongNetto:=aAmmontareCompCongNetto - aImSospesoCompCong;
+                            aImCompCongIrpefNetto:=aAmmontareCompCongNetto;
+                            aImSospesoCompCong := aImSospesoCompCong + glbImportoIrpefSospesoGoduto;
+                       End If;
+                    Else  -- non devo applicare la sospensione quindi me la valorizzo con quella della testata che è la precedente
+                       aImSospesoCompCong := glbImportoIrpefSospesoGoduto;
+                    End If;
+                 Elsif aAmmontareCompCongNetto < 0 Then
+                    -- devo restituire i soldi al percipiente quindi non applico la sospensione
+                    -- però ridulo la sospensione già calcolata
+                    If glbImportoIrpefSospesoGoduto > 0 Then
+                        If Abs(aAmmontareCompCongNetto) >= glbImportoIrpefSospesoGoduto Then
+                              aAmmontareCompCongNetto := aAmmontareCompCongNetto + glbImportoIrpefSospesoGoduto;
+                              aImSospesoCompCong := 0;
+                              aImCompCongIrpefNetto:=aAmmontareCompCongNetto;
+                        Elsif Abs(aAmmontareCompCongNetto) < glbImportoIrpefSospesoGoduto Then
+                              aImSospesoCompCong := aAmmontareCompCongNetto + glbImportoIrpefSospesoGoduto;
+                              aAmmontareCompCongNetto := 0;
+                              aImCompCongIrpefNetto:=aAmmontareCompCongNetto;
+                        End If;
+                    End If;
+                 Else
+                    aImSospesoCompCong := glbImportoIrpefSospesoGoduto;
+                 End If;
+               End;
          ELSIF aRecCoriConguaglio.cd_classificazione_cori = CNRCTB545.isCoriAddReg THEN
                IF aRecConguaglio.fl_accantona_add_terr = 'Y' THEN
                   CNRCTB545.generaRateizzaClassificCori(aRecConguaglio,
@@ -1337,8 +1349,19 @@ BEGIN
                aAmmontareCompCong:=aImCompCongAddComNetto;
                aAmmontareCompCongNetto:=aImCompCongAddComNetto;
          ELSIF CNRCTB545.IsCoriCreditoIrpef(aRecCoriConguaglio.cd_contributo_ritenuta) = 'Y' THEN
-               aAmmontareCompCong:=aImCompCongCreditoIrpef;
-               aAmmontareCompCongNetto:=aImCompCongCreditoIrpef;
+              i_credito := 0;
+
+              FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+                if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_Validita then
+                    if dataInizioGestioneCuneoFiscale <= tabCreditoIrpef(i_credito).tDtIniValCori then
+                      aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoCreditoIrpefGoduto);
+                    else
+                      aAmmontareCompCong:=-(tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto - glbImportoBonusIrpefGoduto);
+                    end if;
+                  aAmmontareCompCongNetto:=aAmmontareCompCong;
+                 exit;
+                end if;
+              END LOOP;
          ELSE
                aImponibileCompCong:=aRecCoriConguaglio.imponibile;
                aAmmontareCompCong:=aRecCoriConguaglio.ammontare;
@@ -1390,6 +1413,8 @@ BEGIN
              detrazione_figli_netto = 0,
              detrazione_altri = 0,
              detrazione_altri_netto = 0,
+             detrazione_riduzione_cuneo = 0,
+             detrazione_rid_cuneo_netto = 0,
              imponibile_fiscale = glbImponibileLordoIrpef,
              imponibile_fiscale_netto = glbImponibileNettoIrpef,
              im_deduzione_irpef = glbDeduzioneIrpef,
@@ -1404,68 +1429,18 @@ BEGIN
 --pipe.send_message('aTotRedditoComplessivo nel CONG= '||aTotRedditoComplessivo);
 END creaCompensoConguaglio;
 
--- =================================================================================================
--- Calcolo del credito irpef
--- =================================================================================================
-FUNCTION calcolaCreditoIrpefDovuto
-   (
-    aImportoRiferimento NUMBER,
-    inNumGGTotMinPerCredito INTEGER,
-    aRecCompenso COMPENSO%ROWTYPE
-   ) RETURN NUMBER IS
-
-   aCreditoTotAnno NUMBER(15,2);
-   aCoefficiente  	NUMBER(15,4);
-
-   aEsercizioRif COMPENSO.esercizio%TYPE;
-   aRecCreditoIrpef CREDITO_IRPEF%ROWTYPE;
-
-   aGGAnno INTEGER;
-
-BEGIN
-   aCreditoTotAnno:=0;
-   aCoefficiente:=1;
-
- BEGIN
-
---pipe.send_message('aImportoRiferimento = '||aImportoRiferimento);
---pipe.send_message('glbFlNoCreditoIrpef = '||glbFlNoCreditoIrpef);
-   --è prevista la gestione ed il terzo non ha chiesto che non sia applicato
-   If glbFlNoCreditoIrpef != 'Y' Then
-
-        -------------------------------------------------------------------------------------------------
-        -- Determinazione giorni
-
-        aEsercizioRif:=aRecCompenso.Esercizio;
-        IF aEsercizioRif != TO_NUMBER(TO_CHAR(aRecCompenso.dt_registrazione,'YYYY')) THEN
-              RETURN aCreditoTotAnno;
-        END IF;
-
-        aGGAnno:=IBMUTL001.getDaysBetween(TO_DATE('0101' || aEsercizioRif,'DDMMYYYY'),
-                                                TO_DATE('3112' || aEsercizioRif,'DDMMYYYY'));
-        -------------------------------------------------------------------------------------------------
-        -- Leggo parametri per credito
-
-        BEGIN
-           SELECT * INTO aRecCreditoIrpef
-           FROM   CREDITO_IRPEF
-           WHERE  dt_inizio_validita <= aRecCompenso.dt_registrazione AND
-                  dt_fine_validita >= aRecCompenso.dt_registrazione AND
-                  im_inferiore <= aImportoRiferimento AND
-                  im_superiore >= aImportoRiferimento;
-
-        EXCEPTION
-           WHEN no_data_found THEN
---pipe.send_message('Nessuna riga in CREDITO_IRPEF');
-                RETURN aCreditoTotAnno;
-           WHEN OTHERS THEN
-              IBMERR001.RAISE_ERR_GENERICO ('Errore nel recupero dei dati per il calcolo del credito irpef.');
-        END;
---pipe.send_message('aRecCreditoIrpef.im_credito = '||aRecCreditoIrpef.im_credito);
-        IF aRecCreditoIrpef.im_credito = 0 then
-            RETURN aCreditoTotAnno;
-        END IF;
-
+procedure calcolaCreditoEDetrazioni( aRecCreditoIrpef in credito_irpef%rowtype,
+                                     aRecCompenso in COMPENSO%ROWTYPE,
+                                     aImportoRiferimento in NUMBER,
+                                     numeroGiorni in number,
+                                      importoCredito in out number,
+                                        importoDetrazioni in out number) is
+    aCoefficiente   NUMBER(15,4) := 1;
+    aGGTotaliCredito INTEGER;
+    dataInizioGestioneCuneoFiscale date;
+    aCreditoBase NUMBER(15,2) := 0;
+begin
+    IF aRecCreditoIrpef.im_credito != 0 then
         IF ((aRecCompenso.dt_da_competenza_coge >= aRecCreditoIrpef.dt_inizio_validita
              AND
              aRecCompenso.dt_da_competenza_coge <= aRecCreditoIrpef.dt_fine_validita)
@@ -1478,23 +1453,160 @@ BEGIN
              AND
              aRecCompenso.dt_a_competenza_coge >= aRecCreditoIrpef.dt_inizio_validita)) THEN
 
+             dataInizioGestioneCuneoFiscale := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
+             aGGTotaliCredito:=IBMUTL001.getDaysBetween(aRecCreditoIrpef.dt_inizio_validita, aRecCreditoIrpef.dt_fine_validita);
              --Calcolo coefficiente
              If aRecCreditoIrpef.fl_applica_formula = 'Y' then
                  aCoefficiente := TRUNC(((aRecCreditoIrpef.im_superiore - aImportoRiferimento)/(aRecCreditoIrpef.im_superiore - aRecCreditoIrpef.im_inferiore)),4);
              end if;
 --pipe.send_message('aCoefficiente = '||aCoefficiente);
              -- calcolo il credito totale rapportato agli effettivi giorni che lavorerà nell'anno
-             aCreditoTotAnno:= ROUND(((aRecCreditoIrpef.im_credito/aGGAnno)* inNumGGTotMinPerCredito),2);
+             importoCredito := ROUND(((aRecCreditoIrpef.im_credito/aGGTotaliCredito)* numeroGiorni),2);
 --pipe.send_message('aCreditoTotAnno = '||aCreditoTotAnno);
              -- applico il coefficiente
-             aCreditoTotAnno := aCreditoTotAnno * aCoefficiente;
+             importoCredito := importoCredito * aCoefficiente;
+             if aRecCreditoIrpef.im_credito_base != 0 then
+                aCreditoBase := ROUND(((aRecCreditoIrpef.im_credito_base /aGGTotaliCredito) * numeroGiorni),2);
+             end if;
+             importoCredito := importoCredito + aCreditoBase;
 
+        if aRecCreditoIrpef.fl_detrazione = 'Y' THEN
+            if glbFlNoDetrCuneoIrpef != 'Y' then
+                importoDetrazioni := importoDetrazioni + importoCredito;
+            end if;
+            importoCredito := 0;
+        else
+           If ((aRecCompenso.dt_a_competenza_coge < dataInizioGestioneCuneoFiscale and glbFlNoCreditoIrpef = 'Y') or
+                (aRecCompenso.dt_a_competenza_coge >= dataInizioGestioneCuneoFiscale and glbFlNoCreditoCuneoIrpef = 'Y') )Then
+               importoCredito := 0;
+           END IF;
         END IF;
 
-  End If;   -- FINE  If glbFlNoCreditoIrpef != 'Y' Then
-  RETURN  aCreditoTotAnno;
+        END IF;
+    end if;
+end;
+
+-- =================================================================================================
+-- Calcolo del credito irpef
+-- =================================================================================================
+procedure calcolaCreditoIrpefDovuto
+   (
+    aImportoRiferimento in NUMBER,
+    inNumGGTotMinPerCredito in INTEGER,
+    aRecCompenso in COMPENSO%ROWTYPE,
+    aDataMin in date,
+    aDataMax in date,
+    aCdCori in tipo_contributo_ritenuta.cd_contributo_ritenuta%type,
+    dt_ini_val_cori in tipo_contributo_ritenuta.dt_ini_validita%type,
+    totImportoDetrazioni in out number
+)  IS
+
+   aCreditoTotAnno NUMBER(15,2);
+   aCoefficiente    NUMBER(15,4);
+
+   aEsercizioRif COMPENSO.esercizio%TYPE;
+   aRecCreditoIrpef CREDITO_IRPEF%ROWTYPE;
+
+   aGGAnno INTEGER;
+   aCreditoBase NUMBER(15,2) := 0;
+   giorniCompetenzaCredito INTEGER;
+   importoCredito number := 0;
+   importoDetrazioni number := 0;
+   credito GenericCurTyp;
+   conta number := 0;
+   trovatoCredito char(1) := 'N';
+   mess varchar2(2000) := '';
+BEGIN
+   aCreditoTotAnno:=0;
+   aCoefficiente:=1;
+
+ BEGIN
+
+--pipe.send_message('aImportoRiferimento = '||aImportoRiferimento);
+--pipe.send_message('glbFlNoCreditoIrpef = '||glbFlNoCreditoIrpef);
+   --è prevista la gestione ed il terzo non ha chiesto che non sia applicato
+
+        -------------------------------------------------------------------------------------------------
+        -- Determinazione giorni
+        aEsercizioRif:=aRecCompenso.Esercizio;
+        IF aEsercizioRif = TO_NUMBER(TO_CHAR(aRecCompenso.dt_registrazione,'YYYY')) THEN
+            -------------------------------------------------------------------------------------------------
+            -- Leggo parametri per credito
+              OPEN credito FOR
+               SELECT *
+                FROM   CREDITO_IRPEF
+                where ((aDataMin between dt_inizio_validita  and dt_fine_validita ) or
+                      (aDataMax between dt_inizio_validita  and dt_fine_validita )) AND
+                       im_inferiore <= aImportoRiferimento AND
+                       im_superiore >= aImportoRiferimento AND
+                       cd_cori = aCdCori AND
+                       DT_INI_VALIDITA_CORI = DT_INI_VAL_CORI
+                order by dt_inizio_validita;
+          LOOP
+
+             FETCH credito INTO aRecCreditoIrpef;
+
+             EXIT WHEN credito%NOTFOUND;
+             if aDataMin between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita and
+                aDataMax between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
+                giorniCompetenzaCredito := inNumGGTotMinPerCredito;
+             else
+                  giorniCompetenzaCredito := 0;
+                  FOR i IN tabella_date_ok.FIRST .. tabella_date_ok.LAST
+                  LOOP
+                    if tabella_date_ok(i).tDataDa between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
+                      if tabella_date_ok(i).tDataA between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
+                        giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(tabella_date_ok(i).tDataDa, tabella_date_ok(i).tDataA);
+                      else
+                        giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(tabella_date_ok(i).tDataDa, aRecCreditoIrpef.dt_fine_validita);
+                      end if;
+                    elsif tabella_date_ok(i).tDataA between aRecCreditoIrpef.dt_inizio_validita  and aRecCreditoIrpef.dt_fine_validita then
+                      giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(aRecCreditoIrpef.dt_inizio_validita, tabella_date_ok(i).tDataA);
+                    elsif tabella_date_ok(i).tDataDa < aRecCreditoIrpef.dt_inizio_validita and tabella_date_ok(i).tDataA > aRecCreditoIrpef.dt_inizio_validita then
+                      giorniCompetenzaCredito := giorniCompetenzaCredito + IBMUTL001.getDaysBetween(aRecCreditoIrpef.dt_inizio_validita, aRecCreditoIrpef.dt_fine_validita);
+                    end if;
+                  END LOOP;
+             end if;
+             importoCredito := 0;
+             importoDetrazioni := 0;
+             calcolaCreditoEDetrazioni(aRecCreditoIrpef,
+                                          aRecCompenso,
+                                          aImportoRiferimento,
+                                          giorniCompetenzaCredito,
+                                          importoCredito,
+                                          importoDetrazioni);
+--             IF importoCredito > 0 THEN
+--RAISE_APPLICATION_ERROR(-20100,giorniCompetenzaCredito||' '||importoCredito||' '||importoDetrazioni||' '||inNumGGTotMinPerCredito||' '||aDataMin||' '||aDataMax||' '||aRecCreditoIrpef.dt_inizio_validita);
+--            END IF;
+              IF tabCreditoIrpef.COUNT > 0 THEN
+                FOR conta IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+                  if tabCreditoIrpef(conta).tCdCori = aCdCori and tabCreditoIrpef(conta).tDtIniValCori = DT_INI_VAL_CORI then
+                   tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
+                   tabCreditoIrpef(conta).tImCreditoIrpefDovuto := tabCreditoIrpef(conta).tImCreditoIrpefDovuto + importoCredito;
+                   trovatoCredito := 'S';
+                  end if;
+                  mess := mess||tabCreditoIrpef(conta).tCdCori||' '||tabCreditoIrpef(conta).tDtIniValCori||' '||tabCreditoIrpef(conta).tImCreditoIrpefDovuto||' '||tabCreditoIrpef(conta).tImCreditoIrpefGoduto;
+                END LOOP;
+              END IF;
+--              if aCdCori = 'BONUSDL66' THEN
+--              RAISE_APPLICATION_ERROR(-20100,mess);
+--              END IF;
+                IF trovatoCredito = 'N' then
+                  conta:=tabCreditoIrpef.COUNT + 1;
+                  tabCreditoIrpef(conta).tCdCori := aCdCori;
+                  tabCreditoIrpef(conta).tDtIniValCori := DT_INI_VAL_CORI;
+                  tabCreditoIrpef(conta).tImCreditoIrpefGoduto := 0;
+                  tabCreditoIrpef(conta).tImCreditoIrpefDovuto := importoCredito;
+                  tabCreditoIrpef(conta).tImCreditoMaxDovuto := aRecCreditoIrpef.im_credito + aRecCreditoIrpef.im_credito_base;
+                end if;
+
+             totImportoDetrazioni := totImportoDetrazioni + importoDetrazioni;
+          end loop;
+        end if;
   END;
 END calcolaCreditoIrpefDovuto;
+
+
 
 -- =================================================================================================
 -- Lettura dati di base legati al conguaglio in calcolo, testata conguaglio e anagrafico.
@@ -1532,6 +1644,10 @@ BEGIN
    glbFlDetrazioniAltriTipi:=CNRCTB080.getAnagFlDetrazioniAltriTipi(inEsercizioConguaglio,
                                                                   aRecAnagrafico.cd_anag);
    glbFlNoCreditoIrpef:=CNRCTB080.getAnagFlNoCreditoIrpef(inEsercizioConguaglio,
+                                                          aRecAnagrafico.cd_anag);
+   glbFlNoCreditoCuneoIrpef:=CNRCTB080.getAnagFlNoCreditoCuneoIrpef(inEsercizioConguaglio,
+                                                          aRecAnagrafico.cd_anag);
+   glbFlNoDetrCuneoIrpef:=CNRCTB080.getAnagFlNoDetrCuneoIrpef(inEsercizioConguaglio,
                                                           aRecAnagrafico.cd_anag);
    glbRedditoComplessivo:=cnrctb080.getAnagRedditoComplessivo(inEsercizioConguaglio,
                                                               aRecAnagrafico.cd_anag);
@@ -1603,32 +1719,34 @@ BEGIN
          glbDetrazioniCoGoduto:=aRecConguaglioUltimo.detrazioni_co_dovuto;
          glbDetrazioniFiGoduto:=aRecConguaglioUltimo.detrazioni_fi_dovuto;
          glbDetrazioniAlGoduto:=aRecConguaglioUltimo.detrazioni_al_dovuto;
+         glbDetrazioniCuneoGoduto:=aRecConguaglioUltimo.detrazione_rid_cuneo_dovuto;
          glbDeduzioneIrpefGoduto:=aRecConguaglioUltimo.im_deduzione_dovuto;
          glbDeduzioneFamilyGoduto:=aRecConguaglioUltimo.im_deduzione_family_dovuto;
          glbImportoCreditoIrpefGoduto := aRecConguaglioUltimo.im_credito_irpef_dovuto;
+         glbImportoBonusIrpefGoduto := aRecConguaglioUltimo.im_bonus_irpef_dovuto;
          glbDataMinCompetenza:=aRecConguaglioUltimo.dt_da_competenza_coge;
          glbDataMaxCompetenza:=aRecConguaglioUltimo.dt_a_competenza_coge;
 
-	 -- Sospeso goduto letto dalla testata dell'ultimo conguaglio (contiene il sospeso di tutti
-	 -- i compensi conguagliati ma non quello del conguaglio stesso)
-	 --glbImportoIrpefSospesoGoduto:=aRecConguaglioUltimo.im_cori_sospeso;
-	 -- Devo aggiungere il sospeso dell'ultimo conguaglio
-	 Declare
-	     imSospUltimoCong  NUMBER;
-	 Begin
-	     Select Nvl(Sum(im_cori_sospeso),0)
-	     Into imSospUltimoCong
-	     From contributo_ritenuta
-	     Where cd_cds = aRecConguaglioUltimo.cd_cds_compenso
-	       And cd_unita_organizzativa = aRecConguaglioUltimo.cd_uo_compenso
-	       And esercizio = aRecConguaglioUltimo.esercizio_compenso
-	       And pg_compenso = aRecConguaglioUltimo.pg_compenso;
+   -- Sospeso goduto letto dalla testata dell'ultimo conguaglio (contiene il sospeso di tutti
+   -- i compensi conguagliati ma non quello del conguaglio stesso)
+   --glbImportoIrpefSospesoGoduto:=aRecConguaglioUltimo.im_cori_sospeso;
+   -- Devo aggiungere il sospeso dell'ultimo conguaglio
+   Declare
+       imSospUltimoCong  NUMBER;
+   Begin
+       Select Nvl(Sum(im_cori_sospeso),0)
+       Into imSospUltimoCong
+       From contributo_ritenuta
+       Where cd_cds = aRecConguaglioUltimo.cd_cds_compenso
+         And cd_unita_organizzativa = aRecConguaglioUltimo.cd_uo_compenso
+         And esercizio = aRecConguaglioUltimo.esercizio_compenso
+         And pg_compenso = aRecConguaglioUltimo.pg_compenso;
 
-	       glbImportoIrpefSospesoGoduto:= imSospUltimoCong;
-	 Exception
-	    When No_Data_Found Then
-	      Null;
-	 End;
+         glbImportoIrpefSospesoGoduto:= imSospUltimoCong;
+   Exception
+      When No_Data_Found Then
+        Null;
+   End;
 
 
       END;
@@ -1646,10 +1764,12 @@ BEGIN
            glbDetrazioniCoGoduto:=0;
            glbDetrazioniFiGoduto:=0;
            glbDetrazioniAlGoduto:=0;
+           glbDetrazioniCuneoGoduto:=0;
            glbDeduzioneIrpefGoduto:=0;
            glbDeduzioneFamilyGoduto:=0;
            glbImportoIrpefSospesoGoduto:=0;
            glbImportoCreditoIrpefGoduto:=0;
+           glbImportoBonusIrpefGoduto:=0;
            glbDataMinCompetenza:=NULL;
            glbDataMaxCompetenza:=NULL;
 
@@ -1672,8 +1792,13 @@ PROCEDURE leggiCompensiPerConguaglio
 
    gen_cur GenericCurTyp;
    gen_cur_cori GenericCurTyp;
+   i_credito number := 0;
+   trovatoCredito char(1):= 'N';
+   dataInizioGestioneCuneoFiscale date;
 
 BEGIN
+
+   dataInizioGestioneCuneoFiscale := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
 
    eseguiLock:='Y';
 
@@ -1742,11 +1867,11 @@ BEGIN
                                                  aRecCompensoConguaglioBase.pg_compenso,
                                                  eseguiLock);
 
-	    If aRecTipoTrattamento.fl_agevolazioni_cervelli = 'Y' Or glbEsisteCompensoCervelli = 'Y' or
-	       --aRecTipoTrattamento.cd_trattamento in ('T162','T163','CONGL20','CONGL30')
-	       aRecTipoTrattamento.fl_agevolazioni_rientro_lav = 'Y' Then
-	        glbImponibileLordoPercipiente := glbImponibileLordoPercipiente + aRecCompensoC.im_lordo_percipiente - aRecCompensoC.quota_esente;
-	    End If;
+      If aRecTipoTrattamento.fl_agevolazioni_cervelli = 'Y' Or glbEsisteCompensoCervelli = 'Y' or
+         --aRecTipoTrattamento.cd_trattamento in ('T162','T163','CONGL20','CONGL30')
+         aRecTipoTrattamento.fl_agevolazioni_rientro_lav = 'Y' Then
+          glbImponibileLordoPercipiente := glbImponibileLordoPercipiente + aRecCompensoC.im_lordo_percipiente - aRecCompensoC.quota_esente;
+      End If;
 
             -- Composizione della matrice delle date per il calcolo dei giorni reali di competenza
             -- del conguaglio
@@ -1784,6 +1909,7 @@ BEGIN
                   glbDetrazioniCoGoduto:=glbDetrazioniCoGoduto + aRecCompensoC.detrazione_coniuge_netto;
                   glbDetrazioniFiGoduto:=glbDetrazioniFiGoduto + aRecCompensoC.detrazione_figli_netto;
                   glbDetrazioniAlGoduto:=glbDetrazioniAlGoduto + aRecCompensoC.detrazione_altri_netto;
+                  glbDetrazioniCuneoGoduto:=glbDetrazioniCuneoGoduto + aRecCompensoC.detrazione_rid_cuneo_netto;
                END IF;
 
                IF aRecCompensoConguaglioBase.fl_detrazioni_familiari = 'Y' THEN
@@ -1906,7 +2032,34 @@ BEGIN
 
                IF CNRCTB545.IsCoriCreditoIrpef(aRecCoriConguaglio.cd_contributo_ritenuta) = 'Y' then
                   IF aRecCompensoConguaglioBase.is_associato_conguaglio = 'N' THEN
-                     glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                     i_credito := 0;
+                     trovatoCredito := 'N';
+
+                      if tabCreditoIrpef.count > 0 then
+                       FOR i_credito IN tabCreditoIrpef.FIRST .. tabCreditoIrpef.LAST LOOP
+                          if tabCreditoIrpef(i_credito).tCdCori = aRecCoriConguaglio.cd_contributo_ritenuta and tabCreditoIrpef(i_credito).tDtIniValCori = aRecCoriConguaglio.dt_ini_validita then
+                           tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto := tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                           trovatoCredito := 'S';
+                           if dataInizioGestioneCuneoFiscale <= aRecCoriConguaglio.dt_ini_validita then
+                             glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                           else
+                             glbImportoBonusIrpefGoduto:=glbImportoBonusIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                           end if;
+                          end if;
+                       end loop;
+                      end if;
+                      IF trovatoCredito = 'N' then
+                         i_credito:=tabCreditoIrpef.COUNT + 1;
+                         tabCreditoIrpef(i_credito).tCdCori := aRecCoriConguaglio.cd_contributo_ritenuta;
+                         tabCreditoIrpef(i_credito).tDtIniValCori := aRecCoriConguaglio.dt_ini_validita;
+                         tabCreditoIrpef(i_credito).tImCreditoIrpefGoduto := -aRecCoriConguaglio.ammontare_lordo;
+                         tabCreditoIrpef(i_credito).tImCreditoIrpefDovuto := 0;
+                         if dataInizioGestioneCuneoFiscale <= aRecCoriConguaglio.dt_ini_validita then
+                           glbImportoCreditoIrpefGoduto:=glbImportoCreditoIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                         else
+                           glbImportoBonusIrpefGoduto:=glbImportoBonusIrpefGoduto + (-aRecCoriConguaglio.ammontare_lordo);
+                         end if;
+                      end if;
                   END IF;
                END IF;
 
@@ -2407,11 +2560,11 @@ BEGIN
                intervallo_date_appoggio(j).tDataA:=intervallo_date_ok(1).tDataA;
             Else
                If intervallo_date_appoggio(j).tDataA = intervallo_date_ok(i).tDataDa - 1 Then
-               	    intervallo_date_appoggio(j).tDataA := intervallo_date_ok(i).tDataA;
+                    intervallo_date_appoggio(j).tDataA := intervallo_date_ok(i).tDataA;
                Else
                     -- Inserisco un nuovo intervallo solo se non esistono intersezioni
-            	    -- con le date precedentemente memorizzate
-            	    j:=j+1;
+                  -- con le date precedentemente memorizzate
+                  j:=j+1;
                     intervallo_date_appoggio(j).tDataDa:=intervallo_date_ok(i).tDataDa;
                     intervallo_date_appoggio(j).tDataA:=intervallo_date_ok(i).tDataA;
                End If;
@@ -2429,16 +2582,16 @@ BEGIN
             numero_mesi_anno_precedente:=0;
             If intervallo_date_annoprec.FIRST IS NULL Then
             --sto leggendo il primo intervallo
-	       If To_Char(intervallo_date_appoggio(1).tDataDa,'yyyy') = inEsercizioCompenso Then
-	          --ho solo date dell'esercizio del conguaglio
-	          j:=1;
-	          intervallo_date_annoprec(j).tDataDa:=intervallo_date_appoggio(1).tDataDa;
+         If To_Char(intervallo_date_appoggio(1).tDataDa,'yyyy') = inEsercizioCompenso Then
+            --ho solo date dell'esercizio del conguaglio
+            j:=1;
+            intervallo_date_annoprec(j).tDataDa:=intervallo_date_appoggio(1).tDataDa;
                   intervallo_date_annoprec(j).tDataA:=intervallo_date_appoggio(1).tDataA;
 
                   salta:='Y';
                Else
                   --devo separare le date dell'esercizio precedente da quelle dell'esercizio corrente
-		  j:=1;
+      j:=1;
                   If To_Char(intervallo_date_appoggio(1).tDataDa,'yyyy') = To_Char(intervallo_date_appoggio(1).tDataA,'yyyy') Then
                      --tutto l'intervallo è nell'anno precedente
                      intervallo_date_annoprec(j).tDataDa:=intervallo_date_appoggio(1).tDataDa;
@@ -2460,17 +2613,17 @@ BEGIN
                      intervallo_date_annoprec(j).tDataA:=intervallo_date_appoggio(1).tDataA;
                   End If;
                End If;
-	    Else
-	    --non è il primo intervallo
-	      If salta = 'Y' Then
-	         -- da questo punto in poi carico intervallo_date_annoprec uguale a intervallo_date_appoggio
-	         j:=j+1;
-	         intervallo_date_annoprec(j).tDataDa:=intervallo_date_appoggio(i).tDataDa;
+      Else
+      --non è il primo intervallo
+        If salta = 'Y' Then
+           -- da questo punto in poi carico intervallo_date_annoprec uguale a intervallo_date_appoggio
+           j:=j+1;
+           intervallo_date_annoprec(j).tDataDa:=intervallo_date_appoggio(i).tDataDa;
                  intervallo_date_annoprec(j).tDataA:=intervallo_date_appoggio(i).tDataA;
-	      Else
-	         -- devo ancora separare le date dell'esercizio precedente da quelle dell'esercizio corrente
-	         j:=j+1;
-	         If To_Char(intervallo_date_appoggio(i).tDataDa,'yyyy') = To_Char(intervallo_date_appoggio(i).tDataA,'yyyy') Then
+        Else
+           -- devo ancora separare le date dell'esercizio precedente da quelle dell'esercizio corrente
+           j:=j+1;
+           If To_Char(intervallo_date_appoggio(i).tDataDa,'yyyy') = To_Char(intervallo_date_appoggio(i).tDataA,'yyyy') Then
                      --tutto l'intervallo è nell'anno precedente
                      intervallo_date_annoprec(j).tDataDa:=intervallo_date_appoggio(i).tDataDa;
                      intervallo_date_annoprec(j).tDataA:=intervallo_date_appoggio(i).tDataA;
@@ -2490,8 +2643,8 @@ BEGIN
                      intervallo_date_annoprec(j).tDataDa:=To_Date('0101'||To_Char(intervallo_date_appoggio(i).tDataA,'yyyy'),'ddmmyyyy');
                      intervallo_date_annoprec(j).tDataA:=intervallo_date_appoggio(i).tDataA;
                   End If;
-	      End If;
-	    End If;
+        End If;
+      End If;
 
          END LOOP;
 
@@ -2509,12 +2662,12 @@ BEGIN
                   If To_Char(intervallo_date_annoprec(1).tDataA,'yyyy') <= inEsercizioCompenso Then
                        --non è l'esercizio successivo
                        j:=1;
-	               intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(1).tDataDa;
+                 intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(1).tDataDa;
                        intervallo_date_ok_unite(j).tDataA:=intervallo_date_annoprec(1).tDataA;
                   Else
                        --a cavallo tra i due esercizi
                        j:=1;
-	               intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(1).tDataDa;
+                 intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(1).tDataDa;
                        intervallo_date_ok_unite(j).tDataA:=To_Date('3112'||To_Char(intervallo_date_annoprec(1).tDataDa,'yyyy'),'ddmmyyyy');
 
                        j:=j+1;
@@ -2529,7 +2682,7 @@ BEGIN
                Else
                   --è già tutto anno successivo
                   j:=1;
-	          intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(1).tDataDa;
+            intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(1).tDataDa;
                   intervallo_date_ok_unite(j).tDataA:=intervallo_date_annoprec(1).tDataA;
 
                   numero_mesi_anno_successivo:= numero_mesi_anno_successivo
@@ -2540,25 +2693,25 @@ BEGIN
             Else
             --non è il primo intervallo
                If salta = 'Y' Then
-	         -- da questo punto in poi carico intervallo_date_ok_unite uguale a intervallo_date_annoprec
-	         j:=j+1;
-	         intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
+           -- da questo punto in poi carico intervallo_date_ok_unite uguale a intervallo_date_annoprec
+           j:=j+1;
+           intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
                  intervallo_date_ok_unite(j).tDataA:=intervallo_date_annoprec(i).tDataA;
                  numero_mesi_anno_successivo:= numero_mesi_anno_successivo
                                                    +
                                                    Ceil(MONTHS_BETWEEN(intervallo_date_ok_unite(j).tDataA,intervallo_date_ok_unite(j).tDataDa));
-	       Else
-	         -- devo ancora separare le date dell'esercizio successivo da quelle dell'esercizio corrente
-	         If To_Char(intervallo_date_annoprec(i).tDataDa,'yyyy') <= inEsercizioCompenso Then
+         Else
+           -- devo ancora separare le date dell'esercizio successivo da quelle dell'esercizio corrente
+           If To_Char(intervallo_date_annoprec(i).tDataDa,'yyyy') <= inEsercizioCompenso Then
                     If To_Char(intervallo_date_annoprec(i).tDataA,'yyyy') <= inEsercizioCompenso Then
                          --non è l'esercizio successivo
                          j:=j+1;
-	                 intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
+                   intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
                          intervallo_date_ok_unite(j).tDataA:=intervallo_date_annoprec(i).tDataA;
                     Else
                          --a cavallo tra i due esercizi
                          j:=j+1;
-	                 intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
+                   intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
                          intervallo_date_ok_unite(j).tDataA:=To_Date('3112'||To_Char(intervallo_date_annoprec(i).tDataDa,'yyyy'),'ddmmyyyy');
 
                          j:=j+1;
@@ -2573,7 +2726,7 @@ BEGIN
                  Else
                     --è tutto anno successivo
                     j:=j+1;
-	            intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
+              intervallo_date_ok_unite(j).tDataDa:=intervallo_date_annoprec(i).tDataDa;
                     intervallo_date_ok_unite(j).tDataA:=intervallo_date_annoprec(i).tDataA;
 
                     numero_mesi_anno_successivo:= numero_mesi_anno_successivo
@@ -2581,7 +2734,7 @@ BEGIN
                                                      Ceil(MONTHS_BETWEEN(intervallo_date_ok_unite(j).tDataA,intervallo_date_ok_unite(j).tDataDa));
                     salta:='Y';
                  End If;
-	       End If;
+         End If;
 
             End If;
          END LOOP;
@@ -2620,7 +2773,8 @@ PROCEDURE nettizzaDetrazioni
     aImDetrazioniLaNetto IN OUT NUMBER,
     aImDetrazioniCoNetto IN OUT NUMBER,
     aImDetrazioniFiNetto IN OUT NUMBER,
-    aImDetrazioniAlNetto IN OUT NUMBER
+    aImDetrazioniAlNetto IN OUT NUMBER,
+    aImDetrazioniCuneoNetto IN OUT NUMBER
    ) IS
    k BINARY_INTEGER;
    aImportoResto NUMBER(15,2);
@@ -2633,7 +2787,7 @@ BEGIN
 
    BEGIN
 
-      FOR k IN 1 .. 5
+      FOR k IN 1 .. 6
 
       LOOP
 
@@ -2692,6 +2846,17 @@ BEGIN
                      --aImportoResto:=aImportoResto + aImDetrazioniAlNetto;
                      aImportoResto:=aImDetrazioniAlNetto * -1;
                      aImDetrazioniAlNetto:=0;
+                  ELSE
+                     aImportoResto:=0;
+                     EXIT;
+                  END IF;
+               END IF;
+         ELSIF k = 6 THEN
+               IF aImDetrazioniCuneoNetto > 0 THEN
+                  aImDetrazioniCuneoNetto:=aImDetrazioniCuneoNetto - aImportoResto;
+                  IF aImDetrazioniCuneoNetto < 0 THEN
+                     aImportoResto:=aImDetrazioniCuneoNetto * -1;
+                     aImDetrazioniCuneoNetto:=0;
                   ELSE
                      aImportoResto:=0;
                      EXIT;
@@ -3097,13 +3262,13 @@ BEGIN
               FROM   ASS_COMPENSO_CONGUAGLIO A, COMPENSO C, TIPO_TRATTAMENTO T
               WHERE  A.cd_cds_compenso = C.cd_cds AND
                      A.cd_uo_compenso = C.cd_unita_organizzativa AND
-          	     A.esercizio_compenso = C.esercizio AND
-          	     A.pg_compenso = C.pg_compenso And
+                 A.esercizio_compenso = C.esercizio AND
+                 A.pg_compenso = C.pg_compenso And
                      C.cd_trattamento = T.cd_trattamento And
-		     A.cd_cds_conguaglio = aRecConguaglio.cd_cds AND
-          	     A.cd_uo_conguaglio = aRecConguaglio.cd_unita_organizzativa AND
-          	     A.esercizio_conguaglio = aRecConguaglio.esercizio AND
-          	     A.pg_conguaglio = aRecConguaglio.pg_conguaglio And
+         A.cd_cds_conguaglio = aRecConguaglio.cd_cds AND
+                 A.cd_uo_conguaglio = aRecConguaglio.cd_unita_organizzativa AND
+                 A.esercizio_conguaglio = aRecConguaglio.esercizio AND
+                 A.pg_conguaglio = aRecConguaglio.pg_conguaglio And
                      T.fl_agevolazioni_cervelli ='Y');
 
         If esisteCompenso = 0 Then
@@ -3142,13 +3307,13 @@ BEGIN
             From   ASS_COMPENSO_CONGUAGLIO A, COMPENSO C
             Where  A.cd_cds_compenso = C.cd_cds AND
                    A.cd_uo_compenso = C.cd_unita_organizzativa AND
-          	   A.esercizio_compenso = C.esercizio AND
-          	   A.pg_compenso = C.pg_compenso And
-		   A.cd_cds_conguaglio = aRecConguaglio.cd_cds AND
-          	   A.cd_uo_conguaglio = aRecConguaglio.cd_unita_organizzativa AND
-          	   A.esercizio_conguaglio = aRecConguaglio.esercizio AND
-          	   A.pg_conguaglio = aRecConguaglio.pg_conguaglio And
-          	   C.fl_compenso_conguaglio = 'N';
+               A.esercizio_compenso = C.esercizio AND
+               A.pg_compenso = C.pg_compenso And
+       A.cd_cds_conguaglio = aRecConguaglio.cd_cds AND
+               A.cd_uo_conguaglio = aRecConguaglio.cd_unita_organizzativa AND
+               A.esercizio_conguaglio = aRecConguaglio.esercizio AND
+               A.pg_conguaglio = aRecConguaglio.pg_conguaglio And
+               C.fl_compenso_conguaglio = 'N';
 
             aRecMontanti.irpef_lordo_altri:= totImponibileFiscale;
 
@@ -3157,33 +3322,33 @@ BEGIN
              Select * --imponibile_irpef_lordo
              Into   aRecUltimoConguaglio --totImponibileUltCong
              From   CONGUAGLIO C
-      	     Where  (c.cd_cds, c.cd_unita_organizzativa, c.esercizio, c.pg_conguaglio)
-      	           In
-      	           (Select b.cd_cds_conguaglio, b.cd_uo_conguaglio, b.esercizio_conguaglio, b.pg_conguaglio
-      	            From V_COMPENSO_CONGUAGLIO_BASE b
-      	            Where c.cd_cds = b.cd_cds_conguaglio
-      	              And c.cd_unita_organizzativa = b.cd_uo_conguaglio
-      	              And c.esercizio = b.esercizio_conguaglio
-      	              And c.pg_conguaglio = b.pg_conguaglio
-      	              And b.cd_anag = aRecAnagrafico.cd_anag
-             	      And b.is_compenso_conguaglio = 'Y'
-             	      And b.stato_cofi != 'A'
-             	      And b.dacr_conguaglio =
-                	(SELECT MAX(e.dacr_conguaglio)
-                 	 FROM   V_COMPENSO_CONGUAGLIO_BASE e
-                 	 WHERE  e.cd_anag = b.cd_anag AND
-	                        e.is_compenso_conguaglio = b.is_compenso_conguaglio AND
-                         	e.stato_cofi != 'A' And
-                         	(aRecConguaglio.cd_cds != e.cd_cds_conguaglio
-             	           	OR
-          		   	aRecConguaglio.cd_unita_organizzativa != e.cd_uo_conguaglio
-          		   	OR
-          		   	aRecConguaglio.esercizio != e.esercizio_conguaglio
-          		   	OR
-          		   	aRecConguaglio.pg_conguaglio != e.pg_conguaglio)
-          		    ));
+             Where  (c.cd_cds, c.cd_unita_organizzativa, c.esercizio, c.pg_conguaglio)
+                   In
+                   (Select b.cd_cds_conguaglio, b.cd_uo_conguaglio, b.esercizio_conguaglio, b.pg_conguaglio
+                    From V_COMPENSO_CONGUAGLIO_BASE b
+                    Where c.cd_cds = b.cd_cds_conguaglio
+                      And c.cd_unita_organizzativa = b.cd_uo_conguaglio
+                      And c.esercizio = b.esercizio_conguaglio
+                      And c.pg_conguaglio = b.pg_conguaglio
+                      And b.cd_anag = aRecAnagrafico.cd_anag
+                    And b.is_compenso_conguaglio = 'Y'
+                    And b.stato_cofi != 'A'
+                    And b.dacr_conguaglio =
+                  (SELECT MAX(e.dacr_conguaglio)
+                   FROM   V_COMPENSO_CONGUAGLIO_BASE e
+                   WHERE  e.cd_anag = b.cd_anag AND
+                          e.is_compenso_conguaglio = b.is_compenso_conguaglio AND
+                          e.stato_cofi != 'A' And
+                          (aRecConguaglio.cd_cds != e.cd_cds_conguaglio
+                          OR
+                  aRecConguaglio.cd_unita_organizzativa != e.cd_uo_conguaglio
+                  OR
+                  aRecConguaglio.esercizio != e.esercizio_conguaglio
+                  OR
+                  aRecConguaglio.pg_conguaglio != e.pg_conguaglio)
+                  ));
 
-                         	totImponibileUltCong := aRecUltimoConguaglio.imponibile_irpef_lordo;
+                          totImponibileUltCong := aRecUltimoConguaglio.imponibile_irpef_lordo;
             Exception
               When No_Data_Found Then
                  totImponibileUltCong := 0;
@@ -3193,7 +3358,7 @@ BEGIN
          End;
 
          aRecMontanti.irpef_altri:=aRecMontanti.irpef_lordo_altri - aRecMontanti.deduzione_irpef_altri;
-	 ----------------------
+   ----------------------
          CNRCTB080.upgMontantiAltri(aRecMontanti);
       END IF;
       -- Cancellazione delle associazioni compenso_conguaglio
@@ -3234,7 +3399,7 @@ BEGIN
             dataCancellazioneLocica:=trunc(CNRCTB008.getTimestampContabile(aRecConguaglio.esercizio, dataOdierna));
          else
             dataCancellazioneLocica:=trunc(dataOdierna);
-	 end if;
+   end if;
 
          UPDATE CONGUAGLIO
          SET    dt_cancellazione = dataCancellazioneLocica,
@@ -3657,7 +3822,7 @@ Begin
              Loop
 --pipe.send_message('1tabella_date_fam_ok_unite(i).tDataDa = '||tabella_date_fam_ok_unite(i).tDataDa);
 --pipe.send_message('1tabella_date_fam_ok_unite(i).tDataA = '||tabella_date_fam_ok_unite(i).tDataA);
-	        --devo escludere gli intervalli dell'anno precedente
+          --devo escludere gli intervalli dell'anno precedente
                 If To_Char(tabella_date_fam_ok_unite(i).tDataDa,'yyyy') = inEsercizioConguaglio Then
                    aImDetrazioniCo:=0;
                    aImDetrazioniFi:=0;
@@ -3677,10 +3842,10 @@ Begin
                                                aImDetrazioniFiS,
                                                esisteFiSenzaConiuge);
 
-                	aImTotDetrazioniCo:=aImTotDetrazioniCo + aImDetrazioniCo;
-                	aImTotDetrazioniFi:=aImTotDetrazioniFi + aImDetrazioniFi;
-                	aImTotDetrazioniAl:=aImTotDetrazioniAl + aImDetrazioniAl;
-                	aImTotDetrazioniFiS:=aImTotDetrazioniFiS + aImDetrazioniFiS;
+                  aImTotDetrazioniCo:=aImTotDetrazioniCo + aImDetrazioniCo;
+                  aImTotDetrazioniFi:=aImTotDetrazioniFi + aImDetrazioniFi;
+                  aImTotDetrazioniAl:=aImTotDetrazioniAl + aImDetrazioniAl;
+                  aImTotDetrazioniFiS:=aImTotDetrazioniFiS + aImDetrazioniFiS;
                 End If;
              END LOOP;
 
@@ -3724,7 +3889,7 @@ Begin
                          dt_fine_validita >= aRecConguaglio.dt_registrazione AND
                          im_inferiore <= aTotRedditoComplessivo AND
                          im_superiore >= aTotRedditoComplessivo;
-		  If  aImDetrazioniCo - maggCo > 0 Then
+      If  aImDetrazioniCo - maggCo > 0 Then
                      aImDetrazioniCo:= aImDetrazioniCo - maggCo;
                   Else
                      aImDetrazioniCo := 0;

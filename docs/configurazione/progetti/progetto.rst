@@ -90,6 +90,11 @@ Ci sono diverse modalità per modificare nelcorso dell'anno di gestione gli impo
 - Spostamento importi oltre i limiti dell'utilizzato (impegni e trasferimenti): non consentito;
 - Spostamento importi da un progetto ad un altro (solo se il primo è chiuso, tramite la gae specifica di natura 6, si rimodulazione se oltre limiti delle voci economiche, si variazioni) 
 
+**Voce Speciale**
+
+Importante nota da tener presente nella gestione successiva del Piano Economico del Progetto è la Voce Speciale. Questa Voce è definita parametricamente (equivale alla Voce di spesa per il Personale a tempo indeterminato) e consente lo spostamento, tramite la GEA di natura 6, di soldi su altre voci di spesa del Piano economico prima ancora che il Progetto sia scaduto. Lo spostamento di fondi tramite la Vice Speciale deve avvenire nell'ambito dello stesso progetto e solo attraverso la GAE di natura 6.
+Alla Voce Speciale non è consentito invece attribuire soldi attraverso le Variazioni di Bilancio.
+
 .. _rimodulazione-progetto:
 
 Rimodulazione Progetto
@@ -105,7 +110,7 @@ Solo i Progetti Approvati, che hanno Piano Economico specificato, possono essere
 Le operazioni possibili in fase di rimodulazione sono dettagliate di seguito. Gli stati della rimodulazione seguono le attività dell'utente e le relative validazioni da parte degli utenti abilitati a tale funzione.
 
 **Gestione Data Proroga**
-In fase di rimodulazione un progetto può essere prorogato operando appunto sulla ‘Data Proroga’. Specificando questa data viene obbligatoriamente richiesto un allegato di tipo ‘Proroga’ e se non si operano ulteriori rimodulazioni di importi, al salvataggio definitivo da parte dell’utente la Rimodulazione in oggetto diviene immediatamente Approvata.
+In fase di rimodulazione un progetto può essere prorogato operando appunto sulla ‘Data Proroga’. Specificando questa data viene obbligatoriamente richiesto un allegato di tipo ‘Proroga’ e se non si operano ulteriori rimodulazioni di importi (e variazioni collegate), al salvataggio definitivo da parte dell’utente, e dopo la validazione da parte della Sede Centrale, la Rimodulazione in oggetto diviene immediatamente Approvata.
 
 Per la gestione della rimodulazione del piano economico di un progetto, le modifiche possono riguardare:
 -	Aumento/Diminuzione importi Finanziati/Cofinanziati di un progetto (Totali e di conseguenza per categoria economica);

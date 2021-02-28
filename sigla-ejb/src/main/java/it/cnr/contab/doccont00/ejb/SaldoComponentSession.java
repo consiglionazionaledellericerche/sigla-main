@@ -60,8 +60,8 @@ void checkDispPianoEconomicoProgetto(it.cnr.jada.UserContext param1, it.cnr.cont
 void checkPdgPianoEconomico(UserContext userContext, Var_stanz_resBulk variazione) throws ComponentException,java.rmi.RemoteException;
 void checkPdgPianoEconomico(UserContext userContext, Pdg_variazioneBulk pdgVariazione) throws ComponentException,java.rmi.RemoteException;
 java.math.BigDecimal getStanziamentoAssestatoProgetto(it.cnr.jada.UserContext param0, ProgettoBulk param1, String param2, Integer param3, Timestamp param4, String param5) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-void checkBloccoDisponibilitaResidue(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-void checkBloccoDisponibilitaResidue(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
-void checkBloccoDisponibilitaResidue(UserContext userContext, Var_stanz_resBulk variazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void checkBloccoImpegniNatfin(UserContext userContext, String cdr, String cdLineaAttivita, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void checkBloccoImpegniNatfin(UserContext userContext, WorkpackageBulk workpackageBulk, Elemento_voceBulk elementoVoceBulk, String tipoObbligazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+void checkBloccoImpegniNatfin(UserContext userContext, Var_stanz_resBulk variazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 void checkBloccoLimiteClassificazione(UserContext userContext, Pdg_variazioneBulk variazione) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 }

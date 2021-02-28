@@ -78,7 +78,7 @@
 			columnName="NATURA"
 			propertyName="natura"
 			sqlTypeName="VARCHAR"
-			columnSize="2"
+			columnSize="4"
 			nullable="true" />
 		<columnMapping
 			columnName="RIFERIMENTO_AMMINISTRAZIONE"

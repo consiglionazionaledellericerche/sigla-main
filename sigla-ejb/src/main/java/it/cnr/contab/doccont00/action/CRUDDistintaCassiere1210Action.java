@@ -73,6 +73,7 @@ public class CRUDDistintaCassiere1210Action extends CRUDAction {
 			CRUDDistintaCassiere1210BP bp = (CRUDDistintaCassiere1210BP)context.getBusinessProcess();	
 			if (bp.getDistintaCassiere1210LettereCollegate().countDetails() == 0)
 				throw new ApplicationException("Associare almeno un documento alla distinta!");
+			bp.generaDistinta(context);
 			BulkBP firmaOTPBP = (BulkBP) context.createBusinessProcess("FirmaOTPBP");
 			firmaOTPBP.setModel(context, new FirmaOTPBulk());
 			context.addHookForward("firmaOTP",this,"doBackInvia");			

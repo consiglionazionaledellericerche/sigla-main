@@ -291,11 +291,11 @@
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="FL_LIMITE_RESIDUI_IMPROPRI"
-			propertyName="fl_limite_residui_impropri"
+			columnName="BLOCCO_IMPEGNI_NATFIN"
+			propertyName="blocco_impegni_natfin"
 			sqlTypeName="CHAR"
 			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+			nullable="false"/>
 	</defaultColumnMap>
 
 	<persistentProperty
@@ -387,5 +387,5 @@
 	<persistentProperty
 		name="fl_limite_competenza" />
 	<persistentProperty
-		name="fl_limite_residui_impropri" />
+		name="blocco_impegni_natfin" />
 </SQLPersistentInfo>

@@ -435,6 +435,13 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return false;
 	}
 
+	public Boolean isFatturaElettronicaRifiutata() {
+		if (FATT_ELETT_RIFIUTATA_DESTINATARIO.equals(getStatoInvioSdi())){
+			return true;
+		}
+		return false;
+	}
+
 	public void addToDettagliCancellati(IDocumentoAmministrativoRigaBulk dettaglio) {
 
 		if (dettaglio != null && ((OggettoBulk)dettaglio).getCrudStatus() == OggettoBulk.NORMAL) {

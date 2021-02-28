@@ -32,6 +32,9 @@
   <action 
       path="/CRUDProgettiAlberoAction" actionClass="it.cnr.contab.progettiric00.action.CRUDProgettiAlberoAction">
   </action>
+  <action
+          path="/ConsProgEcoVociGaeAction" actionClass="it.cnr.contab.progettiric00.consultazioni.action.ConsProgEcoVociGaeAction">
+  </action>
 
   <action 
       path="/CRUDCommessaWorkpackageAction" actionClass="it.cnr.contab.progettiric00.action.CRUDCommessaWorkpackageAction">
@@ -141,6 +144,22 @@
     <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.core.bulk.TipoFinanziamentoBulk"/>
     <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
     <init-param name="defaultAction" value="CRUDAction"/>
+  </businessProcess>
+  <businessProcess
+          name="ConsProgEcoVoceGaeBP" className="it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeBP">
+    <forward name="default" path="/progettiric00/cons_prog_eco_voci_gae.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"/>
+    <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+    <init-param name="defaultAction" value="ConsProgEcoVociGaeAction"/>
+  </businessProcess>
+
+  <businessProcess
+          name="ConsProgEcoVoceGaeDettBP" className="it.cnr.contab.progettiric00.consultazioni.bp.ConsProgEcoVoceGaeDettBP">
+    <forward name="default" path="/consultazioni/form_lista.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.progettiric00.consultazioni.bulk.ConsProgettiEcoVociGaeBulk"/>
+    <init-param name="componentSessionName" value="CNRPDG00_EJB_PdGPreventivoComponentSession"/>
+    <init-param name="defaultAction" value="ConsultazioniAction"/>
+    <init-param name="multiSelezione" value="Y" />
   </businessProcess>
 
 </action-mappings>

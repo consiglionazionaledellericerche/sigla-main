@@ -27,10 +27,7 @@ import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
 import it.cnr.contab.config00.esercizio.bulk.EsercizioBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Voce_fBulk;
 import it.cnr.contab.config00.sto.bulk.*;
-import it.cnr.contab.docamm00.docs.bulk.Documento_genericoBulk;
-import it.cnr.contab.docamm00.docs.bulk.Documento_generico_rigaBulk;
-import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
-import it.cnr.contab.docamm00.docs.bulk.Tipo_documento_ammBulk;
+import it.cnr.contab.docamm00.docs.bulk.*;
 import it.cnr.contab.docamm00.ejb.DocumentoGenericoComponentSession;
 import it.cnr.contab.docamm00.ejb.FatturaPassivaComponentSession;
 import it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk;
@@ -42,6 +39,7 @@ import it.cnr.contab.doccont00.ejb.SaldoComponentSession;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.Tipo_bolloBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqConsegnaBulk;
 import it.cnr.contab.prevent00.bulk.Voce_f_saldi_cdr_lineaBulk;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramBulk;
@@ -1054,8 +1052,8 @@ Attenzione: l'importo della riga non viene mai modificato
      * importo già associato a reversali) maggiore di zero (metodo findSospesiDiEntrata)
      *
      * @param userContext lo <code>UserContext</code> che ha generato la richiesta
-     * @param clausole  le clausole specificate dall'utente
-     * @param reversale <code>ReversaleBulk</code> la reversale
+     * @param clausole    le clausole specificate dall'utente
+     * @param reversale   <code>ReversaleBulk</code> la reversale
      * @return il RemoteIterator della lista dei sospesi
      */
 
@@ -1355,7 +1353,7 @@ REVERSALE
             //CREA UN ACCERTAMENTO con una scadenza
             accertamento = createAccertamentoPGiroComponentSession().creaAccertamentoDiIncassoIVA(userContext, reversale, importoSplit.compareTo(new java.math.BigDecimal(0)) != 0);
             //CREA UNA RIGA DEL DOCUMENTO CONTABILIZZATA SULLA SCADENZA DELL'ACCERTAMENTO
-            docGenerico_creaDocumentoGenericoRiga(userContext, documento, accertamento.getAccertamento_scadenzarioColl().get(0), ((MandatoIBulk) mandato).getImReversaleDiIncassoIVA(), (Mandato_rigaBulk) mandato.getMandato_rigaColl().get(0));
+            docGenerico_creaDocumentoGenericoRiga(userContext, documento, accertamento.getAccertamento_scadenzarioColl().get(0), ((MandatoIBulk) mandato).getImReversaleDiIncassoIVA(), mandato.getMandato_rigaColl().get(0));
 
             documento = (Documento_genericoBulk) createDocumentoGenericoComponentSession().creaConBulk(userContext, documento);
 
@@ -2588,8 +2586,8 @@ REVERSALE
                 return ((Unita_organizzativaBulk) result.get(0));
             } else {
                 //cerco l'uo in configurazione CNR
-                String cdUo = Optional.ofNullable(((Configurazione_cnrHome)getHome(userContext,Configurazione_cnrBulk.class)).getUoAccreditamentoSac(CNRUserContext.getEsercizio(userContext)))
-                        .orElseThrow(()->new ApplicationException("Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC per l'esercizio "+CNRUserContext.getEsercizio(userContext)+"."));
+                String cdUo = Optional.ofNullable(((Configurazione_cnrHome) getHome(userContext, Configurazione_cnrBulk.class)).getUoAccreditamentoSac(CNRUserContext.getEsercizio(userContext)))
+                        .orElseThrow(() -> new ApplicationException("Configurazione CNR: manca la definizione dell'UO_SPECIALE per ACCREDITAMENTO SAC per l'esercizio " + CNRUserContext.getEsercizio(userContext) + "."));
                 return (Unita_organizzativaBulk) getHome(userContext, Unita_organizzativaBulk.class).findByPrimaryKey(new Unita_organizzativaBulk(cdUo));
             }
 
@@ -2788,8 +2786,8 @@ REVERSALE
      * PostCondition:
      * Viene inizializzata l'istanza di ReversaleBulk
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la reversale da inizializzare per la ricerca
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la reversale da inizializzare per la ricerca
      * @return reversale la Reversale inizializzata per la ricerca
      */
     public OggettoBulk inizializzaBulkPerRicerca(UserContext userContext, OggettoBulk bulk) throws ComponentException {
@@ -2814,8 +2812,8 @@ REVERSALE
      * PostCondition:
      * Viene inizializzata l'istanza di ReversaleBulk
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param bulk <code>OggettoBulk</code> la reversale da inizializzare per la ricerca
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param bulk        <code>OggettoBulk</code> la reversale da inizializzare per la ricerca
      * @return reversale la Reversale inizializzata per la ricerca
      */
     public OggettoBulk inizializzaBulkPerRicercaLibera(UserContext userContext, OggettoBulk bulk) throws ComponentException {
@@ -3118,9 +3116,9 @@ REVERSALE
      * @param bulk        l'OggettoBulk che rappresenta il contesto della ricerca.
      * @param uo          l'OggettoBulk da usare come prototipo della ricerca; sul prototipo vengono
      *                    costruite delle clausole aggiuntive che vengono aggiunte in AND alle clausole specificate.
+     * @param clauses     L'albero logico delle clausole da applicare alla ricerca
      * @return Un'istanza di SQLBuilder contenente l'istruzione SQL da eseguire e tutti i parametri
      * della query.
-     * @param                clauses L'albero logico delle clausole da applicare alla ricerca
      **/
     public SQLBuilder selectUoEmittenteForPrintByClause(UserContext userContext, Stampa_giornale_reversaliBulk bulk, Unita_organizzativaBulk uo, CompoundFindClause clauses) throws ComponentException {
 
@@ -3548,8 +3546,8 @@ REVERSALE
      * Se esiste un unico Codice SIOPE associabile alla riga della reversale viene creata una nuova
      * istanza di Reversale_siopeBulk per l'importo complessivo della riga della reversale
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga <code>Reversale_rigaBulk</code> la riga reversale da aggiornare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param riga        <code>Reversale_rigaBulk</code> la riga reversale da aggiornare
      * @return riga <code>Reversale_rigaBulk</code> la riga reversale aggiornata
      */
 
@@ -3582,8 +3580,8 @@ REVERSALE
      * PostCondition:
      * Vengono caricati i codici SIOPE disponibili per l'associazione della riga della reversale
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga <code>Reversale_rigaBulk</code> la riga reversale da aggiornare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param riga        <code>Reversale_rigaBulk</code> la riga reversale da aggiornare
      * @return riga <code>Reversale_rigaBulk</code> la riga reversale aggiornata
      */
     private Reversale_rigaBulk setCodiciSIOPECollegabili(UserContext userContext, Reversale_rigaBulk riga) throws ComponentException {
@@ -3627,8 +3625,8 @@ REVERSALE
      * PostCondition:
      * Ritorna TRUE se la riga della reversale è associata completamente a codici SIOPE
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param riga <code>Reversale_rigaBulk</code> la riga reversale da controllare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param riga        <code>Reversale_rigaBulk</code> la riga reversale da controllare
      * @return Boolean
      */
     private java.lang.Boolean isCollegamentoSiopeCompleto(UserContext userContext, Reversale_rigaBulk riga) throws ComponentException {
@@ -3653,8 +3651,8 @@ REVERSALE
      * Viene verificato che tutte le righe della reversale siano associate a codici SIOPE.
      * Ritorna TRUE se tutte le righe della reversale sono associate completamente a codici SIOPE
      *
-     * @param userContext     lo <code>UserContext</code> che ha generato la richiesta
-     * @param reversale <code>ReversaleBulk</code> la reversale da controllare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param reversale   <code>ReversaleBulk</code> la reversale da controllare
      * @return Boolean
      */
     public java.lang.Boolean isCollegamentoSiopeCompleto(UserContext userContext, ReversaleBulk reversale) throws ComponentException {
@@ -3682,8 +3680,8 @@ REVERSALE
      * PostCondition:
      * Vengono caricati i codici SIOPE disponibili per l'associazione sulla righe della reversale
      *
-     * @param userContext  lo <code>UserContext</code> che ha generato la richiesta
-     * @param reversale <code>ReversaleBulk</code> la reversale da aggiornare
+     * @param userContext lo <code>UserContext</code> che ha generato la richiesta
+     * @param reversale   <code>ReversaleBulk</code> la reversale da aggiornare
      * @return riga <code>ReversaleBulk</code> la reversale aggiornata
      */
     public ReversaleBulk setCodiciSIOPECollegabili(UserContext userContext, ReversaleBulk reversale) throws ComponentException {
@@ -3881,6 +3879,32 @@ REVERSALE
                 return Boolean.TRUE;
             else
                 return Boolean.FALSE;
+        } catch (Exception e) {
+            throw handleException(e);
+        }
+    }
+
+    public Boolean isReversaleCORINonAssociataMandato (UserContext userContext, ReversaleBulk reversale) throws ComponentException {
+        try {
+            SQLBuilder sql = getHome(userContext, ReversaleIBulk.class).createSQLBuilder();
+            sql.addClause("AND", "esercizio", SQLBuilder.EQUALS, reversale.getEsercizio());
+            sql.addClause("AND", "cd_cds", SQLBuilder.EQUALS, reversale.getCd_cds());
+            sql.addClause("AND", "pg_reversale", SQLBuilder.EQUALS, reversale.getPg_reversale());
+            sql.addTableToHeader("REVERSALE_RIGA");
+            sql.addSQLJoin( "REVERSALE_RIGA.ESERCIZIO", "REVERSALE.ESERCIZIO");
+            sql.addSQLJoin( "REVERSALE_RIGA.CD_CDS", "REVERSALE.CD_CDS");
+            sql.addSQLJoin( "REVERSALE_RIGA.PG_REVERSALE", "REVERSALE.PG_REVERSALE");
+            sql.openParenthesis(FindClause.AND);
+                sql.addSQLClause(FindClause.AND, "REVERSALE_RIGA.CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, IDocumentoAmministrativoRigaBulk.tipo.GEN_CORA_E.name());
+                sql.addSQLClause(FindClause.OR, "REVERSALE_RIGA.CD_TIPO_DOCUMENTO_AMM", SQLBuilder.EQUALS, IDocumentoAmministrativoRigaBulk.tipo.GEN_CORV_E.name());
+            sql.closeParenthesis();
+            SQLBuilder sqlNotExists = getHome(userContext, Ass_mandato_reversaleBulk.class).createSQLBuilder();
+            sqlNotExists.addSQLClause("AND", "esercizio_reversale", SQLBuilder.EQUALS, reversale.getEsercizio());
+            sqlNotExists.addSQLClause("AND", "cd_cds_reversale", SQLBuilder.EQUALS, reversale.getCd_cds());
+            sqlNotExists.addSQLClause("AND", "pg_reversale", SQLBuilder.EQUALS, reversale.getPg_reversale());
+            sql.addSQLNotExistsClause(FindClause.AND, sqlNotExists);
+
+            return sql.executeCountQuery(getConnection(userContext)) > 0;
         } catch (Exception e) {
             throw handleException(e);
         }

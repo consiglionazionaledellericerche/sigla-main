@@ -42,6 +42,7 @@ import javax.ejb.EJBException;
 import javax.ejb.RemoveException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.util.SIGLAGroups;
 import org.apache.poi.hssf.record.RecordFormatException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -491,7 +492,7 @@ public class CRUDConfigAnagContrattoBP extends SimpleCRUDBP {
 			if (folder != null){
 				contrattoService.updateProperties(contratto, folder); 
 				contrattoService.addAspect(folder, "P:sigla_contratti_aspect:stato_definitivo");
-				contrattoService.addConsumer(folder,"GROUP_CONTRATTI");
+				contrattoService.addConsumer(folder, SIGLAGroups.GROUP_CONTRATTI.name());
 				contrattoService.setInheritedPermission(
 						contrattoService.getStorageObjectByPath(contrattoService.getCMISPathFolderContratto(contratto)),
 						Boolean.FALSE);

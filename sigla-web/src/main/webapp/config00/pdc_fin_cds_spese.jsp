@@ -136,7 +136,7 @@
             <% bp.getController().writeFormField(out,"fl_limite_competenza");%>
         </tr>
         <tr>
-            <% bp.getController().writeFormField(out,"fl_limite_residui_impropri");%>
+            <% bp.getController().writeFormField(out,"blocco_impegni_natfin");%>
         </tr>
     <% } %>
 	</table>

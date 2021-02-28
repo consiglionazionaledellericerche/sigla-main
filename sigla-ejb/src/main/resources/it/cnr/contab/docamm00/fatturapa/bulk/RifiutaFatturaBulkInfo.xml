@@ -1,0 +1,81 @@
+<!--
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://contab.cnr.it/schema/SIGLA"
+        xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+    <fieldProperty
+            name="message_text"
+            property="messageText"
+            label="Richiesta storno:"
+            inputType="TEXTAREA"
+            maxLength="250"
+            cols="60"
+            rows="5"
+            nullable="false"/>
+    <fieldProperty
+            name="message_text_nota"
+            property="messageText"
+            label="Rifiuto:"
+            inputType="TEXTAREA"
+            maxLength="250"
+            cols="60"
+            rows="5"
+            nullable="false"/>
+
+    <fieldProperty
+            name="note"
+            property="note"
+            label="Note:"
+            inputType="TEXTAREA"
+            maxLength="1000"
+            cols="60"
+            rows="5"/>
+    <fieldProperty
+            name="message_option"
+            property="messageOption"
+            label="Rifiuto:"
+            keysProperty="motivoRifiutoKeys"
+            inputType="SELECT"
+            nullable="false"/>
+
+    <fieldProperty
+            name="message_option_nullable"
+            property="messageOption"
+            label="Rifiuto:"
+            keysProperty="motivoRifiutoKeys"
+            command="doOnChangeMessage"
+            inputType="SELECT"/>
+
+    <fieldProperty
+            name="emailPEC"
+            property="emailPEC"
+            label="PEC:"
+            inputType="TEXT"
+            maxLength="100"
+            nullable="false"/>
+
+    <formFieldProperty name="message_option"/>
+    <formFieldProperty name="message_option_nullable"/>
+    <formFieldProperty name="message_text" />
+    <formFieldProperty name="message_text_nota" />
+    <formFieldProperty name="emailPEC" />
+    <formFieldProperty name="note" />
+
+</bulkInfo>

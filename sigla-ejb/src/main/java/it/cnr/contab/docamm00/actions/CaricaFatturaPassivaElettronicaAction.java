@@ -44,12 +44,7 @@ import it.gov.fatturapa.sdi.monitoraggio.v1.FattureRicevuteType;
 import it.gov.fatturapa.sdi.monitoraggio.v1.MonitoraggioFlussiType;
 import it.gov.fatturapa.sdi.ws.ricezione.v1_0.types.FileSdIConMetadatiType;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -113,32 +108,50 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 			FileSdIConMetadatiTypeBulk fileSdIConMetadatiTypeBulk = (FileSdIConMetadatiTypeBulk) caricaPassivaElettronicaBP.getModel();
 			UploadedFile file = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.file");
 			UploadedFile fileMetadata = ((it.cnr.jada.action.HttpActionContext)actioncontext).getMultipartParameter("main.metadati");
-			if (file.getFile() == null || fileMetadata.getFile() == null){
+			if (file.getFile() == null || (fileMetadata.getFile() == null && fileSdIConMetadatiTypeBulk.getIdentificativoSdI() == null)){
 				caricaPassivaElettronicaBP.setMessage("Valorizzare i campi obbligatori!");
 				return actioncontext.findDefaultForward();
 			}	
 	    	FatturazioneElettronicaClient client = SpringUtil.getBean("fatturazioneElettronicaClient", 
 	    			FatturazioneElettronicaClient.class);
-	    	JAXBElement<MetadatiInvioFileType> metadatiInvioFileType = (JAXBElement<MetadatiInvioFileType>) client.getUnmarshaller().unmarshal(new StreamSource(fileMetadata.getFile()));
-	    	fileSdIConMetadatiTypeBulk.setIdentificativoSdI(new BigInteger(metadatiInvioFileType.getValue().getIdentificativoSdI()));
-	    	String cuu = metadatiInvioFileType.getValue().getCodiceDestinatario();
-	    	//TODO
-	    	
+
+			fileSdIConMetadatiTypeBulk.setIdentificativoSdI(
+					Optional.ofNullable(fileMetadata.getFile())
+							.map(file1 -> new StreamSource(file1))
+							.map(streamSource -> {
+								try {
+									return client.getUnmarshaller().unmarshal(streamSource);
+								} catch (IOException e) {
+									throw new RuntimeException("Cannot marshal file");
+								}
+							})
+							.filter(JAXBElement.class::isInstance)
+							.map(JAXBElement.class::cast)
+							.map(JAXBElement::getValue)
+							.filter(MetadatiInvioFileType.class::isInstance)
+							.map(MetadatiInvioFileType.class::cast)
+							.map(MetadatiInvioFileType::getIdentificativoSdI)
+							.map(s -> new BigInteger(s))
+							.orElse(fileSdIConMetadatiTypeBulk.getIdentificativoSdI())
+			);
+
 	    	DataSource byteArrayDataSource = new UploadedFileDataSource(file);
-			DataSource byteArrayDataSource2 = new UploadedFileDataSource(fileMetadata);
-			
 			getRicezioneFattureService().
-				riceviFatturaSIGLA(fileSdIConMetadatiTypeBulk.getIdentificativoSdI(), file.getName(), null, 
+				riceviFatturaSIGLA(
+						fileSdIConMetadatiTypeBulk.getIdentificativoSdI(),
+						file.getName(),
+						null,
 						new DataHandler(byteArrayDataSource), 
-								fileMetadata.getName(), 
-								new DataHandler(byteArrayDataSource2));
+						Optional.ofNullable(fileMetadata).filter(uploadedFile -> Optional.ofNullable(uploadedFile.getFile()).isPresent()).map(UploadedFile::getName).orElse("empty.xml"),
+						Optional.ofNullable(fileMetadata).filter(uploadedFile -> Optional.ofNullable(uploadedFile.getFile()).isPresent()).map(
+								uploadedFile -> {
+									return new DataHandler(new UploadedFileDataSource(uploadedFile));
+								}
+						).orElse(new DataHandler(new EmptyDataSource("empty.xml", "text/xml")))
+				);
 			caricaPassivaElettronicaBP.setMessage("File caricato correttamente");
 			fileSdIConMetadatiTypeBulk.setIdentificativoSdI(null);
 		} catch (FillException e) {
-			return handleException(actioncontext, e);
-		} catch (FileNotFoundException e) {
-			return handleException(actioncontext, e);
-		} catch (IOException e) {
 			return handleException(actioncontext, e);
 		} catch (ComponentException e) {
 			return handleException(actioncontext, e);
@@ -276,7 +289,38 @@ public class CaricaFatturaPassivaElettronicaAction extends FormAction {
 		}
 		
 	}
-	
+
+	class EmptyDataSource implements DataSource {
+		private final String name;
+		private final String contentType;
+
+		public EmptyDataSource(String name, String contentType) {
+			this.name = name;
+			this.contentType = contentType;
+		}
+
+		@Override
+		public OutputStream getOutputStream() throws IOException {
+			return new ByteArrayOutputStream();
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		@Override
+		public InputStream getInputStream() throws IOException {
+			return new ByteArrayInputStream("".getBytes());
+		}
+
+		@Override
+		public String getContentType() {
+			return contentType;
+		}
+
+	}
+
 	private RicezioneFatturePA getRicezioneFattureService() {
 		return Optional.ofNullable(EJBCommonServices.createEJB("RicezioneFatture!it.cnr.contab.docamm00.ejb.RicezioneFatturePA"))
 				.filter(RicezioneFatturePA.class::isInstance)

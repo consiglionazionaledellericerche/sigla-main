@@ -185,13 +185,13 @@ public class Missione_tipo_spesaHome extends BulkHome implements ConsultazioniRe
 						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") &&
 								operator == SQLBuilder.EQUALS){
 							NazioneHome nazionehome=(NazioneHome)getHomeCache().getHome(NazioneBulk.class);
-							Integer str = (Integer)clause.getValue();
-							nazioneBulk = new NazioneBulk(new Long(str));
+							Double str = (Double)clause.getValue();
+							nazioneBulk = new NazioneBulk(new Long(str.longValue()));
 							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk);
 						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("inquadramento") &&
 								operator == SQLBuilder.EQUALS)	{
-							Integer str = (Integer)clause.getValue();
-							inquadramento = new Long(str);
+							Double str = (Double)clause.getValue();
+							inquadramento = new Long(str.longValue());
 						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("data") &&
 								operator == SQLBuilder.EQUALS)	{
 							SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

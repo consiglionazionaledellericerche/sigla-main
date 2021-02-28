@@ -237,11 +237,20 @@
 		formatName="date_short"
 		/>
 	<fieldProperty
+			name="dtIniValGruppoIva"
+			property="dtIniValGruppoIva"
+			label="Data Inizio Validit&#224; gruppo IVA"
+			inputType="TEXT"
+			inputSize="8"
+			formatName="date_short"
+	/>
+	<fieldProperty
 		name="dt_canc"
 		property="dt_canc"
-		readonlyPropertyOnEdit="dipendente"
-		label="dt_canc"
+		label="Data Fine Validit&#224; gruppo IVA"
 		inputType="TEXT"
+		inputSize="8"
+		formatName="date_short"
 		/>
 	<fieldProperty
 		name="dt_fine_rapporto"
@@ -420,10 +429,8 @@
 		property="ti_entita_giuridica"
 		readonlyPropertyOnEdit="dipendente"
 		keysProperty="ti_entita_giuridicaKeys"
-		label="Tipo entita' giuridica" 
-		inputType="RADIOGROUP"
-		enabledOnSearch="true"
-		layout="HORIZONTAL" />
+		label="Tipo entita' giuridica"
+		inputType="SELECT" />
 	<fieldProperty
 		name="ti_italiano_estero"
 		property="ti_italiano_estero"
@@ -560,6 +567,18 @@
 		inputType="CHECKBOX"
 		label="No Credito Irpef" 		
 		nullable="false" />
+	<fieldProperty
+			name="fl_no_credito_cuneo_irpef"
+			property="anagrafico_esercizio.fl_no_credito_cuneo_irpef"
+			inputType="CHECKBOX"
+			label="No Credito Cuneo Irpef"
+			nullable="false" />
+	<fieldProperty
+			name="fl_no_detr_cuneo_irpef"
+			property="anagrafico_esercizio.fl_no_detr_cuneo_irpef"
+			inputType="CHECKBOX"
+			label="No Detrazione Cuneo Irpef"
+			nullable="false" />
 	<fieldProperty
 		name="fl_detrazioni_altri_tipi"
 		property="anagrafico_esercizio.fl_detrazioni_altri_tipi"
@@ -721,6 +740,18 @@
 	<columnFieldProperty
 		name="find_tipologia_istat"
 		label="Tipologia Istat"/>  -->
+	<form name="searchtool_completo">
+		<formFieldProperty
+				name="cd_anag"/>
+		<formFieldProperty
+				name="ragione_sociale"/>
+		<formFieldProperty
+				name="cognome"/>
+		<formFieldProperty
+				name="nome"/>
+		<formFieldProperty
+				name="codice_fiscale"/>
+	</form>
 	<form name="searchtool">
 		<formFieldProperty
 			name="cd_anag"/> 
@@ -801,6 +832,9 @@
 	<formFieldProperty
 		name="dt_canc"
 		/>
+	<formFieldProperty
+			name="dtIniValGruppoIva"
+	/>
 	<formFieldProperty
 		name="dt_fine_rapporto"
 		/>
@@ -944,6 +978,10 @@
 		name="im_reddito_abitaz_princ" />		
 	<formFieldProperty
 		name="fl_applica_detr_pers_max" />
+	<formFieldProperty
+			name="fl_no_credito_cuneo_irpef" />
+	<formFieldProperty
+			name="fl_no_detr_cuneo_irpef" />
 	<formFieldProperty
 		name="fl_no_credito_irpef" />
 	<formFieldProperty

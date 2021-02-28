@@ -590,6 +590,7 @@ public class PdGVariazioneBP extends it.cnr.jada.util.action.SimpleCRUDBP {
                     optPdg_variazioneBulk.get().isPropostaDefinitiva() &&
                     optPdg_variazioneBulk.get().isNotNew() &&
                     optPdg_variazioneBulk.get().getStatoDocumentale() == null &&
+                    optPdg_variazioneBulk.get().getDt_firma() == null &&
                     (getCentro_responsabilita_scrivania().getLivello().intValue() == 1 || isUoArea() || isUoSac()) &&
                     optPdg_variazioneBulk.get().getCentro_responsabilita().getCd_cds().equals(getCentro_responsabilita_scrivania().getCd_cds());
         } else {

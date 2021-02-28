@@ -12,5 +12,5 @@ La funzionalità mostra la Coda di Stampa che riporta tutti gli elaborati visibi
 
 Questa mappa è presente a menù e potrebbe essere consultata dall'utente all'occorrenza. In ogni caso automaticamente la funzione viene presentata all'utente anche quando chiede ed accetta l'accodamento delle stampa e da qui è possibile verificare lo stato delle schedulazioni avviate. Sempre in questa funzione è possibile eliminare elaborati eseguiti e non più utili.
 
-.. thumbnail:: ../screenshot/coda.png
+.. figure:: ../screenshot/coda.png
 

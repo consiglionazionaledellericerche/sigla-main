@@ -421,7 +421,7 @@ end if;
 				,comune com
 			where abi.ABI       = vpg.ABI
 			  and abi.CAB	    = vpg.CAB
-			  and com.PG_COMUNE = abi.PG_COMUNE)
+			  and abi.PG_COMUNE = com.PG_COMUNE(+))
 		 where vpg.CD_CDS 		= aMan.CD_CDS
 		   and vpg.ESERCIZIO 	= aMan.ESERCIZIO
 		   and vpg.PG_MANDATO   = aMan.PG_MANDATO
@@ -482,7 +482,7 @@ end if;
 				,comune com
 			where abi.ABI       = vpg.ABI_TERZO
 			  and abi.CAB	    = vpg.CAB_TERZO
-			  and com.PG_COMUNE = abi.PG_COMUNE)
+			  and abi.PG_COMUNE = com.PG_COMUNE(+))
 		 where vpg.CD_CDS 		= aMan.CD_CDS
 		   and vpg.ESERCIZIO 	= aMan.ESERCIZIO
 		   and vpg.PG_MANDATO   = aMan.PG_MANDATO

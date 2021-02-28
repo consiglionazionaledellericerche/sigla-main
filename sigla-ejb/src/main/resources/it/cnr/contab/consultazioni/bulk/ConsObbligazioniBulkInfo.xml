@@ -224,6 +224,27 @@
 		maxLength="10"
 		formatName="date_short"
 		label="Data documento Amministrativo" />
+	<fieldProperty
+			name="cd_terzo_resp_gae"
+			property="cd_terzo_resp_gae"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="10"
+			label="Terzo Resp GAE" />
+	<fieldProperty
+			name="cd_progetto_padre"
+			property="cd_progetto_padre"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="Area Progettuale" />
+	<fieldProperty
+			name="cd_progetto"
+			property="cd_progetto"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="Progetto" />
 	<formFieldProperty
 		name="cds" />
 	<formFieldProperty
@@ -234,6 +255,12 @@
 		name="cd_linea_attivita" />
 	<formFieldProperty
 		name="ds_linea_attivita" />
+	<formFieldProperty
+			name="cd_terzo_resp_gae" />
+	<formFieldProperty
+			name="cd_progetto" />
+	<formFieldProperty
+			name="cd_progetto_padre" />
 	<formFieldProperty
 		name="cd_elemento_voce" />
 	<formFieldProperty
@@ -287,10 +314,16 @@
 	<columnFieldProperty
 		name="cd_centro_responsabilita" />
 	<columnFieldProperty
+			name="cd_progetto_padre" />
+	<columnFieldProperty
+			name="cd_progetto" />
+	<columnFieldProperty
 		name="cd_linea_attivita" />
 	<columnFieldProperty
 		name="ds_linea_attivita"
 		label="Descrizione GAE" />
+	<columnFieldProperty
+			name="cd_terzo_resp_gae" />
 	<columnFieldProperty
 		name="cd_elemento_voce" />
 	<columnFieldProperty
@@ -346,9 +379,15 @@
 	<findFieldProperty
 		name="cd_centro_responsabilita" />
 	<findFieldProperty
+			name="cd_progetto_padre" />
+	<findFieldProperty
+			name="cd_progetto" />
+	<findFieldProperty
 		name="cd_linea_attivita" />
 	<findFieldProperty
 		name="ds_linea_attivita" />
+	<findFieldProperty
+			name="cd_terzo_resp_gae" />
 	<findFieldProperty
 		name="cd_elemento_voce" />
 	<findFieldProperty

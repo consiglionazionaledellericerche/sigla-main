@@ -22,7 +22,7 @@
     <parent>
         <groupId>it.cnr.si.sigla</groupId>
         <artifactId>sigla-parent</artifactId>
-        <version>6.2.19-SNAPSHOT</version>
+        <version>6.3.1-SNAPSHOT</version>
     </parent>
     <dependencyManagement>
         <dependencies>
@@ -211,10 +211,6 @@
         </dependency>
         <dependency>
             <groupId>io.thorntail</groupId>
-            <artifactId>management</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.thorntail</groupId>
             <artifactId>swagger</artifactId>
         </dependency>
         <dependency>
@@ -224,6 +220,14 @@
         <dependency>
             <groupId>org.picketbox</groupId>
             <artifactId>picketbox</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>management</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>management-console</artifactId>
         </dependency>
         <!-- SIGLA  dependency-->
         <dependency>
@@ -273,6 +277,11 @@
             <groupId>it.cnr.si.storage</groupId>
             <artifactId>storage-cloud-filesystem</artifactId>
             <version>${storage.cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>it.cnr.si</groupId>
+            <artifactId>ace-client</artifactId>
+            <version>${ace.version}</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -395,8 +404,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>1.4</version>
-            <type>jar</type>
+            <version>2.8.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>

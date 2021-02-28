@@ -125,7 +125,7 @@ public class CRUDAnagraficaBP extends SimpleCRUDBP {
 			validaRapporto(context,(RapportoBulk)bulk);
 		}
 		public boolean isInputReadonly() {
-			return super.isInputReadonly() || isRapportoReadonly((RapportoBulk)getModel());
+			return super.isInputReadonly() || isRapportoReadonly((AnagraficoBulk)getParentModel(), (RapportoBulk)getModel());
 		}
 		public boolean isShrinkable() {
 			return super.isShrinkable() && isRapportoShrinkable((RapportoBulk)getModel());
@@ -134,6 +134,14 @@ public class CRUDAnagraficaBP extends SimpleCRUDBP {
 			validaRapportoPerCancellazione(context, (RapportoBulk)detail);
 		}
 	};
+
+	private final SimpleDetailCRUDController crudAnagraficoGruppiIvaCollegati = new SimpleDetailCRUDController("AnagraficoGruppiIvaCollegati",AssGruppoIvaAnagBulk.class,"assGruppoIva",this) {
+	};
+
+	public SimpleDetailCRUDController getCrudAnagraficoGruppiIvaCollegati() {
+		return crudAnagraficoGruppiIvaCollegati;
+	}
+
 
 	private final SimpleDetailCRUDController crudInquadramenti = new SimpleDetailCRUDController("Inquadramenti",InquadramentoBulk.class,"inquadramenti",crudRapporti) {
 		protected void validate(ActionContext context,OggettoBulk bulk) throws ValidationException {
@@ -289,8 +297,8 @@ protected boolean isInquadramentoReadonly(InquadramentoBulk inquadramento) {
 protected boolean isInquadramentoShrinkable(InquadramentoBulk inquadramento) {
 	return true;
 }
-protected boolean isRapportoReadonly(RapportoBulk rapporto) {
-	return rapporto != null && rapporto.getTipo_rapporto() != null && rapporto.getTipo_rapporto().isDipendente();
+protected boolean isRapportoReadonly(AnagraficoBulk anagraficoBulk, RapportoBulk rapporto) {
+	return rapporto != null && rapporto.getTipo_rapporto() != null && (rapporto.getTipo_rapporto().isDipendente() && !anagraficoBulk.isAbilitatoTrattamenti());
 }
 protected boolean isRapportoShrinkable(RapportoBulk rapporto) {
 	return true;
@@ -403,6 +411,7 @@ protected void validaInquadramentoPerCancellazione(ActionContext context,Inquadr
 		throw new it.cnr.jada.DetailedRuntimeException(e);
 	}
 }
+
 protected void validaRapporto(ActionContext context,RapportoBulk rapporto) throws ValidationException {
 	try {
 		// Controllo tipo rapporto non nullo
@@ -1398,7 +1407,8 @@ public String[][] getTabs() {
 			{ "tabDetrazioniFamiliari","Carichi familiari","/anagraf00/tab_detrazioni_familiari.jsp" },
 			{ "tabDettagli","Dettagli","/anagraf00/tab_dettagli.jsp" },
 			{ "tabPagamentiEsterni","Pagamenti esterni","/anagraf00/tab_pagamenti_esterni.jsp" },
-			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }};
+			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" },
+			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" }};
 	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero() !=null && ((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getTi_italiano_estero().compareTo(NazioneBulk.ITALIA)==0 &&
 			((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).getPartita_iva()!=null &&
 					(((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaGiuridica()) &&
@@ -1406,23 +1416,27 @@ public String[][] getTabs() {
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } ,
-			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" }};
+			{ "tabEsportatore","Esportatore abituale","/anagraf00/tab_esportatore.jsp" },
+			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" }};
 	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isPersonaFisica())
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
 			{ "tabDetrazioniFamiliari","Carichi familiari","/anagraf00/tab_detrazioni_familiari.jsp" },
 			{ "tabDettagli","Dettagli","/anagraf00/tab_dettagli.jsp" },
-			{ "tabPagamentiEsterni","Pagamenti esterni","/anagraf00/tab_pagamenti_esterni.jsp" } };
+			{ "tabPagamentiEsterni","Pagamenti esterni","/anagraf00/tab_pagamenti_esterni.jsp" },
+			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" } };
 	else if (((it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk)getModel()).isStudioAssociato() ) 
 		return new String[][] {
 				{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
 				{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
-				{ "tabAssociatiStudio","Lista Associati","/anagraf00/tab_associati_studio.jsp" } };
+				{ "tabAssociatiStudio","Lista Associati","/anagraf00/tab_associati_studio.jsp" },
+				{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" } };
 	else
 		return new String[][] {
 			{ "tabAnagrafica","Anagrafica","/anagraf00/tab_anagrafica.jsp" },
-			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" } };
+			{ "tabRapporto","Rapporto","/anagraf00/tab_rapporto.jsp" },
+			{ "tabAssGruppoIva","Associazione Gruppo Iva","/anagraf00/tab_gruppo_iva.jsp" } };
 }
 public SimpleDetailCRUDController getCrudAssociatiStudio() {
 	return crudAssociatiStudio;
@@ -1457,10 +1471,17 @@ protected void validaDichiarazione(ActionContext context,Dichiarazione_intentoBu
 		}
 	}
 }
-public boolean isUoEnte(ActionContext context){	
-	Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
-	if (uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
-		return true;	
-	return false; 
-}	
+	public boolean isUoEnte(ActionContext context){
+		Unita_organizzativaBulk uo = it.cnr.contab.utenze00.bulk.CNRUserInfo.getUnita_organizzativa(context);
+		if (uo.getCd_tipo_unita().equals(it.cnr.contab.config00.sto.bulk.Tipo_unita_organizzativaHome.TIPO_UO_ENTE))
+			return true;
+		return false;
+	}
+	public void aggiornaDatiAce(ActionContext context, AnagraficoBulk anagraficoBulk) throws BusinessProcessException {
+		try {
+			((AnagraficoComponentSession)createComponentSession()).aggiornaDatiAce(context.getUserContext(), anagraficoBulk);
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
 }

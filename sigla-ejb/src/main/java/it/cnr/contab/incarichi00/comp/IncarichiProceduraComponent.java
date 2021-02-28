@@ -20,8 +20,10 @@ package it.cnr.contab.incarichi00.comp;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
+import it.cnr.contab.bilaterali00.bulk.Blt_visiteBulk;
 import it.cnr.contab.incarichi00.bulk.*;
 import it.cnr.contab.incarichi00.bulk.storage.*;
+import it.cnr.contab.util.SIGLAGroups;
 import it.cnr.si.spring.storage.bulk.StorageFile;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.compensi00.docs.bulk.CompensoHome;
@@ -476,6 +478,13 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 	}	
 
 	private void validaProceduraIncarico(UserContext aUC,Incarichi_proceduraBulk procedura) throws ComponentException {
+		Incarichi_proceduraBulk incaricoOld = null;
+		try {
+			if (!procedura.isToBeCreated())
+				incaricoOld = (Incarichi_proceduraBulk) getTempHome(aUC, procedura.getClass()).findByPrimaryKey(procedura);
+		} catch (PersistencyException e) {
+		}
+
 		if (procedura.getTerzo_resp()==null || procedura.getTerzo_resp().getCd_terzo()==null)
 			throw handleException( new ApplicationException( "Il campo \"Responsabile del procedimento\" non può essere vuoto.") );
 		/*
@@ -645,6 +654,23 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
 						else
 							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CURRICULUM_VINCITORE).toString()+"\".");
+					}
+				}
+				//Il documento viene richiesto solo in fase di salvataggio definitivo della procedura.
+				//In caso di semplice cambio importi per anno non deve scattare il controllo, dato che per incarichi vecchi
+				//tale documento non esiste.
+				if (incarico.getConflittoInteressi()==null &&
+						!Optional.ofNullable(incaricoOld).map(Incarichi_proceduraBulk::isProceduraDefinitiva).orElse(Boolean.FALSE)) {
+					if (parametri!=null && parametri.getAllega_conflitto_interesse()!=null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+						if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+							//Istanzio la classe per riempire tipo_archivioKeys
+							new Incarichi_procedura_archivioBulk();
+						}
+
+						if (incarico.getV_terzo()!=null && incarico.getV_terzo().getCognome()!=null && incarico.getV_terzo().getNome()!=null)
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \""+incarico.getV_terzo().getCognome()+" "+incarico.getV_terzo().getNome()+"\" un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString()+"\".");
+						else
+							throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \""+Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString()+"\".");
 					}
 				}
 				if (incarico.getDecretoDiNomina()==null) {
@@ -945,7 +971,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
-						else if (procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
 						else
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
@@ -1496,7 +1522,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				sql.addClause(FindClause.OR, "cd_tipo_attivita", SQLBuilder.EQUALS, procedura.getCd_tipo_attivita());
 				sql.addClause(FindClause.OR, "cd_tipo_attivita", SQLBuilder.ISNULL, null);
 			sql.closeParenthesis();
-				sql.openParenthesis(FindClause.AND);
+			sql.openParenthesis(FindClause.AND);
 				sql.addClause(FindClause.OR, "cd_tipo_incarico", SQLBuilder.EQUALS, procedura.getCd_tipo_incarico());
 				sql.addClause(FindClause.OR, "cd_tipo_incarico", SQLBuilder.ISNULL, null);
 			sql.closeParenthesis();
@@ -1582,6 +1608,9 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 						if (!(parametriDefinitivi.getFl_invio_fp()!=null && parametriDefinitivi.getFl_invio_fp().equals("Y")) &&
 							parametri.getFl_invio_fp()!=null)
 							parametriDefinitivi.setFl_invio_fp(parametri.getFl_invio_fp());
+						if (!(parametriDefinitivi.getAllega_conflitto_interesse()!=null && parametriDefinitivi.getAllega_conflitto_interesse().equals("Y")) &&
+							parametri.getAllega_conflitto_interesse()!=null)
+							parametriDefinitivi.setAllega_conflitto_interesse(parametri.getAllega_conflitto_interesse());
 					}
 				}
 				return parametriDefinitivi;
@@ -1685,7 +1714,8 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 		List<StorageObject> nodeAddAspect = new ArrayList<StorageObject>();
 		ContrattiService contrattiService = SpringUtil.getBean(ContrattiService.class);
 		try{
-		    Optional.ofNullable(contrattiService.getStorageObjectByPath(incarico_procedura.getCMISFolder().getCMISPath()))
+		    Optional.ofNullable(contrattiService.getStorageObjectByPath(incarico_procedura.
+					getCMISFolder().getCMISPath()))
                     .filter(storageObject ->
                             storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(
                                     StorageContrattiAspect.SIGLA_CONTRATTI_STATO_DEFINITIVO.value()
@@ -1702,6 +1732,10 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 				Incarichi_archivioBulk allegato = (Incarichi_archivioBulk)i.next();
 				if (allegato.getCms_node_ref()!=null) {
 					Optional<StorageObject> optStorage = Optional.ofNullable(contrattiService.getStorageObjectBykey(allegato.getCms_node_ref()));
+					if (optStorage.isPresent()) {
+						contrattiService.addConsumer(optStorage.get(), SIGLAGroups.GROUP_CONTRATTI.name());
+						contrattiService.addConsumer(optStorage.get(), SIGLAGroups.GROUP_INCARICHI.name());
+					}
 					optStorage.filter(storageObject ->
                                     !storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()).contains(
                                             StorageContrattiAspect.SIGLA_CONTRATTI_STATO_ANNULLATO.value()
@@ -1717,7 +1751,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(optStorage.get(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(optStorage.get(), true);
-						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(optStorage.get(), true);
 						else
 							contrattiService.setInheritedPermission(optStorage.get(), false);
@@ -1764,7 +1798,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_procedura.isProceduraDefinitiva() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);

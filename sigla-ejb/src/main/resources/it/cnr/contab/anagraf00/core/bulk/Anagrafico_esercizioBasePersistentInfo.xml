@@ -128,7 +128,21 @@
 			sqlTypeName="CHAR"
 			columnSize="1"
 			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" 
-			nullable="false"/>								
+			nullable="false"/>
+		<columnMapping
+				columnName="FL_NO_CREDITO_CUNEO_IRPEF"
+				propertyName="fl_no_credito_cuneo_irpef"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+				nullable="false"/>
+		<columnMapping
+				columnName="FL_NO_DETR_CUNEO_IRPEF"
+				propertyName="fl_no_detr_cuneo_irpef"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter"
+				nullable="false"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="fl_notaxarea" />
@@ -160,6 +174,10 @@
 		name="fl_applica_detr_pers_max" />	
 	<persistentProperty
 		name="fl_no_credito_irpef" />
+	<persistentProperty
+			name="fl_no_credito_cuneo_irpef" />
+	<persistentProperty
+			name="fl_no_detr_cuneo_irpef" />
 	<persistentProperty
 		name="fl_detrazioni_altri_tipi" />	
 </SQLPersistentInfo>

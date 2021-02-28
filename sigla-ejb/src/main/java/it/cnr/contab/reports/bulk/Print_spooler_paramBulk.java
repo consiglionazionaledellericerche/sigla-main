@@ -20,7 +20,7 @@ package it.cnr.contab.reports.bulk;
 public class Print_spooler_paramBulk extends Print_spooler_paramBase {
 
 	private Print_spooler_paramKey key;
-	
+
 	public Print_spooler_paramBulk() {
 		super();
 		key = new Print_spooler_paramKey();
@@ -42,5 +42,10 @@ public class Print_spooler_paramBulk extends Print_spooler_paramBase {
 	public void setPgStampa(Long pgStampa) {
 		super.setPgStampa(pgStampa);
 		key.setPgStampa(pgStampa);
+	}
+
+	@Override
+	public Print_spooler_paramKey getKey() {
+		return key;
 	}
 }

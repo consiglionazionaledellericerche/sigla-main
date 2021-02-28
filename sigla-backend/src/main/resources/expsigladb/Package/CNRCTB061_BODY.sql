@@ -1715,6 +1715,58 @@
                                     'Impossibile lo scarico.');
      Exception
        When No_Data_Found Then
+          Declare
+            conta number;
+            recPdgModuloSpese pdg_modulo_spese%rowtype;
+            pLinea linea_attivita%rowtype;
+          Begin
+            select count(0) into conta
+            from pdg_modulo_spese
+            where esercizio = tabModuloSpeseGest(i).ESERCIZIO
+            AND   CD_CENTRO_RESPONSABILITA = tabModuloSpeseGest(i).CD_CENTRO_RESPONSABILITA
+            AND   PG_PROGETTO = tabModuloSpeseGest(i).PG_PROGETTO
+            AND   ID_CLASSIFICAZIONE = tabModuloSpeseGest(i).ID_CLASSIFICAZIONE
+            AND   CD_CDS_AREA = tabModuloSpeseGest(i).CD_CDS_AREA
+            AND   PG_DETTAGLIO = tabModuloSpeseGest(i).PG_DETTAGLIO;
+
+            If conta=0 Then
+              If tabModuloSpeseGest(i).IM_SPESE_GEST_DECENTRATA_INT != 0 or tabModuloSpeseGest(i).IM_SPESE_GEST_DECENTRATA_EST != 0 or
+                 tabModuloSpeseGest(i).IM_SPESE_GEST_ACCENTRATA_INT != 0 or tabModuloSpeseGest(i).IM_SPESE_GEST_ACCENTRATA_EST != 0 or
+                 tabModuloSpeseGest(i).IM_PAGAMENTI != 0 Then
+                 IBMERR001.RAISE_ERR_GENERICO('Non risulta presente nel bilancio previsionale una combinazione voce/gae richiesta '||
+                 'invece nell''ambito del gestionale. Impossibile lo scarico. '||
+                 '(CodErr: '||tabModuloSpeseGest(i).cd_cdr_assegnatario||'-'||tabModuloSpeseGest(i).id_classificazione||'-'||
+                 tabModuloSpeseGest(i).pg_progetto||'-'||tabModuloSpeseGest(i).pg_dettaglio||')');
+              End If;
+
+              Select * into pLinea
+              from linea_attivita
+              where cd_centro_responsabilita = tabModuloSpeseGest(i).cd_cdr_assegnatario
+              And   cd_linea_attivita = tabModuloSpeseGest(i).cd_linea_attivita;
+
+              recPdgModuloSpese.esercizio := tabModuloSpeseGest(i).ESERCIZIO;
+              recPdgModuloSpese.CD_CENTRO_RESPONSABILITA := tabModuloSpeseGest(i).CD_CENTRO_RESPONSABILITA;
+              recPdgModuloSpese.PG_PROGETTO := tabModuloSpeseGest(i).PG_PROGETTO;
+              recPdgModuloSpese.ID_CLASSIFICAZIONE := tabModuloSpeseGest(i).ID_CLASSIFICAZIONE;
+              recPdgModuloSpese.CD_CDS_AREA := tabModuloSpeseGest(i).CD_CDS_AREA;
+              recPdgModuloSpese.PG_DETTAGLIO := tabModuloSpeseGest(i).PG_DETTAGLIO;
+              recPdgModuloSpese.CD_COFOG := pLinea.cd_cofog;
+              recPdgModuloSpese.CD_MISSIONE := pLinea.CD_MISSIONE;
+              recPdgModuloSpese.IM_SPESE_GEST_DECENTRATA_INT := 0;
+              recPdgModuloSpese.IM_SPESE_GEST_DECENTRATA_EST := 0;
+              recPdgModuloSpese.IM_SPESE_GEST_ACCENTRATA_INT := 0;
+              recPdgModuloSpese.IM_SPESE_GEST_ACCENTRATA_EST := 0;
+              recPdgModuloSpese.IM_SPESE_A2 := 0;
+              recPdgModuloSpese.IM_SPESE_A3 := 0;
+              recPdgModuloSpese.UTCR := tabModuloSpeseGest(i).UTCR;
+              recPdgModuloSpese.DACR := tabModuloSpeseGest(i).DACR;
+              recPdgModuloSpese.UTUV := tabModuloSpeseGest(i).UTUV;
+              recPdgModuloSpese.DUVA := tabModuloSpeseGest(i).DUVA;
+              recPdgModuloSpese.PG_VER_REC := tabModuloSpeseGest(i).PG_VER_REC;
+
+              CNRCTB051.INS_PDG_MODULO_SPESE(recPdgModuloSpese);
+            End If;
+          End;
           Dbms_Output.put_line('inserisco -'||tabModuloSpeseGest(i).cd_cdr_assegnatario||' '||aLATmp.cd_cofog||' '||tabModuloSpeseGest(i).id_classificazione||' '||tabModuloSpeseGest(i).pg_progetto||' '||tabModuloSpeseGest(i).pg_dettaglio);
           CNRCTB051.INS_PDG_MODULO_SPESE_GEST(tabModuloSpeseGest(i));
      End;

@@ -123,6 +123,14 @@
 		enabledOnFreeSearch="true"			
 		enabledOnSearch="true"
 		label="Da esercizio precedente"/>
+	<form name="searchtool">
+		<formFieldProperty
+				name="pg_liquidazione" />
+		<formFieldProperty
+				name="dt_da" />
+		<formFieldProperty
+				name="dt_a" />
+	</form>
 
 	<formFieldProperty
 		name="cd_cds" />

@@ -52,6 +52,7 @@ import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.RemoveAccent;
+import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.contab.util.enumeration.StatoVariazioneSostituzione;
 import it.cnr.contab.util.enumeration.TipoDebitoSIOPE;
 import it.cnr.contab.util.Utility;
@@ -79,6 +80,7 @@ import javax.ejb.EJBException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -89,7 +91,12 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.concurrent.CompletionException;
 import java.util.regex.Pattern;
@@ -1393,8 +1400,11 @@ public class DistintaCassiereComponent extends
                             MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
                 } else {
                     sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.dt_firma", SQLBuilder.ISNOTNULL, null);
-                    sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
+                    sql.openParenthesis(FindClause.AND);
+                        sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.stato_trasmissione", SQLBuilder.EQUALS,
                             MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA);
+                        sql.addSQLClause(FindClause.OR, "v_mandato_reversale_dist_ann.esito_operazione", SQLBuilder.EQUALS, EsitoOperazione.NON_ACQUISITO.value());
+                    sql.closeParenthesis();
                 }
                 sql.addSQLClause("AND", "v_mandato_reversale_dist_ann.ti_documento_cont", SQLBuilder.NOT_EQUALS,
                         MandatoBulk.TIPO_REGOLARIZZAZIONE);
@@ -4873,7 +4883,7 @@ public class DistintaCassiereComponent extends
                     sostituzioneMandato.setEsercizioMandatoDaSostituire(mandatoRiemissione.getEsercizio());
                     sostituzioneMandato.setNumeroMandatoDaSostituire(mandatoRiemissione.getPg_mandato().intValue());
                     // TODO Valore fisso a 1
-                    sostituzioneMandato.setProgressivoBeneficiarioDaSostituire(BigInteger.ONE);
+                    sostituzioneMandato.setProgressivoBeneficiarioDaSostituire(BigInteger.ONE.intValue());
                     infoben.setSostituzioneMandato(sostituzioneMandato);
                 }
 
@@ -5341,25 +5351,29 @@ public class DistintaCassiereComponent extends
                         if (!salta) {
                             // 17/01/2018 per non indicare cup nel tag - fine aggiunta
                             if (doc.getCdSiope() != null) {
-                                // cambio codice siope senza cup dovrebbe essere il
-                                // resto
+                                // cambio codice siope senza cup dovrebbe essere il resto
                                 if (oldDoc != null
-                                        && oldDoc.getCdSiope().compareTo(
-                                        doc.getCdSiope()) != 0
+                                        && oldDoc.getCdSiope().compareTo(doc.getCdSiope()) != 0
                                         && doc.getCdCup() == null
                                         && totAssSiope.compareTo(totAssCup) != 0
                                         && totAssCup.compareTo(BigDecimal.ZERO) != 0) {
                                     clas = objectFactory.createMandatoInformazioniBeneficiarioClassificazione();
                                     clas.setCodiceCgu(oldDoc.getCdSiope());
-                                    clas.setImporto((totAssSiope.subtract(totAssCup))
-                                            .setScale(2, BigDecimal.ROUND_HALF_UP));
+                                    clas.setImporto((totAssSiope.subtract(totAssCup)).setScale(2, BigDecimal.ROUND_HALF_UP));
                                     caricaClassificazione(userContext, clas, objectFactory, bulk, oldDoc.getCdSiope());
 
                                     totAssCup = BigDecimal.ZERO;
                                     totAssSiope = BigDecimal.ZERO;
                                     infoben.getClassificazione().add(clas);
 
-                                } else
+                                    // Carico l'attuale codice SIOPE
+                                    clas = objectFactory.createMandatoInformazioniBeneficiarioClassificazione();
+                                    clas.setCodiceCgu(doc.getCdSiope());
+                                    clas.setImporto(doc.getImportoCge().setScale(2, BigDecimal.ROUND_HALF_UP));
+                                    caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
+                                    infoben.getClassificazione().add(clas);
+
+                                } else {
                                     // stesso codice siope senza cup resto
                                     if (oldDoc != null
                                             && oldDoc.getCdSiope().compareTo(
@@ -5418,8 +5432,7 @@ public class DistintaCassiereComponent extends
                                                 caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                                 infoben.getClassificazione().add(clas);
-                                            } else // diverso siope con cup null e precedente
-                                                // completamente associato a cup
+                                            } else // diverso siope con cup null e precedente completamente associato a cup
                                                 if (oldDoc != null
                                                         && oldDoc.getCdSiope().compareTo(
                                                         doc.getCdSiope()) != 0
@@ -5432,28 +5445,25 @@ public class DistintaCassiereComponent extends
                                                             BigDecimal.ROUND_HALF_UP));
                                                     totAssSiope = BigDecimal.ZERO;
                                                     totAssCup = BigDecimal.ZERO;
-                                                    caricaClassificazione(userContext, clas, objectFactory, bulk,doc.getCdSiope());
+                                                    caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
                                                     infoben.getClassificazione().add(clas);
                                                 } else
                                                     // primo inserimento
-                                                    if (doc.getCdCup() != null
-                                                            && doc.getImportoCup().compareTo(
-                                                            BigDecimal.ZERO) != 0) {
+                                                    if (doc.getCdCup() != null && doc.getImportoCup().compareTo(BigDecimal.ZERO) != 0) {
                                                         clas = objectFactory.createMandatoInformazioniBeneficiarioClassificazione();
                                                         clas.setCodiceCgu(doc.getCdSiope());
                                                         clas.setCodiceCup(doc.getCdCup());
-                                                        clas.setImporto(doc.getImportoCup().setScale(2,
-                                                                BigDecimal.ROUND_HALF_UP));
+                                                        clas.setImporto(doc.getImportoCup().setScale(2, BigDecimal.ROUND_HALF_UP));
                                                         totAssCup = doc.getImportoCup();
                                                         totAssSiope = doc.getImportoCge();
                                                         // Causale Cup
                                                         if (infoben.getCausale() != null) {
-                                                            if (!infoben.getCausale().contains(
-                                                                    doc.getCdCup()))
-                                                                infoben.setCausale(infoben.getCausale()
-                                                                        + "-" + doc.getCdCup());
-                                                        } else
+                                                            if (!infoben.getCausale().contains(doc.getCdCup())) {
+                                                                infoben.setCausale(infoben.getCausale() + "-" + doc.getCdCup());
+                                                            }
+                                                        } else {
                                                             infoben.setCausale("CUP " + doc.getCdCup());
+                                                        }
                                                         caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
 
                                                         infoben.getClassificazione().add(clas);
@@ -5466,6 +5476,7 @@ public class DistintaCassiereComponent extends
                                                         caricaClassificazione(userContext, clas, objectFactory, bulk, doc.getCdSiope());
                                                         infoben.getClassificazione().add(clas);
                                                     }
+                                }
                                 oldDoc = doc;
                             }
                         } // if(!salta){ -- 17/01/2018 per non indicare cup nel tag
@@ -5674,15 +5685,16 @@ public class DistintaCassiereComponent extends
                                        it.siopeplus.Mandato.InformazioniBeneficiario.Classificazione clas,
                                        ObjectFactory objectFactory,
                                        V_mandato_reversaleBulk bulk,
-                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException {
+                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         clas.setClassificazioneDatiSiopeUscite(getClassificazioneDatiSiope(userContext, objectFactory, bulk, codiceSiope));
     }
 
     private CtClassificazioneDatiSiopeUscite getClassificazioneDatiSiope(UserContext userContext,
                                        ObjectFactory objectFactory,
                                        V_mandato_reversaleBulk bulk,
-                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException {
+                                       String codiceSiope) throws ComponentException, PersistencyException, IntrospectionException, DatatypeConfigurationException {
         CtClassificazioneDatiSiopeUscite ctClassificazioneDatiSiopeUscite = objectFactory.createCtClassificazioneDatiSiopeUscite();
+
         Optional<TipoDebitoSIOPE> tipoDebitoSIOPE = Optional.ofNullable(bulk.getTipo_debito_siope())
                 .map(s -> TipoDebitoSIOPE.getValueFrom(s));
         if (!tipoDebitoSIOPE.isPresent() || (tipoDebitoSIOPE.isPresent() && tipoDebitoSIOPE.get().equals(TipoDebitoSIOPE.COMMERCIALE))) {
@@ -5870,6 +5882,7 @@ public class DistintaCassiereComponent extends
                                 CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                                 ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.getNr_fattura_fornitore());
                                 ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                                ctDatiFatturaSiope.setDataScadenzaPagamSiope(convertToXMLGregorianCalendar(fattura_passivaBulk.getDt_scadenza()));
                                 //TODO CONTROLLARE SE NOTA
                                 ctDatiFatturaSiope.setImportoSiope(importo.setScale(2, BigDecimal.ROUND_HALF_UP));
 
@@ -5970,6 +5983,7 @@ public class DistintaCassiereComponent extends
                             CtDatiFatturaSiope ctDatiFatturaSiope = objectFactory.createCtDatiFatturaSiope();
                             ctDatiFatturaSiope.setNumeroFatturaSiope(fattura_passivaBulk.get().getNr_fattura_fornitore());
                             ctDatiFatturaSiope.setNaturaSpesaSiope(CORRENTE);
+                            ctDatiFatturaSiope.setDataScadenzaPagamSiope(convertToXMLGregorianCalendar(fattura_passivaBulk.get().getDt_scadenza()));
                             //TODO CONTROLLARE SE NOTA
                             ctDatiFatturaSiope.setImportoSiope(fattura_passivaBulk.get().getIm_totale_fattura().setScale(2, BigDecimal.ROUND_HALF_UP));
                             ctFatturaSiope.setDatiFatturaSiope(ctDatiFatturaSiope);
@@ -6002,6 +6016,14 @@ public class DistintaCassiereComponent extends
             }
         }
         return ctClassificazioneDatiSiopeUscite;
+    }
+
+    private XMLGregorianCalendar convertToXMLGregorianCalendar(Timestamp timestamp) {
+        try {
+            return DatatypeFactory.newInstance().newXMLGregorianCalendar(timestamp.toLocalDateTime().toLocalDate().toString());
+        } catch (DatatypeConfigurationException e) {
+            throw new RuntimeException("Cannot convert timpestamp to XMLGregorianCalendar " + timestamp.toInstant().toString());
+        }
     }
 
     public Long findMaxMovimentoContoEvidenza(UserContext userContext, MovimentoContoEvidenzaBulk movimentoContoEvidenzaBulk) throws ComponentException {

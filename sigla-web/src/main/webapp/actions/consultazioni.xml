@@ -30,6 +30,8 @@
 		actionClass="it.cnr.contab.consultazioni.action.ConsObbligazioniAction">
 	</action>
 
+
+
 	<action path="/ConsWorkpackageAction"
 		actionClass="it.cnr.contab.consultazioni.action.ConsWorkpackageAction">
 	</action>
@@ -208,6 +210,9 @@
 	</action>
 	<action path="/ConsNazioneAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
 		needExistingSession="false">
+	</action>
+	<action path="/ConsComuneAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
+			needExistingSession="false">
 	</action>
 	<action path="/ConsCapitoloAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
@@ -1493,6 +1498,15 @@
 			value="it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk" />
 		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_NazioneComponentSession" />
 		<init-param name="defaultAction" value="ConsNazioneAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
+	</businessProcess>
+	<businessProcess name="ConsComuneBP"
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk" />
+		<init-param name="componentSessionName" value="CNRCONFIG00_EJB_NazioneComponentSession" />
+		<init-param name="defaultAction" value="ConsComuneAction" />
 		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 	<businessProcess name="ConsCapitoloBP"

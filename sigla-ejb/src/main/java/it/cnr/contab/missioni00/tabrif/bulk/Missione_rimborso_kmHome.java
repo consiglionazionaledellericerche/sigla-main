@@ -185,8 +185,8 @@ public class Missione_rimborso_kmHome extends BulkHome implements ConsultazioniR
 						if (clause.getPropertyName() != null && clause.getPropertyName().equals("nazione") &&
 								operator == SQLBuilder.EQUALS){
 							NazioneHome nazionehome=(NazioneHome)getHomeCache().getHome(NazioneBulk.class);
-							Integer str = (Integer)clause.getValue();
-							nazioneBulk = new NazioneBulk(new Long(str));
+							Double str = (Double)clause.getValue();
+							nazioneBulk = new NazioneBulk(new Long(str.longValue()));
 							nazioneBulk = (NazioneBulk)nazionehome.findByPrimaryKey(nazioneBulk);
 						}else if (clause.getPropertyName() != null && clause.getPropertyName().equals("tipoAuto") &&
 								operator == SQLBuilder.EQUALS)	{

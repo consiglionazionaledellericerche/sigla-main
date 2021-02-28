@@ -46,16 +46,34 @@ Persona Guiridica
 =================
 Il caricamento dell'anagrafica di una persona guiridica prevede obbligatoriamente l'inserimento del codice fiscale e della partita iva del soggetto in questione. Per questa tipologia di anagrafica è possibile,
 qualora sia necessario, valorizzare solo il tab `Rapporto`_.
+Una Persona Giuridica deve essere ulteriormente classificata in:
+- Ente Pubblico;
+- Gruppo IVA;
+- Altro.
+
+Ente Pubblico
+=============
+Particolare importanza assume la definizione di un'anagrafica di un Ente Pubblico, ai fini dell'emissione fatture attive, perchè dal 31 Marzo 2015 è obbligatorio emettere verso tali enti esclusivamente fatture elettroniche.
+La procedura periodicamente accedendo all'Indice delle Pubbliche Amministrazioni (IPA), rileva in automatico il Codice Amministrazione e la data di avvio Fatturazione elettronica e lo associa all'anagrafica di Sigla mediante il Codice Fiscale presente sull'anagrafica stessa. Sarà compito dell'utente, invece, specifare sul Terzo di tali anagrafiche, il CUU corretto (richiesto prima dell'emissione di fatture attive). Tale informazione consente di creare Documenti attivi elettronici che, dopo essere stati opportunamente firmati, vengono automaticamente inviati alla Piattaforma SDI.
+
+Gruppo IVA
+===========
+Con la circolare 19/E/2018 l’Agenzia delle entrate si è soffermata sulle novità del Gruppo Iva, fornendo importanti chiarimenti.
+Il Gruppo Iva sorge a seguito di un’opzione, vincolante per un periodo predefinito, in forza della quale viene istituito un autonomo soggetto passivo d’imposta. Si rimanda alla Circolare relativa, emanata dall’Ufficio Fiscale, per quanto riguarda la funzione e gli obblighi del Gruppo IVA.
+Si ricorda che il gruppo iva ha la caratteristica di essere una unica partita iva e l'identificazione per ogni componente che aderisce al gruppo avviene tramite il codice fiscale. 
+Per questo motivo le fatture elettroniche ricevute riportano la partita IVA del Gruppo (appositamente costituito con Atto formale come un nuovo soggetto giuridico) ed il Codice Fiscale del prestatore che ha precedentemente aderito al Gruppo IVA. 
+Le fatture attive vengono emesse verso i singoli componenti del Gruppo e riportano la partita IVA del gruppo ed il codice fiscale del prestatore.
+
+Le implementazioni effettuate in Sigla hanno coinvolto l’Anagrafica clienti/fornitori per la qualifica dell’anagrafica stessa e per l’indicazione dei componenti che aderiscono al Gruppo IVA. La prima operazione da fare in Sigla è creare la nuova anagrafica del Gruppo IVA e qualificarla come tale. E’ obbligatorio indicare anche il Periodo di validità del Gruppo IVA così come indicato nell’atto di costituzione.
+Successivamente bisogna associare i componenti (anagrafiche sigla) al Gruppo IVA attraverso l'apposita Tab aggiunta nella funzione di anagrafica. In questa nuova sezione è possibile gestire i componenti del Gruppo IVA oppure è possibile dall’anagrafica del componente indicare il suo legame al Gruppo IVA (utilizzando sempre la stessa sezione della maschera).
+In fase di ricezione di un documento elettronico passivo, la procedura controlla se la partita IVA del gruppo è di un gruppo IVA, in questo caso viene fatto un controllo di congruenza tra la partita iva del gruppo e la partita iva della fattura, e tra il codice fiscale della fattura ed il codice fiscale del terzo associato al gruppo. In SIGLA sulla fattura verrà indicato il terzo del codice fiscale associato al gruppo, oppure, qualora in fattura non sia indicato il codice fiscale, verrà registrato il terzo del Gruppo IVA. 
+
 
 Studio Associato
 ================
 Lo Studio Associato è una persona guiridica e come tale deve essere registrata. L'attributo "Studio associato" consente di inserire nel tab Lista Associati,
 qualora sia necessario, i soggetti che fanno parte dello studio, inoltre consente la gestione di un particolare caso nella funzione dei :doc:`Compensi<compensi>`
 
-Ente Pubblico
-================
-Particolare importanza assume la definizione di un'anagrafica di un Ente Pubblico, ai fini dell'emissione fatture attive, perchè dal 31 Marzo 2015 è obbligatorio emettere verso tali enti esclusivamente fatture elettroniche.
-La procedura periodicamente accedendo all'Indice delle Pubbliche Amministrazioni (IPA), rileva in automatico il Codice Amministrazione e la data di avvio Fatturazione elettronica e lo associa all'anagrafica di Sigla mediante il Codice Fiscale presente sull'anagrafica stessa. Sarà compito dell'utente, invece, specifare sul Terzo di tali anagrafiche, il CUU corretto (richiesto prima dell'emissione di fatture attive). Tale informazione consente di creare Documenti attivi elettronici che, dopo essere stati opportunamente firmati, vengono automaticamente inviati alla Piattaforma SDI.
 
 Utilizzo delle Anagrafiche - Schema di Controlli
 ================================================

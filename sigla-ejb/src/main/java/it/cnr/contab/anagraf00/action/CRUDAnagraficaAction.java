@@ -30,6 +30,7 @@ import it.cnr.contab.anagraf00.core.bulk.*;
 import it.cnr.contab.compensi00.bp.CRUDCompensoBP;
 import it.cnr.contab.compensi00.docs.bulk.CompensoBulk;
 import it.cnr.contab.config00.ejb.Configurazione_cnrComponentSession;
+import it.cnr.contab.docamm00.bp.CRUDFatturaAttivaBP;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.jada.action.*;
 import it.cnr.jada.bulk.*;
@@ -766,34 +767,6 @@ public Forward doCambiaDateRes(ActionContext context) {
 					{
 						numGiorniRes = DateUtils.daysBetweenDates(anagrafico.getDt_inizio_res_italia(),DateServices.getLastDayOfYear(data_da.get(java.util.GregorianCalendar.YEAR))) + 1;	
 					}
-					//calcolo anno inizio residenza fiscale
-					if (!anagrafico.isDipendente()){
-						if (!(numGiorniRes.compareTo(numMinGiorni.longValue() + 1) < 0))
-						{
-							//numGiorniRes>=numMinGiorni e quindi la residenza fiscale è nello stesso anno
-							anagrafico.setAnno_inizio_res_fis(new Long(data_da.get(java.util.GregorianCalendar.YEAR)));
-						}
-						else
-						{
-							//numGiorniRes<numMinGiorni e devo verificare se l'anno successivo può essere fiscale
-							if( anagrafico.getDt_fine_res_italia() == null)
-							{
-								anagrafico.setAnno_inizio_res_fis(new Long(data_da.get(java.util.GregorianCalendar.YEAR))+1);
-							}
-							else
-							{
-								numGiorniResAnnoSuc = DateUtils.daysBetweenDates(DateServices.getFirstDayOfYear(data_da.get(java.util.GregorianCalendar.YEAR)+1) ,anagrafico.getDt_fine_res_italia()) + 1;
-								if (!(numGiorniResAnnoSuc.compareTo(numMinGiorni.longValue() + 1) < 0))
-								{
-									anagrafico.setAnno_inizio_res_fis(new Long(data_da.get(java.util.GregorianCalendar.YEAR))+1);
-								}
-								else
-								{
-									anagrafico.setAnno_inizio_res_fis(null);
-								}
-							}
-						}
-					}
 				}
  			}	
 			else
@@ -802,30 +775,6 @@ public Forward doCambiaDateRes(ActionContext context) {
 			}
  						
  			if (anagrafico.getAnno_inizio_res_fis()!=null)
- 				if (!anagrafico.isDipendente()){
-					if(anagrafico.getDt_fine_res_italia() != null)
-					{
-						if (new Long(data_a.get(java.util.GregorianCalendar.YEAR)).equals(new Long(anagrafico.getAnno_inizio_res_fis())))
-							anagrafico.setAnno_fine_agevolazioni(new Long(data_a.get(java.util.GregorianCalendar.YEAR)));
-						else  //anno di data_a > anno di data_da
-						{
-							if (new Long(data_a.get(java.util.GregorianCalendar.YEAR)).compareTo(new Long(anagrafico.getAnno_inizio_res_fis()+numMaxAnni-1))> 0)
-								anagrafico.setAnno_fine_agevolazioni(anagrafico.getAnno_inizio_res_fis()+numMaxAnni-1);
-							else
-							{
-								numGiorniResUltimoAnno = DateUtils.daysBetweenDates(DateServices.getFirstDayOfYear(data_a.get(java.util.GregorianCalendar.YEAR)) ,anagrafico.getDt_fine_res_italia()) + 1;
-
-								if (!(numGiorniResUltimoAnno.compareTo(numMinGiorni.longValue()) < 0))
-									anagrafico.setAnno_fine_agevolazioni(new Long(data_a.get(java.util.GregorianCalendar.YEAR)));
-								else
-									anagrafico.setAnno_fine_agevolazioni(new Long(data_a.get(java.util.GregorianCalendar.YEAR))- 1);
-							}
-						}
-					}
-					else
-						anagrafico.setAnno_fine_agevolazioni(anagrafico.getAnno_inizio_res_fis()+numMaxAnni-1);
-				}
- 			else
  				anagrafico.setAnno_fine_agevolazioni(null);
 		} catch(it.cnr.jada.bulk.FillException e) {
 			anagrafico.setDt_inizio_res_italia(oldDtIniResIta);
@@ -984,6 +933,31 @@ public Forward doCambiaDateDiariaMissEst(ActionContext context) {
 		return handleException(context, e);
 	}
 	
+	}
+
+	public Forward doSalva(ActionContext actioncontext) throws java.rmi.RemoteException {
+		CRUDAnagraficaBP bp = (CRUDAnagraficaBP)getBusinessProcess(actioncontext);
+		try {
+			fillModel(actioncontext);
+
+			bp.save(actioncontext);
+			postSalvataggio(actioncontext);
+			return actioncontext.findDefaultForward();
+		} catch (ValidationException validationexception) {
+			getBusinessProcess(actioncontext).setErrorMessage(validationexception.getMessage());
+		} catch (Throwable throwable) {
+			return handleException(actioncontext, throwable);
+		}
+		return actioncontext.findDefaultForward();
+	}
+
+	protected void postSalvataggio(ActionContext context) throws BusinessProcessException {
+
+		CRUDAnagraficaBP bp = (CRUDAnagraficaBP) getBusinessProcess(context);
+		AnagraficoBulk anag = (AnagraficoBulk) bp.getModel();
+		if (!anag.isDipendente() && !anag.getRapporti().isEmpty()){
+			bp.aggiornaDatiAce(context, anag);
+		}
 	}
 
 }

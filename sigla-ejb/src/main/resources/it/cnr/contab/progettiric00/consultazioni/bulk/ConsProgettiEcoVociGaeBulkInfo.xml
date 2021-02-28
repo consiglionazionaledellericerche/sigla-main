@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="esercizio_piano"
+		property="esercizio_piano"
+		inputType="TEXT"
+		inputSize="4"
+		maxLength="4"
+		label="esercizio" />
+	<fieldProperty
+			name="cd_voce_piano"
+			property="cd_voce_piano"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="10"
+			label="Voce Economica" />
+	<fieldProperty
+			name="cd_linea_attivita"
+			property="cd_linea_attivita"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="GAE" />
+	<fieldProperty
+			name="cd_elemento_voce"
+			property="cd_elemento_voce"
+			inputType="TEXT"
+			inputSize="30"
+			maxLength="30"
+			label="Voce" />
+	<fieldProperty
+			name="ds_elemento_voce"
+			property="ds_elemento_voce"
+			inputType="TEXTAREA"
+			cols="60"
+			rows="5"
+			maxLength="300"
+			label="Descr. Voce" />
+	<fieldProperty
+		name="cd_centro_responsabilita"
+		property="cd_centro_responsabilita"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Centro Responsabilità" />
+	<fieldProperty
+		name="ds_cdr"
+		property="ds_cdr"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="300"
+		label="Desc. CdR" />
+	<fieldProperty
+		name="cd_progetto"
+		property="cd_progetto"
+		inputType="TEXT"
+		inputSize="30"
+		maxLength="30"
+		label="Progetto" />
+	<fieldProperty
+		name="ds_progetto"
+		property="ds_progetto"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="8"
+		maxLength="433"
+		label="Desc. Progetto" />
+	<fieldProperty
+		name="assestato_fin"
+		property="assestato_fin"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Fin." />
+	<fieldProperty
+		name="assestato_cofin"
+		property="assestato_cofin"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Assestato Cofin." />
+	<fieldProperty
+		name="impacc_fin"
+		property="impacc_fin"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegnato Fin." />
+	<fieldProperty
+			name="im_spesa_finanziato"
+			property="im_spesa_finanziato"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Finanziato Voce Ec.." />
+	<fieldProperty
+			name="im_spesa_cofinanziato"
+			property="im_spesa_cofinanziato"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Cofinanziato Voce Ec." />
+	<fieldProperty
+		name="impacc_cofin"
+		property="impacc_cofin"
+		inputType="TEXT"
+		inputSize="22"
+		maxLength="22"
+		formatName="it.cnr.contab.util.EuroFormat"
+		label="Impegnato Cofin." />
+	<fieldProperty
+			name="manris_fin"
+			property="manris_fin"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Mandato Fin." />
+	<fieldProperty
+			name="manris_cofin"
+			property="manris_cofin"
+			inputType="TEXT"
+			inputSize="22"
+			maxLength="22"
+			formatName="it.cnr.contab.util.EuroFormat"
+			label="Mandato Cofin." />
+	<fieldProperty
+			name="findProgettoForPrint"
+			property="findProgettoForPrint"
+			enabledOnEdit="true"
+			inputType="SEARCHTOOL"
+			formName="form_searchtool_progetto"
+			completeOnSave="true"
+			label="Progetto"/>
+	<fieldProperty
+			name="tipoStampa"
+			property="tipoStampa"
+			keysProperty="TIPOLOGIA_STAMPA_KEYS"
+			inputType="RADIOGROUP"
+			layout = "HORIZONTAL"
+			label="Tipo Stampa"
+			caseSensitiveSearch="false" />
+
+	<formFieldProperty name="tipoStampa" />
+	<formFieldProperty name="cd_progetto" />
+	<formFieldProperty name="ds_progetto" />
+	<formFieldProperty name="cd_voce_piano" />
+	<formFieldProperty name="esercizio_piano" />
+	<formFieldProperty name="im_spesa_finanziato" />
+	<formFieldProperty name="im_spesa_cofinanziato" />
+	<formFieldProperty name="cd_centro_responsabilita" />
+	<formFieldProperty name="ds_cdr" />
+	<formFieldProperty name="cd_elemento_voce" />
+	<formFieldProperty name="ds_elemento_voce" />
+	<formFieldProperty name="cd_linea_attivita" />
+	<formFieldProperty name="assestato_fin" />
+	<formFieldProperty name="assestato_cofin" />
+	<formFieldProperty name="impacc_fin" />
+	<formFieldProperty name="impacc_cofin" />
+	<formFieldProperty name="manris_fin" />
+	<formFieldProperty name="manris_cofin" />
+	<formFieldProperty name="findProgettoForPrint" />
+
+	<columnFieldProperty name="cd_progetto" />
+	<columnFieldProperty name="ds_progetto" />
+	<columnFieldProperty name="cd_voce_piano" />
+ 	<columnFieldProperty name="esercizio_piano" />
+	<columnFieldProperty name="im_spesa_finanziato" />
+	<columnFieldProperty name="im_spesa_cofinanziato" />
+	<columnFieldProperty name="cd_centro_responsabilita" />
+	<columnFieldProperty name="ds_cdr" />
+	<columnFieldProperty name="cd_elemento_voce" />
+	<columnFieldProperty name="ds_elemento_voce" />
+	<columnFieldProperty name="cd_linea_attivita" />
+	<columnFieldProperty name="assestato_fin" />
+	<columnFieldProperty name="assestato_cofin" />
+	<columnFieldProperty name="impacc_fin" />
+	<columnFieldProperty name="impacc_cofin" />
+	<columnFieldProperty name="manris_fin" />
+	<columnFieldProperty name="manris_cofin" />
+
+	<columnSet name="SINTETICA">
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_voce_piano" />
+		<columnFieldProperty name="esercizio_piano" />
+		<columnFieldProperty name="im_spesa_finanziato" />
+		<columnFieldProperty name="im_spesa_cofinanziato" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="assestato_fin" />
+		<columnFieldProperty name="assestato_cofin" />
+		<columnFieldProperty name="impacc_fin" />
+		<columnFieldProperty name="impacc_cofin" />
+		<columnFieldProperty name="manris_fin" />
+		<columnFieldProperty name="manris_cofin" />
+	</columnSet>
+	<columnSet name="DETTAGLIATA">
+		<columnFieldProperty name="cd_progetto" />
+		<columnFieldProperty name="ds_progetto" />
+		<columnFieldProperty name="cd_voce_piano" />
+		<columnFieldProperty name="esercizio_piano" />
+		<columnFieldProperty name="im_spesa_finanziato" />
+		<columnFieldProperty name="im_spesa_cofinanziato" />
+		<columnFieldProperty name="cd_centro_responsabilita" />
+		<columnFieldProperty name="ds_cdr" />
+		<columnFieldProperty name="cd_elemento_voce" />
+		<columnFieldProperty name="ds_elemento_voce" />
+		<columnFieldProperty name="cd_linea_attivita" />
+		<columnFieldProperty name="assestato_fin" />
+		<columnFieldProperty name="assestato_cofin" />
+		<columnFieldProperty name="impacc_fin" />
+		<columnFieldProperty name="impacc_cofin" />
+		<columnFieldProperty name="manris_fin" />
+		<columnFieldProperty name="manris_cofin" />
+	</columnSet>
+
+
+</bulkInfo>

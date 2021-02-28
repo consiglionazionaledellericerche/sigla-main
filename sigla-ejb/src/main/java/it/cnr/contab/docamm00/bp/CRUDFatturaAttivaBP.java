@@ -1244,7 +1244,7 @@ public boolean isROBank(UserContext context, Fattura_attivaBulk fattura) throws 
 		Fattura_attivaBulk fattura = (Fattura_attivaBulk)getModel();
 		Source xmlDoc = new StreamSource(docCollService.getStreamXmlFatturaAttiva(fattura));
 		TransformerFactory tFactory = TransformerFactory.newInstance();
-		Source xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.xsl"));
+		Source xslDoc = new StreamSource(this.getClass().getResourceAsStream("/it/cnr/contab/docamm00/bp/fatturapa_v1.2.1.xsl"));
 		HttpServletResponse response = ((HttpActionContext)actioncontext).getResponse();
 		OutputStream os = response.getOutputStream();
 		response.setContentType("text/html");

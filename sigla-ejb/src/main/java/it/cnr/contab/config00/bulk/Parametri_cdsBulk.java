@@ -23,6 +23,7 @@ import it.cnr.contab.anagraf00.tabrif.bulk.Tipo_rapportoBulk;
 import it.cnr.contab.config00.sto.bulk.CdsBulk;
 import it.cnr.contab.config00.sto.bulk.DipartimentoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -49,6 +50,13 @@ public class Parametri_cdsBulk extends Parametri_cdsBase {
 		blocco_impegniKeys.put(BLOCCO_IMPEGNI_NOTHING,"Nessuno");	
     };
 
+	public final static Dictionary abilProgettiKeys;
+	static {
+		abilProgettiKeys = new it.cnr.jada.util.OrderedHashtable();
+		abilProgettiKeys.put(V_struttura_organizzativaHome.LIVELLO_UO,"Unità Organizzativa");
+		abilProgettiKeys.put(V_struttura_organizzativaHome.LIVELLO_CDS,"Centro di Spesa");
+	};
+
 	public Parametri_cdsBulk() {
 		super();
 	}
@@ -67,7 +75,7 @@ public class Parametri_cdsBulk extends Parametri_cdsBase {
 		setFl_approva_var_pdg(new Boolean( false ) );
 		setFl_approva_var_stanz_res(new Boolean( false ) );
 		setFl_blocco_iban(new Boolean(false));
-		setFl_limite_residui_impropri(Boolean.FALSE);
+		setFl_blocco_impegni_natfin(Boolean.FALSE);
 		return this;
 	}
 	

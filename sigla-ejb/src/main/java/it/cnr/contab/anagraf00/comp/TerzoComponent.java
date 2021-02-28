@@ -1219,11 +1219,12 @@ public class TerzoComponent extends UtilitaAnagraficaComponent implements ICRUDM
             final Optional<String> tipoPagamentoSiopePlus = Optional.ofNullable(bulk)
                     .flatMap(bancaBulk -> Optional.ofNullable(bancaBulk.getTipo_pagamento_siope()));
             if (tipoPagamentoSiopePlus.isPresent()) {
-                sql.addClause(FindClause.AND, "fl_sepa", SQLBuilder.EQUALS,
-                        tipoPagamentoSiopePlus
-                                .map(s -> s.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER.value()))
-                                .orElse(Boolean.FALSE)
-                );
+                if (tipoPagamentoSiopePlus.get().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.SEPACREDITTRANSFER.value()) ||
+                        tipoPagamentoSiopePlus.get().equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABB.value())) {
+                    sql.addClause(FindClause.AND, "fl_sepa", SQLBuilder.EQUALS, Boolean.TRUE);
+                } else {
+                    sql.addClause(FindClause.AND, "fl_sepa", SQLBuilder.EQUALS, Boolean.FALSE);
+                }
             }
             sql.addOrderBy("cd_iso");
             Broker broker = home.createBroker(sql);

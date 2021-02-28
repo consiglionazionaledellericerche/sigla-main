@@ -29,11 +29,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.sql.Connection;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -43,7 +39,11 @@ import javax.mail.PasswordAuthentication;
 import javax.xml.bind.JAXBElement;
 import javax.xml.transform.stream.StreamResult;
 
+import it.cnr.contab.anagraf00.core.bulk.*;
+import it.cnr.contab.config00.bulk.*;
+import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -51,11 +51,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoBulk;
-import it.cnr.contab.anagraf00.core.bulk.AnagraficoHome;
-import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService;
 import it.cnr.contab.pdd.ws.client.FatturazioneElettronicaClient;
@@ -140,10 +135,18 @@ public class DocumentoEleTestataHome extends BulkHome {
 		sql.closeParenthesis();
 
 		sql.openParenthesis(FindClause.AND);
-		if (codiceFiscale != null)
-			sql.addSQLClause(FindClause.AND, "codice_fiscale", SQLBuilder.EQUALS, codiceFiscale);
-		if (partitaIVA != null)
-			sql.addSQLClause(FindClause.OR, "partita_iva", SQLBuilder.EQUALS, partitaIVA);  
+		sql.addSQLClause(FindClause.AND, "partita_iva", SQLBuilder.EQUALS, partitaIVA);
+		if (codiceFiscale != null){
+			sql.openParenthesis(FindClause.OR);
+			sql.addSQLClause(FindClause.OR, "codice_fiscale", SQLBuilder.EQUALS, codiceFiscale);
+			sql.addClause("AND", "ti_entita_giuridica", SQLBuilder.NOT_EQUALS, AnagraficoBulk.GRUPPO_IVA);
+
+			AssGruppoIvaAnagHome assGruppoIvaAnagHome = (AssGruppoIvaAnagHome)getHomeCache().getHome(AssGruppoIvaAnagBulk.class);
+			SQLBuilder sqlExists = assGruppoIvaAnagHome.createSQLBuilder();
+			sqlExists.addSQLJoin("ASS_GRUPPO_IVA_ANAG.CD_ANAG", "ANAGRAFICO.CD_ANAG");
+			sql.addSQLNotExistsClause("AND",sqlExists);
+			sql.closeParenthesis();
+		}
 		sql.closeParenthesis();
         return sql;
     }	
@@ -159,10 +162,17 @@ public class DocumentoEleTestataHome extends BulkHome {
 		sql.closeParenthesis();
 
 		sql.openParenthesis(FindClause.AND);
-		if (codiceFiscale != null)
+		if (codiceFiscale != null){
 			sql.addSQLClause(FindClause.AND, "CODICE_FISCALE_ANAGRAFICO", SQLBuilder.EQUALS, codiceFiscale);
-		if (partitaIVA != null)
-			sql.addSQLClause(FindClause.OR, "PARTITA_IVA_ANAGRAFICO", SQLBuilder.EQUALS, partitaIVA);  
+			AnagraficoHome anagraficoHome = (AnagraficoHome)getHomeCache().getHome(AnagraficoBulk.class);
+			SQLBuilder sqlExists = anagraficoHome.createSQLBuilder();
+			sqlExists.addSQLJoin("V_TERZO_CF_PI.CD_ANAG", "ANAGRAFICO.CD_ANAG");
+			sqlExists.addSQLClause(FindClause.AND, "PARTITA_IVA", SQLBuilder.EQUALS, partitaIVA);
+			sqlExists.addClause("AND", "ti_entita_giuridica", SQLBuilder.NOT_EQUALS, AnagraficoBulk.GRUPPO_IVA);
+			sql.addSQLExistsClause("OR",sqlExists);
+		} else {
+				sql.addSQLClause(FindClause.OR, "PARTITA_IVA_ANAGRAFICO", SQLBuilder.EQUALS, partitaIVA);
+		}
 		sql.closeParenthesis();
         return sql;
     }	

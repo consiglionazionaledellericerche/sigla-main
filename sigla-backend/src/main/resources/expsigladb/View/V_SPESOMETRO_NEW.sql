@@ -56,7 +56,7 @@
                             and n.pg_nazione = a.pg_nazione_fiscale
                             AND f.stato_cofi != 'A'
                             AND f.protocollo_iva IS NOT NULL
-                            and STATO_INVIO_SDI is null
+                            and (STATO_INVIO_SDI is null or f.fl_intra_ue = 'Y' OR f.fl_EXTra_ue = 'Y' OR f.fl_SAN_MARINO = 'Y')
                             AND (   LTRIM (a.partita_iva) IS NOT NULL
                                  OR LTRIM (a.codice_fiscale) IS NOT NULL)
                             having SUM (DECODE (f.ti_fattura,

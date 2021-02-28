@@ -84,14 +84,28 @@ thorntail:
         suffix: .yyyy-MM-dd
         named-formatter: LOG_FORMATTER
         level: INFO
+  jmx:
+    expression-expose-model.domain-name: RemoteJMX
+    jmx-remoting-connector:
+      use-management-endpoint: true
+    resolved-expose-model.domain-name: RemoteJMX
+    show-model: true
+    audit-log-configuration:
+      enabled: true
+      log-boot: true
+
   management:
+    audit-access:
+      audit-log-logger:
+        log-boot: true
+        enabled: true
+    bind:
+      address: 0.0.0.0
     http-interface-management-interface:
+      console-enabled: true
       security-realm: ManagementRealm
     security-realms:
       ManagementRealm:
-        local-authentication:
-          default-user: '$local'
-          skip-group-loading: true
         in-memory-authentication:
           users:
             admin:
@@ -135,6 +149,48 @@ thorntail:
       json:
         path: /SIGLA/restapi/swagger.json
 
+  infinispan:
+    cache-containers:
+      sigla-web:
+        default-cache: passivation
+        module: org.wildfly.clustering.web.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
+      sigla-ejb:
+        default-cache: passivation
+        module: org.wildfly.clustering.ejb.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
 repository:
   base:
     url: http://as1dock.si.cnr.it:8080/alfresco/
@@ -188,7 +244,6 @@ cnr:
 help:
   base:
     url: https://consiglionazionaledellericerche.github.io/sigla-main
-
 ---
 project:
   stage: demo-h2
@@ -320,6 +375,14 @@ thorntail:
 repository:
   base:
     url: http://gestdoc.cnr.it:90/alfresco/
+
+authJWT:
+  username: ace
+  password: thisissecret
+ace:
+  url: "https://api.ace.cnr.it/api"
+  username: app.sigla
+
 spring:
   profiles:
     active: no-liquibase
