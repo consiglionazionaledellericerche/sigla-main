@@ -19,7 +19,7 @@ package it.cnr.contab.pagopa.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
-public class TipoScadenzaPagopaBase extends TipoScadenzaPagopaKey implements Keyed {
+public class TipoPendenzaPagopaBase extends TipoPendenzaPagopaKey implements Keyed {
 	private static final long serialVersionUID = 1L;
 
 	private String descrizione;
@@ -51,11 +51,11 @@ public class TipoScadenzaPagopaBase extends TipoScadenzaPagopaKey implements Key
 
 	private String applicationCodeDefault;
 
-	public TipoScadenzaPagopaBase() {
+	public TipoPendenzaPagopaBase() {
 		super();
 	}
 
-	public TipoScadenzaPagopaBase(Integer id) {
+	public TipoPendenzaPagopaBase(Integer id) {
 		super(id);
 	}
 

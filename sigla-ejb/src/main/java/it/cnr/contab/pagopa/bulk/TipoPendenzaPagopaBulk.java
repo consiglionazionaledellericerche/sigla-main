@@ -19,16 +19,15 @@ package it.cnr.contab.pagopa.bulk;
 
 import it.cnr.jada.bulk.ValidationException;
 
-import java.util.Dictionary;
 import java.util.Optional;
 
-public class TipoScadenzaPagopaBulk extends TipoScadenzaPagopaBase {
+public class TipoPendenzaPagopaBulk extends TipoPendenzaPagopaBase {
 	private static final long serialVersionUID = 1L;
-	public TipoScadenzaPagopaBulk() {
+	public TipoPendenzaPagopaBulk() {
 		super();
 	}
 
-	public TipoScadenzaPagopaBulk(Integer id) {
+	public TipoPendenzaPagopaBulk(Integer id) {
 		super(id);
 	}
 	

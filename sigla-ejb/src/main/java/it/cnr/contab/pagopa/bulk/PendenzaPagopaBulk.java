@@ -17,31 +17,29 @@
 
 package it.cnr.contab.pagopa.bulk;
 
-import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkList;
 
 import java.util.Optional;
 
-public class ScadenzaPagopaBulk extends ScadenzaPagopaBase {
+public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	private static final long serialVersionUID = 1L;
 
 	public static final String TIPO_POSIZIONE_CREDITORIA = "C";
 	public static final String TIPO_POSIZIONE_DEBITORIA = "D";
 	public static final String STATO_VALIDO = "VAL";
+	public static final String STATO_CHIUSO = "CHI";
+	public static final String STATO_ANNULLATO = "ANN";
 	private Unita_organizzativaBulk unitaOrganizzativa;
-	private TipoScadenzaPagopaBulk tipoScadenzaPagopa;
+	protected TerzoBulk terzo;
+	private TipoPendenzaPagopaBulk tipoScadenzaPagopa;
 
 
-	public ScadenzaPagopaBulk() {
+	public PendenzaPagopaBulk() {
 		super();
 	}
 
-	public ScadenzaPagopaBulk(Long id) {
+	public PendenzaPagopaBulk(Long id) {
 		super(id);
 	}
 
@@ -65,18 +63,26 @@ public class ScadenzaPagopaBulk extends ScadenzaPagopaBase {
 		Optional.ofNullable(getUnitaOrganizzativa()).ifPresent(el->el.setCd_unita_organizzativa(cdUnitaOrganizzativa));
 	}
 	
-	public TipoScadenzaPagopaBulk getTipoScadenzaPagopa() {
+	public TipoPendenzaPagopaBulk getTipoScadenzaPagopa() {
 		return tipoScadenzaPagopa;
 	}
 
-	public void setTipoScadenzaPagopa(TipoScadenzaPagopaBulk tipoScadenzaPagopaBulk) {
-		this.tipoScadenzaPagopa = tipoScadenzaPagopaBulk;
+	public void setTipoScadenzaPagopa(TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk) {
+		this.tipoScadenzaPagopa = tipoPendenzaPagopaBulk;
 	}
-	
+
+	public TerzoBulk getTerzo() {
+		return terzo;
+	}
+
+	public void setTerzo(TerzoBulk terzo) {
+		this.terzo = terzo;
+	}
+
 	@Override
 	public Integer getIdTipoScadenzaPagopa() {
 		return Optional.ofNullable(getTipoScadenzaPagopa())
-					.map(TipoScadenzaPagopaBulk::getId)
+					.map(TipoPendenzaPagopaBulk::getId)
 					.orElse(null);
 	}
 	
@@ -84,5 +90,19 @@ public class ScadenzaPagopaBulk extends ScadenzaPagopaBase {
 	public void setIdTipoScadenzaPagopa(Integer idTipoScadenzaPagopa) {
 		Optional.ofNullable(getTipoScadenzaPagopa()).ifPresent(el->el.setId(idTipoScadenzaPagopa));
 	}
-	
+	public void setCd_terzo(java.lang.Integer cd_terzo) {
+		Optional.ofNullable(getTerzo()).ifPresent(el->el.setCd_terzo(cd_terzo));
+	}
+	public java.lang.Integer getCd_terzo() {
+		return Optional.ofNullable(getTerzo())
+				.map(TerzoBulk::getCd_terzo)
+				.orElse(null);
+	}
+	public Boolean isPendenzaNonModificabile(){
+		if (getStato() != null && (getStato().equals(STATO_ANNULLATO) || getStato().equals(STATO_CHIUSO))){
+			return true;
+		}
+		return false;
+	}
+
 }

@@ -24,23 +24,23 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
 
-public class ScadenzaPagopaHome extends BulkHome {
+public class TipoPendenzaPagopaHome extends BulkHome {
 	private static final long serialVersionUID = 1L;
 
-	public ScadenzaPagopaHome(java.sql.Connection conn) {
-		super(ScadenzaPagopaBulk.class,conn);
+	public TipoPendenzaPagopaHome(java.sql.Connection conn) {
+		super(TipoPendenzaPagopaBulk.class,conn);
 	}
-	public ScadenzaPagopaHome(java.sql.Connection conn, PersistentCache persistentCache) {
-		super(ScadenzaPagopaBulk.class,conn,persistentCache);
+	public TipoPendenzaPagopaHome(java.sql.Connection conn, PersistentCache persistentCache) {
+		super(TipoPendenzaPagopaBulk.class,conn,persistentCache);
 	}
 
 	@Override
-	public void initializePrimaryKeyForInsert(UserContext  usercontext,OggettoBulk oggettobulk)throws PersistencyException, ComponentException {
+	public void initializePrimaryKeyForInsert(UserContext  usercontext,OggettoBulk oggettobulk) throws PersistencyException, ComponentException {
 		try {
-			ScadenzaPagopaBulk atto = (ScadenzaPagopaBulk)oggettobulk;
-			atto.setId(
-					new Long(((Long)findAndLockMax( oggettobulk, "id", new Long(0) )).intValue()+1));
-			super.initializePrimaryKeyForInsert(usercontext, atto);
+			TipoPendenzaPagopaBulk tipoAtto = (TipoPendenzaPagopaBulk)oggettobulk;
+			tipoAtto.setId(
+					new Integer(((Integer)findAndLockMax( oggettobulk, "id", new Integer(0) )).intValue()+1));
+			super.initializePrimaryKeyForInsert(usercontext, tipoAtto);
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
 			throw new PersistencyException(e);
 		}

@@ -20,34 +20,27 @@ package it.cnr.contab.pagopa.bulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.PersistentCache;
-import it.cnr.jada.persistency.sql.FindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
-
-public class TipoScadenzaPagopaHome extends BulkHome {
+public class PendenzaPagopaHome extends BulkHome {
 	private static final long serialVersionUID = 1L;
 
-	public TipoScadenzaPagopaHome(java.sql.Connection conn) {
-		super(TipoScadenzaPagopaBulk.class,conn);
+	public PendenzaPagopaHome(java.sql.Connection conn) {
+		super(PendenzaPagopaBulk.class,conn);
 	}
-	public TipoScadenzaPagopaHome(java.sql.Connection conn, PersistentCache persistentCache) {
-		super(TipoScadenzaPagopaBulk.class,conn,persistentCache);
+	public PendenzaPagopaHome(java.sql.Connection conn, PersistentCache persistentCache) {
+		super(PendenzaPagopaBulk.class,conn,persistentCache);
 	}
 
 	@Override
-	public void initializePrimaryKeyForInsert(UserContext  usercontext,OggettoBulk oggettobulk) throws PersistencyException, ComponentException {
+	public void initializePrimaryKeyForInsert(UserContext  usercontext,OggettoBulk oggettobulk)throws PersistencyException, ComponentException {
 		try {
-			TipoScadenzaPagopaBulk tipoAtto = (TipoScadenzaPagopaBulk)oggettobulk;
-			tipoAtto.setId(
-					new Integer(((Integer)findAndLockMax( oggettobulk, "id", new Integer(0) )).intValue()+1));
-			super.initializePrimaryKeyForInsert(usercontext, tipoAtto);
+			PendenzaPagopaBulk atto = (PendenzaPagopaBulk)oggettobulk;
+			atto.setId(
+					new Long(((Long)findAndLockMax( oggettobulk, "id", new Long(0) )).intValue()+1));
+			super.initializePrimaryKeyForInsert(usercontext, atto);
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
 			throw new PersistencyException(e);
 		}

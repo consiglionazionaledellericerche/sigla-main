@@ -20,16 +20,16 @@ package it.cnr.contab.pagopa.bulk;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.persistency.KeyedPersistent;
 
-public class ScadenzaPagopaKey extends OggettoBulk implements KeyedPersistent {
+public class TipoPendenzaPagopaKey extends OggettoBulk implements KeyedPersistent {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
+	private Integer id;
 
-	public ScadenzaPagopaKey() {
+	public TipoPendenzaPagopaKey() {
 		super();
 	}
 	
-	public ScadenzaPagopaKey(Long id) {
+	public TipoPendenzaPagopaKey(Integer id) {
 		super();
 		this.id = id;
 	}
@@ -37,9 +37,9 @@ public class ScadenzaPagopaKey extends OggettoBulk implements KeyedPersistent {
 	public boolean equals(Object o) {
 		if (this == o) 
 			return true;
-		if (!(o instanceof ScadenzaPagopaKey))
+		if (!(o instanceof TipoPendenzaPagopaKey))
 			return false;
-		ScadenzaPagopaKey k = (ScadenzaPagopaKey)o;
+		TipoPendenzaPagopaKey k = (TipoPendenzaPagopaKey)o;
 		if(!compareKey(getId(),k.getId())) 
 			return false;
 		return true;
@@ -48,19 +48,19 @@ public class ScadenzaPagopaKey extends OggettoBulk implements KeyedPersistent {
 	public boolean equalsByPrimaryKey(Object o) {
 		if (this == o) 
 			return true;
-		if (!(o instanceof ScadenzaPagopaKey))
+		if (!(o instanceof TipoPendenzaPagopaKey))
 			return false;
-		ScadenzaPagopaKey k = (ScadenzaPagopaKey)o;
+		TipoPendenzaPagopaKey k = (TipoPendenzaPagopaKey)o;
 		if(!compareKey(getId(),k.getId())) 
 			return false;
 		return true;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

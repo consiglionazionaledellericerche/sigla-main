@@ -17,9 +17,9 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.pagopa.bulk.ScadenzaPagopaKey" >
+	persistentClassName="it.cnr.contab.pagopa.bulk.TipoPendenzaPagopaKey" >
 	<defaultColumnMap
-		tableName="SCADENZA_PAGOPA" >
+		tableName="TIPO_PENDENZA_PAGOPA" >
 		<columnMapping
 			columnName="ID"
 			propertyName="id"

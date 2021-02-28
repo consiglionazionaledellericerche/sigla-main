@@ -17,11 +17,10 @@
 
 package it.cnr.contab.pagopa.ejb;
 
-import it.cnr.contab.bollo00.comp.TipoAttoBolloComponent;
-import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.pagopa.bulk.ScadenzaPagopaBulk;
-import it.cnr.contab.pagopa.comp.ScadenzaPagopaComponent;
+import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
+import it.cnr.contab.pagopa.comp.PendenzaPagopaComponent;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.comp.ComponentException;
 
@@ -34,19 +33,19 @@ import java.sql.Timestamp;
  * Bean implementation class for Enterprise Bean: CNRBOLLO00_EJB_TipoAttoBolloComponentSession
  */
 @Stateless(name="CNRPAGOPA_EJB_ScadenzaPagopaComponentSession")
-public class ScadenzaPagopaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements ScadenzaPagopaComponentSession {
+public class PendenzaPagopaComponentSessionBean extends it.cnr.jada.ejb.CRUDComponentSessionBean implements PendenzaPagopaComponentSession {
 	@PostConstruct
 	public void ejbCreate() {
-		componentObj = new ScadenzaPagopaComponent();
+		componentObj = new PendenzaPagopaComponent();
 	}
 	public static it.cnr.jada.ejb.CRUDComponentSessionBean newInstance() throws javax.ejb.EJBException {
-		return new ScadenzaPagopaComponentSessionBean();
+		return new PendenzaPagopaComponentSessionBean();
 	}
 
-    public ScadenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, BigDecimal importoScadenza) throws ComponentException, javax.ejb.EJBException{
+    public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws ComponentException, javax.ejb.EJBException{
         pre_component_invocation(userContext, componentObj);
         try {
-            ScadenzaPagopaBulk result = ((ScadenzaPagopaComponent)componentObj).generaPosizioneDebitoria(userContext, documentoAmministrativoBulk, dataScadenza, importoScadenza);
+            PendenzaPagopaBulk result = ((PendenzaPagopaComponent)componentObj).generaPosizioneDebitoria(userContext, documentoAmministrativoBulk, dataScadenza, descrizione, importoScadenza, terzoBulk);
             component_invocation_succes(userContext, componentObj);
             return result;
         } catch (it.cnr.jada.comp.NoRollbackException e) {

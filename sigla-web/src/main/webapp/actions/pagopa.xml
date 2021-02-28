@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~ Copyright (C) 2020  Consiglio Nazionale delle Ricerche
   ~
   ~     This program is free software: you can redistribute it and/or modify
   ~     it under the terms of the GNU Affero General Public License as
@@ -16,24 +15,14 @@
   ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<SQLPersistentInfo
-	persistentClassName="it.cnr.contab.pagopa.bulk.ScadenzaPagopaBulk"
-	homeClassName="it.cnr.contab.pagopa.bulk.ScadenzaPagopaHome">
-	<defaultColumnMap
-		tableName="SCADENZA_PAGOPA" >
-		<columnMapping
-			columnName="CD_UNITA_ORGANIZZATIVA"
-			propertyName="unitaOrganizzativa.cd_unita_organizzativa"/>
-		<columnMapping
-			columnName="ID_TIPO_SCADENZA_PAGOPA"
-			propertyName="tipoScadenzaPagopa.id"
-			sqlTypeName="DECIMAL"
-			columnSize="15"
-			nullable="false" />
-	</defaultColumnMap>
+<action-mappings>
+  <action
+          path="/PendenzePagopaAction" actionClass="it.cnr.contab.pagopa.action.PendenzePagopaAction">
+  </action>
 
-	<persistentProperty
-		name="unitaOrganizzativa" />	
-	<persistentProperty
-		name="tipoScadenzaPagopa" />
-</SQLPersistentInfo>
+  <businessProcess name="CRUDPendenzaPagopaBP" className="it.cnr.contab.pagopa.bp.CRUDPendenzaPagopaBP">
+    <forward name="default" path="/ordmag/pendenze_pagopa.jsp"/>
+    <init-param name="bulkClassName" value="it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk"/>
+    <init-param name="componentSessionName" value="CNRPAGOPA_EJB_ScadenzaPagopaComponentSession"/>
+  </businessProcess>
+</action-mappings>

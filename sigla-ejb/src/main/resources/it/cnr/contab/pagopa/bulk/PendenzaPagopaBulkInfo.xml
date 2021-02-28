@@ -52,16 +52,52 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false"/>
 	<fieldProperty
+			name="findTerzo"
+			property="terzo"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="Terzo"
+			enabledOnSearch="true"
+			nullable="false"
+			CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"/>
+	<fieldProperty
+			name="partita_iva"
+			property="terzo.anagrafico.partita_iva"
+			readonlyProperty="true"
+			label="Partita IVA"
+			inputType="TEXT"
+			maxLength="20"
+			inputSize="20"
+			enabledOnSearch="true"
+			nullable="true"
+	/>
+	<fieldProperty
+			name="codice_fiscale"
+			property="terzo.anagrafico.codice_fiscale"
+			readonlyProperty="true"
+			label="Codice Fiscale"
+			inputType="TEXT"
+			maxLength="20"
+			inputSize="20"
+			enabledOnSearch="true"
+			nullable="true"
+	/>
+	<fieldProperty
 		name="cdUnitaOrganizzativa"
 		property="unitaOrganizzativa.cd_unita_organizzativa"
 		inputType="TEXT"
 		label="Unit&#224; organizzativa" />
 	<fieldProperty
-		name="findTipoScadenzaPagopa"
-		property="tipoScadenzaPagopa"
+			name="cd_terzo"
+			property="terzo.cd_terzo"
+			inputType="TEXT"
+			label="Terzo" />
+	<fieldProperty
+		name="findTipoPendenzaPagopa"
+		property="tipoPendenzaPagopa"
 		inputType="SEARCHTOOL"
 		formName="searchtool"
-		label="Tipo Scadenza"
+		label="Tipo Pendenza"
 		enabledOnSearch="true"
 		enabledOnFreeSearch="false"
 		nullable="false"/>
@@ -75,6 +111,28 @@
 		enabledOnSearch="true"
 		enabledOnFreeSearch="true"
 		nullable="false" />
+	<fieldProperty
+			name="note"
+			property="note"
+			maxLength="2000"
+			cols="60"
+			rows="4"
+			inputType="TEXTAREA"
+			label="Descrizione"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="true" />
+	<fieldProperty
+			name="descrizione"
+			property="descrizione"
+			maxLength="2000"
+			cols="60"
+			rows="4"
+			inputType="TEXTAREA"
+			nullable="false"
+			label="Descrizione"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"/>
 	<fieldProperty
 		name="cdIuv"
 		property="cdIuv"
@@ -118,10 +176,16 @@
 	<formFieldProperty
 		name="findUnitaOrganizzativa" />
 	<formFieldProperty
-		name="findTipoScadenzaPagopa" />
+			name="findTerzo" />
+	<formFieldProperty
+		name="findTipoPendenzaPagopa" />
 	<formFieldProperty
 		name="cdAvviso"
 		label="Codice&lt;BR&gt;Avviso" />
+	<formFieldProperty
+			name="note"/>
+	<formFieldProperty
+			name="descrizione"/>
 	<formFieldProperty
 		name="cdIuv"
 		label="Codice&lt;BR&gt;Iuv" />
@@ -132,6 +196,12 @@
 			name="stato" />
 	<formFieldProperty
 			name="tipoPosizione" />
+	<formFieldProperty
+			name="codice_fiscale"
+	/>
+	<formFieldProperty
+			name="partita_iva"
+	/>
 	<columnFieldProperty
 		name="id" />
 	<columnFieldProperty
@@ -139,7 +209,13 @@
 	<columnFieldProperty
 		name="cdUnitaOrganizzativa" />
 	<columnFieldProperty
+			name="cd_terzo" />
+	<columnFieldProperty
 		name="cdAvviso" />
+	<columnFieldProperty
+			name="descrizione" />
+	<columnFieldProperty
+			name="note" />
 	<columnFieldProperty
 		name="cdIuv" />
 	<columnFieldProperty
@@ -156,9 +232,15 @@
 	<findFieldProperty
 		name="cdAvviso" />
 	<findFieldProperty
+			name="descrizione" />
+	<findFieldProperty
+			name="note" />
+	<findFieldProperty
 			name="cdIuv" />
 	<findFieldProperty
 		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+			name="cd_terzo" />
 	<findFieldProperty
 		name="stato" />
 	<findFieldProperty

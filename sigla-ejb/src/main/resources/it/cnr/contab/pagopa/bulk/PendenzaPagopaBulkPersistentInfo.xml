@@ -17,18 +17,28 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.pagopa.bulk.TipoScadenzaPagopaKey" >
+	persistentClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk"
+	homeClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaHome">
 	<defaultColumnMap
-		tableName="TIPO_SCADENZA_PAGOPA" >
+		tableName="PENDENZA_PAGOPA" >
 		<columnMapping
-			columnName="ID"
-			propertyName="id"
+			columnName="CD_UNITA_ORGANIZZATIVA"
+			propertyName="unitaOrganizzativa.cd_unita_organizzativa"/>
+		<columnMapping
+			columnName="ID_TIPO_PENDENZA_PAGOPA"
+			propertyName="tipoPendenzaPagopa.id"
 			sqlTypeName="DECIMAL"
 			columnSize="15"
-			nullable="false"
-			primary="true" />
+			nullable="false" />
+		<columnMapping
+				columnName="CD_TERZO"
+				propertyName="terzo.cd_terzo" />
 	</defaultColumnMap>
+
 	<persistentProperty
-		name="id"
-		partOfOid="true" />
+		name="unitaOrganizzativa" />
+	<persistentProperty
+			name="terzo" />
+	<persistentProperty
+		name="tipoPendenzaPagopa" />
 </SQLPersistentInfo>

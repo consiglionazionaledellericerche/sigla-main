@@ -17,23 +17,22 @@
 
 package it.cnr.contab.pagopa.ejb;
 
-import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
-import it.cnr.contab.pagopa.bulk.ScadenzaPagopaBulk;
+import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.comp.ComponentException;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
-public class TransactionalScadenzaPagopaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements ScadenzaPagopaComponentSession {
-    public ScadenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, BigDecimal importoScadenza) throws RemoteException, it.cnr.jada.comp.ComponentException {
+public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb.TransactionalCRUDComponentSession implements PendenzaPagopaComponentSession {
+    public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
-            return (ScadenzaPagopaBulk) invoke("generaPosizioneDebitoria", new Object[]{
+            return (PendenzaPagopaBulk) invoke("generaPosizioneDebitoria", new Object[]{
                     userContext,
                     documentoAmministrativoBulk,
-                    dataScadenza, importoScadenza});
+                    dataScadenza, descrizione, importoScadenza, terzoBulk});
         } catch (RemoteException e) {
             throw e;
         } catch (java.lang.reflect.InvocationTargetException e) {

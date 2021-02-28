@@ -17,11 +17,11 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.pagopa.bulk.ScadenzaPagopaBase"
-	keyClassName="it.cnr.contab.pagopa.bulk.ScadenzaPagopaKey"
-	homeClassName="it.cnr.contab.pagopa.bulk.ScadenzaPagopaHome" >
+	persistentClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaBase"
+	keyClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaKey"
+	homeClassName="it.cnr.contab.pagopa.bulk.PendenzaPagopaHome" >
 	<defaultColumnMap
-		tableName="SCADENZA_PAGOPA" >
+		tableName="PENDENZA_PAGOPA" >
 		<columnMapping
 			columnName="ESERCIZIO"
 			propertyName="esercizio"
@@ -59,8 +59,8 @@
 				columnSize="1"
 				nullable="false" />
 		<columnMapping
-				columnName="ID_TIPO_SCADENZA_PAGOPA"
-				propertyName="idTipoScadenzaPagopa"
+				columnName="ID_TIPO_PENDENZA_PAGOPA"
+				propertyName="idTipoPendenzaPagopa"
 				sqlTypeName="DECIMAL"
 				columnSize="15"
 				nullable="false" />
@@ -71,14 +71,20 @@
 			columnSize="2000"
 			nullable="true" />
 		<columnMapping
+				columnName="DESCRIZIONE"
+				propertyName="descrizione"
+				sqlTypeName="VARCHAR"
+				columnSize="2000"
+				nullable="true" />
+		<columnMapping
 			columnName="DT_SCADENZA"
 			propertyName="dtScadenza"
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="false" />
 		<columnMapping
-				columnName="IMPORTO_SCADENZA"
-				propertyName="importoScadenza"
+				columnName="IMPORTO_PENDENZA"
+				propertyName="importoPendenza"
 				sqlTypeName="DECIMAL"
 				columnSize="15"
 				columnScale="2"
@@ -103,6 +109,12 @@
 				propertyName="cdTipoDocAmm"
 				sqlTypeName="VARCHAR"
 				columnSize="10"/>
+		<columnMapping
+				columnName="CD_TERZO"
+				propertyName="cd_terzo"
+				sqlTypeName="DECIMAL"
+				columnSize="8"
+				nullable="false" />
 		<columnMapping
 				columnName="PG_DOC_AMM"
 				propertyName="pgDocAmm"
@@ -150,15 +162,17 @@
 	<persistentProperty
 		name="tipoPosizione" />
 	<persistentProperty
-			name="idTipoScadenzaPagopa" />
+			name="idTipoPendenzaPagopa" />
 	<persistentProperty
 		name="stato" />
 	<persistentProperty
 		name="note" />
 	<persistentProperty
+			name="descrizione" />
+	<persistentProperty
 	    name="dtScadenza" />
 	<persistentProperty
-			name="importoScadenza" />
+			name="importoPendenza" />
 	<persistentProperty
 			name="cdCdsDocAmm"/>
 	<persistentProperty
@@ -169,6 +183,8 @@
 			name="cdTipoDocAmm"/>
 	<persistentProperty
 			name="pgDocAmm"/>
+	<persistentProperty
+			name="cd_terzo" />
 	<persistentProperty
 		name="pg_ver_rec" />
 	<persistentProperty

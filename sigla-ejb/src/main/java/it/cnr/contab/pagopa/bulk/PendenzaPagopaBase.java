@@ -22,7 +22,7 @@ import it.cnr.jada.persistency.Keyed;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
+public class PendenzaPagopaBase extends PendenzaPagopaKey implements Keyed {
 	private static final long serialVersionUID = 1L;
 
 	// ESERCIZIO DECIMAL(4,0) NOT NULL 
@@ -57,7 +57,7 @@ public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
 	private String cdCdsDocAmm;
 	private String cdUoDocAmm;
 	private String cdTipoDocAmm;
-	private BigDecimal importoScadenza;
+	private BigDecimal importoPendenza;
 	private Integer esercizioDocAmm;
 	private Long pgDocAmm;
 
@@ -67,11 +67,31 @@ public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
 	private java.sql.Timestamp dtScadenza;
 
 	private String note;
-	public ScadenzaPagopaBase() {
+
+	private java.lang.Integer cd_terzo;
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public Integer getCd_terzo() {
+		return cd_terzo;
+	}
+
+	public void setCd_terzo(Integer cd_terzo) {
+		this.cd_terzo = cd_terzo;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	private String descrizione;
+	public PendenzaPagopaBase() {
 		super();
 	}
 
-	public ScadenzaPagopaBase(Long id) {
+	public PendenzaPagopaBase(Long id) {
 		super(id);
 	}
 
@@ -95,12 +115,12 @@ public class ScadenzaPagopaBase extends ScadenzaPagopaKey implements Keyed {
 		this.cdUoDocAmm = cdUoDocAmm;
 	}
 
-	public BigDecimal getImportoScadenza() {
-		return importoScadenza;
+	public BigDecimal getImportoPendenza() {
+		return importoPendenza;
 	}
 
-	public void setImportoScadenza(BigDecimal importoScadenza) {
-		this.importoScadenza = importoScadenza;
+	public void setImportoPendenza(BigDecimal importoPendenza) {
+		this.importoPendenza = importoPendenza;
 	}
 
 	public Integer getEsercizioDocAmm() {

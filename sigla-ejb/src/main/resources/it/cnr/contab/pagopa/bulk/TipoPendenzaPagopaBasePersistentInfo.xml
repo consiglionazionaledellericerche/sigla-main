@@ -17,11 +17,11 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.pagopa.bulk.TipoScadenzaPagopaBase"
-	keyClassName="it.cnr.contab.pagopa.bulk.TipoScadenzaPagopaKey"
-	homeClassName="it.cnr.contab.pagopa.bulk.TipoScadenzaPagopaHome" >
+	persistentClassName="it.cnr.contab.pagopa.bulk.TipoPendenzaPagopaBase"
+	keyClassName="it.cnr.contab.pagopa.bulk.TipoPendenzaPagopaKey"
+	homeClassName="it.cnr.contab.pagopa.bulk.TipoPendenzaPagopaHome" >
 	<defaultColumnMap
-		tableName="TIPO_SCADENZA_PAGOPA" >
+		tableName="TIPO_PENDENZA_PAGOPA" >
 		<columnMapping
 			columnName="DESCRIZIONE"
 			propertyName="descrizione"

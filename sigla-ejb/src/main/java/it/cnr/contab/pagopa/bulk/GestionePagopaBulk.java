@@ -17,20 +17,12 @@
 
 package it.cnr.contab.pagopa.bulk;
 
-import it.cnr.contab.bollo00.tabrif.bulk.Tipo_atto_bolloBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
-import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
-import it.cnr.contab.util00.bulk.storage.AllegatoParentBulk;
-import it.cnr.jada.bulk.BulkCollection;
-import it.cnr.jada.bulk.BulkList;
-
 import java.util.Optional;
 
 public class GestionePagopaBulk extends GestionePagopaBase  {
 	private static final long serialVersionUID = 1L;
 
-	private TipoScadenzaPagopaBulk tipoScadenzaPagopa;
+	private TipoPendenzaPagopaBulk tipoScadenzaPagopa;
 	public GestionePagopaBulk() {
 		super();
 	}
@@ -40,18 +32,18 @@ public class GestionePagopaBulk extends GestionePagopaBase  {
 	}
 
 
-	public TipoScadenzaPagopaBulk getTipoScadenzaPagopa() {
+	public TipoPendenzaPagopaBulk getTipoScadenzaPagopa() {
 		return tipoScadenzaPagopa;
 	}
 
-	public void setTipoScadenzaPagopa(TipoScadenzaPagopaBulk tipoScadenzaPagopaBulk) {
-		this.tipoScadenzaPagopa = tipoScadenzaPagopaBulk;
+	public void setTipoScadenzaPagopa(TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk) {
+		this.tipoScadenzaPagopa = tipoPendenzaPagopaBulk;
 	}
 
 	@Override
 	public Integer getIdTipoScadenzaPagopa() {
 		return Optional.ofNullable(getTipoScadenzaPagopa())
-					.map(TipoScadenzaPagopaBulk::getId)
+					.map(TipoPendenzaPagopaBulk::getId)
 					.orElse(null);
 	}
 	

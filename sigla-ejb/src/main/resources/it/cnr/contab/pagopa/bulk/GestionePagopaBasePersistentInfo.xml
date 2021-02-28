@@ -23,8 +23,8 @@
 	<defaultColumnMap
 		tableName="GESTIONE_PAGOPA" >
 		<columnMapping
-				columnName="ID_TIPO_SCADENZA_PAGOPA"
-				propertyName="idTipoScadenzaPagopa"
+				columnName="ID_TIPO_PENDENZA_PAGOPA"
+				propertyName="idTipoPendenzaPagopa"
 				sqlTypeName="DECIMAL"
 				columnSize="15"
 				nullable="false" />
@@ -92,7 +92,7 @@
 	<persistentProperty
 		name="posizioneDebitoria" />
 	<persistentProperty
-		name="idTipoScadenzaPagopa" />
+		name="idTipoPendenzaPagopa" />
 	<persistentProperty
 		name="posizioneCreditoria" />
 	<persistentProperty
