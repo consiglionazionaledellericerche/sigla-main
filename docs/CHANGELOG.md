@@ -1,3 +1,161 @@
+## Release 6.3.2  -- _March 01, 2021_ 
+**Changes**
+
+>**FIX version of jackson-annotations and junit**
+>
+>[872a0a3f445f015](https://github.com/consiglionazionaledellericerche/sigla-main/commit/872a0a3f445f015) marco.spasiano *March 01, 2021*
+
+
+## Release 6.3.1  -- _February 28, 2021_ 
+**Changes**
+
+>**Fix Comunicazione PerlaPa**
+>
+>[8778d92bfd30043](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8778d92bfd30043) raffaele.pagano *February 27, 2021*
+
+>**Comunicazione PerlaPa: adeguamento procedure per gestire la comunicazione al nuovo sistema Perla attivo dal 2018.**
+> * Unità organizzative: aggiunto campo AOO di Ipa da imputare sul CDS.
+> * Incarichi:
+> * 1) eliminato campo Invio Corte Conti;
+> * 2) reso obbligatoria la Dichiarazione Altri rapporti anche per Occasionali;
+> * 3) limitata al pdf la tipologia di file allegabili per curriculum e dichiarazione altri rapporti;
+> * 4) eliminata dichiarazione &quot;Selezione art.51 comma 6 L. 449/199&quot;
+>
+>[d1d586af89e2a76](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1d586af89e2a76) raffaele.pagano *February 27, 2021*
+
+>**FIX predisposizione reversali annullate**
+>
+>[c456a905235d64a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c456a905235d64a) marco.spasiano *February 25, 2021*
+
+>**update build docs**
+>
+>[78535cca862ac82](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78535cca862ac82) marco.spasiano *February 25, 2021*
+
+>**Add circleci build**
+>
+>[3fdb2ef5c7deef9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3fdb2ef5c7deef9) marco.spasiano *February 24, 2021*
+
+>**Updated config.yml**
+>
+>[447aae8b2953c52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/447aae8b2953c52) Marco Spasiano *February 24, 2021*
+
+>**Add circleci build**
+>
+>[68bbb593aa5f3ed](https://github.com/consiglionazionaledellericerche/sigla-main/commit/68bbb593aa5f3ed) marco.spasiano *February 24, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[bc16a899de3f0a0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/bc16a899de3f0a0) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[691fc521dceccac](https://github.com/consiglionazionaledellericerche/sigla-main/commit/691fc521dceccac) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[7c28451c4cce507](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7c28451c4cce507) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[44f0b6c1013d956](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44f0b6c1013d956) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[1e5c7c3c6357d7c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1e5c7c3c6357d7c) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[be8d7a81331f921](https://github.com/consiglionazionaledellericerche/sigla-main/commit/be8d7a81331f921) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[f349ac4007d9c6f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f349ac4007d9c6f) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[25e9785ebc2b348](https://github.com/consiglionazionaledellericerche/sigla-main/commit/25e9785ebc2b348) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[72f95819e98ce67](https://github.com/consiglionazionaledellericerche/sigla-main/commit/72f95819e98ce67) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[63117708bf50441](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63117708bf50441) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[63c7c646df2787f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/63c7c646df2787f) patriziavillani *February 23, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[c540439ebd491f5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c540439ebd491f5) patriziavillani *February 23, 2021*
+
+>**Update index.rst**
+>
+>[621f92534c85b31](https://github.com/consiglionazionaledellericerche/sigla-main/commit/621f92534c85b31) patriziavillani *February 23, 2021*
+
+>**Update index.rst**
+>
+>[31d689ac4020948](https://github.com/consiglionazionaledellericerche/sigla-main/commit/31d689ac4020948) patriziavillani *February 23, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[e7039242c5652b7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e7039242c5652b7) patriziavillani *February 23, 2021*
+
+>**Update fattura_attiva.rst**
+>
+>[c17f8395876f7dc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c17f8395876f7dc) patriziavillani *February 23, 2021*
+
+>**Delete Fatturefattura_attiva_elettronica.rst**
+>
+>[f29865c0002715c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f29865c0002715c) patriziavillani *February 23, 2021*
+
+>**Create Fatturefattura_attiva_elettronica.rst**
+>
+>[5c9badd9dd5f656](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5c9badd9dd5f656) patriziavillani *February 23, 2021*
+
+>**Create fattura_attiva_elettronica.rst**
+>
+>[4c2a5a71dd953fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c2a5a71dd953fe) patriziavillani *February 23, 2021*
+
+>**Fix procedure CNRMIG080**
+>
+>[13a4e85440e0920](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13a4e85440e0920) raffaele.pagano *February 12, 2021*
+
+>**FIX Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Modificata per Bonifici Esteri. Resolve issue #64**
+>
+>[9e55a4c389c5efb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e55a4c389c5efb) raffaele.pagano *February 11, 2021*
+
+>**Rilascio integrazione con ACE**
+>
+>[e4de8319f27fee7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4de8319f27fee7) gianfranco.gasparro *February 11, 2021*
+
+>**Rilascio integrazione con ACE**
+>
+>[40630148ebfc13e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/40630148ebfc13e) gianfranco.gasparro *February 11, 2021*
+
+>**FIX ace client integration**
+>
+>[217191d71ef034f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/217191d71ef034f) marco.spasiano *February 09, 2021*
+
+>**Inizio integrazione ACE**
+>
+>[a201965aed29e24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a201965aed29e24) gianfranco.gasparro *February 08, 2021*
+
+>**Inizio integrazione ACE**
+>
+>[3198c3d4bfc4966](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3198c3d4bfc4966) gianfranco.gasparro *February 08, 2021*
+
+>**FIX error on compile**
+>
+>[fe30fc242eb8083](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fe30fc242eb8083) marco.spasiano *February 08, 2021*
+
+>**Fix view**
+>
+>[017334be889f0ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/017334be889f0ce) gianfranco.gasparro *February 07, 2021*
+
+
 ## Release 6.3.0  -- _February 22, 2021_ 
 **Changes**
 
@@ -181,14 +339,6 @@
 >
 >[c34866bc4ae8157](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c34866bc4ae8157) patriziavillani *February 11, 2021*
 
->**FIX error on compile**
->
->[fe30fc242eb8083](https://github.com/consiglionazionaledellericerche/sigla-main/commit/fe30fc242eb8083) marco.spasiano *February 08, 2021*
-
->**Fix view**
->
->[017334be889f0ce](https://github.com/consiglionazionaledellericerche/sigla-main/commit/017334be889f0ce) gianfranco.gasparro *February 07, 2021*
-
 
 ## Release 6.2.97  -- _February 15, 2021_ 
 **Changes**
@@ -216,34 +366,6 @@
 >**Aggiunto blocco alla predisposizione per le Reversali cori non associate ai Mandati**
 >
 >[6c91bd35a246942](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6c91bd35a246942) marco.spasiano *February 12, 2021*
-
->**Fix procedure CNRMIG080**
->
->[13a4e85440e0920](https://github.com/consiglionazionaledellericerche/sigla-main/commit/13a4e85440e0920) raffaele.pagano *February 12, 2021*
-
->**FIX Creazione procedura batch per aggiornamento coordinate bancarie dipendenti NSIP. Modificata per Bonifici Esteri. Resolve issue #64**
->
->[9e55a4c389c5efb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/9e55a4c389c5efb) raffaele.pagano *February 11, 2021*
-
->**Rilascio integrazione con ACE**
->
->[e4de8319f27fee7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e4de8319f27fee7) gianfranco.gasparro *February 11, 2021*
-
->**Rilascio integrazione con ACE**
->
->[40630148ebfc13e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/40630148ebfc13e) gianfranco.gasparro *February 11, 2021*
-
->**FIX ace client integration**
->
->[217191d71ef034f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/217191d71ef034f) marco.spasiano *February 09, 2021*
-
->**Inizio integrazione ACE**
->
->[a201965aed29e24](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a201965aed29e24) gianfranco.gasparro *February 08, 2021*
-
->**Inizio integrazione ACE**
->
->[3198c3d4bfc4966](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3198c3d4bfc4966) gianfranco.gasparro *February 08, 2021*
 
 
 ## Release 6.2.94  -- _February 08, 2021_ 
