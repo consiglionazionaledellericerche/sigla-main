@@ -39,7 +39,7 @@ In sintesi, dopo la definizione degli aspetti preliminari appena descritti, l’
 Tutti i documenti passivi (ad eccezione di quelli emessi da soggetti non residenti), con data di emissione dal  31 marzo 2015 incluso, dovranno essere ricevuti esclusivamente in formato elettronico e attraverso il Sistema di Interscambio. 
 Il processo operativo dei documenti elettronici passivi previsto è il seguente: 
 
-.. figure:: /screenshot/processo_fatt_ele_pass.png
+.. figure:: /screenshot/Processo_fatt_ele_pass.png
 
 
 
