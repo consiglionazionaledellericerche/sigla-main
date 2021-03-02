@@ -18,13 +18,19 @@ In questo paragrafo analizziamo esclusivamente la funzionalità di registrazione
 
 Analizziamo ora i vari campi presenti nel folder “Testata” comuni per tutte le tipologie di fattura passiva: 
 
-Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento del salvataggio della fattura. 
-- Data registrazione. Tale campo viene proposto dal sistema e non deve essere mai modificato. 
-- Data protocollo. campo non obbligatorio nel quale può essere indicato il protocollo di ricevimento della fattura. 
-- Registrazione IVA. Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA. 
-- N. Registrazione IVA. generale Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA. 
- 
-- Liquidazione Differita. L'utilizzo di tale flag è limitato alle fatture ricevute nello svolgimento dell'attività commerciale. Per ulteriori dettagli sull'esigibilità differita delle fatture passive consultare la Circ. 17/2009. 
+- Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento del salvataggio della fattura. 
+- Esercizio. Tale campo sarà assegnato automaticamento dal sistema con l'esercizio di scrivania.
+- Data registrazione. Tale campo viene proposto dal sistema e non deve essere modificato. 
+- Data protocollo/ricezione. Campo non obbligatorio nel quale può essere indicata la data di ricevimento della fattura. Per documenti elettronici viene valorizzato con la data ricezione del documento dal Sistema di Interscambio.
+- Numero Protocollo. Campo non obbligatorio nel quale può essere indicato il protocollo di ricevimento del documento (se non elettronico).
+- Identificativo SDI. Tale campo viene assegnato automaticamente dal sistema e contiene l'identificativo SDI del documento elettronico ricevuto.
+- Progressivo SDI. Tale campo viene assegnato automaticamente dal sistema e contiene il progressivo del documento elettronico nel caso in cui il documento faccia parte di un lotto (quindi più documento hanno lo stesso Identificativo SDI che insieme al Progressivo SDI individua univocamente il documento elettronico).
+- Numero Registrazione IVA. Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA (Numerazione per Esercizio/CDS/Sezionale/Tipo documento). 
+- Numero Registrazione IVA generale. Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA (Numerazione per Esercizio/CDS/Sezionale).
+- Stato. Tale campo viene gestito automaticamente dal sistema e indica la situazione contabile del documento (Contabilizzato/Pagato).
+- Associazione Man./rev. Tale campo indica se il documento è stato o meno associato a Mandato.
+- Associato a Compenso. Questo flag viene spuntato se la fattura riguarda un Professionista per il quale occorre inserire il compenso. Nel caso di documento elettronico, questo viene impostato automaticamente dalla procedura quando la natura del documento lo richiede. Se spuntato tale flag contestualmente alla registrazione della fattura deve essere registrato anche il compenso.
+ - Liquidazione Differita. L'utilizzo di tale flag è limitato alle fatture ricevute nello svolgimento dell'attività commerciale. Per ulteriori dettagli sull'esigibilità differita delle fatture passive consultare la Circ. 17/2009. 
 - Fondo economale. scegliere nel menù a tendina la voce che interessa tenendo presente che 'USA FONDO ECONOMALE' non può essere usato nel caso di fatture:  
    - Intra U.E.
    - Extra U.E.  	 
@@ -34,6 +40,7 @@ Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento d
 USARE FONDO ECONOMALE se la fattura sarà pagata tramite fondo economale. 
 NON USARE FONDO ECONOMALE se la fattura sarà pagata tramite mandato di pagamento. 
 
+- Stato Liquidazione e causale. In questi campi si indica se il documento è liquidabile e, in caso contrario, il motivo della non liquidabilità.
 - Numero Fattura. Deve essere inserito il numero della fattura del fornitore. 
 - Descrizione. Campo libero. 
 -	Data emissione. Deve essere inserita la data di emissione della fattura del fornitore. 
@@ -300,6 +307,21 @@ In questo caso occorre scegliere:
 - Spuntare: Bolla Doganale
 - e ricercare la fattura passiva a cui si riferisce nell'apposito campo 'Fattura estera'
 
+**Split Payment  nell’ambito dell’attività istituzionale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Istituzionale;
+- Spuntare: Split Payment
+- Il sistema in automatico proporrà il Sezionale: REGISTRO ACQUISTI ISTITUZIONALE SPLIT PAYMENT
+
+**Split Payment  nell’ambito dell’attività commerciale**
+
+In questo caso occorre scegliere: 
+
+- Tipo: Commerciale;
+- Spuntare: Split Payment
+- Il sistema in automatico proporrà il Sezionale: REGISTRO IVA ORDINARIO ACQUISTI
 
 
 **FORNITORE**
@@ -365,7 +387,23 @@ La scadenza dell’impegno sarà pari all’importo del sospeso aumentato dell�
 Negli altri casi la scadenza dell’impegno sarà pari all’importo del sospeso. 
 
 
-INTRASTAT
-=========
+**INTRASTAT**
+
+Se in testata è stato spuntato il flag 'INTRA-UE' sarà necessario, ove previsto,  compilare anche il folder “INTRASTAT”  
+
+**Acquisizione di beni**
+Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti.
+
+**Acquisizione di servizi**
+Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti.
+
+**CONCLUSIONI**
+
+Si ricorda che sarà possibile procedere al salvataggio della fattura solo se tutti i folder interessati sono stati compilati. Nel caso di acquisizione di beni durevoli è necessario che tutti i beni siano stati inventariati. Tale operazione può essere gestita tramite i pulsanti presenti nella maschera principale della fattura:  
+
+- Inventaria 
+- Associa
+- Aumento Valore
+
 
 
