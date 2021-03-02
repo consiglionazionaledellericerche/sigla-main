@@ -31,12 +31,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
 import it.cnr.contab.client.docamm.Contratto;
 import it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.ValidationException;
@@ -45,9 +49,6 @@ import it.cnr.jada.persistency.PersistencyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.web.rest.model.DittaInvitataExt;
 import it.cnr.contab.web.rest.model.UoAbilitataExt;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
