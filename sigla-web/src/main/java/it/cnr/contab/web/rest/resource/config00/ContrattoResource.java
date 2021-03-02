@@ -98,21 +98,41 @@ public class ContrattoResource implements ContrattoLocal {
 
 	private ContrattoBulk creaContrattoSigla(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext) throws PersistencyException, ValidationException, ComponentException, RemoteException {
 		ContrattoBulk contrattoBulkSigla = new ContrattoBulk();
-
-		contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulk.getCd_unita_organizzativa());
+		if (Optional.ofNullable(contrattoBulk.getCd_unita_organizzativa()).isPresent()){
+			contrattoBulkSigla.setUnita_organizzativa(new Unita_organizzativaBulk());
+			contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulk.getCd_unita_organizzativa());
+		}
 		contrattoBulkSigla.setEsercizio(contrattoBulk.getEsercizio());
 		contrattoBulkSigla.setPg_contratto(contrattoBulk.getPg_contratto());
 		contrattoBulkSigla.setStato(contrattoBulk.getStato());
 		contrattoBulkSigla.setIm_contratto_attivo(contrattoBulk.getIm_contratto_attivo());
-		contrattoBulkSigla.setCd_organo(contrattoBulk.getCd_organo());
-		contrattoBulkSigla.setCd_proc_amm(contrattoBulk.getCd_proc_amm());
+		if (Optional.ofNullable(contrattoBulk.getCd_organo()).isPresent()){
+			contrattoBulkSigla.setOrgano(new OrganoBulk());
+			contrattoBulkSigla.setCd_organo(contrattoBulk.getCd_organo());
+		}
+		if (Optional.ofNullable(contrattoBulk.getCd_proc_amm()).isPresent()){
+			contrattoBulkSigla.setProcedura_amministrativa(new Procedure_amministrativeBulk());
+			contrattoBulkSigla.setCd_proc_amm(contrattoBulk.getCd_proc_amm());
+		}
 		contrattoBulkSigla.setCd_protocollo(contrattoBulk.getCd_protocollo());
 		contrattoBulkSigla.setCd_protocollo_generale(contrattoBulk.getCd_protocollo_generale());
-		contrattoBulkSigla.setCd_terzo_firmatario(contrattoBulk.getCd_terzo_firmatario());
-		contrattoBulkSigla.setCd_terzo_resp(contrattoBulk.getCd_terzo_resp());
-		contrattoBulkSigla.setCd_tipo_atto(contrattoBulk.getCd_tipo_atto());
+		if (Optional.ofNullable(contrattoBulk.getCd_terzo_firmatario()).isPresent()){
+			contrattoBulkSigla.setFirmatario(new V_persona_fisicaBulk());
+			contrattoBulkSigla.setCd_terzo_firmatario(contrattoBulk.getCd_terzo_firmatario());
+		}
+		if (Optional.ofNullable(contrattoBulk.getCd_terzo_resp()).isPresent()){
+			contrattoBulkSigla.setResponsabile(new V_persona_fisicaBulk());
+			contrattoBulkSigla.setCd_terzo_resp(contrattoBulk.getCd_terzo_resp());
+		}
+		if (Optional.ofNullable(contrattoBulk.getCd_tipo_atto()).isPresent()){
+			contrattoBulkSigla.setAtto(new Tipo_atto_amministrativoBulk());
+			contrattoBulkSigla.setCd_tipo_atto(contrattoBulk.getCd_tipo_atto());
+		}
 		contrattoBulkSigla.setCdCigExt(contrattoBulk.getCdCigExt());
-		contrattoBulkSigla.setCd_tipo_contratto(contrattoBulk.getCd_tipo_contratto());
+		if (Optional.ofNullable(contrattoBulk.getCd_tipo_contratto()).isPresent()){
+			contrattoBulkSigla.setTipo_contratto(new Tipo_contrattoBulk());
+			contrattoBulkSigla.setCd_tipo_contratto(contrattoBulk.getCd_tipo_contratto());
+		}
 		contrattoBulkSigla.setCdCigFatturaAttiva(contrattoBulk.getCdCigFatturaAttiva());
 		contrattoBulkSigla.setCodfisPivaAggiudicatarioExt(contrattoBulk.getCodfisPivaAggiudicatarioExt());
 		contrattoBulkSigla.setCodfisPivaFirmatarioExt(contrattoBulk.getCodfisPivaFirmatarioExt());
@@ -127,8 +147,14 @@ public class ContrattoResource implements ContrattoLocal {
 		contrattoBulkSigla.setDt_stipula(contrattoBulk.getDt_stipula());
 		contrattoBulkSigla.setEsercizio_protocollo(contrattoBulk.getEsercizio_protocollo());
 
-		contrattoBulkSigla.setFig_giur_est(contrattoBulk.getFig_giur_est());
-		contrattoBulkSigla.setFig_giur_int(contrattoBulk.getFig_giur_int());
+		if (Optional.ofNullable(contrattoBulk.getFig_giur_est()).isPresent()){
+			contrattoBulkSigla.setFigura_giuridica_esterna(new TerzoBulk());
+			contrattoBulkSigla.setFig_giur_est(contrattoBulk.getFig_giur_est());
+		}
+		if (Optional.ofNullable(contrattoBulk.getFig_giur_int()).isPresent()){
+			contrattoBulkSigla.setFigura_giuridica_interna(new TerzoBulk());
+			contrattoBulkSigla.setFig_giur_int(contrattoBulk.getFig_giur_int());
+		}
 		contrattoBulkSigla.setFl_art82(contrattoBulk.getFl_art82());
 		contrattoBulkSigla.setFl_mepa(contrattoBulk.getFl_mepa());
 		contrattoBulkSigla.setFl_pubblica_contratto(contrattoBulk.getFl_pubblica_contratto());
@@ -136,9 +162,10 @@ public class ContrattoResource implements ContrattoLocal {
 		contrattoBulkSigla.setIm_contratto_passivo_netto(contrattoBulk.getIm_contratto_passivo_netto());
 		contrattoBulkSigla.setNatura_contabile(contrattoBulk.getNatura_contabile());
 		contrattoBulkSigla.setOggetto(contrattoBulk.getOggetto());
-		contrattoBulkSigla.setPg_contratto_padre(contrattoBulk.getPg_contratto_padre());
-		contrattoBulkSigla.setEsercizio_padre(contrattoBulk.getEsercizio_padre());
-		contrattoBulkSigla.setPg_progetto(contrattoBulk.getPg_progetto());
+		if (Optional.ofNullable(contrattoBulk.getPg_progetto()).isPresent()){
+			contrattoBulkSigla.setProgetto(new ProgettoBulk());
+			contrattoBulkSigla.setPg_progetto(contrattoBulk.getPg_progetto());
+		}
 		contrattoBulkSigla.setResp_esterno(contrattoBulk.getResp_esterno());
 		contrattoBulkSigla.setStato_padre(contrattoBulk.getStato_padre());
 		gestioneCupSuContrattoDaFlows(userContext, contrattoBulkSigla, contrattoBulk.getCdCupExt());
