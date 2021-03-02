@@ -8,7 +8,8 @@ Sono di seguito illustrati i vari folder di cui si compone la maschera “Nota d
 
 **TESTATA**
 
-Analizziamo ora i vari campi presenti nel folder “Testata”  
+Analizziamo ora i vari campi presenti nel folder “Testata”
+
 -	Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento del salvataggio della nota di credito. 
 -	Data registrazione. Tale campo viene proposto dal sistema e non deve essere mai modificato. 
 -	Numero di protocollo. Deve essere riportato il numero di protocollo della nota di credito tale campo non è obbligatorio. 
@@ -16,6 +17,7 @@ Analizziamo ora i vari campi presenti nel folder “Testata”
 -	N. Registrazione IVA generale. Tale campo sarà compilato automaticamente dal sistema dopo la chiusura mensile dei registri IVA. 
 
 - Tutti i campi relativi a:
+
     - Tipo;
     - INTRAUE;
     - EXTRAUE;
@@ -24,6 +26,7 @@ Analizziamo ora i vari campi presenti nel folder “Testata”
     - Bolla doganale;
     - Autofattura;
     - Sezionale;
+    
   Sono tutti ereditati dalla fattura a cui viene legata la nota di credito. 
 
 -	N. Nota di credito. Deve essere inserito il numero della nota di credito. 
