@@ -30,7 +30,7 @@ Analizziamo ora i vari campi presenti nel folder “Testata” comuni per tutte 
 - Stato. Tale campo viene gestito automaticamente dal sistema e indica la situazione contabile del documento (Contabilizzato/Pagato).
 - Associazione Man./rev. Tale campo indica se il documento è stato o meno associato a Mandato.
 - Associato a Compenso. Questo flag viene spuntato se la fattura riguarda un Professionista per il quale occorre inserire il compenso. Nel caso di documento elettronico, questo viene impostato automaticamente dalla procedura quando la natura del documento lo richiede. Se spuntato tale flag contestualmente alla registrazione della fattura deve essere registrato anche il compenso.
- - Liquidazione Differita. L'utilizzo di tale flag è limitato alle fatture ricevute nello svolgimento dell'attività commerciale. Per ulteriori dettagli sull'esigibilità differita delle fatture passive consultare la Circ. 17/2009. 
+- Liquidazione Differita. L'utilizzo di tale flag è limitato alle fatture ricevute nello svolgimento dell'attività commerciale. Per ulteriori dettagli sull'esigibilità differita delle fatture passive consultare la Circ. 17/2009. 
 - Fondo economale. scegliere nel menù a tendina la voce che interessa tenendo presente che 'USA FONDO ECONOMALE' non può essere usato nel caso di fatture:  
    - Intra U.E.
    - Extra U.E.  	 
