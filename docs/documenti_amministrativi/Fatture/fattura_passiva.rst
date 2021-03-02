@@ -18,7 +18,7 @@ In questo paragrafo analizziamo esclusivamente la funzionalità di registrazione
 
 Analizziamo ora i vari campi presenti nel folder “Testata” comuni per tutte le tipologie di fattura passiva: 
 
-Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento del salvataggio della fattura. 
+- Progressivo. Tale campo sarà assegnato automaticamente dal sistema al momento del salvataggio della fattura. 
 - Data registrazione. Tale campo viene proposto dal sistema e non deve essere mai modificato. 
 - Data protocollo. campo non obbligatorio nel quale può essere indicato il protocollo di ricevimento della fattura. 
 - Registrazione IVA. Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA. 
