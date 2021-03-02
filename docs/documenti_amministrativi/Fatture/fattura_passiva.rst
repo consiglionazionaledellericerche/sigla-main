@@ -22,7 +22,7 @@ Analizziamo ora i vari campi presenti nel folder “Testata” comuni per tutte 
 - Data registrazione. Tale campo viene proposto dal sistema e non deve essere mai modificato. 
 - Data protocollo. campo non obbligatorio nel quale può essere indicato il protocollo di ricevimento della fattura. 
 - Registrazione IVA. Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA. 
-- N. Registrazione IVA. generale Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA. 
+- Numero Registrazione IVA. generale Tale campo sarà compilato automaticamente dal sistema in seguito alla chiusura mensile dei registri IVA. 
  
 - Liquidazione Differita. L'utilizzo di tale flag è limitato alle fatture ricevute nello svolgimento dell'attività commerciale. Per ulteriori dettagli sull'esigibilità differita delle fatture passive consultare la Circ. 17/2009. 
 - Fondo economale. scegliere nel menù a tendina la voce che interessa tenendo presente che 'USA FONDO ECONOMALE' non può essere usato nel caso di fatture:  
