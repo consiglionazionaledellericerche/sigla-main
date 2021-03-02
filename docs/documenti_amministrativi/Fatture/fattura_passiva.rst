@@ -307,6 +307,9 @@ In questo caso occorre scegliere:
 - Spuntare: Bolla Doganale
 - e ricercare la fattura passiva a cui si riferisce nell'apposito campo 'Fattura estera'
 
+**Split Payment**
+Per le informazioni generali riguardanti lo Split Payment, vedi la sezione specifica :ref:`split-payment`
+
 **Split Payment  nell’ambito dell’attività istituzionale**
 
 In questo caso occorre scegliere: 
@@ -406,4 +409,24 @@ Si ricorda che sarà possibile procedere al salvataggio della fattura solo se tu
 - Aumento Valore
 
 
+.. _split-payment:
+
+Split Payment
+=============
+Il Decreto Legge n° 50/2017 ha introdotto una serie di novità rispetto allo Split Payment (fatturazione attiva e passiva) che sono entrate in vigore il 01/07/2017.
+Da tale data il CNR è entrato nell’elenco dei soggetti Split Payment. Questo vuol dire che tutte le fatture ricevute dal CNR con data di emissione a partire dal primo luglio 2017 sono in regime di ‘Split Payment’, escluso le fatture estere e poche altre eccezioni relative a regimi IVA che non prevedono l’imposta.
+
+Tutte le fatture elettroniche, dal primo luglio 2017, che hanno imposta IVA valorizzata (quindi escludendo tutti i regimi IVA che non prevedono l’imposta), sono emesse dal Fornitore, nei confronti del CNR, con Split Payment. Nella sezione Riepilogo IVA del documento elettronico dovrà essere indicata la ‘S’ Split Ppament e non 'I' IVA Immediata.
+Al ricevimento del documento elettronico con la corretta indicazione dello ‘Split’, nel momento in cui si effettua la registrazione in Sigla, sono cambiate alcune regole di registrazione:
+
+**Attività Commerciale**
+
+Se il documento passivo riguarda l’attività Commerciale al fornitore viene pagato il solo l’imponibile quindi l’impegno da indicare in fase di registrazione, è al netto di IVA. L’IVA viene rilevata sia sul registro Acquisti che Vendite (meccanismo automatico operato direttamente in fase di registrazione e trasparente all’utente). 
+L’indicazione dell’Attività commerciale, genera il controllo in fase di contabilizzazione che l’importo degli impegni collegati risulti uguale all’imponibile del documento.
+In questo caso il pagamento di questo documento risulterà del solo importo imponibile.
+
+**Istituzionale**
+
+Se il documento riguarda l’Attività Istituzionale, sarà proposto il tipo sezionale acquisti istituzionale: a/ispp - REGISTRO ACQUISTI ISTITUZIONALE SPLIT PAYMENT.
+L’impegno è comprensivo dell’Importo dell’Iva e nella fase di emissione del mandato di pagamento il sistema genera una reversale per l’importo dell’Iva, che poi sarà versato all'Erario, ed al fornitore viene erogato l’importo al netto dell’Iva. In questo caso l’IVA riguarda solo gli Acquisti.
 
