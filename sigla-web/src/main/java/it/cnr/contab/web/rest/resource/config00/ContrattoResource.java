@@ -93,6 +93,7 @@ public class ContrattoResource implements ContrattoLocal {
     			userContext,
 				contrattoBulkSigla);
 				
+		contratto.setToBeCreated();
     	ContrattoBulk contrattoCreated = (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto);
     	contrattoBulk.setPg_contratto(contrattoCreated.getPg_contratto());
     	return Response.status(Status.CREATED).entity(contrattoBulk).build();
