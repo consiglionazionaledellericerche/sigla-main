@@ -425,7 +425,7 @@ Se il documento passivo riguarda l’attività Commerciale al fornitore viene pa
 L’indicazione dell’Attività commerciale, genera il controllo in fase di contabilizzazione che l’importo degli impegni collegati risulti uguale all’imponibile del documento.
 In questo caso il pagamento di questo documento risulterà del solo importo imponibile.
 
-**Istituzionale**
+**Attività Istituzionale**
 
 Se il documento riguarda l’Attività Istituzionale, sarà proposto il tipo sezionale acquisti istituzionale: a/ispp - REGISTRO ACQUISTI ISTITUZIONALE SPLIT PAYMENT.
 L’impegno è comprensivo dell’Importo dell’Iva e nella fase di emissione del mandato di pagamento il sistema genera una reversale per l’importo dell’Iva, che poi sarà versato all'Erario, ed al fornitore viene erogato l’importo al netto dell’Iva. In questo caso l’IVA riguarda solo gli Acquisti.
