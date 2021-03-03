@@ -1,3 +1,11 @@
+## Release 6.3.4  -- _March 03, 2021_ 
+**Changes**
+
+>**Update ContrattoResource.java**
+>
+>[02dc387771a0ab9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/02dc387771a0ab9) GASPARRO GIANFRANCO *March 03, 2021*
+
+
 ## Release 6.3.3  -- _March 03, 2021_ 
 **Changes**
 
