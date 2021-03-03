@@ -86,6 +86,7 @@ public class ContrattoResource implements ContrattoLocal {
 		}
 
 		contrattoBulkSigla.setNatura_contabile(ContrattoBulk.NATURA_CONTABILE_PASSIVO);
+		contrattoBulkSigla.setAtto(new Tipo_atto_amministrativoBulk());
 		contrattoBulkSigla.setCd_tipo_atto("DET");
 
 		final ContrattoBulk contratto = (ContrattoBulk) contrattoComponentSession.inizializzaBulkPerInserimento(
