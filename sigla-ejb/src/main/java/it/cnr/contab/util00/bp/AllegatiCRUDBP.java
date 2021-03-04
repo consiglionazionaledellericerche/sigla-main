@@ -182,13 +182,22 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 if (Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()))
                         .map(String.class::cast)
                         .filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
-                        .isPresent())
+                        .isPresent()) {
+                    initializeModelForEditAllegati(actioncontext, oggettobulk, storageObject.getPath());
                     continue;
+                }
+                final String primaryPath = getStorePath((K) oggettobulk, false);
                 T allegato = (T) Introspector.newInstance(getAllegatoClass(), storageObject.getKey());
                 allegato.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
                 allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                 allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                 allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
+                allegato.setRelativePath(
+                        Optional.ofNullable(storageObject.getPath())
+                                .map(s -> s.substring(s.indexOf(primaryPath) + primaryPath.length()))
+                                .map(s -> s.substring(0, s.indexOf(allegato.getNome())))
+                                .orElse(File.separator)
+                );
                 completeAllegato(allegato);
                 allegato.setCrudStatus(OggettoBulk.NORMAL);
                 allegatoParentBulk.addToArchivioAllegati(allegato);

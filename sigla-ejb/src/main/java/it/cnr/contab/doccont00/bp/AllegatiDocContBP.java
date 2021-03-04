@@ -398,7 +398,10 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
                             new FileInputStream(allegato.getFile()),
                             allegato.getContentType(),
                             allegato.getNome(),
-                            v_mandato_reversaleBulk.getStorePath()
+                            Optional.ofNullable(uploadedFile.getFilePath())
+                                    .map(s -> s.substring(s.indexOf(File.separator), s.indexOf(uploadedFile.getName())))
+                                    .map(s -> v_mandato_reversaleBulk.getStorePath().concat(s))
+                                    .orElse(v_mandato_reversaleBulk.getStorePath())
                     );
                 }
             } catch (FileNotFoundException e) {
