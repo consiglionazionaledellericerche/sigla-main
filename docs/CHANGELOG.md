@@ -1,29 +1,29 @@
-## Release 6.3.5  -- _March 03, 2021_ 
+## Release 6.3.7  -- _March 05, 2021_ 
 **Changes**
 
->**Update ContrattoResource.java**
+>**Update AnagraficoComponent.java**
 >
->[7b22d63e5506598](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b22d63e5506598) GASPARRO GIANFRANCO *March 03, 2021*
+>[2605ccff5ffd539](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2605ccff5ffd539) GASPARRO GIANFRANCO *March 05, 2021*
 
-
-## Release 6.3.4  -- _March 03, 2021_ 
-**Changes**
-
->**Update ContrattoResource.java**
+>**Aggiunta la possibilità di allegare files da una cartella rispettando l'alberatura delle sottocartelle**
 >
->[02dc387771a0ab9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/02dc387771a0ab9) GASPARRO GIANFRANCO *March 03, 2021*
+>[a50f09afeb10339](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a50f09afeb10339) marco.spasiano *March 04, 2021*
 
-
-## Release 6.3.3  -- _March 03, 2021_ 
-**Changes**
-
->**Update ContrattoResource.java**
+>**Update fattura_passiva.rst**
 >
->[4ba202841135556](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ba202841135556) GASPARRO GIANFRANCO *March 02, 2021*
+>[8b4e45405dcabb6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b4e45405dcabb6) patriziavillani *March 03, 2021*
 
->**Update ContrattoResource.java**
+>**Update fattura_passiva.rst**
 >
->[f86eea9ee677dd7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f86eea9ee677dd7) GASPARRO GIANFRANCO *March 02, 2021*
+>[5356297dc823cf6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/5356297dc823cf6) patriziavillani *March 02, 2021*
+
+>**Update progetto.rst**
+>
+>[f24598a3783c4e6](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f24598a3783c4e6) patriziavillani *March 02, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[c6d3284b68297ba](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c6d3284b68297ba) patriziavillani *March 02, 2021*
 
 >**FIX sphinx nested tables are not yet implemented.**
 >
@@ -144,6 +144,34 @@
 >**Update fattura_passiva.rst**
 >
 >[6668bec31322ccc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6668bec31322ccc) patriziavillani *February 26, 2021*
+
+
+## Release 6.3.5  -- _March 03, 2021_ 
+**Changes**
+
+>**Update ContrattoResource.java**
+>
+>[7b22d63e5506598](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b22d63e5506598) GASPARRO GIANFRANCO *March 03, 2021*
+
+
+## Release 6.3.4  -- _March 03, 2021_ 
+**Changes**
+
+>**Update ContrattoResource.java**
+>
+>[02dc387771a0ab9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/02dc387771a0ab9) GASPARRO GIANFRANCO *March 03, 2021*
+
+
+## Release 6.3.3  -- _March 03, 2021_ 
+**Changes**
+
+>**Update ContrattoResource.java**
+>
+>[4ba202841135556](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ba202841135556) GASPARRO GIANFRANCO *March 02, 2021*
+
+>**Update ContrattoResource.java**
+>
+>[f86eea9ee677dd7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f86eea9ee677dd7) GASPARRO GIANFRANCO *March 02, 2021*
 
 
 ## Release 6.3.2  -- _March 01, 2021_ 
