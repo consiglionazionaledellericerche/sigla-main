@@ -3,6 +3,9 @@ Nota Credito Passiva
 ====================
 
 Per poter procedere alla registrazione di una nota di credito bisogna entrare nella funzionalità della gestione delle Fatture Passive, richiamare la fattura passiva a cui si riferisce la nota di credito e cliccare sul pulsante 'Genera Nota Credito'.
+
+Con l'introduzione della fatturazione elettronica, la registrazione di una nota credito, come tutti i documenti passivi elettronici ricevuti, ha inizio dalla funzionalità di 'Fatturazione elettronica' e per le Note Credito/Debito la procedura riporta l'utente direttamente alla fase di registrazione creando il legame alla fattura di riferimento in modo automatico perchè l'utente la sceglie in fase di selezione dettagli della Nota stessa.
+
 E’ sempre possibile emettere una nota di credito su fatture registrate nell’esercizio in corso (siano esse in stato “contabilizzato” che “pagato”); è possibile emettere note di credito su fatture registrate negli esercizi precedenti se sono in stato contabilizzato, qualora invece siano state pagate è possibile emettere la nota di credito solo se il pagamento è avvenuto nell’esercizio in corso. 
 Sono di seguito illustrati i vari folder di cui si compone la maschera “Nota di credito”. 
 
@@ -29,7 +32,7 @@ Analizziamo ora i vari campi presenti nel folder “Testata”
     
   Sono tutti ereditati dalla fattura a cui viene legata la nota di credito. 
 
--	N. Nota di credito. Deve essere inserito il numero della nota di credito. 
+-	Numero Nota di credito. Deve essere inserito il numero della nota di credito. 
 -	Descrizione. Il sistema riporta quello della fattura ma può essere modificata. 
 -	Data emissione. Deve essere inserita la data di emissione della fattura del fornitore. 
 -	Data di scadenza. Campo non obbligatorio va indicato la data di scadenza della fattura. (non serve per il trasferimento della liquidità da parte dell’Ufficio Bilancio che prende in considerazione le date di scadenza degli impegni liquidati). 
@@ -75,11 +78,10 @@ Dopo la contabilizzazione del dettaglio il sistema si posiziona sul folder storn
 
 Se la nota di credito è collegata ad una fattura pagata, e non sono presenti fatture dello stesso fornitore da pagare, il sistema, dopo la contabilizzazione del dettaglio,  propone la maschera della creazione e ricerca dell’accertamento. Dopo la compilazione dell’accertamento cliccando  su “riporta” si ritorna su questo folder e si devono scegliere le modalità di incasso (c/c ente). 
 
-**RIVEDERE**
 **PROTOCOLLO**
 
 Ai fini dell’inserimento nel registro IVA e per l’assegnazione del relativo numero al documento fiscale, è necessario protocollare.  
-Con l'introduzione della Fatturazione elettronica non è più necessario effettuare il Protocollo manuale attraverso l'apposita funzionalità perchè questo avviene automaticamente in fase di registrazione del documento elettronico.
+Con l'introduzione della Fatturazione elettronica non è più necessario effettuare il Protocollo manuale attraverso l'apposita funzionalità perchè questo avviene automaticamente in fase di firma del documento elettronico.
 
 
 
