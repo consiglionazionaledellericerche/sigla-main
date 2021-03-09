@@ -2554,19 +2554,9 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
             throw handleException(e);
         }
     }
-    public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk1) throws ComponentException {
+    public void aggiornaDatiAce(UserContext userContext, AnagraficoBulk anagraficoBulk) throws ComponentException {
         if (!Optional.ofNullable(aceService).isPresent())
             return;
-        AnagraficoHome anagraficoHome = (AnagraficoHome) getHome(userContext, AnagraficoBulk.class);
-        List<AnagraficoBulk> listaAnagrafico = null;
-        try {
-            listaAnagrafico = anagraficoHome.findAnagraficoNonDipValidi();
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (PersistencyException e) {
-            e.printStackTrace();
-        }
-            for (AnagraficoBulk anagraficoBulk : listaAnagrafico){
                 logger.info(anagraficoBulk.getCd_anag().toString());
                 anagraficoBulk = (AnagraficoBulk)inizializzaBulkPerModifica(userContext, anagraficoBulk);
                 try {
@@ -2693,7 +2683,6 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
         } catch (Throwable e) {
             throw handleException(e);
         }
-            }
     }
     private void aggiornaPersonaEO(String utente, LocalDate dtIniValidita, LocalDate dtFinValidita, PersonaEntitaOrganizzativaWebDto personaEOWebDto) {
         PersonaEntitaOrganizzativaDto personaEntitaOrganizzativaDto = new PersonaEntitaOrganizzativaDto();
