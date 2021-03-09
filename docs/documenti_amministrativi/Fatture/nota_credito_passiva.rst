@@ -17,7 +17,7 @@ Analizziamo ora i vari campi presenti nel folder “Testata”
 -	Data registrazione. Tale campo viene proposto dal sistema e non deve essere mai modificato. 
 -	Numero di protocollo. Deve essere riportato il numero di protocollo della nota di credito tale campo non è obbligatorio. 
 -	Registrazione IVA. Tale campo sarà compilato automaticamente dal sistema dopo la chiusura mensile dei registri IVA. 
--	N. Registrazione IVA generale. Tale campo sarà compilato automaticamente dal sistema dopo la chiusura mensile dei registri IVA. 
+-	Numero Registrazione IVA generale. Tale campo sarà compilato automaticamente dal sistema dopo la chiusura mensile dei registri IVA. 
 
 - Tutti i campi relativi a:
 
