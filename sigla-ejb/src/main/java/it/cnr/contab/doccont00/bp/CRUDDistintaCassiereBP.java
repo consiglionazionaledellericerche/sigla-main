@@ -1818,11 +1818,11 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
             return false;
         if (super.isDeleteButtonEnabled()
                 && (((Distinta_cassiereBulk) getModel()).getDt_invio_pec() == null)
-                && (!isFlusso()))
+                && (!(isFlusso()||isAnnulli())))
             return true;
         return super.isDeleteButtonEnabled()
                 && (((Distinta_cassiereBulk) getModel()).getDt_invio() != null)
-                && (isFlusso());
+                && (isFlusso()||isAnnulli());
     }
 
     public boolean isSalvaDefButtonHidden() {
@@ -1832,7 +1832,7 @@ public class CRUDDistintaCassiereBP extends AllegatiCRUDBP<AllegatoGenericoBulk,
                     .map(Distinta_cassiereBulk.class::cast)
                     .flatMap(distinta_cassiereBulk -> Optional.ofNullable(distinta_cassiereBulk.getPg_distinta()))
                     .isPresent() || isViewing() || isDirty();
-        return !isFlusso();
+        return !(isFlusso() || isAnnulli());
     }
 
     public boolean isSalvaDefButtonEnabled() {
