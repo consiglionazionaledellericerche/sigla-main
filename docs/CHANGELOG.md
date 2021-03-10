@@ -1,9 +1,25 @@
-## Release 6.3.8  -- _March 10, 2021_ 
+## Release 6.3.9  -- _March 10, 2021_ 
 **Changes**
 
 >**Gestione distinta annulli senza l'integrazione con SIOPE+**
 >
+>[ce4610c14958ff0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ce4610c14958ff0) marco.spasiano *March 10, 2021*
+
+>**Gestione distinta annulli senza l'integrazione con SIOPE+**
+>
 >[2fc14a2859a876e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fc14a2859a876e) marco.spasiano *March 10, 2021*
+
+>**Update nota_credito_passiva.rst**
+>
+>[6b93e464d0aee0d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6b93e464d0aee0d) patriziavillani *March 09, 2021*
+
+>**Update nota_credito_passiva.rst**
+>
+>[c7d2352220a4f42](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c7d2352220a4f42) patriziavillani *March 09, 2021*
+
+>**Update fattura_passiva.rst**
+>
+>[ae1d50f56391efc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ae1d50f56391efc) patriziavillani *March 09, 2021*
 
 >**FIX StringIndexOutOfBoundsException when uploading a folder**
 >
