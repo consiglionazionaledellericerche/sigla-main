@@ -2,7 +2,17 @@
 Fattura Passiva
 ===============
 
-Per poter procedere alla registrazione di una fattura passiva bisogna entrare nell’albero delle funzioni: 
+Per poter procedere alla registrazione di una fattura passiva bisogna distinguere due casistiche: Fatturazione Elettronica (che copre la quasi totalità delle registrazioni attuali) e Fatturazione 'cartacea' (che ad oggi riguarda solo Fatture non nazionali. I due percorsi sono: 
+
+**Per la Fatturazione Elettronica**
+
+**- Documenti amministrativi**  
+ 
+      - Fatture   
+      - fattura passiva  
+          - Fatturazione elettronica
+
+**Per l'inserimento di Fatture ricevute in forma cartacea**
 
 **- Documenti amministrativi**  
  
