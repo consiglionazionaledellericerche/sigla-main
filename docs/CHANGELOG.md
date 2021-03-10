@@ -1,9 +1,13 @@
-## Release 6.3.7  -- _March 05, 2021_ 
+## Release 6.3.8  -- _March 10, 2021_ 
 **Changes**
 
->**Update AnagraficoComponent.java**
+>**Gestione distinta annulli senza l'integrazione con SIOPE+**
 >
->[2605ccff5ffd539](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2605ccff5ffd539) GASPARRO GIANFRANCO *March 05, 2021*
+>[2fc14a2859a876e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2fc14a2859a876e) marco.spasiano *March 10, 2021*
+
+>**FIX StringIndexOutOfBoundsException when uploading a folder**
+>
+>[2e6ff9611f868ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2e6ff9611f868ff) marco.spasiano *March 09, 2021*
 
 >**Aggiunta la possibilità di allegare files da una cartella rispettando l'alberatura delle sottocartelle**
 >
@@ -144,6 +148,14 @@
 >**Update fattura_passiva.rst**
 >
 >[6668bec31322ccc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6668bec31322ccc) patriziavillani *February 26, 2021*
+
+
+## Release 6.3.7  -- _March 05, 2021_ 
+**Changes**
+
+>**Update AnagraficoComponent.java**
+>
+>[2605ccff5ffd539](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2605ccff5ffd539) GASPARRO GIANFRANCO *March 05, 2021*
 
 
 ## Release 6.3.5  -- _March 03, 2021_ 
