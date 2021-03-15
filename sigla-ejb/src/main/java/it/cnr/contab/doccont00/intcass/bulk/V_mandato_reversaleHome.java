@@ -17,6 +17,9 @@
 
 package it.cnr.contab.doccont00.intcass.bulk;
 
+import it.cnr.contab.config00.bulk.Configurazione_cnrBase;
+import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.bulk.Configurazione_cnrHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
@@ -26,6 +29,7 @@ import it.cnr.contab.missioni00.docs.bulk.RimborsoBulk;
 import it.cnr.contab.missioni00.docs.bulk.RimborsoHome;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.CNRUserInfo;
 import it.cnr.contab.util.enumeration.EsitoOperazione;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
@@ -41,6 +45,7 @@ import it.cnr.jada.persistency.sql.*;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Optional;
 
 public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRestHome {
     private DocumentiContabiliService documentiContabiliService;
@@ -368,6 +373,19 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
     }
 
     public SQLBuilder selectByClauseForFirmaMandati(UserContext usercontext, V_mandato_reversaleBulk v_mandato_reversaleBulk, CompoundFindClause compoundfindclause) throws PersistencyException {
+        final Configurazione_cnrHome configurazione_cnrHome = (Configurazione_cnrHome) getHomeCache().getHome(Configurazione_cnrBulk.class);
+        Configurazione_cnrBulk configurazione_cnrBulk = new Configurazione_cnrBulk();
+        configurazione_cnrBulk.setEsercizio(CNRUserContext.getEsercizio(usercontext));
+        configurazione_cnrBulk.setCd_unita_funzionale("*");
+        configurazione_cnrBulk.setCd_chiave_primaria(Configurazione_cnrBulk.PK_FLUSSO_ORDINATIVI);
+        configurazione_cnrBulk.setCd_chiave_secondaria(Configurazione_cnrBulk.SK_ATTIVO_SIOPEPLUS);
+        final Boolean attivoSIOPEPlus = Optional.ofNullable(configurazione_cnrHome.findByPrimaryKey(configurazione_cnrBulk))
+                .filter(Configurazione_cnrBulk.class::isInstance)
+                .map(Configurazione_cnrBulk.class::cast)
+                .map(Configurazione_cnrBase::getVal01)
+                .map(s -> Boolean.valueOf(s))
+                .orElse(Boolean.FALSE);
+
         SQLBuilder sqlBuilder = createSQLBuilder();
         if(compoundfindclause == null){
             if(v_mandato_reversaleBulk != null)
@@ -421,7 +439,9 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
 
             sqlBuilder.openParenthesis(FindClause.OR);
                 sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
-                sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
+                if (attivoSIOPEPlus) {
+                    sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.EQUALS, EsitoOperazione.ACQUISITO.value());
+                }
                 sqlBuilder.addJoin("pg_documento_cont", "pg_documento_cont_padre");
                 sqlBuilder.addClause(FindClause.AND, "cd_tipo_documento_cont", SQLBuilder.EQUALS, Numerazione_doc_contBulk.TIPO_REV);
             sqlBuilder.closeParenthesis();
@@ -432,7 +452,9 @@ public class V_mandato_reversaleHome extends BulkHome implements ConsultazioniRe
             sqlBuilder.openParenthesis(FindClause.OR);
                 sqlBuilder.addClause(FindClause.AND, "stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_ANNULLATO);
                 sqlBuilder.addClause(FindClause.AND, "dt_trasmissione", SQLBuilder.ISNOTNULL, null);
-                sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.NOT_EQUALS, EsitoOperazione.NON_ACQUISITO.value());
+                if (attivoSIOPEPlus) {
+                    sqlBuilder.addClause(FindClause.AND, "esitoOperazione", SQLBuilder.NOT_EQUALS, EsitoOperazione.NON_ACQUISITO.value());
+                }
             sqlBuilder.closeParenthesis();
         sqlBuilder.closeParenthesis();
 
