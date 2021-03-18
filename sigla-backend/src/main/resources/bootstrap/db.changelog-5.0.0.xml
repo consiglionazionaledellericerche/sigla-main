@@ -3878,8 +3878,8 @@ TRASPORTO_AEREO"/>
         </insert>
         <insert tableName="cicloDottorati">
             <column name="numero" type="BIGINT" value="0"/>
-            <column name="annoInizio" type="DATE" value="0"/>
-            <column name="annoFine" type="DATE" value="0"/>
+            <column name="annoInizio" type="DATE" />
+            <column name="annoFine" type="DATE" />
         </insert>
         <insert tableName="tipoCorsoDottorati">
             <column name="name" type="STRING" value="0"/>
