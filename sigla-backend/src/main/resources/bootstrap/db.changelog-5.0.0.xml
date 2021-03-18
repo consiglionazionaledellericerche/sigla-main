@@ -3853,4 +3853,36 @@ TRASPORTO_AEREO"/>
             <column name="anomalia_perla" type="VARCHAR(1000)" remarks="Anomalia verificatasi in fase di ultima comunicazione al sistema PerlaPa."/>
         </addColumn>
     </changeSet>
+
+    <changeSet author="valerio.diego" id="add-anagrafica-dottorati">
+        <insert tableName="anagraficaDottorati">
+            <column name="regione" type="STRING" value="0"/>
+            <column name="universitaCapofila" type="STRING" value="0"/>
+            <column name="codiceTerzo" type="STRING" value="0"/>
+            <column name="ibanAteneo" type="STRING" value="0"/>
+            <column name="telefonoAteneo" type="STRING" value="0"/>
+            <column name="emailAteneo" type="STRING" value="0"/>
+            <column name="altreUniversita" type="STRING" value="0"/>
+            <column name="dipartimentoUniversita" type="STRING" value="0"/>
+            <column name="corsoDottorato" type="STRING" value="0"/>
+            <column name="tematica" type="STRING" value="0"/>
+            <column name="numeroCicliFinanziati" type="BIGINT" value="0"/>
+            <column name="ricercatore" type="STRING" value="0"/>
+            <column name="istitutoCNR" type="STRING" value="0"/>
+            <column name="dipartimentoCNR" type="STRING" value="0"/>
+            <column name="dataStipulaConvenzione" type="DATE" value="0"/>
+            <column name="note" type="STRING" value="0"/>
+        </insert>
+        <insert tableName="phdTipoDottorati">
+            <column name="name" type="STRING" value="0"/>
+        </insert>
+        <insert tableName="cicloDottorati">
+            <column name="numero" type="BIGINT" value="0"/>
+            <column name="annoInizio" type="DATE" value="0"/>
+            <column name="annoFine" type="DATE" value="0"/>
+        </insert>
+        <insert tableName="tipoCorsoDottorati">
+            <column name="name" type="STRING" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
