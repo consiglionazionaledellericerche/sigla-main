@@ -4196,7 +4196,7 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
         <insert tableName="numerazione_doc_amm">
-            <column name="esercizio" type="NUMERIC" value="2021"/>
+            <column name="esercizio" type="NUMERIC" value="2020"/>
             <column name="cd_cds" type="STRING" value="999"/>
             <column name="cd_unita_organizzativa" type="STRING" value="999.000"/>
             <column name="cd_tipo_documento_amm" type="STRING" value="POS_CRED"/>
