@@ -25,6 +25,7 @@ import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.jada.bulk.ValidationException;
 import it.cnr.jada.util.action.FormBP;
 import it.cnr.jada.util.upload.UploadedFile;
@@ -47,6 +48,8 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import java.io.*;
@@ -58,6 +61,8 @@ import java.util.stream.Stream;
 
 public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, StatoTrasmissione> {
     private static final long serialVersionUID = 1L;
+    private transient final static Logger logger = LoggerFactory.getLogger(AllegatiDocContBP.class);
+
     private final SimpleDetailCRUDController documentiPassiviSelezionati =
             new SimpleDetailCRUDController("DocumentiPassiviSelezionati", Mandato_rigaIBulk.class, "mandato_rigaColl", this);
     private final SimpleDetailCRUDController dettaglioAllegati =
@@ -393,13 +398,25 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
                 final Optional<StorageObject> parentFolder =
                         Optional.ofNullable(storeService.getStorageObjectByPath(v_mandato_reversaleBulk.getStorePath()));
                 if (parentFolder.isPresent()) {
-                    storeService.storeSimpleDocument(
-                            allegato,
-                            new FileInputStream(allegato.getFile()),
-                            allegato.getContentType(),
-                            allegato.getNome(),
-                            v_mandato_reversaleBulk.getStorePath()
-                    );
+                    try {
+                        storeService.storeSimpleDocument(
+                                allegato,
+                                new FileInputStream(allegato.getFile()),
+                                allegato.getContentType(),
+                                allegato.getNome(),
+                                Optional.ofNullable(uploadedFile.getFilePath())
+                                        .map(s -> s.substring(s.indexOf(File.separator), s.indexOf(uploadedFile.getName())))
+                                        .map(s -> v_mandato_reversaleBulk.getStorePath().concat(s))
+                                        .orElse(v_mandato_reversaleBulk.getStorePath())
+                        );
+                    } catch (StringIndexOutOfBoundsException _ex) {
+                        logger.warn("File non caricato path locale {}", uploadedFile.getFilePath());
+                        throw handleException(new ApplicationMessageFormatException(
+                                "Il caricamento è stato interrotto verificare il file [{0}]",
+                                uploadedFile.getFilePath()
+                            )
+                        );
+                    }
                 }
             } catch (FileNotFoundException e) {
                 throw handleException(e);

@@ -16,9 +16,6 @@ Tutto il processo e le informazioni sono stati dettagliati nell'apposito paragra
 
 :doc:`Fattura Attiva Elettronica<fattura_attiva_elettronica>`
 
-
-:download:`Manuale Fatturazione elettronica Attiva</_static/MANUALE_FATT_ELE_ATT.pdf>`
-
 L'emissione di un documento attivo segue le stesse regole rispetto ai dati che l'utente deve inserire in Sigla. Sono di seguito indicati i vari folder di cui si compone la maschera “Fattura Attiva”. 
 
 **Testata**
@@ -118,6 +115,11 @@ Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà
 **Cessione di servizi**
 
 Per procedere all’inserimento sarà necessario cliccare su 'Nuovo', si creerà una nuova riga e si dovrà procedere alla compilazione dei record richiesti. 
+
+**PROTOCOLLO**
+
+Dopo aver salvato il documento, ai fini dell’inserimento nel registro IVA e per l’assegnazione del relativo numero, è necessario protocollare.  
+Con l'introduzione della Fatturazione elettronica non è più necessario effettuare il Protocollo manuale attraverso l'apposita funzionalità perchè questo avviene automaticamente con la firma del documento elettronico
 
 
 

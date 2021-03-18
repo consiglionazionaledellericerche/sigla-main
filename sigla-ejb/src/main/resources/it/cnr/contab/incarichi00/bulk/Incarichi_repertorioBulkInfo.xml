@@ -486,6 +486,29 @@
 		command="doOnDtEfficaciaChange"
 		readonlyProperty="RODataEfficacia"
 		label="Data Efficacia" />
+	<fieldProperty
+		name="idPerla"
+		property="idPerla"
+		inputType="TEXT"
+		inputSize="10"
+		maxLength="10"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Identificativo PerlaPa" />
+	<fieldProperty
+		name="anomalia_perla"
+		property="anomalia_perla"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="1000"
+		enabledOnSearch="true"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		nullable="false"
+		label="Anomalia PerlaPa" />
 
 	<formFieldProperty
 		name="esercizio" />
@@ -613,6 +636,10 @@
 		label="Data&lt;BR&gt;Protocollo" />
 	<formFieldProperty
 		name="dt_efficacia" />
+	<formFieldProperty
+		name="idPerla" />
+	<formFieldProperty
+		name="anomalia_perla" />
 
 	<columnFieldProperty
 		name="esercizio" />

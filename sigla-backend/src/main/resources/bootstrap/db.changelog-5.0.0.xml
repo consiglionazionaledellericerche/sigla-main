@@ -3338,6 +3338,7 @@ TRASPORTO_AEREO"/>
     <changeSet author="marco.spasiano" id="ldap-server-drop">
         <dropTable tableName="LDAP_SERVER"></dropTable>
     </changeSet>
+
     <changeSet author="raffaele.pagano" id="incarichi-parametri-add-column-allega-conflitto-interesse">
         <addColumn tableName="incarichi_parametri">
             <column name="allega_conflitto_interesse" type="CHAR(1)"/>
@@ -3833,6 +3834,24 @@ TRASPORTO_AEREO"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="add-riferimenti-perla2018">
+        <addColumn tableName="unita_organizzativa">
+            <column name="codiceAooIpa" type="VARCHAR(100)" remarks="Codice univoco ipa che identifica le Aree Organizzative Omogenee (AOO) dell’Amministrazione dichiarante"/>
+        </addColumn>
+        <addColumn tableName="incarichi_repertorio">
+            <column name="idPerla" type="BIGINT" remarks="Identificativo attribuito dal sistema perla all'incarico."/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="incarichi-disable-invio-corte-conti">
+        <update tableName="incarichi_parametri">
+            <column name="fl_invio_fp" value='N' type="CHAR(1)"/>
+        </update>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="add-anomalie-perla2018">
+        <addColumn tableName="incarichi_repertorio">
+            <column name="anomalia_perla" type="VARCHAR(1000)" remarks="Anomalia verificatasi in fase di ultima comunicazione al sistema PerlaPa."/>
+        </addColumn>
     </changeSet>
     <changeSet author="gianfranco.gasparro" id="inizio-gestione-pagopa">
         <createTable remarks="Tabella contenente le possibili tipologie di casistiche per le pendenze di Pagopa." tableName="tipo_pendenza_pagopa">

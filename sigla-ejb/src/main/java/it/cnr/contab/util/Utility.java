@@ -39,6 +39,7 @@ import java.util.jar.Manifest;
 import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 
+import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
 import it.cnr.contab.progettiric00.comp.RimodulaProgettoRicercaComponent;
 import it.cnr.contab.progettiric00.ejb.ProgettoRicercaComponentSession;
 import it.cnr.contab.progettiric00.ejb.RimodulaProgettoRicercaComponentSession;
@@ -517,5 +518,8 @@ public final class Utility {
 	}
 	public static RimodulaProgettoRicercaComponentSession createRimodulaProgettoRicercaComponentSession() throws javax.ejb.EJBException{
 		return (RimodulaProgettoRicercaComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPROGETTIRIC00_EJB_RimodulaProgettoRicercaComponentSession", RimodulaProgettoRicercaComponentSession.class);
+	}
+	public static IncarichiEstrazioneFpComponentSession createIncarichiEstrazioneFpComponentSession() throws javax.ejb.EJBException{
+		return (IncarichiEstrazioneFpComponentSession)it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRINCARICHI00_EJB_IncarichiEstrazioneFpComponentSession", IncarichiEstrazioneFpComponentSession.class);
 	}
 }

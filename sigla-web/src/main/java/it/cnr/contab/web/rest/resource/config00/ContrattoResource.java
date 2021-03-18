@@ -34,8 +34,9 @@ import javax.ws.rs.core.SecurityContext;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
-import it.cnr.contab.client.docamm.Contratto;
 import it.cnr.contab.config00.contratto.bulk.*;
+import it.cnr.contab.client.docamm.Contratto;
+import it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk;
 import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
 import it.cnr.contab.doccont00.tabrif.bulk.CupHome;
@@ -91,7 +92,7 @@ public class ContrattoResource implements ContrattoLocal {
 		final ContrattoBulk contratto = (ContrattoBulk) contrattoComponentSession.inizializzaBulkPerInserimento(
     			userContext,
 				contrattoBulkSigla);
-
+				
 		contratto.setToBeCreated();
     	ContrattoBulk contrattoCreated = (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto);
     	contrattoBulk.setPg_contratto(contrattoCreated.getPg_contratto());

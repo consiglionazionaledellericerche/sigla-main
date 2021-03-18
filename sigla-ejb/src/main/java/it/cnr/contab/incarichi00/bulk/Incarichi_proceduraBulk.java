@@ -933,7 +933,7 @@ public class Incarichi_proceduraBulk extends Incarichi_proceduraBase {
     		   this.getTipo_attivita().getTipo_associazione().equals(Tipo_attivitaBulk.ASS_INCARICHI);
     }
     public boolean isDichiarazioneContraenteRequired(){
-    	return this.isProceduraForIncarichi() && !this.isProceduraForOccasionali();
+    	return this.isProceduraForIncarichi();
     }
     public boolean isProceduraMultiIncarico(){
     	return getNr_contratti()!=null &&

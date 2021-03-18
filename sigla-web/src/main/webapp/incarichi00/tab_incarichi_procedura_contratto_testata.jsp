@@ -43,15 +43,15 @@ if (bp.getModel()!=null &&
 		          			true, 
 		          			bp.getParentRoot().isBootstrap());%>
 		          	</td>
-	            <% } else if (bp.getIncarichiParametri()==null || bp.getIncarichiParametri().getFl_invio_fp()==null || 
-	            		  bp.getIncarichiParametri().getFl_invio_fp().equals("Y")) {%>
+	            <% } else if (incarico.getFl_inviato_corte_conti().booleanValue()) {%>
 			        <% controller.writeFormField(out,"fl_inviato_corte_conti");%>
 	            <% } %>
 		      </tr>      
 	      </table>
 	      </div>
 	      </td></tr>
-      <% } else { %>
+      <% } else {
+        if (incarico.getFl_inviato_corte_conti().booleanValue()) { %>
 	      <tr><td colspan=4>
 	      <div class="Group card">
 	      <table>
@@ -62,7 +62,8 @@ if (bp.getModel()!=null &&
 	      </div>
 	      </td></tr>
       <% } %>
-<% } %>      
+     <% } %>
+<% } %>
 	  <% if (incarico!=null && incarico.getFl_inviato_corte_conti().booleanValue()) {%>
 	      <tr><td colspan=4>
 	      <div class="Group card">

@@ -1434,7 +1434,7 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 	}
 	protected Button[] createToolbar() {
 		Button[] toolbar = super.createToolbar();
-		Button[] newToolbar = new Button[ toolbar.length + 8];
+		Button[] newToolbar = new Button[ toolbar.length + 7];
 		int i;
 		for ( i = 0; i < toolbar.length; i++ )
 			newToolbar[i] = toolbar[i];
@@ -1452,8 +1452,6 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 		newToolbar[ i+5 ].setSeparator(true);
 		newToolbar[ i+6 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.sendEmailCds");
 		newToolbar[ i+6 ].setSeparator(true);
-		newToolbar[ i+7 ] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"Toolbar.mergeCMIS");
-		newToolbar[ i+7 ].setSeparator(true);
 
 		return newToolbar;
 	}

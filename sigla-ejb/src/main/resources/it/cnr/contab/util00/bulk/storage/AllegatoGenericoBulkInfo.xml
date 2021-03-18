@@ -87,6 +87,11 @@
     <columnFieldProperty
             name="nome"/>
     <columnFieldProperty
+            name="relativePath"
+            property="relativePath"
+            inputType="TEXT"
+            label="Path"/>
+    <columnFieldProperty
             name="descrizione"/>
     <columnFieldProperty
             name="titolo"/>

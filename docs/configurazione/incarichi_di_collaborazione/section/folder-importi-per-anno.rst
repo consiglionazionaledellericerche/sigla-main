@@ -21,23 +21,10 @@ La rimodulazione degli importi segue le seguenti regole:
 
 Di seguito è riportato un esempio:
 
-+----------+--------------------------------------------+
-| |image3| | +---------------------+                    |
-|          | | Situazione Iniziale |                    |
-|          | +---------------------+                    |
-+==========+============================================+
-|          | +----------------------------------------+ |
-|          | | Situazione Modificata **Non Corretta** | |
-|          | +----------------------------------------+ |
-+----------+--------------------------------------------+
-|          | +--------------------------+               |
-|          | | Controllo al salvataggio |               |
-|          | +--------------------------+               |
-+----------+--------------------------------------------+
-|          | +------------------------------------+     |
-|          | | Situazione Modificata **Corretta** |     |
-|          | +------------------------------------+     |
-+----------+--------------------------------------------+
+- Situazione Iniziale
+- Situazione Modificata **Non Corretta**
+- Controllo al salvataggio
+- Situazione Modificata **Corretta**
 
 Se l’importo utilizzato è maggiore di zero, e quindi esistono dei compensi associati, posizionandosi sulla riga corrente, viene attivato il tab “Compensi Associati” nel quale è possibile visualizzare alcuni dettagli degli stessi compensi.
 

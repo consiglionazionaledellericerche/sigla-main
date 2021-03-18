@@ -274,6 +274,15 @@
 		enabledOnSearch="true"
 		/>
 	<fieldProperty
+		name="codiceAooIpa"
+		property="codiceAooIpa"
+		label="Codice AooIpa"
+		inputType="TEXT"
+		maxLength="100"
+		enabledOnEdit="true"
+		enabledOnSearch="true"
+		/>
+	<fieldProperty
 		name="cd_tipo_unita"
 		property="cd_tipo_unita"
 		label="Tipo Unita"
@@ -479,6 +488,8 @@
 	<formFieldProperty
 		name="id_funzione_pubblica" 
 		/>
+	<formFieldProperty
+		name="codiceAooIpa" />
 
 	<findFieldProperty
 		name="cd_area_ricerca2"
@@ -521,5 +532,7 @@
 	<findFieldProperty
 		name="id_funzione_pubblica" 
 		/>
+	<findFieldProperty
+			name="codiceAooIpa" />
 
 </bulkInfo>

@@ -17,15 +17,24 @@
 
 package it.cnr.contab.incarichi00.ejb;
 
+import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ComponentException;
+
 import javax.ejb.Remote;
+import java.math.BigDecimal;
 
 @Remote
 public interface IncarichiEstrazioneFpComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
-	public it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk completaIncaricoElencoFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk param1) throws it.cnr.jada.comp.ComponentException;
-	public void aggiornaIncarichiComunicatiFP(it.cnr.jada.UserContext param0, java.util.List<it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk> param1) throws it.cnr.jada.comp.ComponentException;
-	public void aggiornaIncarichiComunicatiFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk param1) throws it.cnr.jada.comp.ComponentException;
-	public it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk getIncarichiComunicatiAggFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk param1) throws it.cnr.jada.comp.ComponentException;	
-	public it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk getIncarichiComunicatiAggFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk param1) throws it.cnr.jada.comp.ComponentException;	
-	public java.util.List<it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk> getIncarichiComunicatiEliminatiFP(it.cnr.jada.UserContext param0, Integer param1, Integer param2) throws it.cnr.jada.comp.ComponentException;
-	public java.util.List<it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detBulk> getPagatoPerSemestre(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException;
+	it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk completaIncaricoElencoFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk param1) throws it.cnr.jada.comp.ComponentException;
+	void aggiornaIncarichiComunicatiFP(it.cnr.jada.UserContext param0, java.util.List<it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk> param1) throws it.cnr.jada.comp.ComponentException;
+	void aggiornaIncarichiComunicatiFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk param1) throws it.cnr.jada.comp.ComponentException;
+	it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk getIncarichiComunicatiAggFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.V_incarichi_elenco_fpBulk param1) throws it.cnr.jada.comp.ComponentException;
+	it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk getIncarichiComunicatiAggFP(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk param1) throws it.cnr.jada.comp.ComponentException;
+	java.util.List<it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fpBulk> getIncarichiComunicatiEliminatiFP(it.cnr.jada.UserContext param0, Integer param1, Integer param2) throws it.cnr.jada.comp.ComponentException;
+	java.util.List<it.cnr.contab.incarichi00.xmlfp.bulk.Incarichi_comunicati_fp_detBulk> getPagatoPerSemestre(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException;
+	BigDecimal getPagatoIncarico(it.cnr.jada.UserContext param0, it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk param1) throws it.cnr.jada.comp.ComponentException;
+	void comunicaPerla2018(UserContext userContext, Incarichi_repertorioBulk incaricoRepertorio) throws ComponentException;
+	void comunicaPerla2018(UserContext userContext, V_incarichi_elenco_fpBulk incaricoElenco) throws ComponentException;
 }

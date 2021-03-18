@@ -2,7 +2,7 @@
 --  DDL for View V_UNITA_ORGANIZZATIVA
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_UNITA_ORGANIZZATIVA" ("CD_UO", "ESERCIZIO", "ESERCIZIO_INIZIO", "CD_UNITA_ORGANIZZATIVA", "CD_PROPRIO_UNITA", "CD_TIPO_UNITA", "FL_CDS", "FL_UO_CDS", "FL_RUBRICA", "CD_UNITA_PADRE", "LIVELLO", "DS_UNITA_ORGANIZZATIVA", "PRC_COPERTURA_OBBLIG_2", "PRC_COPERTURA_OBBLIG_3", "DACR", "CD_AREA_RICERCA", "FL_PRESIDENTE_AREA", "CD_RESPONSABILE", "UTCR", "DUVA", "CD_RESPONSABILE_AMM", "UTUV", "PG_VER_REC", "ESERCIZIO_FINE", "CD_AREA_SCIENTIFICA", "ID_FUNZIONE_PUBBLICA") AS 
+  CREATE OR REPLACE FORCE VIEW "V_UNITA_ORGANIZZATIVA" ("CD_UO", "ESERCIZIO", "ESERCIZIO_INIZIO", "CD_UNITA_ORGANIZZATIVA", "CD_PROPRIO_UNITA", "CD_TIPO_UNITA", "FL_CDS", "FL_UO_CDS", "FL_RUBRICA", "CD_UNITA_PADRE", "LIVELLO", "DS_UNITA_ORGANIZZATIVA", "PRC_COPERTURA_OBBLIG_2", "PRC_COPERTURA_OBBLIG_3", "DACR", "CD_AREA_RICERCA", "FL_PRESIDENTE_AREA", "CD_RESPONSABILE", "UTCR", "DUVA", "CD_RESPONSABILE_AMM", "UTUV", "PG_VER_REC", "ESERCIZIO_FINE", "CD_AREA_SCIENTIFICA", "ID_FUNZIONE_PUBBLICA", "CODICEAOOIPA") AS
   SELECT
 --
 -- Date: 25/03/2010
@@ -65,7 +65,8 @@
           unita_organizzativa.utuv, unita_organizzativa.pg_ver_rec,
           unita_organizzativa.esercizio_fine,
           unita_organizzativa.cd_area_scientifica,
-          unita_organizzativa.id_funzione_pubblica
+          unita_organizzativa.id_funzione_pubblica,
+          unita_organizzativa.codiceAooIpa
      FROM v_unita_organizzativa_valida unita_organizzativa,
           v_unita_organizzativa_valida uo_cds
     WHERE uo_cds.fl_uo_cds = 'Y'
@@ -93,7 +94,8 @@
           unita_organizzativa.utuv, unita_organizzativa.pg_ver_rec,
           unita_organizzativa.esercizio_fine,
           unita_organizzativa.cd_area_scientifica,
-          unita_organizzativa.id_funzione_pubblica
+          unita_organizzativa.id_funzione_pubblica,
+          unita_organizzativa.codiceAooIpa
      FROM v_unita_organizzativa_valida unita_organizzativa
     WHERE unita_organizzativa.fl_uo_cds = 'N'
       AND cd_tipo_unita != 'SAC'               -- L'UO CDS al di fuori del SAC
@@ -117,7 +119,8 @@
           unita_organizzativa.utuv, unita_organizzativa.pg_ver_rec,
           unita_organizzativa.esercizio_fine,
           unita_organizzativa.cd_area_scientifica,
-          unita_organizzativa.id_funzione_pubblica
+          unita_organizzativa.id_funzione_pubblica,
+          unita_organizzativa.codiceAooIpa
      FROM v_unita_organizzativa_valida unita_organizzativa,
           v_unita_organizzativa_valida uo_rubrica,
           v_cdr_valido cdr,
@@ -164,7 +167,8 @@
           unita_organizzativa.utuv, unita_organizzativa.pg_ver_rec,
           unita_organizzativa.esercizio_fine,
           unita_organizzativa.cd_area_scientifica,
-          unita_organizzativa.id_funzione_pubblica
+          unita_organizzativa.id_funzione_pubblica,
+          unita_organizzativa.codiceAooIpa
      FROM v_unita_organizzativa_valida unita_organizzativa
     WHERE unita_organizzativa.fl_rubrica = 'N'
       AND cd_tipo_unita = 'SAC';
