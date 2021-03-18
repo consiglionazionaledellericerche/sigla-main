@@ -18,8 +18,13 @@
 package it.cnr.contab.pagopa.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
+import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.jada.bulk.OggettoBulk;
+import it.cnr.jada.util.ejb.EJBCommonServices;
 
+import java.util.Dictionary;
 import java.util.Optional;
 
 public class PendenzaPagopaBulk extends PendenzaPagopaBase {
@@ -32,8 +37,17 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public static final String STATO_ANNULLATO = "ANN";
 	private Unita_organizzativaBulk unitaOrganizzativa;
 	protected TerzoBulk terzo;
-	private TipoPendenzaPagopaBulk tipoScadenzaPagopa;
-
+	private TipoPendenzaPagopaBulk tipoPendenzaPagopa;
+	private final static Dictionary statoKeys;
+	static {
+		statoKeys = new it.cnr.jada.util.OrderedHashtable();
+		statoKeys.put(STATO_VALIDO,"Valido");
+		statoKeys.put(STATO_ANNULLATO,"Annullato");
+		statoKeys.put(STATO_CHIUSO,"Chiuso");
+	};
+	public final java.util.Dictionary getStatoKeys() {
+		return statoKeys;
+	}
 
 	public PendenzaPagopaBulk() {
 		super();
@@ -50,7 +64,20 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
 		this.unitaOrganizzativa = unitaOrganizzativa;
 	}
-	
+
+	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
+		setStato(STATO_VALIDO);
+		setUnitaOrganizzativa(new Unita_organizzativaBulk());
+		setCdUnitaOrganizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
+		return super.initializeForInsert(bp,context);
+	}
+
+	public OggettoBulk initializeForSearch(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
+		setUnitaOrganizzativa(new Unita_organizzativaBulk());
+		setCdUnitaOrganizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
+		return super.initializeForInsert(bp,context);
+	}
+
 	@Override
 	public String getCdUnitaOrganizzativa() {
 		return Optional.ofNullable(getUnitaOrganizzativa())
@@ -63,12 +90,12 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 		Optional.ofNullable(getUnitaOrganizzativa()).ifPresent(el->el.setCd_unita_organizzativa(cdUnitaOrganizzativa));
 	}
 	
-	public TipoPendenzaPagopaBulk getTipoScadenzaPagopa() {
-		return tipoScadenzaPagopa;
+	public TipoPendenzaPagopaBulk getTipoPendenzaPagopa() {
+		return tipoPendenzaPagopa;
 	}
 
-	public void setTipoScadenzaPagopa(TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk) {
-		this.tipoScadenzaPagopa = tipoPendenzaPagopaBulk;
+	public void setTipoPendenzaPagopa(TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk) {
+		this.tipoPendenzaPagopa = tipoPendenzaPagopaBulk;
 	}
 
 	public TerzoBulk getTerzo() {
@@ -80,15 +107,15 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	}
 
 	@Override
-	public Integer getIdTipoScadenzaPagopa() {
-		return Optional.ofNullable(getTipoScadenzaPagopa())
+	public Integer getIdTipoPendenzaPagopa() {
+		return Optional.ofNullable(getTipoPendenzaPagopa())
 					.map(TipoPendenzaPagopaBulk::getId)
 					.orElse(null);
 	}
 	
 	@Override
-	public void setIdTipoScadenzaPagopa(Integer idTipoScadenzaPagopa) {
-		Optional.ofNullable(getTipoScadenzaPagopa()).ifPresent(el->el.setId(idTipoScadenzaPagopa));
+	public void setIdTipoPendenzaPagopa(Integer idTipoPendenzaPagopa) {
+		Optional.ofNullable(getTipoPendenzaPagopa()).ifPresent(el->el.setId(idTipoPendenzaPagopa));
 	}
 	public void setCd_terzo(java.lang.Integer cd_terzo) {
 		Optional.ofNullable(getTerzo()).ifPresent(el->el.setCd_terzo(cd_terzo));

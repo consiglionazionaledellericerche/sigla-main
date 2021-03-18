@@ -19,6 +19,8 @@ package it.cnr.contab.docamm00.docs.bulk;
 
 import it.cnr.jada.persistency.Keyed;
 
+import java.sql.Timestamp;
+
 public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// CAMBIO DECIMAL(15,4) NOT NULL
 	private java.math.BigDecimal cambio;
@@ -35,6 +37,14 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// CD_MODALITA_PAG_UO_CDS VARCHAR(10) NOT NULL
 	private java.lang.String cd_modalita_pag_uo_cds;
 
+	public Long getIdPendenzaPagopa() {
+		return idPendenzaPagopa;
+	}
+
+	public void setIdPendenzaPagopa(Long idPendenzaPagopa) {
+		this.idPendenzaPagopa = idPendenzaPagopa;
+	}
+
 	// CD_TERMINI_PAG VARCHAR(10)
 	private java.lang.String cd_termini_pag;
 
@@ -43,6 +53,9 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 
 	// CD_TERZO DECIMAL(8,0) NOT NULL
 	private java.lang.Integer cd_terzo;
+
+	// CD_TERZO DECIMAL(8,0) NOT NULL
+	private java.lang.Long idPendenzaPagopa;
 
 	// CD_TERZO_UO_CDS DECIMAL(8,0) NOT NULL
 	private java.lang.Integer cd_terzo_uo_cds;
@@ -87,6 +100,8 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 	// DT_A_COMPETENZA_COGE TIMESTAMP NOT NULL
 	private java.sql.Timestamp dt_a_competenza_coge;
 
+	private java.sql.Timestamp dt_ordine;
+
 	// DT_CANCELLAZIONE TIMESTAMP
 	private java.sql.Timestamp dt_cancellazione;
 
@@ -104,6 +119,24 @@ public class Fattura_attivaBase extends Fattura_attivaKey implements Keyed {
 
 	// FL_CONGELATA CHAR(1) NOT NULL
 	private java.lang.Boolean fl_congelata;
+
+	private java.lang.Boolean fl_ordine_elettronico;
+
+	public Timestamp getDt_ordine() {
+		return dt_ordine;
+	}
+
+	public void setDt_ordine(Timestamp dt_ordine) {
+		this.dt_ordine = dt_ordine;
+	}
+
+	public Boolean getFl_ordine_elettronico() {
+		return fl_ordine_elettronico;
+	}
+
+	public void setFl_ordine_elettronico(Boolean fl_ordine_elettronico) {
+		this.fl_ordine_elettronico = fl_ordine_elettronico;
+	}
 
 	// FL_EXTRA_UE CHAR(1) NOT NULL
 	private java.lang.Boolean fl_extra_ue;

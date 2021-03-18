@@ -25,7 +25,7 @@ public class GestionePagopaBase extends GestionePagopaKey implements Keyed {
 	private static final long serialVersionUID = 1L;
 
 	// ID_TIPO_ATTO_BOLLO NUMBER NOT NULL
-	private Integer idTipoScadenzaPagopa;
+	private Integer idTipoPendenzaPagopa;
 
 	private java.sql.Timestamp dtIniValidita;
 	private java.sql.Timestamp dtFinValidita;
@@ -40,12 +40,12 @@ public class GestionePagopaBase extends GestionePagopaKey implements Keyed {
 		super(id);
 	}
 
-	public Integer getIdTipoScadenzaPagopa() {
-		return idTipoScadenzaPagopa;
+	public Integer getIdTipoPendenzaPagopa() {
+		return idTipoPendenzaPagopa;
 	}
 
-	public void setIdTipoScadenzaPagopa(Integer idTipoScadenzaPagopaBulk) {
-		this.idTipoScadenzaPagopa = idTipoScadenzaPagopaBulk;
+	public void setIdTipoPendenzaPagopa(Integer idTipoPendenzaPagopaBulk) {
+		this.idTipoPendenzaPagopa = idTipoPendenzaPagopaBulk;
 	}
 
 	public Timestamp getDtIniValidita() {

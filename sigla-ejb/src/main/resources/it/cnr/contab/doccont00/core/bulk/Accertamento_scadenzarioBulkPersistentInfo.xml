@@ -37,11 +37,6 @@
 			columnName="CD_CDS"
 			propertyName="accertamento.cds.cd_unita_organizzativa"
 			/>
-		<columnMapping
-				columnName="ID_SCADENZA_PAGOPA"
-				propertyName="scadenzaPagopa.id"
-				sqlTypeName="DECIMAL"
-				columnSize="15"/>
 	</defaultColumnMap>
 	<columnMap
 		name="IMPORTO_ASSOCIATO"
@@ -129,8 +124,6 @@
 	<persistentProperty
 		name="accertamento"
 		partOfOid="true" />
-	<persistentProperty
-			name="scadenzaPagopa"/>
 	<fetchPolicy
 		name="it.cnr.contab.doccont00.comp.AccertamentoComponent.edit">
 		<exclude pattern="*"/>

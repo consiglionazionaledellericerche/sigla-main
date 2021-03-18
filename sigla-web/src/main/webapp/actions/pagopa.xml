@@ -21,7 +21,7 @@
   </action>
 
   <businessProcess name="CRUDPendenzaPagopaBP" className="it.cnr.contab.pagopa.bp.CRUDPendenzaPagopaBP">
-    <forward name="default" path="/ordmag/pendenze_pagopa.jsp"/>
+    <forward name="default" path="/pagopa/pendenze_pagopa.jsp"/>
     <init-param name="bulkClassName" value="it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk"/>
     <init-param name="componentSessionName" value="CNRPAGOPA_EJB_ScadenzaPagopaComponentSession"/>
   </businessProcess>

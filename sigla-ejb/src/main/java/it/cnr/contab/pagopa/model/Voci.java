@@ -55,46 +55,6 @@ public class Voci {
         this.codEntrata = codEntrata;
     }
 
-    @JsonProperty("ibanAccredito")
-    public String getIbanAccredito() {
-        return ibanAccredito;
-    }
-
-    @JsonProperty("ibanAccredito")
-    public void setIbanAccredito(String ibanAccredito) {
-        this.ibanAccredito = ibanAccredito;
-    }
-
-    @JsonProperty("ibanAppoggio")
-    public String getIbanAppoggio() {
-        return ibanAppoggio;
-    }
-
-    @JsonProperty("ibanAppoggio")
-    public void setIbanAppoggio(String ibanAppoggio) {
-        this.ibanAppoggio = ibanAppoggio;
-    }
-
-    @JsonProperty("tipoContabilita")
-    public String getTipoContabilita() {
-        return tipoContabilita;
-    }
-
-    @JsonProperty("tipoContabilita")
-    public void setTipoContabilita(String tipoContabilita) {
-        this.tipoContabilita = tipoContabilita;
-    }
-
-    @JsonProperty("codiceContabilita")
-    public Integer getCodiceContabilita() {
-        return codiceContabilita;
-    }
-
-    @JsonProperty("codiceContabilita")
-    public void setCodiceContabilita(Integer codiceContabilita) {
-        this.codiceContabilita = codiceContabilita;
-    }
-
     @JsonProperty("tipoBollo")
     public String getTipoBollo() {
         return tipoBollo;

@@ -90,11 +90,6 @@
 			sqlTypeName="TIMESTAMP"
 			columnSize="7"
 			nullable="false" />
-		<columnMapping
-				columnName="ID_SCADENZA_PAGOPA"
-				propertyName="idScadenzaPagopa"
-				sqlTypeName="DECIMAL"
-				columnSize="15"/>
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -118,6 +113,4 @@
 		name="utuv" />
 	<persistentProperty
 		name="dt_scadenza_emissione_fattura" />
-	<persistentProperty
-			name="idScadenzaPagopa" />
 </SQLPersistentInfo>

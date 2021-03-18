@@ -20,7 +20,7 @@
  PendenzaPagopaBulk bulk = (PendenzaPagopaBulk) bp.getModel();%>
 
 </head>
-	<title>Posizioni debitorie PagoPA</title>
+	<title>Posizioni Debitorie PagoPA</title>
 <body class="Form">
 <%  bp.openFormWindow(pageContext);%>	 
 

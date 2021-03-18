@@ -3834,12 +3834,6 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
-    <changeSet author="gianfranco.gasparro" id="inventario-beni-add-index-targa">
-        <createIndex indexName="IX_INVENTARIO_BENI05" tableName="inventario_beni">
-            <column name="targa"/>
-        </createIndex>
-    </changeSet>
-
     <changeSet author="gianfranco.gasparro" id="inizio-gestione-pagopa">
         <createTable remarks="Tabella contenente le possibili tipologie di casistiche per le pendenze di Pagopa." tableName="tipo_pendenza_pagopa">
             <column name="id" remarks="Chiave Primaria." type="INT">
@@ -4210,6 +4204,32 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
         <createIndex indexName="IX_pendenza_pagopa03" tableName="pendenza_pagopa">
             <column name="cd_terzo"/>
         </createIndex>
-
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="modify_cu_2020">
+        <addColumn tableName="estrazione_cud">
+            <column name="gg_periodo_lavoro_sem1" remarks="Giorni Periodo Lavoro primo semestre per riduzione cuneo" type="BIGINT"/>
+            <column name="gg_periodo_lavoro_sem2" remarks="Giorni Periodo Lavoro secondo semestre per riduzione cuneo" type="BIGINT"/>
+            <column name="ult_detr_cuneo_fisc" remarks="ULTERIORE DETRAZIONE CUNEO FISCALE" type="numeric(15, 2)"/>
+            <column name="tratt_int_erog_cuneo_fisc" remarks="TRATTAMENTO INTEGRATIVO EROGATO CUNEO FISCALE" type="numeric(15, 2)"/>
+            <column name="tratt_int_cong_cuneo_fisc" remarks="TRATTAMENTO INTEGRATIVO RECUPERATO ENTRO CONGUAGLIO CUNEO FISCALE" type="numeric(15, 2)"/>
+        </addColumn>
+        <addColumn tableName="estrazione_cud_dett">
+            <column name="DETRAZIONE_RID_CUNEO_NETTO" remarks="DETRAZIONE RIDUZIONE CUNEO SU COMPENSI" type="numeric(15, 2)"/>
+            <column name="im_rid_cuneo_erogato" remarks="DETRAZIONE RIDUZIONE CUNEO EROGATA" type="numeric(15, 2)"/>
+            <column name="im_credito_irpef_dovuto" remarks="CREDITO IRPEF DOVUTO CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+            <column name="im_credito_irpef_goduto" remarks="CREDITO IRPEF GODUTO CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+            <column name="im_detr_rid_cuneo_dovuto_cong" remarks="DETRAZIONE RIDUZIONE CUNEO DOVUTA CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+            <column name="im_detr_rid_cuneo_goduto_cong" remarks="DETRAZIONE RIDUZIONE CUNEO GODUTA CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_fattura-attiva_ordine_elettr">
+        <addColumn tableName="FATTURA_ATTIVA">
+            <column name="FL_ORDINE_ELETTRONICO" type="VARCHAR(1)" remarks="Ordine Elettronico Y=Si N=No">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_ordine" remarks="Data Ordine" type="${date.type}">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

@@ -40,7 +40,6 @@ public class Accertamento_scadenzarioBase extends Accertamento_scadenzarioKey im
 
 	// IM_SCADENZA DECIMAL(15,2) NOT NULL
 	private java.math.BigDecimal im_scadenza;
-	private Long idScadenzaPagopa;
 
 public Accertamento_scadenzarioBase() {
 	super();
@@ -120,12 +119,5 @@ public void setIm_associato_doc_contabile(java.math.BigDecimal im_associato_doc_
 public void setIm_scadenza(java.math.BigDecimal im_scadenza) {
 	this.im_scadenza = im_scadenza;
 }
-	public Long getIdScadenzaPagopa() {
-		return idScadenzaPagopa;
-	}
-
-	public void setIdScadenzaPagopa(Long idScadenzaPagopa) {
-		this.idScadenzaPagopa = idScadenzaPagopa;
-	}
 
 }

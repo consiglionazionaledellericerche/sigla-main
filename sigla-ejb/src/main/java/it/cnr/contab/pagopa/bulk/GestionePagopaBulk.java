@@ -22,7 +22,7 @@ import java.util.Optional;
 public class GestionePagopaBulk extends GestionePagopaBase  {
 	private static final long serialVersionUID = 1L;
 
-	private TipoPendenzaPagopaBulk tipoScadenzaPagopa;
+	private TipoPendenzaPagopaBulk tipoPendenzaPagopa;
 	public GestionePagopaBulk() {
 		super();
 	}
@@ -32,24 +32,24 @@ public class GestionePagopaBulk extends GestionePagopaBase  {
 	}
 
 
-	public TipoPendenzaPagopaBulk getTipoScadenzaPagopa() {
-		return tipoScadenzaPagopa;
+	public TipoPendenzaPagopaBulk getTipoPendenzaPagopa() {
+		return tipoPendenzaPagopa;
 	}
 
-	public void setTipoScadenzaPagopa(TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk) {
-		this.tipoScadenzaPagopa = tipoPendenzaPagopaBulk;
+	public void setTipoPendenzaPagopa(TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk) {
+		this.tipoPendenzaPagopa = tipoPendenzaPagopaBulk;
 	}
 
 	@Override
-	public Integer getIdTipoScadenzaPagopa() {
-		return Optional.ofNullable(getTipoScadenzaPagopa())
+	public Integer getIdTipoPendenzaPagopa() {
+		return Optional.ofNullable(getTipoPendenzaPagopa())
 					.map(TipoPendenzaPagopaBulk::getId)
 					.orElse(null);
 	}
 	
 	@Override
-	public void setIdTipoScadenzaPagopa(Integer idScadenzaPagopaBulk) {
-		Optional.ofNullable(getTipoScadenzaPagopa()).ifPresent(el->el.setId(idScadenzaPagopaBulk));
+	public void setIdTipoPendenzaPagopa(Integer idPendenzaPagopaBulk) {
+		Optional.ofNullable(getTipoPendenzaPagopa()).ifPresent(el->el.setId(idPendenzaPagopaBulk));
 	}
 	
 }

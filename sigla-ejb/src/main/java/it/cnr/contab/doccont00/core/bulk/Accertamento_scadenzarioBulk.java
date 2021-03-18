@@ -53,7 +53,6 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	private Integer esercizio_doc_attivo;
 	private String cd_tipo_documento_amm;	
 	private java.lang.Long pg_doc_attivo;
-	private PendenzaPagopaBulk scadenzaPagopa;
 
 	private boolean fromDocAmm = false;	
 
@@ -460,24 +459,5 @@ public class Accertamento_scadenzarioBulk extends Accertamento_scadenzarioBase i
 	public java.math.BigDecimal getImportoNonIncassato() {
 		return Optional.ofNullable(getIm_scadenza()).map(map -> map).orElse(BigDecimal.ZERO).
 				subtract(Optional.ofNullable(getIm_associato_doc_contabile()).map(map -> map).orElse(BigDecimal.ZERO));
-	}
-	public PendenzaPagopaBulk getScadenzaPagopa() {
-		return scadenzaPagopa;
-	}
-
-	public void setScadenzaPagopa(PendenzaPagopaBulk scadenzaPagopa) {
-		this.scadenzaPagopa = scadenzaPagopa;
-	}
-
-	@Override
-	public Long getIdScadenzaPagopa() {
-		return Optional.ofNullable(getScadenzaPagopa())
-				.map(PendenzaPagopaBulk::getId)
-				.orElse(null);
-	}
-
-	@Override
-	public void setIdScadenzaPagopa(Long idScadenzaPagopa) {
-		Optional.ofNullable(getScadenzaPagopa()).ifPresent(el->el.setId(idScadenzaPagopa));
 	}
 }

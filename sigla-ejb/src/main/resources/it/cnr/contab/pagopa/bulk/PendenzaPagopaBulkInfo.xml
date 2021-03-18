@@ -63,20 +63,35 @@
 	<fieldProperty
 			name="partita_iva"
 			property="terzo.anagrafico.partita_iva"
-			readonlyProperty="true"
 			label="Partita IVA"
-			inputType="TEXT"
+			inputType="ROTEXT"
 			maxLength="20"
 			inputSize="20"
 			enabledOnSearch="true"
 			nullable="true"
 	/>
 	<fieldProperty
+			name="partita_iva"
+			property="terzo.anagrafico.partita_iva"
+			label="Partita IVA"
+			inputType="ROTEXT"
+			maxLength="20"
+			inputSize="20"
+			enabledOnSearch="true"
+			nullable="true"
+	/>
+	<fieldProperty
+			name="denominazione_sede"
+			property="terzo.denominazione_sede"
+			label="Ragione sociale"
+			inputType="TEXT"
+			enabledOnSearch="true"
+			caseSensitiveSearch="false"/>
+	<fieldProperty
 			name="codice_fiscale"
 			property="terzo.anagrafico.codice_fiscale"
-			readonlyProperty="true"
 			label="Codice Fiscale"
-			inputType="TEXT"
+			inputType="ROTEXT"
 			maxLength="20"
 			inputSize="20"
 			enabledOnSearch="true"
@@ -105,7 +120,7 @@
 		name="cdAvviso"
 		property="cdAvviso"
 		maxLength="50"
-		inputType="TEXT"
+		inputType="ROTEXT"
 		label="Codice Avviso"
 		inputCssClass=" w-100"
 		enabledOnSearch="true"
@@ -115,19 +130,30 @@
 			name="note"
 			property="note"
 			maxLength="2000"
-			cols="60"
-			rows="4"
+			cols="80"
+			rows="2"
 			inputType="TEXTAREA"
-			label="Descrizione"
+			label="Note"
 			enabledOnSearch="true"
 			enabledOnFreeSearch="true"
 			nullable="true" />
 	<fieldProperty
+			name="importoPendenza"
+			property="importoPendenza"
+			label="Importo"
+			inputType="TEXT"
+			formatName = "it.cnr.contab.util.EuroFormat"
+			maxLength="16"
+			inputSize="16"
+			enabledOnSearch="true"
+			nullable="false"
+	/>
+	<fieldProperty
 			name="descrizione"
 			property="descrizione"
 			maxLength="2000"
-			cols="60"
-			rows="4"
+			cols="80"
+			rows="3"
 			inputType="TEXTAREA"
 			nullable="false"
 			label="Descrizione"
@@ -136,7 +162,7 @@
 	<fieldProperty
 		name="cdIuv"
 		property="cdIuv"
-		inputType="TEXT"
+		inputType="ROTEXT"
 		inputSize="50"
 		maxLength="20"
 		enabledOnSearch="true"
@@ -146,6 +172,7 @@
 		property="dtScadenza"
 		inputType="TEXT"
 		inputSize="10"
+		nullable="false"
 		formatName="date_short"
 		enabledOnSearch="true"
 		label="Data Scadenza" />
@@ -167,10 +194,32 @@
 			maxLength="3"
 			enabledOnEdit="false"
 			nullable="false"
-			keysProperty="tipoPosizioneKeys"
 			label="Posizione" />
-	<formFieldProperty
-		name="id" />
+	<form name="searchtool" >
+		<formFieldProperty
+				name="esercizio" />
+		<formFieldProperty
+				name="cdAvviso" />
+		<formFieldProperty
+				name="descrizione"
+				inputSize="30" />
+		<formFieldProperty
+				name="importoPendenza" />
+	</form>
+	<form name="searchtool_terzo" >
+		<formFieldProperty
+				name="cdAvviso" />
+		<formFieldProperty
+				name="cd_terzo" />
+		<formFieldProperty
+				name="denominazione_sede"
+				inputSize="30"  />
+		<formFieldProperty
+				name="descrizione"
+				inputSize="30" />
+		<formFieldProperty
+				name="importoPendenza" />
+	</form>
 	<formFieldProperty
 		name="esercizio" />
 	<formFieldProperty
@@ -186,6 +235,8 @@
 			name="note"/>
 	<formFieldProperty
 			name="descrizione"/>
+	<formFieldProperty
+			name="importoPendenza"/>
 	<formFieldProperty
 		name="cdIuv"
 		label="Codice&lt;BR&gt;Iuv" />
@@ -203,36 +254,40 @@
 			name="partita_iva"
 	/>
 	<columnFieldProperty
-		name="id" />
-	<columnFieldProperty
 		name="esercizio" />
 	<columnFieldProperty
 		name="cdUnitaOrganizzativa" />
 	<columnFieldProperty
 			name="cd_terzo" />
 	<columnFieldProperty
+			name="denominazione_sede"
+	/>
+	<columnFieldProperty
+			name="codice_fiscale"
+	/>
+	<columnFieldProperty
+			name="partita_iva"
+	/>
+	<columnFieldProperty
+			name="importoPendenza" />
+	<columnFieldProperty
+			name="dtScadenza" />
+	<columnFieldProperty
 		name="cdAvviso" />
-	<columnFieldProperty
-			name="descrizione" />
-	<columnFieldProperty
-			name="note" />
 	<columnFieldProperty
 		name="cdIuv" />
 	<columnFieldProperty
-		name="dtScadenza" />
+			name="descrizione" />
 	<columnFieldProperty
 			name="stato" />
-	<columnFieldProperty
-			name="tipoPosizione" />
-
-	<findFieldProperty
-		name="id" />
 	<findFieldProperty
 			name="esercizio" />
 	<findFieldProperty
 		name="cdAvviso" />
 	<findFieldProperty
 			name="descrizione" />
+	<findFieldProperty
+			name="importoPendenza" />
 	<findFieldProperty
 			name="note" />
 	<findFieldProperty

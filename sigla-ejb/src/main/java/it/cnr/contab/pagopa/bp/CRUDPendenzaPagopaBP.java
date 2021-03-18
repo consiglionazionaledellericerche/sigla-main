@@ -18,7 +18,6 @@
 package it.cnr.contab.pagopa.bp;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.docamm00.bp.IDocumentoAmministrativoBP;
 import it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
@@ -71,7 +70,7 @@ public void delete(ActionContext context) throws BusinessProcessException {
 	int crudStatus = getModel().getCrudStatus();
 	try {
 			getModel().setToBeUpdated();
-			setModel( context, ((it.cnr.contab.doccont00.ejb.ObbligazionePGiroComponentSession) createComponentSession()).annullaObbligazione(context.getUserContext(),(ImpegnoPGiroBulk)getModel()));
+//			setModel( context, ((it.cnr.contab.doccont00.ejb.ObbligazionePGiroComponentSession) createComponentSession()).annullaObbligazione(context.getUserContext(),(ImpegnoPGiroBulk)getModel()));
 			setStatus(VIEW);			
 		} catch(Exception e) {
 			getModel().setCrudStatus(crudStatus);
@@ -82,10 +81,7 @@ public void delete(ActionContext context) throws BusinessProcessException {
  * getBringBackModel method comment.
  */
 public OggettoBulk getBringBackModel() {
-	
-	if (((ImpegnoPGiroBulk) getModel()).getObbligazione_scadenzarioColl().size() == 0)
-		return null;
-	return (Obbligazione_scadenzarioBulk)((ImpegnoPGiroBulk) getModel()).getObbligazione_scadenzarioColl().get(0);
+	return super.getBringBackModel();
 }
 /**
  * Inizializza il modello per la modifica.
@@ -112,10 +108,7 @@ protected void initialize(ActionContext actioncontext)
 
 public boolean isDeleteButtonEnabled()
 {
-	boolean isResiduo = false;
-	if ( getModel() != null && Numerazione_doc_contBulk.TIPO_IMP_RES.equals(((ImpegnoPGiroBulk)getModel()).getCd_tipo_documento_cont()))
-		isResiduo = true;
-	return super.isDeleteButtonEnabled() && !isResiduo;
+	return super.isDeleteButtonEnabled();
 }
 /**
  * Metodo per selezionare la scadenza dell'obbligazione.
@@ -129,12 +122,6 @@ public void selezionaScadenza(Obbligazione_scadenzarioBulk scadenza, ActionConte
  */
 public void update(ActionContext context) throws BusinessProcessException
 {
-	//se provengo da BP dei doc amm imposto il flag fromDocAmm a true
-	if ( IDocumentoAmministrativoBP.class.isAssignableFrom( getParent().getClass()))
-		((ImpegnoPGiroBulk)getModel()).setFromDocAmm( true );
-	else
-		((ImpegnoPGiroBulk)getModel()).setFromDocAmm( false );
-
 	super.update( context );
 }
 }

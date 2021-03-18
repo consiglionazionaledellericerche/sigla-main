@@ -33,7 +33,7 @@ public class PendenzaPagopaBase extends PendenzaPagopaKey implements Keyed {
 	
 	private String tipoPosizione;
 
-	private Integer idTipoScadenzaPagopa;
+	private Integer idTipoPendenzaPagopa;
 
 	public String getCdIuv() {
 		return cdIuv;
@@ -159,12 +159,12 @@ public class PendenzaPagopaBase extends PendenzaPagopaKey implements Keyed {
 		this.tipoPosizione = tipoPosizione;
 	}
 
-	public Integer getIdTipoScadenzaPagopa() {
-		return idTipoScadenzaPagopa;
+	public Integer getIdTipoPendenzaPagopa() {
+		return idTipoPendenzaPagopa;
 	}
 
-	public void setIdTipoScadenzaPagopa(Integer idTipoScadenzaPagopa) {
-		this.idTipoScadenzaPagopa = idTipoScadenzaPagopa;
+	public void setIdTipoPendenzaPagopa(Integer idTipoPendenzaPagopa) {
+		this.idTipoPendenzaPagopa = idTipoPendenzaPagopa;
 	}
 
 	public String getCdAvviso() {

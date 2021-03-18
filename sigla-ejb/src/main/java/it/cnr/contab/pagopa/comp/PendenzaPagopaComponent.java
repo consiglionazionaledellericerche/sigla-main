@@ -40,6 +40,7 @@ import it.cnr.contab.pagopa.model.Voci;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
@@ -74,7 +75,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 
 				scadenzaPagopaBulk.setCdAvviso(codiceAvviso);
 				scadenzaPagopaBulk.setCdIuv(iuv);
-				scadenzaPagopaBulk.setTipoScadenzaPagopa(tipoPendenzaPagopaBulk);
+				scadenzaPagopaBulk.setTipoPendenzaPagopa(tipoPendenzaPagopaBulk);
 				scadenzaPagopaBulk.setEsercizio(numerazioneProgressivoUnivoco.getEsercizio());
 				scadenzaPagopaBulk.setDtScadenza(dataScadenza);
 				scadenzaPagopaBulk.setTipoPosizione(PendenzaPagopaBulk.TIPO_POSIZIONE_CREDITORIA);
@@ -138,6 +139,10 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 				entrata.setIbanAppoggio("AA1");
 				voci.setEntrata(entrata);
 				pendenza.setVoci(Arrays.asList(voci));
+
+
+
+
 				return scadenzaPagopaBulk;
 			} else {
 				throw new it.cnr.jada.comp.ApplicationException("La gestione PagoPA non è indicata per la data odierna");
@@ -146,6 +151,40 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		} catch (Throwable t) {
 			throw handleException(t);
 		}
+	}
+
+	@Override
+	public OggettoBulk creaConBulk(UserContext userContext, OggettoBulk oggettobulk) throws ComponentException {
+		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk) oggettobulk;
+		try {
+			GestionePagopaHome home = (GestionePagopaHome) getHome(userContext, GestionePagopaBulk.class);
+			Timestamp dataOdierna = DateServices.getDataOdierna();
+			GestionePagopaBulk gestionePagopaBulk = home.findGestionePagopa(dataOdierna);
+			if (gestionePagopaBulk != null){
+				Numerazione_doc_ammBulk numerazioneProgressivoUnivoco = new Numerazione_doc_ammBulk();
+
+				TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk = getTipoScadenzaPagopaBulk(userContext, gestionePagopaBulk);
+
+
+				String iuv = generaIuv(userContext, null, dataOdierna, numerazioneProgressivoUnivoco, tipoPendenzaPagopaBulk);
+
+				String codiceAvviso = generaCodiceAvviso(tipoPendenzaPagopaBulk, iuv);
+
+				pendenzaPagopaBulk.setCdAvviso(codiceAvviso);
+				pendenzaPagopaBulk.setCdIuv(iuv);
+				pendenzaPagopaBulk.setTipoPendenzaPagopa(tipoPendenzaPagopaBulk);
+				pendenzaPagopaBulk.setEsercizio(numerazioneProgressivoUnivoco.getEsercizio());
+				pendenzaPagopaBulk.setTipoPosizione(PendenzaPagopaBulk.TIPO_POSIZIONE_CREDITORIA);
+				pendenzaPagopaBulk.setToBeCreated();
+			} else {
+				throw new it.cnr.jada.comp.ApplicationException("La gestione PagoPA non è indicata per la data odierna");
+			}
+
+		} catch (Throwable t) {
+			throw handleException(t);
+		}
+
+		return super.creaConBulk(userContext, oggettobulk);
 	}
 
 	private String generaCodiceAvviso(TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk, String iuv) {
@@ -158,7 +197,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 	}
 
 	private TipoPendenzaPagopaBulk getTipoScadenzaPagopaBulk(UserContext userContext, GestionePagopaBulk gestionePagopaBulk) throws ComponentException {
-		TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk = gestionePagopaBulk.getTipoScadenzaPagopa();
+		TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk = gestionePagopaBulk.getTipoPendenzaPagopa();
 		try {
 			tipoPendenzaPagopaBulk = (TipoPendenzaPagopaBulk) getHome(userContext, tipoPendenzaPagopaBulk).findByPrimaryKey(tipoPendenzaPagopaBulk);
 		} catch (PersistencyException e) {

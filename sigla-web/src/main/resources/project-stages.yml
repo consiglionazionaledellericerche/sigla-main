@@ -244,6 +244,12 @@ cnr:
 help:
   base:
     url: https://consiglionazionaledellericerche.github.io/sigla-main
+
+pagopa:
+  govpay:
+    base_url: http://govpay.test.si.cnr.it/govpay
+    username: gpadmin
+    password: bubbazza
 ---
 project:
   stage: demo-h2
