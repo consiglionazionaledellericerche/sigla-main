@@ -4180,34 +4180,6 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_doc_amm" remarks="Progressivo del documento amministrativo collegato" type="BIGINT"/>
         </addColumn>
     </changeSet>
-    <changeSet author="gianfranco.gasparro" id="ins-num-posizione-creditoria-pagopa">
-        <insert tableName="tipo_documento_amm">
-            <column name="cd_tipo_documento_amm" type="STRING" value="POS_CRED"/>
-            <column name="ds_tipo_documento_amm" type="STRING" value="Posizione Creditoria PagoPA"/>
-            <column name="ti_entrata_spesa" type="STRING" value="E"/>
-            <column name="fl_doc_generico" type="STRING" value="N"/>
-            <column name="fl_utilizzo_doc_generico" type="STRING" value="N"/>
-            <column name="fl_solo_partita_giro" type="STRING" value="N"/>
-            <column name="fl_manrev_utente" type="STRING" value="N"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="STRING" value="SYSTEM"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="STRING" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert>
-        <insert tableName="numerazione_doc_amm">
-            <column name="esercizio" type="NUMERIC" value="2020"/>
-            <column name="cd_cds" type="STRING" value="999"/>
-            <column name="cd_unita_organizzativa" type="STRING" value="999.000"/>
-            <column name="cd_tipo_documento_amm" type="STRING" value="POS_CRED"/>
-            <column name="corrente" type="NUMERIC" value="0"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="STRING" value="SYSTEM"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="STRING" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
-        </insert>
-    </changeSet>
     <changeSet author="gianfranco.gasparro" id="alter-pendenza_pagopa-add-codice_iuv">
         <addColumn tableName="pendenza_pagopa">
             <column name="cd_iuv" remarks="Codice IUV" type="VARCHAR(50)"/>
@@ -4250,5 +4222,33 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
                 <constraints nullable="true"/>
             </column>
         </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="ins-num-posizione-creditoria-pagopa">
+        <insert tableName="tipo_documento_amm">
+            <column name="cd_tipo_documento_amm" type="STRING" value="POS_CRED"/>
+            <column name="ds_tipo_documento_amm" type="STRING" value="Posizione Creditoria PagoPA"/>
+            <column name="ti_entrata_spesa" type="STRING" value="E"/>
+            <column name="fl_doc_generico" type="STRING" value="N"/>
+            <column name="fl_utilizzo_doc_generico" type="STRING" value="N"/>
+            <column name="fl_solo_partita_giro" type="STRING" value="N"/>
+            <column name="fl_manrev_utente" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="numerazione_doc_amm">
+            <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
+            <column name="cd_cds" type="STRING" value="999"/>
+            <column name="cd_unita_organizzativa" type="STRING" value="999.000"/>
+            <column name="cd_tipo_documento_amm" type="STRING" value="POS_CRED"/>
+            <column name="corrente" type="NUMERIC" value="0"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
