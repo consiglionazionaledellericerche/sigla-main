@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+	<fieldProperty
+		name="id"
+		property="id"
+		label="Id."
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		style="text-align: right"
+		nullable="false" />
+	<fieldProperty
+		name="esercizio"
+		property="esercizio"
+		label="Esercizio"
+		inputType="TEXT"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
+		nullable="false" />
+	<fieldProperty
+		name="findUnitaOrganizzativa"
+		property="unitaOrganizzativa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Unit&#224; organizzativa"
+		enabledOnInsert="false"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		enabledOnFreeSearch="false"/>
+	<fieldProperty
+			name="findTerzo"
+			property="terzo"
+			inputType="SEARCHTOOL"
+			formName="searchtool_large"
+			label="Terzo"
+			enabledOnSearch="true"
+			nullable="false"
+			CRUDBusinessProcessName="CRUDAnagraficaPersonaBP"/>
+	<fieldProperty
+			name="partita_iva"
+			property="terzo.anagrafico.partita_iva"
+			label="Partita IVA"
+			inputType="ROTEXT"
+			maxLength="20"
+			inputSize="20"
+			enabledOnSearch="true"
+			nullable="true"
+	/>
+	<fieldProperty
+			name="partita_iva"
+			property="terzo.anagrafico.partita_iva"
+			label="Partita IVA"
+			inputType="ROTEXT"
+			maxLength="20"
+			inputSize="20"
+			enabledOnSearch="true"
+			nullable="true"
+	/>
+	<fieldProperty
+			name="denominazione_sede"
+			property="terzo.denominazione_sede"
+			label="Ragione sociale"
+			inputType="TEXT"
+			enabledOnSearch="true"
+			caseSensitiveSearch="false"/>
+	<fieldProperty
+			name="codice_fiscale"
+			property="terzo.anagrafico.codice_fiscale"
+			label="Codice Fiscale"
+			inputType="ROTEXT"
+			maxLength="20"
+			inputSize="20"
+			enabledOnSearch="true"
+			nullable="true"
+	/>
+	<fieldProperty
+		name="cdUnitaOrganizzativa"
+		property="unitaOrganizzativa.cd_unita_organizzativa"
+		inputType="TEXT"
+		label="Unit&#224; organizzativa" />
+	<fieldProperty
+			name="cd_terzo"
+			property="terzo.cd_terzo"
+			inputType="TEXT"
+			label="Terzo" />
+	<fieldProperty
+		name="findTipoPendenzaPagopa"
+		property="tipoPendenzaPagopa"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		label="Tipo Pendenza"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="false"
+		nullable="false"/>
+	<fieldProperty
+		name="cdAvviso"
+		property="cdAvviso"
+		maxLength="50"
+		inputType="ROTEXT"
+		label="Codice Avviso"
+		inputCssClass=" w-100"
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"
+		nullable="false" />
+	<fieldProperty
+			name="note"
+			property="note"
+			maxLength="2000"
+			cols="80"
+			rows="2"
+			inputType="TEXTAREA"
+			label="Note"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			nullable="true" />
+	<fieldProperty
+			name="importoPendenza"
+			property="importoPendenza"
+			label="Importo"
+			inputType="TEXT"
+			formatName = "it.cnr.contab.util.EuroFormat"
+			maxLength="16"
+			inputSize="16"
+			enabledOnSearch="true"
+			nullable="false"
+	/>
+	<fieldProperty
+			name="descrizione"
+			property="descrizione"
+			maxLength="2000"
+			cols="80"
+			rows="3"
+			inputType="TEXTAREA"
+			nullable="false"
+			label="Descrizione"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"/>
+	<fieldProperty
+		name="cdIuv"
+		property="cdIuv"
+		inputType="ROTEXT"
+		inputSize="50"
+		maxLength="20"
+		enabledOnSearch="true"
+		label="Codice IUV" />
+	<fieldProperty
+		name="dtScadenza"
+		property="dtScadenza"
+		inputType="TEXT"
+		inputSize="10"
+		nullable="false"
+		formatName="date_short"
+		enabledOnSearch="true"
+		label="Data Scadenza" />
+	<fieldProperty
+			name="stato"
+			property="stato"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="3"
+			enabledOnEdit="false"
+			nullable="false"
+			keysProperty="statoKeys"
+			label="Stato" />
+	<fieldProperty
+			name="tipoPosizione"
+			property="tipoPosizione"
+			inputType="TEXT"
+			inputSize="10"
+			maxLength="3"
+			enabledOnEdit="false"
+			nullable="false"
+			label="Posizione" />
+	<form name="searchtool" >
+		<formFieldProperty
+				name="esercizio" />
+		<formFieldProperty
+				name="cdAvviso" />
+		<formFieldProperty
+				name="descrizione"
+				inputSize="30" />
+		<formFieldProperty
+				name="importoPendenza" />
+	</form>
+	<form name="searchtool_terzo" >
+		<formFieldProperty
+				name="cdAvviso" />
+		<formFieldProperty
+				name="cd_terzo" />
+		<formFieldProperty
+				name="denominazione_sede"
+				inputSize="30"  />
+		<formFieldProperty
+				name="descrizione"
+				inputSize="30" />
+		<formFieldProperty
+				name="importoPendenza" />
+	</form>
+	<formFieldProperty
+		name="esercizio" />
+	<formFieldProperty
+		name="findUnitaOrganizzativa" />
+	<formFieldProperty
+			name="findTerzo" />
+	<formFieldProperty
+		name="findTipoPendenzaPagopa" />
+	<formFieldProperty
+		name="cdAvviso"
+		label="Codice&lt;BR&gt;Avviso" />
+	<formFieldProperty
+			name="note"/>
+	<formFieldProperty
+			name="descrizione"/>
+	<formFieldProperty
+			name="importoPendenza"/>
+	<formFieldProperty
+		name="cdIuv"
+		label="Codice&lt;BR&gt;Iuv" />
+	<formFieldProperty
+		name="dtScadenza"
+		label="Data&lt;BR&gt;Scadenza" />
+	<formFieldProperty
+			name="stato" />
+	<formFieldProperty
+			name="tipoPosizione" />
+	<formFieldProperty
+			name="codice_fiscale"
+	/>
+	<formFieldProperty
+			name="partita_iva"
+	/>
+	<columnFieldProperty
+		name="esercizio" />
+	<columnFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<columnFieldProperty
+			name="cd_terzo" />
+	<columnFieldProperty
+			name="denominazione_sede"
+	/>
+	<columnFieldProperty
+			name="codice_fiscale"
+	/>
+	<columnFieldProperty
+			name="partita_iva"
+	/>
+	<columnFieldProperty
+			name="importoPendenza" />
+	<columnFieldProperty
+			name="dtScadenza" />
+	<columnFieldProperty
+		name="cdAvviso" />
+	<columnFieldProperty
+		name="cdIuv" />
+	<columnFieldProperty
+			name="descrizione" />
+	<columnFieldProperty
+			name="stato" />
+	<findFieldProperty
+			name="esercizio" />
+	<findFieldProperty
+		name="cdAvviso" />
+	<findFieldProperty
+			name="descrizione" />
+	<findFieldProperty
+			name="importoPendenza" />
+	<findFieldProperty
+			name="note" />
+	<findFieldProperty
+			name="cdIuv" />
+	<findFieldProperty
+		name="cdUnitaOrganizzativa" />
+	<findFieldProperty
+			name="cd_terzo" />
+	<findFieldProperty
+		name="stato" />
+	<findFieldProperty
+		name="dtScadenza" />
+	<findFieldProperty
+		name="tipoPosizione" />
+</bulkInfo>

@@ -841,6 +841,28 @@
 		enabledOnEdit="true"
 		enabledOnInsert="true"
 		enabledOnSearch="true" />
+	<fieldProperty
+			name="dt_ordine"
+			property="dt_ordine"
+			maxLength="10"
+			inputSize="10"
+			inputType="TEXT"
+			formatName="date_short"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="false"
+			nullable="true"
+			label="Data Ordine" />
+	<fieldProperty
+			name="fl_ordine_elettronico"
+			property="fl_ordine_elettronico"
+			inputType="CHECKBOX"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			label="Ordine Elettronico"
+			keysProperty="extra_ueKeys"
+			enabledOnEdit="true"/>
 
 	<findFieldProperty name="pg_fattura_attiva"/>
 	<findFieldProperty name="protocollo_iva" />	
@@ -873,7 +895,9 @@
 	<findFieldProperty name="codiceInvioSdi" />
 	<findFieldProperty name="codiceUnivocoUfficioIpa" />
 	<findFieldProperty name="dtConsegnaSdi" />
-	
+	<findFieldProperty name="dt_ordine" />
+	<findFieldProperty name="fl_ordine_elettronico" />
+
 	<formFieldProperty
 		name="statoFattElett" />
 	<formFieldProperty
@@ -1000,6 +1024,9 @@
 		name="statoInvioSdi" />
 	<formFieldProperty
 		name="noteInvioSdi" />
+	<formFieldProperty
+			name="dt_ordine" />
+	<formFieldProperty name="fl_ordine_elettronico" />
 
 	<formFieldProperty
 		name="sezionaliFlagsRadioGroup" />
@@ -1117,7 +1144,7 @@
 		name="dtConsegnaSdi" />
 	<columnFieldProperty
 		name="statoInvioSdi" />
-		
+
 	<columnSet
 		name="protocollazioneIvaSet">
 		<columnFieldProperty name="esercizio"/>

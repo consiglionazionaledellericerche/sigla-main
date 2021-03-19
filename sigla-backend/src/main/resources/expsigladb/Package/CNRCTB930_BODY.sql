@@ -1241,7 +1241,12 @@ PROCEDURE scriviFileQuadroSCSY
     inUtente VARCHAR2
    ) IS
 
-   aStringa VARCHAR2(4000);
+   aStringa_interna_sdoppia VARCHAR2(5000);
+   aStringa_sdoppia VARCHAR2(5000);
+   aStringa_prima_sdoppia VARCHAR2(5000);
+   aStringa_finale VARCHAR2(5000);
+   aStringa_anag VARCHAR2(5000);
+   aStringa VARCHAR2(5000);
    --mioCLOB_sc1 CLOB;
    --mioCLOB_sc2 CLOB;
    --aRecBframeBlob_sc1 BFRAME_BLOB%ROWTYPE;
@@ -1275,7 +1280,6 @@ PROCEDURE scriviFileQuadroSCSY
 BEGIN
    -------------------------------------------------------------------------------------------------
    BEGIN
-
       -- Valorizzazione costanti della chiave file -------------------------------------------------
       aContatore :=1;
       aTi_entita :=' ';
@@ -1296,38 +1300,6 @@ BEGIN
       aIndirizzo :=' ';
       aCodiceComuneDomicilio :=	' ';
       aIdentificativoFiscale :=' ';
-
-      /*aRecBframeBlob_sc1.cd_tipo:=IDTIPOBLOB;
-		  aRecBframeBlob_sc1.path:='fileout770/' || inEsercizio || '/';
-		  aRecBframeBlob_sc1.ds_file:='FILE OUTPUT ESTRAZIONE 770 SEMPLIFICATO - QUADRO '||inQuadro;
-		  aRecBframeBlob_sc1.ti_visibilita:='U';
-		  aRecBframeBlob_sc1.ds_utente:='FILE OUTPUT ESTRAZIONE 770';
-		  aRecBframeBlob_sc1.filename:='FILEOUT_770_SEMPLIFICATO_'||inQuadro||'1_'|| inRepID || '.DAT';
-
- 			IBMUTL005.ShIniCBlob(aRecBframeBlob_sc1.cd_tipo,
-                        aRecBframeBlob_sc1.path,
-                        aRecBframeBlob_sc1.filename,
-                        aRecBframeBlob_sc1.ti_visibilita,
-                        aRecBframeBlob_sc1.ds_file,
-                        aRecBframeBlob_sc1.ds_utente,
-                        inUtente,
-                        mioCLOB_sc1);
-
-  		aRecBframeBlob_sc2.cd_tipo:=IDTIPOBLOB;
-		  aRecBframeBlob_sc2.path:='fileout770/' || inEsercizio || '/';
-		  aRecBframeBlob_sc2.ds_file:='FILE OUTPUT ESTRAZIONE 770 SEMPLIFICATO - QUADRO '||inQuadro;
-		  aRecBframeBlob_sc2.ti_visibilita:='U';
-		  aRecBframeBlob_sc2.ds_utente:='FILE OUTPUT ESTRAZIONE 770';
-		  aRecBframeBlob_sc2.filename:='FILEOUT_770_SEMPLIFICATO_'||inQuadro||'2_'|| inRepID || '.DAT';
-
- 			IBMUTL005.ShIniCBlob(aRecBframeBlob_sc2.cd_tipo,
-                        aRecBframeBlob_sc2.path,
-                        aRecBframeBlob_sc2.filename,
-                        aRecBframeBlob_sc2.ti_visibilita,
-                        aRecBframeBlob_sc2.ds_file,
-                        aRecBframeBlob_sc2.ds_utente,
-                        inUtente,
-                        mioCLOB_sc2);             */
 
       -- Ciclo elaborazione dati 770 ---------------------------------------------------------------
     OPEN gen_cur FOR
@@ -1438,7 +1410,7 @@ BEGIN
               -- fino a 705 caratteri
 
                aStringa:= aStringa || LPAD(to_char(trunc(sysdate),'DDMMYYYY'), 8, '0'); -- data stampa
-               aStringa:= aStringa || RPAD('IL PRESIDENTE MASSIMO INGUSCIO', 50, ' ');
+               aStringa:= aStringa || RPAD('IL VICEPRESIDENTE LUCIO d''ALESSANDRO', 50, ' ');
                aStringa:= aStringa || RPAD(' ', 3, ' ');
 
                aStringa:= aStringa || LPAD('0', 6, '0'); -- num pagina
@@ -1455,7 +1427,7 @@ BEGIN
                aStringa:= aStringa || RPAD(' ', 24, ' ');
                aStringa:= aStringa || '0'; -- FLAG conferma certificazione ????
 
-               aStringa:= aStringa || RPAD(' ', 2222, ' ');
+               aStringa:= aStringa || RPAD(' ', 2722, ' ');
                aStringa:= aStringa || RPAD(' ', 1, ' ');-- flag validazione
                aStringa:= aStringa || RPAD(' ', 10, ' ');-- codice caricamento
                aStringa:= aStringa || RPAD(' ', 7, ' '); -- codice utente
@@ -1477,10 +1449,11 @@ BEGIN
                aStringa:= aStringa || RPAD(' ', 10, ' ');-- sezionamento 3
                --pipe.send_message('sc0');
 
-               IF LENGTH(aStringa) != 3500 THEN
+               IF LENGTH(aStringa) != 4000 THEN
                   IBMERR001.RAISE_ERR_GENERICO
                      ('Errore in lunghezza file in output tipo record 770 lunghezza sc0 ' || LENGTH(aStringa));
               	END IF;
+                aStringa_anag := aStringa;
              -- Scrittura CLOB
              	IBMUTL005.ShPutLine(aRecBframeBlob.cd_tipo,
                                  aRecBframeBlob.path,
@@ -1489,7 +1462,6 @@ BEGIN
                                  aStringa);
 
               -- Creazione del record d'estrazione del 770 SC1
-             aStringa:=NULL;
              aStringa:= ' SC1';
 	           aStringa:= aStringa || '80054330586     ';  -- codice fiscale dichiatrante
 	           aStringa:= aStringa || '                ';  -- codice fiscale sostituto
@@ -1525,10 +1497,14 @@ BEGIN
       	     aStringa:= aStringa || '    ';   -- anno
              aStringa:= aStringa || ' ';   -- anticipazione --cambiato su scarto di data manager
 
+             aStringa_prima_sdoppia := aStringa;
+             aStringa_sdoppia := null;
+             aStringa := '';
+
              if(aRecEstrazione770.cd_quadro='SC') then
               -- Se l'imponibile fiscale è superiore al lordo mettiamo l'imponibile fiscale su importo lordo
               -- caso Rivalsa Inps
-               if(aRecEstrazione770.IMPONIBILE_FI > aRecEstrazione770.im_Lordo) then
+                    if(aRecEstrazione770.IMPONIBILE_FI > aRecEstrazione770.im_Lordo) then
 	      	     		aStringa:= aStringa ||  LPAD((aRecEstrazione770.IMPONIBILE_FI * 100), 12, '0');   -- lordo
 	      	     	else
 	      	     		aStringa:= aStringa ||  LPAD((aRecEstrazione770.im_Lordo * 100), 12, '0');   -- lordo
@@ -1538,10 +1514,10 @@ BEGIN
 	             	ELSE
 										-- Trattamenti con convenzione
 		            	 IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) LIKE 'T017%' or SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) LIKE 'R017%') and aRecEstrazione770.im_Lordo = aRecEstrazione770.im_netto THEN
-	                    aStringa:=aStringa || LPAD((aRecEstrazione770.im_lordo*100), 12, '0');
-	               	 ELSE
-		                  aStringa:= aStringa ||  LPAD('0', 12, '0');
-	               	 END IF;
+	                        aStringa:=aStringa || LPAD((aRecEstrazione770.im_lordo*100), 12, '0');
+	               	     ELSE
+		                    aStringa:= aStringa ||  LPAD('0', 12, '0');
+	               	     END IF;
 	             	END IF;
 
 	             	If aRecEstrazione770.IM_NON_SOGG_RIT is not null and aRecEstrazione770.IM_NON_SOGG_RIT > 0 then
@@ -1550,35 +1526,42 @@ BEGIN
 	             		 		aStringa:= aStringa ||  LPAD('0', 12, '0');--somma non soggetta a ritenute
 	             		else
 	             				-- NON E' CM e Regime Forfettario e Legge 388 ma ha IM_NON_SOGG_RIT!=0
-	             		  	IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) not in ('T255','T255C','T256','T256C','T257','T257C','T259','T159',
-																																				'T155','T155C','T156','T156C','T157','T157C','T091','T091C','T259C')) then
+	             		  	IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) NOT in ('T255','T256','T257','T258','T259','T159',
+	             		  															'T155','T156','T157','T260','T019','T021','T091','T191')) then
 
-	                			aStringa:= aStringa || '7';
-	                			aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
+  	                			aStringa:= aStringa || '8';
+  	                			aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
 	                	  else
 		                	  -- CM e Regime Forfettario e Legge 388 ma ha IM_NON_SOGG_RIT!=0
-		                		IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T255C','T256','T256C','T257','T257C','T259','T159',
-																																					'T155','T155C','T156','T156C','T157','T157C','T091','T091C','T259C')) then
-																				aStringa:= aStringa || '7';
-																				aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_LORDO * 100), 12, '0');-- somma non soggetta a ritenute
-		                		else
-		                			aStringa:= aStringa || '0';
-		             		 			aStringa:= aStringa ||  LPAD('0', 12, '0');--somma non soggetta a ritenute
-		                		end if;
+  		                		IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T256','T257','T258','T259','T159',
+  																						'T155','T156','T157','T260','T019','T021','T091','T191')) then
+                                      aStringa_sdoppia := aStringa;
+          									aStringa:= aStringa || '7';
+          									aStringa:= aStringa ||  LPAD(((aRecEstrazione770.IM_LORDO - aRecEstrazione770.IM_NON_SOGG_RIT) * 100), 12, '0');-- somma non soggetta a ritenute
+
+          									aStringa_sdoppia:= aStringa_sdoppia || '8';
+          									aStringa_sdoppia:= aStringa_sdoppia ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
+		                		  else
+  		                			aStringa:= aStringa || '0';
+    		             		 		aStringa:= aStringa ||  LPAD('0', 12, '0');--somma non soggetta a ritenute
+		                  		end if;
 	                		end if;
 	                end if;
-	             Else
+	                Else
 									-- CM e Regime Forfettario e Legge 388
-	                 IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T255C','T256','T256C','T257','T257C','T259','T159',
-																																				'T155','T155C','T156','T156C','T157','T157C','T091','T091C','T259C')) then
-											aStringa:= aStringa || '7';
-											aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_LORDO * 100), 12, '0');-- somma non soggetta a ritenute
-										else
+	                    IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T256','T257','T258','T259','T159',
+                                                                            'T155','T156','T157','T260','T019','T021','T091','T191')) then
+							aStringa:= aStringa || '7';
+							aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_LORDO * 100), 12, '0');-- somma non soggetta a ritenute
+					    else
 	                		aStringa:= aStringa || '0';
-	             				aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
-	             			End if;
-	              End if;
-        	     aStringa:= aStringa ||  LPAD((aRecEstrazione770.IMPONIBILE_FI * 100), 12, '0');-- imponibile
+	             			aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
+	             	    End if;
+	                End if;
+        	        aStringa:= aStringa ||  LPAD((aRecEstrazione770.IMPONIBILE_FI * 100), 12, '0');-- imponibile
+                  if aStringa_sdoppia is not null then
+                    aStringa_sdoppia:= aStringa_sdoppia ||  LPAD((aRecEstrazione770.IMPONIBILE_FI * 100), 12, '0');-- imponibile
+                  end if;
             else --'SY'
                    aStringa:= aStringa ||  LPAD('0', 12, '0');--lordo
                    aStringa:= aStringa ||  LPAD('0', 12, '0'); -- somma no rit a regime convezionale
@@ -1586,6 +1569,11 @@ BEGIN
                    aStringa:= aStringa ||  LPAD('0', 12, '0');-- somma non soggetta a ritenute
                    aStringa:= aStringa ||  LPAD('0', 12, '0');-- imponibile
             end if;
+
+            aStringa_interna_sdoppia := aStringa;
+
+            aStringa := '';
+
       	    if(aRecEstrazione770.cd_quadro='SC') then
                IF  aRecEstrazione770.TI_RITENUTA = 'A' THEN
 		                aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_RITENUTE * 100), 12, '0');  -- Ritenute a titolo di acconto
@@ -1651,51 +1639,7 @@ BEGIN
 	           aStringa:= aStringa ||  LPAD('0', 120, '0');-- numerici non valorizzati
 
 	           aStringa:= aStringa || RPAD(' ', 16, ' ');-- CF operazioni straordinarie ??
-	           --aStringa:= aStringa || RPAD(' ', 16, ' ');-- CF operazioni straordinarie pignoramenti??
-	           --aStringa:= aStringa || RPAD(' ', 16, ' ');-- CF operazioni esproprio ??
-
-	           -- pignoramenti   ????
-	           --*****
-
-	          /*if(aRecEstrazione770.cd_quadro='SY') then
-				           aStringa:=aStringa || RPAD(SUBSTR(aCodiceFiscalePignorato, 1, 16), 16, ' ');   -- codice fiscale pignorato
-			      	     aStringa:= aStringa ||  LPAD((aRecEstrazione770.im_Lordo * 100), 12, '0');   -- somma erogata
-			             aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_RITENUTE * 100), 12, '0');  -- ritenuta operata
-			             If aRecEstrazione770.IM_RITENUTE > 0 then
-			                  aStringa:=aStringa || ' '; -- '0' -- Modificato su indicazione di Carla
-			             Else
-			                  aStringa:=aStringa || 'X'; -- '1'-- Modificato su indicazione di Carla
-			             End if;
-						 else
-						  	 aStringa:= aStringa || RPAD(' ', 16, ' ');-- CF  pignorato??
-		             aStringa:= aStringa ||  LPAD('0', 12, '0');-- Somme erogate
-								 aStringa:= aStringa ||  LPAD('0', 12, '0');-- ritenute
-								 aStringa:= aStringa || RPAD(' ', 1, ' '); --  ritenute non operate
-						 end if;	 */
-	           -- pignoramenti  riservato soggetto erogatore ????
-	           --aStringa:= aStringa || RPAD(' ', 16, ' ');-- CF  pignorato??
-             --aStringa:= aStringa ||  LPAD('0', 12, '0');-- Somme erogate
-						 --aStringa:= aStringa ||  LPAD('0', 12, '0');-- ritenute
-						 --aStringa:= aStringa || RPAD(' ', 1, ' '); --  ritenute non operate
-
-	           -- somme corrisposta a titolo di indennità  ??
-	           --aStringa:= aStringa ||  LPAD('0', 12, '0');-- Somme erogate
-						 --aStringa:= aStringa ||  LPAD('0', 12, '0');-- ritenute
-
-	           -- somme corrisposta altre indennità  ??
-	           --aStringa:= aStringa ||  LPAD('0', 12, '0');-- Somme erogate
-						 --aStringa:= aStringa ||  LPAD('0', 12, '0');-- ritenute
-
-						 -- somme corrisposta esproprio  ??
-	           --aStringa:= aStringa ||  LPAD('0', 12, '0');-- Somme erogate
-						 --aStringa:= aStringa ||  LPAD('0', 12, '0');-- ritenute
-
-						 -- somme corrisposta  altre indennità  e interessi??
-	           --aStringa:= aStringa ||  LPAD('0', 12, '0');-- Somme erogate
-						 --aStringa:= aStringa ||  LPAD('0', 12, '0');-- ritenute
-
-	           --aStringa:= aStringa || RPAD(' ', 2490, ' '); -- spazio
-	           aStringa:= aStringa || RPAD(' ', 2700, ' '); -- spazio
+	           aStringa:= aStringa || RPAD(' ', 3200, ' '); -- spazio
              aStringa:= aStringa || RPAD(' ', 1, ' ');-- flag validazione
              aStringa:= aStringa || RPAD(' ', 10, ' ');-- codice caricamento
              aStringa:= aStringa || RPAD(' ', 7, ' '); -- codice utente
@@ -1704,22 +1648,32 @@ BEGIN
              aStringa:= aStringa || RPAD(' ', 10, ' ');-- sezionamento 1
              aStringa:= aStringa || RPAD(' ', 10, ' ');-- sezionamento 2
              aStringa:= aStringa || RPAD(' ', 10, ' ');-- sezionamento 3
+
+             aStringa_finale := aStringa_prima_sdoppia||aStringa_interna_sdoppia||aStringa;
+
              --pipe.send_message('sc1');
-	           IF LENGTH(aStringa) != 3500 THEN
+	           IF LENGTH(aStringa_finale) != 4000 THEN
                   IBMERR001.RAISE_ERR_GENERICO
-                     ('Errore in lunghezza file in output tipo record 770 lunghezza sc1 ' || LENGTH(aStringa));
+                     ('Errore in lunghezza file in output tipo record 770 lunghezza sc1 ' || LENGTH(aStringa_finale));
              END IF;
-             -- Scrittura CLOB
-             /*IBMUTL005.ShPutLine(aRecBframeBlob_sc1.cd_tipo,
-                                 aRecBframeBlob_sc1.path,
-                                 aRecBframeBlob_sc1.filename,
-                                 mioCLOB_sc1,
-                                 aStringa);                   */
                IBMUTL005.ShPutLine(aRecBframeBlob.cd_tipo,
                                  aRecBframeBlob.path,
                                  aRecBframeBlob.filename,
                                  mioCLOB,
-                                 aStringa);
+                                 aStringa_finale);
+                if aStringa_sdoppia is not null then
+                   IBMUTL005.ShPutLine(aRecBframeBlob.cd_tipo,
+                                     aRecBframeBlob.path,
+                                     aRecBframeBlob.filename,
+                                     mioCLOB,
+                                     aStringa_anag);
+                    aStringa_finale := aStringa_prima_sdoppia||aStringa_sdoppia||aStringa;
+                    IBMUTL005.ShPutLine(aRecBframeBlob.cd_tipo,
+                                     aRecBframeBlob.path,
+                                     aRecBframeBlob.filename,
+                                     mioCLOB,
+                                     aStringa_finale);
+                end if;
 
 			-- nuovo sc2 21/02/2017
 			 if(aRecEstrazione770.cd_quadro='SY') then
@@ -1788,7 +1742,7 @@ BEGIN
 	           aStringa:= aStringa ||  LPAD('0', 12, '0');-- Somme erogate
 						 aStringa:= aStringa ||  LPAD('0', 12, '0');-- ritenute
 
-	           aStringa:= aStringa || RPAD(' ', 2990, ' '); -- spazio
+	           aStringa:= aStringa || RPAD(' ', 3490, ' '); -- spazio
 	           aStringa:= aStringa || RPAD(' ', 1, ' ');-- flag validazione
              aStringa:= aStringa || RPAD(' ', 10, ' ');-- codice caricamento
              aStringa:= aStringa || RPAD(' ', 7, ' '); -- codice utente
@@ -1798,16 +1752,10 @@ BEGIN
              aStringa:= aStringa || RPAD(' ', 10, ' ');-- sezionamento 2
              aStringa:= aStringa || RPAD(' ', 10, ' ');-- sezionamento 3
              --pipe.send_message('sc1');
-	           IF LENGTH(aStringa) != 3500 THEN
+	           IF LENGTH(aStringa) != 4000 THEN
                   IBMERR001.RAISE_ERR_GENERICO
                      ('Errore in lunghezza file in output tipo record 770 lunghezza sc2 ' || LENGTH(aStringa));
              END IF;
-              -- Scrittura CLOB
-            /* IBMUTL005.ShPutLine(aRecBframeBlob_sc2.cd_tipo,
-                                 aRecBframeBlob_sc2.path,
-                                 aRecBframeBlob_sc2.filename,
-                                 mioCLOB_sc2,
-                                 aStringa);*/
                   IBMUTL005.ShPutLine(aRecBframeBlob.cd_tipo,
                                  aRecBframeBlob.path,
                                  aRecBframeBlob.filename,
@@ -1937,14 +1885,6 @@ BEGIN
 
    CLOSE gen_cur;
    END;
-   /*IBMUTL005.ShCloseClob(aRecBframeBlob_sc1.cd_tipo,
- 		   	                 aRecBframeBlob_sc1.path,
-                         aRecBframeBlob_sc1.filename,
-			                   mioCLOB_sc1);
-	IBMUTL005.ShCloseClob(aRecBframeBlob_sc2.cd_tipo,
- 		   	                 aRecBframeBlob_sc2.path,
-                         aRecBframeBlob_sc2.filename,
-			                   mioCLOB_sc2);			                   */
 END scriviFileQuadroSCSY;
 
 -- =================================================================================================

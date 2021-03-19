@@ -509,7 +509,7 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 						descrizione = fattura.getDs_fattura_attiva();
 					}
 					List<String> listaCausali = new ArrayList<String>();
-					if (fattura.getRiferimento_ordine() != null){
+					if (fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() == null){
 						if (!descrizione.equals("")){
 							descrizione += "  ";
 						} 
@@ -535,16 +535,17 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 					datiGeneraliDocumento.getCausale().addAll(listaCausali);
 					
 					datiGenerali.setDatiGeneraliDocumento(datiGeneraliDocumento);
-					
+
 					DatiBeniServiziType datiBeniServizi = factory.createDatiBeniServiziType();
 					List<DettaglioLineeType> listaDettagli = new ArrayList<DettaglioLineeType>();
 					List<RiepilogoPerAliquotaIVA> listaRiepilogo = new ArrayList<DocAmmFatturazioneElettronicaComponent.RiepilogoPerAliquotaIVA>();
 					HashMap<ContrattoBulk, List<Integer>> mappaContratti = new HashMap<ContrattoBulk, List<Integer>>();
 					HashMap<Fattura_attivaBulk,List<Integer>> dettagliNoteSenzaContratto = new HashMap<Fattura_attivaBulk, List<Integer>>();
 					HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>> mappaDocumentiCollegati = new HashMap<Fattura_attivaBulk, HashMap<ContrattoBulk, List<Integer>>>();
+					List<Integer> listaTutteLinee = new ArrayList<>();
 					for (Iterator<Fattura_attiva_rigaBulk> i= dettaglio.iterator(); i.hasNext();) {
 						Fattura_attiva_rigaBulk riga= (Fattura_attiva_rigaBulk) i.next();
-//						if (!esisteBollo || !isRigaFatturaConBollo(userContext, riga)){
+						listaTutteLinee.add(riga.getProgressivo_riga().intValue());
 							DettaglioLineeType rigaFattura = factory.createDettaglioLineeType();
 							rigaFattura.setNumeroLinea(riga.getProgressivo_riga().intValue());
 							if (riga.getDs_riga_fattura() != null){
@@ -572,12 +573,43 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 							}
 							preparaDatiContratto(userContext, mappaContratti, riga);
 							impostaDatiPerRiepilogoDatiIva(listaRiepilogo, riga);
-//						}
 					}
 					datiBeniServizi.getDettaglioLinee().addAll(listaDettagli);
 
 					impostaDatiContratto(factory, datiGenerali, mappaContratti);
 					impostaDatiDocumentiCollegati(factory, datiGenerali, mappaDocumentiCollegati, dettagliNoteSenzaContratto);
+
+					if (!fattura.isFatturaEstera() && fattura.getRiferimento_ordine() != null && fattura.getDt_ordine() != null){
+						DatiDocumentiCorrelatiType datiOrdineAcquisto = factory.createDatiDocumentiCorrelatiType();
+						datiOrdineAcquisto.getRiferimentoNumeroLinea().addAll(listaTutteLinee);
+						datiOrdineAcquisto.setData(convertDateToXmlGregorian(fattura.getDt_ordine()));
+						datiOrdineAcquisto.setIdDocumento(substring(fattura.getRiferimento_ordine(),20));
+						String soggettoOrdine = null;
+						if (!fattura.getFl_ordine_elettronico()){
+							soggettoOrdine = "#NO#";
+						}  else {
+							if (fattura.getCodiceUnivocoUfficioIpa() != null){
+								soggettoOrdine = "#0201:"+fattura.getCodiceUnivocoUfficioIpa()+"#";
+							} else {
+								if (fattura.getPartita_iva() != null){
+									soggettoOrdine = "#9906:";
+								} else {
+									soggettoOrdine = "#9907:";
+								}
+								if (fattura.getCodiceDestinatarioFatt() != null){
+									soggettoOrdine += fattura.getCodiceDestinatarioFatt();
+								} else if (fattura.getPecFatturaElettronica() != null) {
+									soggettoOrdine += fattura.getPecFatturaElettronica();
+								} else {
+									soggettoOrdine += datiTrasmissione.getCodiceDestinatario();
+								}
+									soggettoOrdine += "#";
+							}
+						}
+						datiOrdineAcquisto.setCodiceCommessaConvenzione(soggettoOrdine);
+						datiGenerali.getDatiOrdineAcquisto().add(datiOrdineAcquisto);
+					}
+
 
 					fatturaBodyType.setDatiGenerali(datiGenerali);
 
@@ -892,13 +924,17 @@ public class DocAmmFatturazioneElettronicaComponent extends CRUDComponent{
 	}
 	
 	private String substring80(String rit) {
-		return rit.length() > 80 ? rit.substring(0,80) : rit;
+		return substring(rit, 80 );
 	}
 
 	private String substring60(String rit) {
-		return rit.length() > 60 ? rit.substring(0,60) : rit;
+		return substring(rit, 60 );
 	}
-	
+
+	private String substring(String rit, int caratteri) {
+		return rit.length() > caratteri ? rit.substring(0,caratteri) : rit;
+	}
+
 	private IndirizzoType impostaIndirizzo(UserContext userContext, ObjectFactory factory, TerzoBulk terzo, Fattura_attivaBulk fattura) throws ComponentException, PersistencyException{
 		IndirizzoType indirizzoCedente = factory.createIndirizzoType();
 		ComuneBulk comune = terzo.getComune_sede();

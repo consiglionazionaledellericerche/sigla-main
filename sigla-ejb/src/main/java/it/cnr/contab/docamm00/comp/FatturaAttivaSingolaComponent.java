@@ -70,7 +70,6 @@ import it.cnr.jada.comp.*;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.*;
-import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.SendMail;
 import it.cnr.jada.util.ejb.EJBCommonServices;
@@ -194,6 +193,22 @@ public class FatturaAttivaSingolaComponent
                 fattura_attiva.setFattura_attiva_accertamentiHash(newAccertamentiHash);
                 for (java.util.Enumeration e = ((AccertamentiTable) newAccertamentiHash.clone()).keys(); e.hasMoreElements(); ) {
                     Accertamento_scadenzarioBulk scadenza = (Accertamento_scadenzarioBulk) e.nextElement();
+/*
+                    if (scadenza.getCrudStatus() == 5){
+                        ScadenzaPagopaComponentSession pagopaComponent = (ScadenzaPagopaComponentSession) it.cnr.jada.util.ejb.EJBCommonServices.createEJB("CNRPAGOPA_EJB_ScadenzaPagopaComponentSession", ScadenzaPagopaComponentSession.class);
+                        try {
+                            ScadenzaPagopaBulk scadenzaPagopa = pagopaComponent.generaPosizioneDebitoria(userContext, fattura_attiva, scadenza.getDt_scadenza_incasso(), scadenza.getIm_scadenza());
+                            scadenzaPagopa = (ScadenzaPagopaBulk) super.creaConBulk(userContext, scadenzaPagopa);
+                            for (java.util.Enumeration e1 = ((AccertamentiTable) fattura_attiva.getFattura_attiva_accertamentiHash()).keys(); e1.hasMoreElements(); ) {
+                                Accertamento_scadenzarioBulk scadenzaFattura = (Accertamento_scadenzarioBulk) e1.nextElement();
+                                scadenzaFattura.setScadenzaPagopa(scadenzaPagopa);
+                                scadenzaFattura.setToBeUpdated();
+                            }
+                        } catch (RemoteException remoteException) {
+                            throw  new ComponentException(remoteException);
+                        }
+                    }
+*/
                     scadenza.setIm_associato_doc_amm(calcolaTotaleAccertamentoPer(userContext, scadenza, fattura_attiva));
                     updateImportoAssociatoDocAmm(userContext, scadenza);
                 }
@@ -802,6 +817,7 @@ public class FatturaAttivaSingolaComponent
 
             Unita_organizzativa_enteBulk uoEnte = (Unita_organizzativa_enteBulk) getHome(userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
             Numerazione_doc_ammBulk numerazioneProgressivoUnivoco = new Numerazione_doc_ammBulk(fattura_attiva, uoEnte);
+            numerazioneProgressivoUnivoco.setCd_tipo_documento_amm(Numerazione_doc_ammBulk.TIPO_UNIVOCO_FATTURA_ATTIVA);
             fattura_attiva.setProgrUnivocoAnno(progressiviSession.getNextPG(userContext, numerazioneProgressivoUnivoco));
         } catch (Throwable t) {
             throw handleException(fattura_attiva, t);

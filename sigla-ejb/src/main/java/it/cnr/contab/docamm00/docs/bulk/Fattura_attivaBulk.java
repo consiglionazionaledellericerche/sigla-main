@@ -42,6 +42,7 @@ import it.cnr.contab.doccont00.core.bulk.IScadenzaDocumentoContabileBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.inventario00.docs.bulk.Ass_inv_bene_fatturaBulk;
 import it.cnr.contab.inventario01.bulk.Buono_carico_scaricoBulk;
+import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
 import it.cnr.contab.util00.bulk.storage.AllegatoGenericoBulk;
@@ -255,8 +256,19 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	private Fattura_attivaBulk fattura_attiva;
 	@JsonIgnore
 	protected AnagraficoBulk anagrafico;
+
+	public PendenzaPagopaBulk getPendenzaPagopa() {
+		return pendenzaPagopa;
+	}
+
+	public void setPendenzaPagopa(PendenzaPagopaBulk pendenzaPagopa) {
+		this.pendenzaPagopa = pendenzaPagopa;
+	}
+
 	@JsonIgnore
 	protected TerzoBulk cliente;
+	@JsonIgnore
+	protected PendenzaPagopaBulk pendenzaPagopa;
 	@JsonIgnore
 	protected TerzoBulk terzo_uo;
 	@JsonIgnore
@@ -604,7 +616,13 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 			return null;
 		return cliente.getCd_terzo();
 	}
-	/* 
+	public java.lang.Long getIdPendenzaPagopa() {
+		PendenzaPagopaBulk pendenzaPagopaBulk = this.getPendenzaPagopa();
+		if (pendenzaPagopaBulk == null)
+			return null;
+		return pendenzaPagopaBulk.getId();
+	}
+	/*
 	 * Getter dell'attributo cd_terzo_uo_cds
 	 */
 	public java.lang.Integer getCd_terzo_uo_cds() {
@@ -687,7 +705,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (5/15/2002 10:50:29 AM)
-	 * @param docCont it.cnr.contab.doccont00.core.bulk.IDocumentoContabileBulk
 	 */
 	public it.cnr.jada.bulk.PrimaryKeyHashMap getDefferredSaldi() {
 		return deferredSaldi;
@@ -1179,6 +1196,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		if (getFl_intra_ue()==null) setFl_intra_ue(Boolean.FALSE);
 		if (getFl_liquidazione_differita()==null) setFl_liquidazione_differita(Boolean.FALSE);
 		if (getFl_stampa()==null) setFl_stampa(Boolean.FALSE);
+		if (getFl_ordine_elettronico()==null) setFl_ordine_elettronico(Boolean.FALSE);
 		setFl_congelata(Boolean.FALSE);
 
 		if (getCambio()==null) setCambio(new java.math.BigDecimal("1"));
@@ -1209,6 +1227,7 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		//if (getFl_intra_ue()==null) setFl_intra_ue(Boolean.FALSE);
 		//if (getFl_liquidazione_differita()==null) setFl_liquidazione_differita(Boolean.FALSE);
 		if (getFl_stampa()==null) setFl_stampa(Boolean.FALSE);
+		if (getFl_ordine_elettronico()==null) setFl_ordine_elettronico(Boolean.FALSE);
 
 		if (getCambio()==null) setCambio(new java.math.BigDecimal("1"));
 
@@ -1574,7 +1593,10 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 	public void setCd_terzo(java.lang.Integer cd_terzo) {
 		this.getCliente().setCd_terzo(cd_terzo);
 	}
-	/* 
+	public void setIdPendenzaPagopa(java.lang.Long idPendenzaPagopa) {
+		this.getPendenzaPagopa().setId(idPendenzaPagopa);
+	}
+	/*
 	 * Setter dell'attributo cd_terzo_uo_cds
 	 */
 	public void setCd_terzo_uo_cds(java.lang.Integer cd_terzo_uo_cds) {

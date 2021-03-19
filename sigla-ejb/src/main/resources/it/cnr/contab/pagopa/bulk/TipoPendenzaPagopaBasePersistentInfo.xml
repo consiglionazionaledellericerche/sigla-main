@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.pagopa.bulk.TipoPendenzaPagopaBase"
+	keyClassName="it.cnr.contab.pagopa.bulk.TipoPendenzaPagopaKey"
+	homeClassName="it.cnr.contab.pagopa.bulk.TipoPendenzaPagopaHome" >
+	<defaultColumnMap
+		tableName="TIPO_PENDENZA_PAGOPA" >
+		<columnMapping
+			columnName="DESCRIZIONE"
+			propertyName="descrizione"
+			sqlTypeName="VARCHAR"
+			columnSize="2000"
+			nullable="false" />
+		<columnMapping
+				columnName="AUX_DIGIT"
+				propertyName="auxDigit"
+				sqlTypeName="DECIMAL"
+				columnSize="1"
+				nullable="false"/>
+		<columnMapping
+				columnName="APPLICATION_CODE"
+				propertyName="applicationCode"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+			columnName="APPLICATION_CODE_DEFAULT"
+			propertyName="applicationCodeDefault"
+			sqlTypeName="VARCHAR"
+			columnSize="2" />
+		<columnMapping
+				columnName="CODICE_SEGREGAZIONE"
+				propertyName="codiceSegregazione"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+				columnName="IUV_CHECK_DIGIT"
+				propertyName="iuvCheckDigit"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				nullable="false"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+		<columnMapping
+				columnName="LUNGHEZZA_IUV_BASE"
+				propertyName="lunghezzaIuvBase"
+				sqlTypeName="DECIMAL"
+				columnSize="2"
+				nullable="false"/>
+		<columnMapping
+				columnName="DIVISORE_CHECK_DIGIT"
+				propertyName="divisoreCheckDigit"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="false"/>
+		<columnMapping
+				columnName="LUNGHEZZA_IUV"
+				propertyName="lunghezzaIuv"
+				sqlTypeName="DECIMAL"
+				columnSize="2"
+				nullable="false"/>
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="descrizione" />
+	<persistentProperty
+		name="auxDigit" />
+	<persistentProperty
+		name="applicationCode" />
+	<persistentProperty
+		name="applicationCodeDefault" />
+	<persistentProperty
+		name="codiceSegregazione" />
+	<persistentProperty
+		name="iuvCheckDigit" />
+	<persistentProperty
+	    name="lunghezzaIuvBase" />
+	<persistentProperty
+			name="lunghezzaIuv" />
+	<persistentProperty
+			name="divisoreCheckDigit" />
+	<persistentProperty
+		name="pg_ver_rec" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="utuv" />
+</SQLPersistentInfo>

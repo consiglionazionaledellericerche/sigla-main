@@ -39,6 +39,7 @@ import it.cnr.contab.docamm00.docs.bulk.Fattura_passivaHome;
 import it.cnr.contab.doccont00.service.DocumentiContabiliService;
 import it.cnr.contab.incarichi00.bp.CRUDIncarichiProceduraBP;
 import it.cnr.contab.incarichi00.bulk.Incarichi_repertorioBulk;
+import it.cnr.contab.incarichi00.bulk.VIncarichiAssRicBorseStBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.missioni00.docs.bulk.MissioneHome;
 import it.cnr.contab.service.SpringUtil;
@@ -2566,8 +2567,30 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                     personaId = Optional.ofNullable(aceService.getPersonaId(anagraficoBulk.getCodice_fiscale()));
                 } catch (FeignException _ex) {
                 }
+                List<RapportoBulk> rapportiValidi = new LinkedList<>();
+                boolean isExDipendente = false;
+                for (Object obj : anagraficoBulk.getRapporti()){
+                    RapportoBulk rapportoBulk = (RapportoBulk) obj;
+                    Tipo_rapportoBulk tipo_rapportoBulk = (Tipo_rapportoBulk) getHome(userContext, Tipo_rapportoBulk.class).findByPrimaryKey(rapportoBulk.getTipo_rapporto());
+                    if (tipo_rapportoBulk.isDipendente()){
+                        isExDipendente = true;
+                    }
+                    if ((rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
+                            rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente()  &&
+                            RapportoBulk.TIPOCONTRATTO_ACE.containsKey(tipo_rapportoBulk.getCd_tipo_rapporto())){
+                        rapportiValidi.add(rapportoBulk);
+                    }
+                }
+
                 if (!personaId.isPresent()) {
-                    SendMail.sendErrorMail("Invio Dati ACE: Codice fiscale "  + anagraficoBulk.getCodice_fiscale() +" non trovato.", "Per il codice fiscale: "  + anagraficoBulk.getCodice_fiscale() +" non è stata trovata la persona in ACE");
+                    for (RapportoBulk rapportoBulk : rapportiValidi){
+                        if (rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.BORSA_DI_STUDIO) ||
+                                rapportoBulk.getCd_tipo_rapporto().equals(VIncarichiAssRicBorseStBulk.ASSEGNI_DI_RICERCA)){
+                            SendMail.sendErrorMail("Invio Dati ACE: Codice fiscale "  + anagraficoBulk.getCodice_fiscale() +" non trovato.", "Per il codice fiscale: "  + anagraficoBulk.getCodice_fiscale() +" non è stata trovata la persona in ACE");
+                            break;
+                        }
+                    }
+
                 } else {
                     PersonaWebDto personaWebDto = aceService.personaById(new Integer(personaId.get()));
                     try {
@@ -2583,32 +2606,12 @@ public class AnagraficoComponent extends UtilitaAnagraficaComponent implements I
                             params.put("tipoAppartenenza", TipoAppartenenza.SEDE);
                             personeEO = aceService.personaEntitaOrganizzativaFind(params)
                                     .stream().sorted(Comparator.comparing(PersonaEntitaOrganizzativaWebDto::getInizioValidita)).collect(Collectors.toList());
-
-/*                            String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
-                             logger.error(error);
-                            SendMail.sendErrorMail("Invio Dati ACE: Appartenenza non trovata per la persona "  + personaId.get() , "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE");*/
                         }
-                        //else {
-// Prendo l'ultima appartenenza valida dopo averla ordinata
                         if (personeEO == null || personeEO.isEmpty()){
                             String error = "Per la persona: "  + personaId.get() +" Anagrafico: "+anagraficoBulk.getCd_anag()+" non è stata trovata l'appartenenza in ACE";
                             logger.error(error);
                         } else {
                             PersonaEntitaOrganizzativaWebDto personaEO = personeEO.stream().reduce((first, second) -> second).get();
-                            List<RapportoBulk> rapportiValidi = new LinkedList<>();
-                            boolean isExDipendente = false;
-                            for (Object obj : anagraficoBulk.getRapporti()){
-                                RapportoBulk rapportoBulk = (RapportoBulk) obj;
-                                Tipo_rapportoBulk tipo_rapportoBulk = (Tipo_rapportoBulk) getHome(userContext, Tipo_rapportoBulk.class).findByPrimaryKey(rapportoBulk.getTipo_rapporto());
-                                if (tipo_rapportoBulk.isDipendente()){
-                                    isExDipendente = true;
-                                }
-                                if ((rapportoBulk.getDt_ini_validita().compareTo(getCurrentDate()) > 0 ||
-                                        rapportoBulk.getDt_fin_validita().compareTo(getCurrentDate()) > 0) && !tipo_rapportoBulk.isDipendente()  &&
-                                        RapportoBulk.TIPOCONTRATTO_ACE.containsKey(tipo_rapportoBulk.getCd_tipo_rapporto())){
-                                    rapportiValidi.add(rapportoBulk);
-                                }
-                            }
 
                             if (rapportiValidi.size() > 0){
                                 List<RapportoBulk> rapportiOrdinati = (List<RapportoBulk>) rapportiValidi.stream().sorted(Comparator.comparing(RapportoBulk::getDt_ini_validita)).collect(Collectors.toList());
