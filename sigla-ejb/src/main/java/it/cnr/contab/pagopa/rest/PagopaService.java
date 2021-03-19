@@ -2,12 +2,12 @@ package it.cnr.contab.pagopa.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import feign.*;
+import feign.Feign;
+import feign.Retryer;
 import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
-import it.cnr.contab.anagraf00.comp.AnagraficoComponent;
 import net.dongliu.gson.GsonJava8TypeAdapterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,7 @@ public class PagopaService {
     String baseUrl;
     String username;
     String password;
+    private PagopaClient pagopaClient;
 
     public String getBaseUrl() {
         return baseUrl;
@@ -46,8 +47,6 @@ public class PagopaService {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private PagopaClient pagopaClient;
 
     @PostConstruct
     public void init() {
