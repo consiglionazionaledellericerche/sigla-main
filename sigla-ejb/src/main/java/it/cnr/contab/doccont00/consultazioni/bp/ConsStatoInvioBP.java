@@ -94,6 +94,8 @@ public class ConsStatoInvioBP extends SelezionatoreListaBP implements SearchProv
         listButton.addAll(Arrays.asList(baseToolbar));
         listButton.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().
                 getProperties(getClass()), "CRUDToolbar.contabile"));
+        listButton.add(new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().
+                getProperties(getClass()), "CRUDToolbar.allegati"));
         return listButton.toArray(new Button[listButton.size()]);
     }
 

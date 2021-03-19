@@ -133,7 +133,7 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 
     @Override
     protected boolean isChildGrowable(boolean isGrowable) {
-        return true;
+        return isGrowable;
     }
 
     @Override
@@ -143,10 +143,11 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
         if (allegatoDocContBulk.getRifModalitaPagamento() != null && !allegatoDocContBulk.getRifModalitaPagamento().equalsIgnoreCase("GEN") &&
                 (((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_INSERITO) ||
                         ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO) ||
-                        ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA)))
+                        ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))) {
             setStatus(VIEW);
-        else
+        } else {
             setStatus(EDIT);
+        }
         super.getChildDetail(allegatoDocContBulk);
     }
 
