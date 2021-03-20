@@ -1,5 +1,53 @@
-## Release 6.3.9  -- _March 10, 2021_ 
+## Release 6.3.13  -- _March 20, 2021_ 
 **Changes**
+
+>**FIX H2 test**
+>
+>[70a777b8a17435d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/70a777b8a17435d) marco.spasiano *March 20, 2021*
+
+
+## Release 6.3.12  -- _March 20, 2021_ 
+**Changes**
+
+>**FIX H2 test**
+>
+>[f5e2149e7fde20e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f5e2149e7fde20e) marco.spasiano *March 19, 2021*
+
+
+## Release 6.3.11  -- _March 19, 2021_ 
+**Changes**
+
+>**Aggiunta la possibilità di visualizzare i file allegati al mandato anche dalla consultazione stato invio mandati**
+>
+>[7b9cd0852d14007](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b9cd0852d14007) marco.spasiano *March 19, 2021*
+
+>**Cambiato anno**
+>
+>[c1053582513d0a5](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c1053582513d0a5) gianfranco.gasparro *March 19, 2021*
+
+>**FIX NPE on attach invoice**
+>
+>[717cb929dcfa709](https://github.com/consiglionazionaledellericerche/sigla-main/commit/717cb929dcfa709) marco.spasiano *March 19, 2021*
+
+>**Cambiato anno**
+>
+>[cb034e57e7ac8cb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cb034e57e7ac8cb) gianfranco.gasparro *March 18, 2021*
+
+>**Cambiato anno**
+>
+>[524d6825e75aa02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/524d6825e75aa02) gianfranco.gasparro *March 18, 2021*
+
+>**Modifiche CU**
+>
+>[aa1c835884367b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/aa1c835884367b4) gianfranco.gasparro *March 18, 2021*
+
+>**Nella selezione dei mandati annullati da firmare non veniva fatto il controllo sull'attivazione di SIOPE+**
+>
+>[8b48f8486cc5558](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8b48f8486cc5558) marco.spasiano *March 15, 2021*
+
+>**FIX file name in docs**
+>
+>[41e311f294484d9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/41e311f294484d9) marco.spasiano *March 15, 2021*
 
 >**Gestione distinta annulli senza l'integrazione con SIOPE+**
 >
@@ -93,6 +141,10 @@
 >
 >[6fbb8715e3ee70b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fbb8715e3ee70b) patriziavillani *March 01, 2021*
 
+>**Modifiche PagoPA**
+>
+>[755005de1b41604](https://github.com/consiglionazionaledellericerche/sigla-main/commit/755005de1b41604) gianfranco.gasparro *February 28, 2021*
+
 >**Update nota_credito_attiva.rst**
 >
 >[791d7d316b50715](https://github.com/consiglionazionaledellericerche/sigla-main/commit/791d7d316b50715) patriziavillani *February 26, 2021*
@@ -164,76 +216,6 @@
 >**Update fattura_passiva.rst**
 >
 >[6668bec31322ccc](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6668bec31322ccc) patriziavillani *February 26, 2021*
-
-
-## Release 6.3.7  -- _March 05, 2021_ 
-**Changes**
-
->**Update AnagraficoComponent.java**
->
->[2605ccff5ffd539](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2605ccff5ffd539) GASPARRO GIANFRANCO *March 05, 2021*
-
-
-## Release 6.3.5  -- _March 03, 2021_ 
-**Changes**
-
->**Update ContrattoResource.java**
->
->[7b22d63e5506598](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b22d63e5506598) GASPARRO GIANFRANCO *March 03, 2021*
-
-
-## Release 6.3.4  -- _March 03, 2021_ 
-**Changes**
-
->**Update ContrattoResource.java**
->
->[02dc387771a0ab9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/02dc387771a0ab9) GASPARRO GIANFRANCO *March 03, 2021*
-
-
-## Release 6.3.3  -- _March 03, 2021_ 
-**Changes**
-
->**Update ContrattoResource.java**
->
->[4ba202841135556](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ba202841135556) GASPARRO GIANFRANCO *March 02, 2021*
-
->**Update ContrattoResource.java**
->
->[f86eea9ee677dd7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f86eea9ee677dd7) GASPARRO GIANFRANCO *March 02, 2021*
-
-
-## Release 6.3.2  -- _March 01, 2021_ 
-**Changes**
-
->**FIX version of jackson-annotations and junit**
->
->[872a0a3f445f015](https://github.com/consiglionazionaledellericerche/sigla-main/commit/872a0a3f445f015) marco.spasiano *March 01, 2021*
-
-
-## Release 6.3.1  -- _February 28, 2021_ 
-**Changes**
-
->**Fix Comunicazione PerlaPa**
->
->[8778d92bfd30043](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8778d92bfd30043) raffaele.pagano *February 27, 2021*
-
->**Comunicazione PerlaPa: adeguamento procedure per gestire la comunicazione al nuovo sistema Perla attivo dal 2018.**
-> * Unità organizzative: aggiunto campo AOO di Ipa da imputare sul CDS.
-> * Incarichi:
-> * 1) eliminato campo Invio Corte Conti;
-> * 2) reso obbligatoria la Dichiarazione Altri rapporti anche per Occasionali;
-> * 3) limitata al pdf la tipologia di file allegabili per curriculum e dichiarazione altri rapporti;
-> * 4) eliminata dichiarazione &quot;Selezione art.51 comma 6 L. 449/199&quot;
->
->[d1d586af89e2a76](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1d586af89e2a76) raffaele.pagano *February 27, 2021*
-
->**FIX predisposizione reversali annullate**
->
->[c456a905235d64a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c456a905235d64a) marco.spasiano *February 25, 2021*
-
->**update build docs**
->
->[78535cca862ac82](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78535cca862ac82) marco.spasiano *February 25, 2021*
 
 >**Add circleci build**
 >
@@ -322,6 +304,92 @@
 >**Create fattura_attiva_elettronica.rst**
 >
 >[4c2a5a71dd953fe](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4c2a5a71dd953fe) patriziavillani *February 23, 2021*
+
+>**Fix**
+>
+>[486ecf861ebc55f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/486ecf861ebc55f) gianfranco.gasparro *January 19, 2021*
+
+>**Aggiornamento PagoPA**
+>
+>[47251ea2f38bcd1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/47251ea2f38bcd1) gianfranco.gasparro *June 05, 2020*
+
+>**Inizio Gestione PagoPA**
+>
+>[a38e8ce64d3804f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/a38e8ce64d3804f) gianfranco.gasparro *May 28, 2020*
+
+>**Aggiunta e corretta view di controllo sulle partite di giro**
+>
+>[8d5d4e97b0e54ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d5d4e97b0e54ff) gianfranco.gasparro *May 25, 2020*
+
+
+## Release 6.3.7  -- _March 05, 2021_ 
+**Changes**
+
+>**Update AnagraficoComponent.java**
+>
+>[2605ccff5ffd539](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2605ccff5ffd539) GASPARRO GIANFRANCO *March 05, 2021*
+
+
+## Release 6.3.5  -- _March 03, 2021_ 
+**Changes**
+
+>**Update ContrattoResource.java**
+>
+>[7b22d63e5506598](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7b22d63e5506598) GASPARRO GIANFRANCO *March 03, 2021*
+
+
+## Release 6.3.4  -- _March 03, 2021_ 
+**Changes**
+
+>**Update ContrattoResource.java**
+>
+>[02dc387771a0ab9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/02dc387771a0ab9) GASPARRO GIANFRANCO *March 03, 2021*
+
+
+## Release 6.3.3  -- _March 03, 2021_ 
+**Changes**
+
+>**Update ContrattoResource.java**
+>
+>[4ba202841135556](https://github.com/consiglionazionaledellericerche/sigla-main/commit/4ba202841135556) GASPARRO GIANFRANCO *March 02, 2021*
+
+>**Update ContrattoResource.java**
+>
+>[f86eea9ee677dd7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f86eea9ee677dd7) GASPARRO GIANFRANCO *March 02, 2021*
+
+
+## Release 6.3.2  -- _March 01, 2021_ 
+**Changes**
+
+>**FIX version of jackson-annotations and junit**
+>
+>[872a0a3f445f015](https://github.com/consiglionazionaledellericerche/sigla-main/commit/872a0a3f445f015) marco.spasiano *March 01, 2021*
+
+
+## Release 6.3.1  -- _February 28, 2021_ 
+**Changes**
+
+>**Fix Comunicazione PerlaPa**
+>
+>[8778d92bfd30043](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8778d92bfd30043) raffaele.pagano *February 27, 2021*
+
+>**Comunicazione PerlaPa: adeguamento procedure per gestire la comunicazione al nuovo sistema Perla attivo dal 2018.**
+> * Unità organizzative: aggiunto campo AOO di Ipa da imputare sul CDS.
+> * Incarichi:
+> * 1) eliminato campo Invio Corte Conti;
+> * 2) reso obbligatoria la Dichiarazione Altri rapporti anche per Occasionali;
+> * 3) limitata al pdf la tipologia di file allegabili per curriculum e dichiarazione altri rapporti;
+> * 4) eliminata dichiarazione &quot;Selezione art.51 comma 6 L. 449/199&quot;
+>
+>[d1d586af89e2a76](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d1d586af89e2a76) raffaele.pagano *February 27, 2021*
+
+>**FIX predisposizione reversali annullate**
+>
+>[c456a905235d64a](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c456a905235d64a) marco.spasiano *February 25, 2021*
+
+>**update build docs**
+>
+>[78535cca862ac82](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78535cca862ac82) marco.spasiano *February 25, 2021*
 
 >**Fix procedure CNRMIG080**
 >
@@ -1841,46 +1909,6 @@
 >
 >[1beeb085812fdfb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/1beeb085812fdfb) gianfranco.gasparro *May 04, 2020*
 
->**Corretto test per comunicazione dati pagamenti**
->
->[497a3e5b6520c2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/497a3e5b6520c2e) gianfranco.gasparro *April 16, 2020*
-
->**Corretto test per comunicazione dati pagamenti**
->
->[379603aeda42335](https://github.com/consiglionazionaledellericerche/sigla-main/commit/379603aeda42335) gianfranco.gasparro *April 16, 2020*
-
->**Corretto test per comunicazione dati pagamenti**
->
->[b02a7f13b887c5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b02a7f13b887c5c) gianfranco.gasparro *April 16, 2020*
-
->**Adeguato a swagger i servizi REST di Missioni e Contratto**
->
->[f3f768f6b2c478d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3f768f6b2c478d) gianfranco.gasparro *April 16, 2020*
-
->**Fix allegati progetti: corretta errata visualizzazione di file allegati al progetto (venivano visualizzati più volte gli stessi file)**
->
->[2b807e0755a22df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b807e0755a22df) raffaele.pagano *April 15, 2020*
-
->**Fix**
->
->[f9fb58f2f09242c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9fb58f2f09242c) gianfranco.gasparro *April 15, 2020*
-
->**Add json path for swagger**
->
->[37d40dde54fcfc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37d40dde54fcfc7) marco.spasiano *April 15, 2020*
-
->**FIX maven.repo on docker compose [ci skip]**
->
->[6fa78ab6028da18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fa78ab6028da18) marco.spasiano *April 14, 2020*
-
->**Added swagger for API documentation and change Thorntail version to 2.6.0.Final**
->
->[d56bf4ac17c4b79](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d56bf4ac17c4b79) marco.spasiano *April 14, 2020*
-
->**Completata comunicazione dati pagamenti**
->
->[37515cc236fae02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37515cc236fae02) gianfranco.gasparro *March 27, 2020*
-
 
 ## Release 6.2.44  -- _October 06, 2020_ 
 **Changes**
@@ -2376,10 +2404,6 @@
 >
 >[44cad47d982be8d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44cad47d982be8d) raffaele.pagano *June 05, 2020*
 
->**Aggiunta e corretta view di controllo sulle partite di giro**
->
->[8d5d4e97b0e54ff](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8d5d4e97b0e54ff) gianfranco.gasparro *May 25, 2020*
-
 
 ## Release 6.2.20  -- _June 08, 2020_ 
 **Changes**
@@ -2519,6 +2543,50 @@
 >**FIX Nuova gestione limiti di spesa per classificazione voci e blocco residui impropri: il controllo limite classificazione per cds nel momento in cui viene resa definitiva una variazione di competenza è stato limitato solo alle fonti interne**
 >
 >[cecf12ae1f1150b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/cecf12ae1f1150b) raffaele.pagano *April 20, 2020*
+
+
+## Release 6.2.8  -- _April 20, 2020_ 
+**Changes**
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[497a3e5b6520c2e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/497a3e5b6520c2e) gianfranco.gasparro *April 16, 2020*
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[379603aeda42335](https://github.com/consiglionazionaledellericerche/sigla-main/commit/379603aeda42335) gianfranco.gasparro *April 16, 2020*
+
+>**Corretto test per comunicazione dati pagamenti**
+>
+>[b02a7f13b887c5c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b02a7f13b887c5c) gianfranco.gasparro *April 16, 2020*
+
+>**Adeguato a swagger i servizi REST di Missioni e Contratto**
+>
+>[f3f768f6b2c478d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f3f768f6b2c478d) gianfranco.gasparro *April 16, 2020*
+
+>**Fix allegati progetti: corretta errata visualizzazione di file allegati al progetto (venivano visualizzati più volte gli stessi file)**
+>
+>[2b807e0755a22df](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2b807e0755a22df) raffaele.pagano *April 15, 2020*
+
+>**Fix**
+>
+>[f9fb58f2f09242c](https://github.com/consiglionazionaledellericerche/sigla-main/commit/f9fb58f2f09242c) gianfranco.gasparro *April 15, 2020*
+
+>**Add json path for swagger**
+>
+>[37d40dde54fcfc7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37d40dde54fcfc7) marco.spasiano *April 15, 2020*
+
+>**FIX maven.repo on docker compose [ci skip]**
+>
+>[6fa78ab6028da18](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6fa78ab6028da18) marco.spasiano *April 14, 2020*
+
+>**Added swagger for API documentation and change Thorntail version to 2.6.0.Final**
+>
+>[d56bf4ac17c4b79](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d56bf4ac17c4b79) marco.spasiano *April 14, 2020*
+
+>**Completata comunicazione dati pagamenti**
+>
+>[37515cc236fae02](https://github.com/consiglionazionaledellericerche/sigla-main/commit/37515cc236fae02) gianfranco.gasparro *March 27, 2020*
 
 
 ## Release 6.2.7  -- _April 07, 2020_ 
