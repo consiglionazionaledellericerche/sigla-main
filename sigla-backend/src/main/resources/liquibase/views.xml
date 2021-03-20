@@ -3029,16 +3029,16 @@
             ORDER BY cnr_anadip.nominativo;</createView>
     </changeSet>
     <changeSet author="marco.spasiano" runOnChange="true" id="create-view-PROGETTO_TEMP-h2">
-        <sqlFile dbms="h2" path="../expsigladb/View/PROGETTO_TEMP.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+        <sqlFile dbms="h2" path="../expsigladb/View/PROGETTO_TEMP_H2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
     <changeSet author="marco.spasiano" runOnChange="true" id="create-view-PROGETTO-h2">
         <sqlFile dbms="h2" path="../expsigladb/View/PROGETTO.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
     <changeSet author="marco.spasiano" runOnChange="true" id="create-view-V_PROGETTO_PADRE-h2">
-        <sqlFile dbms="h2" path="../expsigladb/View/V_PROGETTO_PADRE.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+        <sqlFile dbms="h2" path="../expsigladb/View/V_PROGETTO_PADRE_H2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
     <changeSet author="marco.spasiano" runOnChange="true" id="create-view-V_LINEA_ATTIVITA_VALIDA-h2">
-        <sqlFile dbms="h2" path="../expsigladb/View/V_LINEA_ATTIVITA_VALIDA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
+        <sqlFile dbms="h2" path="../expsigladb/View/V_LINEA_ATTIVITA_VALIDA_H2.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
     </changeSet>
     <changeSet author="marco.spasiano" runOnChange="true" id="create-view-VOCE_F_SALDI_CDR_LINEA-h2">
         <sqlFile dbms="h2" path="../expsigladb/View/VOCE_F_SALDI_CDR_LINEA.sql" relativeToChangelogFile="true" splitStatements="true" stripComments="false"/>
