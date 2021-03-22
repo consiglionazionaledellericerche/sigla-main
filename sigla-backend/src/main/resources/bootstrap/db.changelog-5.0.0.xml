@@ -3854,35 +3854,114 @@ TRASPORTO_AEREO"/>
         </addColumn>
     </changeSet>
 
-    <changeSet author="valerio.diego" id="add-anagrafica-dottorati">
-        <insert tableName="anagraficaDottorati">
-            <column name="regione" type="STRING" value="0"/>
-            <column name="universitaCapofila" type="STRING" value="0"/>
-            <column name="codiceTerzo" type="STRING" value="0"/>
-            <column name="ibanAteneo" type="STRING" value="0"/>
-            <column name="telefonoAteneo" type="STRING" value="0"/>
-            <column name="emailAteneo" type="STRING" value="0"/>
-            <column name="altreUniversita" type="STRING" value="0"/>
-            <column name="dipartimentoUniversita" type="STRING" value="0"/>
-            <column name="corsoDottorato" type="STRING" value="0"/>
-            <column name="tematica" type="STRING" value="0"/>
-            <column name="numeroCicliFinanziati" type="BIGINT" value="0"/>
-            <column name="ricercatore" type="STRING" value="0"/>
-            <column name="istitutoCNR" type="STRING" value="0"/>
-            <column name="dipartimentoCNR" type="STRING" value="0"/>
-            <column name="dataStipulaConvenzione" type="DATE" value="0"/>
-            <column name="note" type="STRING" value="0"/>
-        </insert>
-        <insert tableName="phdTipoDottorati">
-            <column name="name" type="STRING" value="0"/>
-        </insert>
-        <insert tableName="cicloDottorati">
-            <column name="numero" type="BIGINT" value="0"/>
-            <column name="annoInizio" type="DATE" />
-            <column name="annoFine" type="DATE" />
-        </insert>
-        <insert tableName="tipoCorsoDottorati">
-            <column name="name" type="STRING" value="0"/>
-        </insert>
+    <changeSet author="valerio.diego" id="create-table-anagrafica-dottorati">
+        <createTable remarks="Tabella contenente anagrafica dottorati." tableName="anagrafica_dottorati">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="regione" type="STRING">
+                <constraints nullable="false"/>
+            </column>
+            <column name="universitaCapofila" type="STRING">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codiceTerzo" type="STRING">
+                <constraints nullable="false"/>
+            </column>
+            <column name="telefonoAteneo" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="emailAteneo" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="altreUniversita" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dipartimentoUniversita" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="corsoDottorato" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="tematica" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="numeroCicliFinanziati" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ricercatore" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="istitutoCNR" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dipartimentoCNR" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dataStipulaConvenzione" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="note" type="STRING">
+                <constraints nullable="true"/>
+            </column>
+            <column name="id_phdtipo_dottorati_anagrafica_dottorati" remarks="Identificativo del tipo dottorati." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_ciclo_dottorati_anagrafica_dottorati" remarks="Identificativo del ciclo dottorati." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tipocorso_dottorati_anagrafica_dottorati" remarks="Identificativo del tipocorso_dottorati." type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="anagrafica_dottorati_pkey" tableName="anagrafica_dottorati"/>
+    </changeSet>
+    <changeSet author="valerio.diego" id="create-table-phdtipo_dottorati">
+    <createTable remarks="Tabella contenente il phdtipo dei dottorati." tableName="phdtipo_dottorati">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="STRING">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="phdtipo_dottorati_pkey" tableName="phdtipo_dottorati"/>
+    </changeSet>
+    <changeSet author="valerio.diego" id="create-table-ciclo_dottorati">
+        <createTable remarks="Tabella contenente il phdtipo dei dottorati." tableName="ciclo_dottorati">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="annoInizio" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="annoFine" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="ciclo_dottorati_pkey" tableName="ciclo_dottorati"/>
+    </changeSet>
+    <changeSet author="valerio.diego" id="create-table-ciclo_dottorati">
+        <createTable remarks="Tabella contenente il phdtipo dei dottorati." tableName="tipocorso_dottorati">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="STRING">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="tipocorso_dottorati_pkey" tableName="tipocorso_dottorati"/>
+    </changeSet>
+    <changeSet author="valerio.diego" id="relazioni-dottorati" >
+        <addForeignKeyConstraint baseColumnNames="id_phdtipo_dottorati_anagrafica_dottorati" baseTableName="anagrafica_dottorati" constraintName="fk_anagrafica_dottorati_phdtipo_dottorati_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="phdtipo_dottorati"/>
+        <addForeignKeyConstraint baseColumnNames="id_ciclo_dottorati_anagrafica_dottorati" baseTableName="anagrafica_dottorati" constraintName="fk_anagrafica_dottorati_ciclo_dottorati_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="ciclo_dottorati"/>
+        <addForeignKeyConstraint baseColumnNames="id_tipocorso_dottorati_anagrafica_dottorati" baseTableName="anagrafica_dottorati" constraintName="fk_anagrafica_dottorati_tipocorso_dottorati_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipocorso_dottorati"/>
     </changeSet>
 </databaseChangeLog>
