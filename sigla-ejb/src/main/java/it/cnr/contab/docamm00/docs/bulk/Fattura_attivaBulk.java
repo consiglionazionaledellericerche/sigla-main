@@ -1227,7 +1227,6 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		//if (getFl_intra_ue()==null) setFl_intra_ue(Boolean.FALSE);
 		//if (getFl_liquidazione_differita()==null) setFl_liquidazione_differita(Boolean.FALSE);
 		if (getFl_stampa()==null) setFl_stampa(Boolean.FALSE);
-		if (getFl_ordine_elettronico()==null) setFl_ordine_elettronico(Boolean.FALSE);
 
 		if (getCambio()==null) setCambio(new java.math.BigDecimal("1"));
 
