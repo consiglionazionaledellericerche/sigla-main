@@ -1,3 +1,11 @@
+## Release 6.3.14  -- _March 22, 2021_ 
+**Changes**
+
+>**Fix ricerca che non tornava dati**
+>
+>[53a5ed36de852e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53a5ed36de852e7) gianfranco.gasparro *March 22, 2021*
+
+
 ## Release 6.3.13  -- _March 20, 2021_ 
 **Changes**
 
