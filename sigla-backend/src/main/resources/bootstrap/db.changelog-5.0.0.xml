@@ -3859,58 +3859,58 @@ TRASPORTO_AEREO"/>
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="regione" type="STRING">
+            <column name="regione" type="VARCHAR(250)">
                 <constraints nullable="false"/>
             </column>
-            <column name="universitaCapofila" type="STRING">
+            <column name="universita_capofila" type="VARCHAR(250)">
                 <constraints nullable="false"/>
             </column>
-            <column name="codiceTerzo" type="STRING">
+            <column name="cd_terzo" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="telefonoAteneo" type="STRING">
+            <column name="telefono_ateneo" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="emailAteneo" type="STRING">
+            <column name="email_ateneo" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="altreUniversita" type="STRING">
+            <column name="altre_universita" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="dipartimentoUniversita" type="STRING">
+            <column name="dipartimento_universita" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="corsoDottorato" type="STRING">
+            <column name="corso_dottorato" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="tematica" type="STRING">
+            <column name="tematica" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="numeroCicliFinanziati" type="BIGINT">
+            <column name="numero_cicli_finanziati" type="BIGINT">
                 <constraints nullable="true"/>
             </column>
-            <column name="ricercatore" type="STRING">
+            <column name="ricercatore" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="istitutoCNR" type="STRING">
+            <column name="istituto_cnr" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="dipartimentoCNR" type="STRING">
+            <column name="dipartimento_cnr" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="dataStipulaConvenzione" type="DATE">
+            <column name="data_stipula_convenzione" type="DATE">
                 <constraints nullable="true"/>
             </column>
-            <column name="note" type="STRING">
+            <column name="note" type="VARCHAR(250)">
                 <constraints nullable="true"/>
             </column>
-            <column name="id_phdtipo_dottorati_anagrafica_dottorati" remarks="Identificativo del tipo dottorati." type="INT">
+            <column name="id_phdtipo_dottorati" remarks="Identificativo del tipo dottorati." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="id_ciclo_dottorati_anagrafica_dottorati" remarks="Identificativo del ciclo dottorati." type="INT">
+            <column name="id_ciclo_dottorati" remarks="Identificativo del ciclo dottorati." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="id_tipocorso_dottorati_anagrafica_dottorati" remarks="Identificativo del tipocorso_dottorati." type="INT">
+            <column name="id_tipocorso_dottorati" remarks="Identificativo del tipocorso_dottorati." type="INT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -3922,7 +3922,7 @@ TRASPORTO_AEREO"/>
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="STRING">
+            <column name="name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -3937,31 +3937,51 @@ TRASPORTO_AEREO"/>
             <column name="numero" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="annoInizio" type="DATE">
+            <column name="anno_inizio" type="DATE">
                 <constraints nullable="false"/>
             </column>
-            <column name="annoFine" type="DATE">
+            <column name="anno_fine" type="DATE">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <addPrimaryKey columnNames="id" constraintName="ciclo_dottorati_pkey" tableName="ciclo_dottorati"/>
     </changeSet>
-    <changeSet author="valerio.diego" id="create-table-ciclo_dottorati">
+    <changeSet author="valerio.diego" id="create-table-tipocorso_dottorati">
         <createTable remarks="Tabella contenente il phdtipo dei dottorati." tableName="tipocorso_dottorati">
             <column name="id" remarks="Chiave Primaria." type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="STRING">
+            <column name="name" type="VARCHAR(250)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
         <addPrimaryKey columnNames="id" constraintName="tipocorso_dottorati_pkey" tableName="tipocorso_dottorati"/>
     </changeSet>
     <changeSet author="valerio.diego" id="relazioni-dottorati" >
-        <addForeignKeyConstraint baseColumnNames="id_phdtipo_dottorati_anagrafica_dottorati" baseTableName="anagrafica_dottorati" constraintName="fk_anagrafica_dottorati_phdtipo_dottorati_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="phdtipo_dottorati"/>
-        <addForeignKeyConstraint baseColumnNames="id_ciclo_dottorati_anagrafica_dottorati" baseTableName="anagrafica_dottorati" constraintName="fk_anagrafica_dottorati_ciclo_dottorati_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="ciclo_dottorati"/>
-        <addForeignKeyConstraint baseColumnNames="id_tipocorso_dottorati_anagrafica_dottorati" baseTableName="anagrafica_dottorati" constraintName="fk_anagrafica_dottorati_tipocorso_dottorati_id" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tipocorso_dottorati"/>
+        <addForeignKeyConstraint
+                baseColumnNames="id_phdtipo_dottorati"
+                baseTableName="anagrafica_dottorati"
+                constraintName="fk_phdtipo_dottorati"
+                referencedColumnNames="id"
+                referencedTableName="phdtipo_dottorati"/>
+        <addForeignKeyConstraint
+                baseColumnNames="id_ciclo_dottorati"
+                baseTableName="anagrafica_dottorati"
+                constraintName="fk_ciclo_dottorati"
+                referencedColumnNames="id"
+                referencedTableName="ciclo_dottorati"/>
+        <addForeignKeyConstraint
+                baseColumnNames="id_tipocorso_dottorati"
+                baseTableName="anagrafica_dottorati"
+                constraintName="fk_tipocorso_dottorati"
+                referencedColumnNames="id"
+                referencedTableName="tipocorso_dottorati"/>
+        <addForeignKeyConstraint
+                baseColumnNames="cd_terzo"
+                baseTableName="anagrafica_dottorati"
+                constraintName="fk_terzo"
+                referencedColumnNames="cd_terzo"
+                referencedTableName="terzo"/>
     </changeSet>
 </databaseChangeLog>
