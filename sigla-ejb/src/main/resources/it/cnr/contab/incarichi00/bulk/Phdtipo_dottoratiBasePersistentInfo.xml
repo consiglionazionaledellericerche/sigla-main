@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.util.bulk.PhdtipoDottoratiBase"
+	keyClassName="it.cnr.contab.util.bulk.PhdtipoDottoratiKey"
+	homeClassName="it.cnr.contab.util.bulk.PhdtipoDottoratiHome">
+	<defaultColumnMap
+		tableName="PHDTIPO_DOTTORATI">
+		<columnMapping
+			columnName="NAME"
+			propertyName="name"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="name" />
+</SQLPersistentInfo>

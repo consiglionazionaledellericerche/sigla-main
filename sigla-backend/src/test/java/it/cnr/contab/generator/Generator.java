@@ -30,9 +30,9 @@ public class Generator {
         bean.setPackageName("it.cnr.contab.util.bulk");
         bean.setSourceFolder(System.getProperty("user.home").concat(File.separator));
         bean.setTargetXMLFolder(System.getProperty("user.home").concat(File.separator));
-        bean.setPrefix("Help");
+        bean.setPrefix("PhdtipoDottorati");
 
-        bean.setTable("HELP_LKT");
+        bean.setTable("PHDTIPO_DOTTORATI");
         bean.setDriver("oracle.jdbc.driver.OracleDriver");
         bean.setUrl("jdbc:oracle:thin:@dbtest.cedrc.cnr.it:1521:SIGLAF");
         bean.setSchema("PCIR009");

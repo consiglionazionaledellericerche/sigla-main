@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.util.bulk.CicloDottoratiBulk"
+	homeClassName="it.cnr.contab.util.bulk.CicloDottoratiHome">
+	<defaultColumnMap
+		tableName="CICLO_DOTTORATI">
+	</defaultColumnMap>
+</SQLPersistentInfo>

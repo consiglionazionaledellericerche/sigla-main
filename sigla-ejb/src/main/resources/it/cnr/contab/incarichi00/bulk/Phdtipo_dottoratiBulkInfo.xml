@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Chiave Primaria." />
+	<fieldProperty
+		name="name"
+		property="name"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="250"
+		enabledOnEdit="false"
+		nullable="false"
+		label="name" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="name" />
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="name" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="name" />
+</bulkInfo>

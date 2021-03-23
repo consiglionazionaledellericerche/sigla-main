@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bulkInfo>
+	<fieldProperty
+		name="id"
+		property="id"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		enabledOnSearch="false"
+		nullable="false"
+		label="Chiave Primaria." />
+	<fieldProperty
+		name="numero"
+		property="numero"
+		inputType="TEXTAREA"
+		cols="60"
+		rows="5"
+		maxLength="38"
+		enabledOnEdit="false"
+		nullable="false"
+		label="numero" />
+	<fieldProperty
+		name="annoInizio"
+		property="annoInizio"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="annoInizio" />
+	<fieldProperty
+		name="annoFine"
+		property="annoFine"
+		inputType="TEXT"
+		formatName="date_short"
+		enabledOnEdit="false"
+		nullable="false"
+		label="annoFine" />
+	<form
+		name="searchtool">
+		<formFieldProperty
+			name="id" />
+	</form>
+	<formFieldProperty
+		name="id" />
+	<formFieldProperty
+		name="numero" />
+	<formFieldProperty
+		name="annoInizio" />
+	<formFieldProperty
+		name="annoFine" />
+	<findFieldProperty
+		name="id" />
+	<findFieldProperty
+		name="numero" />
+	<findFieldProperty
+		name="annoInizio" />
+	<findFieldProperty
+		name="annoFine" />
+	<columnFieldProperty
+		name="id" />
+	<columnFieldProperty
+		name="numero" />
+	<columnFieldProperty
+		name="annoInizio" />
+	<columnFieldProperty
+		name="annoFine" />
+</bulkInfo>

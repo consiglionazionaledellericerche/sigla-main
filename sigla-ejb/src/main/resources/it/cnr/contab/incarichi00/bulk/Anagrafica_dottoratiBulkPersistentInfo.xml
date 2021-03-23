@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.util.bulk.AnagraficaDottoratiBulk"
+	homeClassName="it.cnr.contab.util.bulk.AnagraficaDottoratiHome">
+	<defaultColumnMap
+		tableName="ANAGRAFICA_DOTTORATI">
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="terzo.cd_terzo" />
+		<columnMapping
+			columnName="ID_PHDTIPO_DOTTORATI"
+			propertyName="phdtipoDottorati.id" />
+		<columnMapping
+			columnName="ID_CICLO_DOTTORATI"
+			propertyName="cicloDottorati.id" />
+		<columnMapping
+			columnName="ID_TIPOCORSO_DOTTORATI"
+			propertyName="tipocorsoDottorati.id" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="terzo" />
+	<persistentProperty
+		name="phdtipoDottorati" />
+	<persistentProperty
+		name="cicloDottorati" />
+	<persistentProperty
+		name="tipocorsoDottorati" />
+</SQLPersistentInfo>

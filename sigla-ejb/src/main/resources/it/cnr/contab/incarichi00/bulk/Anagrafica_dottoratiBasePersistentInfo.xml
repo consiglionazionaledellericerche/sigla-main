@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.util.bulk.AnagraficaDottoratiBase"
+	keyClassName="it.cnr.contab.util.bulk.AnagraficaDottoratiKey"
+	homeClassName="it.cnr.contab.util.bulk.AnagraficaDottoratiHome">
+	<defaultColumnMap
+		tableName="ANAGRAFICA_DOTTORATI">
+		<columnMapping
+			columnName="REGIONE"
+			propertyName="regione"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="UNIVERSITA_CAPOFILA"
+			propertyName="universitaCapofila"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="false" />
+		<columnMapping
+			columnName="CD_TERZO"
+			propertyName="cdTerzo"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="TELEFONO_ATENEO"
+			propertyName="telefonoAteneo"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="EMAIL_ATENEO"
+			propertyName="emailAteneo"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="ALTRE_UNIVERSITA"
+			propertyName="altreUniversita"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="DIPARTIMENTO_UNIVERSITA"
+			propertyName="dipartimentoUniversita"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="CORSO_DOTTORATO"
+			propertyName="corsoDottorato"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="TEMATICA"
+			propertyName="tematica"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="NUMERO_CICLI_FINANZIATI"
+			propertyName="numeroCicliFinanziati"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="true" />
+		<columnMapping
+			columnName="RICERCATORE"
+			propertyName="ricercatore"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="ISTITUTO_CNR"
+			propertyName="istitutoCnr"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="DIPARTIMENTO_CNR"
+			propertyName="dipartimentoCnr"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="DATA_STIPULA_CONVENZIONE"
+			propertyName="dataStipulaConvenzione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="true" />
+		<columnMapping
+			columnName="NOTE"
+			propertyName="note"
+			sqlTypeName="VARCHAR"
+			columnSize="250"
+			nullable="true" />
+		<columnMapping
+			columnName="ID_PHDTIPO_DOTTORATI"
+			propertyName="idPhdtipoDottorati"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_CICLO_DOTTORATI"
+			propertyName="idCicloDottorati"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+		<columnMapping
+			columnName="ID_TIPOCORSO_DOTTORATI"
+			propertyName="idTipocorsoDottorati"
+			sqlTypeName="DECIMAL"
+			columnSize="38"
+			nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="regione" />
+	<persistentProperty
+		name="universitaCapofila" />
+	<persistentProperty
+		name="cdTerzo" />
+	<persistentProperty
+		name="telefonoAteneo" />
+	<persistentProperty
+		name="emailAteneo" />
+	<persistentProperty
+		name="altreUniversita" />
+	<persistentProperty
+		name="dipartimentoUniversita" />
+	<persistentProperty
+		name="corsoDottorato" />
+	<persistentProperty
+		name="tematica" />
+	<persistentProperty
+		name="numeroCicliFinanziati" />
+	<persistentProperty
+		name="ricercatore" />
+	<persistentProperty
+		name="istitutoCnr" />
+	<persistentProperty
+		name="dipartimentoCnr" />
+	<persistentProperty
+		name="dataStipulaConvenzione" />
+	<persistentProperty
+		name="note" />
+	<persistentProperty
+		name="idPhdtipoDottorati" />
+	<persistentProperty
+		name="idCicloDottorati" />
+	<persistentProperty
+		name="idTipocorsoDottorati" />
+</SQLPersistentInfo>
