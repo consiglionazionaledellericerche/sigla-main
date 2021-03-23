@@ -1,3 +1,11 @@
+## Release 6.3.15  -- _March 23, 2021_ 
+**Changes**
+
+>**FIX riporta indietro accertamento**
+>
+>[8042010221e4061](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8042010221e4061) marco.spasiano *March 23, 2021*
+
+
 ## Release 6.3.14  -- _March 22, 2021_ 
 **Changes**
 
