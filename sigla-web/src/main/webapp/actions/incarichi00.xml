@@ -175,11 +175,40 @@
 		<init-param name="componentSessionName" value="CNRINCARICHI00_EJB_ConsIncarAssRicBorseStComponentSession"/>								
 	    <init-param name="defaultAction" value="ConsIncarAssRicBorseStAction"/>	    
   </businessProcess>
+<!--
+Anagrafica Dottorati
+da dare il nome corretto al business process
+
+e creare action
+-->
+    <businessProcess
+            name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/util/form.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
 
     <businessProcess
             name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
         <forward name="default" path="/util/form.jsp"/>
-        <init-param name="bulkClassName" value="it.cnr.contab.dottorati.bulk.DottoratiBulk"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/util/form.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Phdtipo_dottoratiBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+        <init-param name="defaultAction" value="CRUDAction"/>
+    </businessProcess>
+
+    <businessProcess
+            name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+        <forward name="default" path="/util/form.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Tipocorso_dottoratiBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
         <init-param name="defaultAction" value="CRUDAction"/>
     </businessProcess>
