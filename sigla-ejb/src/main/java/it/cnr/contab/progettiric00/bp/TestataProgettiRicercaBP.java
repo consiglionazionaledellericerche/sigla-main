@@ -997,7 +997,7 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     private ProgettoBulk innerInitializeModelForEditAllegati(ActionContext actioncontext, ProgettoBulk oggettoBulk, String cdUnitaOrganizzativa) throws BusinessProcessException {
         String storePath = getStorePath(oggettoBulk, false);
         storePath = storePath.replaceFirst(oggettoBulk.getCd_unita_organizzativa(), cdUnitaOrganizzativa);
-        final ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettoBulk, storePath);
+        final ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettoBulk, storePath, false);
 
         //Aggiungo gli allegati delle rimodulazioni approvate
         progetto.getRimodulazioni().stream().filter(el->el.isStatoApprovato() || el.isStatoValidato())
