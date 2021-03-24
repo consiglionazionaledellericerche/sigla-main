@@ -1,3 +1,15 @@
+## Release 6.3.16  -- _March 24, 2021_ 
+**Changes**
+
+>**FIX NPE sugli allegati ai progetti**
+>
+>[04d495bf6620c70](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04d495bf6620c70) marco.spasiano *March 24, 2021*
+
+>**Progetti: corretta anomalia visualizzazione allegati verificatasi in seguito ad aggiornamenti sui criteri di visualizzazione dei file contenuti nelle sottodirectory delle cartelle principali associate agli oggetti.**
+>
+>[eae113fa6d73be3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eae113fa6d73be3) raffaele.pagano *March 24, 2021*
+
+
 ## Release 6.3.15  -- _March 23, 2021_ 
 **Changes**
 
