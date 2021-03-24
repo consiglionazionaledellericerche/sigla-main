@@ -168,6 +168,10 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
     }
 
     protected OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk, String path) throws BusinessProcessException {
+        return initializeModelForEditAllegati(actioncontext, oggettobulk, path, true);
+    }
+
+    protected OggettoBulk initializeModelForEditAllegati(ActionContext actioncontext, OggettoBulk oggettobulk, String path, boolean includeSubFolder) throws BusinessProcessException {
         AllegatoParentBulk allegatoParentBulk = (AllegatoParentBulk) oggettobulk;
         try {
             if (path == null)
@@ -183,7 +187,8 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                         .map(String.class::cast)
                         .filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
                         .isPresent()) {
-                    initializeModelForEditAllegati(actioncontext, oggettobulk, storageObject.getPath());
+                    if (includeSubFolder)
+                        initializeModelForEditAllegati(actioncontext, oggettobulk, storageObject.getPath());
                     continue;
                 }
                 final String primaryPath = getStorePath((K) oggettobulk, false);

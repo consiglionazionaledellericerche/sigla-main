@@ -996,8 +996,10 @@ public class TestataProgettiRicercaBP extends AllegatiProgettoCRUDBP<AllegatoGen
     //Carica tutti gli allegati presenti anche in  altre UO Partecipanti che in precedenza erano state UO Coordinatrici
     private ProgettoBulk innerInitializeModelForEditAllegati(ActionContext actioncontext, ProgettoBulk oggettoBulk, String cdUnitaOrganizzativa) throws BusinessProcessException {
         String storePath = getStorePath(oggettoBulk, false);
-        storePath = storePath.replaceFirst(oggettoBulk.getCd_unita_organizzativa(), cdUnitaOrganizzativa);
-        final ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettoBulk, storePath);
+        if (Optional.ofNullable(oggettoBulk.getCd_unita_organizzativa()).isPresent()) {
+            storePath = storePath.replaceFirst(oggettoBulk.getCd_unita_organizzativa(), cdUnitaOrganizzativa);
+        }
+        final ProgettoBulk progetto = (ProgettoBulk)super.initializeModelForEditAllegati(actioncontext, oggettoBulk, storePath, false);
 
         //Aggiungo gli allegati delle rimodulazioni approvate
         progetto.getRimodulazioni().stream().filter(el->el.isStatoApprovato() || el.isStatoValidato())
