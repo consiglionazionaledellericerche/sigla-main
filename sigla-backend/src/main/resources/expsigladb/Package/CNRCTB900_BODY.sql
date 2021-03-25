@@ -2196,7 +2196,8 @@ BEGIN
                   aRecEstrazioneCud.cnr_detrazione_figli:=aRecEstrazioneCudDett.detraz_fi_dovuto_conguaglio +
                                                           aRecEstrazioneCudDett.detraz_al_dovuto_conguaglio;
                   aRecEstrazioneCud.totale_detrazioni:=aRecEstrazioneCud.detrazioni_lavoro_dip +
-                                                       aRecEstrazioneCud.detrazioni_familiari;
+                                                       aRecEstrazioneCud.detrazioni_familiari +
+                                                       aRecEstrazioneCudDett.im_detr_rid_cuneo_dovuto_cong;
                   aRecEstrazioneCud.ritenute_irpef:=aRecEstrazioneCud.imposta_lorda -
                                                     aRecEstrazioneCud.totale_detrazioni;
                   aRecEstrazioneCud.deduzione_dovuta:=aRecEstrazioneCudDett.im_deduzione_dovuto_conguaglio;
@@ -3027,17 +3028,19 @@ BEGIN
 
          Loop
             -- Calcolo del numero dei giorni
-            numeroGG:=(numeroGG + (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1));
-            IF DATA_INIZIO_RID_CUNEO > tabella_date_ok(i).tDataDa THEN
-                IF DATA_INIZIO_RID_CUNEO < tabella_date_ok(i).tDataA THEN
-                  numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (DATA_INIZIO_RID_CUNEO - tabella_date_ok(i).tDataDa );
-                  numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - DATA_INIZIO_RID_CUNEO + 1 );
+            if tabella_date_ok(i).tDataA >= to_date('01/01/'||inEsercizio,'dd/mm/yyyy') then
+                numeroGG:=(numeroGG + (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1));
+                IF DATA_INIZIO_RID_CUNEO > tabella_date_ok(i).tDataDa THEN
+                    IF DATA_INIZIO_RID_CUNEO < tabella_date_ok(i).tDataA THEN
+                      numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (DATA_INIZIO_RID_CUNEO - tabella_date_ok(i).tDataDa );
+                      numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - DATA_INIZIO_RID_CUNEO + 1 );
+                    ELSE
+                      numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1);
+                    END IF;
                 ELSE
-                  numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1);
+                  numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1 );
                 END IF;
-            ELSE
-              numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1 );
-            END IF;
+            end if;
          End Loop;
 
          IF numeroGG_CREDITO_1_SEM > 181 THEN

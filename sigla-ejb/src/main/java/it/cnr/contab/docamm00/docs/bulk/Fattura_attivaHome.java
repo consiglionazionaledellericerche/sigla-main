@@ -111,4 +111,10 @@ public class Fattura_attivaHome extends BulkHome {
         sql.addSQLClause(FindClause.AND, "NOME_FILE_INVIO_SDI", SQLBuilder.ISNULL, null);
         return fetchAll(sql);
     }
+
+    @Override
+    public void update(Persistent persistent, UserContext userContext) throws PersistencyException {
+        super.update(persistent, userContext);
+
+    }
 }
