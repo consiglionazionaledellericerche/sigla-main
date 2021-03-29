@@ -26,6 +26,7 @@ import it.gov.agenziaentrate.ivaservizi.docs.xsd.fatture.v1.FatturaElettronicaTy
 import java.rmi.RemoteException;
 
 import javax.ejb.Remote;
+import javax.ws.rs.QueryParam;
 import javax.xml.bind.JAXBElement;
 
 @Remote
@@ -46,4 +47,5 @@ public interface DocAmmFatturazioneElettronicaComponentSession extends
 	public String recuperoInizioNomeFile(UserContext userContext)
 			throws RemoteException, ComponentException;
 	public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_attivaBulk fattura)throws RemoteException, ComponentException;
+	public void aggiornaMetadati(UserContext userContext, Integer esercizio, String cdCds, Long pgFatturaAttiva)throws RemoteException, ComponentException;
 }
