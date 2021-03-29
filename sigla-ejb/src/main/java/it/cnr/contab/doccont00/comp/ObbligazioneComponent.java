@@ -626,8 +626,9 @@ public Obbligazione_scadenzarioBulk aggiornaScadenzaSuccessivaObbligazione (User
 
 	//individuo la scadenza successiva e calcolo quanto aggiungere/togliere alla scadenza successiva
 	BigDecimal delta = scadenzario.getScadenza_iniziale().getIm_scadenza().subtract(scadenzario.getIm_scadenza());
-	int index, scadSuccessivaIndex;
-	index = scadSuccessivaIndex = 0;
+	int index = 0, scadSuccessivaIndex = 0;
+
+	
 	for ( Iterator i = obbligazione.getObbligazione_scadenzarioColl().iterator(); i.hasNext(); )
 	{
 		if ( ((Obbligazione_scadenzarioBulk) i.next()).equals( scadenzario ) )

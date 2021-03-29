@@ -21,9 +21,11 @@
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xmlns:task="http://www.springframework.org/schema/task"
 		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:util="http://www.springframework.org/schema/util"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
+						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -73,9 +75,19 @@
 	</bean>
 	<bean id="gson" class="com.google.gson.Gson"/>
 
+	<bean id="testJsonDataSource"
+		  class="it.cnr.contab.reports.service.dataSource.TestJsonDataSource" >
+	</bean>
+
+	<util:map id="mapPrintDsOfflineImplemented" map-class="java.util.HashMap">
+		<entry key="/ordmag/iss/TestJsonDs.jasper" value-ref="testJsonDataSource" />
+	</util:map>
+
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
 		<property name="serverPrint" value="${print.server.name}"/>
+		<property name="printDsOfflineImplemented" ref="mapPrintDsOfflineImplemented"/>
 	</bean>
+  
 	<bean id="pagopaService" class="it.cnr.contab.pagopa.rest.PagopaService">
 		<property name="baseUrl" value="${pagopa.govpay.base_url}"/>
 		<property name="username" value="${pagopa.govpay.username}"/>
@@ -134,6 +146,7 @@
 		<task:scheduled ref="pdgVariazioniService" method="executeDeletePECMessage" cron="${pec.cron.expression}" />
 		<task:scheduled ref="utilService" method="executeAggiornaGECO" cron="${aggiorna.geco.cron.expression}" />
 		<task:scheduled ref="utilService" method="executeDeleteMessaggi" cron="${delete.messaggi.cron.expression}" />
+		<task:scheduled ref="printService" method="executeReportWithJsonDataSource" cron="${print.jsondatasource.cron.expression}" />
 	</task:scheduled-tasks>
 
 	<task:scheduler id="siglaScheduler"  pool-size="10"/>

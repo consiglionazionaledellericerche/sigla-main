@@ -17,12 +17,12 @@
 
 package it.cnr.contab.reports.bp;
 
-import it.cnr.contab.reports.bulk.*;
-import it.cnr.jada.action.*;
-import it.cnr.jada.bulk.*;
+import it.cnr.jada.action.ActionContext;
+import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.ejb.PrintComponentSession;
-import it.cnr.jada.util.action.*;
-import it.cnr.jada.util.jsp.*;
+import it.cnr.jada.util.action.FormController;
+import it.cnr.jada.util.jsp.Button;
 
 /**
  * Insert the type's description here.
@@ -34,7 +34,18 @@ public class ParametricPrintBP extends it.cnr.jada.util.action.BulkBP {
 	private Class bulkClass;
 	private java.lang.String reportName;
 	public int serverPriority;
-/**
+
+	private Boolean repotWhitDsOffLine =Boolean.FALSE;
+
+	public Boolean getRepotWhitDsOffLine() {
+		return repotWhitDsOffLine;
+	}
+
+	public void setRepotWhitDsOffLine(Boolean repotWhitDsOffLine) {
+		this.repotWhitDsOffLine = repotWhitDsOffLine;
+	}
+
+	/**
  * ParametricPrintBP constructor comment.
  */
 public ParametricPrintBP() {
@@ -101,6 +112,8 @@ protected void init(it.cnr.jada.action.Config config,it.cnr.jada.action.ActionCo
 		setBulkClassName(config.getInitParameter("bulkClassName"));
 		setComponentSessioneName(config.getInitParameter("componentSessionName"));
 		setReportName(config.getInitParameter("reportName"));
+		if ( config.getInitParameter("repotWhitDsOffLine")!=null)
+			setRepotWhitDsOffLine(Boolean.valueOf(config.getInitParameter("repotWhitDsOffLine")));
 		String s = config.getInitParameter("serverPriority");
 		if (s != null)
 			try {

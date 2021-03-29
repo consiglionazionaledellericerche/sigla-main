@@ -211,6 +211,8 @@
 		name="tipoMovimento"
 		property="tipoMovimento"
 		keysProperty="tipoMovimentoKeys"
+		inputSize="2"
+		maxLength="2"
 		inputType="SELECT"
 		label="Tipo"/>
 	<fieldProperty
