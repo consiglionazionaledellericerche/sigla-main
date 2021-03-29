@@ -173,7 +173,23 @@
 			inputType="TEXT"
 			name="ds_progetto"/>
 	</form>
-					         
+
+	<columnSet
+			name="default">
+		<columnFieldProperty
+				name="cd_progetto"/>
+		<columnFieldProperty
+				name="cd_unita_organizzativa"
+				label="UO Responsabile" />
+		<columnFieldProperty
+				name="ds_progetto" />
+		<columnFieldProperty
+				name="cd_responsabile_terzo" />
+		<columnFieldProperty
+				name="dt_inizio" />
+		<columnFieldProperty
+				name="dt_inizio" />
+	</columnSet>
 	<columnSet
 		name="moduli_sip">
 		<columnFieldProperty

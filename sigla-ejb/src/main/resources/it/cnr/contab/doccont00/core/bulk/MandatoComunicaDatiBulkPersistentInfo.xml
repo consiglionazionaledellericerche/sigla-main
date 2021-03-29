@@ -40,26 +40,14 @@
 				columnSize="10"
 				nullable="false" />
 		<columnMapping
-				columnName="IM_MANDATO"
-				propertyName="im_mandato"
-				sqlTypeName="DECIMAL"
-				columnSize="22"
-				nullable="false" />
-		<columnMapping
-				columnName="IM_RITENUTE"
-				propertyName="im_ritenute"
-				sqlTypeName="DECIMAL"
-				columnSize="22"
-				nullable="false" />
-		<columnMapping
 				columnName="DT_PAGAMENTO"
 				propertyName="dt_pagamento"
 				sqlTypeName="TIMESTAMP"
 				columnSize="7"
 				nullable="false" />
 		<columnMapping
-				columnName="IM_CAPITOLO_PESATO"
-				propertyName="importoCapitolo"
+				columnName="IMPORTO"
+				propertyName="importo"
 				sqlTypeName="DECIMAL"
 				columnSize="22"
 				nullable="false" />
@@ -90,13 +78,9 @@
 	<persistentProperty
 			name="pg_mandato"/>
 	<persistentProperty
-			name="im_mandato"/>
-	<persistentProperty
-			name="im_ritenute"/>
-	<persistentProperty
 			name="dt_pagamento"/>
 	<persistentProperty
-			name="importoCapitolo"/>
+			name="importo"/>
 	<persistentProperty
 			name="denominazioneSede"/>
 	<persistentProperty

@@ -119,4 +119,5 @@ public void setIm_associato_doc_contabile(java.math.BigDecimal im_associato_doc_
 public void setIm_scadenza(java.math.BigDecimal im_scadenza) {
 	this.im_scadenza = im_scadenza;
 }
+
 }

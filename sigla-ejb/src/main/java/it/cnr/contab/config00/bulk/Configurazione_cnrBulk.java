@@ -29,6 +29,8 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String PK_OBBLIGATORIETA_ORDINI = "OBBLIGATORIETA_ORDINI";
 	public final static String PK_PARAMETRI_ORDINI = "PARAMETRI_ORDINI";
 
+	public final static String PK_RIDUZIONE_CUNEO_DL_3_2020 = "RIDUZIONE_CUNEO_DL_3_2020";
+	public final static String SK_DATA_INIZIO = "DATA_INIZIO";
 	public final static String PK_LINEA_ATTIVITA_SPECIALE = "LINEA_ATTIVITA_SPECIALE";
 	public final static String SK_LINEA_COMUNE_VERSAMENTO_IVA = "LINEA_COMUNE_VERSAMENTO_IVA";
 	
@@ -134,6 +136,7 @@ public class Configurazione_cnrBulk extends Configurazione_cnrBase {
 	public final static String SK_ATTIVO_SIOPEPLUS = "ATTIVO_SIOPEPLUS";
 	public final static String SK_ANNULLA_MANDATI = "ANNULLA_MANDATI";
 	public final static String SK_ANNULLA_REVERSALI = "ANNULLA_REVERSALI";
+	public final static String SK_RIPORTA_MANDATO_DAFIRMARE = "RIPORTA_MANDATO_DAFIRMARE";
 
 	public final static String PK_AGGIORNAMENTO_IMPEGNO_DA_ORDINE = "AGGIORNAMENTO IMPEGNO DA ORDINE";
 	public final static String IMPEGNO_CHIUSURA_FORZATA_A_RESIDUO = "IMPEGNO CHIUSURA FORZATA A RESIDUO";

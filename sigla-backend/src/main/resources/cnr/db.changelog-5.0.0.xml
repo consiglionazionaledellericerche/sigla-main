@@ -122,4 +122,9 @@
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="abilita_posizione_creditoria_pagopa">
+        <update tableName="gestione_pagopa">
+            <column name="posizione_creditoria" type="CHAR(1)" value="Y"/>
+        </update>
+    </changeSet>
 </databaseChangeLog>

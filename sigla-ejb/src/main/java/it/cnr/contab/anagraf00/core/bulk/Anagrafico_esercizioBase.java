@@ -44,11 +44,15 @@ public class Anagrafico_esercizioBase extends Anagrafico_esercizioKey implements
 	private Boolean fl_no_detrazioni_altre;
 	
 	private Boolean fl_no_detrazioni_family;
-	
+
 	private Boolean fl_applica_detr_pers_max;
 	
 	private Boolean fl_no_credito_irpef;
-	
+
+	private Boolean fl_no_credito_cuneo_irpef;
+
+	private Boolean fl_no_detr_cuneo_irpef;
+
 	private Boolean fl_detrazioni_altri_tipi;
 	
 public Anagrafico_esercizioBase() {
@@ -152,4 +156,20 @@ public void setIm_detrazione_personale_anag(java.math.BigDecimal im_detrazione_p
 	public void setFl_detrazioni_altri_tipi(Boolean fl_detrazioni_altri_tipi) {
 		this.fl_detrazioni_altri_tipi = fl_detrazioni_altri_tipi;
 	}
+	public Boolean getFl_no_credito_cuneo_irpef() {
+		return fl_no_credito_cuneo_irpef;
+	}
+
+	public void setFl_no_credito_cuneo_irpef(Boolean fl_no_credito_cuneo_irpef) {
+		this.fl_no_credito_cuneo_irpef = fl_no_credito_cuneo_irpef;
+	}
+
+	public Boolean getFl_no_detr_cuneo_irpef() {
+		return fl_no_detr_cuneo_irpef;
+	}
+
+	public void setFl_no_detr_cuneo_irpef(Boolean fl_no_detr_cuneo_irpef) {
+		this.fl_no_detr_cuneo_irpef = fl_no_detr_cuneo_irpef;
+	}
+
 }

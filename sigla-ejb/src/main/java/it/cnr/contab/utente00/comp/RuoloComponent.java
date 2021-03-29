@@ -507,6 +507,10 @@ public class RuoloComponent extends it.cnr.jada.comp.CRUDComponent implements IC
         return controlloAbilitazione(userContext, PrivilegioBulk.ABILITA_FIRMA_FATTURA_ELETTRONICA);
     }
 
+    public boolean isAbilitatoSbloccoImpegni(UserContext userContext) throws it.cnr.jada.comp.ComponentException {
+        return controlloAbilitazione(userContext, PrivilegioBulk.ABILITA_SBLOCCO_IMPEGNO);
+    }
+
     public boolean controlloAbilitazione(UserContext userContext, String tipoAbilitazione) throws ComponentException {
         try {
             SQLBuilder sql = null;

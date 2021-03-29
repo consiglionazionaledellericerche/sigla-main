@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<bulkInfo
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns="https://contab.cnr.it/schema/SIGLA" 
+		xsi:schemaLocation="https://contab.cnr.it/schema/SIGLA https://contab.cnr.it/schema/SIGLA/BulkInfo_1_5.xsd">
+
+	<fieldProperty
+		name="pgInizio"
+		property="pgInizio"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Dal Numero Mandato" />
+	<fieldProperty
+		name="pgFine"
+		property="pgFine"
+		inputType="TEXT"
+		maxLength="10"
+		inputSize="10"
+		label="Al Numero Mandato" />
+	<fieldProperty
+			name="ds_uo_liquidazione"
+			property="ds_uo_liquidazione"
+			maxLength="100"
+			inputSize="100"
+			inputType="ROTEXT"
+			label="Descr Uo Liquidazione" />
+	<fieldProperty
+			name="cd_uo_liquidazione"
+			property="cd_uo_liquidazione"
+			maxLength="30"
+			inputSize="30"
+			inputType="ROTEXT"
+			label="Uo Liquidazione" />
+	<formFieldProperty
+		name="esercizio_liquidazione"
+		property="esercizio_liquidazione"
+		inputType="ROTEXT"
+		label="Esercizio Liquidazione" />
+	<formFieldProperty
+		name="cd_cds_doc"
+		property="cd_cds_doc"
+		inputType="ROTEXT"
+		label="Cds" />
+	<fieldProperty
+			name="findDaLiquidazione"
+			property="daLiquidazione"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="Da Numero Liquidazione" />
+	<fieldProperty
+			name="findALiquidazione"
+			property="aLiquidazione"
+			inputType="searchtool"
+			formName="searchtool"
+			enabledOnSearch="true"
+			label="A Numero Liquidazione" />
+	<formFieldProperty name="pgInizio" />
+	<formFieldProperty name="pgFine" />
+	<formFieldProperty name="cd_uo_liquidazione" />
+	<formFieldProperty name="ds_uo_liquidazione" />
+	<formFieldProperty name="esercizio_liquidazione" />
+	<formFieldProperty name="cd_cds_doc" />
+	<formFieldProperty name="findDaLiquidazione" />
+	<formFieldProperty name="findALiquidazione" />
+
+</bulkInfo>

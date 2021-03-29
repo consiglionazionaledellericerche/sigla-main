@@ -73,10 +73,7 @@
 		<property name="digitalPreservationCodRegFA" value="${DigitalPreservationCodRegFA}" />
 		<property name="digitalPreservationCodRegFP" value="${DigitalPreservationCodRegFP}" />
 	</bean>
-	<!--
 	<bean id="gson" class="com.google.gson.Gson"/>
--->
-
 
 	<bean id="testJsonDataSource"
 		  class="it.cnr.contab.reports.service.dataSource.TestJsonDataSource" >
@@ -87,9 +84,14 @@
 	</util:map>
 
 	<bean id="printService" class="it.cnr.contab.reports.service.PrintService">
-		<!--<property name="gson" ref="gson"/>-->
 		<property name="serverPrint" value="${print.server.name}"/>
 		<property name="printDsOfflineImplemented" ref="mapPrintDsOfflineImplemented"/>
+	</bean>
+  
+	<bean id="pagopaService" class="it.cnr.contab.pagopa.rest.PagopaService">
+		<property name="baseUrl" value="${pagopa.govpay.base_url}"/>
+		<property name="username" value="${pagopa.govpay.username}"/>
+		<property name="password" value="${pagopa.govpay.password}"/>
 	</bean>
 
 	<bean id="fatturaPassivaElettronicaService" class="it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService">
@@ -110,6 +112,8 @@
 		<property name="pecSDISubjectFatturaAttivaNotificaScartoTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.scarto.term}"/>
 		<property name="pecSDISubjectFatturaAttivaMancataConsegnaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.mancataConsegna.term}"/>
 		<property name="pecSDISubjectNotificaEsitoTerm" value="${pec.sdi.subject.notifica.esito.term}"/>
+		<property name="pecSDISubjectNotificaRifiutoTerm" value="${pec.sdi.subject.notifica.rifiuto.term}"/>
+
 		<property name="pecSDISubjectFatturaAttivaDecorrenzaTerminiTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.decorrenzaTermini.term}"/>
 		<property name="pecSDISubjectFatturaAttivaAttestazioneTrasmissioneFatturaTerm" value="${pec.sdi.subject.fatturaAttiva.notifica.attestazioneTrasmissioneFattura.term}"/>
 		<property name="pecSDISubjectFatturaAttivaInvioTerm" value="${pec.sdi.subject.fatturaAttiva.invio.term}"/>

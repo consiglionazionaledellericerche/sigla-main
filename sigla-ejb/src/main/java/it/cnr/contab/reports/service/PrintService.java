@@ -17,8 +17,11 @@
 
 package it.cnr.contab.reports.service;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.GsonBuilder;
+import com.google.gson.Gson;
 import it.cnr.contab.reports.bulk.Print_spoolerBulk;
 import it.cnr.contab.reports.bulk.Print_spooler_paramKey;
 import it.cnr.contab.reports.bulk.Report;
@@ -54,7 +57,7 @@ public class PrintService implements InitializingBean {
 
 	private final static Logger logger = LoggerFactory.getLogger(PrintService.class);
 
-	private String serverPrint;
+  private String serverPrint;
 
 	public String getServerPrint() {
 		return serverPrint;
@@ -70,11 +73,13 @@ public class PrintService implements InitializingBean {
 	static {
 		gson = new GsonBuilder().
 				registerTypeAdapter(Print_spooler_paramKey.class,new PrintSpoolerParamKeySerializer()).
-				registerTypeAdapter(Timestamp.class,new JsonTimestampSeraializer()).create();
+				registerTypeAdapter(Timestamp.class,new JsonTimestampSeraializer())
+      	setExclusionStrategies( new HiddenAnnotationExclusionStrategy())
+        .create();
 
 	}
 
-	public void setOfflineReportComponent(
+  public void setOfflineReportComponent(
 			OfflineReportComponentSession offlineReportComponent) {
 		this.offlineReportComponent = offlineReportComponent;
 	}
@@ -91,7 +96,8 @@ public class PrintService implements InitializingBean {
 	}
 
 	private static String dsOnBody="/dsOnBody";
-	private String getExecuteHttpUrl( UserContext userContext,Print_spoolerBulk printSpooler){
+	
+  private String getExecuteHttpUrl( UserContext userContext,Print_spoolerBulk printSpooler){
 		String url = resolveServerPrint(userContext);
 		if (Optional.of( printSpooler).
 				filter( p->Print_spoolerBulk.STATO_IN_CODA_WAITDS.equals(p.getStato())).isPresent())
@@ -119,7 +125,7 @@ public class PrintService implements InitializingBean {
 		HttpPost method = null;
 		try {
 			method = getHttPostExecute(userContext,printSpooler);
-	        HttpResponse httpResponse = httpclient.execute(method);				
+	    HttpResponse httpResponse = httpclient.execute(method);				
 			int status = httpResponse.getStatusLine().getStatusCode();
 			if (status != HttpStatus.SC_OK)
 				throw new ComponentException("Webscript response width status error: "+status);
@@ -127,7 +133,7 @@ public class PrintService implements InitializingBean {
 					IOUtils.toByteArray(httpResponse.getEntity().getContent()),
 					httpResponse.getEntity().getContentType().getValue(), 
 					httpResponse.getEntity().getContentLength());
-		}finally{
+		} finally {
 			if (method != null)
 				method.releaseConnection();
 		}
@@ -143,7 +149,7 @@ public class PrintService implements InitializingBean {
 			if (status != HttpStatus.SC_OK)
 				throw new ComponentException("Webscript response width status error: "+status);
 
-		}finally{
+		} finally {
 			if (method != null)
 				method.releaseConnection();
 		}
@@ -182,11 +188,22 @@ public class PrintService implements InitializingBean {
 		}
 		logger.info( "Finish executeReportWithJsonDataSource");
 	}
+  
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		this.offlineReportComponent = Optional.ofNullable(EJBCommonServices.createEJB("BREPORTS_EJB_OfflineReportComponentSession"))
 				.filter(OfflineReportComponentSession.class::isInstance)
 				.map(OfflineReportComponentSession.class::cast)
 				.orElseThrow(() -> new DetailedRuntimeException("cannot find ejb BREPORTS_EJB_OfflineReportComponentSession"));
+	}
+
+	public class HiddenAnnotationExclusionStrategy implements ExclusionStrategy {
+		public boolean shouldSkipClass(Class<?> clazz) {
+			return clazz.getAnnotation(JsonIgnore.class) != null;
+		}
+
+		public boolean shouldSkipField(FieldAttributes f) {
+			return f.getAnnotation(JsonIgnore.class) != null;
+		}
 	}
 }

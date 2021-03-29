@@ -114,6 +114,18 @@
 </div>
 </fieldset>
 
+<fieldset class="fieldset card">
+<legend class="GroupLabel card-header text-primary">Detrazione per riduzione cuneo fiscale DL 3/2020</legend>
+<div class="Panel">
+<table>
+  <tr>
+	<td><% bp.getController().writeFormLabel(out,"detrazioneRiduzioneCuneo"); %></td>
+	<td><% bp.getController().writeFormInput(out,null,"detrazioneRiduzioneCuneo", !compenso.isSenzaCalcoli(),null, null); %></td>
+  </tr>
+</table>
+</div>
+</fieldset>
+
 <div class="Panel card">
 <table>
   <tr>

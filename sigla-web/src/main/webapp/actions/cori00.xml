@@ -52,8 +52,8 @@
 		<init-param name="bulkClassName" value="it.cnr.contab.cori00.docs.bulk.Liquid_gruppo_centroBulk" />
 		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />								
 	    <init-param name="defaultAction" value="LiquidGruppoCentroAction" />	    
-    </businessProcess> 
-    <action 
+    </businessProcess>
+    <action
         path="/LiquidazioneCoriF24EPAction" actionClass="it.cnr.contab.cori00.actions.LiquidazioneCoriF24EPAction">
     </action>
   
@@ -64,5 +64,25 @@
     		<init-param name="componentSessionName" value="CNRCORI00_EJB_Liquid_coriComponentSession"/>
     		<init-param name="defaultAction" value="LiquidazioneCoriF24EPAction"/>
   	</businessProcess>
-  
+
+	<action
+			path="/ConsLiquidCoriAction" actionClass="it.cnr.contab.cori00.actions.ConsLiquidCoriAction">
+	</action>
+	<businessProcess
+			name="ConsLiquidCoriBP" className="it.cnr.contab.cori00.bp.ConsLiquidCoriBP">
+		<forward name="default" path="/cori00/cons_liquid_cori.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.cori00.docs.bulk.ParSelConsLiqCoriBulk" />
+		<init-param name="componentSessionName" value="CNRCORI00_EJB_Liquid_coriComponentSession"/>
+		<init-param name="defaultAction" value="ConsLiquidCoriAction"/>
+	</businessProcess>
+
+	<businessProcess
+			name="VConsLiquidCoriBP" className="it.cnr.jada.util.action.ConsultazioniBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp"/>
+		<init-param name="bulkClassName" value="it.cnr.contab.cori00.docs.bulk.VConsLiqCoriBulk" />
+		<init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
+		<init-param name="defaultAction" value="ConsultazioniAction"/>
+		<init-param name="multiSelezione" value="Y" />
+	</businessProcess>
+
 </action-mappings>

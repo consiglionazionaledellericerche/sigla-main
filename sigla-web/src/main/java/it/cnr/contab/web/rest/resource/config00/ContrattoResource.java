@@ -17,26 +17,40 @@
 
 package it.cnr.contab.web.rest.resource.config00;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import java.rmi.RemoteException;
+import java.sql.Timestamp;
+import java.util.*;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
 
+import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
+import it.cnr.contab.anagraf00.core.bulk.V_persona_fisicaBulk;
+import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
+import it.cnr.contab.config00.contratto.bulk.*;
+import it.cnr.contab.client.docamm.Contratto;
+import it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupBulk;
+import it.cnr.contab.doccont00.tabrif.bulk.CupHome;
+import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
+import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
+import it.cnr.jada.UserContext;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_ditteBulk;
-import it.cnr.contab.config00.contratto.bulk.Ass_contratto_uoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
-import it.cnr.contab.config00.contratto.model.DittaInvitataExt;
-import it.cnr.contab.config00.contratto.model.UoAbilitataExt;
+import it.cnr.contab.web.rest.model.DittaInvitataExt;
+import it.cnr.contab.web.rest.model.UoAbilitataExt;
 import it.cnr.contab.config00.ejb.ContrattoComponentSession;
 import it.cnr.contab.config00.ejb.Unita_organizzativaComponentSession;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
@@ -53,24 +67,111 @@ public class ContrattoResource implements ContrattoLocal {
 	@EJB ContrattoComponentSession contrattoComponentSession;
 	@EJB Unita_organizzativaComponentSession unita_organizzativaComponentSession;
 	
-    public Response insert(@Context HttpServletRequest request, ContrattoBulk contrattoBulk) throws Exception {
+    public Response insertContratto(@Context HttpServletRequest request, ContrattoDtoBulk contrattoBulk) throws Exception {
+
     	CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
     	Optional.ofNullable(contrattoBulk.getEsercizio()).filter(x -> userContext.getEsercizio().equals(x)).
-		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Esercizio del contesto diverso da quello della Missione"));
+		orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Esercizio del contesto diverso da quello del Contratto"));
 		Optional.ofNullable(contrattoBulk.getEsercizio()).orElse(getYearFromToday());
-		contrattoBulk.setStato(ContrattoBulk.STATO_PROVVISORIO);
-		if (contrattoBulk.getCd_unita_organizzativa() != null){
-			if (contrattoBulk.getCd_unita_organizzativa().length() == 6){
-				contrattoBulk.setCd_unita_organizzativa(contrattoBulk.getCd_unita_organizzativa().substring(0, 3)+"."+contrattoBulk.getCd_unita_organizzativa().substring(3));
+		ContrattoBulk contrattoBulkSigla = creaContrattoSigla(contrattoBulk, userContext);
+		contrattoBulkSigla.setStato(ContrattoBulk.STATO_PROVVISORIO);
+		if (contrattoBulkSigla.getCd_unita_organizzativa() != null){
+			if (contrattoBulkSigla.getCd_unita_organizzativa().length() == 6){
+				contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulkSigla.getCd_unita_organizzativa().substring(0, 3)+"."+contrattoBulkSigla.getCd_unita_organizzativa().substring(3));
 			} else {
-				throw new RestException(Status.BAD_REQUEST, "L'Unita Organizzativa indicata "+contrattoBulk.getCd_unita_organizzativa()+" non è conforme con il formato atteso");
+				throw new RestException(Status.BAD_REQUEST, "L'Unita Organizzativa indicata "+contrattoBulkSigla.getCd_unita_organizzativa()+" non è conforme con il formato atteso");
 			}
 		} else {
 			throw new RestException(Status.BAD_REQUEST, "Unita Organizzativa non indicata");
 		}
-		
-		contrattoBulk.setNatura_contabile(ContrattoBulk.NATURA_CONTABILE_PASSIVO);
-		contrattoBulk.setCd_tipo_atto("DET");
+
+		contrattoBulkSigla.setNatura_contabile(ContrattoBulk.NATURA_CONTABILE_PASSIVO);
+		contrattoBulkSigla.setAtto(new Tipo_atto_amministrativoBulk());
+		contrattoBulkSigla.setCd_tipo_atto("DET");
+
+		final ContrattoBulk contratto = (ContrattoBulk) contrattoComponentSession.inizializzaBulkPerInserimento(
+    			userContext,
+				contrattoBulkSigla);
+				
+		contratto.setToBeCreated();
+    	ContrattoBulk contrattoCreated = (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto);
+    	contrattoBulk.setPg_contratto(contrattoCreated.getPg_contratto());
+    	return Response.status(Status.CREATED).entity(contrattoBulk).build();
+    }
+
+	private ContrattoBulk creaContrattoSigla(ContrattoDtoBulk contrattoBulk, CNRUserContext userContext) throws PersistencyException, ValidationException, ComponentException, RemoteException {
+		ContrattoBulk contrattoBulkSigla = new ContrattoBulk();
+		if (Optional.ofNullable(contrattoBulk.getCd_unita_organizzativa()).isPresent()){
+			contrattoBulkSigla.setUnita_organizzativa(new Unita_organizzativaBulk());
+			contrattoBulkSigla.setCd_unita_organizzativa(contrattoBulk.getCd_unita_organizzativa());
+		}
+		contrattoBulkSigla.setEsercizio(contrattoBulk.getEsercizio());
+		contrattoBulkSigla.setPg_contratto(contrattoBulk.getPg_contratto());
+		contrattoBulkSigla.setStato(contrattoBulk.getStato());
+		contrattoBulkSigla.setIm_contratto_attivo(contrattoBulk.getIm_contratto_attivo());
+		if (Optional.ofNullable(contrattoBulk.getCd_organo()).isPresent()){
+			contrattoBulkSigla.setOrgano(new OrganoBulk());
+			contrattoBulkSigla.setCd_organo(contrattoBulk.getCd_organo());
+		}
+		if (Optional.ofNullable(contrattoBulk.getCd_proc_amm()).isPresent()){
+			contrattoBulkSigla.setProcedura_amministrativa(new Procedure_amministrativeBulk());
+			contrattoBulkSigla.setCd_proc_amm(contrattoBulk.getCd_proc_amm());
+		}
+		contrattoBulkSigla.setCd_protocollo(contrattoBulk.getCd_protocollo());
+		contrattoBulkSigla.setCd_protocollo_generale(contrattoBulk.getCd_protocollo_generale());
+		if (Optional.ofNullable(contrattoBulk.getCd_terzo_firmatario()).isPresent()){
+			contrattoBulkSigla.setFirmatario(new V_persona_fisicaBulk());
+			contrattoBulkSigla.setCd_terzo_firmatario(contrattoBulk.getCd_terzo_firmatario());
+		}
+		if (Optional.ofNullable(contrattoBulk.getCd_terzo_resp()).isPresent()){
+			contrattoBulkSigla.setResponsabile(new V_persona_fisicaBulk());
+			contrattoBulkSigla.setCd_terzo_resp(contrattoBulk.getCd_terzo_resp());
+		}
+		if (Optional.ofNullable(contrattoBulk.getCd_tipo_atto()).isPresent()){
+			contrattoBulkSigla.setAtto(new Tipo_atto_amministrativoBulk());
+			contrattoBulkSigla.setCd_tipo_atto(contrattoBulk.getCd_tipo_atto());
+		}
+		contrattoBulkSigla.setCdCigExt(contrattoBulk.getCdCigExt());
+		if (Optional.ofNullable(contrattoBulk.getCd_tipo_contratto()).isPresent()){
+			contrattoBulkSigla.setTipo_contratto(new Tipo_contrattoBulk());
+			contrattoBulkSigla.setCd_tipo_contratto(contrattoBulk.getCd_tipo_contratto());
+		}
+		contrattoBulkSigla.setCdCigFatturaAttiva(contrattoBulk.getCdCigFatturaAttiva());
+		contrattoBulkSigla.setCodfisPivaAggiudicatarioExt(contrattoBulk.getCodfisPivaAggiudicatarioExt());
+		contrattoBulkSigla.setCodfisPivaFirmatarioExt(contrattoBulk.getCodfisPivaFirmatarioExt());
+		contrattoBulkSigla.setCodfisPivaRupExt(contrattoBulk.getCodfisPivaRupExt());
+		contrattoBulkSigla.setCodiceFlussoAcquisti(contrattoBulk.getCodiceFlussoAcquisti());
+		contrattoBulkSigla.setDs_atto(contrattoBulk.getDs_atto());
+		contrattoBulkSigla.setDs_organo_non_definito(contrattoBulk.getDs_organo_non_definito());
+		contrattoBulkSigla.setDt_fine_validita(contrattoBulk.getDt_fine_validita());
+		contrattoBulkSigla.setDt_inizio_validita(contrattoBulk.getDt_inizio_validita());
+		contrattoBulkSigla.setDt_proroga(contrattoBulk.getDt_proroga());
+		contrattoBulkSigla.setDt_registrazione(contrattoBulk.getDt_registrazione());
+		contrattoBulkSigla.setDt_stipula(contrattoBulk.getDt_stipula());
+		contrattoBulkSigla.setEsercizio_protocollo(contrattoBulk.getEsercizio_protocollo());
+
+		if (Optional.ofNullable(contrattoBulk.getFig_giur_est()).isPresent()){
+			contrattoBulkSigla.setFigura_giuridica_esterna(new TerzoBulk());
+			contrattoBulkSigla.setFig_giur_est(contrattoBulk.getFig_giur_est());
+		}
+		if (Optional.ofNullable(contrattoBulk.getFig_giur_int()).isPresent()){
+			contrattoBulkSigla.setFigura_giuridica_interna(new TerzoBulk());
+			contrattoBulkSigla.setFig_giur_int(contrattoBulk.getFig_giur_int());
+		}
+		contrattoBulkSigla.setFl_art82(contrattoBulk.getFl_art82());
+		contrattoBulkSigla.setFl_mepa(contrattoBulk.getFl_mepa());
+		contrattoBulkSigla.setFl_pubblica_contratto(contrattoBulk.getFl_pubblica_contratto());
+		contrattoBulkSigla.setIm_contratto_passivo(contrattoBulk.getIm_contratto_passivo());
+		contrattoBulkSigla.setIm_contratto_passivo_netto(contrattoBulk.getIm_contratto_passivo_netto());
+		contrattoBulkSigla.setNatura_contabile(contrattoBulk.getNatura_contabile());
+		contrattoBulkSigla.setOggetto(contrattoBulk.getOggetto());
+		if (Optional.ofNullable(contrattoBulk.getPg_progetto()).isPresent()){
+			contrattoBulkSigla.setProgetto(new ProgettoBulk());
+			contrattoBulkSigla.setPg_progetto(contrattoBulk.getPg_progetto());
+		}
+		contrattoBulkSigla.setResp_esterno(contrattoBulk.getResp_esterno());
+		contrattoBulkSigla.setStato_padre(contrattoBulk.getStato_padre());
+		gestioneCupSuContrattoDaFlows(userContext, contrattoBulkSigla, contrattoBulk.getCdCupExt());
 		if (contrattoBulk.getListaDitteInvitateExt() != null && !contrattoBulk.getListaDitteInvitateExt().isEmpty()){
 			for (DittaInvitataExt ditta : contrattoBulk.getListaDitteInvitateExt()){
 				Ass_contratto_ditteBulk dittaContr = new Ass_contratto_ditteBulk();
@@ -80,9 +181,9 @@ public class ContrattoResource implements ContrattoLocal {
 					dittaContr.setId_fiscale(ditta.getpIvaCodiceFiscaleDittaInvitata());
 				}
 				dittaContr.setTipologia(Ass_contratto_ditteBulk.LISTA_INVITATE);
-				dittaContr.setUser(contrattoBulk.getUser());
+				dittaContr.setUser(contrattoBulkSigla.getUser());
 				dittaContr.setDenominazione(ditta.getRagioneSocialeDittaInvitata());
-				contrattoBulk.addToDitteInvitate(dittaContr);
+				contrattoBulkSigla.addToDitteInvitate(dittaContr);
 			}
 		}
 		if (contrattoBulk.getListaUoAbilitateExt() != null && !contrattoBulk.getListaUoAbilitateExt().isEmpty()){
@@ -92,10 +193,10 @@ public class ContrattoResource implements ContrattoLocal {
 					if (uoExt.getUo().length() == 6){
 						uo.setUnita_organizzativa(new Unita_organizzativaBulk());
 						uo.setCd_unita_organizzativa(uoExt.getUo().substring(0, 3)+"."+uoExt.getUo().substring(3));
-						uo.setContratto(contrattoBulk);
-						uo.setEsercizio(contrattoBulk.getEsercizio());
-						uo.setStato_contratto(contrattoBulk.getStato());
-						contrattoBulk.addToAssociazioneUO(uo);
+						uo.setContratto(contrattoBulkSigla);
+						uo.setEsercizio(contrattoBulkSigla.getEsercizio());
+						uo.setStato_contratto(contrattoBulkSigla.getStato());
+						contrattoBulkSigla.addToAssociazioneUO(uo);
 					} else {
 						throw new RestException(Status.BAD_REQUEST, "L'Unita Organizzativa indicata "+uoExt.getUo()+" non è conforme con il formato atteso");
 					}
@@ -104,16 +205,10 @@ public class ContrattoResource implements ContrattoLocal {
 				}
 			}
 		}
+		return contrattoBulkSigla;
+	}
 
-		final ContrattoBulk contratto = (ContrattoBulk) contrattoComponentSession.inizializzaBulkPerInserimento(
-    			userContext, 
-    			contrattoBulk);
-				
-    	contratto.setToBeCreated();
-    	ContrattoBulk contrattoCreated = (ContrattoBulk) contrattoComponentSession.creaContrattoDaFlussoAcquisti(userContext, contratto);
-    	return Response.status(Status.CREATED).build();
-    }
-    private Date getDateTodayWithoutTime(){
+	private Date getDateTodayWithoutTime(){
     	Calendar cal = getTodayWithoutTime();
     	return cal.getTime();	
     }
@@ -130,5 +225,40 @@ public class ContrattoResource implements ContrattoLocal {
 		Calendar cal = getTodayWithoutTime();
 		return cal.get(Calendar.YEAR);
 	}
+	private void gestioneCupSuContrattoDaFlows(UserContext userContext, ContrattoBulk contratto, String cupExt)
+			throws PersistencyException, ComponentException, RemoteException, EJBException {
+		if (cupExt != null){
 
+			CupBulk cup = new CupBulk();
+			cup.setCdCup(cupExt);
+			cup.setDescrizione(contratto.getOggetto());
+			CupBulk cupDb = (CupBulk)crudComponentSession.findByPrimaryKey(userContext, cup);
+			if (cupDb != null){
+				contratto.setCup(cupDb);
+			} else {
+				cup.setUser(contratto.getUser());
+				cup.setToBeCreated();
+				contratto.setCup(cup);
+			}
+		}
+	}
+	@Override
+	public Response recuperoDatiContratto(@Context HttpServletRequest request, @QueryParam("uo") String uo,
+										  @QueryParam("cdTerzo") Integer cdTerzo) throws Exception {
+		LOGGER.debug("REST request per recupero Dati Contratto.");
+		CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
+		final ContrattoDatiSintesiBulk contrattoDatiSintesiBulk = new ContrattoDatiSintesiBulk();
+		Optional.ofNullable(uo).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, uo di selezione obbligatoria."));
+		Optional.ofNullable(cdTerzo).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, codice terzo di selezione obbligatoria."));
+
+		try {
+			List<ContrattoDatiSintesiBulk> dati =
+					crudComponentSession.find(userContext, ContrattoDatiSintesiBulk.class, "recuperoDati", userContext, contrattoDatiSintesiBulk, ContrattoBulk.NATURA_CONTABILE_PASSIVO, cdTerzo, uo);
+
+			LOGGER.debug("Fine REST per recupero Dati Contratto.");
+			return Response.ok(Optional.ofNullable(dati).orElse(Collections.emptyList())).build();
+		} catch (Exception _ex) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("ERROR", _ex)).build();
+		}
+	}
 }

@@ -25,16 +25,27 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class MandatoComunicaDatiBulk extends OggettoBulk implements Persistent {
+    public final static Integer ANNO_INIZIO_PUBBLICAZIONE = 2016;
+    private Timestamp daData;
+    private Timestamp aData;
     private java.lang.String cd_cds;
     private java.lang.Integer esercizio;
     private java.lang.Long pg_mandato;
     private java.sql.Timestamp dt_pagamento;
-    private java.math.BigDecimal im_mandato;
-    private java.math.BigDecimal im_ritenute;
-    private java.math.BigDecimal importoCapitolo;
+    private java.math.BigDecimal importo;
     private String cdLiv4;
     private String dsLiv4;
     private String denominazioneSede;
+
+    public MandatoComunicaDatiBulk(String cd_cds, Integer esercizio, Long pg_mandato, Timestamp dt_pagamento, String cdLiv4, String dsLiv4, String denominazioneSede) {
+        this.cd_cds = cd_cds;
+        this.esercizio = esercizio;
+        this.pg_mandato = pg_mandato;
+        this.dt_pagamento = dt_pagamento;
+        this.cdLiv4 = cdLiv4;
+        this.dsLiv4 = dsLiv4;
+        this.denominazioneSede = denominazioneSede;
+    }
 
     public MandatoComunicaDatiBulk() {
         super();
@@ -64,12 +75,12 @@ public class MandatoComunicaDatiBulk extends OggettoBulk implements Persistent {
         this.denominazioneSede = denominazioneSede;
     }
 
-    public BigDecimal getImportoCapitolo() {
-        return importoCapitolo;
+    public BigDecimal getImporto() {
+        return importo;
     }
 
-    public void setImportoCapitolo(BigDecimal importoCapitolo) {
-        this.importoCapitolo = importoCapitolo;
+    public void setImporto(BigDecimal importo) {
+        this.importo = importo;
     }
 
     public String getCd_cds() {
@@ -104,19 +115,4 @@ public class MandatoComunicaDatiBulk extends OggettoBulk implements Persistent {
         this.dt_pagamento = dt_pagamento;
     }
 
-    public BigDecimal getIm_mandato() {
-        return im_mandato;
-    }
-
-    public void setIm_mandato(BigDecimal im_mandato) {
-        this.im_mandato = im_mandato;
-    }
-
-    public BigDecimal getIm_ritenute() {
-        return im_ritenute;
-    }
-
-    public void setIm_ritenute(BigDecimal im_ritenute) {
-        this.im_ritenute = im_ritenute;
-    }
 }

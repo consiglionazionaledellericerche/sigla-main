@@ -156,6 +156,11 @@
 			propertyName="id_funzione_pubblica"
 			sqlTypeName="VARCHAR"
 			columnSize="10" />
+		<columnMapping
+			columnName="CODICEAOOIPA"
+			propertyName="codiceAooIpa"
+			sqlTypeName="VARCHAR"
+			columnSize="100" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="pg_ver_rec" />
@@ -203,4 +208,6 @@
 		name="id_funzione_pubblica" />
 	<persistentProperty
 		name="fl_cds" />
+	<persistentProperty
+		name="codiceAooIpa" />
 </SQLPersistentInfo>

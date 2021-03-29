@@ -114,6 +114,12 @@
 			columnSize="1"
 			nullable="true" />
 		<columnMapping
+			columnName="ALLEGA_CONFLITTO_INTERESSE"
+			propertyName="allega_conflitto_interesse"
+			sqlTypeName="CHAR"
+			columnSize="1"
+			nullable="true" />
+		<columnMapping
 			columnName="INDICA_URL_PROGETTO"
 			propertyName="indica_url_progetto"
 			sqlTypeName="CHAR"
@@ -186,6 +192,8 @@
 		name="allega_dich_contraente" />
 	<persistentProperty
 		name="allega_progetto" />
+	<persistentProperty
+		name="allega_conflitto_interesse" />
 	<persistentProperty
 		name="indica_url_progetto" />
 	<persistentProperty

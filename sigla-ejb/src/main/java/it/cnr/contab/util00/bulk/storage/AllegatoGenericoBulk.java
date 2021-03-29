@@ -38,6 +38,7 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	private String nome;
 	private String titolo;
 	private String descrizione;
+	private String relativePath;
 	private Boolean daNonEliminare = false;
 	
 	public AllegatoGenericoBulk() {
@@ -47,7 +48,12 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 	public static AllegatoGenericoBulk construct(String storageKey){
 		return new AllegatoGenericoBulk(storageKey);
 	}
-	
+	public static AllegatoGenericoBulk name(String name){
+		AllegatoGenericoBulk allegatoGenericoBulk = new AllegatoGenericoBulk();
+		allegatoGenericoBulk.setNome(name);
+		return allegatoGenericoBulk;
+	}
+
 	public AllegatoGenericoBulk(String storageKey) {
 		super();
 		this.storageKey = storageKey;
@@ -147,5 +153,13 @@ public class AllegatoGenericoBulk extends OggettoBulk {
 
 	public void setDaNonEliminare(Boolean daNonEliminare) {
 		this.daNonEliminare = daNonEliminare;
+	}
+
+	public String getRelativePath() {
+		return relativePath;
+	}
+
+	public void setRelativePath(String relativePath) {
+		this.relativePath = relativePath;
 	}
 }

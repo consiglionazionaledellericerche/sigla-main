@@ -2,7 +2,7 @@
 --  DDL for Package Body CNRMIG100
 --------------------------------------------------------
 
-  CREATE OR REPLACE PACKAGE BODY "CNRMIG100" is
+CREATE OR REPLACE PACKAGE BODY "CNRMIG100" is
 
 function isRibaltamentoPDGPEffettuato (aEs number, aPgEsec number) return boolean is
 --aPgEsecPrec integer;
@@ -270,8 +270,24 @@ begin
   						    FL_CHECK_TERZO_SIOPE,
   						    FL_INV_BENI_COMP,
   						    FL_LIMITE_SPESA,
-  						    FL_PRELIEVO, FL_SOGGETTO_PRELIEVO, PERC_PRELIEVO_PDGP_ENTRATE,FL_SOLO_RESIDUO,FL_SOLO_COMPETENZA,FL_TROVATO,FL_AZZERA_RESIDUI,
-  						    ESERCIZIO_ELEMENTO_PADRE,TI_APPARTENENZA_ELEMENTO_PADRE,TI_GESTIONE_ELEMENTO_PADRE,FL_MISSIONI)
+  						    FL_PRELIEVO,
+  						    FL_SOGGETTO_PRELIEVO,
+  						    PERC_PRELIEVO_PDGP_ENTRATE,
+  						    FL_SOLO_RESIDUO,
+  						    FL_SOLO_COMPETENZA,
+  						    FL_TROVATO,
+  						    FL_AZZERA_RESIDUI,
+  						    ESERCIZIO_ELEMENTO_PADRE,
+  						    TI_APPARTENENZA_ELEMENTO_PADRE,
+  						    TI_GESTIONE_ELEMENTO_PADRE,
+  						    FL_MISSIONI,
+  						    CD_UNITA_PIANO,
+  						    CD_VOCE_PIANO,
+  						    GG_DEROGA_OBBL_COMP_PRG_SCAD,
+  						    GG_DEROGA_OBBL_RES_PRG_SCAD,
+  						    FL_COMUNICA_PAGAMENTI,
+  						    FL_LIMITE_COMPETENZA,
+  						    BLOCCO_IMPEGNI_NATFIN)
 			values (aEs,
 				aElVoce.TI_APPARTENENZA,
 				aElVoce.TI_GESTIONE,
@@ -305,9 +321,24 @@ begin
   				aElVoce.FL_CHECK_TERZO_SIOPE,
   				aElVoce.FL_INV_BENI_COMP,
   				aElVoce.FL_LIMITE_SPESA,
-  				aElVoce.FL_PRELIEVO, aElVoce.FL_SOGGETTO_PRELIEVO, aElVoce.PERC_PRELIEVO_PDGP_ENTRATE,aElVoce.FL_SOLO_RESIDUO,aElVoce.FL_SOLO_COMPETENZA,
-  				aElVoce.FL_TROVATO,aElVoce.FL_AZZERA_RESIDUI,
-  				aElVoce.ESERCIZIO_ELEMENTO_PADRE,aElVoce.TI_APPARTENENZA_ELEMENTO_PADRE,aElVoce.TI_GESTIONE_ELEMENTO_PADRE,aElVoce.FL_MISSIONI);
+  				aElVoce.FL_PRELIEVO,
+  				aElVoce.FL_SOGGETTO_PRELIEVO,
+  				aElVoce.PERC_PRELIEVO_PDGP_ENTRATE,
+  				aElVoce.FL_SOLO_RESIDUO,
+  				aElVoce.FL_SOLO_COMPETENZA,
+  				aElVoce.FL_TROVATO,
+  				aElVoce.FL_AZZERA_RESIDUI,
+  				aElVoce.ESERCIZIO_ELEMENTO_PADRE,
+  				aElVoce.TI_APPARTENENZA_ELEMENTO_PADRE,
+  				aElVoce.TI_GESTIONE_ELEMENTO_PADRE,
+  				aElVoce.FL_MISSIONI,
+  				aElVoce.CD_UNITA_PIANO,
+  				aElVoce.CD_VOCE_PIANO,
+  				aElVoce.GG_DEROGA_OBBL_COMP_PRG_SCAD,
+  				aElVoce.GG_DEROGA_OBBL_RES_PRG_SCAD,
+  				aElVoce.FL_COMUNICA_PAGAMENTI,
+  				aElVoce.FL_LIMITE_COMPETENZA,
+  				aElVoce.BLOCCO_IMPEGNI_NATFIN);
 		exception when DUP_VAL_ON_INDEX then
 			ibmutl200.LOGWAR(aPgEsec,'ELEMENTO_VOCE con PK('||aEs||', '
 					||aElVoce.TI_APPARTENENZA||', '
@@ -473,10 +504,11 @@ begin
 							  FL_DECENTRATO,
 							  CDR_ACCENTRATORE,
 							  FL_PIANO_RIPARTO,
-						  	FL_ESTERNA_DA_QUADRARE_SAC,
-						  	FL_VISTO_DIP_VARIAZIONI,
-						  	TI_CLASSIFICAZIONE,
-						  	FL_PREV_OBB_ANNO_SUC)
+						  	  FL_ESTERNA_DA_QUADRARE_SAC,
+						  	  FL_VISTO_DIP_VARIAZIONI,
+						  	  TI_CLASSIFICAZIONE,
+						  	  FL_PREV_OBB_ANNO_SUC,
+						  	  IM_LIMITE_ASSESTATO)
 			values (new_id,
 				aEs,
 				aClassV.TI_GESTIONE,
@@ -504,7 +536,8 @@ begin
 				aClassV.FL_ESTERNA_DA_QUADRARE_SAC,
 				aClassV.FL_VISTO_DIP_VARIAZIONI,
 				aclassV.TI_CLASSIFICAZIONE,
-				aclassV.FL_PREV_OBB_ANNO_SUC);
+				aclassV.FL_PREV_OBB_ANNO_SUC,
+				aclassV.IM_LIMITE_ASSESTATO);
 
 			--Aggiorno l'elemento voce con la nuova classificazione creata
 			update elemento_voce v
@@ -1015,7 +1048,7 @@ begin
 
 	begin
 		aPgEsec := IBMUTL200.LOGSTART(TI_LOG_RIBALTAMENTO_PDGP,dsProcesso_pdgp,null,cgUtente,null,null);
-
+dbms_output.put_line('0001');
 		startLogRibaltamento(aEs, aPgEsec, dsProcesso_pdgp , cgUtente);
 
 		if isRibaltamentoPDGPEffettuato(aEs, aPgEsec) then
@@ -1097,6 +1130,7 @@ begin
 			ibmutl200.LOGWAR(aPgEsec,'Parametri CNR per l''esercizio base '||aEs||' già esistenti','','');
 			stato_fine := 'W';
 		end;
+dbms_output.put_line('0002');
 
 		-- Definizione esercizio contabile dell'ente
 		lock table esercizio in exclusive mode nowait;
@@ -1174,9 +1208,11 @@ begin
 			ibmutl200.LOGWAR(aPgEsec,'TIPO_VARIAZIONE per l''esercizio base '||aEs||' già esistente','','');
 			stato_fine := 'W';
 		end;
+dbms_output.put_line('0003');
 
 		-- Ribaltamento dell'anagrafica dei capitoli
 		ribaltaEV(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
+dbms_output.put_line('0004');
 
 		-- Ribaltamento CONFIGURAZIONE_CNR sull'esercizio contabile destinazione
 		-- a partire dall'esercizio precedente
@@ -1255,10 +1291,12 @@ begin
 				stato_fine := 'W';
 			end;
 		end loop;
+dbms_output.put_line('0005');
 
 
 		-- Ribaltamento della struttura organizzativa
 		ribaltaStruttOrg(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
+dbms_output.put_line('0006');
 
     -- Ribaltamento limiti di spesa
     ribaltaLimitiSpesa(aEs, aEsPrec, aPgEsec, stato_fine, aMessage);
@@ -1272,6 +1310,7 @@ begin
 		-- Update del log sul processo
 
 		endLogRibaltamentoPerPDGP(aEs, aPgEsec, stato_fine, aMessage );
+dbms_output.put_line('0007');
 
 	exception when OTHERS then
 	    rollback;
@@ -1451,9 +1490,24 @@ begin
   						    FL_CHECK_TERZO_SIOPE,
   						    FL_INV_BENI_COMP,
   						    FL_LIMITE_SPESA,
-  						    FL_PRELIEVO, FL_SOGGETTO_PRELIEVO, PERC_PRELIEVO_PDGP_ENTRATE,FL_SOLO_RESIDUO,FL_SOLO_COMPETENZA,FL_TROVATO,FL_AZZERA_RESIDUI,
-  						    ESERCIZIO_ELEMENTO_PADRE,TI_APPARTENENZA_ELEMENTO_PADRE,TI_GESTIONE_ELEMENTO_PADRE,FL_MISSIONI,CD_UNITA_PIANO,CD_VOCE_PIANO,
-  						    GG_DEROGA_OBBL_COMP_PRG_SCAD,GG_DEROGA_OBBL_RES_PRG_SCAD)
+  						    FL_PRELIEVO,
+  						    FL_SOGGETTO_PRELIEVO,
+  						    PERC_PRELIEVO_PDGP_ENTRATE,
+  						    FL_SOLO_RESIDUO,
+  						    FL_SOLO_COMPETENZA,
+  						    FL_TROVATO,
+  						    FL_AZZERA_RESIDUI,
+  						    ESERCIZIO_ELEMENTO_PADRE,
+  						    TI_APPARTENENZA_ELEMENTO_PADRE,
+  						    TI_GESTIONE_ELEMENTO_PADRE,
+  						    FL_MISSIONI,
+  						    CD_UNITA_PIANO,
+  						    CD_VOCE_PIANO,
+  						    GG_DEROGA_OBBL_COMP_PRG_SCAD,
+  						    GG_DEROGA_OBBL_RES_PRG_SCAD,
+                            FL_COMUNICA_PAGAMENTI,
+                            FL_LIMITE_COMPETENZA,
+                            BLOCCO_IMPEGNI_NATFIN)
 			values (aEsDest,
 				aElVoce.TI_APPARTENENZA,
 				aElVoce.TI_GESTIONE,
@@ -1487,10 +1541,25 @@ begin
   				aElVoce.FL_CHECK_TERZO_SIOPE,
   				aElVoce.FL_INV_BENI_COMP,
   				aElVoce.FL_LIMITE_SPESA,
-  				aElVoce.FL_PRELIEVO, aElVoce.FL_SOGGETTO_PRELIEVO, aElVoce.PERC_PRELIEVO_PDGP_ENTRATE,aElVoce.FL_SOLO_RESIDUO,aElVoce.FL_SOLO_COMPETENZA,
-  				aElVoce.FL_TROVATO,aElVoce.FL_AZZERA_RESIDUI,
-  				aElVoce.ESERCIZIO_ELEMENTO_PADRE,aElVoce.TI_APPARTENENZA_ELEMENTO_PADRE,aElVoce.TI_GESTIONE_ELEMENTO_PADRE,aElVoce.FL_MISSIONI,
-  				aElVoce.CD_UNITA_PIANO,aElVoce.CD_VOCE_PIANO,aElVoce.GG_DEROGA_OBBL_COMP_PRG_SCAD,aElVoce.GG_DEROGA_OBBL_RES_PRG_SCAD);
+  				aElVoce.FL_PRELIEVO,
+  				aElVoce.FL_SOGGETTO_PRELIEVO,
+  				aElVoce.PERC_PRELIEVO_PDGP_ENTRATE,
+  				aElVoce.FL_SOLO_RESIDUO,
+  				aElVoce.FL_SOLO_COMPETENZA,
+  				aElVoce.FL_TROVATO,
+  				aElVoce.FL_AZZERA_RESIDUI,
+  				aElVoce.ESERCIZIO_ELEMENTO_PADRE,
+  				aElVoce.TI_APPARTENENZA_ELEMENTO_PADRE,
+  				aElVoce.TI_GESTIONE_ELEMENTO_PADRE,
+  				aElVoce.FL_MISSIONI,
+  				aElVoce.CD_UNITA_PIANO,
+  				aElVoce.CD_VOCE_PIANO,
+  				aElVoce.GG_DEROGA_OBBL_COMP_PRG_SCAD,
+  				aElVoce.GG_DEROGA_OBBL_RES_PRG_SCAD,
+                aElVoce.FL_COMUNICA_PAGAMENTI,
+                aElVoce.FL_LIMITE_COMPETENZA,
+                aElVoce.BLOCCO_IMPEGNI_NATFIN
+  				);
 		exception when DUP_VAL_ON_INDEX then
 			ibmutl200.LOGWAR(aPgEsec,'ELEMENTO_VOCE con PK('||aEsDest||', '
 					||aElVoce.TI_APPARTENENZA||', '
@@ -1674,10 +1743,11 @@ begin
 							  FL_DECENTRATO,
 							  CDR_ACCENTRATORE,
 							  FL_PIANO_RIPARTO,
-						  	FL_ESTERNA_DA_QUADRARE_SAC,
-						  	FL_VISTO_DIP_VARIAZIONI,
-						  	TI_CLASSIFICAZIONE,
-						  	FL_PREV_OBB_ANNO_SUC)
+						  	  FL_ESTERNA_DA_QUADRARE_SAC,
+						  	  FL_VISTO_DIP_VARIAZIONI,
+						  	  TI_CLASSIFICAZIONE,
+						  	  FL_PREV_OBB_ANNO_SUC,
+						  	  IM_LIMITE_ASSESTATO)
 			values (new_id,
 				aEsDest,
 				aClassV.TI_GESTIONE,
@@ -1705,7 +1775,8 @@ begin
 				aClassV.FL_ESTERNA_DA_QUADRARE_SAC,
 				aClassV.FL_VISTO_DIP_VARIAZIONI,
 				aclassV.TI_CLASSIFICAZIONE,
-				aclassV.FL_PREV_OBB_ANNO_SUC);
+				aclassV.FL_PREV_OBB_ANNO_SUC,
+				aclassV.IM_LIMITE_ASSESTATO);
 
 			--Aggiorno l'elemento voce con la nuova classificazione creata
 			update elemento_voce v
@@ -1995,6 +2066,7 @@ begin
 				   	,cgUtente
 				   	,1
 				   	,0); --- Viene settata alla chiusura dell'esercizio
+dbms_output.put_line('0010 + '||aCds.cd_unita_organizzativa);
 
 			 -- esplosione del piano dei conti in funzione dell'esercizio contabile appena creato
 --			 ibmutl200.LOGINF(aPgEsec,'cnrctb001.creaEsplVociEsercizio('||aEsDest||','||aCds.cd_unita_organizzativa||','||cgUtente||')','','');
@@ -2029,7 +2101,9 @@ begin
 			 from prc_copertura_obblig prc
 			 where prc.esercizio 	   	  	  = aEsOrig
 			   and prc.CD_UNITA_ORGANIZZATIVA = aCds.cd_unita_organizzativa;
-		exception when DUP_VAL_ON_INDEX then
+
+			  dbms_output.put_line('0011');
+exception when DUP_VAL_ON_INDEX then
 			ibmutl200.LOGWAR(aPgEsec,'Percentuali di copertura '||cnrutil.getLabelObbl()||' per il CDS '||aCds.cd_unita_organizzativa|| ' per l''esercizio '|| aEsDest||' già impostate','','');
 			aStato := 'W';
 		end;
@@ -2037,8 +2111,10 @@ begin
 		-- aggiornamento dei numeratori dei documenti contabili in NUMERAZIONE_DOC_CONT
 --		ibmutl200.LOGINF(aPgEsec,'CNRCTB018.AGGIORNANUMERATORI('||aEsDest||','||aCds.cd_unita_organizzativa||','|| cgUtente||')','','');
 		CNRCTB018.AGGIORNANUMERATORI(aEsDest, aCds.cd_unita_organizzativa, cgUtente);
+			  dbms_output.put_line('0012');
 
 	end loop; -- fine ciclo sui cds
+dbms_output.put_line('0013');
 
 	lock table parametri_cds in exclusive mode nowait;
 	aMessage := 'Creazione dei parametri CDS per l''esercizio contabile '||aEsDest||' per i CDS validi. Lock tabella PARAMETRI_CDS.';
@@ -2063,6 +2139,7 @@ begin
   		from parametri_cds
   		where CD_CDS = aCds.cd_unita_organizzativa
 	          and ESERCIZIO = aEsOrig;
+dbms_output.put_line('0014');
 
 		 If CD_CDR_LINEA_E Is Not Null Or CD_LINEA_E Is Not Null Then
 			 Declare
@@ -2098,6 +2175,7 @@ begin
 			       CD_LINEA_S := Null;
 			 End;
 		 End If;
+dbms_output.put_line('0014');
 
 		begin
 			insert into parametri_cds (CD_CDS,
@@ -2134,7 +2212,9 @@ begin
   						   FL_KIT_FIRMA_DIGITALE,
   						   CD_DIPARTIMENTO,
   						   FL_RIACCERTAMENTO,
-  						   FL_RIOBBLIGAZIONE)
+  						   FL_RIOBBLIGAZIONE,
+  						   FL_BLOCCO_IMPEGNI_NATFIN,
+                           ABIL_PROGETTO_STRORG)
 			 select aCds.cd_unita_organizzativa,
 			 	aEsDest,
 			 	FL_COMMESSA_OBBLIGATORIA,
@@ -2169,10 +2249,14 @@ begin
   				FL_KIT_FIRMA_DIGITALE,
   				cd_dipartimento,
   				FL_RIACCERTAMENTO,
-  				FL_RIOBBLIGAZIONE
+  				FL_RIOBBLIGAZIONE,
+  				FL_BLOCCO_IMPEGNI_NATFIN,
+                ABIL_PROGETTO_STRORG
 			 from parametri_cds
 			 where CD_CDS = aCds.cd_unita_organizzativa
 			   and ESERCIZIO = aEsOrig;
+			  dbms_output.put_line('0015');
+
 		exception
 		when DUP_VAL_ON_INDEX then
 			ibmutl200.LOGWAR(aPgEsec,'Parametri CDS per l''esercizio contabile '||aEsDest||' e per il CDS '||aCds.cd_unita_organizzativa||' già definiti','','');

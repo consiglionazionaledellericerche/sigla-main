@@ -18,9 +18,9 @@ Begin
       And A.esercizio = inEsercizio
       And A.cd_anag = inAnag
       And A.cd_trattamento In (Select t.cd_trattamento
-      			       From tipo_trattamento t
-      			       Where To_Char(t.dt_fin_validita,'yyyy') >= inEsercizio
-      			         And t.fl_agevolazioni_cervelli = 'Y');
+                               From tipo_trattamento t
+                               Where To_Char(t.dt_fin_validita,'yyyy') >= inEsercizio
+                                 And t.fl_agevolazioni_cervelli = 'Y');
     If conta = 0 Then
        isCerv := 'N';
     Else
@@ -43,8 +43,8 @@ Begin
       And A.esercizio = inEsercizio
       And A.cd_anag = inAnag
       And A.cd_trattamento In (Select t.cd_trattamento
-      			       From tipo_trattamento t, trattamento_cori c, tipo_contributo_ritenuta cr
-      			       Where t.cd_trattamento = C.CD_TRATTAMENTO
+                               From tipo_trattamento t, trattamento_cori c, tipo_contributo_ritenuta cr
+                               Where t.cd_trattamento = C.CD_TRATTAMENTO
                      and To_Char(t.dt_fin_validita,'yyyy') >= inEsercizio
                      and c.cd_contributo_ritenuta = cr.cd_contributo_ritenuta
                      And t.fl_agevolazioni_rientro_lav = 'Y'
@@ -74,8 +74,8 @@ Begin
       And A.esercizio = inEsercizio
       And A.cd_anag = inAnag
       And A.cd_trattamento In (Select t.cd_trattamento
-      			       From tipo_trattamento t, trattamento_cori c, tipo_contributo_ritenuta cr
-      			       Where t.cd_trattamento = C.CD_TRATTAMENTO
+                               From tipo_trattamento t, trattamento_cori c, tipo_contributo_ritenuta cr
+                               Where t.cd_trattamento = C.CD_TRATTAMENTO
                      and To_Char(t.dt_fin_validita,'yyyy') >= inEsercizio
                      and c.cd_contributo_ritenuta = cr.cd_contributo_ritenuta
                      And t.fl_agevolazioni_rientro_lav = 'Y'
@@ -583,15 +583,21 @@ BEGIN
                  imponibile_previd_contrib,
                  im_deduzione_family,
                  im_ded_family_dovuto_cong,
-		             im_ded_family_goduto_cong,
-		             im_irpef_sospeso,
-		             fl_compenso_missione,
-		             im_redd_non_tassati_per_conv,
-		             im_redd_esenti_per_legge,
-		             im_bonus_erogato,
-		             im_bonus_dovuto_cong,
-		             im_bonus_goduto_cong,
-		             cd_categoria)
+                         im_ded_family_goduto_cong,
+                         im_irpef_sospeso,
+                         fl_compenso_missione,
+                         im_redd_non_tassati_per_conv,
+                         im_redd_esenti_per_legge,
+                         im_bonus_erogato,
+                         im_bonus_dovuto_cong,
+                         im_bonus_goduto_cong,
+                         cd_categoria,
+                         DETRAZIONE_RID_CUNEO_NETTO,
+                         im_rid_cuneo_erogato,
+                         im_credito_irpef_dovuto,
+                         im_credito_irpef_goduto,
+                         im_detr_rid_cuneo_dovuto_cong,
+                         im_detr_rid_cuneo_goduto_cong)
          VALUES (inRepID,
                  inEsercizio,
                  aRecEstraiImponibileCudV.cd_cds_compenso,
@@ -688,16 +694,22 @@ BEGIN
                  0,
                  0,
                  0,          --verrà valorizzato da CONTRIBUTO_RITENUTA
-                 0,	     --verrà valorizzato da CONGUAGLIO
-                 0,	     --verrà valorizzato da CONGUAGLIO
+                 0,          --verrà valorizzato da CONGUAGLIO
+                 0,          --verrà valorizzato da CONGUAGLIO
                  0,      --verrà valorizzato da CONTRIBUTO_RITENUTA o da CONGUAGLIO
                  aRecEstraiImponibileCudV.fl_compenso_missione,
-		             aRecEstraiImponibileCudV.im_redd_non_tassati_per_conv,
-		             aRecEstraiImponibileCudV.im_redd_esenti_per_legge,
-		             0,
-		             0,
-		             0,
-		             aRecEstraiImponibileCudV.cd_categoria);
+                         aRecEstraiImponibileCudV.im_redd_non_tassati_per_conv,
+                         aRecEstraiImponibileCudV.im_redd_esenti_per_legge,
+                         0,
+                         0,
+                         0,
+                         aRecEstraiImponibileCudV.cd_categoria,
+                         aRecEstraiImponibileCudV.DETRAZIONE_RID_CUNEO_NETTO,
+                 0,
+                 0,
+                 0,
+                 0,
+                 0);
       END LOOP;
 
       CLOSE gen_cur;
@@ -722,7 +734,12 @@ PROCEDURE upgDatiCUDDettCori
 
    gen_cur GenericCurTyp;
 
+   DATA_INIZIO_RID_CUNEO DATE;
+
 BEGIN
+
+   DATA_INIZIO_RID_CUNEO := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
+
 
    -------------------------------------------------------------------------------------------------
    -- Recupero delle informazioni relativi agli importi a carico percipiente (INPS, INAIL, RIDUZ e IRPEF)
@@ -750,7 +767,10 @@ BEGIN
                   C.cd_classificazione_cori,
                   C.pg_classificazione_montanti,
                   C.fl_scrivi_montanti,
-                  C.fl_credito_irpef
+                  C.fl_credito_irpef,
+                  a.dt_cmp_da_compenso,
+                  a.dt_cmp_a_compenso,
+                  c.dt_ini_validita
            FROM   ESTRAZIONE_CUD_DETT A,
                   CONTRIBUTO_RITENUTA B,
                   TIPO_CONTRIBUTO_RITENUTA C
@@ -784,7 +804,10 @@ BEGIN
                aRecTipoContributoRitenuta.cd_classificazione_cori,
                aRecTipoContributoRitenuta.pg_classificazione_montanti,
                aRecTipoContributoRitenuta.fl_scrivi_montanti,
-               aRecTipoContributoRitenuta.fl_credito_irpef;
+               aRecTipoContributoRitenuta.fl_credito_irpef,
+               aRecEstrazioneCudDett.dt_cmp_da_compenso,
+               aRecEstrazioneCudDett.dt_cmp_a_compenso,
+               aRecTipoContributoRitenuta.dt_ini_validita;
 
          EXIT WHEN gen_cur%NOTFOUND;
 
@@ -807,6 +830,7 @@ BEGIN
          aRecEstrazioneCudDett.imponibile_previd_contrib:=0;
          aRecEstrazioneCudDett.fl_ritenuta_non_residenti:='N';
          aRecEstrazioneCudDett.im_bonus_erogato:=0;
+         aRecEstrazioneCudDett.im_rid_cuneo_erogato:=0;
 
          -- Normalizzazione importi ----------------------------------------------------------------
 
@@ -822,10 +846,14 @@ BEGIN
                       aRecTipoContributoRitenuta.pg_classificazione_montanti = 5) THEN
                      aRecEstrazioneCudDett.im_riduz_contrib:=aRecContributoRitenuta.ammontare_lordo;
                   ELSIF aRecTipoContributoRitenuta.fl_credito_irpef = 'Y' then
+                    if DATA_INIZIO_RID_CUNEO > aRecTipoContributoRitenuta.dt_ini_validita then
                      aRecEstrazioneCudDett.im_bonus_erogato:=-aRecContributoRitenuta.ammontare_lordo;
+                    else
+                     aRecEstrazioneCudDett.im_rid_cuneo_erogato:=-aRecContributoRitenuta.ammontare_lordo;
+                    end if;
 --pipe.send_message('aRecEstrazioneCudDett.im_bonus_erogato = '||aRecEstrazioneCudDett.im_bonus_erogato);
                   ELSE
-		                 aRecEstrazioneCudDett.im_deduzione_family:=aRecContributoRitenuta.im_deduzione_family;
+                             aRecEstrazioneCudDett.im_deduzione_family:=aRecContributoRitenuta.im_deduzione_family;
                      IF aRecTipoContributoRitenuta.fl_assistenza_fiscale = 'Y' Then
                         --QUESTI CAMPI VALORIZZATI NON VENGONO PIù UTILIZZATI, IN OGNI CASO I CORI PER L'ASSISTENZA
                         --FISCALE VANNO ESCLUSI PER IL CALCOLO DELL'AMMONTARE
@@ -942,7 +970,8 @@ BEGIN
                                                       aRecEstrazioneCudDett.secondo_acconto_irpef_contrib,
                       imponibile_previd_contrib = imponibile_previd_contrib +
                                                   aRecEstrazioneCudDett.imponibile_previd_contrib,
-                      im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCudDett.im_bonus_erogato
+                      im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCudDett.im_bonus_erogato,
+                      im_rid_cuneo_erogato = im_rid_cuneo_erogato + aRecEstrazioneCudDett.im_rid_cuneo_erogato
                WHERE  id_estrazione = inRepID AND
                       esercizio = inEsercizio AND
                       cd_cds_compenso = aRecEstrazioneCudDett.cd_cds_compenso AND
@@ -977,14 +1006,14 @@ BEGIN
                                                       aRecEstrazioneCudDett.secondo_acconto_irpef_contrib,
                       imponibile_previd_contrib = imponibile_previd_contrib +
                                                   aRecEstrazioneCudDett.imponibile_previd_contrib,
-                      im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCudDett.im_bonus_erogato
+                      im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCudDett.im_bonus_erogato,
+                      im_rid_cuneo_erogato = im_rid_cuneo_erogato + aRecEstrazioneCudDett.im_rid_cuneo_erogato
                WHERE  id_estrazione = inRepID AND
                       esercizio = inEsercizio AND
                       cd_cds_compenso = aRecEstrazioneCudDett.cd_cds_compenso AND
                       cd_uo_compenso = aRecEstrazioneCudDett.cd_uo_compenso AND
                       esercizio_compenso = aRecEstrazioneCudDett.esercizio_compenso AND
                       pg_compenso = aRecEstrazioneCudDett.pg_compenso;
-
             END IF;
 
          END;
@@ -1067,6 +1096,10 @@ BEGIN
                   B.detrazioni_al_goduto,
                   B.im_deduzione_family_dovuto,
                   B.im_deduzione_family_goduto,
+                  B.detrazione_rid_cuneo_dovuto,
+                  B.detrazione_rid_cuneo_goduto,
+                  B.im_bonus_irpef_dovuto,
+                  B.im_bonus_irpef_goduto,
                   B.im_credito_irpef_dovuto,
                   B.im_credito_irpef_goduto
            FROM   ESTRAZIONE_CUD_DETT A, CONGUAGLIO B
@@ -1124,6 +1157,10 @@ BEGIN
                aRecConguaglio.detrazioni_al_goduto,
                aRecConguaglio.im_deduzione_family_dovuto,
                aRecConguaglio.im_deduzione_family_goduto,
+               aRecConguaglio.detrazione_rid_cuneo_dovuto,
+               aRecConguaglio.detrazione_rid_cuneo_goduto,
+               aRecConguaglio.im_bonus_irpef_dovuto,
+               aRecConguaglio.im_bonus_irpef_goduto,
                aRecConguaglio.im_credito_irpef_dovuto,
                aRecConguaglio.im_credito_irpef_goduto;
          EXIT WHEN gen_cur%NOTFOUND;
@@ -1170,9 +1207,13 @@ BEGIN
                    detraz_fi_goduto_conguaglio = aRecConguaglio.detrazioni_fi_goduto,
                    detraz_al_goduto_conguaglio = aRecConguaglio.detrazioni_al_goduto,
                    im_ded_family_dovuto_cong = aRecConguaglio.im_deduzione_family_dovuto,
-		               im_ded_family_goduto_cong = aRecConguaglio.im_deduzione_family_goduto,
-		               im_bonus_dovuto_cong = aRecConguaglio.im_credito_irpef_dovuto,
-		               im_bonus_goduto_cong = aRecConguaglio.im_credito_irpef_goduto
+                       im_ded_family_goduto_cong = aRecConguaglio.im_deduzione_family_goduto,
+                       im_bonus_dovuto_cong = aRecConguaglio.im_bonus_irpef_dovuto,
+                       im_bonus_goduto_cong = aRecConguaglio.im_bonus_irpef_goduto,
+                       im_credito_irpef_dovuto = aRecConguaglio.im_credito_irpef_dovuto,
+                       im_credito_irpef_goduto = aRecConguaglio.im_credito_irpef_goduto,
+                       im_detr_rid_cuneo_dovuto_cong = aRecConguaglio.detrazione_rid_cuneo_dovuto,
+                       im_detr_rid_cuneo_goduto_cong = aRecConguaglio.detrazione_rid_cuneo_goduto
             WHERE  id_estrazione = inRepID AND
                    esercizio = inEsercizio AND
                    cd_cds_compenso = aRecEstrazioneCudDett.cd_cds_compenso AND
@@ -1433,7 +1474,7 @@ PROCEDURE aggregaDatiCUD
    isRientroLav30 VARCHAR2(1);
    isRientroLav20 VARCHAR2(1);
    imponibile_non_tassato  NUMBER(15,2):=0;
-
+   detrazione_rid_cuneo  NUMBER(15,2):=0;
 
    gen_cur GenericCurTyp;
 
@@ -1495,6 +1536,7 @@ BEGIN
                   SUM(DECODE(A.fl_detrazioni,'Y', 0, A.imponibile_fisc_lordo_contrib)),
                   SUM(A.primo_acconto_irpef_contrib),
                   SUM(A.secondo_acconto_irpef_contrib),
+                  SUM(A.detrazione_rid_cuneo_netto),
                   0,
                   0,
                   0
@@ -1534,6 +1576,7 @@ BEGIN
                aRecEstrazioneCud.imponibile_no_detr,
                aRecEstrazioneCud.primo_acconto_irpef,
                aRecEstrazioneCud.secondo_acconto_irpef,
+               aRecEstrazioneCud.ult_detr_cuneo_fisc,
                aRecEstrazioneCud.imponibile_si_detr_tassep,
                aRecEstrazioneCud.imponibile_no_detr_tassep,
                aRecEstrazioneCud.imponibile_non_residenti;
@@ -1563,7 +1606,7 @@ BEGIN
             aRecEstrazioneCud.imponibile_no_detr:=0;
          END IF;
 
-	-- Gestione per residenti esteri
+      -- Gestione per residenti esteri
 
          IF aRecEstrazioneCudDett.fl_ritenuta_non_residenti = 'Y' Then
             If aRecEstrazioneCud.imponibile_si_detr != 0 Then
@@ -1582,95 +1625,9 @@ BEGIN
             IF isScritto = 'N' THEN
                isScritto:= 'Y';
 
-	             -- i campi successivi non sono più utilizzati, quindi li valorizzo a zero
-	             add_reg_anno_prec := 0;
+                   -- i campi successivi non sono più utilizzati, quindi li valorizzo a zero
+                   add_reg_anno_prec := 0;
                add_com_anno_prec := 0;
-               /*
-               --Calcolo l'Addizionale Regionale e Comunale per l'anno precedente
-               --Prendo tutti i compensi che non sono conguagli e che non sono in seriti in nessun conguaglio
-               --  + l'ultimo conguaglio
-                Declare
-                  addreg_prec 		NUMBER(15,2):=0;
-                  addreg_cong_prec 	NUMBER(15,2):=0;
-                  addcom_prec 		NUMBER(15,2):=0;
-                  addcom_cong_prec 	NUMBER(15,2):=0;
-               Begin
-                   Select Nvl(sum(r.ammontare_lordo),0)
-                   Into addreg_prec
-                   From compenso c, contributo_ritenuta r, tipo_contributo_ritenuta t, config_estrazione_cud e
-       	 	   Where c.cd_cds = r.cd_cds
-         	     And c.cd_unita_organizzativa = r.cd_unita_organizzativa
-         	     And c.esercizio = r.esercizio
-         	     And c.pg_compenso = r.pg_compenso
-         	     And r.cd_contributo_ritenuta = t.cd_contributo_ritenuta
-		     And r.dt_ini_validita = t.dt_ini_validita
-         	     And r.ti_ente_percipiente = 'P'
-		     And e.esercizio = c.esercizio
-         	     And e.cd_trattamento = c.cd_trattamento
-         	     And To_Char(c.dt_emissione_mandato,'yyyy') = To_Char(inEsercizio - 1)
-         	     And c.cd_terzo = aRecEstrazioneCudDett.cd_terzo
-         	     And t.cd_classificazione_cori = CNRCTB545.isCoriAddReg
-         	     And c.stato_cofi = 'P'
-         	     And c.fl_compenso_conguaglio = 'N'
-         	     And Not Exists
-                     (SELECT 1
-                      FROM   ASS_COMPENSO_CONGUAGLIO A
-                      WHERE  A.cd_cds_compenso = C.cd_cds AND
-                             A.cd_uo_compenso = C.cd_unita_organizzativa AND
-                             A.esercizio_compenso = C.esercizio AND
-                             A.pg_compenso = C.pg_compenso);
-
-         	   Select Nvl(sum(r.ammontare_lordo),0)
-                   Into addcom_prec
-                   From compenso c, contributo_ritenuta r, tipo_contributo_ritenuta t, config_estrazione_cud e
-       	 	   Where c.cd_cds = r.cd_cds
-         	     And c.cd_unita_organizzativa = r.cd_unita_organizzativa
-         	     And c.esercizio = r.esercizio
-         	     And c.pg_compenso = r.pg_compenso
-         	     And r.cd_contributo_ritenuta = t.cd_contributo_ritenuta
-		     And r.dt_ini_validita = t.dt_ini_validita
-         	     And r.ti_ente_percipiente = 'P'
-         	     And e.esercizio = c.esercizio
-         	     And e.cd_trattamento = c.cd_trattamento
-         	     And To_Char(c.dt_emissione_mandato,'yyyy') = To_Char(inEsercizio - 1)
-         	     And c.cd_terzo = aRecEstrazioneCudDett.cd_terzo
-         	     And t.cd_classificazione_cori = CNRCTB545.isCoriAddCom
-         	     And c.stato_cofi = 'P'
-         	     And c.fl_compenso_conguaglio = 'N'
-         	     And Not Exists
-                     (SELECT 1
-                      FROM   ASS_COMPENSO_CONGUAGLIO A
-                      WHERE  A.cd_cds_compenso = C.cd_cds AND
-                             A.cd_uo_compenso = C.cd_unita_organizzativa AND
-                             A.esercizio_compenso = C.esercizio AND
-                             A.pg_compenso = C.pg_compenso);
-
-           	   Select Nvl(Sum(im_addreg_dovuto),0), Nvl(Sum(im_addcom_dovuto),0)
-         	   Into addreg_cong_prec, addcom_cong_prec
-         	   From Conguaglio c
-         	   Where c.esercizio = (inEsercizio - 1)
-         	     And c.cd_terzo = aRecEstrazioneCudDett.cd_terzo
-         	     And (c.cd_terzo, c.dacr) =
-                         (SELECT B.cd_terzo, MAX(B.dacr)
-                          FROM   CONGUAGLIO B
-                          WHERE  B.CD_TERZO = C.CD_TERZO AND
-                                 B.esercizio = C.esercizio
-                          Group By B.cd_terzo)
-                     And Exists
-         	         (Select '1'
-         	          From Compenso p, config_estrazione_cud e
-         	          Where p.cd_cds = c.cd_cds_compenso
-         	            And p.cd_unita_organizzativa = c.cd_uo_compenso
-         	            And p.esercizio = c.esercizio_compenso
-         	            And p.pg_compenso = c.pg_compenso
-         	            And p.stato_cofi = 'P'
-         	            And e.esercizio = c.esercizio
-         	            And e.cd_trattamento = c.cd_trattamento);
-
-                   add_reg_anno_prec := addreg_prec + addreg_cong_prec;
-                   add_com_anno_prec := addcom_prec + addcom_cong_prec;
-               End;
-               */
 
                INSERT INTO ESTRAZIONE_CUD
                       (id_estrazione,
@@ -1749,7 +1706,10 @@ BEGIN
                        im_redd_non_tassati_per_conv,
                        im_redd_esenti_per_legge,
                        im_bonus_erogato,
-                       cd_categoria)
+                       cd_categoria,
+                       ult_detr_cuneo_fisc,
+                       tratt_int_erog_cuneo_fisc,
+                       tratt_int_cong_cuneo_fisc)
                VALUES (inRepID,
                        inEsercizio ,
                        parametri_tab(2).stringa,
@@ -1826,7 +1786,10 @@ BEGIN
                        0,
                        0,
                        0,
-                       aRecEstrazioneCudDett.cd_categoria);
+                       aRecEstrazioneCudDett.cd_categoria,
+                       0,
+                       0,
+                       0);
             ELSE
 
                UPDATE ESTRAZIONE_CUD
@@ -2049,13 +2012,17 @@ BEGIN
                   fl_escludi_qvaria_deduzione,
                   fl_intera_qfissa_deduzione,
                   im_deduzione_family,
-		              im_ded_family_dovuto_cong,
-		              fl_ritenuta_non_residenti,
-		              im_irpef_sospeso,
-		              im_redd_non_tassati_per_conv,
+                          im_ded_family_dovuto_cong,
+                          fl_ritenuta_non_residenti,
+                          im_irpef_sospeso,
+                          im_redd_non_tassati_per_conv,
                   im_redd_esenti_per_legge,
                   im_bonus_erogato,
-                  im_bonus_dovuto_cong
+                  im_bonus_dovuto_cong,
+                  im_rid_cuneo_erogato,
+                  im_credito_irpef_dovuto,
+                  im_credito_irpef_goduto,
+                  im_detr_rid_cuneo_dovuto_cong
            FROM   ESTRAZIONE_CUD_DETT A
            WHERE  id_estrazione = inRepID AND
                   esercizio = inEsercizio;
@@ -2106,7 +2073,11 @@ BEGIN
                aRecEstrazioneCudDett.im_redd_non_tassati_per_conv,
                aRecEstrazioneCudDett.im_redd_esenti_per_legge,
                aRecEstrazioneCudDett.im_bonus_erogato,
-               aRecEstrazioneCudDett.im_bonus_dovuto_cong;
+               aRecEstrazioneCudDett.im_bonus_dovuto_cong,
+               aRecEstrazioneCudDett.im_rid_cuneo_erogato,
+               aRecEstrazioneCudDett.im_credito_irpef_dovuto,
+               aRecEstrazioneCudDett.im_credito_irpef_goduto,
+               aRecEstrazioneCudDett.im_detr_rid_cuneo_dovuto_cong;
 
          EXIT WHEN gen_cur%NOTFOUND;
 
@@ -2143,15 +2114,18 @@ BEGIN
 
             aRecEstrazioneCud.dip_rp_deduzione_fissa_intera:='N';
 
-	          aRecEstrazioneCud.imponibile_non_residenti:=0;
-	          aRecEstrazioneCud.ritenute_non_residenti:=0;
+                aRecEstrazioneCud.imponibile_non_residenti:=0;
+                aRecEstrazioneCud.ritenute_non_residenti:=0;
 
-	          aRecEstrazioneCud.im_irpef_sospeso:=0;
+                aRecEstrazioneCud.im_irpef_sospeso:=0;
 
-	          aRecEstrazioneCud.im_redd_non_tassati_per_conv := aRecEstrazioneCudDett.im_redd_non_tassati_per_conv;
-	          aRecEstrazioneCud.im_redd_esenti_per_legge := aRecEstrazioneCudDett.im_redd_esenti_per_legge;
+                aRecEstrazioneCud.im_redd_non_tassati_per_conv := aRecEstrazioneCudDett.im_redd_non_tassati_per_conv;
+                aRecEstrazioneCud.im_redd_esenti_per_legge := aRecEstrazioneCudDett.im_redd_esenti_per_legge;
 
-	          aRecEstrazioneCud.im_bonus_erogato:=0;
+                aRecEstrazioneCud.im_bonus_erogato:=0;
+                aRecEstrazioneCud.ult_detr_cuneo_fisc:=0;
+                aRecEstrazioneCud.tratt_int_erog_cuneo_fisc:=0;
+                aRecEstrazioneCud.tratt_int_cong_cuneo_fisc:=0;
 
             -- Sistemazione dati estratti ----------------------------------------------------------
 
@@ -2205,6 +2179,9 @@ BEGIN
                   aRecEstrazioneCud.addizionale_comunale:=aRecEstrazioneCudDett.im_addcom_contrib;
                   aRecEstrazioneCud.im_irpef_sospeso:=aRecEstrazioneCudDett.im_irpef_sospeso;
                   aRecEstrazioneCud.im_bonus_erogato:=aRecEstrazioneCudDett.im_bonus_erogato;
+                  aRecEstrazioneCud.ult_detr_cuneo_fisc:=aRecEstrazioneCudDett.im_detr_rid_cuneo_dovuto_cong;
+                  aRecEstrazioneCud.tratt_int_erog_cuneo_fisc:=aRecEstrazioneCudDett.im_rid_cuneo_erogato;
+
                END IF;
 
                -- Elaborazione compensi conguaglio (solo ultimo)
@@ -2230,6 +2207,14 @@ BEGIN
                   aRecEstrazioneCud.addizionale_comunale:=aRecEstrazioneCudDett.im_addcom_dovuto_cong;
                   aRecEstrazioneCud.im_irpef_sospeso:=aRecEstrazioneCudDett.im_irpef_sospeso;
                   aRecEstrazioneCud.im_bonus_erogato:=aRecEstrazioneCudDett.im_bonus_dovuto_cong;
+
+                  aRecEstrazioneCud.ult_detr_cuneo_fisc:=aRecEstrazioneCudDett.im_detr_rid_cuneo_dovuto_cong;
+                  aRecEstrazioneCud.tratt_int_erog_cuneo_fisc:=aRecEstrazioneCudDett.im_credito_irpef_dovuto;
+                  if aRecEstrazioneCudDett.im_credito_irpef_goduto - aRecEstrazioneCudDett.im_credito_irpef_dovuto > 0 then
+                    aRecEstrazioneCud.tratt_int_cong_cuneo_fisc:=aRecEstrazioneCudDett.im_credito_irpef_goduto - aRecEstrazioneCudDett.im_credito_irpef_dovuto;
+                  else
+                    aRecEstrazioneCud.tratt_int_cong_cuneo_fisc:=0;
+                  end if;
                   IF aRecEstrazioneCudDett.fl_detrazioni = 'Y' THEN
                      aRecEstrazioneCud.imponibile_cong_si_detr:=aRecEstrazioneCudDett.imponibile_fiscale_esterno;
                      aRecEstrazioneCud.imponibile_si_detr:=aRecEstrazioneCudDett.imponibile_fiscale_esterno;
@@ -2287,7 +2272,10 @@ BEGIN
                 aRecEstrazioneCud.im_irpef_sospeso != 0 or
                 aRecEstrazioneCud.im_redd_non_tassati_per_conv != 0 or
                 aRecEstrazioneCud.im_redd_esenti_per_legge != 0 or
-                aRecEstrazioneCud.im_bonus_erogato != 0) THEN
+                aRecEstrazioneCud.im_bonus_erogato != 0 or
+                aRecEstrazioneCud.ult_detr_cuneo_fisc != 0 or
+                aRecEstrazioneCud.tratt_int_erog_cuneo_fisc != 0 or
+                aRecEstrazioneCud.tratt_int_cong_cuneo_fisc != 0) THEN
 
                IF aRecEstrazioneCud.dip_rp_deduzione_fissa_intera = 'Y' THEN
 
@@ -2322,7 +2310,10 @@ BEGIN
                          im_irpef_sospeso = im_irpef_sospeso + aRecEstrazioneCud.im_irpef_sospeso,
                          im_redd_non_tassati_per_conv  = im_redd_non_tassati_per_conv + aRecEstrazioneCud.im_redd_non_tassati_per_conv,
                          im_redd_esenti_per_legge  = im_redd_esenti_per_legge + aRecEstrazioneCud.im_redd_esenti_per_legge,
-                         im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCud.im_bonus_erogato
+                         im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCud.im_bonus_erogato,
+                         ult_detr_cuneo_fisc = ult_detr_cuneo_fisc + aRecEstrazioneCud.ult_detr_cuneo_fisc,
+                         tratt_int_erog_cuneo_fisc = tratt_int_erog_cuneo_fisc + aRecEstrazioneCud.tratt_int_erog_cuneo_fisc,
+                         tratt_int_cong_cuneo_fisc = tratt_int_cong_cuneo_fisc + aRecEstrazioneCud.tratt_int_cong_cuneo_fisc
                   WHERE  id_estrazione = inRepID AND
                          esercizio = inEsercizio AND
                          dip_cd_anag = aRecEstrazioneCudDett.cd_anag AND
@@ -2360,7 +2351,10 @@ BEGIN
                          im_irpef_sospeso = im_irpef_sospeso + aRecEstrazioneCud.im_irpef_sospeso,
                          im_redd_non_tassati_per_conv  = im_redd_non_tassati_per_conv + aRecEstrazioneCud.im_redd_non_tassati_per_conv,
                          im_redd_esenti_per_legge  = im_redd_esenti_per_legge + aRecEstrazioneCud.im_redd_esenti_per_legge,
-                         im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCud.im_bonus_erogato
+                         im_bonus_erogato = im_bonus_erogato + aRecEstrazioneCud.im_bonus_erogato,
+                         ult_detr_cuneo_fisc = ult_detr_cuneo_fisc + aRecEstrazioneCud.ult_detr_cuneo_fisc,
+                         tratt_int_erog_cuneo_fisc = tratt_int_erog_cuneo_fisc + aRecEstrazioneCud.tratt_int_erog_cuneo_fisc,
+                         tratt_int_cong_cuneo_fisc = tratt_int_cong_cuneo_fisc + aRecEstrazioneCud.tratt_int_cong_cuneo_fisc
                   WHERE  id_estrazione = inRepID AND
                          esercizio = inEsercizio AND
                          dip_cd_anag = aRecEstrazioneCudDett.cd_anag AND
@@ -2521,26 +2515,26 @@ BEGIN
 
          EXIT WHEN gen_cur%NOTFOUND;
 
-	 -- Poichè esistono dati sporchi sul db (residenza anagrafico diversa da residenza terzo)
-	 -- e poichè nei compensi e nell'acconto prendiamo la residenza dal terzo, anche nel CUD
-	 -- i dati della residenza li prendiamo dal terzo e poichè potrebbero esserci più terzi validi
-	 -- per la stessa anagrafica, prendiamo il terzo di ESTRAZIONE_CUD
-	 Begin
-	    Select c.ds_comune, c.cd_provincia, c.cd_catastale, substr(t.cap_comune_sede,1,5), t.via_sede, t.numero_civico_sede, c.ti_italiano_estero
-	      Into aRecEstrazioneCud.dip_com_domfisc, aRecEstrazioneCud.dip_prv_domfisc, aRecEstrazioneCud.dip_cod_com_domfisc,
-	           aRecEstrazioneCud.dip_cap_domfisc, cv_via_fiscale, cv_num_civico_fiscale, cv_ti_italiano_estero
-	      From terzo t, comune c
+       -- Poichè esistono dati sporchi sul db (residenza anagrafico diversa da residenza terzo)
+       -- e poichè nei compensi e nell'acconto prendiamo la residenza dal terzo, anche nel CUD
+       -- i dati della residenza li prendiamo dal terzo e poichè potrebbero esserci più terzi validi
+       -- per la stessa anagrafica, prendiamo il terzo di ESTRAZIONE_CUD
+       Begin
+          Select c.ds_comune, c.cd_provincia, c.cd_catastale, substr(t.cap_comune_sede,1,5), t.via_sede, t.numero_civico_sede, c.ti_italiano_estero
+            Into aRecEstrazioneCud.dip_com_domfisc, aRecEstrazioneCud.dip_prv_domfisc, aRecEstrazioneCud.dip_cod_com_domfisc,
+                 aRecEstrazioneCud.dip_cap_domfisc, cv_via_fiscale, cv_num_civico_fiscale, cv_ti_italiano_estero
+            From terzo t, comune c
               Where t.pg_comune_sede = c.pg_comune
                 And t.cd_anag = aRecEstrazioneCud.dip_cd_anag
                 --And t.dt_fine_rapporto Is Null
                 And t.cd_terzo In (Select e.cd_terzo
                                    From ESTRAZIONE_CUD_DETT e
-	                           Where id_estrazione = inRepID
-	                             And esercizio = inEsercizio
-	                             And cd_anag = aRecEstrazioneCud.dip_cd_anag)
-	        And Rownum < 2;
-   	 Exception
-     	      When NO_DATA_FOUND then
+                                 Where id_estrazione = inRepID
+                                   And esercizio = inEsercizio
+                                   And cd_anag = aRecEstrazioneCud.dip_cd_anag)
+              And Rownum < 2;
+       Exception
+            When NO_DATA_FOUND then
                   IBMERR001.RAISE_ERR_GENERICO('Terzo non trovato per Anagrafico:'||aRecEstrazioneCud.dip_cd_anag);
               When Too_Many_Rows then
                   IBMERR001.RAISE_ERR_GENERICO('Esistono più terzi validi per Anagrafico:'||aRecEstrazioneCud.dip_cd_anag);
@@ -2551,7 +2545,7 @@ BEGIN
          aRecEstrazioneCud.dip_nome:=NULL;
          --03/03/2009 - Prendiamo sempre il Cognome ed il Nome, così se non sono valorizzati il CUD
          --             ci segnala l'errore e possiamo correggerlo in SIGLA
-	 /*
+       /*
          IF    cv_ti_entita = 'U' THEN
                aRecEstrazioneCud.dip_cognome:=cv_ragione_sociale;
          ELSIF cv_ti_entita = 'G' THEN
@@ -2575,30 +2569,30 @@ BEGIN
          aRecEstrazioneCud.dip_cognome:=cv_cognome;
          aRecEstrazioneCud.dip_nome:=cv_nome;
 
-	 -- Se il comune della residenza fiscale è estero, si prende il comune della UO
-	 If cv_ti_italiano_estero != 'I' Then
-	   Begin
-	      --prendo la UO sulla quale il terzo ha il reddito maggiore
-	      Select cd_uo_compenso
-	      Into cv_uo
-	      From ( Select cd_uo_compenso, Nvl(Sum(imponibile_fisc_lordo_contrib),0) somma
-	             From ESTRAZIONE_CUD_DETT
-	             Where id_estrazione = inRepID
-	               And esercizio = inEsercizio
-	               And cd_anag = aRecEstrazioneCud.dip_cd_anag
-	             Group By cd_uo_compenso
-	             Order By somma Desc)
-	      Where Rownum <2;
+       -- Se il comune della residenza fiscale è estero, si prende il comune della UO
+       If cv_ti_italiano_estero != 'I' Then
+         Begin
+            --prendo la UO sulla quale il terzo ha il reddito maggiore
+            Select cd_uo_compenso
+            Into cv_uo
+            From ( Select cd_uo_compenso, Nvl(Sum(imponibile_fisc_lordo_contrib),0) somma
+                   From ESTRAZIONE_CUD_DETT
+                   Where id_estrazione = inRepID
+                     And esercizio = inEsercizio
+                     And cd_anag = aRecEstrazioneCud.dip_cd_anag
+                   Group By cd_uo_compenso
+                   Order By somma Desc)
+            Where Rownum <2;
 
-		      Select c.ds_comune, c.cd_provincia, c.cd_catastale, substr(t.cap_comune_sede,1,5), t.via_sede, t.numero_civico_sede
-	      Into aRecEstrazioneCud.dip_com_domfisc, aRecEstrazioneCud.dip_prv_domfisc, aRecEstrazioneCud.dip_cod_com_domfisc,
-	           aRecEstrazioneCud.dip_cap_domfisc, cv_via_fiscale, cv_num_civico_fiscale
-	      From terzo t, comune c
-	      Where t.pg_comune_sede = c.pg_comune
-	        And cd_unita_organizzativa = cv_uo;
-	   Exception
-	         When Others Then Null;
-	   End;
+                  Select c.ds_comune, c.cd_provincia, c.cd_catastale, substr(t.cap_comune_sede,1,5), t.via_sede, t.numero_civico_sede
+            Into aRecEstrazioneCud.dip_com_domfisc, aRecEstrazioneCud.dip_prv_domfisc, aRecEstrazioneCud.dip_cod_com_domfisc,
+                 aRecEstrazioneCud.dip_cap_domfisc, cv_via_fiscale, cv_num_civico_fiscale
+            From terzo t, comune c
+            Where t.pg_comune_sede = c.pg_comune
+              And cd_unita_organizzativa = cv_uo;
+         Exception
+               When Others Then Null;
+         End;
          End If;
 
          IF cv_num_civico_fiscale IS NOT NULL THEN
@@ -2924,6 +2918,8 @@ PROCEDURE scriviGiorniLavoro
     aCdAnag NUMBER
    ) IS
 
+   numeroGG_CREDITO_1_SEM INTEGER;
+   numeroGG_CREDITO_2_SEM INTEGER;
    numeroGG INTEGER;
    numeroGGTassep INTEGER;
    aImponibile NUMBER(15,2);
@@ -2940,7 +2936,12 @@ PROCEDURE scriviGiorniLavoro
 
    i BINARY_INTEGER;
 
+   DATA_INIZIO_RID_CUNEO DATE;
+
 BEGIN
+
+      DATA_INIZIO_RID_CUNEO := CNRCTB015.getDt01PerChiave('0', 'RIDUZIONE_CUNEO_DL_3_2020', 'DATA_INIZIO');
+
 
    -------------------------------------------------------------------------------------------------
    -- Valorizzazione costanti
@@ -3020,6 +3021,8 @@ BEGIN
    -- Calcolo del numero di giorni lavorativi (preso solo dai compensi non a tassazione separata)
    BEGIN
 
+      numeroGG_CREDITO_1_SEM :=0;
+      numeroGG_CREDITO_2_SEM :=0;
       numeroGG:=0;                 -- devo considerare solo i compensi non a tassazione separata
 
       IF tabella_date_ok.COUNT > 0 THEN
@@ -3029,7 +3032,21 @@ BEGIN
          Loop
             -- Calcolo del numero dei giorni
             numeroGG:=(numeroGG + (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1));
+            IF DATA_INIZIO_RID_CUNEO > tabella_date_ok(i).tDataDa THEN
+                IF DATA_INIZIO_RID_CUNEO < tabella_date_ok(i).tDataA THEN
+                  numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (DATA_INIZIO_RID_CUNEO - tabella_date_ok(i).tDataDa );
+                  numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - DATA_INIZIO_RID_CUNEO + 1 );
+                ELSE
+                  numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1);
+                END IF;
+            ELSE
+              numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1 );
+            END IF;
          End Loop;
+
+         IF numeroGG_CREDITO_1_SEM > 181 THEN
+            numeroGG_CREDITO_1_SEM := 181;
+         END IF;
 
          IF numeroGG > maxGGAnno THEN
             numeroGG:=maxGGAnno;
@@ -3042,7 +3059,7 @@ BEGIN
    -- Calcolo della minima e massima data dei compensi ed aggiornamento delle annotazioni (DATE COMPENSI)
    BEGIN
 
-      aDataMinGenerale:=NULL;		  -- devo considerare tutti i compensi (anche a tassazione separata)
+      aDataMinGenerale:=NULL;         -- devo considerare tutti i compensi (anche a tassazione separata)
       aDataMaxGenerale:=NULL;             -- devo considerare tutti i compensi (anche a tassazione separata)
 
       IF tabella_date_ok_tutte.COUNT > 0 THEN
@@ -3177,7 +3194,8 @@ BEGIN
 
       UPDATE ESTRAZIONE_CUD
       SET    gg_periodo_lavoro = numeroGG,
-             cnr_gg_periodo_tassep = numeroGGTassep,
+             gg_periodo_lavoro_sem1 = numeroGG_CREDITO_1_SEM,
+             gg_periodo_lavoro_sem2 = numeroGG_CREDITO_2_SEM,
              dt_inizio_cococo = aDataMinCococo,
              dt_fine_cococo = aDataMaxCococo,
              cnr_data_assunzione = aDataMinGenerale,
@@ -3987,13 +4005,13 @@ PROCEDURE calcolaAccontoAddCom
     inRepID INTEGER
    ) IS
 
-   acconto_es_suc 	     NUMBER(15,2):=0;
-   cod_com_acc_es_suc  	     VARCHAR2(10);
-   pg_com_acc_es_suc  	     NUMBER(10);
+   acconto_es_suc            NUMBER(15,2):=0;
+   cod_com_acc_es_suc        VARCHAR2(10);
+   pg_com_acc_es_suc         NUMBER(10);
    data_acc_es_suc           DATE;
    esenzione_add_com_es_suc  NUMBER(15,2):=0;
-   acconto_es     	     NUMBER(15,2):=0;
-   cod_com_acc_es  	     VARCHAR2(10);
+   acconto_es                NUMBER(15,2):=0;
+   cod_com_acc_es            VARCHAR2(10);
    esenzione_add_com_saldo   NUMBER(15,2):=0;
    data_ultimo_cong          DATE;
    pg_com_domfisc            NUMBER(10);
@@ -4018,7 +4036,7 @@ BEGIN
 
          EXIT WHEN gen_cur%NOTFOUND;
          --Prendo l'acconto calcolato per l'esercizio successivo
-	 Begin
+       Begin
              Select Nvl(a.im_acconto_calcolato,0), c.cd_catastale, a.pg_comune, a.dacr
              Into acconto_es_suc, cod_com_acc_es_suc, pg_com_acc_es_suc, data_acc_es_suc
              From acconto_classific_cori a, comune c
@@ -4051,7 +4069,7 @@ BEGIN
              esenzione_add_com_es_suc := CNRCTB545.getEsenzioniAddcom(pg_com_acc_es_suc,data_acc_es_suc).importo;
          End If;
          --Prendo l'acconto trattenuto per l'esercizio dei dati del CUD
-	 Begin
+       Begin
              Select Nvl(a.im_acconto_trattenuto,0), c.cd_catastale
              Into acconto_es, cod_com_acc_es
              From acconto_classific_cori a, comune c
@@ -4064,13 +4082,13 @@ BEGIN
                 acconto_es := 0;
                 cod_com_acc_es := aRecEstrazioneCud.dip_cod_com_domfisc;
          End;
-	 --Prendo l'eventuale esenzione dei comuni presi in considerazione per il saldo addiz. com. (data ultimo cong)
-	 --
-	 Begin
-	    Select dacr_conguaglio
-	    Into data_ultimo_cong
-	    From estrazione_cud_dett
-	    Where id_estrazione = inRepID
+       --Prendo l'eventuale esenzione dei comuni presi in considerazione per il saldo addiz. com. (data ultimo cong)
+       --
+       Begin
+          Select dacr_conguaglio
+          Into data_ultimo_cong
+          From estrazione_cud_dett
+          Where id_estrazione = inRepID
               And esercizio = inEsercizio
               And cd_anag = aRecEstrazioneCud.dip_cd_anag
               And fl_compenso_conguaglio = 'Y'
@@ -4094,7 +4112,7 @@ BEGIN
                     pg_com_domfisc := Null;
          End;
          If pg_com_domfisc Is Not Null Then
-	      esenzione_add_com_saldo := CNRCTB545.getEsenzioniAddcom(pg_com_domfisc,data_ultimo_cong).importo;
+            esenzione_add_com_saldo := CNRCTB545.getEsenzioniAddcom(pg_com_domfisc,data_ultimo_cong).importo;
          End If;
          Begin
             UPDATE ESTRAZIONE_CUD
@@ -4140,7 +4158,7 @@ BEGIN
          EXIT WHEN gen_cur%NOTFOUND;
 
          --Prendo le addizionali rateizzate
-	 Begin
+       Begin
              Select Nvl(im_da_rateizzare,0)
              Into add_reg_rat
              From rateizza_classific_cori
@@ -4437,15 +4455,15 @@ BEGIN
 
                aStringa:=aStringa || LPAD('9', 6, '9');
 
-	       -- Indirizzo Domicilio Fiscale completo solo per la stampa delle Etichette
+             -- Indirizzo Domicilio Fiscale completo solo per la stampa delle Etichette
                IF aRecEstrazioneCud.dip_ind_domfisc IS NULL THEN
                   aStringa:=aStringa || RPAD(' ', 100, ' ');
                ELSE
                   aStringa:=aStringa || RPAD(SUBSTR(Upper(aRecEstrazioneCud.dip_ind_domfisc), 1, 100), 100, ' ');
                END IF;
 
-	       -- Codice comune con cui è stato calcolato l'acconto addizionale comunale per l'esercizio successivo
-	       -- Altrimenti è quello dell'anagrafica
+             -- Codice comune con cui è stato calcolato l'acconto addizionale comunale per l'esercizio successivo
+             -- Altrimenti è quello dell'anagrafica
 
                IF aRecEstrazioneCud.dip_cod_com_acc_es_suc IS NULL THEN
                   aStringa:=aStringa || RPAD(' ', 4, ' ');
@@ -4453,7 +4471,7 @@ BEGIN
                   aStringa:=aStringa || RPAD(SUBSTR(Upper(aRecEstrazioneCud.dip_cod_com_acc_es_suc), 1, 4), 4, ' ');
                END IF;
 
-	       -- Codice comune alla data 31/12/esercizio (uguale a Codice comune del domicilio fiscale)
+             -- Codice comune alla data 31/12/esercizio (uguale a Codice comune del domicilio fiscale)
 
                IF aRecEstrazioneCud.dip_cod_com_domfisc IS NULL THEN
                   aStringa:=aStringa || RPAD(' ', 4, ' ');
@@ -4491,11 +4509,11 @@ BEGIN
                             LPAD((aRecEstrazioneCud.contributi_trattenuti_cococo * 100), 10, '0') ||
                             LPAD((aRecEstrazioneCud.contributi_versati_cococo * 100), 10, '0') ||
                             LPAD('0', 10, '0') ||
-                  	    LPAD(' ', 5, ' ') ||
-                  	    LPAD('0', 41, '0') ||
-                  	    LPAD(' ', 1, ' ') ||
-                  	    LPAD('0', 18, '0') ||
-                  	    LPAD(' ', 5, ' ') ||
+                            LPAD(' ', 5, ' ') ||
+                            LPAD('0', 41, '0') ||
+                            LPAD(' ', 1, ' ') ||
+                            LPAD('0', 18, '0') ||
+                            LPAD(' ', 5, ' ') ||
                             LPAD('0', 40, '0') ||
                             LPAD(' ', 16, ' ') ||
                             LPAD('0', 20, '0');
@@ -4574,7 +4592,7 @@ BEGIN
                      aStringa:=aStringa || '1';
                   END IF;
 
-	          /*
+                /*
                   IF (aRecEstrazioneCud.cnr_deduzione_fissa_3000 + aRecEstrazioneCud.cnr_deduzione_fissa_4500) > 0 THEN
                      aStringa:=aStringa || '0';
                   ELSE
@@ -4585,9 +4603,9 @@ BEGIN
                             LPAD((aRecEstrazioneCud.cnr_deduzione_fissa_3000 * 100), 10, '0') ||
                             LPAD((aRecEstrazioneCud.cnr_deduzione_fissa_4500 * 100), 10, '0') ||
                             ' ';
-	          */
-	          aStringa:=aStringa ||
-	                    LPAD('0', 1, '0') ||
+                */
+                aStringa:=aStringa ||
+                          LPAD('0', 1, '0') ||
                             LPAD('0', 10, '0') ||
                             LPAD('0', 10, '0');
 
@@ -4619,21 +4637,23 @@ BEGIN
                   aStringa:=aStringa || ' ';
 
                   aStringa:=aStringa ||
-                  	         Lpad('0',10,'0') ||
-                  	         Lpad('0',10,'0') ||
-                  	         Lpad('0',10,'0') ||
-                  	         Lpad('0',10,'0') ||
-                  	         Lpad(' ',16,' ') ||
-                  	         Lpad('0',10,'0');
+                                 Lpad('0',10,'0') ||
+                                 Lpad('0',10,'0') ||
+                                 Lpad('0',10,'0') ||
+                                 Lpad('0',10,'0') ||
+                                 Lpad(' ',16,' ') ||
+                                 Lpad('0',10,'0');
 
                   aStringa:=aStringa ||Lpad((aRecEstrazioneCud.im_acconto_add_com_es_suc * 100), 10, '0');
+                  aStringa:=aStringa ||LPAD(aRecEstrazioneCud.gg_periodo_lavoro_sem1, 3, '0') ||
+                                       LPAD(aRecEstrazioneCud.gg_periodo_lavoro_sem2, 3, '0');
 
-                  IF LENGTH(aStringa) != 374 Then
+                  IF LENGTH(aStringa) != 380 Then
                      IBMERR001.RAISE_ERR_GENERICO
                         ('Errore in lunghezza file in output tipo record 2010 lunghezza ' || LENGTH(aStringa));
                   END IF;
                End If;
-	    Else         -- i = 3
+          Else         -- i = 3
 
                -- Chiave
 
@@ -4641,10 +4661,10 @@ BEGIN
                aStringaChiave3:=LPAD((300000 + aRecEstrazioneCud.dip_cd_anag),6,'0');
                aStringa:=aStringaChiave1 || aStringaChiave2 || aStringaChiave3;
 
- 	       -- Campi contabili
+             -- Campi contabili
 
-	       -- se il terzo è SOLO non residente (per come abbiamo inteso noi i non residenti)i primi cinque campi sono a zero
-	       If aRecEstrazioneCud.fl_soggetto_estero = 'Y' And
+             -- se il terzo è SOLO non residente (per come abbiamo inteso noi i non residenti)i primi cinque campi sono a zero
+             If aRecEstrazioneCud.fl_soggetto_estero = 'Y' And
                   Nvl(aRecEstrazioneCud.imponibile_si_detr,0) = 0 And
                   Nvl(aRecEstrazioneCud.imponibile_no_detr,0) = 0 Then
 
@@ -4655,24 +4675,24 @@ BEGIN
                                         LPAD('0', 10, '0');
          Else
                   --IF aggiunto per sanare casi sporchi
-   		  --Esistono diversi conguagli non contabilizzati che quindi non vengono inseriti nel cud (il che è giusto)
-   		  --però se per essi esiste l'acconto, poichè aRecEstrazioneCud.addizionale_comunale è <0, invece dell'acconto
-   		  --viene passato zero
+              --Esistono diversi conguagli non contabilizzati che quindi non vengono inseriti nel cud (il che è giusto)
+              --però se per essi esiste l'acconto, poichè aRecEstrazioneCud.addizionale_comunale è <0, invece dell'acconto
+              --viene passato zero
                   --If aRecEstrazioneCud.dip_cd_anag In(20210,60281,64656,66401,79333,80356,91528,91530,91532) Then
                   --     aStringa:=aStringa ||
-                  --	         Lpad((Nvl(aRecEstrazioneCud.im_acconto_add_com,0) * 100), 10, '0');
+                  --             Lpad((Nvl(aRecEstrazioneCud.im_acconto_add_com,0) * 100), 10, '0');
                   --Else
                        --SE DOVUTO - ACCONTO >= 0 PASSO L'ACCONTO COSì COME CALCOLATO ALTRIMENTI LO FORZO UGUALE AL SALDO
                        If  aRecEstrazioneCud.addizionale_comunale - Nvl(aRecEstrazioneCud.im_acconto_add_com,0) < 0 Then
                            If aRecEstrazioneCud.addizionale_comunale > 0 Then
                                  aStringa:=aStringa ||
-                       	                   Lpad((aRecEstrazioneCud.addizionale_comunale * 100), 10, '0');
-                       	   Else
-                       	         aStringa:=aStringa || Lpad('0', 10, '0');
-                       	   End If;
+                                           Lpad((aRecEstrazioneCud.addizionale_comunale * 100), 10, '0');
+                           Else
+                                 aStringa:=aStringa || Lpad('0', 10, '0');
+                           End If;
                        Else
                            aStringa:=aStringa ||
-                       	    Lpad((Nvl(aRecEstrazioneCud.im_acconto_add_com,0) * 100), 10, '0');
+                            Lpad((Nvl(aRecEstrazioneCud.im_acconto_add_com,0) * 100), 10, '0');
                        End If;
                   --End If;
                   aStringa:=aStringa ||
@@ -4692,8 +4712,8 @@ BEGIN
 
          aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.altri_redditi,0) * 100), 10, '0');
 
-         aStringa:=aStringa || LPAD('0', 10, '0');       																					-- ADD. COM. ACCONTO ESERCIZIO SOSPESA
-         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_irpef_sospeso,0) * 100), 10, '0');  	-- RITENUTA IRPEF SOSPESA
+         aStringa:=aStringa || LPAD('0', 10, '0');                                                                                                                                  -- ADD. COM. ACCONTO ESERCIZIO SOSPESA
+         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_irpef_sospeso,0) * 100), 10, '0');       -- RITENUTA IRPEF SOSPESA
          aStringa:=aStringa || LPAD('0', 10, '0')||
                                LPAD('0', 10, '0')||
                                LPAD('0', 10, '0')||
@@ -4716,8 +4736,8 @@ BEGIN
              aStringa:=aStringa ||'N';
          END IF;
 
-         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_redd_esenti_per_legge,0) * 100), 10, '0');  	--  REDDITI ESENTI PER LEGGE (ASSEGNI DI RICERCA)
-         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_redd_non_tassati_per_conv,0) * 100), 10, '0');  	--  REDDITI NON TASSATI PER CONVENZIONE
+         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_redd_esenti_per_legge,0) * 100), 10, '0');     --  REDDITI ESENTI PER LEGGE (ASSEGNI DI RICERCA)
+         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_redd_non_tassati_per_conv,0) * 100), 10, '0');       --  REDDITI NON TASSATI PER CONVENZIONE
          aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.imponi_non_tassato_rientro_lav,0) * 100), 10, '0');  -- IMPONIBILE NON TASSATO RIENTRO DEI LAVORATORI
 
          IF aRecEstrazioneCud.cnr_tipologia_reddito_punto_2 IS NULL THEN
@@ -4726,9 +4746,12 @@ BEGIN
               aStringa:=aStringa || RPAD(SUBSTR(aRecEstrazioneCud.cnr_tipologia_reddito_punto_2, 1, 3), 3, ' ');
          END IF;
 
-         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_bonus_erogato,0) * 100), 10, '0');  	--  IMPORTO BONUS EROGATO
+         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.im_bonus_erogato,0) * 100), 10, '0');       --  IMPORTO BONUS EROGATO
+         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.ult_detr_cuneo_fisc,0) * 100), 10, '0');    --  ULTERIORE DETRAZIONE CUNEO FISCALE...SOLO LA PARTE DI DETRAZIONE
+         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.tratt_int_erog_cuneo_fisc,0) * 100), 10, '0');    --  TRATTAMENTO INTEGRATIVO EROGATO CUNEO FISCALE...SOLO LA PARTE DI TRATTAMENTO INTEGRATIVO(NON DETRAZIONE) EROGATA, INCLUSI I CONGUAGLI
+         aStringa:=aStringa ||Lpad((Nvl(aRecEstrazioneCud.tratt_int_cong_cuneo_fisc,0) * 100), 10, '0');    --  TRATTAMENTO INTEGRATIVO RECUPERATO ENTRO CONGUAGLIO CUNEO FISCALE...SOLO LA PARTE DI CONGUAGLIO TRATTAMENTO INTEGRATIVO(NON DETRAZIONE)
 
-         IF LENGTH(aStringa) != 274 Then
+         IF LENGTH(aStringa) != 304 Then
             IBMERR001.RAISE_ERR_GENERICO
                ('Errore in lunghezza file in output tipo record 2020 lunghezza ' || LENGTH(aStringa));
          END IF;
@@ -4736,13 +4759,13 @@ BEGIN
       END IF;   -- i=....
 
       -- Scrittura CLOB
-	    If aSalta = 'N' Then
+          If aSalta = 'N' Then
                 aDifferenza:= 500 - LENGTH(aStringa);
 
                 aStringa:=aStringa || LPAD(' ', aDifferenza, ' ');
 
                 IBMUTL005.ShPutLine(aRecBframeBlob.cd_tipo,
- 		                    aRecBframeBlob.path,
+                                aRecBframeBlob.path,
                                     aRecBframeBlob.filename,
                                     mioCLOB,
                                     aStringa);
@@ -4760,9 +4783,9 @@ BEGIN
    -- Chiusura CLOB
 
    IBMUTL005.ShCloseClob(aRecBframeBlob.cd_tipo,
- 		   	 aRecBframeBlob.path,
+                   aRecBframeBlob.path,
                          aRecBframeBlob.filename,
-			 mioCLOB);
+                   mioCLOB);
 
 END scriviFileOutput;
 
@@ -4784,7 +4807,7 @@ PROCEDURE inserisciCarichiFamiliari
    FL_MINORE_3_ANNI  VARCHAR2(1);
 BEGIN
    for rec in (select esercizio,ID_ESTRAZIONE, dip_cd_anag,
-    		              DIP_CODICE_FISCALE,DIP_COGNOME,DIP_NOME,
+                          DIP_CODICE_FISCALE,DIP_COGNOME,DIP_NOME,
                       nvl(DETRAZIONI_FAMILIARI,0) DETRAZIONI_FAMILIARI,
                       nvl(CNR_DETRAZIONE_CONIUGE,0) CNR_DETRAZIONE_CONIUGE,
                       nvl(CNR_DETRAZIONE_FIGLI,0) CNR_DETRAZIONE_FIGLI
@@ -4823,11 +4846,11 @@ BEGIN
                NUMERO_MESI := MESE_FINE - MESE_INIZIO + 1;
 
                INSERT INTO ESTRAZIONE_CUD_CARICHI_FAM (ID_ESTRAZIONE,ESERCIZIO,DIP_CD_ANAG,DIP_CODICE_FISCALE,DIP_COGNOME,DIP_NOME,DT_NASCITA_FIGLIO,
-    					                       TIPOLOGIA_CARICO,CODICE_FISCALE_CARICO,NOMINATIVO_CARICO,ANNO_DETRAZIONE,PRC_CARICO,
-          				                   NUMERO_MESI_CARICO,FL_MINORE_3_ANNI)
-          		VALUES (REC.ID_ESTRAZIONE,REC.ESERCIZIO,LPAD((300000 + rec.dip_cd_anag),6,'0'),REC.DIP_CODICE_FISCALE,REC.DIP_COGNOME,REC.DIP_NOME,NULL,
-    			        'CONIUGE',CON.CODICE_FISCALE,NULL,REC.ESERCIZIO,CON.PRC_CARICO,
-          			NUMERO_MESI,Null);
+                                                     TIPOLOGIA_CARICO,CODICE_FISCALE_CARICO,NOMINATIVO_CARICO,ANNO_DETRAZIONE,PRC_CARICO,
+                                                 NUMERO_MESI_CARICO,FL_MINORE_3_ANNI)
+                  VALUES (REC.ID_ESTRAZIONE,REC.ESERCIZIO,LPAD((300000 + rec.dip_cd_anag),6,'0'),REC.DIP_CODICE_FISCALE,REC.DIP_COGNOME,REC.DIP_NOME,NULL,
+                          'CONIUGE',CON.CODICE_FISCALE,NULL,REC.ESERCIZIO,CON.PRC_CARICO,
+                        NUMERO_MESI,Null);
 
            END LOOP;
         end if;
@@ -4875,11 +4898,11 @@ BEGIN
                End If;
 
                INSERT INTO ESTRAZIONE_CUD_CARICHI_FAM (ID_ESTRAZIONE,ESERCIZIO,DIP_CD_ANAG,DIP_CODICE_FISCALE,DIP_COGNOME,DIP_NOME,DT_NASCITA_FIGLIO,
-    					      TIPOLOGIA_CARICO,CODICE_FISCALE_CARICO,NOMINATIVO_CARICO,ANNO_DETRAZIONE,PRC_CARICO,
-          				      NUMERO_MESI_CARICO,FL_MINORE_3_ANNI)
-          		VALUES (REC.ID_ESTRAZIONE,REC.ESERCIZIO,LPAD((300000 + rec.dip_cd_anag),6,'0'),REC.DIP_CODICE_FISCALE,REC.DIP_COGNOME,REC.DIP_NOME,FIG.DT_NASCITA_FIGLIO,
-    			        TIPO,FIG.CODICE_FISCALE,NULL,REC.ESERCIZIO,FIG.PRC_CARICO,
-          			NUMERO_MESI,FL_MINORE_3_ANNI);
+                                    TIPOLOGIA_CARICO,CODICE_FISCALE_CARICO,NOMINATIVO_CARICO,ANNO_DETRAZIONE,PRC_CARICO,
+                                    NUMERO_MESI_CARICO,FL_MINORE_3_ANNI)
+                  VALUES (REC.ID_ESTRAZIONE,REC.ESERCIZIO,LPAD((300000 + rec.dip_cd_anag),6,'0'),REC.DIP_CODICE_FISCALE,REC.DIP_COGNOME,REC.DIP_NOME,FIG.DT_NASCITA_FIGLIO,
+                          TIPO,FIG.CODICE_FISCALE,NULL,REC.ESERCIZIO,FIG.PRC_CARICO,
+                        NUMERO_MESI,FL_MINORE_3_ANNI);
 
            END LOOP;
         End If;
@@ -5225,3 +5248,4 @@ END estrazioneCUD;
 -- =================================================================================================
 
 END; -- PACKAGE END;
+

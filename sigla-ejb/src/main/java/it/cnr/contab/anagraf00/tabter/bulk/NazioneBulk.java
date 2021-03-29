@@ -20,6 +20,7 @@ package it.cnr.contab.anagraf00.tabter.bulk;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -54,7 +55,9 @@ public class NazioneBulk extends NazioneBase {
 		TI_NAZIONE.put(SAN_MARINO, "San Marino");
 		TI_NAZIONE.put(INDIFFERENTE, "Indifferente");
 	}
+	@JsonIgnore
 	private it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk divisa;
+	@JsonIgnore
 	private it.cnr.contab.docamm00.tabrif.bulk.DivisaBulk divisaPerMissione;
 
 	public final static java.lang.String IBAN_SEPARATORE = ";";
@@ -125,6 +128,7 @@ public OggettoBulk initializeForSearch(CRUDBP bp, ActionContext context) {
  * Creation date: (30/10/2002 11.52.30)
  * @return it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk
  */
+@JsonIgnore
 public boolean isRODivisa() {
 	return getDivisa()==null || getDivisa().getCrudStatus()==NORMAL;
 }
@@ -133,6 +137,7 @@ public boolean isRODivisa() {
  * Creation date: (30/10/2002 11.52.30)
  * @return it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk
  */
+@JsonIgnore
 public boolean isRODivisaPerMissione() {
 	return getDivisaPerMissione()==null || getDivisaPerMissione().getCrudStatus()==NORMAL;
 }
@@ -141,6 +146,7 @@ public boolean isRODivisaPerMissione() {
  * Creation date: (30/10/2002 11.52.30)
  * @return it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk
  */
+@JsonIgnore
 public boolean isROPgNazione() {
 	return isTipoIndifferente();
 }
@@ -191,6 +197,7 @@ public void validate() throws ValidationException {
 	if(getCd_nazione() == null)
 		throw new ValidationException("Il campo CODICE NAZIONE non può essere vuoto");
 }
+@JsonIgnore
 public String getStrutturaIbanLivello(int livello){
 	int nrLivello = 0;
 	String aLivello = "";
@@ -205,45 +212,59 @@ public String getStrutturaIbanLivello(int livello){
 	}
 	return aLivello;
 }
+	@JsonIgnore
 public int getStrutturaIbanNrLivelli(){
 	return new StringTokenizer(Optional.ofNullable(getStruttura_iban()).orElse(""),IBAN_SEPARATORE).countTokens();
 }
+	@JsonIgnore
 public int getStruttura_iban_parte1MaxLength(){
 	return getStrutturaIbanLivello(1).length();
 }
+	@JsonIgnore
 public int getStruttura_iban_parte2MaxLength(){
 	return getStrutturaIbanLivello(2).length();
 }
+	@JsonIgnore
 public int getStruttura_iban_parte3MaxLength(){
 	return getStrutturaIbanLivello(3).length();
 }
+	@JsonIgnore
 public int getStruttura_iban_parte4MaxLength(){
 	return getStrutturaIbanLivello(4).length();
 }
+	@JsonIgnore
 public int getStruttura_iban_parte5MaxLength(){
 	return getStrutturaIbanLivello(5).length();
 }
+	@JsonIgnore
 public int getStruttura_iban_parte6MaxLength(){
 	return getStrutturaIbanLivello(6).length();
 }
+	@JsonIgnore
 public int getStruttura_iban_parte1InputSize(){
 	return getStruttura_iban_parte1MaxLength()+MARGINE;
 }
+	@JsonIgnore
 public int getStruttura_iban_parte2InputSize(){
 	return getStruttura_iban_parte2MaxLength()+MARGINE;
 }
+	@JsonIgnore
 public int getStruttura_iban_parte3InputSize(){
 	return getStruttura_iban_parte3MaxLength()+MARGINE;
 }
+	@JsonIgnore
 public int getStruttura_iban_parte4InputSize(){
 	return getStruttura_iban_parte4MaxLength()+MARGINE;
 }
+	@JsonIgnore
 public int getStruttura_iban_parte5InputSize(){
 	return getStruttura_iban_parte5MaxLength()+MARGINE;
 }
+	@JsonIgnore
 public int getStruttura_iban_parte6InputSize(){
 	return getStruttura_iban_parte6MaxLength()+MARGINE;
 }
+	@JsonIgnore
 public String getStrutturaPivaModello(int livello){
 	int nrLivello = 0;
 	String aLivello=null;
@@ -258,6 +279,7 @@ public String getStrutturaPivaModello(int livello){
 	}
 	return aLivello;
 }
+	@JsonIgnore
 public int getStrutturaPivaModelliPossibili(){
 	return new StringTokenizer(Optional.ofNullable(getStruttura_piva()).orElse(""),IBAN_SEPARATORE).countTokens();
 }

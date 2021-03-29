@@ -2,7 +2,7 @@
 --  DDL for View V_CONS_OBBL_LINEE_ATTIVITA
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_CONS_OBBL_LINEE_ATTIVITA" ("CDS", "UO", "CD_CENTRO_RESPONSABILITA", "CD_LINEA_ATTIVITA", "DS_LINEA_ATTIVITA", "CD_ELEMENTO_VOCE", "DT_REGISTRAZIONE", "ESERCIZIO_ORIGINALE", "PG_OBBLIGAZIONE", "ESERCIZIO_ORI_ORI_RIPORTO", "PG_OBBLIGAZIONE_ORI_RIPORTO", "ESERCIZIO", "ESERCIZIO_ORI_RIPORTO", "PG_OBBLIGAZIONE_SCADENZARIO", "DS_SCADENZA", "IM_SCADENZA", "IM_VOCE", "ESERCIZIO_DOCAMM", "PG_DOC_AMM", "DATA_DOCAMM", "PG_MANDATO", "DATA_PAGAMENTO", "CD_TERZO", "DENOMINAZIONE_SEDE", "TI_FATTURA", "TIPO_DOC_AMM", "ESERCIZIO_CONTRATTO", "PG_CONTRATTO") AS 
+  CREATE OR REPLACE FORCE VIEW "V_CONS_OBBL_LINEE_ATTIVITA" ("CDS", "UO", "CD_CENTRO_RESPONSABILITA", "CD_LINEA_ATTIVITA", "DS_LINEA_ATTIVITA", "CD_ELEMENTO_VOCE", "DT_REGISTRAZIONE", "ESERCIZIO_ORIGINALE", "PG_OBBLIGAZIONE", "ESERCIZIO_ORI_ORI_RIPORTO", "PG_OBBLIGAZIONE_ORI_RIPORTO", "ESERCIZIO", "ESERCIZIO_ORI_RIPORTO", "PG_OBBLIGAZIONE_SCADENZARIO", "DS_SCADENZA", "IM_SCADENZA", "IM_VOCE", "ESERCIZIO_DOCAMM", "PG_DOC_AMM", "DATA_DOCAMM", "PG_MANDATO", "DATA_PAGAMENTO", "CD_TERZO", "DENOMINAZIONE_SEDE", "TI_FATTURA", "TIPO_DOC_AMM", "ESERCIZIO_CONTRATTO", "PG_CONTRATTO", "CD_TERZO_RESP_GAE", "CD_PROGETTO", "CD_PROGETTO_PADRE") AS
   SELECT   /*+ optimizer_features_enable('10.1.0') */
 --
 -- Date: 18/01/2007
@@ -80,7 +80,8 @@
                 cnrctb002.getdestipodocamm
                                           (v_doc_passivo.cd_tipo_documento_amm)
                ),
-            nvl(obbligazione.esercizio_contratto,obbligazione.esercizio_rep), nvl(obbligazione.pg_contratto,obbligazione.pg_repertorio)
+            nvl(obbligazione.esercizio_contratto,obbligazione.esercizio_rep), nvl(obbligazione.pg_contratto,obbligazione.pg_repertorio),
+            v_linea_attivita_valida.cd_responsabile_terzo, v_linea_attivita_valida.CD_PROGETTO, v_linea_attivita_valida.CD_PROGETTO_PADRE
        FROM cdr,
             elemento_voce,
             v_linea_attivita_valida,
@@ -182,7 +183,8 @@
                 cnrctb002.getdestipodocamm
                                           (v_doc_passivo.cd_tipo_documento_amm)
                ),
-            nvl(obbligazione.esercizio_contratto,obbligazione.esercizio_rep), nvl(obbligazione.pg_contratto,obbligazione.pg_repertorio)
+            nvl(obbligazione.esercizio_contratto,obbligazione.esercizio_rep), nvl(obbligazione.pg_contratto,obbligazione.pg_repertorio),
+            v_linea_attivita_valida.cd_responsabile_terzo, v_linea_attivita_valida.CD_PROGETTO, v_linea_attivita_valida.CD_PROGETTO_PADRE
        FROM cdr,
             elemento_voce,
             v_linea_attivita_valida,

@@ -613,7 +613,7 @@
 		label="Stato Notifica Esito" />
 	<fieldProperty
 		name="statoDocumentoVisual"
-		property="statoDocumento"
+		property="statoDocumentoLabel"
 		inputType="TEXT"
 		inputSize="22"
 		maxLength="60"

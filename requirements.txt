@@ -1,7 +1,1 @@
-sphinx==2.4.4
-git+https://github.com/bashtage/sphinx-material.git
-git+https://github.com/sphinx-contrib/images
-recommonmark
-numpydoc
-nbsphinx
-sphinx_markdown_tables
+git+https://github.com/consiglionazionaledellericerche/docs-cnr-theme.git

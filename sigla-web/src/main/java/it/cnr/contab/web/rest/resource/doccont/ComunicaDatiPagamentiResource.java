@@ -20,8 +20,11 @@ package it.cnr.contab.web.rest.resource.doccont;
 import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
 import it.cnr.contab.doccont00.ejb.MandatoComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.web.rest.exception.RestException;
 import it.cnr.contab.web.rest.local.doccont.ComunicaDatiPagamentiLocal;
 import it.cnr.jada.ejb.CRUDComponentSession;
+import it.cnr.jada.util.DateUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +36,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,21 +57,42 @@ public class ComunicaDatiPagamentiResource implements ComunicaDatiPagamentiLocal
     @Override
     public Response recuperoDatiPagamenti(@Context HttpServletRequest request, @QueryParam("esercizio") Integer esercizio,
                                           @QueryParam("cdCds") String cdCds,
-                                          @QueryParam("pgMandato") Long pgMandato) throws Exception {
+                                          @QueryParam("pgMandato") Long pgMandato, @QueryParam("daData") String daData,
+                                          @QueryParam("aData") String aData) throws Exception {
         LOGGER.debug("REST request per recupero Dati Pagamenti.");
         CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
         final MandatoComunicaDatiBulk mandatoComunicaDatiBulk = new MandatoComunicaDatiBulk();
+        Optional.ofNullable(daData).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, data di inizio selezione obbligatoria."));
+        Optional.ofNullable(aData).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, data di fine selezione obbligatoria."));
         Optional.ofNullable(esercizio).ifPresent(integer -> mandatoComunicaDatiBulk.setEsercizio(esercizio));
         Optional.ofNullable(cdCds).ifPresent(integer -> mandatoComunicaDatiBulk.setCd_cds(cdCds));
         Optional.ofNullable(pgMandato).ifPresent(integer -> mandatoComunicaDatiBulk.setPg_mandato(pgMandato));
+
+        Timestamp startDate = getTimestamp(daData);
+        Timestamp endDate = getTimestamp(aData);
+
         try {
             List<MandatoComunicaDatiBulk> dati =
-                    crudComponentSession.find(userContext, MandatoComunicaDatiBulk.class, "recuperoDati", userContext, mandatoComunicaDatiBulk);
+                    crudComponentSession.find(userContext, MandatoComunicaDatiBulk.class, "recuperoDati", userContext, mandatoComunicaDatiBulk, startDate, endDate);
 
             LOGGER.debug("Fine REST per recupero Dati Pagamenti.");
-            return Response.ok(Optional.ofNullable(dati).orElse(Collections.emptyList())).build();
+            return Response.ok(Optional.ofNullable(dati).orElse(Collections.emptyList())).header("Keep-Alive","timeout=86400").build();
         } catch (Exception _ex) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(Collections.singletonMap("ERROR", _ex)).build();
+        }
+    }
+
+    private Timestamp getTimestamp(String data) throws Exception {
+        if (StringUtils.isEmpty(data)){
+            return null;
+        }
+        String aPattern = "dd/MM/yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(aPattern);
+        try {
+            Date fromDate = sdf.parse(data);
+            return new Timestamp(fromDate.getTime());
+        } catch (ParseException e) {
+            throw new Exception("La data " + data + " non è nel formato " + aPattern);
         }
     }
 }

@@ -34,7 +34,6 @@ public class DocumentoEleTrasmissioneBulk extends DocumentoEleTrasmissioneBase {
 	static {
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_01.name(),RegimeFiscaleType.RF_01.value()+" - Regime ordinario");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_02.name(),RegimeFiscaleType.RF_02.value()+" - Regime dei contribuenti minimi (art. 1,c.96-117, L. 244/2007)");
-		regimefiscaleKeys.put(RegimeFiscaleType.RF_03.name(),RegimeFiscaleType.RF_03.value()+" - Regime delle nuove iniziative produttive (art. 13, L. 388/2000)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_04.name(),RegimeFiscaleType.RF_04.value()+" - Agricoltura e attività connesse e pesca (artt. 34 e 34-bis, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_05.name(),RegimeFiscaleType.RF_05.value()+" - Vendita sali e tabacchi (art. 74, c.1, D.P.R. 633/1972)");
 		regimefiscaleKeys.put(RegimeFiscaleType.RF_06.name(),RegimeFiscaleType.RF_06.value()+" - Commercio dei fiammiferi (art. 74, c.1, D.P.R. 633/1972)");

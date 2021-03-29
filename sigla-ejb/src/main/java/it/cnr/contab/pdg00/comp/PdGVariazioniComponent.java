@@ -267,18 +267,7 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 					pdg));
 			// RosPuc 28/01/2011
 			if(pdg.getStato().equalsIgnoreCase(Pdg_variazioneBulk.STATO_PROPOSTA_DEFINITIVA)){
-//			if (pdg.getStato().equalsIgnoreCase(
-//					Pdg_variazioneBulk.STATO_APPROVATA)
-//					|| pdg.getStato().equalsIgnoreCase(
-//							Pdg_variazioneBulk.STATO_APPROVAZIONE_FORMALE)) {
-//				
-			  if(selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0) 
-		 	 	  pdg.setStatoDocumentale(ArchiviaStampaPdgVariazioneBulk.VIEW_SIGNED); 
-			  else if (selectVariazioniForDocumentale(userContext, null,new Pdg_variazioneBulk(pdg.getEsercizio(),pdg.getPg_variazione_pdg()), ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED, Boolean.TRUE).executeCountQuery(getConnection(userContext))!=0)
-				  pdg.setStatoDocumentale(ArchiviaStampaPdgVariazioneBulk.VIEW_NOT_SIGNED);
-					  
-				pdg.setVar_bilancio(((Var_bilancioHome) getHome(userContext,
-						Var_bilancioBulk.class)).findByPdg_variazione(pdg));
+			  pdg.setVar_bilancio(((Var_bilancioHome) getHome(userContext, Var_bilancioBulk.class)).findByPdg_variazione(pdg));
 			}
 			String desTipoVariazione = getDesTipoVariazione(userContext, pdg);
 			if (desTipoVariazione != null)
@@ -301,6 +290,17 @@ public class PdGVariazioniComponent extends it.cnr.jada.comp.CRUDComponent
 		}
 	}
 
+	private boolean isCdsEnte(UserContext userContext) throws ComponentException {
+		try {
+			Unita_organizzativa_enteBulk ente = (Unita_organizzativa_enteBulk) getHome( userContext, Unita_organizzativa_enteBulk.class).findAll().get(0);
+			if (((CNRUserContext) userContext).getCd_unita_organizzativa().equals( ente.getCd_unita_organizzativa()))
+				return true;
+			else
+				return false;
+		} catch(Throwable e) {
+			throw handleException(e);
+		}
+	}
 	public OggettoBulk modificaConBulk(UserContext userContext, OggettoBulk bulk)
 			throws ComponentException {
 		if (!(bulk instanceof Pdg_variazioneBulk))

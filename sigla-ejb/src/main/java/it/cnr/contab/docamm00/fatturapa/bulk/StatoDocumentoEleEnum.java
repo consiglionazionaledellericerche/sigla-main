@@ -18,8 +18,17 @@
 package it.cnr.contab.docamm00.fatturapa.bulk;
 
 public enum StatoDocumentoEleEnum {
-	INIZIALE("SF01"), AGGIORNATO("SF02"), COMPLETO("SF02"), REGISTRATO("SF03"), RIFIUTATO("SF04");
-	
+	INIZIALE("SF01"),
+	AGGIORNATO("SF02"),
+	COMPLETO("SF02"),
+	REGISTRATO("SF03"),
+	RIFIUTATO("SF04"),
+	//PEC_INVIATA("SF05"),
+	DA_STORNARE("SF06"),
+	RIFIUTATA_CON_PEC("SF07"),
+	//PEC_NON_INVIATA("SF08"),
+	STORNATO("SF09");
+
 	private final String statoSDI;
 
 	private StatoDocumentoEleEnum(String statoSDI) {
@@ -28,6 +37,10 @@ public enum StatoDocumentoEleEnum {
 
 	public String statoSDI() {
 		return statoSDI;
+	}
+
+	public String label() {
+		return this.name().replace("_", " ");
 	}
 
 	public static StatoDocumentoEleEnum fromStatoSDI(String v) {

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2019  Consiglio Nazionale delle Ricerche
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU Affero General Public License as
+  ~     published by the Free Software Foundation, either version 3 of the
+  ~     License, or (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU Affero General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU Affero General Public License
+  ~     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<SQLPersistentInfo
+	persistentClassName="it.cnr.contab.anagraf00.core.bulk.AssGruppoIvaAnagBase"
+	keyClassName="it.cnr.contab.anagraf00.core.bulk.AssGruppoIvaAnagKey"
+	homeClassName="it.cnr.contab.anagraf00.core.bulk.AssGruppoIvaAnagHome" >
+	<defaultColumnMap
+		tableName="ASS_GRUPPO_IVA_ANAG" >
+		<columnMapping
+			columnName="DT_CANCELLAZIONE"
+			propertyName="dt_cancellazione"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7" />
+		<columnMapping
+			columnName="DACR"
+			propertyName="dacr"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTCR"
+			propertyName="utcr"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="DUVA"
+			propertyName="duva"
+			sqlTypeName="TIMESTAMP"
+			columnSize="7"
+			nullable="false" />
+		<columnMapping
+			columnName="UTUV"
+			propertyName="utuv"
+			sqlTypeName="VARCHAR"
+			columnSize="20"
+			nullable="false" />
+		<columnMapping
+			columnName="PG_VER_REC"
+			propertyName="pg_ver_rec"
+			sqlTypeName="DECIMAL"
+			columnSize="22"
+			nullable="false" />
+		<columnMapping
+				columnName="STATO"
+				propertyName="stato"
+				sqlTypeName="VARCHAR"
+				columnSize="3"
+				nullable="false" />
+	</defaultColumnMap>
+	<persistentProperty
+		name="dt_cancellazione" />
+	<persistentProperty
+			name="stato" />
+	<persistentProperty
+		name="utcr" />
+	<persistentProperty
+		name="dacr" />
+	<persistentProperty
+		name="utuv" />
+	<persistentProperty
+		name="duva" />
+	<persistentProperty
+		name="pg_ver_rec" />
+</SQLPersistentInfo>

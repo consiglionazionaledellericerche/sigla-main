@@ -1098,6 +1098,84 @@ BEGIN
 END getAnagFlNoCreditoIrpef;
 
 
+FUNCTION getAnagFlNoCreditoCuneoIrpef
+   (
+    aEsercizio NUMBER,
+    aCdAnag ANAGRAFICO.cd_anag%TYPE
+   ) RETURN VARCHAR2 IS
+   attivaCredito CHAR(1);
+   aFlNoCreditoCuneoIrpef CHAR(1);
+   rec_parametri_cnr PARAMETRI_CNR%Rowtype;
+
+BEGIN
+
+   -- Dominio
+   -- N = Attiva calcolo credito
+   -- Y = Non attiva calcolo credito
+
+   aFlNoCreditoCuneoIrpef:='Y';
+
+   -- Controllo generale nei parametri se attivare o meno il calcolo del credito irpef
+   rec_parametri_cnr := cnrutl001.getRecParametriCnr(aEsercizio);
+   attivaCredito := rec_parametri_cnr.fl_credito_irpef;
+
+   IF attivaCredito = 'N' THEN
+      RETURN aFlNoCreditoCuneoIrpef;
+   END IF;
+
+   BEGIN
+      SELECT NVL(fl_no_credito_cuneo_irpef,'N') INTO aFlNoCreditoCuneoIrpef
+      FROM ANAGRAFICO_ESERCIZIO
+      WHERE  esercizio = aEsercizio AND
+             cd_anag = aCdAnag;
+   EXCEPTION
+      WHEN no_data_found THEN
+           aFlNoCreditoCuneoIrpef:='N';
+   END;
+
+   RETURN aFlNoCreditoCuneoIrpef;
+
+END getAnagFlNoCreditoCuneoIrpef;
+
+FUNCTION getAnagFlNoDetrCuneoIrpef
+   (
+    aEsercizio NUMBER,
+    aCdAnag ANAGRAFICO.cd_anag%TYPE
+   ) RETURN VARCHAR2 IS
+   attivaCredito CHAR(1);
+   aFlNoDetrCuneoIrpef CHAR(1);
+   rec_parametri_cnr PARAMETRI_CNR%Rowtype;
+
+BEGIN
+
+   -- Dominio
+   -- N = Attiva calcolo credito
+   -- Y = Non attiva calcolo credito
+
+   aFlNoDetrCuneoIrpef:='Y';
+
+   -- Controllo generale nei parametri se attivare o meno il calcolo del credito irpef
+   rec_parametri_cnr := cnrutl001.getRecParametriCnr(aEsercizio);
+   attivaCredito := rec_parametri_cnr.fl_credito_irpef;
+
+   IF attivaCredito = 'N' THEN
+      RETURN aFlNoDetrCuneoIrpef;
+   END IF;
+
+   BEGIN
+      SELECT NVL(fl_no_Detr_Cuneo_Irpef,'N') INTO aFlNoDetrCuneoIrpef
+      FROM ANAGRAFICO_ESERCIZIO
+      WHERE  esercizio = aEsercizio AND
+             cd_anag = aCdAnag;
+   EXCEPTION
+      WHEN no_data_found THEN
+           aFlNoDetrCuneoIrpef:='N';
+   END;
+
+   RETURN aFlNoDetrCuneoIrpef;
+
+END getAnagFlNoDetrCuneoIrpef;
+
 -- =================================================================================================
 -- Recupero del Reddito complessivo impostato da utente solo per il calcolo delle detrazioni
 -- =================================================================================================

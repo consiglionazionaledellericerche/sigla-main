@@ -62,6 +62,8 @@ thorntail:
         level: ERROR
       org.jboss.as.ejb3:
         level: ERROR
+      org.jboss.as.ejb3.invocation:
+        level: SEVERE
       org.jboss.as.dependency.private:
         level: ERROR
       org.jboss.as.server.deployment:
@@ -82,14 +84,28 @@ thorntail:
         suffix: .yyyy-MM-dd
         named-formatter: LOG_FORMATTER
         level: INFO
+  jmx:
+    expression-expose-model.domain-name: RemoteJMX
+    jmx-remoting-connector:
+      use-management-endpoint: true
+    resolved-expose-model.domain-name: RemoteJMX
+    show-model: true
+    audit-log-configuration:
+      enabled: true
+      log-boot: true
+
   management:
+    audit-access:
+      audit-log-logger:
+        log-boot: true
+        enabled: true
+    bind:
+      address: 0.0.0.0
     http-interface-management-interface:
+      console-enabled: true
       security-realm: ManagementRealm
     security-realms:
       ManagementRealm:
-        local-authentication:
-          default-user: '$local'
-          skip-group-loading: true
         in-memory-authentication:
           users:
             admin:
@@ -133,6 +149,48 @@ thorntail:
       json:
         path: /SIGLA/restapi/swagger.json
 
+  infinispan:
+    cache-containers:
+      sigla-web:
+        default-cache: passivation
+        module: org.wildfly.clustering.web.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
+      sigla-ejb:
+        default-cache: passivation
+        module: org.wildfly.clustering.ejb.infinispan
+        local-caches:
+          passivation:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: true
+              purge: false
+          persistent:
+            transaction-component:
+              mode: BATCH
+            locking-component:
+              isolation: REPEATABLE_READ
+            file-store:
+              passivation: false
+              purge: false
 repository:
   base:
     url: http://as1dock.si.cnr.it:8080/alfresco/
@@ -187,6 +245,11 @@ help:
   base:
     url: https://consiglionazionaledellericerche.github.io/sigla-main
 
+pagopa:
+  govpay:
+    base_url: http://govpay.test.si.cnr.it/govpay
+    username: gpadmin
+    password: bubbazza
 ---
 project:
   stage: demo-h2
@@ -318,6 +381,14 @@ thorntail:
 repository:
   base:
     url: http://gestdoc.cnr.it:90/alfresco/
+
+authJWT:
+  username: ace
+  password: thisissecret
+ace:
+  url: "https://api.ace.cnr.it/api"
+  username: app.sigla
+
 spring:
   profiles:
     active: no-liquibase

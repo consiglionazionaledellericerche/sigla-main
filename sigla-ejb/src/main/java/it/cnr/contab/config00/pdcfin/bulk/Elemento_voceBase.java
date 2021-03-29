@@ -125,7 +125,7 @@ public class Elemento_voceBase extends Elemento_voceKey implements Keyed {
 
 	private java.lang.Boolean fl_limite_competenza;
 
-	private java.lang.Boolean fl_limite_residui_impropri;
+	private java.lang.String blocco_impegni_natfin;
 
 	public Elemento_voceBase() {
 	super();
@@ -515,11 +515,11 @@ public void setTi_elemento_voce(java.lang.String ti_elemento_voce) {
 		this.fl_limite_competenza = fl_limite_competenza;
 	}
 
-	public Boolean getFl_limite_residui_impropri() {
-		return fl_limite_residui_impropri;
+	public String getBlocco_impegni_natfin() {
+		return blocco_impegni_natfin;
 	}
 
-	public void setFl_limite_residui_impropri(Boolean fl_limite_residui_impropri) {
-		this.fl_limite_residui_impropri = fl_limite_residui_impropri;
+	public void setBlocco_impegni_natfin(String blocco_impegni_natfin) {
+		this.blocco_impegni_natfin = blocco_impegni_natfin;
 	}
 }

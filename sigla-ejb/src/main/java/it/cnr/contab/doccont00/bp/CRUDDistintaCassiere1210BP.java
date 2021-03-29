@@ -49,16 +49,18 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.*;
 import it.cnr.jada.util.ejb.EJBCommonServices;
 import it.cnr.jada.util.jsp.Button;
+import it.cnr.si.spring.storage.MimeTypes;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StorageDriver;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -397,14 +399,9 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
         }
     }
 
-    public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
+    public void generaDistinta(ActionContext actionContext) throws IOException, ComponentException {
         DistintaCassiere1210Bulk distintaCassiere1210Bulk = (DistintaCassiere1210Bulk) getModel();
         Timestamp currentTimestamp = EJBCommonServices.getServerTimestamp();
-        List<String> nodes = new ArrayList<String>();
-        for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
-            Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
-            nodes.add(documentiContabiliService.getDocumentKey(lettera_pagam_esteroBulk, true));
-        }
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         Print_spoolerBulk print = new Print_spoolerBulk();
         print.setPgStampa(UUID.randomUUID().getLeastSignificantBits());
@@ -412,14 +409,14 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
         print.setReport("/doccont/doccont/distinta_cassiere_1210.jasper");
         print.setNomeFile("Distinta 1210 n. "
                 + distintaCassiere1210Bulk.getPgDistinta() + ".pdf");
-        print.setUtcr(context.getUserContext().getUser());
+        print.setUtcr(actionContext.getUserContext().getUser());
         print.addParam("esercizio", String.valueOf(distintaCassiere1210Bulk.getEsercizio()), String.class);
         print.addParam("pg_distinta", String.valueOf(distintaCassiere1210Bulk.getPgDistinta()), String.class);
         print.addParam("DT_EMISSIONE", format.format(distintaCassiere1210Bulk.getDtEmissione()), String.class);
         print.addParam("DT_INVIO", format.format(currentTimestamp), String.class);
 
         Report report = SpringUtil.getBean("printService",
-                PrintService.class).executeReport(context.getUserContext(),
+                PrintService.class).executeReport(actionContext.getUserContext(),
                 print);
         StorageObject node = documentiContabiliService.restoreSimpleDocument(
                 distintaCassiere1210Bulk,
@@ -428,8 +425,43 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
                 report.getName(),
                 distintaCassiere1210Bulk.getStorePath(),
                 false);
-        String nodo = node.getPropertyValue("alfcmis:nodeRef");
-        nodes.add(nodo);
+        PDFMergerUtility ut = new PDFMergerUtility();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ut.setDestinationStream(out);
+        ut.addSource(documentiContabiliService.getResource(node));
+        for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
+            Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
+            ut.addSource(documentiContabiliService.getStreamDocumento(lettera_pagam_esteroBulk));
+        }
+        try {
+            ut.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
+        } catch (IOException _ex) {
+            throw new ApplicationException("\nAlla distinta risulta allegato un documento non in formato PDF" +
+                    ", pertanto è stato escluso dalla selezione.");
+        }
+        documentiContabiliService.restoreSimpleDocument(
+            distintaCassiere1210Bulk,
+            new ByteArrayInputStream(out.toByteArray()),
+            MimeTypes.PDF.mimetype(),
+            DocumentiContabiliService.DISTINTA_PEC_PDF,
+            distintaCassiere1210Bulk.getStorePath(),
+            false
+        );
+    }
+
+    public void invia(ActionContext context, FirmaOTPBulk firmaOTPBulk) throws Exception {
+        DistintaCassiere1210Bulk distintaCassiere1210Bulk = (DistintaCassiere1210Bulk) getModel();
+        Timestamp currentTimestamp = EJBCommonServices.getServerTimestamp();
+        List<String> nodes = new ArrayList<String>();
+        for (int i = 0; i < distintaCassiere1210LettereCollegate.countDetails(); i++) {
+            Lettera_pagam_esteroBulk lettera_pagam_esteroBulk = distintaCassiere1210LettereCollegate.getLettera(i);
+            nodes.add(documentiContabiliService.getDocumentKey(lettera_pagam_esteroBulk, true));
+        }
+        nodes.add(documentiContabiliService.getStorageObjectByPath(distintaCassiere1210Bulk.getStorePath().concat(StorageDriver.SUFFIX).concat("Distinta 1210 n. "
+                + distintaCassiere1210Bulk.getPgDistinta() + ".pdf")).getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
+        StorageObject distintaPEC = documentiContabiliService.getStorageObjectByPath(distintaCassiere1210Bulk.getStorePath().concat(StorageDriver.SUFFIX).concat(DocumentiContabiliService.DISTINTA_PEC_PDF));
+        nodes.add(distintaPEC.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value()));
+
         Apparence apparence = new Apparence(
                 null,
                 "Rome", "Firma documento contabile",
@@ -447,10 +479,15 @@ public class CRUDDistintaCassiere1210BP extends SimpleCRUDBP {
         distintaCassiere1210Bulk.setToBeUpdated();
         distintaCassiere1210Bulk = (DistintaCassiere1210Bulk) createComponentSession().modificaConBulk(context.getUserContext(), distintaCassiere1210Bulk);
         //nodes.add(nodo);
-        if (distintaCassiere1210Bulk.getEsercizio() != null && distintaCassiere1210Bulk.getPgDistinta() != null)
-            documentiContabiliService.inviaDistintaPEC1210(nodes, true, distintaCassiere1210Bulk.getEsercizio() + "/" + distintaCassiere1210Bulk.getPgDistinta());
-        else
-            documentiContabiliService.inviaDistintaPEC1210(nodes);
+        if (distintaCassiere1210Bulk.getEsercizio() != null && distintaCassiere1210Bulk.getPgDistinta() != null) {
+            documentiContabiliService.inviaDistintaPEC1210(
+                    Collections.singletonList(distintaPEC.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value())),
+                    true,
+                    distintaCassiere1210Bulk.getEsercizio() + "/" + distintaCassiere1210Bulk.getPgDistinta()
+            );
+        } else {
+            documentiContabiliService.inviaDistintaPEC1210(Collections.singletonList(distintaPEC.getPropertyValue(StoragePropertyNames.ALFCMIS_NODEREF.value())));
+        }
         commitUserTransaction();
         setMessage("Invio effettuato correttamente.");
         setStatus(VIEW);

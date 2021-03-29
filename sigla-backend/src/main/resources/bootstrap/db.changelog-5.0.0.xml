@@ -21,6 +21,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
                                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="data_rifiuto_fattura" value="to_Date('06112020','ddmmyyyy')" dbms="oracle"/>
+    <property name="data_rifiuto_fattura" value="timestamp '2020-11-06'" dbms="postgresql,h2"/>
+
     <changeSet author="marco.spasiano" id="addColumn-ti_bollo-voce_iva">
         <addColumn tableName="voce_iva">
             <column name="ti_bollo" type="CHAR(1)" defaultValue="N" remarks="Codice IVA soggetto a Bollo Dominio: S  =  Sì N  =  No D  =  Specifica Dicitura indicata su Configurazione CNR.">
@@ -3335,4 +3339,916 @@ TRASPORTO_AEREO"/>
         <dropTable tableName="LDAP_SERVER"></dropTable>
     </changeSet>
 
+    <changeSet author="raffaele.pagano" id="incarichi-parametri-add-column-allega-conflitto-interesse">
+        <addColumn tableName="incarichi_parametri">
+            <column name="allega_conflitto_interesse" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="configurazione_cnr-add-data-inizio-riduzione-cuneo-dl320">
+        <insert tableName="configurazione_cnr" dbms="oracle">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="RIDUZIONE_CUNEO_DL_3_2020"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_INIZIO"/>
+            <column name="dt01" type="${date.type}" valueDate="to_Date('01072020','ddmmyyyy')"/>
+            <column name="dt02" type="${date.type}" valueDate="to_Date('31122100','ddmmyyyy')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="configurazione_cnr" dbms="postgresql">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="RIDUZIONE_CUNEO_DL_3_2020"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_INIZIO"/>
+            <column name="dt01" type="${date.type}" valueDate="to_timestamp('2020-01-07','YYYY-mm-DD')"/>
+            <column name="dt02" type="${date.type}" valueDate="to_timestamp('2100-12-31','YYYY-mm-DD')"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irper-detrazioni-riduzione_cuneo">
+        <addColumn tableName="credito_irpef">
+            <column name="fl_detrazione" type="CHAR(1)" defaultValue="N" remarks="Indica se il credito funziona come detrazione">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-compenso-detrazioni-riduzione_cuneo">
+        <addColumn tableName="compenso">
+            <column name="detrazione_riduzione_cuneo" remarks="Detrazione per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+            </column>
+            <column name="detrazione_rid_cuneo_netto" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irpef-im_credito_base">
+        <addColumn tableName="credito_irpef">
+            <column name="im_credito_base" defaultValue="0" remarks="Nel caso di formula attiva viene indicato il valore fisso del credito da aggiungere a quello che viene calcolato dalla formula" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-anagrafico_esercizio-no_credito_cuneo_irpef">
+        <addColumn tableName="anagrafico_esercizio">
+            <column name="fl_no_credito_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fisclae irpef. Dominio Y = SI Non deve essere applicato il credito cuneo fiscale irpef. N = NO Deve essere applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_no_detr_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fisclae irpef. Dominio Y = SI Non deve essere applicato il credito cuneo fiscale irpef. N = NO Deve essere applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addNotNull-compenso-detrazione_cuneo">
+        <addNotNullConstraint columnName="detrazione_riduzione_cuneo" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
+        <addNotNullConstraint columnName="detrazione_rid_cuneo_netto" tableName="compenso" defaultNullValue="0" columnDataType="numeric(15, 2)"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-detrazioni-riduzione_cuneo">
+        <addColumn tableName="conguaglio">
+            <column name="detrazione_rid_cuneo_esterno" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detrazione_rid_cuneo_goduto" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="detrazione_rid_cuneo_dovuto" defaultValue="0" remarks="Detrazione netto per riduzione cuneo DL 3/2020" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-no_credito_cuneo_irpef">
+        <addColumn tableName="conguaglio">
+            <column name="fl_no_credito_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione del Credito Cuneo Fiscale irpef. Dominio Y = SI Applicato il credito cuneo fiscale irpef. N = Non applicato il credito cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fl_no_detr_cuneo_irpef" type="CHAR(1)" defaultValue="N" remarks="Indicatore di gestione della detrazione del Cuneo Fiscale irpef. Dominio Y = SI Applicata la detrazione cuneo fiscale irpef. N = Non applicata la detrazione cuneo fiscale irpef">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-credito_irpef-cd_cori">
+        <addColumn tableName="credito_irpef">
+            <column name="cd_cori" type="VARCHAR(10)" remarks="Codice contributo ritenuta collegato al Credito Irpef">
+            </column>
+            <column name="dt_ini_validita_cori" type="DATE" remarks="Data inizio validita contributo ritenuta collegato al Credito Irpef">
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="cd_cori,dt_ini_validita_cori" baseTableName="credito_irpef" constraintName="fk_credito_irpef01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_contributo_ritenuta, dt_ini_validita" referencedTableName="tipo_contributo_ritenuta"/>
+        <createIndex indexName="fx_credito_irpef01" tableName="credito_irpef">
+            <column name="cd_cori"/>
+            <column name="dt_ini_validita_cori"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-tmp_report_generico-importi_rid_cuneo"  dbms="oracle">
+        <addColumn tableName="tmp_report_generico">
+            <column name="importo_56" remarks="Importo 56" type="numeric(20, 3)">
+            </column>
+            <column name="importo_57" remarks="Importo 57" type="numeric(20, 3)">
+            </column>
+            <column name="importo_58" remarks="Importo 58" type="numeric(20, 3)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-conguaglio-divisione_importi_credito_bonus">
+        <addColumn tableName="conguaglio">
+            <column name="im_bonus_irpef_dovuto" defaultValue="0" remarks="Importo bonus DL 66/2014 dovuto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="im_bonus_irpef_goduto" defaultValue="0" remarks="Importo bonus DL 66/2014 goduto" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn-tmp_report_generico-importi_bonus" dbms="oracle">
+        <addColumn tableName="tmp_report_generico">
+            <column name="importo_59" remarks="Importo 60" type="numeric(20, 3)">
+            </column>
+            <column name="importo_60" remarks="Importo 59" type="numeric(20, 3)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-importi_bonus">
+        <update tableName="conguaglio">
+            <column name="im_bonus_irpef_dovuto" valueComputed='im_credito_irpef_dovuto'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-importi_bonus_goduto">
+        <update tableName="conguaglio">
+            <column name="im_bonus_irpef_goduto" valueComputed='im_credito_irpef_goduto'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-azzera-credito">
+        <update tableName="conguaglio">
+            <column name="im_credito_irpef_dovuto" value='0'/>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="update-conguaglio-azzera-credito-goduto">
+        <update tableName="conguaglio">
+            <column name="im_credito_irpef_goduto" value='0'/>
+        </update>
+    </changeSet>
+    <changeSet id="add-column-abil_progetto_strorg-on-cds" author="marco.spasiano">
+        <addColumn tableName="parametri_cds">
+            <column name="abil_progetto_strorg" type="VARCHAR(3)"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="add-column-dt_ini_val_gr_iva-on-anagrafico" author="gianfranco.gasparro">
+        <addColumn tableName="anagrafico">
+            <column name="dt_ini_val_gruppo_iva" type="${date.type}"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_table_ass_gruppo_iva_anag">
+        <createTable remarks="Tabella contenente le associazioni tra anagrafico di tipo Gruppo IVA e anagrafico diverse da Gruppo IVA." tableName="ass_gruppo_iva_anag">
+            <column name="cd_anag_gr_iva" remarks="Anagrafico Gruppo IVA" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_anag" remarks="Anagrafico non di tipo Gruppo IVA" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stato" type="varchar2(3)" remarks="Stato della distinta siope+">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_cancellazione" remarks="Data Cancellazione" type="${date.type}"/>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cd_anag_gr_iva,cd_anag" constraintName="ass_gruppo_iva_anag_pkey" tableName="ass_gruppo_iva_anag"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_anag_gr_iva" baseTableName="ass_gruppo_iva_anag" constraintName="fk_ass_gruppo_iva_anag01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_anag" referencedTableName="anagrafico"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_anag" baseTableName="ass_gruppo_iva_anag" constraintName="fk_ass_gruppo_iva_anag02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_anag" referencedTableName="anagrafico"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="create_index-inventario_beni-targa">
+        <createIndex indexName="ix_inventario_beni01" tableName="inventario_beni">
+            <column name="TARGA"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_documento_ele_iva-modify-natura">
+        <modifyDataType tableName="documento_ele_iva" columnName="natura" newDataType="VARCHAR(4)"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_documento_ele_tributi-modify-natura">
+        <modifyDataType tableName="documento_ele_tributi" columnName="natura" newDataType="VARCHAR(4)"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_voce_iva-modify-natura">
+        <modifyDataType tableName="voce_iva" columnName="natura_oper_non_imp_sdi" newDataType="VARCHAR(4)"/>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-cons-pdgp-prog-gae">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="ti_accesso" type="CHAR(1)" value=""/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione PdGP - Progetto/GAE"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsProgEcoVoceGaeBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.PRV.PDGMODAGG.CON.PDGPPROGGAE"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Consultazione PDGP - Progetto/GAE"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsProgEcoVoceGaeBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="90"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="PDGPPROGGAE"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.PRV.PDGMODAGG.CON"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="fix-accesso-cons-pdgp-prog-gae">
+        <update tableName="accesso">
+            <column name="ti_accesso" value='D' type="CHAR(1)"/>
+            <where>cd_accesso = 'CFGPDGPCONSPROGGAE'</where>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="fix-accesso-nome-cons-pdgp-prog-gae">
+        <update tableName="accesso">
+            <column name="ds_accesso" value='Movimentazione Piano Economico' type="CHAR(200)"/>
+            <where>cd_accesso = 'CFGPDGPCONSPROGGAE'</where>
+        </update>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="fix-albero_main-ds_nodo">
+        <update tableName="albero_main">
+            <column name="ds_nodo" value='Movimentazione Piano Economico' type="CHAR(200)"/>
+            <where>cd_nodo = '0.PRV.PDGMODAGG.CON.PDGPPROGGAE'</where>
+        </update>
+    </changeSet>
+    <changeSet id="add_data_rifiuto_fattura_motivi_pred" author="marco.spasiano">
+        <insert tableName="configurazione_cnr">
+            <column name="esercizio" type="NUMERIC" value="0"/>
+            <column name="cd_unita_funzionale" type="STRING" value="*"/>
+            <column name="cd_chiave_primaria" type="STRING" value="COSTANTI"/>
+            <column name="cd_chiave_secondaria" type="STRING" value="DATA_RIFIUTO_FATTURA_SDI_MOTIVI_PREDEFINITI"/>
+            <column name="dt01" type="${date.type}" valueDate="${data_rifiuto_fattura}"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet id="modify_position_CFGPDGPCONSPROGGAE" author="gianfranco.gasparro">
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PROGETTI.CONS"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Consultazioni"/>
+            <column name="pg_ordinamento" type="BIGINT" value="6"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CONS"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PROGETTI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <delete tableName="albero_main">
+            <where>cd_nodo = '0.PRV.PDGMODAGG.CON.PDGPPROGGAE'</where>
+        </delete>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.PROGETTI.CONS.MOVPIAECO"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Movimentazione Piano Economico"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPDGPCONSPROGGAE"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsProgEcoVoceGaeBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="1"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="MOVPIAECO"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.PROGETTI.CONS"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="add_collegamento_nota_fattura_sdi" author="marco.spasiano">
+        <addColumn tableName="documento_ele_testata">
+            <column name="id_paese_fat_col" type="VARCHAR(2)"/>
+            <column name="id_codice_fat_col" type="VARCHAR(28)"/>
+            <column name="identificativo_sdi_fat_col" type="BIGINT"/>
+            <column name="progressivo_fat_col" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="id_paese_fat_col,id_codice_fat_col,identificativo_sdi_fat_col,progressivo_fat_col"
+                                 baseTableName="documento_ele_testata"
+                                 constraintName="fk_doc_ele_testata03"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="id_paese,id_codice,identificativo_sdi,progressivo"
+                                 referencedTableName="documento_ele_testata"/>
+
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="inserimento-privilegio-sblocco-impegni">
+        <insert tableName="privilegio">
+            <column name="cd_privilegio" type="STRING" value="SBLIMP"/>
+            <column name="ds_privilegio" type="STRING" value="Abilitato alla creazione/modifica degli impegni anche in caso di blocco."/>
+            <column name="ti_privilegio" type="STRING" value="C"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-elemento-voce-add-column-blocco-impegni-natfin">
+        <addColumn tableName="elemento_voce">
+            <column name="blocco_impegni_natfin" remarks="Blocco impegni per natura e finanziamento sulla base dei valori Configurazione_cnrBulk.PK_BLOCCO_RESIDUI e Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO - Dominio (
+                'C' = Solo Competenza,
+                'R' = Solo Residui,
+                'A' = Competenza/Residui,
+                'N' = Nessuno)" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="update-column-blocco-impegni-table-elemento-voce">
+        <sql>
+            update elemento_voce
+            set blocco_impegni_natfin = 'N';
+        </sql>
+        <sql>
+            update elemento_voce
+            set blocco_impegni_natfin = 'R'
+            where FL_LIMITE_RESIDUI_IMPROPRI = 'Y';
+        </sql>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="alter-table-elemento-voce-modify-column-blocco-impegni-natfin">
+        <addNotNullConstraint columnName="blocco_impegni_natfin" tableName="elemento_voce" columnDataType="CHAR(1)"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="drop-column-limite-residui-impropri-table-elemento-voce">
+        <dropColumn tableName="elemento_voce" columnName="fl_limite_residui_impropri"/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="rename-column-limite-residui-impropri-table-parametri-cds">
+        <renameColumn oldColumnName="fl_limite_residui_impropri" newColumnName="fl_blocco_impegni_natfin" tableName="parametri_cds" remarks="Blocco impegni per natura e finanziamento sulla base dei valori Configurazione_cnrBulk.PK_BLOCCO_RESIDUI e Configurazione_cnrBulk.SK_NATURA_FINANZIAMENTO. Il flag lavora insieme a quello identico presente sull'elemento voce."/>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="create-table-pea-ccordinate">
+        <createTable remarks="Tabella contenente le coordinate bancrie dei dipendenti NSIP" tableName="pea_coordinate">
+            <column name="dip_id" type="NUMBER(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_mod_pag" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_mod_out" type="CHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_cab" type="CHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_abi" type="CHAR(5)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_num_conto" type="CHAR(12)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_st_corrente" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_delega" type="CHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_piazza" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_tipo_op" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_data_op" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coo_cin" type="CHAR(1)"/>
+            <column name="coo_iban" type="CHAR(34)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="raffaele.pagano" id="inserimento-batch-agg-coordinate-dipendenti">
+        <insert tableName="batch_log_tipo">
+            <column name="cd_log_tipo" type="STRING" value="REG_NSIP00"/>
+            <column name="ti_log" type="STRING" value="0"/>
+            <column name="ds_log_tipo" type="STRING" value="Aggiornamento coordinate bancarie dipendenti NSIP"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+
+        <insert tableName="batch_procedura">
+            <column name="cd_procedura" type="STRING" value="AGGMODPAGDIPENDENTI"/>
+            <column name="ds_procedura" type="STRING" value="Aggiornamento modalità pagamento dipendenti da NSIP."/>
+            <column name="object_name" type="STRING" value="JOB_AGGIORNA_COORD_BANCARIE"/>
+            <column name="package_name" type="STRING" value="CNRMIG080"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+
+        <insert tableName="batch_procedura_parametro">
+            <column name="cd_procedura" type="STRING" value="AGGMODPAGDIPENDENTI"/>
+            <column name="nome_parametro" type="STRING" value="NRGIORNIBACK"/>
+            <column name="pg_valore_parametro" type="NUMERIC" value="1"/>
+            <column name="valore_number" type="NUMERIC" value="3"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-cons-liquid_cori">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSLIQUIDCORI"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione CORI Liquidati"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSLIQUIDCORI"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsLiquidCoriBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.COMPEN.CORI.CONSCORILIQ"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Consultazione CORI Liquidati"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSLIQUIDCORI"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsLiquidCoriBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="90"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CONSCORILIQ"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.COMPEN.CORI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="add-riferimenti-perla2018">
+        <addColumn tableName="unita_organizzativa">
+            <column name="codiceAooIpa" type="VARCHAR(100)" remarks="Codice univoco ipa che identifica le Aree Organizzative Omogenee (AOO) dell’Amministrazione dichiarante"/>
+        </addColumn>
+        <addColumn tableName="incarichi_repertorio">
+            <column name="idPerla" type="BIGINT" remarks="Identificativo attribuito dal sistema perla all'incarico."/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="incarichi-disable-invio-corte-conti">
+        <update tableName="incarichi_parametri">
+            <column name="fl_invio_fp" value='N' type="CHAR(1)"/>
+        </update>
+    </changeSet>
+    <changeSet author="raffaele.pagano" id="add-anomalie-perla2018">
+        <addColumn tableName="incarichi_repertorio">
+            <column name="anomalia_perla" type="VARCHAR(1000)" remarks="Anomalia verificatasi in fase di ultima comunicazione al sistema PerlaPa."/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="inizio-gestione-pagopa">
+        <createTable remarks="Tabella contenente le possibili tipologie di casistiche per le pendenze di Pagopa." tableName="tipo_pendenza_pagopa">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descrizione" remarks="Descrizione del tipo di pendenza." type="VARCHAR(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aux_digit" remarks="Aux Digit come da specifiche PagoPA." type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application_code" remarks="Esistenza dell'Application Code" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="application_code_default" remarks="Application Code di default." type="VARCHAR(2)"/>
+            <column name="codice_segregazione" remarks="Esistenza del codice di Segregazione" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lunghezza_iuv_base" remarks="Lunghezza IUV Base" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="iuv_check_digit" remarks="Esistenza del check digit dello IUV" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lunghezza_iuv" remarks="Lunghezza Codice IUV" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="tipo_pendenza_pagopa_pkey" tableName="tipo_pendenza_pagopa"/>
+
+        <createTable remarks="Tabella contenente i periodi di validità per la gestione PagoPA." tableName="gestione_pagopa">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tipo_pendenza_pagopa" remarks="Identificativo del tipo pendenza PagoPA." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_ini_validita" remarks="Data Inizio Validita" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_fin_validita" remarks="Data Fine Validita" type="${date.type}"/>
+            <column name="posizione_debitoria" remarks="Attiva la gestione della posizione debitoria" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="posizione_creditoria" remarks="Attiva la gestione della posizione creditoria" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="gestione_pagopa_pkey" tableName="gestione_pagopa"/>
+
+        <createTable remarks="Tabella contenente le posizioni di PAGOPA." tableName="pendenza_pagopa">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="esercizio" remarks="Esercizio." type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_unita_organizzativa" remarks="Codice UO che ha registrato la posizione." type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_posizione" remarks="Tipo Posizione PagoPA. D: Debitoria, C: Creditoria" type="VARCHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tipo_pendenza_pagopa" remarks="ID Tipo Pendenza PagoPA." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_avviso" remarks="Codice Avviso" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stato" remarks="Stato. VAL: Valido" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_scadenza" remarks="Data scadenza" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="note" remarks="Note" type="VARCHAR(2000)"/>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="pendenza_pagopa_pkey" tableName="pendenza_pagopa"/>
+
+        <addForeignKeyConstraint baseColumnNames="cd_unita_organizzativa" baseTableName="pendenza_pagopa" constraintName="fk_pendenza_pagopa01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_unita_organizzativa" referencedTableName="unita_organizzativa"/>
+
+        <createIndex indexName="FX_PENDENZA_PAGOPA01" tableName="pendenza_pagopa">
+            <column name="cd_unita_organizzativa"/>
+        </createIndex>
+
+        <createIndex indexName="IX_PENDENZA_PAGOPA02" tableName="pendenza_pagopa">
+            <column name="cd_avviso"/>
+            <column name="tipo_posizione"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_tipo_pendenza_pagopa_add_divisor">
+        <addColumn tableName="tipo_pendenza_pagopa">
+            <column name="divisore_check_digit" remarks="Divisore per Check Digit" type="INT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="accessi-pagopa">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPENDENZAPAGOPAM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione PagoPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPENDENZAPAGOPAV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione PagoPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPENDENZAPAGOPAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPendenzaPagopaBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="M"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPENDENZAPAGOPAV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPendenzaPagopaBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.PAGOPA"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="PagoPA"/>
+            <column name="pg_ordinamento" type="BIGINT" value="15"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="PAGOPA"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM"/>
+            <column name="url_icona" type="VARCHAR(200)" value="book_closed.gif"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.PAGOPA.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPENDENZAPAGOPAM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPendenzaPagopaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.PAGOPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.AMM.PAGOPA.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGPENDENZAPAGOPAV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPendenzaPagopaBP"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.AMM.PAGOPA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="insert-base-pagopa">
+        <insert tableName="tipo_pendenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="1"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 0"/>
+            <column name="aux_digit" type="NUMERIC" value="0"/>
+            <column name="application_code" type="STRING" value="Y"/>
+            <column name="application_code_default" type="STRING" value="00"/>
+            <column name="codice_segregazione" type="STRING" value="N"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="13"/>
+            <column name="iuv_check_digit" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="15"/>
+            <column name="divisore_check_digit" type="NUMERIC" value="93"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="tipo_pendenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="2"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 1"/>
+            <column name="aux_digit" type="NUMERIC" value="1"/>
+            <column name="application_code" type="STRING" value="N"/>
+            <column name="codice_segregazione" type="STRING" value="N"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="17"/>
+            <column name="iuv_check_digit" type="STRING" value="N"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="17"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="tipo_pendenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="3"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 2"/>
+            <column name="aux_digit" type="NUMERIC" value="2"/>
+            <column name="application_code" type="STRING" value="N"/>
+            <column name="codice_segregazione" type="STRING" value="N"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="15"/>
+            <column name="iuv_check_digit" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="17"/>
+            <column name="divisore_check_digit" type="NUMERIC" value="93"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="tipo_pendenza_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="4"/>
+            <column name="descrizione" type="STRING" value="Aux Digit 3"/>
+            <column name="aux_digit" type="NUMERIC" value="3"/>
+            <column name="application_code" type="STRING" value="N"/>
+            <column name="codice_segregazione" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv_base" type="NUMERIC" value="13"/>
+            <column name="iuv_check_digit" type="STRING" value="Y"/>
+            <column name="lunghezza_iuv" type="NUMERIC" value="17"/>
+            <column name="divisore_check_digit" type="NUMERIC" value="93"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="gestione_pagopa" dbms="oracle">
+            <column name="id" type="NUMERIC" value="1"/>
+            <column name="id_tipo_pendenza_pagopa" type="NUMERIC" value="1"/>
+            <column name="dt_ini_validita" type="${date.type}" valueDate="to_Date('01012002','ddmmyyyy')"/>
+            <column name="posizione_debitoria" type="STRING" value="N"/>
+            <column name="posizione_creditoria" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_pendenza_pagopa_add_column_doc_amm">
+        <addColumn tableName="pendenza_pagopa">
+            <column name="importo_pendenza" remarks="Importo Pendenza" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cd_tipo_doc_amm" remarks="Tipo del documento amministrativo collegato. Dominio:
+FATTURA_A = Fattura attiva
+FATTURA_P = Fattura passiva
+GENERICO_E = Generico di entrata
+GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
+            <column name="cd_cds_doc_amm" remarks="Cds del documento amministrativo collegato" type="VARCHAR(30)"/>
+            <column name="cd_uo_doc_amm" remarks="Cds del documento amministrativo collegato" type="VARCHAR(30)"/>
+            <column name="esercizio_doc_amm" remarks="Esercizio del documento amministrativo collegato" type="SMALLINT"/>
+            <column name="pg_doc_amm" remarks="Progressivo del documento amministrativo collegato" type="BIGINT"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter-pendenza_pagopa-add-codice_iuv">
+        <addColumn tableName="pendenza_pagopa">
+            <column name="cd_iuv" remarks="Codice IUV" type="VARCHAR(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="alter_pendenza_pagopa_add_columns">
+        <addColumn tableName="pendenza_pagopa">
+            <column name="descrizione" remarks="Descrizione Pendenza PagoPA" type="VARCHAR(2000)"/>
+            <column name="cd_terzo" remarks="Codice Terzo" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="cd_terzo" baseTableName="pendenza_pagopa" constraintName="fk_pendenza_pagopa02" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="cd_terzo" referencedTableName="terzo"/>
+
+        <createIndex indexName="IX_pendenza_pagopa03" tableName="pendenza_pagopa">
+            <column name="cd_terzo"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="modify_cu_2020">
+        <addColumn tableName="estrazione_cud">
+            <column name="gg_periodo_lavoro_sem1" remarks="Giorni Periodo Lavoro primo semestre per riduzione cuneo" type="BIGINT"/>
+            <column name="gg_periodo_lavoro_sem2" remarks="Giorni Periodo Lavoro secondo semestre per riduzione cuneo" type="BIGINT"/>
+            <column name="ult_detr_cuneo_fisc" remarks="ULTERIORE DETRAZIONE CUNEO FISCALE" type="numeric(15, 2)"/>
+            <column name="tratt_int_erog_cuneo_fisc" remarks="TRATTAMENTO INTEGRATIVO EROGATO CUNEO FISCALE" type="numeric(15, 2)"/>
+            <column name="tratt_int_cong_cuneo_fisc" remarks="TRATTAMENTO INTEGRATIVO RECUPERATO ENTRO CONGUAGLIO CUNEO FISCALE" type="numeric(15, 2)"/>
+        </addColumn>
+        <addColumn tableName="estrazione_cud_dett">
+            <column name="DETRAZIONE_RID_CUNEO_NETTO" remarks="DETRAZIONE RIDUZIONE CUNEO SU COMPENSI" type="numeric(15, 2)"/>
+            <column name="im_rid_cuneo_erogato" remarks="DETRAZIONE RIDUZIONE CUNEO EROGATA" type="numeric(15, 2)"/>
+            <column name="im_credito_irpef_dovuto" remarks="CREDITO IRPEF DOVUTO CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+            <column name="im_credito_irpef_goduto" remarks="CREDITO IRPEF GODUTO CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+            <column name="im_detr_rid_cuneo_dovuto_cong" remarks="DETRAZIONE RIDUZIONE CUNEO DOVUTA CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+            <column name="im_detr_rid_cuneo_goduto_cong" remarks="DETRAZIONE RIDUZIONE CUNEO GODUTA CALCOLATO IN CONGUAGLIO" type="numeric(15, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="addColumn_fattura-attiva_ordine_elettr">
+        <addColumn tableName="FATTURA_ATTIVA">
+            <column name="FL_ORDINE_ELETTRONICO" type="VARCHAR(1)" remarks="Ordine Elettronico Y=Si N=No">
+                <constraints nullable="true"/>
+            </column>
+            <column name="dt_ordine" remarks="Data Ordine" type="${date.type}">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="ins-num-posizione-creditoria-pagopa">
+        <insert tableName="tipo_documento_amm">
+            <column name="cd_tipo_documento_amm" type="STRING" value="POS_CRED"/>
+            <column name="ds_tipo_documento_amm" type="STRING" value="Posizione Creditoria PagoPA"/>
+            <column name="ti_entrata_spesa" type="STRING" value="E"/>
+            <column name="fl_doc_generico" type="STRING" value="N"/>
+            <column name="fl_utilizzo_doc_generico" type="STRING" value="N"/>
+            <column name="fl_solo_partita_giro" type="STRING" value="N"/>
+            <column name="fl_manrev_utente" type="STRING" value="N"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+        <insert tableName="numerazione_doc_amm">
+            <column name="esercizio" type="NUMERIC" value="${liquibase.bootstrap.esercizio}"/>
+            <column name="cd_cds" type="STRING" value="999"/>
+            <column name="cd_unita_organizzativa" type="STRING" value="999.000"/>
+            <column name="cd_tipo_documento_amm" type="STRING" value="POS_CRED"/>
+            <column name="corrente" type="NUMERIC" value="0"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="STRING" value="SYSTEM"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="STRING" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="NUMERIC" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

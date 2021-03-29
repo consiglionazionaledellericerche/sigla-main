@@ -204,7 +204,19 @@
 		property="dtApprovazione"
 		inputType="TEXT"
 		formatName="date_short"
-		label="Data approvazione" />	
+		label="Data approvazione" />
+	<fieldProperty
+		name="tiMotivazioneVariazione"
+		property="tiMotivazioneVariazione"
+		inputType="SELECT"
+		keysProperty="tiMotivazioneVariazioneForSearchKeys"
+		maxLength="10"
+		enabledOnInsert="true"
+		enabledOnSearch="true"
+		enabledOnEdit="true"
+		nullable="false"
+		label="Finalità della Variazione" />
+
 	<form
 		name="searchtool">
 	</form>
@@ -251,7 +263,10 @@
 	<formFieldProperty
 		name="voceDelPiano" />
 	<formFieldProperty
-		name="dtApprovazione" />	
+		name="dtApprovazione" />
+	<formFieldProperty
+		name="tiMotivazioneVariazione" />
+
 	<findFieldProperty
 		name="tipoVar" />
 	<findFieldProperty
@@ -295,7 +310,10 @@
 	<findFieldProperty
 		name="voceDelPiano" />
 	<findFieldProperty
-		name="dtApprovazione" />		
+		name="dtApprovazione" />
+	<findFieldProperty
+		name="tiMotivazioneVariazione" />
+
 	<columnFieldProperty
 		name="tipoVar" />
 	<columnFieldProperty
@@ -339,5 +357,7 @@
 	<columnFieldProperty
 		name="voceDelPiano" />
 	<columnFieldProperty
-		name="dtApprovazione" />		
+		name="dtApprovazione" />
+	<columnFieldProperty
+		name="tiMotivazioneVariazione" />
 </bulkInfo>

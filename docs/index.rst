@@ -36,24 +36,15 @@ Organizzato in questo modo il sistema prevede gestisce e controlla l’aspetto a
 ------------------------------------------------
 
 .. toctree::
-   :maxdepth: -1
+   :numbered:
+   :caption: Indice dei contenuti
+   :maxdepth: 2
 
    nuovo_layout
-
-.. toctree::
-   :maxdepth: -1
-
    funzionalita_servizio/index
-
-.. toctree::
-   :maxdepth: -1
-
    configurazione/index
-
-.. toctree::
-   :maxdepth: -1
-
    documenti_contabili/index
+   documenti_amministrativi/index
    
 .. toctree::
    :hidden:

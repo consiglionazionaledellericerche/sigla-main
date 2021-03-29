@@ -29,11 +29,11 @@ import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.V_struttura_organizzativaHome;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.incarichi00.bulk.*;
+import it.cnr.contab.incarichi00.ejb.IncarichiEstrazioneFpComponentSession;
 import it.cnr.contab.incarichi00.service.ContrattiService;
 import it.cnr.contab.incarichi00.storage.StorageContrattiAspect;
 import it.cnr.contab.incarichi00.tabrif.bulk.Incarichi_parametriBulk;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.Utility;
@@ -51,13 +51,11 @@ import it.cnr.jada.persistency.sql.Query;
 import it.cnr.jada.persistency.sql.SQLBuilder;
 import it.cnr.jada.util.DateUtils;
 import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.si.spring.storage.StorageObject;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class IncarichiRepertorioComponent extends CRUDComponent {
     public OggettoBulk inizializzaBulkPerInserimento(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
@@ -408,9 +406,9 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
         for (Iterator i = incarico.getArchivioAllegati().iterator(); i.hasNext(); ) {
             Incarichi_repertorio_archivioBulk allegato = (Incarichi_repertorio_archivioBulk) i.next();
             if (!(allegato.getFile() == null || allegato.getFile().getName().equals(""))) {
+                String nomeFile = allegato.getFile().getName();
+                String estensioneFile = nomeFile.substring(nomeFile.lastIndexOf(".") + 1);
                 if (listFileAllegabili != null && !listFileAllegabili.isEmpty()) {
-                    String nomeFile = allegato.getFile().getName();
-                    String estensioneFile = nomeFile.substring(nomeFile.lastIndexOf(".") + 1);
                     String estensioniValide = null;
 
                     boolean valido = false;
@@ -424,6 +422,12 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                     }
                     if (!valido)
                         throw new ApplicationException("File non valido!\nI formati dei file consentiti sono " + estensioniValide + ".");
+                }
+                if (!estensioneFile.equalsIgnoreCase("pdf")) {
+                    if (allegato.isCurriculumVincitore())
+                        throw new ApplicationException("File non valido!\nIl formato del file consentito per il Curriculum Vitae è il pdf.");
+                    if (allegato.isAggiornamentoCurriculumVincitore())
+                        throw new ApplicationException("File non valido!\nIl formato del file consentito per l'aggiornamento del Curriculum Vitae è il pdf.");
                 }
                 allegato.setToBeUpdated();
             }
@@ -625,6 +629,20 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                     }
                 }
 
+                if (incarico.getConflittoInteressi() == null) {
+                    if (parametri != null && parametri.getAllega_conflitto_interesse() != null && parametri.getAllega_conflitto_interesse().equals("Y")) {
+                        if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
+                            //Istanzio la classe per riempire tipo_archivioKeys
+                            new Incarichi_procedura_archivioBulk();
+                        }
+
+                        if (incarico.getV_terzo() != null && incarico.getV_terzo().getCognome() != null && incarico.getV_terzo().getNome() != null)
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto del terzo \"" + incarico.getV_terzo().getCognome() + " " + incarico.getV_terzo().getNome() + "\" un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString() + "\".");
+                        else
+                            throw new it.cnr.jada.comp.ApplicationException("Allegare al contratto un file di tipo \"" + Incarichi_procedura_archivioBulk.tipo_archivioKeys.get(Incarichi_procedura_archivioBulk.TIPO_CONFLITTO_INTERESSI).toString() + "\".");
+                    }
+                }
+
                 if (incarico.getDecretoDiNomina() == null) {
                     if (parametri != null && parametri.getAllega_decreto_nomina() != null && parametri.getAllega_decreto_nomina().equals("Y")) {
                         if (Incarichi_procedura_archivioBulk.tipo_archivioKeys.isEmpty()) {
@@ -728,6 +746,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
                         updateBulk(usercontext, procedura);
                     }
                 }
+                this.comunicaPerla(usercontext, incarico);
             } else {
                 updateBulk(usercontext, oggettobulk);
             }
@@ -948,7 +967,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);
@@ -997,7 +1016,7 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
-						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore()))
+						else if (incarico_repertorio.isIncaricoDefinitivo() && (allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, true);
 						else
 							contrattiService.setInheritedPermission(nodeAllegato, false);
@@ -1011,6 +1030,34 @@ public class IncarichiRepertorioComponent extends CRUDComponent {
             for (StorageObject node : nodeRemoveConsumer)
                 contrattiService.addConsumerToEveryone(node);
             throw new ApplicationException(e.getMessage());
+        }
+    }
+
+    public void aggiornaDatiPerla(UserContext aUC, Incarichi_repertorioBulk bulk, Long idPerla, String anomaliaPerla) throws ComponentException {
+        try {
+            Incarichi_repertorioBulk incarico = (Incarichi_repertorioBulk) getHome(aUC, Incarichi_repertorioBulk.class).findByPrimaryKey(bulk);
+            if (incarico == null)
+                throw new ApplicationException("L'incarico e' stato cancellato");
+            if (Optional.ofNullable(idPerla).isPresent())
+                incarico.setIdPerla(idPerla.intValue());
+            incarico.setAnomalia_perla(anomaliaPerla);
+            incarico.setToBeUpdated();
+            updateBulk(aUC, incarico);
+        } catch (Exception e) {
+            throw new ApplicationException(e.getMessage());
+        }
+    }
+
+    public void comunicaPerla(UserContext userContext, Incarichi_repertorioBulk incarico) throws ComponentException {
+        try {
+            IncarichiEstrazioneFpComponentSession comp = Utility.createIncarichiEstrazioneFpComponentSession();
+            try {
+                comp.comunicaPerla2018(userContext, incarico);
+            } catch (Exception e) {
+                this.aggiornaDatiPerla(userContext, incarico, null, e.getMessage());
+            }
+        } catch (Exception e){
+            throw handleException(e);
         }
     }
 }

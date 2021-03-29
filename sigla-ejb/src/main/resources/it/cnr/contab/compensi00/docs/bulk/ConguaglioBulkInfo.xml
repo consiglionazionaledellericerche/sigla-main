@@ -241,8 +241,24 @@
 		enabledOnInsert = "true"
 		enabledOnSearch = "false"
 		enabledOnFreeSearch = "true"
-		label="Non Applicazione Bonus DL 66/2014"/>			
-/*********** COMPENSO ************/
+		label="Non Applicazione Bonus DL 66/2014"/>
+	<fieldProperty
+			name="fl_no_credito_cuneo_irpef"
+			property="fl_no_credito_cuneo_irpef"
+			inputType="CHECKBOX"
+			enabledOnInsert = "true"
+			enabledOnSearch = "false"
+			enabledOnFreeSearch = "true"
+			label="Non Applicazione Rid. Cuneo DL 3/2020"/>
+	<fieldProperty
+			name="fl_no_detr_cuneo_irpef"
+			property="fl_no_detr_cuneo_irpef"
+			inputType="CHECKBOX"
+			enabledOnInsert = "true"
+			enabledOnSearch = "false"
+			enabledOnFreeSearch = "true"
+			label="Non Applicazione Detrazione Rid. Cuneo DL 3/2020"/>
+	/*********** COMPENSO ************/
 	<fieldProperty
 		name="cd_uo_compenso"
 		property="cd_uo_compenso"
@@ -725,6 +741,18 @@
 		inputType="ROTEXT"
 		label="Detr. figli goduto" />
 	<fieldProperty
+			name="detrazioni_rid_cuneo_goduto"
+			property="detrazioni_rid_cuneo_goduto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Detr. Rid. Cuneo goduto" />
+	<fieldProperty
+			name="detrazioni_rid_cuneo_dovuto"
+			property="detrazioni_rid_cuneo_dovuto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Detr. Rid. Cuneo goduto" />
+	<fieldProperty
 		name="detrazioni_al_goduto"
 		property="detrazioni_al_goduto"
 		formatName="it.cnr.contab.util.EuroFormat"
@@ -816,14 +844,26 @@
 		property="im_credito_irpef_dovuto"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="ROTEXT"
-		label="Credito irpef dovuto" />		
+		label="Credito irpef dovuto" />
+	<fieldProperty
+			name="im_bonus_irpef_dovuto"
+			property="im_bonus_irpef_dovuto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Bonus irpef dovuto" />
 	<fieldProperty
 		name="im_credito_irpef_goduto"
 		property="im_credito_irpef_goduto"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="ROTEXT"
-		label="Credito irpef goduto" />	
-				
+		label="Credito irpef goduto" />
+	<fieldProperty
+			name="im_bonus_irpef_goduto"
+			property="im_bonus_irpef_goduto"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Bonus irpef goduto" />
+
 /*********** ****** **************/
 /*********** TOTALI **************/
 	<fieldProperty
@@ -881,12 +921,24 @@
 		inputType="ROTEXT"
 		label="Conguaglio detrazioni altri familiari" />
 	<fieldProperty
+			name="detrazioni_rid_cuneo"
+			property="detrazioni_rid_cuneo"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="Conguaglio detrazioni Riduzione Cuneo" />
+	<fieldProperty
 		name="im_credito_irpef"
 		property="im_credito_irpef"
 		formatName="it.cnr.contab.util.EuroFormat"
 		inputType="ROTEXT"
-		label="BONUS DL 66/2014" />
-		
+		label="CUNEO DL 3/2020" />
+	<fieldProperty
+			name="im_bonus_irpef"
+			property="im_bonus_irpef"
+			formatName="it.cnr.contab.util.EuroFormat"
+			inputType="ROTEXT"
+			label="BONUS DL 66/2014" />
+
 	<fieldProperty
 		name="totale_irpef_dovuto"
 		property="totale_irpef_dovuto"
@@ -988,6 +1040,9 @@
 	<formFieldProperty name="contoQ" />
 	<formFieldProperty name="contoN" />
 	<formFieldProperty name="detrazioni_fi_goduto" />
+	<formFieldProperty name="detrazioni_rid_cuneo" />
+	<formFieldProperty name="detrazioni_rid_cuneo_goduto" />
+	<formFieldProperty name="detrazioni_rid_cuneo_dovuto" />
 	<formFieldProperty name="detrazioni_al_goduto" />
 	<formFieldProperty
 		name="dt_a_competenza_esterno"
@@ -1024,6 +1079,9 @@
 	<formFieldProperty name="im_credito_irpef_dovuto" />
 	<formFieldProperty name="im_credito_irpef_goduto" />
 	<formFieldProperty name="im_credito_irpef" />
+	<formFieldProperty name="im_bonus_irpef_dovuto" />
+	<formFieldProperty name="im_bonus_irpef_goduto" />
+	<formFieldProperty name="im_bonus_irpef" />
 	<formFieldProperty name="im_irpef" />
 	<formFieldProperty name="im_addreg" />
 	<formFieldProperty name="im_addprov" />
@@ -1058,7 +1116,9 @@
 	<formFieldProperty name="fl_no_detrazioni_family" />
 	<formFieldProperty name="fl_detrazioni_altri_tipi" />	
 	<formFieldProperty name="fl_no_credito_irpef" />
-        	
+	<formFieldProperty name="fl_no_credito_cuneo_irpef" />
+	<formFieldProperty name="fl_no_detr_cuneo_irpef" />
+
 	<columnFieldProperty name="cd_cds" />
 	<columnFieldProperty name="cd_unita_organizzativa" />
 	<columnFieldProperty name="esercizio" />
@@ -1149,6 +1209,8 @@
 	<findFieldProperty name="fl_no_detrazioni_altre" />
 	<findFieldProperty name="fl_no_detrazioni_family" />
 	<findFieldProperty name="fl_detrazioni_altri_tipi" />	
-	<findFieldProperty name="fl_no_credito_irpef" />	
-	
+	<findFieldProperty name="fl_no_credito_irpef" />
+	<findFieldProperty name="fl_no_credito_cuneo_irpef" />
+	<findFieldProperty name="fl_no_detr_cuneo_irpef" />
+
 </bulkInfo>

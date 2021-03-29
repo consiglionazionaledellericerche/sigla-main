@@ -23,6 +23,8 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
+import java.sql.Timestamp;
+
 public class AnagraficoBase extends AnagraficoKey implements Keyed {
 	// ALIQUOTA_FISCALE DECIMAL(6,3)
 	private java.math.BigDecimal aliquota_fiscale;
@@ -68,6 +70,7 @@ public class AnagraficoBase extends AnagraficoKey implements Keyed {
 
 	// DT_ANTIMAFIA TIMESTAMP
 	private java.sql.Timestamp dt_antimafia;
+	private java.sql.Timestamp dtIniValGruppoIva;
 
 	// DT_CANC TIMESTAMP
 	private java.sql.Timestamp dt_canc;
@@ -811,4 +814,12 @@ public java.lang.String getFlPivaVerificata() {
 public void setFlPivaVerificata(java.lang.String flPivaVerificata) {
 	this.flPivaVerificata = flPivaVerificata;
 }
+	public Timestamp getDtIniValGruppoIva() {
+		return dtIniValGruppoIva;
+	}
+
+	public void setDtIniValGruppoIva(Timestamp dtIniValGruppoIva) {
+		this.dtIniValGruppoIva = dtIniValGruppoIva;
+	}
+
 }

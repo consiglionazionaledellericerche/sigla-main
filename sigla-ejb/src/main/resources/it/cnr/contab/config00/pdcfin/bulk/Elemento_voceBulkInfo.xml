@@ -427,14 +427,15 @@
 		enabledOnSearch="false"
 		enabledOnFreeSearch="false" />
 	<fieldProperty
-		name="fl_limite_residui_impropri"
-		property="fl_limite_residui_impropri"
-		label="Applicazione Limite Spesa Residui Impropri"
+		name="blocco_impegni_natfin"
+		property="blocco_impegni_natfin"
+		keysProperty="blocco_impegni_natfinKeys"
+		label="Blocco Impegni per Natura/Finanziamento"
+		inputType="SELECT"
+		nullable="false"
 		enabledOnEdit="true"
-		enabledOnInsert="true"
-		inputType="CHECKBOX"
-		enabledOnSearch="false"
-		enabledOnFreeSearch="false" />
+		enabledOnSearch="true"
+		enabledOnFreeSearch="true"/>
 
 	<form
 		name="searchtool" >
@@ -702,7 +703,7 @@
 	<formFieldProperty
 		name="fl_limite_competenza" />
 	<formFieldProperty
-		name="fl_limite_residui_impropri" />
+		name="blocco_impegni_natfin" />
 
 	<findFieldProperty
 		name="esercizio"
@@ -757,7 +758,9 @@
 	<findFieldProperty
 		name="gg_deroga_obbl_comp_prg_scad" />
 	<findFieldProperty
-		name="gg_deroga_obbl_res_prg_scad" />	
+		name="gg_deroga_obbl_res_prg_scad" />
+	<findFieldProperty
+		name="blocco_impegni_natfin" />
 
 	<form
 		name="searchtool_x_var_stanz_res" >

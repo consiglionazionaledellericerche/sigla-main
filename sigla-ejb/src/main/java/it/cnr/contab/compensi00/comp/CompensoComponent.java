@@ -28,7 +28,6 @@ import it.cnr.contab.anagraf00.core.bulk.RapportoBulk;
 import it.cnr.contab.anagraf00.core.bulk.RapportoHome;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
-import it.cnr.contab.anagraf00.ejb.AnagraficoComponentSession;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsBulk;
 import it.cnr.contab.anagraf00.tabrif.bulk.Codici_rapporti_inpsHome;
 import it.cnr.contab.anagraf00.tabrif.bulk.Rif_modalita_pagamentoBulk;
@@ -93,7 +92,6 @@ import it.cnr.contab.config00.sto.bulk.Unita_organizzativaHome;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
 import it.cnr.contab.docamm00.client.RicercaTrovato;
 import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_IBulk;
-import it.cnr.contab.docamm00.docs.bulk.Fattura_passiva_rigaIBulk;
 import it.cnr.contab.docamm00.docs.bulk.Filtro_ricerca_obbligazioniVBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
@@ -132,12 +130,9 @@ import it.cnr.contab.incarichi00.ejb.IncarichiRepertorioComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.RemoveAccent;
 import it.cnr.contab.util.Utility;
+import it.cnr.jada.DetailedRuntimeException;
 import it.cnr.jada.UserContext;
-import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.bulk.PrimaryKeyHashMap;
-import it.cnr.jada.bulk.PrimaryKeyHashtable;
-import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.bulk.*;
 import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.comp.FatturaNonTrovataException;
@@ -2185,6 +2180,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				AnagraficoBulk a = (AnagraficoBulk) aHome
 						.findByPrimaryKey(aKey);
 
+				if (a.getFl_cervellone() && (a.getAnno_inizio_res_fis() == null || a.getAnno_fine_agevolazioni() == null)){
+					throw new it.cnr.jada.comp.ApplicationException(
+							"Per la persona in esame è impostata l'agevolazione fiscale del rientro dei cervelli ma non è indicato l'anno inizio residenza fiscale o l'anno di fine delle agevolazioni.");
+				}
 				if (data_da.get(GregorianCalendar.YEAR) == data_a
 						.get(GregorianCalendar.YEAR)) {
 					if (a.getFl_cervellone()
@@ -3705,7 +3704,7 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			filtro.setTiIstituzionaleCommerciale(compenso
 					.getTi_istituz_commerc());
 			filtro.setFlBonus(compenso.isDaBonus());
-			filtro.setFlSplitPayment(compenso.getFl_split_payment()); 
+			filtro.setFlSplitPayment(compenso.getFl_split_payment());
 			if (filtro.getCdTipoRapporto() != null
 					&& filtro.getCdTipoRapporto().equals("DIP")) {
 				try {
@@ -3783,7 +3782,6 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				AnagraficoBulk aKey = new AnagraficoBulk(t.getCd_anag());
 				AnagraficoBulk a = (AnagraficoBulk) aHome
 						.findByPrimaryKey(aKey);
-
 				if (data_da.get(GregorianCalendar.YEAR) == data_a
 						.get(GregorianCalendar.YEAR)) {
 					if (a.getFl_cervellone()
@@ -3846,6 +3844,12 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		}
 	}
 
+	private Boolean isCompensoSoggettoConguaglio(Tipo_trattamentoBulk tratt){
+		if (tratt != null && tratt.getFl_soggetto_conguaglio() != null && tratt.getFl_soggetto_conguaglio()){
+			return true;
+		}
+		return false;
+	}
 	private Boolean isCompensoSoloInailEnte(Tipo_trattamentoBulk tratt){
 		if (tratt != null && tratt.getFl_solo_inail_ente() != null && tratt.getFl_solo_inail_ente()){
 			return true;
@@ -4026,9 +4030,43 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 		validaContratto(userContext, compenso);
 
 		controlliCig(compenso);
-		
+
+		aggiornaModalitaPagamentoMandatoAssociato(userContext, compenso);
+
 		return compenso;
 
+	}
+
+	private void aggiornaModalitaPagamentoMandatoAssociato(UserContext userContext, CompensoBulk compenso) throws ComponentException {
+		try {
+			BulkHome home = getHome(userContext, Mandato_rigaIBulk.class);
+			SQLBuilder sql = home.createSQLBuilder();
+			sql.addClause(FindClause.AND, "cd_cds_doc_amm", SQLBuilder.EQUALS, compenso.getCd_cds());
+			sql.addClause(FindClause.AND, "cd_uo_doc_amm", SQLBuilder.EQUALS, compenso.getCd_unita_organizzativa());
+			sql.addClause(FindClause.AND, "esercizio_doc_amm", SQLBuilder.EQUALS, compenso.getEsercizio());
+			sql.addClause(FindClause.AND, "cd_tipo_documento_amm", SQLBuilder.EQUALS, Numerazione_doc_ammBulk.TIPO_COMPENSO);
+			sql.addClause(FindClause.AND, "pg_doc_amm", SQLBuilder.EQUALS, compenso.getPg_compenso());
+			List<Mandato_rigaIBulk> result = home.fetchAll(sql);
+			getHomeCache(userContext).fetchAll(userContext);
+			result
+					.stream()
+					.filter(mandato_rigaIBulk -> {
+						return !mandato_rigaIBulk.getModalita_pagamento().getRif_modalita_pagamento().equalsByPrimaryKey(compenso.getModalitaPagamento()) ||
+								!mandato_rigaIBulk.getBanca().equalsByPrimaryKey(compenso.getBanca());
+					})
+					.forEach(mandato_rigaIBulk -> {
+						mandato_rigaIBulk.getModalita_pagamento().setRif_modalita_pagamento(compenso.getModalitaPagamento());
+						mandato_rigaIBulk.setBanca(compenso.getBanca());
+						mandato_rigaIBulk.setToBeUpdated();
+						try {
+							home.update(mandato_rigaIBulk, userContext);
+						} catch (PersistencyException e) {
+							throw new DetailedRuntimeException(e);
+						}
+					});
+		} catch (PersistencyException _ex) {
+			throw handleException(_ex);
+		}
 	}
 
 	public void controlliCig(CompensoBulk compenso) throws ApplicationException {
@@ -4062,7 +4100,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 **/
 	public CompensoBulk onTipoTrattamentoChange(UserContext userContext,
 			CompensoBulk compenso) throws ComponentException {
-
+		if (isCompensoSoggettoConguaglio(compenso.getTipoTrattamento())){
+			controlloRiduzioneCuneo32020(userContext, compenso);
+		}
 		compenso.resetDatiLiquidazione();
 		setDatiLiquidazione(userContext, compenso);
 
@@ -4978,6 +5018,41 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 	 *            l'OggettoBulk da validare
 	 * 
 	 **/
+
+	private void controlloRiduzioneCuneo32020(UserContext userContext, CompensoBulk compenso) throws ComponentException {
+		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+		Timestamp dataInizioGestioneRiduzioneCuneo = null;
+		Timestamp dataFineGestioneRiduzioneCuneo = null;
+		try {
+			Configurazione_cnrBulk configurazione = Utility.createConfigurazioneCnrComponentSession().getConfigurazione( userContext, null, null, Configurazione_cnrBulk.PK_RIDUZIONE_CUNEO_DL_3_2020, Configurazione_cnrBulk.SK_DATA_INIZIO);
+			if (configurazione != null){
+				dataInizioGestioneRiduzioneCuneo = configurazione.getDt01();
+				dataFineGestioneRiduzioneCuneo = configurazione.getDt02();
+			}
+		} catch (it.cnr.jada.comp.ComponentException ex) {
+			throw handleException(ex);
+		} catch (java.rmi.RemoteException ex) {
+			throw handleException(ex);
+		}
+
+
+		if (compenso.getDt_a_competenza_coge() != null && compenso.getDt_da_competenza_coge() != null){
+			if (compenso.getDt_da_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) < 0 ||
+					compenso.getDt_a_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) < 0){
+				if (compenso.getDt_da_competenza_coge().compareTo(dataInizioGestioneRiduzioneCuneo) < 0 &&
+						compenso.getDt_a_competenza_coge().compareTo(dataInizioGestioneRiduzioneCuneo) >= 0){
+					throw new ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di inizio della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(dataInizioGestioneRiduzioneCuneo));
+				}
+				if (compenso.getDt_da_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) <= 0 &&
+						compenso.getDt_a_competenza_coge().compareTo(dataFineGestioneRiduzioneCuneo) > 0){
+					throw new ApplicationException("Operazione non consentita. Le date di competenza devono essere entrambe precedenti o uguali/successive alla data di fine della riduzione del cuneo fiscale DL 3/2020 del "+sdf.format(dataFineGestioneRiduzioneCuneo));
+				}
+			}
+		}
+	}
+
+
+
 	private void validaCompenso(UserContext userContext, CompensoBulk compenso)
 			throws ComponentException {
 		// Controllo Testata Compenso
@@ -4986,6 +5061,9 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 				throw new ApplicationException(
 						"Attenzione! Non è possibile utilizzare un trattamento di tipo 'Torno Subito con solo INAIL a carico ente' per una minicarriera");
 			}
+		}
+		if (isCompensoSoggettoConguaglio(compenso.getTipoTrattamento()) && !compenso.isDaConguaglio() ){
+			controlloRiduzioneCuneo32020(userContext, compenso);
 		}
 		try {
 	
@@ -5317,6 +5395,10 @@ public class CompensoComponent extends it.cnr.jada.comp.CRUDComponent implements
 			compenso.setDetrazione_figli_netto(new java.math.BigDecimal(0));
 		if (compenso.getDetrazione_altri_netto() == null)
 			compenso.setDetrazione_altri_netto(new java.math.BigDecimal(0));
+		if (compenso.getDetrazioneRiduzioneCuneo() == null)
+			compenso.setDetrazioneRiduzioneCuneo(new java.math.BigDecimal(0));
+		if (compenso.getDetrazioneRidCuneoNetto() == null)
+			compenso.setDetrazioneRidCuneoNetto(new java.math.BigDecimal(0));
 
 		if (compenso.isSenzaCalcoli())
 			validaCompensoSenzaCalcoli(userContext, compenso);

@@ -25,6 +25,11 @@ import it.cnr.contab.doccont00.intcass.bulk.StatoTrasmissione;
 import it.cnr.contab.doccont00.intcass.bulk.V_mandato_reversaleBulk;
 import it.cnr.contab.doccont00.service.ContabiliService;
 import it.cnr.contab.service.SpringUtil;
+import it.cnr.contab.util.ApplicationMessageFormatException;
+import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.util.action.FormBP;
+import it.cnr.jada.util.upload.UploadedFile;
+import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
@@ -43,11 +48,11 @@ import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.OrderedHashtable;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.util.*;
@@ -56,6 +61,8 @@ import java.util.stream.Stream;
 
 public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, StatoTrasmissione> {
     private static final long serialVersionUID = 1L;
+    private transient final static Logger logger = LoggerFactory.getLogger(AllegatiDocContBP.class);
+
     private final SimpleDetailCRUDController documentiPassiviSelezionati =
             new SimpleDetailCRUDController("DocumentiPassiviSelezionati", Mandato_rigaIBulk.class, "mandato_rigaColl", this);
     private final SimpleDetailCRUDController dettaglioAllegati =
@@ -126,7 +133,7 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
 
     @Override
     protected boolean isChildGrowable(boolean isGrowable) {
-        return true;
+        return isGrowable;
     }
 
     @Override
@@ -136,10 +143,11 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
         if (allegatoDocContBulk.getRifModalitaPagamento() != null && !allegatoDocContBulk.getRifModalitaPagamento().equalsIgnoreCase("GEN") &&
                 (((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_INSERITO) ||
                         ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_TRASMESSO) ||
-                        ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA)))
+                        ((StatoTrasmissione) getModel()).getStato_trasmissione().equalsIgnoreCase(MandatoBulk.STATO_TRASMISSIONE_PRIMA_FIRMA))) {
             setStatus(VIEW);
-        else
+        } else {
             setStatus(EDIT);
+        }
         super.getChildDetail(allegatoDocContBulk);
     }
 
@@ -362,5 +370,64 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
         }
         is.close();
         os.flush();
+    }
+
+    public void aggiungiAllegati(ActionContext actioncontext, List<UploadedFile> uploadedFiles) throws BusinessProcessException{
+        final V_mandato_reversaleBulk v_mandato_reversaleBulk = Optional.ofNullable(getModel())
+                .filter(V_mandato_reversaleBulk.class::isInstance)
+                .map(V_mandato_reversaleBulk.class::cast)
+                .orElseThrow(() -> handleException(new ApplicationException("Modello non trovato!")));
+        for (UploadedFile uploadedFile : uploadedFiles) {
+            AllegatoGenericoBulk allegato = new AllegatoGenericoBulk();
+            allegato.setContentType(
+                    Optional.ofNullable(uploadedFile)
+                            .flatMap(uploadedFile1 -> Optional.ofNullable(uploadedFile1.getContentType()))
+                            .orElseThrow(() -> handleException(new ApplicationException("Non è stato possibile determinare il tipo di file!")))
+            );
+            allegato.setNome(
+                    Optional.ofNullable(uploadedFile)
+                            .flatMap(uploadedFile1 -> Optional.ofNullable(uploadedFile1.getName()))
+                            .orElseThrow(() -> handleException(new ApplicationException("Non è stato possibile determinare il nome del file!")))
+
+            );
+            allegato.setFile(
+                    Optional.ofNullable(uploadedFile)
+                            .flatMap(uploadedFile1 -> Optional.ofNullable(uploadedFile1.getFile()))
+                            .orElseThrow(() -> handleException(new ApplicationException("File non presente!")))
+            );
+            try {
+                final Optional<StorageObject> parentFolder =
+                        Optional.ofNullable(storeService.getStorageObjectByPath(v_mandato_reversaleBulk.getStorePath()));
+                if (parentFolder.isPresent()) {
+                    try {
+                        storeService.storeSimpleDocument(
+                                allegato,
+                                new FileInputStream(allegato.getFile()),
+                                allegato.getContentType(),
+                                allegato.getNome(),
+                                Optional.ofNullable(uploadedFile.getFilePath())
+                                        .map(s -> s.substring(s.indexOf(File.separator), s.indexOf(uploadedFile.getName())))
+                                        .map(s -> v_mandato_reversaleBulk.getStorePath().concat(s))
+                                        .orElse(v_mandato_reversaleBulk.getStorePath())
+                        );
+                    } catch (StringIndexOutOfBoundsException _ex) {
+                        logger.warn("File non caricato path locale {}", uploadedFile.getFilePath());
+                        throw handleException(new ApplicationMessageFormatException(
+                                "Il caricamento è stato interrotto verificare il file [{0}]",
+                                uploadedFile.getFilePath()
+                            )
+                        );
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                throw handleException(e);
+            } catch (StorageException e) {
+                if (e.getType().equals(StorageException.Type.CONSTRAINT_VIOLATED))
+                    throw handleException(new ApplicationException("File [" + allegato.getNome() + "] gia' presente. Inserimento non possibile!"));
+                throw handleException(e);
+            }
+        }
+        edit(actioncontext, v_mandato_reversaleBulk);
+        setMessage(FormBP.INFO_MESSAGE, "Allegati inseriti correttamente al documento.");
     }
 }

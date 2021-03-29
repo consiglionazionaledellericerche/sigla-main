@@ -100,6 +100,10 @@ public class Incarichi_repertorioBase extends Incarichi_repertorioKey implements
 //    DT_EFFICACIA TIMESTAMP(7)
 	private java.sql.Timestamp dt_efficacia;
 
+	private java.lang.Integer idPerla;
+
+	private java.lang.String anomalia_perla;
+
 	public Incarichi_repertorioBase() {
 		super();
 	}
@@ -268,5 +272,21 @@ public class Incarichi_repertorioBase extends Incarichi_repertorioKey implements
 	}
     public void setDt_efficacia(java.sql.Timestamp dt_efficacia) {
 		this.dt_efficacia = dt_efficacia;
+	}
+
+	public Integer getIdPerla() {
+		return idPerla;
+	}
+
+	public void setIdPerla(Integer idPerla) {
+		this.idPerla = idPerla;
+	}
+
+	public String getAnomalia_perla() {
+		return anomalia_perla;
+	}
+
+	public void setAnomalia_perla(String anomalia_perla) {
+		this.anomalia_perla = anomalia_perla;
 	}
 }

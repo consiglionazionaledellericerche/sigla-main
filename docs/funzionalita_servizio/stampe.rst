@@ -19,7 +19,7 @@ Dopo aver richiesto le stampe, queste vengono inviate nella  :ref:`coda-di-stamp
 
 Le mappe di lancio stampa si presentano con le seguenti icone:
 
-.. thumbnail:: ../screenshot/print_4.png
+.. figure:: ../screenshot/print_4.png
 
 Successivamente al lancio della stampa è possibile inserire una descrizione e cambiare la visibilità della stampa eseguita:
 
@@ -30,12 +30,12 @@ Successivamente al lancio della stampa è possibile inserire una descrizione e c
 - Ente
 - Pubblico 
 
-.. thumbnail:: ../screenshot/print_6.png
+.. figure:: ../screenshot/print_6.png
 
 Attivando la spunta su **Invia E-Mail con la stampa allegata** è possibile ricevere via E-mail il prodotto della stampa.
 Inoltre è possibile schedulare la produzione della stampa stessa secondo i parametri presenti nella maschera.
 
-.. thumbnail:: ../screenshot/print_7.png
+.. figure:: ../screenshot/print_7.png
 
 Indicando nell'ultimo box una data/ora, una unità di intervallo (giorni/settimane/mesi) ed un **valore per l’unità di intervallo** (1 giorno, 5 giorni, 2 settimane, ecc.) si indica a SIGLA:
 - di eseguire quella particolare stampa a partire da quella data/ora con la cadenza indicata;

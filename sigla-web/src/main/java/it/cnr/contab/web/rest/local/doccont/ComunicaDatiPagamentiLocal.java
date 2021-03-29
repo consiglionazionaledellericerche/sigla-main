@@ -50,6 +50,8 @@ public interface ComunicaDatiPagamentiLocal {
     Response recuperoDatiPagamenti(@Context HttpServletRequest request,
                                    @QueryParam("esercizio") Integer esercizio,
                                    @QueryParam("cdCds") String cdCds,
-                                   @QueryParam("pgMandato") Long pgMandato) throws Exception;
+                                   @QueryParam("pgMandato") Long pgMandato,
+                                   @QueryParam("daData") String daData,
+                                   @QueryParam("aData") String aData) throws Exception;
 
 }

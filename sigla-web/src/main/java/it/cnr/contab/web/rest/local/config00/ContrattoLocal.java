@@ -20,24 +20,58 @@ package it.cnr.contab.web.rest.local.config00;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.contratto.bulk.ContrattoDatiSintesiBulk;
+import it.cnr.contab.doccont00.core.bulk.MandatoComunicaDatiBulk;
+import it.cnr.contab.missioni00.docs.bulk.MissioneBulk;
 import it.cnr.contab.web.rest.config.SIGLARoles;
+import it.cnr.contab.web.rest.config.SIGLASecurityContext;
+import it.cnr.contab.web.rest.model.ContrattoDtoBulk;
 
 @Local
 @Path("/contratto")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @RolesAllowed(SIGLARoles.CONTRATTO)
+@Api("Contratti")
 public interface ContrattoLocal {
+    /**
+     * PUT  /restapi/contratto -> return Contratto
+     */
     @PUT
-    public Response insert(@Context HttpServletRequest request, ContrattoBulk contrattoBulk) throws Exception;
+    @ApiOperation(value = "Inserisce un contratto",
+            notes = "Accesso consentito solo alle utenze abilitate al ruolo CONTRATTO",
+            response = ContrattoDtoBulk.class,
+            authorizations = {
+                    @Authorization(value = "BASIC"),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_ESERCIZIO),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDS),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_UNITA_ORGANIZZATIVA),
+                    @Authorization(value = SIGLASecurityContext.X_SIGLA_CD_CDR),
+            }
+    )
+    public Response insertContratto(@Context HttpServletRequest request, ContrattoDtoBulk contrattoBulk) throws Exception;
 
+    /**
+     * GET  /restapi/contratto -> return Contratto
+     */
+    @GET
+    @RolesAllowed(SIGLARoles.PARCO_AUTO)
+    @ApiOperation(value = "Recupera i dati dei contratti",
+            notes = "Accesso consentito solo alle utenze abilitate al ruolo REST_PARCO_AUTO",
+            response = ContrattoDatiSintesiBulk.class,
+            responseContainer = "List",
+            authorizations = @Authorization(value = "BASIC")
+    )
+    Response recuperoDatiContratto(@Context HttpServletRequest request,
+                                   @QueryParam("uo") String uo,
+                                   @QueryParam("cdTerzo") Integer cdTerzo) throws Exception;
 }

@@ -46,6 +46,7 @@ import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
 import it.cnr.contab.progettiric00.core.bulk.ProgettoHome;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
+import it.cnr.contab.utenze00.bulk.UtenteBulk;
 import it.cnr.contab.util.ApplicationMessageFormatException;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.UserContext;
@@ -236,8 +237,8 @@ public class ObbligazioneResComponent extends ObbligazioneComponent {
 				WorkpackageBulk latt = ((WorkpackageHome)getHome(aUC, WorkpackageBulk.class)).searchGAECompleta(aUC,CNRUserContext.getEsercizio(aUC),
 						key.getCd_centro_responsabilita(), key.getCd_linea_attivita());
 
-				if (!Utility.createUtenteComponentSession().isSupervisore(aUC))
-					Utility.createSaldoComponentSession().checkBloccoDisponibilitaResidue(aUC, latt, obbligazione.getElemento_voce());
+				if (!UtenteBulk.isAbilitatoSbloccoImpegni(aUC))
+					Utility.createSaldoComponentSession().checkBloccoImpegniNatfin(aUC, latt, obbligazione.getElemento_voce(), obbligazione.isObbligazioneResiduo()?ObbligazioneBulk.TIPO_RESIDUO_PROPRIO:ObbligazioneBulk.TIPO_RESIDUO_IMPROPRIO);
 
 				//se aumento l'importo del residuo devo controllare che il progetto non sia scaduto
 				if (totaleScad.compareTo((BigDecimal)prcImputazioneFinanziariaTable.get( key ))>0 &&

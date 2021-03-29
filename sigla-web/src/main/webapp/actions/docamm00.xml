@@ -196,6 +196,26 @@
         <init-param name="defaultAction" value="CRUDFatturaPassivaElettronicaAction"/>
     </businessProcess>
 
+    <action
+            path="/RifiutaFatturaAction" actionClass="it.cnr.contab.docamm00.actions.RifiutaFatturaAction">
+    </action>
+    <businessProcess name="RifiutaFatturaBP"
+            className="it.cnr.contab.docamm00.bp.RifiutaFatturaBP">
+        <forward name="default" path="/docamm00/rifiuta_fattura_elettronica.jsp"/>
+        <forward name="bootstrap" path="/bootstrap/docamm00/rifiuta_fattura_elettronica.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.docamm00.fatturapa.bulk.RifiutaFatturaBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="RifiutaFatturaAction"/>
+    </businessProcess>
+
+    <businessProcess name="RifiutaFatturaConPECBP" className="it.cnr.contab.docamm00.bp.RifiutaFatturaBP">
+        <forward name="default" path="/docamm00/rifiuta_fattura_elettronica_con_pec.jsp"/>
+        <forward name="bootstrap" path="/bootstrap/docamm00/rifiuta_fattura_elettronica_con_pec.jsp"/>
+        <init-param name="bulkClassName" value="it.cnr.contab.docamm00.fatturapa.bulk.RifiutaFatturaBulk"/>
+        <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession"/>
+        <init-param name="defaultAction" value="RifiutaFatturaAction"/>
+    </businessProcess>
+
     <businessProcess
             name="CaricaFatturaElettronicaBP" className="it.cnr.contab.docamm00.bp.CaricaFatturaElettronicaBP">
         <forward name="default" path="/docamm00/carica_fattura_elettronica.jsp"/>

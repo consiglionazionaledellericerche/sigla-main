@@ -17,6 +17,7 @@
 
 package it.cnr.contab.anagraf00.core.bulk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import it.cnr.contab.anagraf00.tabrif.bulk.AbicabBulk;
@@ -38,29 +39,40 @@ public class BancaBulk extends BancaBase {
 
     public static String ORIGINE_ON_LINE = "O";
     public static String ORIGINE_STIPENDI = "S";
+    @JsonIgnore
     private TerzoBulk terzo;
+    @JsonIgnore
     private it.cnr.contab.anagraf00.tabrif.bulk.AbicabBulk abi_cab;
+    @JsonIgnore
     private java.util.Collection nazioniIban;
+    @JsonIgnore
     private TerzoBulk terzo_delegato;
     private String chiave;
+    @JsonIgnore
     private NazioneBulk nazione_iban;
 
     // CODICE_IBAN_PARTE1 VARCHAR(34)
+    @JsonIgnore
     private java.lang.String codice_iban_parte1;
 
     // CODICE_IBAN_PARTE2 VARCHAR(34)
+    @JsonIgnore
     private java.lang.String codice_iban_parte2;
 
     // CODICE_IBAN_PARTE3 VARCHAR(34)
+    @JsonIgnore
     private java.lang.String codice_iban_parte3;
 
     // CODICE_IBAN_PARTE4 VARCHAR(34)
+    @JsonIgnore
     private java.lang.String codice_iban_parte4;
 
     // CODICE_IBAN_PARTE5 VARCHAR(34)
+    @JsonIgnore
     private java.lang.String codice_iban_parte5;
 
     // CODICE_IBAN_PARTE6 VARCHAR(34)
+    @JsonIgnore
     private java.lang.String codice_iban_parte6;
 
     public final static Dictionary tipo_PostalizzazioneKeys = new OrderedHashtable();
@@ -445,6 +457,7 @@ public class BancaBulk extends BancaBase {
         this.nazioniIban = nazioniIban;
     }
 
+    @JsonIgnore
     public java.lang.String getCodice_iban_parte1() {
         return codice_iban_parte1;
     }
@@ -453,6 +466,7 @@ public class BancaBulk extends BancaBase {
         this.codice_iban_parte1 = codice_iban_parte1;
     }
 
+    @JsonIgnore
     public java.lang.String getCodice_iban_parte2() {
         return codice_iban_parte2;
     }
@@ -461,6 +475,7 @@ public class BancaBulk extends BancaBase {
         this.codice_iban_parte2 = codice_iban_parte2;
     }
 
+    @JsonIgnore
     public java.lang.String getCodice_iban_parte3() {
         return codice_iban_parte3;
     }
@@ -469,6 +484,7 @@ public class BancaBulk extends BancaBase {
         this.codice_iban_parte3 = codice_iban_parte3;
     }
 
+    @JsonIgnore
     public java.lang.String getCodice_iban_parte4() {
         return codice_iban_parte4;
     }
@@ -477,6 +493,7 @@ public class BancaBulk extends BancaBase {
         this.codice_iban_parte4 = codice_iban_parte4;
     }
 
+    @JsonIgnore
     public java.lang.String getCodice_iban_parte5() {
         return codice_iban_parte5;
     }
@@ -485,6 +502,7 @@ public class BancaBulk extends BancaBase {
         this.codice_iban_parte5 = codice_iban_parte5;
     }
 
+    @JsonIgnore
     public java.lang.String getCodice_iban_parte6() {
         return codice_iban_parte6;
     }
@@ -493,66 +511,79 @@ public class BancaBulk extends BancaBase {
         this.codice_iban_parte6 = codice_iban_parte6;
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte1MaxLength() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte1MaxLength();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte2MaxLength() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte2MaxLength();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte3MaxLength() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte3MaxLength();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte4MaxLength() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte4MaxLength();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte5MaxLength() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte5MaxLength();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte6MaxLength() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte6MaxLength();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte1InputSize() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte1InputSize();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte2InputSize() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte2InputSize();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte3InputSize() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte3InputSize();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte4InputSize() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte4InputSize();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte5InputSize() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte5InputSize();
     }
 
+    @JsonIgnore
     public int getCodice_iban_parte6InputSize() {
         if (getNazione_iban() == null) return 0;
         return getNazione_iban().getStruttura_iban_parte6InputSize();
     }
 
+    @JsonIgnore
     public String getCodice_iban_calcolato() {
         if (this.getNazione_iban() == null) return null;
         String iban = this.getNazione_iban().getCd_iso();

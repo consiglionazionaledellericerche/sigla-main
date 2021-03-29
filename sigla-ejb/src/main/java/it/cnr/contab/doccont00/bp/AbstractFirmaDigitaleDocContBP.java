@@ -46,6 +46,7 @@ import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.ColumnFieldProperty;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ApplicationException;
+import it.cnr.jada.comp.CRUDNotNullConstraintException;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.ejb.CRUDComponentSession;
 import it.cnr.jada.util.OrderedHashtable;
@@ -121,7 +122,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
     public it.cnr.jada.util.jsp.Button[] createToolbar() {
         Button[] baseToolbar = super.createToolbar();
 
-        Button[] toolbar = new Button[baseToolbar.length + 8];
+        Button[] toolbar = new Button[baseToolbar.length + 9];
         int i = 0;
         for (Button button : baseToolbar) {
             toolbar[i++] = button;
@@ -136,6 +137,8 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
         toolbar[i - 1].setSeparator(true);
         toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
                 .getHandler().getProperties(getClass()), "Toolbar.predisponi");
+        toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
+                .getHandler().getProperties(getClass()), "Toolbar.allegadocumenti");
         toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
                 .getHandler().getProperties(getClass()), "Toolbar.zipdocumenti");
         toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config
@@ -221,6 +224,10 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
         return !oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_PREDISPOSTO);
     }
 
+    public boolean isAllegaDocumentiButtonHidden() {
+        return isZipDocumentiButtonHidden();
+    }
+
     public boolean isZipDocumentiButtonHidden() {
         StatoTrasmissione oggettobulk = (StatoTrasmissione) getModel();
         return oggettobulk.getStato_trasmissione().equals(MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO);
@@ -236,6 +243,8 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
                 aggiornaStato(context, MandatoBulk.STATO_TRASMISSIONE_NON_INSERITO, v_mandato_reversaleBulk);
             }
             setMessage("Cancellazione effettuata correttamente.");
+        } catch (CRUDNotNullConstraintException e) {
+            setMessage(e.getUserMessage());
         } catch (ApplicationException e) {
             setMessage(e.getMessage());
         } catch (ComponentException e) {
@@ -282,6 +291,31 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
             }
     }
 
+    private void addToZip(DocumentiContabiliService documentiContabiliService, ZipOutputStream zos, String path, StatoTrasmissione statoTrasmissione) {
+        documentiContabiliService.getChildren(documentiContabiliService.getStorageObjectByPath(path).getKey())
+                .stream()
+                .forEach(storageObject -> {
+                    try {
+                        if (!Optional.ofNullable(storageObject.getPropertyValue(StoragePropertyNames.BASE_TYPE_ID.value()))
+                                .map(String.class::cast)
+                                .filter(s -> s.equals(StoragePropertyNames.CMIS_FOLDER.value()))
+                                .isPresent()) {
+                            ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
+                                    .concat(
+                                            Optional.ofNullable(storageObject.getPath())
+                                            .map(s -> s.substring(statoTrasmissione.getStorePath().length()))
+                                            .orElse(StorageDriver.SUFFIX)
+                                    ));
+                            zos.putNextEntry(zipEntryChild);
+                            IOUtils.copyLarge(documentiContabiliService.getResource(storageObject), zos);
+                        } else {
+                            addToZip(documentiContabiliService, zos, storageObject.getPath(), statoTrasmissione);
+                        }
+                    } catch (IOException e) {
+                        throw new DetailedRuntimeException(e);
+                    }
+                });
+    }
     @SuppressWarnings("unchecked")
     public void scaricaZip(ActionContext actioncontext) throws Exception {
         setSelection(actioncontext);
@@ -300,19 +334,7 @@ public abstract class AbstractFirmaDigitaleDocContBP extends SelezionatoreListaB
             response.setHeader("Content-disposition", "attachment; filename=Documenti contabili.zip");
             selectelElements.stream()
                     .forEach(statoTrasmissione -> {
-                        documentiContabiliService.getChildren(documentiContabiliService.getStorageObjectByPath(statoTrasmissione.getStorePath()).getKey())
-                                .stream()
-                                .forEach(storageObject -> {
-                                    try {
-                                        ZipEntry zipEntryChild = new ZipEntry(statoTrasmissione.getCMISFolderName()
-                                                .concat(StorageDriver.SUFFIX)
-                                                .concat(storageObject.getPropertyValue(StoragePropertyNames.NAME.value())));
-                                        zos.putNextEntry(zipEntryChild);
-                                        IOUtils.copyLarge(documentiContabiliService.getResource(storageObject), zos);
-                                    } catch (IOException e) {
-                                        throw new DetailedRuntimeException(e);
-                                    }
-                                });
+                        addToZip(documentiContabiliService, zos, statoTrasmissione.getStorePath(), statoTrasmissione);
                         if (statoTrasmissione.getCd_tipo_documento_cont().equals(Numerazione_doc_contBulk.TIPO_MAN)) {
                             try {
                                 MandatoBulk mandatoBulk = (MandatoBulk) getComponentSession().findByPrimaryKey(actioncontext.getUserContext(),

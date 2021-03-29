@@ -2,7 +2,7 @@
 --  DDL for View V_UTENTE_UNITA_ORGANIZZATIVA
 --------------------------------------------------------
 
-  CREATE OR REPLACE FORCE VIEW "V_UTENTE_UNITA_ORGANIZZATIVA" ("CD_UTENTE", "ESERCIZIO", "ESERCIZIO_INIZIO", "CD_UNITA_ORGANIZZATIVA", "CD_PROPRIO_UNITA", "CD_TIPO_UNITA", "FL_CDS", "FL_UO_CDS", "FL_RUBRICA", "CD_UNITA_PADRE", "LIVELLO", "DS_UNITA_ORGANIZZATIVA", "PRC_COPERTURA_OBBLIG_2", "PRC_COPERTURA_OBBLIG_3", "DACR", "CD_AREA_RICERCA", "FL_PRESIDENTE_AREA", "CD_RESPONSABILE", "UTCR", "DUVA", "CD_RESPONSABILE_AMM", "UTUV", "PG_VER_REC", "ESERCIZIO_FINE", "CD_AREA_SCIENTIFICA", "ID_FUNZIONE_PUBBLICA") AS 
+  CREATE OR REPLACE FORCE VIEW "V_UTENTE_UNITA_ORGANIZZATIVA" ("CD_UTENTE", "ESERCIZIO", "ESERCIZIO_INIZIO", "CD_UNITA_ORGANIZZATIVA", "CD_PROPRIO_UNITA", "CD_TIPO_UNITA", "FL_CDS", "FL_UO_CDS", "FL_RUBRICA", "CD_UNITA_PADRE", "LIVELLO", "DS_UNITA_ORGANIZZATIVA", "PRC_COPERTURA_OBBLIG_2", "PRC_COPERTURA_OBBLIG_3", "DACR", "CD_AREA_RICERCA", "FL_PRESIDENTE_AREA", "CD_RESPONSABILE", "UTCR", "DUVA", "CD_RESPONSABILE_AMM", "UTUV", "PG_VER_REC", "ESERCIZIO_FINE", "CD_AREA_SCIENTIFICA", "ID_FUNZIONE_PUBBLICA", "CODICEAOOIPA") AS
   SELECT
 --
 -- Date: 25/03/2010
@@ -73,7 +73,8 @@
           v_unita_organizzativa.utuv, v_unita_organizzativa.pg_ver_rec,
           v_unita_organizzativa.esercizio_fine,
           v_unita_organizzativa.cd_area_scientifica,
-          v_unita_organizzativa.id_funzione_pubblica
+          v_unita_organizzativa.id_funzione_pubblica,
+          v_unita_organizzativa.codiceAooIpa
      FROM v_unita_organizzativa, utente, configurazione_cnr
     WHERE configurazione_cnr.esercizio = 0
       AND configurazione_cnr.cd_unita_funzionale = '*'
@@ -114,7 +115,8 @@
           v_unita_organizzativa.utuv, v_unita_organizzativa.pg_ver_rec,
           v_unita_organizzativa.esercizio_fine,
           v_unita_organizzativa.cd_area_scientifica,
-          v_unita_organizzativa.id_funzione_pubblica
+          v_unita_organizzativa.id_funzione_pubblica,
+          v_unita_organizzativa.codiceAooIpa
      FROM v_unita_organizzativa,
           utente utente_templ,
           utente,
@@ -155,7 +157,8 @@
           v_unita_organizzativa.utuv, v_unita_organizzativa.pg_ver_rec,
           v_unita_organizzativa.esercizio_fine,
           v_unita_organizzativa.cd_area_scientifica,
-          v_unita_organizzativa.id_funzione_pubblica
+          v_unita_organizzativa.id_funzione_pubblica,
+          v_unita_organizzativa.codiceAooIpa
      FROM v_unita_organizzativa, utente, configurazione_cnr
     WHERE configurazione_cnr.esercizio = 0
       AND configurazione_cnr.cd_unita_funzionale = '*'

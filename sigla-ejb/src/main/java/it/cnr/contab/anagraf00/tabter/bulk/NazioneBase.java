@@ -17,48 +17,63 @@
 
 package it.cnr.contab.anagraf00.tabter.bulk;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cnr.jada.persistency.Keyed;
 
 public class NazioneBase extends NazioneKey implements Keyed {
     // CD_CATASTALE VARCHAR(10)
+    @JsonIgnore
     private java.lang.String cd_catastale;
 
     // CD_DIVISA VARCHAR(10)
+    @JsonIgnore
     private java.lang.String cd_divisa;
 
     // CD_DIVISA_PER_MISSIONE VARCHAR(10)
+    @JsonIgnore
     private java.lang.String cd_divisa_per_missione;
 
     // CD_ISO VARCHAR(10)
+    @JsonIgnore
     private java.lang.String cd_iso;
 
     // CD_NAZIONE VARCHAR(10) NOT NULL
+    @JsonIgnore
     private java.lang.String cd_nazione;
 
     // CD_NAZIONE_770 VARCHAR(10)
+    @JsonIgnore
     private java.lang.String cd_nazione_770;
 
     // DS_NAZIONE VARCHAR(100) NOT NULL
+    @JsonIgnore
     private java.lang.String ds_nazione;
 
     // NAZIONALITA VARCHAR(100) NOT NULL
+    @JsonIgnore
     private java.lang.String nazionalita;
 
     // TI_NAZIONE CHAR(1) NOT NULL
+    @JsonIgnore
     private java.lang.String ti_nazione;
 
     // FL_IBAN BOOLEAN NOT NULL
+    @JsonIgnore
     private java.lang.Boolean fl_iban;
 
     // STRUTTURA_IBAN CHAR(100) NOT NULL
+    @JsonIgnore
     private java.lang.String struttura_iban;
 
+    @JsonIgnore
     private java.lang.String struttura_piva;
 
     // CD_AREA_ESTERA CHAR(2) NOT NULL
+    @JsonIgnore
     private java.lang.String cd_area_estera;
 
     // FL_SEPA BOOLEAN
+    @JsonIgnore
     private java.lang.Boolean fl_sepa;
 
     public NazioneBase() {

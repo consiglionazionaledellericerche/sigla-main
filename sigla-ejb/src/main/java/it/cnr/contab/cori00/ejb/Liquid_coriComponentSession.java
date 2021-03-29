@@ -21,8 +21,16 @@ import javax.ejb.Remote;
 
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
 import it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk;
+import it.cnr.contab.cori00.views.bulk.ParSelConsLiqCoriBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.ParametriSelezioneMovimentiBulk;
 import it.cnr.jada.UserContext;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.comp.ComponentException;
+import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.util.RemoteIterator;
+
+import java.rmi.RemoteException;
+
 @Remote
 public interface Liquid_coriComponentSession extends it.cnr.jada.ejb.CRUDDetailComponentSession {
 it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk calcolaLiquidazione(it.cnr.jada.UserContext param0,it.cnr.contab.cori00.docs.bulk.Liquid_coriBulk param1) throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
@@ -43,4 +51,6 @@ String getSedeInpsF24(UserContext userContext)throws it.cnr.jada.comp.ComponentE
 Configurazione_cnrBulk getSedeInailF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 String getSedeInpdapF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
 String getSedeInpgiF24(UserContext userContext)throws it.cnr.jada.comp.ComponentException,java.rmi.RemoteException;
+RemoteIterator ricercaCori(UserContext userContext, ParSelConsLiqCoriBulk parametri) throws ComponentException, RemoteException;
+ParSelConsLiqCoriBulk initializeConsultazioneCori(UserContext userContext, ParSelConsLiqCoriBulk parametri) throws PersistencyException, ComponentException , RemoteException, ApplicationException;
 }

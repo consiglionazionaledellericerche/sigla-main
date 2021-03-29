@@ -2,7 +2,8 @@
 Configurazione
 ================
 .. toctree::
-   :maxdepth: -1
+   :caption: Indice dei contenuti
+   :maxdepth: 2
 
    progetti/index
    gae
@@ -10,5 +11,6 @@ Configurazione
    struttura_organizzativa
    anagrafica_clienti_fornitori
    terzi
+   incarichi_di_collaborazione/index
    
    
