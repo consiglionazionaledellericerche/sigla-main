@@ -395,7 +395,7 @@ public class BancaBulk extends BancaBase {
                         getNumero_conto() == null)
                     throw new ValidationException("Modalità di pagamento: ABI, CAB, e Numero Conto sono obbligatori.");
             }
-        } else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equals(getTi_pagamento()) && isTABA()) {
+        } else if (Rif_modalita_pagamentoBulk.BANCA_ITALIA.equals(getTi_pagamento()) && (isTABA() || isRegolarizzazione())) {
             // SE è BANCA_ITALIA
             Optional.ofNullable(getNumero_conto())
                     .filter(s -> s.length() == 7)
@@ -724,6 +724,12 @@ public class BancaBulk extends BancaBase {
     public boolean isTABA() {
         return Optional.ofNullable(getTipo_pagamento_siope())
                 .map(s -> s.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA.value()))
+                .orElse(Boolean.FALSE);
+    }
+
+    public boolean isRegolarizzazione() {
+        return Optional.ofNullable(getTipo_pagamento_siope())
+                .map(s -> s.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.REGOLARIZZAZIONE.value()))
                 .orElse(Boolean.FALSE);
     }
 
