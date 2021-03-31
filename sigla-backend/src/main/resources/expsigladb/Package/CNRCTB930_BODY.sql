@@ -1533,22 +1533,20 @@ BEGIN
                       aStringa:= aStringa||LPAD('0', 12, '0');--somma non soggetta a ritenute
                   else
                       -- NON E' CM e Regime Forfettario e Legge 388 ma ha IM_NON_SOGG_RIT!=0
-                      IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) NOT in ('T255','T256','T257','T258','T259','T159',
-                                                  'T155','T156','T157','T260','T019','T021','T091','T191')) then
+                      IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) NOT in ('T255','T256','T257','T259','T159','T155','T156','T157','T260','T091','T191')) then
 
                           aStringa:= aStringa1||aStringa2 || '8';
                           aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
                       else
                         -- CM e Regime Forfettario e Legge 388 ma ha IM_NON_SOGG_RIT!=0
-                          IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T256','T257','T258','T259','T159',
-                                              'T155','T156','T157','T260','T019','T021','T091','T191')) then
+                          IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T256','T257','T259','T159','T155','T156','T157','T260','T091','T191')) then
                             aImportoLordo := aRecEstrazione770.IM_LORDO - aRecEstrazione770.IM_NON_SOGG_RIT;
-                            aStringa := LPAD((aImportoLordo * 100), 12, '0') || aStringa2;
+                                            aStringa := LPAD((aImportoLordo * 100), 12, '0') || aStringa2;
                             aStringa:= aStringa || '7';
                             aStringa:= aStringa ||  LPAD(((aRecEstrazione770.IM_LORDO - aRecEstrazione770.IM_NON_SOGG_RIT) * 100), 12, '0');-- somma non soggetta a ritenute
 
                             aImportoLordo := aRecEstrazione770.IM_NON_SOGG_RIT;
-                            aStringa_sdoppia := LPAD((aImportoLordo * 100), 12, '0') || aStringa2;
+                                            aStringa_sdoppia := LPAD((aImportoLordo * 100), 12, '0') || aStringa2;
                             aStringa_sdoppia:= aStringa_sdoppia || '8';
                             aStringa_sdoppia:= aStringa_sdoppia ||  LPAD((aRecEstrazione770.IM_NON_SOGG_RIT * 100), 12, '0');-- somma non soggetta a ritenute
                           else
@@ -1559,8 +1557,7 @@ BEGIN
                   end if;
                   Else
                   -- CM e Regime Forfettario e Legge 388
-                      IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T256','T257','T258','T259','T159',
-                                                                            'T155','T156','T157','T260','T019','T021','T091','T191')) then
+                      IF (SUBSTR(aRecEstrazione770.CD_TRATTAMENTO, 1, 4) in ('T255','T256','T257','T259','T159','T155','T156','T157','T260','T091','T191')) then
               aStringa:= aStringa1||aStringa2  || '7';
               aStringa:= aStringa ||  LPAD((aRecEstrazione770.IM_LORDO * 100), 12, '0');-- somma non soggetta a ritenute
               else
