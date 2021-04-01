@@ -98,6 +98,23 @@ public FatturaElettronicaType preparaFattura(UserContext userContext, Fattura_at
 		}
 	}
 }
+	public void aggiornaMetadati(UserContext userContext, Integer esercizio, String cdCds, Long pgFatturaAttiva)throws RemoteException,ComponentException{
+		try {
+			invoke("aggiornaMetadati",new Object[] {
+					userContext,
+					esercizio, cdCds, pgFatturaAttiva});
+		} catch(java.rmi.RemoteException e) {
+			throw e;
+		} catch(java.lang.reflect.InvocationTargetException e) {
+			try {
+				throw e.getTargetException();
+			} catch(it.cnr.jada.comp.ComponentException ex) {
+				throw ex;
+			} catch(Throwable ex) {
+				throw new java.rmi.RemoteException("Uncaugth exception",ex);
+			}
+		}
+	}
 public String recuperoInizioNomeFile(UserContext param0) throws RemoteException,ComponentException {
 	try {
 		return (String)invoke("recuperoInizioNomeFile",new Object[] {

@@ -43,7 +43,6 @@ import javax.ejb.RemoveException;
 import javax.servlet.ServletException;
 
 import it.cnr.contab.util.SIGLAGroups;
-import org.apache.poi.hssf.record.RecordFormatException;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -75,6 +74,8 @@ import it.cnr.jada.util.upload.UploadedFile;
 import it.cnr.si.spring.storage.StorageException;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.config.StoragePropertyNames;
+import org.apache.poi.util.RecordFormatException;
+
 /**
  * @author mspasiano
  *

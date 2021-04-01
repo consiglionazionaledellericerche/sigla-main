@@ -1,17 +1,41 @@
+## Release 6.3.17  -- _March 25, 2021_ 
+**Changes**
+
+>**Rilascio aggiornamento metadati fatture attive**
+>
+>[189d816e66f6d52](https://github.com/consiglionazionaledellericerche/sigla-main/commit/189d816e66f6d52) gianfranco.gasparro *March 25, 2021*
+
+>**Fix Estrazione CU**
+>
+>[7924bd915e141ea](https://github.com/consiglionazionaledellericerche/sigla-main/commit/7924bd915e141ea) gianfranco.gasparro *March 25, 2021*
+
+>**Fix Estrazione CU**
+>
+>[c80ab9aca77456e](https://github.com/consiglionazionaledellericerche/sigla-main/commit/c80ab9aca77456e) gianfranco.gasparro *March 24, 2021*
+
+>**Fix ricerca che non tornava dati**
+>
+>[53a5ed36de852e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53a5ed36de852e7) gianfranco.gasparro *March 22, 2021*
+
+
+## Release 6.3.16  -- _March 24, 2021_ 
+**Changes**
+
+>**FIX NPE sugli allegati ai progetti**
+>
+>[04d495bf6620c70](https://github.com/consiglionazionaledellericerche/sigla-main/commit/04d495bf6620c70) marco.spasiano *March 24, 2021*
+
+>**Progetti: corretta anomalia visualizzazione allegati verificatasi in seguito ad aggiornamenti sui criteri di visualizzazione dei file contenuti nelle sottodirectory delle cartelle principali associate agli oggetti.**
+>
+>[eae113fa6d73be3](https://github.com/consiglionazionaledellericerche/sigla-main/commit/eae113fa6d73be3) raffaele.pagano *March 24, 2021*
+
+
 ## Release 6.3.15  -- _March 23, 2021_ 
 **Changes**
 
 >**FIX riporta indietro accertamento**
 >
 >[8042010221e4061](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8042010221e4061) marco.spasiano *March 23, 2021*
-
-
-## Release 6.3.14  -- _March 22, 2021_ 
-**Changes**
-
->**Fix ricerca che non tornava dati**
->
->[53a5ed36de852e7](https://github.com/consiglionazionaledellericerche/sigla-main/commit/53a5ed36de852e7) gianfranco.gasparro *March 22, 2021*
 
 
 ## Release 6.3.13  -- _March 20, 2021_ 

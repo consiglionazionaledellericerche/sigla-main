@@ -2179,8 +2179,6 @@ BEGIN
                   aRecEstrazioneCud.addizionale_comunale:=aRecEstrazioneCudDett.im_addcom_contrib;
                   aRecEstrazioneCud.im_irpef_sospeso:=aRecEstrazioneCudDett.im_irpef_sospeso;
                   aRecEstrazioneCud.im_bonus_erogato:=aRecEstrazioneCudDett.im_bonus_erogato;
-                  aRecEstrazioneCud.ult_detr_cuneo_fisc:=aRecEstrazioneCudDett.im_detr_rid_cuneo_dovuto_cong;
-                  aRecEstrazioneCud.tratt_int_erog_cuneo_fisc:=aRecEstrazioneCudDett.im_rid_cuneo_erogato;
 
                END IF;
 
@@ -2198,7 +2196,8 @@ BEGIN
                   aRecEstrazioneCud.cnr_detrazione_figli:=aRecEstrazioneCudDett.detraz_fi_dovuto_conguaglio +
                                                           aRecEstrazioneCudDett.detraz_al_dovuto_conguaglio;
                   aRecEstrazioneCud.totale_detrazioni:=aRecEstrazioneCud.detrazioni_lavoro_dip +
-                                                       aRecEstrazioneCud.detrazioni_familiari;
+                                                       aRecEstrazioneCud.detrazioni_familiari +
+                                                       aRecEstrazioneCudDett.im_detr_rid_cuneo_dovuto_cong;
                   aRecEstrazioneCud.ritenute_irpef:=aRecEstrazioneCud.imposta_lorda -
                                                     aRecEstrazioneCud.totale_detrazioni;
                   aRecEstrazioneCud.deduzione_dovuta:=aRecEstrazioneCudDett.im_deduzione_dovuto_conguaglio;
@@ -2278,7 +2277,6 @@ BEGIN
                 aRecEstrazioneCud.tratt_int_cong_cuneo_fisc != 0) THEN
 
                IF aRecEstrazioneCud.dip_rp_deduzione_fissa_intera = 'Y' THEN
-
                   UPDATE ESTRAZIONE_CUD
                   SET    imponibile_si_detr = imponibile_si_detr + aRecEstrazioneCud.imponibile_cong_si_detr,
                          imponibile_no_detr = imponibile_no_detr + aRecEstrazioneCud.imponibile_cong_no_detr,
@@ -2320,7 +2318,6 @@ BEGIN
                          rigo_cococo = 1;
 
                ELSE
-
                   UPDATE ESTRAZIONE_CUD
                   SET    imponibile_si_detr = imponibile_si_detr + aRecEstrazioneCud.imponibile_cong_si_detr,
                          imponibile_no_detr = imponibile_no_detr + aRecEstrazioneCud.imponibile_cong_no_detr,
@@ -3031,17 +3028,19 @@ BEGIN
 
          Loop
             -- Calcolo del numero dei giorni
-            numeroGG:=(numeroGG + (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1));
-            IF DATA_INIZIO_RID_CUNEO > tabella_date_ok(i).tDataDa THEN
-                IF DATA_INIZIO_RID_CUNEO < tabella_date_ok(i).tDataA THEN
-                  numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (DATA_INIZIO_RID_CUNEO - tabella_date_ok(i).tDataDa );
-                  numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - DATA_INIZIO_RID_CUNEO + 1 );
+            if tabella_date_ok(i).tDataA >= to_date('01/01/'||inEsercizio,'dd/mm/yyyy') then
+                numeroGG:=(numeroGG + (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1));
+                IF DATA_INIZIO_RID_CUNEO > tabella_date_ok(i).tDataDa THEN
+                    IF DATA_INIZIO_RID_CUNEO < tabella_date_ok(i).tDataA THEN
+                      numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (DATA_INIZIO_RID_CUNEO - tabella_date_ok(i).tDataDa );
+                      numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - DATA_INIZIO_RID_CUNEO + 1 );
+                    ELSE
+                      numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1);
+                    END IF;
                 ELSE
-                  numeroGG_CREDITO_1_SEM := numeroGG_CREDITO_1_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1);
+                  numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1 );
                 END IF;
-            ELSE
-              numeroGG_CREDITO_2_SEM := numeroGG_CREDITO_2_SEM+ (tabella_date_ok(i).tDataA - tabella_date_ok(i).tDataDa + 1 );
-            END IF;
+            end if;
          End Loop;
 
          IF numeroGG_CREDITO_1_SEM > 181 THEN
@@ -3051,7 +3050,7 @@ BEGIN
          IF numeroGG > maxGGAnno THEN
             numeroGG:=maxGGAnno;
          END IF;
-
+         numeroGG_CREDITO_2_SEM := numeroGG - numeroGG_CREDITO_1_SEM;
       END IF;
 
    END;
@@ -5248,4 +5247,4 @@ END estrazioneCUD;
 -- =================================================================================================
 
 END; -- PACKAGE END;
-
+/

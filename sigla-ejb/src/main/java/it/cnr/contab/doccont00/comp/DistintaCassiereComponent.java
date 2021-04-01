@@ -5318,11 +5318,13 @@ public class DistintaCassiereComponent extends
                     if (tipoPagamentoSiopePlus.equals(Rif_modalita_pagamentoBulk.TipoPagamentoSiopePlus.ACCREDITOTESORERIAPROVINCIALESTATOPERTABA)) {
                         infoben.setNumeroContoBancaItaliaEnteRicevente(
                                 Optional.ofNullable(docContabile.getNumeroConto())
+                                        .filter(s -> s.length() == 7)
                                         .orElseThrow(() -> new ApplicationMessageFormatException("Impossibile generare il flusso, manca il numero conto " +
-                                                "sul Mandato {0}/{1}/{2}",
+                                                "sul Mandato {0}/{1}/{2}, oppure il numero conto {3} non ha la lunghezza corretta!",
                                                 String.valueOf(bulk.getEsercizio()),
                                                 String.valueOf(bulk.getCd_cds()),
-                                                String.valueOf(bulk.getPg_documento_cont())
+                                                String.valueOf(bulk.getPg_documento_cont()),
+                                                docContabile.getNumeroConto()
                                         ))
                         );
                         infoben.setTipoContabilitaEnteRicevente(TIPO_CONTABILITA_ENTE_RICEVENTE);

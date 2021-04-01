@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Iterator;
-import org.apache.poi.hssf.record.RecordFormatException;
 import org.apache.poi.hssf.usermodel.*;
 import it.cnr.contab.compensi00.ejb.AddizionaliComponentSession;
 import it.cnr.contab.compensi00.tabrif.bulk.AddizionaliBulk;
@@ -37,6 +36,7 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.util.action.SimpleCRUDBP;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+import org.apache.poi.util.RecordFormatException;
 
 public class CRUDAddizionaliBP extends SimpleCRUDBP{
 
