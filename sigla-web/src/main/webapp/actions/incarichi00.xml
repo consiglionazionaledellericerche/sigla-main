@@ -182,7 +182,7 @@ da dare il nome corretto al business process
 e creare action
 -->
     <businessProcess
-            name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+            name="CRUDAnagraficaDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
         <forward name="default" path="/util/form.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Anagrafica_dottoratiBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
@@ -190,7 +190,7 @@ e creare action
     </businessProcess>
 
     <businessProcess
-            name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+            name="CRUDCicloDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
         <forward name="default" path="/util/form.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Ciclo_dottoratiBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
@@ -198,7 +198,7 @@ e creare action
     </businessProcess>
 
     <businessProcess
-            name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+            name="CRUDPhdtipoDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
         <forward name="default" path="/util/form.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Phdtipo_dottoratiBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
@@ -206,7 +206,7 @@ e creare action
     </businessProcess>
 
     <businessProcess
-            name="CRUDConfigTipoAttoBolloBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
+            name="CRUDTipocorsoDottoratiBP" className="it.cnr.jada.util.action.SimpleCRUDBP">
         <forward name="default" path="/util/form.jsp"/>
         <init-param name="bulkClassName" value="it.cnr.contab.incarichi00.bulk.Tipocorso_dottoratiBulk"/>
         <init-param name="componentSessionName" value="JADAEJB_CRUDComponentSession" />
