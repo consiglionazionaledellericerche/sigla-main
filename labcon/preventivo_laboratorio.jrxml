@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laboratori" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="preventivoLaboratori"/>
+	<style name="table" mode="Transparent" isBold="true">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="bold" fontName="Times New Roman" fontSize="10" isBold="true" pdfFontName="Times-Bold"/>
+	<parameter name="DIR_IMAGE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_SUBREPORT" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString language="json">
+		<![CDATA[]]>
+	</queryString>
+	<field name="anno" class="java.lang.String">
+		<fieldDescription><![CDATA[anno]]></fieldDescription>
+	</field>
+	<field name="annotre" class="java.lang.String">
+		<fieldDescription><![CDATA[annotre]]></fieldDescription>
+	</field>
+	<field name="nPreventivo" class="java.lang.String">
+		<fieldDescription><![CDATA[nPreventivo]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<fieldDescription><![CDATA[tipo]]></fieldDescription>
+	</field>
+	<field name="title" class="java.lang.String">
+		<fieldDescription><![CDATA[title]]></fieldDescription>
+	</field>
+	<field name="respItaliano" class="java.lang.String">
+		<fieldDescription><![CDATA[respItaliano]]></fieldDescription>
+	</field>
+	<field name="respStraniero" class="java.lang.String">
+		<fieldDescription><![CDATA[respStraniero]]></fieldDescription>
+	</field>
+	<field name="totPreventivoCaricoCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[totPreventivoCaricoCNR]]></fieldDescription>
+	</field>
+	<field name="cup" class="java.lang.String">
+		<fieldDescription><![CDATA[cup]]></fieldDescription>
+	</field>
+	<field name="nAssRicCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[nAssRicCNR]]></fieldDescription>
+	</field>
+	<field name="costoAssRicCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[costoAssRicCNR]]></fieldDescription>
+	</field>
+	<field name="importoAssRicCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[importoAssRicCNR]]></fieldDescription>
+	</field>
+	<field name="importoTotAssPersCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[importoTotAssPersCNR]]></fieldDescription>
+	</field>
+	<field name="nRicCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[nRicCNR]]></fieldDescription>
+	</field>
+	<field name="costoRicCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[costoRicCNR]]></fieldDescription>
+	</field>
+	<field name="importoRicCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[importoRicCNR]]></fieldDescription>
+	</field>
+	<field name="nAssCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[nAssCNR]]></fieldDescription>
+	</field>
+	<field name="costoAssCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[costoAssCNR]]></fieldDescription>
+	</field>
+	<field name="importoAssCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[importoAssCNR]]></fieldDescription>
+	</field>
+	<field name="importoBorsCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[importoBorsCNR]]></fieldDescription>
+	</field>
+	<field name="nBorsCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[nBorsCNR]]></fieldDescription>
+	</field>
+	<field name="borsCostoCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[borsCostoCNR]]></fieldDescription>
+	</field>
+	<field name="importoAssocCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[importoAssocCNR]]></fieldDescription>
+	</field>
+	<field name="nAssocCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[nAssocCNR]]></fieldDescription>
+	</field>
+	<field name="costoAssocCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[costoAssocCNR]]></fieldDescription>
+	</field>
+	<field name="importoTotPersCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[importoTotPersCNR]]></fieldDescription>
+	</field>
+	<field name="profOperaCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[profOperaCNR]]></fieldDescription>
+	</field>
+	<field name="matLabCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[matLabCNR]]></fieldDescription>
+	</field>
+	<field name="strumCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[strumCNR]]></fieldDescription>
+	</field>
+	<field name="dissCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[dissCNR]]></fieldDescription>
+	</field>
+	<field name="totAltreSpeseCNR" class="java.lang.String">
+		<fieldDescription><![CDATA[totAltreSpeseCNR]]></fieldDescription>
+	</field>
+	<field name="soggStran" class="java.lang.String">
+		<fieldDescription><![CDATA[soggStran]]></fieldDescription>
+	</field>
+	<field name="totSoggStran" class="java.lang.String">
+		<fieldDescription><![CDATA[totSoggStran]]></fieldDescription>
+	</field>
+	<field name="profOperaStran" class="java.lang.String">
+		<fieldDescription><![CDATA[profOperaStran]]></fieldDescription>
+	</field>
+	<field name="matLabStran" class="java.lang.String">
+		<fieldDescription><![CDATA[matLabStran]]></fieldDescription>
+	</field>
+	<field name="strumStran" class="java.lang.String">
+		<fieldDescription><![CDATA[strumStran]]></fieldDescription>
+	</field>
+	<field name="dissStran" class="java.lang.String">
+		<fieldDescription><![CDATA[dissStran]]></fieldDescription>
+	</field>
+	<field name="totAltreSpeseStran" class="java.lang.String">
+		<fieldDescription><![CDATA[totAltreSpeseStran]]></fieldDescription>
+	</field>
+	<field name="soggAltre" class="java.lang.String">
+		<fieldDescription><![CDATA[soggAltre]]></fieldDescription>
+	</field>
+	<field name="totSoggAltre" class="java.lang.String">
+		<fieldDescription><![CDATA[totSoggAltre]]></fieldDescription>
+	</field>
+	<field name="profOperaAltre" class="java.lang.String">
+		<fieldDescription><![CDATA[profOperaAltre]]></fieldDescription>
+	</field>
+	<field name="matLabAltre" class="java.lang.String">
+		<fieldDescription><![CDATA[matLabAltre]]></fieldDescription>
+	</field>
+	<field name="strumAltre" class="java.lang.String">
+		<fieldDescription><![CDATA[strumAltre]]></fieldDescription>
+	</field>
+	<field name="dissAltre" class="java.lang.String">
+		<fieldDescription><![CDATA[dissAltre]]></fieldDescription>
+	</field>
+	<field name="totAltreSpeseAltre" class="java.lang.String">
+		<fieldDescription><![CDATA[totAltreSpeseAltre]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<image isUsingCache="true">
+				<reportElement x="174" y="2" width="202" height="38" uuid="a5b896c4-f594-402b-97f1-507b694bfe7e"/>
+				<imageExpression><![CDATA[$P{DIR_IMAGE} + "CNR.JPG"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="39" width="521" height="33" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LABORATORI:  " + $F{anno}+
+"\n"+$F{nPreventivo}+"° Preventivo di Spesa:"+$F{tipo}+": "+$F{anno}+" - "+$F{annotre}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="471" splitType="Stretch">
+			<line>
+				<reportElement x="21" y="220" width="523" height="1" uuid="7364748e-0afa-4e04-a968-c4e88619f6a2"/>
+			</line>
+			<line>
+				<reportElement x="544" y="220" width="1" height="250" uuid="9fa62e2e-94f3-454e-8a70-000769346966"/>
+			</line>
+			<line>
+				<reportElement x="20" y="220" width="1" height="250" uuid="85585c34-a21f-42c6-ad21-4a0ed669925b"/>
+			</line>
+			<line>
+				<reportElement x="21" y="410" width="523" height="1" uuid="f0d761b9-1696-4882-8294-a08e21a4f7d4"/>
+			</line>
+			<staticText>
+				<reportElement x="21" y="100" width="212" height="20" uuid="533b6047-d712-4177-90a7-d1084f23c5ef"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[SPESE A CARICO DEL CNR]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="45" width="473" height="35" uuid="cdc55d32-c51a-421c-8768-3105713ffadb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nominativi dei Responsabili (Italiano e Straniero): "
+ + $F{respItaliano}+" - "+ $F{respStraniero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="30" width="473" height="15" uuid="74117d72-654e-4e44-89ee-1894aa15483a"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CUP:  " + $F{cup}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="10" width="473" height="20" uuid="def45739-8b09-4fae-94b2-6e799bf687f7"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Denominazione:  " + $F{title}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="28" y="230" width="357" height="20" uuid="5393071d-e25d-47d4-80dc-b78facbfe9ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Spese per missioni del personale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="220" width="50" height="36" uuid="c56c6eb6-d721-40ed-baa5-103e2ab214cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="443" y="221" width="48" height="30" uuid="1a13ffcd-2ed0-493d-9edc-165a1df002f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo 
+Unitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="220" width="50" height="34" uuid="824cde66-7035-4a90-995a-c232662323ea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importo
+Previsto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="256" width="358" height="20" uuid="d6f330a2-0e38-48c2-b49e-8daaf8ec1061"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Soggiorni di ricerca nel Paese straniero del personale inserito nel Research Team (ricercatori CNR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="275" width="358" height="15" uuid="da28e61c-ca54-4b3d-b654-15fd6f83d58d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Soggiorni di ricerca nel Paese straniero del personale inserito nel Research Team (assegnisti CNR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="291" width="358" height="20" uuid="9d7d82ee-161d-4580-b64b-32e37b5de600"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Soggiorni di ricerca nel Paese straniero del personale inserito nel Research Team (borsisti CNR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="310" width="358" height="20" uuid="a78be187-fa4e-42a5-baa8-969df2424ee9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Soggiorni di ricerca nel Paese straniero del personale inserito nel Research Team (associati al CNR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="335" width="454" height="14" uuid="654a0cee-1b76-4175-99f5-0791a3f2aeec"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Totali]]></text>
+			</staticText>
+			<line>
+				<reportElement x="22" y="255" width="523" height="1" uuid="320e4628-7f16-487b-90fa-7a4b935ca7f9"/>
+			</line>
+			<line>
+				<reportElement x="21" y="275" width="523" height="1" uuid="128761ce-574d-4672-ba20-979e8594ef3b"/>
+			</line>
+			<line>
+				<reportElement x="21" y="290" width="523" height="1" uuid="73f73f11-b74d-470a-8c89-a70cd3dd0e34"/>
+			</line>
+			<line>
+				<reportElement x="21" y="310" width="523" height="1" uuid="3bad6fcc-2180-4236-a465-74631d4d3163"/>
+			</line>
+			<line>
+				<reportElement x="21" y="330" width="523" height="1" uuid="c109e7b0-c9f1-4e9b-9cde-3750bfd3ce95"/>
+			</line>
+			<line>
+				<reportElement x="491" y="221" width="1" height="249" uuid="8f3071c2-b48a-4c5f-a93f-600089b44cb8"/>
+			</line>
+			<line>
+				<reportElement x="442" y="220" width="1" height="110" uuid="7ce7aa31-6c94-45fc-bd23-737e73685724"/>
+			</line>
+			<line>
+				<reportElement x="392" y="220" width="1" height="110" uuid="a7d86c9c-621f-4e9c-a028-fb543c77a6b9"/>
+			</line>
+			<line>
+				<reportElement x="21" y="349" width="523" height="1" uuid="edd76df8-038a-45ed-8d99-423676704a33"/>
+			</line>
+			<line>
+				<reportElement x="21" y="370" width="523" height="1" uuid="a5336ec5-fa70-4ee2-9a4c-26835529af15"/>
+			</line>
+			<line>
+				<reportElement x="21" y="390" width="523" height="1" uuid="7387e9d2-b2a1-4e5b-b400-b33f8e1ff6d9"/>
+			</line>
+			<line>
+				<reportElement x="21" y="430" width="523" height="1" uuid="c923f43e-921e-4750-856a-b47349d6c4d3"/>
+			</line>
+			<line>
+				<reportElement x="21" y="450" width="523" height="1" uuid="90cfe6d0-b5f9-4881-a968-64a9107a6bce"/>
+			</line>
+			<line>
+				<reportElement x="20" y="470" width="525" height="1" uuid="10cc1588-e8f7-421f-9157-6cea1d781a78"/>
+			</line>
+			<staticText>
+				<reportElement x="31" y="454" width="454" height="14" uuid="0641723e-cbc1-4260-ac32-9104cc88f81e"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Totali]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="350" width="357" height="20" uuid="db3bcd60-4a1f-4f42-9bdf-7821c6108e3a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALTRE SPESE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="494" y="347" width="44" height="26" uuid="fd914edc-80ed-4d2a-8774-e974dab090c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Importo
+Previsto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="370" width="468" height="20" uuid="1ed60260-5dd9-4ba7-ae2f-821dffbe8c28"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prestazione professionali / contratti d'opera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="390" width="468" height="20" uuid="48085e22-1a1c-4850-80c2-3edd61655e83"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Materiale di Laboratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="431" width="468" height="20" uuid="8e00d142-eef9-4beb-8065-74f3bdb0aa19"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Disseminazione dei risultati ( pubblicazioni, poster, brochure, protezione della conoscenza - solo quota brevetto spettante al CNR)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="395" y="256" width="46" height="17" uuid="1652a926-9935-4c87-a48f-faaac0d006b3"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nRicCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="444" y="256" width="46" height="17" uuid="ffc285f8-59f3-4a00-be0a-f3573fc2522e"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costoRicCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="256" width="50" height="17" uuid="fb875a8c-41a2-46ec-8300-906e3822b712"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoRicCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="275" width="52" height="15" uuid="7f7283b6-770e-44b6-aba6-86bc883d86b7"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoAssCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="395" y="275" width="46" height="15" uuid="1f275100-d8f6-4268-acf5-a2f47b1ea8a0"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nAssCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="443" y="276" width="48" height="14" uuid="907f542d-dc91-4685-b189-33622334ee14"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costoAssCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="293" width="52" height="15" uuid="2e02eeb7-5df4-4fb6-921f-ed8c279e4cd1"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoBorsCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="395" y="293" width="46" height="15" uuid="8c10e53d-b6a1-43b3-8d8b-071ca691664d"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nBorsCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="441" y="294" width="48" height="14" uuid="6696581b-6543-424a-9d30-07f98d9035eb"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{borsCostoCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="313" width="52" height="15" uuid="c873c041-a49b-44c6-91b7-815d9c81465e"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoAssocCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="395" y="313" width="46" height="15" uuid="5c9534f0-2ae1-416e-bd04-3260e96a99bc"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nAssocCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="443" y="313" width="48" height="14" uuid="a3bcd8d9-55a5-400a-bd1c-2046813b7cff"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costoAssocCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="333" width="52" height="15" uuid="7194d04b-c8e2-4618-a224-22b737c9d35d"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoTotPersCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="372" width="52" height="15" uuid="e0d44403-c226-40d9-833e-0d0e5d105f44"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{profOperaCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="392" width="52" height="15" uuid="d04134d6-d312-40ca-be9d-e2512ab24f55"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matLabCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="413" width="52" height="15" uuid="2a8338c0-342e-4e76-a719-f5a549155357"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{strumCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="432" width="52" height="15" uuid="ff324325-7f95-4b6f-8bfb-e04d10202295"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dissCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="453" width="52" height="15" uuid="1944a9e1-b2ce-4a05-86af-15e7a6e51467"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totAltreSpeseCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="410" width="468" height="20" uuid="f7424705-9b2b-4da4-a419-9993db699703"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Piccola strumentazione di laboratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="140" width="357" height="20" uuid="423afbb6-1988-4a16-ae90-b820c14d09de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Spese di Personale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="130" width="50" height="36" uuid="e5e0e3d1-a5b2-46f6-9083-e2e2857972a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="131" width="48" height="30" uuid="91846056-315a-4fae-b67e-42cb76b56679"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo 
+Unitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="130" width="50" height="34" uuid="06988488-f4f3-4718-a1fa-0ef208d31b0b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importo
+Previsto]]></text>
+			</staticText>
+			<line>
+				<reportElement x="15" y="166" width="521" height="1" uuid="4b3bffd8-93f0-4723-9c03-243149404c36"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement x="388" y="166" width="46" height="17" uuid="9a6da2d4-c160-4622-9c6e-02883beb5295"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nAssRicCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="437" y="166" width="46" height="17" uuid="2b36cceb-2ae2-45db-af8a-fb0e67c112ed"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costoAssRicCNR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="485" y="166" width="50" height="17" uuid="bbdc908f-1bd3-41af-91a5-10acaa159c3c"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoAssRicCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="385" y="131" width="1" height="52" uuid="25a05e71-5f60-47aa-b729-c52d485d47d4"/>
+			</line>
+			<line>
+				<reportElement x="436" y="130" width="1" height="53" uuid="62555978-cc0a-47e9-ae20-e4b8fb802efe"/>
+			</line>
+			<line>
+				<reportElement x="485" y="130" width="1" height="69" uuid="98b97676-d5a4-473f-bca7-77437eab7ce4"/>
+			</line>
+			<line>
+				<reportElement x="537" y="130" width="1" height="69" uuid="4a3b277c-2f2f-4b23-ae18-788dca976265"/>
+			</line>
+			<line>
+				<reportElement x="14" y="130" width="1" height="69" uuid="df30d622-9c7e-4f43-9a7e-d90973c10f03"/>
+			</line>
+			<line>
+				<reportElement x="15" y="182" width="523" height="1" uuid="6b987706-63d0-4c75-9e2a-5faff620845a"/>
+			</line>
+			<line>
+				<reportElement x="14" y="198" width="523" height="1" uuid="be2f743d-e3b7-4f75-977b-e15d3f4a180b"/>
+			</line>
+			<staticText>
+				<reportElement x="21" y="184" width="454" height="14" uuid="78f0d026-28c0-429b-aaee-24bf0af3c555"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Totali]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="486" y="182" width="52" height="15" uuid="e17147a9-ce0b-400b-b1a8-b3837b9ded17"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{importoTotAssPersCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="167" width="363" height="14" uuid="a7b9bcaf-d535-407c-85b3-688be07c2286"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Assegno di ricerca o borsa di studio per personale selezionato ad hoc]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="80" width="473" height="15" uuid="5c783038-a0c4-490c-aa74-c31837a8279b"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Totale importo Preventivo a carico del CNR:  " + $F{totPreventivoCaricoCNR}+" €"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="15" y="130" width="523" height="1" uuid="294db22a-a3ea-4049-a223-112549774306"/>
+			</line>
+		</band>
+		<band height="284" splitType="Stretch"/>
+		<band height="661" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="100" width="269" height="20" uuid="533b6047-d712-4177-90a7-d1084f23c5ef"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[SPESE A CARICO DEL PARTNER STRANIERO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="10" width="473" height="29" uuid="def45739-8b09-4fae-94b2-6e799bf687f7"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Denominazione:  " + $F{title}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="200" width="469" height="20" uuid="5393071d-e25d-47d4-80dc-b78facbfe9ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Spese per missioni del personale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="190" width="50" height="34" uuid="824cde66-7035-4a90-995a-c232662323ea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importo
+Previsto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="220" width="358" height="20" uuid="d6f330a2-0e38-48c2-b49e-8daaf8ec1061"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Soggiorni di ricerca in Italia di ricercatori stranieri inseriti nel Research Team]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="245" width="454" height="14" uuid="654a0cee-1b76-4175-99f5-0791a3f2aeec"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Totali]]></text>
+			</staticText>
+			<line>
+				<reportElement x="21" y="220" width="523" height="1" uuid="320e4628-7f16-487b-90fa-7a4b935ca7f9"/>
+			</line>
+			<line>
+				<reportElement x="21" y="240" width="522" height="1" uuid="c109e7b0-c9f1-4e9b-9cde-3750bfd3ce95"/>
+			</line>
+			<line>
+				<reportElement x="492" y="194" width="1" height="185" uuid="8f3071c2-b48a-4c5f-a93f-600089b44cb8"/>
+			</line>
+			<line>
+				<reportElement x="22" y="259" width="521" height="1" uuid="edd76df8-038a-45ed-8d99-423676704a33"/>
+			</line>
+			<line>
+				<reportElement x="21" y="280" width="523" height="1" uuid="a5336ec5-fa70-4ee2-9a4c-26835529af15"/>
+			</line>
+			<line>
+				<reportElement x="21" y="300" width="522" height="1" uuid="7387e9d2-b2a1-4e5b-b400-b33f8e1ff6d9"/>
+			</line>
+			<line>
+				<reportElement x="21" y="340" width="523" height="1" uuid="c923f43e-921e-4750-856a-b47349d6c4d3"/>
+			</line>
+			<line>
+				<reportElement x="21" y="360" width="523" height="1" uuid="90cfe6d0-b5f9-4881-a968-64a9107a6bce"/>
+			</line>
+			<line>
+				<reportElement x="21" y="380" width="523" height="1" uuid="10cc1588-e8f7-421f-9157-6cea1d781a78"/>
+			</line>
+			<staticText>
+				<reportElement x="32" y="364" width="454" height="14" uuid="0641723e-cbc1-4260-ac32-9104cc88f81e"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Totali]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="259" width="357" height="20" uuid="db3bcd60-4a1f-4f42-9bdf-7821c6108e3a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALTRE SPESE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="495" y="257" width="44" height="26" uuid="fd914edc-80ed-4d2a-8774-e974dab090c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Importo
+Previsto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="280" width="468" height="20" uuid="1ed60260-5dd9-4ba7-ae2f-821dffbe8c28"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prestazione professionali / contratti d'opera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="300" width="468" height="20" uuid="48085e22-1a1c-4850-80c2-3edd61655e83"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Materiale di Laboratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="320" width="468" height="20" uuid="f7424705-9b2b-4da4-a419-9993db699703"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Piccola strumentazione di laboratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="341" width="468" height="20" uuid="8e00d142-eef9-4beb-8065-74f3bdb0aa19"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Disseminazione dei risultati ( pubblicazioni, poster, brochure, protezione della conoscenza - solo quota brevetto spettante al CNR)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="543" y="193" width="1" height="187" uuid="a7f3c710-d5d8-47f7-992f-192823df6616"/>
+			</line>
+			<line>
+				<reportElement x="21" y="193" width="523" height="1" uuid="8b6987c3-052a-45ac-acd2-a682bd8a1ca2"/>
+			</line>
+			<line>
+				<reportElement x="21" y="193" width="1" height="187" uuid="8e5d5805-62e8-4963-adf8-c31da38ca8f5"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="223" width="52" height="15" uuid="018af52c-f662-4baf-a1aa-e9a4a0b730fa"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{soggStran}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="242" width="52" height="15" uuid="cbcbca89-3283-4300-9bf2-1126ae5b940f"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totSoggStran}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="283" width="52" height="15" uuid="c70d1ed7-3843-465e-a4ee-73ecede57533"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{profOperaStran}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="302" width="52" height="15" uuid="2ea31e27-1e6f-4323-b8db-4c1adc11ccff"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matLabStran}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="322" width="52" height="15" uuid="7ce437d7-dd92-4334-ad75-9100a60cad11"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{strumStran}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="343" width="52" height="15" uuid="e998fe5a-2b18-4c3a-92f2-ba46bf0f3226"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dissStran}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="363" width="52" height="15" uuid="a6ad100e-02cb-49d1-861b-d6e759e2f507"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totAltreSpeseStran}+" €"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="21" y="320" width="523" height="1" uuid="6d35711d-1af3-4bec-affc-1b0f190a23a9"/>
+			</line>
+		</band>
+		<band height="284" splitType="Stretch"/>
+		<band height="661" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="100" width="312" height="20" uuid="533b6047-d712-4177-90a7-d1084f23c5ef"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[SPESE A CARICO DI ALTRE ISTITUZIONI ITALIANE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement x="23" y="10" width="473" height="29" uuid="def45739-8b09-4fae-94b2-6e799bf687f7"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Denominazione:  " + $F{title}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="29" y="195" width="357" height="20" uuid="5393071d-e25d-47d4-80dc-b78facbfe9ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Spese per missioni del personale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="493" y="195" width="50" height="30" uuid="824cde66-7035-4a90-995a-c232662323ea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importo
+Previsto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="225" width="456" height="14" uuid="a78be187-fa4e-42a5-baa8-969df2424ee9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Soggiorni di ricerca nel Paese straniero del personale inserito nel Research Team (associati al CNR)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="245" width="454" height="14" uuid="654a0cee-1b76-4175-99f5-0791a3f2aeec"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Totali]]></text>
+			</staticText>
+			<line>
+				<reportElement x="21" y="220" width="523" height="1" uuid="320e4628-7f16-487b-90fa-7a4b935ca7f9"/>
+			</line>
+			<line>
+				<reportElement x="20" y="240" width="523" height="1" uuid="c109e7b0-c9f1-4e9b-9cde-3750bfd3ce95"/>
+			</line>
+			<line>
+				<reportElement x="492" y="196" width="1" height="183" uuid="8f3071c2-b48a-4c5f-a93f-600089b44cb8"/>
+			</line>
+			<line>
+				<reportElement x="21" y="259" width="523" height="1" uuid="edd76df8-038a-45ed-8d99-423676704a33"/>
+			</line>
+			<line>
+				<reportElement x="21" y="280" width="523" height="1" uuid="a5336ec5-fa70-4ee2-9a4c-26835529af15"/>
+			</line>
+			<line>
+				<reportElement x="21" y="300" width="523" height="1" uuid="7387e9d2-b2a1-4e5b-b400-b33f8e1ff6d9"/>
+			</line>
+			<line>
+				<reportElement x="21" y="340" width="523" height="1" uuid="c923f43e-921e-4750-856a-b47349d6c4d3"/>
+			</line>
+			<line>
+				<reportElement x="21" y="360" width="523" height="1" uuid="90cfe6d0-b5f9-4881-a968-64a9107a6bce"/>
+			</line>
+			<line>
+				<reportElement x="21" y="380" width="523" height="1" uuid="10cc1588-e8f7-421f-9157-6cea1d781a78"/>
+			</line>
+			<staticText>
+				<reportElement x="32" y="364" width="454" height="14" uuid="0641723e-cbc1-4260-ac32-9104cc88f81e"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Totali]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="259" width="357" height="20" uuid="db3bcd60-4a1f-4f42-9bdf-7821c6108e3a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALTRE SPESE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="495" y="257" width="44" height="26" uuid="fd914edc-80ed-4d2a-8774-e974dab090c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Importo
+Previsto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="280" width="468" height="20" uuid="1ed60260-5dd9-4ba7-ae2f-821dffbe8c28"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Prestazione professionali / contratti d'opera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="300" width="468" height="20" uuid="48085e22-1a1c-4850-80c2-3edd61655e83"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Materiale di Laboratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="320" width="468" height="20" uuid="f7424705-9b2b-4da4-a419-9993db699703"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Piccola strumentazione di laboratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="341" width="468" height="20" uuid="8e00d142-eef9-4beb-8065-74f3bdb0aa19"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Disseminazione dei risultati ( pubblicazioni, poster, brochure, protezione della conoscenza - solo quota brevetto spettante al CNR)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="21" y="196" width="1" height="185" uuid="1b2b0524-1646-4bdd-a4b7-11ecce26b148"/>
+			</line>
+			<line>
+				<reportElement x="21" y="195" width="523" height="1" uuid="d57657f0-24d7-435d-84ce-0b01ec4f32c6"/>
+			</line>
+			<line>
+				<reportElement x="543" y="195" width="1" height="186" uuid="27144de4-1d10-4110-8f00-2be859c03032"/>
+			</line>
+			<line>
+				<reportElement x="21" y="320" width="523" height="1" uuid="d935f6a8-7d63-4499-98b0-f74be4f118b6"/>
+			</line>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="224" width="52" height="15" uuid="41951f53-9a7e-4121-9dd6-c55e6480ba4c"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{soggAltre}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="243" width="52" height="15" uuid="a9b99d12-0ef5-45ed-ac74-a12468514e83"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totSoggAltre}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="284" width="52" height="15" uuid="43392cf3-f45d-4e09-90a7-d45b0dfe6f0b"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{profOperaAltre}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="303" width="52" height="15" uuid="504029fd-7997-43be-8d8f-2ef1ef4538f6"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matLabAltre}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="492" y="323" width="52" height="15" uuid="568dabe7-d4a5-444e-b2a5-45577bc38382"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{strumAltre}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="344" width="52" height="15" uuid="32e04f68-6ebf-459e-89bc-d5487293baed"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dissAltre}+" €"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement x="493" y="364" width="52" height="15" uuid="b256c33f-1b62-4675-9c15-2a0e7379552a"/>
+				<box>
+					<pen lineWidth="0.0" lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Dashed"/>
+					<leftPen lineWidth="0.0" lineStyle="Dashed"/>
+					<bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+					<rightPen lineWidth="0.0" lineStyle="Dashed"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totAltreSpeseAltre}+" €"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="10" width="161" height="21" uuid="5934f960-b2b3-4b06-b944-d7ea3ab23f31"/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="383" y="10" width="161" height="21" uuid="5ffc1b5f-8cdb-4640-9187-3d1c32c336b6"/>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="233" y="30" width="100" height="30" uuid="61ca4d08-1b5e-4347-964a-b4e8ddcdb557"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="335" splitType="Stretch"/>
+	</summary>
+</jasperReport>
