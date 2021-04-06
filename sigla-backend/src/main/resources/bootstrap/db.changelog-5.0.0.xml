@@ -4251,4 +4251,18 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+<!--
+    <changeSet author="gianfranco.gasparro" id="ins-num-posizione-creditoria-pagopa">
+        <addColumn tableName="PENDENZA_PAGOPA">
+            <column name="esercizio_voce" remarks="Esercizio Elemento Voce." type="SMALLINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cd_elemento_voce" remarks="Codice Identificativo dell'elemento voce." type="VARCHAR(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ti_appartenenza" type="CHAR(1)"/>
+            <column name="ti_gestione" type="CHAR(1)"/>
+        </addColumn>
+    </changeSet>
+-->
 </databaseChangeLog>

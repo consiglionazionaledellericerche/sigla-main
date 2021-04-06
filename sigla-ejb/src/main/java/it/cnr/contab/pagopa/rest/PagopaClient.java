@@ -10,18 +10,8 @@ import it.cnr.si.service.dto.anagrafica.scritture.PersonaDto;
 
 @Headers({"Content-Type: application/json"})
 public interface PagopaClient {
-    @RequestLine("GET /ace/v1/persona/{id}")
-    PersonaWebDto personaById(@Param("id") int var1);
-
 
     //    http://govpay.test.si.cnr.it/govpay
-    @RequestLine("POST /ace/v1/pendenza/create")
-    Pendenza creaPendenza(Pendenza pendenza);
-
-    @RequestLine("PUT /ace/v1/persona/update")
-    PersonaWebDto updatePersona(PersonaDto var1);
-
-    @RequestLine("DELETE /ace/v1/persona/delete/{id}")
-    Response deletePersona(@Param("id") int var1);
-
+    @RequestLine("PUT /backend/api/pendenze/rs/basic/v2/pendenze/{idA2A}/{idPendenza}")
+    Pendenza creaPendenza(@Param("idA2A") String application, @Param("idPendenza") Long idPendenza, Pendenza pendenza);
 }

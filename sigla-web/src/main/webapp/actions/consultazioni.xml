@@ -203,6 +203,8 @@
 	</action>
 	<action path="/ConsTerzoPerCompensoAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
+	<action path="/ConsUtenteGestAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
+	</action>
 	<action path="/ConsRiepilogoSiopeMandatiRestAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction">
 	</action>
 	<action path="/ConsDivisaAction" actionClass="it.cnr.jada.util.action.ConsultazioniAction"
@@ -1814,5 +1816,13 @@
 		<init-param name="defaultAction" value="ConsRiepilogoSiopeMandatiRestAction" />
 		<init-param name="searchResultColumnSet" value="BASEDETT" />
 		<init-param name="freeSearchSet" value="BASEDETT" />
+	</businessProcess>
+	<businessProcess name="ConsUtenteGestBP"
+					 className="it.cnr.contab.consultazioni.bp.ConsultazioniRestBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.utenze00.bulk.UtenteBulk" />
+		<init-param name="defaultAction" value="ConsUtenteGestAction" />
+		<init-param name="searchResultColumnSet" value="restService" />
 	</businessProcess>
 </action-mappings>

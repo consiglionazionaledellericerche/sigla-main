@@ -8,6 +8,8 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
+import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.util.Utility;
 import net.dongliu.gson.GsonJava8TypeAdapterFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,25 @@ public class PagopaService {
     String baseUrl;
     String username;
     String password;
+    String usernameApp;
+    String passwordApp;
+
+    public String getUsernameApp() {
+        return usernameApp;
+    }
+
+    public void setUsernameApp(String usernameApp) {
+        this.usernameApp = usernameApp;
+    }
+
+    public String getPasswordApp() {
+        return passwordApp;
+    }
+
+    public void setPasswordApp(String passwordApp) {
+        this.passwordApp = passwordApp;
+    }
+
     private PagopaClient pagopaClient;
 
     public String getBaseUrl() {
@@ -66,9 +87,12 @@ public class PagopaService {
         pagopaClient = Feign.builder()
                 .decoder(new GsonDecoder(gsonParser))
                 .encoder(new GsonEncoder(gsonParser))
-                .requestInterceptor(new BasicAuthRequestInterceptor(username, password))
+                .requestInterceptor(new BasicAuthRequestInterceptor(usernameApp, passwordApp))
                 .errorDecoder(new ErrorDecoder.Default())
                 .retryer(new Retryer.Default())
                 .target(PagopaClient.class, baseUrl);
+    }
+    public Pendenza creaPendenza(Long idPendenza, Pendenza pendenza){
+        return pagopaClient.creaPendenza(Utility.APPLICATION_TITLE.substring(0, 5), idPendenza, pendenza);
     }
 }

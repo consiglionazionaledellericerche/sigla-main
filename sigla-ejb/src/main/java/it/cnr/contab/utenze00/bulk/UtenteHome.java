@@ -23,8 +23,11 @@ import java.util.List;
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteBulk;
 import it.cnr.contab.config00.bulk.Parametri_enteHome;
+import it.cnr.contab.config00.latt.bulk.WorkpackageBulk;
+import it.cnr.contab.config00.latt.bulk.WorkpackageHome;
 import it.cnr.contab.config00.sto.bulk.CdrBulk;
 import it.cnr.contab.config00.sto.bulk.CdrHome;
+import it.cnr.contab.consultazioni.bulk.ConsultazioniRestHome;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
 import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperMagBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
@@ -36,7 +39,7 @@ import it.cnr.jada.persistency.*;
 import it.cnr.jada.persistency.beans.*;
 import it.cnr.jada.persistency.sql.*;
 
-public class UtenteHome extends BulkHome {
+public class UtenteHome extends BulkHome implements ConsultazioniRestHome {
 
 
 	final static String TIPO_COMUNE = "U";
@@ -281,5 +284,18 @@ public java.util.Collection findUtente_indirizzi_email(UtenteBulk utente) throws
 		return bulkList;
 	}
 
+
+	@Override
+	public SQLBuilder restSelect(UserContext userContext, SQLBuilder sql, CompoundFindClause compoundfindclause, OggettoBulk oggettobulk) throws ComponentException, PersistencyException {
+		if(compoundfindclause == null){
+			if(oggettobulk != null)
+				compoundfindclause = oggettobulk.buildFindClauses(null);
+		}else{
+			compoundfindclause = CompoundFindClause.and(compoundfindclause, oggettobulk.buildFindClauses(Boolean.FALSE));
+		}
+		sql =  getHomeCache().getHome(UtenteBulk.class, "V_UTENTE_LDAP").selectByClause(userContext, compoundfindclause);
+
+		return sql;
+	}
 
 }

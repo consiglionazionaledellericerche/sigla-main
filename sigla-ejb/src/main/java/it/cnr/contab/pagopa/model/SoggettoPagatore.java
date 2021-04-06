@@ -48,8 +48,6 @@ public class SoggettoPagatore {
     private String email;
     @JsonProperty("cellulare")
     private String cellulare;
-    @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("tipo")
     public String getTipo() {
@@ -159,16 +157,6 @@ public class SoggettoPagatore {
     @JsonProperty("cellulare")
     public void setCellulare(String cellulare) {
         this.cellulare = cellulare;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    @JsonAnySetter
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
     }
 
 }

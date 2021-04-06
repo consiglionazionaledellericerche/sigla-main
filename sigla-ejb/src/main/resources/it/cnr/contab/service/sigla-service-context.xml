@@ -92,6 +92,8 @@
 		<property name="baseUrl" value="${pagopa.govpay.base_url}"/>
 		<property name="username" value="${pagopa.govpay.username}"/>
 		<property name="password" value="${pagopa.govpay.password}"/>
+		<property name="usernameApp" value="${pagopa.govpay.usernameApp}"/>
+		<property name="passwordApp" value="${pagopa.govpay.passwordApp}"/>
 	</bean>
 
 	<bean id="fatturaPassivaElettronicaService" class="it.cnr.contab.docamm00.service.FatturaPassivaElettronicaService">
