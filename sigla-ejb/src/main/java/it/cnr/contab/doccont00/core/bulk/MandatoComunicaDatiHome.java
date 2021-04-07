@@ -102,7 +102,11 @@ public class MandatoComunicaDatiHome extends BulkHome {
         if (daData != null){
             sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.GREATER_EQUALS, daData );
         }
+        int anno = 0;
         if (aData != null){
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(aData.getTime());
+            anno = cal.get(Calendar.YEAR);
             sql.addSQLClause("AND", "dt_pagamento", SQLBuilder.LESS_EQUALS, aData );
         }
         sql.addSQLClause("AND", "mandato.stato", SQLBuilder.EQUALS, MandatoBulk.STATO_MANDATO_PAGATO );
@@ -110,7 +114,12 @@ public class MandatoComunicaDatiHome extends BulkHome {
         sql.addSQLClause("AND", "ti_documento", SQLBuilder.EQUALS, "M" );
         sql.openParenthesis(FindClause.AND);
         sql.addSQLClause("OR", "ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_PAGAMENTO );
-        sql.addSQLClause("OR", "ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_REGOLAM_SOSPESO );
+        sql.openParenthesis(FindClause.OR);
+        sql.addSQLClause("AND", "ti_mandato", SQLBuilder.EQUALS, MandatoBulk.TIPO_REGOLAM_SOSPESO );
+        if (anno != 0){
+            sql.addSQLClause("AND", "mandato.esercizio", SQLBuilder.EQUALS, anno);
+        }
+        sql.closeParenthesis();
         sql.closeParenthesis();
         sql.addSQLClause("AND", "FL_COMUNICA_PAGAMENTI", SQLBuilder.EQUALS, "Y" );
 
