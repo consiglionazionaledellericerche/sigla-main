@@ -58,8 +58,16 @@
 	<td colspan=2>
 		<% bp.getController().writeFormInput( out, "dtScadenza"); %></td>
 	</tr>
+	<tr>
+	<td><% bp.getController().writeFormLabel( out, "cd_elemento_voce"); %></td>
+	<td>
+	    <% bp.getController().writeFormInput( out, "cd_elemento_voce"); %>
+	    <% bp.getController().writeFormInput( out, "ds_elemento_voce"); %>
+      <% bp.getController().writeFormInput( out, "find_elemento_voce"); %>
+	</td>
+	</tr>
 	</table>
-</div>	
+</div>
 
 <div class="Group card p-2">
 	<table class="Panel">

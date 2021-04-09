@@ -19,6 +19,7 @@ package it.cnr.contab.pagopa.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -35,6 +36,7 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public static final String STATO_VALIDO = "VAL";
 	public static final String STATO_CHIUSO = "CHI";
 	public static final String STATO_ANNULLATO = "ANN";
+	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce;
 	private Unita_organizzativaBulk unitaOrganizzativa;
 	protected TerzoBulk terzo;
 	private TipoPendenzaPagopaBulk tipoPendenzaPagopa;
@@ -45,6 +47,15 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 		statoKeys.put(STATO_ANNULLATO,"Annullato");
 		statoKeys.put(STATO_CHIUSO,"Chiuso");
 	};
+
+	public Elemento_voceBulk getElemento_voce() {
+		return elemento_voce;
+	}
+
+	public void setElemento_voce(Elemento_voceBulk elemento_voce) {
+		this.elemento_voce = elemento_voce;
+	}
+
 	public final java.util.Dictionary getStatoKeys() {
 		return statoKeys;
 	}
@@ -64,7 +75,43 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	public void setUnitaOrganizzativa(Unita_organizzativaBulk unitaOrganizzativa) {
 		this.unitaOrganizzativa = unitaOrganizzativa;
 	}
+	public java.lang.String getCd_elemento_voce() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+		if (elemento_voce == null)
+			return null;
+		return elemento_voce.getCd_elemento_voce();
+	}
+	public java.lang.String getTi_appartenenza() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+		if (elemento_voce == null)
+			return null;
+		return elemento_voce.getTi_appartenenza();
+	}
+	public java.lang.String getTi_gestione() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+		if (elemento_voce == null)
+			return null;
+		return elemento_voce.getTi_gestione();
+	}
 
+	public java.lang.Integer getEsercizioVoce() {
+		it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce = this.getElemento_voce();
+		if (elemento_voce == null)
+			return null;
+		return elemento_voce.getEsercizio();
+	}
+	public void setCd_elemento_voce(java.lang.String cd_elemento_voce) {
+		this.getElemento_voce().setCd_elemento_voce(cd_elemento_voce);
+	}
+	public void setTi_appartenenza(java.lang.String ti_appartenenza) {
+		this.getElemento_voce().setTi_appartenenza(ti_appartenenza);
+	}
+	public void setTi_gestione(java.lang.String ti_gestione) {
+		this.getElemento_voce().setTi_gestione(ti_gestione);
+	}
+	public void setEsercizioVoce(java.lang.Integer esercizioVoce) {
+		this.getElemento_voce().setEsercizio(esercizioVoce);
+	}
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
 		setStato(STATO_VALIDO);
 		setUnitaOrganizzativa(new Unita_organizzativaBulk());

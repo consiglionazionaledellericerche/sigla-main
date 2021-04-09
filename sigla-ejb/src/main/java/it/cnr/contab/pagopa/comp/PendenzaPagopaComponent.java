@@ -24,13 +24,16 @@ import it.cnr.contab.anagraf00.core.bulk.TerzoHome;
 import it.cnr.contab.anagraf00.tabter.bulk.ComuneBulk;
 import it.cnr.contab.anagraf00.tabter.bulk.NazioneBulk;
 import it.cnr.contab.config00.bulk.Configurazione_cnrBulk;
+import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativa_enteBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
 import it.cnr.contab.docamm00.docs.bulk.IDocumentoAmministrativoBulk;
 import it.cnr.contab.docamm00.docs.bulk.Numerazione_doc_ammBulk;
 import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.doccont00.comp.DateServices;
+import it.cnr.contab.incarichi00.action.IncarichiProceduraAction;
 import it.cnr.contab.pagopa.bulk.GestionePagopaBulk;
 import it.cnr.contab.pagopa.bulk.GestionePagopaHome;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
@@ -46,6 +49,9 @@ import it.cnr.jada.comp.CRUDComponent;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.sql.CompoundFindClause;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
@@ -57,6 +63,7 @@ import java.util.Collection;
 
 public class PendenzaPagopaComponent extends CRUDComponent {
 	private static final long serialVersionUID = 1L;
+	private transient static final Logger logger = LoggerFactory.getLogger(PendenzaPagopaComponent.class);
 	PagopaService pagopaService =
 			SpringUtil.getBean("pagopaService", PagopaService.class);
 
@@ -66,11 +73,11 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		try {
 			generaPendenzaSuPagopa(usercontext, pendenzaPagopaBulk);
 		} catch (Throwable t) {
+			logger.info(t.getMessage());
 			throw handleException(t);
 		}
 		return pendenzaPagopaBulk;
 	}
-
 	public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws ComponentException {
 
 		try {
@@ -124,7 +131,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 	private void generaPendenzaSuPagopa(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException, IntrospectionException, PersistencyException {
 		Timestamp dataOdierna = DateServices.getDataOdierna();
 		Pendenza pendenza = new Pendenza();
-		pendenza.setIdTipoPendenza("PRESTAZIONE");
+		pendenza.setIdTipoPendenza("LIBERO");
 		TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
 
 		pendenza.setIdDominio(terzoCnr.getPartita_iva_anagrafico());
@@ -169,13 +176,15 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		pendenza.setDataPromemoriaScadenza(pendenza.getDataScadenza());
 		Voci voci = new Voci();
 		try {
-			String iban = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, 0, null, "F24EP", "CONTO_CORRENTE");
+			String iban = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, 0, null, "F24_EP", "CONTO_CORRENTE");
 			voci.setIbanAccredito(iban);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
 		voci.setDescrizione(pendenzaPagopaBulk.getDescrizione());
 		voci.setIdVocePendenza(pendenzaPagopaBulk.getId().toString());
+		voci.setCodiceContabilita(pendenzaPagopaBulk.getCd_elemento_voce());
+		voci.setTipoContabilita("SIOPE");
 		voci.setImporto(pendenzaPagopaBulk.getImportoPendenza());
 		pendenza.setVoci(Arrays.asList(voci));
 
@@ -225,6 +234,18 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		return codiceAvviso;
 	}
 
+	public it.cnr.jada.persistency.sql.SQLBuilder selectElemento_voceByClause(
+			UserContext aUC,
+			PendenzaPagopaBulk pendenzaPagopaBulk,
+			Elemento_voceBulk elemento_voceBulk,
+			CompoundFindClause clauses)
+			throws ComponentException {
+		it.cnr.jada.persistency.sql.SQLBuilder sql = getHome(aUC, elemento_voceBulk).createSQLBuilder();
+		sql.addSQLClause("AND", "ESERCIZIO", sql.EQUALS, CNRUserContext.getEsercizio(aUC));
+		sql.addSQLClause("AND", "TI_GESTIONE", sql.EQUALS, "E");
+		sql.addClause(clauses);
+		return sql;
+	}
 	private TipoPendenzaPagopaBulk getTipoScadenzaPagopaBulk(UserContext userContext, GestionePagopaBulk gestionePagopaBulk) throws ComponentException {
 		TipoPendenzaPagopaBulk tipoPendenzaPagopaBulk = gestionePagopaBulk.getTipoPendenzaPagopa();
 		try {

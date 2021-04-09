@@ -195,6 +195,33 @@
 			enabledOnEdit="false"
 			nullable="false"
 			label="Posizione" />
+	<fieldProperty
+			name="find_elemento_voce"
+			property="elemento_voce"
+			inputType="SEARCHTOOL"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			nullable="false"
+			enabledOnFreeSearch="true"/>
+	/>
+	<fieldProperty
+			name="cd_elemento_voce"
+			property="elemento_voce.cd_elemento_voce"
+			label="Voce Bilancio"
+			inputType="TEXT"
+			maxLength="20"
+			inputSize="10"
+			enabledOnSearch="true"
+	/>
+	<fieldProperty
+			name="ds_elemento_voce"
+			property="elemento_voce.ds_elemento_voce"
+			label=""
+			inputType="ROTEXT"
+			inputSize="20"
+			enabledOnSearch="true"
+	/>
 	<form name="searchtool" >
 		<formFieldProperty
 				name="esercizio" />
@@ -302,4 +329,19 @@
 		name="dtScadenza" />
 	<findFieldProperty
 		name="tipoPosizione" />
+	<columnFieldProperty
+			name="cd_elemento_voce"
+	/>
+	<formFieldProperty
+			name="find_elemento_voce"
+	/>
+	<formFieldProperty
+			name="cd_elemento_voce"
+	/>
+	<formFieldProperty
+			name="ds_elemento_voce"
+	/>
+	<findFieldProperty
+			name="cd_elemento_voce"
+	/>
 </bulkInfo>

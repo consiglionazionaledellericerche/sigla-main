@@ -4251,8 +4251,7 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
-<!--
-    <changeSet author="gianfranco.gasparro" id="ins-num-posizione-creditoria-pagopa">
+    <changeSet author="gianfranco.gasparro" id="alter-pendenza_pagopa-add-voce">
         <addColumn tableName="PENDENZA_PAGOPA">
             <column name="esercizio_voce" remarks="Esercizio Elemento Voce." type="SMALLINT">
                 <constraints nullable="true"/>
@@ -4260,9 +4259,23 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="cd_elemento_voce" remarks="Codice Identificativo dell'elemento voce." type="VARCHAR(20)">
                 <constraints nullable="true"/>
             </column>
-            <column name="ti_appartenenza" type="CHAR(1)"/>
-            <column name="ti_gestione" type="CHAR(1)"/>
+            <column name="ti_appartenenza" remarks="Tipo appartenenza dell'elemento voce." type="CHAR(1)"/>
+            <column name="ti_gestione" remarks="Tipo gestione dell'elemento voce." type="CHAR(1)"/>
         </addColumn>
+        <addForeignKeyConstraint baseColumnNames="esercizio_voce,ti_appartenenza,ti_gestione,cd_elemento_voce" baseTableName="pendenza_pagopa" constraintName="fk_pendenza_pagopa03" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="esercizio,ti_appartenenza,ti_gestione,cd_elemento_voce" referencedTableName="elemento_voce"/>
+        <createIndex indexName="FX_PENDENZA_PAGOPA04" tableName="pendenza_pagopa">
+            <column name="ESERCIZIO_VOCE"/>
+            <column name="TI_APPARTENENZA"/>
+            <column name="TI_GESTIONE"/>
+            <column name="CD_ELEMENTO_VOCE"/>
+        </createIndex>
     </changeSet>
--->
+    <changeSet author="gianfranco.gasparro" id="update-application_code_default">
+        <update tableName="tipo_pendenza_pagopa">
+            <column name="application_code_default" value='01' type="VARCHAR(2)"/>
+            <where>aux_digit = 0 </where>
+        </update>
+    </changeSet>
+
+
 </databaseChangeLog>
