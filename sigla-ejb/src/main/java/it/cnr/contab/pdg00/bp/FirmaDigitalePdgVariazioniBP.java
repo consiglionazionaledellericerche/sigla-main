@@ -746,7 +746,9 @@ public class FirmaDigitalePdgVariazioniBP extends
                 nomeFileP7m
         );
         try {
-            node = Optional.ofNullable(pdgVariazioniService.signDocuments(signP7M, "service/sigla/firma/variazioni", pdgVariazioniService.getCMISPath(archiviaStampaPdgVariazioneBulk)))
+            node = Optional.ofNullable(pdgVariazioniService.signVariazioni(
+                    signP7M,
+                    pdgVariazioniService.getParentPath(archiviaStampaPdgVariazioneBulk)))
                     .map(s -> pdgVariazioniService.getStorageObjectBykey(s))
                     .orElse(null);
         } catch (StorageException _ex) {
