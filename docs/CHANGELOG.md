@@ -1,13 +1,17 @@
-## Release 6.3.18  -- _April 07, 2021_ 
+## Release 6.3.19  -- _April 12, 2021_ 
 **Changes**
 
->**Tolti i mandati a regolamento sospeso dell'anno diverso da quello di elaborazione**
+>**FIX sign variazioni**
 >
->[91d3baae7e07b4f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91d3baae7e07b4f) gianfranco.gasparro *April 07, 2021*
+>[d8d8f60f94d6760](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d8d8f60f94d6760) marco.spasiano *April 12, 2021*
 
->**Rilascio Consultazione Rest Utenti per helpdesk**
+>**FIX NPE on allineaDatiProceduraIncarichi**
 >
->[ba0d62857ce48b2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba0d62857ce48b2) gianfranco.gasparro *April 06, 2021*
+>[2459990a977fa87](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2459990a977fa87) marco.spasiano *April 01, 2021*
+
+>**FIX NPE on allineaDatiProceduraIncarichi**
+>
+>[d68f4eac88e13fd](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d68f4eac88e13fd) marco.spasiano *April 01, 2021*
 
 >**Fix CU Autonomi**
 >
@@ -852,6 +856,18 @@
 >**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
 >
 >[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
+
+
+## Release 6.3.18  -- _April 07, 2021_ 
+**Changes**
+
+>**Tolti i mandati a regolamento sospeso dell'anno diverso da quello di elaborazione**
+>
+>[91d3baae7e07b4f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/91d3baae7e07b4f) gianfranco.gasparro *April 07, 2021*
+
+>**Rilascio Consultazione Rest Utenti per helpdesk**
+>
+>[ba0d62857ce48b2](https://github.com/consiglionazionaledellericerche/sigla-main/commit/ba0d62857ce48b2) gianfranco.gasparro *April 06, 2021*
 
 
 ## Release 6.3.17  -- _March 25, 2021_ 
