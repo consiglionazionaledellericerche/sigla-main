@@ -1,5 +1,9 @@
-## Release 6.3.20  -- _April 12, 2021_ 
+## Release 6.3.21  -- _April 12, 2021_ 
 **Changes**
+
+>**FIX sign variazioni from CADES to PADES**
+>
+>[6bb850df5e77eae](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6bb850df5e77eae) marco.spasiano *April 12, 2021*
 
 >**FIX sign variazioni**
 >
