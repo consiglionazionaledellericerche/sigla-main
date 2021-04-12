@@ -300,18 +300,18 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         StorageObject storageObject = storageDriver.getObject(signP7M.getNodeRefSource());
         StorageObject docFirmato =null;
         try {
-            final byte[] bytes = arubaSignServiceClient.pkcs7SignV2(
+            final List<byte[]> bytes = arubaSignServiceClient.pkcs7SignV2Multiple(
                     signP7M.getUsername(),
                     signP7M.getPassword(),
                     signP7M.getOtp(),
-                    IOUtils.toByteArray(storageDriver.getInputStream(signP7M.getNodeRefSource())));
+                    Arrays.asList(IOUtils.toByteArray(storageDriver.getInputStream(signP7M.getNodeRefSource()))));
 
             Map<String, Object> metadataProperties = new HashMap<>();
             metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
             metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
 
             docFirmato = storeSimpleDocument(
-                    new ByteArrayInputStream(bytes),
+                    new ByteArrayInputStream(bytes.stream().findAny().get()),
                     MimeTypes.P7M.mimetype(),
                     path,
                     metadataProperties);
