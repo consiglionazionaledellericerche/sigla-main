@@ -17,217 +17,227 @@
   -->
 
 <SQLPersistentInfo
-	persistentClassName="it.cnr.contab.utenze00.bulk.UtenteBase"
-	keyClassName="it.cnr.contab.utenze00.bulk.UtenteKey"
-	homeClassName="it.cnr.contab.utenze00.bulk.UtenteHome" >
+		persistentClassName="it.cnr.contab.utenze00.bulk.UtenteBase"
+		keyClassName="it.cnr.contab.utenze00.bulk.UtenteKey"
+		homeClassName="it.cnr.contab.utenze00.bulk.UtenteHome" >
 	<defaultColumnMap
-		tableName="UTENTE" >
+			tableName="UTENTE" >
 		<columnMapping
-			columnName="PASSWORD"
-			propertyName="password"
-			sqlTypeName="VARCHAR"
-			columnSize="50" />
+				columnName="PASSWORD"
+				propertyName="password"
+				sqlTypeName="VARCHAR"
+				columnSize="50" />
 		<columnMapping
-			columnName="PG_VER_REC"
-			propertyName="pg_ver_rec"
-			sqlTypeName="DECIMAL"
-			columnSize="22"
-			nullable="false" />
+				columnName="PG_VER_REC"
+				propertyName="pg_ver_rec"
+				sqlTypeName="DECIMAL"
+				columnSize="22"
+				nullable="false" />
 		<columnMapping
-			columnName="TI_UTENTE"
-			propertyName="ti_utente"
-			sqlTypeName="CHAR"
-			columnSize="1" />
+				columnName="TI_UTENTE"
+				propertyName="ti_utente"
+				sqlTypeName="CHAR"
+				columnSize="1" />
 		<columnMapping
-			columnName="COGNOME"
-			propertyName="cognome"
-			sqlTypeName="VARCHAR"
-			columnSize="100" />
+				columnName="COGNOME"
+				propertyName="cognome"
+				sqlTypeName="VARCHAR"
+				columnSize="100" />
 		<columnMapping
-			columnName="FL_PASSWORD_CHANGE"
-			propertyName="fl_password_change"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+				columnName="FL_PASSWORD_CHANGE"
+				propertyName="fl_password_change"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="CD_GESTORE"
-			propertyName="cd_gestore"
-			sqlTypeName="VARCHAR"
-			columnSize="20" />
+				columnName="CD_GESTORE"
+				propertyName="cd_gestore"
+				sqlTypeName="VARCHAR"
+				columnSize="20" />
 		<columnMapping
-			columnName="UTCR"
-			propertyName="utcr"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
+				columnName="UTCR"
+				propertyName="utcr"
+				sqlTypeName="VARCHAR"
+				columnSize="20"
+				nullable="false" />
 		<columnMapping
-			columnName="DACR"
-			propertyName="dacr"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
+				columnName="DACR"
+				propertyName="dacr"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
 		<columnMapping
-			columnName="DUVA"
-			propertyName="duva"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7"
-			nullable="false" />
+				columnName="DUVA"
+				propertyName="duva"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7"
+				nullable="false" />
 		<columnMapping
-			columnName="DT_INIZIO_VALIDITA"
-			propertyName="dt_inizio_validita"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
+				columnName="DT_INIZIO_VALIDITA"
+				propertyName="dt_inizio_validita"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
 		<columnMapping
-			columnName="DT_FINE_VALIDITA"
-			propertyName="dt_fine_validita"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
+				columnName="DT_FINE_VALIDITA"
+				propertyName="dt_fine_validita"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
 		<columnMapping
-			columnName="NOME"
-			propertyName="nome"
-			sqlTypeName="VARCHAR"
-			columnSize="100" />
+				columnName="NOME"
+				propertyName="nome"
+				sqlTypeName="VARCHAR"
+				columnSize="100" />
 		<columnMapping
-			columnName="INDIRIZZO"
-			propertyName="indirizzo"
-			sqlTypeName="VARCHAR"
-			columnSize="200" />
+				columnName="INDIRIZZO"
+				propertyName="indirizzo"
+				sqlTypeName="VARCHAR"
+				columnSize="200" />
 		<columnMapping
-			columnName="FL_UTENTE_TEMPL"
-			propertyName="fl_utente_templ"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+				columnName="FL_UTENTE_TEMPL"
+				propertyName="fl_utente_templ"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="UTUV"
-			propertyName="utuv"
-			sqlTypeName="VARCHAR"
-			columnSize="20"
-			nullable="false" />
+				columnName="UTUV"
+				propertyName="utuv"
+				sqlTypeName="VARCHAR"
+				columnSize="20"
+				nullable="false" />
 		<columnMapping
-			columnName="CD_CDS_CONFIGURATORE"
-			propertyName="cd_cds_configuratore"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
+				columnName="CD_CDS_CONFIGURATORE"
+				propertyName="cd_cds_configuratore"
+				sqlTypeName="VARCHAR"
+				columnSize="30" />
 		<columnMapping
-			columnName="DT_ULTIMA_VAR_PASSWORD"
-			propertyName="dt_ultima_var_password"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
+				columnName="DT_ULTIMA_VAR_PASSWORD"
+				propertyName="dt_ultima_var_password"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
 		<columnMapping
-			columnName="CD_UTENTE_TEMPL"
-			propertyName="cd_utente_templ"
-			sqlTypeName="VARCHAR"
-			columnSize="20" />
+				columnName="CD_UTENTE_TEMPL"
+				propertyName="cd_utente_templ"
+				sqlTypeName="VARCHAR"
+				columnSize="20" />
 		<columnMapping
-			columnName="CD_CDR"
-			propertyName="cd_cdr"
-			sqlTypeName="VARCHAR"
-			columnSize="30" />
+				columnName="CD_CDR"
+				propertyName="cd_cdr"
+				sqlTypeName="VARCHAR"
+				columnSize="30" />
 		<columnMapping
-			columnName="DS_UTENTE"
-			propertyName="ds_utente"
-			sqlTypeName="VARCHAR"
-			columnSize="200" />
+				columnName="DS_UTENTE"
+				propertyName="ds_utente"
+				sqlTypeName="VARCHAR"
+				columnSize="200" />
 		<columnMapping
-			columnName="CD_DIPARTIMENTO"
-			propertyName="cd_dipartimento"
-			sqlTypeName="VARCHAR"
-			columnSize="15" />			
+				columnName="CD_DIPARTIMENTO"
+				propertyName="cd_dipartimento"
+				sqlTypeName="VARCHAR"
+				columnSize="15" />
 		<columnMapping
-			columnName="DT_ULTIMO_ACCESSO"
-			propertyName="dt_ultimo_accesso"
-			sqlTypeName="TIMESTAMP"
-			columnSize="7" />
+				columnName="DT_ULTIMO_ACCESSO"
+				propertyName="dt_ultimo_accesso"
+				sqlTypeName="TIMESTAMP"
+				columnSize="7" />
 		<columnMapping
-			columnName="FL_AUTENTICAZIONE_LDAP"
-			propertyName="fl_autenticazione_ldap"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+				columnName="FL_AUTENTICAZIONE_LDAP"
+				propertyName="fl_autenticazione_ldap"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="CD_UTENTE_UID"
-			propertyName="cd_utente_uid"
-			sqlTypeName="VARCHAR"
-			columnSize="200" />
+				columnName="CD_UTENTE_UID"
+				propertyName="cd_utente_uid"
+				sqlTypeName="VARCHAR"
+				columnSize="200" />
 		<columnMapping
-			columnName="FL_SUPERVISORE"
-			propertyName="fl_supervisore"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+				columnName="FL_SUPERVISORE"
+				propertyName="fl_supervisore"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="CD_RUOLO_SUPERVISORE"
-			propertyName="cd_ruolo_supervisore"
-			sqlTypeName="VARCHAR"
-			columnSize="20" />
+				columnName="CD_RUOLO_SUPERVISORE"
+				propertyName="cd_ruolo_supervisore"
+				sqlTypeName="VARCHAR"
+				columnSize="20" />
 		<columnMapping
-			columnName="FL_ALTRA_PROC"
-			propertyName="fl_altra_proc"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+				columnName="FL_ALTRA_PROC"
+				propertyName="fl_altra_proc"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 		<columnMapping
-			columnName="FL_ATTIVA_BLOCCO"
-			propertyName="fl_attiva_blocco"
-			sqlTypeName="CHAR"
-			columnSize="1"
-			converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
+				columnName="FL_ATTIVA_BLOCCO"
+				propertyName="fl_attiva_blocco"
+				sqlTypeName="CHAR"
+				columnSize="1"
+				converterClassName="it.cnr.jada.persistency.sql.CHARToBooleanConverter" />
 	</defaultColumnMap>
+	<columnMap
+			name="V_UTENTE_LDAP"
+			tableName="V_UTENTE_LDAP">
+		<columnMapping
+				columnName="ID_UTENTE"
+				propertyName="cd_utente"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true"/>
+	</columnMap>
 	<persistentProperty
-		name="password" />
+			name="password" />
 	<persistentProperty
-		name="pg_ver_rec" />
+			name="pg_ver_rec" />
 	<persistentProperty
-		name="ti_utente" />
+			name="ti_utente" />
 	<persistentProperty
-		name="cognome" />
+			name="cognome" />
 	<persistentProperty
-		name="fl_password_change" />
+			name="fl_password_change" />
 	<persistentProperty
-		name="cd_gestore" />
+			name="cd_gestore" />
 	<persistentProperty
-		name="utcr" />
+			name="utcr" />
 	<persistentProperty
-		name="dacr" />
+			name="dacr" />
 	<persistentProperty
-		name="duva" />
+			name="duva" />
 	<persistentProperty
-		name="dt_inizio_validita" />
+			name="dt_inizio_validita" />
 	<persistentProperty
-		name="dt_fine_validita" />
+			name="dt_fine_validita" />
 	<persistentProperty
-		name="nome" />
+			name="nome" />
 	<persistentProperty
-		name="indirizzo" />
+			name="indirizzo" />
 	<persistentProperty
-		name="fl_utente_templ" />
+			name="fl_utente_templ" />
 	<persistentProperty
-		name="utuv" />
+			name="utuv" />
 	<persistentProperty
-		name="cd_cds_configuratore" />
+			name="cd_cds_configuratore" />
 	<persistentProperty
-		name="dt_ultima_var_password" />
+			name="dt_ultima_var_password" />
 	<persistentProperty
-		name="cd_utente_templ" />
+			name="cd_utente_templ" />
 	<persistentProperty
-		name="cd_cdr" />
+			name="cd_cdr" />
 	<persistentProperty
-		name="ds_utente" />
+			name="ds_utente" />
 	<persistentProperty
-		name="cd_dipartimento" />		
+			name="cd_dipartimento" />
 	<persistentProperty
-		name="dt_ultimo_accesso" />		
+			name="dt_ultimo_accesso" />
 	<persistentProperty
-		name="fl_autenticazione_ldap" />		
+			name="fl_autenticazione_ldap" />
 	<persistentProperty
-		name="cd_utente_uid" />		
+			name="cd_utente_uid" />
 	<persistentProperty
-		name="fl_supervisore" />		
+			name="fl_supervisore" />
 	<persistentProperty
-		name="cd_ruolo_supervisore" />		
+			name="cd_ruolo_supervisore" />
 	<persistentProperty
-		name="fl_altra_proc" />		
+			name="fl_altra_proc" />
 	<persistentProperty
-		name="fl_attiva_blocco" />
+			name="fl_attiva_blocco" />
 </SQLPersistentInfo>

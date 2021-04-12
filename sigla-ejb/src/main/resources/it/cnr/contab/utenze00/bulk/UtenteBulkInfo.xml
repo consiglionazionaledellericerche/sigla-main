@@ -302,7 +302,13 @@
 		<columnFieldProperty
 			name="cd_utente_uid" />
 	</columnSet>
-	
+
+	<columnSet
+			name="restService">
+		<columnFieldProperty
+				name="cd_utente" />
+	</columnSet>
+
 	<findFieldProperty
 		name="cd_utente" />
 	<findFieldProperty
