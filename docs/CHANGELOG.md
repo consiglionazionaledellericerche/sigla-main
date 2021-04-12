@@ -1,5 +1,13 @@
-## Release 6.3.19  -- _April 12, 2021_ 
+## Release 6.3.20  -- _April 12, 2021_ 
 **Changes**
+
+>**FIX sign variazioni**
+>
+>[44028f202844dd9](https://github.com/consiglionazionaledellericerche/sigla-main/commit/44028f202844dd9) marco.spasiano *April 12, 2021*
+
+>**Cahnge log level for execute Report With JsonDataSource**
+>
+>[df19e84df5a49b4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/df19e84df5a49b4) marco.spasiano *April 12, 2021*
 
 >**FIX sign variazioni**
 >
