@@ -300,21 +300,24 @@ public class PdgVariazioniService extends DocumentiContabiliService {
         StorageObject storageObject = storageDriver.getObject(signP7M.getNodeRefSource());
         StorageObject docFirmato =null;
         try {
-            final List<byte[]> bytes = arubaSignServiceClient.pkcs7SignV2Multiple(
+            byte[] bytesSigned = arubaSignServiceClient.pdfsignatureV2(
                     signP7M.getUsername(),
                     signP7M.getPassword(),
                     signP7M.getOtp(),
-                    Arrays.asList(IOUtils.toByteArray(storageDriver.getInputStream(signP7M.getNodeRefSource()))));
+                    IOUtils.toByteArray(getResource(storageObject)));
 
             Map<String, Object> metadataProperties = new HashMap<>();
             metadataProperties.put(StoragePropertyNames.NAME.value(), signP7M.getNomeFile());
             metadataProperties.put(StoragePropertyNames.OBJECT_TYPE_ID.value(), SIGLAStoragePropertyNames.CNR_ENVELOPEDDOCUMENT.value());
 
             docFirmato = storeSimpleDocument(
-                    new ByteArrayInputStream(bytes.stream().findAny().get()),
-                    MimeTypes.P7M.mimetype(),
+                    new ByteArrayInputStream(bytesSigned),
+                    MimeTypes.PDF.mimetype(),
                     path,
                     metadataProperties);
+
+            logger.info("VARIAZIONE {} firmata correttamente.", signP7M.getNomeFile());
+
             List<String> aspects = storageObject.getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value());
             aspects.add("P:cnr:signedDocument");
             updateProperties(Collections.singletonMap(
@@ -326,7 +329,6 @@ public class PdgVariazioniService extends DocumentiContabiliService {
                 createRelationship(docFirmato.getKey(), storageObject.getKey(),  "R:cnr:signedDocumentAss");
             }
             return docFirmato.getKey();
-
         } catch (ArubaSignServiceException | IOException e) {
             throw new StorageException(StorageException.Type.GENERIC, e);
         }
