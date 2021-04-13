@@ -5,6 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.pdf.exclude.key.TransparentImage" value="" />
+	<property name="net.sf.jasperreports.export.pdf.tagged" value="true" />
 	<property name="net.sf.jasperreports.export.pdfa.conformance" value="pdfa1a" />
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
