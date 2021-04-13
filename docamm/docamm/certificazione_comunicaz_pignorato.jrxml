@@ -14,7 +14,7 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="default" isDefault="true" fontName="DejaVu Sans"/>
+	<style name="default" isDefault="true" fontName="Times New Roman"/>
 	<style name="TNR10" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10B" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNR16B" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
