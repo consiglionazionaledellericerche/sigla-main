@@ -9,12 +9,11 @@
 	<property name="net.sf.jasperreports.export.pdf.tagged" value="true" />
 	<property name="net.sf.jasperreports.export.pdfa.conformance" value="pdfa1a" />
 	<property name="net.sf.jasperreports.export.pdfa.icc.profile.path" value="/opt/AdobeRGB1998.icc" />
-	<property name="net.sf.jasperreports.export.pdf.tag.language" value="it-it"/>
+	<property name="net.sf.jasperreports.export.pdf.tag.language" value="en-US"/>
 
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="default" isDefault="true" fontName="Times New Roman"/>
 	<style name="TNR10" fontName="Times New Roman" pdfFontName="Times-Roman"/>
 	<style name="TNR10B" fontName="Times New Roman" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="TNR16B" fontName="Times New Roman" fontSize="16" isBold="true" pdfFontName="Times-Bold"/>
