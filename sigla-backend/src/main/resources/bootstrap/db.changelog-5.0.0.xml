@@ -3987,9 +3987,9 @@ TRASPORTO_AEREO"/>
 
     <changeSet author="valerio.diego" id="accessi_dottorati" >
         <insert tableName="accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="ANADOTTORATIBP"/>
-            <column name="ti_accesso" type="CHAR(1)" value=""/>
-            <column name="ds_accesso" type="VARCHAR(200)" value="Anagrafica Dottorati"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Anagrafica Dottorati"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
@@ -3997,9 +3997,9 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
         <insert tableName="accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="CICLODOTTORATIBP"/>
-            <column name="ti_accesso" type="CHAR(1)" value=""/>
-            <column name="ds_accesso" type="VARCHAR(200)" value="Ciclo Dottorati annuale"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Anagrafica Dottorati"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
@@ -4007,9 +4007,9 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
         <insert tableName="accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="PHDTIPODOTTORATIBP"/>
-            <column name="ti_accesso" type="CHAR(1)" value=""/>
-            <column name="ds_accesso" type="VARCHAR(200)" value="Phd Tipo Dottorati"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Ciclo Dottorati annuale"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
@@ -4017,9 +4017,49 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
         <insert tableName="accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="TIPOCORSODOTTORATIBP"/>
-            <column name="ti_accesso" type="CHAR(1)" value=""/>
-            <column name="ds_accesso" type="VARCHAR(200)" value="Tipo Corso Dottorati"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Ciclo Dottorati annuale"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Phd Tipo Dottorati"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Phd Tipo Dottorati"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOM"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Gestione Tipo Corso Dottorati"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOV"/>
+            <column name="ti_accesso" type="CHAR(1)" value="C"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Visualizzazione Tipo Corso Dottorati"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
@@ -4028,7 +4068,7 @@ TRASPORTO_AEREO"/>
         </insert>
 
         <insert tableName="ass_bp_accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="ANADOTTORATIBP"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGM"/>
             <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiBP"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
@@ -4038,7 +4078,17 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
         <insert tableName="ass_bp_accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="CICLODOTTORATIBP"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOM"/>
             <column name="business_process" type="VARCHAR(200)" value="CRUDCicloDottoratiBP"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
@@ -4048,7 +4098,17 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
         <insert tableName="ass_bp_accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="PHDTIPODOTTORATIBP"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDCicloDottoratiBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDM"/>
             <column name="business_process" type="VARCHAR(200)" value="CRUDPhdtipoDottoratiBP"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
@@ -4058,7 +4118,17 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
         <insert tableName="ass_bp_accesso">
-            <column name="cd_accesso" type="VARCHAR(20)" value="TIPOCORSODOTTORATIBP"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPhdtipoDottoratiBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOM"/>
             <column name="business_process" type="VARCHAR(200)" value="CRUDTipocorsoDottoratiBP"/>
             <column name="ti_funzione" type="CHAR(1)" value="M"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
@@ -4067,67 +4137,225 @@ TRASPORTO_AEREO"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-<!--
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Bollo Virtuale"/>
-            <column name="pg_ordinamento" type="BIGINT" value="145"/>
-            <column name="fl_terminale" type="CHAR(1)" value="N"/>
-            <column name="livello" type="SMALLINT" value="3"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLLO"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
-            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipocorsoDottoratiBP"/>
+            <column name="ti_funzione" type="CHAR(1)" value="V"/>
             <column name="duva" type="${date.type}" valueDate="${now}"/>
             <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="dacr" type="${date.type}" valueDate="${now}"/>
             <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Bollo Virtuale"/>
-            <column name="pg_ordinamento" type="BIGINT" value="145"/>
-            <column name="fl_terminale" type="CHAR(1)" value="N"/>
-            <column name="livello" type="SMALLINT" value="3"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLLO"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
-            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Bollo Virtuale"/>
-            <column name="pg_ordinamento" type="BIGINT" value="145"/>
-            <column name="fl_terminale" type="CHAR(1)" value="N"/>
-            <column name="livello" type="SMALLINT" value="3"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLLO"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
-            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>
-        <insert tableName="albero_main">
-            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.BOLLO"/>
-            <column name="ds_nodo" type="VARCHAR(200)" value="Bollo Virtuale"/>
-            <column name="pg_ordinamento" type="BIGINT" value="145"/>
-            <column name="fl_terminale" type="CHAR(1)" value="N"/>
-            <column name="livello" type="SMALLINT" value="3"/>
-            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="BOLLO"/>
-            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
-            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
-            <column name="duva" type="${date.type}" valueDate="${now}"/>
-            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="dacr" type="${date.type}" valueDate="${now}"/>
-            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
-            <column name="pg_ver_rec" type="BIGINT" value="0"/>
-        </insert>-->
 
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Dottorati"/>
+            <column name="pg_ordinamento" type="BIGINT" value="136"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="3"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="DOTTORATI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG"/>
+            <column name="url_icona" type="VARCHAR(200)" value="leaf.gif"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="tabelle di riferimento"/>
+            <column name="pg_ordinamento" type="BIGINT" value="50"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="4"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="TABRIF"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <!-- Anagrafica-->
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANA"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Anagrafica Dottorati"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="ANA"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANA.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGM"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANA.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGV"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANA"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <!-- Ciclo dottorati -->
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CICLODOTTORATI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Gestione Ciclo Dottorati"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CICLODOTTORATI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CICLODOTTORATI.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOM"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CICLODOTTORATI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CICLODOTTORATI.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOV"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CICLODOTTORATI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <!-- Phd tipo dottorati -->
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.PHDDOTTORATI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Gestione Phd Dottorati"/>
+            <column name="pg_ordinamento" type="BIGINT" value="30"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="PHDDOTTORATI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.PHDDOTTORATI.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDM"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.PHDDOTTORATI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.PHDDOTTORATI.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDV"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.PHDDOTTORATI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <!-- Gestione tipo corso dottorati -->
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CORSODOTTORATI"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="Gestione Corso Dottorati"/>
+            <column name="pg_ordinamento" type="BIGINT" value="40"/>
+            <column name="fl_terminale" type="CHAR(1)" value="N"/>
+            <column name="livello" type="SMALLINT" value="5"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="CORSODOTTORATI"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CORSODOTTORATI.M"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOM"/>
+            <column name="pg_ordinamento" type="BIGINT" value="10"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="M"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CORSODOTTORATI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="albero_main">
+            <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CORSODOTTORATI.V"/>
+            <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOV"/>
+            <column name="pg_ordinamento" type="BIGINT" value="20"/>
+            <column name="fl_terminale" type="CHAR(1)" value="Y"/>
+            <column name="livello" type="SMALLINT" value="6"/>
+            <column name="cd_proprio_nodo" type="VARCHAR(100)" value="V"/>
+            <column name="cd_nodo_padre" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CORSODOTTORATI"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
