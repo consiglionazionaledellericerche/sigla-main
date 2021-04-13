@@ -46,9 +46,9 @@ public class TransactionalPendenzaPagopaComponentSession extends it.cnr.jada.ejb
         }
     }
 
-    public String stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, it.cnr.jada.comp.ComponentException {
+    public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException, it.cnr.jada.comp.ComponentException {
         try {
-            return (String) invoke("pendenzaPagopaBulk", new Object[]{
+            return (byte[]) invoke("pendenzaPagopaBulk", new Object[]{
                     userContext,
                     pendenzaPagopaBulk});
         } catch (RemoteException e) {

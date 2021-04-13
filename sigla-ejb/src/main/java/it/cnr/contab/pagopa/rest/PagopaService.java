@@ -28,6 +28,9 @@ public class PagopaService {
     String usernameApp;
     String passwordApp;
 
+    private PagopaClient pagopaClient;
+    private PagopaClient pagopaDownloadClient;
+
     public String getUsernameApp() {
         return usernameApp;
     }
@@ -43,8 +46,6 @@ public class PagopaService {
     public void setPasswordApp(String passwordApp) {
         this.passwordApp = passwordApp;
     }
-
-    private PagopaClient pagopaClient;
 
     public String getBaseUrl() {
         return baseUrl;
@@ -92,11 +93,18 @@ public class PagopaService {
                 .errorDecoder(new ErrorDecoder.Default())
                 .retryer(new Retryer.Default())
                 .target(PagopaClient.class, baseUrl);
+
+        pagopaDownloadClient = Feign.builder()
+                .encoder(new GsonEncoder(gsonParser))
+                .requestInterceptor(new BasicAuthRequestInterceptor(usernameApp, passwordApp))
+                .errorDecoder(new ErrorDecoder.Default())
+                .retryer(new Retryer.Default())
+                .target(PagopaClient.class, baseUrl);
     }
     public PendenzaResponse creaPendenza(Long idPendenza, Pendenza pendenza){
         return pagopaClient.creaPendenza(Utility.APPLICATION_TITLE.substring(0, 5), idPendenza, true, pendenza);
     }
-    public String getAvviso(String idDominio, String numeroAvviso){
-        return pagopaClient.stampaAvviso(idDominio, numeroAvviso);
+    public byte[] getAvviso(String idDominio, String numeroAvviso){
+        return pagopaDownloadClient.stampaAvviso(idDominio, numeroAvviso);
     }
 }

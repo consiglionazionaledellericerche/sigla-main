@@ -290,7 +290,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			throw new ComponentException(e);
 		}
 	}
-	public String stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException{
+	public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException{
 
 		TerzoBulk terzoCnr = null;
 		try {

@@ -25,5 +25,5 @@ public interface PagopaClient {
 
     @Headers({"Accept: application/pdf"})
     @RequestLine("GET /backend/api/pendenze/rs/basic/v2/avvisi/{idDominio}/{numeroAvviso}")
-    String stampaAvviso(@Param("idDominio") String idDominio, @Param("numeroAvviso") String numeroAvviso);
+    byte[] stampaAvviso(@Param("idDominio") String idDominio, @Param("numeroAvviso") String numeroAvviso);
 }

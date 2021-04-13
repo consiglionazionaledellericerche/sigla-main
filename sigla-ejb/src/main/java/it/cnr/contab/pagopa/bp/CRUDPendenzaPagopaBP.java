@@ -135,8 +135,7 @@ public void update(ActionContext context) throws BusinessProcessException
 }
 	public void visualizzaAvvisoPagamento(ActionContext actioncontext) throws Exception {
 		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)getModel();
-		String stampa = ((PendenzaPagopaComponentSession)createComponentSession()).stampaAvviso(actioncontext.getUserContext(), pendenzaPagopaBulk);
-		byte [] stampaAvviso = Base64.getDecoder().decode(stampa);
+		byte [] stampaAvviso = ((PendenzaPagopaComponentSession)createComponentSession()).stampaAvviso(actioncontext.getUserContext(), pendenzaPagopaBulk);
 		ByteArrayInputStream is = new ByteArrayInputStream(stampaAvviso);
 		if (is != null){
 			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");

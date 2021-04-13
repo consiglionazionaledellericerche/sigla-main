@@ -61,10 +61,10 @@ public class PendenzaPagopaComponentSessionBean extends it.cnr.jada.ejb.CRUDComp
             throw uncaughtError(userContext, componentObj, e);
         }
     }
-    public String stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws  ComponentException, javax.ejb.EJBException{
+    public byte[] stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws  ComponentException, javax.ejb.EJBException{
     pre_component_invocation(userContext, componentObj);
         try {
-        String result = ((PendenzaPagopaComponent)componentObj).stampaAvviso(userContext, pendenzaPagopaBulk);
+        byte[] result = ((PendenzaPagopaComponent)componentObj).stampaAvviso(userContext, pendenzaPagopaBulk);
         component_invocation_succes(userContext, componentObj);
         return result;
     } catch (it.cnr.jada.comp.NoRollbackException e) {
