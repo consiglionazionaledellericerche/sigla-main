@@ -5,6 +5,8 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.pdf.exclude.key.TransparentImage" value="" />
+	<property name="net.sf.jasperreports.export.pdf.tagged" value="true" />
 	<property name="net.sf.jasperreports.export.pdfa.conformance" value="pdfa1a" />
 	<property name="net.sf.jasperreports.export.pdfa.icc.profile.path" value="/opt/AdobeRGB1998.icc" />
 	<import value="net.sf.jasperreports.engine.*"/>
@@ -111,10 +113,6 @@ $F{FRAZIONE_PIGNORATO}+" "+($F{CAP_PIGNORATO}==null?"":$F{CAP_PIGNORATO}))+" - "
 					<textElement/>
 					<textFieldExpression class="java.lang.String"><![CDATA[$F{NAZIONE_PIGNORATO}]]></textFieldExpression>
 				</textField>
-				<image onErrorType="Icon">
-					<reportElement key="image-1" x="107" y="0" width="405" height="40"/>
-					<imageExpression class="java.lang.String"><![CDATA[$P{DIR_IMAGE}+"CNR.JPG"]]></imageExpression>
-				</image>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField-4" style="TNR10" stretchType="RelativeToTallestObject" x="299" y="178" width="266" height="14"/>
 					<box>
