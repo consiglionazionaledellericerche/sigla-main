@@ -5,13 +5,25 @@ import feign.Param;
 import feign.RequestLine;
 import feign.Response;
 import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.pagopa.model.PendenzaResponse;
 import it.cnr.si.service.dto.anagrafica.letture.PersonaWebDto;
 import it.cnr.si.service.dto.anagrafica.scritture.PersonaDto;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 @Headers({"Content-Type: application/json"})
 public interface PagopaClient {
 
     //    http://govpay.test.si.cnr.it/govpay
-    @RequestLine("PUT /backend/api/pendenze/rs/basic/v2/pendenze/{idA2A}/{idPendenza}")
-    Pendenza creaPendenza(@Param("idA2A") String application, @Param("idPendenza") Long idPendenza, Pendenza pendenza);
+    @RequestLine("PUT /backend/api/pendenze/rs/basic/v2/pendenze/{idA2A}/{idPendenza}?stampaAvviso={stampaAvviso}")
+    PendenzaResponse creaPendenza(@Param("idA2A") String application, @Param("idPendenza") Long idPendenza, @Param("stampaAvviso") Boolean stampaAvviso, Pendenza pendenza);
+
+
+    @Headers({"Accept: application/pdf"})
+    @RequestLine("GET /backend/api/pendenze/rs/basic/v2/avvisi/{idDominio}/{numeroAvviso}")
+    String stampaAvviso(@Param("idDominio") String idDominio, @Param("numeroAvviso") String numeroAvviso);
 }

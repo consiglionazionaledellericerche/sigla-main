@@ -58,6 +58,7 @@ import java.rmi.RemoteException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -188,7 +189,9 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		voci.setImporto(pendenzaPagopaBulk.getImportoPendenza());
 		pendenza.setVoci(Arrays.asList(voci));
 
-		Pendenza pendenzaCreata = pagopaService.creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
+		PendenzaResponse pendenzaCreata = pagopaService.creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
+		byte [] stampaAvviso = Base64.getDecoder().decode(pendenzaCreata.getPdf());
+		int i = 0;
 	}
 
 	@Override
@@ -287,5 +290,20 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 			throw new ComponentException(e);
 		}
 	}
+	public String stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException{
 
+		TerzoBulk terzoCnr = null;
+		try {
+			terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
+		} catch (PersistencyException e) {
+			throw new ComponentException(e);
+		}
+
+		try {
+			return pagopaService.getAvviso(terzoCnr.getPartita_iva_anagrafico(), pendenzaPagopaBulk.getCdAvviso());
+		} catch (Throwable t) {
+			logger.info(t.getMessage());
+			throw handleException(t);
+		}
+	}
 }

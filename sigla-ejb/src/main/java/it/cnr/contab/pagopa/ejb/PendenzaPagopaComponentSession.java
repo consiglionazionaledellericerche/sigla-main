@@ -34,4 +34,5 @@ import java.sql.Timestamp;
 @Remote
 public interface PendenzaPagopaComponentSession extends it.cnr.jada.ejb.CRUDComponentSession {
     public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws RemoteException,  ComponentException;
+    public String stampaAvviso(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws RemoteException,  ComponentException;
 }

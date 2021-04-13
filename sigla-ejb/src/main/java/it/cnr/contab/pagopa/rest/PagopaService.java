@@ -9,6 +9,7 @@ import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
 import it.cnr.contab.pagopa.model.Pendenza;
+import it.cnr.contab.pagopa.model.PendenzaResponse;
 import it.cnr.contab.util.Utility;
 import net.dongliu.gson.GsonJava8TypeAdapterFactory;
 import org.slf4j.Logger;
@@ -92,7 +93,10 @@ public class PagopaService {
                 .retryer(new Retryer.Default())
                 .target(PagopaClient.class, baseUrl);
     }
-    public Pendenza creaPendenza(Long idPendenza, Pendenza pendenza){
-        return pagopaClient.creaPendenza(Utility.APPLICATION_TITLE.substring(0, 5), idPendenza, pendenza);
+    public PendenzaResponse creaPendenza(Long idPendenza, Pendenza pendenza){
+        return pagopaClient.creaPendenza(Utility.APPLICATION_TITLE.substring(0, 5), idPendenza, true, pendenza);
+    }
+    public String getAvviso(String idDominio, String numeroAvviso){
+        return pagopaClient.stampaAvviso(idDominio, numeroAvviso);
     }
 }

@@ -18,16 +18,26 @@
 package it.cnr.contab.pagopa.bp;
 
 import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attivaBulk;
+import it.cnr.contab.docamm00.ejb.FatturaAttivaSingolaComponentSession;
 import it.cnr.contab.doccont00.core.bulk.ImpegnoPGiroBulk;
 import it.cnr.contab.doccont00.core.bulk.Numerazione_doc_contBulk;
 import it.cnr.contab.doccont00.core.bulk.Obbligazione_scadenzarioBulk;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
+import it.cnr.contab.pagopa.comp.PendenzaPagopaComponent;
+import it.cnr.contab.pagopa.ejb.PendenzaPagopaComponentSession;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
+import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.util.action.SimpleCRUDBP;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Base64;
 
 /**
  * Business Process che gestisce le attività di CRUD per l'entita' Impegno Partita di Giro.
@@ -70,8 +80,7 @@ public void delete(ActionContext context) throws BusinessProcessException {
 	int crudStatus = getModel().getCrudStatus();
 	try {
 			getModel().setToBeUpdated();
-//			setModel( context, ((it.cnr.contab.doccont00.ejb.ObbligazionePGiroComponentSession) createComponentSession()).annullaObbligazione(context.getUserContext(),(ImpegnoPGiroBulk)getModel()));
-			setStatus(VIEW);			
+			setStatus(VIEW);
 		} catch(Exception e) {
 			getModel().setCrudStatus(crudStatus);
 			throw handleException(e);
@@ -124,4 +133,43 @@ public void update(ActionContext context) throws BusinessProcessException
 {
 	super.update( context );
 }
+	public void visualizzaAvvisoPagamento(ActionContext actioncontext) throws Exception {
+		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)getModel();
+		String stampa = ((PendenzaPagopaComponentSession)createComponentSession()).stampaAvviso(actioncontext.getUserContext(), pendenzaPagopaBulk);
+		byte [] stampaAvviso = Base64.getDecoder().decode(stampa);
+		ByteArrayInputStream is = new ByteArrayInputStream(stampaAvviso);
+		if (is != null){
+			((HttpActionContext)actioncontext).getResponse().setContentType("application/pdf");
+			OutputStream os = ((HttpActionContext)actioncontext).getResponse().getOutputStream();
+			((HttpActionContext)actioncontext).getResponse().setDateHeader("Expires", 0);
+			byte[] buffer = new byte[((HttpActionContext)actioncontext).getResponse().getBufferSize()];
+			int buflength;
+			while ((buflength = is.read(buffer)) > 0) {
+				os.write(buffer,0,buflength);
+			}
+			is.close();
+			os.flush();
+		}
+	}
+	public boolean isVisualizzaAvvisoPagamentoButtonHidden() {
+		PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)getModel();
+		return (pendenzaPagopaBulk == null || pendenzaPagopaBulk.getCdAvviso() == null);
+	}
+	protected it.cnr.jada.util.jsp.Button[] createToolbar() {
+		it.cnr.jada.util.jsp.Button[] toolbar = new it.cnr.jada.util.jsp.Button[10];
+		int i = 0;
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.search");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.startSearch");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.freeSearch");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.new");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.save");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.delete");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.bringBack");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.undoBringBack");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(it.cnr.jada.util.action.CRUDBP.class),"CRUDToolbar.print");
+		toolbar[i++] = new it.cnr.jada.util.jsp.Button(it.cnr.jada.util.Config.getHandler().getProperties(getClass()),"CRUDToolbar.avviso");
+
+		return toolbar;
+	}
+
 }
