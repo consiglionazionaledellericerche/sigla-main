@@ -1,5 +1,14 @@
-## Release 6.3.21  -- _April 12, 2021_ 
+## Release 6.3.22  -- _April 14, 2021_ 
 **Changes**
+
+>**Upgrade version of sigla-ws-client**
+>
+>[b4dcf1263870781](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b4dcf1263870781) marco.spasiano *April 14, 2021*
+
+>**sostituita nella view v_spesometro_new la stringa ‘N6’ con ‘N6.2’!**
+> * Il valore N6 non è più valido da inizio anno, provocando lo scarto del file prodotto.
+>
+>[8848f7431f275c1](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8848f7431f275c1) marco.spasiano *April 13, 2021*
 
 >**FIX sign variazioni from CADES to PADES**
 >
