@@ -4196,6 +4196,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANA.M"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="10"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
@@ -4211,6 +4212,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.ANA.V"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIANAGV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDAnagraficaDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="20"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
@@ -4241,6 +4243,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CICLODOTTORATI.M"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDCicloDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="10"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
@@ -4256,6 +4259,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CICLODOTTORATI.V"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICICLOV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDCicloDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="20"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
@@ -4286,6 +4290,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.PHDDOTTORATI.M"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPhdtipoDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="10"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
@@ -4301,6 +4306,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.PHDDOTTORATI.V"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATIPHDV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDPhdtipoDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="20"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
@@ -4331,6 +4337,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CORSODOTTORATI.M"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="gestione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOM"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipocorsoDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="10"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
@@ -4346,6 +4353,7 @@ TRASPORTO_AEREO"/>
             <column name="cd_nodo" type="VARCHAR(100)" value="0.CFG.DOTTORATI.TABRIF.CORSODOTTORATI.V"/>
             <column name="ds_nodo" type="VARCHAR(200)" value="visualizzazione"/>
             <column name="cd_accesso" type="VARCHAR(20)" value="CFGDOTTORATICORSOV"/>
+            <column name="business_process" type="VARCHAR(200)" value="CRUDTipocorsoDottoratiBP"/>
             <column name="pg_ordinamento" type="BIGINT" value="20"/>
             <column name="fl_terminale" type="CHAR(1)" value="Y"/>
             <column name="livello" type="SMALLINT" value="6"/>
