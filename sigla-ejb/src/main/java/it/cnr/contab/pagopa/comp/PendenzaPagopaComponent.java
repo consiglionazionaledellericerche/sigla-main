@@ -34,6 +34,10 @@ import it.cnr.contab.docamm00.ejb.ProgressiviAmmComponentSession;
 import it.cnr.contab.docamm00.service.DocumentiCollegatiDocAmmService;
 import it.cnr.contab.doccont00.comp.DateServices;
 import it.cnr.contab.incarichi00.action.IncarichiProceduraAction;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperBulk;
+import it.cnr.contab.ordmag.anag00.AbilUtenteUopOperHome;
+import it.cnr.contab.ordmag.anag00.TipoOperazioneOrdBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.contab.pagopa.bulk.GestionePagopaBulk;
 import it.cnr.contab.pagopa.bulk.GestionePagopaHome;
 import it.cnr.contab.pagopa.bulk.PendenzaPagopaBulk;
@@ -50,6 +54,8 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.IntrospectionException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.sql.CompoundFindClause;
+import it.cnr.jada.persistency.sql.Query;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,6 +85,12 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		}
 		return pendenzaPagopaBulk;
 	}
+
+	@Override
+	public void eliminaConBulk(UserContext usercontext, OggettoBulk oggettobulk) throws ComponentException {
+		super.eliminaConBulk(usercontext, oggettobulk);
+	}
+
 	public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws ComponentException {
 
 		try {
@@ -135,7 +147,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		pendenza.setIdTipoPendenza("LIBERO");
 		TerzoBulk terzoCnr = ((TerzoHome)getHome( userContext, TerzoBulk.class)).findTerzoEnte();
 
-		pendenza.setIdDominio(terzoCnr.getPartita_iva_anagrafico());
+		pendenza.setIdDominio(terzoCnr.getCodice_fiscale_anagrafico());
 		pendenza.setIdUnitaOperativa(pendenzaPagopaBulk.getCdUnitaOrganizzativa().replace(".",""));
 		pendenza.setCausale(pendenzaPagopaBulk.getDescrizione());
 		SoggettoPagatore soggettoPagatore = new SoggettoPagatore();
@@ -300,10 +312,17 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		}
 
 		try {
-			return pagopaService.getAvviso(terzoCnr.getPartita_iva_anagrafico(), pendenzaPagopaBulk.getCdAvviso());
+			return pagopaService.getAvviso(terzoCnr.getCodice_fiscale_anagrafico(), pendenzaPagopaBulk.getCdAvviso());
 		} catch (Throwable t) {
 			logger.info(t.getMessage());
 			throw handleException(t);
 		}
+	}
+
+	protected Query select(UserContext userContext, CompoundFindClause clauses, OggettoBulk bulk) throws ComponentException, it.cnr.jada.persistency.PersistencyException
+	{
+		SQLBuilder sql = (SQLBuilder) super.select( userContext, clauses, bulk );
+		sql.addOrderBy("id");
+		return sql;
 	}
 }

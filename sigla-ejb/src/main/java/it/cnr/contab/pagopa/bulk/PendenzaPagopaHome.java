@@ -17,12 +17,16 @@
 
 package it.cnr.contab.pagopa.bulk;
 
+import it.cnr.contab.docamm00.docs.bulk.Fattura_attiva_IBulk;
+import it.cnr.contab.ordmag.ordini.bulk.OrdineAcqBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
+import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.SQLBuilder;
 
 public class PendenzaPagopaHome extends BulkHome {
 	private static final long serialVersionUID = 1L;
@@ -37,12 +41,24 @@ public class PendenzaPagopaHome extends BulkHome {
 	@Override
 	public void initializePrimaryKeyForInsert(UserContext  usercontext,OggettoBulk oggettobulk)throws PersistencyException, ComponentException {
 		try {
-			PendenzaPagopaBulk atto = (PendenzaPagopaBulk)oggettobulk;
-			atto.setId(
+			PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)oggettobulk;
+			pendenzaPagopaBulk.setId(
 					new Long(((Long)findAndLockMax( oggettobulk, "id", new Long(0) )).intValue()+1));
-			super.initializePrimaryKeyForInsert(usercontext, atto);
+			super.initializePrimaryKeyForInsert(usercontext, pendenzaPagopaBulk);
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
 			throw new PersistencyException(e);
 		}
+	}
+
+	@Override
+	public void delete(Persistent persistent, UserContext userContext) throws PersistencyException {
+		((PendenzaPagopaBulk)persistent).setStato(PendenzaPagopaBulk.STATO_ANNULLATO);
+		super.update(persistent, userContext);
+	}
+	public SQLBuilder createSQLBuilder() {
+
+		SQLBuilder sql = super.createSQLBuilder();
+		sql.addSQLClause("AND", "STATO", sql.NOT_EQUALS, PendenzaPagopaBulk.STATO_ANNULLATO);
+		return sql;
 	}
 }
