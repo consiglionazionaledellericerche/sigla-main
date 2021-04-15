@@ -164,10 +164,9 @@ public class AllegatiDocContBP extends AllegatiCRUDBP<AllegatoDocContBulk, Stato
     }
 
     @Override
-    protected void completeAllegato(AllegatoDocContBulk allegato) throws ApplicationException {
-        super.completeAllegato(allegato);
-        Optional.ofNullable(storeService.getStorageObjectBykey(allegato.getStorageKey()))
-                .map(storageObject -> storageObject.getPropertyValue("doccont:rif_modalita_pagamento"))
+    protected void completeAllegato(AllegatoDocContBulk allegato, StorageObject storageObject) throws ApplicationException {
+        super.completeAllegato(allegato, storageObject);
+        Optional.ofNullable(storageObject.getPropertyValue("doccont:rif_modalita_pagamento"))
                 .map(String.class::cast)
                 .ifPresent(s -> allegato.setRifModalitaPagamento(s));
     }

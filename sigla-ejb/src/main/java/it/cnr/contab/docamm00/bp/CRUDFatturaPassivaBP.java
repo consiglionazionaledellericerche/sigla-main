@@ -1690,9 +1690,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
     }
 
     @Override
-    protected void completeAllegato(AllegatoFatturaBulk allegato) throws ApplicationException {
-        Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(allegato.getStorageKey()))
-                .map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+    protected void completeAllegato(AllegatoFatturaBulk allegato, StorageObject storageObject) throws ApplicationException {
+        Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
                 .map(strings -> strings.stream())
                 .ifPresent(stringStream -> {
                     stringStream
@@ -1700,7 +1699,8 @@ public abstract class CRUDFatturaPassivaBP extends AllegatiCRUDBP<AllegatoFattur
                             .findFirst()
                             .ifPresent(s -> allegato.setAspectName(s));
                 });
-        super.completeAllegato(allegato);
+        allegato.setUtenteSIGLA(storageObject.getPropertyValue("sigla_commons_aspect:utente_applicativo"));
+        super.completeAllegato(allegato, storageObject);
     }
 
     public boolean isRequiredSplitPayment(ActionContext actioncontext, Timestamp dt_registrazione) throws BusinessProcessException {

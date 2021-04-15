@@ -25,11 +25,6 @@ import java.util.Date;
 
 public class AllegatoNonRegistrabilitaBulk extends AllegatoFatturaBulk {
     @StoragePolicy(
-            name = "P:sigla_commons_aspect:utente_applicativo_sigla",
-            property = @StorageProperty(name = "sigla_commons_aspect:utente_applicativo")
-    )
-    private String utenteSIGLA;
-    @StoragePolicy(
             name = "P:sigla_commons_aspect:protocollo",
             property = @StorageProperty(name = "sigla_commons_aspect:anno_protocollo")
     )
@@ -56,14 +51,6 @@ public class AllegatoNonRegistrabilitaBulk extends AllegatoFatturaBulk {
     @Override
     public String getAspectName() {
         return StorageDocAmmAspect.SIGLA_FATTURE_ATTACHMENT_COMUNICAZIONE_NON_REGISTRABILITA.value();
-    }
-
-    public String getUtenteSIGLA() {
-        return utenteSIGLA;
-    }
-
-    public void setUtenteSIGLA(String utenteSIGLA) {
-        this.utenteSIGLA = utenteSIGLA;
     }
 
     public Integer getAnnoProtocollo() {

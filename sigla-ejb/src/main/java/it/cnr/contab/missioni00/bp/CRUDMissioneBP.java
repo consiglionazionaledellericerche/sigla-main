@@ -2607,7 +2607,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                             allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                             allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                             allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                            completeAllegato(allegato);
+                            completeAllegato(allegato, storageObject);
                             allegato.setCrudStatus(OggettoBulk.NORMAL);
                             allegatoParentBulk.addToArchivioAllegati(allegato);
                         }
@@ -2627,7 +2627,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                             allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                             allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                             allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                            completeAllegato(allegato);
+                            completeAllegato(allegato, storageObject);
                             allegato.setCrudStatus(OggettoBulk.NORMAL);
                             allegatoParentBulk.addToArchivioAllegati(allegato);
                         }
@@ -2676,7 +2676,7 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
                             allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                             allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                             allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
-                            completeAllegato(allegato);
+                            completeAllegato(allegato, storageObject);
                             allegato.setCrudStatus(OggettoBulk.NORMAL);
                             allegatoParentBulk.addToArchivioAllegati(allegato);
                         }
@@ -2742,15 +2742,13 @@ public class CRUDMissioneBP extends AllegatiCRUDBP<AllegatoMissioneBulk, Mission
     }
 
     @Override
-    protected void completeAllegato(AllegatoMissioneBulk allegato) throws ApplicationException {
-        allegato.setAspectName(Optional.ofNullable(allegato.getStorageKey())
-                .map(key -> missioniCMISService.getStorageObjectBykey(key))
-                .map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+    protected void completeAllegato(AllegatoMissioneBulk allegato, StorageObject storageObject) throws ApplicationException {
+        allegato.setAspectName(Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
                 .map(list -> list.stream().filter(
                         o -> AllegatoMissioneBulk.aspectNamesKeys.get(o) != null
                         ).findAny().orElse(MissioniCMISService.ASPECT_ALLEGATI_MISSIONE_SIGLA)
                 ).orElse(null));
-        super.completeAllegato(allegato);
+        super.completeAllegato(allegato, storageObject);
     }
 
 

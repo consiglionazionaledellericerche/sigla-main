@@ -28,6 +28,17 @@
 		inputSize="40"
 		nullable="false"
 		label="Tipologia" />
+	<fieldProperty
+		name="utente"
+		inputType="TEXT"
+		property="utenteSIGLA"
+		label="Utente"/>
+	<fieldProperty
+		name="data"
+		inputType="TEXT"
+		property="lastModificationDate"
+		formatName="timestamp"
+		label="Data"/>
 
 	<form name="readonly">
 		<formFieldProperty
@@ -98,7 +109,11 @@
 		<columnFieldProperty
 			name="descrizione" />
 		<columnFieldProperty
-			name="titolo" />    	    
+			name="titolo" />
+		<columnFieldProperty
+			name="utente"/>
+		<columnFieldProperty
+			name="data"/>
 	</columnSet>	
 	
 	<columnSet name="default">
@@ -110,7 +125,11 @@
 			name="descrizione" />
 		<columnFieldProperty
 			name="titolo" />
-	</columnSet>	
+		<columnFieldProperty
+			name="utente"/>
+		<columnFieldProperty
+			name="data"/>
+	</columnSet>
 	<columnSet name="fatturaAttiva">
 		<columnFieldProperty
 			name="nome" />
