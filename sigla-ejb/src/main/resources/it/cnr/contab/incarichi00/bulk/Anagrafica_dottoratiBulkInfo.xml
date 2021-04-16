@@ -3,9 +3,7 @@
 	<fieldProperty
 		name="id"
 		property="id"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="38"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
@@ -14,9 +12,7 @@
 	<fieldProperty
 		name="regione"
 		property="regione"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
 		nullable="false"
@@ -25,8 +21,6 @@
 		name="universitaCapofila"
 		property="universitaCapofila"
 		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
 		maxLength="250"
 		enabledOnEdit="false"
 		nullable="false"
@@ -35,8 +29,6 @@
 		name="cdTerzo"
 		property="cdTerzo"
 		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
 		maxLength="38"
 		enabledOnEdit="false"
 		nullable="false"
@@ -44,18 +36,14 @@
 	<fieldProperty
 		name="telefonoAteneo"
 		property="telefonoAteneo"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
 		label="telefonoAteneo" />
 	<fieldProperty
 		name="emailAteneo"
 		property="emailAteneo"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
 		label="emailAteneo" />
@@ -98,36 +86,28 @@
 	<fieldProperty
 		name="numeroCicliFinanziati"
 		property="numeroCicliFinanziati"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="38"
 		enabledOnEdit="false"
 		label="numeroCicliFinanziati" />
 	<fieldProperty
 		name="ricercatore"
 		property="ricercatore"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
 		label="ricercatore" />
 	<fieldProperty
 		name="istitutoCnr"
 		property="istitutoCnr"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
 		label="istitutoCnr" />
 	<fieldProperty
 		name="dipartimentoCnr"
 		property="dipartimentoCnr"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
+		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
 		label="dipartimentoCnr" />
