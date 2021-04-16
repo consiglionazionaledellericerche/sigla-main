@@ -311,6 +311,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                                     new FileInputStream(allegato.getFile()),
                                     allegato.getContentType());
                         }
+                        allegato.complete(actioncontext.getUserContext());
                         storeService.updateProperties(allegato, storeService.getStorageObjectBykey(allegato.getStorageKey()));
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {
