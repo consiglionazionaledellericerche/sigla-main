@@ -1,5 +1,9 @@
-## Release 6.3.22  -- _April 14, 2021_ 
+## Release 6.3.23  -- _April 15, 2021_ 
 **Changes**
+
+>**Added user information and date to the attachments of the electronic invoice**
+>
+>[498ef6adb0f39fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/498ef6adb0f39fb) marco.spasiano *April 15, 2021*
 
 >**Upgrade version of sigla-ws-client**
 >
