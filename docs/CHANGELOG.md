@@ -1,5 +1,21 @@
-## Release 6.3.23  -- _April 15, 2021_ 
+## Release 6.3.25  -- _April 19, 2021_ 
 **Changes**
+
+>**Progetti: corretta anomalia visualizzazione allegati nelle rimodulazioni.**
+>
+>[d9c9b50cf34a584](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9c9b50cf34a584) raffaele.pagano *April 19, 2021*
+
+>**Aggiunto controllo per la visibilità dei Curriculum del vincitore**
+>
+>[304041b77004d74](https://github.com/consiglionazionaledellericerche/sigla-main/commit/304041b77004d74) marco.spasiano *April 19, 2021*
+
+>**Added user information and date to the attachments of the electronic invoice**
+>
+>[24b4b61c43e1e66](https://github.com/consiglionazionaledellericerche/sigla-main/commit/24b4b61c43e1e66) marco.spasiano *April 19, 2021*
+
+>**Added user information and date to the attachments of the electronic invoice**
+>
+>[e880f273cf52de4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e880f273cf52de4) marco.spasiano *April 16, 2021*
 
 >**Added user information and date to the attachments of the electronic invoice**
 >
