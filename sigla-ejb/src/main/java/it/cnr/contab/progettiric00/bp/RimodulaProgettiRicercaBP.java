@@ -61,6 +61,7 @@ import it.cnr.jada.persistency.sql.CompoundFindClause;
 import it.cnr.jada.util.RemoteIterator;
 import it.cnr.jada.util.action.SimpleDetailCRUDController;
 import it.cnr.jada.util.jsp.Button;
+import it.cnr.si.spring.storage.StorageObject;
 
 public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUDBP<AllegatoProgettoRimodulazioneBulk, Progetto_rimodulazioneBulk> {
 	private boolean flPrgPianoEconomico = false;
@@ -860,8 +861,9 @@ public class RimodulaProgettiRicercaBP extends AllegatiProgettoRimodulazioneCRUD
     }
     
     @Override
-	protected void completeAllegato(AllegatoProgettoRimodulazioneBulk allegato) throws ApplicationException {
-    	super.completeAllegato(allegato);
+	protected void completeAllegato(AllegatoProgettoRimodulazioneBulk allegato, StorageObject storageObject) throws ApplicationException {
+		super.completeAllegato(allegato, storageObject);
+		super.completeAllegato(allegato);
 		allegato.setDaNonEliminare(Boolean.FALSE);
     	if (Optional.ofNullable(this.getModel()).filter(Progetto_rimodulazioneBulk.class::isInstance).map(Progetto_rimodulazioneBulk.class::cast)
     			.filter(el->el.isStatoProvvisorio())
