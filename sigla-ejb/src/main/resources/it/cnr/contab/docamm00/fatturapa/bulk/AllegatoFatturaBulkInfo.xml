@@ -130,6 +130,22 @@
 		<columnFieldProperty
 			name="data"/>
 	</columnSet>
+
+	<columnSet name="readonly">
+		<columnFieldProperty
+				name="aspectName"/>
+		<columnFieldProperty
+				name="nome" />
+		<columnFieldProperty
+				name="descrizione" />
+		<columnFieldProperty
+				name="titolo" />
+		<columnFieldProperty
+				name="utente"/>
+		<columnFieldProperty
+				name="data"/>
+	</columnSet>
+
 	<columnSet name="fatturaAttiva">
 		<columnFieldProperty
 			name="nome" />
