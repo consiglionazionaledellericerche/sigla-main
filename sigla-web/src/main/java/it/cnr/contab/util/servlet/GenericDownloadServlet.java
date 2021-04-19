@@ -17,6 +17,8 @@
 
 package it.cnr.contab.util.servlet;
 
+import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
+import it.cnr.contab.incarichi00.storage.StorageContrattiAttachment;
 import it.cnr.contab.service.SpringUtil;
 import it.cnr.si.spring.storage.StorageObject;
 import it.cnr.si.spring.storage.StoreService;
@@ -38,6 +40,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Servlet implementation class GenericDownload
@@ -46,8 +50,9 @@ public class GenericDownloadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private transient final static Logger LOGGER = LoggerFactory.getLogger(GenericDownloadServlet.class);
 	private static final String AUTHORIZATION = "Authorization";
-       
-    /**
+	public static final String NUMERO_ANNI_SCADENZA_INCARICO = "3";
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public GenericDownloadServlet() {
@@ -60,22 +65,36 @@ public class GenericDownloadServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
 		if (request.getParameter("nodeRef")!= null){
-
-			UsernamePasswordCredentials customCredentials = getCredentials(request.getHeader(AUTHORIZATION));
+			UsernamePasswordCredentials customCredentials = Optional.ofNullable(getCredentials(request.getHeader(AUTHORIZATION)))
+						.orElseThrow(() -> new ServletException("AUTHORIZATION not found!"));
 			StorageObject storageObject = storeService.getStorageObjectBykey(request.getParameter("nodeRef"), customCredentials);
-			InputStream is = storeService.getResource(storageObject);
-			response.setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
-			response.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-			OutputStream os = response.getOutputStream();
-			response.setDateHeader("Expires", 0);
-			byte[] buffer = new byte[response.getBufferSize()];
-			int buflength;
-			while ((buflength = is.read(buffer)) > 0) {
-				os.write(buffer,0,buflength);
+			/**
+			 * Controllo se sto richiamando un curriculum più vecchio di 3 anni
+			 */
+			if (Optional.ofNullable(storageObject)
+						.map(storageObject1 -> storageObject1.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()))
+						.filter(s -> s.equalsIgnoreCase(StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_CURRICULUM_VINCITORE.value()))
+						.isPresent() &&
+					Optional.ofNullable(storageObject)
+							.map(storageObject1 -> storageObject1.<BigInteger>getPropertyValue("sigla_contratti_aspect_incarichi:esercizio"))
+							.filter(integer -> integer.add(new BigInteger(NUMERO_ANNI_SCADENZA_INCARICO)).intValue() < LocalDate.now().getYear())
+							.isPresent()) {
+				response.setStatus(HttpServletResponse.SC_FOUND);
+			} else {
+				InputStream is = storeService.getResource(storageObject);
+				response.setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+				response.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+				OutputStream os = response.getOutputStream();
+				response.setDateHeader("Expires", 0);
+				byte[] buffer = new byte[response.getBufferSize()];
+				int buflength;
+				while ((buflength = is.read(buffer)) > 0) {
+					os.write(buffer,0,buflength);
+				}
+				is.close();
+				os.flush();
 			}
-			is.close();
-			os.flush();
-		}else{
+		} else {
 			HttpActionContext actionContext = new HttpActionContext(this, request, response);
 			try {
 				if (request.getParameter("methodName") != null)
