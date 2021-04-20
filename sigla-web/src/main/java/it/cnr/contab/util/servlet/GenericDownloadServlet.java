@@ -17,15 +17,13 @@
 
 package it.cnr.contab.util.servlet;
 
-import it.cnr.contab.docamm00.storage.StorageDocAmmAspect;
-import it.cnr.contab.incarichi00.storage.StorageContrattiAttachment;
 import it.cnr.contab.service.SpringUtil;
-import it.cnr.si.spring.storage.StorageObject;
-import it.cnr.si.spring.storage.StoreService;
-import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import it.cnr.jada.action.BusinessProcess;
 import it.cnr.jada.action.HttpActionContext;
 import it.cnr.jada.util.Introspector;
+import it.cnr.si.spring.storage.StorageObject;
+import it.cnr.si.spring.storage.StoreService;
+import it.cnr.si.spring.storage.config.StoragePropertyNames;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,113 +38,105 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
-import java.time.LocalDate;
 import java.util.Optional;
 
 /**
  * Servlet implementation class GenericDownload
  */
 public class GenericDownloadServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private transient final static Logger LOGGER = LoggerFactory.getLogger(GenericDownloadServlet.class);
-	private static final String AUTHORIZATION = "Authorization";
-	public static final String NUMERO_ANNI_SCADENZA_INCARICO = "3";
+    public static final String NUMERO_ANNI_SCADENZA_INCARICO = "3";
+    private static final long serialVersionUID = 1L;
+    private transient final static Logger LOGGER = LoggerFactory.getLogger(GenericDownloadServlet.class);
+    private static final String AUTHORIZATION = "Authorization";
 
-	/**
+    /**
      * @see HttpServlet#HttpServlet()
      */
     public GenericDownloadServlet() {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
-		if (request.getParameter("nodeRef")!= null){
-			UsernamePasswordCredentials customCredentials = Optional.ofNullable(getCredentials(request.getHeader(AUTHORIZATION)))
-						.orElseThrow(() -> new ServletException("AUTHORIZATION not found!"));
-			StorageObject storageObject = storeService.getStorageObjectBykey(request.getParameter("nodeRef"), customCredentials);
-			/**
-			 * Controllo se sto richiamando un curriculum più vecchio di 3 anni
-			 */
-			if (Optional.ofNullable(storageObject)
-						.map(storageObject1 -> storageObject1.<String>getPropertyValue(StoragePropertyNames.OBJECT_TYPE_ID.value()))
-						.filter(s -> s.equalsIgnoreCase(StorageContrattiAttachment.SIGLA_CONTRATTI_ATTACHMENT_CURRICULUM_VINCITORE.value()))
-						.isPresent() &&
-					Optional.ofNullable(storageObject)
-							.map(storageObject1 -> storageObject1.<BigInteger>getPropertyValue("sigla_contratti_aspect_incarichi:esercizio"))
-							.filter(integer -> integer.add(new BigInteger(NUMERO_ANNI_SCADENZA_INCARICO)).intValue() < LocalDate.now().getYear())
-							.isPresent()) {
-				response.setStatus(HttpServletResponse.SC_FOUND);
-			} else {
-				InputStream is = storeService.getResource(storageObject);
-				response.setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
-				response.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
-				OutputStream os = response.getOutputStream();
-				response.setDateHeader("Expires", 0);
-				byte[] buffer = new byte[response.getBufferSize()];
-				int buflength;
-				while ((buflength = is.read(buffer)) > 0) {
-					os.write(buffer,0,buflength);
-				}
-				is.close();
-				os.flush();
-			}
-		} else {
-			HttpActionContext actionContext = new HttpActionContext(this, request, response);
-			try {
-				if (request.getParameter("methodName") != null)
-					Introspector.invoke(BusinessProcess.getBusinessProcess(request), request.getParameter("methodName"), actionContext);
-			} catch (NoSuchMethodException e) {
-				throw new ServletException(e);
-			} catch (IllegalAccessException e) {
-				throw new ServletException(e);
-			} catch (InvocationTargetException e) {
-				throw new ServletException(e.getTargetException().getMessage(), e);
-			}
-		}
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        StoreService storeService = SpringUtil.getBean("storeService", StoreService.class);
+        final String nodeRef = request.getParameter("nodeRef");
+        if (nodeRef != null) {
+            final String header = request.getHeader(AUTHORIZATION);
+            UsernamePasswordCredentials customCredentials = Optional.ofNullable(getCredentials(header))
+                    .orElseThrow(() -> new ServletException("AUTHORIZATION not found!"));
+            StorageObject storageObject = storeService.getStorageObjectBykey(nodeRef, customCredentials);
+            /**
+             * Controllo se sto richiamando un curriculum più vecchio di 3 anni
+             */
+            LOGGER.info("Try to GET content of node {} with AUTHORIZATION {}", nodeRef, header);
+            InputStream is = storeService.getResource(storageObject);
+            response.setContentLength(storageObject.<BigInteger>getPropertyValue(StoragePropertyNames.CONTENT_STREAM_LENGTH.value()).intValue());
+            response.setContentType(storageObject.getPropertyValue(StoragePropertyNames.CONTENT_STREAM_MIME_TYPE.value()));
+            OutputStream os = response.getOutputStream();
+            response.setDateHeader("Expires", 0);
+            byte[] buffer = new byte[response.getBufferSize()];
+            int buflength;
+            while ((buflength = is.read(buffer)) > 0) {
+                os.write(buffer, 0, buflength);
+            }
+            is.close();
+            os.flush();
+        } else {
+            HttpActionContext actionContext = new HttpActionContext(this, request, response);
+            try {
+                if (request.getParameter("methodName") != null)
+                    Introspector.invoke(BusinessProcess.getBusinessProcess(request), request.getParameter("methodName"), actionContext);
+            } catch (NoSuchMethodException e) {
+                throw new ServletException(e);
+            } catch (IllegalAccessException e) {
+                throw new ServletException(e);
+            } catch (InvocationTargetException e) {
+                throw new ServletException(e.getTargetException().getMessage(), e);
+            }
+        }
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-	private UsernamePasswordCredentials getCredentials(String authorization){
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 
-		if (authorization != null) {
-			String[] values = authorization.split(" ");
+    private UsernamePasswordCredentials getCredentials(String authorization) {
 
-			if (values.length == 2 && values[0].equals("Basic")) {
+        if (authorization != null) {
+            String[] values = authorization.split(" ");
 
-				String base64 = values[1];
-				String decoded = new String(
-						DatatypeConverter.parseBase64Binary(base64));
+            if (values.length == 2 && values[0].equals("Basic")) {
 
-				int sep = decoded.indexOf(':');
-				LOGGER.debug("decoded value: " + decoded);
+                String base64 = values[1];
+                String decoded = new String(
+                        DatatypeConverter.parseBase64Binary(base64));
 
-				String username = decoded.substring(0, sep);
-				String password = decoded.substring(sep + 1);
+                int sep = decoded.indexOf(':');
+                LOGGER.debug("decoded value: " + decoded);
 
-				LOGGER.info("username: " + username);
-				LOGGER.info("password: " + password);
+                String username = decoded.substring(0, sep);
+                String password = decoded.substring(sep + 1);
 
-				return new UsernamePasswordCredentials(username,
-						password);
+                LOGGER.info("username: " + username);
+                LOGGER.info("password: " + password);
+
+                return new UsernamePasswordCredentials(username,
+                        password);
 
 
-			} else {
-				LOGGER.info("Problemi con Authorization Header: " + authorization);
-			}
-		} else {
-			LOGGER.info("authorization is null");
-		}
+            } else {
+                LOGGER.info("Problemi con Authorization Header: " + authorization);
+            }
+        } else {
+            LOGGER.info("authorization is null");
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }
