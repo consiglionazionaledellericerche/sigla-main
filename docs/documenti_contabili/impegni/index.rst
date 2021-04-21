@@ -6,5 +6,6 @@ Impegni
    :maxdepth: -1
 
    competenza
-   residuo
+   residuo_proprio
+   residuo_improprio
    partite_giro
