@@ -1,3 +1,3 @@
 ==============
-RESIDUI PROPRI
+Residui Propri
 ==============
