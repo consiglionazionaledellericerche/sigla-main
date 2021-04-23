@@ -2355,7 +2355,8 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			hash.put(i++, new String[]{"tabProceduraContrattoAllegati", "Allegati", "/incarichi00/tab_incarichi_procedura_contratto_allegati.jsp" });
 
 			if (incarico!=null) {
-				hash.put(i++, new String[]{"tabProceduraContrattoRapporti","Dichiarazione Contraente","/incarichi00/tab_incarichi_procedura_rapporti.jsp" });
+				if (incarico.getIncarichi_procedura().isDichiarazioneContraenteRequired())
+					hash.put(i++, new String[]{"tabProceduraContrattoRapporti","Dichiarazione Contraente","/incarichi00/tab_incarichi_procedura_rapporti.jsp" });
 				if (incarico.isIncaricoDefinitivo()||!incarico.getIncarichi_repertorio_varColl().isEmpty())
 					hash.put(i++, new String[]{"tabProceduraContrattoVariazioni","Variazioni","/incarichi00/tab_incarichi_procedura_variazioni.jsp" });
 

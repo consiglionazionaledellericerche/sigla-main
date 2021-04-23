@@ -23,6 +23,7 @@ import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
 import it.cnr.jada.bulk.OggettoBulk;
 import it.cnr.jada.bulk.ValidationException;
+import it.cnr.jada.comp.ApplicationException;
 import it.cnr.jada.util.upload.UploadedFile;
 
 /**
@@ -32,7 +33,8 @@ import it.cnr.jada.util.upload.UploadedFile;
  */
 public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.SimpleDetailCRUDController {
 	private static final long LUNGHEZZA_MAX=0x1000000;
-	
+	private static final long LUNGHEZZA_MAX_PERLA=Long.valueOf(1000000);
+
 	public Incarichi_archivioCRUDController(String name, Class modelClass, String listPropertyName, it.cnr.jada.util.action.FormController parent) {
 		super(name, modelClass, listPropertyName, parent);
 	}
@@ -46,9 +48,16 @@ public class Incarichi_archivioCRUDController extends it.cnr.jada.util.action.Si
 				throw new ValidationException("Attenzione: selezionare un File da caricare.");
 		}
 
-		if (!(file == null || file.getName().equals(""))) { 
+		if (!(file == null || file.getName().equals(""))) {
 			if (file.length() > LUNGHEZZA_MAX)
 				throw new ValidationException("Attenzione: la dimensione del file è superiore alla massima consentita (10 Mb).");
+
+			if (allegato.isCurriculumVincitore()||allegato.isAggiornamentoCurriculumVincitore()||allegato.isConflittoInteressi()) {
+				if (file.length() > LUNGHEZZA_MAX_PERLA)
+					throw new ValidationException("Attenzione: la dimensione del file è superiore alla massima consentita (1 Mb).");
+				if (!file.getContentType().equals("application/pdf"))
+					throw new ValidationException("File non valido! Il formato del file consentito è il pdf.");
+			}
 
 			allegato.setFile(file.getFile());
 			allegato.setNome_file(allegato.parseFilename(file.getName()));

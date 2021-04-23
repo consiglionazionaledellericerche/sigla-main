@@ -1151,7 +1151,8 @@ public class CRUDIncarichiEstrazioneFpBP extends SimpleCRUDBP {
 			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
 			Timestamp dt_inizio = new Timestamp(sdf.parse("01/01/"+archivioXmlFP.getEsercizio().intValue()).getTime());
 			Timestamp dt_fine = new Timestamp(sdf.parse("31/12/"+archivioXmlFP.getEsercizio().intValue()).getTime());
-			clauses.addClause(FindClause.AND,"pg_repertorio",SQLBuilder.EQUALS,274);
+
+			//clauses.addClause(FindClause.AND,"pg_repertorio",SQLBuilder.EQUALS,195);
 
 			if (archivioXmlFP.getDt_calcolo().equals(Incarichi_archivio_xml_fpBulk.DATA_STIPULA)) {
 				clauses.addClause(FindClause.AND,"dt_stipula",SQLBuilder.GREATER_EQUALS,dt_inizio);
