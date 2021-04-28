@@ -143,6 +143,13 @@
 		formatName="date_short"
 		label="Data fine validita" />
 	<fieldProperty
+		name="dt_proroga"
+		property="dt_proroga"
+		inputType="TEXT"
+		inputSize="10"
+		formatName="date_short"
+		label="Data proroga" />
+	<fieldProperty
 		name="dt_fine_validita_variazione"
 		property="dt_fine_validita_variazione"
 		inputType="TEXT"
@@ -230,6 +237,8 @@
 		name="dt_inizio_validita" />
 	<formFieldProperty
 		name="dt_fine_validita" />
+	<formFieldProperty
+		name="dt_proroga" />
 	<formFieldProperty
 		name="dt_fine_validita_variazione" />
 	<formFieldProperty

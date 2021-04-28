@@ -960,7 +960,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					}
 					if (allegato!=null) {
 						if (procedura.isProceduraAnnullata() || procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(storageFile.getStorageObject(), true);
@@ -1743,7 +1743,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
                     });
 					if (allegato!=null && optStorage.isPresent()) {
 						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(optStorage.get(), false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(optStorage.get(), true);
@@ -1790,7 +1790,7 @@ public class IncarichiProceduraComponent extends CRUDComponent {
 					}
 					if (allegato!=null && nodeAllegato!=null) {
 						if (incarico_procedura.isProceduraAnnullata() || incarico_procedura.isProceduraProvvisoria() || 
-								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore())) 
+								!(allegato.isBando() || allegato.isCurriculumVincitore() || allegato.isAggiornamentoCurriculumVincitore() || allegato.isConflittoInteressi()))
 							contrattiService.setInheritedPermission(nodeAllegato, false);
 						else if (allegato.isBando())
 							contrattiService.setInheritedPermission(nodeAllegato, true);
