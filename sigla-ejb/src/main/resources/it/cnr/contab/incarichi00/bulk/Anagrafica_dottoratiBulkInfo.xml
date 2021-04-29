@@ -134,27 +134,23 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Identificativo del tipo dottorati" />
+		label="nome del tipo dottorati" />
 	<fieldProperty
-		name="idCicloDottorati"
-		property="idCicloDottorati"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
+		name="find_CicloDottorati"
+		property="cicloDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
 		nullable="false"
-		label="Identificativo del ciclo dottorati." />
+		label="numero del ciclo dottorati." />
 	<fieldProperty
-		name="idTipocorsoDottorati"
-		property="idTipocorsoDottorati"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
+		name="find_TipocorsoDottorati"
+		property="tipocorsoDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
 		nullable="false"
-		label="Identificativo del tipocorso_dottorati." />
+		label="nome del tipocorso_dottorati." />
 	<form
 		name="searchtool">
 		<formFieldProperty
@@ -192,6 +188,10 @@
 		name="note" />
 	<formFieldProperty
 			name="find_PhdtipoDottorati" />
+	<formFieldProperty
+			name="find_CicloDottorati" />
+	<formFieldProperty
+			name="find_TipocorsoDottorati" />
 	<findFieldProperty
 		name="id" />
 	<findFieldProperty

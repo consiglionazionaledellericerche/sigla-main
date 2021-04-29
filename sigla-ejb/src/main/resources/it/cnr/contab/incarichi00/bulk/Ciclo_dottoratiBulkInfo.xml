@@ -62,4 +62,12 @@
 		name="annoInizio" />
 	<columnFieldProperty
 		name="annoFine" />
+
+	<form
+			name="searchtool" >
+		<formFieldProperty
+				name="numero"
+				inputType="TEXT"
+				inputSize="30" />
+	</form>
 </bulkInfo>
