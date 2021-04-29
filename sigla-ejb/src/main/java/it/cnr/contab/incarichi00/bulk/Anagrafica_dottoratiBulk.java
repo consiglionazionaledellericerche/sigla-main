@@ -5,6 +5,8 @@
 package it.cnr.contab.incarichi00.bulk;
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
 
+import java.util.Iterator;
+
 public class Anagrafica_dottoratiBulk extends Anagrafica_dottoratiBase {
 	/**
 	 * [TERZO ]

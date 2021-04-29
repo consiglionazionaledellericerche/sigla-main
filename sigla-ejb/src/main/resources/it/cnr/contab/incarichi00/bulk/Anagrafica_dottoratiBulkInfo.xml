@@ -128,15 +128,13 @@
 		enabledOnEdit="false"
 		label="note" />
 	<fieldProperty
-		name="idPhdtipoDottorati"
-		property="idPhdtipoDottorati"
-		inputType="TEXTAREA"
-		cols="60"
-		rows="5"
-		maxLength="38"
-		enabledOnEdit="false"
+		name="find_PhdtipoDottorati"
+		property="phdtipoDottorati"
+		inputType="SEARCHTOOL"
+		formName="searchtool"
+		enabledOnSearch="true"
 		nullable="false"
-		label="Identificativo del tipo dottorati." />
+		label="Identificativo del tipo dottorati" />
 	<fieldProperty
 		name="idCicloDottorati"
 		property="idCicloDottorati"
@@ -192,6 +190,8 @@
 		name="dataStipulaConvenzione" />
 	<formFieldProperty
 		name="note" />
+	<formFieldProperty
+			name="find_PhdtipoDottorati" />
 	<findFieldProperty
 		name="id" />
 	<findFieldProperty
@@ -224,8 +224,6 @@
 		name="dataStipulaConvenzione" />
 	<findFieldProperty
 		name="note" />
-	<findFieldProperty
-		name="idPhdtipoDottorati" />
 	<findFieldProperty
 		name="idCicloDottorati" />
 	<findFieldProperty

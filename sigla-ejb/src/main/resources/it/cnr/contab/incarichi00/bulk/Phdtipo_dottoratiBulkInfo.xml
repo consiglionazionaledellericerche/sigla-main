@@ -34,4 +34,12 @@
 		name="id" />
 	<columnFieldProperty
 		name="name" />
+
+	<form
+			name="searchtool" >
+		<formFieldProperty
+				name="name"
+				inputType="TEXT"
+				inputSize="30" />
+	</form>
 </bulkInfo>
