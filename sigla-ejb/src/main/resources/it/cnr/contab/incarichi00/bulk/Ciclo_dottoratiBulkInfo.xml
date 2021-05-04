@@ -8,7 +8,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Chiave Primaria." />
+		label="Id" />
 	<fieldProperty
 		name="numero"
 		property="numero"
@@ -16,7 +16,7 @@
 		maxLength="38"
 		enabledOnEdit="false"
 		nullable="false"
-		label="numero" />
+		label="Numero" />
 	<fieldProperty
 		name="annoInizio"
 		property="annoInizio"
@@ -24,7 +24,7 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
-		label="annoInizio" />
+		label="Anno Inizio" />
 	<fieldProperty
 		name="annoFine"
 		property="annoFine"
@@ -32,7 +32,7 @@
 		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
-		label="annoFine" />
+		label="Anno Fine" />
 	<form
 		name="searchtool">
 		<formFieldProperty

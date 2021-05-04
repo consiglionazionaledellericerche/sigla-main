@@ -8,7 +8,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Chiave Primaria." />
+		label="Id" />
 	<fieldProperty
 		name="name"
 		property="name"
@@ -16,7 +16,7 @@
 		maxLength="250"
 		enabledOnEdit="false"
 		nullable="false"
-		label="name" />
+		label="Name" />
 	<form
 		name="searchtool">
 		<formFieldProperty

@@ -8,7 +8,7 @@
 		enabledOnEdit="false"
 		enabledOnSearch="false"
 		nullable="false"
-		label="Chiave Primaria." />
+		label="Id" />
 	<fieldProperty
 		name="regione"
 		property="regione"
@@ -16,7 +16,7 @@
 		maxLength="250"
 		enabledOnEdit="false"
 		nullable="false"
-		label="regione" />
+		label="Regione" />
 	<fieldProperty
 		name="universitaCapofila"
 		property="universitaCapofila"
@@ -24,7 +24,7 @@
 		maxLength="250"
 		enabledOnEdit="false"
 		nullable="false"
-		label="universitaCapofila" />
+		label="Universita Capofila" />
 	<fieldProperty
 		name="cdTerzo"
 		property="cdTerzo"
@@ -39,14 +39,14 @@
 		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="telefonoAteneo" />
+		label="Telefono Ateneo" />
 	<fieldProperty
 		name="emailAteneo"
 		property="emailAteneo"
 		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="emailAteneo" />
+		label="Email Ateneo" />
 	<fieldProperty
 		name="altreUniversita"
 		property="altreUniversita"
@@ -55,7 +55,7 @@
 		rows="5"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="altreUniversita" />
+		label="Altre Universita" />
 	<fieldProperty
 		name="dipartimentoUniversita"
 		property="dipartimentoUniversita"
@@ -64,7 +64,7 @@
 		rows="5"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="dipartimentoUniversita" />
+		label="Dipartimento Universita" />
 	<fieldProperty
 		name="corsoDottorato"
 		property="corsoDottorato"
@@ -73,7 +73,7 @@
 		rows="5"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="corsoDottorato" />
+		label="Corso Dottorato" />
 	<fieldProperty
 		name="tematica"
 		property="tematica"
@@ -82,35 +82,35 @@
 		rows="5"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="tematica" />
+		label="Tematica" />
 	<fieldProperty
 		name="numeroCicliFinanziati"
 		property="numeroCicliFinanziati"
 		inputType="TEXT"
 		maxLength="38"
 		enabledOnEdit="false"
-		label="numeroCicliFinanziati" />
+		label="Numero Cicli Finanziati" />
 	<fieldProperty
 		name="ricercatore"
 		property="ricercatore"
 		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="ricercatore" />
+		label="Ricercatore" />
 	<fieldProperty
 		name="istitutoCnr"
 		property="istitutoCnr"
 		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="istitutoCnr" />
+		label="istituto Cnr" />
 	<fieldProperty
 		name="dipartimentoCnr"
 		property="dipartimentoCnr"
 		inputType="TEXT"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="dipartimentoCnr" />
+		label="Dipartimento Cnr" />
 	<fieldProperty
 		name="dataStipulaConvenzione"
 		property="dataStipulaConvenzione"
@@ -126,7 +126,7 @@
 		rows="5"
 		maxLength="250"
 		enabledOnEdit="false"
-		label="note" />
+		label="Note" />
 	<fieldProperty
 		name="find_PhdtipoDottorati"
 		property="phdtipoDottorati"
@@ -142,7 +142,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="numero del ciclo dottorati." />
+		label="Numero del ciclo dottorati." />
 	<fieldProperty
 		name="find_TipocorsoDottorati"
 		property="tipocorsoDottorati"
@@ -150,7 +150,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="nome del tipocorso_dottorati." />
+		label="Nome del tipocorso_dottorati." />
 	<form
 		name="searchtool">
 		<formFieldProperty
