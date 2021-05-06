@@ -592,9 +592,9 @@
 				<textFieldExpression><![CDATA["Email:  " + $F{pcEmail}]]></textFieldExpression>
 			</textField>
 		</band>
-		<band height="180" splitType="Stretch">
+		<band height="500" splitType="Stretch">
 			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="13" y="101" width="531" height="62" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e">
+				<reportElement stretchType="RelativeToBandHeight" x="15" y="30" width="531" height="62" uuid="72a1d452-0a74-4a47-9aeb-7d8c207e229e">
 					<property name="com.jaspersoft.studio.layout"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -669,9 +669,9 @@
 				</staticText>
 			</frame>
 		</band>
-		<band height="284" splitType="Stretch">
+		<band height="500" splitType="Stretch">
 			<frame>
-				<reportElement stretchType="RelativeToBandHeight" x="15" y="150" width="531" height="57" uuid="611e5434-d034-496c-8319-fda3dbfafdca"/>
+				<reportElement stretchType="RelativeToBandHeight" x="15" y="30" width="531" height="57" uuid="611e5434-d034-496c-8319-fda3dbfafdca"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -730,7 +730,7 @@
 				</staticText>
 			</frame>
 		</band>
-		<band height="284" splitType="Stretch">
+		<band height="500" splitType="Stretch">
 			<frame>
 				<reportElement stretchType="RelativeToBandHeight" x="15" y="30" width="531" height="57" uuid="07537241-c43e-4aef-ae57-ffe6c6c3896d"/>
 				<box>
