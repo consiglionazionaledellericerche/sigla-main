@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<!-- Created with Jaspersoft Studio version 6.16.0.final utlizzo versione della libreria JasperReports6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laboratori" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="9c3b805b-ea54-4163-b6ac-3dbd635f86f5">
 	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="labcompleto"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<style name="table" mode="Transparent" isBold="true">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -729,6 +729,8 @@
 					<text><![CDATA[Qualification / Institution]]></text>
 				</staticText>
 			</frame>
+		</band>
+		<band height="284" splitType="Stretch">
 			<frame>
 				<reportElement stretchType="RelativeToBandHeight" x="15" y="30" width="531" height="57" uuid="07537241-c43e-4aef-ae57-ffe6c6c3896d"/>
 				<box>
