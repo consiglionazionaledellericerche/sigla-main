@@ -158,6 +158,11 @@ Begin
                                  AND   pg_progetto=P_PG_PROGLIV2
                                  AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                  AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = cdr
+                               AND   SALDI.CD_LINEA_ATTIVITA = lda))
                    UNION ALL
                    SELECT esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -223,6 +228,11 @@ Begin
                                  AND   pg_progetto=P_PG_PROGLIV2
                                  AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                  AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = cdr
+                               AND   SALDI.CD_LINEA_ATTIVITA = lda))
                    UNION ALL
                    SELECT a.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -274,6 +284,11 @@ Begin
                            a.ti_appartenenza = c.ti_appartenenza AND
                            a.ti_gestione = c.ti_gestione AND
                            a.cd_elemento_voce = c.cd_elemento_voce))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = b.cd_centro_responsabilita
+                               AND   SALDI.CD_LINEA_ATTIVITA = b.cd_linea_attivita))
                    UNION ALL
                    SELECT a.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -330,6 +345,11 @@ Begin
                            b.ti_appartenenza = d.ti_appartenenza AND
                            b.ti_gestione = d.ti_gestione AND
                            b.cd_elemento_voce = d.cd_elemento_voce))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = c.cd_centro_responsabilita
+                               AND   SALDI.CD_LINEA_ATTIVITA = c.cd_linea_attivita))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -384,6 +404,11 @@ Begin
                            a.ti_appartenenza = e.ti_appartenenza AND
                            a.ti_gestione = e.ti_gestione AND
                            a.cd_voce = e.cd_elemento_voce))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = d.cd_centro_responsabilita
+                               AND   SALDI.CD_LINEA_ATTIVITA = d.cd_linea_attivita))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -437,6 +462,11 @@ Begin
                            a.ti_appartenenza = e.ti_appartenenza AND
                            a.ti_gestione = e.ti_gestione AND
                            a.cd_voce = e.cd_elemento_voce))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = d.cd_centro_responsabilita
+                               AND   SALDI.CD_LINEA_ATTIVITA = d.cd_linea_attivita))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -491,6 +521,11 @@ Begin
                            c.ti_appartenenza = e.ti_appartenenza AND
                            c.ti_gestione = e.ti_gestione AND
                            c.cd_voce = e.cd_elemento_voce))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = d.cd_centro_responsabilita
+                               AND   SALDI.CD_LINEA_ATTIVITA = d.cd_linea_attivita))
                    UNION ALL
                    SELECT c.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -544,6 +579,11 @@ Begin
                            c.ti_appartenenza = e.ti_appartenenza AND
                            c.ti_gestione = e.ti_gestione AND
                            c.cd_voce = e.cd_elemento_voce))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = d.cd_centro_responsabilita
+                               AND   SALDI.CD_LINEA_ATTIVITA = d.cd_linea_attivita))
                    UNION ALL
                    SELECT a.esercizio,
                           CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -586,18 +626,15 @@ Begin
                            a.esercizio = c.esercizio_voce AND
                            a.ti_appartenenza = c.ti_appartenenza AND
                            a.ti_gestione = c.ti_gestione AND
-                           a.cd_elemento_voce = c.cd_elemento_voce))) a
+                           a.cd_elemento_voce = c.cd_elemento_voce))
+                   AND (P_SOLO_GAE_ATTIVE='N' OR
+                        EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                               WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                               AND   SALDI.CD_CENTRO_RESPONSABILITA = b.cd_centro_responsabilita
+                               AND   SALDI.CD_LINEA_ATTIVITA = b.cd_linea_attivita))) a
              WHERE a.esercizio <= P_ESERCIZIO
              GROUP BY a.tipo, a.esercizio_res, a.cd_linea_attivita, a.cd_unita_piano, a.cd_voce_piano, a.cd_elemento_voce) P
-             WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov!=0)
-             AND (P_SOLO_GAE_ATTIVE='N' OR
-                  EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
-                         WHERE SALDI.ESERCIZIO = P_ESERCIZIO
-                         AND   SALDI.ESERCIZIO_RES = P.ESERCIZIO_RES
-                         AND   SALDI.CD_CENTRO_RESPONSABILITA = P_CENTRO_RESPONSABILITA
-                         AND   SALDI.CD_LINEA_ATTIVITA = P.CD_LINEA_ATTIVITA
-                         AND   SALDI.TI_GESTIONE = P.TIPO
-                         AND   SALDI.CD_ELEMENTO_VOCE = P.CD_ELEMENTO_VOCE)));
+             WHERE (p.stanziamento != 0 OR p.variazioni != 0 OR p.impacc != 0 OR p.pagris != 0 or p.nummov!=0));
 
       IF P_PRINT_MOVIMENTAZIONE = 'S' THEN
           --INSERISCO DETAIL VARIAZIONI
@@ -652,6 +689,11 @@ Begin
                                               AND   pg_progetto=P_PG_PROGLIV2
                                               AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                               AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
+                AND   (P_SOLO_GAE_ATTIVE='N' OR
+                       EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                              WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                              AND   SALDI.CD_CENTRO_RESPONSABILITA = a.cd_cdr_assegnatario
+                              AND   SALDI.CD_LINEA_ATTIVITA = a.cd_linea_attivita))
                 UNION ALL
                 SELECT A.ESERCIZIO,
                        CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -683,6 +725,11 @@ Begin
                                               AND   pg_progetto=P_PG_PROGLIV2
                                               AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                               AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
+                AND   (P_SOLO_GAE_ATTIVE='N' OR
+                       EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                              WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                              AND   SALDI.CD_CENTRO_RESPONSABILITA = a.cd_cdr
+                              AND   SALDI.CD_LINEA_ATTIVITA = a.cd_linea_attivita))
                 UNION ALL
                 SELECT A.ESERCIZIO,
                        CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -723,6 +770,11 @@ Begin
                                               AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                               AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
                 AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                AND   (P_SOLO_GAE_ATTIVE='N' OR
+                       EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                              WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                              AND   SALDI.CD_CENTRO_RESPONSABILITA = a.cd_centro_responsabilita
+                              AND   SALDI.CD_LINEA_ATTIVITA = a.cd_linea_attivita))
                 UNION ALL
                 SELECT A.ESERCIZIO,
                        CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -762,6 +814,11 @@ Begin
                                               AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                               AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
                 AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                AND   (P_SOLO_GAE_ATTIVE='N' OR
+                       EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                              WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                              AND   SALDI.CD_CENTRO_RESPONSABILITA = a.cd_centro_responsabilita
+                              AND   SALDI.CD_LINEA_ATTIVITA = a.cd_linea_attivita))
                 UNION ALL
                 SELECT A.ESERCIZIO,
                        CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -802,6 +859,11 @@ Begin
                                               AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                               AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
                 AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                AND   (P_SOLO_GAE_ATTIVE='N' OR
+                       EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                              WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                              AND   SALDI.CD_CENTRO_RESPONSABILITA = a.cd_centro_responsabilita
+                              AND   SALDI.CD_LINEA_ATTIVITA = a.cd_linea_attivita))
                 UNION ALL
                 SELECT A.ESERCIZIO,
                        CASE WHEN P_ROTTURA_ANNO_LOCAL='S'
@@ -840,7 +902,12 @@ Begin
                                               AND   pg_progetto=P_PG_PROGLIV2
                                               AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
                                               AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
-                AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0) X
+                AND   (im_voce-(im_voce*(IM_ASSOCIATO_DOC_CONTABILE/IM_SCADENZA)))!=0
+                AND   (P_SOLO_GAE_ATTIVE='N' OR
+                       EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                              WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                              AND   SALDI.CD_CENTRO_RESPONSABILITA = a.cd_centro_responsabilita
+                              AND   SALDI.CD_LINEA_ATTIVITA = a.cd_linea_attivita))) X
            GROUP BY X.ESERCIZIO, X.ESERCIZIO_RES, X.TI_GESTIONE,
                     X.CD_LINEA_ATTIVITA, X.CD_ELEMENTO_VOCE,
                     X.ESERCIZIO_VARIAZIONE, X.PG_VARIAZIONE,
@@ -1114,7 +1181,12 @@ Begin
                                               WHERE cd_centro_responsabilita = P_CENTRO_RESPONSABILITA
                                               AND   pg_progetto=P_PG_PROGLIV2
                                               AND   cd_linea_attivita=NVL(decode(P_GAE,'*',null,P_GAE), cd_linea_attivita)
-                                              AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))) X
+                                              AND   (P_RESPONSABILE_GAE IS NULL OR cd_responsabile_terzo=P_RESPONSABILE_GAE))
+                AND   (P_SOLO_GAE_ATTIVE='N' OR
+                       EXISTS(SELECT '1' FROM VOCE_F_SALDI_CDR_LINEA SALDI
+                              WHERE SALDI.ESERCIZIO = P_ESERCIZIO
+                              AND   SALDI.CD_CENTRO_RESPONSABILITA = P_CENTRO_RESPONSABILITA
+                              AND   SALDI.CD_LINEA_ATTIVITA = a.cd_linea_attivita))) X
           GROUP BY X.ESERCIZIO, X.ESERCIZIO_RES, X.TI_GESTIONE, X.CD_LINEA_ATTIVITA, X.CD_ELEMENTO_VOCE,
                    X.ESERCIZIO_OBBACC, X.PG_OBBACC, X.DS_OBBACC, X.DT_OBBACC, X.CD_TERZO,
                    X.CD_TIPO_DOCUMENTO_AMM, X.ESERCIZIO_DOCAMM, X.PG_DOCUMENTO_AMM,
