@@ -79,6 +79,17 @@ public class Pendenza implements Serializable {
     @JsonProperty("voci")
     private List<Voci> voci = null;
 
+    public StatoPendenzaVerificata getStato() {
+        return stato;
+    }
+
+    public void setStato(StatoPendenzaVerificata stato) {
+        this.stato = stato;
+    }
+
+    @JsonProperty("stato")
+    private StatoPendenzaVerificata stato;
+
     @JsonProperty("idTipoPendenza")
     public String getIdTipoPendenza() {
         return idTipoPendenza;

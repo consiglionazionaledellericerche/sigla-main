@@ -72,6 +72,17 @@ function doVisualizzaAvvisoPagamento() {
       <% bp.getController().writeFormInput( out, "find_elemento_voce"); %>
 	</td>
 	</tr>
+	<tr>
+        <%
+				   if (bp.isInserting()) {
+					 bp.getController().writeFormField(out, "stato");
+				   } else if (bp.isSearching()) {
+				     bp.getController().writeFormField(out, "statoForSearch");
+				   } else {
+				     bp.getController().writeFormField(out, "statoForUpdate");
+				   }
+				%>
+	  </tr>
 	</table>
 </div>
 

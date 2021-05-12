@@ -182,10 +182,39 @@
 			inputType="TEXT"
 			inputSize="10"
 			maxLength="3"
+			enabledOnInsert="false"
 			enabledOnEdit="false"
+			enabledOnSearch="false"
+			enabledOnFreeSearch="false"
 			nullable="false"
 			keysProperty="statoKeys"
 			label="Stato" />
+	<fieldProperty
+			name="statoForSearch"
+			property="stato"
+			inputSize="20"
+			maxLength="20"
+			inputType="SELECT"
+			nullable="true"
+			keysProperty="statoKeysForSearch"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			enabledOnSearch="true"
+			enabledOnFreeSearch="true"
+			label="Stato"
+			caseSensitiveSearch="false" />
+	<fieldProperty
+			name="statoForUpdate"
+			property="stato"
+			inputSize="20"
+			maxLength="20"
+			inputType="SELECT"
+			nullable="true"
+			keysProperty="statoKeysForUpdate"
+			enabledOnInsert="true"
+			enabledOnEdit="true"
+			label="Stato"
+			caseSensitiveSearch="false" />
 	<fieldProperty
 			name="tipoPosizione"
 			property="tipoPosizione"
@@ -224,14 +253,15 @@
 	/>
 	<form name="searchtool" >
 		<formFieldProperty
-				name="esercizio" />
-		<formFieldProperty
 				name="cdAvviso" />
 		<formFieldProperty
 				name="descrizione"
+				inputType="ROTEXT"
 				inputSize="30" />
 		<formFieldProperty
 				name="importoPendenza" />
+		<formFieldProperty
+				name="dtScadenza" />
 	</form>
 	<form name="searchtool_terzo" >
 		<formFieldProperty
@@ -273,6 +303,10 @@
 	<formFieldProperty
 			name="stato" />
 	<formFieldProperty
+			name="statoForSearch" />
+	<formFieldProperty
+			name="statoForUpdate" />
+	<formFieldProperty
 			name="tipoPosizione" />
 	<formFieldProperty
 			name="codice_fiscale"
@@ -307,6 +341,10 @@
 			name="descrizione" />
 	<columnFieldProperty
 			name="stato" />
+	<columnFieldProperty
+			name="statoForSearch" />
+	<findFieldProperty
+			name="statoForSearch" />
 	<findFieldProperty
 			name="esercizio" />
 	<findFieldProperty

@@ -18,12 +18,11 @@
 package it.cnr.contab.pagopa.bulk;
 
 import it.cnr.contab.anagraf00.core.bulk.TerzoBulk;
-import it.cnr.contab.config00.contratto.bulk.ContrattoBulk;
 import it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk;
 import it.cnr.contab.config00.sto.bulk.Unita_organizzativaBulk;
 import it.cnr.contab.utenze00.bp.CNRUserContext;
 import it.cnr.jada.bulk.OggettoBulk;
-import it.cnr.jada.util.ejb.EJBCommonServices;
+import it.cnr.jada.util.OrderedHashtable;
 
 import java.util.Dictionary;
 import java.util.Optional;
@@ -33,8 +32,10 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 
 	public static final String TIPO_POSIZIONE_CREDITORIA = "C";
 	public static final String TIPO_POSIZIONE_DEBITORIA = "D";
-	public static final String STATO_VALIDO = "VAL";
+	public static final String STATO_APERTA = "APE";
 	public static final String STATO_CHIUSO = "CHI";
+	public static final String STATO_ASSOCIATO = "ASS";
+	public static final String STATO_IN_PAGAMENTO = "INP";
 	public static final String STATO_ANNULLATO = "ANN";
 	private it.cnr.contab.config00.pdcfin.bulk.Elemento_voceBulk elemento_voce;
 	private Unita_organizzativaBulk unitaOrganizzativa;
@@ -43,9 +44,11 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 	private final static Dictionary statoKeys;
 	static {
 		statoKeys = new it.cnr.jada.util.OrderedHashtable();
-		statoKeys.put(STATO_VALIDO,"Valido");
-		statoKeys.put(STATO_ANNULLATO,"Annullato");
-		statoKeys.put(STATO_CHIUSO,"Chiuso");
+		statoKeys.put(STATO_APERTA,"Aperta");
+		statoKeys.put(STATO_ASSOCIATO,"Associata");
+		statoKeys.put(STATO_IN_PAGAMENTO,"In Pagamento");
+		statoKeys.put(STATO_ANNULLATO,"Annullata");
+		statoKeys.put(STATO_CHIUSO,"Chiusa");
 	};
 
 	public Elemento_voceBulk getElemento_voce() {
@@ -113,7 +116,7 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 		this.getElemento_voce().setEsercizio(esercizioVoce);
 	}
 	public OggettoBulk initializeForInsert(it.cnr.jada.util.action.CRUDBP bp, it.cnr.jada.action.ActionContext context) {
-		setStato(STATO_VALIDO);
+		setStato(STATO_APERTA);
 		setUnitaOrganizzativa(new Unita_organizzativaBulk());
 		setCdUnitaOrganizzativa(CNRUserContext.getCd_unita_organizzativa(context.getUserContext()));
 		return super.initializeForInsert(bp,context);
@@ -173,10 +176,45 @@ public class PendenzaPagopaBulk extends PendenzaPagopaBase {
 				.orElse(null);
 	}
 	public Boolean isPendenzaNonModificabile(){
-		if (getStato() != null && (getStato().equals(STATO_ANNULLATO) || getStato().equals(STATO_CHIUSO))){
+		if (getStato() != null && (getStato().equals(STATO_IN_PAGAMENTO) || getStato().equals(STATO_CHIUSO) || getStato().equals(STATO_ASSOCIATO))){
 			return true;
 		}
 		return false;
 	}
 
+	public Boolean isPendenzaAnnullata(){
+		if (getStato() != null && (getStato().equals(STATO_ANNULLATO))){
+			return true;
+		}
+		return false;
+	}
+
+	public Boolean isPendenzaAperta(){
+		if (getStato() != null && (getStato().equals(STATO_APERTA))){
+			return true;
+		}
+		return false;
+	}
+
+	public Dictionary getStatoKeysForSearch() {
+
+		OrderedHashtable d = (OrderedHashtable)getStatoKeys();
+		if (d == null) return null;
+		OrderedHashtable clone = (OrderedHashtable)d.clone();
+		return clone;
+	}
+	public Dictionary getStatoKeysForUpdate() {
+		Dictionary stato = new it.cnr.jada.util.OrderedHashtable();
+		if (isPendenzaAperta()){
+			stato.put(STATO_APERTA,"Aperta");
+			stato.put(STATO_ANNULLATO,"Annullata");
+		} else {
+			stato.put(STATO_APERTA,"Aperta");
+			stato.put(STATO_ASSOCIATO,"Associata");
+			stato.put(STATO_IN_PAGAMENTO,"In Pagamento");
+			stato.put(STATO_ANNULLATO,"Annullata");
+			stato.put(STATO_CHIUSO,"Chiusa");
+		}
+		return stato;
+	}
 }

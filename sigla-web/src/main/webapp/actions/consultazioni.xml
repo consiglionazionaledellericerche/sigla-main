@@ -1181,6 +1181,9 @@
 	<action path="/ConsGAEResAction"
 		actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
 	</action>
+	<action path="/ConsGAEResSpeVocAction"
+			actionClass="it.cnr.contab.doccont00.consultazioni.action.ConsGAEResAction">
+	</action>
 	<businessProcess name="ConsGAEResEtrBP"
 		className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResEtrBP">
 		<forward name="default" path="/consultazioni/form_lista.jsp" />
@@ -1199,6 +1202,16 @@
 		<init-param name="componentSessionName"
 			value="CNRDOCCONT00_EJB_ConsGAEResComponentSession" />
 		<init-param name="defaultAction" value="ConsGAEResAction" />
+		<init-param name="multiSelezione" value="Y" />
+	</businessProcess>
+	<businessProcess name="ConsGAEResSpeVocBP"
+					 className="it.cnr.contab.doccont00.consultazioni.bp.ConsGAEResSpeVocBP">
+		<forward name="default" path="/consultazioni/form_lista.jsp" />
+		<init-param name="bulkClassName"
+					value="it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk" />
+		<init-param name="componentSessionName"
+					value="CNRDOCCONT00_EJB_ConsGAEResComponentSession" />
+		<init-param name="defaultAction" value="ConsGAEResSpeVocAction" />
 		<init-param name="multiSelezione" value="Y" />
 	</businessProcess>
 

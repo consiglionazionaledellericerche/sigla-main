@@ -1317,6 +1317,10 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 		return isROClienteSearchTool() || getCliente() == null ||
 				getCliente().getCrudStatus() == OggettoBulk.NORMAL;
 	}
+	@JsonIgnore
+	public boolean isROpendenza() {
+		return isROPendenzaSearchTool() || getPendenzaPagopa() == null;
+	}
 	/**
 	 * Insert the method's description here.
 	 * Creation date: (10/4/2001 2:42:26 PM)
@@ -1347,6 +1351,11 @@ public abstract class Fattura_attivaBulk extends Fattura_attivaBase implements I
 				(fattura_attiva_intrastatColl != null && 
 				!fattura_attiva_intrastatColl.isEmpty())||
 				isStampataSuRegistroIVA();
+	}
+	@JsonIgnore
+	public boolean isROPendenzaSearchTool() {
+		return 	(fattura_attiva_accertamentiHash != null &&
+				!fattura_attiva_accertamentiHash.isEmpty());
 	}
 	/**
 	 * Insert the method's description here.

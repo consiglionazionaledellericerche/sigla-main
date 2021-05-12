@@ -4276,6 +4276,92 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <where>aux_digit = 0 </where>
         </update>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-column-pendenza-fattura_attiva">
+        <addColumn tableName="FATTURA_ATTIVA">
+            <column name="id_pendenza_pagopa" remarks="Id Pendenza PagoPA." type="INT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addForeignKeyConstraint baseColumnNames="id_pendenza_pagopa" baseTableName="fattura_attiva" constraintName="fk_fattura_attiva13" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="pendenza_pagopa"/>
 
+        <createIndex indexName="FX_FATTURA_ATTIVA13" tableName="fattura_attiva">
+            <column name="id_pendenza_pagopa"/>
+        </createIndex>
+    </changeSet>
 
+    <changeSet author="gianfranco.gasparro" id="create_table_pagamenti_pagopa">
+        <createTable remarks="Tabella contenente i pagamenti di Pagopa." tableName="pagamento_pagopa">
+            <column name="id" remarks="Chiave Primaria." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_pendenza_pagopa" remarks="Id Pendenza PagoPA." type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="causale" remarks="Causale del pagamento." type="VARCHAR(1000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="iur" remarks="Identificativo Univoco di Riscossione." type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ccp" remarks="Codice Contesto Pagamento." type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="rpp" remarks="Codice Richiesta Pagamento PagoPA." type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="stato" remarks="Stato." type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dt_pagamento" remarks="Data pagamento" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importo" remarks="Importo" type="numeric(15, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dacr" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utcr" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duva" type="${date.type}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utuv" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pg_ver_rec" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="id" constraintName="pagamento_pagopa_pkey" tableName="pagamento_pagopa"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_pendenza_pagopa" baseTableName="pagamento_pagopa" constraintName="fk_pagamento_pagopa01" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="pendenza_pagopa"/>
+
+        <createIndex indexName="FX_PAGAMENTO_PAGOPA01" tableName="pagamento_pagopa">
+            <column name="id_pendenza_pagopa"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-cons-gae-res-spe-voc">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSGAERESSPEVOC"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione GAE Residui Spesa Voci"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSGAERESSPEVOC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsGAEResSpeVocBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
