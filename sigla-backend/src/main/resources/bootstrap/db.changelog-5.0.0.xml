@@ -4251,4 +4251,25 @@ GENERICO_S = Generico di spesa" type="VARCHAR(10)"/>
             <column name="pg_ver_rec" type="NUMERIC" value="0"/>
         </insert>
     </changeSet>
+    <changeSet author="gianfranco.gasparro" id="add-cons-gae-res-spe-voc">
+        <insert tableName="accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSGAERESSPEVOC"/>
+            <column name="ti_accesso" type="CHAR(1)" value="D"/>
+            <column name="ds_accesso" type="VARCHAR(200)" value="Consultazione GAE Residui Spesa Voci"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+        <insert tableName="ass_bp_accesso">
+            <column name="cd_accesso" type="VARCHAR(20)" value="CFGCONSGAERESSPEVOC"/>
+            <column name="business_process" type="VARCHAR(200)" value="ConsGAEResSpeVocBP"/>
+            <column name="duva" type="${date.type}" valueDate="${now}"/>
+            <column name="utuv" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="dacr" type="${date.type}" valueDate="${now}"/>
+            <column name="utcr" type="VARCHAR(20)" value="SYSTEM"/>
+            <column name="pg_ver_rec" type="BIGINT" value="0"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
