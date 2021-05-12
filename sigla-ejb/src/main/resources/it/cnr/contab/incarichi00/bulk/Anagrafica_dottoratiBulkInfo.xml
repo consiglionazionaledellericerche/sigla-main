@@ -28,7 +28,7 @@
 	<fieldProperty
 		name="cdTerzo"
 		property="cdTerzo"
-		inputType="TEXTAREA"
+		inputType="TEXT"
 		maxLength="38"
 		enabledOnEdit="false"
 		nullable="false"
@@ -162,6 +162,8 @@
 		name="regione" />
 	<formFieldProperty
 		name="universitaCapofila" />
+	<formFieldProperty
+			name="cdTerzo" />
 	<formFieldProperty
 		name="telefonoAteneo" />
 	<formFieldProperty
