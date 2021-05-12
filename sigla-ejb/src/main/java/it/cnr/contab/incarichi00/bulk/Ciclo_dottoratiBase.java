@@ -8,11 +8,11 @@ public class Ciclo_dottoratiBase extends Ciclo_dottoratiKey implements Keyed {
 //    NUMERO DECIMAL(38,0) NOT NULL
 	private java.lang.Long numero;
  
-//    ANNO_INIZIO TIMESTAMP(7) NOT NULL
-	private java.sql.Timestamp annoInizio;
+//    ANNO_INIZIO INT
+	private Integer annoInizio;
  
-//    ANNO_FINE TIMESTAMP(7) NOT NULL
-	private java.sql.Timestamp annoFine;
+//    ANNO_FINE INT
+	private Integer annoFine;
  
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
@@ -42,28 +42,28 @@ public class Ciclo_dottoratiBase extends Ciclo_dottoratiKey implements Keyed {
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [annoInizio]
 	 **/
-	public java.sql.Timestamp getAnnoInizio() {
+	public Integer getAnnoInizio() {
 		return annoInizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [annoInizio]
 	 **/
-	public void setAnnoInizio(java.sql.Timestamp annoInizio)  {
+	public void setAnnoInizio(Integer annoInizio)  {
 		this.annoInizio=annoInizio;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [annoFine]
 	 **/
-	public java.sql.Timestamp getAnnoFine() {
+	public Integer getAnnoFine() {
 		return annoFine;
 	}
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Setta il valore di: [annoFine]
 	 **/
-	public void setAnnoFine(java.sql.Timestamp annoFine)  {
+	public void setAnnoFine(Integer annoFine)  {
 		this.annoFine=annoFine;
 	}
 }

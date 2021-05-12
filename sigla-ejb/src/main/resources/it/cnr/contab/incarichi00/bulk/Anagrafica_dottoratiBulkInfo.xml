@@ -119,6 +119,42 @@
 		enabledOnEdit="false"
 		label="dataStipulaConvenzione" />
 	<fieldProperty
+			name="azienda"
+			property="azienda"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Azienda" />
+	<fieldProperty
+			name="aziendaSettore"
+			property="aziendaSettore"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Settore Azienda" />
+	<fieldProperty
+			name="aziendaSede"
+			property="aziendaSede"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Sede dell'Azienda" />
+	<fieldProperty
+			name="nomeInfraEuropea"
+			property="nomeInfraEuropea"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Nome Infrastruttura Europea" />
+	<fieldProperty
+			name="descrInfraEuropea"
+			property="descrInfraEuropea"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Descrizione Infrastruttura Europea" />
+	<fieldProperty
+			name="numeroBorseFinanziate"
+			property="numeroBorseFinanziate"
+			inputType="TEXT"
+			enabledOnEdit="false"
+			label="Numero di borse finanziate prima del corso" />
+	<fieldProperty
 		name="note"
 		property="note"
 		inputType="TEXTAREA"
@@ -187,6 +223,18 @@
 	<formFieldProperty
 		name="dataStipulaConvenzione" />
 	<formFieldProperty
+		name="azienda" />
+	<formFieldProperty
+		name="aziendaSettore" />
+	<formFieldProperty
+		name="aziendaSede" />
+	<formFieldProperty
+		name="nomeInfraEuropea" />
+	<formFieldProperty
+		name="descrInfraEuropea" />
+	<formFieldProperty
+		name="numeroBorseFinanziate" />
+	<formFieldProperty
 		name="note" />
 	<formFieldProperty
 			name="find_PhdtipoDottorati" />
@@ -227,6 +275,18 @@
 	<findFieldProperty
 		name="note" />
 	<findFieldProperty
+		name="azienda" />
+	<findFieldProperty
+		name="aziendaSettore" />
+	<findFieldProperty
+		name="aziendaSede" />
+	<findFieldProperty
+		name="nomeInfraEuropea" />
+	<findFieldProperty
+		name="descrInfraEuropea" />
+	<findFieldProperty
+		name="numeroBorseFinanziate" />
+	<findFieldProperty
 		name="idCicloDottorati" />
 	<findFieldProperty
 		name="idTipocorsoDottorati" />
@@ -260,6 +320,18 @@
 		name="dipartimentoCnr" />
 	<columnFieldProperty
 		name="dataStipulaConvenzione" />
+	<columnFieldProperty
+			name="azienda" />
+	<columnFieldProperty
+			name="aziendaSettore" />
+	<columnFieldProperty
+			name="aziendaSede" />
+	<columnFieldProperty
+			name="nomeInfraEuropea" />
+	<columnFieldProperty
+			name="descrInfraEuropea" />
+	<columnFieldProperty
+			name="numeroBorseFinanziate" />
 	<columnFieldProperty
 		name="note" />
 	<columnFieldProperty

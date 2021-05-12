@@ -21,7 +21,6 @@
 		name="annoInizio"
 		property="annoInizio"
 		inputType="TEXT"
-		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
 		label="Anno Inizio" />
@@ -29,7 +28,6 @@
 		name="annoFine"
 		property="annoFine"
 		inputType="TEXT"
-		formatName="date_short"
 		enabledOnEdit="false"
 		nullable="false"
 		label="Anno Fine" />

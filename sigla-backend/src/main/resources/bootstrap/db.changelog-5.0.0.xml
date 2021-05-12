@@ -4366,4 +4366,33 @@ TRASPORTO_AEREO"/>
             <column name="pg_ver_rec" type="BIGINT" value="0"/>
         </insert>
     </changeSet>
+
+    <changeSet id="add_Azienda_Nome_Infra_Europea" author="valerio.diego">
+        <addColumn tableName="anagrafica_dottorati">
+            <column name="azienda" type="VARCHAR(250)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="azienda_settore" type="VARCHAR(250)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="azienda_sede" type="VARCHAR(250)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="nome_infra_europea" type="VARCHAR(250)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="descr_infra_europea" type="VARCHAR(250)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="numero_borse_finanziate" type="INT">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="valerio.diego" id="alter_anno_inizio_e_fine">
+        <modifyDataType tableName="ciclo_dottorati" columnName="anno_inizio" newDataType="INT"/>
+        <modifyDataType tableName="ciclo_dottorati" columnName="anno_fine" newDataType="INT"/>
+    </changeSet>
+
 </databaseChangeLog>

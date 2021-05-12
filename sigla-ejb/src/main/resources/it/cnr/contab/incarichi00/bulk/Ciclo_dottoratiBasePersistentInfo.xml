@@ -14,13 +14,13 @@
 		<columnMapping
 			columnName="ANNO_INIZIO"
 			propertyName="annoInizio"
-			sqlTypeName="TIMESTAMP"
+			sqlTypeName="DECIMAL"
 			columnSize="7"
 			nullable="false" />
 		<columnMapping
 			columnName="ANNO_FINE"
 			propertyName="annoFine"
-			sqlTypeName="TIMESTAMP"
+			sqlTypeName="DECIMAL"
 			columnSize="7"
 			nullable="false" />
 	</defaultColumnMap>

@@ -49,6 +49,14 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
  
 //    NOTE VARCHAR(250)
 	private String note;
+
+	private String azienda;
+
+	private String aziendaSettore;
+	private String aziendaSede;
+	private String nomeInfraEuropea;
+	private String descrInfraEuropea;
+	private Integer numeroBorseFinanziate;
  
 //    ID_PHDTIPO_DOTTORATI DECIMAL(38,0) NOT NULL
 	private Long idPhdtipoDottorati;
@@ -266,6 +274,61 @@ public class Anagrafica_dottoratiBase extends Anagrafica_dottoratiKey implements
 	public void setDataStipulaConvenzione(java.sql.Timestamp dataStipulaConvenzione)  {
 		this.dataStipulaConvenzione=dataStipulaConvenzione;
 	}
+	/**
+	 * Creato Valerio
+	 */
+	public String getAzienda() {
+		return azienda;
+	}
+
+	public void setAzienda(String azienda) {
+		this.azienda = azienda;
+	}
+
+	public String getAziendaSettore() {
+		return aziendaSettore;
+	}
+
+	public void setAziendaSettore(String aziendaSettore) {
+		this.aziendaSettore = aziendaSettore;
+	}
+
+	public String getAziendaSede() {
+		return aziendaSede;
+	}
+
+	public void setAziendaSede(String aziendaSede) {
+		this.aziendaSede = aziendaSede;
+	}
+
+	public String getNomeInfraEuropea() {
+		return nomeInfraEuropea;
+	}
+
+	public void setNomeInfraEuropea(String nomeInfraEuropea) {
+		this.nomeInfraEuropea = nomeInfraEuropea;
+	}
+
+	public String getDescrInfraEuropea() {
+		return descrInfraEuropea;
+	}
+
+	public void setDescrInfraEuropea(String descrInfraEuropea) {
+		this.descrInfraEuropea = descrInfraEuropea;
+	}
+
+	public Integer getNumeroBorseFinanziate() {
+		return numeroBorseFinanziate;
+	}
+
+	public void setNumeroBorseFinanziate(Integer numeroBorseFinanziate) {
+		this.numeroBorseFinanziate = numeroBorseFinanziate;
+	}
+
+	/**
+	 * Fine Creato Valerio
+	 */
+
 	/**
 	 * Created by BulkGenerator 2.0 [07/12/2009]
 	 * Restituisce il valore di: [note]

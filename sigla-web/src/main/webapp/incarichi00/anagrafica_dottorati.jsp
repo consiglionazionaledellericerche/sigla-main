@@ -104,6 +104,30 @@
     			    <td><% bp.getController().writeFormLabel(out, "note"); %></td>
                     <td><% bp.getController().writeFormInput(out, "note"); %></td>
     			</tr>
+                <tr>
+    			    <td><% bp.getController().writeFormLabel(out, "azienda"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "azienda"); %></td>
+    			</tr>
+                <tr>
+    			    <td><% bp.getController().writeFormLabel(out, "aziendaSettore"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "aziendaSettore"); %></td>
+    			</tr>
+<tr>
+    			    <td><% bp.getController().writeFormLabel(out, "aziendaSede"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "aziendaSede"); %></td>
+    			</tr>
+<tr>
+    			    <td><% bp.getController().writeFormLabel(out, "nomeInfraEuropea"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "nomeInfraEuropea"); %></td>
+    			</tr>
+<tr>
+    			    <td><% bp.getController().writeFormLabel(out, "descrInfraEuropea"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "descrInfraEuropea"); %></td>
+    			</tr>
+<tr>
+    			    <td><% bp.getController().writeFormLabel(out, "numeroBorseFinanziate"); %></td>
+                    <td><% bp.getController().writeFormInput(out, "numeroBorseFinanziate"); %></td>
+    			</tr>
     		</table>
     	</fieldset>
         <fieldset>

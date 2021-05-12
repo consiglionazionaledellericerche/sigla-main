@@ -90,6 +90,42 @@
 			columnSize="7"
 			nullable="true" />
 		<columnMapping
+				columnName="AZIENDA"
+				propertyName="azienda"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="AZIENDA_SETTORE"
+				propertyName="aziendaSettore"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="AZIENDA_SEDE"
+				propertyName="aziendaSede"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="NOME_INFRA_EUROPEA"
+				propertyName="nomeInfraEuropea"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="DESCR_INFRA_EUROPEA"
+				propertyName="descrInfraEuropea"
+				sqlTypeName="VARCHAR"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
+				columnName="NUMERO_BORSE_FINANZIATE"
+				propertyName="numeroBorseFinanziate"
+				sqlTypeName="DECIMAL"
+				columnSize="250"
+				nullable="true" />
+		<columnMapping
 			columnName="NOTE"
 			propertyName="note"
 			sqlTypeName="VARCHAR"
@@ -142,6 +178,18 @@
 		name="dipartimentoCnr" />
 	<persistentProperty
 		name="dataStipulaConvenzione" />
+	<persistentProperty
+		name="azienda" />
+	<persistentProperty
+		name="aziendaSettore" />
+	<persistentProperty
+		name="aziendaSede" />
+	<persistentProperty
+		name="nomeInfraEuropea" />
+	<persistentProperty
+		name="descrInfraEuropea" />
+	<persistentProperty
+		name="numeroBorseFinanziate" />
 	<persistentProperty
 		name="note" />
 	<persistentProperty
