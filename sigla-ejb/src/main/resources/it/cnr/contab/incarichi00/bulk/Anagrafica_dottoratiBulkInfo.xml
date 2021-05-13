@@ -24,7 +24,7 @@
 		maxLength="250"
 		enabledOnEdit="false"
 		nullable="false"
-		label="Universita Capofila" />
+		label="Sede Amministrativa Dottorato" />
 	<fieldProperty
 		name="cdTerzo"
 		property="cdTerzo"
@@ -178,7 +178,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Numero del ciclo dottorati." />
+		label="Ciclo di Inizio" />
 	<fieldProperty
 		name="find_TipocorsoDottorati"
 		property="tipocorsoDottorati"
@@ -186,7 +186,7 @@
 		formName="searchtool"
 		enabledOnSearch="true"
 		nullable="false"
-		label="Nome del tipocorso_dottorati." />
+		label="Tipo Corso Dottorato Delibera 52/2020" />
 	<form
 		name="searchtool">
 		<formFieldProperty
