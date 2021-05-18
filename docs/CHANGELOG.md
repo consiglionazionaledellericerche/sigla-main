@@ -1,9 +1,54 @@
-## Release 6.3.25  -- _April 19, 2021_ 
+## Release 6.3.28  -- _May 18, 2021_ 
 **Changes**
 
->**Progetti: corretta anomalia visualizzazione allegati nelle rimodulazioni.**
+>**Perla: aggiornamento Perla-Service**
 >
->[d9c9b50cf34a584](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9c9b50cf34a584) raffaele.pagano *April 19, 2021*
+>[b2140c16a105182](https://github.com/consiglionazionaledellericerche/sigla-main/commit/b2140c16a105182) raffaele.pagano *May 18, 2021*
+
+>**Variazioni: gestita la possibilità di approvare trasferimenti alla Ragioneria da progetti attivi su FES a stesso progetto su stessa Fonte**
+>
+>[54ee368a3d1853d](https://github.com/consiglionazionaledellericerche/sigla-main/commit/54ee368a3d1853d) raffaele.pagano *May 18, 2021*
+
+>**Fix Progetti: corretta anomalia visualizzazione allegati**
+>
+>[896a9bf01e7af8f](https://github.com/consiglionazionaledellericerche/sigla-main/commit/896a9bf01e7af8f) raffaele.pagano *May 13, 2021*
+
+
+## Release 6.3.27  -- _May 12, 2021_ 
+**Changes**
+
+>**Rilascio consultazione GAE Residui Spesa con dettaglio VOCE**
+>
+>[d48dc16066a317b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d48dc16066a317b) gianfranco.gasparro *May 12, 2021*
+
+>**Fix Stampa Progetti: corretto funzionamento flag 'Stampa solo Gae Movimentate'**
+>
+>[8c7d5a1c7b3751b](https://github.com/consiglionazionaledellericerche/sigla-main/commit/8c7d5a1c7b3751b) raffaele.pagano *May 12, 2021*
+
+>**Fix Incarichi - Allineata view v_incarichi_elenco_fp alle modifiche apportate a v_incarichi_elenco**
+>
+>[e09a119195da173](https://github.com/consiglionazionaledellericerche/sigla-main/commit/e09a119195da173) raffaele.pagano *April 29, 2021*
+
+
+## Release 6.3.26  -- _April 28, 2021_ 
+**Changes**
+
+>**Fix Incarichi:**
+> * 1) non pubblicava gli attestati di insussistenza.
+> * 2) spostato il controllo dei 3 mesi della data di stipula alla data di fine pubblicazione.
+>
+>[6d093c95237e031](https://github.com/consiglionazionaledellericerche/sigla-main/commit/6d093c95237e031) raffaele.pagano *April 28, 2021*
+
+>**Comunicazione PerlaPa: adeguamento procedure per gestire la comunicazione al nuovo sistema Perla attivo dal 2018.**
+> * 1) eliminata obbligatorietà della Dichiarazione Altri rapporti anche per Occasionali in quanto già compresa nella Dichiarazione Insussistenza Conflitti Interesse;
+> * 3) limitata al pdf la tipologia di file allegabili per Curriculum e Dichiarazione Insussistenza Conflitti Interesse;
+> * 4) inserito limite di 1MB per Curriculum e Dichiarazione Insussistenza Conflitti Interesse;
+>
+>[d0fa900ab5f8dd0](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d0fa900ab5f8dd0) raffaele.pagano *April 23, 2021*
+
+>**Rimosso controllo per la visibilità dei Curriculum del vincitore**
+>
+>[78dfefd8c82ed72](https://github.com/consiglionazionaledellericerche/sigla-main/commit/78dfefd8c82ed72) marco.spasiano *April 20, 2021*
 
 >**Aggiunto controllo per la visibilità dei Curriculum del vincitore**
 >
@@ -897,6 +942,14 @@
 >**funzioni ordini e magazzini - Add qta_carico_lotto a tipo_movimento_mag - qta_carico_lotto not null**
 >
 >[2654e93510972fb](https://github.com/consiglionazionaledellericerche/sigla-main/commit/2654e93510972fb) marco.spasiano *January 20, 2020*
+
+
+## Release 6.3.25  -- _April 19, 2021_ 
+**Changes**
+
+>**Progetti: corretta anomalia visualizzazione allegati nelle rimodulazioni.**
+>
+>[d9c9b50cf34a584](https://github.com/consiglionazionaledellericerche/sigla-main/commit/d9c9b50cf34a584) raffaele.pagano *April 19, 2021*
 
 
 ## Release 6.3.18  -- _April 07, 2021_ 
