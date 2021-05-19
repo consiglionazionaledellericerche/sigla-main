@@ -28,6 +28,15 @@ Si sceglie il “Tipo” sezionale e il relativo mese e si clicca sull’icona �
 Rivedere-Creazione variazione per spostamento fondi alla sede centrale e gae di blocco operatività
 ===================================================================================================
 
+**Importante**
+IVA Commerciale detraibile tenendo conto della percentuale prorata (prorata 4% - detraibile il 96%) - Alimenta registo Acquisti e Vendite
+IVA Istituzionale non detraibile - Alimenta solo registro Acquisti.
+
+Iva split viene trattenuta e versata;
+Iva non residenti ugualmente viene versata.
+Entrambi i casi l'obbligo di versamento scatta con il pagamento della fattura acquisti.
+
+
 (Non più valido dopo modifiche split)
 
 Nel caso in cui l’IVA è a debito,  si ricorda che la liquidazione IVA è fatta automaticamente sugli stanziamenti di competenza sulla voce 1.01.452, nel caso in cui la copertura sia disponibile sui residui (solo dell’esercizio n-1) è necessario darne comunicazione con un congruo anticipo all’ufficio fiscale (non oltre il giorno 6 di ogni mese). Si ricorda che le fatture emesse ad esigibilità differita confluiscono nella liquidazione del mese in cui vengono incassate.
