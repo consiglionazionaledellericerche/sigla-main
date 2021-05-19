@@ -33,6 +33,7 @@ Rivedere-Creazione variazione per spostamento fondi alla sede centrale e gae di 
 Nel caso in cui l’IVA è a debito,  si ricorda che la liquidazione IVA è fatta automaticamente sugli stanziamenti di competenza sulla voce 1.01.452, nel caso in cui la copertura sia disponibile sui residui (solo dell’esercizio n-1) è necessario darne comunicazione con un congruo anticipo all’ufficio fiscale (non oltre il giorno 6 di ogni mese). Si ricorda che le fatture emesse ad esigibilità differita confluiscono nella liquidazione del mese in cui vengono incassate.
 
 **Dalla Nota tecnica: Gestione Split Payment 2017**
+
 1.4	Registri IVA e Liquidazione IVA
 Rispetto all’argomento ‘adempimenti periodici IVA’, ci sono delle novità per quanto riguarda le attività a carico degli Istituti. E’ di fondamentale importanza che tutte le UO svolgano le attività indicate di seguito onde evitare che vengano create variazioni automatiche, riguardanti l’IVA Commerciale,  per l’intero importo sulla competenza.
 
