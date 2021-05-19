@@ -111,8 +111,8 @@
     <field name="cvCo" class="java.lang.String">
         <fieldDescription><![CDATA[cvCo]]></fieldDescription>
     </field>
-    <field name="abstract" class="java.lang.String">
-        <fieldDescription><![CDATA[abstract]]></fieldDescription>
+    <field name="abstractz" class="java.lang.String">
+        <fieldDescription><![CDATA[abstractz]]></fieldDescription>
     </field>
     <field name="objective" class="java.lang.String">
         <fieldDescription><![CDATA[objective]]></fieldDescription>
@@ -896,7 +896,7 @@
                 <textElement textAlignment="Justified" verticalAlignment="Top">
                     <font fontName="Times New Roman" size="12" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA["ABSTRACT:  \n" + $F{abstract}]]></textFieldExpression>
+                <textFieldExpression><![CDATA["ABSTRACT:  \n" + $F{abstractz}]]></textFieldExpression>
             </textField>
             <break>
                 <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
