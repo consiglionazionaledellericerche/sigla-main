@@ -29,7 +29,7 @@ Rivedere-Creazione variazione per spostamento fondi alla sede centrale e gae di 
 ===================================================================================================
 
 **Importante**
-IVA Commerciale detraibile tenendo conto della percentuale prorata (prorata 4% - detraibile il 96%) - Alimenta registo Acquisti e Vendite
+IVA Commerciale detraibile tenendo conto della percentuale prorata (prorata 4% - detraibile il 96%) - Alimenta registro Acquisti e Vendite
 IVA Istituzionale non detraibile - Alimenta solo registro Acquisti.
 
 Iva split viene trattenuta e versata;
