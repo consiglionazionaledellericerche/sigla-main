@@ -27,7 +27,9 @@ Si sceglie il “Tipo” sezionale e il relativo mese e si clicca sull’icona �
 
 Rivedere-Creazione variazione per spostamento fondi alla sede centrale e gae di blocco operatività
 ===================================================================================================
+
 (Non più valido dopo modifiche split)
+
 Nel caso in cui l’IVA è a debito,  si ricorda che la liquidazione IVA è fatta automaticamente sugli stanziamenti di competenza sulla voce 1.01.452, nel caso in cui la copertura sia disponibile sui residui (solo dell’esercizio n-1) è necessario darne comunicazione con un congruo anticipo all’ufficio fiscale (non oltre il giorno 6 di ogni mese). Si ricorda che le fatture emesse ad esigibilità differita confluiscono nella liquidazione del mese in cui vengono incassate.
 
 **Dalla Nota tecnica: Gestione Split Payment 2017**
