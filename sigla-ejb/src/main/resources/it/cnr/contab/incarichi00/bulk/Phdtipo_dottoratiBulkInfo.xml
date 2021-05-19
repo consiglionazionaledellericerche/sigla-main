@@ -5,8 +5,10 @@
 		property="id"
 		inputType="TEXT"
 		maxLength="38"
+		enabledOnInsert="false"
 		enabledOnEdit="false"
 		enabledOnSearch="false"
+		enabledOnFreeSearch="false"
 		nullable="false"
 		label="Id" />
 	<fieldProperty
