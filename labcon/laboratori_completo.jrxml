@@ -105,6 +105,30 @@
     <field name="pcEmail" class="java.lang.String">
         <fieldDescription><![CDATA[pcEmail]]></fieldDescription>
     </field>
+    <field name="cvPi" class="java.lang.String">
+        <fieldDescription><![CDATA[cvPi]]></fieldDescription>
+    </field>
+    <field name="cvCo" class="java.lang.String">
+        <fieldDescription><![CDATA[cvCo]]></fieldDescription>
+    </field>
+    <field name="abstract" class="java.lang.String">
+        <fieldDescription><![CDATA[abstract]]></fieldDescription>
+    </field>
+    <field name="objective" class="java.lang.String">
+        <fieldDescription><![CDATA[objective]]></fieldDescription>
+    </field>
+    <field name="workplan" class="java.lang.String">
+        <fieldDescription><![CDATA[workplan]]></fieldDescription>
+    </field>
+    <field name="expectedResults" class="java.lang.String">
+        <fieldDescription><![CDATA[expectedResults]]></fieldDescription>
+    </field>
+    <field name="bibliography" class="java.lang.String">
+        <fieldDescription><![CDATA[bibliography]]></fieldDescription>
+    </field>
+    <field name="collaboration" class="java.lang.String">
+        <fieldDescription><![CDATA[collaboration]]></fieldDescription>
+    </field>
     <background>
         <band splitType="Stretch"/>
     </background>
@@ -671,6 +695,13 @@
             <break>
                 <reportElement x="0" y="148" width="100" height="1" uuid="1ea00490-cc9d-4c69-bdc9-15c80e85498b"/>
             </break>
+            <staticText>
+                <reportElement x="192" y="5" width="141" height="20" uuid="977ad158-0567-48e5-ba1f-c3921ca7afc0"/>
+                <textElement textAlignment="Center">
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[CNR Research Team]]></text>
+            </staticText>
         </band>
         <band height="250" splitType="Stretch">
             <frame>
@@ -735,6 +766,13 @@
             <break>
                 <reportElement x="0" y="148" width="100" height="1" uuid="1ea00490-cc9d-4c69-bdc9-15c80e85498b"/>
             </break>
+            <staticText>
+                <reportElement x="149" y="3" width="226" height="16" uuid="0825d805-8787-4cde-8e0a-630ece883173"/>
+                <textElement textAlignment="Center">
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Additional Team Member]]></text>
+            </staticText>
         </band>
         <band height="250" splitType="Stretch">
             <frame>
@@ -794,6 +832,172 @@
                     <text><![CDATA[Scientific/Technical Role in the project]]></text>
                 </staticText>
             </frame>
+            <staticText>
+                <reportElement x="152" y="4" width="226" height="16" uuid="82f91610-2d28-406b-b535-2a93714244ea"/>
+                <textElement textAlignment="Center">
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Foreign Research Team]]></text>
+            </staticText>
+            <break>
+                <reportElement x="0" y="140" width="99" height="1" uuid="a286cae7-84c6-4038-94d6-31770531fb53"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                    <property name="com.jaspersoft.studio.unit.height" value="px"/>
+                </reportElement>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["CV PRINCIPAL INVESTIGATOR:  \n" + $F{cvPi}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["CV COORDINATOR:  \n" + $F{cvCo}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["ABSTRACT:  \n" + $F{abstract}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["OBJECTIVE: \n" + $F{objective}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["workplan:  \n" + $F{workplan}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["RESULTS:  \n" + $F{expectedResults}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d"/>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["BIBLIOGRAPHY:  \n" + $F{bibliography}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
+        </band>
+        <band height="600" splitType="Stretch">
+            <textField isBlankWhenNull="false">
+                <reportElement x="23" y="39" width="521" height="533" uuid="d826c966-0dc4-4fd9-be5e-60509608107d">
+                    <property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+                </reportElement>
+                <box>
+                    <pen lineWidth="0.0" lineStyle="Dashed"/>
+                    <topPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <leftPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Dashed"/>
+                    <rightPen lineWidth="0.0" lineStyle="Dashed"/>
+                </box>
+                <textElement textAlignment="Justified" verticalAlignment="Top">
+                    <font fontName="Times New Roman" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["COLLABORATION:  \n" + $F{collaboration}]]></textFieldExpression>
+            </textField>
+            <break>
+                <reportElement x="0" y="75" width="100" height="1" uuid="497cb2ea-bab4-424f-8ffc-8ad53a3c7557"/>
+            </break>
         </band>
     </detail>
     <pageFooter>
