@@ -37,6 +37,7 @@ import javax.servlet.ServletException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -197,13 +198,17 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 allegato.setNome(storageObject.getPropertyValue(StoragePropertyNames.NAME.value()));
                 allegato.setDescrizione(storageObject.getPropertyValue(StoragePropertyNames.DESCRIPTION.value()));
                 allegato.setTitolo(storageObject.getPropertyValue(StoragePropertyNames.TITLE.value()));
+                allegato.setLastModificationDate(
+                        storageObject.<Calendar>getPropertyValue("cmis:lastModificationDate")
+                            .getTime()
+                );
                 allegato.setRelativePath(
                         Optional.ofNullable(storageObject.getPath())
                                 .map(s -> s.substring(s.indexOf(primaryPath) + primaryPath.length()))
                                 .map(s -> s.substring(0, s.indexOf(allegato.getNome())))
                                 .orElse(File.separator)
                 );
-                completeAllegato(allegato);
+                completeAllegato(allegato, storageObject);
                 allegato.setCrudStatus(OggettoBulk.NORMAL);
                 allegatoParentBulk.addToArchivioAllegati(allegato);
             }
@@ -227,7 +232,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
         return initializeModelForEditAllegati(actioncontext, oggettobulk);
     }
 
-    protected void completeAllegato(T allegato) throws ApplicationException {
+    protected void completeAllegato(T allegato, StorageObject storageObject) throws ApplicationException {
     }
 
     protected boolean excludeChild(StorageObject storageObject) {
@@ -283,6 +288,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                 final File file = Optional.ofNullable(allegato.getFile())
                         .orElseThrow(() -> new ApplicationException("File non presente"));
                 try {
+                    allegato.complete(actioncontext.getUserContext());
                     storeService.storeSimpleDocument(allegato,
                             new FileInputStream(file),
                             allegato.getContentType(),
@@ -305,6 +311,7 @@ public abstract class AllegatiCRUDBP<T extends AllegatoGenericoBulk, K extends A
                                     new FileInputStream(allegato.getFile()),
                                     allegato.getContentType());
                         }
+                        allegato.complete(actioncontext.getUserContext());
                         storeService.updateProperties(allegato, storeService.getStorageObjectBykey(allegato.getStorageKey()));
                         allegato.setCrudStatus(OggettoBulk.NORMAL);
                     } catch (FileNotFoundException e) {

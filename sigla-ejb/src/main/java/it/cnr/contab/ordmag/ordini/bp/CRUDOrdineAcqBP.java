@@ -328,18 +328,15 @@ public class CRUDOrdineAcqBP extends AllegatiCRUDBP<AllegatoRichiestaBulk, Ordin
 		return oggettobulk;	
 	}
 	@Override
-	protected void completeAllegato(AllegatoRichiestaBulk allegato) throws ApplicationException {
-		Optional.ofNullable(allegato)
-				.map(allegatoRichiestaBulk -> allegatoRichiestaBulk.getStorageKey())
-				.map(storageKey -> ordineAcqCMISService.getStorageObjectBykey(storageKey))
-				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+	protected void completeAllegato(AllegatoRichiestaBulk allegato, StorageObject storageObject) throws ApplicationException {
+		Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
 				.filter(strings -> !strings.isEmpty())
 				.ifPresent(strings -> {
 					allegato.setAspectName(strings.stream()
 							.filter(s -> AllegatoRichiestaBulk.aspectNamesKeys.get(s) != null)
 							.findAny().orElse(RichiesteCMISService.ASPECT_ALLEGATI_RICHIESTA_ORDINI));
 				});
-		super.completeAllegato(allegato);
+		super.completeAllegato(allegato, storageObject);
 	}
 
 	@Override

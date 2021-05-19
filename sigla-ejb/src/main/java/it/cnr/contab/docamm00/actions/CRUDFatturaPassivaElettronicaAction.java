@@ -219,7 +219,7 @@ public class CRUDFatturaPassivaElettronicaAction extends CRUDAction {
         try {
             CRUDFatturaPassivaElettronicaBP fatturaPassivaElettronicaBP = (CRUDFatturaPassivaElettronicaBP) context.getBusinessProcess();
             DocumentoEleTestataBulk bulk = (DocumentoEleTestataBulk) fatturaPassivaElettronicaBP.getModel();
-            if (bulk.getFlDecorrenzaTermini().equalsIgnoreCase("S")) {
+            if (Optional.ofNullable(bulk.getFlDecorrenzaTermini()).orElse("N").equalsIgnoreCase("S")) {
                 fatturaPassivaElettronicaBP.setMessage("Ricevuta decorrenza termini - non è possibile effettuare il Rifiuto. Registrare il documento e richiedere nota credito, oppure rifiutare il documento secondo le modalità di invio PEC (Vedere Manuale)!");
             } else {
                 Configurazione_cnrComponentSession sess = (Configurazione_cnrComponentSession)

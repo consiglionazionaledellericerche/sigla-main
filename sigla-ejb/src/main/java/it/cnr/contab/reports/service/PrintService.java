@@ -154,7 +154,7 @@ public class PrintService implements InitializingBean {
     public void executeReportWithJsonDataSource() throws Exception {
         Print_spoolerBulk printSpooler = null;
         try {
-            logger.warn("Start executeReportWithJsonDataSource");
+            logger.trace("Start executeReportWithJsonDataSource");
             UserContext userContextCal = new CNRUserContext("JOB_STAMPADS", "JOB_STAMPADS"
                     , null, null, null, null);
             printSpooler = offlineReportComponent.getJobWaitToJsoDS(userContextCal);
@@ -173,7 +173,7 @@ public class PrintService implements InitializingBean {
             }
             logger.error(error, e);
         }
-        logger.warn("Finish executeReportWithJsonDataSource");
+        logger.trace("Finish executeReportWithJsonDataSource");
     }
 
     @Override

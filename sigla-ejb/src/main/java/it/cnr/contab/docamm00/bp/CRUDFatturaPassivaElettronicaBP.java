@@ -924,9 +924,8 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	}
 
 	@Override
-	protected void completeAllegato(AllegatoFatturaBulk allegato) throws ApplicationException {
-		Optional.ofNullable(SpringUtil.getBean("storeService", StoreService.class).getStorageObjectBykey(allegato.getStorageKey()))
-				.map(storageObject -> storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
+	protected void completeAllegato(AllegatoFatturaBulk allegato, StorageObject storageObject) throws ApplicationException {
+		Optional.ofNullable(storageObject.<List<String>>getPropertyValue(StoragePropertyNames.SECONDARY_OBJECT_TYPE_IDS.value()))
 				.map(strings -> strings.stream())
 				.ifPresent(stringStream -> {
 					stringStream
@@ -934,7 +933,9 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 							.findFirst()
 							.ifPresent(s -> allegato.setAspectName(s));
 				});
-		super.completeAllegato(allegato);
+		Optional.ofNullable(storageObject.<String>getPropertyValue("sigla_commons_aspect:utente_applicativo"))
+				.ifPresent(s -> allegato.setUtenteSIGLA(s));
+		super.completeAllegato(allegato, storageObject);
 	}
 	
 	@Override
@@ -1002,4 +1003,5 @@ public class CRUDFatturaPassivaElettronicaBP extends AllegatiCRUDBP<AllegatoFatt
 	public void setDataDisattivazioneSplitProf(Date dataDisattivazioneSplitProf) {
 		this.dataDisattivazioneSplitProf = dataDisattivazioneSplitProf;
 	}
+
 }

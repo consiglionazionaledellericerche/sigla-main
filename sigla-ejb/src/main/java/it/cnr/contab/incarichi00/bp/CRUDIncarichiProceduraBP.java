@@ -1970,7 +1970,14 @@ public class CRUDIncarichiProceduraBP extends it.cnr.jada.util.action.SimpleCRUD
 			List<Incarichi_repertorio_annoBulk> incaricoAnnoListToBeDeleted = new ArrayList<Incarichi_repertorio_annoBulk>();
 			for (Iterator i=incarico.getIncarichi_repertorio_annoColl().iterator();i.hasNext();){
 				Incarichi_repertorio_annoBulk incarico_anno = (Incarichi_repertorio_annoBulk)i.next();
-				if (incarico_anno.getImporto_iniziale().compareTo(Utility.ZERO)==0 && incarico_anno.getImporto_complessivo().compareTo(Utility.ZERO)==0) {
+				if (
+						Optional.ofNullable(incarico_anno)
+							.flatMap(incarichi_repertorio_annoBulk -> Optional.ofNullable(incarichi_repertorio_annoBulk.getImporto_iniziale()))
+							.orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO) == 0 &&
+						Optional.ofNullable(incarico_anno)
+							.flatMap(incarichi_repertorio_annoBulk -> Optional.ofNullable(incarichi_repertorio_annoBulk.getImporto_complessivo()))
+							.orElse(BigDecimal.ZERO).compareTo(BigDecimal.ZERO) == 0
+				) {
 					boolean trovatoAnno=false;
 					for (Iterator<Incarichi_procedura_annoBulk> y=procedura.getIncarichi_procedura_annoColl().iterator();y.hasNext();) {
 						Incarichi_procedura_annoBulk proceduraAnno = y.next();
