@@ -78,6 +78,9 @@
     <field name="pcUniversity" class="java.lang.String">
         <fieldDescription><![CDATA[pcUniversity]]></fieldDescription>
     </field>
+    <field name="pcPublic" class="java.lang.String">
+        <fieldDescription><![CDATA[pcPublic]]></fieldDescription>
+    </field>
     <field name="pcUniAddress" class="java.lang.String">
         <fieldDescription><![CDATA[pcUniAddress]]></fieldDescription>
     </field>
@@ -475,7 +478,7 @@
                 <textElement textAlignment="Left" verticalAlignment="Middle">
                     <font fontName="Times New Roman" size="11" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA["Public"]]></textFieldExpression>
+                <textFieldExpression><![CDATA["Public: "+ $F{pcPublic}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
                 <reportElement x="30" y="440" width="473" height="15" uuid="f0bf7d78-11b1-4761-86a7-a809f0f1920a"/>
@@ -520,19 +523,19 @@
                 <textFieldExpression><![CDATA["Email:  " + $F{pcUniEmail}]]></textFieldExpression>
             </textField>
             <line>
-                <reportElement x="22" y="503" width="523" height="1" uuid="4b0bb953-900f-4013-aba9-a54d0ab9fb8b"/>
+                <reportElement x="22" y="513" width="523" height="1" uuid="4b0bb953-900f-4013-aba9-a54d0ab9fb8b"/>
             </line>
             <line>
-                <reportElement x="545" y="503" width="1" height="108" uuid="ab65e074-1805-4872-a6d3-879a2a978607"/>
+                <reportElement x="545" y="513" width="1" height="108" uuid="ab65e074-1805-4872-a6d3-879a2a978607"/>
             </line>
             <line>
-                <reportElement x="22" y="503" width="1" height="107" uuid="8695106c-2dd5-44af-af58-91e1fd95edd6"/>
+                <reportElement x="22" y="513" width="1" height="107" uuid="8695106c-2dd5-44af-af58-91e1fd95edd6"/>
             </line>
             <line>
-                <reportElement x="22" y="610" width="523" height="1" uuid="591614a7-2bdd-45e2-a6ee-0c8fc206f8cc"/>
+                <reportElement x="22" y="620" width="523" height="1" uuid="591614a7-2bdd-45e2-a6ee-0c8fc206f8cc"/>
             </line>
             <textField isBlankWhenNull="false">
-                <reportElement x="31" y="510" width="473" height="15" uuid="1b524929-f41a-45f8-9e39-97c58ad263ab"/>
+                <reportElement x="31" y="520" width="473" height="15" uuid="1b524929-f41a-45f8-9e39-97c58ad263ab"/>
                 <box>
                     <pen lineWidth="0.0" lineStyle="Dashed"/>
                     <topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -546,7 +549,7 @@
                 <textFieldExpression><![CDATA["Surname:  " + $F{pcSurname}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="31" y="525" width="473" height="15" uuid="0e758363-2750-465b-be55-b9d74f136bca"/>
+                <reportElement x="31" y="535" width="473" height="15" uuid="0e758363-2750-465b-be55-b9d74f136bca"/>
                 <box>
                     <pen lineWidth="0.0" lineStyle="Dashed"/>
                     <topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -560,7 +563,7 @@
                 <textFieldExpression><![CDATA["name:  " + $F{pcName}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="31" y="540" width="473" height="15" uuid="10c1757e-c672-4e01-8ec3-3ef41756c49b"/>
+                <reportElement x="31" y="550" width="473" height="15" uuid="10c1757e-c672-4e01-8ec3-3ef41756c49b"/>
                 <box>
                     <pen lineWidth="0.0" lineStyle="Dashed"/>
                     <topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -574,7 +577,7 @@
                 <textFieldExpression><![CDATA["Qualification:  " + $F{pcQualification}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="31" y="555" width="473" height="15" uuid="8ca6bfa9-3b00-42b9-b61a-fa3822b613b6"/>
+                <reportElement x="31" y="565" width="473" height="15" uuid="8ca6bfa9-3b00-42b9-b61a-fa3822b613b6"/>
                 <box>
                     <pen lineWidth="0.0" lineStyle="Dashed"/>
                     <topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -588,7 +591,7 @@
                 <textFieldExpression><![CDATA["Contact address (street,post-code and city):  " + $F{pcAddress}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="31" y="570" width="473" height="15" uuid="f576bddf-ff03-44d8-9b68-b3e94615e5c7"/>
+                <reportElement x="31" y="580" width="473" height="15" uuid="f576bddf-ff03-44d8-9b68-b3e94615e5c7"/>
                 <box>
                     <pen lineWidth="0.0" lineStyle="Dashed"/>
                     <topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -602,7 +605,7 @@
                 <textFieldExpression><![CDATA["Telephone:  " + $F{pcTelephone}]]></textFieldExpression>
             </textField>
             <textField isBlankWhenNull="false">
-                <reportElement x="31" y="585" width="473" height="15" uuid="8360b096-a892-4f98-81d1-61e637151840"/>
+                <reportElement x="31" y="595" width="473" height="15" uuid="8360b096-a892-4f98-81d1-61e637151840"/>
                 <box>
                     <pen lineWidth="0.0" lineStyle="Dashed"/>
                     <topPen lineWidth="0.0" lineStyle="Dashed"/>
@@ -615,6 +618,20 @@
                 </textElement>
                 <textFieldExpression><![CDATA["Email:  " + $F{pcEmail}]]></textFieldExpression>
             </textField>
+            <staticText>
+                <reportElement x="23" y="497" width="170" height="20" uuid="86b27109-759c-41ca-96ad-3769ba5b653b"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Foreign Project Coordinator]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="21" y="380" width="141" height="20" uuid="b1038663-9cc0-47f9-8701-1858238885b6"/>
+                <textElement>
+                    <font size="12"/>
+                </textElement>
+                <text><![CDATA[Partner Institution]]></text>
+            </staticText>
         </band>
         <band height="250" splitType="Stretch">
             <frame>
@@ -771,7 +788,7 @@
                 <textElement textAlignment="Center">
                     <font size="12"/>
                 </textElement>
-                <text><![CDATA[Additional Team Member]]></text>
+                <text><![CDATA[Foreign Research Team]]></text>
             </staticText>
         </band>
         <band height="250" splitType="Stretch">
@@ -837,7 +854,7 @@
                 <textElement textAlignment="Center">
                     <font size="12"/>
                 </textElement>
-                <text><![CDATA[Foreign Research Team]]></text>
+                <text><![CDATA[Additional Team Member]]></text>
             </staticText>
             <break>
                 <reportElement x="0" y="140" width="99" height="1" uuid="a286cae7-84c6-4038-94d6-31770531fb53"/>
