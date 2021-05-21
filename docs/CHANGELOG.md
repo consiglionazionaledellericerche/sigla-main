@@ -1,3 +1,11 @@
+## Release 6.3.29  -- _May 21, 2021_ 
+**Changes**
+
+>**Aggiunta nella consultazione per GAE/Residuo Voce la colonna esercizio residuo**
+>
+>[3b0df912dd43da4](https://github.com/consiglionazionaledellericerche/sigla-main/commit/3b0df912dd43da4) gianfranco.gasparro *May 21, 2021*
+
+
 ## Release 6.3.28  -- _May 18, 2021_ 
 **Changes**
 
