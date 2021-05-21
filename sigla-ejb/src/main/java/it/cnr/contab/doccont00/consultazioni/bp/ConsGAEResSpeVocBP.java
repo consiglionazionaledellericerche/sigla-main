@@ -17,28 +17,12 @@
 
 package it.cnr.contab.doccont00.consultazioni.bp;
 
-import it.cnr.contab.config00.bulk.Parametri_cnrBulk;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_entBulk;
-import it.cnr.contab.doccont00.consultazioni.bulk.V_cons_gae_residui_speBulk;
-import it.cnr.contab.doccont00.consultazioni.ejb.ConsGAEResComponentSession;
-import it.cnr.contab.progettiric00.core.bulk.ProgettoBulk;
-import it.cnr.contab.utenze00.bp.CNRUserContext;
-import it.cnr.contab.util.Utility;
 import it.cnr.jada.action.ActionContext;
 import it.cnr.jada.action.BusinessProcessException;
-import it.cnr.jada.comp.ComponentException;
-import it.cnr.jada.persistency.sql.CompoundFindClause;
-import it.cnr.jada.persistency.sql.SQLBuilder;
-import it.cnr.jada.util.Config;
-import it.cnr.jada.util.action.ConsultazioniBP;
-import it.cnr.jada.util.jsp.Button;
-
-import java.rmi.RemoteException;
-import java.util.Iterator;
 
 public class ConsGAEResSpeVocBP extends ConsGAEResSpeBP {
-    @Override
-    public void initVariabili(ActionContext context, String pathProvenienza, String livello_destinazione) throws BusinessProcessException {
-        super.initVariabili(context, LIVELLO_SPEGAE, LIVELLO_VOC);
-    }
+	   @Override
+	   public void initVariabili(ActionContext context, String pathProvenienza, String livello_destinazione) throws BusinessProcessException {
+			super.initVariabili(context, "SPEGAE", "ESRESVOC");
+	   }
 }
