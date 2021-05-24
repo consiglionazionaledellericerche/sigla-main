@@ -8,6 +8,7 @@ import feign.auth.BasicAuthRequestInterceptor;
 import feign.codec.ErrorDecoder;
 import feign.gson.GsonDecoder;
 import feign.gson.GsonEncoder;
+import it.cnr.contab.pagopa.model.MovimentoCassaPagopa;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.pagopa.model.PendenzaResponse;
 import it.cnr.contab.util.Utility;
@@ -106,5 +107,8 @@ public class PagopaService {
     }
     public byte[] getAvviso(String idDominio, String numeroAvviso){
         return pagopaDownloadClient.stampaAvviso(idDominio, numeroAvviso);
+    }
+    public MovimentoCassaPagopa riconciliaIncasso(String idDominio, MovimentoCassaPagopa movimentoCassaPagopa){
+        return pagopaClient.riconciliaIncasso(idDominio, movimentoCassaPagopa);
     }
 }

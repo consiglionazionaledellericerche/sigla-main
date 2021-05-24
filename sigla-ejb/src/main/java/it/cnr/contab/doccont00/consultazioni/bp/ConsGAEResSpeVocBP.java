@@ -39,6 +39,6 @@ import java.util.Iterator;
 public class ConsGAEResSpeVocBP extends ConsGAEResSpeBP {
 	   @Override
 	   public void initVariabili(ActionContext context, String pathProvenienza, String livello_destinazione) throws BusinessProcessException {
-			super.initVariabili(context, "SPEGAE", "VOC");
+			super.initVariabili(context, "SPEGAE", "ESRESVOC");
 	   }
 }

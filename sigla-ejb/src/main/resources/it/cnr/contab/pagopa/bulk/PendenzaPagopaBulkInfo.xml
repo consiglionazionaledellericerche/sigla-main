@@ -54,7 +54,7 @@
 	<fieldProperty
 			name="findTerzo"
 			property="terzo"
-			inputType="SEARCHTOOL"
+			inputType="SEARCHTOOL_WITH_LIKE"
 			formName="searchtool_large"
 			label="Terzo"
 			enabledOnSearch="true"

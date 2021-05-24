@@ -38,6 +38,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class Pendenza implements Serializable {
 
+    @JsonProperty("idA2A")
+    private String idA2A = null;
+
+    @JsonProperty("idPendenza")
+    private String idPendenza = null;
+
     @JsonProperty("idTipoPendenza")
     private String idTipoPendenza;
     @JsonProperty("idDominio")
@@ -62,6 +68,8 @@ public class Pendenza implements Serializable {
     private String divisione;
     @JsonProperty("dataValidita")
     private String dataValidita;
+    @JsonProperty("dataCaricamento")
+    private String dataCaricamento;
     @JsonProperty("dataScadenza")
     private String dataScadenza;
     @JsonProperty("annoRiferimento")
@@ -290,4 +298,15 @@ public class Pendenza implements Serializable {
         this.voci = voci;
     }
 
+    public void setIdA2A(String idA2A) {
+        this.idA2A = idA2A;
+    }
+
+    public void setIdPendenza(String idPendenza) {
+        this.idPendenza = idPendenza;
+    }
+
+    public void setDataCaricamento(String dataCaricamento) {
+        this.dataCaricamento = dataCaricamento;
+    }
 }

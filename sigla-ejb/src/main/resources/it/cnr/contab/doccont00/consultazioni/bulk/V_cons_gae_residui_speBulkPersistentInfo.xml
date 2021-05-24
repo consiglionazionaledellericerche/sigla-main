@@ -733,9 +733,149 @@
 			sqlTypeName="VARCHAR"
 			columnSize="100"
 			nullable="true" />
-		</columnMap>	
-		
-		<columnMap 
+		</columnMap>
+
+	<columnMap
+			name="SPEGAEESRESVOC"
+			tableName="V_CONS_GAE_RESIDUI_SPE"
+			extends="BASEGAEVOC" >
+		<columnMapping
+				columnName="DS_PROGETTO"
+				propertyName="ds_progetto"
+				sqlTypeName="VARCHAR"
+				columnSize="433"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_COMMESSA"
+				propertyName="ds_commessa"
+				sqlTypeName="VARCHAR"
+				columnSize="433"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_MODULO"
+				propertyName="ds_modulo"
+				sqlTypeName="VARCHAR"
+				columnSize="433"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_LINEA_ATTIVITA"
+				propertyName="ds_linea_attivita"
+				sqlTypeName="VARCHAR"
+				columnSize="300"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_STANZ_RES_IMPROPRIO"
+				propertyName="im_stanz_res_improprio"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="VAR_PIU_STANZ_RES_IMP"
+				propertyName="var_piu_stanz_res_imp"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="VAR_MENO_STANZ_RES_IMP"
+				propertyName="var_meno_stanz_res_imp"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_OBBL_RES_IMP"
+				propertyName="im_obbl_res_imp"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_OBBL_RES_PRO"
+				propertyName="im_obbl_res_pro"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="VAR_PIU_OBBL_RES_PRO"
+				propertyName="var_piu_obbl_res_pro"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="VAR_MENO_OBBL_RES_PRO"
+				propertyName="var_meno_obbl_res_pro"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_MANDATI_REVERSALI_PRO"
+				propertyName="im_mandati_reversali_pro"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="IM_MANDATI_REVERSALI_IMP"
+				propertyName="im_mandati_reversali_imp"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="ASS_RES_IMP"
+				propertyName="ass_res_imp"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="INIZIALE"
+				propertyName="iniziale"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="DISP_RES"
+				propertyName="disp_res"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="RIMASTI_DA_PAGARE"
+				propertyName="rimasti_da_pagare"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="PAGATO_TOTALE"
+				propertyName="pagato_totale"
+				sqlTypeName="DECIMAL"
+				columnSize="15"
+				columnScale="2"
+				nullable="true" />
+		<columnMapping
+				columnName="DS_ELEMENTO_VOCE"
+				propertyName="ds_elemento_voce"
+				sqlTypeName="VARCHAR"
+				columnSize="100"
+				nullable="true" />
+		<columnMapping
+				columnName="ESERCIZIO_RES"
+				propertyName="esercizio_res"
+				sqlTypeName="DECIMAL"
+				columnSize="4"
+				nullable="true" />
+	</columnMap>
+
+	<columnMap
 			name="SPEGAEVOCVARP"
 			tableName="V_CONS_GAE_RESIDUI_SPE"
 			extends="BASEGAEVOC" >

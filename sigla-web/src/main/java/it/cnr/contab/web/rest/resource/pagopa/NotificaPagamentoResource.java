@@ -44,11 +44,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.SecurityContext;
+import javax.xml.bind.DatatypeConverter;
 import java.rmi.RemoteException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Stateless
@@ -63,9 +61,13 @@ public class NotificaPagamentoResource implements NotificaPagamentoLocal {
 	public Response comunicazionePagamento(@Context HttpServletRequest request,
 										   @PathParam("idDominio") String idDominio,
 										   @PathParam("iuv") String iuv,
-										   NotificaPagamento pagamento) throws Exception {
-		logger.info("Ricevuta Notifica Pagamento Iuv: "+iuv+ " - IdPendenza: "+pagamento.getIdPendenza());
+										   String base64) throws Exception {
+		NotificaPagamento pagamento = null;
+		logger.info("Ricevuta Notifica Pagamento Iuv: "+iuv);
 		try{
+			byte [] payload = Base64.getDecoder().decode(base64);
+			com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+			pagamento = mapper.readValue(payload, NotificaPagamento.class);
 			CNRUserContext userContext = (CNRUserContext) securityContext.getUserPrincipal();
 			Optional.ofNullable(iuv).orElseThrow(() -> new RestException(Status.BAD_REQUEST, "Errore, indicare il codice iuv."));
 			pendenzaPagopaComponentSession.notificaPagamento(userContext, pagamento, iuv);

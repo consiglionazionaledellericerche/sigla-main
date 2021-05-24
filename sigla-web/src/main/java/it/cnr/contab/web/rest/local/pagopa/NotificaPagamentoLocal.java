@@ -50,5 +50,5 @@ public interface NotificaPagamentoLocal {
     Response comunicazionePagamento(@Context HttpServletRequest request,
                                     @PathParam("idDominio") String idDominio,
                                     @PathParam("iuv") String iuv,
-                                    NotificaPagamento pagamento) throws Exception;
+                                    String base64) throws Exception;
 }

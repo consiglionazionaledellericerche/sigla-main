@@ -4,6 +4,7 @@ import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import feign.Response;
+import it.cnr.contab.pagopa.model.MovimentoCassaPagopa;
 import it.cnr.contab.pagopa.model.Pendenza;
 import it.cnr.contab.pagopa.model.PendenzaResponse;
 import it.cnr.si.service.dto.anagrafica.letture.PersonaWebDto;
@@ -26,4 +27,8 @@ public interface PagopaClient {
     @Headers({"Accept: application/pdf"})
     @RequestLine("GET /backend/api/pendenze/rs/basic/v2/avvisi/{idDominio}/{numeroAvviso}")
     byte[] stampaAvviso(@Param("idDominio") String idDominio, @Param("numeroAvviso") String numeroAvviso);
+
+    @RequestLine("POST /backend/api/ragioneria/rs/basic/v2/riconciliazioni/{idDominio}")
+    MovimentoCassaPagopa riconciliaIncasso(@Param("idDominio") String dominio, MovimentoCassaPagopa movimentoCassaPagopa);
+
 }

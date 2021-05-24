@@ -98,8 +98,15 @@ public class ConsGAEResComponent extends CRUDComponent {
 				addColumnGAE(sqlEsterna,tabAlias,(livelloDestinazione.equals(ConsGAEResBP.LIVELLO_ETRGAE)||livelloDestinazione.equals(ConsGAEResBP.LIVELLO_SPEGAE)),false,pathDestinazione);
 			}
 			if (pathDestinazione.indexOf(ConsGAEResBP.LIVELLO_VOC)>=0){
-				addColumnVOC(sql,tabAlias,livelloDestinazione.equals(ConsGAEResBP.LIVELLO_VOC),true);
-				addColumnVOC(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsGAEResBP.LIVELLO_VOC),false);
+				addColumnVOC(sql,tabAlias,livelloDestinazione.endsWith(ConsGAEResBP.LIVELLO_VOC),true);
+				addColumnVOC(sqlEsterna,tabAlias,livelloDestinazione.endsWith(ConsGAEResBP.LIVELLO_VOC),false);
+			}
+			if (pathDestinazione.indexOf(ConsGAEResBP.LIVELLO_ESRES)>=0){
+				String alias = getAlias(tabAlias);
+				addColumn(sql,alias.concat("ESERCIZIO_RES"),true);
+				addSQLGroupBy(sql,alias.toLowerCase().concat("esercizio_res"),true);
+				addColumn(sqlEsterna,alias.concat("ESERCIZIO_RES"),true);
+				addSQLGroupBy(sqlEsterna,alias.toLowerCase().concat("esercizio_res"),false);
 			}
 			if (pathDestinazione.indexOf(ConsGAEResBP.LIVELLO_VARP)>=0){
 				addColumnVARP(sql,tabAlias,livelloDestinazione.equals(ConsGAEResBP.LIVELLO_VARP),true);
@@ -141,7 +148,7 @@ public class ConsGAEResComponent extends CRUDComponent {
 				addColumnREV(sql,tabAlias,livelloDestinazione.equals(ConsGAEResBP.LIVELLO_REV),true);
 				addColumnREV(sqlEsterna,tabAlias,livelloDestinazione.equals(ConsGAEResBP.LIVELLO_REV),false);
 			}
-			if(!isUtenteEnte(userContext)){
+		if(!isUtenteEnte(userContext)){
 				CdrBulk cdrUtente = cdrFromUserContext(userContext);
 			 	if ( !cdrUtente.isCdrILiv() ){
 					sql.addSQLClause("AND", "CD_CENTRO_RESPONSABILITA",sql.EQUALS,CNRUserContext.getCd_cdr(userContext));

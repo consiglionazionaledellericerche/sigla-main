@@ -43,7 +43,7 @@ public class PendenzaPagopaHome extends BulkHome {
 		try {
 			PendenzaPagopaBulk pendenzaPagopaBulk = (PendenzaPagopaBulk)oggettobulk;
 			pendenzaPagopaBulk.setId(
-					new Long(((Long)findAndLockMax( oggettobulk, "id", new Long(0) )).intValue()+1));
+					new Long(((Long)findAndLockMax( oggettobulk, "id", new Long(1) )).intValue()+1));
 			super.initializePrimaryKeyForInsert(usercontext, pendenzaPagopaBulk);
 		} catch(it.cnr.jada.bulk.BusyResourceException e) {
 			throw new PersistencyException(e);

@@ -17,6 +17,9 @@
 
 package it.cnr.contab.pagopa.bulk;
 
+import it.cnr.contab.ordmag.anag00.TipoMovimentoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.LottoMagBulk;
+import it.cnr.contab.ordmag.magazzino.bulk.MovimentiMagazzinoRigaBulk;
 import it.cnr.jada.UserContext;
 import it.cnr.jada.bulk.BulkHome;
 import it.cnr.jada.bulk.OggettoBulk;
@@ -24,7 +27,13 @@ import it.cnr.jada.comp.ComponentException;
 import it.cnr.jada.persistency.PersistencyException;
 import it.cnr.jada.persistency.Persistent;
 import it.cnr.jada.persistency.PersistentCache;
+import it.cnr.jada.persistency.sql.FindClause;
 import it.cnr.jada.persistency.sql.SQLBuilder;
+import it.cnr.jada.util.DateUtils;
+import it.cnr.jada.util.Orderable;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public class PagamentoPagopaHome extends BulkHome {
 	private static final long serialVersionUID = 1L;
@@ -59,4 +68,22 @@ public class PagamentoPagopaHome extends BulkHome {
 //		sql.addSQLClause("AND", "STATO", sql.NOT_EQUALS, PagamentoPagopaBulk.STATO_ANNULLATO);
 		return sql;
 	}
+
+	public PagamentoPagopaBulk findPagamentoPagopa(UserContext userContext, String iur) throws PersistencyException
+	{
+		SQLBuilder sql = this.createSQLBuilder();
+
+		sql.addClause(FindClause.AND, "iur", SQLBuilder.EQUALS, iur);
+		List lista =  this.fetchAll(sql);
+		if (lista != null){
+			if (lista.size() == 1){
+				return (PagamentoPagopaBulk) lista.get(0);
+			} else {
+				throw new PersistencyException("Esistono sull'archivio pagamenti PagoPA diverse righe con IUR "+iur);
+			}
+		}
+		return null;
+	}
+
+
 }

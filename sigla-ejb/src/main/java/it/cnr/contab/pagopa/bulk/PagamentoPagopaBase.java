@@ -30,6 +30,22 @@ public class PagamentoPagopaBase extends PagamentoPagopaKey implements Keyed {
 
 	private Long idPendenzaPagopa;
 
+	public String getId_riconciliazione() {
+		return id_riconciliazione;
+	}
+
+	public void setId_riconciliazione(String id_riconciliazione) {
+		this.id_riconciliazione = id_riconciliazione;
+	}
+
+	public String getRiconciliazione() {
+		return riconciliazione;
+	}
+
+	public void setRiconciliazione(String riconciliazione) {
+		this.riconciliazione = riconciliazione;
+	}
+
 	private Timestamp dtPagamento;
 
 	private BigDecimal importo;
@@ -37,8 +53,9 @@ public class PagamentoPagopaBase extends PagamentoPagopaKey implements Keyed {
 	private String iur;
 
 	private String causale;
-
 	private String rpp;
+	private String id_riconciliazione;
+	private String riconciliazione;
 
 	private String ccp;
 

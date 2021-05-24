@@ -21,7 +21,7 @@
 
 <script language="JavaScript">
 function doVisualizzaAvvisoPagamento() {
-	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/visualizzaAvvisoPagamento.html?methodName=visualizzaAvvisoPagamento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
+	doPrint('<%=JSPUtils.getAppRoot(request)%>genericdownload/AvvisoPagamento<%=bulk.getCdAvviso()%>.html?methodName=visualizzaAvvisoPagamento&it.cnr.jada.action.BusinessProcess=<%=bp.getPath()%>',
 			'Avviso', 'toolbar=no, location=no, directories=no, status=no, menubar=no,resizable,scrollbars,width=800,height=600').focus() ;
 }
 </script>

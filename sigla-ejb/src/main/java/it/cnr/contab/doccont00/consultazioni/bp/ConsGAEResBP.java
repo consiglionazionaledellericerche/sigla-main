@@ -50,6 +50,7 @@ public class ConsGAEResBP extends ConsultazioniBP {
 	public static final String LIVELLO_MAN= "MAN"; /* per la spesa: mandati res propri*/
 	public static final String LIVELLO_ACC= "ACC";
 	public static final String LIVELLO_REV= "REV";
+	public static final String LIVELLO_ESRES= "ESRES";
 	public static final String LIVELLO_PIUSTAN= "PIUSTAN";
 	public static final String LIVELLO_MENOSTAN= "MENOSTAN";
 	public static final String LIVELLO_OBB= "OBB"; /* impegni res. impropri*/

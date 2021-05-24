@@ -101,6 +101,18 @@
 			sqlTypeName="VARCHAR"
 			columnSize="20"
 			nullable="false" />
+		<columnMapping
+				columnName="ID_RICONCILIAZIONE"
+				propertyName="id_riconciliazione"
+				sqlTypeName="VARCHAR"
+				columnSize="50"
+				nullable="true" />
+		<columnMapping
+				columnName="RICONCILIAZIONE"
+				propertyName="riconciliazione"
+				sqlTypeName="VARCHAR"
+				columnSize="100"
+				nullable="true" />
 	</defaultColumnMap>
 	<persistentProperty
 		name="iur" />
@@ -128,4 +140,8 @@
 		name="duva" />
 	<persistentProperty
 		name="utuv" />
+	<persistentProperty
+			name="id_riconciliazione" />
+	<persistentProperty
+			name="riconciliazione" />
 </SQLPersistentInfo>

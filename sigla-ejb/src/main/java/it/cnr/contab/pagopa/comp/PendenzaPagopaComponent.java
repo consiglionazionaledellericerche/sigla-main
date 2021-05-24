@@ -78,6 +78,29 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		super.eliminaConBulk(usercontext, oggettobulk);
 	}
 
+	public void riconciliaIncassoPagopa(UserContext userContext) throws ComponentException {
+		try {
+			MovimentoCassaPagopa movimentoCassaPagopa = new MovimentoCassaPagopa();
+			movimentoCassaPagopa.setDataContabile("");
+			movimentoCassaPagopa.setDataValuta("");
+			movimentoCassaPagopa.setCausale("");
+			movimentoCassaPagopa.setImporto(BigDecimal.ZERO);
+			movimentoCassaPagopa.setSct("");
+			movimentoCassaPagopa = pagopaService.riconciliaIncasso(getIdDominio(userContext), movimentoCassaPagopa);
+			if (movimentoCassaPagopa != null && movimentoCassaPagopa.getRiscossioni() != null && !movimentoCassaPagopa.getRiscossioni().isEmpty()){
+				PagamentoPagopaHome home = (PagamentoPagopaHome) getHome(userContext, PagamentoPagopaBulk.class);
+				for (RiscossioneMovimentoCassaPagopa riscossione : movimentoCassaPagopa.getRiscossioni()){
+					PagamentoPagopaBulk pagamentoPagopaBulk = home.findPagamentoPagopa(userContext, riscossione.getIur());
+					pagamentoPagopaBulk.setStato(Riscossione.StatoEnum.INCASSATA);
+					pagamentoPagopaBulk.setId_riconciliazione(movimentoCassaPagopa.getIdRiconciliazione());
+					pagamentoPagopaBulk.setRiconciliazione(riscossione.getRiconciliazione());
+				}
+			}
+		} catch (Throwable t) {
+			throw handleException(t);
+		}
+	}
+
 	public PendenzaPagopaBulk generaPosizioneDebitoria(UserContext userContext, IDocumentoAmministrativoBulk documentoAmministrativoBulk, Timestamp dataScadenza, String descrizione, BigDecimal importoScadenza, TerzoBulk terzoBulk) throws ComponentException {
 
 		try {
@@ -131,10 +154,13 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 
 	private void generaPendenzaSuPagopa(UserContext userContext, PendenzaPagopaBulk pendenzaPagopaBulk) throws ComponentException, IntrospectionException, PersistencyException {
 		Pendenza pendenza = getPendenza(userContext, pendenzaPagopaBulk);
-
-		PendenzaResponse pendenzaCreata = pagopaService.creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
-		byte [] stampaAvviso = Base64.getDecoder().decode(pendenzaCreata.getPdf());
-		int i = 0;
+		PendenzaResponse pendenzaCreata = null;
+		try {
+			pendenzaCreata = pagopaService.creaPendenza(pendenzaPagopaBulk.getId(), pendenza);
+		} catch (Exception e){
+			logger.error("Errore su creaPendenza",e);
+			throw new ComponentException("Errore nella creazione della pendenza"+e.getMessage());
+		}
 	}
 
 	public Pendenza getPendenza(UserContext userContext, String numeroAvviso) throws ComponentException, IntrospectionException, PersistencyException {
@@ -166,9 +192,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		Timestamp dataOdierna = DateServices.getDataOdierna();
 		Pendenza pendenza = new Pendenza();
 		pendenza.setIdTipoPendenza("LIBERO");
-		TerzoBulk terzoCnr = ((TerzoHome)getHome(userContext, TerzoBulk.class)).findTerzoEnte();
-
-		pendenza.setIdDominio(terzoCnr.getCodice_fiscale_anagrafico());
+		pendenza.setIdDominio(getIdDominio(userContext));
 		pendenza.setIdUnitaOperativa(pendenzaPagopaBulk.getCdUnitaOrganizzativa().replace(".",""));
 		pendenza.setCausale(pendenzaPagopaBulk.getDescrizione());
 		SoggettoPagatore soggettoPagatore = new SoggettoPagatore();
@@ -213,7 +237,7 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		pendenza.setDataPromemoriaScadenza(pendenza.getDataScadenza());
 		Voci voci = new Voci();
 		try {
-			String iban = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, 0, null, "F24_EP", "CONTO_CORRENTE");
+			String iban = Utility.createConfigurazioneCnrComponentSession().getVal01(userContext, 0, null, "PAGOPA", "IBAN");
 			voci.setIbanAccredito(iban);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -225,6 +249,12 @@ public class PendenzaPagopaComponent extends CRUDComponent {
 		voci.setImporto(pendenzaPagopaBulk.getImportoPendenza());
 		pendenza.setVoci(Arrays.asList(voci));
 		return pendenza;
+	}
+
+	private String getIdDominio(UserContext userContext) throws PersistencyException, ComponentException {
+		TerzoBulk terzoCnr = ((TerzoHome)getHome(userContext, TerzoBulk.class)).findTerzoEnte();
+
+		return terzoCnr.getCodice_fiscale_anagrafico();
 	}
 
 	@Override
