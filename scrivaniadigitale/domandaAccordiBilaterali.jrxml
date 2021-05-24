@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.11.0.final utlizzo versione della libreria JasperReports6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="domandaAccordiBilaterali" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0187353-db16-46fc-a7a4-9ece39bc4976">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="domandaAccordiBilaterali" pageWidth="595" pageHeight="842" whenNoDataType="NoPages" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0187353-db16-46fc-a7a4-9ece39bc4976">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -417,7 +417,7 @@
 					<textFieldExpression><![CDATA[$F{titolo}]]></textFieldExpression>
 				</textField>
 			</band>
-			<band height="193">
+			<band height="181">
 				<textField>
 					<reportElement x="0" y="124" width="200" height="20" uuid="cfa4daaf-6dcb-40f2-9881-83fce970ef94"/>
 					<textElement textAlignment="Left">
@@ -540,14 +540,23 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="49" splitType="Stretch">
 			<printWhenExpression><![CDATA[$F{propostaDiRicerca}  != null]]></printWhenExpression>
 			<textField textAdjust="StretchHeight">
-				<reportElement positionType="Float" x="-1" y="7" width="556" height="17" uuid="4cfea49b-9713-48e6-82db-09b68941541c"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="html">
+				<reportElement positionType="Float" x="0" y="6" width="556" height="17" uuid="291517b7-fc21-45ce-8e67-b01b6093e828"/>
+				<textElement textAlignment="Left" verticalAlignment="Justified" markup="styled">
 					<font fontName="SansSerif" size="11" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<style isBold=\"true\" isUnderline=\"true\">Proposta di Ricerca :</style> \r\n"+ $F{propostaDiRicerca} +"\r\n"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["<style isBold=\"true\" isUnderline=\"true\">Proposta di Ricerca :</style>"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="0" y="27" width="556" height="17" uuid="c285b73c-30a0-4318-9d6f-a6e423585258"/>
+				<textElement textAlignment="Left" verticalAlignment="Justified" markup="html">
+					<font fontName="SansSerif" size="11" isBold="false" isItalic="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{propostaDiRicerca} +"\r\n"]]></textFieldExpression>
 			</textField>
 		</band>
 		<band height="30" splitType="Stretch">
